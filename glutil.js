@@ -1855,7 +1855,8 @@ Scene3D.prototype.getAspect=function(){
 * @param {number} near The distance from the camera to
 * the near clipping plane. This should be slightly greater than 0.
 * @param {number}  far The distance from the camera to
-* the far clipping plane.
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
 * @return {Scene3D} This object.
 */
 Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
@@ -1863,13 +1864,17 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
    aspect,near,far));
 }
 /**
- * Sets this scene's projection matrix to a perspective view.
+ * Sets this scene's projection matrix to a perspective view that defines
+ * the view frustum, or the limits in the camera's view.
  * @param {number} left
  * @param {number} right
  * @param {number} bottom
  * @param {number} top
- * @param {number} near
- * @param {number} far
+* @param {number} near The distance from the camera to
+* the near clipping plane. This should be slightly greater than 0.
+* @param {number}  far The distance from the camera to
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
 * @return {Scene3D} This object.
  */
 Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
@@ -1877,13 +1882,13 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
    left, right, top, bottom, near, far));
 }
 /**
- *
+ * Sets this scene's projection matrix to an orthographic view.
  * @param {number} left
  * @param {number} right
  * @param {number} bottom
  * @param {number} top
- * @param {number} near
- * @param {number} far
+* @param {number} near
+* @param {number}  far
 * @return {Scene3D} This object.
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
@@ -1988,8 +1993,10 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
  return this;
 }
 /**
-*  Sets this scene's view matrix.
+*  Sets this scene's view matrix. The view matrix can also
+* be set using the setLookAt() method.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
+ * @return {Scene3D} This object.
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
  this._viewMatrix=GLMath.mat4copy(matrix);
@@ -2005,8 +2012,8 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * @param {Array<number>} up A 3-element vector specifying
 * the up-vector direction.  May be omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
-* vector must not point in the same direction as the camera's
-* line of sight.
+* vector must not point in the same or opposite direction as 
+* the camera's view direction.
 * @return {Scene3D} This object.
 */
 Scene3D.prototype.setLookAt=function(eye, center, up){
@@ -2043,6 +2050,7 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  * @param {*} position
  * @param {*} diffuse
  * @param {*} specular
+* @return {Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  this.lightSource.setPointLight(index,position,diffuse,specular);
@@ -2111,6 +2119,7 @@ MultiShape.prototype.add=function(shape){
   and a transformation matrix (which defines the object's position and size).
    @constructor
 * @alias glutil.Shape
+* @param {Mesh} mesh A geometric mesh to associate with this shape.
   */
 function Shape(mesh){
   if(mesh==null)throw new Error("mesh is null");
@@ -2128,6 +2137,7 @@ function Shape(mesh){
 /**
  *
  * @param {*} context
+ * @return {Shape} This object.
  */
 Shape.prototype.loadMesh=function(context){
  if(!this.vertfaces){
@@ -2138,6 +2148,7 @@ Shape.prototype.loadMesh=function(context){
 /**
  *
  * @param {*} value
+ * @return {Shape} This object.
  */
 Shape.prototype.setMatrix=function(value){
  this._matrixDirty=false;
@@ -2156,6 +2167,7 @@ Shape.prototype.setMatrix=function(value){
 * May be omitted if a string or array is given as the "r" parameter.
 * @param {number} a Alpha color component (0-1).
 * May be omitted if a string or array is given as the "r" parameter.
+ * @return {Shape} This object.
 */
 Shape.prototype.setColor=function(r,g,b,a){
  this.material=MaterialShade.fromColor(r,g,b,a);
@@ -2163,6 +2175,7 @@ Shape.prototype.setColor=function(r,g,b,a){
 }
 /** Sets this shape's material parameters.
 * @param {MaterialShade|Texture} material
+ * @return {Shape} This object.
 */
 Shape.prototype.setMaterial=function(material){
  this.material=material;
@@ -2173,6 +2186,7 @@ Shape.prototype.setMaterial=function(material){
  * @param {*} x
  * @param {*} y
  * @param {*} z
+* @return {Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
   if(x!=null && y==null && z==null){
@@ -2188,9 +2202,13 @@ Shape.prototype.setScale=function(x,y,z){
 }
 /**
  *
- * @param {*} x
- * @param {*} y
- * @param {*} z
+ * @param {Array<number>|number} x Either the X-coordinate,
+ * or an array of 3 numbers giving the x, y, and z coordinates.
+ * @param {number} y The Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z The Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @return {Shape} This object.
  */
 Shape.prototype.setPosition=function(x,y,z){
   if(x!=null && y==null && z==null){
@@ -2206,9 +2224,24 @@ Shape.prototype.setPosition=function(x,y,z){
 }
 /**
  *
- * @param {*} rotation
+ * @param {Array<number>|number} x Rotation about the X-axis in degrees
+ * (may be negative),
+ * or an array of 3 numbers giving the rotation about the x, y, and z axis.
+ * @param {number} y Rotation about the Y-axis in degrees (may be negative).
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z Rotation about the Z-axis in degrees (may be negative).
+ * If "x" is an array, this parameter may be omitted.
+ * @return {Shape} This object.
  */
-Shape.prototype.setRotation=function(rotation){
+Shape.prototype.setRotation=function(x,y,z){
+  if(x!=null && y==null && z==null){
+   if(x.constructor==Array)
+    this.rotation=x.slice(0,3);
+   else
+    this.rotation=[x,x,x];
+  } else {
+   this.rotation=[x,y,z];
+  }
   this.rotation=rotation.slice(0,3);
   this._matrixDirty=true;
   return this;
@@ -2216,6 +2249,7 @@ Shape.prototype.setRotation=function(rotation){
 /**
  *
  * @param {*} program
+ * @return {Shape} This object.
  */
 Shape.prototype.render=function(program){
   // Set material (texture or color)
@@ -2241,6 +2275,7 @@ Shape.prototype.render=function(program){
      1.0 : 0.0;
   program.setUniforms(uniforms);
   this.vertfaces.draw(program);
+  return this;
 };
 /** @private */
 Shape.prototype._updateMatrix=function(){
