@@ -18,6 +18,7 @@
 	/**
 	 * @class A promise - value to be resolved in the future.
 	 * Implements the "Promises/A+ 1.1" specification.
+   * @alias Promise
 	 * @param {function} [resolver]
 	 */
 	var Promise = function(resolver) {

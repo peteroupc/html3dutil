@@ -24,9 +24,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
 /**
 * Contains miscellaneous utility methods.
+* @class
 * @alias glutil.GLUtil
 */
 var GLUtil={
+/**
+*  Calls a function once per frame. (If the browser doesn't
+* support requestAnimationFrame or an equivalent, uses
+* setTimeout to implement this method.)
+*/
 "renderLoop":function(func){
   func();
   var selfRefFunc=function(){
@@ -895,7 +901,7 @@ MaterialShade.fromColor=function(r,g,b,a){
  return new MaterialShade(color,color);
 }
 /** Sets parameters for a shader program based on
- the information in this material data object. 
+ the information in this material data object.
  * @param {ShaderProgram} program A shader program object
  * where the locations of material-related uniforms will be retrieved.
  */
@@ -2012,7 +2018,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * @param {Array<number>} up A 3-element vector specifying
 * the up-vector direction.  May be omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
-* vector must not point in the same or opposite direction as 
+* vector must not point in the same or opposite direction as
 * the camera's view direction.
 * @return {Scene3D} This object.
 */
