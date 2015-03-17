@@ -9,6 +9,8 @@ A public domain JavaScript library for easing the development of WebGL applicati
 
 API documentation is found at: [https://peteroupc.github.io/html3dutil](https://peteroupc.github.io/html3dutil)
 
+The file "glutil_min.js" is a minified single-file version of the library.
+
 Source Code
 ---------
 Source code is available in the [project page](https://github.com/peteroupc/html3dutil).

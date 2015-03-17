@@ -32,6 +32,7 @@ var GLUtil={
 *  Calls a function once per frame. (If the browser doesn't
 * support requestAnimationFrame or an equivalent, uses
 * setTimeout to implement this method.)
+* @param {Function} func The function to call.
 */
 "renderLoop":function(func){
   func();
@@ -133,6 +134,14 @@ var GLUtil={
   }
  });
 },
+/**
+* Creates a mesh of a rectangular prism.  The 3-dimensional
+* shape will be centered at the origin.
+* @param {number} xSize Width of the prism.
+* @param {number} ySize Height of the prism.
+* @param {number} xSize Depth of the prism.
+* @return {Mesh}
+*/
 "createCube":function(xSize,ySize,zSize){
  // Position X, Y, Z, normal NX, NY, NZ, texture U, V
  xSize/=2.0;
@@ -151,6 +160,19 @@ var GLUtil={
  13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23]
  return new Mesh(vertices,faces,Mesh.NORMALS_BIT | Mesh.TEXCOORDS_BIT);
 },
+/**
+* Creates a mesh of a sphere.  The sphere
+* will be centered at the origin.
+* @param {number|undefined} radius Radius of the sphere.
+*  If omitted, this value is 1.
+* @param {number|undefined} div Number of subdivisions.
+* Must be 1 or greater.  A value of 1 generates an octahedron,
+* and successive values generate an increasingly fine
+* approximation to a sphere.  If omitted, this
+* value is 6.  There will be 2^div-1 lines
+* of latitude generated (excluding the poles).  
+* @return {Mesh}
+*/
 "createSphere":function(radius,div){
 var radius = 1.0;
 var x, y, z;
@@ -433,7 +455,7 @@ if(!namedColors){
 * If compiling or linking the shader program fails, a diagnostic
 * log is output to the JavaScript console.
 *
-* @constructor
+* @class
 * @alias glutil.ShaderProgram
 * @param {WebGLRenderingContext} context A WebGL context associated with the
 * compiled shader program.
@@ -495,7 +517,13 @@ ShaderProgram.prototype.getContext=function(){
 * is linked (which, in the case of ShaderProgram, currently only
 * happens upon construction).
 * @param {string} name The name of a uniform defined in either the
-* vertex or fragment shader of this shader program.
+* vertex or fragment shader of this shader program.  If the uniform
+* is an array, each element in the array is named as in these examples:
+* "uniform[0]", "uniform[1]".   If the uniform
+* is a struct, each member in the struct is named as in these examples:
+* "uniform.member1", "uniform.member2".  If the uniform is an array of struct, each
+* member is named as in these examples: "uniform[0].member1",
+* "uniform[0].member2".
 * @return {number|null} The location of the uniform name, or null if it doesn't exist.
 */
 ShaderProgram.prototype.get=function(name){
@@ -521,7 +549,9 @@ ShaderProgram.prototype.use=function(){
 * vectors must be 3 or 4 elements long, respectively.  Uniforms
 * that are 4x4 matrices must be 16 elements long.  Keys to
 * uniforms that don't exist in this program are ignored.  Keys
-* where hasOwnProperty is false are also ignored.
+* where hasOwnProperty is false are also ignored.  See also
+* the "name" parameter of the "get" for more information on
+* uniform names.
 * @return {ShaderProgram} This object.
 */
 ShaderProgram.prototype.setUniforms=function(uniforms){
@@ -721,7 +751,7 @@ return shader;
 };
 
 /** Specifies parameters for light sources.
-* @constructor
+* @class
 * @alias glutil.LightSource
 */
 function LightSource(position, ambient, diffuse, specular) {
@@ -734,16 +764,21 @@ function LightSource(position, ambient, diffuse, specular) {
 /**
 * A collection of light sources.  It stores the scene's
 * ambient color and data on one or more light sources.
-* @constructor
+* @class
 * @alias glutil.Lights
 */
 function Lights(){
  this.lights=[new LightSource()];
+ /**
+ *  Ambient color for the scene.  In the absence of 
+ *  other lighting effects, all objects will be given this color.
+ *  @default
+ */
  this.sceneAmbient=[0.2,0.2,0.2];
 }
 /** Maximum number of lights supported
    by the default shader program.
-   @constant
+   @const
    */
 Lights.MAX_LIGHTS = 3;
 /** @private */
@@ -765,9 +800,10 @@ Lights._createLight=function(index, position, diffuse, specular,directional){
  * @param {*} position
  * @param {*} diffuse
  * @param {*} specular
+ * @return {Lights} This object.
  */
-Lights.prototype.setDirectionalLight=function(index,position,diffuse,specular){
- this.lights[index]=Lights._createLight(index,position,diffuse,specular,true);
+Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
+ this.lights[index]=Lights._createLight(index,direction,diffuse,specular,true);
  return this;
 }
 /**
@@ -776,16 +812,18 @@ Lights.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  * @param {*} position
  * @param {*} diffuse
  * @param {*} specular
+ * @return {Lights} This object.
  */
 Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  this.lights[index]=Lights._createLight(index,position,diffuse,specular,false);
  return this;
 }
 /**
- *
+ * Adds a directional light.
  * @param {*} position
  * @param {*} diffuse
  * @param {*} specular
+ * @return {Lights} This object.
  */
 Lights.prototype.addDirectionalLight=function(position,diffuse,specular){
  this.lights.push(Lights._createLight(this.lights.length,position,diffuse,specular,true));
@@ -796,6 +834,7 @@ Lights.prototype.addDirectionalLight=function(position,diffuse,specular){
  * @param {*} position
  * @param {*} diffuse
  * @param {*} specular
+ * @return {Lights} This object.
  */
 Lights.prototype.addPointLight=function(position,diffuse,specular){
  this.lights.push(Lights._createLight(this.lights.length,position,diffuse,specular,false));
@@ -806,6 +845,7 @@ Lights.prototype.addPointLight=function(position,diffuse,specular){
  * the information in this light source object.
  * @param {ShaderProgram} program A shader program object
  * where locations of lighting uniforms will come from.
+ * @return {Lights} This object.
  */
 Lights.prototype.bind=function(program){
  if(!program)return this;
@@ -832,12 +872,12 @@ Lights.prototype.bind=function(program){
 * default shader program does.  If Scene3D.disableLighting() is called,
 * disabling lighting calculations in the default shader, only
 * the diffuse property of this object is used.
-* @constructor
+* @class
 *
 * @alias glutil.MaterialShade
 * @param {Array<number>} ambient Ambient reflection.  An array of three numbers
-* indicating how much an object reflects ambient lights (lights that shine
-* on all objects equally in all directions) in the red, green,
+* indicating how much an object reflects ambient lights (lights that color pixels
+* the same way regardless of direction or distance) in the red, green,
 * and blue components respectively.  Each component ranges from 0 to 1.
 * May be omitted; default is (0.2, 0.2, 0.2).
 * @param {Array<number>} diffuse Diffuse reflection.  An array of three numbers
@@ -867,10 +907,15 @@ Lights.prototype.bind=function(program){
 function MaterialShade(ambient, diffuse, specular,shininess,emission) {
  // NOTE: A solid color is defined by setting ambient
  // and diffuse to the same value
+ /** Specular highlight power of this material. */
  this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
+ /** Ambient reflection of this material. */
  this.ambient=ambient||[0.2,0.2,0.2];
+ /** Diffuse reflection of this material. */
  this.diffuse=diffuse||[0.8,0.8,0.8];
+ /** Specular highlight color of this material. */
  this.specular=specular||[0,0,0];
+ /** Additive color emitted by objects with this material. */
  this.emission=emission||[0,0,0];
 }
 /** Clones the parameters to a new MaterialShade
@@ -901,7 +946,7 @@ MaterialShade.fromColor=function(r,g,b,a){
  return new MaterialShade(color,color);
 }
 /** Sets parameters for a shader program based on
- the information in this material data object.
+ the information in this material data object. 
  * @param {ShaderProgram} program A shader program object
  * where the locations of material-related uniforms will be retrieved.
  */
@@ -918,7 +963,7 @@ MaterialShade.prototype.bind=function(program){
 
 /**
 * Specifies the triangles and lines that make up a geometric shape.
-* @constructor
+* @class
 *
 * @alias glutil.Mesh
 * @param {Array<number>} vertices An array that contains data on each
@@ -926,19 +971,20 @@ MaterialShade.prototype.bind=function(program){
 * Each vertex is made up of the same number of elements, as defined in
 * format. If null or omitted, creates an initially empty mesh.
 * @param {Array<number>} faces An array of vertex indices.  Each trio of
-* indices specifies a separate triangle.
+* indices specifies a separate triangle or line segment.
 * If null or omitted, creates an initially empty mesh.
 * @param {number} format A set of bit flags depending on the kind of data
 * each vertex contains.  Each vertex contains 3 elements plus:
 *  -- 3 more elements if Mesh.NORMALS_BIT is set, plus
 *  -- 3 more elements if Mesh.COLORS_BIT is set, plus
 *  -- 2 more elements if Mesh.TEXCOORDS_BIT is set.
+* If Mesh.LINES_BIT is set, each vertex index specifies a point of a line
+* segment.
 */
 function Mesh(vertices,faces,format){
  this.subMeshes=[
   new SubMesh(vertices,faces,format)
  ];
- this.builderMode=-1;
 }
 /** @private */
 Mesh._primitiveType=function(mode){
@@ -1021,7 +1067,7 @@ Mesh.prototype.getAttributeBits=function(){
  */
 Mesh.prototype.mode=function(m){
   if(this.subMeshes.length>0 &&
-    !Mesh._isCompatibleMode(this.builderMode,m)){
+    !Mesh._isCompatibleMode(this.subMeshes[this.subMeshes.length-1].builderMode,m)){
    this.subMeshes.push(new SubMesh().mode(m));
   } else {
    this.subMeshes[this.subMeshes.length-1].mode(m);
@@ -1030,7 +1076,7 @@ Mesh.prototype.mode=function(m){
  }
  /**
   * Sets the current normal for this mesh.  The next vertex position
-  * defined will have this normal.  If necessary, rebuilds the mesh
+  * defined (with vertex3()) will have this normal.  If necessary, rebuilds the mesh
   * to accommodate normals.
   * @param {number} x X-coordinate of the normal.
   * @param {number} y Y-coordinate of the normal.
@@ -1045,7 +1091,7 @@ Mesh.prototype.mode=function(m){
  }
  /**
   * Sets the current color for this mesh.  The next vertex position
-  * defined will have this color.  If necessary, rebuilds the mesh
+  * defined (with vertex3()) will have this color.  If necessary, rebuilds the mesh
   * to accommodate colors.
   * @param {number} r Red component of the color.
   * @param {number} g Green component of the color.
@@ -1060,7 +1106,7 @@ Mesh.prototype.mode=function(m){
  }
  /**
   * Sets the current texture coordinates for this mesh.  The next vertex position
-  * defined will have these texture coordinates.  If necessary, rebuilds the mesh
+  * defined (with vertex3()) will have these texture coordinates.  If necessary, rebuilds the mesh
   * to accommodate texture coordinates.
   * @param {number} x X-coordinate of the texture, from 0-1.
   * @param {number} y Y-coordinate of the texture, from 0-1.
@@ -1091,16 +1137,20 @@ Mesh.prototype.mode=function(m){
   */
  Mesh.prototype.recalcNormals=function(){
   for(var i=0;i<this.subMeshes.length;i++){
-   if(this.subMeshes[i].primitiveType==Mesh.TRIANGLES){
+   if((this.subMeshes[i].attributeBits&Mesh.LINES_BIT)!=0){
     this.subMeshes[i].recalcNormals();
    }
   }
   return this;
  }
 /**
- *
-  * @return {Mesh} A new mesh with triangles converted
-  * to lines.
+ * Converts this mesh to a new mesh with triangles converted
+ * to line segments.  The new mesh will reuse the vertices
+ * contained in this one without copying the vertices.  Parts
+ * of the mesh already consisting of line segments will remain
+ * unchanged.
+ * @return {Mesh} A new mesh with triangles converted
+ * to lines.
  */
 Mesh.prototype.toWireFrame=function(){
   var mesh=new Mesh();
@@ -1116,7 +1166,6 @@ function SubMesh(vertices,faces,format){
  this.tris=faces||[];
  this.stride=3;
  this.builderMode=-1;
- this.primitiveType=-1;
  this.normal=[0,0,0];
  this.bounds=null;
  this.color=[0,0,0];
@@ -1126,7 +1175,9 @@ function SubMesh(vertices,faces,format){
  this.attributeBits=(format==null) ? 0 : format;
  this.mode=function(m){
   this.builderMode=m;
-  this.primitiveType=Mesh._primitiveType(m);
+  if(Mesh._primitiveType(m)==Mesh.LINES){
+   this.attributeBits|=Mesh.LINES_BIT;
+  }
   this.startIndex=this.vertices.length;
   return this;
  }
@@ -1329,24 +1380,30 @@ Mesh.texCoordOffset=function(format){
   return [-1,-1,-1,-1,3,6,6,9][format];
 }
 /** The mesh contains normals for each vertex.
- @constant
+ @const
  @default
 */
 Mesh.NORMALS_BIT = 1;
 /** The mesh contains colors for each vertex.
- @constant
+ @const
  @default
 */
 Mesh.COLORS_BIT = 2;
 /** The mesh contains texture coordinates for each vertex.
- @constant
+ @const
  @default
 */
 Mesh.TEXCOORDS_BIT = 4;
+/** The mesh consists of lines (2 vertices per line) instead
+of triangles (3 vertices per line.
+ @const
+ @default
+*/
+Mesh.LINES_BIT = 8;
 /**
 Primitive mode for rendering triangles, made up
 of 3 vertices each.
- @constant
+ @const
 */
 Mesh.TRIANGLES = 0;
 /**
@@ -1354,19 +1411,19 @@ Primitive mode for rendering a strip of quadrilaterals (quads).
 The first 4 vertices make up the first quad, and each additional
 quad is made up of the last 2 vertices of the previous quad and
 2 new vertices.
- @constant
+ @const
 */
 Mesh.QUAD_STRIP = 1;
 /**
 Primitive mode for rendering quadrilaterals, made up
 of 4 vertices each.
- @constant
+ @const
 */
 Mesh.QUADS = 2;
 /**
 Primitive mode for rendering line segments, made up
 of 2 vertices each.
- @constant
+ @const
 */
 Mesh.LINES = 3;
 /**
@@ -1374,7 +1431,7 @@ Primitive mode for rendering a triangle fan.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last vertex, the first vertex, and 1
 new vertex.
- @constant
+ @const
 */
 Mesh.TRIANGLE_FAN = 4;
 /**
@@ -1382,12 +1439,12 @@ Primitive mode for rendering a triangle strip.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.
- @constant
+ @const
 */
 Mesh.TRIANGLE_STRIP = 5;
 
 /** A geometric mesh in the form of vertex buffer objects.
-* @constructor
+* @class
 * @alias glutil.BufferedMesh
 * @param {Mesh} mesh A geometric mesh object.
 * @param {WebGLRenderingContext} context A WebGL context to
@@ -1462,7 +1519,6 @@ function BufferedSubMesh(mesh, context){
  }
   this.verts=vertbuffer;
   this.faces=facebuffer;
-  this.primitiveType=mesh.primitiveType;
   this.facesLength=mesh.tris.length;
   this.type=type;
   this.format=mesh.attributeBits;
@@ -1529,7 +1585,7 @@ BufferedSubMesh.prototype.draw=function(program){
    throw new Error("can't bind mesh: context mismatch");
   }
   context.drawElements(
-    (this.primitiveType==Mesh.LINES) ? context.LINES :
+    ((this.format&Mesh.LINES_BIT)!=0) ? context.LINES :
       context.TRIANGLES,
     this.facesLength,
     this.type, 0);
@@ -1539,7 +1595,7 @@ BufferedSubMesh.prototype.draw=function(program){
 *  Specifies a texture, which can serve as image data applied to
 *  the surface of a shape, or even a 2-dimensional array of pixels
 *  used for some other purpose, depending on the shader.
-* @constructor
+* @class
 * @alias glutil.Texture
 * @param {string} name URL of the texture data.  It will be loaded via
 *  the JavaScript DOM's Image class.  However, this constructor
@@ -1761,7 +1817,7 @@ TextureImage.prototype.bind=function(program){
  * When a Scene3D object is created, it compiles and loads
  * a default shader program that enables lighting parameters,
  * and sets the projection and view matrices to identity.
-*  @constructor
+*  @class
 * @alias glutil.Scene3D
  * @param {WebGLRenderingContext} context A WebGL 3D context to associate
  * with this scene.
@@ -1818,8 +1874,11 @@ Scene3D.prototype._initProgramData=function(){
   // update matrix-related uniforms later
   this._matrixDirty=true;
 }
-/** Changes the active shader program for this scene
+/** 
+* Changes the active shader program for this scene
 * and prepares this object for the new program.
+* @param {ShaderProgram} program The shader program to use.
+* @return {Scene3D} This object.
 */
 Scene3D.prototype.useProgram=function(program){
  if(!program)throw new Error("invalid program");
@@ -1830,6 +1889,7 @@ Scene3D.prototype.useProgram=function(program){
 }
 /** Changes the active shader program for this scene
 * to a program that doesn't support lighting.
+* @return {Scene3D} This object.
 */
 Scene3D.prototype.disableLighting=function(){
  this.lightingEnabled=false;
@@ -1838,15 +1898,21 @@ Scene3D.prototype.disableLighting=function(){
    this._getDefines()+ShaderProgram.getDefaultFragment());
  return this.useProgram(program);
 }
-/** Gets the viewport width for this scene.*/
+/** Gets the viewport width for this scene.
+* @return {number}
+*/
 Scene3D.prototype.getWidth=function(){
  return this.context.canvas.width*1.0;
 }
-/** Gets the viewport height for this scene.*/
+/** Gets the viewport height for this scene.
+* @return {number}
+*/
 Scene3D.prototype.getHeight=function(){
  return this.context.canvas.height*1.0;
 }
-/** Gets the ratio of width to height for this scene.*/
+/** Gets the ratio of width to height for this scene.
+* @return {number}
+*/
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
 }
@@ -2018,7 +2084,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * @param {Array<number>} up A 3-element vector specifying
 * the up-vector direction.  May be omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
-* vector must not point in the same or opposite direction as
+* vector must not point in the same or opposite direction as 
 * the camera's view direction.
 * @return {Scene3D} This object.
 */
@@ -2081,7 +2147,7 @@ Scene3D.prototype.render=function(){
 
 /** A shape object that gathers multiple shapes
  and treats them as one bigger shape.
-    @constructor
+    @class
 * @alias glutil.MultiShape
  */
 function MultiShape(){
@@ -2123,7 +2189,7 @@ MultiShape.prototype.add=function(shape){
 /** An object that associates a geometric mesh (the shape of the object) with
   material data (which defines what is seen on the object's surface)
   and a transformation matrix (which defines the object's position and size).
-   @constructor
+   @class
 * @alias glutil.Shape
 * @param {Mesh} mesh A geometric mesh to associate with this shape.
   */
@@ -2141,8 +2207,9 @@ function Shape(mesh){
   this.matrix=GLMath.mat4identity();
 }
 /**
- *
- * @param {*} context
+ * Loads this shape's mesh to vertex buffer objects.
+ * @param {*} context The WebGL context under which
+ * to load this shape's mesh.
  * @return {Shape} This object.
  */
 Shape.prototype.loadMesh=function(context){
@@ -2248,7 +2315,6 @@ Shape.prototype.setRotation=function(x,y,z){
   } else {
    this.rotation=[x,y,z];
   }
-  this.rotation=rotation.slice(0,3);
   this._matrixDirty=true;
   return this;
 }
