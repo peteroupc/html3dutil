@@ -895,7 +895,10 @@ MaterialShade.fromColor=function(r,g,b,a){
  return new MaterialShade(color,color);
 }
 /** Sets parameters for a shader program based on
- the information in this material data object. */
+ the information in this material data object. 
+ * @param {ShaderProgram} program A shader program object
+ * where the locations of material-related uniforms will be retrieved.
+ */
 MaterialShade.prototype.bind=function(program){
  program.setUniforms({
  "useTexture":0,
@@ -2103,8 +2106,9 @@ MultiShape.prototype.add=function(shape){
  this.shapes.push(shape);
 }
 
-/** An object that associates a geometric mesh with
-  material data and a transformation matrix.
+/** An object that associates a geometric mesh (the shape of the object) with
+  material data (which defines what is seen on the object's surface)
+  and a transformation matrix (which defines the object's position and size).
    @constructor
 * @alias glutil.Shape
   */
