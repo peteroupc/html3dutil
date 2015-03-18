@@ -6,6 +6,11 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/**
+* A collection of math functions for working
+* with vectors and matrices.
+* @module glmath
+*/
 (function (g,f) {
 	if (typeof define=="function" && define["amd"]) {
 		define([ "exports" ], f);
@@ -17,32 +22,115 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 }(this, function (exports) {
 	if (exports.GLMath) { return; }
 
+/**
+* A collection of math functions for working
+* with vectors and matrices.<p>
+* Vectors: A vector is simply a set of 3 or 4 elements that are related
+* to each other.  These methods treat arrays as vectors.  Functions
+* dealing with vectors begin with "vec".<p>
+* Matrices:  A matrix is a 16- or 9-element array that describes a
+* transformation from one coordinate system to another.
+* All functions dealing with 4x4 matrices assume that
+* the translation elements in x, y, and z are located in the
+* 13th, 14th, and 15th elements of the matrix.  All functions also assume
+* a right-handed coordinate system, in which the z-axis points
+* toward the viewer, the x-axis points to the right and the y-axis
+* points up. Functions dealing with matrices begin with "mat".<p>
+* Quaternions:  A quaternion is a 4-element array that describes a
+* 3D rotation.  The first three elements are the X, Y, and Z components
+* (axis of rotation multiplied by the sine of half the angle)
+* and the fourth component is the W component (cosine of half the angle).
+* Functions dealing with quaternions begin with "quat".<p>
+* @class
+* @alias glmath.GLMath
+*/
 var GLMath={
+/** Finds the cross product of two 3-element vectors.
+ @return {Array<number>} */
 vec3cross:function(a,b){
 return [a[1]*b[2]-a[2]*b[1],
  a[2]*b[0]-a[0]*b[2],
  a[0]*b[1]-a[1]*b[0]];
 },
+/**
+ * Finds the dot product of two 3-element vectors.
+ * @param {Array<number>} a
+ * @param {Array<number>} b
+ * @return {number} The dot product.
+ */
 vec3dot:function(a,b){
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
 },
+/**
+ * Adds two 3-element vectors and stores
+ * the result in the first vector.
+ * @param {Array<number>} a
+ * @param {Array<number>} b
+ * @return {Array<number>} The parameter "a"
+ */
 vec3addInPlace:function(a,b){
+// Use variables in case a and b are the same
 var b0=b[0];
 var b1=b[1];
 a[0]+=b0;
 a[1]+=b1;
+return a;
 },
+/**
+ * Subtracts two 3-element vectors and stores
+ * the result in the first vector.
+ * @param {Array<number>} a
+ * @param {Array<number>} b
+ * @return {Array<number>} The parameter "a"
+ */
 vec3subInPlace:function(a,b){
+// Use variables in case a and b are the same
 var b0=b[0];
 var b1=b[1];
 a[0]-=b0;
 a[1]-=b1;
+return a;
 },
+/**
+ * Multiplies each element of a 3-element vector by a factor
+ * and stores the result in that vector.
+ * @param {Array<number>} a A 3-element vector.
+ * @param {number} scalar A factor to multiply.
+ * @return {Array<number>} The parameter "a".
+ */
 vec3scaleInPlace:function(a,scalar){
 a[0]*=scalar;
 a[1]*=scalar;
 a[2]*=scalar;
+return a;
 },
+/**
+ * Finds the dot product of two 4-element vectors.
+ * @param {Array<number>} a
+ * @param {Array<number>} b
+ */
+vec4dot:function(a,b){
+return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
+},
+/**
+ * Multiplies each element of a 4-element vector by a factor
+ * and stores the result in that vector.
+ * @param {Array<number>} a A 4-element vector.
+ * @param {number} scalar A factor to multiply.
+ * @return {Array<number>} The parameter "a".
+ */
+vec4scaleInPlace:function(a,scalar){
+a[0]*=scalar;
+a[1]*=scalar;
+a[2]*=scalar;
+a[3]*=scalar;
+return a;
+},
+/**
+ * Converts a 3-element vector to its normalized version.
+ * @param {Array<number>} vec A 3-element vector.
+ * @return {Array<number>} The parameter "vec".
+ */
 vec3normInPlace:function(vec){
  var x=vec[0];
  var y=vec[1];
@@ -56,23 +144,87 @@ vec3normInPlace:function(vec){
  }
  return vec;
 },
+/**
+ * Converts a 4-element vector to its normalized version.
+ * @param {Array<number>} vec A 4-element vector.
+ * @return {Array<number>} The parameter "vec".
+ */
+vec4normInPlace:function(vec){
+ var x=vec[0];
+ var y=vec[1];
+ var z=vec[2];
+ var w=vec[3];
+ len=Math.sqrt(x*x+y*y+z*z+w*w);
+ if(len!=0){
+  len=1.0/len;
+  vec[0]*=len;
+  vec[1]*=len;
+  vec[2]*=len;
+  vec[3]*=len;
+ }
+ return vec;
+},
+/**
+ * Returns a normalized version of a 3-element vector.
+ * @param {*} vec A 3-element vector.
+ * @return {Array<number>} The resulting vector.
+ */
 vec3norm:function(vec){
  var ret=[vec[0],vec[1],vec[2]]
  GLMath.vec3normInPlace(ret);
  return ret;
 },
+/**
+ * Returns the distance of this three-element vector from the origin.
+ * @param {*} a A three-element vector.
+ * @return {number}
+ */
 vec3length:function(a){
  var dx=a[0];
  var dy=a[1];
  var dz=a[2];
  return Math.sqrt(dx*dx+dy*dy+dz*dz);
 },
-mat4identity:function(){
- return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+/** Returns the length of a 4-element vector.
+  @return {number} */
+vec4length:function(a){
+ var dx=a[0];
+ var dy=a[1];
+ var dz=a[2];
+ var dw=a[3];
+ return Math.sqrt(dx*dx+dy*dy+dz*dz+dw*dw);
 },
+/**
+ * Returns the identity 3x3 matrix.
+ * @return {Array<number>}
+ */
+mat3identity:function(){
+ return [1,0,0,0,1,0,0,0,1];
+},
+/**
+ * Returns the identity 4x4 matrix.
+ * @return {Array<number>}
+ */
+mat4identity:function(){
+ return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
+},
+/** Returns the identity quaternion, (0, 0, 0, 1).
+ @return {Array<number>} */
+quatIdentity:function(){
+ return [0,0,0,1];
+},
+/**
+ * Returns a copy of a 4x4 matrix.
+ * @return {Array<number>}
+ */
 mat4copy:function(mat){
  return mat.slice(0,16);
 },
+/**
+ * Finds the inverse of a 4x4 matrix.
+ * @param {*} m
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4invert:function(m){
 var tvar0 = m[0]*m[10];
 var tvar1 = m[0]*m[11];
@@ -161,6 +313,273 @@ for(var i=0;i<16;i++){
 }
 return r;
 },
+/**
+ * Inverts the rotation given in this quaternion without normalizing it;
+ * returns a new quaternion.
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ */
+quatConjugate:function(quat){
+ return [-quat[0],-quat[1],-quat[2],quat[3]];
+},
+/**
+ * Inverts the rotation given in this quaternion, then normalizes the result;
+ * returns a new quaternion.
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ */
+quatInverse:function(quat){
+ return GLMath.quatNormInPlace(
+   GLMath.quatConjugate(quat));
+},
+/**
+ * Not documented yet.
+ * @param {*} quat
+ */
+quatToMat4:function(quat){
+  var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
+  tx = 2.0 * quat[0];
+  ty = 2.0 * quat[1];
+  tz = 2.0 * quat[2];
+  xx = tx * quat[0];
+  xy = tx * quat[1];
+  xz = tx * quat[2];
+  yy = ty * quat[1];
+  yz = tz * quat[1];
+  zz = tz * quat[2];
+  wx = tx * quat[3];
+  wy = ty * quat[3];
+  wz = tz * quat[3];
+  return [
+    1 - (yy + zz), xy + wz, xz - wy,0,
+    xy - wz, 1 - (xx + zz), yz + wx,0,
+    xz + wy, yz - wx, 1 - (xx + yy),0,
+    0,0,0,1
+  ]
+},
+/**
+* Calculates the angle and axis of rotation for this
+* quaternion.
+* @param {Array<number>} A quaternion.
+* @return  {Array<number>} A 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.
+*/
+quatToAngleAxis:function(a){
+ var w=a[3];
+ var d=1.0-(w*w);
+ if(d>0){
+  d=1/Math.sqrt(d);
+  return [a[0]*d,a[1]*d,a[2]*d,
+    Math.acos(w)*360/Math.PI];
+ } else {
+  return [0,1,0,0]
+ }
+},
+/**
+ * Generates a quaternion from an angle and axis of rotation.
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the X axis.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the Y axis.
+ * @param {number} vz Z-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the Z axis.
+ * @return {Array<number>} The generated quaternion.
+ */
+quatFromAngleAxis:function(angle,v,vy,vz){
+var v0,v1,v2,ang;
+if(typeof vy!="undefined" && typeof vz!="undefined"){
+ v0=v;
+ v1=vy;
+ v2=vz;
+ ang=angle*Math.PI/360;
+} else if(typeof v=="undefined"){
+ v0=angle[0];
+ v1=angle[1];
+ v2=angle[2];
+ ang=angle[3];
+ ang=ang*Math.PI/360;
+} else {
+ v0=v[0];
+ v1=v[1];
+ v2=v[2];
+ ang=angle*Math.PI/360;
+}
+var cost = Math.cos(ang);
+var sint = Math.sin(ang);
+var ret=[v0,v1,v2,cost];
+ret[0]*=sint;
+ret[1]*=sint;
+ret[2]*=sint;
+return ret;
+},
+/**
+ * Generates a quaternion from roll, pitch and yaw angles.
+ * @param {number} rollDegrees Rotation about the z-axis, in degrees.
+ * @param {number} pitchDegrees Rotation about the x-axis, in degrees.
+ * @param {number} yawDegrees Rotation about the y-axis, in degrees.
+ * @return {Array<number>} The generated quaternion.
+ */
+quatRollPitchYaw:function(rollDegrees,pitchDegrees,yawDegrees){
+ rollDegrees=(rollDegrees+180)%360.0-180.0;
+ pitchDegrees=(pitchDegrees+180)%360.0-180.0;
+ yawDegrees=(yawDegrees+180)%360.0-180.0;
+ var rollRad=roll*Math.PI/360;
+ var pitchRad=pitch*Math.PI/360;
+ var yawRad=yaw*Math.PI/360;
+ var sp=Math.sin(pitchRad);
+ var cp=Math.cos(pitchRad);
+ var sy=Math.sin(yawRad);
+ var cy=Math.cos(yawRad);
+ var sr=Math.sin(rollRad);
+ var cr=Math.cos(rollRad);
+ var pitchYaw=[sp*cy,cp*sy,sp*sy,cp*cy];
+ return [
+  pitchYaw[0] * cr + pitchYaw[1] * sr,
+  pitchYaw[1] * cr - pitchYaw[0] * sr,
+  pitchYaw[3] * sr + pitchYaw[2] * cr,
+  pitchYaw[3] * cr - pitchYaw[2] * sr
+ ]
+},
+/**
+ * Not documented yet.
+ * @param {*} a
+ */
+quatToEuler:function(a){
+	var sqw = a[3]*a[3];
+	var sqx = a[0]*a[0];
+	var sqy = a[1]*a[1];
+	var sqz = a[2]*a[2];
+  var euler=[
+	 Math.atan2(2.0 * (a[0]*a[1] + a[2]*a[3]), sqx - sqy - sqz + sqw),
+	 Math.asin(-2.0 * (a[0]*a[2] - a[1]*a[3])),
+	 Math.atan2(2.0 * (a[1]*a[2] + a[0]*a[3]), -sqx - sqy + sqz + sqw)]
+	var mpi = 180.0 / Math.PI;
+  euler[0]*=mpi;
+  euler[1]*=mpi;
+  euler[2]*=mpi;
+  return euler;
+},
+/**
+ * Not documented yet.
+ * @param {*} q1
+ * @param {*} q2
+ * @param {*} factor
+ */
+quatSlerp:function(q1,q2,factor){
+ var cosval=GLMath.quatDot(q1,q2);
+ var qd=q2;
+ if(cosval<0){
+  qd=[-q2[0],-q2[1],-q2[2],-q2[3]];
+  cosval=GLMath.quatDot(q1,qd);
+ }
+ var angle=0;
+ if(cosval>-1){
+  if(cosval<1){
+   angle=Math.acos(cosval);
+   if(angle==0)return qd.slice(0,4);
+  }
+  else return qd.slice(0,4);
+ } else {
+  angle=Math.PI;
+ }
+ var s=Math.sin(angle);
+ var sinv=1.0/s;
+ var c1=Math.sin((1.0-factor)*angle)*sinv;
+ var c2=Math.sin(factor*angle)*sinv;
+ return [
+  q1[0]*c1+qd[0]*c2,
+  q1[1]*c1+qd[1]*c2,
+  q1[2]*c1+qd[2]*c2,
+  q1[3]*c1+qd[3]*c2
+ ];
+},
+/**
+ * Not documented yet.
+ * @param {*} q
+ * @param {*} v
+ */
+quatRotate:function(q,v){
+var v1 = GLMath.vec3cross( q, v );
+v1[0] += v[0] * q[3];
+v1[1] += v[1] * q[3];
+v1[2] += v[2] * q[3];
+var v2 = GLMath.vec3cross( v1, q );
+var dot = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
+return [
+q[0] * dot + v1[0] * q[3] - v2[0],
+q[1] * dot + v1[1] * q[3] - v2[1],
+q[2] * dot + v1[2] * q[3] - v2[2],
+1]
+},
+/**
+ * Not documented yet.
+ * @param {*} m
+ */
+quatFromMat4:function(m){
+var ret=[]
+ var xy=m[1];
+ var xz=m[2];
+ var yx=m[4];
+ var yz=m[6];
+ var zx=m[8];
+ var zy=m[9];
+ var trace = m[0] + m[5] + m[10];
+if (trace >= 0.0)
+{
+var s = Math.sqrt(trace + 1.0) * 0.5;
+var t = 0.25/s;
+ret[0] = (yz - zy) * t;
+ret[1] = (zx - xz) * t;
+ret[2] = (xy - yx) * t;
+ret[3] = s;
+}
+else if((m[0] > m[5]) && (m[0] > m[10]))
+{
+// s=4*x
+var s = Math.sqrt(1.0+m[0]-m[5]-m[10]) * 0.5;
+var t = 0.25/s;
+ret[0] = s;
+ret[1] = (yx + xy) * t;
+ret[2] = (xz + zx) * t;
+ret[3] = (yz - zy) * t;
+}
+else if(m[5] > m[10])
+{
+// s=4*y
+var s = Math.sqrt(1.0+m[5]-m[0]-m[10]) * 0.5;
+var t = 0.25/s;
+ret[0] = (yx + xy) * t;
+ret[1] = s;
+ret[2] = (zy + yz) * t;
+ret[3] = (zx - xz) * t;
+}
+else
+{
+// s=4*z
+var s = Math.sqrt(1.0+m[10]-m[0]-m[5]) * 0.5;
+var t = 0.25/s;
+ret[0] = (zx + xz) * t;
+ret[1] = (zy + yz) * t;
+ret[2] = s;
+ret[3] = (xy - yx) * t;
+}
+return ret
+},
+/**
+* Returns the transposed result of the inverted upper left corner of
+* the given 4x4 matrix.
+* @param {Array<number>} A 4x4 matrix.
+* @result {Array<number>} The resulting 3x3 matrix.
+*/
 mat4inverseTranspose3:function(m4){
  // Operation equivalent to transpose(invert(mat3(m4)))
 var m=[m4[0],m4[1],m4[2],m4[4],m4[5],m4[6],
@@ -186,7 +605,17 @@ return [
  (m[2] * m[3] - m[0] * m[5])*det,
  (-m[1] * m[3] + m[0] * m[4])*det]
 },
-mat4scale:function(mat,v3, v3y, v3z){
+/**
+ * Multiplies a 4x4 matrix by a scaling transformation.
+ * @param {Array<number>|number} v3 Scaling factor along the
+ * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * be a 3-element array giving the scaling factors along the X, Y, and
+ * Z axes.
+ * @param {number} v3y Scaling factor along the Y axis.
+ * @param {number} v3z Scaling factor along the Z axis.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
+mat4scale:function(mat,v3,v3y,v3z){
   var scaleX,scaleY,scaleZ;
   if(typeof v3y!="undefined" && typeof v3z!="undefined"){
       scaleX=v3;
@@ -204,9 +633,16 @@ mat4scale:function(mat,v3, v3y, v3z){
   mat[12], mat[13], mat[14], mat[15]
 	];
 },
-mat3identity:function(){
- return [1,0,0,0,1,0,0,0,1];
-},
+/**
+ * Returns a 4x4 matrix representing a scaling transformation.
+ * @param {Array<number>|number} v3 Scaling factor along the
+ * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * be a 3-element array giving the scaling factors along the X, Y, and
+ * Z axes.
+ * @param {number} v3y Scaling factor along the Y axis.
+ * @param {number} v3z Scaling factor along the Z axis.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4scaled:function(v3,v3y,v3z){
   if(typeof v3y!="undefined" && typeof v3z!="undefined"){
    return [v3,0,0,0,0,v3y,0,0,0,0,v3z,0,0,0,0,1]
@@ -214,6 +650,16 @@ mat4scaled:function(v3,v3y,v3z){
    return [v3[0],0,0,0,0,v3[1],0,0,0,0,v3[2],0,0,0,0,1]
   }
 },
+/**
+ * Returns a translation matrix
+ * @param {Array<number>|number} v3 Translation along the
+ * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * be a 3-element array giving the translations along the X, Y, and
+ * Z axes.
+ * @param {number} v3y Translation along the Y axis.
+ * @param {number} v3z Translation along the Z axis.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4translated:function(v3,v3y,v3z){
   if(typeof v3y!="undefined" && typeof v3z!="undefined"){
    return [1,0,0,0,0,1,0,0,0,0,1,0,v3,v3y,v3z,1]
@@ -221,6 +667,17 @@ mat4translated:function(v3,v3y,v3z){
    return [1,0,0,0,0,1,0,0,0,0,1,0,v3[0],v3[1],v3[2],1]
   }
 },
+/**
+ * Multiplies a 4x4 matrix by a translation transformation.
+ * @param {Array<number>} mat The matrix to multiply.
+ * @param {Array<number>|number} v3 Translation along the
+ * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * be a 3-element array giving the translations along the X, Y, and
+ * Z axes.
+ * @param {number} v3y Translation along the Y axis.
+ * @param {number} v3z Translation along the Z axis.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4translate:function(mat,v3,v3y,v3z){
   var x,y,z;
   if(typeof v3y!="undefined" && typeof v3z!="undefined"){
@@ -242,6 +699,23 @@ mat4translate:function(mat,v3,v3y,v3z){
   mat[3] * x + mat[7] * y + mat[11] * z + mat[15]
   ]
 },
+/**
+ * Returns a 4x4 matrix representing a perspective view.
+ * This method assumes a right-handed coordinate system, in which
+ * the z-axis points toward the viewer.
+* @param {number}  fovY Y-axis field of view, in degrees.  (The bigger
+* this number, the bigger close objects appear to be.  As a result,
+* zoom can be implemented by multiplying field of view by an
+* additional factor.)
+* @param {number}  aspectRatio The ratio of width to height of the viewport, usually
+*  the scene's aspect ratio.
+* @param {number} nearZ The distance from the camera to
+* the near clipping plane. This should be slightly greater than 0.
+* @param {number}  farZ The distance from the camera to
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
  var f = 1/Math.tan(fovY*Math.PI/360);
  var nmf = nearZ-farZ;
@@ -249,7 +723,21 @@ mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
  return [f/aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
    nmf*(nearZ+farZ), -1, 0, 0, nmf*nearZ*farZ*2, 0]
 },
-mat4lookat:function(viewerPos, lookingAt, up){
+/**
+ * Returns a 4x4 matrix representing a camera view.
+* @param {Array<number>} viewerPos A 3-element vector specifying
+* the camera position in world space.
+* @param {Array<number>} lookingAt A 3-element vector specifying
+* the point in world space that the camera is looking at.
+* @param {Array<number>} up A 3-element vector specifying
+* the up-vector direction.  May be omitted, in which case
+* the default is a vector pointing positive on the Y axis.  This
+* vector must not point in the same or opposite direction as
+* the camera's view direction.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
+mat4lookat:function(viewerPos,lookingAt,up){
+ if(!up)up=[0,1,0];
  var f=[viewerPos[0]-lookingAt[0],viewerPos[1]-lookingAt[1],viewerPos[2]-lookingAt[2]];
  if(GLMath.vec3length(f)<1e-6){
    return GLMath.mat4identity();
@@ -264,6 +752,16 @@ mat4lookat:function(viewerPos, lookingAt, up){
     -GLMath.vec3dot(viewerPos,u),
     -GLMath.vec3dot(viewerPos,f),1];
 },
+/**
+ * Returns a 4x4 matrix representing an orthographic projection.
+ * @param {*} l
+ * @param {*} r
+ * @param {*} b
+ * @param {*} t
+ * @param {*} n
+ * @param {*} f
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4ortho:function(l,r,b,t,n,f){
  var width=1/(r-l);
  var height=1/(t-b);
@@ -271,6 +769,16 @@ mat4ortho:function(l,r,b,t,n,f){
  return [2*width,0,0,0,0,2*height,0,0,0,0,-2*depth,0,
    -(l+r)*width,-(t+b)*height,-(n+f)*depth,1];
 },
+/**
+ * Returns a 4x4 matrix representing a view frustum.
+ * @param {*} l
+ * @param {*} r
+ * @param {*} b
+ * @param {*} t
+ * @param {*} n
+ * @param {*} f
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4frustum:function(l,r,b,t,n,f){
  var dn=2*n;
  var onedx=1/(r-l);
@@ -282,6 +790,12 @@ return [
     (l+r)*onedx,(t+b)*onedy,-(f+n)*onedz,-1,
    0,0,-(dn*f)*onedz,0];
 },
+/**
+ * Modifies a 4x4 matrix by multiplying it by a 3-element vector.
+ * @param {*} mat A 4x4 matrix.
+ * @param {*} v3 A 3-element vector.
+ * @return {Array<number>} The same parameter as "mat".
+ */
 mat4scaleInPlace:function(mat,v3){
   var scaleX=v3[0];
   var scaleY=v3[1];
@@ -298,7 +812,14 @@ mat4scaleInPlace:function(mat,v3){
   mat[6]*=scaleZ;
   mat[10]*=scaleZ;
   mat[14]*=scaleZ;
+  return mat;
 },
+/**
+ * Multiplies two 4x4 matrices.  A new matrix is returned.
+ * @param {*} a The first matrix.
+ * @param {*} b The second matrix.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
 mat4multiply:function(a,b){
   var dst=[];
 	for(var i = 0; i < 16; i+= 4){
@@ -312,20 +833,62 @@ mat4multiply:function(a,b){
   }
   return dst;
 },
-mat4rotate:function(mat, angle, v, vy, vz){
-angle=angle*Math.PI/180;
-var cost = Math.cos(angle);
-var sint = Math.sin(angle);
-var v0,v1,v2;
+/**
+* Multiplies two quaternions, creating a composite rotation.
+ * @param {*} a The first quaternion.
+ * @param {*} b The second quaternion.
+ * @return {Array<number>} The resulting quaternion.
+*/
+quatMultiply:function(a,b){
+	return [
+	a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
+	a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
+	a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
+    a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]]
+},
+/**
+ * Multiplies a 4x4 matrix by a rotation transformation,
+ * and returns a new matrix.
+ * @param {Array<number>} mat A 4x4 matrix to multiply.
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the X axis.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the Y axis.
+ * @param {number} vz Z-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the Z axis.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
+mat4rotate:function(mat,angle,v,vy,vz){
+var v0,v1,v2,ang;
 if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
+ ang=angle*Math.PI/180;
+} else if(typeof v=="undefined"){
+ v0=angle[0];
+ v1=angle[1];
+ v2=angle[2];
+ ang=angle[3];
+ ang=ang*Math.PI/180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
+ ang=angle*Math.PI/180;
 }
+var cost = Math.cos(ang);
+var sint = Math.sin(ang);
 if( 1 == v0 && 0 == v1 && 0 == v2 ) {
   return [mat[0], mat[1], mat[2], mat[3],
   cost*mat[4]+mat[8]*sint, cost*mat[5]+mat[9]*sint, cost*mat[6]+mat[10]*sint, cost*mat[7]+mat[11]*sint,
@@ -382,20 +945,48 @@ mat[10]*v21+mat[2]*v22+mat[6]*v23, mat[11]*v21+mat[3]*v22+mat[7]*v23,
 mat[12], mat[13], mat[14], mat[15]];
 }
 },
-mat4rotated:function(angle, v, vy, vz){
-angle=angle*Math.PI/180;
-var cost = Math.cos(angle);
-var sint = Math.sin(angle);
-var v0,v1,v2;
+/**
+ * Returns a 4x4 matrix representing a rotation transformation.
+ * @param {Array<number>} mat A 4x4 matrix to multiply.
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the X axis.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the Y axis.
+ * @param {number} vz Z-component of the axis
+ * of rotation.  This means rotate this value times the given number
+ * of degrees about the Z axis.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
+mat4rotated:function(angle,v,vy,vz){
+var v0,v1,v2,ang;
 if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
+ ang=angle*Math.PI/180;
+} else if(typeof v=="undefined"){
+ v0=angle[0];
+ v1=angle[1];
+ v2=angle[2];
+ ang=angle[3];
+ ang=ang*Math.PI/180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
+ ang=angle*Math.PI/180;
 }
+var cost = Math.cos(ang);
+var sint = Math.sin(ang);
 if( 1 == v0 && 0 == v1 && 0 == v2 ) {
   return[1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1]
 } else if( 0 == v0 && 1 == v1 && 0 == v2 ) {
@@ -427,5 +1018,34 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 }
 }
 };
+/** Finds the dot product of two quaternions.
+ @function
+ @param {Array<number>} a The first quaternion.
+ @param {Array<number>} b The second quaternion.
+ @return {number} */
+GLMath.quatDot=GLMath.vec4dot;
+/**
+ * Converts a quaternion to its normalized version.
+ * @function
+ * @param {Array<number>} vec A quaternion.
+ * @return {Array<number>} The parameter "vec".
+ */
+GLMath.quatNormInPlace=GLMath.vec4normInPlace;
+/** Returns the length of a quaternion, the
+  same as for a 4-element vector.
+* @function
+ @param {Array<number>} quat The quaternion.
+  @return {number} */
+GLMath.quatLength=GLMath.vec4length;
+/**
+ * Multiplies each element of a quaternion by a factor
+ * and stores the result in that vector.
+ * @function
+ * @param {Array<number>} a A quaternion.
+ * @param {number} scalar A factor to multiply.
+ * @return {Array<number>} The parameter "a".
+ */
+GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
+
 	exports["GLMath"]=GLMath;
 }));
