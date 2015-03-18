@@ -26,8 +26,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * A collection of math functions for working
 * with vectors and matrices.<p>
 * Vectors: A vector is simply a set of 3 or 4 elements that are related
-* to each other.  These methods treat arrays as vectors.  Functions
-* dealing with vectors begin with "vec".<p>
+* to each other.  As such, a vector can symbolize a position, a direction,
+* a ray, a color, or anything else.  The methods in this class 
+* treat arrays as vectors.  Functions dealing with vectors begin with "vec".<p>
 * Matrices:  A matrix is a 16- or 9-element array that describes a
 * transformation from one coordinate system to another.
 * All functions dealing with 4x4 matrices assume that

@@ -2352,7 +2352,9 @@ Shape.prototype.render=function(program){
 /** @private */
 Shape.prototype._updateMatrix=function(){
   this._matrixDirty=false;
-  this.matrix=GLMath.mat4scaled(this.scale);
+  this.matrix=GLMath.mat4translated(this.position[0],
+    this.position[1],this.position[2]);
+  this.matrix=GLMath.mat4scale(this.matrix,this.scale);
   if(this.rotation[0]!=0){
     this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[0],[1,0,0]);
   }
@@ -2362,9 +2364,8 @@ Shape.prototype._updateMatrix=function(){
   if(this.rotation[2]!=0){
     this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[2],[0,0,1]);
   }
-  this.matrix[12]+=this.position[0];
-  this.matrix[13]+=this.position[1];
-  this.matrix[14]+=this.position[2];
+  this.matrix=GLMath.mat4translate(this.matrix,-this.position[0],
+    -this.position[1],-this.position[2]);
   this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
 }
 /////////////
