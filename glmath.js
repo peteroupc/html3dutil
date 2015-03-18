@@ -27,7 +27,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * with vectors and matrices.<p>
 * Vectors: A vector is simply a set of 3 or 4 elements that are related
 * to each other.  As such, a vector can symbolize a position, a direction,
-* a ray, a color, or anything else.  The methods in this class 
+* a ray, a color, or anything else.  The methods in this class
 * treat arrays as vectors.  Functions dealing with vectors begin with "vec".<p>
 * Matrices:  A matrix is a 16- or 9-element array that describes a
 * transformation from one coordinate system to another.
@@ -220,6 +220,13 @@ quatIdentity:function(){
  */
 mat4copy:function(mat){
  return mat.slice(0,16);
+},
+/**
+ * Returns a copy of a 4-element vector.
+ * @return {Array<number>}
+ */
+vec4copy:function(mat){
+ return mat.slice(0,4);
 },
 /**
  * Finds the inverse of a 4x4 matrix.
@@ -470,10 +477,14 @@ quatToEuler:function(a){
   return euler;
 },
 /**
- * Not documented yet.
- * @param {*} q1
- * @param {*} q2
- * @param {*} factor
+ * Does a spherical linear interpolation between two quaternions.
+ * This method is useful for smoothly animating between the two
+ * rotations they describe.
+ * @param {*} q1 The first quaternion.  Should be normalized.
+ * @param {*} q2 The second quaternion.  Should be normalized.
+ * @param {*} factor A value from 0 through 1.  Closer to 0 means
+ * closer to q1, and closer to 1 means closer to q2.
+ * @param {Array<number>} The interpolated quaternion.
  */
 quatSlerp:function(q1,q2,factor){
  var cosval=GLMath.quatDot(q1,q2);
@@ -1047,6 +1058,10 @@ GLMath.quatLength=GLMath.vec4length;
  * @return {Array<number>} The parameter "a".
  */
 GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
-
+/**
+ * Returns a copy of a quaternion
+ * @return {Array<number>}
+ */
+GLMath.quatCopy=GLMath.vec4copy;
 	exports["GLMath"]=GLMath;
 }));

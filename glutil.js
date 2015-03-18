@@ -170,7 +170,7 @@ var GLUtil={
 * and successive values generate an increasingly fine
 * approximation to a sphere.  If omitted, this
 * value is 6.  There will be 2^div-1 lines
-* of latitude generated (excluding the poles).  
+* of latitude generated (excluding the poles).
 * @return {Mesh}
 */
 "createSphere":function(radius,div){
@@ -770,7 +770,7 @@ function LightSource(position, ambient, diffuse, specular) {
 function Lights(){
  this.lights=[new LightSource()];
  /**
- *  Ambient color for the scene.  In the absence of 
+ *  Ambient color for the scene.  In the absence of
  *  other lighting effects, all objects will be given this color.
  *  @default
  */
@@ -946,7 +946,7 @@ MaterialShade.fromColor=function(r,g,b,a){
  return new MaterialShade(color,color);
 }
 /** Sets parameters for a shader program based on
- the information in this material data object. 
+ the information in this material data object.
  * @param {ShaderProgram} program A shader program object
  * where the locations of material-related uniforms will be retrieved.
  */
@@ -1874,7 +1874,7 @@ Scene3D.prototype._initProgramData=function(){
   // update matrix-related uniforms later
   this._matrixDirty=true;
 }
-/** 
+/**
 * Changes the active shader program for this scene
 * and prepares this object for the new program.
 * @param {ShaderProgram} program The shader program to use.
@@ -2084,7 +2084,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * @param {Array<number>} up A 3-element vector specifying
 * the up-vector direction.  May be omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
-* vector must not point in the same or opposite direction as 
+* vector must not point in the same or opposite direction as
 * the camera's view direction.
 * @return {Scene3D} This object.
 */
@@ -2186,10 +2186,11 @@ MultiShape.prototype.add=function(shape){
  this.shapes.push(shape);
 }
 
-/** An object that associates a geometric mesh (the shape of the object) with
-  material data (which defines what is seen on the object's surface)
-  and a transformation matrix (which defines the object's position and size).
-   @class
+/** 
+* An object that associates a geometric mesh (the shape of the object) with
+*  material data (which defines what is seen on the object's surface)
+ * and a transformation matrix (which defines the object's position and size).
+ *  @class
 * @alias glutil.Shape
 * @param {Mesh} mesh A geometric mesh to associate with this shape.
   */
@@ -2255,7 +2256,8 @@ Shape.prototype.setMaterial=function(material){
  return this;
 }
 /**
- *
+ * Sets the scale of this shape relative to its original
+ * size.
  * @param {*} x
  * @param {*} y
  * @param {*} z
@@ -2274,7 +2276,7 @@ Shape.prototype.setScale=function(x,y,z){
   return this;
 }
 /**
- *
+ * Sets the relative position of this shape from the origin.
  * @param {Array<number>|number} x Either the X-coordinate,
  * or an array of 3 numbers giving the x, y, and z coordinates.
  * @param {number} y The Y-coordinate.
@@ -2352,9 +2354,9 @@ Shape.prototype.render=function(program){
 /** @private */
 Shape.prototype._updateMatrix=function(){
   this._matrixDirty=false;
-  this.matrix=GLMath.mat4translated(this.position[0],
+  this.matrix=GLMath.mat4identity();
+  this.matrix=GLMath.mat4translate(this.matrix,this.position[0],
     this.position[1],this.position[2]);
-  this.matrix=GLMath.mat4scale(this.matrix,this.scale);
   if(this.rotation[0]!=0){
     this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[0],[1,0,0]);
   }
@@ -2364,8 +2366,7 @@ Shape.prototype._updateMatrix=function(){
   if(this.rotation[2]!=0){
     this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[2],[0,0,1]);
   }
-  this.matrix=GLMath.mat4translate(this.matrix,-this.position[0],
-    -this.position[1],-this.position[2]);
+  this.matrix=GLMath.mat4scale(this.matrix,this.scale);
   this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
 }
 /////////////
