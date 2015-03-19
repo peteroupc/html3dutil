@@ -715,7 +715,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * Returns a 4x4 matrix representing a perspective view.
  * This method assumes a right-handed coordinate system, in which
  * the z-axis points toward the viewer.
-* @param {number}  fovY Y-axis field of view, in degrees.  (The bigger
+* @param {number}  fovY Vertical field of view, in degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
 * additional factor.)

@@ -1918,7 +1918,7 @@ Scene3D.prototype.getAspect=function(){
 }
 /**
 *  Sets this scene's projection matrix to a perspective view.
-* @param {number}  fov Y-axis field of view, in degrees.  (The bigger
+* @param {number}  fov Vertical field of view, in degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
 * additional factor.)
@@ -2191,7 +2191,7 @@ MultiShape.prototype.setMaterial=function(material){
  }
 }
 
-/** 
+/**
 * An object that associates a geometric mesh (the shape of the object) with
 *  material data (which defines what is seen on the object's surface)
  * and a transformation matrix (which defines the object's position and size).
