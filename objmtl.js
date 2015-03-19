@@ -528,7 +528,6 @@ ObjData._loadObj=function(str){
   e=usemtlLine.exec(line)
   if(e){
     if(e[1]=="usemtl"){
-      console.log(usemtl)
       // Changes the material used
       if(resolvedVertices.length>0){
         mesh=new Mesh(resolvedVertices,faces,

@@ -2185,6 +2185,11 @@ MultiShape.prototype.loadMesh=function(context){
 MultiShape.prototype.add=function(shape){
  this.shapes.push(shape);
 }
+MultiShape.prototype.setMaterial=function(material){
+ for(var i=0;i<this.shapes.length;i++){
+  this.shapes[i].setMaterial(material);
+ }
+}
 
 /** 
 * An object that associates a geometric mesh (the shape of the object) with
@@ -2374,6 +2379,8 @@ exports["BufferedMesh"]=BufferedMesh;
 exports["Lights"]=Lights;
 exports["LightSource"]=LightSource;
 exports["Mesh"]=Mesh;
+exports["Texture"]=Texture;
+exports["MaterialShade"]=MaterialShade;
 exports["MultiShape"]=MultiShape;
 exports["Shape"]=Shape;
 exports["Scene3D"]=Scene3D;
