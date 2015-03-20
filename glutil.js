@@ -675,6 +675,7 @@ return "" +
 * and the return value is the new color at the given texture coordinates.  Besides
 * this requirement, the shader code is also free to define additional uniforms,
 * constants, functions, and so on (but not another "main" function).
+* @return {string} The source text of the resulting fragment shader.
 */
 ShaderProgram.makeEffectFragment=function(functionCode){
 var shader=ShaderProgram.fragmentShaderHeader();
