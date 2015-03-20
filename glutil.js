@@ -1793,16 +1793,16 @@ function FrameBuffer(context, width, height){
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
 this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
-this.context.texImage2D(this.context.TEXTURE_2D, 0, 
-  this.context.RGBA, this.width, this.height, 0, 
+this.context.texImage2D(this.context.TEXTURE_2D, 0,
+  this.context.RGBA, this.width, this.height, 0,
    this.context.RGBA, this.context.UNSIGNED_BYTE, null);
  // create depth renderbuffer
  this.depthbuffer=context.createRenderbuffer();
@@ -2334,7 +2334,7 @@ Scene3D.prototype.render=function(){
    this.fboQuad.render(this.fboFilter);
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
-   this.useProgram(oldProgram);  
+   this.useProgram(oldProgram);
   } else {
    // Render as usual
    return this._renderInner();
@@ -2344,7 +2344,13 @@ Scene3D.prototype.useFilter=function(filterProgram){
  if(filterProgram==null){
   this.fboFilter=null;
  } else {
-  this.fboFilter=filterProgram;
+  if(typeof filterProgram=="string"){
+   // Assume the string is GLSL source code
+   this.fboFilter=new ShaderProgram(this.context,
+     null,ShaderProgram.makeEffectFragment(filterProgram));
+  } else {
+   this.fboFilter=filterProgram;
+  }
   if(typeof this.fbo=="undefined" || !this.fbo){
    this.fbo=this.createBuffer();
   }
