@@ -781,6 +781,9 @@ mat4ortho:function(l,r,b,t,n,f){
  return [2*width,0,0,0,0,2*height,0,0,0,0,-2*depth,0,
    -(l+r)*width,-(t+b)*height,-(n+f)*depth,1];
 },
+mat4ortho2d:function(l,r,b,t){
+ return GLMath.mat4ortho2d(l,r,b,t,-1,1);
+},
 /**
  * Returns a 4x4 matrix representing a view frustum.
  * @param {*} l

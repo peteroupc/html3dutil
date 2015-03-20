@@ -460,7 +460,7 @@ if(!namedColors){
 * @param {WebGLRenderingContext} context A WebGL context associated with the
 * compiled shader program.
 * @param {String|undefined} vertexShader Source text of a vertex shader, in OpenGL
-* Shading Language (GLSL).  If null, a default
+* ES Shading Language (GLSL).  If null, a default
 * vertex shader is used instead.
 * @param {String|undefined} fragmentShader Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
@@ -550,7 +550,7 @@ ShaderProgram.prototype.use=function(){
 * that are 4x4 matrices must be 16 elements long.  Keys to
 * uniforms that don't exist in this program are ignored.  Keys
 * where hasOwnProperty is false are also ignored.  See also
-* the "name" parameter of the "get" for more information on
+* the "name" parameter of the "get" method for more information on
 * uniform names.
 * @return {ShaderProgram} This object.
 */
@@ -563,6 +563,8 @@ ShaderProgram.prototype.setUniforms=function(uniforms){
       //console.log("setting "+i+": "+v);
       if(v.length==3){
        this.context.uniform3f(uniform, v[0],v[1],v[2]);
+      } else if(v.length==2){
+       this.context.uniform2f(uniform, v[0],v[1]);
       } else if(v.length==4){
        this.context.uniform4f(uniform, v[0],v[1],v[2],v[3]);
       } else if(v.length==16){
@@ -649,11 +651,87 @@ var shader="" +
 "}";
 return shader;
 };
-ShaderProgram.getDefaultFragment=function(){
-var shader="" +
+ShaderProgram.fragmentShaderHeader=function(){
+return "" +
 "#ifdef GL_ES\n" +
+"#ifndef GL_FRAGMENT_PRECISION_HIGH\n" +
+"precision mediump float;\n" +
+"#else\n" +
 "precision highp float;\n" +
 "#endif\n" +
+"#endif\n";
+}
+/**
+* Generates source code for a fragment shader for applying
+* a raster effect to a texture.
+* @param {string} functionCode A string giving shader code
+* in GLSL that must contain a function with the following signature:
+* <pre>
+* vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
+* </pre>
+* where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
+* is the texture coordinates ranging from 0 to 1 in each component,
+* <code>textureSize</code> is the dimensions of the texture in pixels,
+* and the return value is the new color at the given texture coordinates.  Besides
+* this requirement, the shader code is also free to define additional uniforms,
+* constants, functions, and so on (but not another "main" function).
+*/
+ShaderProgram.makeEffectFragment=function(functionCode){
+var shader=ShaderProgram.fragmentShaderHeader();
+shader+=""+
+"uniform sampler2D sampler;\n" + // texture sampler
+"uniform vec2 textureSize;\n" + // texture size
+"varying vec2 textureUVVar;\n"+
+"varying vec3 colorAttrVar;\n";
+shader+=functionCode;
+shader+="\n\nvoid main(){\n" +
+" // normalize coordinates to 0..1\n" +
+" vec2 uv=gl_FragCoord.xy/textureSize.xy;\n" +
+" gl_FragColor=textureEffect(sampler,uv,textureSize);\n" +
+"}";
+return shader;
+}
+ShaderProgram.getInvertFragment=function(){
+return ShaderProgram.makeEffectFragment(
+[
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" vec4 color=texture2D(sampler,uvCoord);",
+" return vec4(vec3(1,1,1.)-color.rgb,color.a);",
+"}"].join("\n"));
+}
+ShaderProgram.getEdgeDetectFragment=function(){
+// Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
+// in the public domain
+return ShaderProgram.makeEffectFragment(
+["float luma(vec3 color) {",
+" return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
+"}",
+"const vec4 edge_color=vec4(0.,0,0,1);",
+"const vec4 back_color=vec4(1.,1,1,1);",
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+"float dx = 1.0 / float(textureSize.x);",
+"float dy = 1.0 / float(textureSize.y);",
+"float s00 = luma(texture2D(sampler, uvCoord + vec2(-dx,dy)).rgb);",
+"float s10 = luma(texture2D(sampler, uvCoord + vec2(-dx,0.0)).rgb);",
+"float s20 = luma(texture2D(sampler, uvCoord + vec2(-dx,-dy)).rgb);",
+"float s01 = luma(texture2D(sampler, uvCoord + vec2(0.0,dy)).rgb);",
+"float s21 = luma(texture2D(sampler, uvCoord + vec2(0.0,-dy)).rgb);",
+"float s02 = luma(texture2D(sampler, uvCoord + vec2(dx, dy)).rgb);",
+"float s12 = luma(texture2D(sampler, uvCoord + vec2(dx, 0.0)).rgb);",
+"float s22 = luma(texture2D(sampler, uvCoord + vec2(dx, -dy)).rgb);",
+"float sx = s00 + 2.0 * s10 + s20 - (s02 + 2.0 * s12 + s22);",
+"float sy = s00 + 2.0 * s01 + s02 - (s20 + 2.0 * s21 + s22);",
+"float dist = sx * sx + sy * sy;",
+"if(dist > 0.4) {",
+"return edge_color;",
+"} else {",
+"return back_color;",
+"}}"
+].join("\n"));
+}
+
+ShaderProgram.getDefaultFragment=function(){
+var shader=ShaderProgram.fragmentShaderHeader() +
  // if shading is disabled, this is solid color instead of material diffuse
  "uniform vec3 md;\n" + // material diffuse color (0-1 each component). Is multiplied by texture/solid color.
 "#ifdef SHADING\n" +
@@ -676,7 +754,7 @@ var shader="" +
 "#endif\n" +
 "#endif\n" +
 "uniform sampler2D sampler;\n" + // texture sampler
-"uniform float useTexture;\n" + // use texture sampler rather than solid color if 1
+"uniform vec2 textureSize;\n" + // texture size (all zeros if textures not used)
 "uniform float useColorAttr;\n" + // use color attribute if 1
 "varying vec2 textureUVVar;\n"+
 "varying vec3 colorAttrVar;\n" +
@@ -700,6 +778,7 @@ var shader="" +
 "}\n" +
 "#endif\n" +
 "void main(){\n" +
+" float useTexture=sign(textureSize.x+textureSize.y);\n" +
 " vec4 baseColor=mix(\n"+
 "#ifdef SHADING\n" +
 "   white, /*when useTexture is 0*/\n" +
@@ -856,6 +935,7 @@ Lights.prototype.bind=function(program){
   uniforms["lights["+i+"].specular"]=this.lights[i].specular;
   uniforms["lights["+i+"].position"]=this.lights[i].position;
  }
+ // Set default values for undefined lights up to MAX_LIGHTS
  for(var i=this.lights.length;i<Lights.MAX_LIGHTS;i++){
   uniforms["lights["+i+"].diffuse"]=[0,0,0];
   uniforms["lights["+i+"].specular"]=[0,0,0];
@@ -952,7 +1032,7 @@ MaterialShade.fromColor=function(r,g,b,a){
  */
 MaterialShade.prototype.bind=function(program){
  program.setUniforms({
- "useTexture":0,
+ "textureSize":[0,0],
  "mshin":this.shininess,
  "ma":[this.ambient[0], this.ambient[1], this.ambient[2]],
  "md":[this.diffuse[0], this.diffuse[1], this.diffuse[2]],
@@ -1112,9 +1192,9 @@ Mesh.prototype.mode=function(m){
   * @param {number} y Y-coordinate of the texture, from 0-1.
   * @return {Mesh} This object.
   */
- Mesh.prototype.texCoord3=function(x,y){
+ Mesh.prototype.texCoord2=function(x,y){
   for(var i=0;i<this.subMeshes.length;i++){
-   this.subMeshes[i].texCoord3(x,y);
+   this.subMeshes[i].texCoord2(x,y);
   }
   return this;
  }
@@ -1137,7 +1217,7 @@ Mesh.prototype.mode=function(m){
   */
  Mesh.prototype.recalcNormals=function(){
   for(var i=0;i<this.subMeshes.length;i++){
-   if((this.subMeshes[i].attributeBits&Mesh.LINES_BIT)!=0){
+   if((this.subMeshes[i].attributeBits&Mesh.LINES_BIT)==0){
     this.subMeshes[i].recalcNormals();
    }
   }
@@ -1163,7 +1243,7 @@ Mesh.prototype.toWireFrame=function(){
 /** @private */
 function SubMesh(vertices,faces,format){
  this.vertices=vertices||[];
- this.tris=faces||[];
+ this.indices=faces||[];
  this.stride=3;
  this.builderMode=-1;
  this.normal=[0,0,0];
@@ -1269,34 +1349,34 @@ function SubMesh(vertices,faces,format){
    this.vertices.push(this.normal[0],this.normal[1],this.normal[2]);
   }
   if((this.attributeBits&Mesh.TEXCOORDS_BIT)!=0){
-   this.vertices.push(this.texCoords[0],this.texCoords[1],this.texCoords[2]);
+   this.vertices.push(this.texCoord[0],this.texCoord[1]);
   }
   if(this.builderMode==Mesh.QUAD_STRIP &&
      (this.vertices.length-this.startIndex)>=this.stride*4 &&
      (this.vertices.length-this.startIndex)%(this.stride*2)==0){
    var index=(this.vertices.length/this.stride)-4;
-   this.tris.push(index,index+1,index+2,index+2,index+1,index+3);
+   this.indices.push(index,index+1,index+2,index+2,index+1,index+3);
   } else if(this.builderMode==Mesh.QUADS &&
      (this.vertices.length-this.startIndex)%(this.stride*4)==0){
    var index=(this.vertices.length/this.stride)-4;
-   this.tris.push(index,index+1,index+2,index+2,index+3,index);
+   this.indices.push(index,index+1,index+2,index+2,index+3,index);
   } else if(this.builderMode==Mesh.TRIANGLES &&
      (this.vertices.length-this.startIndex)%(this.stride*3)==0){
    var index=(this.vertices.length/this.stride)-3;
-   this.tris.push(index,index+1,index+2);
+   this.indices.push(index,index+1,index+2);
   } else if(this.builderMode==Mesh.LINES &&
      (this.vertices.length-this.startIndex)%(this.stride*2)==0){
    var index=(this.vertices.length/this.stride)-2;
-   this.tris.push(index,index+1);
+   this.indices.push(index,index+1);
   } else if(this.builderMode==Mesh.TRIANGLE_FAN &&
      (this.vertices.length-this.startIndex)>=2){
    var index=(this.vertices.length/this.stride)-2;
    var firstIndex=(this.startIndex/this.stride);
-   this.tris.push(firstIndex,index,index+1);
+   this.indices.push(firstIndex,index,index+1);
   } else if(this.builderMode==Mesh.TRIANGLE_STRIP &&
      (this.vertices.length-this.startIndex)>=2){
    var index=(this.vertices.length/this.stride)-3;
-   this.tris.push(index,index+1,index+2);
+   this.indices.push(index,index+1,index+2);
   }
   return this;
  }
@@ -1309,10 +1389,10 @@ SubMesh.prototype.toWireFrame=function(){
    return this;
   }
   var faces=[];
-  for(var i=0;i<this.tris.length;i+=3){
-    var f1=this.tris[i];
-    var f2=this.tris[i+1];
-    var f3=this.tris[i+2];
+  for(var i=0;i<this.indices.length;i+=3){
+    var f1=this.indices[i];
+    var f2=this.indices[i+1];
+    var f3=this.indices[i+2];
     faces.push(f1,f2,f2,f3,f3,f1);
   }
   var ret=new SubMesh(this.vertices, faces, this.attributeBits);
@@ -1355,7 +1435,7 @@ SubMesh.prototype.recalcBounds=function(){
  */
 SubMesh.prototype.recalcNormals=function(){
   this._rebuildVertices(Mesh.NORMALS_BIT);
-  Mesh._recalcNormals(this.vertices,this.tris,
+  Mesh._recalcNormals(this.vertices,this.indices,
     this.stride,3);
   return this;
 };
@@ -1395,7 +1475,7 @@ Mesh.COLORS_BIT = 2;
 */
 Mesh.TEXCOORDS_BIT = 4;
 /** The mesh consists of lines (2 vertices per line) instead
-of triangles (3 vertices per line.
+of triangles (3 vertices per line).
  @const
  @default
 */
@@ -1505,21 +1585,21 @@ function BufferedSubMesh(mesh, context){
  context.bufferData(context.ARRAY_BUFFER,
    new Float32Array(mesh.vertices), context.STATIC_DRAW);
  var type=context.UNSIGNED_SHORT;
- if(mesh.vertices.length>=65536 || mesh.tris.length>=65536){
+ if(mesh.vertices.length>=65536 || mesh.indices.length>=65536){
   type=context.UNSIGNED_INT;
   context.bufferData(context.ELEMENT_ARRAY_BUFFER,
-    new Uint32Array(mesh.tris), context.STATIC_DRAW);
- } else if(mesh.vertices.length<=256 && mesh.tris.length<=256){
+    new Uint32Array(mesh.indices), context.STATIC_DRAW);
+ } else if(mesh.vertices.length<=256 && mesh.indices.length<=256){
   type=context.UNSIGNED_BYTE;
   context.bufferData(context.ELEMENT_ARRAY_BUFFER,
-    new Uint8Array(mesh.tris), context.STATIC_DRAW);
+    new Uint8Array(mesh.indices), context.STATIC_DRAW);
  } else {
   context.bufferData(context.ELEMENT_ARRAY_BUFFER,
-    new Uint16Array(mesh.tris), context.STATIC_DRAW);
+    new Uint16Array(mesh.indices), context.STATIC_DRAW);
  }
   this.verts=vertbuffer;
   this.faces=facebuffer;
-  this.facesLength=mesh.tris.length;
+  this.facesLength=mesh.indices.length;
   this.type=type;
   this.format=mesh.attributeBits;
   this.context=context;
@@ -1698,8 +1778,82 @@ Texture.prototype.bind=function(program){
  }
  if(this.material){
    this.material.bind(program);
-   program.setUniforms({"useTexture":1.0});
+   program.setUniforms({
+     "textureSize":[this.width,this.height]
+    });
  }
+}
+
+function FrameBuffer(context, width, height){
+ this.context=context;
+ this.buffer=context.createFramebuffer();
+ // create color texture
+ this.colorTexture = context.createTexture();
+ this.width=Math.ceil(width);
+ this.height=Math.ceil(height);
+this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
+this.context.texParameteri(this.context.TEXTURE_2D, 
+  this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
+this.context.texParameteri(this.context.TEXTURE_2D, 
+  this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
+this.context.texParameteri(this.context.TEXTURE_2D, 
+  this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
+this.context.texParameteri(this.context.TEXTURE_2D, 
+  this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
+this.context.texImage2D(this.context.TEXTURE_2D, 0, 
+  this.context.RGBA, this.width, this.height, 0, 
+   this.context.RGBA, this.context.UNSIGNED_BYTE, null);
+ // create depth renderbuffer
+ this.depthbuffer=context.createRenderbuffer();
+ this.context.bindFramebuffer(
+   context.FRAMEBUFFER,this.buffer);
+ this.context.bindRenderbuffer(
+   context.RENDERBUFFER,this.depthbuffer);
+ this.context.renderbufferStorage(
+   context.RENDERBUFFER,context.DEPTH_COMPONENT16,
+   this.width,this.height);
+ // attach color and depth buffers
+ this.context.framebufferTexture2D(
+   context.FRAMEBUFFER,context.COLOR_ATTACHMENT0,
+   context.TEXTURE_2D,this.colorTexture,0);
+ this.context.framebufferRenderbuffer(
+   context.FRAMEBUFFER,context.DEPTH_ATTACHMENT,
+   context.RENDERBUFFER,this.depthbuffer);
+ this.context.bindFramebuffer(
+   context.FRAMEBUFFER,null);
+}
+FrameBuffer.prototype.getMaterial=function(){
+  var thisObj=this;
+  return {
+    bind:function(program){
+      var uniforms={};
+      uniforms["textureSize"]=[thisObj.width,thisObj.height];
+      program.setUniforms(uniforms);
+      var ctx=program.getContext()
+      ctx.activeTexture(ctx.TEXTURE0);
+      ctx.bindTexture(ctx.TEXTURE_2D,
+        thisObj.colorTexture);
+    }
+  };
+}
+FrameBuffer.prototype.bind=function(program){
+  this.context.bindFramebuffer(
+    this.context.FRAMEBUFFER,this.buffer);
+}
+FrameBuffer.prototype.unbind=function(){
+  this.context.bindFramebuffer(
+    this.context.FRAMEBUFFER,null);
+}
+FrameBuffer.prototype.dispose=function(){
+ if(this.buffer!=null)
+  this.context.deleteFramebuffer(this.buffer);
+ if(this.depthbuffer!=null)
+  this.context.deleteRenderbuffer(this.depthbuffer);
+ if(this.colorTexture!=null)
+  this.context.deleteTexture(this.colorTexture);
+ this.buffer=null;
+ this.depthbuffer=null;
+ this.colorTexture=null;
 }
 
 //////////////////////////////////
@@ -1707,6 +1861,8 @@ var TextureImage=function(name){
   this.textureName=null;
   this.name=name;
   this.image=null;
+  this.width=0;
+  this.height=0;
 }
 /**
  *
@@ -1747,6 +1903,8 @@ TextureImage.prototype.mapToContext=function(context){
    return (a==1);
   }
   this.textureName=context.createTexture();
+  this.width=this.image.width;
+  this.height=this.image.height;
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, true);
   context.bindTexture(context.TEXTURE_2D, this.textureName);
   context.texParameteri(context.TEXTURE_2D,
@@ -1794,7 +1952,7 @@ TextureImage.prototype.bind=function(program){
    }
    if (this.textureName!==null) {
       var uniforms={};
-      uniforms["useTexture"]=1;
+      uniforms["textureSize"]=[this.width,this.height];
       program.setUniforms(uniforms);
       var ctx=program.getContext()
       ctx.activeTexture(ctx.TEXTURE0);
@@ -1916,6 +2074,12 @@ Scene3D.prototype.getHeight=function(){
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
 }
+
+Scene3D.prototype.createBuffer=function(){
+ return new FrameBuffer(this.context,
+   this.getWidth(),this.getHeight());
+}
+
 /**
 *  Sets this scene's projection matrix to a perspective view.
 * @param {number}  fov Vertical field of view, in degrees.  (The smaller
@@ -1966,6 +2130,18 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4ortho(
    left, right, top, bottom, near, far));
+}
+/**
+ * Sets this scene's projection matrix to a 2D orthographic view.
+ * @param {number} left Leftmost coordinate of the 2D view.
+ * @param {number} right Rightmost coordinate of the 2D view.
+ * @param {number} bottom Bottommost coordinate of the 2D view.
+ * @param {number} top Topmost coordinate of the 2D view.
+* @return {Scene3D} This object.
+ */
+Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
+ return this.setProjectionMatrix(GLMath.mat4ortho(
+   left, right, top, bottom, -1, 1));
 }
 /** @private */
 Scene3D.prototype._setClearColor=function(){
@@ -2136,8 +2312,57 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  * @return {Scene3D} This object.
  */
 Scene3D.prototype.render=function(){
+  if(typeof this.fboFilter!="undefined" && this.fboFilter){
+   // Render to the framebuffer, then to the main buffer via
+   // a filter
+   var oldProgram=this.program;
+   var oldProj=this._projectionMatrix.slice(0,16);
+   var oldView=this._viewMatrix.slice(0,16);
+   this.useProgram(oldProgram);
+   this.setProjectionMatrix(oldProj);
+   this.setViewMatrix(oldView);
+   this.fbo.bind();
+   this._renderInner();
+   this.fbo.unbind();
+   this.useProgram(this.fboFilter);
+   this.context.clear(
+    this.context.COLOR_BUFFER_BIT);
+   this.setOrtho2D(0,this.getWidth(),this.getHeight(),0);
+   this.setViewMatrix(GLMath.mat4identity());
+   this._updateMatrix();
+   this.fboQuad.render(this.fboFilter);
+   this.setProjectionMatrix(oldProj);
+   this.setViewMatrix(oldView);
+   this.useProgram(oldProgram);  
+  } else {
+   // Render as usual
+   return this._renderInner();
+  }
+}
+Scene3D.prototype.useFilter=function(filterProgram){
+ if(filterProgram==null){
+  this.fboFilter=null;
+ } else {
+  this.fboFilter=filterProgram;
+  if(typeof this.fbo=="undefined" || !this.fbo){
+   this.fbo=this.createBuffer();
+  }
+  if(typeof this.fboQuad=="undefined" || !this.fboQuad){
+   var width=this.getWidth();
+   var height=this.getHeight();
+   var mesh=new Mesh(
+     [0,0,0,0,0,0,height,0,0,1,width,0,0,1,0,width,height,0,1,1],
+     [0,1,2,2,1,3],
+     Mesh.TEXCOORDS_BIT);
+   this.fboQuad=new Shape(mesh).setMaterial(this.fbo.getMaterial());
+  }
+ }
+}
+Scene3D.prototype._renderInner=function(){
   this._updateMatrix();
-  this.context.clear(this.context.COLOR_BUFFER_BIT);
+  this.context.clear(
+    this.context.COLOR_BUFFER_BIT |
+    this.context.DEPTH_BUFFER_BIT);
   for(var i=0;i<this.shapes.length;i++){
    this.shapes[i].render(this.program);
   }
@@ -2337,7 +2562,8 @@ Shape.prototype.render=function(program){
   }
   // Bind vertex attributes
   if(this.vertfaces==null){
-   this.vertfaces=BufferedMesh.fromMesh(mesh,program.getContext());
+   this.vertfaces=new BufferedMesh(this.mesh,
+     program.getContext());
   }
   this.vertfaces.bind(program);
   // Set world matrix
@@ -2377,6 +2603,7 @@ Shape.prototype._updateMatrix=function(){
 /////////////
 exports["BufferedMesh"]=BufferedMesh;
 exports["Lights"]=Lights;
+exports["FrameBuffer"]=FrameBuffer;
 exports["LightSource"]=LightSource;
 exports["Mesh"]=Mesh;
 exports["Texture"]=Texture;
