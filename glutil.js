@@ -135,14 +135,14 @@ var GLUtil={
  });
 },
 /**
-* Creates a mesh of a rectangular prism.  The 3-dimensional
-* shape will be centered at the origin.
-* @param {number} xSize Width of the prism.
-* @param {number} ySize Height of the prism.
-* @param {number} xSize Depth of the prism.
+* Creates a mesh of a box (rectangular prism), which
+* will be centered at the origin.
+* @param {number} xSize Width of the box.
+* @param {number} ySize Height of the box.
+* @param {number} xSize Depth of the box.
 * @return {Mesh}
 */
-"createCube":function(xSize,ySize,zSize){
+"createBox":function(xSize,ySize,zSize){
  // Position X, Y, Z, normal NX, NY, NZ, texture U, V
  xSize/=2.0;
  ySize/=2.0;
@@ -843,7 +843,7 @@ function LightSource(position, ambient, diffuse, specular) {
 
 /**
 * A collection of light sources.  It stores the scene's
-* ambient color and data on one or more light sources.
+* ambient color as well as data on one or more light sources.
 * @class
 * @alias glutil.Lights
 */
@@ -1785,7 +1785,19 @@ Texture.prototype.bind=function(program){
  }
 }
 
+/**
+* Represents an off-screen frame buffer.
+* @class
+* @alias glutil.FrameBuffer
+* @param {WebGLRenderingContext} context
+* WebGL context associated with this buffer.
+* @param {number} width Width, in pixels, of the frame buffer.
+* Fractional values are rounded up.
+* @param {number} height Height, in pixels, of the frame buffer.
+* Fractional values are rounded up.
+*/
 function FrameBuffer(context, width, height){
+ if(width<0 || height<0)throw new Error("width or height negative");
  this.context=context;
  this.buffer=context.createFramebuffer();
  // create color texture
@@ -1793,16 +1805,16 @@ function FrameBuffer(context, width, height){
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
 this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
-this.context.texParameteri(this.context.TEXTURE_2D,
+this.context.texParameteri(this.context.TEXTURE_2D, 
   this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
-this.context.texParameteri(this.context.TEXTURE_2D,
+this.context.texParameteri(this.context.TEXTURE_2D, 
   this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
-this.context.texParameteri(this.context.TEXTURE_2D,
+this.context.texParameteri(this.context.TEXTURE_2D, 
   this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
-this.context.texParameteri(this.context.TEXTURE_2D,
+this.context.texParameteri(this.context.TEXTURE_2D, 
   this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
-this.context.texImage2D(this.context.TEXTURE_2D, 0,
-  this.context.RGBA, this.width, this.height, 0,
+this.context.texImage2D(this.context.TEXTURE_2D, 0, 
+  this.context.RGBA, this.width, this.height, 0, 
    this.context.RGBA, this.context.UNSIGNED_BYTE, null);
  // create depth renderbuffer
  this.depthbuffer=context.createRenderbuffer();
@@ -1838,6 +1850,9 @@ FrameBuffer.prototype.getMaterial=function(){
   };
 }
 FrameBuffer.prototype.bind=function(program){
+  if(program.getContext()!=this.context){
+   throw new Error("can't bind buffer: context mismatch");
+  }
   this.context.bindFramebuffer(
     this.context.FRAMEBUFFER,this.buffer);
 }
@@ -2334,7 +2349,7 @@ Scene3D.prototype.render=function(){
    this.fboQuad.render(this.fboFilter);
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
-   this.useProgram(oldProgram);
+   this.useProgram(oldProgram);  
   } else {
    // Render as usual
    return this._renderInner();
