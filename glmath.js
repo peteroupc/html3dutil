@@ -230,8 +230,9 @@ vec4copy:function(mat){
 },
 /**
  * Finds the inverse of a 4x4 matrix.
- * @param {*} m
+ * @param {*} m A 4x4 matrix.
  * @return {Array<number>} The resulting 4x4 matrix.
+ * Returns the identity matrix if this matrix is not invertible.
  */
 mat4invert:function(m){
 var tvar0 = m[0]*m[10];
@@ -339,8 +340,9 @@ quatInverse:function(quat){
    GLMath.quatConjugate(quat));
 },
 /**
- * Not documented yet.
- * @param {*} quat
+ * Generates a 4x4 matrix describing the rotation
+ * described by this quaternion.
+ * @param {*} quat A quaternion.
  */
 quatToMat4:function(quat){
   var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;

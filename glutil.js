@@ -659,6 +659,11 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
   if(fs!==null)context.deleteShader(fs);
   return program;
 };
+/**
+* Gets the text of the default vertex shader.  Putting "#define SHADING\n"
+* at the start of the return value enables the lighting model.
+* @return {string} The resulting shader text.
+*/
 ShaderProgram.getDefaultVertex=function(){
 var shader="" +
 "attribute vec3 position;\n" +
@@ -721,6 +726,8 @@ return shader;
 /**
 * Generates a shader program for applying
 * a raster effect to a texture.
+* @param {WebGLRenderingContext} context A WebGL context associated with the
+* compiled shader program.
 * @param {string} functionCode A string giving shader code
 * in OpenGL ES Shading Language (GLSL) that must contain 
 * a function with the following signature:
@@ -735,23 +742,35 @@ return shader;
 * constants, functions, and so on (but not another "main" function).
 * @return {ShaderProgram} The resulting shader program.
 */
-ShaderProgram.makeEffect=function(functionCode){
- return new ShaderProgram(null,
+ShaderProgram.makeEffect=function(context,functionCode){
+ return new ShaderProgram(context, null,
    ShaderProgram.makeEffectFragment(functionCode));
 }
-
-ShaderProgram.getInvertFragment=function(){
-return ShaderProgram.makeEffectFragment(
+/**
+* Generates a shader program that inverts the colors of a texture.
+* @param {WebGLRenderingContext} context A WebGL context associated with the
+* compiled shader program.
+* @return {ShaderProgram} The resulting shader program.
+*/
+ShaderProgram.getInvertEffect=function(context){
+return ShaderProgram.makeEffect(context,
 [
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
 " return vec4(vec3(1,1,1.)-color.rgb,color.a);",
 "}"].join("\n"));
 }
-ShaderProgram.getEdgeDetectFragment=function(){
+/**
+* Generates a shader program that generates a two-color texture showing
+* the source texture's edges.
+* @param {WebGLRenderingContext} context A WebGL context associated with the
+* compiled shader program.
+* @return {ShaderProgram} The resulting shader program.
+*/
+ShaderProgram.getEdgeDetectEffect=function(context){
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
-return ShaderProgram.makeEffectFragment(
+return ShaderProgram.makeEffect(context,
 ["float luma(vec3 color) {",
 " return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
 "}",
@@ -779,6 +798,14 @@ return ShaderProgram.makeEffectFragment(
 ].join("\n"));
 }
 
+/**
+* Gets the text of the default fragment shader.  Putting "#define SHADING\n"
+* at the start of the return value enables the lighting model. 
+* Putting "#define SPECULAR\n"
+* at the start of the return value enables specular highlights (as long
+* as SHADING is also enabled). 
+* @return {string} The resulting shader text.
+*/
 ShaderProgram.getDefaultFragment=function(){
 var shader=ShaderProgram.fragmentShaderHeader() +
  // if shading is disabled, this is solid color instead of material diffuse
@@ -2025,7 +2052,7 @@ TextureImage.prototype.bind=function(program){
       var prog=program;
       this.loadImage().then(function(e){
         // try again loading the image
-        thisObj.bind(program);
+        thisObj.bind(prog);
       });
       return;
    }
@@ -2402,7 +2429,7 @@ Scene3D.prototype.render=function(){
    this.useProgram(oldProgram);
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
-   this.fbo.bind();
+   this.fbo.bind(oldProgram);
    this._renderInner();
    this.fbo.unbind();
    this.useProgram(this.fboFilter);
