@@ -42,6 +42,15 @@ var GLUtil={
   };
   window.requestAnimationFrame(selfRefFunc);
 },
+/**
+* Creates a 3D rendering context from an HTML canvas element,
+* falling back to a 2D context if that fails.
+* @param {HTMLCanvasElement} canvasElement An HTML
+* canvas element.
+* @return {WebGLRenderingContext} A 3D or 2D rendering context, or null
+* if an error occurred in creating the context. Returns null if "canvasElement"
+* is null or not an HTML canvas element.
+*/
 "get3DOr2DContext":function(canvasElement){
   if(!canvasElement)return null;
   if(!canvasElement.getContext)return null;
@@ -71,8 +80,19 @@ var GLUtil={
   }
   return context;
 },
+/**
+* Creates a 3D rendering context from an HTML canvas element.
+*
+* @param {HTMLCanvasElement} canvasElement An HTML
+* canvas element.
+* @param {function} err A function to call if an error occurs in creating
+* the context.  The function takes one parameter consisting of a human-
+* readable error message.  If "err" is null, window.alert() will be used instead.
+* @return {WebGLRenderingContext} A 3D rendering context, or null
+* if an error occurred in creating the context.  Returns null if "canvasElement"
+* is null or not an HTML canvas element.
+*/
 "get3DContext":function(canvasElement,err){
-  if(!canvasElement)return null;
   var c=GLUtil.get3DOr2DContext(canvasElement);
   var errmsg=null;
   if(!c && window.WebGLShader){
@@ -88,6 +108,10 @@ var GLUtil={
   }
   return c;
 },
+/**
+* Returns whether the given object is a 3D rendering context.
+* @return {boolean}
+*/
 "is3DContext":function(context){
  return context && ("compileShader" in context);
 },
@@ -95,18 +119,19 @@ var GLUtil={
 * Utility function that returns a promise that
  * resolves after the given list of promises finishes
  * its work.
- * @result {Promise} A promise that is never rejected.  The result
+ * @param {Array<Promise>} promises - an array containing promise objects
+ *  @param {Function|undefined} progressResolve - a function called as each
+ *   individual promise is resolved; optional
+ *  @param {Function|undefined} progressReject - a function called as each
+ *   individual promise is rejected; optional
+ * @return {Promise} A promise that is never rejected and resolves when
+* all of the promises are each resolved or rejected. The result
  * of the promise will be an object with
  * two keys:
  *  "successes" - contains a list of results from the
  *  promises that succeeded.
  *  "failures" - contains a list of results from the
  *  promises that failed.
- * @param {Array<Promise>} promises - an array containing promise objects
- *  @param {Function|undefined} progressResolve - a function called as each
- *   individual promise is resolved; optional
- *  @param {Function|undefined} progressReject - a function called as each
- *   individual promise is rejected; optional
  */
 "getPromiseResults":function(promises,
    progressResolve, progressReject){
@@ -281,6 +306,14 @@ newStrip=false;
 return new Mesh(vertices,tris,
   Mesh.NORMALS_BIT | Mesh.TEXCOORDS_BIT);
 },
+/**
+* Loads a text file asynchronously, using XMLHttpRequest
+* @param {string} url URL of the text file to load.
+* @return {Promise} A promise that resolves when the text
+* file is loaded successfully (the result will be an object with
+* two properties: "url", the URL of the file, and "text", the
+* file's text), and is rejected when an error occurs (the 
+*/
 "loadFileFromUrl":function(url){
  var urlstr=url;
  return new Promise(function(resolve, reject){
@@ -297,6 +330,9 @@ return new Mesh(vertices,tris,
      }
     }
    };
+   xhr.onerror=function(e){
+    reject({url: urlstr}); 
+   }
    xhr.open("get", url, true);
    xhr.send();
  });
@@ -519,11 +555,11 @@ ShaderProgram.prototype.getContext=function(){
 * @param {string} name The name of a uniform defined in either the
 * vertex or fragment shader of this shader program.  If the uniform
 * is an array, each element in the array is named as in these examples:
-* "uniform[0]", "uniform[1]".   If the uniform
+* "unif[0]", "unif[1]".   If the uniform
 * is a struct, each member in the struct is named as in these examples:
-* "uniform.member1", "uniform.member2".  If the uniform is an array of struct, each
-* member is named as in these examples: "uniform[0].member1",
-* "uniform[0].member2".
+* "unif.member1", "unif.member2".  If the uniform is an array of struct, each
+* member is named as in these examples: "unif[0].member1",
+* "unif[0].member2".
 * @return {number|null} The location of the uniform name, or null if it doesn't exist.
 */
 ShaderProgram.prototype.get=function(name){
@@ -664,17 +700,7 @@ return "" +
 /**
 * Generates source code for a fragment shader for applying
 * a raster effect to a texture.
-* @param {string} functionCode A string giving shader code
-* in GLSL that must contain a function with the following signature:
-* <pre>
-* vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
-* </pre>
-* where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
-* is the texture coordinates ranging from 0 to 1 in each component,
-* <code>textureSize</code> is the dimensions of the texture in pixels,
-* and the return value is the new color at the given texture coordinates.  Besides
-* this requirement, the shader code is also free to define additional uniforms,
-* constants, functions, and so on (but not another "main" function).
+* @param {string} functionCode See ShaderProgram.makeEffect().
 * @return {string} The source text of the resulting fragment shader.
 */
 ShaderProgram.makeEffectFragment=function(functionCode){
@@ -692,6 +718,28 @@ shader+="\n\nvoid main(){\n" +
 "}";
 return shader;
 }
+/**
+* Generates a shader program for applying
+* a raster effect to a texture.
+* @param {string} functionCode A string giving shader code
+* in OpenGL ES Shading Language (GLSL) that must contain 
+* a function with the following signature:
+* <pre>
+* vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
+* </pre>
+* where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
+* is the texture coordinates ranging from 0 to 1 in each component,
+* <code>textureSize</code> is the dimensions of the texture in pixels,
+* and the return value is the new color at the given texture coordinates.  Besides
+* this requirement, the shader code is also free to define additional uniforms,
+* constants, functions, and so on (but not another "main" function).
+* @return {ShaderProgram} The resulting shader program.
+*/
+ShaderProgram.makeEffect=function(functionCode){
+ return new ShaderProgram(null,
+   ShaderProgram.makeEffectFragment(functionCode));
+}
+
 ShaderProgram.getInvertFragment=function(){
 return ShaderProgram.makeEffectFragment(
 [
@@ -1805,16 +1853,16 @@ function FrameBuffer(context, width, height){
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
 this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
-this.context.texParameteri(this.context.TEXTURE_2D, 
+this.context.texParameteri(this.context.TEXTURE_2D,
   this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
-this.context.texImage2D(this.context.TEXTURE_2D, 0, 
-  this.context.RGBA, this.width, this.height, 0, 
+this.context.texImage2D(this.context.TEXTURE_2D, 0,
+  this.context.RGBA, this.width, this.height, 0,
    this.context.RGBA, this.context.UNSIGNED_BYTE, null);
  // create depth renderbuffer
  this.depthbuffer=context.createRenderbuffer();
@@ -1835,10 +1883,15 @@ this.context.texImage2D(this.context.TEXTURE_2D, 0,
  this.context.bindFramebuffer(
    context.FRAMEBUFFER,null);
 }
+/**
+ * Returns a material object for binding to Shapes.
+ * @return {Object} An object implementing the method
+ * bind(program), similar to MaterialShade and Texture
+ * objects, and exposing the texture this frame buffer uses.
+ */
 FrameBuffer.prototype.getMaterial=function(){
   var thisObj=this;
-  return {
-    bind:function(program){
+  return {"bind":function(program){
       var uniforms={};
       uniforms["textureSize"]=[thisObj.width,thisObj.height];
       program.setUniforms(uniforms);
@@ -1849,6 +1902,10 @@ FrameBuffer.prototype.getMaterial=function(){
     }
   };
 }
+/**
+ * Not documented yet.
+ * @param {WebGLShaderProgram} program
+ */
 FrameBuffer.prototype.bind=function(program){
   if(program.getContext()!=this.context){
    throw new Error("can't bind buffer: context mismatch");
@@ -1856,10 +1913,16 @@ FrameBuffer.prototype.bind=function(program){
   this.context.bindFramebuffer(
     this.context.FRAMEBUFFER,this.buffer);
 }
+/**
+ * Not documented yet.
+ */
 FrameBuffer.prototype.unbind=function(){
   this.context.bindFramebuffer(
     this.context.FRAMEBUFFER,null);
 }
+/**
+ * Not documented yet.
+ */
 FrameBuffer.prototype.dispose=function(){
  if(this.buffer!=null)
   this.context.deleteFramebuffer(this.buffer);
@@ -2090,7 +2153,9 @@ Scene3D.prototype.getHeight=function(){
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
 }
-
+/**
+ * Not documented yet.
+ */
 Scene3D.prototype.createBuffer=function(){
  return new FrameBuffer(this.context,
    this.getWidth(),this.getHeight());
@@ -2349,12 +2414,26 @@ Scene3D.prototype.render=function(){
    this.fboQuad.render(this.fboFilter);
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
-   this.useProgram(oldProgram);  
+   this.useProgram(oldProgram);
+   return this;
   } else {
    // Render as usual
    return this._renderInner();
   }
 }
+/**
+ * Uses a shader program to apply a texture filter after the
+ * scene is rendered.  If a filter program is used, the scene will
+ * create a frame buffer object, render its shapes to that frame
+ * buffer, and then apply the filter program as it renders the
+ * frame buffer to the canvas.
+ * @param {WebGLShaderProgram} filterProgram A shader
+ * program that implements a texture filter.  The program
+ * could be created using the ShaderProgram.makeEffect() method.
+ * If this value is null, texture filtering is disabled and shapes
+ * are rendered to the canvas normally.
+ * @return {Scene3D} This object.
+ */
 Scene3D.prototype.useFilter=function(filterProgram){
  if(filterProgram==null){
   this.fboFilter=null;
@@ -2379,7 +2458,11 @@ Scene3D.prototype.useFilter=function(filterProgram){
    this.fboQuad=new Shape(mesh).setMaterial(this.fbo.getMaterial());
   }
  }
+ return this;
 }
+/**
+ * Not documented yet.
+ *//** @private */
 Scene3D.prototype._renderInner=function(){
   this._updateMatrix();
   this.context.clear(
@@ -2432,6 +2515,10 @@ MultiShape.prototype.loadMesh=function(context){
 MultiShape.prototype.add=function(shape){
  this.shapes.push(shape);
 }
+/**
+ * Not documented yet.
+ * @param {*} material
+ */
 MultiShape.prototype.setMaterial=function(material){
  for(var i=0;i<this.shapes.length;i++){
   this.shapes[i].setMaterial(material);
