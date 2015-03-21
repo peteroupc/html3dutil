@@ -994,7 +994,8 @@ Lights.prototype.addPointLight=function(position,diffuse,specular){
  return this;
 }
 
-/** Sets parameters for a shader program based on
+/** 
+ * Sets parameters for a shader program based on
  * the information in this light source object.
  * @param {ShaderProgram} program A shader program object
  * where locations of lighting uniforms will come from.
@@ -1099,8 +1100,9 @@ MaterialShade.fromColor=function(r,g,b,a){
  var color=GLUtil["toGLColor"](r,g,b,a);
  return new MaterialShade(color,color);
 }
-/** Sets parameters for a shader program based on
- the information in this material data object.
+/** 
+ * Sets parameters for a shader program based on
+ * the information in this material data object.
  * @param {ShaderProgram} program A shader program object
  * where the locations of material-related uniforms will be retrieved.
  */
@@ -2339,7 +2341,7 @@ Scene3D.prototype._updateMatrix=function(){
 /**
  * Sets the projection matrix for this object.  The projection
  * matrix can also be set using the setFrustum(), setOrtho(),
- * and setPerspective() methods.
+ * setOrtho2D(), and setPerspective() methods.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
  * @return {Scene3D} This object.
  */
@@ -2365,7 +2367,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * the camera position in world space.
 * @param {Array<number>} center A 3-element vector specifying
 * the point in world space that the camera is looking at.
-* @param {Array<number>} up A 3-element vector specifying
+* @param {Array<number>|undefined} up A 3-element vector specifying
 * the up-vector direction.  May be omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
 * vector must not point in the same or opposite direction as
@@ -2454,7 +2456,7 @@ Scene3D.prototype.render=function(){
  * create a frame buffer object, render its shapes to that frame
  * buffer, and then apply the filter program as it renders the
  * frame buffer to the canvas.
- * @param {WebGLShaderProgram} filterProgram A shader
+ * @param {ShaderProgram} filterProgram A shader
  * program that implements a texture filter.  The program
  * could be created using the ShaderProgram.makeEffect() method.
  * If this value is null, texture filtering is disabled and shapes
@@ -2490,9 +2492,7 @@ Scene3D.prototype.useFilter=function(filterProgram){
  }
  return this;
 }
-/**
- * Not documented yet.
- *//** @private */
+/** @private */
 Scene3D.prototype._renderInner=function(){
   this._updateMatrix();
   this.context.clear(
