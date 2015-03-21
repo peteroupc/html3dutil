@@ -651,9 +651,7 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
 		console.log("link: "+context.getProgramInfoLog(program));
 		context.deleteProgram(program);
     program=null;
-	 } else {
-    context.useProgram(program);
-   }
+	 }
   }
   if(vs!==null)context.deleteShader(vs);
   if(fs!==null)context.deleteShader(fs);
@@ -2097,6 +2095,7 @@ function Scene3D(context){
    this._getDefines()+ShaderProgram.getDefaultFragment());
  this.shapes=[];
  this.clearColor=[0,0,0,1];
+ this.fboFilter=null;
  this.textureCache={};
  this.context.enable(context.BLEND);
  this._projectionMatrix=GLMath.mat4identity();
@@ -2181,7 +2180,8 @@ Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
 }
 /**
- * Not documented yet.
+ * Creates a frame buffer object associated with this scene.
+ * @return {FrameBuffer} A buffer with the same size as this scene.
  */
 Scene3D.prototype.createBuffer=function(){
  return new FrameBuffer(this.context,
@@ -2435,7 +2435,7 @@ Scene3D.prototype.render=function(){
    this.useProgram(this.fboFilter);
    this.context.clear(
     this.context.COLOR_BUFFER_BIT);
-   this.setOrtho2D(0,this.getWidth(),this.getHeight(),0);
+   this.setProjectionMatrix(GLMath.mat4identity());
    this.setViewMatrix(GLMath.mat4identity());
    this._updateMatrix();
    this.fboQuad.render(this.fboFilter);
@@ -2467,8 +2467,8 @@ Scene3D.prototype.useFilter=function(filterProgram){
  } else {
   if(typeof filterProgram=="string"){
    // Assume the string is GLSL source code
-   this.fboFilter=new ShaderProgram(this.context,
-     null,ShaderProgram.makeEffectFragment(filterProgram));
+   this.fboFilter=ShaderProgram.makeEffect(this.context,
+    filterProgram);
   } else {
    this.fboFilter=filterProgram;
   }
@@ -2479,7 +2479,10 @@ Scene3D.prototype.useFilter=function(filterProgram){
    var width=this.getWidth();
    var height=this.getHeight();
    var mesh=new Mesh(
-     [0,0,0,0,0,0,height,0,0,1,width,0,0,1,0,width,height,0,1,1],
+     [-1,1,0,0,0,
+      -1,-1,0,0,1,
+      1,1,0,1,0,
+      1,-1,0,1,1],
      [0,1,2,2,1,3],
      Mesh.TEXCOORDS_BIT);
    this.fboQuad=new Shape(mesh).setMaterial(this.fbo.getMaterial());
