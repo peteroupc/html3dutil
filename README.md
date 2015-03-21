@@ -11,6 +11,10 @@ API documentation is found at: [https://peteroupc.github.io/html3dutil](https://
 
 The file "glutil_min.js" is a minified single-file version of the library.
 
+Demos
+---------
+* [squares.html](https://github.com/peteroupc/html3dutil/squares.html) - Demonstrates shader-based filters.
+
 Source Code
 ---------
 Source code is available in the [project page](https://github.com/peteroupc/html3dutil).

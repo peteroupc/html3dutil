@@ -312,7 +312,7 @@ return new Mesh(vertices,tris,
 * @return {Promise} A promise that resolves when the text
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "text", the
-* file's text), and is rejected when an error occurs (the 
+* file's text), and is rejected when an error occurs (the
 */
 "loadFileFromUrl":function(url){
  var urlstr=url;
@@ -331,7 +331,7 @@ return new Mesh(vertices,tris,
     }
    };
    xhr.onerror=function(e){
-    reject({url: urlstr}); 
+    reject({url: urlstr});
    }
    xhr.open("get", url, true);
    xhr.send();
@@ -541,6 +541,19 @@ var ShaderProgram=function(context, vertexShader, fragmentShader){
   this.actives=ret;
  }
 }
+/** Disposes resources from this shader program.
+*/
+ShaderProgram.prototype.dispose=function(){
+ if(this.program){
+  this.context.deleteProgram(this.program);
+ }
+ this.context=null;
+ this.program=null;
+ this.actives={};
+ this.attributes={};
+ this.uniformTypes={};
+}
+
 /** Gets the WebGL context associated with this shader program.
 * @return {WebGLRenderingContext}
 */
@@ -727,7 +740,7 @@ return shader;
 * @param {WebGLRenderingContext} context A WebGL context associated with the
 * compiled shader program.
 * @param {string} functionCode A string giving shader code
-* in OpenGL ES Shading Language (GLSL) that must contain 
+* in OpenGL ES Shading Language (GLSL) that must contain
 * a function with the following signature:
 * <pre>
 * vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
@@ -798,10 +811,10 @@ return ShaderProgram.makeEffect(context,
 
 /**
 * Gets the text of the default fragment shader.  Putting "#define SHADING\n"
-* at the start of the return value enables the lighting model. 
+* at the start of the return value enables the lighting model.
 * Putting "#define SPECULAR\n"
 * at the start of the return value enables specular highlights (as long
-* as SHADING is also enabled). 
+* as SHADING is also enabled).
 * @return {string} The resulting shader text.
 */
 ShaderProgram.getDefaultFragment=function(){
@@ -994,7 +1007,7 @@ Lights.prototype.addPointLight=function(position,diffuse,specular){
  return this;
 }
 
-/** 
+/**
  * Sets parameters for a shader program based on
  * the information in this light source object.
  * @param {ShaderProgram} program A shader program object
@@ -1100,7 +1113,7 @@ MaterialShade.fromColor=function(r,g,b,a){
  var color=GLUtil["toGLColor"](r,g,b,a);
  return new MaterialShade(color,color);
 }
-/** 
+/**
  * Sets parameters for a shader program based on
  * the information in this material data object.
  * @param {ShaderProgram} program A shader program object
