@@ -27,8 +27,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * with vectors and matrices.<p>
 * Vectors: A vector is simply a set of 3 or 4 elements that are related
 * to each other.  As such, a vector can symbolize a position, a direction,
-* a ray, a color, or anything else.  The methods in this class
-* treat arrays as vectors.  Functions dealing with vectors begin with "vec".<p>
+* a ray, a color, or anything else.  If a vector describes a position, direction,
+* or normal, the four elements are given as X, Y, Z, and W, in that order.
+* If a vector describes a color, the four elements are given as red, green,
+* blue, and alpha, in that order (where each element ranges from 0-1).
+* The methods in this class treat arrays as vectors.  Functions dealing
+* with vectors begin with "vec".<p>
 * Matrices:  A matrix is a 16- or 9-element array that describes a
 * transformation from one coordinate system to another.
 * All functions dealing with 4x4 matrices assume that
@@ -379,7 +383,7 @@ quatToAngleAxis:function(a){
  if(d>0){
   d=1/Math.sqrt(d);
   return [a[0]*d,a[1]*d,a[2]*d,
-    Math.acos(w)*360/Math.PI];
+    Math.acos(w)*GLMath.Num360DividedByPi];
  } else {
   return [0,1,0,0]
  }
@@ -410,18 +414,18 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*Math.PI/360;
+ ang=angle*GLMath.PiDividedBy360;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*Math.PI/360;
+ ang=ang*GLMath.PiDividedBy360;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*Math.PI/360;
+ ang=angle*GLMath.PiDividedBy360;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -442,9 +446,9 @@ quatRollPitchYaw:function(rollDegrees,pitchDegrees,yawDegrees){
  rollDegrees=(rollDegrees+180)%360.0-180.0;
  pitchDegrees=(pitchDegrees+180)%360.0-180.0;
  yawDegrees=(yawDegrees+180)%360.0-180.0;
- var rollRad=roll*Math.PI/360;
- var pitchRad=pitch*Math.PI/360;
- var yawRad=yaw*Math.PI/360;
+ var rollRad=roll*GLMath.PiDividedBy360;
+ var pitchRad=pitch*GLMath.PiDividedBy360;
+ var yawRad=yaw*GLMath.PiDividedBy360;
  var sp=Math.sin(pitchRad);
  var cp=Math.cos(pitchRad);
  var sy=Math.sin(yawRad);
@@ -472,7 +476,7 @@ quatToEuler:function(a){
 	 Math.atan2(2.0 * (a[0]*a[1] + a[2]*a[3]), sqx - sqy - sqz + sqw),
 	 Math.asin(-2.0 * (a[0]*a[2] - a[1]*a[3])),
 	 Math.atan2(2.0 * (a[1]*a[2] + a[0]*a[3]), -sqx - sqy + sqz + sqw)]
-	var mpi = 180.0 / Math.PI;
+	var mpi = GLMath.Num180DividedByPi;
   euler[0]*=mpi;
   euler[1]*=mpi;
   euler[2]*=mpi;
@@ -675,11 +679,17 @@ mat4scaled:function(v3,v3y,v3z){
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4translated:function(v3,v3y,v3z){
+  var x,y,z;
   if(typeof v3y!="undefined" && typeof v3z!="undefined"){
-   return [1,0,0,0,0,1,0,0,0,0,1,0,v3,v3y,v3z,1]
+      x=v3;
+      y=v3y;
+      z=v3z;
   } else {
-   return [1,0,0,0,0,1,0,0,0,0,1,0,v3[0],v3[1],v3[2],1]
+      x=v3[0];
+      y=v3[1];
+      z=v3[2];
   }
+  return [1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1]
 },
 /**
  * Multiplies a 4x4 matrix by a translation transformation.
@@ -731,7 +741,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
- var f = 1/Math.tan(fovY*Math.PI/360);
+ var f = 1/Math.tan(fovY*GLMath.PiDividedBy360);
  var nmf = nearZ-farZ;
  nmf=1/nmf;
  return [f/aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
@@ -898,18 +908,18 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*Math.PI/180;
+ ang=angle*GLMath.PiDividedBy180;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*Math.PI/180;
+ ang=ang*GLMath.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*Math.PI/180;
+ ang=angle*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -996,18 +1006,18 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*Math.PI/180;
+ ang=angle*GLMath.PiDividedBy180;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*Math.PI/180;
+ ang=ang*GLMath.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*Math.PI/180;
+ ang=angle*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -1075,5 +1085,26 @@ GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
  * @return {Array<number>}
  */
 GLMath.quatCopy=GLMath.vec4copy;
+/**
+ @private
+ @const
+*/
+GLMath.PiDividedBy180 = 0.01745329251994329576923690768489;
+/**
+ @private
+ @const
+*/
+GLMath.PiDividedBy360 = 0.00872664625997164788461845384244;
+/**
+ @private
+ @const
+*/
+GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
+/**
+ @private
+ @const
+*/
+GLMath.Num180DividedByPi = 57.295779513082320876798154814105;
+
 	exports["GLMath"]=GLMath;
 }));

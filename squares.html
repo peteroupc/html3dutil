@@ -27,6 +27,24 @@ function createQuad(x,y,width,height){
 var scene3d=null;
 var currentFilter=null;
 
+function makeWave(context){
+return ShaderProgram.makeEffect(context,[
+"uniform float time;",
+"const float pi = 3.14159265;",
+"float interp(float t){",
+" return sin(t*pi*2.0);",
+"}",
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" float t=float(time)/100.0;",
+" t=t+uvCoord.y;",
+" float offset=interp(fract(t*8.0));",
+" float x=clamp(uvCoord.x+offset*0.02,0.0,1.0);",
+" vec4 color=texture2D(sampler,vec2(x,uvCoord.y));",
+" return color;",
+"}"].join("\n"));
+}
+
+
 function makeGrayscale(context){
 return ShaderProgram.makeEffect(context,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
@@ -55,14 +73,30 @@ function link2(){
 function link3(){
  if(scene3d){
   if(currentFilter)currentFilter.dispose();
-  currentFilter=null;
+  currentFilter=makeWave(scene3d.getContext());
   scene3d.useFilter(currentFilter);
  }
 }
 
+function linknone(){
+ if(scene3d){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=null;
+  scene3d.useFilter(currentFilter);
+ }
+}
+function toarr(a){
+ if(!a)return null;
+ var ret=[];
+ for(var i=0;i<a.length;i++){
+  ret.push(a[i])
+ }
+ return ret;
+}
+
 onload=(function(){
   var context=createContext();
-  var scene=new Scene3D(context).disableLighting()
+  var scene=new Scene3D(context).disableLighting();
   scene3d=scene;
   var color=true;
   var oddrow=false;
@@ -80,7 +114,11 @@ onload=(function(){
    oddrow=!oddrow
   }
   var rot=0;
+  var time=0;
   GLUtil.renderLoop(function(){
+   if(currentFilter)currentFilter.setUniforms({"time":time});
+   time+=1;
+   time%=100;   
    scene.render();
    for(var i=0;i<scene.shapes.length;i++){
     scene.shapes[i].setRotation([0,rot,0]);
@@ -95,7 +133,8 @@ onload=(function(){
 <h1>Quads</h1>
 <a href="javascript:link1()">Grayscale</a>,
 <a href="javascript:link2()">Invert colors</a>,
-<a href="javascript:link3()">No filters</a>
+<a href="javascript:link3()">Wave</a>,
+<a href="javascript:linknone()">No filters</a>
 <br>
 <canvas width="600" height="450" id=canvas></canvas>
 </body>

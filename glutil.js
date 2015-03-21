@@ -513,6 +513,7 @@ var ShaderProgram=function(context, vertexShader, fragmentShader){
  this.context=context;
  this.actives={};
  this.uniformTypes={};
+ this.savedUniforms={};
  if(this.program!=null){
   this.attributes=[];
   var name=null;
@@ -561,39 +562,67 @@ ShaderProgram.prototype.getContext=function(){
  return this.context;
 }
 /**
-* Gets the location of the given uniform's name in this program.
-* Note that the location may change each time the shader program
-* is linked (which, in the case of ShaderProgram, currently only
-* happens upon construction).
-* @param {string} name The name of a uniform defined in either the
-* vertex or fragment shader of this shader program.  If the uniform
+* Gets the location of the given uniform or attribute's name in this program.
+* (Although the location may change each time the shader program
+* is linked, that normally only happens upon construction
+* in the case of ShaderProgram.)
+* @param {string} name The name of an attribute or uniform defined in either the
+* vertex or fragment shader of this shader program.  If the uniform or attribute
 * is an array, each element in the array is named as in these examples:
-* "unif[0]", "unif[1]".   If the uniform
-* is a struct, each member in the struct is named as in these examples:
-* "unif.member1", "unif.member2".  If the uniform is an array of struct, each
+* "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
+* "unif.member1", "unif.member2".  If it's an array of struct, each
 * member is named as in these examples: "unif[0].member1",
 * "unif[0].member2".
-* @return {number|null} The location of the uniform name, or null if it doesn't exist.
+* @return {number|WebGLUniformLocation|null} The location of the uniform or attribute
+* name, or null if it doesn't exist.
 */
 ShaderProgram.prototype.get=function(name){
  return (!this.actives.hasOwnProperty(name)) ?
    null : this.actives[name];
 }
 /**
+* Gets the value of the given uniform in this program. This method
+* may be called at any time, even if this program is not currently the
+* active program in the WebGL context.
+* @param {string} name The name of a uniform defined in either the
+* vertex or fragment shader of this shader program.  See get().
+* @return {*} The uniform's value, or null if it doesn't exist or if
+* an attribute is named, not a uniform.
+*/
+ShaderProgram.prototype.getUniform=function(name){
+ var loc=(typeof name=="string") ? this.get(name) : name;
+ // If "loc" is a number that means it's an attribute, not a uniform;
+ // we expect WebGLUniformLocation
+ if(loc==null || typeof loc=="number")return null;
+ return this.context.getUniform(this.program,loc);
+}
+/**
 * Makes this program the active program for the WebGL context.
+* This method also sets uniforms that couldn't be applied by the
+* setUniforms() method because the context used a different
+* program.
 * @return {ShaderProgram} This object.
 */
 ShaderProgram.prototype.use=function(){
  this.context.useProgram(this.program);
+ this.setUniforms(this.savedUniforms);
+ this.savedUniforms={};
  return this;
 }
 /**
-*  Sets uniform variables for this program.  This method assumes
-*  that this object's program is currently active.  Uniform variables
+* Sets uniform variables for this program.  Uniform variables
 * are called uniform because they uniformly apply to all vertices
-* in a primitive, and are not different per vertex.
+* in a primitive, and are not different per vertex.<p>
+* This method may be called at any time, even if this program is not currently the
+* active program in the WebGL context.  In that case, this method will instead
+* save the uniforms to write them later the next time this program
+* becomes the currently active program (via the use() method).<p>
+* Once the uniform is written to the program, it will be retained even
+* after a different program becomes the active program. (It will only
+* be reset if this program is re-linked, which won't normally happen
+* in the case of the ShaderProgram class.)
 * @param {Object} uniforms A hash of key/value pairs.  Each key is
-* the name of a uniform, and each value is the value to set
+* the name of a uniform (see get() for more information), and each value is the value to set
 * to that uniform.  Uniform values that are 3- or 4-element
 * vectors must be 3 or 4 elements long, respectively.  Uniforms
 * that are 4x4 matrices must be 16 elements long.  Keys to
@@ -604,13 +633,22 @@ ShaderProgram.prototype.use=function(){
 * @return {ShaderProgram} This object.
 */
 ShaderProgram.prototype.setUniforms=function(uniforms){
+  var isCurrentProgram=null;
   for(var i in uniforms){
     if(uniforms.hasOwnProperty(i)){
       v=uniforms[i];
       var uniform=this.get(i);
       if(uniform===null)continue;
       //console.log("setting "+i+": "+v);
-      if(v.length==3){
+      if(isCurrentProgram==null){
+       isCurrentProgram=this.context.getParameter(
+         this.context.CURRENT_PROGRAM)==this.program;
+      }
+      if(!isCurrentProgram){
+       // Save this uniform to write later
+       var val=(v instanceof Array) ? v.slice(0,v.length) : v;
+       this.savedUniforms[i]=val;
+      } else if(v.length==3){
        this.context.uniform3f(uniform, v[0],v[1],v[2]);
       } else if(v.length==2){
        this.context.uniform2f(uniform, v[0],v[1]);
@@ -2737,9 +2775,8 @@ Shape.prototype.render=function(program){
 /** @private */
 Shape.prototype._updateMatrix=function(){
   this._matrixDirty=false;
-  this.matrix=GLMath.mat4identity();
-  this.matrix=GLMath.mat4translate(this.matrix,this.position[0],
-    this.position[1],this.position[2]);
+  this.matrix=GLMath.mat4translated(this.position[0],
+  this.position[1],this.position[2]);
   if(this.rotation[0]!=0){
     this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[0],[1,0,0]);
   }
