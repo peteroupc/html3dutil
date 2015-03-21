@@ -591,7 +591,7 @@ return ret
 /**
 * Returns the transposed result of the inverted upper left corner of
 * the given 4x4 matrix.
-* @param {Array<number>} A 4x4 matrix.
+* @param {Array<number>} m4 A 4x4 matrix.
 * @result {Array<number>} The resulting 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
