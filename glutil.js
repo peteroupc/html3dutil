@@ -29,9 +29,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 var GLUtil={
 /**
-*  Calls a function once per frame. (If the browser doesn't
+* This method will call the function once before returning,
+* and queue requests to call that function once per frame. 
+* (If the browser doesn't
 * support requestAnimationFrame or an equivalent, uses
-* setTimeout to implement this method.)
+* setTimeout to implement this method.) 
 * @param {Function} func The function to call.
 */
 "renderLoop":function(func){
@@ -490,10 +492,12 @@ if(!namedColors){
 * or GPU.<p>
 * When the ShaderProgram constructor is called, it will compile
 * and link a shader program from the source text passed to it, but
-* it won't use that program until the use() method is called.<p>
+* it won't use that program until the use() method is called.  If the
+* program is compiled and linked successfully, the constructor
+* will also gather a list of the program's attributes (vertex-specific variables
+* in vertex buffer objects) and uniforms (variables not specific to a vertex).<p>
 * If compiling or linking the shader program fails, a diagnostic
 * log is output to the JavaScript console.
-*
 * @class
 * @alias glutil.ShaderProgram
 * @param {WebGLRenderingContext} context A WebGL context associated with the
@@ -973,6 +977,8 @@ function LightSource(position, ambient, diffuse, specular) {
 /**
 * A collection of light sources.  It stores the scene's
 * ambient color as well as data on one or more light sources.
+* When constructed, the default lighting will consist of one directional
+ * light source that points away from the viewer.
 * @class
 * @alias glutil.Lights
 */
@@ -1116,8 +1122,6 @@ Lights.prototype.bind=function(program){
 * May be omitted; default is (0,0,0).
 */
 function MaterialShade(ambient, diffuse, specular,shininess,emission) {
- // NOTE: A solid color is defined by setting ambient
- // and diffuse to the same value
  /** Specular highlight power of this material. */
  this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
  /** Ambient reflection of this material. */
@@ -1262,14 +1266,6 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset){
     }
   }
 }
-/**
- *
- */
-Mesh.prototype.getAttributeBits=function(){
-  // It is assumed that each sub-mesh has the same
-  // attribute bits
-  return this.subMeshes[0].attributeBits;
- }
 /**
  * Changes the primitive mode for this mesh.
  * Future vertices will be drawn as primitives of the new type.
@@ -1513,9 +1509,7 @@ function SubMesh(vertices,faces,format){
   return this;
  }
 }
-/**
- *
- */
+/** @private */
 SubMesh.prototype.toWireFrame=function(){
   if(this.builderMode==Mesh.LINES){
    return this;
@@ -1749,7 +1743,6 @@ BufferedSubMesh.prototype.dispose=function(){
 }
 /**
  * @private
- * @param {*} program
  */
 BufferedSubMesh.prototype.bind=function(program){
   var context=program.getContext();
@@ -1785,8 +1778,7 @@ BufferedSubMesh.prototype.bind=function(program){
   }
 }
 /**
- *
- * @param {*} program
+ * @private
  */
 BufferedSubMesh.prototype.draw=function(program){
   var context=program.getContext();
@@ -1806,7 +1798,8 @@ BufferedSubMesh.prototype.draw=function(program){
 /**
 *  Specifies a texture, which can serve as image data applied to
 *  the surface of a shape, or even a 2-dimensional array of pixels
-*  used for some other purpose, depending on the shader.
+*  used for some other purpose, such as a depth map, a height map,
+*  a normal map, a reflection map, and so on.
 * @class
 * @alias glutil.Texture
 * @param {string} name URL of the texture data.  It will be loaded via
@@ -1898,8 +1891,10 @@ Texture.prototype.mapToContext=function(context){
  return this;
 }
 /**
- *
- * @param {*} program
+ * Sets up information about this texture and its materials
+ * to a WebGL program.
+ * @param {ShaderProgram} program The WebGL program in which 
+ * uniform values related to the texture will be set up.
  */
 Texture.prototype.bind=function(program){
  if(this.textureImage!==null){
@@ -1917,7 +1912,12 @@ Texture.prototype.bind=function(program){
 }
 
 /**
-* Represents an off-screen frame buffer.
+* Represents an off-screen frame buffer.<p>
+* When FrameBuffer's
+* constructor is called, it will create a texture buffer with the given
+* width and height and a depth buffer with the same dimensions,
+* and will bind both to the frame buffer.  The frame buffer currently
+* bound to the WebGL context will remain unchanged.
 * @class
 * @alias glutil.FrameBuffer
 * @param {WebGLRenderingContext} context
@@ -1949,6 +1949,8 @@ this.context.texImage2D(this.context.TEXTURE_2D, 0,
    this.context.RGBA, this.context.UNSIGNED_BYTE, null);
  // create depth renderbuffer
  this.depthbuffer=context.createRenderbuffer();
+ var oldBuffer=this.context.getParameter(
+   context.FRAMEBUFFER_BINDING);
  this.context.bindFramebuffer(
    context.FRAMEBUFFER,this.buffer);
  this.context.bindRenderbuffer(
@@ -1964,7 +1966,7 @@ this.context.texImage2D(this.context.TEXTURE_2D, 0,
    context.FRAMEBUFFER,context.DEPTH_ATTACHMENT,
    context.RENDERBUFFER,this.depthbuffer);
  this.context.bindFramebuffer(
-   context.FRAMEBUFFER,null);
+   context.FRAMEBUFFER,oldBuffer);
 }
 /**
  * Returns a material object for binding to Shapes.
@@ -1997,7 +1999,7 @@ FrameBuffer.prototype.bind=function(program){
     this.context.FRAMEBUFFER,this.buffer);
 }
 /**
- * Not documented yet.
+ * Unbinds this frame buffer from its associated WebGL context.
  */
 FrameBuffer.prototype.unbind=function(){
   this.context.bindFramebuffer(
@@ -2019,6 +2021,7 @@ FrameBuffer.prototype.dispose=function(){
 }
 
 //////////////////////////////////
+/** @private */
 var TextureImage=function(name){
   this.textureName=null;
   this.name=name;
@@ -2026,9 +2029,7 @@ var TextureImage=function(name){
   this.width=0;
   this.height=0;
 }
-/**
- *
- */
+/** @private */
 TextureImage.prototype.loadImage=function(){
  if(this.image!==null){
   // already loaded
@@ -2049,9 +2050,7 @@ TextureImage.prototype.loadImage=function(){
   image.src=thisName;
  });
 }
-/**
- * @param {*} context
- */
+/** @private */
 TextureImage.prototype.mapToContext=function(context){
   if(this.textureName!==null){
    // already loaded
@@ -2095,10 +2094,7 @@ TextureImage.prototype.mapToContext=function(context){
   }
   return this;
 }
-/**
- *
- * @param {*} program
- */
+/** @private */
 TextureImage.prototype.bind=function(program){
    if(this.image!==null && this.textureName===null){
       // load the image as a texture
@@ -2137,6 +2133,8 @@ TextureImage.prototype.bind=function(program){
  * When a Scene3D object is created, it compiles and loads
  * a default shader program that enables lighting parameters,
  * and sets the projection and view matrices to identity.
+ * The default lighting for the scene will consist of one directional
+ * light source that points away from the viewer.
 *  @class
 * @alias glutil.Scene3D
  * @param {WebGLRenderingContext} context A WebGL 3D context to associate
@@ -2253,7 +2251,8 @@ Scene3D.prototype.createBuffer=function(){
 * @param {number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio (getAspect()).
 * @param {number} near The distance from the camera to
-* the near clipping plane. This should be slightly greater than 0.
+* the near clipping plane. Objects closer than this distance won't be
+* seen. This should be slightly greater than 0.
 * @param {number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
@@ -2271,7 +2270,8 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * @param {number} bottom
  * @param {number} top
 * @param {number} near The distance from the camera to
-* the near clipping plane. This should be slightly greater than 0.
+* the near clipping plane. Objects closer than this distance won't be
+* seen. This should be slightly greater than 0.
 * @param {number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
@@ -2445,7 +2445,9 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  return this;
 }
 /**
-* Adds a 3D shape to this scene.
+* Adds a 3D shape to this scene. This method will load the
+* shape's mesh to vertex buffer objects, if it isn't loaded
+* already.
 * @param {Shape|MultiShape} shape A 3D shape.
 * @return {Scene3D} This object.
 */
@@ -2455,7 +2457,8 @@ Scene3D.prototype.addShape=function(shape){
 }
 /**
  *
- * @param {*} index
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
  * @param {*} position
  * @param {*} diffuse
  * @param {*} specular
@@ -2468,7 +2471,8 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 }
 /**
  *
- * @param {*} index
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
  * @param {*} position
  * @param {*} diffuse
  * @param {*} specular
@@ -2628,7 +2632,6 @@ function Shape(mesh){
   this.vertfaces=null;
   this.material=new MaterialShade();
   this.scale=[1,1,1];
-  this.angle=0;
   this.position=[0,0,0];
   this.rotation=GLMath.quatIdentity();
   this._matrixDirty=true;
@@ -2636,8 +2639,9 @@ function Shape(mesh){
   this.matrix=GLMath.mat4identity();
 }
 /**
- * Loads this shape's mesh to vertex buffer objects.
- * @param {*} context The WebGL context under which
+ * Loads this shape's mesh to vertex buffer objects, if it isn't loaded
+ * already.
+ * @param {WebGLRenderingContext} context The WebGL context under which
  * to load this shape's mesh.
  * @return {Shape} This object.
  */
@@ -2648,13 +2652,14 @@ Shape.prototype.loadMesh=function(context){
  return this;
 }
 /**
- *
- * @param {*} value
+ * Sets this shape's transformation matrix.
+ * @param {*} value A 4x4 matrix.
+ * This method will copy the value of this parameter.
  * @return {Shape} This object.
  */
 Shape.prototype.setMatrix=function(value){
  this._matrixDirty=false;
- this.matrix=value;
+ this.matrix=value.slice(0,16);
  this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
  return this;
 }
@@ -2675,7 +2680,8 @@ Shape.prototype.setColor=function(r,g,b,a){
  this.material=MaterialShade.fromColor(r,g,b,a);
  return this;
 }
-/** Sets this shape's material parameters.
+/** 
+* Sets this shape's material parameters.
 * @param {MaterialShade|Texture} material
  * @return {Shape} This object.
 */
@@ -2686,9 +2692,9 @@ Shape.prototype.setMaterial=function(material){
 /**
  * Sets the scale of this shape relative to its original
  * size.
- * @param {*} x
- * @param {*} y
- * @param {*} z
+ * @param {*} x Scaling factor for this object's width.
+ * @param {*} y Scaling factor for this object's height.
+ * @param {*} z Scaling factor for this object's depth.
 * @return {Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
@@ -2704,7 +2710,7 @@ Shape.prototype.setScale=function(x,y,z){
   return this;
 }
 /**
- * Sets the relative position of this shape from the origin.
+ * Sets the relative position of this shape from its center.
  * @param {Array<number>|number} x Either the X-coordinate,
  * or an array of 3 numbers giving the x, y, and z coordinates.
  * @param {number} y The Y-coordinate.
@@ -2751,8 +2757,11 @@ Shape.prototype.setRotation=function(x,y,z){
   return this;
 }
 /**
- *
- * @param {*} program
+ * Renders this object.  This method will load the shape's mesh to vertex 
+ * buffer objects, if it isn't loaded already.
+ * @param {ShaderProgram} program The WebGL program in which attributes
+ * and uniforms related to the rendered object will be set up.  The
+ * program's shaders will control how the shape will be rendered.
  * @return {Shape} This object.
  */
 Shape.prototype.render=function(program){

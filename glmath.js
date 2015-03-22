@@ -781,8 +781,9 @@ mat4translate:function(mat,v3,v3y,v3z){
 * additional factor.)
 * @param {number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @param {number} nearZ The distance from the camera to
-* the near clipping plane. This should be slightly greater than 0.
+* @param {number} near The distance from the camera to
+* the near clipping plane. Objects closer than this distance won't be
+* seen. This should be slightly greater than 0.
 * @param {number}  farZ The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
@@ -828,12 +829,12 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * Returns a 4x4 matrix representing an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
- * @param {*} l
- * @param {*} r
- * @param {*} b
- * @param {*} t
- * @param {*} n
- * @param {*} f
+ * @param {number} l
+ * @param {number} r
+ * @param {number} b
+ * @param {number} t
+ * @param {number} n
+ * @param {number} f
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4ortho:function(l,r,b,t,n,f){
@@ -844,23 +845,28 @@ mat4ortho:function(l,r,b,t,n,f){
    -(l+r)*width,-(t+b)*height,-(n+f)*depth,1];
 },
 /**
- * Not documented yet.
- * @param {*} l
- * @param {*} r
- * @param {*} b
- * @param {*} t
+ * Returns a 4x4 matrix representing a 2D orthographic view.
+ * @param {number} l Leftmost coordinate of the 2D view.
+ * @param {number} r Rightmost coordinate of the 2D view.
+ * @param {number} b Bottommost coordinate of the 2D view.
+ * @param {number} t Topmost coordinate of the 2D view.
+ * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4ortho2d:function(l,r,b,t){
  return GLMath.mat4ortho2d(l,r,b,t,-1,1);
 },
 /**
  * Returns a 4x4 matrix representing a view frustum.
- * @param {*} l
- * @param {*} r
- * @param {*} b
- * @param {*} t
- * @param {*} n
- * @param {*} f
+ * @param {number} l
+ * @param {number} r
+ * @param {number} b
+ * @param {number} t
+* @param {number} near The distance from the camera to
+* the near clipping plane. Objects closer than this distance won't be
+* seen. This should be slightly greater than 0.
+* @param {number}  farZ The distance from the camera to
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4frustum:function(l,r,b,t,n,f){
