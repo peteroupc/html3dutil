@@ -194,7 +194,7 @@ var GLUtil={
 * Must be 1 or greater.  A value of 1 generates an octahedron,
 * and successive values generate an increasingly fine
 * approximation to a sphere.  If omitted, this
-* value is 6.  There will be 2^div-1 lines
+* value is 6.  There will be 2<sup>div</sup>-1 lines
 * of latitude generated (excluding the poles).
 * @return {Mesh}
 */
@@ -487,7 +487,10 @@ if(!namedColors){
 * WebGL consists of a vertex shader (which processes vertices),
 * and a fragment shader (which processes pixels).  Shader programs
 * are specially designed for running on a graphics processing unit,
-* or GPU.
+* or GPU.<p>
+* When the ShaderProgram constructor is called, it will compile
+* and link a shader program from the source text passed to it, but
+* it won't use that program until the use() method is called.<p>
 * If compiling or linking the shader program fails, a diagnostic
 * log is output to the JavaScript console.
 *
@@ -600,7 +603,9 @@ ShaderProgram.prototype.getUniform=function(name){
 * Makes this program the active program for the WebGL context.
 * This method also sets uniforms that couldn't be applied by the
 * setUniforms() method because the context used a different
-* program.
+* program.<p>
+* Changing the context's active program doesn't reset the uniform
+* variables associated with the previous program.
 * @return {ShaderProgram} This object.
 */
 ShaderProgram.prototype.use=function(){
@@ -1999,7 +2004,7 @@ FrameBuffer.prototype.unbind=function(){
     this.context.FRAMEBUFFER,null);
 }
 /**
- * Not documented yet.
+ * Disposes all resources from this frame buffer object.
  */
 FrameBuffer.prototype.dispose=function(){
  if(this.buffer!=null)
@@ -2154,8 +2159,6 @@ function Scene3D(context){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._matrixDirty=true;
- this._invProjectionView=null;
- this._invTransModel3=null;
  this._invView=null;
  this.lightSource=new Lights();
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
@@ -2376,10 +2379,20 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  return GLUtil.getPromiseResults(promises, resolve, reject);
 }
 /** @private */
+Scene3D.prototype._setIdentityMatrices=function(){
+ this._matrixDirty=false;
+ this._projectionMatrix=GLMath.mat4identity();
+ this._viewMatrix=GLMath.mat4identity();
+ this._invView=GLMath.mat4identity();
+ this.program.setUniforms({
+   "view":this._viewMatrix,
+   "projection":this._projectionMatrix,
+   "viewInverse":this._invView,
+ });
+}
+/** @private */
 Scene3D.prototype._updateMatrix=function(){
  if(this._matrixDirty){
-  var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
-  this._invProjectionView=GLMath.mat4invert(projView);
   this._invView=GLMath.mat4invert(this._viewMatrix);
   this.program.setUniforms({
    "view":this._viewMatrix,
@@ -2476,21 +2489,16 @@ Scene3D.prototype.render=function(){
   if(typeof this.fboFilter!="undefined" && this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
+   this.fbo.bind(this.program);
+   this._renderInner();
+   this.fbo.unbind();
    var oldProgram=this.program;
    var oldProj=this._projectionMatrix.slice(0,16);
    var oldView=this._viewMatrix.slice(0,16);
-   this.useProgram(oldProgram);
-   this.setProjectionMatrix(oldProj);
-   this.setViewMatrix(oldView);
-   this.fbo.bind(oldProgram);
-   this._renderInner();
-   this.fbo.unbind();
    this.useProgram(this.fboFilter);
    this.context.clear(
     this.context.COLOR_BUFFER_BIT);
-   this.setProjectionMatrix(GLMath.mat4identity());
-   this.setViewMatrix(GLMath.mat4identity());
-   this._updateMatrix();
+   this._setIdentityMatrices();
    this.fboQuad.render(this.fboFilter);
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
