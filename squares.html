@@ -50,7 +50,6 @@ return ShaderProgram.makeEffect(context,[
 "}"].join("\n"));
 }
 
-
 function makeGrayscale(context){
 return ShaderProgram.makeEffect(context,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
@@ -124,7 +123,7 @@ onload=(function(){
   GLUtil.renderLoop(function(){
    if(currentFilter)currentFilter.setUniforms({"time":time});
    time+=1;
-   time%=100;   
+   time%=100;
    scene.render();
    for(var i=0;i<scene.shapes.length;i++){
     scene.shapes[i].setRotation([0,rot,0]);

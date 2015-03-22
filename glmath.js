@@ -51,7 +51,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 var GLMath={
 /** Finds the cross product of two 3-element vectors.
- @return {Array<number>} */
+ * @param {Array<number>} a The first vector.
+ * @param {Array<number>} b The second vector.
+ * @return {Array<number>} A 3-element vector containing the cross product.
+ */
 vec3cross:function(a,b){
 return [a[1]*b[2]-a[2]*b[1],
  a[2]*b[0]-a[0]*b[2],
@@ -59,8 +62,8 @@ return [a[1]*b[2]-a[2]*b[1],
 },
 /**
  * Finds the dot product of two 3-element vectors.
- * @param {Array<number>} a
- * @param {Array<number>} b
+ * @param {Array<number>} a The first vector.
+ * @param {Array<number>} b The second vector.
  * @return {number} The dot product.
  */
 vec3dot:function(a,b){
@@ -69,8 +72,8 @@ return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
 /**
  * Adds two 3-element vectors and stores
  * the result in the first vector.
- * @param {Array<number>} a
- * @param {Array<number>} b
+ * @param {Array<number>} a The first vector.
+ * @param {Array<number>} b The second vector.
  * @return {Array<number>} The parameter "a"
  */
 vec3addInPlace:function(a,b){
@@ -133,6 +136,8 @@ return a;
 },
 /**
  * Converts a 3-element vector to its normalized version.
+ * When a vector is normalized, the distance from the origin
+ * to that vector becomes 1 (unless all its components are 0.)
  * @param {Array<number>} vec A 3-element vector.
  * @return {Array<number>} The parameter "vec".
  */
@@ -151,6 +156,8 @@ vec3normInPlace:function(vec){
 },
 /**
  * Converts a 4-element vector to its normalized version.
+ * When a vector is normalized, the distance from the origin
+ * to that vector becomes 1 (unless all its components are 0.)
  * @param {Array<number>} vec A 4-element vector.
  * @return {Array<number>} The parameter "vec".
  */
@@ -171,7 +178,9 @@ vec4normInPlace:function(vec){
 },
 /**
  * Returns a normalized version of a 3-element vector.
- * @param {*} vec A 3-element vector.
+ * When a vector is normalized, the distance from the origin
+ * to that vector becomes 1 (unless all its components are 0.)
+ * @param {Array<number>} vec A 3-element vector.
  * @return {Array<number>} The resulting vector.
  */
 vec3norm:function(vec){
@@ -179,9 +188,22 @@ vec3norm:function(vec){
  GLMath.vec3normInPlace(ret);
  return ret;
 },
+
+/**
+ * Returns a normalized version of a 4-element vector.
+ * When a vector is normalized, the distance from the origin
+ * to that vector becomes 1 (unless all its components are 0.)
+ * @param {Array<number>} vec A 4-element vector.
+ * @return {Array<number>} The resulting vector.
+ */
+vec4norm:function(vec){
+ var ret=[vec[0],vec[1],vec[2],vec[3]]
+ GLMath.vec4normInPlace(ret);
+ return ret;
+},
 /**
  * Returns the distance of this three-element vector from the origin.
- * @param {*} a A three-element vector.
+ * @param {Array<number>} a A three-element vector.
  * @return {number}
  */
 vec3length:function(a){
@@ -190,8 +212,11 @@ vec3length:function(a){
  var dz=a[2];
  return Math.sqrt(dx*dx+dy*dy+dz*dz);
 },
-/** Returns the length of a 4-element vector.
-  @return {number} */
+/**
+ * Returns the distance of this four-element vector from the origin.
+ * @param {Array<number>} a A four-element vector.
+ * @return {number}
+ */
 vec4length:function(a){
  var dx=a[0];
  var dy=a[1];
@@ -344,6 +369,13 @@ quatInverse:function(quat){
    GLMath.quatConjugate(quat));
 },
 /**
+* Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
+* @return {boolean}
+*/
+quatIsIdentity:function(quat){
+ return quat[0]==0 && quat[1]==0 && quat[2]==0 && quat[3]==1
+},
+/**
  * Generates a 4x4 matrix describing the rotation
  * described by this quaternion.
  * @param {*} quat A quaternion.
@@ -396,16 +428,13 @@ quatToAngleAxis:function(a){
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.
  * @param {Array<number>|number} v X-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the X axis.  If "vy" and "vz" are omitted, this can
+ * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
  * @param {number} vy Y-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the Y axis.
+ * of rotation.
  * @param {number} vz Z-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the Z axis.
+ * of rotation.
  * @return {Array<number>} The generated quaternion.
  */
 quatFromAngleAxis:function(angle,v,vy,vz){
@@ -436,19 +465,21 @@ ret[2]*=sint;
 return ret;
 },
 /**
- * Generates a quaternion from roll, pitch and yaw angles.
- * @param {number} rollDegrees Rotation about the z-axis, in degrees.
+ * Generates a quaternion from pitch, yaw and roll angles
+ * (sometimes known as bank, heading and attitude, respectively).
+ * The rotation will occur as a pitch, then yaw, then roll.
  * @param {number} pitchDegrees Rotation about the x-axis, in degrees.
  * @param {number} yawDegrees Rotation about the y-axis, in degrees.
+ * @param {number} rollDegrees Rotation about the z-axis, in degrees.
  * @return {Array<number>} The generated quaternion.
  */
-quatRollPitchYaw:function(rollDegrees,pitchDegrees,yawDegrees){
+quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
  rollDegrees=(rollDegrees+180)%360.0-180.0;
  pitchDegrees=(pitchDegrees+180)%360.0-180.0;
  yawDegrees=(yawDegrees+180)%360.0-180.0;
- var rollRad=roll*GLMath.PiDividedBy360;
- var pitchRad=pitch*GLMath.PiDividedBy360;
- var yawRad=yaw*GLMath.PiDividedBy360;
+ var rollRad=rollDegrees*GLMath.PiDividedBy360;
+ var pitchRad=pitchDegrees*GLMath.PiDividedBy360;
+ var yawRad=yawDegrees*GLMath.PiDividedBy360;
  var sp=Math.sin(pitchRad);
  var cp=Math.cos(pitchRad);
  var sy=Math.sin(yawRad);
@@ -464,31 +495,45 @@ quatRollPitchYaw:function(rollDegrees,pitchDegrees,yawDegrees){
  ]
 },
 /**
- * Not documented yet.
- * @param {*} a
+ * Converts this quaternion to the same version of the rotation
+ * in the form of pitch, yaw, and roll angles
+  * (sometimes known as bank, heading and attitude, respectively).
+  * The rotation described by the return value 
+ * will occur as a pitch, then yaw, then roll.
+ * @param {Array<number>} a A quaternion.  Should be normalized.
+ * @return {Array<number>} A three-element array containing the
+ * pitch, yaw, and roll angles, in that order, in degrees.
  */
-quatToEuler:function(a){
-	var sqw = a[3]*a[3];
-	var sqx = a[0]*a[0];
-	var sqy = a[1]*a[1];
-	var sqz = a[2]*a[2];
+quatToPitchYawRoll:function(a){
+  var c0=a[3];
+  var c1=a[0]; // first pitch
+  var c2=a[1]; // then yaw
+  var c3=a[2]; // then roll
+	var sq1=c1*c1;
+  var sq2=c2*c2;
+  var sq3=c3*c3;
+  var e1=Math.atan2(2*(c0*c1-c2*c3),1-(sq1+sq2)*2);
+  var e2=Math.asin(2*(c0*c2+c1*c3));
+  var e3=Math.atan2(2*(c0*c3-c1*c2),1-(sq2+sq3)*2);
   var euler=[
-	 Math.atan2(2.0 * (a[0]*a[1] + a[2]*a[3]), sqx - sqy - sqz + sqw),
-	 Math.asin(-2.0 * (a[0]*a[2] - a[1]*a[3])),
-	 Math.atan2(2.0 * (a[1]*a[2] + a[0]*a[3]), -sqx - sqy + sqz + sqw)]
-	var mpi = GLMath.Num180DividedByPi;
-  euler[0]*=mpi;
-  euler[1]*=mpi;
-  euler[2]*=mpi;
+    e1*GLMath.Num180DividedByPi,
+    e2*GLMath.Num180DividedByPi,
+    e3*GLMath.Num180DividedByPi
+  ]
+  if(Math.abs(euler[1],90)<0.000001 ||
+      Math.abs(euler[1],-90)<0.000001){
+    euler[2]=0;
+    euler[0]=Math.atan2(p1,p0)*GLMath.Num180DividedByPi;
+  }
   return euler;
 },
 /**
  * Does a spherical linear interpolation between two quaternions.
  * This method is useful for smoothly animating between the two
  * rotations they describe.
- * @param {*} q1 The first quaternion.  Should be normalized.
- * @param {*} q2 The second quaternion.  Should be normalized.
- * @param {*} factor A value from 0 through 1.  Closer to 0 means
+ * @param {Array<number>} q1 The first quaternion.  Should be normalized.
+ * @param {Array<number>} q2 The second quaternion.  Should be normalized.
+ * @param {number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @param {Array<number>} The interpolated quaternion.
  */
@@ -522,8 +567,8 @@ quatSlerp:function(q1,q2,factor){
 },
 /**
  * Not documented yet.
- * @param {*} q
- * @param {*} v
+ * @param {Array<number>} q
+ * @param {Array<number>} v
  */
 quatRotate:function(q,v){
 var v1 = GLMath.vec3cross( q, v );
@@ -539,8 +584,10 @@ q[2] * dot + v1[2] * q[3] - v2[2],
 1]
 },
 /**
- * Not documented yet.
- * @param {*} m
+ * Generates a quaternion from the rotation described in a 4x4 matrix.
+ * The results are undefined if the matrix doesn't describe a rotation.
+ * @param {Array<number>} m A 4x4 matrix.
+ * @return {Array<number>} The resulting quaternion.
  */
 quatFromMat4:function(m){
 var ret=[]
@@ -596,7 +643,8 @@ return ret
 * Returns the transposed result of the inverted upper left corner of
 * the given 4x4 matrix.
 * @param {Array<number>} m4 A 4x4 matrix.
-* @result {Array<number>} The resulting 3x3 matrix.
+* @result {Array<number>} The resulting 3x3 matrix. If the matrix
+* can't be inverted, returns the identity 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
  // Operation equivalent to transpose(invert(mat3(m4)))
@@ -669,7 +717,7 @@ mat4scaled:function(v3,v3y,v3z){
   }
 },
 /**
- * Returns a translation matrix
+ * Returns a 4x4 matrix representing a translation.
  * @param {Array<number>|number} v3 Translation along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the translations along the X, Y, and
@@ -778,6 +826,8 @@ mat4lookat:function(viewerPos,lookingAt,up){
 },
 /**
  * Returns a 4x4 matrix representing an orthographic projection.
+ * In this projection, the left clipping plane is parallel to the right clipping
+ * plane and the top to the bottom.
  * @param {*} l
  * @param {*} r
  * @param {*} b
@@ -890,16 +940,13 @@ quatMultiply:function(a,b){
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.
  * @param {Array<number>|number} v X-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the X axis.  If "vy" and "vz" are omitted, this can
+ * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
  * @param {number} vy Y-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the Y axis.
+ * of rotation.
  * @param {number} vz Z-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the Z axis.
+ * of rotation.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4rotate:function(mat,angle,v,vy,vz){
@@ -988,16 +1035,13 @@ mat[12], mat[13], mat[14], mat[15]];
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.
  * @param {Array<number>|number} v X-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the X axis.  If "vy" and "vz" are omitted, this can
+ * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
  * @param {number} vy Y-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the Y axis.
+ * of rotation.
  * @param {number} vz Z-component of the axis
- * of rotation.  This means rotate this value times the given number
- * of degrees about the Z axis.
+ * of rotation.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4rotated:function(angle,v,vy,vz){
@@ -1060,13 +1104,23 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 GLMath.quatDot=GLMath.vec4dot;
 /**
  * Converts a quaternion to its normalized version.
+ * When a quaternion is normalized, the distance from the origin
+ * to that quaternion becomes 1 (unless all its components are 0.)
  * @function
  * @param {Array<number>} vec A quaternion.
  * @return {Array<number>} The parameter "vec".
  */
 GLMath.quatNormInPlace=GLMath.vec4normInPlace;
-/** Returns the length of a quaternion, the
-  same as for a 4-element vector.
+/**
+ * Converts a quaternion to its normalized version; returns a new quaternion.
+ * When a quaternion is normalized, the distance from the origin
+ * to that quaternion becomes 1 (unless all its components are 0.)
+ * @function
+ * @param {Array<number>} vec A quaternion.
+ * @return {Array<number>} The normalized quaternion.
+ */
+GLMath.quatNorm=GLMath.vec4norm;
+/** Returns the distance of this quaternion from the origin.
 * @function
  @param {Array<number>} quat The quaternion.
   @return {number} */
@@ -1081,7 +1135,8 @@ GLMath.quatLength=GLMath.vec4length;
  */
 GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
 /**
- * Returns a copy of a quaternion
+ * Returns a copy of a quaternion.
+* @function
  * @return {Array<number>}
  */
 GLMath.quatCopy=GLMath.vec4copy;

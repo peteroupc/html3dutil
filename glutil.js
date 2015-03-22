@@ -2630,7 +2630,7 @@ function Shape(mesh){
   this.scale=[1,1,1];
   this.angle=0;
   this.position=[0,0,0];
-  this.rotation=[0,0,0];
+  this.rotation=GLMath.quatIdentity();
   this._matrixDirty=true;
   this._invTransModel3=GLMath.mat3identity();
   this.matrix=GLMath.mat4identity();
@@ -2726,7 +2726,8 @@ Shape.prototype.setPosition=function(x,y,z){
   return this;
 }
 /**
- *
+ * Sets this object's rotation.  The rotation will occur in this order: X-axis,
+ * then Y-axis, then Z-axis rotation.
  * @param {Array<number>|number} x Rotation about the X-axis in degrees
  * (may be negative),
  * or an array of 3 numbers giving the rotation about the x, y, and z axis.
@@ -2739,12 +2740,13 @@ Shape.prototype.setPosition=function(x,y,z){
 Shape.prototype.setRotation=function(x,y,z){
   if(x!=null && y==null && z==null){
    if(x.constructor==Array)
-    this.rotation=x.slice(0,3);
+    this.rotation=GLMath.quatFromPitchYawRoll(x[0],x[1],x[2]);
    else
-    this.rotation=[x,x,x];
+    this.rotation=GLMath.quatFromPitchYawRoll(x,x,x);
   } else {
-   this.rotation=[x,y,z];
+   this.rotation=GLMath.quatFromPitchYawRoll(x,y,z);
   }
+  GLMath.quatNormInPlace(this.rotation);
   this._matrixDirty=true;
   return this;
 }
@@ -2785,14 +2787,9 @@ Shape.prototype._updateMatrix=function(){
   this._matrixDirty=false;
   this.matrix=GLMath.mat4translated(this.position[0],
   this.position[1],this.position[2]);
-  if(this.rotation[0]!=0){
-    this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[0],[1,0,0]);
-  }
-  if(this.rotation[1]!=0){
-    this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[1],[0,1,0]);
-  }
-  if(this.rotation[2]!=0){
-    this.matrix=GLMath.mat4rotate(this.matrix,this.rotation[2],[0,0,1]);
+  if(!GLMath.quatIsIdentity(this.rotation)){
+    this.matrix=GLMath.mat4multiply(this.matrix,
+      GLMath.quatToMat4(this.rotation));
   }
   this.matrix=GLMath.mat4scale(this.matrix,this.scale);
   this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
