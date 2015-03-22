@@ -13,7 +13,7 @@ The file "glutil_min.js" is a minified single-file version of the library.
 
 Demos
 ---------
-* [squares.html](https://github.com/peteroupc/html3dutil/squares.html) - Demonstrates shader-based filters.
+* [squares.html](https://peteroupc.github.io/html3dutil/squares.html) - Demonstrates shader-based filters.
 
 Source Code
 ---------
