@@ -25,8 +25,11 @@ function createQuad(x,y,width,height){
  var y2=y+height;
  builder.vertex3(x,y,0);
  builder.vertex3(x,y2,0);
- builder.vertex3(x2,y,0);
- builder.vertex3(x2,y2,0);
+ var slices=1;
+ for(var i=1;i<=slices;i++){
+  builder.vertex3(x+(x2-x)*i/slices,y,0);
+  builder.vertex3(x+(x2-x)*i/slices,y2,0);
+ }
  return builder.recalcNormals();
 };
 
