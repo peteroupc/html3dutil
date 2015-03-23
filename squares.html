@@ -100,6 +100,7 @@ function toarr(a){
 onload=(function(){
   var scene=new Scene3D(document.getElementById("canvas"));
   var context=scene.getContext();
+  scene.setDirectionalLight(0,[0,0,-1]);
   scene3d=scene;
   var color=true;
   var oddrow=false;
