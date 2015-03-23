@@ -262,7 +262,7 @@ for (var i=divisions-1;i>=0;i--) {
   aCache[0]=0; // cos(-90deg)
   aCache[1]=-1; // sin(-90deg)
  } else {
-  var rada=a*GLUtil.PiDividedBy180;
+  var rada=a*GLMath.PiDividedBy180;
   var ca=Math.cos(rada);
   var sa=Math.sin(rada);
   aCache[i*2]=ca;
@@ -280,7 +280,7 @@ bCache[0]=1; // cos(0deg)
 bCache[1]=0; // sin(0deg)
 for (var i=1;i<divisions*2;i++) {
  var b=(360.0*i/divisions);
- var radb=b*GLUtil.PiDividedBy180;
+ var radb=b*GLMath.PiDividedBy180;
  var cb=Math.cos(radb);
  var sb=Math.sin(radb);
  bCache.push(cb,sb);
@@ -1037,7 +1037,7 @@ Lights.MAX_LIGHTS = 3;
 /** @private */
 Lights._createLight=function(index, position, diffuse, specular,directional){
  var lightPosition=position ? [position[0],position[1],position[2],
-   directional ? 0.0 : 1.0] : (directional ? 
+   directional ? 0.0 : 1.0] : (directional ?
    [0, 0, 1, 0] :
    [0,0,0,1]);
  var lightDiffuse=diffuse || (index==0 ? [1,1,1] : [0,0,0]);
@@ -1059,11 +1059,11 @@ Lights._createLight=function(index, position, diffuse, specular,directional){
  * along the z-axis toward the origin (Z-coordinate -1). May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
  * @return {Lights} This object.
  */
@@ -1075,17 +1075,17 @@ Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  * Sets a directional light given its position.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
- * @param {Array<number>} position A 3-element vector giving the relative position of the light from the origin, 
- * along the X, Y, and Z axes, respectively.  The light will shine everywhere in the same direction as the 
+ * @param {Array<number>} position A 3-element vector giving the relative position of the light from the origin,
+ * along the X, Y, and Z axes, respectively.  The light will shine everywhere in the same direction as the
  * light's position from the origin, but not in the opposite direction. For example, (0, 1, 0) means a light shining
  * from the top (Y-coordinate 1). May be null, in which case the default
  * is (0, 0, -1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
  * @return {Lights} This object.
  */
@@ -1104,11 +1104,11 @@ Lights.prototype.setDirectionalLightByPos=function(index,direction,diffuse,specu
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {*} position
- * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, 
- * in the red, green, and blue components respectively.  Each component ranges from 0 to 1. 
+ * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light,
+ * in the red, green, and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
- * the light, in the red, green, and blue components respectively.  Each component 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
+ * the light, in the red, green, and blue components respectively.  Each component
  * ranges from 0 to 1. May be null, in which case the default is (1, 1, 1).
  * @return {Lights} This object.
  */
@@ -1124,11 +1124,11 @@ Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  * along the z-axis toward the origin (third coordinate -1). May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
  * @return {Lights} This object.
  */
@@ -1140,11 +1140,11 @@ Lights.prototype.addDirectionalLight=function(position,diffuse,specular){
  *
  * @param {*} position
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
  * @return {Lights} This object.
  */
@@ -2251,9 +2251,9 @@ TextureImage.prototype.bind=function(program){
  */
 function Scene3D(canvasOrContext){
  var context=canvasOrContext;
- if(typeof canvas.getContext=="function"){
+ if(typeof canvasOrContext.getContext=="function"){
   // This might be a canvas, so create a WebGL context.
-  context=GLUtil.get3DContext(canvas);
+  context=GLUtil.get3DContext(canvasOrContext);
  }
  this.context=context;
  this.context.viewport(0,0,
@@ -2388,7 +2388,7 @@ Scene3D.prototype.createBuffer=function(){
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 * @return {Scene3D} This object.
-* @example 
+* @example
 * // Set the perspective view.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
 * scene.setPerspective(45,scene.getAspect(),0.1,100);
@@ -2597,17 +2597,17 @@ Scene3D.prototype.addShape=function(shape){
  * Sets a directional light given its position.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
- * @param {Array<number>} position A 3-element vector giving the relative position of the light from the origin, 
- * along the X, Y, and Z axes, respectively.  The light will shine everywhere in the same direction as the 
+ * @param {Array<number>} position A 3-element vector giving the relative position of the light from the origin,
+ * along the X, Y, and Z axes, respectively.  The light will shine everywhere in the same direction as the
  * light's position from the origin, but not in the opposite direction. For example, (0, 1, 0) means a light shining
  * from the top (Y-coordinate 1). May be null, in which case the default
  * is (0, 0, -1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
  * @return {Lights} This object.
  */
@@ -2626,11 +2626,11 @@ Scene3D.prototype.setDirectionalLightByPos=function(index,position,diffuse,specu
  * along the z-axis toward the origin (third coordinate -1). May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
 * @return {Scene3D} This object.
  */
@@ -2645,11 +2645,11 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  * light has index 0, the second has index 1, and so on.
  * @param {*} position
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by 
+ * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1. 
+ * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
 * @return {Scene3D} This object.
  */
