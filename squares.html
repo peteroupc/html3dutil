@@ -13,11 +13,6 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-function createContext(){
-  var canvasElement=document.getElementById("canvas")
-  return GLUtil.get3DContext(canvasElement);
-}
-
 function createQuad(x,y,width,height){
  var builder=new Mesh();
  builder.mode(Mesh.QUAD_STRIP);
@@ -103,8 +98,8 @@ function toarr(a){
 }
 
 onload=(function(){
-  var context=createContext();
-  var scene=new Scene3D(context);
+  var scene=new Scene3D(document.getElementById("canvas"));
+  var context=scene.getContext();
   scene3d=scene;
   var color=true;
   var oddrow=false;

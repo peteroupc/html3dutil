@@ -25,7 +25,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /**
 * A collection of math functions for working
 * with vectors and matrices.<p>
-* Vectors: A vector is simply a set of 3 or 4 elements that are related
+* <b>Vectors:</b> A vector is simply a set of 3 or 4 elements that are related
 * to each other.  As such, a vector can symbolize a position, a direction,
 * a ray, a color, or anything else.  If a vector describes a position, direction,
 * or normal, the four elements are given as X, Y, Z, and W, in that order.
@@ -33,15 +33,16 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * blue, and alpha, in that order (where each element ranges from 0-1).
 * The methods in this class treat arrays as vectors.  Functions dealing
 * with vectors begin with "vec".<p>
-* Matrices:  A matrix is a 16- or 9-element array that describes a
-* transformation from one coordinate system to another.
+* <b>Matrices:</b>  A matrix is a 16- or 9-element array that describes a
+* transformation from one coordinate system to another. Transformations
+* include translation (shifting), scaling, and rotation.<p>
 * All functions dealing with 4x4 matrices assume that
 * the translation elements in x, y, and z are located in the
 * 13th, 14th, and 15th elements of the matrix.  All functions also assume
 * a right-handed coordinate system, in which the z-axis points
 * toward the viewer, the x-axis points to the right and the y-axis
 * points up. Functions dealing with matrices begin with "mat".<p>
-* Quaternions:  A quaternion is a 4-element array that describes a
+* <b>Quaternions:</b>  A quaternion is a 4-element array that describes a
 * 3D rotation.  The first three elements are the X, Y, and Z components
 * (axis of rotation multiplied by the sine of half the angle)
 * and the fourth component is the W component (cosine of half the angle).
@@ -465,12 +466,14 @@ ret[2]*=sint;
 return ret;
 },
 /**
- * Generates a quaternion from pitch, yaw and roll angles
- * (sometimes known as bank, heading and attitude, respectively).
+ * Generates a quaternion from pitch, yaw and roll angles.
  * The rotation will occur as a pitch, then yaw, then roll.
- * @param {number} pitchDegrees Rotation about the x-axis, in degrees.
- * @param {number} yawDegrees Rotation about the y-axis, in degrees.
- * @param {number} rollDegrees Rotation about the z-axis, in degrees.
+ * @param {number} pitchDegrees Rotation about the x-axis, in degrees.  Positive
+ * values indicate counterclockwise rotation.
+ * @param {number} yawDegrees Rotation about the y-axis, in degrees.  Positive
+ * values indicate counterclockwise rotation.
+ * @param {number} rollDegrees Rotation about the z-axis, in degrees.  Positive
+ * values indicate counterclockwise rotation.
  * @return {Array<number>} The generated quaternion.
  */
 quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
@@ -496,13 +499,13 @@ quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
 },
 /**
  * Converts this quaternion to the same version of the rotation
- * in the form of pitch, yaw, and roll angles
-  * (sometimes known as bank, heading and attitude, respectively).
-  * The rotation described by the return value 
+ * in the form of pitch, yaw, and roll angles.
+  * The rotation described by the return value
  * will occur as a pitch, then yaw, then roll.
  * @param {Array<number>} a A quaternion.  Should be normalized.
  * @return {Array<number>} A three-element array containing the
- * pitch, yaw, and roll angles, in that order, in degrees.
+ * pitch, yaw, and roll angles, in that order, in degrees.  Positive
+ * values indicate counterclockwise rotation.
  */
 quatToPitchYawRoll:function(a){
   var c0=a[3];
@@ -535,7 +538,7 @@ quatToPitchYawRoll:function(a){
  * @param {Array<number>} q2 The second quaternion.  Should be normalized.
  * @param {number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
- * @param {Array<number>} The interpolated quaternion.
+ * @return {Array<number>} The interpolated quaternion.
  */
 quatSlerp:function(q1,q2,factor){
  var cosval=GLMath.quatDot(q1,q2);
@@ -800,9 +803,10 @@ mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
  * Returns a 4x4 matrix representing a camera view.
 * @param {Array<number>} viewerPos A 3-element vector specifying
 * the camera position in world space.
-* @param {Array<number>} lookingAt A 3-element vector specifying
-* the point in world space that the camera is looking at.
-* @param {Array<number>} up A 3-element vector specifying
+* @param {Array<number>|undefined} lookingAt A 3-element vector specifying
+* the point in world space that the camera is looking at.  May be omitted,
+* in which case the default is the coordinates (0,0,0).
+* @param {Array<number>|undefined} up A 3-element vector specifying
 * the up-vector direction.  May be omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
 * vector must not point in the same or opposite direction as
@@ -811,6 +815,7 @@ mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
  */
 mat4lookat:function(viewerPos,lookingAt,up){
  if(!up)up=[0,1,0];
+ if(!lookingAt)lookingAt=[0,0,0]
  var f=[viewerPos[0]-lookingAt[0],viewerPos[1]-lookingAt[1],viewerPos[2]-lookingAt[2]];
  if(GLMath.vec3length(f)<1e-6){
    return GLMath.mat4identity();
@@ -1147,8 +1152,9 @@ GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
  */
 GLMath.quatCopy=GLMath.vec4copy;
 /**
- @private
+ Pi divided by 180. Multiply by this number to convert degrees to radians.
  @const
+ @default
 */
 GLMath.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
@@ -1162,8 +1168,9 @@ GLMath.PiDividedBy360 = 0.00872664625997164788461845384244;
 */
 GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
- @private
+ 180 divided by pi. Multiply by this number to convert radians to degrees.
  @const
+ @default
 */
 GLMath.Num180DividedByPi = 57.295779513082320876798154814105;
 

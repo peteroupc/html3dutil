@@ -30,10 +30,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 var GLUtil={
 /**
 * This method will call the function once before returning,
-* and queue requests to call that function once per frame. 
+* and queue requests to call that function once per frame.
 * (If the browser doesn't
 * support requestAnimationFrame or an equivalent, uses
-* setTimeout to implement this method.) 
+* setTimeout to implement this method.)
 * @param {Function} func The function to call.
 */
 "renderLoop":function(func){
@@ -43,6 +43,43 @@ var GLUtil={
    window.requestAnimationFrame(selfRefFunc);
   };
   window.requestAnimationFrame(selfRefFunc);
+},
+/**
+* Creates an HTML canvas element, optionally appending
+* it to an existing HTML element.
+* @param {number|null} width Width of the new canvas
+* element, or if null, the value <code>window.innerWidth</code>.
+* The resulting width will be rounded up.
+* This parameter can't be a negative number.
+* @param {number|null} height Height of the new canvas
+* element, or if null, the value <code>window.innerHeight</code>.
+* The resulting height will be rounded up.
+* This parameter can't be a negative number.
+* @param {HTMLElement|null} parent If non-null, the parent
+* element of the new HTML canvas element. The element will be
+* appended as a child of this parent.
+* @return {HTMLCanvasElement} The resulting canvas element.
+*/
+"createCanvas":function(width, height, parent){
+ var canvas=document.createElement("canvas");
+ if(width==null){
+  canvas.width=Math.ceil(window.innerWidth)+"";
+ } else if(width<0){
+  throw new Error("width negative");
+ } else {
+  canvas.width=Math.ceil(width)+"";
+ }
+ if(height==null){
+  canvas.height=Math.ceil(window.innerHeight)+"";
+ } else if(height<0){
+  throw new Error("height negative");
+ } else {
+  canvas.height=Math.ceil(height)+"";
+ }
+ if(parent){
+  parent.appendChild(canvas);
+ }
+ return canvas;
 },
 /**
 * Creates a 3D rendering context from an HTML canvas element,
@@ -78,7 +115,6 @@ var GLUtil={
   }
   if(GLUtil.is3DContext(context)){
    context.getExtension("OES_element_index_uint");
-   context.getExtension("EXT_texture_filter_anisotropic");
   }
   return context;
 },
@@ -963,7 +999,8 @@ shader+=" // emission\n"+
 return shader;
 };
 
-/** Specifies parameters for light sources.
+/**
+* Specifies parameters for light sources.
 * @class
 * @alias glutil.LightSource
 */
@@ -1635,8 +1672,8 @@ Mesh.LINES = 3;
 /**
 Primitive mode for rendering a triangle fan.  The first 3
 vertices make up the first triangle, and each additional
-triangle is made up of the last vertex, the first vertex, and 1
-new vertex.
+triangle is made up of the last vertex, the first vertex of
+the first trangle, and 1 new vertex.
  @const
 */
 Mesh.TRIANGLE_FAN = 4;
@@ -1893,7 +1930,7 @@ Texture.prototype.mapToContext=function(context){
 /**
  * Sets up information about this texture and its materials
  * to a WebGL program.
- * @param {ShaderProgram} program The WebGL program in which 
+ * @param {ShaderProgram} program The WebGL program in which
  * uniform values related to the texture will be set up.
  */
 Texture.prototype.bind=function(program){
@@ -2073,6 +2110,12 @@ TextureImage.prototype.mapToContext=function(context){
   context.texImage2D(context.TEXTURE_2D, 0,
     context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
     this.image);
+  var ext=context.getExtension("EXT_texture_filter_anisotropic");
+  if(ext){
+   var extParam=ext.TEXTURE_MAX_ANISOTROPY_EXT;
+   context.texParameterf(context.TEXTURE_2D,extParam,
+     context.getParameter(extParam));
+  }
   if(isPowerOfTwo(this.image.width) &&
       isPowerOfTwo(this.image.height)){
    // Enable mipmaps if texture's dimensions are powers of two
@@ -2137,10 +2180,16 @@ TextureImage.prototype.bind=function(program){
  * light source that points away from the viewer.
 *  @class
 * @alias glutil.Scene3D
- * @param {WebGLRenderingContext} context A WebGL 3D context to associate
- * with this scene.
+ * @param {WebGLRenderingContext|HTMLCanvasElement} context
+ * A WebGL 3D context to associate with this scene, or an HTML
+ * canvas element to create a WebGL context from.
  */
-function Scene3D(context){
+function Scene3D(canvasOrContext){
+ var context=canvasOrContext;
+ if(typeof canvas.getContext=="function"){
+  // This might be a canvas, so create a WebGL context.
+  context=GLUtil.get3DContext(canvas);
+ }
  this.context=context;
  this.context.viewport(0,0,
     this.context.canvas.width*1.0,this.context.canvas.height*1.0);
@@ -2214,6 +2263,23 @@ Scene3D.prototype.disableLighting=function(){
    this._getDefines()+ShaderProgram.getDefaultVertex(),
    this._getDefines()+ShaderProgram.getDefaultFragment());
  return this.useProgram(program);
+}
+/**
+* Sets the viewport width and height for this scene.
+* @param {number} width Width of the scene, in pixels.
+*  Will be rounded up.
+* @param {number} height Height of the scene, in pixels.
+*  Will be rounded up.
+* @return {number}
+*/
+Scene3D.prototype.setDimensions=function(width, height){
+ if(width<0 || height<0)throw new Error("width or height negative");
+ this.context.canvas.width=Math.ceil(width)+"";
+ this.context.canvas.height=Math.ceil(height)+"";
+  if(this.fbo!="undefined" && this.fbo){
+   this.fbo.dispose();
+   this.fbo=this.createBuffer();
+  }
 }
 /** Gets the viewport width for this scene.
 * @return {number}
@@ -2429,8 +2495,9 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 *  Sets this scene's view matrix to represent a camera view.
 * @param {Array<number>} eye A 3-element vector specifying
 * the camera position in world space.
-* @param {Array<number>} center A 3-element vector specifying
-* the point in world space that the camera is looking at.
+* @param {Array<number>|undefined} center A 3-element vector specifying
+* the point in world space that the camera is looking at. May be omitted,
+* in which case the default is the coordinates (0,0,0).
 * @param {Array<number>|undefined} up A 3-element vector specifying
 * the up-vector direction.  May be omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
@@ -2440,6 +2507,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 */
 Scene3D.prototype.setLookAt=function(eye, center, up){
  up = up || [0,1,0];
+ center = center || [0,0,0];
  this._viewMatrix=GLMath.mat4lookat(eye, center, up);
  this._matrixDirty=true;
  return this;
@@ -2519,7 +2587,7 @@ Scene3D.prototype.render=function(){
  * create a frame buffer object, render its shapes to that frame
  * buffer, and then apply the filter program as it renders the
  * frame buffer to the canvas.
- * @param {ShaderProgram} filterProgram A shader
+ * @param {ShaderProgram|null} filterProgram A shader
  * program that implements a texture filter.  The program
  * could be created using the ShaderProgram.makeEffect() method.
  * If this value is null, texture filtering is disabled and shapes
@@ -2680,7 +2748,7 @@ Shape.prototype.setColor=function(r,g,b,a){
  this.material=MaterialShade.fromColor(r,g,b,a);
  return this;
 }
-/** 
+/**
 * Sets this shape's material parameters.
 * @param {MaterialShade|Texture} material
  * @return {Shape} This object.
@@ -2757,7 +2825,7 @@ Shape.prototype.setRotation=function(x,y,z){
   return this;
 }
 /**
- * Renders this object.  This method will load the shape's mesh to vertex 
+ * Renders this object.  This method will load the shape's mesh to vertex
  * buffer objects, if it isn't loaded already.
  * @param {ShaderProgram} program The WebGL program in which attributes
  * and uniforms related to the rendered object will be set up.  The
