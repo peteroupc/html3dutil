@@ -2388,6 +2388,10 @@ Scene3D.prototype.createBuffer=function(){
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 * @return {Scene3D} This object.
+* @example 
+* // Set the perspective view.  Camera has a 45-degree field of view
+* // and will see objects from 0.1 to 100 units away.
+* scene.setPerspective(45,scene.getAspect(),0.1,100);
 */
 Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  return this.setProjectionMatrix(GLMath.mat4perspective(fov,

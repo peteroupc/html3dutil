@@ -569,9 +569,11 @@ quatSlerp:function(q1,q2,factor){
  ];
 },
 /**
- * Not documented yet.
- * @param {Array<number>} q
- * @param {Array<number>} v
+ * Rotates a vector using a quaternion's rotation.
+ * @param {Array<number>} q A quaternion describing
+ * the rotation.
+ * @param {Array<number>} v The vector to rotate.
+ * @return {Array<number>} The rotated vector.
  */
 quatRotate:function(q,v){
 var v1 = GLMath.vec3cross( q, v );
@@ -816,15 +818,19 @@ mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
 mat4lookat:function(viewerPos,lookingAt,up){
  if(!up)up=[0,1,0];
  if(!lookingAt)lookingAt=[0,0,0]
- var f=[viewerPos[0]-lookingAt[0],viewerPos[1]-lookingAt[1],viewerPos[2]-lookingAt[2]];
+ var f=[lookingAt[0]-viewerPos[0],lookingAt[1]-viewerPos[1],lookingAt[2]-viewerPos[2]];
  if(GLMath.vec3length(f)<1e-6){
    return GLMath.mat4identity();
  }
  GLMath.vec3normInPlace(f);
- var s=GLMath.vec3cross(up,f);
+ up=GLMath.vec3norm(up);
+ var s=GLMath.vec3cross(f,up);
  GLMath.vec3normInPlace(s);
- var u=GLMath.vec3cross(f,s);
+ var u=GLMath.vec3cross(s,f);
  GLMath.vec3normInPlace(u);
+ f[0]=-f[0];
+ f[1]=-f[1];
+ f[2]=-f[2];
  return [s[0],u[0],f[0],0,s[1],u[1],f[1],0,s[2],u[2],f[2],0,
     -GLMath.vec3dot(viewerPos,s),
     -GLMath.vec3dot(viewerPos,u),
