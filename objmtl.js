@@ -21,6 +21,9 @@ function MtlData(){
   this.url=null;
   this.list=[];
 }
+/**
+ * Not documented yet.
+ */
 ObjData.prototype.toShape=function(){
  var multi=new MultiShape();
  for(var i=0;i<this.meshes.length;i++){
@@ -31,6 +34,10 @@ ObjData.prototype.toShape=function(){
  }
  return multi;
 }
+/**
+ * Not documented yet.
+ * @param {*} name
+ */
 ObjData.prototype.toShapeFromName=function(name){
  var multi=new MultiShape();
  for(var i=0;i<this.meshes.length;i++){
@@ -56,6 +63,8 @@ ObjData._resolvePath=function(path, name){
  }
  return ret;
 }
+
+/** @private */
 ObjData.prototype._getMaterial=function(mesh){
  if(!this.mtl || !mesh){
   return new MaterialShade();
@@ -69,6 +78,8 @@ ObjData.prototype._getMaterial=function(mesh){
   }
  }
 }
+
+/** @private */
 MtlData.prototype._resolveTextures=function(){
   for(var i=0;i<this.list.length;i++){
     var mtl=this.list[i].data;
@@ -81,6 +92,10 @@ MtlData.prototype._resolveTextures=function(){
     }
   }
 }
+/**
+ * Not documented yet.
+ * @param {*} name
+ */
 MtlData.prototype.getMaterial=function(name){
   for(var i=0;i<this.list.length;i++){
     if(this.list[i].name==name){
