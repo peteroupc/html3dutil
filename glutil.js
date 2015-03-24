@@ -318,7 +318,7 @@ var GLUtil={
    lastRad=radiusEnd;
    var triangleFanBase=(i==0 && baseRad==0);
    var triangleFanTop=(i==stacks-1 && topRad==0);
-   mesh.mode((triangleFanBase || triangleFanTop) ? 
+   mesh.mode((triangleFanBase || triangleFanTop) ?
      Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
    if(triangleFanTop){
     // Output first vertices in reverse order to
@@ -773,7 +773,7 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
    lastZ=zEnd;
    lastRad=radiusEnd;
    var triangleFanBase=(i==0 && inner==0);
-   mesh.mode((triangleFanBase) ? 
+   mesh.mode((triangleFanBase) ?
      Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
    for(var k=0,j=0;k<=slicesTimes2;k+=2,j++){
     var tx=tc[j];
@@ -792,7 +792,6 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
   }
   return mesh.recalcNormals(inward);
 }
-
 
 /**
 * Represents a WebGL shader program.  A shader program in
@@ -1250,7 +1249,7 @@ shader+="vec3 viewPosition=normalize(vec3(viewInverse*vec4(0,0,0,1)-worldPositio
 "// specular reflection\n" +
 "vec3 specular=vec3(0,0,0.);\n" +
 "#define ADD_SPECULAR(i) "+
-"  if(dot(transformedNormalVar,lightPower[i].xyz)>=0.0){" +
+"  if(mshin>0.0 && dot(transformedNormalVar,lightPower[i].xyz)>=0.0){" +
 "   specular+=pow(max(dot(reflect(-lightPower[i].xyz,transformedNormalVar)," +
 "      viewPosition),0.0),mshin)*lights[i].specular*lightPower[i].w;" +
 "  }\n";
@@ -2468,7 +2467,7 @@ TextureImage.prototype.mapToContext=function(context){
   }
   this.textureName=context.createTexture();
   this.width=this.image.width;
-  this.height=this.image.height; 
+  this.height=this.image.height;
   context.bindTexture(context.TEXTURE_2D, this.textureName);
   context.texParameteri(context.TEXTURE_2D,
     context.TEXTURE_MAG_FILTER, context.LINEAR);
@@ -2592,7 +2591,7 @@ Scene3D.prototype._getDefines=function(){
  var ret="";
  if(this.lightingEnabled)
   ret+="#define SHADING\n"
- if(this.lightingEnabled)
+ if(this.specularEnabled)
   ret+="#define SPECULAR\n"
  return ret;
 }
@@ -3155,6 +3154,10 @@ Shape.prototype.setColor=function(r,g,b,a){
  this.material=MaterialShade.fromColor(r,g,b,a);
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} name
+ */
 Shape.prototype.setTexture=function(name){
  this.material=new Texture(name);
  return this;
