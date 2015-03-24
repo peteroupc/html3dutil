@@ -40,8 +40,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * the translation elements in x, y, and z are located in the
 * 13th, 14th, and 15th elements of the matrix.  All functions also assume
 * a right-handed coordinate system, in which the z-axis points
-* toward the viewer, the x-axis points to the right and the y-axis
-* points up. Functions dealing with matrices begin with "mat".<p>
+* toward (not away from) the viewer whenever the x-axis points to 
+* the right and the y-axis points up. Functions dealing with matrices begin with "mat".<p>
 * <b>Quaternions:</b>  A quaternion is a 4-element array that describes a
 * 3D rotation.  The first three elements are the X, Y, and Z components
 * (axis of rotation multiplied by the sine of half the angle)
