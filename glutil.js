@@ -211,30 +211,30 @@ var GLUtil={
  ySize/=2.0;
  zSize/=2.0;
  var vertices=[
--xSize,-ySize,zSize,-1.0,0.0,0.0,1.0,1.0,
--xSize,ySize,zSize,-1.0,0.0,0.0,1.0,0.0,
--xSize,ySize,-zSize,-1.0,0.0,0.0,0.0,0.0,
--xSize,-ySize,-zSize,-1.0,0.0,0.0,0.0,1.0,
-xSize,-ySize,-zSize,1.0,0.0,0.0,1.0,1.0,
-xSize,ySize,-zSize,1.0,0.0,0.0,1.0,0.0,
-xSize,ySize,zSize,1.0,0.0,0.0,0.0,0.0,
-xSize,-ySize,zSize,1.0,0.0,0.0,0.0,1.0,
-xSize,-ySize,-zSize,0.0,-1.0,0.0,1.0,1.0,
-xSize,-ySize,zSize,0.0,-1.0,0.0,1.0,0.0,
--xSize,-ySize,zSize,0.0,-1.0,0.0,0.0,0.0,
--xSize,-ySize,-zSize,0.0,-1.0,0.0,0.0,1.0,
-xSize,ySize,zSize,0.0,1.0,0.0,1.0,1.0,
-xSize,ySize,-zSize,0.0,1.0,0.0,1.0,0.0,
--xSize,ySize,-zSize,0.0,1.0,0.0,0.0,0.0,
--xSize,ySize,zSize,0.0,1.0,0.0,0.0,1.0,
--xSize,-ySize,-zSize,0.0,0.0,-1.0,1.0,1.0,
--xSize,ySize,-zSize,0.0,0.0,-1.0,1.0,0.0,
-xSize,ySize,-zSize,0.0,0.0,-1.0,0.0,0.0,
-xSize,-ySize,-zSize,0.0,0.0,-1.0,0.0,1.0,
-xSize,-ySize,zSize,0.0,0.0,1.0,1.0,1.0,
-xSize,ySize,zSize,0.0,0.0,1.0,1.0,0.0,
--xSize,ySize,zSize,0.0,0.0,1.0,0.0,0.0,
--xSize,-ySize,zSize,0.0,0.0,1.0,0.0,1.0]
+-xSize,-ySize,zSize,-1.0,0.0,0.0,1.0,0.0,
+-xSize,ySize,zSize,-1.0,0.0,0.0,1.0,1.0,
+-xSize,ySize,-zSize,-1.0,0.0,0.0,0.0,1.0,
+-xSize,-ySize,-zSize,-1.0,0.0,0.0,0.0,0.0,
+xSize,-ySize,-zSize,1.0,0.0,0.0,1.0,0.0,
+xSize,ySize,-zSize,1.0,0.0,0.0,1.0,1.0,
+xSize,ySize,zSize,1.0,0.0,0.0,0.0,1.0,
+xSize,-ySize,zSize,1.0,0.0,0.0,0.0,0.0,
+xSize,-ySize,-zSize,0.0,-1.0,0.0,1.0,0.0,
+xSize,-ySize,zSize,0.0,-1.0,0.0,1.0,1.0,
+-xSize,-ySize,zSize,0.0,-1.0,0.0,0.0,1.0,
+-xSize,-ySize,-zSize,0.0,-1.0,0.0,0.0,0.0,
+xSize,ySize,zSize,0.0,1.0,0.0,1.0,0.0,
+xSize,ySize,-zSize,0.0,1.0,0.0,1.0,1.0,
+-xSize,ySize,-zSize,0.0,1.0,0.0,0.0,1.0,
+-xSize,ySize,zSize,0.0,1.0,0.0,0.0,0.0,
+-xSize,-ySize,-zSize,0.0,0.0,-1.0,1.0,0.0,
+-xSize,ySize,-zSize,0.0,0.0,-1.0,1.0,1.0,
+xSize,ySize,-zSize,0.0,0.0,-1.0,0.0,1.0,
+xSize,-ySize,-zSize,0.0,0.0,-1.0,0.0,0.0,
+xSize,-ySize,zSize,0.0,0.0,1.0,1.0,0.0,
+xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
+-xSize,ySize,zSize,0.0,0.0,1.0,0.0,1.0,
+-xSize,-ySize,zSize,0.0,0.0,1.0,0.0,0.0]
  var faces=[0,1,2,0,2,3,4,5,6,4,6,7,8,9,10,8,10,11,12,
  13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23]
  return new Mesh(vertices,faces,Mesh.NORMALS_BIT | Mesh.TEXCOORDS_BIT);
@@ -331,14 +331,14 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,0.0,
      x=sc[k]*radiusStart;
      y=sc[k+1]*radiusStart;
      mesh.texCoord2(1-tx,zStart);
-     mesh.normal3(x*normDir,y*normDir,0);
+     mesh.normal3(x*normDir,y*normDir,zStartHeight*normDir);
      mesh.vertex3(x,y,zStartHeight);
     }
     if(!triangleFanTop){
      x=sc[k]*radiusEnd;
      y=sc[k+1]*radiusEnd;
      mesh.texCoord2(1-tx,zEnd);
-     mesh.normal3(x*normDir,y*normDir,0);
+     mesh.normal3(x*normDir,y*normDir,zEndHeight*normDir);
      mesh.vertex3(x,y,zEndHeight);
     }
    }
