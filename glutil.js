@@ -310,17 +310,17 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,0.0,
    if(triangleFanTop){
     // Output first vertices in reverse order to
     // allow triangle fan effect to work
-    mesh.texCoord2(0,zEnd);
+    mesh.texCoord2(1,zEnd);
     mesh.normal3(0,radiusEnd*normDir,0);
     mesh.vertex3(0,radiusEnd,zEndHeight);
-    mesh.texCoord2(0,zStart);
+    mesh.texCoord2(1,zStart);
     mesh.normal3(0,radiusStart*normDir,0);
     mesh.vertex3(0,radiusStart,zStartHeight);
    } else {
-    mesh.texCoord2(0,zStart);
+    mesh.texCoord2(1,zStart);
     mesh.normal3(0,radiusStart*normDir,0);
     mesh.vertex3(0,radiusStart,zStartHeight);
-    mesh.texCoord2(0,zEnd);
+    mesh.texCoord2(1,zEnd);
     mesh.normal3(0,radiusEnd*normDir,0);
     mesh.vertex3(0,radiusEnd,zEndHeight);
    }
@@ -330,14 +330,14 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,0.0,
     if(!triangleFanBase){
      x=sc[k]*radiusStart;
      y=sc[k+1]*radiusStart;
-     mesh.texCoord2(tx,zStart);
+     mesh.texCoord2(1-tx,zStart);
      mesh.normal3(x*normDir,y*normDir,0);
      mesh.vertex3(x,y,zStartHeight);
     }
     if(!triangleFanTop){
      x=sc[k]*radiusEnd;
      y=sc[k+1]*radiusEnd;
-     mesh.texCoord2(tx,zEnd);
+     mesh.texCoord2(1-tx,zEnd);
      mesh.normal3(x*normDir,y*normDir,0);
      mesh.vertex3(x,y,zEndHeight);
     }
@@ -766,9 +766,9 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
     mesh.mode(Mesh.TRIANGLES);
    } else {
     mesh.mode(Mesh.QUAD_STRIP);
-    mesh.texCoord2(0,texStart);
+    mesh.texCoord2(1,texStart);
     normAndVertex(mesh,normDir,0,radiusStart,zStartHeight);
-    mesh.texCoord2(0,texEnd);
+    mesh.texCoord2(1,texEnd);
     normAndVertex(mesh,normDir,0,radiusEnd,zEndHeight);
    }
    var lastTx=0;
@@ -779,14 +779,14 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
     var x,y;
     if(i==stacks-1){
      var txMiddle=lastTx+(tx-lastTx)*0.5;
-     mesh.texCoord2(lastTx,texStart);
+     mesh.texCoord2(1-lastTx,texStart);
      normAndVertex(mesh,normDir,lastX*radiusStart,lastY*radiusStart,zStartHeight);
      // point at south pole
-     mesh.texCoord2(txMiddle,texEnd);
+     mesh.texCoord2(1-txMiddle,texEnd);
      normAndVertex(mesh,normDir,0,radiusEnd,zEndHeight);
      x=sc[k];
      y=sc[k+1];
-     mesh.texCoord2(tx,texStart);
+     mesh.texCoord2(1-tx,texStart);
      normAndVertex(mesh,normDir,x*radiusStart,y*radiusStart,zStartHeight);
      lastX=x;
      lastY=y;
@@ -794,13 +794,13 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
     } else if(i==0){
      var txMiddle=lastTx+(tx-lastTx)*0.5;
      // point at north pole
-     mesh.texCoord2(txMiddle,texStart);
+     mesh.texCoord2(1-txMiddle,texStart);
      normAndVertex(mesh,normDir,0,radiusStart,zStartHeight);
-     mesh.texCoord2(lastTx,texEnd);
+     mesh.texCoord2(1-lastTx,texEnd);
      normAndVertex(mesh,normDir,lastX*radiusEnd,lastY*radiusEnd,zEndHeight);
      x=sc[k];
      y=sc[k+1];
-     mesh.texCoord2(tx,texEnd);
+     mesh.texCoord2(1-tx,texEnd);
      normAndVertex(mesh,normDir,x*radiusEnd,y*radiusEnd,zEndHeight);
      lastX=x;
      lastY=y;
@@ -808,9 +808,9 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
     } else {
      x=sc[k];
      y=sc[k+1];
-     mesh.texCoord2(tx,texStart);
+     mesh.texCoord2(1-tx,texStart);
      normAndVertex(mesh,normDir,x*radiusStart,y*radiusStart,zStartHeight);
-     mesh.texCoord2(tx,texEnd);
+     mesh.texCoord2(1-tx,texEnd);
      normAndVertex(mesh,normDir,x*radiusEnd,y*radiusEnd,zEndHeight);
     }
    }
@@ -1285,7 +1285,7 @@ shader+=""+
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="ADD_SPECULAR("+i+");\n";
 }
-shader+=" phong+=(ms*specular);\n" +
+shader+=" phong+=ms*specular;\n" +
 "#endif\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=md*baseColor.rgb;\n";
@@ -2499,7 +2499,11 @@ TextureImage.prototype.mapToContext=function(context){
   this.textureName=context.createTexture();
   this.width=this.image.width;
   this.height=this.image.height; 
-  context.bindTexture(context.TEXTURE_2D, this.textureName);
+  // In WebGL, texture coordinates start at the upper left corner rather than
+  // the lower left as in OpenGL and OpenGL ES, so we use this method call
+  // to reestablish the lower left corner.
+ context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
+ context.bindTexture(context.TEXTURE_2D, this.textureName);
   context.texParameteri(context.TEXTURE_2D,
     context.TEXTURE_MAG_FILTER, context.LINEAR);
   context.texImage2D(context.TEXTURE_2D, 0,

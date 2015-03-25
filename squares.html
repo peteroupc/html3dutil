@@ -20,7 +20,7 @@ function createQuad(x,y,width,height){
  var y2=y+height;
  builder.vertex3(x,y,0);
  builder.vertex3(x,y2,0);
- var slices=1;
+ var slices=10;
  for(var i=1;i<=slices;i++){
   builder.vertex3(x+(x2-x)*i/slices,y,0);
   builder.vertex3(x+(x2-x)*i/slices,y2,0);
@@ -87,14 +87,6 @@ function linknone(){
   currentFilter=null;
   scene3d.useFilter(currentFilter);
  }
-}
-function toarr(a){
- if(!a)return null;
- var ret=[];
- for(var i=0;i<a.length;i++){
-  ret.push(a[i])
- }
- return ret;
 }
 
 onload=(function(){
