@@ -318,7 +318,7 @@ var GLUtil={
    lastRad=radiusEnd;
    var triangleFanBase=(i==0 && baseRad==0);
    var triangleFanTop=(i==stacks-1 && topRad==0);
-   mesh.mode((triangleFanBase || triangleFanTop) ?
+   mesh.mode((triangleFanBase || triangleFanTop) ? 
      Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
    if(triangleFanTop){
     // Output first vertices in reverse order to
@@ -507,10 +507,44 @@ var e=null;
 * Creates a 4-element array representing a color.  Each element
 * can range from 0 to 1 and specifies the red, green, blue or alpha
 * component, respectively.
+* This method also converts HTML and CSS colors to 4-element RGB
+* colors.  The following lists the kinds of colors accepted:
+* <ul>
+* <li>HTML colors with the syntax <code>#RRGGBB</code>, where
+* RR is the hexadecimal form of the red component (0-255), GG
+* is the hexadecimal green component, and BB is the hexadecimal
+* blue component.  Example: #88DFE0.
+* <li>HTML colors with the syntax <code>#RGB</code>, where
+* R is the hexadecimal form of the red component (0-15), G
+* is the hexadecimal green component, and B is the hexadecimal
+* blue component.  Example: #8DE.
+* <li>CSS colors with the syntax <code>rgb(red, green, blue)</code> or
+* <code>rgba(red, green, blue, alpha)</code> where
+* <code>red</code>, <code>green</code>, and <code>blue</code>
+* are the red, green, and blue components, respectively, either as a
+* number (0-255) or as a percent, and <code>alpha</code> is
+* a number from 0-1 specifying the alpha component.
+* Examples: <code>rgb(255,0,0)</code>,
+* <code>rgb(100%,50%,0%)</code>, <code>rgba(20,255,255,0.5)</code>.
+* <li>CSS colors with the syntax <code>hsl(hue, sat, light)</code> or
+* <code>hsla(hue, sat, light, alpha)</code> where
+* <code>hue</code> is the hue component in degrees (0-360),
+* <code>sat</code> and <code>light</code>
+* are the saturation and lightness components, respectively, as percents, 
+* and <code>alpha</code> is
+* a number from 0-1 specifying the alpha component.
+* Examples: <code>rgb(255,0,0)</code>,
+* <code>hsl(200,50%,50%)</code>, <code>hsla(20,80%,90%,0.5)</code>.
+* <li>CSS colors such as <code>red</code>, <code>green</code>,
+* <code>white</code>, <code>lemonchiffon</code>, <code>chocolate</code>,
+* and so on, including the newly added <code>rebeccapurple</code>.
+* </ul>
+* For more information:
+* [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
 * @alias glutil.GLUtil.toGLColor
 * @param {Array<number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
-* specifying an HTML or CSS color.
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.  Returns (0,0,0,0) if this value is null.
 * @param {number} g Green color component (0-1).
 * May be omitted if a string or array is given as the "r" parameter.
 * @param {number} b Blue color component (0-1).
@@ -653,7 +687,7 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
    lastZ=zEnd;
    lastRad=radiusEnd;
    var triangleFanBase=(i==0 && inner==0);
-   mesh.mode((triangleFanBase) ?
+   mesh.mode((triangleFanBase) ? 
      Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
    for(var k=0,j=0;k<=slicesTimes2;k+=2,j++){
     var tx=tc[j];
@@ -678,7 +712,7 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
 * @param {number} radius Radius of the sphere.
 * May be omitted, in which case the default is 1.
 * @param {number} slices Number of "slices" (similar to pizza slices) the sphere consists
-* of.  This function will create an octahedron if "slices" is 4 and "stacks" is 2.
+* of.  This function will create an octahedron if "slices" is 4 and "stacks" is 2. 
 * Must be 3 or greater. May be omitted, in which case the default is 32.
 * @param {number} stacks Number of vertical stacks the sphere consists of.
 * May be omitted, in which case the default is 32.
@@ -722,7 +756,7 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
    var origt=i*1.0/stacks;
    var angle=Math.PI*origt;
    var s=Math.sin(angle);
-   scStack.push(s);
+   scStack.push(s); 
    zEnd.push(-Math.cos(angle));
    var tex=origt;
    texc.push(tex);
@@ -798,7 +832,7 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
      normAndVertex(mesh,normDir,x*radiusEnd,y*radiusEnd,zEndHeight);
      lastX=x;
      lastY=y;
-     lastTx=tx;
+     lastTx=tx;    
     } else {
      x=sc[k];
      y=sc[k+1];
@@ -811,6 +845,8 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
   }
  return flat ? mesh.recalcNormals(inside) : mesh.normalizeNormals();
 }
+
+
 
 /**
 * Represents a WebGL shader program.  A shader program in
@@ -1486,7 +1522,8 @@ Lights.prototype.bind=function(program){
 * indicating how much an object reflects ambient lights (lights that color pixels
 * the same way regardless of direction or distance) in the red, green,
 * and blue components respectively.  Each component ranges from 0 to 1.
-* May be omitted; default is (0.2, 0.2, 0.2).
+* May be omitted; default is (0.2, 0.2, 0.2).  Can also be a string representing
+* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {Array<number>} diffuse Diffuse reflection.  An array of three numbers
 * indicating how much an object reflects diffuse lights (lights that point
 * in a certain direction) in the red, green,
@@ -1494,12 +1531,14 @@ Lights.prototype.bind=function(program){
 * Setting ambient and diffuse to the same value usually defines an object's
 * color.  If Scene3D.disableLighting() is called, disabling lighting calculations,
 * this value is used for coloring objects.
-* May be omitted; default is (0.8, 0.8, 0.8).
+* May be omitted; default is (0.8, 0.8, 0.8). Can also be a string representing
+* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {Array<number>} specular Color of specular highlights on an
 * object.  An array of three numbers indicating the red, green, and blue
 * components.
 * Each component ranges from 0 to 1.
-* May be omitted; default is (0,0,0).
+* May be omitted; default is (0,0,0). Can also be a string representing
+* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {Array<number>} shininess Indicates how sharp the specular
 * highlights are.  0 means the object creates no specular highlights. Ranges
 * from 0 through 128.
@@ -1509,9 +1548,14 @@ Lights.prototype.bind=function(program){
 * three numbers indicating the red, green, and blue components.
 * Each component ranges from -1 to 1. Positive values add to each component,
 * while negative values subtract from each component.
-* May be omitted; default is (0,0,0).
+* May be omitted; default is (0,0,0). Can also be a string representing
+* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 */
 function MaterialShade(ambient, diffuse, specular,shininess,emission) {
+ if(ambient!=null)ambient=GLUtil["toGLColor"](ambient)
+ if(diffuse!=null)diffuse=GLUtil["toGLColor"](diffuse)
+ if(specular!=null)specular=GLUtil["toGLColor"](specular)
+ if(emission!=null)emission=GLUtil["toGLColor"](emission)
  /** Specular highlight power of this material. */
  this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
  /** Ambient reflection of this material. */
@@ -1538,7 +1582,7 @@ MaterialShade.prototype.copy=function(){
  * object from an RGBA color.
 * @param {Array<number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
-* specifying an HTML or CSS color.
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {number} g Green color component (0-1).
 * May be omitted if a string or array is given as the "r" parameter.
 * @param {number} b Blue color component (0-1).
@@ -1581,7 +1625,6 @@ MaterialShade.prototype.bind=function(program){
 * indices specifies a separate triangle, or each pair of indices specifies
 * a line segment.
 * If null or omitted, creates an initially empty mesh.
-* May be omitted, in which case an empty index array is used.
 * @param {number|undefined} format A set of bit flags depending on the kind of data
 * each vertex contains.  Each vertex contains 3 elements plus:
 *  -- 3 more elements if Mesh.NORMALS_BIT is set, plus
@@ -2511,7 +2554,7 @@ TextureImage.prototype.mapToContext=function(context){
   }
   this.textureName=context.createTexture();
   this.width=this.image.width;
-  this.height=this.image.height;
+  this.height=this.image.height; 
   context.bindTexture(context.TEXTURE_2D, this.textureName);
   context.texParameteri(context.TEXTURE_2D,
     context.TEXTURE_MAG_FILTER, context.LINEAR);
@@ -2797,7 +2840,7 @@ Scene3D.prototype._setClearColor=function(){
 * This color is black by default.
 * @param {Array<number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
-* specifying an HTML or CSS color.
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {number} g Green color component (0-1).
 * May be omitted if a string or array is given as the "r" parameter.
 * @param {number} b Blue color component (0-1).
@@ -3185,7 +3228,7 @@ Shape.prototype.setMatrix=function(value){
 * Sets material parameters that give the shape a certain color.
 * @param {Array<number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
-* specifying an HTML or CSS color.
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {number} g Green color component (0-1).
 * May be omitted if a string or array is given as the "r" parameter.
 * @param {number} b Blue color component (0-1).
