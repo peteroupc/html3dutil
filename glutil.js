@@ -1567,10 +1567,10 @@ MaterialShade.prototype.bind=function(program){
 * a line segment.
 * If null or omitted, creates an initially empty mesh.
 * @param {number|undefined} format A set of bit flags depending on the kind of data
-* each vertex contains.  Each vertex contains 3 elements plus:
-*  -- 3 more elements if Mesh.NORMALS_BIT is set, plus
-*  -- 3 more elements if Mesh.COLORS_BIT is set, plus
-*  -- 2 more elements if Mesh.TEXCOORDS_BIT is set.
+* each vertex contains.  Each vertex contains 3 elements plus:<ul>
+*  <li> 3 more elements if Mesh.NORMALS_BIT is set, plus
+*  <li> 3 more elements if Mesh.COLORS_BIT is set, plus
+*  <li> 2 more elements if Mesh.TEXCOORDS_BIT is set.</ul>
 * If Mesh.LINES_BIT is set, each vertex index specifies a point of a line
 * segment.
 * May be null or omitted, in which case "format" is set to 0.
@@ -1648,6 +1648,9 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,inward){
 /**
  * Changes the primitive mode for this mesh.
  * Future vertices will be drawn as primitives of the new type.
+ * The primitive type can be set to the same mode, in which
+ * case future vertices given will not build upon previous
+ * vertices.
  * @param {*} m A primitive type.  One of the following:
  * Mesh.TRIANGLES, Mesh.LINES, Mesh.TRIANGLE_STRIP,
  * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.
@@ -1662,7 +1665,7 @@ Mesh.prototype.mode=function(m){
   return this;
  }
  /**
-  * Sets the current normal for this mesh.  The next vertex position
+  * Sets the current normal for this mesh.  Future vertex positions
   * defined (with vertex3()) will have this normal.  If necessary, rebuilds the mesh
   * to accommodate normals.
   * @param {number} x X-coordinate of the normal.
@@ -1677,7 +1680,7 @@ Mesh.prototype.mode=function(m){
   return this;
  }
  /**
-  * Sets the current color for this mesh.  The next vertex position
+  * Sets the current color for this mesh.  Future vertex positions
   * defined (with vertex3()) will have this color.  If necessary, rebuilds the mesh
   * to accommodate colors.
   * @param {number} r Red component of the color.
@@ -1692,7 +1695,7 @@ Mesh.prototype.mode=function(m){
   return this;
  }
  /**
-  * Sets the current texture coordinates for this mesh.  The next vertex position
+  * Sets the current texture coordinates for this mesh.  Future vertex positions
   * defined (with vertex3()) will have these texture coordinates.  If necessary, rebuilds the mesh
   * to accommodate texture coordinates.
   * @param {number} x X-coordinate of the texture, from 0-1.
@@ -2227,7 +2230,7 @@ BufferedSubMesh.prototype.draw=function(program){
 *  Specifies a texture, which can serve as image data applied to
 *  the surface of a shape, or even a 2-dimensional array of pixels
 *  used for some other purpose, such as a depth map, a height map,
-*  a normal map, a reflection map, and so on.
+*  a bump map, a reflection map, and so on.
 * @class
 * @alias glutil.Texture
 * @param {string} name URL of the texture data.  It will be loaded via
