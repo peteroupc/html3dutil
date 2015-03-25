@@ -22,9 +22,6 @@ Examples
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
-  // Set lighting, here located at the positive Z-axis, where the viewer
-  // is found, so it will shine directly on objects on the screen.
-  scene.setDirectionalLightByPos(0,[0,0,1]);
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
   scene.setPerspective(45,scene.getAspect(),0.1,100);
