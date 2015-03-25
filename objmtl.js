@@ -160,7 +160,7 @@ ObjData.loadMtlFromUrl=function(url){
  return GLUtil.loadFileFromUrl(url).then(
    function(e){
      var mtl=MtlData._loadMtl(e.text);
-     if(mtl.error)return Promise.reject({url:e.url, error: mtl.error});
+     if(mtl.error)return Promise.reject({url:e.url, "error": mtl.error});
      var mtldata=mtl.success;
      mtldata.url=e.url;
      mtldata._resolveTextures();
@@ -184,9 +184,10 @@ An error occurs when loading the OBJ file.
 ObjData.loadObjFromUrl=function(url){
  return GLUtil.loadFileFromUrl(url).then(
    function(e){
-     var obj=ObjData._loadObj(e.text);
-     if(obj.error)return Promise.reject({url:e.url, error:obj.error});
-     obj=obj.success
+     var obj;
+     obj=ObjData._loadObj(e.text);
+     if(obj.error)return Promise.reject({url:e.url, "error":obj.error});
+     obj=obj.success;
      obj.url=e.url;
      if(obj.mtllib){
        // load the material file if available
@@ -198,14 +199,13 @@ ObjData.loadObjFromUrl=function(url){
         }, function(result){
           // MTL not loaded successfully, ignore
           obj.mtl=null;
-          console.log(result)
           return Promise.resolve(obj);
         });
      } else {
        // otherwise just return the object
        return Promise.resolve(obj);
      }
-     return {url: e.url, obj: GLUtil._loadObj(e.text)};
+     return {url: e.url, "obj": obj};
    },
    function(e){
      return Promise.reject(e)
@@ -244,7 +244,7 @@ MtlData._loadMtl=function(str){
    line=line.substr(0,line.length-1);
   }
   if(firstLine && !(/^newmtl\s+/)){
-   return {error: "newmtl not the first line in MTL file"};
+   return {"error": "newmtl not the first line in MTL file"};
   }
   firstLine=false;
   var e=newmtlLine.exec(line)
@@ -286,7 +286,7 @@ MtlData._loadMtl=function(str){
     currentMat[e[1]]=[parseInt(e[2],10)];
     continue;
   }
-  return {error: new Error("unsupported line: "+line)}
+  return {"error": new Error("unsupported line: "+line)}
  }
  var mtl=new MtlData();
  mtl.list=materials;
@@ -508,7 +508,7 @@ ObjData._loadObj=function(str){
       faceCount++;
       continue;
      }
-     return {error: new Error("unsupported face: "+oldline)}
+     return {"error": new Error("unsupported face: "+oldline)}
     }
     if(faceCount>=4){
       // Add an additional triangle for each vertex after
@@ -520,16 +520,16 @@ ObjData._loadObj=function(str){
        faces[m+2]=currentFaces[k];
       }
     } else if(faceCount<3){
-     return {error: "face has fewer than 3 vertices"}
+     return {"error": "face has fewer than 3 vertices"}
     }
     if(flat){
       // Give all vertices in the face normals for a flat
       // appearance
-      ObjData._recalcNormalsSingleFace(resolvedVertices,
-        currentFaces, 8);
+     // ObjData._recalcNormalsSingleFace(resolvedVertices,
+     //   currentFaces, 8);
       // Don't reuse previous vertices
       lookBack=faces.length;
-      haveNormals=true;
+    //  haveNormals=true;
     }
     continue;
   }
@@ -593,7 +593,7 @@ ObjData._loadObj=function(str){
     flat=(e[2]=="off");
     continue;
   }
-  return {error: new Error("unsupported line: "+line)}
+  return {"error": new Error("unsupported line: "+line)}
  }
  mesh=new Mesh(resolvedVertices,faces,
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);

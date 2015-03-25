@@ -1777,7 +1777,6 @@ Mesh.prototype.toWireFrame=function(){
 function SubMesh(vertices,faces,format){
  this.vertices=vertices||[];
  this.indices=faces||[];
- this.stride=3;
  this.builderMode=-1;
  this.normal=[0,0,0];
  this.bounds=null;
@@ -1809,7 +1808,8 @@ function SubMesh(vertices,faces,format){
    newStride+=3;
   if((newBits&Mesh.TEXCOORDS_BIT)!=0)
    newStride+=2;
-  for(var i=0;i<this.vertices.length;i+=this.stride){
+  var currentStride=Mesh.getStride(oldBits);
+  for(var i=0;i<this.vertices.length;i+=currentStride){
    var vx=this.vertices[i];
    var vy=this.vertices[i+1];
    var vz=this.vertices[i+2];
@@ -1848,7 +1848,6 @@ function SubMesh(vertices,faces,format){
     }
    }
   }
-  this.stride=newStride;
   this.vertices=newVertices;
   this.attributeBits=newBits;
  }
@@ -1884,31 +1883,32 @@ function SubMesh(vertices,faces,format){
   if((this.attributeBits&Mesh.TEXCOORDS_BIT)!=0){
    this.vertices.push(this.texCoord[0],this.texCoord[1]);
   }
+  var stride=Mesh.getStride(this.attributeBits);
   if(this.builderMode==Mesh.QUAD_STRIP &&
-     (this.vertices.length-this.startIndex)>=this.stride*4 &&
-     (this.vertices.length-this.startIndex)%(this.stride*2)==0){
-   var index=(this.vertices.length/this.stride)-4;
+     (this.vertices.length-this.startIndex)>=stride*4 &&
+     (this.vertices.length-this.startIndex)%(stride*2)==0){
+   var index=(this.vertices.length/stride)-4;
    this.indices.push(index,index+1,index+2,index+2,index+1,index+3);
   } else if(this.builderMode==Mesh.QUADS &&
-     (this.vertices.length-this.startIndex)%(this.stride*4)==0){
-   var index=(this.vertices.length/this.stride)-4;
+     (this.vertices.length-this.startIndex)%(stride*4)==0){
+   var index=(this.vertices.length/stride)-4;
    this.indices.push(index,index+1,index+2,index+2,index+3,index);
   } else if(this.builderMode==Mesh.TRIANGLES &&
-     (this.vertices.length-this.startIndex)%(this.stride*3)==0){
-   var index=(this.vertices.length/this.stride)-3;
+     (this.vertices.length-this.startIndex)%(stride*3)==0){
+   var index=(this.vertices.length/stride)-3;
    this.indices.push(index,index+1,index+2);
   } else if(this.builderMode==Mesh.LINES &&
-     (this.vertices.length-this.startIndex)%(this.stride*2)==0){
-   var index=(this.vertices.length/this.stride)-2;
+     (this.vertices.length-this.startIndex)%(stride*2)==0){
+   var index=(this.vertices.length/stride)-2;
    this.indices.push(index,index+1);
   } else if(this.builderMode==Mesh.TRIANGLE_FAN &&
-     (this.vertices.length-this.startIndex)>=(this.stride*2)){
-   var index=(this.vertices.length/this.stride)-2;
-   var firstIndex=(this.startIndex/this.stride);
+     (this.vertices.length-this.startIndex)>=(stride*2)){
+   var index=(this.vertices.length/stride)-2;
+   var firstIndex=(this.startIndex/stride);
    this.indices.push(firstIndex,index,index+1);
   } else if(this.builderMode==Mesh.TRIANGLE_STRIP &&
      (this.vertices.length-this.startIndex)>=2){
-   var index=(this.vertices.length/this.stride)-3;
+   var index=(this.vertices.length/stride)-3;
    this.indices.push(index,index+1,index+2);
   }
   return this;
@@ -1985,11 +1985,11 @@ SubMesh.prototype.recalcBounds=function(){
 /**
  *
  */
-SubMesh.prototype.recalcNormals=function(){
+SubMesh.prototype.recalcNormals=function(inward){
   this._rebuildVertices(Mesh.NORMALS_BIT);
   this.makeRedundant();
   Mesh._recalcNormals(this.vertices,this.indices,
-    this.stride,3);
+    Mesh.getStride(this.attributeBits),3,inward);
   return this;
 };
 /** @private */
