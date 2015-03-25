@@ -211,30 +211,30 @@ var GLUtil={
  ySize/=2.0;
  zSize/=2.0;
  var vertices=[
- -xSize,-ySize,zSize,1.0,0.0,0.0,1.0,1.0,
- -xSize,ySize,zSize,1.0,0.0,0.0,1.0,0.0,
- -xSize,ySize,-zSize,1.0,0.0,0.0,0.0,0.0,
- -xSize,-ySize,-zSize,1.0,0.0,0.0,0.0,1.0,
- xSize,-ySize,-zSize,-1.0,0.0,0.0,1.0,1.0,
- xSize,ySize,-zSize,-1.0,0.0,0.0,1.0,0.0,
- xSize,ySize,zSize,-1.0,0.0,0.0,0.0,0.0,
- xSize,-ySize,zSize,-1.0,0.0,0.0,0.0,1.0,
- xSize,-ySize,-zSize,0.0,1.0,0.0,1.0,1.0,
- xSize,-ySize,zSize,0.0,1.0,0.0,1.0,0.0,
- -xSize,-ySize,zSize,0.0,1.0,0.0,0.0,0.0,
- -xSize,-ySize,-zSize,0.0,1.0,0.0,0.0,1.0,
- xSize,ySize,zSize,0.0,-1.0,0.0,1.0,1.0,
- xSize,ySize,-zSize,0.0,-1.0,0.0,1.0,0.0,
- -xSize,ySize,-zSize,0.0,-1.0,0.0,0.0,0.0,
- -xSize,ySize,zSize,0.0,-1.0,0.0,0.0,1.0,
- -xSize,-ySize,-zSize,0.0,0.0,1.0,1.0,1.0,
- -xSize,ySize,-zSize,0.0,0.0,1.0,1.0,0.0,
- xSize,ySize,-zSize,0.0,0.0,1.0,0.0,0.0,
- xSize,-ySize,-zSize,0.0,0.0,1.0,0.0,1.0,
- xSize,-ySize,zSize,0.0,0.0,-1.0,1.0,1.0,
- xSize,ySize,zSize,0.0,0.0,-1.0,1.0,0.0,
- -xSize,ySize,zSize,0.0,0.0,-1.0,0.0,0.0,
- -xSize,-ySize,zSize,0.0,0.0,-1.0,0.0,1.0]
+-xSize,-ySize,zSize,-1.0,0.0,0.0,1.0,1.0,
+-xSize,ySize,zSize,-1.0,0.0,0.0,1.0,0.0,
+-xSize,ySize,-zSize,-1.0,0.0,0.0,0.0,0.0,
+-xSize,-ySize,-zSize,-1.0,0.0,0.0,0.0,1.0,
+xSize,-ySize,-zSize,1.0,0.0,0.0,1.0,1.0,
+xSize,ySize,-zSize,1.0,0.0,0.0,1.0,0.0,
+xSize,ySize,zSize,1.0,0.0,0.0,0.0,0.0,
+xSize,-ySize,zSize,1.0,0.0,0.0,0.0,1.0,
+xSize,-ySize,-zSize,0.0,-1.0,0.0,1.0,1.0,
+xSize,-ySize,zSize,0.0,-1.0,0.0,1.0,0.0,
+-xSize,-ySize,zSize,0.0,-1.0,0.0,0.0,0.0,
+-xSize,-ySize,-zSize,0.0,-1.0,0.0,0.0,1.0,
+xSize,ySize,zSize,0.0,1.0,0.0,1.0,1.0,
+xSize,ySize,-zSize,0.0,1.0,0.0,1.0,0.0,
+-xSize,ySize,-zSize,0.0,1.0,0.0,0.0,0.0,
+-xSize,ySize,zSize,0.0,1.0,0.0,0.0,1.0,
+-xSize,-ySize,-zSize,0.0,0.0,-1.0,1.0,1.0,
+-xSize,ySize,-zSize,0.0,0.0,-1.0,1.0,0.0,
+xSize,ySize,-zSize,0.0,0.0,-1.0,0.0,0.0,
+xSize,-ySize,-zSize,0.0,0.0,-1.0,0.0,1.0,
+xSize,-ySize,zSize,0.0,0.0,1.0,1.0,1.0,
+xSize,ySize,zSize,0.0,0.0,1.0,1.0,0.0,
+-xSize,ySize,zSize,0.0,0.0,1.0,0.0,0.0,
+-xSize,-ySize,zSize,0.0,0.0,1.0,0.0,1.0]
  var faces=[0,1,2,0,2,3,4,5,6,4,6,7,8,9,10,8,10,11,12,
  13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23]
  return new Mesh(vertices,faces,Mesh.NORMALS_BIT | Mesh.TEXCOORDS_BIT);
@@ -242,7 +242,8 @@ var GLUtil={
 /**
 * Creates a mesh of a cylinder.  The cylinder's base will
 * be centered at the origin and its height will run along the
-* positive z-axis.
+* positive z-axis.  The base and top themselves will not be
+* included in the mesh.
 * @param {number} baseRad Radius of the base of the cylinder. If 0,
 * this function will create an approximation to a downward pointing cone.
 * @param {number} topRad Radius of the top of the cylinder. If 0,
@@ -272,8 +273,9 @@ var GLUtil={
  if(slices<=2)throw new Error("too few slices");
  if(stacks<1)throw new Error("too few stacks");
  if(height<0)throw new Error("negative height")
- if((baseRad<=0 && topRad<=0)){
-  // both baseRad and topRad are zero or negative
+ if((baseRad<=0 && topRad<=0) || height==0){
+  // both baseRad and topRad are zero or negative,
+  // or height is zero
   return mesh;
  }
  var normDir=(inside) ? -1 : 1;
@@ -289,21 +291,6 @@ var GLUtil={
  sc.push(0,1);
  tc.push(1);
  var slicesTimes2=slices*2;
- // Base
- if(baseRad>0){
-  mesh.mode(Mesh.TRIANGLE_FAN);
-  mesh.texCoord2(0,0);
-  mesh.normal3(0,0,1*normDir);
-  mesh.vertex3(0,0,0);
-  for(var i=0,j=0;i<=slicesTimes2;i+=2,j++){
-   var x,y;
-   x=sc[i]*baseRad;
-   y=sc[i+1]*baseRad;
-   mesh.texCoord2(tc[j],0);
-   mesh.normal3(0,0,1*normDir);
-   mesh.vertex3(x,y,0);
-  }
- }
  if(height>0){
   var lastZ=0;
   var lastRad=baseRad;
@@ -324,17 +311,17 @@ var GLUtil={
     // Output first vertices in reverse order to
     // allow triangle fan effect to work
     mesh.texCoord2(0,zEnd);
-    mesh.normal3(0,-radiusEnd*normDir,0);
+    mesh.normal3(0,radiusEnd*normDir,0);
     mesh.vertex3(0,radiusEnd,zEndHeight);
     mesh.texCoord2(0,zStart);
-    mesh.normal3(0,-radiusStart*normDir,0);
+    mesh.normal3(0,radiusStart*normDir,0);
     mesh.vertex3(0,radiusStart,zStartHeight);
    } else {
     mesh.texCoord2(0,zStart);
-    mesh.normal3(0,-radiusStart*normDir,0);
+    mesh.normal3(0,radiusStart*normDir,0);
     mesh.vertex3(0,radiusStart,zStartHeight);
     mesh.texCoord2(0,zEnd);
-    mesh.normal3(0,-radiusEnd*normDir,0);
+    mesh.normal3(0,radiusEnd*normDir,0);
     mesh.vertex3(0,radiusEnd,zEndHeight);
    }
    for(var k=2,j=1;k<=slicesTimes2;k+=2,j++){
@@ -344,32 +331,17 @@ var GLUtil={
      x=sc[k]*radiusStart;
      y=sc[k+1]*radiusStart;
      mesh.texCoord2(tx,zStart);
-     mesh.normal3(-x*normDir,-y*normDir,0);
+     mesh.normal3(x*normDir,y*normDir,0);
      mesh.vertex3(x,y,zStartHeight);
     }
     if(!triangleFanTop){
      x=sc[k]*radiusEnd;
      y=sc[k+1]*radiusEnd;
      mesh.texCoord2(tx,zEnd);
-     mesh.normal3(-x*normDir,-y*normDir,0);
+     mesh.normal3(x*normDir,y*normDir,0);
      mesh.vertex3(x,y,zEndHeight);
     }
    }
-  }
- }
- // Top
- if(topRad>0){
-  mesh.mode(Mesh.TRIANGLE_FAN);
-  mesh.texCoord2(0,1);
-  mesh.normal3(0,0,-1*normDir);
-  mesh.vertex3(0,0,height);
-  for(var i=0,j=0;i<=slicesTimes2;i+=2,j++){
-   var x,y;
-   x=sc[i]*topRad;
-   y=sc[i+1]*topRad;
-   mesh.texCoord2(tc[j],1);
-   mesh.normal3(0,0,-1*normDir);
-   mesh.vertex3(x,y,height);
   }
  }
  return flat ? mesh.recalcNormals(inside) : mesh;
@@ -736,7 +708,7 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
   // radius is zero
   return mesh;
  }
- var normDir=(inside) ? 1 : -1;
+ var normDir=(inside) ? -1 : 1;
  var sc=[0,1]; // sin(0), cos(0)
  var scStack=[];
  var texc=[];
@@ -925,7 +897,6 @@ ShaderProgram.prototype.dispose=function(){
  this.attributes={};
  this.uniformTypes={};
 }
-
 /** Gets the WebGL context associated with this shader program.
 * @return {WebGLRenderingContext}
 */
@@ -1081,39 +1052,6 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
   if(fs!==null)context.deleteShader(fs);
   return program;
 };
-/**
-* Gets the text of the default vertex shader.  Putting "#define SHADING\n"
-* at the start of the return value enables the lighting model.
-* @return {string} The resulting shader text.
-*/
-ShaderProgram.getDefaultVertex=function(){
-var shader="" +
-"attribute vec3 position;\n" +
-"attribute vec3 normal;\n" +
-"attribute vec2 textureUV;\n" +
-"attribute vec3 colorAttr;\n" +
-"uniform mat4 world;\n" +
-"uniform mat4 view;\n" +
-"uniform mat4 projection;\n"+
-"varying vec2 textureUVVar;\n"+
-"varying vec3 colorAttrVar;\n" +
-"#ifdef SHADING\n"+
-"uniform mat3 worldInverseTrans3; /* internal */\n" +
-"varying vec4 worldPositionVar;\n" +
-"varying vec3 transformedNormalVar;\n"+
-"#endif\n"+
-"void main(){\n" +
-"vec4 positionVec4=vec4(position,1.0);\n" +
-"gl_Position=projection*view*world*positionVec4;\n" +
-"colorAttrVar=colorAttr;\n" +
-"textureUVVar=textureUV;\n" +
-"#ifdef SHADING\n"+
-"transformedNormalVar=normalize(worldInverseTrans3*normal);\n" +
-"worldPositionVar=world*positionVec4;\n" +
-"#endif\n"+
-"}";
-return shader;
-};
 ShaderProgram.fragmentShaderHeader=function(){
 return "" +
 "#ifdef GL_ES\n" +
@@ -1220,6 +1158,41 @@ return ShaderProgram.makeEffect(context,
 ].join("\n"));
 }
 
+
+/**
+* Gets the text of the default vertex shader.  Putting "#define SHADING\n"
+* at the start of the return value enables the lighting model.
+* @return {string} The resulting shader text.
+*/
+ShaderProgram.getDefaultVertex=function(){
+var shader="" +
+"attribute vec3 position;\n" +
+"attribute vec3 normal;\n" +
+"attribute vec2 textureUV;\n" +
+"attribute vec3 colorAttr;\n" +
+"uniform mat4 world;\n" +
+"uniform mat4 view;\n" +
+"uniform mat4 projection;\n"+
+"varying vec2 textureUVVar;\n"+
+"varying vec3 colorAttrVar;\n" +
+"#ifdef SHADING\n"+
+"uniform mat3 worldInverseTrans3; /* internal */\n" +
+"varying vec4 viewWorldPositionVar;\n" +
+"varying vec3 transformedNormalVar;\n"+
+"#endif\n"+
+"void main(){\n" +
+"vec4 positionVec4=vec4(position,1.0);\n" +
+"gl_Position=projection*view*world*positionVec4;\n" +
+"colorAttrVar=colorAttr;\n" +
+"textureUVVar=textureUV;\n" +
+"#ifdef SHADING\n"+
+"transformedNormalVar=normalize(worldInverseTrans3*normal);\n" +
+"viewWorldPositionVar=view*world*positionVec4;\n" +
+"#endif\n"+
+"}";
+return shader;
+};
+
 /**
 * Gets the text of the default fragment shader.  Putting "#define SHADING\n"
 * at the start of the return value enables the lighting model.
@@ -1257,17 +1230,17 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "varying vec2 textureUVVar;\n"+
 "varying vec3 colorAttrVar;\n" +
 "#ifdef SHADING\n" +
-"varying vec4 worldPositionVar;\n" +
+"varying vec4 viewWorldPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
 "const vec4 white=vec4(1.0,1.0,1.0,1.0);\n"+
-"vec4 calcLightPower(light lt, vec4 worldPosition){\n" +
+"vec4 calcLightPower(light lt, vec4 viewWorldPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
 " if(lt.position.w == 0.0){\n" +
 "  sdir=normalize(lt.position.xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else {\n" +
-"  vec3 vertexToLight=vec3(lt.position-worldPosition);\n" +
+"  vec3 vertexToLight=vec3(lt.position-viewWorldPosition);\n" +
 "  float dist=length(vertexToLight);\n" +
 "  sdir=normalize(vertexToLight);\n" +
 "  attenuation=1.0;\n" +
@@ -1290,7 +1263,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "  useColorAttr);\n" +
 "#ifdef SHADING\n" +
 "#define SET_LIGHTPOWER(i) "+
-" lightPower[i]=calcLightPower(lights[i],worldPositionVar)\n" +
+" lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
 " phong+=lights[i].diffuse*max(0.0,dot(transformedNormalVar," +
 "   lightPower[i].xyz))*lightPower[i].w*materialDiffuse;\n" +
@@ -1302,7 +1275,7 @@ shader+=""+
 "vec3 phong=sceneAmbient*ma; /* ambient*/\n" +
 "#ifdef SPECULAR\n" +
 "// specular reflection\n" +
-"vec3 viewDirection=normalize(vec3(viewInverse*vec4(0,0,0,1)-worldPositionVar));\n" +
+"vec3 viewDirection=normalize(vec3(viewInverse*vec4(0,0,0,1)-viewWorldPositionVar));\n" +
 "vec3 specular=vec3(0,0,0.);\n" +
 "#define ADD_SPECULAR(i) "+
 "  if(mshin>0.0 && dot(transformedNormalVar,lightPower[i].xyz)>=0.0){" +
@@ -1383,9 +1356,7 @@ Lights._createLight=function(index, position, diffuse, specular,directional){
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
- * axes, respectively.  Negative coordinates mean the light is directed toward the origin, and positive
- * coordinates mean the light is directed away from the origin.  For example, (0, 0, -1) means a light pointing
- * along the z-axis toward the origin (Z-coordinate -1). May be null, in which case the default
+ * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
@@ -1398,34 +1369,6 @@ Lights._createLight=function(index, position, diffuse, specular,directional){
  */
 Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  this.lights[index]=Lights._createLight(index,direction,diffuse,specular,true);
- return this;
-}
-/**
- * Sets a directional light given its position.
- * @param {number} index Zero-based index of the light to set.  The first
- * light has index 0, the second has index 1, and so on.
- * @param {Array<number>} position A 3-element vector giving the relative position of the light from the origin,
- * along the X, Y, and Z axes, respectively.  The light will shine everywhere in the same direction as the
- * light's position from the origin, but not in the opposite direction. For example, (0, 1, 0) means a light shining
- * from the top (Y-coordinate 1). May be null, in which case the default
- * is (0, 0, -1).
- * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
- * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
- * @return {Lights} This object.
- */
-Lights.prototype.setDirectionalLightByPos=function(index,direction,diffuse,specular){
- var dir=direction;
- if(dir){
-  dir=[-dir[0],-dir[1],-dir[2]];
- } else {
-  dir=[0,0,-1];
- }
- this.lights[index]=Lights._createLight(index,dir,diffuse,specular,true);
  return this;
 }
 /**
@@ -1448,9 +1391,7 @@ Lights.prototype.setPointLight=function(index,position,diffuse,specular){
 /**
  * Adds a directional light.
  * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
- * axes, respectively.  Negative coordinates mean the light is directed toward the origin, and positive
- * coordinates mean the light is directed away from the origin.  For example, (0, 0, -1) means a light pointing
- * along the z-axis toward the origin (third coordinate -1). May be null, in which case the default
+ * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
@@ -2561,7 +2502,9 @@ TextureImage.prototype.mapToContext=function(context){
   context.texImage2D(context.TEXTURE_2D, 0,
     context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
     this.image);
-  var ext=context.getExtension("EXT_texture_filter_anisotropic");
+  var ext=context.getExtension("EXT_texture_filter_anisotropic") ||
+    context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
+    context.getExtension("MOZ_EXT_texture_filter_anisotropic");
   if(ext){
    context.texParameteri(context.TEXTURE_2D,
      ext.TEXTURE_MAX_ANISOTROPY_EXT,
@@ -2978,38 +2921,12 @@ Scene3D.prototype.addShape=function(shape){
  this.shapes.push(shape.loadMesh(this.context));
  return this;
 }
-
-/**
- * Sets a directional light given its position.
- * @param {number} index Zero-based index of the light to set.  The first
- * light has index 0, the second has index 1, and so on.
- * @param {Array<number>} position A 3-element vector giving the relative position of the light from the origin,
- * along the X, Y, and Z axes, respectively.  The light will shine everywhere in the same direction as the
- * light's position from the origin, but not in the opposite direction. For example, (0, 1, 0) means a light shining
- * from the top (Y-coordinate 1). May be null, in which case the default
- * is (0, 0, -1).
- * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
- * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
- * @return {Lights} This object.
- */
-Scene3D.prototype.setDirectionalLightByPos=function(index,position,diffuse,specular){
- this.lightSource.setDirectionalLightByPos(index,position,diffuse,specular);
- this.lightSource.bind(this.program);
- return this;
-}
 /**
  *
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
- * axes, respectively.  Negative coordinates mean the light is directed toward the origin, and positive
- * coordinates mean the light is directed away from the origin.  For example, (0, 0, -1) means a light pointing
- * along the z-axis toward the origin (third coordinate -1). May be null, in which case the default
+ * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
