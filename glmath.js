@@ -645,6 +645,32 @@ ret[3] = (xy - yx) * t;
 return ret
 },
 /**
+ * Not documented yet.
+ * @param {*} m4
+ */
+mat4toMat3:function(m4){
+ return [
+  m4[0],m4[1],m4[2],
+  m4[4],m4[5],m4[6],
+  m4[8],m4[9],m4[10]
+ ]
+},
+/**
+ * Not documented yet.
+ * @param {*} m4
+ */
+mat4inverseTranspose:function(m4){
+ var mat=GLMath.mat4invert(m4);
+ var tmp;
+ tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
+ tmp=mat[2];mat[2]=mat[8];mat[8]=tmp;
+ tmp=mat[3];mat[3]=mat[12];mat[12]=tmp;
+ tmp=mat[6];mat[6]=mat[9];mat[9]=tmp;
+ tmp=mat[7];mat[7]=mat[13];mat[13]=tmp;
+ tmp=mat[11];mat[11]=mat[14];mat[14]=tmp;
+ return mat;
+},
+/**
 * Returns the transposed result of the inverted upper left corner of
 * the given 4x4 matrix.
 * @param {Array<number>} m4 A 4x4 matrix.

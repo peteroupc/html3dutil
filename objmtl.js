@@ -159,7 +159,7 @@ MtlData._getMaterial=function(mtl){
 ObjData.loadMtlFromUrl=function(url){
  return GLUtil.loadFileFromUrl(url).then(
    function(e){
-     var mtl=MtlData._loadMtl(e.text);
+     var mtl=MtlData._loadMtl(e.data);
      if(mtl.error)return Promise.reject({url:e.url, "error": mtl.error});
      var mtldata=mtl.success;
      mtldata.url=e.url;
@@ -185,7 +185,7 @@ ObjData.loadObjFromUrl=function(url){
  return GLUtil.loadFileFromUrl(url).then(
    function(e){
      var obj;
-     obj=ObjData._loadObj(e.text);
+     obj=ObjData._loadObj(e.data);
      if(obj.error)return Promise.reject({url:e.url, "error":obj.error});
      obj=obj.success;
      obj.url=e.url;
