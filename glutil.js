@@ -1750,8 +1750,10 @@ Mesh.prototype.mode=function(m){
   }
   return this;
  }
-
- Mesh.prototype.normalizeNormals=function(){
+/**
+ * Not documented yet.
+ */
+Mesh.prototype.normalizeNormals=function(){
   for(var i=0;i<this.subMeshes.length;i++){
    var stride=Mesh.getStride(this.subMeshes[i].attributeBits);
    var vertices=this.subMeshes[i].vertices;
@@ -2726,7 +2728,8 @@ Scene3D.prototype.createBuffer=function(){
 
 /**
 *  Sets this scene's projection matrix to a perspective view.
-* @param {number}  fov Vertical field of view, in degrees.  (The smaller
+* @param {number}  fov Vertical field of view, in degrees. Should be less
+* than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
 * additional factor.)
@@ -2751,10 +2754,14 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
 /**
  * Sets this scene's projection matrix to a perspective view that defines
  * the view frustum, or the limits in the camera's view.
- * @param {number} left
- * @param {number} right
- * @param {number} bottom
- * @param {number} top
+ * @param {number} left X-coordinate of the point where the left
+ * clipping plane meets the near clipping plane.
+ * @param {number} right X-coordinate of the point where the right
+ * clipping plane meets the near clipping plane.
+ * @param {number} bottom Y-coordinate of the point where the bottom
+ * clipping plane meets the near clipping plane.
+ * @param {number} top Y-coordinate of the point where the top
+ * clipping plane meets the near clipping plane.
 * @param {number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
@@ -2768,14 +2775,20 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
    left, right, top, bottom, near, far));
 }
 /**
- * Sets this scene's projection matrix to an orthographic view.
- * @param {number} left
- * @param {number} right
- * @param {number} bottom
- * @param {number} top
-* @param {number} near
-* @param {number}  far
-* @return {Scene3D} This object.
+ * Sets this scene's projection matrix to an orthographic projection.
+ * In this projection, the left clipping plane is parallel to the right clipping
+ * plane and the top to the bottom.
+ * @param {number} left Leftmost coordinate of the 3D view.
+ * @param {number} right Rightmost coordinate of the 3D view.
+ * (Note that right can be greater than left or vice versa.)
+ * @param {number} bottom Bottommost coordinate of the 3D view.
+ * @param {number} top Topmost coordinate of the 3D view.
+ * (Note that top can be greater than bottom or vice versa.)
+ * @param {number} near Distance from the camera to the near clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @param {number} far Distance from the camera to the far clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @return {Scene3D} This object.
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4ortho(
@@ -2785,9 +2798,11 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to a 2D orthographic view.
  * @param {number} left Leftmost coordinate of the 2D view.
  * @param {number} right Rightmost coordinate of the 2D view.
+ * (Note that right can be greater than left or vice versa.)
  * @param {number} bottom Bottommost coordinate of the 2D view.
  * @param {number} top Topmost coordinate of the 2D view.
-* @return {Scene3D} This object.
+ * (Note that top can be greater than bottom or vice versa.)
+ * @return {Scene3D} This object.
  */
 Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
  return this.setProjectionMatrix(GLMath.mat4ortho(
@@ -3180,6 +3195,10 @@ Shape.prototype.setColor=function(r,g,b,a){
  this.material=MaterialShade.fromColor(r,g,b,a);
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} name
+ */
 Shape.prototype.setTexture=function(name){
  this.material=new Texture(name);
  return this;

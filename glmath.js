@@ -806,7 +806,8 @@ mat4translate:function(mat,v3,v3y,v3z){
  * Returns a 4x4 matrix representing a perspective view.
  * This method assumes a right-handed coordinate system, in which
  * the z-axis points toward the viewer.
-* @param {number}  fovY Vertical field of view, in degrees.  (The smaller
+* @param {number}  fovY Vertical field of view, in degrees. Should be less
+* than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
 * additional factor.)
@@ -866,12 +867,16 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * Returns a 4x4 matrix representing an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
- * @param {number} l
- * @param {number} r
- * @param {number} b
- * @param {number} t
- * @param {number} n
- * @param {number} f
+ * @param {number} l Leftmost coordinate of the 3D view.
+ * @param {number} r Rightmost coordinate of the 3D view.
+ * (Note that r can be greater than l or vice versa.)
+ * @param {number} b Bottommost coordinate of the 3D view.
+ * @param {number} t Topmost coordinate of the 3D view.
+ * (Note that t can be greater than b or vice versa.)
+ * @param {number} n Distance from the camera to the near clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @param {number} f Distance from the camera to the far clipping
+ * plane.  A positive value means the plane is in front of the viewer.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4ortho:function(l,r,b,t,n,f){
@@ -885,23 +890,30 @@ mat4ortho:function(l,r,b,t,n,f){
  * Returns a 4x4 matrix representing a 2D orthographic view.
  * @param {number} l Leftmost coordinate of the 2D view.
  * @param {number} r Rightmost coordinate of the 2D view.
+ * (Note that r can be greater than l or vice versa.)
  * @param {number} b Bottommost coordinate of the 2D view.
  * @param {number} t Topmost coordinate of the 2D view.
+ * (Note that t can be greater than b or vice versa.)
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4ortho2d:function(l,r,b,t){
  return GLMath.mat4ortho2d(l,r,b,t,-1,1);
 },
 /**
- * Returns a 4x4 matrix representing a view frustum.
- * @param {number} l
- * @param {number} r
- * @param {number} b
- * @param {number} t
-* @param {number} near The distance from the camera to
+ * Returns a 4x4 matrix representing a view frustum,
+ * or the limits in the camera's view.
+ * @param {number} l X-coordinate of the point where the left
+ * clipping plane meets the near clipping plane.
+ * @param {number} r X-coordinate of the point where the right
+ * clipping plane meets the near clipping plane.
+ * @param {number} b Y-coordinate of the point where the bottom
+ * clipping plane meets the near clipping plane.
+ * @param {number} t Y-coordinate of the point where the top
+ * clipping plane meets the near clipping plane.
+* @param {number} n The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {number}  farZ The distance from the camera to
+* @param {number} f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
  * @return {Array<number>} The resulting 4x4 matrix.
