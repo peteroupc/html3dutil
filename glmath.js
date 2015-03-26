@@ -35,18 +35,39 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * with vectors begin with "vec".<p>
 * <b>Matrices:</b>  A matrix is a 16- or 9-element array that describes a
 * transformation from one coordinate system to another. Transformations
-* include translation (shifting), scaling, and rotation.<p>
+* include translation (shifting), scaling, and rotation.  Functions dealing 
+* with matrices begin with "mat".<p>
 * All functions dealing with 4x4 matrices assume that
 * the translation elements in x, y, and z are located in the
-* 13th, 14th, and 15th elements of the matrix.  All functions also assume
-* a right-handed coordinate system, in which the z-axis points
+* 13th, 14th, and 15th elements of the matrix (zero-based indices 12, 13,
+* and 14).  All functions also assume
+* a right-handed coordinate system (such as OpenGL's), in which the z-axis points
 * toward (not away from) the viewer whenever the x-axis points to
-* the right and the y-axis points up. Functions dealing with matrices begin with "mat".<p>
+* the right and the y-axis points up.<p>
+* The methods mat4multiply, mat4scale, mat4translate, and
+* mat4rotate involve multiplying 4x4 matrices, combining multiple 
+* transformations into a single transformation.  In these methods,
+* the matrices are multiplied such that the transformations
+* they describe happen in reverse order.  For example, if
+* the first matrix (input matrix) describes a translation and the second
+* matrix describes a scaling, the multiplied matrix will
+* describe the effect of scaling then translation.
+* Matrix multiplication is not commutative; the order
+* of multiplying matrices is important.  This multiplication
+* behavior follows that of OpenGL and is opposite to that in the D3DX and
+* DirectXMath libraries.<p>
 * <b>Quaternions:</b>  A quaternion is a 4-element array that describes a
 * 3D rotation.  The first three elements are the X, Y, and Z components
 * (axis of rotation multiplied by the sine of half the angle)
 * and the fourth component is the W component (cosine of half the angle).
 * Functions dealing with quaternions begin with "quat".<p>
+* The methods quatMultiply and quatFromPitchYawRoll involve
+* multiplying quaternions, combining multiple rotations into a single
+* rotation.  In these methods, multiplying one rotation by another
+* creates a combined rotation in which the second rotation happens
+* before the first rotation.  Like matrix multiplication, quaternion
+* multiplication is not commutative. This multiplication behavior 
+* is opposite to that in the D3DX and DirectXMath libraries.
 * @class
 * @alias glmath.GLMath
 */
@@ -645,8 +666,10 @@ ret[3] = (xy - yx) * t;
 return ret
 },
 /**
- * Not documented yet.
- * @param {*} m4
+ * Returns the upper-left part of a 4x4 matrix as a new
+ * 3x3 matrix.
+ * @param {Array<number>} m4 A 4x4 matrix.
+ * @return {Array<number>} The resulting 3x3 matrix.
  */
 mat4toMat3:function(m4){
  return [
@@ -656,8 +679,10 @@ mat4toMat3:function(m4){
  ]
 },
 /**
- * Not documented yet.
- * @param {*} m4
+ * Inverts a 4x4 matrix, then transposes it. Returns
+ * a new matrix.
+ * @param {Array<number>} m4 A 4x4 matrix.
+ * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4inverseTranspose:function(m4){
  var mat=GLMath.mat4invert(m4);
@@ -803,9 +828,11 @@ mat4translate:function(mat,v3,v3y,v3z){
   ]
 },
 /**
- * Returns a 4x4 matrix representing a perspective view.
- * This method assumes a right-handed coordinate system, in which
- * the z-axis points toward the viewer.
+ * Returns a 4x4 matrix representing a perspective view.<p>
+ * This method assumes a right-handed coordinate system, such as
+ * OpenGL's. To adjust the result of this method to a left-handed system,
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {number}  fovY Vertical field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
@@ -829,7 +856,12 @@ mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
    nmf*(nearZ+farZ), -1, 0, 0, nmf*nearZ*farZ*2, 0]
 },
 /**
- * Returns a 4x4 matrix representing a camera view.
+ * Returns a 4x4 matrix representing a camera view.<p>
+ * This method assumes a right-handed coordinate system, such as
+ * OpenGL's. To adjust the result of this method to a left-handed system,
+ * such as Direct3D's, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
+* 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
+* 10, 12, and 14).
 * @param {Array<number>} viewerPos A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<number>|undefined} lookingAt A 3-element vector specifying
@@ -866,7 +898,11 @@ mat4lookat:function(viewerPos,lookingAt,up){
 /**
  * Returns a 4x4 matrix representing an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
- * plane and the top to the bottom.
+ * plane and the top to the bottom.<p>
+ * This method assumes a right-handed coordinate system, such as
+ * OpenGL's. To adjust the result of this method to a left-handed system,
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l Leftmost coordinate of the 3D view.
  * @param {number} r Rightmost coordinate of the 3D view.
  * (Note that r can be greater than l or vice versa.)
@@ -887,7 +923,11 @@ mat4ortho:function(l,r,b,t,n,f){
    -(l+r)*width,-(t+b)*height,-(n+f)*depth,1];
 },
 /**
- * Returns a 4x4 matrix representing a 2D orthographic view.
+ * Returns a 4x4 matrix representing a 2D orthographic view.<p>
+ * This method assumes a right-handed coordinate system, such as
+ * OpenGL's. To adjust the result of this method to a left-handed system,
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l Leftmost coordinate of the 2D view.
  * @param {number} r Rightmost coordinate of the 2D view.
  * (Note that r can be greater than l or vice versa.)
@@ -901,7 +941,11 @@ mat4ortho2d:function(l,r,b,t){
 },
 /**
  * Returns a 4x4 matrix representing a view frustum,
- * or the limits in the camera's view.
+ * or the limits in the camera's view.<p>
+ * This method assumes a right-handed coordinate system, such as
+ * OpenGL's. To adjust the result of this method to a left-handed system,
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {number} r X-coordinate of the point where the right
@@ -955,6 +999,8 @@ mat4scaleInPlace:function(mat,v3){
 },
 /**
  * Multiplies two 4x4 matrices.  A new matrix is returned.
+ * See the constructor for GLMath for details on the matrix
+ * multiplication behavior.
  * @param {*} a The first matrix.
  * @param {*} b The second matrix.
  * @return {Array<number>} The resulting 4x4 matrix.
@@ -993,7 +1039,10 @@ quatMultiply:function(a,b){
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer (as the z-axis does by default in right-handed
+ * coordinate systems like OpenGL's), the angle is 0 at the 12 o'clock position,
+ * 90 degrees at the 9 o'clock position, and so on.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
@@ -1088,7 +1137,10 @@ mat[12], mat[13], mat[14], mat[15]];
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer (as the z-axis does by default in right-handed
+ * coordinate systems like OpenGL's), the angle is 0 at the 12 o'clock position,
+ * 90 degrees at the 9 o'clock position, and so on.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
@@ -1196,7 +1248,7 @@ GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
  */
 GLMath.quatCopy=GLMath.vec4copy;
 /**
- Pi divided by 180. Multiply by this number to convert degrees to radians.
+ Closest approximation to pi divided by 180. Multiply by this number to convert degrees to radians.
  @const
  @default
 */
@@ -1212,7 +1264,7 @@ GLMath.PiDividedBy360 = 0.00872664625997164788461845384244;
 */
 GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
- 180 divided by pi. Multiply by this number to convert radians to degrees.
+ Closest approximation to 180 divided by pi. Multiply by this number to convert radians to degrees.
  @const
  @default
 */
