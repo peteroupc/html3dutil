@@ -429,7 +429,10 @@ quatToMat4:function(quat){
 * @param {Array<number>} A quaternion.
 * @return  {Array<number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.
+ * in degrees as the fourth element. If the axis of rotation
+ * points toward the viewer (as the z-axis does by default in right-handed
+ * coordinate systems like OpenGL's), the angle's value is increasing in
+ * a counterclockwise direction.
 */
 quatToAngleAxis:function(a){
  var w=a[3];
@@ -452,7 +455,10 @@ quatToAngleAxis:function(a){
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
+ * of rotation in x, y, and z, respectively.  If the axis of rotation
+ * points toward the viewer (as the z-axis does by default in right-handed
+ * coordinate systems like OpenGL's), the angle's value is increasing in
+ * a counterclockwise direction.
  * @param {number} vy Y-component of the axis
  * of rotation.
  * @param {number} vz Z-component of the axis
@@ -488,7 +494,7 @@ return ret;
 },
 /**
  * Generates a quaternion from pitch, yaw and roll angles.
- * The rotation will occur as a pitch, then yaw, then roll.
+ * The rotation will occur as a roll, then yaw, then pitch.
  * @param {number} pitchDegrees Rotation about the x-axis, in degrees.  Positive
  * values indicate counterclockwise rotation.
  * @param {number} yawDegrees Rotation about the y-axis, in degrees.  Positive
@@ -522,7 +528,7 @@ quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
   * The rotation described by the return value
- * will occur as a pitch, then yaw, then roll.
+ * will occur as a roll, then yaw, then pitch.
  * @param {Array<number>} a A quaternion.  Should be normalized.
  * @return {Array<number>} A three-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  Positive
@@ -1041,8 +1047,8 @@ quatMultiply:function(a,b){
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
  * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle is 0 at the 12 o'clock position,
- * 90 degrees at the 9 o'clock position, and so on.
+ * coordinate systems like OpenGL's), the angle's value is increasing in
+ * a counterclockwise direction.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
@@ -1139,7 +1145,7 @@ mat[12], mat[13], mat[14], mat[15]];
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
  * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle is 0 at the 12 o'clock position,
+ * coordinate systems like OpenGL's), the angle is 0 degrees at the 12 o'clock position,
  * 90 degrees at the 9 o'clock position, and so on.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can

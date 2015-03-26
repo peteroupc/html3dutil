@@ -3255,8 +3255,8 @@ Shape.prototype.setPosition=function(x,y,z){
   return this;
 }
 /**
- * Sets this object's rotation.  The rotation will occur in this order: X-axis,
- * then Y-axis, then Z-axis rotation.
+ * Sets this object's rotation.  The rotation will occur in this order: Z-axis,
+ * then Y-axis, then X-axis rotation.
  * @param {Array<number>|number} x Rotation about the X-axis in degrees
  * (may be negative),
  * or an array of 3 numbers giving the rotation about the x, y, and z axis.
