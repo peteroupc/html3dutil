@@ -355,7 +355,9 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * @return {Promise} A promise that resolves when the text
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "data", the
-* file's text or data), and is rejected when an error occurs (the
+* file's text or data), and is rejected when an error occurs (the 
+* result may be an object with
+* one property: "url", the URL of the file).
 */
 "loadFileFromUrl":function(url,responseType){
  var urlstr=url;
@@ -493,11 +495,11 @@ var e=null;
 * colors.  The following lists the kinds of colors accepted:
 * <ul>
 * <li>HTML colors with the syntax <code>#RRGGBB</code>, where
-* RR is the hexadecimal form of the red component (0-255), GG
+* RR is the hexadecimal form of the red component (00-FF), GG
 * is the hexadecimal green component, and BB is the hexadecimal
 * blue component.  Example: #88DFE0.
 * <li>HTML colors with the syntax <code>#RGB</code>, where
-* R is the hexadecimal form of the red component (0-15), G
+* R is the hexadecimal form of the red component (0-F), G
 * is the hexadecimal green component, and B is the hexadecimal
 * blue component.  Example: #8DE.
 * <li>CSS colors with the syntax <code>rgb(red, green, blue)</code> or
@@ -520,6 +522,7 @@ var e=null;
 * <li>CSS colors such as <code>red</code>, <code>green</code>,
 * <code>white</code>, <code>lemonchiffon</code>, <code>chocolate</code>,
 * and so on, including the newly added <code>rebeccapurple</code>.
+* <li>The value <code>transparent</code>, meaning transparent black.
 * </ul>
 * For more information:
 * [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
@@ -548,6 +551,9 @@ exports["toGLColor"]=function(r,g,b,a){
  if(typeof r=="number" &&
      typeof g=="number" && typeof b=="number"){
    return [r,g,b,(typeof a!="number") ? 1.0 : a];
+ } else if(r.constructor==Array){
+   return r.length==4 ? r : [r[0]||0,r[1]||0,r[2]||0,
+     (typeof r[3]!="number") ? 1.0 : r[3]];
  } else {
    return r || [0,0,0,0];
  }
@@ -982,7 +988,8 @@ ShaderProgram.prototype.use=function(){
 * be reset if this program is re-linked, which won't normally happen
 * in the case of the ShaderProgram class.)
 * @param {Object} uniforms A hash of key/value pairs.  Each key is
-* the name of a uniform (see get() for more information), and each value is the value to set
+* the name of a uniform (see get() for more information), and each 
+* value is the value to set
 * to that uniform.  Uniform values that are 3- or 4-element
 * vectors must be 3 or 4 elements long, respectively.  Uniforms
 * that are 4x4 matrices must be 16 elements long.  Keys to
@@ -1089,7 +1096,7 @@ var shader=ShaderProgram.fragmentShaderHeader();
 shader+=""+
 "uniform sampler2D sampler;\n" + // texture sampler
 "uniform vec2 textureSize;\n" + // texture size
-"varying vec2 textureUVVar;\n"+
+"varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n";
 shader+=functionCode;
 shader+="\n\nvoid main(){\n" +
@@ -1183,12 +1190,12 @@ ShaderProgram.getDefaultVertex=function(){
 var shader="" +
 "attribute vec3 position;\n" +
 "attribute vec3 normal;\n" +
-"attribute vec2 textureUV;\n" +
+"attribute vec2 uv;\n" +
 "attribute vec3 colorAttr;\n" +
 "uniform mat4 world;\n" +
 "uniform mat4 view;\n" +
 "uniform mat4 projection;\n"+
-"varying vec2 textureUVVar;\n"+
+"varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n" +
 "#ifdef SHADING\n"+
 "uniform mat3 worldViewInvTrans3; /* internal */\n" +
@@ -1199,7 +1206,7 @@ var shader="" +
 "vec4 positionVec4=vec4(position,1.0);\n" +
 "gl_Position=projection*view*world*positionVec4;\n" +
 "colorAttrVar=colorAttr;\n" +
-"textureUVVar=textureUV;\n" +
+"uvVar=uv;\n" +
 "#ifdef SHADING\n"+
 "transformedNormalVar=normalize(worldViewInvTrans3*normal);\n" +
 "viewWorldPositionVar=view*world*positionVec4;\n" +
@@ -1242,7 +1249,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "uniform sampler2D sampler;\n" + // texture sampler
 "uniform vec2 textureSize;\n" + // texture size (all zeros if textures not used)
 "uniform float useColorAttr;\n" + // use color attribute if 1
-"varying vec2 textureUVVar;\n"+
+"varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n" +
 "#ifdef SHADING\n" +
 "varying vec4 viewWorldPositionVar;\n" +
@@ -1271,7 +1278,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#else\n" +
 "   vec4(md,1.0), /*when useTexture is 0*/\n" +
 "#endif\n" +
-"   texture2D(sampler,textureUVVar), /*when useTexture is 1*/\n"+
+"   texture2D(sampler,uvVar), /*when useTexture is 1*/\n"+
 "  useTexture);\n"+
 " baseColor=mix(baseColor, /* when useColorAttr is 0 */\n"+
 "  vec4(colorAttrVar,1.0), /* when useColorAttr is 1 */\n" +
@@ -1755,7 +1762,7 @@ Mesh.prototype.mode=function(m){
  */
 Mesh.prototype.normalizeNormals=function(){
   for(var i=0;i<this.subMeshes.length;i++){
-   var stride=Mesh.getStride(this.subMeshes[i].attributeBits);
+   var stride=this.subMeshes[i].getStride();
    var vertices=this.subMeshes[i].vertices;
    var normalOffset=Mesh.normalOffset(
      this.subMeshes[i].attributeBits);
@@ -1805,6 +1812,9 @@ function SubMesh(vertices,faces,format){
  this.startIndex=0;
  this.hasLines=false;
  this.attributeBits=(format==null) ? 0 : format;
+ this.getStride=function(){
+  return Mesh.getStride(this.attributeBits);
+ }
  this.mode=function(m){
   this.builderMode=m;
   if(Mesh._primitiveType(m)==Mesh.LINES){
@@ -1818,6 +1828,7 @@ function SubMesh(vertices,faces,format){
   var oldBits=this.attributeBits;
   var newBits=oldBits|newAttributes;
   if(newBits==oldBits)return;
+  var currentStride=this.getStride();
   // Rebuild the list of vertices if a new kind of
   // attribute is added to the mesh
   var newVertices=[];
@@ -1828,7 +1839,6 @@ function SubMesh(vertices,faces,format){
    newStride+=3;
   if((newBits&Mesh.TEXCOORDS_BIT)!=0)
    newStride+=2;
-  var currentStride=Mesh.getStride(oldBits);
   for(var i=0;i<this.vertices.length;i+=currentStride){
    var vx=this.vertices[i];
    var vy=this.vertices[i+1];
@@ -1903,7 +1913,7 @@ function SubMesh(vertices,faces,format){
   if((this.attributeBits&Mesh.TEXCOORDS_BIT)!=0){
    this.vertices.push(this.texCoord[0],this.texCoord[1]);
   }
-  var stride=Mesh.getStride(this.attributeBits);
+  var stride=this.getStride();
   if(this.builderMode==Mesh.QUAD_STRIP &&
      (this.vertices.length-this.startIndex)>=stride*4 &&
      (this.vertices.length-this.startIndex)%(stride*2)==0){
@@ -1938,7 +1948,7 @@ function SubMesh(vertices,faces,format){
 /** @private */
 SubMesh.prototype.makeRedundant=function(){
   var existingIndices=[];
-  var stride=Mesh.getStride(this.attributeBits);
+  var stride=this.getStride();
   var originalIndicesLength=this.indices.length;
   for(var i=0;i<originalIndicesLength;i++){
     var index=this.indices[i];
@@ -1975,7 +1985,7 @@ SubMesh.prototype.toWireFrame=function(){
  *
  */
 SubMesh.prototype.recalcBounds=function(){
-  var stride=Mesh.getStride(this.attributeBits);
+  var stride=this.getStride();
   var minx=0;
   var maxx=0;
   var miny=0;
@@ -2002,14 +2012,12 @@ SubMesh.prototype.recalcBounds=function(){
   this.bounds=[[minx,miny,minz],[maxx,maxy,maxz]];
   return this;
 };
-/**
- *
- */
+/** @private */
 SubMesh.prototype.recalcNormals=function(inward){
   this._rebuildVertices(Mesh.NORMALS_BIT);
   this.makeRedundant();
   Mesh._recalcNormals(this.vertices,this.indices,
-    Mesh.getStride(this.attributeBits),3,inward);
+    this.getStride(),3,inward);
   return this;
 };
 /** @private */
@@ -2116,8 +2124,8 @@ function BufferedMesh(mesh, context){
 * Binds the buffers in this object to attributes according
 * to their data format.
 * @param {ShaderProgram} program A shader program object to get
-* the IDs from for uniforms named "position", "normal",
-* "colorAttr", and "textureUV".
+* the IDs from for attributes named "position", "normal",
+* "colorAttr", and "uv".
 */
 BufferedMesh.prototype.bind=function(program){
  for(var i=0;i<this.subMeshes.length;i++){
@@ -2221,7 +2229,7 @@ BufferedSubMesh.prototype.bind=function(program){
   offset=Mesh.texCoordOffset(format);
   if(offset>=0){
    BufferedMesh._vertexAttrib(context,
-     program.get("textureUV"), 2,
+     program.get("uv"), 2,
     context.FLOAT, stride*4, offset*4);
   }
 }
@@ -2727,7 +2735,7 @@ Scene3D.prototype.createBuffer=function(){
 }
 
 /**
-*  Sets this scene's projection matrix to a perspective view.
+*  Sets this scene's projection matrix to a perspective projection.
 * @param {number}  fov Vertical field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.  As a result,
@@ -2743,7 +2751,7 @@ Scene3D.prototype.createBuffer=function(){
 * to be seen.
 * @return {Scene3D} This object.
 * @example
-* // Set the perspective view.  Camera has a 45-degree field of view
+* // Set the perspective projection.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
 * scene.setPerspective(45,scene.getAspect(),0.1,100);
 */
@@ -2752,7 +2760,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
    aspect,near,far));
 }
 /**
- * Sets this scene's projection matrix to a perspective view that defines
+ * Sets this scene's projection matrix to a perspective projection that defines
  * the view frustum, or the limits in the camera's view.
  * @param {number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
@@ -2795,7 +2803,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
    left, right, top, bottom, near, far));
 }
 /**
- * Sets this scene's projection matrix to a 2D orthographic view.
+ * Sets this scene's projection matrix to a 2D orthographic projection.
  * @param {number} left Leftmost coordinate of the 2D view.
  * @param {number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
@@ -2888,6 +2896,8 @@ Scene3D.prototype._setIdentityMatrices=function(){
  this.program.setUniforms({
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
+   "viewMatrix":this._viewMatrix,
+   "projectionMatrix":this._projectionMatrix,
    "viewInverse":this._invView,
  });
 }
@@ -2898,6 +2908,8 @@ Scene3D.prototype._updateMatrix=function(){
   this.program.setUniforms({
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
+   "viewMatrix":this._viewMatrix,
+   "projectionMatrix":this._projectionMatrix,
    "viewInverse":this._invView,
   });
   this._matrixDirty=false;
@@ -3001,7 +3013,15 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
 /**
  *  Renders all shapes added to this scene.
  *  This is usually called in a render loop, such
- *  as GLUtil.renderLoop().
+ *  as GLUtil.renderLoop().<p>
+ * This method may set the following uniforms if they exist in the
+ * shader program:<ul>
+ * <li><code>projection</code>, <code>projectionMatrix</code>: this scene's
+ * projection matrix
+ * <li><code>view</code>, <code>viewMatrix</code>: this scene's view
+ * matrix
+ * <li><code>viewInverse</code>: inverse of the view matrix
+ * </ul>
  * @return {Scene3D} This object.
  */
 Scene3D.prototype.render=function(){
@@ -3281,7 +3301,18 @@ Shape.prototype.setRotation=function(x,y,z){
 }
 /**
  * Renders this object.  This method will load the shape's mesh to vertex
- * buffer objects, if it isn't loaded already.
+ * buffer objects, if it isn't loaded already.<p>
+ * This method may set the following uniforms if they exist in the
+ * shader program:<ul>
+ * <li><code>world</code>, <code>modelMatrix</code>: this shape's
+ * transformation matrix
+ * <li><code>modelViewMatrix</code>: the view matrix times this shape's
+ * transformation matrix
+ * <li><code>worldViewInvTrans3</code>, <code>normalMatrix</code>: 
+ * 3x3 inverse transpose of the view matrix times this shape's
+ * transformation matrix
+ * <li><code>useColorAttr</code>: whether this shape uses per-vertex colors
+ * </ul>
  * @param {ShaderProgram} program The WebGL program in which attributes
  * and uniforms related to the rendered object will be set up.  The
  * program's shaders will control how the shape will be rendered.
@@ -3300,19 +3331,25 @@ Shape.prototype.render=function(program){
   this.vertfaces.bind(program);
   // Set world matrix
   var uniforms={};
-  var uniformMatrix=program.get("world");
+  var uniformMatrix=program.get("world")
+  if(uniformMatrix==null)uniformMatrix=program.get("modelMatrix");
   if(uniformMatrix!==null){
    if(this._matrixDirty){
     this._updateMatrix();
    }
    uniforms["world"]=this.matrix;
+   uniforms["modelMatrix"]=this.matrix;
    var viewMatrix=program.getUniform("view")
+   if(viewMatrix==null)viewMatrix=program.getUniform("viewMatrix")
    if(viewMatrix){
      var viewWorld=GLMath.mat4multiply(viewMatrix,this.matrix);
      var invTrans=GLMath.mat4toMat3(GLMath.mat4inverseTranspose(viewWorld));
+     uniforms["modelViewMatrix"]=viewWorld;
      uniforms["worldViewInvTrans3"]=invTrans;
+     uniforms["normalMatrix"]=invTrans;
    } else {
      uniforms["worldViewInvTrans3"]=this._invTransModel3;
+     uniforms["normalMatrix"]=this._invTransModel3;
    }
   }
   uniforms["useColorAttr"]=((this.vertfaces.format&Mesh.COLORS_BIT)!=0) ?

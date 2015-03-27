@@ -44,7 +44,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * a right-handed coordinate system (such as OpenGL's), in which the z-axis points
 * toward (not away from) the viewer whenever the x-axis points to
 * the right and the y-axis points up.<p>
-* The methods mat4multiply, mat4scale, mat4translate, and
+* The methods mat4multiply, mat4scale, mat4scaleinPlace, mat4translate, and
 * mat4rotate involve multiplying 4x4 matrices, combining multiple 
 * transformations into a single transformation.  In these methods,
 * the matrices are multiplied such that the transformations
@@ -426,7 +426,7 @@ quatToMat4:function(quat){
 /**
 * Calculates the angle and axis of rotation for this
 * quaternion.
-* @param {Array<number>} A quaternion.
+* @param {Array<number>} a A quaternion.
 * @return  {Array<number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
@@ -536,9 +536,9 @@ quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
  */
 quatToPitchYawRoll:function(a){
   var c0=a[3];
-  var c1=a[0]; // first pitch
-  var c2=a[1]; // then yaw
-  var c3=a[2]; // then roll
+  var c1=a[0]; // pitch
+  var c2=a[1]; // yaw
+  var c3=a[2]; // roll
 	var sq1=c1*c1;
   var sq2=c2*c2;
   var sq3=c3*c3;
@@ -689,6 +689,7 @@ mat4toMat3:function(m4){
  * a new matrix.
  * @param {Array<number>} m4 A 4x4 matrix.
  * @return {Array<number>} The resulting 4x4 matrix.
+ * Returns the identity matrix if this matrix is not invertible.
  */
 mat4inverseTranspose:function(m4){
  var mat=GLMath.mat4invert(m4);
@@ -705,7 +706,7 @@ mat4inverseTranspose:function(m4){
 * Returns the transposed result of the inverted upper left corner of
 * the given 4x4 matrix.
 * @param {Array<number>} m4 A 4x4 matrix.
-* @result {Array<number>} The resulting 3x3 matrix. If the matrix
+* @return {Array<number>} The resulting 3x3 matrix. If the matrix
 * can't be inverted, returns the identity 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
@@ -834,7 +835,7 @@ mat4translate:function(mat,v3,v3y,v3z){
   ]
 },
 /**
- * Returns a 4x4 matrix representing a perspective view.<p>
+ * Returns a 4x4 matrix representing a perspective projection.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
@@ -929,7 +930,7 @@ mat4ortho:function(l,r,b,t,n,f){
    -(l+r)*width,-(t+b)*height,-(n+f)*depth,1];
 },
 /**
- * Returns a 4x4 matrix representing a 2D orthographic view.<p>
+ * Returns a 4x4 matrix representing a 2D orthographic projection.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
@@ -1145,8 +1146,8 @@ mat[12], mat[13], mat[14], mat[15]];
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
  * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle is 0 degrees at the 12 o'clock position,
- * 90 degrees at the 9 o'clock position, and so on.
+ * coordinate systems like OpenGL's), the angle's value is increasing in
+ * a counterclockwise direction.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
