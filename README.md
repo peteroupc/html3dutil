@@ -5,7 +5,7 @@ If you like this software, consider donating to me at this link: [http://upokece
 
 ----
 
-A public domain JavaScript library for easing the development of WebGL applications.
+A public domain JavaScript library for easing the development of HTML 3D applications.
 
 API documentation is found at: [https://peteroupc.github.io/html3dutil](https://peteroupc.github.io/html3dutil)
 
