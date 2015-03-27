@@ -35,7 +35,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * with vectors begin with "vec".<p>
 * <b>Matrices:</b>  A matrix is a 16- or 9-element array that describes a
 * transformation from one coordinate system to another. Transformations
-* include translation (shifting), scaling, and rotation.  Functions dealing 
+* include translation (shifting), scaling, and rotation.  Functions dealing
 * with matrices begin with "mat".<p>
 * All functions dealing with 4x4 matrices assume that
 * the translation elements in x, y, and z are located in the
@@ -45,7 +45,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * toward (not away from) the viewer whenever the x-axis points to
 * the right and the y-axis points up.<p>
 * The methods mat4multiply, mat4scale, mat4scaleinPlace, mat4translate, and
-* mat4rotate involve multiplying 4x4 matrices, combining multiple 
+* mat4rotate involve multiplying 4x4 matrices, combining multiple
 * transformations into a single transformation.  In these methods,
 * the matrices are multiplied such that the transformations
 * they describe happen in reverse order.  For example, if
@@ -66,7 +66,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * rotation.  In these methods, multiplying one rotation by another
 * creates a combined rotation in which the second rotation happens
 * before the first rotation.  Like matrix multiplication, quaternion
-* multiplication is not commutative. This multiplication behavior 
+* multiplication is not commutative. This multiplication behavior
 * is opposite to that in the D3DX and DirectXMath libraries.
 * @class
 * @alias glmath.GLMath
@@ -783,7 +783,7 @@ mat4scaled:function(v3,v3y,v3z){
  * Transforms a 4-element vector with a 4x4 matrix and returns
  * the transformed vector.
  * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>|number} v X coordinate.  
+ * @param {Array<number>|number} v X coordinate.
  * If "vy", "vz", and "vw" are omitted, this value can instead
  * be a 4-element array giving the X, Y, Z, and W coordinates.
  * @param {number} vy Y coordinate.
@@ -815,7 +815,7 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
  * Transforms a 3-element vector with a 3x3 matrix and returns
  * the transformed vector.
  * @param {Array<number>} mat A 3x3 matrix.
- * @param {Array<number>|number} v X coordinate.  
+ * @param {Array<number>|number} v X coordinate.
  * If "vy", and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {number} vy Y coordinate.
@@ -896,7 +896,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * Returns a 4x4 matrix representing a perspective projection.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
- * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {number}  fovY Vertical field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
@@ -966,7 +966,7 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * plane and the top to the bottom.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
- * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l Leftmost coordinate of the 3D view.
  * @param {number} r Rightmost coordinate of the 3D view.
@@ -991,7 +991,7 @@ mat4ortho:function(l,r,b,t,n,f){
  * Returns a 4x4 matrix representing a 2D orthographic projection.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
- * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l Leftmost coordinate of the 2D view.
  * @param {number} r Rightmost coordinate of the 2D view.
@@ -1009,7 +1009,7 @@ mat4ortho2d:function(l,r,b,t){
  * or the limits in the camera's view.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
- * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th 
+ * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.

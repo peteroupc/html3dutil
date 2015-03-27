@@ -1827,8 +1827,13 @@ Mesh.prototype.mode=function(m){
  return this;
 }
 /**
- * Not documented yet.
- * @param {*} other
+ * Merges the vertices from another mesh into this one.
+ * The vertices from the other mesh will be copied into this one,
+ * and the other mesh's indices copied.  Also, resets the primitive
+ * mode (see the mode() method) so that future vertices given
+ * will not build upon previous vertices.
+ * @param {Mesh} other A mesh to merge into this one. The mesh
+ * given in this parameter will remain unchanged.
  */
 Mesh.prototype.merge=function(other){
  var lastMesh=this.subMeshes[this.subMeshes.length-1]
@@ -1951,7 +1956,9 @@ Mesh.prototype.normal3=function(x,y,z){
   return this;
  }
 /**
- * Not documented yet.
+ * Modifies this mesh by normalizing the normals it defines
+ * to unit length.
+ * @param {Mesh} This object.
  */
 Mesh.prototype.normalizeNormals=function(){
   for(var i=0;i<this.subMeshes.length;i++){
@@ -2174,7 +2181,7 @@ SubMesh.prototype.transform=function(matrix){
     v[i+1]=xform[1];
     v[i+2]=xform[2];
     if(normalOffset>=0 && isNonTranslation){
-     // Transform and normalize the normals 
+     // Transform and normalize the normals
      // (using a modified matrix) to ensure
      // they point in the correct direction
      xform=GLMath.mat3transform(matrixForNormals,

@@ -20,7 +20,7 @@ Demos
 ---------
 * [simple.html](https://peteroupc.github.io/html3dutil/simple.html) - A simple demo using this library.
 * [squares.html](https://peteroupc.github.io/html3dutil/squares.html) - Demonstrates shader-based filters.
-* [compositeMesh.html](https://peteroupc.github.io/html3dutil/compositeMesh.html) - Demonstrates 
+* [compositeMesh.html](https://peteroupc.github.io/html3dutil/compositeMesh.html) - Demonstrates
 combining multiple meshes into one.
 
 Examples
