@@ -311,17 +311,17 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
     // Output first vertices in reverse order to
     // allow triangle fan effect to work
     mesh.texCoord2(1,zEnd);
-    mesh.normal3(0,radiusEnd*normDir,0);
+    mesh.normal3(0,radiusEnd*normDir,zEndHeight*normDir);
     mesh.vertex3(0,radiusEnd,zEndHeight);
     mesh.texCoord2(1,zStart);
-    mesh.normal3(0,radiusStart*normDir,0);
+    mesh.normal3(0,radiusStart*normDir,zStartHeight*normDir);
     mesh.vertex3(0,radiusStart,zStartHeight);
    } else {
     mesh.texCoord2(1,zStart);
-    mesh.normal3(0,radiusStart*normDir,0);
+    mesh.normal3(0,radiusStart*normDir,zStartHeight*normDir);
     mesh.vertex3(0,radiusStart,zStartHeight);
     mesh.texCoord2(1,zEnd);
-    mesh.normal3(0,radiusEnd*normDir,0);
+    mesh.normal3(0,radiusEnd*normDir,zEndHeight*normDir);
     mesh.vertex3(0,radiusEnd,zEndHeight);
    }
    for(var k=2,j=1;k<=slicesTimes2;k+=2,j++){
@@ -2151,19 +2151,22 @@ SubMesh.prototype.toWireFrame=function(){
 }
 
 /** @private */
-SubMesh._isIdentityExceptInTranslation=function(matrix){
+SubMesh._isIdentityInUpperLeft=function(matrix){
  return
-    m[0]==1 && m[1]==0 && m[2]==0 && m[3]==0 &&
-    m[4]==0 && m[5]==1 && m[6]==0 && m[7]==0 &&
-    m[8]==0 && m[9]==0 && m[10]==1 && m[11]==0 &&
-    m[15]==1;
+    m[0]==1 && m[1]==0 && m[2]==0 &&
+    m[4]==0 && m[5]==1 && m[6]==0 &&
+    m[8]==0 && m[9]==0 && m[10]==1;
 }
 /** @private */
 SubMesh.prototype.transform=function(matrix){
   var stride=this.getStride();
   var v=this.vertices;
-  var isNonTranslation=!SubMesh._isIdentityExceptInTranslation(matrix);
+  var isNonTranslation=!SubMesh._isIdentityInUpperLeft(matrix);
   var normalOffset=Mesh.normalOffset(this.attributeBits);
+  var matrixForNormals=null;
+  if(normalOffset>=0 && isNonTranslation){
+   matrixForNormals=GLMath.mat4inverseTranspose3(matrix);
+  }
   for(var i=0;i<v.length;i+=stride){
     var xform=GLMath.mat4transform(matrix,
       v[i],v[i+1],v[i+2],1.0);
@@ -2171,10 +2174,11 @@ SubMesh.prototype.transform=function(matrix){
     v[i+1]=xform[1];
     v[i+2]=xform[2];
     if(normalOffset>=0 && isNonTranslation){
-     // Transform and normalize the normals to ensure
+     // Transform and normalize the normals 
+     // (using a modified matrix) to ensure
      // they point in the correct direction
-     xform=GLMath.mat4transform(matrix,
-      v[i+normalOffset],v[i+normalOffset+1],v[i+normalOffset+2],1.0);
+     xform=GLMath.mat3transform(matrixForNormals,
+      v[i+normalOffset],v[i+normalOffset+1],v[i+normalOffset+2]);
      GLMath.vec3normInPlace(xform);
      v[i+normalOffset]=xform[0];
      v[i+normalOffset+1]=xform[1];
