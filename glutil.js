@@ -355,7 +355,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * @return {Promise} A promise that resolves when the text
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "data", the
-* file's text or data), and is rejected when an error occurs (the 
+* file's text or data), and is rejected when an error occurs (the
 * result may be an object with
 * one property: "url", the URL of the file).
 */
@@ -673,6 +673,11 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
  var height=outer-inner;
   var lastZ=0;
   var lastRad=inner;
+  if(inward){
+   mesh.normal3(0,0,-1);
+  } else {
+   mesh.normal3(0,0,1);
+  }
   for(var i=0;i<loops;i++){
    var zStart=lastZ;
    var zEnd=(i+1)/loops;
@@ -700,7 +705,7 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
     mesh.vertex3(x*radiusEnd,y*radiusEnd,0);
    }
   }
-  return mesh.recalcNormals(inward);
+  return mesh;
 }
 
 /**
@@ -708,7 +713,7 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
 * @param {number} inner Inner radius (thickness) of the torus.
 * @param {number} outer Outer radius of the torus (distance from the
 * center to the innermost part of the torus).
-* @param {number} lengthwise Number of lengthwise subdivisions. 
+* @param {number} lengthwise Number of lengthwise subdivisions.
 * May be null or omitted; default is 32.
 * @param {number} crosswise Number of crosswise subdivisions.
 * May be null or omitted; default is 32.
@@ -802,6 +807,11 @@ GLUtil.createPlane=function(width, height, widthDiv, heightDiv,inward){
  if(width==0 || height==0)return mesh;
  var xStart=-width*0.5;
  var yStart=-height*0.5;
+  if(inward){
+   mesh.normal3(0,0,-1);
+  } else {
+   mesh.normal3(0,0,1);
+  }
  for(var i=0;i<heightDiv;i++){
   mesh.mode(Mesh.QUAD_STRIP);
   var iStart=i/heightDiv;
@@ -821,7 +831,7 @@ GLUtil.createPlane=function(width, height, widthDiv, heightDiv,inward){
    mesh.vertex3(x,yNext,0);
   }
  }
- return mesh.recalcNormals(inward);
+ return mesh;
 }
 
 /**
@@ -1109,7 +1119,7 @@ ShaderProgram.prototype.use=function(){
 * be reset if this program is re-linked, which won't normally happen
 * in the case of the ShaderProgram class.)
 * @param {Object} uniforms A hash of key/value pairs.  Each key is
-* the name of a uniform (see get() for more information), and each 
+* the name of a uniform (see get() for more information), and each
 * value is the value to set
 * to that uniform.  Uniform values that are 3- or 4-element
 * vectors must be 3 or 4 elements long, respectively.  Uniforms
@@ -1705,7 +1715,7 @@ MaterialShade.prototype.bind=function(program){
 * Each vertex is made up of the same number of elements, as defined in
 * format. If null or omitted, creates an initially empty mesh.
 * May be null or omitted, in which case an empty vertex array is used.
-* @param {Array<number>|undefined} faces An array of vertex indices.  Each trio of
+* @param {Array<number>|undefined} indices An array of vertex indices.  Each trio of
 * indices specifies a separate triangle, or each pair of indices specifies
 * a line segment.
 * If null or omitted, creates an initially empty mesh.
@@ -1718,10 +1728,15 @@ MaterialShade.prototype.bind=function(program){
 * segment.
 * May be null or omitted, in which case "format" is set to 0.
 */
-function Mesh(vertices,faces,format){
+function Mesh(vertices,indices,format){
  this.subMeshes=[
-  new SubMesh(vertices,faces,format)
+  new SubMesh(vertices,indices,format)
  ];
+ this._elementsDefined=0;
+ this.currentMode=-1;
+ this.normal=[0,0,0];
+ this.color=[0,0,0];
+ this.texCoord=[0,0];
 }
 /** @private */
 Mesh._primitiveType=function(mode){
@@ -1799,14 +1814,55 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,inward){
  * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.
  */
 Mesh.prototype.mode=function(m){
-  if(this.subMeshes.length>0 &&
-    !Mesh._isCompatibleMode(this.subMeshes[this.subMeshes.length-1].builderMode,m)){
-   this.subMeshes.push(new SubMesh().mode(m));
-  } else {
-   this.subMeshes[this.subMeshes.length-1].mode(m);
-  }
-  return this;
+ if(!Mesh._isCompatibleMode(this.currentMode,m)){
+   var format=0;
+   if(Mesh._primitiveType(m)==Mesh.LINES)
+    format|=Mesh.LINES_BIT;
+   this.subMeshes.push(new SubMesh([],[],format));
+   this.currentMode=m;
+ } else {
+   this.subMeshes[this.subMeshes.length-1].newPrimitive();
+   this.currentMode=m;
  }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} other
+ */
+Mesh.prototype.merge=function(other){
+ var lastMesh=this.subMeshes[this.subMeshes.length-1]
+ var prim=(lastMesh.attributeBits&Mesh.LINES_BIT);
+ for(var i=0;i<other.subMeshes.length;i++){
+  var sm=other.subMeshes[i];
+  if((sm.attributeBits&Mesh.LINES_BIT)!=prim ||
+     (lastMesh.vertices.length+sm.vertices.length)>65535*3){
+   // Add new submesh because its primitive type
+   // differs from the last submesh or the combined
+   // submesh would be too long
+   lastMesh=new SubMesh(
+    sm.vertices.slice(0,sm.vertices.length),
+    sm.indices.slice(0,sm.indices.length),
+    sm.attributeBits);
+   this.subMeshes.push(lastMesh);
+   prim=(lastMesh.attributeBits&Mesh.LINES_BIT);
+  } else {
+   // Add to existing submesh
+   var oldVertexLength=lastMesh.vertexCount();
+   var oldIndexLength=lastMesh.indices.length;
+   lastMesh._rebuildVertices(sm.attributeBits);
+   lastMesh.vertices.push.apply(lastMesh.vertices,sm.vertices);
+   lastMesh.indices.push.apply(lastMesh.indices,sm.indices);
+   for(var i=oldIndexLength;i<lastMesh.indices.length;i++){
+    lastMesh.indices[i]+=oldVertexLength;
+   }
+  }
+ }
+ // Reset the primitive
+ lastMesh.newPrimitive();
+ return this;
+}
+
  /**
   * Sets the current normal for this mesh.  Future vertex positions
   * defined (with vertex3()) will have this normal.  If necessary, rebuilds the mesh
@@ -1816,14 +1872,15 @@ Mesh.prototype.mode=function(m){
   * @param {number} z Z-coordinate of the normal.
   * @return {Mesh} This object.
   */
- Mesh.prototype.normal3=function(x,y,z){
-  for(var i=0;i<this.subMeshes.length;i++){
-   this.subMeshes[i].normal3(x,y,z);
-  }
+Mesh.prototype.normal3=function(x,y,z){
+  this.normal[0]=x;
+  this.normal[1]=y;
+  this.normal[2]=z;
+  this._elementsDefined|=Mesh.NORMALS_BIT;
   return this;
- }
+}
  /**
-  * Transforms the positions of all the vertices currently
+  * Transforms the positions and normals of all the vertices currently
   * in this mesh, using a 4x4 matrix.  The matrix won't affect
   * vertices added afterwards.
   * @param {Array<number>} matrix A 4x4 matrix describing
@@ -1845,10 +1902,11 @@ Mesh.prototype.mode=function(m){
   * @param {number} b Blue component of the color.
   * @return {Mesh} This object.
   */
- Mesh.prototype.color3=function(r,g,b){
-  for(var i=0;i<this.subMeshes.length;i++){
-   this.subMeshes[i].color3(r,g,b);
-  }
+ Mesh.prototype.color3=function(x,y,z){
+  this.color[0]=x;
+  this.color[1]=y;
+  this.color[2]=z;
+  this._elementsDefined|=Mesh.COLORS_BIT;
   return this;
  }
  /**
@@ -1859,10 +1917,10 @@ Mesh.prototype.mode=function(m){
   * @param {number} y Y-coordinate of the texture, from 0-1.
   * @return {Mesh} This object.
   */
- Mesh.prototype.texCoord2=function(x,y){
-  for(var i=0;i<this.subMeshes.length;i++){
-   this.subMeshes[i].texCoord2(x,y);
-  }
+ Mesh.prototype.texCoord2=function(u,v){
+  this.texCoord[0]=u;
+  this.texCoord[1]=v;
+  this._elementsDefined|=Mesh.TEXCOORDS_BIT;
   return this;
  }
  /**
@@ -1874,7 +1932,7 @@ Mesh.prototype.mode=function(m){
   * @return {Mesh} This object.
   */
  Mesh.prototype.vertex3=function(x,y,z){
-  this.subMeshes[this.subMeshes.length-1].vertex3(x,y,z);
+  this.subMeshes[this.subMeshes.length-1].vertex3(x,y,z,this);
   return this;
  }
  /**
@@ -1933,35 +1991,28 @@ Mesh.prototype.toWireFrame=function(){
    mesh.subMeshes.push(this.subMeshes[i].toWireFrame());
   }
   return mesh;
- }
+}
 
 /** @private */
 function SubMesh(vertices,faces,format){
  this.vertices=vertices||[];
  this.indices=faces||[];
- this.builderMode=-1;
- this.normal=[0,0,0];
- this.bounds=null;
- this.color=[0,0,0];
- this.texCoord=[0,0];
  this.startIndex=0;
- this.hasLines=false;
  this.attributeBits=(format==null) ? 0 : format;
+ this.vertexCount=function(){
+  return this.vertices.length/this.getStride();
+ }
  this.getStride=function(){
   return Mesh.getStride(this.attributeBits);
  }
- this.mode=function(m){
-  this.builderMode=m;
-  if(Mesh._primitiveType(m)==Mesh.LINES){
-   this.attributeBits|=Mesh.LINES_BIT;
-  }
+ this.newPrimitive=function(m){
   this.startIndex=this.vertices.length;
   return this;
  }
  /** @private */
  this._rebuildVertices=function(newAttributes){
   var oldBits=this.attributeBits;
-  var newBits=oldBits|newAttributes;
+  var newBits=oldBits|(newAttributes&~Mesh.LINES_BIT);
   if(newBits==oldBits)return;
   var currentStride=this.getStride();
   // Rebuild the list of vertices if a new kind of
@@ -2016,62 +2067,44 @@ function SubMesh(vertices,faces,format){
   this.vertices=newVertices;
   this.attributeBits=newBits;
  }
- this.normal3=function(x,y,z){
-  this.normal[0]=x;
-  this.normal[1]=y;
-  this.normal[2]=z;
-  this._rebuildVertices(Mesh.NORMALS_BIT);
-  return this;
- }
- this.color3=function(x,y,z){
-  this.color[0]=x;
-  this.color[1]=y;
-  this.color[2]=z;
-  this._rebuildVertices(Mesh.COLORS_BIT);
-  return this;
- }
- this.texCoord2=function(u,v){
-  this.texCoord[0]=u;
-  this.texCoord[1]=v;
-  this._rebuildVertices(Mesh.TEXCOORDS_BIT);
-  return this;
- }
- this.vertex3=function(x,y,z){
-  if(this.builderMode==-1)throw new Error("mode() not called");
+ this.vertex3=function(x,y,z,state){
+  var currentMode=state.currentMode;
+  if(currentMode==-1)throw new Error("mode() not called");
+  this._rebuildVertices(state._elementsDefined);
   this.vertices.push(x,y,z);
   if((this.attributeBits&Mesh.COLORS_BIT)!=0){
-   this.vertices.push(this.color[0],this.color[1],this.color[2]);
+   this.vertices.push(state.color[0],state.color[1],state.color[2]);
   }
   if((this.attributeBits&Mesh.NORMALS_BIT)!=0){
-   this.vertices.push(this.normal[0],this.normal[1],this.normal[2]);
+   this.vertices.push(state.normal[0],state.normal[1],state.normal[2]);
   }
   if((this.attributeBits&Mesh.TEXCOORDS_BIT)!=0){
-   this.vertices.push(this.texCoord[0],this.texCoord[1]);
+   this.vertices.push(state.texCoord[0],state.texCoord[1]);
   }
   var stride=this.getStride();
-  if(this.builderMode==Mesh.QUAD_STRIP &&
+  if(currentMode==Mesh.QUAD_STRIP &&
      (this.vertices.length-this.startIndex)>=stride*4 &&
      (this.vertices.length-this.startIndex)%(stride*2)==0){
    var index=(this.vertices.length/stride)-4;
    this.indices.push(index,index+1,index+2,index+2,index+1,index+3);
-  } else if(this.builderMode==Mesh.QUADS &&
+  } else if(currentMode==Mesh.QUADS &&
      (this.vertices.length-this.startIndex)%(stride*4)==0){
    var index=(this.vertices.length/stride)-4;
    this.indices.push(index,index+1,index+2,index+2,index+3,index);
-  } else if(this.builderMode==Mesh.TRIANGLES &&
+  } else if(currentMode==Mesh.TRIANGLES &&
      (this.vertices.length-this.startIndex)%(stride*3)==0){
    var index=(this.vertices.length/stride)-3;
    this.indices.push(index,index+1,index+2);
-  } else if(this.builderMode==Mesh.LINES &&
+  } else if(currentMode==Mesh.LINES &&
      (this.vertices.length-this.startIndex)%(stride*2)==0){
    var index=(this.vertices.length/stride)-2;
    this.indices.push(index,index+1);
-  } else if(this.builderMode==Mesh.TRIANGLE_FAN &&
+  } else if(currentMode==Mesh.TRIANGLE_FAN &&
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-2;
    var firstIndex=(this.startIndex/stride);
    this.indices.push(firstIndex,index,index+1);
-  } else if(this.builderMode==Mesh.TRIANGLE_STRIP &&
+  } else if(currentMode==Mesh.TRIANGLE_STRIP &&
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-3;
    this.indices.push(index,index+1,index+2);
@@ -2117,24 +2150,44 @@ SubMesh.prototype.toWireFrame=function(){
   return ret;
 }
 
+/** @private */
+SubMesh._isIdentityExceptInTranslation=function(matrix){
+ return
+    m[0]==1 && m[1]==0 && m[2]==0 && m[3]==0 &&
+    m[4]==0 && m[5]==1 && m[6]==0 && m[7]==0 &&
+    m[8]==0 && m[9]==0 && m[10]==1 && m[11]==0 &&
+    m[15]==1;
+}
+/** @private */
 SubMesh.prototype.transform=function(matrix){
   var stride=this.getStride();
   var v=this.vertices;
+  var isNonTranslation=!SubMesh._isIdentityExceptInTranslation(matrix);
+  var normalOffset=Mesh.normalOffset(this.attributeBits);
   for(var i=0;i<v.length;i+=stride){
     var xform=GLMath.mat4transform(matrix,
       v[i],v[i+1],v[i+2],1.0);
     v[i]=xform[0];
     v[i+1]=xform[1];
     v[i+2]=xform[2];
+    if(normalOffset>=0 && isNonTranslation){
+     // Transform and normalize the normals to ensure
+     // they point in the correct direction
+     xform=GLMath.mat4transform(matrix,
+      v[i+normalOffset],v[i+normalOffset+1],v[i+normalOffset+2],1.0);
+     GLMath.vec3normInPlace(xform);
+     v[i+normalOffset]=xform[0];
+     v[i+normalOffset+1]=xform[1];
+     v[i+normalOffset+2]=xform[2];
+    }
   }
   return this;
 }
 
-
 /**
  *
  */
-SubMesh.prototype.recalcBounds=function(){
+SubMesh.prototype._getBounds=function(){
   var stride=this.getStride();
   var minx=0;
   var maxx=0;
@@ -2159,8 +2212,7 @@ SubMesh.prototype.recalcBounds=function(){
       maxz=Math.max(maxz,z);
     }
   }
-  this.bounds=[[minx,miny,minz],[maxx,maxy,maxz]];
-  return this;
+  return [[minx,miny,minz],[maxx,maxy,maxz]];
 };
 /** @private */
 SubMesh.prototype.recalcNormals=function(inward){
@@ -3468,7 +3520,7 @@ Shape.prototype.setRotation=function(x,y,z){
  * transformation matrix
  * <li><code>modelViewMatrix</code>: the view matrix times this shape's
  * transformation matrix
- * <li><code>worldViewInvTrans3</code>, <code>normalMatrix</code>: 
+ * <li><code>worldViewInvTrans3</code>, <code>normalMatrix</code>:
  * 3x3 inverse transpose of the view matrix times this shape's
  * transformation matrix
  * <li><code>useColorAttr</code>: whether this shape uses per-vertex colors
