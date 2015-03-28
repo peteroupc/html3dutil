@@ -61,7 +61,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * (axis of rotation multiplied by the sine of half the angle)
 * and the fourth component is the W component (cosine of half the angle).
 * Functions dealing with quaternions begin with "quat".<p>
-* The methods quatMultiply and quatFromPitchYawRoll involve
+* The methods quatMultiply, quatFromPitchYawRoll, among others, involve
 * multiplying quaternions, combining multiple rotations into a single
 * rotation.  In these methods, multiplying one rotation by another
 * creates a combined rotation in which the second rotation happens
@@ -596,13 +596,40 @@ quatSlerp:function(q1,q2,factor){
  ];
 },
 /**
- * Rotates a vector using a quaternion's rotation.
+ * Multiplies a quaternion by a rotation transformation
+ * described as an angle and axis of rotation.<p>
+ * This method is equivalent to the following:<pre>
+ * return quatMultiply(quat,quatFromAngleAxis(angle,v,vy,vz));
+ * </pre>
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer (as the z-axis does by default in right-handed
+ * coordinate systems like OpenGL's), the angle's value is increasing in
+ * a counterclockwise direction.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {Array<number>} The resulting quaternion.
+ */
+quatRotate:function(quat,angle,v,vy,vz){
+  return quatMultiply(quat,quatFromAngleAxis(angle,v,vy,vz));
+},
+/**
+ * Transforms a vector using a quaternion's rotation.
  * @param {Array<number>} q A quaternion describing
  * the rotation.
- * @param {Array<number>} v The vector to rotate.
- * @return {Array<number>} The rotated vector.
+ * @param {Array<number>} v The vector to transform.
+ * @return {Array<number>} The transformed vector.
  */
-quatRotate:function(q,v){
+quatTransform:function(q,v){
 var v1 = GLMath.vec3cross( q, v );
 v1[0] += v[0] * q[3];
 v1[1] += v[1] * q[3];

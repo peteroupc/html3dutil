@@ -1131,14 +1131,16 @@ ShaderProgram.prototype.use=function(){
 * be reset if this program is re-linked, which won't normally happen
 * in the case of the ShaderProgram class.)
 * @param {Object} uniforms A hash of key/value pairs.  Each key is
-* the name of a uniform (see get() for more information), and each
+* the name of a uniform (see {@link glutil.ShaderProgram#get}
+* sfor more information), and each
 * value is the value to set
 * to that uniform.  Uniform values that are 3- or 4-element
 * vectors must be 3 or 4 elements long, respectively.  Uniforms
 * that are 4x4 matrices must be 16 elements long.  Keys to
 * uniforms that don't exist in this program are ignored.  Keys
 * where hasOwnProperty is false are also ignored.  See also
-* the "name" parameter of the "get" method for more information on
+* the "name" parameter of the {@link glutil.ShaderProgram#get} 
+* method for more information on
 * uniform names.
 * @return {ShaderProgram} This object.
 */
@@ -1642,7 +1644,7 @@ Lights.prototype.bind=function(program){
 * directly on the object) in the red, green,
 * and blue components respectively.  Each component ranges from 0 to 1.
 * Setting ambient and diffuse to the same value usually defines an object's
-* color.  If Scene3D.disableLighting() is called, disabling lighting calculations,
+* color.  If {@link glutil.Scene3D#disableLighting} is called, disabling lighting calculations,
 * this value is used for coloring objects.
 * May be null or omitted; default is (0.8, 0.8, 0.8). Can also be a string representing
 * an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
@@ -1727,7 +1729,6 @@ MaterialShade.prototype.bind=function(program){
 /**
 * Specifies the triangles and lines that make up a geometric shape.
 * @class
-*
 * @alias glutil.Mesh
 * @param {Array<number>|undefined} vertices An array that contains data on each
 * vertex of the mesh.
@@ -1862,9 +1863,10 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,inward,flat){
  * The primitive type can be set to the same mode, in which
  * case future vertices given will not build upon previous
  * vertices.
- * @param {*} m A primitive type.  One of the following:
+ * @param {number} m A primitive type.  One of the following:
  * Mesh.TRIANGLES, Mesh.LINES, Mesh.TRIANGLE_STRIP,
  * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.
+ * @return {Mesh} This object.
  */
 Mesh.prototype.mode=function(m){
  if(!Mesh._isCompatibleMode(this.currentMode,m)){
@@ -1882,11 +1884,13 @@ Mesh.prototype.mode=function(m){
 /**
  * Merges the vertices from another mesh into this one.
  * The vertices from the other mesh will be copied into this one,
- * and the other mesh's indices copied.  Also, resets the primitive
- * mode (see the mode() method) so that future vertices given
+ * and the other mesh's indices copied or adapted. 
+ * Also, resets the primitive
+ * mode (see {@link glutil.Mesh#mode}) so that future vertices given
  * will not build upon previous vertices.
  * @param {Mesh} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
+ * @return {Mesh} This object.
  */
 Mesh.prototype.merge=function(other){
  var lastMesh=this.subMeshes[this.subMeshes.length-1]
@@ -1981,6 +1985,8 @@ Mesh.prototype.normal3=function(x,y,z){
  /**
   * Adds a new vertex to this mesh.  If appropriate, adds an
   * additional face index according to this mesh's current mode.
+  * The vertex will adopt this mesh's current normal, color,
+  * and texture coordinates if they have been defined.
   * @param {number} x X-coordinate of the vertex.
   * @param {number} y Y-coordinate of the vertex.
   * @param {number} z Z-coordinate of the vertex.
@@ -1994,7 +2000,7 @@ Mesh.prototype.normal3=function(x,y,z){
   * Recalculates the normal vectors for triangles
   * in this mesh.
   * @param {boolean} inward If true, the generated normals
-  * will point inward.
+  * will point inward; otherwise, outward.
   * @param {boolean} flat If true, each triangle in the mesh
   * will have the same normal.  If false, each unique vertex in the mesh
   * will have its own normal.
@@ -2972,6 +2978,7 @@ Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.context.canvas.width=Math.ceil(width)+"";
  this.context.canvas.height=Math.ceil(height)+"";
+ this.context.viewport(0,0,Math.ceil(width),Math.ceil(height));
   if(this.fbo!="undefined" && this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
@@ -3139,7 +3146,7 @@ Scene3D.prototype.loadAndMapTexture=function(name){
 * to a texture buffer object.
 * @param {Array<string>} textureFiles A list of URLs of the image to load.
 * @param {Function|undefined} resolved Called for each URL that is loaded successfully
-* and uploaded to a texture buffer(the argument will be a Texture object.)
+* and uploaded to a texture buffer (the argument will be a Texture object.)
 * @param {Function|undefined} rejected Called for each URL for which an error
 * occurs (the argument will be the data passed upon
 * rejection).
@@ -3187,8 +3194,8 @@ Scene3D.prototype._updateMatrix=function(){
 }
 /**
  * Sets the projection matrix for this object.  The projection
- * matrix can also be set using the setFrustum(), setOrtho(),
- * setOrtho2D(), and setPerspective() methods.
+ * matrix can also be set using the {@link glutil.Scene3D#setFrustum()}, {@link glutil.Scene3D#setOrtho()},
+ * {@link glutil.Scene3D#setOrtho2D()}, and {@link glutil.Scene3D#setPerspective()} methods.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
  * @return {Scene3D} This object.
  */
@@ -3199,7 +3206,7 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
 }
 /**
 *  Sets this scene's view matrix. The view matrix can also
-* be set using the setLookAt() method.
+* be set using the {@link glutil.Scene3D#setLookAt} method.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
  * @return {Scene3D} This object.
 */
@@ -3265,7 +3272,7 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  *
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
- * @param {*} position
+ * @param {Array<number>} position
  * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
@@ -3283,7 +3290,7 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
 /**
  *  Renders all shapes added to this scene.
  *  This is usually called in a render loop, such
- *  as GLUtil.renderLoop().<p>
+ *  as {@link glutil.GLUtil.renderLoop}.<p>
  * This method may set the following uniforms if they exist in the
  * shader program:<ul>
  * <li><code>projection</code>, <code>projectionMatrix</code>: this scene's
@@ -3441,11 +3448,37 @@ function Shape(mesh){
   this.mesh=mesh;
   this.vertfaces=null;
   this.material=new MaterialShade();
+  /** 
+  * A three-element array giving the scaling of this object for this shape's width,
+  * height, and depth, respectively.
+  * For each component,1 means no scaling.  
+  * The value given here is informational only and should not be modified directly.
+  * Use the setScale method to set this value.
+  * @default
+  */
   this.scale=[1,1,1];
+  /** 
+  * A three-element array giving the X, Y, and Z coordinates of the position
+  * of this shape relative to its original position.
+  * The value given here is informational only and should not be modified directly.
+  * Use the setPosition method to set this value.
+  * @default
+  */
   this.position=[0,0,0];
+  /** 
+   * The rotation of this object in the form of a [quaternion]{@link glmath.GLMath}. 
+   * The value given here is informational only and should not be modified directly.
+   * Use the setRotation or setQuaternion method to set this value.
+   */
   this.rotation=GLMath.quatIdentity();
   this._matrixDirty=true;
   this._invTransModel3=GLMath.mat3identity();
+  /** 
+   * The transformation matrix used by this shape.  It is a combination
+   * of the scale, position, and rotation properties.
+   * The value given here should not be modified directly.
+   * Use the setMatrix method to set this value.
+   */
   this.matrix=GLMath.mat4identity();
 }
 /**
@@ -3462,14 +3495,20 @@ Shape.prototype.loadMesh=function(context){
  return this;
 }
 /**
- * Sets this shape's transformation matrix.
- * @param {*} value A 4x4 matrix.
+ * Sets this shape's transformation matrix. This method
+ * will set the position, rotation, and scale properties
+ * accordingly to the matrix given.
+ * @param {Array<number>} value A 4x4 matrix.
  * This method will copy the value of this parameter.
  * @return {Shape} This object.
  */
 Shape.prototype.setMatrix=function(value){
  this._matrixDirty=false;
  this.matrix=value.slice(0,16);
+ this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
+ this.rotation=GLMath.quatFromMat4(this.matrix);
+ this.rotation=GLMath.quatNormInPlace(this.rotation);
+ this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
  this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
  return this;
 }
@@ -3550,6 +3589,21 @@ Shape.prototype.setPosition=function(x,y,z){
   this._matrixDirty=true;
   return this;
 }
+/**
+ * Sets this object's rotation in the form of a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations).
+ * @param {Array<number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAngleAxis}
+ * or {@link glmath.GLMath.quatFromPitchYawRoll}.
+ * @return {Shape} This object.
+ */
+Shape.prototype.setQuaternion=function(quat){
+  this.rotation=quat.slice(0,4);
+  GLMath.quatNormInPlace(this.rotation);
+  this._matrixDirty=true;
+  return this;
+}
+
 /**
  * Sets this object's rotation.  The rotation will occur in this order: Z-axis,
  * then Y-axis, then X-axis rotation.
