@@ -295,58 +295,6 @@ MtlData._loadMtl=function(str){
  }
  return {success: mtl};
 }
-ObjData._recalcNormalsSingleFace=function(vertices,indices,stride){
-  if(indices.length<3)return;
-  // Reset to zero all normals involved
-  for(var i=0;i<indices.length;i++){
-    var v4=indices[i]*stride;
-    vertices[v4+3]=0.0
-    vertices[v4+4]=0.0
-    vertices[v4+5]=0.0
-  }
-  for(var i=0;i<indices.length;i++){
-    var v1=indices[i]*stride
-    var vPrev=(i==0) ? indices[indices.length-1] : indices[i-1]*stride
-    var vNext=(i==indices.length-1) ? indices[0]*stride : indices[i+1]*stride
-    var n1=[vertices[vPrev]-vertices[vNext],vertices[vPrev+1]-vertices[vNext+1],
-       vertices[vPrev+2]-vertices[vNext+2]]
-    var n2=[vertices[v1]-vertices[vNext],vertices[v1+1]-vertices[vNext+1],
-       vertices[v1+2]-vertices[vNext+2]]
-    // cross multiply n1 and n2
-    var x=n1[1]*n2[2]-n1[2]*n2[1]
-    var y=n1[2]*n2[0]-n1[0]*n2[2]
-    var z=n1[0]*n2[1]-n1[1]*n2[0]
-    // normalize xyz vector
-    len=Math.sqrt(x*x+y*y+z*z);
-    if(len!=0){
-      len=1.0/len;
-      x*=len;
-      y*=len;
-      z*=len;
-      // add normalized normal to each vertex of the face
-      for(var j=0;j<indices.length;j++){
-        var v4=indices[j]*stride;
-        vertices[v4+3]+=x;
-        vertices[v4+4]+=x;
-        vertices[v4+5]+=x;
-      }
-    }
-  }
-  // Normalize each normal of each vertex involved
-  for(var i=0;i<indices.length;i++){
-    var v4=indices[i]*stride;
-    var x=vertices[v4+3];
-    var y=vertices[v4+4];
-    var z=vertices[v4+5];
-    len=Math.sqrt(x*x+y*y+z*z);
-    if(len){
-      len=1.0/len;
-      vertices[v4+3]=x*len;
-      vertices[v4+4]=y*len;
-      vertices[v4+5]=z*len;
-    }
-  }
-}
 ObjData._loadObj=function(str){
  function pushVertex(verts,faces,look,
    v1,v2,v3,n1,n2,n3,u1,u2){
@@ -522,15 +470,6 @@ ObjData._loadObj=function(str){
     } else if(faceCount<3){
      return {"error": "face has fewer than 3 vertices"}
     }
-    if(flat){
-      // Give all vertices in the face normals for a flat
-      // appearance
-     // ObjData._recalcNormalsSingleFace(resolvedVertices,
-     //   currentFaces, 8);
-      // Don't reuse previous vertices
-      lookBack=faces.length;
-    //  haveNormals=true;
-    }
     continue;
   }
   e=usemtlLine.exec(line)
@@ -542,7 +481,7 @@ ObjData._loadObj=function(str){
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
         if(!haveNormals){
          // No normals in this mesh, so calculate them
-         mesh.recalcNormals();
+         mesh.recalcNormals(false,flat);
         }
         ret.meshes.push({
           name: seenFacesAfterObjName ? objName : oldObjName,
@@ -561,7 +500,7 @@ ObjData._loadObj=function(str){
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
         if(!haveNormals){
          // No normals in this mesh, so calculate them
-         mesh.recalcNormals();
+         mesh.recalcNormals(false,flat);
         }
         ret.meshes.push({
           name: seenFacesAfterObjName ? objName : oldObjName,
@@ -599,7 +538,7 @@ ObjData._loadObj=function(str){
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
  if(!haveNormals){
    // No normals in this mesh, so calculate them
-   mesh.recalcNormals();
+   mesh.recalcNormals(false,flat);
  }
  ret.meshes.push({
           name: seenFacesAfterObjName ? objName : oldObjName,
