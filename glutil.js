@@ -1870,8 +1870,7 @@ Mesh.prototype.merge=function(other){
 
  /**
   * Sets the current normal for this mesh.  Future vertex positions
-  * defined (with vertex3()) will have this normal.  If necessary, rebuilds the mesh
-  * to accommodate normals.
+  * defined (with vertex3()) will have this normal.
   * @param {number} x X-coordinate of the normal.
   * @param {number} y Y-coordinate of the normal.
   * @param {number} z Z-coordinate of the normal.
@@ -1900,8 +1899,7 @@ Mesh.prototype.normal3=function(x,y,z){
  }
  /**
   * Sets the current color for this mesh.  Future vertex positions
-  * defined (with vertex3()) will have this color.  If necessary, rebuilds the mesh
-  * to accommodate colors.
+  * defined (with vertex3()) will have this color.
   * @param {number} r Red component of the color.
   * @param {number} g Green component of the color.
   * @param {number} b Blue component of the color.
@@ -1916,8 +1914,7 @@ Mesh.prototype.normal3=function(x,y,z){
  }
  /**
   * Sets the current texture coordinates for this mesh.  Future vertex positions
-  * defined (with vertex3()) will have these texture coordinates.  If necessary, rebuilds the mesh
-  * to accommodate texture coordinates.
+  * defined (with vertex3()) will have these texture coordinates.
   * @param {number} x X-coordinate of the texture, from 0-1.
   * @param {number} y Y-coordinate of the texture, from 0-1.
   * @return {Mesh} This object.
