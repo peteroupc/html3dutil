@@ -1274,7 +1274,7 @@ return ShaderProgram.makeEffect(context,
 [
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
-" return vec4(vec3(1,1,1.)-color.rgb,color.a);",
+" vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;",
 "}"].join("\n"));
 }
 /**
@@ -1314,7 +1314,6 @@ return ShaderProgram.makeEffect(context,
 "}}"
 ].join("\n"));
 }
-
 /**
 * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
 * at the start of the return value enables the lighting model.
@@ -1337,13 +1336,15 @@ var shader="" +
 "varying vec3 transformedNormalVar;\n"+
 "#endif\n"+
 "void main(){\n" +
-"vec4 positionVec4=vec4(position,1.0);\n" +
-"gl_Position=projection*view*world*positionVec4;\n" +
+"vec4 positionVec4;\n"+
+"positionVec4.w=1.0;\n"+
+"positionVec4.xyz=position;\n" +
+"gl_Position=((projection*view)*world)*positionVec4;\n" +
 "colorAttrVar=colorAttr;\n" +
 "uvVar=uv;\n" +
 "#ifdef SHADING\n"+
 "transformedNormalVar=normalize(worldViewInvTrans3*normal);\n" +
-"viewWorldPositionVar=view*world*positionVec4;\n" +
+"viewWorldPositionVar=(view*world)*positionVec4;\n" +
 "#endif\n"+
 "}";
 return shader;
@@ -1388,7 +1389,6 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef SHADING\n" +
 "varying vec4 viewWorldPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
-"const vec4 white=vec4(1.0,1.0,1.0,1.0);\n"+
 "vec4 calcLightPower(light lt, vec4 viewWorldPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
@@ -1396,7 +1396,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "  sdir=normalize(lt.position.xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else {\n" +
-"  vec3 vertexToLight=vec3(lt.position-viewWorldPosition);\n" +
+"  vec3 vertexToLight=(lt.position-viewWorldPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
 "  sdir=normalize(vertexToLight);\n" +
 "  attenuation=1.0;\n" +
@@ -1405,18 +1405,17 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "}\n" +
 "#endif\n" +
 "void main(){\n" +
-" float useTexture=sign(textureSize.x+textureSize.y);\n" +
-" vec4 baseColor=mix(\n"+
+" vec4 tmp;\n"+
+" tmp.w=1.0;\n"+
+" tmp.xyz=colorAttrVar;\n"+
+" vec4 baseColor=mix(mix(\n"+
 "#ifdef SHADING\n" +
-"   white, /*when useTexture is 0*/\n" +
+"   vec4(1.0,1.0,1.0,1.0), /*when useTexture is 0*/\n" +
 "#else\n" +
 "   vec4(md,1.0), /*when useTexture is 0*/\n" +
 "#endif\n" +
 "   texture2D(sampler,uvVar), /*when useTexture is 1*/\n"+
-"  useTexture);\n"+
-" baseColor=mix(baseColor, /* when useColorAttr is 0 */\n"+
-"  vec4(colorAttrVar,1.0), /* when useColorAttr is 1 */\n" +
-"  useColorAttr);\n" +
+"   sign(textureSize.x + textureSize.y)), tmp, useColorAttr);\n"+
 "#ifdef SHADING\n" +
 "#define SET_LIGHTPOWER(i) "+
 " lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
@@ -1431,7 +1430,7 @@ shader+=""+
 "vec3 phong=sceneAmbient*ma; /* ambient*/\n" +
 "#ifdef SPECULAR\n" +
 "// specular reflection\n" +
-"vec3 viewDirection=normalize(vec3(viewInverse*vec4(0,0,0,1)-viewWorldPositionVar));\n" +
+"vec3 viewDirection=normalize(((viewInverse * vec4(0.0, 0.0, 0.0, 1.0)) - viewWorldPositionVar).xyz);\n" +
 "vec3 specular=vec3(0,0,0.);\n" +
 "#define ADD_SPECULAR(i) "+
 "  if(mshin>0.0 && dot(transformedNormalVar,lightPower[i].xyz)>=0.0){" +
