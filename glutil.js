@@ -545,6 +545,8 @@ var e=null;
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {number} a Alpha color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
+* @return the color as a 4-element array; if the color is
+* invalid, returns [0,0,0,0] (transparent black).
 */
 exports["toGLColor"]=function(r,g,b,a){
  if(r==null)return [0,0,0,0];
@@ -561,7 +563,7 @@ exports["toGLColor"]=function(r,g,b,a){
      typeof g=="number" && typeof b=="number"){
    return [r,g,b,(typeof a!="number") ? 1.0 : a];
  } else if(r.constructor==Array){
-   return r.length==4 ? r : [r[0]||0,r[1]||0,r[2]||0,
+   return [r[0]||0,r[1]||0,r[2]||0,
      (typeof r[3]!="number") ? 1.0 : r[3]];
  } else {
    return r || [0,0,0,0];
@@ -1139,7 +1141,7 @@ ShaderProgram.prototype.use=function(){
 * that are 4x4 matrices must be 16 elements long.  Keys to
 * uniforms that don't exist in this program are ignored.  Keys
 * where hasOwnProperty is false are also ignored.  See also
-* the "name" parameter of the {@link glutil.ShaderProgram#get} 
+* the "name" parameter of the {@link glutil.ShaderProgram#get}
 * method for more information on
 * uniform names.
 * @return {ShaderProgram} This object.
@@ -1453,7 +1455,7 @@ shader+=""+
 "  if (spectmp) {" +
 "    vec3 negativeLightPower;" +
 "    negativeLightPower = -(lightPower[i].xyz);" +
-"    specular += ((pow (max (0.0, dot ((negativeLightPower - (2.0 * (dot (transformedNormalVar, negativeLightPower) *" + 
+"    specular += ((pow (max (0.0, dot ((negativeLightPower - (2.0 * (dot (transformedNormalVar, negativeLightPower) *" +
 "        transformedNormalVar))), viewDirection)), mshin) * lights[i].specular) * lightPower[i].w);" +
 "  }\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
@@ -1644,11 +1646,11 @@ Lights.prototype.bind=function(program){
 * directly on the object) in the red, green,
 * and blue components respectively.  Each component ranges from 0 to 1.
 * Setting ambient and diffuse to the same value usually defines an object's
-* color.  If {@link glutil.Scene3D#disableLighting} is called, disabling lighting calculations,
-* this value is used for coloring objects.
+* color.  If {@link glutil.Scene3D#disableLighting} is called, disabling
+* lighting calculations, this value is used for coloring objects.
 * May be null or omitted; default is (0.8, 0.8, 0.8). Can also be a string representing
 * an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {Array<number>} specular Color of specular highlights on an
+* @param {Array<number>} specular Color reflection for specular highlights on an
 * object.  An array of three numbers indicating the red, green, and blue
 * components.
 * Each component ranges from 0 to 1.
@@ -1884,7 +1886,7 @@ Mesh.prototype.mode=function(m){
 /**
  * Merges the vertices from another mesh into this one.
  * The vertices from the other mesh will be copied into this one,
- * and the other mesh's indices copied or adapted. 
+ * and the other mesh's indices copied or adapted.
  * Also, resets the primitive
  * mode (see {@link glutil.Mesh#mode}) so that future vertices given
  * will not build upon previous vertices.
@@ -3269,6 +3271,26 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  return this;
 }
 /**
+ * Sets the color of the scene's ambient light.
+* @param {Array<number>|number|string} r Array of three or
+* four color components; or the red color component (0-1); or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* @param {number} g Green color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} b Blue color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} a Alpha color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @return {Scene3D} This object.
+ */
+Scene3D.prototype.setAmbient=function(r,g,b,a){
+ this.lightSource.ambient=GLUtil["toGLColor"](r,g,b,a);
+ this.lightSource.ambient=this.lightSource.ambient.slice(0,4)
+ this.lightSource.bind(this.program);
+ return this;
+}
+
+/**
  *
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
@@ -3448,16 +3470,16 @@ function Shape(mesh){
   this.mesh=mesh;
   this.vertfaces=null;
   this.material=new MaterialShade();
-  /** 
+  /**
   * A three-element array giving the scaling of this object for this shape's width,
   * height, and depth, respectively.
-  * For each component,1 means no scaling.  
+  * For each component,1 means no scaling.
   * The value given here is informational only and should not be modified directly.
   * Use the setScale method to set this value.
   * @default
   */
   this.scale=[1,1,1];
-  /** 
+  /**
   * A three-element array giving the X, Y, and Z coordinates of the position
   * of this shape relative to its original position.
   * The value given here is informational only and should not be modified directly.
@@ -3465,15 +3487,15 @@ function Shape(mesh){
   * @default
   */
   this.position=[0,0,0];
-  /** 
-   * The rotation of this object in the form of a [quaternion]{@link glmath.GLMath}. 
+  /**
+   * The rotation of this object in the form of a [quaternion]{@link glmath.GLMath}.
    * The value given here is informational only and should not be modified directly.
    * Use the setRotation or setQuaternion method to set this value.
    */
   this.rotation=GLMath.quatIdentity();
   this._matrixDirty=true;
   this._invTransModel3=GLMath.mat3identity();
-  /** 
+  /**
    * The transformation matrix used by this shape.  It is a combination
    * of the scale, position, and rotation properties.
    * The value given here should not be modified directly.
