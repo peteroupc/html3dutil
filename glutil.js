@@ -294,6 +294,15 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
  if(height>0){
   var lastZ=0;
   var lastRad=baseRad;
+  var slopeAngle=0,sinSlopeNorm,cosSlopeNorm;
+  if(baseRad==topRad){
+   sinSlopeNorm=0;
+   cosSlopeNorm=normDir;
+  } else {
+   slopeAngle=Math.atan2(baseRad-topRad,height);
+   sinSlopeNorm=Math.sin(slopeAngle)*normDir;
+   cosSlopeNorm=Math.cos(slopeAngle)*normDir;
+  }
   for(var i=0;i<stacks;i++){
    var zStart=lastZ;
    var zEnd=(i+1)/stacks;
@@ -311,35 +320,35 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
     // Output first vertices in reverse order to
     // allow triangle fan effect to work
     mesh.texCoord2(1,zEnd);
-    mesh.normal3(0,radiusEnd*normDir,0);
+    mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusEnd,zEndHeight);
     mesh.texCoord2(1,zStart);
-    mesh.normal3(0,radiusStart*normDir,0);
+    mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusStart,zStartHeight);
    } else {
     mesh.texCoord2(1,zStart);
-    mesh.normal3(0,radiusStart*normDir,0);
+    mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusStart,zStartHeight);
     mesh.texCoord2(1,zEnd);
-    mesh.normal3(0,radiusEnd*normDir,0);
+    mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusEnd,zEndHeight);
    }
    for(var k=2,j=1;k<=slicesTimes2;k+=2,j++){
     var tx=tc[j];
     var x,y;
     if(!triangleFanBase){
-     x=sc[k]*radiusStart;
-     y=sc[k+1]*radiusStart;
+     x=sc[k];
+     y=sc[k+1];
      mesh.texCoord2(1-tx,zStart);
-     mesh.normal3(x*normDir,y*normDir,0);
-     mesh.vertex3(x,y,zStartHeight);
+     mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
+     mesh.vertex3(x*radiusStart,y*radiusStart,zStartHeight);
     }
     if(!triangleFanTop){
-     x=sc[k]*radiusEnd;
-     y=sc[k+1]*radiusEnd;
+     x=sc[k];
+     y=sc[k+1];
      mesh.texCoord2(1-tx,zEnd);
-     mesh.normal3(x*normDir,y*normDir,0);
-     mesh.vertex3(x,y,zEndHeight);
+     mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
+     mesh.vertex3(x*radiusEnd,y*radiusEnd,zEndHeight);
     }
    }
   }
@@ -1622,7 +1631,7 @@ Lights.prototype.bind=function(program){
 * an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {Array<number>} diffuse Diffuse reflection.  An array of three numbers
 * indicating how much an object reflects diffuse lights (lights that point
-* in a certain direction) in the red, green,
+* directly on the object) in the red, green,
 * and blue components respectively.  Each component ranges from 0 to 1.
 * Setting ambient and diffuse to the same value usually defines an object's
 * color.  If Scene3D.disableLighting() is called, disabling lighting calculations,
