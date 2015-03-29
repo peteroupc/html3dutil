@@ -3079,7 +3079,7 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4ortho(
-   left, right, top, bottom, near, far));
+   left, right, bottom, top, near, far));
 }
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
@@ -3093,7 +3093,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  */
 Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
  return this.setProjectionMatrix(GLMath.mat4ortho(
-   left, right, top, bottom, -1, 1));
+   left, right, bottom, top, -1, 1));
 }
 /** @private */
 Scene3D.prototype._setClearColor=function(){
