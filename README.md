@@ -22,6 +22,8 @@ Demos
 * [squares.html](https://peteroupc.github.io/html3dutil/squares.html) - Demonstrates shader-based filters.
 * [compositeMesh.html](https://peteroupc.github.io/html3dutil/compositeMesh.html) - Demonstrates
 combining multiple meshes into one.
+* [selfpulse.html](https://peteroupc.github.io/html3dutil/selfpulse.html) - Demonstrates
+a rotating, pulsating box.
 
 Examples
 ---------

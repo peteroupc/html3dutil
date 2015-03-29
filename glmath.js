@@ -44,7 +44,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * a right-handed coordinate system (such as OpenGL's), in which the z-axis points
 * toward (not away from) the viewer whenever the x-axis points to
 * the right and the y-axis points up.<p>
-* The methods mat4multiply, mat4scale, mat4scaleinPlace, mat4translate, and
+* The methods mat4multiply, mat4scale, mat4scaleInPlace, mat4translate, and
 * mat4rotate involve multiplying 4x4 matrices, combining multiple
 * transformations into a single transformation.  In these methods,
 * the matrices are multiplied such that the transformations
@@ -620,7 +620,8 @@ quatSlerp:function(q1,q2,factor){
  * @return {Array<number>} The resulting quaternion.
  */
 quatRotate:function(quat,angle,v,vy,vz){
-  return quatMultiply(quat,quatFromAngleAxis(angle,v,vy,vz));
+  return GLMath.quatMultiply(quat,
+    GLMath.quatFromAngleAxis(angle,v,vy,vz));
 },
 /**
  * Transforms a vector using a quaternion's rotation.
