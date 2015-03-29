@@ -200,6 +200,7 @@ var GLUtil={
 /**
 * Creates a mesh of a box (rectangular prism), which
 * will be centered at the origin.
+* @tutorial shapes
 * @param {number} xSize Width of the box.
 * @param {number} ySize Height of the box.
 * @param {number} xSize Depth of the box.
@@ -244,6 +245,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * be centered at the origin and its height will run along the
 * positive z-axis.  The base and top themselves will not be
 * included in the mesh.
+* @tutorial shapes
 * @param {number} baseRad Radius of the base of the cylinder. If 0,
 * this function will create an approximation to a downward pointing cone.
 * @param {number} topRad Radius of the top of the cylinder. If 0,
@@ -360,6 +362,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * be centered at the origin and its height will run along the
 * positive z-axis.  The base and top will be included in the mesh if
 * their radius is greater than 0.
+* @tutorial shapes
 * @param {number} baseRad Radius of the base of the cylinder.
 * See {@link glutil.GLUtil.createCylinder}.
 * @param {number} topRad Radius of the top of the cylinder.
@@ -634,6 +637,7 @@ if(!namedColors){
 * Assuming the Y axis points up, the X axis right,
 * and the Z axis toward the viewer, the first vertex in the outer edge
 * of the 2D disk will be at the 12 o'clock position.
+* @tutorial shapes
 * @param {number} inner Radius of the hole in the middle of the
 * disk.  If 0, no hole is created and the method will generate a regular
 * polygon with n sides, where n is the value of "slices".  For example,
@@ -655,7 +659,9 @@ GLUtil.createDisk=function(inner, outer, slices, loops, inward){
 
 /**
 * Creates a mesh of a 2D disk or an arc of a 2D disk.
-* @param {number} inner Radius of the inner hole.  If 0, no hole is created.
+* @tutorial shapes
+* @param {number} inner Radius of the hole where the middle of the 
+* complete disk would be.  If 0, no hole is created.
 * @param {number} outer Outer radius of the disk.
 * @param {number} slices Number of slices going around the partial disk.
 * May be null or omitted; default is 32.
@@ -754,6 +760,7 @@ GLUtil.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
 
 /**
 * Creates a mesh of a torus (donut), centered at the origin.
+* @tutorial shapes
 * @param {number} inner Inner radius (thickness) of the torus.
 * @param {number} outer Outer radius of the torus (distance from the
 * center to the innermost part of the torus).
@@ -827,6 +834,7 @@ GLUtil.createTorus=function(inner, outer, lengthwise, crosswise, inward, flat){
 
 /**
 * Creates a mesh of a 2D rectangle, centered at the origin.
+* @tutorial shapes
 * @param {number} width Width of the rectangle.
 * May be null or omitted; default is 1.
 * @param {number} height Height of the rectangle.
@@ -881,6 +889,7 @@ GLUtil.createPlane=function(width, height, widthDiv, heightDiv,inward){
 
 /**
 * Creates a mesh of a sphere, centered at the origin.
+* @tutorial shapes
 * @param {number} radius Radius of the sphere.
 * May be null or omitted, in which case the default is 1.
 * @param {number} slices Number of vertical sections the sphere consists
@@ -1748,6 +1757,7 @@ MaterialShade.prototype.bind=function(program){
 * Specifies the triangles and lines that make up a geometric shape.
 * @class
 * @alias glutil.Mesh
+* @tutorial shapes
 * @param {Array<number>|undefined} vertices An array that contains data on each
 * vertex of the mesh.
 * Each vertex is made up of the same number of elements, as defined in
@@ -1887,7 +1897,9 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,inward,flat){
  * @return {Mesh} This object.
  */
 Mesh.prototype.mode=function(m){
- if(!Mesh._isCompatibleMode(this.currentMode,m)){
+ if(m<0)throw new Error("invalid mode");
+ if(this.currentMode==-1 ||
+   !Mesh._isCompatibleMode(this.currentMode,m)){
    var format=0;
    if(Mesh._primitiveType(m)==Mesh.LINES)
     format|=Mesh.LINES_BIT;
