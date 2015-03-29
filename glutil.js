@@ -3455,12 +3455,19 @@ MultiShape.prototype.setMaterial=function(material){
  * and a transformation matrix (which defines the object's position and size).
  *  @class
 * @alias glutil.Shape
-* @param {Mesh} mesh A geometric mesh to associate with this shape.
+* @param {Mesh|BufferedMesh} mesh A geometric mesh to associate with this shape,
+*  or a mesh in the form of a vertex buffer object.
   */
 function Shape(mesh){
   if(mesh==null)throw new Error("mesh is null");
-  this.mesh=mesh;
-  this.vertfaces=null;
+  // NOTE: "mesh" property is only used to generate "bufferedMesh"
+  if(mesh.constructor==BufferedMesh){
+   this.mesh=null;
+   this.bufferedMesh=mesh;
+  } else {
+   this.mesh=mesh;
+   this.bufferedMesh=null;
+  }
   this.material=new MaterialShade();
   /**
   * A three-element array giving the scaling of this object for this shape's width,
@@ -3503,8 +3510,8 @@ function Shape(mesh){
  * @return {Shape} This object.
  */
 Shape.prototype.loadMesh=function(context){
- if(!this.vertfaces){
-  this.vertfaces=new BufferedMesh(this.mesh,context);
+ if(!this.bufferedMesh && this.mesh){
+  this.bufferedMesh=new BufferedMesh(this.mesh,context);
  }
  return this;
 }
@@ -3668,11 +3675,11 @@ Shape.prototype.render=function(program){
    this.material.bind(program);
   }
   // Bind vertex attributes
-  if(this.vertfaces==null){
-   this.vertfaces=new BufferedMesh(this.mesh,
+  if(this.bufferedMesh==null && this.mesh){
+   this.bufferedMesh=new BufferedMesh(this.mesh,
      program.getContext());
   }
-  this.vertfaces.bind(program);
+  this.bufferedMesh.bind(program);
   // Set world matrix
   var uniforms={};
   var uniformMatrix=program.get("world")
@@ -3696,10 +3703,10 @@ Shape.prototype.render=function(program){
      uniforms["normalMatrix"]=this._invTransModel3;
    }
   }
-  uniforms["useColorAttr"]=((this.vertfaces.format&Mesh.COLORS_BIT)!=0) ?
+  uniforms["useColorAttr"]=((this.bufferedMesh.format&Mesh.COLORS_BIT)!=0) ?
      1.0 : 0.0;
   program.setUniforms(uniforms);
-  this.vertfaces.draw(program);
+  this.bufferedMesh.draw(program);
   return this;
 };
 /** @private */
