@@ -358,9 +358,9 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 /**
 * Creates a mesh of a closed cylinder.  The cylinder's base will
 * be centered at the origin and its height will run along the
-* positive z-axis.  The base and top will be included in the mesh if 
+* positive z-axis.  The base and top will be included in the mesh if
 * their radius is greater than 0.
-* @param {number} baseRad Radius of the base of the cylinder. 
+* @param {number} baseRad Radius of the base of the cylinder.
 * See {@link glutil.GLUtil.createCylinder}.
 * @param {number} topRad Radius of the top of the cylinder.
 * See {@link glutil.GLUtil.createCylinder}.
@@ -384,9 +384,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
  // move the top disk to the top of the cylinder
  top.transform(GLMath.mat4translated(0,0,height));
  // merge the base and the top
- return cylinder.merge(base).merge(top)
-   // and move the cylinder to the center
-   .transform(GLMath.mat4translated(0,0,-height*0.5));
+ return cylinder.merge(base).merge(top);
 },
 /**
 * Loads a file from a URL asynchronously, using XMLHttpRequest
@@ -1998,7 +1996,7 @@ Mesh.prototype.normal3=function(x,y,z){
  /**
   * Sets the current texture coordinates for this mesh.  Future vertex positions
   * defined (with vertex3()) will have these texture coordinates.
-  * The new current texture coordinates will apply to future vertices 
+  * The new current texture coordinates will apply to future vertices
   * even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.
