@@ -504,9 +504,9 @@ return ret;
  * @return {Array<number>} The generated quaternion.
  */
 quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
- rollDegrees=(rollDegrees+180)%360.0-180.0;
- pitchDegrees=(pitchDegrees+180)%360.0-180.0;
- yawDegrees=(yawDegrees+180)%360.0-180.0;
+ rollDegrees=(rollDegrees<0) ? 360-(-rollDegrees)%360 : rollDegrees%360;
+ pitchDegrees=(pitchDegrees<0) ? 360-(-pitchDegrees)%360 : pitchDegrees%360;
+ yawDegrees=(yawDegrees<0) ? 360-(-yawDegrees)%360 : yawDegrees%360;
  var rollRad=rollDegrees*GLMath.PiDividedBy360;
  var pitchRad=pitchDegrees*GLMath.PiDividedBy360;
  var yawRad=yawDegrees*GLMath.PiDividedBy360;
@@ -550,6 +550,7 @@ quatToPitchYawRoll:function(a){
     e2*GLMath.Num180DividedByPi,
     e3*GLMath.Num180DividedByPi
   ]
+  // Singularity near the poles
   if(Math.abs(euler[1],90)<0.000001 ||
       Math.abs(euler[1],-90)<0.000001){
     euler[2]=0;

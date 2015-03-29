@@ -3510,7 +3510,7 @@ function Shape(mesh){
   /**
   * A three-element array giving the scaling of this object for this shape's width,
   * height, and depth, respectively.
-  * For each component,1 means no scaling.
+  * For each component, 1 means no scaling.
   * The value given here is informational only and should not be modified directly.
   * Use the setScale method to set this value.
   * @default
