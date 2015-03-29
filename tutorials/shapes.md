@@ -1,8 +1,16 @@
 Shapes
 ------------
 
-The HTML 3D library contains several methods for creating built-in shapes such
-as cubes, cylinders, and spheres.  They are listed here.
+The HTML 3D library contains several methods for creating 3D shapes such
+as cubes, cylinders, spheres, and custom shapes.
+
+![An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
+orange partial rink on the first row; and a yellow 3D ring, a brown cylinder, a dark
+green square, and a purple cone on the second row.](shapes.png)
+
+Demo: [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html).
+
+Here are the methods for creating built-in shapes.
 
 **3D Figures**
 
@@ -29,8 +37,8 @@ Shapes can consist of triangles or lines.
 There are two ways for specifying shapes:  through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.
 
-
 **The Mesh Constructor**
+
 The Mesh constructor lets you define a shape from a predefined array of vertex data.
 Here's how.
 
@@ -43,22 +51,22 @@ them after each vertex position in that order: normals first, colors second, and
 coordinates last.  If you don't specify normals, colors, and/or texture coordinates per
 vertex, you can omit them.  The following are examples of this:
 
-   var vertices = [
+    var vertices = [
      x1, y1, z1, nx1, ny1, nz1,
      x2, y2, z2, nx2, ny2, nz2,
      ...
-   ];
-   var vertices = [
+    ];
+    var vertices = [
      x1, y1, z1, cr1, cg1, cb1, u1, v1,
      x2, y2, z2, cr2, cg2, cb2, u2, v2
      ...
-   ];
-   
+    ];
+
 (2) Create a second array of numbers giving the indices to vertices defined in the
 previous step:
 
-   var indices = [0, 1, 2, 1, 2, 3, ... ];
-   
+    var indices = [0, 1, 2, 1, 2, 3, ... ];
+
 Each index refers to the (n+1)th vertex, no matter how many array elements each vertex
 consists of (a vertex with just coordinates will use 3 array elements).
 
@@ -70,7 +78,7 @@ line segment.
 
     var bits = Mesh.NORMALS_BIT; // Assumes we used the vertex array with normals
     var mesh = new Mesh(vertices, indices, bits);
-    
+
 Note that you must include a set of bits indicating what kind of data the vertex
 array contains.  The bits are:
 
@@ -81,33 +89,34 @@ array contains.  The bits are:
 
 The bits may be combined as in the following example:
 
-   var bits = Mesh.NORMALS_BIT | Mesh.COLORS_BIT;
+    var bits = Mesh.NORMALS_BIT | Mesh.COLORS_BIT;
 
 Alternatively, you can call the Mesh constructor with no parameters:
 
     var mesh = new Mesh();
-    
+
 Doing so will create a mesh with no vertices.
 
 **Vertex Methods**
-Alternatively, or in addition, to the method described above, 
+
+Alternatively, or in addition, to the method described above,
 you can specify the mesh's shape by calling methods that give each vertex's position and parameters:
 
 (1) Call the `mode()` method and choose a primitive mode, such as `Mesh.TRIANGLES`
 or `Mesh.QUAD_STRIP`:
 
     mesh.mode(Mesh.TRIANGLES);
-    
-The mesh will build up the shape from the vertices you give it depending on the mesh's 
+
+The mesh will build up the shape from the vertices you give it depending on the mesh's
 primitive mode.  For example, QUAD_STRIP defines a strip of connecting quadrilaterals,
 and TRIANGLES defines a set of triangles that are not necessarily connected.
 
 (2) Call the `normal3()`, `color3()`, and `texCoord2()` methods, as needed, to set the
-next vertex's parameters.  You don't need to do this for each vertex if multiple 
+next vertex's parameters.  You don't need to do this for each vertex if multiple
 consecutive vertices will share the same normal, color, or texture coordinates.
 
     mesh.normal3(2, 3, 4); // Set the x, y, and z of the normal.
-    
+
 (3) Call the `vertex3()` method to add a new vertex and set its position.  The vertex will
 have the last normal, color, and texture coordinates defined on the mesh, if any
 were given:

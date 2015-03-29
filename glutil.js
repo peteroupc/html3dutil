@@ -660,7 +660,7 @@ GLUtil.createDisk=function(inner, outer, slices, loops, inward){
 /**
 * Creates a mesh of a 2D disk or an arc of a 2D disk.
 * @tutorial shapes
-* @param {number} inner Radius of the hole where the middle of the 
+* @param {number} inner Radius of the hole where the middle of the
 * complete disk would be.  If 0, no hole is created.
 * @param {number} outer Outer radius of the disk.
 * @param {number} slices Number of slices going around the partial disk.
