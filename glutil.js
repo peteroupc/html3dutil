@@ -1357,7 +1357,7 @@ var shader="" +
 "uvVar=uv;\n" +
 "#ifdef SHADING\n"+
 "transformedNormalVar=normalize(worldViewInvTrans3*normal);\n" +
-"viewWorldPositionVar=(view*world)*positionVec4;\n" +
+"viewWorldPositionVar=view*world*positionVec4;\n" +
 "#endif\n"+
 "}";
 return shader;
@@ -1389,7 +1389,6 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "uniform vec3 ma;\n" + // material ambient color (-1 to 1 each component).
 "uniform vec3 me;\n" + // material emission color
 "#ifdef SPECULAR\n" +
-"uniform mat4 viewInverse; /* internal */\n" +
 "uniform vec3 ms;\n" + // material specular color (0-1 each comp.).  Affects how intense highlights are.
 "uniform float mshin;\n" + // material shininess
 "#endif\n" +
@@ -1406,10 +1405,10 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
 " if(lt.position.w == 0.0){\n" +
-"  sdir=normalize(lt.position.xyz);\n" +
+"  sdir=normalize((lt.position).xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else {\n" +
-"  vec3 vertexToLight=(lt.position-viewWorldPosition).xyz;\n" +
+"  vec3 vertexToLight=((lt.position)-viewWorldPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
 "  sdir=normalize(vertexToLight);\n" +
 "  attenuation=1.0;\n" +
@@ -1443,8 +1442,7 @@ shader+=""+
 "vec3 phong=sceneAmbient*ma; /* ambient*/\n" +
 "#ifdef SPECULAR\n" +
 "// specular reflection\n" +
-"vec3 viewDirection=normalize(((viewInverse * vec4(0.0, 0.0, 0.0, 1.0)) - viewWorldPositionVar).xyz);\n" +
-"vec3 specular=vec3(0,0,0.);\n" +
+"vec3 viewDirection=vec3(0,0,1.);\n" +
 "bool spectmp;\n" +
 "#define ADD_SPECULAR(i) "+
 "  if (mshin > 0.0) {" +
@@ -1453,16 +1451,13 @@ shader+=""+
 "    spectmp = bool(0);" +
 "  };" +
 "  if (spectmp) {" +
-"    vec3 negativeLightPower;" +
-"    negativeLightPower = -(lightPower[i].xyz);" +
-"    specular += ((pow (max (0.0, dot ((negativeLightPower - (2.0 * (dot (transformedNormalVar, negativeLightPower) *" +
+"    phong += ms*((pow (max (0.0, dot (((-lightPower[i].xyz) - (2.0 * (dot (transformedNormalVar, -lightPower[i].xyz) *" +
 "        transformedNormalVar))), viewDirection)), mshin) * lights[i].specular) * lightPower[i].w);" +
 "  }\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="ADD_SPECULAR("+i+");\n";
 }
-shader+=" phong+=ms*specular;\n" +
-"#endif\n" +
+shader+="#endif\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=md*baseColor.rgb;\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
@@ -3176,8 +3171,7 @@ Scene3D.prototype._setIdentityMatrices=function(){
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
    "viewMatrix":this._viewMatrix,
-   "projectionMatrix":this._projectionMatrix,
-   "viewInverse":this._invView,
+   "projectionMatrix":this._projectionMatrix
  });
 }
 /** @private */
@@ -3188,8 +3182,7 @@ Scene3D.prototype._updateMatrix=function(){
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
    "viewMatrix":this._viewMatrix,
-   "projectionMatrix":this._projectionMatrix,
-   "viewInverse":this._invView,
+   "projectionMatrix":this._projectionMatrix
   });
   this._matrixDirty=false;
  }
@@ -3319,7 +3312,6 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  * projection matrix
  * <li><code>view</code>, <code>viewMatrix</code>: this scene's view
  * matrix
- * <li><code>viewInverse</code>: inverse of the view matrix
  * </ul>
  * @return {Scene3D} This object.
  */
@@ -3695,7 +3687,7 @@ Shape.prototype.render=function(program){
    if(viewMatrix==null)viewMatrix=program.getUniform("viewMatrix")
    if(viewMatrix){
      var viewWorld=GLMath.mat4multiply(viewMatrix,this.matrix);
-     var invTrans=GLMath.mat4toMat3(GLMath.mat4inverseTranspose(viewWorld));
+     var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
      uniforms["modelViewMatrix"]=viewWorld;
      uniforms["worldViewInvTrans3"]=invTrans;
      uniforms["normalMatrix"]=invTrans;
