@@ -159,7 +159,7 @@ return a;
 /**
  * Converts a 3-element vector to its normalized version.
  * When a vector is normalized, the distance from the origin
- * to that vector becomes 1 (unless all its components are 0.)
+ * to that vector becomes 1 (unless all its components are 0).
  * @param {Array<number>} vec A 3-element vector.
  * @return {Array<number>} The parameter "vec".
  */
@@ -179,7 +179,7 @@ vec3normInPlace:function(vec){
 /**
  * Converts a 4-element vector to its normalized version.
  * When a vector is normalized, the distance from the origin
- * to that vector becomes 1 (unless all its components are 0.)
+ * to that vector becomes 1 (unless all its components are 0).
  * @param {Array<number>} vec A 4-element vector.
  * @return {Array<number>} The parameter "vec".
  */
@@ -201,7 +201,7 @@ vec4normInPlace:function(vec){
 /**
  * Returns a normalized version of a 3-element vector.
  * When a vector is normalized, the distance from the origin
- * to that vector becomes 1 (unless all its components are 0.)
+ * to that vector becomes 1 (unless all its components are 0).
  * @param {Array<number>} vec A 3-element vector.
  * @return {Array<number>} The resulting vector.
  */
@@ -214,7 +214,7 @@ vec3norm:function(vec){
 /**
  * Returns a normalized version of a 4-element vector.
  * When a vector is normalized, the distance from the origin
- * to that vector becomes 1 (unless all its components are 0.)
+ * to that vector becomes 1 (unless all its components are 0).
  * @param {Array<number>} vec A 4-element vector.
  * @return {Array<number>} The resulting vector.
  */
@@ -1304,7 +1304,7 @@ GLMath.quatDot=GLMath.vec4dot;
 /**
  * Converts a quaternion to its normalized version.
  * When a quaternion is normalized, the distance from the origin
- * to that quaternion becomes 1 (unless all its components are 0.)
+ * to that quaternion becomes 1 (unless all its components are 0).
  * @function
  * @param {Array<number>} vec A quaternion.
  * @return {Array<number>} The parameter "vec".
@@ -1313,7 +1313,7 @@ GLMath.quatNormInPlace=GLMath.vec4normInPlace;
 /**
  * Converts a quaternion to its normalized version; returns a new quaternion.
  * When a quaternion is normalized, the distance from the origin
- * to that quaternion becomes 1 (unless all its components are 0.)
+ * to that quaternion becomes 1 (unless all its components are 0).
  * @function
  * @param {Array<number>} vec A quaternion.
  * @return {Array<number>} The normalized quaternion.
