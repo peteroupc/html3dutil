@@ -1472,16 +1472,17 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#endif\n" +
 "void main(){\n" +
 " vec4 tmp;\n"+
+" float useTexture=sign(textureSize.x+textureSize.y);\n"+
 " tmp.w=1.0;\n"+
 " tmp.xyz=colorAttrVar;\n"+
 " vec4 baseColor=mix(mix(\n"+
 "#ifdef SHADING\n" +
-"   vec4(1.0,1.0,1.0,1.0), /*when useTexture is 0*/\n" +
+"   vec4(1.0,1.0,1.0,1.0), /*when textures are not used*/\n" +
 "#else\n" +
-"   vec4(md,1.0), /*when useTexture is 0*/\n" +
+"   vec4(md,1.0), /*when textures are not used*/\n" +
 "#endif\n" +
-"   texture2D(sampler,uvVar), /*when useTexture is 1*/\n"+
-"   sign(textureSize.x + textureSize.y)), tmp, useColorAttr);\n"+
+"   texture2D(sampler,uvVar), /*when textures are used*/\n"+
+"   useTexture), tmp, useColorAttr);\n"+
 "#ifdef SHADING\n" +
 "#define SET_LIGHTPOWER(i) "+
 " lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
@@ -1493,7 +1494,8 @@ for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
 }
 shader+=""+
-"vec3 phong=sceneAmbient*ma; /* ambient*/\n" +
+"vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
+"vec3 phong=sceneAmbient*materialAmbient; /* ambient*/\n" +
 "#ifdef SPECULAR\n" +
 "// specular reflection\n" +
 "vec3 viewDirection=vec3(0,0,1.);\n" +
@@ -1592,7 +1594,7 @@ Lights._createLight=function(index, position, diffuse, specular,directional){
  * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1), meaning white light. Can also be a string representing
+ * May be null, in which case the default is (1, 1, 1), meaning white. Can also be a string representing
 * an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
  * @return {Lights} This object.
  */
@@ -1716,9 +1718,15 @@ function MaterialShade(ambient, diffuse, specular,shininess,emission) {
  if(emission!=null)emission=GLUtil["toGLColor"](emission)
  /** Specular highlight power of this material. */
  this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
- /** Ambient reflection of this material. */
+ /** Ambient reflection of this material.<p>
+ * In the default shader program, if a mesh defines its own colors, those
+ * colors are used for ambient reflection rather than this property.
+ */
  this.ambient=ambient||[0.2,0.2,0.2];
- /** Diffuse reflection of this material. */
+ /** Diffuse reflection of this material.<p>
+ * In the default shader program, if a mesh defines its own colors, those
+ * colors are used for diffuse reflection rather than this property.
+ */
  this.diffuse=diffuse||[0.8,0.8,0.8];
  /** Specular highlight color of this material. */
  this.specular=specular||[0,0,0];
@@ -1944,15 +1952,18 @@ Mesh.prototype.mode=function(m){
  */
 Mesh.prototype.merge=function(other){
  var lastMesh=this.subMeshes[this.subMeshes.length-1]
- var prim=(lastMesh.attributeBits&Mesh.LINES_BIT);
+ var prim=lastMesh ? (lastMesh.attributeBits&Mesh.LINES_BIT) : 0;
  for(var i=0;i<other.subMeshes.length;i++){
   var sm=other.subMeshes[i];
   if(sm.indices.length==0)continue;
-  if((sm.attributeBits&Mesh.LINES_BIT)!=prim ||
-     (lastMesh.vertices.length+sm.vertices.length)>65535*3){
+  if(!lastMesh ||
+     (sm.attributeBits&Mesh.LINES_BIT)!=prim ||
+     (lastMesh.vertices.length+sm.vertices.length)>65535*3 ||
+     lastMesh.attributeBits!=sm.attributeBits){
    // Add new submesh because its primitive type
    // differs from the last submesh or the combined
-   // submesh would be too long
+   // submesh would be too long, or the attribute bits
+   // don't match between this submesh and the last
    lastMesh=new SubMesh(
     sm.vertices.slice(0,sm.vertices.length),
     sm.indices.slice(0,sm.indices.length),
@@ -1963,7 +1974,6 @@ Mesh.prototype.merge=function(other){
    // Add to existing submesh
    var oldVertexLength=lastMesh.vertexCount();
    var oldIndexLength=lastMesh.indices.length;
-   lastMesh._rebuildVertices(sm.attributeBits);
    lastMesh.vertices.push.apply(lastMesh.vertices,sm.vertices);
    lastMesh.indices.push.apply(lastMesh.indices,sm.indices);
    for(var i=oldIndexLength;i<lastMesh.indices.length;i++){
