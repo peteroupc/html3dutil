@@ -120,7 +120,6 @@ var GLUtil={
 },
 /**
 * Creates a 3D rendering context from an HTML canvas element.
-*
 * @param {HTMLCanvasElement} canvasElement An HTML
 * canvas element.
 * @param {function} err A function to call if an error occurs in creating
@@ -1027,6 +1026,12 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
  return flat ? mesh.recalcNormals(inside,flat) : mesh.normalizeNormals();
 }
 
+/** @private */
+GLUtil._toContext=function(context){
+ return (context.getContext) ? context.getContext() : context;
+}
+
+///////////////////////
 /**
 * Represents a WebGL shader program.  A shader program in
 * WebGL consists of a vertex shader (which processes vertices),
@@ -1043,8 +1048,10 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
 * log is output to the JavaScript console.
 * @class
 * @alias glutil.ShaderProgram
-* @param {WebGLRenderingContext} context A WebGL context associated with the
-* compiled shader program.
+* @param {WebGLRenderingContext|object} context A WebGL context associated with the
+* compiled shader program, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context.
 * @param {String|undefined} vertexShader Source text of a vertex shader, in OpenGL
 * ES Shading Language (GLSL).  If null, a default
 * vertex shader is used instead.
@@ -1052,6 +1059,7 @@ GLUtil.createSphere=function(radius, slices, stacks, inside, flat){
 * If null, a default fragment shader is used instead.
 */
 var ShaderProgram=function(context, vertexShader, fragmentShader){
+ context=GLUtil._toContext(context);
  if(vertexShader==null){
   vertexShader=ShaderProgram.getDefaultVertex();
  }
@@ -1296,8 +1304,10 @@ return shader;
 /**
 * Generates a shader program for applying
 * a raster effect to a texture.
-* @param {WebGLRenderingContext} context A WebGL context associated with the
-* compiled shader program.
+* @param {WebGLRenderingContext|object} context A WebGL context associated with the
+* compiled shader program, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context.
 * @param {string} functionCode A string giving shader code
 * in OpenGL ES Shading Language (GLSL) that must contain
 * a function with the following signature:
@@ -1318,8 +1328,10 @@ ShaderProgram.makeEffect=function(context,functionCode){
 }
 /**
 * Generates a shader program that inverts the colors of a texture.
-* @param {WebGLRenderingContext} context A WebGL context associated with the
-* compiled shader program.
+* @param {WebGLRenderingContext|object} context A WebGL context associated with the
+* compiled shader program, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context.
 * @return {ShaderProgram} The resulting shader program.
 */
 ShaderProgram.getInvertEffect=function(context){
@@ -1333,8 +1345,10 @@ return ShaderProgram.makeEffect(context,
 /**
 * Generates a shader program that generates a two-color texture showing
 * the source texture's edges.
-* @param {WebGLRenderingContext} context A WebGL context associated with the
-* compiled shader program.
+* @param {WebGLRenderingContext|object} context A WebGL context associated with the
+* compiled shader program, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context.
 * @return {ShaderProgram} The resulting shader program.
 */
 ShaderProgram.getEdgeDetectEffect=function(context){
@@ -2215,7 +2229,11 @@ function SubMesh(vertices,faces,format){
   } else if(currentMode==Mesh.TRIANGLE_STRIP &&
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-3;
-   this.indices.push(index,index+1,index+2);
+   if((index&1)==0){
+     this.indices.push(index,index+1,index+2);
+   } else {
+     this.indices.push(index,index+2,index+1);   
+   }
   }
   return this;
  }
@@ -2422,17 +2440,23 @@ Mesh.TRIANGLE_STRIP = 5;
 * @class
 * @alias glutil.BufferedMesh
 * @param {Mesh} mesh A geometric mesh object.
-* @param {WebGLRenderingContext} context A WebGL context to
-*  create vertex buffers from. (Note that this constructor takes
+* @param {WebGLRenderingContext|object} context A WebGL context to
+*  create vertex buffers from, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context. (Note that this constructor uses
 *  a WebGL context rather than a shader program because
 *  vertex buffer objects are not specific to shader programs.)
 */
 function BufferedMesh(mesh, context){
  this.subMeshes=[];
+ this.context=context;
  for(var i=0;i<mesh.subMeshes.length;i++){
   this.subMeshes.push(new BufferedSubMesh(
     mesh.subMeshes[i],context));
  }
+}
+BufferedMesh.prototype.getContext=function(){
+ return this.context;
 }
 /**
 * Binds the buffers in this object to attributes according
@@ -2692,8 +2716,10 @@ Texture.prototype.bind=function(program){
 * bound to the WebGL context will remain unchanged.
 * @class
 * @alias glutil.FrameBuffer
-* @param {WebGLRenderingContext} context
-* WebGL context associated with this buffer.
+* @param {WebGLRenderingContext|object} context
+* WebGL context to associate with this buffer, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context.
 * @param {number} width Width, in pixels, of the frame buffer.
 * Fractional values are rounded up.
 * @param {number} height Height, in pixels, of the frame buffer.
@@ -2762,6 +2788,9 @@ FrameBuffer.prototype.getMaterial=function(){
         thisObj.colorTexture);
     }
   };
+}
+FrameBuffer.prototype.getContext=function(){
+ return this.context;
 }
 /**
  * Not documented yet.
@@ -2924,15 +2953,21 @@ TextureImage.prototype.bind=function(program){
 * ambient color and one directional light source..
 *  @class
 * @alias glutil.Scene3D
- * @param {WebGLRenderingContext|HTMLCanvasElement} context
+ * @param {WebGLRenderingContext|object} context
  * A WebGL 3D context to associate with this scene, or an HTML
- * canvas element to create a WebGL context from.
+ * canvas element to create a WebGL context from, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context.
  */
 function Scene3D(canvasOrContext){
  var context=canvasOrContext;
  if(typeof canvasOrContext.getContext=="function"){
   // This might be a canvas, so create a WebGL context.
-  context=GLUtil.get3DContext(canvasOrContext);
+  if(HTMLCanvasElement && context.constructor==HTMLCanvasElement){
+   context=GLUtil.get3DContext(canvasOrContext);
+  } else {
+   context=GLUtil._toContext(context);  
+  }
  }
  this.context=context;
  this.context.viewport(0,0,
@@ -3555,8 +3590,10 @@ function Shape(mesh){
 /**
  * Loads this shape's mesh to vertex buffer objects, if it isn't loaded
  * already.
- * @param {WebGLRenderingContext} context The WebGL context under which
- * to load this shape's mesh.
+ * @param {WebGLRenderingContext|object} context The WebGL context 
+ * to load this shape's mesh under, or an object, such as Scene3D, that 
+* implements a no-argument <code>getContext</code> method 
+* that returns a WebGL context.
  * @return {Shape} This object.
  */
 Shape.prototype.loadMesh=function(context){

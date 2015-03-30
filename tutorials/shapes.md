@@ -1,11 +1,8 @@
-Shapes
-------------
-
 The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.
 
 ![An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
-orange partial rink on the first row; and a yellow 3D ring, a brown cylinder, a dark
+orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
 green square, and a purple cone on the second row.](shapes.png)
 
 Demo: [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html).
