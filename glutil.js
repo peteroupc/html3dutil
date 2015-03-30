@@ -1684,9 +1684,11 @@ Lights.prototype.bind=function(program){
 * indicating how much an object reflects diffuse lights (lights that point
 * directly on the object) in the red, green,
 * and blue components respectively.  Each component ranges from 0 to 1.
+* If {@link glutil.Scene3D#disableLighting} is called, disabling
+* lighting calculations, this value is used for coloring objects.<p>
 * Setting ambient and diffuse to the same value usually defines an object's
-* color.  If {@link glutil.Scene3D#disableLighting} is called, disabling
-* lighting calculations, this value is used for coloring objects.
+* color. Both diffuse and ambient reflection depend on the color of ambient
+* and diffuse lights.<p>
 * May be null or omitted; default is (0.8, 0.8, 0.8). Can also be a string representing
 * an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * @param {Array<number>} specular Color reflection for specular highlights on an
@@ -3538,6 +3540,7 @@ MultiShape.prototype.setMaterial=function(material){
 * An object that associates a geometric mesh (the shape of the object) with
 *  material data (which defines what is seen on the object's surface)
  * and a transformation matrix (which defines the object's position and size).
+* See the "{@tutorial shapes}" tutorial.
  *  @class
 * @alias glutil.Shape
 * @param {Mesh|BufferedMesh} mesh A geometric mesh to associate with this shape,

@@ -1,3 +1,6 @@
+Creating Shapes
+------------------
+
 The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.
 
@@ -7,7 +10,9 @@ green square, and a purple cone on the second row.](shapes.png)
 
 Demo: [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html).
 
-Here are the methods for creating built-in shapes.
+Here are the methods for creating built-in shapes.  All methods described
+below return a `Mesh` object that describes the triangles they
+are composed of.  See "Custom Shapes" below for more on meshes.
 
 **3D Figures**
 
@@ -22,7 +27,7 @@ Here are the methods for creating built-in shapes.
 
 * [GLUtil.createDisk()]{@link glutil.GLUtil.createDisk} - Creates a circular disk or a regular polygon, possibly
   with a hole in the middle.
-* [GLUtil.createPartialDisk()]{@link glutil.GLUtil.createPartialDisk} - Creates a portion of circular disk, possibly
+* [GLUtil.createPartialDisk()]{@link glutil.GLUtil.createPartialDisk} - Creates a portion of a circular disk, possibly
   with a hole where the middle of the complete disk would be.
 * [GLUtil.createPlane()]{@link glutil.GLUtil.createPlane} - Creates a rectangle.
 
@@ -141,3 +146,103 @@ the same mode.  What this does is reset the state of the primitive so that futur
 won't depend on previous vertices.  For example, if you define a `TRIANGLE_FAN`, and
 you call `mesh.mode(Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
 "disconnected" from the previous one as far as the mesh object is concerned.
+
+**Transforming the Mesh**
+
+Once you've created the mesh, you can use the `transform()` method to transform
+all the vertices in the mesh with a 4x4 matrix.  The 
+[shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) demo uses
+this method to adjust some of the meshes to make them look better on the screen.
+Example:
+
+    var matrix = GLMath.mat4scaled(2,2,2);
+    // Use the transform to double the mesh's size
+    mesh = mesh.transform(matrix);
+    
+You can also use the `recalcNormals()` method to recalculate the mesh's normals,
+to give the shape a flat or smooth appearance, or to shade the shape from
+the inside or the outside.  This method takes two parameters:
+
+* The first parameter is true if the normals will be calculated such that the shape
+is shaded from the inside; otherwise, false.  For this to work, each triangle in
+the mesh must have its vertices defined counterclockwise.
+* The second parameter is true if the normals will be calculated such that the shape
+will have a flat appearance; otherwise, false (giving the shape a smooth appearance.)
+This works by either giving each triangle the same normal (flat shading) or giving
+each unique vertex its own normal (smooth shading).
+
+Example:
+
+    // Shape is shaded from the outside, and use flat shading
+    mesh = mesh.recalcNormals(false, true);
+    // Both parameters can be omitted, setting both to false
+    mesh = mesh.recalcNormals();
+
+Binding Shapes
+------------------
+
+Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
+in order to have it drawn.  This is where the `Shape` class comes into
+play; this class associates a 3D mesh with its location and orientation in the scene,
+as well as its color and appearance.  To attach a mesh to a 3D scene:
+
+(1) Create a Shape object and pass the mesh to its constructor:
+
+    var shape = new Shape(mesh);
+
+Alternatively, you can create a `BufferedMesh` object and pass that
+to the `Shape` constructor.  This is useful if you will be creating more than one shape
+with the same mesh.  To do this, however, you need a reference to a WebGL
+context, or a reference to the `Scene3D` or another object that provides a WebGL 
+context via a no-argument `getContext` method (an HTML canvas won't do):
+
+    var buffer = new BufferedMesh(mesh, scene3d);
+    var shape = new Shape(buffer);
+    
+(2) You may also set its color, appearance, and position, using the examples below:
+
+Examples for setting appearance:
+
+    shape.setColor("red"); // set the color to a CSS color
+    shape.setColor("#338845"); // set the color to an HTML color
+    shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
+    // set Phong material parameters: ambient, diffuse,
+    // specular, shininess
+    shape.setMaterial(new MaterialShade("blue","blue","white",30));
+    // set Phong material parameters: ambient, diffuse,
+    // specular, shininess, emission
+    shape.setMaterial(new MaterialShade("lime","lime","white",30,[0.2,0.2,0.2]));
+    // set a texture; this requires the mesh to have texture
+    // coordinates assigned to each vertex
+    shape.setMaterial(new Texture("texture.png"));
+    
+Examples for setting position:
+
+    // move the shape 2 units along X axis, 4 units along Y axis,
+    // and 5 units along Z axis
+    shape.setPosition(2,4,5);
+    // same, but passing an array
+    shape.setPosition([2,4,5]);
+    // move the shape 40 units about X axis, 20 units about Y axis,
+    // and 50 units about Z axis
+    shape.setRotation(40,20,50);
+    // same, but passing an array
+    shape.setRotation([40,20,50]);
+    // scale the shape by 2x in all axes
+    shape.setScale(2,2,2);
+    // same, but passing an array
+    shape.setScale([2,2,2]);
+    // use an arbitrary 4x4 matrix, overriding position,
+    // scaling, and rotation
+    shape.setMatrix(...);
+    
+If getMatrix wasn't called, then when the shape is rendered, it will generate
+a transformation matrix that has the effect of scaling, then rotating,
+then translating (shifting) the shape in 3D space.
+    
+(3) Add the shape to the 3D scene:
+
+    scene3d.addShape(shape);
+
+Now, the next time `scene3d.render()` is called, the Scene3D will render the
+given shape to the scene.
