@@ -25,49 +25,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /**
 * A collection of math functions for working
 * with vectors and matrices.<p>
-* <b>Vectors:</b> A vector is simply a set of 3 or 4 elements that are related
-* to each other.  As such, a vector can symbolize a position, a direction,
-* a ray, a color, or anything else.  If a vector describes a position, direction,
-* or normal, the four elements are given as X, Y, Z, and W, in that order.
-* If a vector describes a color, the four elements are given as red, green,
-* blue, and alpha, in that order (where each element ranges from 0-1).
-* The methods in this class treat arrays as vectors.  Functions dealing
-* with vectors begin with "vec".<p>
-* <b>Matrices:</b>  A matrix is a 16- or 9-element array that describes a
-* transformation from one coordinate system to another. Transformations
-* include translation (shifting), scaling, and rotation.  Functions dealing
-* with matrices begin with "mat".<p>
-* All functions dealing with 4x4 matrices assume that
-* the translation elements in x, y, and z are located in the
-* 13th, 14th, and 15th elements of the matrix (zero-based indices 12, 13,
-* and 14).  All functions also assume
-* a right-handed coordinate system (such as OpenGL's), in which the z-axis points
-* toward (not away from) the viewer whenever the x-axis points to
-* the right and the y-axis points up.<p>
-* The methods mat4multiply, mat4scale, mat4scaleInPlace, mat4translate, and
-* mat4rotate involve multiplying 4x4 matrices, combining multiple
-* transformations into a single transformation.  In these methods,
-* the matrices are multiplied such that the transformations
-* they describe happen in reverse order.  For example, if
-* the first matrix (input matrix) describes a translation and the second
-* matrix describes a scaling, the multiplied matrix will
-* describe the effect of scaling then translation.
-* Matrix multiplication is not commutative; the order
-* of multiplying matrices is important.  This multiplication
-* behavior follows that of OpenGL and is opposite to that in the D3DX and
-* DirectXMath libraries.<p>
-* <b>Quaternions:</b>  A quaternion is a 4-element array that describes a
-* 3D rotation.  The first three elements are the X, Y, and Z components
-* (axis of rotation multiplied by the sine of half the angle)
-* and the fourth component is the W component (cosine of half the angle).
-* Functions dealing with quaternions begin with "quat".<p>
-* The methods quatMultiply, quatFromPitchYawRoll, among others, involve
-* multiplying quaternions, combining multiple rotations into a single
-* rotation.  In these methods, multiplying one rotation by another
-* creates a combined rotation in which the second rotation happens
-* before the first rotation.  Like matrix multiplication, quaternion
-* multiplication is not commutative. This multiplication behavior
-* is opposite to that in the D3DX and DirectXMath libraries.
+* See the tutorial "{@tutorial glmath}" for more information.
 * @class
 * @alias glmath.GLMath
 */
@@ -495,21 +453,29 @@ return ret;
 /**
  * Generates a quaternion from pitch, yaw and roll angles.
  * The rotation will occur as a roll, then yaw, then pitch.
- * @param {number} pitchDegrees Rotation about the x-axis, in degrees.  Positive
+ * @param {number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.  Positive
+ * values indicate counterclockwise rotation. This can instead be a 3-element
+ * array giving the rotation about the x-axis, y-axis, and z-axis,
+ * respectively.
+ * @param {number} yawDegrees Rotation about the y-axis (left or right turn), in degrees.  Positive
  * values indicate counterclockwise rotation.
- * @param {number} yawDegrees Rotation about the y-axis, in degrees.  Positive
+ * May be null or omitted if "pitchDegrees" is an array.
+ * @param {number} rollDegrees Rotation about the z-axis (rolling in place), in degrees.  Positive
  * values indicate counterclockwise rotation.
- * @param {number} rollDegrees Rotation about the z-axis, in degrees.  Positive
- * values indicate counterclockwise rotation.
+ * May be null or omitted if "pitchDegrees" is an array.
  * @return {Array<number>} The generated quaternion.
  */
 quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
- rollDegrees=(rollDegrees<0) ? 360-(-rollDegrees)%360 : rollDegrees%360;
- pitchDegrees=(pitchDegrees<0) ? 360-(-pitchDegrees)%360 : pitchDegrees%360;
- yawDegrees=(yawDegrees<0) ? 360-(-yawDegrees)%360 : yawDegrees%360;
- var rollRad=rollDegrees*GLMath.PiDividedBy360;
- var pitchRad=pitchDegrees*GLMath.PiDividedBy360;
- var yawRad=yawDegrees*GLMath.PiDividedBy360;
+ var rollRad,pitchRad,yawRad;
+ if(pitchDegrees.constructor==Array){
+  rollRad=pitchDegrees[2]*GLMath.PiDividedBy360;
+  pitchRad=pitchDegrees[0]*GLMath.PiDividedBy360;
+  yawRad=pitchDegrees[1]*GLMath.PiDividedBy360;
+ } else {
+  rollRad=rollDegrees*GLMath.PiDividedBy360;
+  pitchRad=pitchDegrees*GLMath.PiDividedBy360;
+  yawRad=yawDegrees*GLMath.PiDividedBy360;
+ }
  var sp=Math.sin(pitchRad);
  var cp=Math.cos(pitchRad);
  var sy=Math.sin(yawRad);
@@ -848,7 +814,8 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
  * If "vy", and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {number} vy Y coordinate.
- * @param {number} vz Z coordinate.
+ * @param {number} vz Z coordinate.  To transform a 2D
+ * point, set Z to 1.
  * @return {Array<number>} The transformed vector.
  */
 mat3transform:function(mat,v,vy,vz){

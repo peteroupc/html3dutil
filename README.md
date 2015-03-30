@@ -51,7 +51,8 @@ Examples
    rotation[0]+=.5; // Adjust x-rotation by .5 degree
    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
    // Update the shape's rotation
-   shape.setRotation(rotation);
+   var q=GLMath.quatFromPitchYawRoll(rotation);
+   shape.setRotation(q);
    // Render the scene
    scene.render();
   });

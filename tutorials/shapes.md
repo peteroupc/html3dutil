@@ -53,14 +53,17 @@ them after each vertex position in that order: normals first, colors second, and
 coordinates last.  If you don't specify normals, colors, and/or texture coordinates per
 vertex, you can omit them.  The following are examples of this:
 
+    // An array of vertices each with a set of normals
     var vertices = [
      x1, y1, z1, nx1, ny1, nz1,
      x2, y2, z2, nx2, ny2, nz2,
      ...
     ];
+    // An array of vertices each with a set of colors
+    // and texture coordinates
     var vertices = [
      x1, y1, z1, cr1, cg1, cb1, u1, v1,
-     x2, y2, z2, cr2, cg2, cb2, u2, v2
+     x2, y2, z2, cr2, cg2, cb2, u2, v2,
      ...
     ];
 
@@ -171,7 +174,7 @@ the inside or the outside.  This method takes two parameters:
 is shaded from the inside; otherwise, false.  For this to work, each triangle in
 the mesh must have its vertices defined counterclockwise.
 * The second parameter is true if the normals will be calculated such that the shape
-will have a flat appearance; otherwise, false (giving the shape a smooth appearance.)
+will have a flat appearance; otherwise, false (giving the shape a smooth appearance).
 This works by either giving each triangle the same normal (flat shading) or giving
 each unique vertex its own normal (smooth shading).
 
@@ -228,11 +231,11 @@ Examples for setting position:
     shape.setPosition(2,4,5);
     // same, but passing an array
     shape.setPosition([2,4,5]);
-    // move the shape 40 units about X axis, 20 units about Y axis,
+    // rotate the shape 40 units about X axis, 20 units about Y axis,
     // and 50 units about Z axis
-    shape.setRotation(40,20,50);
-    // same, but passing an array
-    shape.setRotation([40,20,50]);
+    shape.setQuaternion(GLMath.quatFromPitchYawRoll(40,20,50));
+    // rotate the shape 20 units about X axis and Y axis
+    shape.setQuaternion(GLMath.quatFromAngleAxis(20,1,1,0));
     // scale the shape by 2x in all axes
     shape.setScale(2,2,2);
     // same, but passing an array
@@ -241,7 +244,7 @@ Examples for setting position:
     // scaling, and rotation
     shape.setMatrix(...);
 
-If getMatrix wasn't called, then when the shape is rendered, it will generate
+If setMatrix wasn't called, then when the shape is rendered, it will generate
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.
 

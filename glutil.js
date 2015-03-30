@@ -2527,6 +2527,9 @@ function BufferedMesh(mesh, context){
     sm,context));
  }
 }
+/**
+ * Not documented yet.
+ */
 BufferedMesh.prototype.getContext=function(){
  return this.context;
 }
@@ -2752,6 +2755,9 @@ Texture.loadAndMapTexture=function(name, context, textureCache){
 };
 /**
  * Sets material parameters for this texture object.
+ * Under the default shader program, the texture's colors,
+ * rather than the ones given in the material parameters,
+ * will be used as the ambient and diffuse reflection colors.
  * @param {MaterialShade} material
  */
 Texture.prototype.setParams=function(material){
@@ -2871,6 +2877,9 @@ FrameBuffer.prototype.getMaterial=function(){
     }
   };
 }
+/**
+ * Not documented yet.
+ */
 FrameBuffer.prototype.getContext=function(){
  return this.context;
 }
@@ -3798,29 +3807,28 @@ Shape.prototype.setQuaternion=function(quat){
 }
 
 /**
- * Sets this object's rotation.  The rotation will occur in this order: Z-axis,
- * then Y-axis, then X-axis rotation.
- * @param {Array<number>|number} x Rotation about the X-axis in degrees
- * (may be negative),
- * or an array of 3 numbers giving the rotation about the x, y, and z axis.
- * @param {number} y Rotation about the Y-axis in degrees (may be negative).
- * If "x" is an array, this parameter may be omitted.
- * @param {number} z Rotation about the Z-axis in degrees (may be negative).
- * If "x" is an array, this parameter may be omitted.
+ * Sets this object's rotation in the form of an angle and an axis of
+ * rotation.
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer (as the z-axis does by default in right-handed
+ * coordinate systems like OpenGL's), the angle's value is increasing in
+ * a counterclockwise direction.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
  * @return {Shape} This object.
  */
-Shape.prototype.setRotation=function(x,y,z){
-  if(x!=null && y==null && z==null){
-   if(x.constructor==Array)
-    this.rotation=GLMath.quatFromPitchYawRoll(x[0],x[1],x[2]);
-   else
-    this.rotation=GLMath.quatFromPitchYawRoll(x,x,x);
-  } else {
-   this.rotation=GLMath.quatFromPitchYawRoll(x,y,z);
-  }
-  GLMath.quatNormInPlace(this.rotation);
-  this._matrixDirty=true;
-  return this;
+Shape.prototype.setRotation=function(angle, v,vy,vz){
+ return this.setQuaternion(GLMath.quatFromAngleAxis(angle,v,vy,vz));
 }
 /**
  * Renders this object.  This method will load the shape's mesh to vertex
