@@ -154,7 +154,7 @@ you call `mesh.mode(Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will b
 **Transforming the Mesh**
 
 Once you've created the mesh, you can use the `transform()` method to transform
-all the vertices in the mesh with a 4x4 matrix.  The 
+all the vertices in the mesh with a 4x4 matrix.  The
 [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) demo uses
 this method to adjust some of the meshes to make them look better on the screen.
 Example:
@@ -162,7 +162,7 @@ Example:
     var matrix = GLMath.mat4scaled(2,2,2);
     // Use the transform to double the mesh's size
     mesh = mesh.transform(matrix);
-    
+
 You can also use the `recalcNormals()` method to recalculate the mesh's normals,
 to give the shape a flat or smooth appearance, or to shade the shape from
 the inside or the outside.  This method takes two parameters:
@@ -197,12 +197,12 @@ as well as its color and appearance.  To attach a mesh to a 3D scene:
 Alternatively, you can create a `BufferedMesh` object and pass that
 to the `Shape` constructor.  This is useful if you will be creating more than one shape
 with the same mesh.  To do this, however, you need a reference to a WebGL
-context, or a reference to the `Scene3D` or another object that provides a WebGL 
+context, or a reference to the `Scene3D` or another object that provides a WebGL
 context via a no-argument `getContext` method (an HTML canvas won't do):
 
     var buffer = new BufferedMesh(mesh, scene3d);
     var shape = new Shape(buffer);
-    
+
 (2) You may also set its color, appearance, and position, using the examples below:
 
 Examples for setting appearance:
@@ -211,7 +211,8 @@ Examples for setting appearance:
     shape.setColor("#338845"); // set the color to an HTML color
     shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
     // set Phong material parameters: ambient, diffuse,
-    // specular, shininess
+    // specular, shininess (NOTE: if the mesh defines its own colors they
+    // will override ambient and diffuse reflection given below)
     shape.setMaterial(new MaterialShade("blue","blue","white",30));
     // set Phong material parameters: ambient, diffuse,
     // specular, shininess, emission
@@ -219,7 +220,7 @@ Examples for setting appearance:
     // set a texture; this requires the mesh to have texture
     // coordinates assigned to each vertex
     shape.setMaterial(new Texture("texture.png"));
-    
+
 Examples for setting position:
 
     // move the shape 2 units along X axis, 4 units along Y axis,
@@ -239,11 +240,11 @@ Examples for setting position:
     // use an arbitrary 4x4 matrix, overriding position,
     // scaling, and rotation
     shape.setMatrix(...);
-    
+
 If getMatrix wasn't called, then when the shape is rendered, it will generate
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.
-    
+
 (3) Add the shape to the 3D scene:
 
     scene3d.addShape(shape);
