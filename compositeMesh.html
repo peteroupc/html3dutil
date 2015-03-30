@@ -40,7 +40,7 @@ function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
  return shaft.merge(base).merge(pointer).merge(pointerBase);
 }
 
-function multiArrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
+function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
  var slices=32;
  // generate the four parts of the arrow
  var shaft=GLUtil.createCylinder(shaftRadius,shaftRadius,
@@ -48,13 +48,9 @@ function multiArrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
  var pointer=GLUtil.createCylinder(pointerRadius,0,pointerLength,slices);
  var base=GLUtil.createDisk(0,shaftRadius,slices,1,true);
  var pointerBase=GLUtil.createDisk(shaftRadius,pointerRadius,slices,1,true);
- console.log("--shaft--")
  shaft.setColor3("red");
- console.log("--pointer--")
  pointer.setColor3("blue");
- console.log("--base--")
  base.setColor3("red");
- console.log("--pointerbase--")
  pointerBase.setColor3("blue");
  // move the pointer base to the top of the shaft
  pointerBase.transform(GLMath.mat4translated(0,0,shaftLength));
@@ -74,7 +70,7 @@ function multiArrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
   // Create an arrow mesh 10 units in size
-  var mesh=multiArrow(10,2,1,2);
+  var mesh=multiColoredArrow(10,2,1,2);
   // Create a shape based on the mesh and give it a red color
   var shape=new Shape(mesh)
   // Add the shape to the scene
