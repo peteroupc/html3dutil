@@ -134,6 +134,10 @@ next vertex's parameters.  You don't need to do this for each vertex if multiple
 consecutive vertices will share the same normal, color, or texture coordinates.
 
     mesh.normal3(2, 3, 4); // Set the x, y, and z of the normal.
+    mesh.color3(0.1,0.6,1); // Set the red, green, and blue of the color.
+    mesh.color3("red"); // Set a CSS color.
+    mesh.color3("#123FE8"); // Set an HTML color.
+    mesh.texCoord3(0.5,0.5); // Set the texture coordinates.
 
 (3) Call the `vertex3()` method to add a new vertex and set its position.  The vertex will
 have the last normal, color, and texture coordinates defined on the mesh, if any

@@ -2009,15 +2009,26 @@ Mesh.prototype.normal3=function(x,y,z){
   * color will apply to future vertices even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.
-  * @param {number} r Red component of the color.
-  * @param {number} g Green component of the color.
-  * @param {number} b Blue component of the color.
+  * @param {number} r Red component of the color (0-1).
+  * Can also be a string
+  * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+  * @param {number} g Green component of the color (0-1).
+  * May be null or omitted if a string is given as the "r" parameter.
+  * @param {number} b Blue component of the color (0-1).
+  * May be null or omitted if a string is given as the "r" parameter.
   * @return {Mesh} This object.
   */
  Mesh.prototype.color3=function(x,y,z){
-  this.color[0]=x;
-  this.color[1]=y;
-  this.color[2]=z;
+  if(typeof x=="string"){
+   var c=GLUtil["toGLColor"](x);
+   this.color[0]=c[0];
+   this.color[1]=c[1];
+   this.color[2]=c[2];
+  } else {
+   this.color[0]=x;
+   this.color[1]=y;
+   this.color[2]=z;
+  }
   this._elementsDefined|=Mesh.COLORS_BIT;
   return this;
  }
