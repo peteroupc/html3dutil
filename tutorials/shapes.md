@@ -80,7 +80,7 @@ line segment.
     var mesh = new Mesh(vertices, indices, bits);
 
 Note that you must include a set of bits indicating what kind of data the vertex
-array contains.  The bits are:
+array contains.  (If none of the bits apply, use 0.) The bits are:
 
 * Mesh.NORMALS_BIT - if you included normals for each vertex (3 elements)
 * Mesh.COLORS_BIT - if you included colors for each vertex (3 elements)
@@ -91,7 +91,7 @@ The bits may be combined as in the following example:
 
     var bits = Mesh.NORMALS_BIT | Mesh.COLORS_BIT;
 
-Alternatively, you can call the Mesh constructor with no parameters:
+Alternatively, you can call the Mesh constructor with no arguments:
 
     var mesh = new Mesh();
 
@@ -109,7 +109,23 @@ or `Mesh.QUAD_STRIP`:
 
 The mesh will build up the shape from the vertices you give it depending on the mesh's
 primitive mode.  For example, QUAD_STRIP defines a strip of connecting quadrilaterals,
-and TRIANGLES defines a set of triangles that are not necessarily connected.
+and TRIANGLES defines a set of triangles that are not necessarily connected:
+
+* Mesh.TRIANGLES - Set of triangles, 3 vertices each.
+* Mesh.LINES - Set of line segments, 2 vertices each.
+* Mesh.QUADS - Set of quadrilaterals, 4 vertices each.
+* Mesh.TRIANGLE_STRIP - A triangle strip.  The first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the last 2 vertices and 1
+new vertex.
+* Mesh.TRIANGLE_FAN - A triangle fan. The first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the last vertex, the first vertex of
+the first trangle, and 1 new vertex.
+* Mesh.QUAD_STRIP - A strip of quadrilaterals (quads).
+The first 4 vertices make up the first quad, and each additional
+quad is made up of the last 2 vertices of the previous quad and
+2 new vertices.
 
 (2) Call the `normal3()`, `color3()`, and `texCoord2()` methods, as needed, to set the
 next vertex's parameters.  You don't need to do this for each vertex if multiple
@@ -121,7 +137,7 @@ consecutive vertices will share the same normal, color, or texture coordinates.
 have the last normal, color, and texture coordinates defined on the mesh, if any
 were given:
 
-    mesh.vertex(x, y, z);
+    mesh.vertex3(x, y, z);
 
 You can also call the mode() method any time to change the primitive mode, even to
 the same mode.  What this does is reset the state of the primitive so that future vertices
