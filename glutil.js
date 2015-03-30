@@ -1793,9 +1793,13 @@ MaterialShade.prototype.bind=function(program){
 * May be null or omitted, in which case "format" is set to 0.
 */
 function Mesh(vertices,indices,format){
- this.subMeshes=[
-  new SubMesh(vertices,indices,format)
- ];
+ if(vertices!=null){
+  this.subMeshes=[
+   new SubMesh(vertices,indices,format)
+  ];
+ } else {
+  this.subMeshes=[];
+ }
  this._elementsDefined=0;
  this.currentMode=-1;
  this.normal=[0,0,0];
@@ -1943,6 +1947,7 @@ Mesh.prototype.merge=function(other){
  var prim=(lastMesh.attributeBits&Mesh.LINES_BIT);
  for(var i=0;i<other.subMeshes.length;i++){
   var sm=other.subMeshes[i];
+  if(sm.indices.length==0)continue;
   if((sm.attributeBits&Mesh.LINES_BIT)!=prim ||
      (lastMesh.vertices.length+sm.vertices.length)>65535*3){
    // Add new submesh because its primitive type
@@ -2063,6 +2068,35 @@ Mesh.prototype.normal3=function(x,y,z){
   this.subMeshes[this.subMeshes.length-1].vertex3(x,y,z,this);
   return this;
  }
+ /**
+  * Sets all the vertices in this mesh to the given color.
+  * This method doesn't change this mesh's current color.
+  * @param {number} r Red component of the color (0-1).
+  * Can also be a string
+  * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+  * @param {number} g Green component of the color (0-1).
+  * May be null or omitted if a string is given as the "r" parameter.
+  * @param {number} b Blue component of the color (0-1).
+  * May be null or omitted if a string is given as the "r" parameter.
+  * @return {Mesh} This object.
+  */
+Mesh.prototype.setColor3=function(r,g,b){
+  var rr=r;
+  var gg=g;
+  var bb=b;
+  if(typeof r=="string"){
+   var c=GLUtil["toGLColor"](r);
+   rr=c[0];
+   gg=c[1];
+   bb=c[2];
+  }
+  for(var i=0;i<this.subMeshes.length;i++){
+   if((this.subMeshes[i].attributeBits&Mesh.LINES_BIT)==0){
+    this.subMeshes[i].setColor3(rr,gg,bb);
+   }
+  }
+  return this;
+}
  /**
   * Recalculates the normal vectors for triangles
   * in this mesh.
@@ -2366,6 +2400,18 @@ SubMesh.prototype.recalcNormals=function(inward, flat){
   return this;
 };
 /** @private */
+SubMesh.prototype.setColor3=function(r,g,b){
+  this._rebuildVertices(Mesh.COLORS_BIT);
+  var stride=this.getStride();
+  var colorOffset=Mesh.colorOffset(this.attributeBits);
+  for(var i=colorOffset;i<this.vertices.length;i+=stride){
+    this.vertices[i]=r;
+    this.vertices[i+1]=g;
+    this.vertices[i+2]=b;
+  }
+  return this;
+};
+/** @private */
 Mesh.getStride=function(format){
   format&=(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT);
   return [3,6,6,9,5,8,8,11][format];
@@ -2464,13 +2510,27 @@ function BufferedMesh(mesh, context){
  this.subMeshes=[];
  this.context=context;
  for(var i=0;i<mesh.subMeshes.length;i++){
+  var sm=mesh.subMeshes[i];
+  // skip empty submeshes
+  if(sm.indices.length==0)continue;
   this.subMeshes.push(new BufferedSubMesh(
-    mesh.subMeshes[i],context));
+    sm,context));
  }
 }
 BufferedMesh.prototype.getContext=function(){
  return this.context;
 }
+/** @private */
+BufferedMesh.prototype.getFormat=function(){
+ var format=0;
+ for(var i=0;i<this.subMeshes.length;i++){
+  var sm=this.subMeshes[i];
+  format|=sm.format;
+ }
+ return format;
+}
+
+
 /**
 * Binds the buffers in this object to attributes according
 * to their data format.
@@ -3804,7 +3864,7 @@ Shape.prototype.render=function(program){
      uniforms["normalMatrix"]=this._invTransModel3;
    }
   }
-  uniforms["useColorAttr"]=((this.bufferedMesh.format&Mesh.COLORS_BIT)!=0) ?
+  uniforms["useColorAttr"]=((this.bufferedMesh.getFormat()&Mesh.COLORS_BIT)!=0) ?
      1.0 : 0.0;
   program.setUniforms(uniforms);
   this.bufferedMesh.draw(program);

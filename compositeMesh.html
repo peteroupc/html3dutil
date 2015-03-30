@@ -1,8 +1,16 @@
 <meta charset=utf-8>
 <head>
+<!--
 <script type="text/javascript" src="glutil_min.js"></script>
+-->
+<script type="text/javascript" src="promise.js"></script>
+<script type="text/javascript" src="glmath.js"></script>
+<script type="text/javascript" src="glutil.js"></script>
+<script type="text/javascript" src="webgl-debug.js"></script>
 </head>
 <body>
+<a href="javascript:link1()">Same color</a>,
+<a href="javascript:link2()">Multicolored</a><br>
 <canvas width="600" height="450" id=canvas></canvas>
 <script>
 //<!--
@@ -32,6 +40,30 @@ function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
  return shaft.merge(base).merge(pointer).merge(pointerBase);
 }
 
+function multiArrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
+ var slices=32;
+ // generate the four parts of the arrow
+ var shaft=GLUtil.createCylinder(shaftRadius,shaftRadius,
+   shaftLength,slices);
+ var pointer=GLUtil.createCylinder(pointerRadius,0,pointerLength,slices);
+ var base=GLUtil.createDisk(0,shaftRadius,slices,1,true);
+ var pointerBase=GLUtil.createDisk(shaftRadius,pointerRadius,slices,1,true);
+ console.log("--shaft--")
+ shaft.setColor3("red");
+ console.log("--pointer--")
+ pointer.setColor3("blue");
+ console.log("--base--")
+ base.setColor3("red");
+ console.log("--pointerbase--")
+ pointerBase.setColor3("blue");
+ // move the pointer base to the top of the shaft
+ pointerBase.transform(GLMath.mat4translated(0,0,shaftLength));
+ // move the pointer to the top of the shaft
+ pointer.transform(GLMath.mat4translated(0,0,shaftLength));
+ // merge the four parts of the arrow
+ return shaft.merge(base).merge(pointer).merge(pointerBase);
+}
+
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
@@ -42,9 +74,9 @@ function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
   // Create an arrow mesh 10 units in size
-  var mesh=arrow(10,2,1,2);
+  var mesh=multiArrow(10,2,1,2);
   // Create a shape based on the mesh and give it a red color
-  var shape=new Shape(mesh).setColor("red");
+  var shape=new Shape(mesh)
   // Add the shape to the scene
   scene.addShape(shape);
   // Set the starting rotation
@@ -58,6 +90,14 @@ function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
    // Render the scene
    scene.render();
   });
+  
+function link1(){
+
+}
+function link2(){
+
+}
+  
 //-->
 </script>
 </body>
