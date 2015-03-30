@@ -58,6 +58,7 @@ element of the matrix is placed in columns, rather than in rows, as in the follo
  <mtd><mi>matrix[11]</mi></mtd>
  <mtd><mi>matrix[15]</mi></mtd>
  </mtr>
+</mtable>
 </mfenced>
 </math>
 
@@ -74,9 +75,9 @@ the right and the y-axis points up.
 The transformation formula multiplies a matrix by a 3D point to change that vector's
 position:
 
-* output.x = matrix[0] * input.x + matrix[4] * input.y + matrix[8] * input.z + matrix[12]
-* output.y = matrix[1] * input.x + matrix[5] * input.y + matrix[9] * input.z + matrix[13]
-* output.z = matrix[2] * input.x + matrix[6] * input.y + matrix[10] * input.z + matrix[14]
+* output.x = matrix[0] &times; input.x + matrix[4] &times; input.y + matrix[8] &times; input.z + matrix[12]
+* output.y = matrix[1] &times; input.x + matrix[5] &times; input.y + matrix[9] &times; input.z + matrix[13]
+* output.z = matrix[2] &times; input.x + matrix[6] &times; input.y + matrix[10] &times; input.z + matrix[14]
 
 Note that:
 
@@ -128,15 +129,16 @@ It uses the 13th, 14th, and 15th elements of the matrix as seen here:
  <mtd><mi>0</mi></mtd>
  <mtd><mn>1</mn></mtd>
  </mtr>
+</mtable>
 </mfenced>
 </math>
 
 where `tx` is added to the x-coordinate, `ty` is added to the y-coordinate, and
 `tz` is added to the z-coordinate.  The transformation formulas would look like:
 
-* output.x = 1 * input.x + 0 * input.y + 0 * input.z + tx
-* output.y = 0 * input.x + 1 * input.y + 0 * input.z + ty
-* output.z = 0 * input.x + 0 * input.y + 1 * input.z + tz
+* output.x = 1 &times; input.x + 0 &times; input.y + 0 &times; input.z + tx
+* output.y = 0 &times; input.x + 1 &times; input.y + 0 &times; input.z + ty
+* output.z = 0 &times; input.x + 0 &times; input.y + 1 &times; input.z + tz
 
 For example, we add the input x and `tx` to get the output x, and likewise for
 y and z.
@@ -180,6 +182,7 @@ Scaling changes an object's size.  Scaling uses the 1st,
  <mtd><mi>0</mi></mtd>
  <mtd><mn>1</mn></mtd>
  </mtr>
+</mtable>
 </mfenced>
 </math>
 
@@ -188,9 +191,9 @@ the z-coordinate is multiplied by `sz`.
 
 The scaling formula would look like:
 
-* output.x = sx * input.x + 0 * input.y + 0 * input.z + 0
-* output.y = 0 * input.x + sy * input.y + 0 * input.z + 0
-* output.z = 0 * input.x + 0 * input.y + sz * input.z + 0
+* output.x = sx &times; input.x + 0 &times; input.y + 0 &times; input.z + 0
+* output.y = 0 &times; input.x + sy &times; input.y + 0 &times; input.z + 0
+* output.z = 0 &times; input.x + 0 &times; input.y + sz &times; input.z + 0
 
 For example, we multiply the input x by `sx` to get the output x.  If `sx` is 1, x
 remains unchanged.  Likewise for y and z.
@@ -247,6 +250,7 @@ degrees by &pi; and divide by 180), the transformation matrix is as follows.
  <mtd><mi>0</mi></mtd>
  <mtd><mn>1</mn></mtd>
  </mtr>
+</mtable>
 </mfenced>
 </math>
 <figcaption>Rotation about the X axis.</figcaption></figure>
@@ -278,6 +282,7 @@ degrees by &pi; and divide by 180), the transformation matrix is as follows.
  <mtd><mi>0</mi></mtd>
  <mtd><mn>1</mn></mtd>
  </mtr>
+</mtable>
 </mfenced>
 </math>
 <figcaption>Rotation about the Y axis.</figcaption></figure>
@@ -309,6 +314,7 @@ degrees by &pi; and divide by 180), the transformation matrix is as follows.
  <mtd><mi>0</mi></mtd>
  <mtd><mn>1</mn></mtd>
  </mtr>
+</mtable>
 </mfenced>
 </math>
 <figcaption>Rotation about the Z axis.</figcaption></figure>
@@ -320,9 +326,9 @@ the rotation matrices will differ.)
 For conciseness, we only give the rotation formula for the X axis,
 which would look like:
 
-* output.x = 1 * input.x + 0 * input.y + 0 * input.z + 0
-* output.y = 0 * input.x + (cos &theta;) * input.y + -(sin &theta;) * input.z + 0
-* output.z = 0 * input.x + (sin &theta;) * input.y + (cos &theta;) * input.z + 0
+* output.x = 1 &times; input.x + 0 &times; input.y + 0 &times; input.z + 0
+* output.y = 0 &times; input.x + (cos &theta;) &times; input.y + -(sin &theta;) &times; input.z + 0
+* output.z = 0 &times; input.x + (sin &theta;) &times; input.y + (cos &theta;) &times; input.z + 0
 
 Note that when we rotate a point about the X axis, the X coordinate is unchanged
 and the Y and Z coordinates are adjusted in the rotation.  For rotations about the
@@ -334,21 +340,21 @@ We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
 We plug those numbers into the rotation formula to get a formula for rotating a
 point 60 degrees about the X axis.
 
-* output.x = 1 * input.x + 0 * input.y + 0 * input.z + 0 = input.x
-* output.y ~= 0 * input.x + 0.5 * input.y + -0.866025 * input.z + 0
-* output.z ~= 0 * input.x + 0.866025 * input.y + 0.5 * input.z + 0
+* output.x = 1 &times; input.x + 0 &times; input.y + 0 &times; input.z + 0 = input.x
+* output.y ~= 0 &times; input.x + 0.5 &times; input.y + -0.866025 &times; input.z + 0
+* output.z ~= 0 &times; input.x + 0.866025 &times; input.y + 0.5 &times; input.z + 0
 
 If a point is located at (10, 20, 30), the rotated point would now be:
 
-* output.x = 1 * 10 + 0 * 20 + 0 * 30 + 0
-* = 1 * 10
+* output.x = 1 &times; 10 + 0 &times; 20 + 0 &times; 30 + 0
+* = 1 &times; 10
 * = 10
-* output.y ~= 0 * 10 + 0.5 * 20 + -0.866025 * 30 + 0
-* ~= 0.5 * 20 + -0.866025 * 30
+* output.y ~= 0 &times; 10 + 0.5 &times; 20 + -0.866025 &times; 30 + 0
+* ~= 0.5 &times; 20 + -0.866025 &times; 30
 * ~= 10 + -25.98075
 * ~= -15.98075
-* output.z ~= 0 * 10 + 0.866025 * 20 + 0.5 * 30 + 0
-* ~= 0.866025 * 20 + 0.5 * 30
+* output.z ~= 0 &times; 10 + 0.866025 &times; 20 + 0.5 &times; 30 + 0
+* ~= 0.866025 &times; 20 + 0.5 &times; 30
 * ~= 17.3205 + 15
 * ~= 32.3205
 
@@ -392,7 +398,7 @@ some transformations in the GLMath library.
 One example of such a transformation is the frustum matrix.  When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:
 
-* output.w = 0 * input.x + 0 * input.y + -1 * input.z + 0
+* output.w = 0 &times; input.x + 0 &times; input.y + -1 &times; input.z + 0
 
 The W component of the transformed vector is used to help determine the "depth" of
 the transformed vector.
