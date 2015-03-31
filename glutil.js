@@ -1135,8 +1135,8 @@ ShaderProgram.prototype.getContext=function(){
 * name, or null if it doesn't exist.
 */
 ShaderProgram.prototype.get=function(name){
- return (!this.actives.hasOwnProperty(name)) ?
-   null : this.actives[name];
+ var ret=this.actives[name];
+ return (ret==null) ? null : ret;
 }
 /**
 * Gets the value of the given uniform in this program. This method
@@ -1195,8 +1195,7 @@ ShaderProgram.prototype.use=function(){
 * to that uniform.  Uniform values that are 3- or 4-element
 * vectors must be 3 or 4 elements long, respectively.  Uniforms
 * that are 4x4 matrices must be 16 elements long.  Keys to
-* uniforms that don't exist in this program are ignored.  Keys
-* where hasOwnProperty is false are also ignored.  See also
+* uniforms that don't exist in this program are ignored.  See also
 * the "name" parameter of the {@link glutil.ShaderProgram#get}
 * method for more information on
 * uniform names.
@@ -1205,7 +1204,6 @@ ShaderProgram.prototype.use=function(){
 ShaderProgram.prototype.setUniforms=function(uniforms){
   var isCurrentProgram=null;
   for(var i in uniforms){
-    if(uniforms.hasOwnProperty(i)){
       v=uniforms[i];
       var uniform=this.get(i);
       if(uniform===null)continue;
@@ -1236,7 +1234,6 @@ ShaderProgram.prototype.setUniforms=function(uniforms){
         this.context.uniform1i(uniform, v);
        }
       }
-    }
   }
   return this;
 }
@@ -1890,8 +1887,7 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,inward,flat){
    // same normal
    for(var key in uniqueVertices){
     var v=uniqueVertices[key]
-    if(v && v.constructor==Array && v.length>=2 &&
-       uniqueVertices.hasOwnProperty(key)){
+    if(v && v.constructor==Array && v.length>=2){
      var v0=v[0];
      // Add the normals of duplicate vertices
      // to the first vertex
@@ -2725,8 +2721,7 @@ Texture._fromTextureImage=function(textureImage){
 */
 Texture.loadTexture=function(name, textureCache){
  // Get cached texture
- if(textureCache &&
-    textureCache[name] && textureCache.hasOwnProperty(name)){
+ if(textureCache && textureCache[name]){
    var ret=Texture._fromTextureImage(textureCache[name]);
    return Promise.resolve(ret);
  }

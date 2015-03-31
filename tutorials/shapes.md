@@ -113,21 +113,21 @@ or `Mesh.QUAD_STRIP`:
     mesh.mode(Mesh.TRIANGLES);
 
 The mesh will build up the shape from the vertices you give it depending on the mesh's
-primitive mode.  For example, QUAD_STRIP defines a strip of connecting quadrilaterals,
-and TRIANGLES defines a set of triangles that are not necessarily connected:
+primitive mode.  For example, `QUAD_STRIP` defines a strip of connecting quadrilaterals,
+and `TRIANGLES` defines a set of triangles that are not necessarily connected:
 
-* Mesh.TRIANGLES - Set of triangles, 3 vertices each.
-* Mesh.LINES - Set of line segments, 2 vertices each.
-* Mesh.QUADS - Set of quadrilaterals, 4 vertices each.
-* Mesh.TRIANGLE_STRIP - A triangle strip.  The first 3
+* `Mesh.TRIANGLES` - Set of triangles, 3 vertices each.
+* `Mesh.LINES` - Set of line segments, 2 vertices each.
+* `Mesh.QUADS` - Set of quadrilaterals, 4 vertices each.
+* `Mesh.TRIANGLE_STRIP` - A triangle strip.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.
-* Mesh.TRIANGLE_FAN - A triangle fan. The first 3
+* `Mesh.TRIANGLE_FAN` - A triangle fan. The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last vertex, the first vertex of
 the first trangle, and 1 new vertex.
-* Mesh.QUAD_STRIP - A strip of quadrilaterals (quads).
+* `Mesh.QUAD_STRIP` - A strip of quadrilaterals (quads).
 The first 4 vertices make up the first quad, and each additional
 quad is made up of the last 2 vertices of the previous quad and
 2 new vertices.
