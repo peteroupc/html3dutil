@@ -3346,7 +3346,7 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  return GLUtil.getPromiseResults(promises, resolve, reject);
 }
 /** @private */
-S cene3D.prototype._setIdentityMatrices=function(){
+Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._updateMatrix();
@@ -3413,6 +3413,20 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 */
 Scene3D.prototype.addShape=function(shape){
  this.shapes.push(shape.loadMesh(this.context));
+ return this;
+}
+/**
+* Removes all instances of a 3D shape from this scene.
+* @param {Shape|MultiShape} shape The 3D shape to remove.
+* @return {Scene3D} This object.
+*/
+Scene3D.prototype.removeShape=function(shape){
+ for(var i=0;i<this.shapes.length;i++){
+   if(this.shapes[i]==shape){
+     this.shapes.splice(i,1);
+     i--;
+   }
+ }
  return this;
 }
 /**
