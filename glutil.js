@@ -389,7 +389,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
  return cylinder.merge(base).merge(top);
 },
 /**
-* Loads a file from a URL asynchronously, using XMLHttpRequest
+* Loads a file from a URL asynchronously, using XMLHttpRequest.
 * @param {string} url URL of the file to load.
 * @param {string|null} responseType Expected data type of
 * the file.  Can be "json", "xml", or "text".  If null or omitted,
@@ -1279,6 +1279,7 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
   if(fs!==null)context.deleteShader(fs);
   return program;
 };
+/** @private */
 ShaderProgram.fragmentShaderHeader=function(){
 return "" +
 "#ifdef GL_ES\n" +
@@ -3345,7 +3346,7 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  return GLUtil.getPromiseResults(promises, resolve, reject);
 }
 /** @private */
-Scene3D.prototype._setIdentityMatrices=function(){
+S cene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._updateMatrix();
@@ -3750,9 +3751,12 @@ Shape.prototype.setMaterial=function(material){
 /**
  * Sets the scale of this shape relative to its original
  * size.
- * @param {*} x Scaling factor for this object's width.
- * @param {*} y Scaling factor for this object's height.
- * @param {*} z Scaling factor for this object's depth.
+ * @param {number|Array<number>} x Scaling factor for this object's width.
+ *   If "y" and "z" are null or omitted, this can
+ * instead be a 3-element array giving the scaling factors
+ * for width, height, and depth, respectively.
+ * @param {number} y Scaling factor for this object's height.
+ * @param {number} z Scaling factor for this object's depth.
 * @return {Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
@@ -3768,7 +3772,8 @@ Shape.prototype.setScale=function(x,y,z){
   return this;
 }
 /**
- * Sets the relative position of this shape from its center.
+ * Sets the relative position of this shape from its original
+ * position.
  * @param {Array<number>|number} x Either the X-coordinate,
  * or an array of 3 numbers giving the x, y, and z coordinates.
  * @param {number} y The Y-coordinate.
@@ -3796,6 +3801,14 @@ Shape.prototype.setPosition=function(x,y,z){
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAngleAxis}
  * or {@link glmath.GLMath.quatFromPitchYawRoll}.
  * @return {Shape} This object.
+ * @example
+ * // Set this shape's rotation to 30 degrees about the X-axis
+ * shape.setQuaternion(GLMath.quatFromAngleAxis(20,1,0,0));
+ * // Set this shape's rotation to identity (no rotation)
+ * shape.setQuaternion(GLMath.quatIdentity());
+ * // Set this shape's rotation to 30 degree pitch multiplied
+ * // by 40 degree roll
+ * shape.setQuaternion(GLMath.quatFromPitchYawRoll(30,0,40));
  */
 Shape.prototype.setQuaternion=function(quat){
   this.rotation=quat.slice(0,4);
@@ -3803,7 +3816,6 @@ Shape.prototype.setQuaternion=function(quat){
   this._matrixDirty=true;
   return this;
 }
-
 /**
  * Sets this object's rotation in the form of an angle and an axis of
  * rotation.
@@ -3827,6 +3839,50 @@ Shape.prototype.setQuaternion=function(quat){
  */
 Shape.prototype.setRotation=function(angle, v,vy,vz){
  return this.setQuaternion(GLMath.quatFromAngleAxis(angle,v,vy,vz));
+}
+/**
+ * Combines this shape's current rotation with another rotation
+ * described by a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations).  The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ * @param {Array<number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAngleAxis}
+ * or {@link glmath.GLMath.quatFromPitchYawRoll}.
+ * @return {Shape} This object.
+ * @example
+ * // Combine this shape's rotation with to 30 degrees about the X-axis
+ * shape.multQuaternion(GLMath.quatFromAngleAxis(20,1,0,0));
+ * // Combine this shape's rotation with identity (no rotation)
+ * shape.multQuaternion(GLMath.quatIdentity());
+ * // Combine this shape's rotation with 30 degree pitch multiplied
+ * // by 40 degree roll
+ * shape.multQuaternion(GLMath.quatFromPitchYawRoll(30,0,40));
+ */
+Shape.prototype.multQuaternion=function(quat){
+  this.rotation=GLMath.quatMultiply(this.rotation,quat);
+  GLMath.quatNormInPlace(this.rotation);
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Combines this shape's current rotation with another rotation
+ * in the form of an angle and an axis of
+ * rotation. The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees. See {@link glutil.Shape#setRotation}.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {Shape} This object.
+ */
+Shape.prototype.multRotation=function(angle, v,vy,vz){
+ return this.multQuaternion(GLMath.quatFromAngleAxis(angle,v,vy,vz));
 }
 /**
  * Renders this object.  This method will load the shape's mesh to vertex
