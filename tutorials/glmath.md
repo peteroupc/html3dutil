@@ -72,7 +72,7 @@ the right and the y-axis points up.
 
 **Transforming Points**
 
-The transformation formula multiplies a matrix by a 3D point to change that vector's
+The transformation formula multiplies a matrix by a 3D point to change that point's
 position:
 
 * output.x = matrix[0] &times; input.x + matrix[4] &times; input.y + matrix[8] &times; input.z + matrix[12]
@@ -407,7 +407,7 @@ Related functions:
 
 * [GLMath.mat4frustum()]{@link glmath.GLMath.mat4frustum} -
  Returns a frustum matrix
-* [GLMath.mat4perspective()]{@link glmath.GLMath.mat3perspective} -
+* [GLMath.mat4perspective()]{@link glmath.GLMath.mat4perspective} -
  Returns a field-of-view perspective matrix
 
 Quaternions

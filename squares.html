@@ -1,7 +1,7 @@
 <meta charset=utf-8>
 <head>
 <script type="text/javascript" src="glutil_min.js"></script>
-<script>
+<script id="demo">
 //<!--
 /*
 
@@ -101,7 +101,7 @@ onload=(function(){
    for(var y=-100;y<100;y+=20){
     var xx=((x/100)+1)/2
     var yy=((y/100)+1)/2
-    var mesh=createQuad(-0.1,-0.1,0.2,0.2);
+    var mesh=GLUtil.createPlane(0.2,0.2);
     scene.addShape(new Shape(mesh)
       .setColor(color ? [0,xx,yy] : "white")
       .setPosition(x/100+0.1,y/100+0.1,0));
@@ -133,4 +133,11 @@ onload=(function(){
 <a href="javascript:linknone()">No filters</a>
 <br>
 <canvas width="600" height="450" id=canvas></canvas>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
 </body>

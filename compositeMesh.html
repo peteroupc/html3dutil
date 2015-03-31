@@ -1,18 +1,10 @@
 <meta charset=utf-8>
 <head>
-<!--
 <script type="text/javascript" src="glutil_min.js"></script>
--->
-<script type="text/javascript" src="promise.js"></script>
-<script type="text/javascript" src="glmath.js"></script>
-<script type="text/javascript" src="glutil.js"></script>
-<script type="text/javascript" src="webgl-debug.js"></script>
 </head>
 <body>
-<a href="javascript:link1()">Same color</a>,
-<a href="javascript:link2()">Multicolored</a><br>
 <canvas width="600" height="450" id=canvas></canvas>
-<script>
+<script id="demo">
 //<!--
 /*
 Written by Peter O. in 2015.
@@ -88,13 +80,13 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
    scene.render();
   });
 
-function link1(){
-
-}
-function link2(){
-
-}
-
 //-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
 </script>
 </body>
