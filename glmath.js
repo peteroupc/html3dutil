@@ -520,7 +520,7 @@ quatToPitchYawRoll:function(a){
   if(Math.abs(euler[1],90)<0.000001 ||
       Math.abs(euler[1],-90)<0.000001){
     euler[2]=0;
-    euler[0]=Math.atan2(p1,p0)*GLMath.Num180DividedByPi;
+    euler[0]=Math.atan2(c1,c0)*GLMath.Num180DividedByPi;
   }
   return euler;
 },

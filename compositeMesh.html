@@ -3,6 +3,8 @@
 <script type="text/javascript" src="glutil_min.js"></script>
 </head>
 <body>
+<a href="javascript:link1()">Single color</a>,
+<a href="javascript:link2()">Multicolor</a><br>
 <canvas width="600" height="450" id=canvas></canvas>
 <script id="demo">
 //<!--
@@ -62,11 +64,13 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
   // Create an arrow mesh 10 units in size
-  var mesh=multiColoredArrow(10,2,1,2);
+  var mesh1=multiColoredArrow(10,2,1,2);
+  var mesh2=arrow(10,2,1,2);
   // Create a shape based on the mesh and give it a red color
-  var shape=new Shape(mesh)
+  var shape1=new Shape(mesh1)
+  var shape2=new Shape(mesh2).setColor("green")
   // Add the shape to the scene
-  scene.addShape(shape);
+  scene.addShape(shape1);
   // Set the starting rotation
   var rotation=[0,0,0];
   // Set up the render loop
@@ -75,10 +79,21 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
    // Update the shape's rotation
    var q=GLMath.quatFromPitchYawRoll(rotation);
-   shape.setQuaternion(q);
+   scene.shapes[0].setQuaternion(q);
    // Render the scene
    scene.render();
   });
+
+function link1(){
+ scene.removeShape(shape1);
+ scene.addShape(shape2);
+}
+
+function link2(){
+ scene.removeShape(shape2);
+ scene.addShape(shape1);
+}
+
 
 //-->
 </script>

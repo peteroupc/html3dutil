@@ -1709,7 +1709,8 @@ Lights.prototype.bind=function(program){
 * Each component ranges from 0 to 1.
 * May be null or omitted; default is (0,0,0). Can also be a string representing
 * an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {Array<number>} shininess Indicates how sharp the specular
+* @param {Array<number>} shininess The greater the number, the more
+* concentrated the specular
 * highlights are.  0 means the object creates no specular highlights. Ranges
 * from 0 through 128.
 * May be null or omitted; default is 0.
@@ -2538,7 +2539,8 @@ function BufferedMesh(mesh, context){
  }
 }
 /**
- * Not documented yet.
+ * Returns the WebGL context associated with this object.
+ * @return {WebGLRenderingContext}
  */
 BufferedMesh.prototype.getContext=function(){
  return this.context;
@@ -3078,6 +3080,7 @@ function Scene3D(canvasOrContext){
  this.program=new ShaderProgram(context,
    this._getDefines()+ShaderProgram.getDefaultVertex(),
    this._getDefines()+ShaderProgram.getDefaultFragment());
+ /** An array of shapes that are part of the scene. */
  this.shapes=[];
  /** The color used when clearing the screen each frame.
    This value should not be modified directly.  Instead,
