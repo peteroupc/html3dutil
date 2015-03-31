@@ -3089,7 +3089,6 @@ function Scene3D(canvasOrContext){
  this.context.enable(context.BLEND);
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this._matrixDirty=true;
  this._invView=null;
  this.lightSource=new Lights();
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
@@ -3121,8 +3120,7 @@ Scene3D.prototype._initProgramData=function(){
     "sampler":0,
   });
   this.lightSource.bind(this.program);
-  // update matrix-related uniforms later
-  this._matrixDirty=true;
+ this._updateMatrix();
 }
 /**
 * Changes the active shader program for this scene
@@ -3348,29 +3346,18 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
 }
 /** @private */
 Scene3D.prototype._setIdentityMatrices=function(){
- this._matrixDirty=false;
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this._invView=GLMath.mat4identity();
+ this._updateMatrix();
+}
+/** @private */
+Scene3D.prototype._updateMatrix=function(){
  this.program.setUniforms({
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
  });
-}
-/** @private */
-Scene3D.prototype._updateMatrix=function(){
- if(this._matrixDirty){
-  this._invView=GLMath.mat4invert(this._viewMatrix);
-  this.program.setUniforms({
-   "view":this._viewMatrix,
-   "projection":this._projectionMatrix,
-   "viewMatrix":this._viewMatrix,
-   "projectionMatrix":this._projectionMatrix
-  });
-  this._matrixDirty=false;
- }
 }
 /**
  * Sets the projection matrix for this object.  The projection
@@ -3381,7 +3368,7 @@ Scene3D.prototype._updateMatrix=function(){
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
  this._projectionMatrix=GLMath.mat4copy(matrix);
- this._matrixDirty=true;
+ this._updateMatrix();
  return this;
 }
 /**
@@ -3392,7 +3379,7 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
  this._viewMatrix=GLMath.mat4copy(matrix);
- this._matrixDirty=true;
+ this._updateMatrix();
  return this;
 }
 /**
@@ -3413,7 +3400,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  up = up || [0,1,0];
  center = center || [0,0,0];
  this._viewMatrix=GLMath.mat4lookat(eye, center, up);
- this._matrixDirty=true;
+ this._updateMatrix();
  return this;
 }
 /**
@@ -3533,9 +3520,11 @@ Scene3D.prototype.render=function(){
  * create a frame buffer object, render its shapes to that frame
  * buffer, and then apply the filter program as it renders the
  * frame buffer to the canvas.
- * @param {ShaderProgram|null} filterProgram A shader
+ * @param {ShaderProgram|string|null} filterProgram A shader
  * program that implements a texture filter.  The program
- * could be created using the ShaderProgram.makeEffect() method.
+ * could be created using the {@link glutil.ShaderProgram.makeEffect} method.
+ * This parameter can also be a string that could be a parameter
+ * to the ShaderProgram.makeEffect() method.
  * If this value is null, texture filtering is disabled and shapes
  * are rendered to the canvas normally.
  * @return {Scene3D} This object.
