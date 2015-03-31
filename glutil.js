@@ -1070,6 +1070,7 @@ var ShaderProgram=function(context, vertexShader, fragmentShader){
  this.attributes={};
  this.context=context;
  this.actives={};
+ this.uniformValues={};
  this.uniformTypes={};
  this.savedUniforms={};
  if(this.program!=null){
@@ -1151,7 +1152,14 @@ ShaderProgram.prototype.getUniform=function(name){
  // If "loc" is a number that means it's an attribute, not a uniform;
  // we expect WebGLUniformLocation
  if(loc==null || typeof loc=="number")return null;
- return this.context.getUniform(this.program,loc);
+ // using a cache since context.getUniform can be slow with
+ // repeated calls
+ var uv=this.uniformValues[name];
+ if(uv==null){
+  return this.context.getUniform(this.program,loc);
+ } else {
+  return (uv instanceof Array) ? uv.slice(0,uv.length) : uv;
+ }
 }
 /**
 * Makes this program the active program for the WebGL context.
@@ -1201,14 +1209,15 @@ ShaderProgram.prototype.setUniforms=function(uniforms){
       v=uniforms[i];
       var uniform=this.get(i);
       if(uniform===null)continue;
-      //console.log("setting "+i+": "+v);
+//      console.log("setting "+i+": "+v);
       if(isCurrentProgram==null){
        isCurrentProgram=this.context.getParameter(
          this.context.CURRENT_PROGRAM)==this.program;
       }
+      var val=(v instanceof Array) ? v.slice(0,v.length) : v;
+      this.uniformValues[i]=val;
       if(!isCurrentProgram){
        // Save this uniform to write later
-       var val=(v instanceof Array) ? v.slice(0,v.length) : v;
        this.savedUniforms[i]=val;
       } else if(v.length==3){
        this.context.uniform3f(uniform, v[0],v[1],v[2]);
@@ -1222,9 +1231,9 @@ ShaderProgram.prototype.setUniforms=function(uniforms){
        this.context.uniformMatrix3fv(uniform,false,v);
       } else {
        if(this.uniformTypes[i]==this.context.FLOAT){
-        this.context.uniform1f(uniform, (typeof v=="number") ? v : v[0]);
+        this.context.uniform1f(uniform, v);
        } else {
-        this.context.uniform1i(uniform, (typeof v=="number") ? v : v[0]);
+        this.context.uniform1i(uniform, v);
        }
       }
     }
@@ -2518,13 +2527,13 @@ Mesh.TRIANGLE_STRIP = 5;
 */
 function BufferedMesh(mesh, context){
  this.subMeshes=[];
- this.context=context;
+ this.context=GLUtil._toContext(context);
  for(var i=0;i<mesh.subMeshes.length;i++){
   var sm=mesh.subMeshes[i];
   // skip empty submeshes
   if(sm.indices.length==0)continue;
   this.subMeshes.push(new BufferedSubMesh(
-    sm,context));
+    sm,this.context));
  }
 }
 /**
