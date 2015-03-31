@@ -235,7 +235,7 @@ Examples for setting position:
     // and 50 units about Z axis
     shape.setQuaternion(GLMath.quatFromPitchYawRoll(40,20,50));
     // rotate the shape 20 units about X axis and Y axis
-    shape.setQuaternion(GLMath.quatFromAngleAxis(20,1,1,0));
+    shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,1,0));
     // scale the shape by 2x in all axes
     shape.setScale(2,2,2);
     // same, but passing an array

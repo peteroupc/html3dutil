@@ -3810,12 +3810,12 @@ Shape.prototype.setPosition=function(x,y,z){
  * Sets this object's rotation in the form of a [quaternion]{@link glmath.GLMath} (a 4-element array
  * for describing 3D rotations).
  * @param {Array<number>} quat A four-element array describing the rotation.
- * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAngleAxis}
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * or {@link glmath.GLMath.quatFromPitchYawRoll}.
  * @return {Shape} This object.
  * @example
  * // Set this shape's rotation to 30 degrees about the X-axis
- * shape.setQuaternion(GLMath.quatFromAngleAxis(20,1,0,0));
+ * shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
  * // Set this shape's rotation to identity (no rotation)
  * shape.setQuaternion(GLMath.quatIdentity());
  * // Set this shape's rotation to 30 degree pitch multiplied
@@ -3850,7 +3850,7 @@ Shape.prototype.setQuaternion=function(quat){
  * @return {Shape} This object.
  */
 Shape.prototype.setRotation=function(angle, v,vy,vz){
- return this.setQuaternion(GLMath.quatFromAngleAxis(angle,v,vy,vz));
+ return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
 }
 /**
  * Combines this shape's current rotation with another rotation
@@ -3858,12 +3858,12 @@ Shape.prototype.setRotation=function(angle, v,vy,vz){
  * for describing 3D rotations).  The combined rotation will have the
  * same effect as the new rotation followed by the existing rotation.
  * @param {Array<number>} quat A four-element array describing the rotation.
- * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAngleAxis}
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * or {@link glmath.GLMath.quatFromPitchYawRoll}.
  * @return {Shape} This object.
  * @example
  * // Combine this shape's rotation with to 30 degrees about the X-axis
- * shape.multQuaternion(GLMath.quatFromAngleAxis(20,1,0,0));
+ * shape.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
  * // Combine this shape's rotation with identity (no rotation)
  * shape.multQuaternion(GLMath.quatIdentity());
  * // Combine this shape's rotation with 30 degree pitch multiplied
@@ -3894,7 +3894,7 @@ Shape.prototype.multQuaternion=function(quat){
  * @return {Shape} This object.
  */
 Shape.prototype.multRotation=function(angle, v,vy,vz){
- return this.multQuaternion(GLMath.quatFromAngleAxis(angle,v,vy,vz));
+ return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
 }
 /**
  * Renders this object.  This method will load the shape's mesh to vertex

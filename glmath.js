@@ -8,7 +8,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /**
 * A collection of math functions for working
-* with vectors and matrices.
+* with vectors and matrices.<p>
+* See the tutorial "{@tutorial glmath}" for more information.
 * @module glmath
 */
 (function (g,f) {
@@ -30,7 +31,18 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @alias glmath.GLMath
 */
 var GLMath={
-/** Finds the cross product of two 3-element vectors.
+/**
+ * Finds the cross product of two 3-element vectors.
+ * The cross product is the vector that is perpendicular to
+ * each of two other vectors.  If both vectors are unit length
+ * (via @{link glmath.GLMath.vec3normalize}), the sine of
+ * the angle between them is equal to the length of their
+ * cross product.<p>
+ * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as:<pre>
+ * <b>c</b>.x = <b>a</b>.y * <b>b</b>.z - <b>a</b>.z * <b>b</b>.y
+ * <b>c</b>.y = <b>a</b>.z * <b>b</b>.x - <b>a</b>.x * <b>b</b>.z
+ * <b>c</b>.z = <b>a</b>.x * <b>b</b>.y - <b>a</b>.y * <b>b</b>.x
+ * </pre>
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
  * @return {Array<number>} A 3-element vector containing the cross product.
@@ -41,42 +53,70 @@ return [a[1]*b[2]-a[2]*b[1],
  a[0]*b[1]-a[1]*b[0]];
 },
 /**
- * Finds the dot product of two 3-element vectors.
+ * Finds the dot product of two 3-element vectors. It's the
+ * sum of the products of their components (for example, a's X times b's X).
+ * If both vectors are unit length
+ * (via @{link glmath.GLMath.vec3normalize}), the cosine
+ * of the angle between them is equal to their dot product.
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
- * @return {number} The dot product.
+ * @return {number} A number representing the dot product.
  */
 vec3dot:function(a,b){
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
 },
 /**
  * Adds two 3-element vectors and stores
- * the result in the first vector.
- * @param {Array<number>} a The first vector.
- * @param {Array<number>} b The second vector.
+ * the result in the first vector. Adding two vectors
+ * is the same as adding each of their components.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
  * @return {Array<number>} The parameter "a"
  */
 vec3addInPlace:function(a,b){
 // Use variables in case a and b are the same
 var b0=b[0];
 var b1=b[1];
+var b2=b[2];
 a[0]+=b0;
 a[1]+=b1;
+a[2]+=b2;
 return a;
 },
 /**
  * Subtracts two 3-element vectors and stores
- * the result in the first vector.
- * @param {Array<number>} a
- * @param {Array<number>} b
+ * the result in the first vector. Subtracting two vectors
+ * is the same as subtracting each of their components.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
  * @return {Array<number>} The parameter "a"
  */
 vec3subInPlace:function(a,b){
 // Use variables in case a and b are the same
 var b0=b[0];
 var b1=b[1];
+var b2=b[2];
 a[0]-=b0;
 a[1]-=b1;
+a[2]-=b2;
+return a;
+},
+/**
+ * Multiplies two 3-element vectors and stores
+ * the result in the first vector. Multiplying two vectors
+ * is the same as multiplying each of their components.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @return {Array<number>} The parameter "a"
+ */
+vec3mulInPlace:function(a,b){
+// Use variables in case a and b are the same
+var b0=b[0];
+var b1=b[1];
+var b2=b[2];
+a[0]*=b0;
+a[1]*=b1;
+a[2]*=b2;
 return a;
 },
 /**
@@ -93,9 +133,10 @@ a[2]*=scalar;
 return a;
 },
 /**
- * Finds the dot product of two 4-element vectors.
- * @param {Array<number>} a
- * @param {Array<number>} b
+ * Finds the dot product of two 4-element vectors. It's the
+ * sum of the products of their components (for example, a's X times b's X).
+ * @param {Array<number>} a The first 4-element vector.
+ * @param {Array<number>} b The second 4-element vector.
  */
 vec4dot:function(a,b){
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
@@ -118,6 +159,8 @@ return a;
  * Converts a 3-element vector to its normalized version.
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
+ * A vector is normalized by dividing each of its components
+ * by its [length]{@link glmath.GLMath.vec3length}.
  * @param {Array<number>} vec A 3-element vector.
  * @return {Array<number>} The parameter "vec".
  */
@@ -138,6 +181,8 @@ vec3normInPlace:function(vec){
  * Converts a 4-element vector to its normalized version.
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
+ * A vector is normalized by dividing each of its components
+ * by its [length]{@link glmath.GLMath.vec4length}.
  * @param {Array<number>} vec A 4-element vector.
  * @return {Array<number>} The parameter "vec".
  */
@@ -160,30 +205,32 @@ vec4normInPlace:function(vec){
  * Returns a normalized version of a 3-element vector.
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
+ * A vector is normalized by dividing each of its components
+ * by its [length]{@link glmath.GLMath.vec3length}.
  * @param {Array<number>} vec A 3-element vector.
  * @return {Array<number>} The resulting vector.
  */
 vec3norm:function(vec){
- var ret=[vec[0],vec[1],vec[2]]
- GLMath.vec3normInPlace(ret);
- return ret;
+ return GLMath.vec3normInPlace([vec[0],vec[1],vec[2]]);
 },
 
 /**
  * Returns a normalized version of a 4-element vector.
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
+ * A vector is normalized by dividing each of its components
+ * by its [length]{@link glmath.GLMath.vec4length}.
  * @param {Array<number>} vec A 4-element vector.
  * @return {Array<number>} The resulting vector.
  */
 vec4norm:function(vec){
- var ret=[vec[0],vec[1],vec[2],vec[3]]
- GLMath.vec4normInPlace(ret);
- return ret;
+ return GLMath.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
 },
 /**
- * Returns the distance of this three-element vector from the origin.
- * @param {Array<number>} a A three-element vector.
+ * Returns the distance of this 3-element vector from the origin.
+ * It's the same as the square root of the sum of the squares
+ * of its components.
+ * @param {Array<number>} a A 3-element vector.
  * @return {number}
  */
 vec3length:function(a){
@@ -193,8 +240,10 @@ vec3length:function(a){
  return Math.sqrt(dx*dx+dy*dy+dz*dz);
 },
 /**
- * Returns the distance of this four-element vector from the origin.
- * @param {Array<number>} a A four-element vector.
+ * Returns the distance of this 4-element vector from the origin.
+ * It's the same as the square root of the sum of the squares
+ * of its components.
+ * @param {Array<number>} a A 4-element vector.
  * @return {number}
  */
 vec4length:function(a){
@@ -239,7 +288,7 @@ vec4copy:function(mat){
 },
 /**
  * Finds the inverse of a 4x4 matrix.
- * @param {*} m A 4x4 matrix.
+ * @param {Array<number>} m A 4x4 matrix.
  * @return {Array<number>} The resulting 4x4 matrix.
  * Returns the identity matrix if this matrix is not invertible.
  */
@@ -384,7 +433,7 @@ quatToMat4:function(quat){
 /**
 * Calculates the angle and axis of rotation for this
 * quaternion.
-* @param {Array<number>} a A quaternion.
+* @param {Array<number>} a A quaternion.  Must be normalized.
 * @return  {Array<number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
@@ -392,7 +441,7 @@ quatToMat4:function(quat){
  * coordinate systems like OpenGL's), the angle's value is increasing in
  * a counterclockwise direction.
 */
-quatToAngleAxis:function(a){
+quatToAxisAngle:function(a){
  var w=a[3];
  var d=1.0-(w*w);
  if(d>0){
@@ -402,6 +451,25 @@ quatToAngleAxis:function(a){
  } else {
   return [0,1,0,0]
  }
+},
+/**
+ * Generates a quaternion describing a rotation between
+ * two 3-element vectors.  The quaternion
+ * will describe the rotation required to rotate
+ * the ray described in the first vector toward the ray described
+ * in the second vector.  The vectors need not be normalized.
+ * @param {Array<number>} vec1 The first 3-element vector.
+* @param {Array<number>} vec2 The second 3-element vector.
+ * @return {Array<number>} The generated quaternion, which
+ * will be normalized.
+ */
+quatFromVectors:function(vec1,vec2){
+  var ret=GLMath.vec3cross(vec1,vec2);
+  var vecLengths=Math.sqrt(GLMath.vec3dot(vec1,vec1))*
+            Math.sqrt(GLMath.vec3dot(vec2,vec2));
+  if(vecLengths==0)vecLengths=1; // degenerate case
+  ret[3]=vecLengths+GLMath.vec3dot(vec1,vec2);
+  return GLMath.quatNormInPlace(ret);
 },
 /**
  * Generates a quaternion from an angle and axis of rotation.
@@ -423,7 +491,7 @@ quatToAngleAxis:function(a){
  * of rotation.
  * @return {Array<number>} The generated quaternion.
  */
-quatFromAngleAxis:function(angle,v,vy,vz){
+quatFromAxisAngle:function(angle,v,vy,vz){
 var v0,v1,v2,ang;
 if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
@@ -496,7 +564,7 @@ quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
   * The rotation described by the return value
  * will occur as a roll, then yaw, then pitch.
  * @param {Array<number>} a A quaternion.  Should be normalized.
- * @return {Array<number>} A three-element array containing the
+ * @return {Array<number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  Positive
  * values indicate counterclockwise rotation.
  */
@@ -566,7 +634,7 @@ quatSlerp:function(q1,q2,factor){
  * Multiplies a quaternion by a rotation transformation
  * described as an angle and axis of rotation.<p>
  * This method is equivalent to the following:<pre>
- * return quatMultiply(quat,quatFromAngleAxis(angle,v,vy,vz));
+ * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
  * </pre>
  * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
@@ -588,7 +656,7 @@ quatSlerp:function(q1,q2,factor){
  */
 quatRotate:function(quat,angle,v,vy,vz){
   return GLMath.quatMultiply(quat,
-    GLMath.quatFromAngleAxis(angle,v,vy,vz));
+    GLMath.quatFromAxisAngle(angle,v,vy,vz));
 },
 /**
  * Transforms a vector using a quaternion's rotation.
@@ -1265,6 +1333,8 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 }
 };
 /** Finds the dot product of two quaternions.
+* It's equal to the sum of the products of
+* their components (for example, a's X times b's X).
  @function
  @param {Array<number>} a The first quaternion.
  @param {Array<number>} b The second quaternion.
@@ -1274,6 +1344,8 @@ GLMath.quatDot=GLMath.vec4dot;
  * Converts a quaternion to its normalized version.
  * When a quaternion is normalized, the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
+ * A quaternion is normalized by dividing each of its components
+ * by its [length]{@link glmath.GLMath.quatLength}.
  * @function
  * @param {Array<number>} vec A quaternion.
  * @return {Array<number>} The parameter "vec".
@@ -1283,12 +1355,17 @@ GLMath.quatNormInPlace=GLMath.vec4normInPlace;
  * Converts a quaternion to its normalized version; returns a new quaternion.
  * When a quaternion is normalized, the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
+ * A quaternion is normalized by dividing each of its components
+ * by its [length]{@link glmath.GLMath.quatLength}.
  * @function
  * @param {Array<number>} vec A quaternion.
  * @return {Array<number>} The normalized quaternion.
  */
 GLMath.quatNorm=GLMath.vec4norm;
-/** Returns the distance of this quaternion from the origin.
+/**
+* Returns the distance of this quaternion from the origin.
+* It's the same as the square root of the sum of the squares
+* of its components.
 * @function
  @param {Array<number>} quat The quaternion.
   @return {number} */
