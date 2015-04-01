@@ -24,6 +24,8 @@ Demos
 combining multiple meshes into one.
 * [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) - Demonstrates
 the built-in shapes.
+* [platonic.html](https://peteroupc.github.io/html3dutil/platonic.html) - A demo featuring the five
+platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
 * [selfpulse.html](https://peteroupc.github.io/html3dutil/selfpulse.html) - Demonstrates
 a rotating, pulsating box.
 

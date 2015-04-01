@@ -8,7 +8,12 @@ as cubes, cylinders, spheres, and custom shapes.
 orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
 green square, and a purple cone on the second row.](shapes.png)
 
-Demo: [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html).
+Demos:
+
+* [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) - Demonstrates
+the built-in shapes.
+* [platonic.html](https://peteroupc.github.io/html3dutil/platonic.html) - A demo featuring the five
+platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
 
 Here are the methods for creating built-in shapes.  All methods described
 below return a `Mesh` object that describes the triangles they
@@ -85,7 +90,7 @@ line segment.
     var mesh = new Mesh(vertices, indices, bits);
 
 Note that you must include a set of bits indicating what kind of data the vertex
-array contains.  (If none of the bits apply, use 0.) The bits are:
+array contains.  (If none of the bits apply, use 0 or omit the "bits" parameter.) The bits are:
 
 * Mesh.NORMALS_BIT - if you included normals for each vertex (3 elements)
 * Mesh.COLORS_BIT - if you included colors for each vertex (3 elements)
@@ -171,8 +176,8 @@ to give the shape a flat or smooth appearance, or to shade the shape from
 the inside or the outside.  This method takes two parameters:
 
 * The first parameter is true if the normals will be calculated such that the shape
-is shaded from the inside; otherwise, false.  For this to work, each triangle in
-the mesh must have its vertices defined counterclockwise.
+is shaded from the inside; otherwise, false.    For this to work, each triangle in
+the mesh must have its vertices defined in counterclockwise order.
 * The second parameter is true if the normals will be calculated such that the shape
 will have a flat appearance; otherwise, false (giving the shape a smooth appearance).
 This works by either giving each triangle the same normal (flat shading) or giving

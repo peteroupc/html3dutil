@@ -532,8 +532,8 @@ return ret;
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {number|null} mode Specifies the order in which the rotations will occur (in terms of their effect).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
- * and GLMath.RollYawPitch. If null or omitted, the rotation will be 
- * described as the effect of a roll, then pitch, then yaw. 
+ * and GLMath.RollYawPitch. If null or omitted, the rotation will be
+ * described as the effect of a roll, then pitch, then yaw.
  * @return {Array<number>} The generated quaternion.
  */
 quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
@@ -575,11 +575,11 @@ quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
  * @param {Array<number>} a A quaternion.  Should be normalized.
- * @param {number|null} mode Specifies the order in which the rotations will occur 
+ * @param {number|null} mode Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
- * and GLMath.RollYawPitch. If null or omitted, the rotation will be 
- * described as the effect of a roll, then pitch, then yaw. 
+ * and GLMath.RollYawPitch. If null or omitted, the rotation will be
+ * described as the effect of a roll, then pitch, then yaw.
  * @return {Array<number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
  * angle, if the corresponding axis points toward
