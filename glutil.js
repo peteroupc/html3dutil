@@ -3836,8 +3836,7 @@ Shape.prototype.setQuaternion=function(quat){
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
- * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle's value is increasing in
+ * points toward the viewer, the angle's value is increasing in
  * a counterclockwise direction.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can

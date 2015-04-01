@@ -31,14 +31,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @alias glmath.GLMath
 */
 var GLMath={
-/**
+/** 
  * Finds the cross product of two 3-element vectors.
  * The cross product is the vector that is perpendicular to
  * each of two other vectors.  If both vectors are unit length
- * (via @{link glmath.GLMath.vec3normalize}), the sine of
+ * (via {@link glmath.GLMath.vec3normalize}), the sine of
  * the angle between them is equal to the length of their
  * cross product.<p>
- * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as:<pre>
+ * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
+ * follows:<pre>
  * <b>c</b>.x = <b>a</b>.y * <b>b</b>.z - <b>a</b>.z * <b>b</b>.y
  * <b>c</b>.y = <b>a</b>.z * <b>b</b>.x - <b>a</b>.x * <b>b</b>.z
  * <b>c</b>.z = <b>a</b>.x * <b>b</b>.y - <b>a</b>.y * <b>b</b>.x
@@ -56,7 +57,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * Finds the dot product of two 3-element vectors. It's the
  * sum of the products of their components (for example, a's X times b's X).
  * If both vectors are unit length
- * (via @{link glmath.GLMath.vec3normalize}), the cosine
+ * (via {@link glmath.GLMath.vec3normalize}), the cosine 
  * of the angle between them is equal to their dot product.
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
@@ -437,9 +438,8 @@ quatToMat4:function(quat){
 * @return  {Array<number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle's value is increasing in
- * a counterclockwise direction.
+* points toward the viewer, the angle's value is increasing in
+  * a counterclockwise direction.
 */
 quatToAxisAngle:function(a){
  var w=a[3];
@@ -455,7 +455,7 @@ quatToAxisAngle:function(a){
 /**
  * Generates a quaternion describing a rotation between
  * two 3-element vectors.  The quaternion
- * will describe the rotation required to rotate
+ * will describe the rotation required to rotate 
  * the ray described in the first vector toward the ray described
  * in the second vector.  The vectors need not be normalized.
  * @param {Array<number>} vec1 The first 3-element vector.
@@ -482,9 +482,8 @@ quatFromVectors:function(vec1,vec2){
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.  If the axis of rotation
- * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle's value is increasing in
- * a counterclockwise direction.
+* points toward the viewer, the angle's value is increasing in
+  * a counterclockwise direction.
  * @param {number} vy Y-component of the axis
  * of rotation.
  * @param {number} vz Z-component of the axis
@@ -521,15 +520,16 @@ return ret;
 /**
  * Generates a quaternion from pitch, yaw and roll angles.
  * The rotation will occur as a roll, then yaw, then pitch.
- * @param {number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.  Positive
- * values indicate counterclockwise rotation. This can instead be a 3-element
+ * In the parameters given below, when the axis points toward
+ * the viewer, the angle's value is increasing in a counterclockwise
+ * direction.
+ * @param {number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.
+*  This can instead be a 3-element
  * array giving the rotation about the x-axis, y-axis, and z-axis,
  * respectively.
- * @param {number} yawDegrees Rotation about the y-axis (left or right turn), in degrees.  Positive
- * values indicate counterclockwise rotation.
+ * @param {number} yawDegrees Rotation about the y-axis (left or right turn), in degrees. 
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {number} rollDegrees Rotation about the z-axis (rolling in place), in degrees.  Positive
- * values indicate counterclockwise rotation.
+ * @param {number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees. 
  * May be null or omitted if "pitchDegrees" is an array.
  * @return {Array<number>} The generated quaternion.
  */
@@ -565,8 +565,10 @@ quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
  * will occur as a roll, then yaw, then pitch.
  * @param {Array<number>} a A quaternion.  Should be normalized.
  * @return {Array<number>} A 3-element array containing the
- * pitch, yaw, and roll angles, in that order, in degrees.  Positive
- * values indicate counterclockwise rotation.
+ * pitch, yaw, and roll angles, in that order, in degrees.  For each
+ * angle, when the corresponding axis points toward
+ * the viewer, the angle's value is increasing in a counterclockwise
+ * direction.
  */
 quatToPitchYawRoll:function(a){
   var c0=a[3];
@@ -641,8 +643,7 @@ quatSlerp:function(q1,q2,factor){
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
- * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle's value is increasing in
+ * points toward the viewer, the angle's value is increasing in
  * a counterclockwise direction.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
@@ -994,10 +995,10 @@ mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
 * @param {Array<number>} viewerPos A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<number>|undefined} lookingAt A 3-element vector specifying
-* the point in world space that the camera is looking at.  May be omitted,
+* the point in world space that the camera is looking at.  May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
 * @param {Array<number>|undefined} up A 3-element vector specifying
-* the up-vector direction.  May be omitted, in which case
+* the up-vector direction.  May be null or omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
 * vector must not point in the same or opposite direction as
 * the camera's view direction.
@@ -1169,8 +1170,7 @@ quatMultiply:function(a,b){
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
- * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle's value is increasing in
+ * points toward the viewer, the angle's value is increasing in
  * a counterclockwise direction.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
@@ -1267,8 +1267,7 @@ mat[12], mat[13], mat[14], mat[15]];
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
- * points toward the viewer (as the z-axis does by default in right-handed
- * coordinate systems like OpenGL's), the angle's value is increasing in
+ * points toward the viewer, the angle's value is increasing in
  * a counterclockwise direction.
  * @param {Array<number>|number} v X-component of the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
@@ -1333,7 +1332,7 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 }
 };
 /** Finds the dot product of two quaternions.
-* It's equal to the sum of the products of
+* It's equal to the sum of the products of 
 * their components (for example, a's X times b's X).
  @function
  @param {Array<number>} a The first quaternion.
@@ -1362,7 +1361,7 @@ GLMath.quatNormInPlace=GLMath.vec4normInPlace;
  * @return {Array<number>} The normalized quaternion.
  */
 GLMath.quatNorm=GLMath.vec4norm;
-/**
+/** 
 * Returns the distance of this quaternion from the origin.
 * It's the same as the square root of the sum of the squares
 * of its components.
