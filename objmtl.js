@@ -481,7 +481,7 @@ ObjData._loadObj=function(str){
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
         if(!haveNormals){
          // No normals in this mesh, so calculate them
-         mesh.recalcNormals(false,flat);
+         mesh.recalcNormals(flat);
         }
         ret.meshes.push({
           name: seenFacesAfterObjName ? objName : oldObjName,
@@ -500,7 +500,7 @@ ObjData._loadObj=function(str){
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
         if(!haveNormals){
          // No normals in this mesh, so calculate them
-         mesh.recalcNormals(false,flat);
+         mesh.recalcNormals(flat);
         }
         ret.meshes.push({
           name: seenFacesAfterObjName ? objName : oldObjName,
@@ -538,7 +538,7 @@ ObjData._loadObj=function(str){
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
  if(!haveNormals){
    // No normals in this mesh, so calculate them
-   mesh.recalcNormals(false,flat);
+   mesh.recalcNormals(flat);
  }
  ret.meshes.push({
           name: seenFacesAfterObjName ? objName : oldObjName,
