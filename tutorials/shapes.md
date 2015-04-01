@@ -172,7 +172,7 @@ Example:
     mesh = mesh.transform(matrix);
 
 You can also use the `recalcNormals()` method to recalculate the mesh's normals,
-to give the shape a flat or smooth appearance, or to shade the shape from
+in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside.  This method takes two parameters:
 
 * The first parameter is true if the normals will be calculated such that the shape

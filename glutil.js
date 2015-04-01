@@ -260,7 +260,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * @param {number} topRad Radius of the top of the cylinder. If 0,
 * this function will create an approximation to an upward pointing cone.
 * @param {number} height Height of the cylinder.
-* @param {number} slices Number of "slices" (similar to pizza slices) the cylinder consists
+* @param {number} slices Number of lengthwise "slices" the cylinder consists
 * of.  This function will create a triangular prism if "slices" is 3
 * and both radiuses are the same; a triangular pyramid if "slices" is
 * 3 and either radius is zero; a rectangular prism if "slices" is 4
