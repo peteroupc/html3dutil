@@ -319,10 +319,6 @@ degrees by &pi; and divide by 180), the transformation matrix is as follows.
 </math>
 <figcaption>Rotation about the Z axis.</figcaption></figure>
 
-(Note: GLMath assumes a coordinate system in which the Y axis points up
-by default.  In coordinate systems where the Y axis points down by default,
-the rotation matrices will differ.)
-
 For conciseness, we only give the rotation formula for the X axis,
 which would look like:
 
@@ -412,7 +408,7 @@ Related functions:
 
 Quaternions
 --------------
-s
+
 A quaternion is a 4-element array that describes a
 3D rotation.  The first three elements are the X, Y, and Z components
 (axis of rotation multiplied by the sine of half the angle)

@@ -35,7 +35,7 @@ var GLMath={
  * Finds the cross product of two 3-element vectors.
  * The cross product is the vector that is perpendicular to
  * each of two other vectors.  If both vectors are unit length
- * (via {@link glmath.GLMath.vec3normalize}), the sine of
+ * (via {@link glmath.GLMath.vec3norm}), the sine of
  * the angle between them is equal to the length of their
  * cross product.<p>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
@@ -57,7 +57,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * Finds the dot product of two 3-element vectors. It's the
  * sum of the products of their components (for example, a's X times b's X).
  * If both vectors are unit length
- * (via {@link glmath.GLMath.vec3normalize}), the cosine
+ * (via {@link glmath.GLMath.vec3norm}), the cosine
  * of the angle between them is equal to their dot product.
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
@@ -530,10 +530,10 @@ return ret;
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {number} mode Specifies the order in which the rotations will occur (in terms of their effect).
+ * @param {number|null} mode Specifies the order in which the rotations will occur (in terms of their effect).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
- * and GLMath.RollYawPitch. If null or omitted, the rotation will be
- * described as the effect of a roll, then pitch, then yaw.
+ * and GLMath.RollYawPitch. If null or omitted, the rotation will be 
+ * described as the effect of a roll, then pitch, then yaw. 
  * @return {Array<number>} The generated quaternion.
  */
 quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
@@ -575,14 +575,14 @@ quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
  * @param {Array<number>} a A quaternion.  Should be normalized.
- * @param {number} mode Specifies the order in which the rotations will occur
+ * @param {number|null} mode Specifies the order in which the rotations will occur 
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
- * and GLMath.RollYawPitch. If null or omitted, the rotation will be
- * described as the effect of a roll, then pitch, then yaw.
+ * and GLMath.RollYawPitch. If null or omitted, the rotation will be 
+ * described as the effect of a roll, then pitch, then yaw. 
  * @return {Array<number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
- * angle, when the corresponding axis points toward
+ * angle, if the corresponding axis points toward
  * the viewer, the angle's value is increasing in a counterclockwise
  * direction.
  */

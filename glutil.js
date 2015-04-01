@@ -2553,20 +2553,11 @@ BufferedMesh.prototype.getFormat=function(){
 
 /**
 * Binds the buffers in this object to attributes according
-* to their data format.
+* to their data format, and draws the elements in this mesh 
+* according to the data in its vertex buffers.
 * @param {ShaderProgram} program A shader program object to get
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv".
-*/
-BufferedMesh.prototype.bind=function(program){
- for(var i=0;i<this.subMeshes.length;i++){
-  this.subMeshes[i].bind(program);
- }
-}
-/**
-* Draws the elements in this mesh according to the data in its
-* vertex buffers.
-* @param {ShaderProgram} program A shader program object..
 */
 BufferedMesh.prototype.draw=function(program){
  for(var i=0;i<this.subMeshes.length;i++){
@@ -2631,8 +2622,9 @@ BufferedSubMesh.prototype.dispose=function(){
 /**
  * @private
  */
-BufferedSubMesh.prototype.bind=function(program){
-  var context=program.getContext();
+BufferedSubMesh.prototype.draw=function(program){
+  // Binding phase
+    var context=program.getContext();
   if(this.verts==null || this.faces==null){
    throw new Error("mesh buffer disposed");
   }
@@ -2643,31 +2635,36 @@ BufferedSubMesh.prototype.bind=function(program){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
   var format=this.format;
   var stride=Mesh.getStride(format);
+  var boundAttributes=[];
+  var attr=program.get("position");
+  boundAttributes.push(attr)
   BufferedMesh._vertexAttrib(context,
-    program.get("position"), 3, context.FLOAT, stride*4, 0);
+    attr, 3, context.FLOAT, stride*4, 0);
   var offset=Mesh.normalOffset(format);
   if(offset>=0){
+   attr=program.get("normal");
+   boundAttributes.push(attr)
    BufferedMesh._vertexAttrib(context,
-    program.get("normal"), 3,
+    attr, 3,
     context.FLOAT, stride*4, offset*4);
   }
   offset=Mesh.colorOffset(format);
   if(offset>=0){
+   attr=program.get("colorAttr");
+   boundAttributes.push(attr)
    BufferedMesh._vertexAttrib(context,
-    program.get("colorAttr"), 3,
+    attr, 3,
     context.FLOAT, stride*4, offset*4);
   }
   offset=Mesh.texCoordOffset(format);
   if(offset>=0){
+   attr=program.get("uv");
+   boundAttributes.push(attr)
    BufferedMesh._vertexAttrib(context,
-     program.get("uv"), 2,
+     attr, 2,
     context.FLOAT, stride*4, offset*4);
   }
-}
-/**
- * @private
- */
-BufferedSubMesh.prototype.draw=function(program){
+  // Drawing phase
   var context=program.getContext();
   if(this.verts==null || this.faces==null){
    throw new Error("mesh buffer disposed");
@@ -2680,6 +2677,12 @@ BufferedSubMesh.prototype.draw=function(program){
       context.TRIANGLES,
     this.facesLength,
     this.type, 0);
+  // Disable attributes to avoid them leaking in future
+  // drawElements calls (in case a future vertex buffer object
+  // that doesn't use the attribute needs to be drawn)
+  for(var i=0;i<boundAttributes.length;i++){
+   context.disableVertexAttribArray(boundAttributes[i]);
+  }
 }
 
 /**
@@ -3919,12 +3922,11 @@ Shape.prototype.render=function(program){
   if(this.material){
    this.material.bind(program);
   }
-  // Bind vertex attributes
+  // Ensure buffered mesh exists
   if(this.bufferedMesh==null && this.mesh){
    this.bufferedMesh=new BufferedMesh(this.mesh,
      program.getContext());
   }
-  this.bufferedMesh.bind(program);
   // Set world matrix
   var uniforms={};
   var uniformMatrix=program.get("world")
@@ -3951,6 +3953,7 @@ Shape.prototype.render=function(program){
   uniforms["useColorAttr"]=((this.bufferedMesh.getFormat()&Mesh.COLORS_BIT)!=0) ?
      1.0 : 0.0;
   program.setUniforms(uniforms);
+  // Bind vertex attributes and draw
   this.bufferedMesh.draw(program);
   return this;
 };
