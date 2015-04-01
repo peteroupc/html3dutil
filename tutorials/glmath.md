@@ -412,7 +412,7 @@ Related functions:
 
 Quaternions
 --------------
-
+s
 A quaternion is a 4-element array that describes a
 3D rotation.  The first three elements are the X, Y, and Z components
 (axis of rotation multiplied by the sine of half the angle)
@@ -430,7 +430,7 @@ of angles is used. For example, a negative 30-degree
 pitch followed by a negative 20-degree roll does not undo a 30-degree
 pitch followed by a 20-degree roll.
 
-The methods quatMultiply, quatFromPitchYawRoll, among others, involve
+The methods quatMultiply and quatFromEuler, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens

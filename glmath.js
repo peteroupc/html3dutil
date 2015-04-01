@@ -31,7 +31,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @alias glmath.GLMath
 */
 var GLMath={
-/** 
+/**
  * Finds the cross product of two 3-element vectors.
  * The cross product is the vector that is perpendicular to
  * each of two other vectors.  If both vectors are unit length
@@ -57,7 +57,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * Finds the dot product of two 3-element vectors. It's the
  * sum of the products of their components (for example, a's X times b's X).
  * If both vectors are unit length
- * (via {@link glmath.GLMath.vec3normalize}), the cosine 
+ * (via {@link glmath.GLMath.vec3normalize}), the cosine
  * of the angle between them is equal to their dot product.
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
@@ -455,7 +455,7 @@ quatToAxisAngle:function(a){
 /**
  * Generates a quaternion describing a rotation between
  * two 3-element vectors.  The quaternion
- * will describe the rotation required to rotate 
+ * will describe the rotation required to rotate
  * the ray described in the first vector toward the ray described
  * in the second vector.  The vectors need not be normalized.
  * @param {Array<number>} vec1 The first 3-element vector.
@@ -519,7 +519,6 @@ return ret;
 },
 /**
  * Generates a quaternion from pitch, yaw and roll angles.
- * The rotation will occur as a roll, then yaw, then pitch.
  * In the parameters given below, when the axis points toward
  * the viewer, the angle's value is increasing in a counterclockwise
  * direction.
@@ -527,14 +526,20 @@ return ret;
 *  This can instead be a 3-element
  * array giving the rotation about the x-axis, y-axis, and z-axis,
  * respectively.
- * @param {number} yawDegrees Rotation about the y-axis (left or right turn), in degrees. 
+ * @param {number} yawDegrees Rotation about the y-axis (left or right turn), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees. 
+ * @param {number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
+ * @param {number} mode Specifies the order in which the rotations will occur (in terms of their effect).
+ * Is one of the GLMath constants such as GLMath.PitchYawRoll
+ * and GLMath.RollYawPitch. If null or omitted, the rotation will be
+ * described as the effect of a roll, then pitch, then yaw.
  * @return {Array<number>} The generated quaternion.
  */
-quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
+quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  var rollRad,pitchRad,yawRad;
+ if(mode==null)mode=GLMath.RollPitchYaw;
+ if(mode<0 || mode>=6)throw new Error("invalid mode");
  if(pitchDegrees.constructor==Array){
   rollRad=pitchDegrees[2]*GLMath.PiDividedBy360;
   pitchRad=pitchDegrees[0]*GLMath.PiDividedBy360;
@@ -544,53 +549,98 @@ quatFromPitchYawRoll:function(pitchDegrees,yawDegrees,rollDegrees){
   pitchRad=pitchDegrees*GLMath.PiDividedBy360;
   yawRad=yawDegrees*GLMath.PiDividedBy360;
  }
- var sp=Math.sin(pitchRad);
- var cp=Math.cos(pitchRad);
- var sy=Math.sin(yawRad);
- var cy=Math.cos(yawRad);
- var sr=Math.sin(rollRad);
- var cr=Math.cos(rollRad);
- var pitchYaw=[sp*cy,cp*sy,sp*sy,cp*cy];
- return [
-  pitchYaw[0] * cr + pitchYaw[1] * sr,
-  pitchYaw[1] * cr - pitchYaw[0] * sr,
-  pitchYaw[3] * sr + pitchYaw[2] * cr,
-  pitchYaw[3] * cr - pitchYaw[2] * sr
- ]
+  var px = Math.sin(pitchRad);
+  var py = Math.cos(pitchRad);
+  var yx = Math.sin(yawRad);
+  var yy = Math.cos(yawRad);
+  var rx = Math.sin(rollRad);
+  var ry = Math.cos(rollRad);
+  var t8;
+  if(mode==GLMath.PitchYawRoll || mode==GLMath.PitchRollYaw){
+   var t7 = [rx*yx, ry * yx, rx * yy, ry * yy];
+   if(mode==GLMath.PitchYawRoll)t7[0]=-t7[0];
+   t8 = [((t7[3] * px) + (t7[0] * py)), ((t7[1] * py) + (t7[2] * px)), ((t7[2] * py) - (t7[1] * px)), ((t7[3] * py) - (t7[0] * px))];
+  } else if(mode==GLMath.YawPitchRoll || mode==GLMath.YawRollPitch){
+   var t7 = [ry * px, rx * px, rx * py, ry * py];
+   if(mode==GLMath.YawRollPitch)t7[1]=-t7[1];
+   t8 = [((t7[0] * yy) - (t7[2] * yx)), ((t7[3] * yx) + (t7[1] * yy)), ((t7[2] * yy) + (t7[0] * yx)), ((t7[3] * yy) - (t7[1] * yx))];
+  } else {
+   var t7 = [yy * px, yx * py, yx * px, yy * py];
+   if(mode==GLMath.RollPitchYaw)t7[2]=-t7[2];
+   t8 = [((t7[0] * ry) + (t7[1] * rx)), ((t7[1] * ry) - (t7[0] * rx)), ((t7[3] * rx) + (t7[2] * ry)), ((t7[3] * ry) - (t7[2] * rx))];
+  }
+  return t8;
 },
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
-  * The rotation described by the return value
- * will occur as a roll, then yaw, then pitch.
  * @param {Array<number>} a A quaternion.  Should be normalized.
+ * @param {number} mode Specifies the order in which the rotations will occur
+ * (in terms of their effect, not in terms of how they will be returned by this method).
+ * Is one of the GLMath constants such as GLMath.PitchYawRoll
+ * and GLMath.RollYawPitch. If null or omitted, the rotation will be
+ * described as the effect of a roll, then pitch, then yaw.
  * @return {Array<number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
  * angle, when the corresponding axis points toward
  * the viewer, the angle's value is increasing in a counterclockwise
  * direction.
  */
-quatToPitchYawRoll:function(a){
+quatToEuler:function(a,mode){
   var c0=a[3];
-  var c1=a[0]; // pitch
-  var c2=a[1]; // yaw
-  var c3=a[2]; // roll
+  var c1,c2,c3;
+  var e=1;
+  if(mode==null)mode=GLMath.RollPitchYaw;
+  if(mode<0 || mode>=6)throw new Error("invalid mode");
+  if(mode==GLMath.RollPitchYaw){
+   c1=a[1]; c2=a[0]; c3=a[2];
+   e=-1;
+  } else if(mode==GLMath.PitchYawRoll){
+   c1=a[2]; c2=a[1]; c3=a[0];
+   e=-1;
+  } else if(mode==GLMath.PitchRollYaw){
+   c1=a[1]; c2=a[2]; c3=a[0];
+  } else if(mode==GLMath.YawPitchRoll){
+   c1=a[2]; c2=a[0]; c3=a[1];
+  } else if(mode==GLMath.YawRollPitch){
+   c1=a[0]; c2=a[2]; c3=a[1];
+   e=-1;
+  } else {
+   c1=a[0]; c2=a[1]; c3=a[2];
+  }
 	var sq1=c1*c1;
   var sq2=c2*c2;
   var sq3=c3*c3;
-  var e1=Math.atan2(2*(c0*c1-c2*c3),1-(sq1+sq2)*2);
-  var e2=Math.asin(2*(c0*c2+c1*c3));
-  var e3=Math.atan2(2*(c0*c3-c1*c2),1-(sq2+sq3)*2);
-  var euler=[
-    e1*GLMath.Num180DividedByPi,
-    e2*GLMath.Num180DividedByPi,
-    e3*GLMath.Num180DividedByPi
-  ]
+  var e1=Math.atan2(2*(c0*c1-e*c2*c3),1-(sq1+sq2)*2);
+  var sine=2*(c0*c2+e*c1*c3);
+  if(sine>1.0)sine=1.0; // for stability
+  if(sine<-1.0)sine=-1.0; // for stability
+  var e2=Math.asin(sine);
+  var e3=Math.atan2(2*(c0*c3-e*c1*c2),1-(sq2+sq3)*2);
+  e1*=GLMath.Num180DividedByPi
+  e2*=GLMath.Num180DividedByPi
+  e3*=GLMath.Num180DividedByPi
   // Singularity near the poles
-  if(Math.abs(euler[1],90)<0.000001 ||
-      Math.abs(euler[1],-90)<0.000001){
-    euler[2]=0;
-    euler[0]=Math.atan2(c1,c0)*GLMath.Num180DividedByPi;
+  if(Math.abs(e2-90)<0.000001 ||
+      Math.abs(e2+90)<0.000001){
+    e3=0;
+    e1=Math.atan2(c1,c0)*GLMath.Num180DividedByPi;
+    if(isNaN(e1))e1=0;
+  }
+  // Return the Euler angles in the standard order
+  var euler=[];
+  if(mode==GLMath.RollPitchYaw){
+   euler[0]=e2; euler[1]=e1; euler[2]=e3;
+  } else if(mode==GLMath.PitchYawRoll){
+   euler[0]=e3; euler[1]=e2; euler[2]=e1;
+  } else if(mode==GLMath.PitchRollYaw){
+   euler[0]=e3; euler[1]=e1; euler[2]=e2;
+  } else if(mode==GLMath.YawPitchRoll){
+   euler[0]=e2; euler[1]=e3; euler[2]=e1;
+  } else if(mode==GLMath.YawRollPitch){
+   euler[0]=e1; euler[1]=e3; euler[2]=e2;
+  } else {
+   euler[0]=e1; euler[1]=e2; euler[2]=e3;
   }
   return euler;
 },
@@ -1332,7 +1382,7 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 }
 };
 /** Finds the dot product of two quaternions.
-* It's equal to the sum of the products of 
+* It's equal to the sum of the products of
 * their components (for example, a's X times b's X).
  @function
  @param {Array<number>} a The first quaternion.
@@ -1361,7 +1411,7 @@ GLMath.quatNormInPlace=GLMath.vec4normInPlace;
  * @return {Array<number>} The normalized quaternion.
  */
 GLMath.quatNorm=GLMath.vec4norm;
-/** 
+/**
 * Returns the distance of this quaternion from the origin.
 * It's the same as the square root of the sum of the squares
 * of its components.
@@ -1406,6 +1456,36 @@ GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
  @default
 */
 GLMath.Num180DividedByPi = 57.295779513082320876798154814105;
+/**
+* Indicates that a rotation occurs as a pitch, then yaw, then roll.
+* @const
+*/
+GLMath.PitchYawRoll = 0;
+/**
+* Indicates that a rotation occurs as a pitch, then roll, then yaw.
+* @const
+*/
+GLMath.PitchRollYaw = 1;
+/**
+* Indicates that a rotation occurs as a yaw, then pitch, then roll.
+* @const
+*/
+GLMath.YawPitchRoll = 2;
+/**
+* Indicates that a rotation occurs as a yaw, then roll, then pitch.
+* @const
+*/
+GLMath.YawRollPitch = 3;
+/**
+* Indicates that a rotation occurs as a roll, then pitch, then yaw.
+* @const
+*/
+GLMath.RollPitchYaw = 4;
+/**
+* Indicates that a rotation occurs as a roll, then yaw, then pitch.
+* @const
+*/
+GLMath.RollYawPitch = 5;
 
 	exports["GLMath"]=GLMath;
 }));

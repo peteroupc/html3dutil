@@ -233,7 +233,7 @@ Examples for setting position:
     shape.setPosition([2,4,5]);
     // rotate the shape 40 units about X axis, 20 units about Y axis,
     // and 50 units about Z axis
-    shape.setQuaternion(GLMath.quatFromPitchYawRoll(40,20,50));
+    shape.setQuaternion(GLMath.quatFromEuler(40,20,50));
     // rotate the shape 20 units about X axis and Y axis
     shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,1,0));
     // scale the shape by 2x in all axes

@@ -3811,7 +3811,7 @@ Shape.prototype.setPosition=function(x,y,z){
  * for describing 3D rotations).
  * @param {Array<number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
- * or {@link glmath.GLMath.quatFromPitchYawRoll}.
+ * or {@link glmath.GLMath.quatFromEuler}.
  * @return {Shape} This object.
  * @example
  * // Set this shape's rotation to 30 degrees about the X-axis
@@ -3820,7 +3820,7 @@ Shape.prototype.setPosition=function(x,y,z){
  * shape.setQuaternion(GLMath.quatIdentity());
  * // Set this shape's rotation to 30 degree pitch multiplied
  * // by 40 degree roll
- * shape.setQuaternion(GLMath.quatFromPitchYawRoll(30,0,40));
+ * shape.setQuaternion(GLMath.quatFromEuler(30,0,40));
  */
 Shape.prototype.setQuaternion=function(quat){
   this.rotation=quat.slice(0,4);
@@ -3858,7 +3858,7 @@ Shape.prototype.setRotation=function(angle, v,vy,vz){
  * same effect as the new rotation followed by the existing rotation.
  * @param {Array<number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
- * or {@link glmath.GLMath.quatFromPitchYawRoll}.
+ * or {@link glmath.GLMath.quatFromEuler}.
  * @return {Shape} This object.
  * @example
  * // Combine this shape's rotation with to 30 degrees about the X-axis
@@ -3867,7 +3867,7 @@ Shape.prototype.setRotation=function(angle, v,vy,vz){
  * shape.multQuaternion(GLMath.quatIdentity());
  * // Combine this shape's rotation with 30 degree pitch multiplied
  * // by 40 degree roll
- * shape.multQuaternion(GLMath.quatFromPitchYawRoll(30,0,40));
+ * shape.multQuaternion(GLMath.quatFromEuler(30,0,40));
  */
 Shape.prototype.multQuaternion=function(quat){
   this.rotation=GLMath.quatMultiply(this.rotation,quat);
