@@ -1448,10 +1448,13 @@ var shader=ShaderProgram.fragmentShaderHeader() +
  "uniform vec3 md;\n" + // material diffuse color (0-1 each component). Is multiplied by texture/solid color.
 "#ifdef SHADING\n" +
 "struct light {\n" +
+// NOTE: These struct members must be aligned to
+// vec4 size; otherwise, Chrome may have issues retaining 
+// the value of lights[i].specular, causing flickering
 " vec4 position; /* source light direction */\n" +
-" vec3 diffuse; /* source light diffuse color */\n" +
+" vec4 diffuse; /* source light diffuse color */\n" +
 "#ifdef SPECULAR\n" +
-" vec3 specular; /* source light specular color */\n" +
+" vec4 specular; /* source light specular color */\n" +
 "#endif\n" +
 "};\n" +
 "const int MAX_LIGHTS = "+Lights.MAX_LIGHTS+"; /* internal */\n" +
@@ -1504,7 +1507,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#define SET_LIGHTPOWER(i) "+
 " lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
-" phong+=lights[i].diffuse*max(0.0,dot(transformedNormalVar," +
+" phong+=vec3(lights[i].diffuse)*max(0.0,dot(transformedNormalVar," +
 "   lightPower[i].xyz))*lightPower[i].w*materialDiffuse;\n" +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
@@ -1513,27 +1516,33 @@ for(var i=0;i<Lights.MAX_LIGHTS;i++){
 shader+=""+
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
 "vec3 phong=sceneAmbient*materialAmbient; /* ambient*/\n" +
-"#ifdef SPECULAR\n" +
-"// specular reflection\n" +
-"vec3 viewDirection=vec3(0,0,1.);\n" +
-"bool spectmp;\n" +
-"#define ADD_SPECULAR(i) "+
-"  spectmp = dot (transformedNormalVar, lightPower[i].xyz) >= 0.0;" +
-"  if (spectmp) {" +
-"    float specular=dot (-lightPower[i].xyz - (2.0 * dot (transformedNormalVar, -lightPower[i].xyz) * transformedNormalVar), viewDirection);" +
-"    phong += ms*clamp(pow(specular, mshin),0.0,1.0) * lights[i].specular * lightPower[i].w;" +
-"  }\n";
-for(var i=0;i<Lights.MAX_LIGHTS;i++){
- shader+="ADD_SPECULAR("+i+");\n";
-}
-shader+="#endif\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=md*baseColor.rgb;\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="ADD_DIFFUSE("+i+");\n";
 }
+shader+="#ifdef SPECULAR\n" +
+"// specular reflection\n" +
+"vec3 viewDirection=vec3(0,0,1.);\n" +
+"bool spectmp;\n" +
+"float specular;\n";
+for(var i=0;i<Lights.MAX_LIGHTS;i++){
+shader+="  spectmp = dot (transformedNormalVar, lightPower["+i+"].xyz) >= 0.0;\n" +
+"  spectmp = (ms.x*ms.y*ms.z)!=0.0;\n" +
+"  if (spectmp) {\n" +
+"  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+
+"    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (transformedNormalVar, -lightPower["+i+"].xyz)*\n"+
+" transformedNormalVar), viewDirection);\n" +
+"    specular=max(specular,0.0);\n" +
+"    specular=pow(specular,mshin);\n"+
+"    specular=specular*lightPower["+i+"].w;\n";
+shader+="    vec3 specularCompo = ms*specular*lightSpecular;\n";
+shader+="    phong+=specularCompo;\n" +
+"  }\n";
+}
+shader+="#endif\n";
 shader+=" // emission\n"+
-" phong+=me;\n" +
+//" phong+=me;\n" +
 " baseColor=vec4(phong,baseColor.a);\n" +
 "#endif\n" +
 " gl_FragColor=baseColor;\n" +
@@ -1666,14 +1675,14 @@ Lights.prototype.bind=function(program){
  uniforms["sceneAmbient"]=this.sceneAmbient.slice(0,3);
  for(var i=0;i<this.lights.length;i++){
   var lt=this.lights[i]
-  uniforms["lights["+i+"].diffuse"]=[lt.diffuse[0],lt.diffuse[1],lt.diffuse[2]];
-  uniforms["lights["+i+"].specular"]=[lt.specular[0],lt.specular[1],lt.specular[2]];
+  uniforms["lights["+i+"].diffuse"]=[lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],1];
+  uniforms["lights["+i+"].specular"]=[lt.specular[0],lt.specular[1],lt.specular[2],1];
   uniforms["lights["+i+"].position"]=this.lights[i].position;
  }
  // Set empty values for undefined lights up to MAX_LIGHTS
  for(var i=this.lights.length;i<Lights.MAX_LIGHTS;i++){
-  uniforms["lights["+i+"].diffuse"]=[0,0,0];
-  uniforms["lights["+i+"].specular"]=[0,0,0];
+  uniforms["lights["+i+"].diffuse"]=[0,0,0,1];
+  uniforms["lights["+i+"].specular"]=[0,0,0,1];
   uniforms["lights["+i+"].position"]=[0,0,0,0];
  }
  program.setUniforms(uniforms);

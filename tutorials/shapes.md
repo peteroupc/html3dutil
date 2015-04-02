@@ -8,7 +8,7 @@ as cubes, cylinders, spheres, and custom shapes.
 orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
 green square, and a purple cone on the second row.](shapes.png)
 
-Demos: 
+Demos:
 
 * [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) - Demonstrates
 the built-in shapes.
@@ -180,7 +180,7 @@ will have a flat appearance; otherwise, false (giving the shape a smooth appeara
 This works by either giving each triangle the same normal (flat shading) or giving
 each unique vertex its own normal (smooth shading).
 * The second parameter is true if the normals will be calculated such that the shape
-is shaded from the inside; otherwise, false.    
+is shaded from the inside; otherwise, false.
 
 Remember, for normal calculation to properly affect shading, each triangle in
 the mesh must have its vertices defined in counterclockwise order.
