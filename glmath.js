@@ -55,7 +55,7 @@ return [a[1]*b[2]-a[2]*b[1],
 },
 /**
  * Finds the dot product of two 3-element vectors. It's the
- * sum of the products of their components (for example, a's X times b's X).
+ * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
  * of the angle between them is equal to their dot product.
@@ -135,7 +135,7 @@ return a;
 },
 /**
  * Finds the dot product of two 4-element vectors. It's the
- * sum of the products of their components (for example, a's X times b's X).
+ * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * @param {Array<number>} a The first 4-element vector.
  * @param {Array<number>} b The second 4-element vector.
  */
@@ -1383,7 +1383,7 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 };
 /** Finds the dot product of two quaternions.
 * It's equal to the sum of the products of
-* their components (for example, a's X times b's X).
+* their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  @function
  @param {Array<number>} a The first quaternion.
  @param {Array<number>} b The second quaternion.

@@ -1449,7 +1449,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef SHADING\n" +
 "struct light {\n" +
 // NOTE: These struct members must be aligned to
-// vec4 size; otherwise, Chrome may have issues retaining 
+// vec4 size; otherwise, Chrome may have issues retaining
 // the value of lights[i].specular, causing flickering
 " vec4 position; /* source light direction */\n" +
 " vec4 diffuse; /* source light diffuse color */\n" +
@@ -1525,11 +1525,11 @@ shader+="#ifdef SPECULAR\n" +
 "// specular reflection\n" +
 "vec3 viewDirection=vec3(0,0,1.);\n" +
 "bool spectmp;\n" +
-"float specular;\n";
+"float specular;\n" +
+"bool nonZeroMaterialSpecular=((ms.x*ms.y*ms.z)!=0.0);\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
-shader+="  spectmp = dot (transformedNormalVar, lightPower["+i+"].xyz) >= 0.0;\n" +
-"  spectmp = (ms.x*ms.y*ms.z)!=0.0;\n" +
-"  if (spectmp) {\n" +
+shader+="  spectmp = dot(transformedNormalVar, lightPower["+i+"].xyz) >= 0.0;\n" +
+"  if (spectmp && nonZeroMaterialSpecular) {\n" +
 "  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+
 "    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (transformedNormalVar, -lightPower["+i+"].xyz)*\n"+
 " transformedNormalVar), viewDirection);\n" +
@@ -1542,7 +1542,7 @@ shader+="    phong+=specularCompo;\n" +
 }
 shader+="#endif\n";
 shader+=" // emission\n"+
-//" phong+=me;\n" +
+" phong+=me;\n" +
 " baseColor=vec4(phong,baseColor.a);\n" +
 "#endif\n" +
 " gl_FragColor=baseColor;\n" +
@@ -2365,7 +2365,7 @@ SubMesh.prototype.toWireFrame=function(){
     var f3=this.indices[i+2];
     faces.push(f1,f2,f2,f3,f3,f1);
   }
-  return new SubMesh(this.vertices, faces, 
+  return new SubMesh(this.vertices, faces,
     this.attributeBits|Mesh.LINES_BIT);
 }
 
