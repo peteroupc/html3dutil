@@ -1518,14 +1518,10 @@ shader+=""+
 "vec3 viewDirection=vec3(0,0,1.);\n" +
 "bool spectmp;\n" +
 "#define ADD_SPECULAR(i) "+
-"  if (mshin > 0.0) {" +
-"    spectmp = (dot (transformedNormalVar, lightPower[i].xyz) >= 0.0);" +
-"  } else {" +
-"    spectmp = bool(0);" +
-"  };" +
+"  spectmp = dot (transformedNormalVar, lightPower[i].xyz) >= 0.0;" +
 "  if (spectmp) {" +
-"    phong += ms*((pow (max (0.0, dot (((-lightPower[i].xyz) - (2.0 * (dot (transformedNormalVar, -lightPower[i].xyz) *" +
-"        transformedNormalVar))), viewDirection)), mshin) * lights[i].specular) * lightPower[i].w);" +
+"    float specular=dot (-lightPower[i].xyz - (2.0 * dot (transformedNormalVar, -lightPower[i].xyz) * transformedNormalVar), viewDirection);" +
+"    phong += ms*clamp(pow(specular, mshin),0.0,1.0) * lights[i].specular * lightPower[i].w;" +
 "  }\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="ADD_SPECULAR("+i+");\n";
@@ -1669,8 +1665,9 @@ Lights.prototype.bind=function(program){
  var uniforms={};
  uniforms["sceneAmbient"]=this.sceneAmbient.slice(0,3);
  for(var i=0;i<this.lights.length;i++){
-  uniforms["lights["+i+"].diffuse"]=this.lights[i].diffuse;
-  uniforms["lights["+i+"].specular"]=this.lights[i].specular;
+  var lt=this.lights[i]
+  uniforms["lights["+i+"].diffuse"]=[lt.diffuse[0],lt.diffuse[1],lt.diffuse[2]];
+  uniforms["lights["+i+"].specular"]=[lt.specular[0],lt.specular[1],lt.specular[2]];
   uniforms["lights["+i+"].position"]=this.lights[i].position;
  }
  // Set empty values for undefined lights up to MAX_LIGHTS
@@ -2359,9 +2356,8 @@ SubMesh.prototype.toWireFrame=function(){
     var f3=this.indices[i+2];
     faces.push(f1,f2,f2,f3,f3,f1);
   }
-  var ret=new SubMesh(this.vertices, faces, this.attributeBits);
-  ret.builderMode=Mesh.LINES;
-  return ret;
+  return new SubMesh(this.vertices, faces, 
+    this.attributeBits|Mesh.LINES_BIT);
 }
 
 /** @private */
@@ -3990,7 +3986,7 @@ Shape.prototype._updateMatrix=function(){
     this.matrix=GLMath.mat4multiply(this.matrix,
       GLMath.quatToMat4(this.rotation));
   }
-  this.matrix=GLMath.mat4scale(this.matrix,this.scale);
+  GLMath.mat4scaleInPlace(this.matrix,this.scale);
   this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
 }
 /////////////
