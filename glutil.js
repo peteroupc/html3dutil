@@ -1693,71 +1693,95 @@ Lights.prototype.bind=function(program){
 * Specifies parameters for geometry materials, particularly, how an
 * object reflects or absorbs light.<p>
 * The full structure is only used if the shader program supports lighting, as the
-* default shader program does.  If Scene3D.disableLighting() is called,
+* default shader program does.  If [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting} is called,
 * disabling lighting calculations in the default shader, only
 * the diffuse property of this object is used.
 * @class
-*
 * @alias glutil.MaterialShade
-* @param {Array<number>} ambient Ambient reflection.  An array of three numbers
-* indicating how much an object reflects ambient lights (lights that color pixels
-* the same way regardless of direction or distance) in the red, green,
-* and blue components respectively.  Each component ranges from 0 to 1.
-* May be null or omitted; default is (0.2, 0.2, 0.2).  Can also be a string representing
-* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {Array<number>} diffuse Diffuse reflection.  An array of three numbers
-* indicating how much an object reflects diffuse lights (lights that point
-* directly on the object) in the red, green,
-* and blue components respectively.  Each component ranges from 0 to 1.
-* If {@link glutil.Scene3D#disableLighting} is called, disabling
-* lighting calculations, this value is used for coloring objects.<p>
-* Setting ambient and diffuse to the same value usually defines an object's
-* color. Both diffuse and ambient reflection depend on the color of ambient
-* and diffuse lights.<p>
-* May be null or omitted; default is (0.8, 0.8, 0.8). Can also be a string representing
-* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {Array<number>} specular Color reflection for specular highlights on an
-* object.  An array of three numbers indicating the red, green, and blue
-* components.
-* Each component ranges from 0 to 1.
-* May be null or omitted; default is (0,0,0). Can also be a string representing
-* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {Array<number>} shininess The greater the number, the more
-* concentrated the specular
-* highlights are.  0 means the object creates no specular highlights. Ranges
-* from 0 through 128.
-* May be null or omitted; default is 0.
+* @param {Array<number>} ambient Ambient reflection.
+* Can be either an array of three numbers,
+* ranging from 0 to 1 and giving the red, green, and blue components, respectively,
+* or can be a string representing an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* May be null or omitted; default is (0.2, 0.2, 0.2).
+* @param {Array<number>} diffuse Diffuse reflection.  A color with the same format
+* as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).
+* @param {Array<number>} specular Specular highlight reflection.
+* A color with the same format as for "ambient".
+* May be null or omitted; default is (0,0,0), meaning no specular highlights.
+* @param {Array<number>} shininess Specular highlight exponent of this material.
+* Ranges from 0 through 128. May be null or omitted; default is 0.
 * @param {Array<number>} emission Additive color emitted by an object.
-* Used for objects that glow on their own, among other things. An array of
-* three numbers indicating the red, green, and blue components.
-* Each component ranges from -1 to 1. Positive values add to each component,
-* while negative values subtract from each component.
-* May be null or omitted; default is (0,0,0). Can also be a string representing
-* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* A color with the same format as for "ambient", except the array's numbers
+* range from -1 to 1.
+* May be null or omitted; default is (0,0,0).
 */
 function MaterialShade(ambient, diffuse, specular,shininess,emission) {
  if(ambient!=null)ambient=GLUtil["toGLColor"](ambient)
  if(diffuse!=null)diffuse=GLUtil["toGLColor"](diffuse)
  if(specular!=null)specular=GLUtil["toGLColor"](specular)
  if(emission!=null)emission=GLUtil["toGLColor"](emission)
- /** Specular highlight power of this material. */
+ /** Specular highlight exponent of this material.
+* The greater the number, the more concentrated the specular
+* highlights are.  The lower the number, the more extended the highlights are.
+* Ranges from 0 through 128.
+*/
  this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
  /** Ambient reflection of this material.<p>
+ * Ambient reflection indicates how much an object reflects
+ * ambient lights (lights that color pixels
+ * the same way regardless of direction or distance)
+ * in the red, green, and blue components.
+ * Because every part of an object will be shaded the same way by ambient
+ * light, an object with just ambient reflection will not look much like a 3D object.
+ * Ambient reflection
+ * depends on the color of ambient lights.<p>
+ * (0,0,0) means no ambient reflection,
+ * and (1,1,1) means total ambient reflection.<p>
+ * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * color.<p>
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for ambient reflection rather than this property.
  */
  this.ambient=ambient||[0.2,0.2,0.2];
  /** Diffuse reflection of this material.<p>
+ * Diffuse reflection indicates how much an object reflects
+ * diffuse lights (lights that point
+ * directly on the object) in the red, green, and blue components.
+ * Because different parts of an object are shaded differently depending
+ * on how directly they face diffuse lights, diffuse reflection can contribute
+ * much of the 3D effect of that object.  Diffuse reflection
+ * depends on the color of diffuse lights.<p>
+ * (0,0,0) means no diffuse reflection,
+ * and (1,1,1) means total diffuse reflection.<p>
+ * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * color.<p>
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for diffuse reflection rather than this property.
  */
  this.diffuse=diffuse||[0.8,0.8,0.8];
- /** Specular highlight color of this material. */
+ /** Specular highlight reflection of this material.
+ * Specular reflection makes an object shiny, and it depends
+ * on lights that give off specular highlights as well as on the color
+ * of those highlights. Similar to diffuse reflection, specular reflection
+ * is affected by how directly each part of an object faces
+ * a light that gives off specular highlights.
+ * (0,0,0) means no specular reflection,
+ * and (1,1,1) means total specular reflection.<p>
+*/
  this.specular=specular||[0,0,0];
- /** Additive color emitted by objects with this material. */
+ /**
+* Additive color emitted by objects with this material.
+* Used for objects that glow on their own, among other things.
+* Each part of the object will be affected by the additive color the
+* same way regardless of lighting (this property won't be used in the
+* default shader if [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting}
+* is called, disabling lighting calculations).<p>
+* For each of the three color components, positive values add to that component,
+* while negative values subtract from it. (0,0,0) means no additive color.
+ */
  this.emission=emission||[0,0,0];
 }
-/** Clones the parameters to a new MaterialShade
+/** Clones this object's parameters to a new MaterialShade
  object and returns that object. */
 MaterialShade.prototype.copy=function(){
  return new MaterialShade(
@@ -1913,16 +1937,6 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
       vertices[v0]+=vertices[v[i]]
       vertices[v0+1]+=vertices[v[i]+1]
       vertices[v0+2]+=vertices[v[i]+2]
-     }
-     var x=vertices[v0];
-     var y=vertices[v0+1];
-     var z=vertices[v0+2];
-     len=Math.sqrt(x*x+y*y+z*z);
-     if(len!=0){
-      len=1.0/len;
-      vertices[v0]*=len;
-      vertices[v0+1]*=len;
-      vertices[v0+2]*=len;
      }
      // Propagate the first vertex's normal to the
      // other vertices
@@ -2439,8 +2453,15 @@ SubMesh.prototype._getBounds=function(){
 };
 /** @private */
 SubMesh.prototype.recalcNormals=function(flat,inward){
+  var haveOtherAttributes=((this.attributeBits&(Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT))!=0);
   this._rebuildVertices(Mesh.NORMALS_BIT);
-  this.makeRedundant();
+  // No need to duplicate vertices if there are no other attributes
+  // besides normals and smooth shading is requested; the
+  // recalculation will reinitialize normals to 0 and
+  // add the calculated normals to vertices as they are implicated
+  if(haveOtherAttributes || flat){
+    this.makeRedundant();
+  }
   Mesh._recalcNormals(this.vertices,this.indices,
     this.getStride(),3,flat,inward);
   return this;
@@ -2459,24 +2480,29 @@ SubMesh.prototype.setColor3=function(r,g,b){
 };
 /** @private */
 Mesh.getStride=function(format){
-  format&=(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT);
+  format&=Mesh.ATTRIBUTES_BITS;
   return [3,6,6,9,5,8,8,11][format];
  }
 /** @private */
 Mesh.normalOffset=function(format){
-  format&=(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT);
+  format&=Mesh.ATTRIBUTES_BITS;
   return [-1,3,-1,3,-1,3,-1,3][format];
  }
 /** @private */
 Mesh.colorOffset=function(format){
-  format&=(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT);
+  format&=Mesh.ATTRIBUTES_BITS;
   return [-1,-1,3,6,-1,-1,3,6][format];
  }
 /** @private */
 Mesh.texCoordOffset=function(format){
-  format&=(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT);
+  format&=Mesh.ATTRIBUTES_BITS;
   return [-1,-1,-1,-1,3,6,6,9][format];
 }
+/**
+ @private
+ @const
+*/
+Mesh.ATTRIBUTES_BITS = 7;
 /** The mesh contains normals for each vertex.
  @const
  @default
