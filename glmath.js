@@ -1058,10 +1058,15 @@ mat4lookat:function(viewerPos,lookingAt,up){
  if(!up)up=[0,1,0];
  if(!lookingAt)lookingAt=[0,0,0]
  var f=[lookingAt[0]-viewerPos[0],lookingAt[1]-viewerPos[1],lookingAt[2]-viewerPos[2]];
- if(GLMath.vec3length(f)<1e-6){
+ var len=GLMath.vec3length(f);
+ if(len<1e-6){
    return GLMath.mat4identity();
  }
- GLMath.vec3normInPlace(f);
+ // normalize "f"
+ len=1.0/len;
+ f[0]*=len;
+ f[1]*=len;
+ f[2]*=len;
  up=GLMath.vec3norm(up);
  var s=GLMath.vec3cross(f,up);
  GLMath.vec3normInPlace(s);
@@ -1155,8 +1160,9 @@ return [
 },
 /**
  * Modifies a 4x4 matrix by multiplying it by a 3-element vector.
- * @param {*} mat A 4x4 matrix.
- * @param {*} v3 A 3-element vector.
+ * @param {Array<number>} mat A 4x4 matrix.
+ * @param {Array<number>} v3 A 3-element vector giving the scale
+ * factors along the X, Y, and Z axes, respectively.
  * @return {Array<number>} The same parameter as "mat".
  */
 mat4scaleInPlace:function(mat,v3){
