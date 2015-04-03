@@ -194,7 +194,7 @@ var GLUtil={
 * @param {string|null} responseType Expected data type of
 * the file.  Can be "json", "xml", or "text".  If null or omitted,
 * the default is "text".
-* @return {Promise} A promise that resolves when the text
+* @return {Promise} A promise that resolves when the data
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "data", the
 * file's text or data), and is rejected when an error occurs (the
@@ -2065,7 +2065,7 @@ BufferedSubMesh.prototype.draw=function(program){
     attr, 3,
     context.FLOAT, stride*4, offset*4);
   } else {
-   program.setUniforms({"useColorAttr":0.0});  
+   program.setUniforms({"useColorAttr":0.0});
   }
   offset=Mesh.texCoordOffset(format);
   if(offset>=0){
@@ -2529,7 +2529,7 @@ Scene3D.prototype._initProgramData=function(){
   this.program.setUniforms({
     "sampler":0,
   });
-  this.lightSource.bind(this.program);
+  new LightsBinder(this.lightSource).bind(this.program);
  this._updateMatrix();
 }
 /**
@@ -3322,9 +3322,8 @@ Shape.prototype.multRotation=function(angle, v,vy,vz){
  */
 Shape.prototype.render=function(program){
   // Set material (texture or color)
-  if(this.material){
-   this.material.bind(program);
-  }
+  // TODO: Support textures and other material-likes
+  new MaterialBinder(this.material).bind(program);
   // Ensure buffered mesh exists
   if(this.bufferedMesh==null && this.mesh){
    this.bufferedMesh=new BufferedMesh(this.mesh,

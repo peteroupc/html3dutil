@@ -16,11 +16,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 ///////////////////////
 
 function MaterialShadeBinder(mshade){
- lightsObject.mshade=mshade;
+ this.mshade=mshade;
 }
 /**
  * Sets parameters for a shader program based on
- * the information in lightsObject material data object.  It will set
+ * the information in this material data object.  It will set
  * the following uniforms;
  * <ul>
  * <li>textureSize - Set to (0,0), since no textures are being used.
@@ -31,36 +31,40 @@ function MaterialShadeBinder(mshade){
  * </ul>
  * @param {ShaderProgram} program A shader program object
  * where the locations of material-related uniforms will be retrieved.
+ * @return {MaterialShadeBinder} This object.
  */
 MaterialShadeBinder.prototype.bind=function(program){
+ if(!this.mshade)return this;
  program.setUniforms({
  "textureSize":[0,0],
- "mshin":lightsObject.mshade.shininess,
- "ma":[lightsObject.mshade.ambient[0], lightsObject.mshade.ambient[1], lightsObject.mshade.ambient[2]],
- "md":[lightsObject.mshade.diffuse[0], lightsObject.mshade.diffuse[1], lightsObject.mshade.diffuse[2]],
- "ms":[lightsObject.mshade.specular[0],lightsObject.mshade.specular[1],lightsObject.mshade.specular[2]],
- "me":[lightsObject.mshade.emission[0],lightsObject.mshade.emission[1],lightsObject.mshade.emission[2]]
+ "mshin":this.mshade.shininess,
+ "ma":[this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
+ "md":[this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2]],
+ "ms":[this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
+ "me":[this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
  });
+ return this;
 }
 
 //////////////////////////
 
 function LightsBinder(lights){
- lightsObject.lights=lights;
+ this.lights=lights;
 }
 
 
 /**
  * Sets parameters for a shader program based on
- * the information in lightsObject light source object.
+ * the information in this light source object.
  * @param {ShaderProgram} program A shader program object
  * where locations of lighting uniforms will come from.
- * @return {Lights} lightsObject object.
+ * @return {LightsBinder} This object.
  */
-Lights.prototype.bind=function(program){
- if(!program)return lightsObject;
+LightsBinder.prototype.bind=function(program){
+ var lightsObject=this.lights;
+ if(!lightsObject)return this;
+ if(!program)return this;
  var uniforms={};
- var lightsObject=lightsObject.lights;
  uniforms["sceneAmbient"]=lightsObject.sceneAmbient.slice(0,3);
  for(var i=0;i<lightsObject.lights.length;i++){
   var lt=lightsObject.lights[i]
@@ -75,7 +79,7 @@ Lights.prototype.bind=function(program){
   uniforms["lights["+i+"].position"]=[0,0,0,0];
  }
  program.setUniforms(uniforms);
- return lightsObject;
+ return this;
 }
 
 

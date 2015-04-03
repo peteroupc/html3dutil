@@ -10,8 +10,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /**
 * Contains methods that create 3D meshes
 * of common geometric shapes.
+* @alias glutil.Meshes
 */
-
 if(!Meshes){
  Meshes={};
 }
