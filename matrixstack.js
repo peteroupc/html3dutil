@@ -25,8 +25,9 @@ of 4x4 transformation matrices.
 MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>
 When the constructor is called, it will create a stack whose
-only element is the identity matrix.<p>
-@alias matrixstack.MatrixStack
+only element is the identity matrix.
+ @alias matrixstack.MatrixStack
+ @class
  */
 function MatrixStack(){
  this.stack=[
@@ -206,7 +207,7 @@ MatrixStack.prototype.popMatrix=function(){
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
  * This method assumes a right-handed coordinate system, such as
- * OpenGL's. 
+ * OpenGL's.
  * @param {number} l Leftmost coordinate of the 3D view.
  * @param {number} r Rightmost coordinate of the 3D view.
  * (Note that r can be greater than l or vice versa.)

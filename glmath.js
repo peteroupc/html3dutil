@@ -1159,28 +1159,40 @@ return [
    0,0,-(dn*f)*onedz,0];
 },
 /**
- * Modifies a 4x4 matrix by multiplying it by a 3-element vector.
+ * Modifies a 4x4 matrix by multiplying it by a
+ * scaling transformation.
  * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>} v3 A 3-element vector giving the scale
- * factors along the X, Y, and Z axes, respectively.
+ * @param {Array<number>|number} v3 Scale factor along the
+ * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * be a 3-element array giving the scale factors along the X, Y, and
+ * Z axes.
+ * @param {number} v3y Scale factor along the Y axis.
+ * @param {number} v3z Scale factor along the Z axis.
  * @return {Array<number>} The same parameter as "mat".
  */
-mat4scaleInPlace:function(mat,v3){
-  var scaleX=v3[0];
-  var scaleY=v3[1];
-  var scaleZ=v3[2];
-  mat[0]*=scaleX;
-  mat[4]*=scaleX;
-  mat[8]*=scaleX;
-  mat[12]*=scaleX;
-  mat[1]*=scaleY;
-  mat[5]*=scaleY;
-  mat[9]*=scaleY;
-  mat[13]*=scaleY;
-  mat[2]*=scaleZ;
-  mat[6]*=scaleZ;
-  mat[10]*=scaleZ;
-  mat[14]*=scaleZ;
+mat4scaleInPlace:function(mat,v3,v3y,v3z){
+  var x,y,z;
+  if(typeof v3y!="undefined" && typeof v3z!="undefined"){
+      x=v3;
+      y=v3y;
+      z=v3z;
+  } else {
+      x=v3[0];
+      y=v3[1];
+      z=v3[2];
+  }
+  mat[0]*=x;
+  mat[1]*=x;
+  mat[2]*=x;
+  mat[3]*=x;
+  mat[4]*=y;
+  mat[5]*=y;
+  mat[6]*=y;
+  mat[7]*=y;
+  mat[8]*=z;
+  mat[9]*=z;
+  mat[10]*=z;
+  mat[11]*=z;
   return mat;
 },
 /**

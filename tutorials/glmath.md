@@ -389,7 +389,8 @@ Related functions:
 **Other Transformations**
 
 In all the transformations described above, the last row in the transformation matrix is
-(0, 0, 0, 1).  However, this is not the case for
+(0, 0, 0, 1).  (For that reason, they are called _affine transformations_, those that
+keep parallel lines parallel.) However, this is not the case for
 some transformations in the GLMath library.
 
 One example of such a transformation is the frustum matrix.  When a 4-element
