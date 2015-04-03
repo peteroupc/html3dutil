@@ -27,7 +27,8 @@ Functions dealing with matrices begin with "mat".
 
 All functions dealing with 4x4 matrices assume that
 the translation elements in x, y, and z are located in the
-c (zero-based indices 12, 13, and 14).  In mathematical publications,
+13th, 14th, and 15th elements of the matrix array
+(zero-based indices 12, 13, and 14).  In mathematical publications,
 matrices are often notated in column-major order, in which each
 element of the matrix is placed in columns, rather than in rows, as in the following example:
 
@@ -75,9 +76,9 @@ the right and the y-axis points up.
 The transformation formula multiplies a matrix by a 3D point to change that point's
 position:
 
-* output.x = matrix[0] &times; input.x + matrix[4] &times; input.y + matrix[8] &times; input.z + matrix[12]
-* output.y = matrix[1] &times; input.x + matrix[5] &times; input.y + matrix[9] &times; input.z + matrix[13]
-* output.z = matrix[2] &times; input.x + matrix[6] &times; input.y + matrix[10] &times; input.z + matrix[14]
+* **a&prime;**<sub>_x_</sub> = matrix[0] &#x22c5; **a**<sub>_x_</sub> + matrix[4] &#x22c5; **a**<sub>_y_</sub> + matrix[8] &#x22c5; **a**<sub>_z_</sub> + matrix[12]
+* **a&prime;**<sub>_y_</sub> = matrix[1] &#x22c5; **a**<sub>_x_</sub> + matrix[5] &#x22c5; **a**<sub>_y_</sub> + matrix[9] &#x22c5; **a**<sub>_z_</sub> + matrix[13]
+* **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14]
 
 Note that:
 
@@ -136,9 +137,9 @@ It uses the 13th, 14th, and 15th elements of the matrix as seen here:
 where `tx` is added to the x-coordinate, `ty` is added to the y-coordinate, and
 `tz` is added to the z-coordinate.  The transformation formulas would look like:
 
-* output.x = 1 &times; input.x + 0 &times; input.y + 0 &times; input.z + tx
-* output.y = 0 &times; input.x + 1 &times; input.y + 0 &times; input.z + ty
-* output.z = 0 &times; input.x + 0 &times; input.y + 1 &times; input.z + tz
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + tx
+* **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
+* **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + tz
 
 For example, we add the input x and `tx` to get the output x, and likewise for
 y and z.
@@ -191,9 +192,9 @@ the z-coordinate is multiplied by `sz`.
 
 The scaling formula would look like:
 
-* output.x = sx &times; input.x + 0 &times; input.y + 0 &times; input.z + 0
-* output.y = 0 &times; input.x + sy &times; input.y + 0 &times; input.z + 0
-* output.z = 0 &times; input.x + 0 &times; input.y + sz &times; input.z + 0
+* **a&prime;**<sub>_x_</sub> = sx &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + sy &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + sz &#x22c5; **a**<sub>_z_</sub> + 0
 
 For example, we multiply the input x by `sx` to get the output x.  If `sx` is 1, x
 remains unchanged.  Likewise for y and z.
@@ -322,9 +323,9 @@ degrees by &pi; and divide by 180), the transformation matrix is as follows.
 For conciseness, we only give the rotation formula for the X axis,
 which would look like:
 
-* output.x = 1 &times; input.x + 0 &times; input.y + 0 &times; input.z + 0
-* output.y = 0 &times; input.x + (cos &theta;) &times; input.y + -(sin &theta;) &times; input.z + 0
-* output.z = 0 &times; input.x + (sin &theta;) &times; input.y + (cos &theta;) &times; input.z + 0
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (cos &theta;) &#x22c5; **a**<sub>_y_</sub> + -(sin &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (sin &theta;) &#x22c5; **a**<sub>_y_</sub> + (cos &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
 
 Note that when we rotate a point about the X axis, the X coordinate is unchanged
 and the Y and Z coordinates are adjusted in the rotation.  For rotations about the
@@ -336,21 +337,21 @@ We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
 We plug those numbers into the rotation formula to get a formula for rotating a
 point 60 degrees about the X axis.
 
-* output.x = 1 &times; input.x + 0 &times; input.y + 0 &times; input.z + 0 = input.x
-* output.y ~= 0 &times; input.x + 0.5 &times; input.y + -0.866025 &times; input.z + 0
-* output.z ~= 0 &times; input.x + 0.866025 &times; input.y + 0.5 &times; input.z + 0
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0 = **a**<sub>_x_</sub>
+* **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.5 &#x22c5; **a**<sub>_y_</sub> + -0.866025 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.866025 &#x22c5; **a**<sub>_y_</sub> + 0.5 &#x22c5; **a**<sub>_z_</sub> + 0
 
 If a point is located at (10, 20, 30), the rotated point would now be:
 
-* output.x = 1 &times; 10 + 0 &times; 20 + 0 &times; 30 + 0
-* = 1 &times; 10
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 0
+* = 1 &#x22c5; 10
 * = 10
-* output.y ~= 0 &times; 10 + 0.5 &times; 20 + -0.866025 &times; 30 + 0
-* ~= 0.5 &times; 20 + -0.866025 &times; 30
+* **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; 10 + 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30 + 0
+* ~= 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30
 * ~= 10 + -25.98075
 * ~= -15.98075
-* output.z ~= 0 &times; 10 + 0.866025 &times; 20 + 0.5 &times; 30 + 0
-* ~= 0.866025 &times; 20 + 0.5 &times; 30
+* **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; 10 + 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30 + 0
+* ~= 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30
 * ~= 17.3205 + 15
 * ~= 32.3205
 
@@ -394,7 +395,7 @@ some transformations in the GLMath library.
 One example of such a transformation is the frustum matrix.  When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:
 
-* output.w = 0 &times; input.x + 0 &times; input.y + -1 &times; input.z + 0
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
 
 The W component of the transformed vector is used to help determine the "depth" of
 the transformed vector.
@@ -415,17 +416,6 @@ A quaternion is a 4-element array that describes a
 and the fourth component is the W component (cosine of half the angle).
 Functions dealing with quaternions begin with "quat".
 
-Euler angles (pitch, yaw, and roll angles) can also be used to describe 3D
-rotations, but they have disadvantages:
-
-* In general, the order of Euler angle rotations is important. For example, a 30-degree
-pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
-by a 30-degree roll.
-* Euler angle rotations are not easily reversible when the same order
-of angles is used. For example, a negative 30-degree
-pitch followed by a negative 20-degree roll does not undo a 30-degree
-pitch followed by a 20-degree roll.
-
 The methods quatMultiply and quatFromEuler, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
@@ -433,3 +423,25 @@ creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, quaternion
 multiplication is not commutative. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.
+
+### Euler angles and their disadvantages
+
+Euler angles (pitch, yaw, and roll angles) can also be used to describe 3D
+rotations, but they have disadvantages:
+
+* In general, the order of Euler angle rotations is important. For example, a 30-degree
+pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
+by a 30-degree roll.
+* There are multiple conventions for Euler angles, such as the order of
+rotations; pitch then yaw, or yaw then pitch?
+* Euler angle rotations are not easily reversible when the same order
+of angles is used. For example, a negative 30-degree
+pitch followed by a negative 20-degree roll does not undo a 30-degree
+pitch followed by a 20-degree roll.
+
+Related functions:
+
+* [GLMath.quatFromEuler()]{@link glmath.GLMath.quatFromEuler} -
+Converts from Euler angles to a quaternion
+* [GLMath.quatToEuler()]{@link glmath.GLMath.quatToEuler} -
+Converts from a quaternion to Euler angles
