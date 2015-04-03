@@ -679,7 +679,7 @@ GLUtil.createDisk=function(inner, outer, slices, loops, inward){
 * @param {number} start Starting angle of the partial disk, in degrees.
 * May be null or omitted; default is 0.
 * Assuming the Y axis points up, the X axis right,
-* and the Z axis toward the viewer, 0 degrees is at at the 12 o'clock position,
+* and the Z axis toward the viewer, 0 degrees is at the 12 o'clock position,
 * and 90 degrees at the 3 o'clock position.
 * @param {number} sweep Arc length of the partial disk, in degrees.
 * May be null or omitted; default is 360. May be negative.
@@ -2769,8 +2769,7 @@ Texture._fromTextureImage=function(textureImage){
 /**
 *  Loads a texture by its URL.
 * @param {string} name URL of the texture data.  It will be loaded via
-*  the JavaScript DOM's Image class.  However, this constructor
-*  will not load that image yet.
+*  the JavaScript DOM's Image class
 * @param {Object|undefined} textureCache An object whose keys
 * are the names of textures already loaded.  This will help avoid loading
 * the same texture more than once.  This parameter is optional
@@ -2802,10 +2801,12 @@ Texture.loadTexture=function(name, textureCache){
 *  Loads a texture by its URL, then uploads its data to
 * a texture buffer.
 * @param {string} name URL of the texture data.  It will be loaded via
-*  the JavaScript DOM's Image class.  However, this constructor
-*  will not load that image yet.
+*  the JavaScript DOM's Image class.
 * @param {string} context A WebGL context under which a texture
 * buffer will be created and the texture data loaded.
+* Can also be an object, such as Scene3D, that
+* implements a no-argument <code>getContext</code> method
+* that returns a WebGL context.
 * @param {Object|undefined} textureCache An object whose keys
 * are the names of textures already loaded.  This will help avoid loading
 * the same texture more than once.  This parameter is optional
@@ -2816,7 +2817,8 @@ Texture.loadTexture=function(name, textureCache){
 */
 Texture.loadAndMapTexture=function(name, context, textureCache){
   return Texture.loadTexture(name, textureCache).then(function(result){
-    return result.mapToContext(context);
+    result.textureImage.mapToContext(context);
+    return result;
   });
 };
 /**
@@ -2828,14 +2830,6 @@ Texture.loadAndMapTexture=function(name, context, textureCache){
  */
 Texture.prototype.setParams=function(material){
  this.material=material;
- return this;
-}
-/**
- *
- * @param {*} context
- */
-Texture.prototype.mapToContext=function(context){
- this.textureImage.mapToContext(context);
  return this;
 }
 /**
@@ -2945,14 +2939,15 @@ FrameBuffer.prototype.getMaterial=function(){
   };
 }
 /**
- * Not documented yet.
+ * Gets the WebGL context associated with this frame buffer.
+ * @return {WebGLRenderingContext}
  */
 FrameBuffer.prototype.getContext=function(){
  return this.context;
 }
 /**
  * Not documented yet.
- * @param {WebGLShaderProgram} program
+ * @param {ShaderProgram} program
  */
 FrameBuffer.prototype.bind=function(program){
   if(program.getContext()!=this.context){
@@ -3015,6 +3010,7 @@ TextureImage.prototype.loadImage=function(){
 }
 /** @private */
 TextureImage.prototype.mapToContext=function(context){
+  context=GLUtil._toContext(context);
   if(this.textureName!==null){
    // already loaded
    return this;
