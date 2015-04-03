@@ -113,12 +113,12 @@ function shiny(color){
   );
   var mesh;
   var dims=4.5*2/Math.sqrt(3);
-  mesh=GLUtil.createBox(dims,dims,dims)
+  mesh=Meshes.createBox(dims,dims,dims)
     .transform(GLMath.mat4rotated(20,1,1,0));
   scene.addShape(
     new Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron
-  mesh=GLUtil.createSphere(4.5,4,2,true);
+  mesh=Meshes.createSphere(4.5,4,2,true);
   scene.addShape(
     new Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
   mesh=icosahedron(4.5);

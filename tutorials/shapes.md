@@ -21,20 +21,20 @@ are composed of.  See "Custom Shapes" below for more on meshes.
 
 **3D Figures**
 
-* [GLUtil.createBox()]{@link glutil.GLUtil.createBox} - Creates a cube or box.
-* [GLUtil.createCylinder()]{@link glutil.GLUtil.createCylinder} - Creates a cylinder or cone, not including the base
+* [Meshes.createBox()]{@link glutil.Meshes.createBox} - Creates a cube or box.
+* [Meshes.createCylinder()]{@link glutil.Meshes.createCylinder} - Creates a cylinder or cone, not including the base
   or top.
-* [GLUtil.createClosedCylinder()]{@link glutil.GLUtil.createClosedCylinder} - Creates a cylinder or cone, including the base or top.
-* [GLUtil.createTorus()]{@link glutil.GLUtil.createTorus} - Creates a torus (doughnut shape).
-* [GLUtil.createSphere()]{@link glutil.GLUtil.createSphere} - Creates a sphere.
+* [Meshes.createClosedCylinder()]{@link glutil.Meshes.createClosedCylinder} - Creates a cylinder or cone, including the base or top.
+* [Meshes.createTorus()]{@link glutil.Meshes.createTorus} - Creates a torus (doughnut shape).
+* [Meshes.createSphere()]{@link glutil.Meshes.createSphere} - Creates a sphere.
 
 **2D Figures**
 
-* [GLUtil.createDisk()]{@link glutil.GLUtil.createDisk} - Creates a circular disk or a regular polygon, possibly
+* [Meshes.createDisk()]{@link glutil.Meshes.createDisk} - Creates a circular disk or a regular polygon, possibly
   with a hole in the middle.
-* [GLUtil.createPartialDisk()]{@link glutil.GLUtil.createPartialDisk} - Creates a portion of a circular disk, possibly
+* [Meshes.createPartialDisk()]{@link glutil.Meshes.createPartialDisk} - Creates a portion of a circular disk, possibly
   with a hole where the middle of the complete disk would be.
-* [GLUtil.createPlane()]{@link glutil.GLUtil.createPlane} - Creates a rectangle.
+* [Meshes.createPlane()]{@link glutil.Meshes.createPlane} - Creates a rectangle.
 
 **Custom Shapes**
 
