@@ -435,7 +435,14 @@ if(!namedColors){
 GLUtil._toContext=function(context){
  return (context.getContext) ? context.getContext() : context;
 }
-
+/** @private */
+GLUtil._isPowerOfTwo=function(a){
+   if(Math.floor(a)!=a || a<=0)return false;
+   while(a>1 && (a&1)==0){
+    a>>=1;
+   }
+   return (a==1);
+}
 ///////////////////////
 /**
 * Represents a WebGL shader program.  A shader program in
@@ -1622,18 +1629,11 @@ TextureImage.prototype.loadImage=function(){
 }
 /** @private */
 TextureImage.prototype.mapToContext=function(context){
-  context=GLUtil._toContext(context);
   if(this.textureName!==null){
    // already loaded
    return this;
   }
-  function isPowerOfTwo(a){
-   if(Math.floor(a)!=a || a<=0)return false;
-   while(a>1 && (a&1)==0){
-    a>>=1;
-   }
-   return (a==1);
-  }
+  context=GLUtil._toContext(context);
   this.textureName=context.createTexture();
   this.width=this.image.width;
   this.height=this.image.height;
@@ -1642,37 +1642,13 @@ TextureImage.prototype.mapToContext=function(context){
   // to reestablish the lower left corner.
  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
  context.bindTexture(context.TEXTURE_2D, this.textureName);
-  context.texParameteri(context.TEXTURE_2D,
-    context.TEXTURE_MAG_FILTER, context.LINEAR);
-  context.texImage2D(context.TEXTURE_2D, 0,
+ context.texImage2D(context.TEXTURE_2D, 0,
     context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
     this.image);
-  var ext=context.getExtension("EXT_texture_filter_anisotropic") ||
-    context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
-    context.getExtension("MOZ_EXT_texture_filter_anisotropic");
-  if(ext){
-   context.texParameteri(context.TEXTURE_2D,
-     ext.TEXTURE_MAX_ANISOTROPY_EXT,
-     context.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
-  }
-  if(isPowerOfTwo(this.image.width) &&
-      isPowerOfTwo(this.image.height)){
-   // Enable mipmaps if texture's dimensions are powers of two
-   context.texParameteri(context.TEXTURE_2D,
-     context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
-   context.generateMipmap(context.TEXTURE_2D);
-   context.texParameteri(context.TEXTURE_2D,
-     context.TEXTURE_WRAP_S, context.REPEAT);
-   context.texParameteri(context.TEXTURE_2D,
-     context.TEXTURE_WRAP_T, context.REPEAT);
-  } else {
-   context.texParameteri(context.TEXTURE_2D,
-     context.TEXTURE_MIN_FILTER, context.LINEAR);
-   // Other textures require this wrap mode
-   context.texParameteri(context.TEXTURE_2D,
-     context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
-   context.texParameteri(context.TEXTURE_2D,
-     context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+  // generate mipmaps for power-of-two textures
+  if(GLUtil._isPowerOfTwo(this.image.width) &&
+      GLUtil._isPowerOfTwo(this.image.height)){
+    context.generateMipmap(context.TEXTURE_2D);
   }
   return this;
 }
@@ -1692,12 +1668,49 @@ TextureImage.prototype.bind=function(program){
    }
    if (this.textureName!==null) {
       var uniforms={};
+      if(this.anisotropic==null){
+       // Try to load anisotropic filtering extension
+       this.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
+         context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
+         context.getExtension("MOZ_EXT_texture_filter_anisotropic");
+       if(this.anisotropic==null){
+        this.anisotropic={};
+       }
+      } 
       uniforms["textureSize"]=[this.width,this.height];
       program.setUniforms(uniforms);
       var ctx=program.getContext()
       ctx.activeTexture(ctx.TEXTURE0);
       ctx.bindTexture(ctx.TEXTURE_2D,
         this.textureName);
+      // Set texture parameters
+      if(typeof this.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!="undefined"){
+       // Set anisotropy if anisotropic filtering is supported
+       context.texParameteri(context.TEXTURE_2D,
+        ext.TEXTURE_MAX_ANISOTROPY_EXT,
+        context.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT));      
+      }
+      // set magnification
+      context.texParameteri(context.TEXTURE_2D,
+       context.TEXTURE_MAG_FILTER, context.LINEAR);
+      if(GLUtil._isPowerOfTwo(this.image.width) &&
+          GLUtil._isPowerOfTwo(this.image.height)){
+       // Enable mipmaps if texture's dimensions are powers of two
+       context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
+       context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_WRAP_S, context.REPEAT);
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_T, context.REPEAT);
+      } else {
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_MIN_FILTER, context.LINEAR);
+       // Other textures require this wrap mode
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+      }
     }
 }
 ////////////////////////////////////////
