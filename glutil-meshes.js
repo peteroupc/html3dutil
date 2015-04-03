@@ -16,7 +16,6 @@ if(typeof Meshes=="undefined"){
  Meshes={};
 }
 
-
 /**
 * Creates a mesh of a box (rectangular prism), which
 * will be centered at the origin.

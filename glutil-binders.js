@@ -52,7 +52,6 @@ function LightsBinder(lights){
  this.lights=lights;
 }
 
-
 /**
  * Sets parameters for a shader program based on
  * the information in this light source object.
@@ -81,6 +80,3 @@ LightsBinder.prototype.bind=function(program){
  program.setUniforms(uniforms);
  return this;
 }
-
-
-

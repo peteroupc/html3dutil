@@ -2113,7 +2113,7 @@ Scene3D.prototype.removeShape=function(shape){
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  this.lightSource.setDirectionalLight(index,position,diffuse,specular);
- this.lightSource.bind(this.program);
+ new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
 /**
@@ -2132,7 +2132,7 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 Scene3D.prototype.setAmbient=function(r,g,b,a){
  this.lightSource.ambient=GLUtil["toGLColor"](r,g,b,a);
  this.lightSource.ambient=this.lightSource.ambient.slice(0,4)
- this.lightSource.bind(this.program);
+ new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
 
@@ -2152,7 +2152,7 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  this.lightSource.setPointLight(index,position,diffuse,specular);
- this.lightSource.bind(this.program);
+ new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
 /**
