@@ -43,10 +43,9 @@ MatrixStack.prototype.get=function(){
 }
 /**
  * Modifies the matrix at the top of this stack by replacing it with the identity matrix.
- * @param {Array<number>} mat
  * @return {MatrixStack} This object.
  */
-MatrixStack.prototype.loadIdentity=function(mat){
+MatrixStack.prototype.loadIdentity=function(){
  this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
  return this;
 }
@@ -61,10 +60,10 @@ MatrixStack.prototype.loadMatrix=function(mat){
 }
 /**
  * Modifies the matrix at the top of this stack by multiplying it by another matrix.
- * The matrices are multiplied such that the transformations 
+ * The matrices are multiplied such that the transformations
  * they describe happen in reverse order. For example, if the matrix
  * at the top of the stack describes a translation and the matrix
- * passed to this method describes a scaling, the multiplied matrix will describe 
+ * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
  * @param {Array<number>} mat A matrix to multiply the current one by.
  * @return {MatrixStack} This object.
@@ -136,7 +135,7 @@ return this.multMatrix([cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+x
 }
 }
 /**
- * Modifies the matrix at the top of this stack by multiplying it by a 
+ * Modifies the matrix at the top of this stack by multiplying it by a
 * translation transformation.
  * @param {number} x Translation along the X axis.
  * @param {number} y Translation along the Y axis.
@@ -157,7 +156,7 @@ MatrixStack.prototype.translate=function(x,y,z){
  return this;
 }
 /**
- * Modifies the matrix at the top of this stack by multiplying it by a 
+ * Modifies the matrix at the top of this stack by multiplying it by a
 * scaling transformation.
  * @param {number} x Scale factor along the X axis.
  * @param {number} y Scale factor along the Y axis.

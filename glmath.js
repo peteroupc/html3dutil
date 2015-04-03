@@ -1197,10 +1197,10 @@ mat4scaleInPlace:function(mat,v3,v3y,v3z){
 },
 /**
  * Multiplies two 4x4 matrices.  A new matrix is returned.
- * The matrices are multiplied such that the transformations 
- * they describe happen in reverse order. For example, if the first 
- * matrix (input matrix) describes a translation and the second 
- * matrix describes a scaling, the multiplied matrix will describe 
+ * The matrices are multiplied such that the transformations
+ * they describe happen in reverse order. For example, if the first
+ * matrix (input matrix) describes a translation and the second
+ * matrix describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
  * @param {*} a The first matrix.
  * @param {*} b The second matrix.
