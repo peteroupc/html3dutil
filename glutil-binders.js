@@ -48,6 +48,106 @@ MaterialShadeBinder.prototype.bind=function(program){
 
 //////////////////////////
 
+function LoadedTexture(textureImage, context){
+  context=GLUtil._toContext(context);
+  this.context=context;
+  this.textureName=context.createTexture();
+  // In WebGL, texture coordinates start at the upper left corner rather than
+  // the lower left as in OpenGL and OpenGL ES, so we use this method call
+  // to reestablish the lower left corner.
+  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
+  context.bindTexture(context.TEXTURE_2D, this.textureName);
+  context.texImage2D(context.TEXTURE_2D, 0,
+    context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
+    textureImage.image);
+  // generate mipmaps for power-of-two textures
+  if(GLUtil._isPowerOfTwo(textureImage.image.width) &&
+      GLUtil._isPowerOfTwo(textureImage.image.height)){
+    context.generateMipmap(context.TEXTURE_2D);
+  }
+}
+
+LoadedTexture.prototype.dispose=function(){
+ if(this.textureName){
+  this.context.deleteTexture(this.textureName);
+ }
+}
+
+/////////////////////////////////
+
+function TextureBinder(tex){
+ this.texture=tex;
+}
+/**
+ * Sets up information about this texture and its materials
+ * to a WebGL program.  If the texture image isn't loaded yet,
+ * sets up a task to load that image.
+ * @param {ShaderProgram} program The WebGL program in which
+ * uniform values related to the texture will be set up.
+ */
+Texture.prototype.bind=function(program){
+ if(this.image!==null && this.textureName===null){
+      // load the image as a texture
+      this.textureName=new LoadedTexture(program.getContext());
+ } else if(this.image===null && this.textureName===null){
+      var thisObj=this;
+      var prog=program;
+      this.loadImage().then(function(e){
+        // try again loading the image
+        thisObj.bind(prog);
+      });
+      return;
+ }
+ if (this.textureName!==null) {
+      var uniforms={};
+      if(this.anisotropic==null){
+       // Try to load anisotropic filtering extension
+       this.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
+         context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
+         context.getExtension("MOZ_EXT_texture_filter_anisotropic");
+       if(this.anisotropic==null){
+        this.anisotropic={};
+       }
+      } 
+      uniforms["textureSize"]=[this.width,this.height];
+      program.setUniforms(uniforms);
+      var ctx=program.getContext()
+      ctx.activeTexture(ctx.TEXTURE0);
+      ctx.bindTexture(ctx.TEXTURE_2D,
+        this.textureName);
+      // Set texture parameters
+      if(typeof this.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!="undefined"){
+       // Set anisotropy if anisotropic filtering is supported
+       context.texParameteri(context.TEXTURE_2D,
+        ext.TEXTURE_MAX_ANISOTROPY_EXT,
+        context.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT));      
+      }
+      // set magnification
+      context.texParameteri(context.TEXTURE_2D,
+       context.TEXTURE_MAG_FILTER, context.LINEAR);
+      if(this.powerOfTwo){
+       // Enable mipmaps if texture's dimensions are powers of two
+       context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
+       context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_WRAP_S, context.REPEAT);
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_T, context.REPEAT);
+      } else {
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_MIN_FILTER, context.LINEAR);
+       // Other textures require this wrap mode
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+       context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+      }
+    }
+}
+
+
+//////////////////////////
+
 function LightsBinder(lights){
  this.lights=lights;
 }
@@ -79,4 +179,21 @@ LightsBinder.prototype.bind=function(program){
  }
  program.setUniforms(uniforms);
  return this;
+}
+
+
+///////////////////////
+
+var Binders={};
+Binders.getMaterialBinder=function(material){
+ if(material){
+ if(material instanceof MaterialShade){
+  return new MaterialShadeBinder(material);
+ }
+ if(material instanceof Texture){
+  return new TextureBinder(material);
+ }
+ }
+ // Return an empty binding object
+ return {bind:function(program){}};
 }
