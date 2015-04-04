@@ -200,18 +200,9 @@ in order to have it drawn.  This is where the `Shape` class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:
 
-(1) Create a Shape object and pass the mesh to its constructor:
+(1) Create a Shape object and pass the mesh to the 3D scene's `makeShape()` method:
 
-    var shape = new Shape(mesh);
-
-Alternatively, you can create a `BufferedMesh` object and pass that
-to the `Shape` constructor.  This is useful if you will be creating more than one shape
-with the same mesh.  To do this, however, you need a reference to a WebGL
-context, or a reference to the `Scene3D` or another object that provides a WebGL
-context via a no-argument `getContext` method (an HTML canvas won't do):
-
-    var buffer = new BufferedMesh(mesh, scene3d);
-    var shape = new Shape(buffer);
+    var shape = scene.makeShape(mesh);
 
 (2) You may also set its color, appearance, and position, using the examples below:
 

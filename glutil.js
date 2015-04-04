@@ -291,7 +291,7 @@ var hueval=hls[0]*1.0;//[0-360)
 // Returns a 4-item array containing the intensity of red,
 // green, blue, and alpha (each from 0-255)
 // Returns null if the color can't be converted
-exports["colorToRgba"]=function(x){
+var colorToRgba=function(x){
  "use strict";
  function parsePercent(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>100 ? 100 : c))*255/100; }
  function parseAlpha(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>1 ? 1 : c))*255; }
@@ -324,7 +324,7 @@ var e=null;
   x=x.toLowerCase();
   if(x.indexOf("grey")>=0)x=x.replace("grey","gray");// support "grey" variants
   var ret=namedColors[x];
-  if(typeof ret==="string")return exports["colorToRgba"](ret);
+  if(typeof ret==="string")return colorToRgba(ret);
   if(x==="transparent")return [0,0,0,0];
   return null;
  }
@@ -384,7 +384,7 @@ var e=null;
 exports["toGLColor"]=function(r,g,b,a){
  if(r==null)return [0,0,0,0];
  if(typeof r=="string"){
-   var rgba=exports["colorToRgba"](r) || [0,0,0,0];
+   var rgba=colorToRgba(r) || [0,0,0,0];
    var mul=1.0/255;
    rgba[0]*=mul;
    rgba[1]*=mul;
@@ -754,7 +754,9 @@ Texture.prototype.loadImage=function(){
   image.src=thisName;
  });
 }
-
+/**
+ * Not documented yet.
+ */
 Texture.prototype.dispose=function(){
  if(this.loadedTexture==null){
   this.loadedTexture.dispose();
@@ -1445,16 +1447,23 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  return this;
 }
 /**
-* Adds a 3D shape to this scene. This method will load the
-* shape's mesh to vertex buffer objects, if it isn't loaded
-* already.
+* Adds a 3D shape to this scene.
 * @param {Shape|MultiShape} shape A 3D shape.
 * @return {Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
- this.shapes.push(shape.loadMesh(this.context));
+ this.shapes.push(shape);
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} mesh
+ */
+Scene3D.prototype.makeShape=function(mesh){
+ var buffer=new BufferedMesh(mesh,this.context);
+ return new Shape(buffer);
+}
+
 /**
 * Removes all instances of a 3D shape from this scene.
 * @param {Shape|MultiShape} shape The 3D shape to remove.
@@ -1529,6 +1538,20 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
+/** @private */
+Scene3D.prototype._setupMatrices=function(shape,program){
+  var uniforms={};
+  var currentMatrix=shape.getMatrix();
+  var viewWorld=GLMath.mat4multiply(this._viewMatrix,
+    currentMatrix);
+  var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
+  uniforms["world"]=currentMatrix;
+  uniforms["modelMatrix"]=currentMatrix;
+  uniforms["modelViewMatrix"]=viewWorld;
+  uniforms["worldViewInvTrans3"]=invTrans;
+  uniforms["normalMatrix"]=invTrans;
+  program.setUniforms(uniforms);
+}
 /**
  *  Renders all shapes added to this scene.
  *  This is usually called in a render loop, such
@@ -1556,7 +1579,9 @@ Scene3D.prototype.render=function(){
    this.context.clear(
     this.context.COLOR_BUFFER_BIT|this.context.DEPTH_BUFFER_BIT);
    this._setIdentityMatrices();
-   this.fboQuad.render(this.fboFilter);
+   // Do the rendering to main buffer
+   this._renderShape(this.fboQuad,this.fboFilter);
+   // Restore old matrices and program
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
    this.useProgram(oldProgram);
@@ -1568,6 +1593,13 @@ Scene3D.prototype.render=function(){
    this.context.flush();
    return this;
  }
+}
+
+/** @private */
+Scene3D.prototype._renderShape=function(shape,program){
+   this._setupMatrices(shape,program);
+   Binders.getMaterialBinder(shape.material).bind(program);
+   shape.bufferedMesh.draw(program);
 }
 /**
  * Uses a shader program to apply a texture filter after the
@@ -1623,7 +1655,7 @@ Scene3D.prototype._renderInner=function(){
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
   for(var i=0;i<this.shapes.length;i++){
-   this.shapes[i].render(this.program);
+   this._renderShape(this.shapes[i],this.program);
   }
   return this;
 }
@@ -1685,19 +1717,11 @@ MultiShape.prototype.setMaterial=function(material){
 * See the "{@tutorial shapes}" tutorial.
  *  @class
 * @alias glutil.Shape
-* @param {Mesh|BufferedMesh} mesh A geometric mesh to associate with this shape,
-*  or a mesh in the form of a vertex buffer object.
+* @param {BufferedMesh} mesh A mesh in the form of a vertex buffer object.
   */
 function Shape(mesh){
   if(mesh==null)throw new Error("mesh is null");
-  // NOTE: "mesh" property is only used to generate "bufferedMesh"
-  if(mesh.constructor==BufferedMesh){
-   this.mesh=null;
-   this.bufferedMesh=mesh;
-  } else {
-   this.mesh=mesh;
-   this.bufferedMesh=null;
-  }
+  this.bufferedMesh=mesh;
   this.material=new MaterialShade();
   /**
   * A three-element array giving the scaling of this object for this shape's width,
@@ -1723,24 +1747,8 @@ function Shape(mesh){
    */
   this.rotation=GLMath.quatIdentity();
   this._matrixDirty=false;
-  this._invTransModel3=GLMath.mat3identity();
   /** @private */
   this.matrix=GLMath.mat4identity();
-}
-/**
- * Loads this shape's mesh to vertex buffer objects, if it isn't loaded
- * already.
- * @param {WebGLRenderingContext|object} context The WebGL context
- * to load this shape's mesh under, or an object, such as Scene3D, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context.
- * @return {Shape} This object.
- */
-Shape.prototype.loadMesh=function(context){
- if(!this.bufferedMesh && this.mesh){
-  this.bufferedMesh=new BufferedMesh(this.mesh,context);
- }
- return this;
 }
 /**
  * Sets this shape's transformation matrix. This method
@@ -1757,7 +1765,6 @@ Shape.prototype.setMatrix=function(value){
  this.rotation=GLMath.quatFromMat4(this.matrix);
  this.rotation=GLMath.quatNormInPlace(this.rotation);
  this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
- this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
  return this;
 }
 /**
@@ -1933,61 +1940,6 @@ Shape.prototype.multRotation=function(angle, v,vy,vz){
  return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
 }
 /**
- * Renders this object.  This method will load the shape's mesh to vertex
- * buffer objects, if it isn't loaded already.<p>
- * This method may set the following uniforms if they exist in the
- * shader program:<ul>
- * <li><code>world</code>, <code>modelMatrix</code>: this shape's
- * transformation matrix
- * <li><code>modelViewMatrix</code>: the view matrix times this shape's
- * transformation matrix
- * <li><code>worldViewInvTrans3</code>, <code>normalMatrix</code>:
- * 3x3 inverse transpose of the view matrix times this shape's
- * transformation matrix
- * <li><code>useColorAttr</code>: whether this shape uses per-vertex colors
- * </ul>
- * @param {ShaderProgram} program The WebGL program in which attributes
- * and uniforms related to the rendered object will be set up.  The
- * program's shaders will control how the shape will be rendered.
- * @return {Shape} This object.
- */
-Shape.prototype.render=function(program){
-  // Set material (texture or color)
-  Binders.getMaterialBinder(this.material).bind(program);
-  // Set world matrix
-  var uniforms={};
-  var uniformMatrix=program.get("world")
-  if(uniformMatrix==null)uniformMatrix=program.get("modelMatrix");
-  if(uniformMatrix!==null){
-   var currentMatrix=this.getMatrix();
-   uniforms["world"]=currentMatrix;
-   uniforms["modelMatrix"]=currentMatrix;
-   var viewMatrix=program.getUniform("view")
-   if(viewMatrix==null){
-    viewMatrix=program.getUniform("viewMatrix")
-   }
-   if(viewMatrix){
-     var viewWorld=GLMath.mat4multiply(viewMatrix,currentMatrix);
-     var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
-     uniforms["modelViewMatrix"]=viewWorld;
-     uniforms["worldViewInvTrans3"]=invTrans;
-     uniforms["normalMatrix"]=invTrans;
-   } else {
-     uniforms["worldViewInvTrans3"]=this._invTransModel3;
-     uniforms["normalMatrix"]=this._invTransModel3;
-   }
-  }
-  program.setUniforms(uniforms);
-  // Ensure buffered mesh exists
-  if(this.bufferedMesh==null && this.mesh){
-   this.bufferedMesh=new BufferedMesh(this.mesh,
-     program.getContext());
-  }
-  // Bind vertex attributes and draw
-  this.bufferedMesh.draw(program);
-  return this;
-};
-/**
  * Gets the transformation matrix used by this shape.  It is a combination
  * of the scale, position, and rotation properties.
  * @return {Array<number>}
@@ -2002,7 +1954,6 @@ Shape.prototype.getMatrix=function(){
       GLMath.quatToMat4(this.rotation));
    }
    GLMath.mat4scaleInPlace(this.matrix,this.scale);
-   this._invTransModel3=GLMath.mat4inverseTranspose3(this.matrix);
   }
   return this.matrix.slice(0,16);
 }

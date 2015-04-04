@@ -67,8 +67,8 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
   var mesh1=multiColoredArrow(10,2,1,2);
   var mesh2=arrow(10,2,1,2);
   // Create a shape based on the mesh and give it a red color
-  var shape1=new Shape(mesh1)
-  var shape2=new Shape(mesh2).setColor("green")
+  var shape1=scene.makeShape(mesh1)
+  var shape2=scene.makeShape(mesh2).setColor("green")
   // Add the shape to the scene
   scene.addShape(shape1);
   // Set the starting rotation

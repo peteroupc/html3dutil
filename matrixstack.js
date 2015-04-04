@@ -86,7 +86,7 @@ MatrixStack.prototype.multMatrix=function(mat){
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
  * @param {number} angle The desired angle
- * to rotate in degrees.If the axis of rotation
+ * to rotate in degrees. If the axis of rotation
  * points toward the viewer, the angle's value is increasing in
  * a counterclockwise direction.
  * @param {number} x X-component of the axis

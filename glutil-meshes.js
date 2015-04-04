@@ -8,7 +8,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
 /**
-* Contains methods that create 3D meshes
+* Contains methods that create meshes
 * of common geometric shapes.
 * @class
 * @alias glutil.Meshes
@@ -83,7 +83,8 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * this function will create an approximation to an upward pointing cone.
 * @param {number} height Height of the cylinder.
 * @param {number} slices Number of lengthwise "slices" the cylinder consists
-* of.  This function will create a triangular prism if "slices" is 3
+* of, each slice going through the center of the cylinder.  This function will 
+* create a triangular prism if "slices" is 3
 * and both radiuses are the same; a triangular pyramid if "slices" is
 * 3 and either radius is zero; a rectangular prism if "slices" is 4
 * and both radiuses are the same; and a rectangular pyramid if "slices"
