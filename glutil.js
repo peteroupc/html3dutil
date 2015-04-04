@@ -677,7 +677,95 @@ MaterialShade.fromColor=function(r,g,b,a){
  return new MaterialShade(color,color);
 }
 
-/** A geometric mesh in the form of vertex buffer objects.
+////////////////////
+
+/**
+*  Specifies a texture, which can serve as image data applied to
+*  the surface of a shape, or even a 2-dimensional array of pixels
+*  used for some other purpose, such as a depth map, a height map,
+*  a bump map, a reflection map, and so on.
+* @class
+* @alias glutil.Texture
+* @param {string} name URL of the texture data.  It will be loaded via
+*  the JavaScript DOM's Image class.  However, this constructor
+*  will not load that image yet.
+*/
+var Texture=function(name){
+ this.image=null;
+ this.loadedTexture=null;
+ this.name=name;
+ this.width=0;
+ this.height=0;
+}
+
+/**
+*  Loads a texture by its URL.
+* @param {string} name URL of the texture data.  It will be loaded via
+*  the JavaScript DOM's Image class
+* @param {Object|undefined} textureCache An object whose keys
+* are the names of textures already loaded.  This will help avoid loading
+* the same texture more than once.  This parameter is optional
+* and may be omitted.
+* @return {Promise} A promise that resolves when the texture
+* is fully loaded.  If it resolves, the result will be a Texture object.
+*/
+Texture.loadTexture=function(name, textureCache){
+ // Get cached texture
+ if(textureCache && textureCache[name]){
+   return Promise.resolve(textureCache[name]);
+ }
+ var texImage=new Texture(name);
+ if(textureCache){
+  textureCache[name]=texImage;
+ }
+ // Load new texture and cache it
+ return texImage.loadImage().then(
+  function(result){
+   return result;
+  },
+  function(name){
+    return Promise.reject(name.name);
+  });
+}
+
+/** @private */
+Texture.prototype.loadImage=function(){
+ if(this.image!==null){
+  // already loaded
+  return Promise.resolve(this);
+ }
+ var thisImage=this;
+ var thisName=this.name;
+ return new Promise(function(resolve,reject){
+  var image=new Image();
+  image.onload=function(e) {
+   var target=e.target;
+   thisImage.image=target;
+   thisImage.width=target.width;
+   thisImage.height=target.height;
+   thisImage.powerOfTwo=(
+      GLUtil._isPowerOfTwo(thisImage.width) &&
+      GLUtil._isPowerOfTwo(thisImage.height));
+   resolve(thisImage);
+  }
+  image.onerror=function(e){
+   reject({name:name,error:e});
+  }
+  image.src=thisName;
+ });
+}
+
+Texture.prototype.dispose=function(){
+ if(this.loadedTexture==null){
+  this.loadedTexture.dispose();
+  this.loadedTexture=null;
+ }
+}
+
+////////////////////
+
+/**
+* A geometric mesh in the form of vertex buffer objects.
 * @class
 * @alias glutil.BufferedMesh
 * @param {Mesh} mesh A geometric mesh object.
@@ -853,81 +941,7 @@ BufferedSubMesh.prototype.draw=function(program){
   }
 }
 
-/**
-*  Specifies a texture, which can serve as image data applied to
-*  the surface of a shape, or even a 2-dimensional array of pixels
-*  used for some other purpose, such as a depth map, a height map,
-*  a bump map, a reflection map, and so on.
-* @class
-* @alias glutil.Texture
-* @param {string} name URL of the texture data.  It will be loaded via
-*  the JavaScript DOM's Image class.  However, this constructor
-*  will not load that image yet.
-*/
-var Texture=function(name){
- this.image=null;
- this.textureName=null;
- this.name=name;
- this.width=0;
- this.height=0;
-}
-
-/**
-*  Loads a texture by its URL.
-* @param {string} name URL of the texture data.  It will be loaded via
-*  the JavaScript DOM's Image class
-* @param {Object|undefined} textureCache An object whose keys
-* are the names of textures already loaded.  This will help avoid loading
-* the same texture more than once.  This parameter is optional
-* and may be omitted.
-* @return {Promise} A promise that resolves when the texture
-* is fully loaded.  If it resolves, the result will be a Texture object.
-*/
-Texture.loadTexture=function(name, textureCache){
- // Get cached texture
- if(textureCache && textureCache[name]){
-   return Promise.resolve(textureCache[name]);
- }
- var texImage=new Texture(name);
- if(textureCache){
-  textureCache[name]=texImage;
- }
- // Load new texture and cache it
- return texImage.loadImage().then(
-  function(result){
-   return result;
-  },
-  function(name){
-    return Promise.reject(name.name);
-  });
-}
-
-/** @private */
-Texture.prototype.loadImage=function(){
- if(this.image!==null){
-  // already loaded
-  return Promise.resolve(this);
- }
- var thisImage=this;
- var thisName=this.name;
- return new Promise(function(resolve,reject){
-  var image=new Image();
-  image.onload=function(e) {
-   var target=e.target;
-   thisImage.image=target;
-   thisImage.width=target.width;
-   thisImage.height=target.height;
-   thisImage.powerOfTwo=(
-      GLUtil._isPowerOfTwo(thisImage.width) &&
-      GLUtil._isPowerOfTwo(thisImage.height));
-   resolve(thisImage);
-  }
-  image.onerror=function(e){
-   reject({name:name,error:e});
-  }
-  image.src=thisName;
- });
-}
+/////////////////////////////////
 
 /**
 * Represents an off-screen frame buffer.<p>
@@ -1094,11 +1108,6 @@ function Scene3D(canvasOrContext){
    this._getDefines()+ShaderProgram.getDefaultFragment());
  /** An array of shapes that are part of the scene. */
  this.shapes=[];
- /** The color used when clearing the screen each frame.
-   This value should not be modified directly.  Instead,
-   use the {@link #setClearColor} method.
-   @default
-   */
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  this.textureCache={};
@@ -1123,6 +1132,14 @@ function Scene3D(canvasOrContext){
 /** Returns the WebGL context associated with this scene. */
 Scene3D.prototype.getContext=function(){
  return this.context;
+}
+ /**
+  Gets the color used when clearing the screen each frame.
+   @return {Array<number>} An array of four numbers, from 0 through
+   1, specifying the red, green, blue, and alpha components of the color.
+   */
+Scene3D.prototype.getClearColor=function(){
+ return this.clearColor.slice(0,4);
 }
 /** @private */
 Scene3D.prototype._getDefines=function(){
@@ -1362,7 +1379,7 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  for(var i=0;i<textureFiles.length;i++){
   var objf=textureFiles[i];
   var p=this.loadAndMapTexture(objf).then(function(texture){
-    texture.textureName=new LoadedTexture(texture,context);
+    texture.loadedTexture=new LoadedTexture(texture,context);
   });
   promises.push(p);
  }

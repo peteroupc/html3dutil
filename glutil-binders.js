@@ -51,12 +51,12 @@ MaterialShadeBinder.prototype.bind=function(program){
 function LoadedTexture(textureImage, context){
   context=GLUtil._toContext(context);
   this.context=context;
-  this.textureName=context.createTexture();
+  this.loadedTexture=context.createTexture();
   // In WebGL, texture coordinates start at the upper left corner rather than
   // the lower left as in OpenGL and OpenGL ES, so we use this method call
   // to reestablish the lower left corner.
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
-  context.bindTexture(context.TEXTURE_2D, this.textureName);
+  context.bindTexture(context.TEXTURE_2D, this.loadedTexture);
   context.texImage2D(context.TEXTURE_2D, 0,
     context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
     textureImage.image);
@@ -68,8 +68,8 @@ function LoadedTexture(textureImage, context){
 }
 
 LoadedTexture.prototype.dispose=function(){
- if(this.textureName){
-  this.context.deleteTexture(this.textureName);
+ if(this.loadedTexture){
+  this.context.deleteTexture(this.loadedTexture);
  }
 }
 
@@ -85,47 +85,48 @@ function TextureBinder(tex){
  * @param {ShaderProgram} program The WebGL program in which
  * uniform values related to the texture will be set up.
  */
-Texture.prototype.bind=function(program){
- if(this.image!==null && this.textureName===null){
+TextureBinder.prototype.bind=function(program){
+ var texture=this.texture;
+ if(texture.image!==null && texture.loadedTexture===null){
       // load the image as a texture
-      this.textureName=new LoadedTexture(program.getContext());
- } else if(this.image===null && this.textureName===null){
+      texture.loadedTexture=new LoadedTexture(program.getContext());
+ } else if(texture.image===null && texture.loadedTexture===null){
       var thisObj=this;
       var prog=program;
-      this.loadImage().then(function(e){
+      texture.loadImage().then(function(e){
         // try again loading the image
         thisObj.bind(prog);
       });
       return;
  }
- if (this.textureName!==null) {
+ if (texture.loadedTexture!==null) {
       var uniforms={};
-      if(this.anisotropic==null){
+      if(texture.anisotropic==null){
        // Try to load anisotropic filtering extension
-       this.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
+       texture.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
          context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
          context.getExtension("MOZ_EXT_texture_filter_anisotropic");
-       if(this.anisotropic==null){
-        this.anisotropic={};
+       if(texture.anisotropic==null){
+        texture.anisotropic={};
        }
-      } 
-      uniforms["textureSize"]=[this.width,this.height];
+      }
+      uniforms["textureSize"]=[texture.width,texture.height];
       program.setUniforms(uniforms);
       var ctx=program.getContext()
       ctx.activeTexture(ctx.TEXTURE0);
       ctx.bindTexture(ctx.TEXTURE_2D,
-        this.textureName);
+        texture.loadedTexture);
       // Set texture parameters
-      if(typeof this.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!="undefined"){
+      if(typeof texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!="undefined"){
        // Set anisotropy if anisotropic filtering is supported
        context.texParameteri(context.TEXTURE_2D,
         ext.TEXTURE_MAX_ANISOTROPY_EXT,
-        context.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT));      
+        context.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
       }
       // set magnification
       context.texParameteri(context.TEXTURE_2D,
        context.TEXTURE_MAG_FILTER, context.LINEAR);
-      if(this.powerOfTwo){
+      if(texture.powerOfTwo){
        // Enable mipmaps if texture's dimensions are powers of two
        context.texParameteri(context.TEXTURE_2D,
          context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
@@ -144,7 +145,6 @@ Texture.prototype.bind=function(program){
       }
     }
 }
-
 
 //////////////////////////
 
@@ -180,7 +180,6 @@ LightsBinder.prototype.bind=function(program){
  program.setUniforms(uniforms);
  return this;
 }
-
 
 ///////////////////////
 
