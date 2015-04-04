@@ -433,7 +433,7 @@ if(!namedColors){
 
 /** @private */
 GLUtil._toContext=function(context){
- return (context.getContext) ? context.getContext() : context;
+ return (context && context.getContext) ? context.getContext() : context;
 }
 /** @private */
 GLUtil._isPowerOfTwo=function(a){

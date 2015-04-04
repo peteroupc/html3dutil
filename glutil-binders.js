@@ -87,9 +87,10 @@ function TextureBinder(tex){
  */
 TextureBinder.prototype.bind=function(program){
  var texture=this.texture;
+ var context=program.getContext();
  if(texture.image!==null && texture.loadedTexture===null){
       // load the image as a texture
-      texture.loadedTexture=new LoadedTexture(program.getContext());
+      texture.loadedTexture=new LoadedTexture(texture,context);
  } else if(texture.image===null && texture.loadedTexture===null){
       var thisObj=this;
       var prog=program;
@@ -112,16 +113,15 @@ TextureBinder.prototype.bind=function(program){
       }
       uniforms["textureSize"]=[texture.width,texture.height];
       program.setUniforms(uniforms);
-      var ctx=program.getContext()
-      ctx.activeTexture(ctx.TEXTURE0);
-      ctx.bindTexture(ctx.TEXTURE_2D,
-        texture.loadedTexture);
+      context.activeTexture(context.TEXTURE0);
+      context.bindTexture(context.TEXTURE_2D,
+        texture.loadedTexture.loadedTexture);
       // Set texture parameters
       if(typeof texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!="undefined"){
        // Set anisotropy if anisotropic filtering is supported
        context.texParameteri(context.TEXTURE_2D,
-        ext.TEXTURE_MAX_ANISOTROPY_EXT,
-        context.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
+        texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
+        context.getParameter(texture.anisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
       }
       // set magnification
       context.texParameteri(context.TEXTURE_2D,
