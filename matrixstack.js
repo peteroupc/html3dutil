@@ -190,7 +190,7 @@ MatrixStack.prototype.pushMatrix=function(){
 }
 /**
  * Removes the matrix at the top of this stack, making
- * the new top matrix the one beneath it.  Has no
+ * the matrix beneath it the new top matrix.  Has no
  * effect if the stack has only one matrix.
  * @return {MatrixStack} This object.
  */

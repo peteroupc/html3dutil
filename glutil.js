@@ -1643,7 +1643,7 @@ Scene3D.prototype.useFilter=function(filterProgram){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      Mesh.TEXCOORDS_BIT);
-   this.fboQuad=new Shape(mesh).setMaterial(this.fbo.getMaterial());
+   this.fboQuad=this.makeShape(mesh).setMaterial(this.fbo.getMaterial());
   }
  }
  return this;
