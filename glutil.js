@@ -1087,8 +1087,6 @@ function Scene3D(canvasOrContext){
   }
  }
  this.context=context;
- this.context.viewport(0,0,
-    this.context.canvas.width*1.0,this.context.canvas.height*1.0);
  this.lightingEnabled=true;
  this.specularEnabled=true;
  this.program=new ShaderProgram(context,
@@ -1104,16 +1102,19 @@ function Scene3D(canvasOrContext){
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  this.textureCache={};
- this.context.enable(context.BLEND);
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
  this.lightSource=new Lights();
+ this.width=Math.ceil(this.context.canvas.width*1.0);
+ this.height=Math.ceil(this.context.canvas.height*1.0);
+ this.context.viewport(0,0,this.width,this.height);
+ this.context.enable(context.BLEND);
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
  this.context.enable(this.context.DEPTH_TEST);
  this.context.depthFunc(this.context.LEQUAL);
- this._setClearColor();
  this.context.clearDepth(999999);
+ this._setClearColor();
  this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
@@ -1174,9 +1175,11 @@ Scene3D.prototype.disableLighting=function(){
 */
 Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
- this.context.canvas.width=Math.ceil(width)+"";
- this.context.canvas.height=Math.ceil(height)+"";
- this.context.viewport(0,0,Math.ceil(width),Math.ceil(height));
+ this.width=Math.ceil(width);
+ this.height=Math.ceil(height);
+ this.context.canvas.width=this.width+"";
+ this.context.canvas.height=this.height+"";
+ this.context.viewport(0,0,this.width,this.height);
   if(this.fbo!="undefined" && this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
@@ -1186,13 +1189,13 @@ Scene3D.prototype.setDimensions=function(width, height){
 * @return {number}
 */
 Scene3D.prototype.getWidth=function(){
- return this.context.canvas.width*1.0;
+ return this.width;
 }
 /** Gets the viewport height for this scene.
 * @return {number}
 */
 Scene3D.prototype.getHeight=function(){
- return this.context.canvas.height*1.0;
+ return this.height;
 }
 /** Gets the ratio of width to height for this scene.
 * @return {number}
@@ -1355,9 +1358,12 @@ Scene3D.prototype.loadAndMapTexture=function(name){
 */
 Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  var promises=[];
+ var context=this.context;
  for(var i=0;i<textureFiles.length;i++){
   var objf=textureFiles[i];
-  var p=this.loadAndMapTexture(objf);
+  var p=this.loadAndMapTexture(objf).then(function(texture){
+    texture.textureName=new LoadedTexture(texture,context);
+  });
   promises.push(p);
  }
  return GLUtil.getPromiseResults(promises, resolve, reject);
