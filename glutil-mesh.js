@@ -555,14 +555,34 @@ SubMesh.prototype.toWireFrame=function(){
   if(this.builderMode==Mesh.LINES){
    return this;
   }
-  var faces=[];
+  // Adds a line only if it doesn't exist
+  function addLine(lineIndices,existingLines,f1,f2){
+   // Ensure ordering of the indices
+   if(f1<f2){
+    var tmp=f1;f1=f2;f2=tmp;
+   }
+   var e=existingLines[f1];
+   if(e){
+    if(e.indexOf(f2)<0){
+     e.push(f2);
+     lineIndices.push(f1,f2);
+    }
+   } else {
+    existingLines[f1]=[f2];
+    lineIndices.push(f1,f2);
+   }
+  }
+  var lineIndices=[];
+  var existingLines={};
   for(var i=0;i<this.indices.length;i+=3){
     var f1=this.indices[i];
     var f2=this.indices[i+1];
     var f3=this.indices[i+2];
-    faces.push(f1,f2,f2,f3,f3,f1);
+    addLine(lineIndices,existingLines,f1,f2);
+    addLine(lineIndices,existingLines,f2,f3);
+    addLine(lineIndices,existingLines,f3,f1);
   }
-  return new SubMesh(this.vertices, faces,
+  return new SubMesh(this.vertices, lineIndices,
     this.attributeBits|Mesh.LINES_BIT);
 }
 
