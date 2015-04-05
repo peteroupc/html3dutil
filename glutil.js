@@ -1027,28 +1027,24 @@ BufferedSubMesh.prototype.draw=function(program){
 function FrameBuffer(context, width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.context=context;
+ this.textureUnit=0;
  this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
- this.context.activeTexture(this.context.TEXTURE0);
+ this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
+ this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
  // In WebGL, texture coordinates start at the upper left corner rather than
  // the lower left as in OpenGL and OpenGL ES, so we use this method call
  // to reestablish the lower left corner.
  this.context.pixelStorei(this.context.UNPACK_FLIP_Y_WEBGL, 1);
- this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
- this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
- this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
- this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
- this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
  this.context.texImage2D(this.context.TEXTURE_2D, 0,
    this.context.RGBA, this.width, this.height, 0,
    this.context.RGBA, this.context.UNSIGNED_BYTE, null);
+ // set minification filter now; this buffer won't use mipmaps
+ this.context.texParameteri(this.context.TEXTURE_2D,
+   this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
  // create depth renderbuffer
  this.depthbuffer=this.context.createRenderbuffer();
  var oldBuffer=this.context.getParameter(
@@ -1069,26 +1065,6 @@ function FrameBuffer(context, width, height){
    context.RENDERBUFFER,this.depthbuffer);
  this.context.bindFramebuffer(
    context.FRAMEBUFFER,oldBuffer);
-}
-/**
- * Returns a material object for binding to Shapes.
- * @return {Object} An object implementing the method
- * bind(program), similar to Material and Texture
- * objects, and exposing the texture this frame buffer uses.
- */
-FrameBuffer.prototype.getMaterial=function(){
-  var thisObj=this;
-  return {"bind":function(program){
-      var uniforms={};
-      uniforms["sampler"]=0;
-      uniforms["textureSize"]=[thisObj.width,thisObj.height];
-      program.setUniforms(uniforms);
-      var ctx=program.getContext()
-      ctx.activeTexture(ctx.TEXTURE0);
-      ctx.bindTexture(ctx.TEXTURE_2D,
-        thisObj.colorTexture);
-    }
-  };
 }
 /**
  * Gets the WebGL context associated with this frame buffer.
@@ -1707,7 +1683,7 @@ Scene3D.prototype.useFilter=function(filterProgram){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      Mesh.TEXCOORDS_BIT);
-   this.fboQuad=this.makeShape(mesh).setMaterial(this.fbo.getMaterial());
+   this.fboQuad=this.makeShape(mesh).setMaterial(this.fbo);
   }
  }
  return this;
@@ -1808,7 +1784,7 @@ Shape.prototype.setColor=function(r,g,b,a){
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setTexture=function(name){
- this.material=new Texture(name);
+ this.material=new TexturedMaterial(name);
  return this;
 }
 /**
