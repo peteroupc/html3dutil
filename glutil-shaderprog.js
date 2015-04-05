@@ -143,7 +143,7 @@ ShaderProgram.prototype.getUniform=function(name){
 * program.<p>
 * Changing the context's active program doesn't reset the uniform
 * variables associated with the previous program.
-* @return {ShaderProgram} This object.
+* @return {glutil.ShaderProgram} This object.
 */
 ShaderProgram.prototype.use=function(){
  this.context.useProgram(this.program);
@@ -174,7 +174,7 @@ ShaderProgram.prototype.use=function(){
 * the "name" parameter of the {@link glutil.ShaderProgram#get}
 * method for more information on
 * uniform names.
-* @return {ShaderProgram} This object.
+* @return {glutil.ShaderProgram} This object.
 */
 ShaderProgram.prototype.setUniforms=function(uniforms){
   var isCurrentProgram=null;
@@ -302,7 +302,7 @@ return shader;
 * and the return value is the new color at the given texture coordinates.  Besides
 * this requirement, the shader code is also free to define additional uniforms,
 * constants, functions, and so on (but not another "main" function).
-* @return {ShaderProgram} The resulting shader program.
+* @return {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.makeEffect=function(context,functionCode){
  return new ShaderProgram(context, null,
@@ -314,7 +314,7 @@ ShaderProgram.makeEffect=function(context,functionCode){
 * compiled shader program, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
-* @return {ShaderProgram} The resulting shader program.
+* @return {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.getInvertEffect=function(context){
 return ShaderProgram.makeEffect(context,
@@ -331,7 +331,7 @@ return ShaderProgram.makeEffect(context,
 * compiled shader program, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
-* @return {ShaderProgram} The resulting shader program.
+* @return {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.getEdgeDetectEffect=function(context){
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,

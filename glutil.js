@@ -831,7 +831,7 @@ Texture.prototype.dispose=function(){
 * A geometric mesh in the form of vertex buffer objects.
 * @class
 * @alias glutil.BufferedMesh
-* @param {Mesh} mesh A geometric mesh object.
+* @param {glutil.Mesh} mesh A geometric mesh object.
 * @param {WebGLRenderingContext|object} context A WebGL context to
 *  create vertex buffers from, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
@@ -871,7 +871,7 @@ BufferedMesh.prototype.getFormat=function(){
 * Binds the buffers in this object to attributes according
 * to their data format, and draws the elements in this mesh
 * according to the data in its vertex buffers.
-* @param {ShaderProgram} program A shader program object to get
+* @param {glutil.ShaderProgram} program A shader program object to get
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
 */
@@ -1032,9 +1032,10 @@ function FrameBuffer(context, width, height){
  this.colorTexture = context.createTexture();
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
+ this.context.activeTexture(this.context.TEXTURE0);
  // In WebGL, texture coordinates start at the upper left corner rather than
-  // the lower left as in OpenGL and OpenGL ES, so we use this method call
-  // to reestablish the lower left corner.
+ // the lower left as in OpenGL and OpenGL ES, so we use this method call
+ // to reestablish the lower left corner.
  this.context.pixelStorei(this.context.UNPACK_FLIP_Y_WEBGL, 1);
  this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
  this.context.texParameteri(this.context.TEXTURE_2D,
@@ -1079,6 +1080,7 @@ FrameBuffer.prototype.getMaterial=function(){
   var thisObj=this;
   return {"bind":function(program){
       var uniforms={};
+      uniforms["sampler"]=0;
       uniforms["textureSize"]=[thisObj.width,thisObj.height];
       program.setUniforms(uniforms);
       var ctx=program.getContext()
@@ -1097,7 +1099,7 @@ FrameBuffer.prototype.getContext=function(){
 }
 /**
  * Not documented yet.
- * @param {ShaderProgram} program
+ * @param {glutil.ShaderProgram} program
  */
 FrameBuffer.prototype.bind=function(program){
   if(program.getContext()!=this.context){
@@ -1144,7 +1146,7 @@ FrameBuffer.prototype.dispose=function(){
  * a default shader program that enables lighting parameters,
  * and sets the projection and view matrices to identity.
  * The default lighting for the scene will have a default
-* ambient color and one directional light source..
+* ambient color and one directional light source.
 *  @class
 * @alias glutil.Scene3D
  * @param {WebGLRenderingContext|object} context
@@ -1221,8 +1223,8 @@ Scene3D.prototype._initProgramData=function(){
 /**
 * Changes the active shader program for this scene
 * and prepares this object for the new program.
-* @param {ShaderProgram} program The shader program to use.
-* @return {Scene3D} This object.
+* @param {glutil.ShaderProgram} program The shader program to use.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.useProgram=function(program){
  if(!program)throw new Error("invalid program");
@@ -1233,7 +1235,7 @@ Scene3D.prototype.useProgram=function(program){
 }
 /** Changes the active shader program for this scene
 * to a program that doesn't support lighting.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.disableLighting=function(){
  this.lightingEnabled=false;
@@ -1304,7 +1306,7 @@ Scene3D.prototype.createBuffer=function(){
 * @param {number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
 * @example
 * // Set the perspective projection.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
@@ -1331,7 +1333,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
 * @param {number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4frustum(
@@ -1351,7 +1353,7 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @return {Scene3D} This object.
+ * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4ortho(
@@ -1365,7 +1367,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  * @param {number} bottom Bottommost coordinate of the 2D view.
  * @param {number} top Topmost coordinate of the 2D view.
  * (Note that top can be greater than bottom or vice versa.)
- * @return {Scene3D} This object.
+ * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
  return this.setProjectionMatrix(GLMath.mat4ortho(
@@ -1390,7 +1392,7 @@ Scene3D.prototype._setClearColor=function(){
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {number} a Alpha color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setClearColor=function(r,g,b,a){
  this.clearColor=GLUtil["toGLColor"](r,g,b,a);
@@ -1465,7 +1467,7 @@ Scene3D.prototype._updateMatrix=function(){
  * matrix can also be set using the {@link glutil.Scene3D#setFrustum}, {@link glutil.Scene3D#setOrtho},
  * {@link glutil.Scene3D#setOrtho2D}, and {@link glutil.Scene3D#setPerspective} methods.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
- * @return {Scene3D} This object.
+ * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
  this._projectionMatrix=GLMath.mat4copy(matrix);
@@ -1476,7 +1478,7 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
 *  Sets this scene's view matrix. The view matrix can also
 * be set using the {@link glutil.Scene3D#setLookAt} method.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
- * @return {Scene3D} This object.
+ * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
  this._viewMatrix=GLMath.mat4copy(matrix);
@@ -1495,7 +1497,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * the default is a vector pointing positive on the Y axis.  This
 * vector must not point in the same or opposite direction as
 * the camera's view direction.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setLookAt=function(eye, center, up){
  up = up || [0,1,0];
@@ -1507,7 +1509,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 /**
 * Adds a 3D shape to this scene.
 * @param {Shape|MultiShape} shape A 3D shape.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
  this.shapes.push(shape);
@@ -1516,10 +1518,10 @@ Scene3D.prototype.addShape=function(shape){
 /**
  * Creates a vertex buffer from a geometric mesh and
  * returns a shape object.
- * @param {Mesh} mesh A geometric mesh object.  The shape
+ * @param {glutil.Mesh} mesh A geometric mesh object.  The shape
  * created will use the mesh in its current state and won't
  * track future changes.
- * @return {Shape} The generated shape object.
+ * @return {glutil.Shape} The generated shape object.
  */
 Scene3D.prototype.makeShape=function(mesh){
  var buffer=new BufferedMesh(mesh,this.context);
@@ -1529,7 +1531,7 @@ Scene3D.prototype.makeShape=function(mesh){
 /**
 * Removes all instances of a 3D shape from this scene.
 * @param {Shape|MultiShape} shape The 3D shape to remove.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.removeShape=function(shape){
  for(var i=0;i<this.shapes.length;i++){
@@ -1554,7 +1556,7 @@ Scene3D.prototype.removeShape=function(shape){
  * the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  this.lightSource.setDirectionalLight(index,position,diffuse,specular);
@@ -1572,7 +1574,7 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {number} a Alpha color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient=function(r,g,b,a){
  this.lightSource.ambient=GLUtil["toGLColor"](r,g,b,a);
@@ -1593,7 +1595,7 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
  * the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
  * May be null, in which case the default is (1, 1, 1).
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  this.lightSource.setPointLight(index,position,diffuse,specular);
@@ -1625,7 +1627,7 @@ Scene3D.prototype._setupMatrices=function(shape,program){
  * <li><code>view</code>, <code>viewMatrix</code>: this scene's view
  * matrix
  * </ul>
- * @return {Scene3D} This object.
+ * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(){
   if(typeof this.fboFilter!="undefined" && this.fboFilter){
@@ -1676,7 +1678,7 @@ Scene3D.prototype._renderShape=function(shape,program){
  * to the ShaderProgram.makeEffect() method.
  * If this value is null, texture filtering is disabled and shapes
  * are rendered to the canvas normally.
- * @return {Scene3D} This object.
+ * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.useFilter=function(filterProgram){
  if(filterProgram==null){
@@ -1730,6 +1732,8 @@ Scene3D.prototype._renderInner=function(){
  *  @class
 * @alias glutil.Shape
 * @param {BufferedMesh} mesh A mesh in the form of a vertex buffer object.
+* For {@link glutil.Mesh} objects, use the {@link glutil.Scene3D#makeShape}
+* method instead.
   */
 function Shape(mesh){
   if(mesh==null)throw new Error("mesh is null");
@@ -1768,7 +1772,7 @@ function Shape(mesh){
  * accordingly to the matrix given.
  * @param {Array<number>} value A 4x4 matrix.
  * This method will copy the value of this parameter.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
  */
 Shape.prototype.setMatrix=function(value){
  this._matrixDirty=false;
@@ -1792,7 +1796,7 @@ Shape.prototype.setMatrix=function(value){
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {number} a Alpha color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
 */
 Shape.prototype.setColor=function(r,g,b,a){
  this.material=Material.fromColor(r,g,b,a);
@@ -1801,7 +1805,7 @@ Shape.prototype.setColor=function(r,g,b,a){
 /**
  * Sets this shape's material to a texture with the given URL.
  * @param {string} name URL of the texture to use.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
  */
 Shape.prototype.setTexture=function(name){
  this.material=new Texture(name);
@@ -1810,7 +1814,7 @@ Shape.prototype.setTexture=function(name){
 /**
 * Sets this shape's material parameters.
 * @param {Material|TexturedMaterial} material
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
 */
 Shape.prototype.setMaterial=function(material){
  this.material=material;
@@ -1825,7 +1829,7 @@ Shape.prototype.setMaterial=function(material){
  * for width, height, and depth, respectively.
  * @param {number} y Scaling factor for this object's height.
  * @param {number} z Scaling factor for this object's depth.
-* @return {Scene3D} This object.
+* @return {glutil.Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
   if(x!=null && y==null && z==null){
@@ -1848,7 +1852,7 @@ Shape.prototype.setScale=function(x,y,z){
  * If "x" is an array, this parameter may be omitted.
  * @param {number} z The Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
  */
 Shape.prototype.setPosition=function(x,y,z){
   if(x!=null && y==null && z==null){
@@ -1868,7 +1872,7 @@ Shape.prototype.setPosition=function(x,y,z){
  * @param {Array<number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * and {@link glmath.GLMath.quatFromEuler}, among others.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
  * @example
  * // Set this shape's rotation to 30 degrees about the X-axis
  * shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
@@ -1902,7 +1906,7 @@ Shape.prototype.setQuaternion=function(quat){
  * of rotation.
  * @param {number} vz Z-component of the axis
  * of rotation.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
  */
 Shape.prototype.setRotation=function(angle, v,vy,vz){
  return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
@@ -1915,7 +1919,7 @@ Shape.prototype.setRotation=function(angle, v,vy,vz){
  * @param {Array<number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * or {@link glmath.GLMath.quatFromEuler}.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
  * @example
  * // Combine this shape's rotation with a rotation 20 degrees about the X-axis
  * shape.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
@@ -1946,7 +1950,7 @@ Shape.prototype.multQuaternion=function(quat){
  * of rotation.
  * @param {number} vz Z-component of the axis
  * of rotation.
- * @return {Shape} This object.
+ * @return {glutil.Shape} This object.
  */
 Shape.prototype.multRotation=function(angle, v,vy,vz){
  return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));

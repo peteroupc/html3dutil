@@ -15,24 +15,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
 ///////////////////////
 
+/** @private */
 function MaterialBinder(mshade){
  this.mshade=mshade;
 }
-/**
- * Sets parameters for a shader program based on
- * the information in this material data object.  It will set
- * the following uniforms;
- * <ul>
- * <li>textureSize - Set to (0,0), since no textures are being used.
- * <li>mshin - Specular reflection exponent.
- * <li>ma - Ambient reflection.
- * <li>md - Diffuse reflection.
- * <li>ms - Specular reflection.
- * </ul>
- * @param {ShaderProgram} program A shader program object
- * where the locations of material-related uniforms will be retrieved.
- * @return {MaterialBinder} This object.
- */
+
 MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
  program.setUniforms({
@@ -91,13 +78,7 @@ LoadedTexture.prototype.dispose=function(){
 function TextureBinder(tex){
  this.texture=tex;
 }
-/**
- * Sets up information about this texture and its materials
- * to a WebGL program.  If the texture image isn't loaded yet,
- * sets up a task to load that image.
- * @param {ShaderProgram} program The WebGL program in which
- * uniform values related to the texture will be set up.
- */
+
 TextureBinder.prototype.bind=function(program){
  var texture=this.texture;
  var context=program.getContext();
@@ -166,13 +147,6 @@ function LightsBinder(lights){
  this.lights=lights;
 }
 
-/**
- * Sets parameters for a shader program based on
- * the information in this light source object.
- * @param {ShaderProgram} program A shader program object
- * where locations of lighting uniforms will come from.
- * @return {LightsBinder} This object.
- */
 LightsBinder.prototype.bind=function(program){
  var lightsObject=this.lights;
  if(!lightsObject)return this;

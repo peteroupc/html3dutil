@@ -153,7 +153,7 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
  * @param {number} m A primitive type.  One of the following:
  * Mesh.TRIANGLES, Mesh.LINES, Mesh.TRIANGLE_STRIP,
  * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.
- * @return {Mesh} This object.
+ * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.mode=function(m){
  if(m<0)throw new Error("invalid mode");
@@ -177,9 +177,9 @@ Mesh.prototype.mode=function(m){
  * Also, resets the primitive
  * mode (see {@link glutil.Mesh#mode}) so that future vertices given
  * will not build upon previous vertices.
- * @param {Mesh} other A mesh to merge into this one. The mesh
+ * @param {glutil.Mesh} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
- * @return {Mesh} This object.
+ * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.merge=function(other){
  var lastMesh=this.subMeshes[this.subMeshes.length-1]
@@ -226,7 +226,7 @@ Mesh.prototype.merge=function(other){
   * @param {number} x X-coordinate of the normal.
   * @param {number} y Y-coordinate of the normal.
   * @param {number} z Z-coordinate of the normal.
-  * @return {Mesh} This object.
+  * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.normal3=function(x,y,z){
   this.normal[0]=x;
@@ -241,7 +241,7 @@ Mesh.prototype.normal3=function(x,y,z){
   * vertices added afterwards.
   * @param {Array<number>} matrix A 4x4 matrix describing
   * the transformation.
-  * @return {Mesh} This object.
+  * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.transform=function(matrix){
   for(var i=0;i<this.subMeshes.length;i++){
@@ -262,7 +262,7 @@ Mesh.prototype.normal3=function(x,y,z){
   * May be null or omitted if a string is given as the "r" parameter.
   * @param {number} b Blue component of the color (0-1).
   * May be null or omitted if a string is given as the "r" parameter.
-  * @return {Mesh} This object.
+  * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.color3=function(x,y,z){
   if(typeof x=="string"){
@@ -287,7 +287,7 @@ Mesh.prototype.normal3=function(x,y,z){
   * that mode.
   * @param {number} u X-coordinate of the texture, from 0-1.
   * @param {number} v Y-coordinate of the texture, from 0-1.
-  * @return {Mesh} This object.
+  * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.texCoord2=function(u,v){
   this.texCoord[0]=u;
@@ -303,7 +303,7 @@ Mesh.prototype.normal3=function(x,y,z){
   * @param {number} x X-coordinate of the vertex.
   * @param {number} y Y-coordinate of the vertex.
   * @param {number} z Z-coordinate of the vertex.
-  * @return {Mesh} This object.
+  * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.vertex3=function(x,y,z){
   this.subMeshes[this.subMeshes.length-1].vertex3(x,y,z,this);
@@ -319,7 +319,7 @@ Mesh.prototype.normal3=function(x,y,z){
   * May be null or omitted if a string is given as the "r" parameter.
   * @param {number} b Blue component of the color (0-1).
   * May be null or omitted if a string is given as the "r" parameter.
-  * @return {Mesh} This object.
+  * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.setColor3=function(r,g,b){
   var rr=r;
@@ -351,7 +351,7 @@ Mesh.prototype.setColor3=function(r,g,b){
   * appearance.
   * @param {boolean} inward If true, the generated normals
   * will point inward; otherwise, outward.
-  * @return {Mesh} This object.
+  * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.recalcNormals=function(flat,inward){
   for(var i=0;i<this.subMeshes.length;i++){
@@ -364,7 +364,7 @@ Mesh.prototype.setColor3=function(r,g,b){
 /**
  * Modifies this mesh by normalizing the normals it defines
  * to unit length.
- * @return {Mesh} This object.
+ * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.normalizeNormals=function(){
   for(var i=0;i<this.subMeshes.length;i++){
@@ -395,7 +395,7 @@ Mesh.prototype.normalizeNormals=function(){
  * contained in this one without copying the vertices.  Parts
  * of the mesh already consisting of line segments will remain
  * unchanged.
- * @return {Mesh} A new mesh with triangles converted
+ * @return {glutil.Mesh} A new mesh with triangles converted
  * to lines.
  */
 Mesh.prototype.toWireFrame=function(){

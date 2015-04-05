@@ -6,11 +6,6 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/**
-MatrixStack is a class that implements a stack
-of 4x4 transformation matrices.
-* @module matrixstack
-*/
 (function (g,f) {
 	if (typeof define=="function" && define.amd) {
 		define([ "exports" ], f);
@@ -26,7 +21,7 @@ MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>
 When the constructor is called, it will create a stack whose
 only element is the identity matrix.
- @alias matrixstack.MatrixStack
+ @alias MatrixStack
  @class
  */
 function MatrixStack(){
