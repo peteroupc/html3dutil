@@ -612,7 +612,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * colors are used for ambient reflection rather than this property.
  */
  this.ambient=ambient||[0.2,0.2,0.2];
- /** 
+ /**
  * Diffuse reflection of this material.<p>
  * Diffuse reflection indicates how much an object reflects
  * diffuse lights (lights that point
@@ -652,7 +652,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  this.emission=emission||[0,0,0];
  this.textureMap=null;
 }
-/** 
+/**
 * Clones this object's parameters to a new Material
 * object and returns that object. The material's texture
 * map, if any, won't be cloned, but rather, a reference

@@ -43,7 +43,7 @@ Examples
   // Create a box mesh 10 units in size
   var mesh=Meshes.createBox(10,10,10);
   // Create a shape based on the mesh and give it a red color
-  var shape=new Shape(mesh).setColor("red");
+  var shape=scene.makeShape(mesh).setColor("red");
   // Add the shape to the scene
   scene.addShape(shape);
   // Set the starting rotation
