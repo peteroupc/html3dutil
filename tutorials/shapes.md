@@ -214,10 +214,10 @@ Examples for setting appearance:
     // set Phong material parameters: ambient, diffuse,
     // specular, shininess (NOTE: if the mesh defines its own colors they
     // will override ambient and diffuse reflection given below)
-    shape.setMaterial(new MaterialShade("blue","blue","white",30));
+    shape.setMaterial(new Material("blue","blue","white",30));
     // set Phong material parameters: ambient, diffuse,
     // specular, shininess, emission
-    shape.setMaterial(new MaterialShade("lime","lime","white",30,[0.2,0.2,0.2]));
+    shape.setMaterial(new Material("lime","lime","white",30,[0.2,0.2,0.2]));
     // set a texture; this requires the mesh to have texture
     // coordinates assigned to each vertex
     shape.setMaterial(new TextureMaterial("texture.png"));

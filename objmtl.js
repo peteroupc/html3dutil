@@ -67,14 +67,14 @@ ObjData._resolvePath=function(path, name){
 /** @private */
 ObjData.prototype._getMaterial=function(mesh){
  if(!this.mtl || !mesh){
-  return new MaterialShade();
+  return new Material();
  } else {
   if(mesh.usemtl){
    var mtl=this.mtl.getMaterial(mesh.usemtl);
-   if(!mtl)return new MaterialShade();
+   if(!mtl)return new Material();
    return mtl;
   } else {
-   return new MaterialShade();
+   return new Material();
   }
  }
 }
@@ -149,10 +149,16 @@ MtlData._getMaterial=function(mtl){
  if(mtl.hasOwnProperty("Ks")){
   specular=xyzToRgb(mtl["Ks"]);
  }
- var ret=new MaterialShade(ambient,diffuse,specular,shininess,
+ var ret=new Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
-  ret.textureName=textureName;
+  ret=new TexturedMaterial(textureName).setParams({
+   "ambient":ambient,
+   "diffuse":diffuse,
+   "specular":specular,
+   "shininess":shininess,
+   "emission":emission
+  })
  }
  return ret;
 }

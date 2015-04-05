@@ -565,7 +565,7 @@ Lights.prototype.addPointLight=function(position,diffuse,specular){
 * disabling lighting calculations in the default shader, only
 * the diffuse property of this object is used.
 * @class
-* @alias glutil.MaterialShade
+* @alias glutil.Material
 * @param {Array<number>} ambient Ambient reflection.
 * Can be an array of three numbers,
 * ranging from 0 to 1 and giving the red, green, and blue components, respectively,
@@ -583,7 +583,7 @@ Lights.prototype.addPointLight=function(position,diffuse,specular){
 * range from -1 to 1.
 * May be null or omitted; default is (0,0,0).
 */
-function MaterialShade(ambient, diffuse, specular,shininess,emission) {
+function Material(ambient, diffuse, specular,shininess,emission) {
  if(ambient!=null)ambient=GLUtil["toGLColor"](ambient)
  if(diffuse!=null)diffuse=GLUtil["toGLColor"](diffuse)
  if(specular!=null)specular=GLUtil["toGLColor"](specular)
@@ -649,10 +649,10 @@ function MaterialShade(ambient, diffuse, specular,shininess,emission) {
  */
  this.emission=emission||[0,0,0];
 }
-/** Clones this object's parameters to a new MaterialShade
+/** Clones this object's parameters to a new Material
  object and returns that object. */
-MaterialShade.prototype.copy=function(){
- return new MaterialShade(
+Material.prototype.copy=function(){
+ return new Material(
   this.ambient.slice(0,this.ambient.length),
   this.diffuse.slice(0,this.diffuse.length),
   this.specular.slice(0,this.specular.length),
@@ -665,16 +665,16 @@ MaterialShade.prototype.copy=function(){
 * @param {object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
-* <li><code>ambient</code> - Ambient reflection (see {@link glutil.MaterialShade} constructor).
-* <li><code>diffuse</code> - Diffuse reflection (see {@link glutil.MaterialShade} constructor).
-* <li><code>specular</code> - Specular reflection (see {@link glutil.MaterialShade} constructor).
-* <li><code>shininess</code> - Specular reflection exponent (see {@link glutil.MaterialShade} constructor).
-* <li><code>emission</code> - Additive color (see {@link glutil.MaterialShade} constructor).
+* <li><code>ambient</code> - Ambient reflection (see {@link glutil.Material} constructor).
+* <li><code>diffuse</code> - Diffuse reflection (see {@link glutil.Material} constructor).
+* <li><code>specular</code> - Specular reflection (see {@link glutil.Material} constructor).
+* <li><code>shininess</code> - Specular reflection exponent (see {@link glutil.Material} constructor).
+* <li><code>emission</code> - Additive color (see {@link glutil.Material} constructor).
 * </ul>
 * If a value is null or undefined, it is ignored.
-* @return {MaterialShade} This object.
+* @return {Material} This object.
 */
-MaterialShade.prototype.setParams=function(params){
+Material.prototype.setParams=function(params){
  if(params["ambient"]!=null){
   this.ambient=GLUtil["toGLColor"](params.ambient);
  }
@@ -692,7 +692,7 @@ MaterialShade.prototype.setParams=function(params){
  }
  return this;
 }
-/** Convenience method that returns a MaterialShader
+/** Convenience method that returns a Material
  * object from an RGBA color.
 * @param {Array<number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
@@ -704,13 +704,13 @@ MaterialShade.prototype.setParams=function(params){
 * @param {number} a Alpha color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
  */
-MaterialShade.fromColor=function(r,g,b,a){
+Material.fromColor=function(r,g,b,a){
  var color=GLUtil["toGLColor"](r,g,b,a);
- return new MaterialShade(color,color);
+ return new Material(color,color);
 }
 
 /**
-*  Specifies light reflection parameters (as in MaterialShade) as well
+*  Specifies light reflection parameters (as in Material) as well
 *  as a texture map to apply to the surface of a shape.
 * @class
 * @alias glutil.TexturedMaterial
@@ -719,21 +719,24 @@ MaterialShade.fromColor=function(r,g,b,a){
 *  will not load that image yet.
 */
 function TexturedMaterial(texture){
- this.material=new MaterialShade();
+ this.material=new Material();
  this.map=new Texture(texture);
 }
+/**
+ * Not documented yet.
+ * @param {*} params
+ */
 TexturedMaterial.prototype.setParams=function(params){
  for(var key in params){
   if(key=="map"){
    this.map=params[key]
-  } else if(key=="ambient" || key=="diffuse" || key=="specular" || 
+  } else if(key=="ambient" || key=="diffuse" || key=="specular" ||
      key=="shininess" || key=="emission"){
    this.material.setParams({key:params[key]});
   }
  }
  return this;
 }
-
 
 ////////////////////
 
@@ -1069,7 +1072,7 @@ function FrameBuffer(context, width, height){
 /**
  * Returns a material object for binding to Shapes.
  * @return {Object} An object implementing the method
- * bind(program), similar to MaterialShade and Texture
+ * bind(program), similar to Material and Texture
  * objects, and exposing the texture this frame buffer uses.
  */
 FrameBuffer.prototype.getMaterial=function(){
@@ -1781,7 +1784,7 @@ MultiShape.prototype.setMaterial=function(material){
 function Shape(mesh){
   if(mesh==null)throw new Error("mesh is null");
   this.bufferedMesh=mesh;
-  this.material=new MaterialShade();
+  this.material=new Material();
   /**
   * A three-element array giving the scaling of this object for this shape's width,
   * height, and depth, respectively.
@@ -1842,7 +1845,7 @@ Shape.prototype.setMatrix=function(value){
  * @return {Shape} This object.
 */
 Shape.prototype.setColor=function(r,g,b,a){
- this.material=MaterialShade.fromColor(r,g,b,a);
+ this.material=Material.fromColor(r,g,b,a);
  return this;
 }
 /**
@@ -1856,7 +1859,7 @@ Shape.prototype.setTexture=function(name){
 }
 /**
 * Sets this shape's material parameters.
-* @param {MaterialShade|TexturedMaterial} material
+* @param {Material|TexturedMaterial} material
  * @return {Shape} This object.
 */
 Shape.prototype.setMaterial=function(material){
@@ -2023,7 +2026,7 @@ exports["FrameBuffer"]=FrameBuffer;
 exports["LightSource"]=LightSource;
 exports["Texture"]=Texture;
 exports["TexturedMaterial"]=TexturedMaterial;
-exports["MaterialShade"]=MaterialShade;
+exports["Material"]=Material;
 exports["MultiShape"]=MultiShape;
 exports["Shape"]=Shape;
 exports["Scene3D"]=Scene3D;

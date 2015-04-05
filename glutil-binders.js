@@ -15,7 +15,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
 ///////////////////////
 
-function MaterialShadeBinder(mshade){
+function MaterialBinder(mshade){
  this.mshade=mshade;
 }
 /**
@@ -31,9 +31,9 @@ function MaterialShadeBinder(mshade){
  * </ul>
  * @param {ShaderProgram} program A shader program object
  * where the locations of material-related uniforms will be retrieved.
- * @return {MaterialShadeBinder} This object.
+ * @return {MaterialBinder} This object.
  */
-MaterialShadeBinder.prototype.bind=function(program){
+MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
  program.setUniforms({
  "textureSize":[0,0],
@@ -48,7 +48,7 @@ MaterialShadeBinder.prototype.bind=function(program){
 
 function TexturedMaterialBinder(mat){
  this.mat=mat;
- this.matbinder=new MaterialShadeBinder(mat.material);
+ this.matbinder=new MaterialBinder(mat.material);
 }
 TexturedMaterialBinder.prototype.bind=function(program){
  // Sets textureSize to (0,0)
@@ -56,7 +56,6 @@ TexturedMaterialBinder.prototype.bind=function(program){
  // Sets textureSize to image size
  new TextureBinder(this.mat.map).bind(program);
 }
-
 
 //////////////////////////
 
@@ -201,8 +200,8 @@ LightsBinder.prototype.bind=function(program){
 var Binders={};
 Binders.getMaterialBinder=function(material){
  if(material){
- if(material instanceof MaterialShade){
-  return new MaterialShadeBinder(material);
+ if(material instanceof Material){
+  return new MaterialBinder(material);
  }
  if(material instanceof Texture){
   return new TextureBinder(material);
