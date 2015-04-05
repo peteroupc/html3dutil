@@ -684,7 +684,9 @@ quatSlerp:function(q1,q2,factor){
 },
 /**
  * Multiplies a quaternion by a rotation transformation
- * described as an angle and axis of rotation.<p>
+ * described as an angle and axis of rotation.
+ * The result is such that the angle-axis
+ * rotation happens before the quaternion's rotation.<p>
  * This method is equivalent to the following:<pre>
  * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
  * </pre>
@@ -1221,8 +1223,10 @@ mat4multiply:function(a,b){
 },
 /**
 * Multiplies two quaternions, creating a composite rotation.
- * @param {*} a The first quaternion.
- * @param {*} b The second quaternion.
+* The quaternions are multiplied such that the second quaternion's
+* rotation happens before the first quaternion's rotation.
+ * @param {Array<number>} a The first quaternion.
+ * @param {Array<number>} b The second quaternion.
  * @return {Array<number>} The resulting quaternion.
 */
 quatMultiply:function(a,b){
@@ -1442,7 +1446,7 @@ GLMath.quatNorm=GLMath.vec4norm;
 GLMath.quatLength=GLMath.vec4length;
 /**
  * Multiplies each element of a quaternion by a factor
- * and stores the result in that vector.
+ * and stores the result in that quaternion.
  * @function
  * @param {Array<number>} a A quaternion.
  * @param {number} scalar A factor to multiply.
