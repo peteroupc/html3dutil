@@ -890,13 +890,6 @@ BufferedMesh.prototype.dispose=function(){
  }
 }
 /** @private */
-BufferedMesh._vertexAttrib=function(context, attrib, size, type, stride, offset){
-  if(attrib!==null){
-    context.enableVertexAttribArray(attrib);
-    context.vertexAttribPointer(attrib,size,type,false,stride,offset);
-  }
-}
-/** @private */
 function BufferedSubMesh(mesh, context){
  var vertbuffer=context.createBuffer();
  var facebuffer=context.createBuffer();
@@ -941,7 +934,13 @@ BufferedSubMesh.prototype.dispose=function(){
  */
 BufferedSubMesh.prototype.draw=function(program){
   // Binding phase
-    var context=program.getContext();
+  function _vertexAttrib(context, attrib, size, type, stride, offset){
+    if(attrib!==null){
+      context.enableVertexAttribArray(attrib);
+      context.vertexAttribPointer(attrib,size,type,false,stride,offset);
+    }
+  }
+  var context=program.getContext();
   if(this.verts==null || this.faces==null){
    throw new Error("mesh buffer disposed");
   }
@@ -955,13 +954,13 @@ BufferedSubMesh.prototype.draw=function(program){
   var boundAttributes=[];
   var attr=program.get("position");
   boundAttributes.push(attr)
-  BufferedMesh._vertexAttrib(context,
+  _vertexAttrib(context,
     attr, 3, context.FLOAT, stride*4, 0);
   var offset=Mesh.normalOffset(format);
   if(offset>=0){
    attr=program.get("normal");
    boundAttributes.push(attr)
-   BufferedMesh._vertexAttrib(context,
+   _vertexAttrib(context,
     attr, 3,
     context.FLOAT, stride*4, offset*4);
   }
@@ -970,7 +969,7 @@ BufferedSubMesh.prototype.draw=function(program){
    program.setUniforms({"useColorAttr":1.0});
    attr=program.get("colorAttr");
    boundAttributes.push(attr)
-   BufferedMesh._vertexAttrib(context,
+   _vertexAttrib(context,
     attr, 3,
     context.FLOAT, stride*4, offset*4);
   } else {
@@ -980,7 +979,7 @@ BufferedSubMesh.prototype.draw=function(program){
   if(offset>=0){
    attr=program.get("uv");
    boundAttributes.push(attr)
-   BufferedMesh._vertexAttrib(context,
+   _vertexAttrib(context,
      attr, 2,
     context.FLOAT, stride*4, offset*4);
   }

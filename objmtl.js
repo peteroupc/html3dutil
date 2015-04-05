@@ -22,12 +22,15 @@ function MtlData(){
   this.list=[];
 }
 /**
- * Not documented yet.
+ * Creates one or more 3D shapes from the data
+ * in this OBJ file.
+ * @param {Scene3D} scene 3D scene to load the shape with.
+ * @return {Array<Shape>} Array of shapes.
  */
-ObjData.prototype.toShape=function(){
+ObjData.prototype.toShape=function(scene){
  var multi=[];
  for(var i=0;i<this.meshes.length;i++){
-  var shape=new Shape(this.meshes[i].data);
+  var shape=scene.makeShape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.push(shape);
@@ -35,14 +38,18 @@ ObjData.prototype.toShape=function(){
  return multi;
 }
 /**
- * Not documented yet.
- * @param {*} name
+ * Creates one or more 3D shapes from the named portion
+ * of the data in this OBJ file.
+ * @param {Scene3D} scene 3D scene to load the shape with.
+ * @param {string} name Name from the OBJ file of the portion
+ * of the model to use.
+ * @return {Array<Shape>} Array of shapes.
  */
-ObjData.prototype.toShapeFromName=function(name){
+ObjData.prototype.toShapeFromName=function(scene, name){
  var multi=[];
  for(var i=0;i<this.meshes.length;i++){
   if(this.meshes[i].name!=name)continue;
-  var shape=new Shape(this.meshes[i].data);
+  var shape=scene.makeShape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.push(shape);
