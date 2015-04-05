@@ -46,12 +46,26 @@ MaterialShadeBinder.prototype.bind=function(program){
  return this;
 }
 
+function TexturedMaterialBinder(mat){
+ this.mat=mat;
+ this.matbinder=new MaterialShadeBinder(mat.material);
+}
+TexturedMaterialBinder.prototype.bind=function(program){
+ // Sets textureSize to (0,0)
+ this.matbinder.bind(program);
+ // Sets textureSize to image size
+ new TextureBinder(this.mat.map).bind(program);
+}
+
+
 //////////////////////////
 
 function LoadedTexture(textureImage, context){
   context=GLUtil._toContext(context);
   this.context=context;
+  this.textureUnit=0;
   this.loadedTexture=context.createTexture();
+  context.activeTexture(context.TEXTURE0+this.textureUnit);
   // In WebGL, texture coordinates start at the upper left corner rather than
   // the lower left as in OpenGL and OpenGL ES, so we use this method call
   // to reestablish the lower left corner.
@@ -111,9 +125,10 @@ TextureBinder.prototype.bind=function(program){
         texture.anisotropic={};
        }
       }
+      uniforms["sampler"]=texture.loadedTexture.textureUnit;
       uniforms["textureSize"]=[texture.width,texture.height];
       program.setUniforms(uniforms);
-      context.activeTexture(context.TEXTURE0);
+      context.activeTexture(context.TEXTURE0+texture.loadedTexture.textureUnit);
       context.bindTexture(context.TEXTURE_2D,
         texture.loadedTexture.loadedTexture);
       // Set texture parameters
@@ -191,6 +206,9 @@ Binders.getMaterialBinder=function(material){
  }
  if(material instanceof Texture){
   return new TextureBinder(material);
+ }
+ if(material instanceof TexturedMaterial){
+  return new TexturedMaterialBinder(material);
  }
  }
  // Return an empty binding object

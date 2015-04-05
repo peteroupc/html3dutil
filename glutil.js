@@ -660,6 +660,38 @@ MaterialShade.prototype.copy=function(){
   this.emission.slice(0,this.emission.length)
  )
 }
+/**
+* Sets parameters for this material object.
+* @param {object} params An object whose keys have
+* the possibilities given below, and whose values are those
+* allowed for each key.<ul>
+* <li><code>ambient</code> - Ambient reflection (see {@link glutil.MaterialShade} constructor).
+* <li><code>diffuse</code> - Diffuse reflection (see {@link glutil.MaterialShade} constructor).
+* <li><code>specular</code> - Specular reflection (see {@link glutil.MaterialShade} constructor).
+* <li><code>shininess</code> - Specular reflection exponent (see {@link glutil.MaterialShade} constructor).
+* <li><code>emission</code> - Additive color (see {@link glutil.MaterialShade} constructor).
+* </ul>
+* If a value is null or undefined, it is ignored.
+* @return {MaterialShade} This object.
+*/
+MaterialShade.prototype.setParams=function(params){
+ if(params["ambient"]!=null){
+  this.ambient=GLUtil["toGLColor"](params.ambient);
+ }
+ if(params["diffuse"]!=null){
+  this.diffuse=GLUtil["toGLColor"](params.diffuse);
+ }
+ if(params["specular"]!=null){
+  this.specular=GLUtil["toGLColor"](params.specular);
+ }
+ if(params["emission"]!=null){
+  this.emission=GLUtil["toGLColor"](params.emission);
+ }
+ if(params["shininess"]!=null){
+  this.shininess=params.shininess;
+ }
+ return this;
+}
 /** Convenience method that returns a MaterialShader
  * object from an RGBA color.
 * @param {Array<number>|number|string} r Array of three or
@@ -676,6 +708,32 @@ MaterialShade.fromColor=function(r,g,b,a){
  var color=GLUtil["toGLColor"](r,g,b,a);
  return new MaterialShade(color,color);
 }
+
+/**
+*  Specifies light reflection parameters (as in MaterialShade) as well
+*  as a texture map to apply to the surface of a shape.
+* @class
+* @alias glutil.TexturedMaterial
+* @param {string} name URL of the texture data.  It will be loaded via
+*  the JavaScript DOM's Image class.  However, this constructor
+*  will not load that image yet.
+*/
+function TexturedMaterial(texture){
+ this.material=new MaterialShade();
+ this.map=new Texture(texture);
+}
+TexturedMaterial.prototype.setParams=function(params){
+ for(var key in params){
+  if(key=="map"){
+   this.map=params[key]
+  } else if(key=="ambient" || key=="diffuse" || key=="specular" || 
+     key=="shininess" || key=="emission"){
+   this.material.setParams({key:params[key]});
+  }
+ }
+ return this;
+}
+
 
 ////////////////////
 
@@ -1154,10 +1212,7 @@ Scene3D.prototype._getDefines=function(){
 }
 /** @private */
 Scene3D.prototype._initProgramData=function(){
-  this.program.setUniforms({
-    "sampler":0,
-  });
-  new LightsBinder(this.lightSource).bind(this.program);
+ new LightsBinder(this.lightSource).bind(this.program);
  this._updateMatrix();
 }
 /**
@@ -1456,8 +1511,12 @@ Scene3D.prototype.addShape=function(shape){
  return this;
 }
 /**
- * Not documented yet.
- * @param {*} mesh
+ * Creates a vertex buffer from a geometric mesh and
+ * returns a shape object.
+ * @param {Mesh} mesh A geometric mesh object.  The shape
+ * created will use the mesh in its current state and won't
+ * track future changes.
+ * @return {Shape} The generated shape object.
  */
 Scene3D.prototype.makeShape=function(mesh){
  var buffer=new BufferedMesh(mesh,this.context);
@@ -1797,7 +1856,7 @@ Shape.prototype.setTexture=function(name){
 }
 /**
 * Sets this shape's material parameters.
-* @param {MaterialShade|Texture} material
+* @param {MaterialShade|TexturedMaterial} material
  * @return {Shape} This object.
 */
 Shape.prototype.setMaterial=function(material){
@@ -1855,7 +1914,7 @@ Shape.prototype.setPosition=function(x,y,z){
  * for describing 3D rotations).
  * @param {Array<number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
- * or {@link glmath.GLMath.quatFromEuler}.
+ * and {@link glmath.GLMath.quatFromEuler}, among others.
  * @return {Shape} This object.
  * @example
  * // Set this shape's rotation to 30 degrees about the X-axis
@@ -1963,6 +2022,7 @@ exports["Lights"]=Lights;
 exports["FrameBuffer"]=FrameBuffer;
 exports["LightSource"]=LightSource;
 exports["Texture"]=Texture;
+exports["TexturedMaterial"]=TexturedMaterial;
 exports["MaterialShade"]=MaterialShade;
 exports["MultiShape"]=MultiShape;
 exports["Shape"]=Shape;

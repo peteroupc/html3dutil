@@ -220,7 +220,7 @@ Examples for setting appearance:
     shape.setMaterial(new MaterialShade("lime","lime","white",30,[0.2,0.2,0.2]));
     // set a texture; this requires the mesh to have texture
     // coordinates assigned to each vertex
-    shape.setMaterial(new Texture("texture.png"));
+    shape.setMaterial(new TextureMaterial("texture.png"));
 
 Examples for setting position:
 
