@@ -3,7 +3,7 @@ Written by Peter O. in 2015.
 
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/
-If you like lightsObject, you should donate to Peter O.
+If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
@@ -23,25 +23,17 @@ function MaterialBinder(mshade){
 MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
  program.setUniforms({
- "textureSize":[0,0],
- "mshin":this.mshade.shininess,
- "ma":[this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
- "md":[this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2]],
- "ms":[this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
- "me":[this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
+  "textureSize":[0,0],
+  "mshin":this.mshade.shininess,
+  "ma":[this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
+  "md":[this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2]],
+  "ms":[this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]], 
+  "me":[this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
  });
+ if(this.mshade.textureMap){
+  new TextureBinder(this.mshade.textureMap).bind(program);
+ }
  return this;
-}
-
-function TexturedMaterialBinder(mat){
- this.mat=mat;
- this.matbinder=new MaterialBinder(mat.material);
-}
-TexturedMaterialBinder.prototype.bind=function(program){
- // Sets textureSize to (0,0)
- this.matbinder.bind(program);
- // Sets textureSize to image size
- new TextureBinder(this.mat.map).bind(program);
 }
 
 //////////////////////////
@@ -75,11 +67,11 @@ LoadedTexture.prototype.dispose=function(){
 
 /////////////////////////////////
 
-function FrameBufferBinder(fb){
+function FrameBufferMaterialBinder(fb){
  this.fb=fb;
 }
 
-FrameBufferBinder.prototype.bind=function(program){
+FrameBufferMaterialBinder.prototype.bind=function(program){
       var uniforms={};
       var textureUnit=0;
       uniforms["sampler"]=this.fb.textureUnit;
@@ -207,10 +199,7 @@ Binders.getMaterialBinder=function(material){
   return new TextureBinder(material);
  }
  if(material instanceof FrameBuffer){
-  return new FrameBufferBinder(material);
- }
- if(material instanceof TexturedMaterial){
-  return new TexturedMaterialBinder(material);
+  return new FrameBufferMaterialBinder(material);
  }
  }
  // Return an empty binding object

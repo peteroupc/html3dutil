@@ -558,12 +558,13 @@ Lights.prototype.addPointLight=function(position,diffuse,specular){
 }
 
 /**
-* Specifies parameters for geometry materials, particularly, how an
-* object reflects or absorbs light.<p>
+* Specifies parameters for geometry materials, which describe the appearance of a
+* 3D object. This includes how an object reflects or absorbs light, as well
+* as well as a texture image to apply on that object's surface.<p>
 * The full structure is only used if the shader program supports lighting, as the
 * default shader program does.  If [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting} is called,
-* disabling lighting calculations in the default shader, only
-* the diffuse property of this object is used.
+* disabling lighting calculations in the default shader, the "ambient", "specular", "shininess",
+* and "emission" properties of this object are not used.
 * @class
 * @alias glutil.Material
 * @param {Array<number>} ambient Ambient reflection.
@@ -611,7 +612,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * colors are used for ambient reflection rather than this property.
  */
  this.ambient=ambient||[0.2,0.2,0.2];
- /** Diffuse reflection of this material.<p>
+ /** 
+ * Diffuse reflection of this material.<p>
  * Diffuse reflection indicates how much an object reflects
  * diffuse lights (lights that point
  * directly on the object) in the red, green, and blue components.
@@ -648,9 +650,15 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * while negative values subtract from it. (0,0,0) means no additive color.
  */
  this.emission=emission||[0,0,0];
+ this.textureMap=null;
 }
-/** Clones this object's parameters to a new Material
- object and returns that object. */
+/** 
+* Clones this object's parameters to a new Material
+* object and returns that object. The material's texture
+* map, if any, won't be cloned, but rather, a reference
+* to the same object will be used.
+* @return {glutil.Material} A copy of this object.
+*/
 Material.prototype.copy=function(){
  return new Material(
   this.ambient.slice(0,this.ambient.length),
@@ -658,7 +666,7 @@ Material.prototype.copy=function(){
   this.specular.slice(0,this.specular.length),
   this.shininess,
   this.emission.slice(0,this.emission.length)
- )
+ ).setParams({"textureMap":this.textureMap});
 }
 /**
 * Sets parameters for this material object.
@@ -670,9 +678,11 @@ Material.prototype.copy=function(){
 * <li><code>specular</code> - Specular reflection (see {@link glutil.Material} constructor).
 * <li><code>shininess</code> - Specular reflection exponent (see {@link glutil.Material} constructor).
 * <li><code>emission</code> - Additive color (see {@link glutil.Material} constructor).
+* <li><code>textureMap</code> - {@link glutil.Texture} object, or a string with the URL of the texture
+* to use.
 * </ul>
 * If a value is null or undefined, it is ignored.
-* @return {Material} This object.
+* @return {glutil.Material} This object.
 */
 Material.prototype.setParams=function(params){
  if(params["ambient"]!=null){
@@ -690,6 +700,14 @@ Material.prototype.setParams=function(params){
  if(params["shininess"]!=null){
   this.shininess=params.shininess;
  }
+ if(params["textureMap"]!=null){
+   var param=params["textureMap"]
+   if(typeof param=="string"){
+    this.textureMap=new Texture(param)
+   } else {
+    this.textureMap=param
+   }
+ }
  return this;
 }
 /** Convenience method that returns a Material
@@ -703,39 +721,22 @@ Material.prototype.setParams=function(params){
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {number} a Alpha color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
+* @return {glutil.Material} The resulting material object.
  */
 Material.fromColor=function(r,g,b,a){
  var color=GLUtil["toGLColor"](r,g,b,a);
  return new Material(color,color);
 }
 
-/**
-*  Specifies light reflection parameters (as in Material) as well
-*  as a texture map to apply to the surface of a shape.
-* @class
-* @alias glutil.TexturedMaterial
-* @param {string} name URL of the texture data.  It will be loaded via
+/** Convenience method that returns a Material
+ * object from a texture to apply to a 3D object's surface.
+* @param {string} texture URL of the texture data.  It will be loaded via
 *  the JavaScript DOM's Image class.  However, this constructor
 *  will not load that image yet.
-*/
-function TexturedMaterial(texture){
- this.material=new Material();
- this.map=new Texture(texture);
-}
-/**
- * Not documented yet.
- * @param {*} params
+* @return {glutil.Material} The resulting material object.
  */
-TexturedMaterial.prototype.setParams=function(params){
- for(var key in params){
-  if(key=="map"){
-   this.map=params[key]
-  } else if(key=="ambient" || key=="diffuse" || key=="specular" ||
-     key=="shininess" || key=="emission"){
-   this.material.setParams({key:params[key]});
-  }
- }
- return this;
+Material.fromTexture=function(texture){
+ return new Material().setParams({"textureMap":texture});
 }
 
 ////////////////////
@@ -1791,12 +1792,12 @@ Shape.prototype.setColor=function(r,g,b,a){
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setTexture=function(name){
- this.material=new TexturedMaterial(name);
+ this.material=Material.fromTexture(name);
  return this;
 }
 /**
 * Sets this shape's material parameters.
-* @param {Material|TexturedMaterial} material
+* @param {Material} material
  * @return {glutil.Shape} This object.
 */
 Shape.prototype.setMaterial=function(material){
@@ -1962,7 +1963,6 @@ exports["Lights"]=Lights;
 exports["FrameBuffer"]=FrameBuffer;
 exports["LightSource"]=LightSource;
 exports["Texture"]=Texture;
-exports["TexturedMaterial"]=TexturedMaterial;
 exports["Material"]=Material;
 exports["Shape"]=Shape;
 exports["Scene3D"]=Scene3D;
