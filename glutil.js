@@ -1042,9 +1042,16 @@ function FrameBuffer(context, width, height){
  this.context.texImage2D(this.context.TEXTURE_2D, 0,
    this.context.RGBA, this.width, this.height, 0,
    this.context.RGBA, this.context.UNSIGNED_BYTE, null);
- // set minification filter now; this buffer won't use mipmaps
+ // set essential parameters now to eliminate warnings (will
+ // be set again as the texture is bound)
+  this.context.texParameteri(this.context.TEXTURE_2D,
+   this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
  this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
+  this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
+ this.context.texParameteri(this.context.TEXTURE_2D,
+  this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
+ this.context.texParameteri(this.context.TEXTURE_2D,
+  this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
  // create depth renderbuffer
  this.depthbuffer=this.context.createRenderbuffer();
  var oldBuffer=this.context.getParameter(
