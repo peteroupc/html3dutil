@@ -25,12 +25,12 @@ function MtlData(){
  * Not documented yet.
  */
 ObjData.prototype.toShape=function(){
- var multi=new MultiShape();
+ var multi=[];
  for(var i=0;i<this.meshes.length;i++){
   var shape=new Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
-  multi.add(shape);
+  multi.push(shape);
  }
  return multi;
 }
@@ -39,13 +39,13 @@ ObjData.prototype.toShape=function(){
  * @param {*} name
  */
 ObjData.prototype.toShapeFromName=function(name){
- var multi=new MultiShape();
+ var multi=[];
  for(var i=0;i<this.meshes.length;i++){
   if(this.meshes[i].name!=name)continue;
   var shape=new Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
-  multi.add(shape);
+  multi.push(shape);
  }
  return multi;
 }

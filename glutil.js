@@ -1722,56 +1722,6 @@ Scene3D.prototype._renderInner=function(){
   return this;
 }
 
-/** A shape object that gathers multiple shapes
- and treats them as one bigger shape.
-    @class
-* @alias glutil.MultiShape
- */
-function MultiShape(){
- this.shapes=[];
-}
-/** Sets the scaling for each individual shape. */
-MultiShape.prototype.setScale=function(x,y,z){
- for(var i=0;i<this.shapes.length;i++){
-  this.shapes[i].setScale(x,y,z);
- }
-}
-/**
- *
- * @param {*} program
- */
-MultiShape.prototype.render=function(program){
- for(var i=0;i<this.shapes.length;i++){
-  this.shapes[i].render(program);
- }
-}
-/**
- *
- * @param {*} context
- */
-MultiShape.prototype.loadMesh=function(context){
- for(var i=0;i<this.shapes.length;i++){
-  this.shapes[i].loadMesh(context);
- }
- return this;
-}
-/**
- *
- * @param {*} shape
- */
-MultiShape.prototype.add=function(shape){
- this.shapes.push(shape);
-}
-/**
- * Not documented yet.
- * @param {*} material
- */
-MultiShape.prototype.setMaterial=function(material){
- for(var i=0;i<this.shapes.length;i++){
-  this.shapes[i].setMaterial(material);
- }
-}
-
 /**
 * An object that associates a geometric mesh (the shape of the object) with
 *  material data (which defines what is seen on the object's surface)
@@ -2027,7 +1977,6 @@ exports["LightSource"]=LightSource;
 exports["Texture"]=Texture;
 exports["TexturedMaterial"]=TexturedMaterial;
 exports["Material"]=Material;
-exports["MultiShape"]=MultiShape;
 exports["Shape"]=Shape;
 exports["Scene3D"]=Scene3D;
 exports["GLUtil"]=GLUtil;
