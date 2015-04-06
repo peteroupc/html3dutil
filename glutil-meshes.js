@@ -146,11 +146,17 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
    var radiusEnd=baseRad+(topRad-baseRad)*zEnd;
    lastZ=zEnd;
    lastRad=radiusEnd;
+   // for downward pointing cones
    var triangleFanBase=(i==0 && baseRad==0);
+   // for upward pointing cones
    var triangleFanTop=(i==stacks-1 && topRad==0);
    mesh.mode((triangleFanBase || triangleFanTop) ?
      Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
-   {
+   if(triangleFanTop){
+    mesh.texCoord2(1,zEnd);
+    mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
+    mesh.vertex3(0,radiusEnd,zEndHeight);
+   } else {
     mesh.texCoord2(1,zStart);
     mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusStart,zStartHeight);
@@ -158,12 +164,12 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
     mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusEnd,zEndHeight);
    }
-   if(triangleFanBase || triangleFanTop){
-   for(var k=slicesTimes2,j=slicesTimes2/2;k>=2;k-=2,j--){
-    var tx=tc[j];
-    var x,y;
-    x=sc[k];
-    y=sc[k+1];
+   if(triangleFanTop){
+   for(var k=slicesTimes2,j=slicesTimes2/2;k>=0;k-=2,j--){
+     var tx=tc[j];
+     var x,y;
+     x=sc[k];
+     y=sc[k+1];
      mesh.texCoord2(1-tx,zStart);
      mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
      mesh.vertex3(x*radiusStart,y*radiusStart,zStartHeight);
@@ -174,9 +180,11 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
     var x,y;
     x=sc[k];
     y=sc[k+1];
+    if(!triangleFanBase){
      mesh.texCoord2(1-tx,zStart);
      mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
      mesh.vertex3(x*radiusStart,y*radiusStart,zStartHeight);
+     }
      mesh.texCoord2(1-tx,zEnd);
      mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
      mesh.vertex3(x*radiusEnd,y*radiusEnd,zEndHeight);
