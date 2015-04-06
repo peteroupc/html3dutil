@@ -398,8 +398,8 @@ vector is transformed with this matrix, its W component is generated as follows:
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
 
-The W component of the transformed vector is used to help determine the "depth" of
-the transformed vector.
+The graphics system (outside of this JavaScript library) uses this W component
+to help achieve the perspective rendering effect.
 
 Related functions:
 

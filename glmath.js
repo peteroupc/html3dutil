@@ -533,7 +533,7 @@ return ret;
  * @param {number|null} mode Specifies the order in which the rotations will occur (in terms of their effect).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
  * and GLMath.RollYawPitch. If null or omitted, the rotation will be
- * described as the effect of a roll, then pitch, then yaw.
+ * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
  * @return {Array<number>} The generated quaternion.
  */
 quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
@@ -579,7 +579,7 @@ quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
  * and GLMath.RollYawPitch. If null or omitted, the rotation will be
- * described as the effect of a roll, then pitch, then yaw.
+ * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
  * @return {Array<number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
  * angle, if the corresponding axis points toward
@@ -1482,32 +1482,32 @@ GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
 */
 GLMath.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
-* Indicates that a rotation occurs as a pitch, then yaw, then roll.
+* Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
 * @const
 */
 GLMath.PitchYawRoll = 0;
 /**
-* Indicates that a rotation occurs as a pitch, then roll, then yaw.
+* Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
 * @const
 */
 GLMath.PitchRollYaw = 1;
 /**
-* Indicates that a rotation occurs as a yaw, then pitch, then roll.
+* Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 * @const
 */
 GLMath.YawPitchRoll = 2;
 /**
-* Indicates that a rotation occurs as a yaw, then roll, then pitch.
+* Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 * @const
 */
 GLMath.YawRollPitch = 3;
 /**
-* Indicates that a rotation occurs as a roll, then pitch, then yaw.
+* Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
 * @const
 */
 GLMath.RollPitchYaw = 4;
 /**
-* Indicates that a rotation occurs as a roll, then yaw, then pitch.
+* Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 * @const
 */
 GLMath.RollYawPitch = 5;
