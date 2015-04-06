@@ -511,7 +511,8 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
-var ret=[v0,v1,v2,cost];
+var vec=GLMath.vec3normInPlace([v0,v1,v2]);
+var ret=[vec[0],vec[1],vec[2],cost];
 ret[0]*=sint;
 ret[1]*=sint;
 ret[2]*=sint;

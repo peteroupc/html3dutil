@@ -113,8 +113,7 @@ function shiny(color){
   );
   var mesh;
   var dims=4.5*2/Math.sqrt(3);
-  mesh=Meshes.createBox(dims,dims,dims)
-    .transform(GLMath.mat4rotated(20,1,1,0));
+  mesh=Meshes.createBox(dims,dims,dims);
   scene.addShape(
     scene.makeShape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron

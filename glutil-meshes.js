@@ -173,7 +173,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
      mesh.texCoord2(1-tx,zStart);
      mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
      mesh.vertex3(x*radiusStart,y*radiusStart,zStartHeight);
-    }   
+    }
    } else {
    for(var k=2,j=1;k<=slicesTimes2;k+=2,j++){
     var tx=tc[j];
@@ -360,7 +360,7 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
      mesh.vertex3(x*radiusEnd,y*radiusEnd,0);
      mesh.texCoord2((1+(x*rso))*0.5,(1+(y*rso))*0.5);
      mesh.vertex3(x*radiusStart,y*radiusStart,0);
-    }   
+    }
    }
   }
   return mesh;

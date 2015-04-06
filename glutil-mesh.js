@@ -7,7 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-
 /**
 * Specifies the triangles and lines that make up a geometric shape.
 * See the "{@tutorial shapes}" tutorial.
@@ -28,7 +27,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 *  <li> 3 more elements if Mesh.COLORS_BIT is set, plus
 *  <li> 2 more elements if Mesh.TEXCOORDS_BIT is set.</ul>
 * If Mesh.LINES_BIT is set, each vertex index specifies a point of a line
-* segment.
+* segment. If Mesh.POINTS_BIT is set, each vertex index specifies an
+* individual point. Both bits can't be set.
 * May be null or omitted, in which case "format" is set to 0.
 */
 function Mesh(vertices,indices,format){
@@ -49,6 +49,8 @@ function Mesh(vertices,indices,format){
 Mesh._primitiveType=function(mode){
  if(mode==Mesh.LINES || mode==Mesh.LINE_STRIP)
   return Mesh.LINES;
+ else if(mode==Mesh.POINTS)
+  return Mesh.POINTS;
  else
   return Mesh.TRIANGLES;
 }
@@ -162,8 +164,11 @@ Mesh.prototype.mode=function(m){
  if(this.currentMode==-1 ||
    !Mesh._isCompatibleMode(this.currentMode,m)){
    var format=0;
-   if(Mesh._primitiveType(m)==Mesh.LINES)
+   var primtype=Mesh._primitiveType(m);
+   if(primtype==Mesh.LINES)
     format|=Mesh.LINES_BIT;
+   else if(primtype==Mesh.POINTS)
+    format|=Mesh.POINTS_BIT;
    this.subMeshes.push(new SubMesh([],[],format));
    this.currentMode=m;
  } else {
@@ -185,12 +190,12 @@ Mesh.prototype.mode=function(m){
  */
 Mesh.prototype.merge=function(other){
  var lastMesh=this.subMeshes[this.subMeshes.length-1]
- var prim=lastMesh ? (lastMesh.attributeBits&Mesh.LINES_BIT) : 0;
+ var prim=lastMesh ? (lastMesh.attributeBits&Mesh.PRIMITIVES_BITS) : 0;
  for(var i=0;i<other.subMeshes.length;i++){
   var sm=other.subMeshes[i];
   if(sm.indices.length==0)continue;
   if(!lastMesh ||
-     (sm.attributeBits&Mesh.LINES_BIT)!=prim ||
+     (sm.attributeBits&Mesh.PRIMITIVES_BITS)!=prim ||
      (lastMesh.vertices.length+sm.vertices.length)>65535*3 ||
      lastMesh.attributeBits!=sm.attributeBits){
    // Add new submesh because its primitive type
@@ -202,7 +207,7 @@ Mesh.prototype.merge=function(other){
     sm.indices.slice(0,sm.indices.length),
     sm.attributeBits);
    this.subMeshes.push(lastMesh);
-   prim=(lastMesh.attributeBits&Mesh.LINES_BIT);
+   prim=(lastMesh.attributeBits&Mesh.PRIMITIVES_BITS);
   } else {
    // Add to existing submesh
    var oldVertexLength=lastMesh.vertexCount();
@@ -253,7 +258,7 @@ Mesh.prototype.normal3=function(x,y,z){
  }
  /**
   * Sets the current color for this mesh.  Future vertex positions
-  * defined (with vertex3()) will have this color.The new current
+  * defined (with vertex3()) will have this color. The new current
   * color will apply to future vertices even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.
@@ -334,9 +339,7 @@ Mesh.prototype.setColor3=function(r,g,b){
    bb=c[2];
   }
   for(var i=0;i<this.subMeshes.length;i++){
-   if((this.subMeshes[i].attributeBits&Mesh.LINES_BIT)==0){
     this.subMeshes[i].setColor3(rr,gg,bb);
-   }
   }
   return this;
 }
@@ -357,7 +360,7 @@ Mesh.prototype.setColor3=function(r,g,b){
   */
  Mesh.prototype.recalcNormals=function(flat,inward){
   for(var i=0;i<this.subMeshes.length;i++){
-   if((this.subMeshes[i].attributeBits&Mesh.LINES_BIT)==0){
+   if((this.subMeshes[i].attributeBits&Mesh.PRIMITIVES_BITS)==0){
     this.subMeshes[i].recalcNormals(flat,inward);
    }
   }
@@ -413,6 +416,10 @@ function SubMesh(vertices,faces,format){
  this.vertices=vertices||[];
  this.indices=faces||[];
  this.startIndex=0;
+ var prim=(format&Mesh.PRIMITIVES_BITS);
+ if(prim!=0 && prim!=Mesh.LINES_BIT && prim!=Mesh.POINTS_BIT){
+  throw new Error("invalid format");
+ }
  this.attributeBits=(format==null) ? 0 : format;
  this.vertexCount=function(){
   return this.vertices.length/this.getStride();
@@ -427,7 +434,7 @@ function SubMesh(vertices,faces,format){
  /** @private */
  this._rebuildVertices=function(newAttributes){
   var oldBits=this.attributeBits;
-  var newBits=oldBits|(newAttributes&~Mesh.LINES_BIT);
+  var newBits=oldBits|(newAttributes&Mesh.ATTRIBUTES_BITS);
   if(newBits==oldBits)return;
   var currentStride=this.getStride();
   // Rebuild the list of vertices if a new kind of
@@ -523,6 +530,9 @@ function SubMesh(vertices,faces,format){
      (this.vertices.length-this.startIndex)>=(stride*2)){
    var index=(this.vertices.length/stride)-2;
    this.indices.push(index,index+1);
+  } else if(currentMode==Mesh.POINTS){
+   var index=(this.vertices.length/stride)-1;
+   this.indices.push(index);
   } else if(currentMode==Mesh.TRIANGLE_STRIP &&
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-3;
@@ -558,7 +568,8 @@ SubMesh.prototype.makeRedundant=function(){
 }
 /** @private */
 SubMesh.prototype.toWireFrame=function(){
-  if((this.attributeBits&Mesh.LINES_BIT)!=0){
+  if((this.attributeBits&Mesh.PRIMITIVES_BITS)!=0){
+   // Not a triangle mesh
    return this;
   }
   // Adds a line only if it doesn't exist
@@ -643,7 +654,8 @@ Mesh.prototype.reverseWinding=function(){
 }
 
 SubMesh.prototype.reverseWinding=function(){
-  if((this.attributeBits&Mesh.LINES_BIT)!=0){
+  if((this.attributeBits&Mesh.PRIMITIVES_BITS)!=0){
+   // Not a triangle mesh
    return this;
   }
   var lineIndices=[];
@@ -709,6 +721,11 @@ Mesh.texCoordOffset=function(format){
  @const
 */
 Mesh.ATTRIBUTES_BITS = 7;
+/**
+ @private
+ @const
+*/
+Mesh.PRIMITIVES_BITS = 24;
 /** The mesh contains normals for each vertex.
  @const
  @default
@@ -730,6 +747,11 @@ of triangles (3 vertices per line).
  @default
 */
 Mesh.LINES_BIT = 8;
+/** The mesh consists of points (1 vertex per line).
+ @const
+ @default
+*/
+Mesh.POINTS_BIT = 16;
 /**
 Primitive mode for rendering triangles, made up
 of 3 vertices each.
@@ -763,17 +785,10 @@ of 2 vertices each.
 */
 Mesh.LINES = 3;
 /**
-Primitive mode for rendering connected line segments.
-The first 2 vertices make up the first line, and each additional
-line is made up of the last vertex and 1 new vertex.
- @const
-*/
-Mesh.LINE_STRIP = 6;
-/**
 Primitive mode for rendering a triangle fan.  The first 3
 vertices make up the first triangle, and each additional
-triangle is made up of the last vertex, the first vertex of
-the first trangle, and 1 new vertex.
+triangle is made up of the first vertex of the first triangle,
+the last vertex, and 1 new vertex.
  @const
 */
 Mesh.TRIANGLE_FAN = 4;
@@ -781,11 +796,24 @@ Mesh.TRIANGLE_FAN = 4;
 Primitive mode for rendering a triangle strip.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
-new vertex.  For the second triangle in the strip, and 
+new vertex.  For the second triangle in the strip, and
 every other triangle after that, the first and second
 vertices are swapped when generating that triangle.
  @const
 */
 Mesh.TRIANGLE_STRIP = 5;
+/**
+Primitive mode for rendering connected line segments.
+The first 2 vertices make up the first line, and each additional
+line is made up of the last vertex and 1 new vertex.
+ @const
+*/
+Mesh.LINE_STRIP = 6;
+/**
+Primitive mode for rendering points, made up
+of 1 vertex each.
+ @const
+*/
+Mesh.POINTS = 7;
 
 this["Mesh"]=Mesh;

@@ -388,6 +388,7 @@ var shader="" +
 "vec4 positionVec4;\n"+
 "positionVec4.w=1.0;\n"+
 "positionVec4.xyz=position;\n" +
+"gl_PointSize=1.0;\n" +
 "gl_Position=((projection*view)*world)*positionVec4;\n" +
 "colorAttrVar=colorAttr;\n" +
 "uvVar=uv;\n" +

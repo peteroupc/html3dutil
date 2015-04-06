@@ -550,7 +550,7 @@ Lights.prototype.addDirectionalLight=function(position,diffuse,specular){
 /**
  * Adds a positional light.
  * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
- * coordinates, respectively, of the light, in world coordinates.  May be null, in which
+ * coordinates, respectively, of the light, in world coordinates.  May be null, in which 
  * case the default is (0, 0, 0).
  * @param {Array<number>} diffuse @see {@link glutil.Lights#setDirectionalLight}
  * @param {Array<number>} specular @see {@link glutil.Lights#setDirectionalLight}
@@ -995,9 +995,10 @@ BufferedSubMesh.prototype.draw=function(program){
   if(context!=this.context){
    throw new Error("can't bind mesh: context mismatch");
   }
-  context.drawElements(
-    ((this.format&Mesh.LINES_BIT)!=0) ? context.LINES :
-      context.TRIANGLES,
+  var primitive=context.TRIANGLES;
+  if((this.format&Mesh.LINES_BIT)!=0)primitive=context.LINES;
+  if((this.format&Mesh.POINTS_BIT)!=0)primitive=context.POINTS;
+  context.drawElements(primitive,
     this.facesLength,
     this.type, 0);
   // Disable attributes to avoid them leaking in future
