@@ -150,16 +150,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
    var triangleFanTop=(i==stacks-1 && topRad==0);
    mesh.mode((triangleFanBase || triangleFanTop) ?
      Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
-   if(triangleFanTop){
-    // Output first vertices in reverse order to
-    // allow triangle fan effect to work
-    mesh.texCoord2(1,zEnd);
-    mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
-    mesh.vertex3(0,radiusEnd,zEndHeight);
-    mesh.texCoord2(1,zStart);
-    mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
-    mesh.vertex3(0,radiusStart,zStartHeight);
-   } else {
+   {
     mesh.texCoord2(1,zStart);
     mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusStart,zStartHeight);
@@ -167,23 +158,29 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
     mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
     mesh.vertex3(0,radiusEnd,zEndHeight);
    }
-   for(var k=2,j=1;k<=slicesTimes2;k+=2,j++){
+   if(triangleFanBase || triangleFanTop){
+   for(var k=slicesTimes2,j=slicesTimes2/2;k>=2;k-=2,j--){
     var tx=tc[j];
     var x,y;
-    if(!triangleFanBase){
-     x=sc[k];
-     y=sc[k+1];
+    x=sc[k];
+    y=sc[k+1];
      mesh.texCoord2(1-tx,zStart);
      mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
      mesh.vertex3(x*radiusStart,y*radiusStart,zStartHeight);
-    }
-    if(!triangleFanTop){
-     x=sc[k];
-     y=sc[k+1];
+    }   
+   } else {
+   for(var k=2,j=1;k<=slicesTimes2;k+=2,j++){
+    var tx=tc[j];
+    var x,y;
+    x=sc[k];
+    y=sc[k+1];
+     mesh.texCoord2(1-tx,zStart);
+     mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
+     mesh.vertex3(x*radiusStart,y*radiusStart,zStartHeight);
      mesh.texCoord2(1-tx,zEnd);
      mesh.normal3(x*cosSlopeNorm,y*cosSlopeNorm,sinSlopeNorm);
      mesh.vertex3(x*radiusEnd,y*radiusEnd,zEndHeight);
-    }
+   }
    }
   }
  }
@@ -331,19 +328,31 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
    var triangleFanBase=(i==0 && inner==0);
    mesh.mode((triangleFanBase) ?
      Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
-   for(var k=0,j=0;k<=slicesTimes2;k+=2,j++){
-    var tx=tc[j];
-    var x,y;
-    if((!triangleFanBase) || k==0){
+   if(triangleFanBase){
+    var jStart=slicesTimes2/2;
+    for(var k=slicesTimes2,j=jStart;k>=0;k-=2,j--){
+     var tx=tc[j];
+     var x,y;
      x=sc[k];
      y=sc[k+1];
+     if(k==slicesTimes2){
+      mesh.texCoord2((1+(x*rso))*0.5,(1+(y*rso))*0.5);
+      mesh.vertex3(x*radiusStart,y*radiusStart,0);
+     }
+     mesh.texCoord2((1+(x*reo))*0.5,(1+(y*reo))*0.5);
+     mesh.vertex3(x*radiusEnd,y*radiusEnd,0);
+    }
+   } else {
+    for(var k=0,j=0;k<=slicesTimes2;k+=2,j++){
+     var tx=tc[j];
+     var x,y;
+     x=sc[k];
+     y=sc[k+1];
+     mesh.texCoord2((1+(x*reo))*0.5,(1+(y*reo))*0.5);
+     mesh.vertex3(x*radiusEnd,y*radiusEnd,0);
      mesh.texCoord2((1+(x*rso))*0.5,(1+(y*rso))*0.5);
      mesh.vertex3(x*radiusStart,y*radiusStart,0);
-    }
-    x=sc[k];
-    y=sc[k+1];
-    mesh.texCoord2((1+(x*reo))*0.5,(1+(y*reo))*0.5);
-    mesh.vertex3(x*radiusEnd,y*radiusEnd,0);
+    }   
    }
   }
   return mesh;

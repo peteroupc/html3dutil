@@ -19,7 +19,7 @@ Here are the methods for creating built-in shapes.  All methods described
 below return a `Mesh` object that describes the triangles they
 are composed of.  See "Custom Shapes" below for more on meshes.
 
-**3D Figures**
+### 3D Figures
 
 * [Meshes.createBox()]{@link glutil.Meshes.createBox} - Creates a cube or box.
 * [Meshes.createCylinder()]{@link glutil.Meshes.createCylinder} - Creates a cylinder or cone, not including the base
@@ -28,7 +28,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
 * [Meshes.createTorus()]{@link glutil.Meshes.createTorus} - Creates a torus (doughnut shape).
 * [Meshes.createSphere()]{@link glutil.Meshes.createSphere} - Creates a sphere.
 
-**2D Figures**
+### 2D Figures
 
 * [Meshes.createDisk()]{@link glutil.Meshes.createDisk} - Creates a circular disk or a regular polygon, possibly
   with a hole in the middle.
@@ -36,7 +36,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
   with a hole where the middle of the complete disk would be.
 * [Meshes.createPlane()]{@link glutil.Meshes.createPlane} - Creates a rectangle.
 
-**Custom Shapes**
+### Custom Shapes
 
 Also included is a `Mesh` class for defining shapes not given among the built-in ones.
 Shapes can consist of triangles or lines.
@@ -44,7 +44,7 @@ Shapes can consist of triangles or lines.
 There are two ways for specifying shapes:  through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.
 
-**The Mesh Constructor**
+### The Mesh Constructor
 
 The Mesh constructor lets you define a shape from a predefined array of vertex data.
 Here's how.
@@ -107,7 +107,7 @@ Alternatively, you can call the Mesh constructor with no arguments:
 
 Doing so will create a mesh with no vertices.
 
-**Vertex Methods**
+### Vertex Methods
 
 Alternatively, or in addition, to the method described above,
 you can specify the mesh's shape by calling methods that give each vertex's position and parameters:
@@ -159,10 +159,10 @@ won't depend on previous vertices.  For example, if you define a `TRIANGLE_FAN`,
 you call `mesh.mode(Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
 "disconnected" from the previous one as far as the mesh object is concerned.
 
-**Transforming the Mesh**
+### Transforming the Mesh
 
 Once you've created the mesh, you can use the `transform()` method to transform
-all the vertices in the mesh with a 4x4 matrix.  The
+all the vertices in the mesh with a [4x4 matrix]{@tutorial glmath}.  The
 [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) demo uses
 this method to adjust some of the meshes to make them look better on the screen.
 Example:
@@ -171,7 +171,18 @@ Example:
     // Use the transform to double the mesh's size
     mesh = mesh.transform(matrix);
 
-You can also use the `recalcNormals()` method to recalculate the mesh's normals,
+### Normals
+
+For lighting and shading to work correctly, you must specify normals for all the 
+vertices in the mesh.  After generating a mesh, you can use the recalcNormals()
+method, described below, to help in this.
+
+Note that the built-in methods that generate meshes will automatically
+specify the proper normals.
+
+#### recalcNormals()
+
+You can use the `recalcNormals()` method to recalculate the mesh's normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside.  This method takes two parameters:
 
@@ -200,11 +211,11 @@ in order to have it drawn.  This is where the `Shape` class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:
 
-(1) Create a Shape object and pass the mesh to the 3D scene's `makeShape()` method:
+(1) Create a Shape object by passing the mesh to the 3D scene's `makeShape()` method:
 
-    var shape = scene.makeShape(mesh);
+    var shape = scene3d.makeShape(mesh);
 
-(2) You may also set its color, appearance, and position, using the examples below:
+(2) You may also set the Shape's color, appearance, and position, using the examples below:
 
 Examples for setting appearance:
 

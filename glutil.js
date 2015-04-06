@@ -523,7 +523,9 @@ Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  * Sets a point light.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
- * @param {Array<number>} position
+ * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
+ * coordinates, respectively, of the light, in world coordinates.  May be null, in which case the default
+ * is (0, 0, 0).
  * @param {Array<number>} diffuse @see {@link glutil.Lights#setDirectionalLight}
  * @param {Array<number>} specular @see {@link glutil.Lights#setDirectionalLight}
  * @return {Lights} This object.
@@ -546,8 +548,10 @@ Lights.prototype.addDirectionalLight=function(position,diffuse,specular){
  return this;
 }
 /**
- *
- * @param {*} position
+ * Adds a positional light.
+ * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
+ * coordinates, respectively, of the light, in world coordinates.  May be null, in which 
+ * case the default is (0, 0, 0).
  * @param {Array<number>} diffuse @see {@link glutil.Lights#setDirectionalLight}
  * @param {Array<number>} specular @see {@link glutil.Lights#setDirectionalLight}
  * @return {Lights} This object.

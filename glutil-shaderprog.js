@@ -449,8 +449,13 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 " } else {\n" +
 "  vec3 vertexToLight=((lt.position)-viewWorldPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
-"  sdir=normalize(vertexToLight);\n" +
-"  attenuation=1.0;\n" +
+"  if(dist==0.0){\n" +
+"   sdir=vertexToLight;\n" +
+"   attenuation=1.0;\n" +
+"  } else {\n" +
+"   sdir=vertexToLight/dist; /* normalizes vertexToLight */\n" +
+"   attenuation=(1.0*dist);\n" +
+"  }\n" +
 " }\n" +
 " return vec4(sdir,attenuation);\n" +
 "}\n" +

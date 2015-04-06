@@ -7,6 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
+
 /**
 * Specifies the triangles and lines that make up a geometric shape.
 * See the "{@tutorial shapes}" tutorial.
@@ -58,6 +59,7 @@ Mesh._isCompatibleMode=function(oldMode,newMode){
    return true;
  return false;
 }
+
 /** @private */
 Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
   var normDir=(inward) ? 1 : -1;
