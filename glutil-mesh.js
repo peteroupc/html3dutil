@@ -47,7 +47,7 @@ function Mesh(vertices,indices,format){
 }
 /** @private */
 Mesh._primitiveType=function(mode){
- if(mode==Mesh.LINES)
+ if(mode==Mesh.LINES || mode==Mesh.LINE_STRIP)
   return Mesh.LINES;
  else
   return Mesh.TRIANGLES;
@@ -153,7 +153,7 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
  * case future vertices given will not build upon previous
  * vertices.
  * @param {number} m A primitive type.  One of the following:
- * Mesh.TRIANGLES, Mesh.LINES, Mesh.TRIANGLE_STRIP,
+ * Mesh.TRIANGLES, Mesh.LINES, Mesh.LINE_STRIP, Mesh.TRIANGLE_STRIP,
  * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.
  * @return {glutil.Mesh} This object.
  */
@@ -519,6 +519,10 @@ function SubMesh(vertices,faces,format){
    var index=(this.vertices.length/stride)-2;
    var firstIndex=(this.startIndex/stride);
    this.indices.push(firstIndex,index,index+1);
+  } else if(currentMode==Mesh.LINE_STRIP &&
+     (this.vertices.length-this.startIndex)>=(stride*2)){
+   var index=(this.vertices.length/stride)-2;
+   this.indices.push(index,index+1);
   } else if(currentMode==Mesh.TRIANGLE_STRIP &&
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-3;
@@ -554,7 +558,7 @@ SubMesh.prototype.makeRedundant=function(){
 }
 /** @private */
 SubMesh.prototype.toWireFrame=function(){
-  if(this.builderMode==Mesh.LINES){
+  if((this.attributeBits&Mesh.LINES_BIT)!=0){
    return this;
   }
   // Adds a line only if it doesn't exist
@@ -639,7 +643,7 @@ Mesh.prototype.reverseWinding=function(){
 }
 
 SubMesh.prototype.reverseWinding=function(){
-  if(this.builderMode==Mesh.LINES){
+  if((this.attributeBits&Mesh.LINES_BIT)!=0){
    return this;
   }
   var lineIndices=[];
@@ -758,6 +762,13 @@ of 2 vertices each.
  @const
 */
 Mesh.LINES = 3;
+/**
+Primitive mode for rendering connected line segments.
+The first 2 vertices make up the first line, and each additional
+line is made up of the last vertex and 1 new vertex.
+ @const
+*/
+Mesh.LINE_STRIP = 6;
 /**
 Primitive mode for rendering a triangle fan.  The first 3
 vertices make up the first triangle, and each additional

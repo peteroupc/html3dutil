@@ -550,7 +550,7 @@ Lights.prototype.addDirectionalLight=function(position,diffuse,specular){
 /**
  * Adds a positional light.
  * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
- * coordinates, respectively, of the light, in world coordinates.  May be null, in which 
+ * coordinates, respectively, of the light, in world coordinates.  May be null, in which
  * case the default is (0, 0, 0).
  * @param {Array<number>} diffuse @see {@link glutil.Lights#setDirectionalLight}
  * @param {Array<number>} specular @see {@link glutil.Lights#setDirectionalLight}
