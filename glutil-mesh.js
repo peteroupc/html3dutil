@@ -505,7 +505,7 @@ function SubMesh(vertices,faces,format){
   } else if(currentMode==Mesh.QUADS &&
      (this.vertices.length-this.startIndex)%(stride*4)==0){
    var index=(this.vertices.length/stride)-4;
-   this.indices.push(index,index+1,index+2,index+2,index+3,index);
+   this.indices.push(index,index+1,index+2,index,index+2,index+3);
   } else if(currentMode==Mesh.TRIANGLES &&
      (this.vertices.length-this.startIndex)%(stride*3)==0){
    var index=(this.vertices.length/stride)-3;
@@ -525,7 +525,7 @@ function SubMesh(vertices,faces,format){
    if((index&1)==0){
      this.indices.push(index,index+1,index+2);
    } else {
-     this.indices.push(index,index+2,index+1);
+     this.indices.push(index+1,index,index+2);
    }
   }
   return this;
@@ -627,35 +627,32 @@ SubMesh.prototype.transform=function(matrix){
 }
 
 /**
- *
- */
-SubMesh.prototype._getBounds=function(){
-  var stride=this.getStride();
-  var minx=0;
-  var maxx=0;
-  var miny=0;
-  var maxy=0;
-  var minz=0;
-  var maxz=0;
-  for(var i=0;i<vertices.length;i+=stride){
-    var x=vertices[i];
-    var y=vertices[i+1];
-    var z=vertices[i+2];
-    if(i==0){
-      minx=maxx=x;
-      miny=maxy=y;
-      minz=maxz=z;
-    } else {
-      minx=Math.min(minx,x);
-      miny=Math.min(miny,y);
-      minz=Math.min(minz,z);
-      maxx=Math.max(maxx,x);
-      maxy=Math.max(maxy,y);
-      maxz=Math.max(maxz,z);
-    }
+* Reverses the winding order of the triangles in this mesh
+* by swapping the second and third vertex indices of each one.
+* @return {glutil.Mesh} This object.
+*/
+Mesh.prototype.reverseWinding=function(){
+  for(var i=0;i<this.subMeshes.length;i++){
+   this.subMeshes[i].reverseWinding();
   }
-  return [[minx,miny,minz],[maxx,maxy,maxz]];
-};
+  return this;
+}
+
+SubMesh.prototype.reverseWinding=function(){
+  if(this.builderMode==Mesh.LINES){
+   return this;
+  }
+  var lineIndices=[];
+  var existingLines={};
+  for(var i=0;i<this.indices.length;i+=3){
+    var f2=this.indices[i+1];
+    var f3=this.indices[i+2];
+    this.indices[i+2]=f2;
+    this.indices[i+1]=f3;
+  }
+  return this;
+}
+
 /** @private */
 SubMesh.prototype.recalcNormals=function(flat,inward){
   var haveOtherAttributes=((this.attributeBits&(Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT))!=0);
@@ -739,13 +736,19 @@ Mesh.TRIANGLES = 0;
 Primitive mode for rendering a strip of quadrilaterals (quads).
 The first 4 vertices make up the first quad, and each additional
 quad is made up of the last 2 vertices of the previous quad and
-2 new vertices.
+2 new vertices. Each quad is broken into two triangles: the first
+triangle consists of the first, second, and third vertices, in that order,
+and the second triangle consists of the third, second, and fourth
+vertices, in that order.
  @const
 */
 Mesh.QUAD_STRIP = 1;
 /**
 Primitive mode for rendering quadrilaterals, made up
-of 4 vertices each.
+of 4 vertices each.  Each quadrilateral is broken into two triangles: the first
+triangle consists of the first, second, and third vertices, in that order,
+and the second triangle consists of the first, third, and fourth
+vertices, in that order.
  @const
 */
 Mesh.QUADS = 2;
@@ -767,7 +770,9 @@ Mesh.TRIANGLE_FAN = 4;
 Primitive mode for rendering a triangle strip.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
-new vertex.
+new vertex.  For the second triangle in the strip, and 
+every other triangle after that, the first and second
+vertices are swapped when generating that triangle.
  @const
 */
 Mesh.TRIANGLE_STRIP = 5;

@@ -151,7 +151,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
    // for upward pointing cones
    var triangleFanTop=(i==stacks-1 && topRad==0);
    mesh.mode((triangleFanBase || triangleFanTop) ?
-     Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
+     Mesh.TRIANGLE_FAN : Mesh.TRIANGLE_STRIP);
    if(triangleFanTop){
     mesh.texCoord2(1,zEnd);
     mesh.normal3(0,cosSlopeNorm,sinSlopeNorm);
@@ -220,7 +220,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
 */
 Meshes.createClosedCylinder=function(base,top,height,slices,stacks,flat, inside){
  var cylinder=Meshes.createCylinder(base,top,height,slices,stacks,flat, inside);
- var base=Meshes.createDisk(0,base,slices,2,!inside);
+ var base=Meshes.createDisk(0,base,slices,2,!inside).reverseWinding();
  var top=Meshes.createDisk(0,top,slices,2,inside);
  // move the top disk to the top of the cylinder
  top.transform(GLMath.mat4translated(0,0,height));
@@ -335,7 +335,7 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
    lastRad=radiusEnd;
    var triangleFanBase=(i==0 && inner==0);
    mesh.mode((triangleFanBase) ?
-     Mesh.TRIANGLE_FAN : Mesh.QUAD_STRIP);
+     Mesh.TRIANGLE_FAN : Mesh.TRIANGLE_STRIP);
    if(triangleFanBase){
     var jStart=slicesTimes2/2;
     for(var k=slicesTimes2,j=jStart;k>=0;k-=2,j--){
@@ -474,7 +474,7 @@ Meshes.createPlane=function(width, height, widthDiv, heightDiv,inward){
    mesh.normal3(0,0,1);
   }
  for(var i=0;i<heightDiv;i++){
-  mesh.mode(Mesh.QUAD_STRIP);
+  mesh.mode(Mesh.TRIANGLE_STRIP);
   var iStart=i/heightDiv;
   var iNext=(i+1)/heightDiv;
   var y=yStart+height*iStart;
@@ -582,7 +582,7 @@ Meshes.createSphere=function(radius, slices, stacks, flat, inside){
    if((i==stacks-1 || i==0)){
     mesh.mode(Mesh.TRIANGLES);
    } else {
-    mesh.mode(Mesh.QUAD_STRIP);
+    mesh.mode(Mesh.TRIANGLE_STRIP);
     mesh.texCoord2(1,texStart);
     normAndVertex(mesh,normDir,0,radiusStart,zStartHeight);
     mesh.texCoord2(1,texEnd);
