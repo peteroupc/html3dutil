@@ -192,7 +192,6 @@ Mesh._recalcNormalsLines=function(vertices,faces,stride,offset,flat,inward){
   Mesh._recalcNormalsFinish(vertices,uniqueVertices,faces,stride,offset,flat);
 }
 
-
 /**
  * Changes the primitive mode for this mesh.
  * Future vertices will be drawn as primitives of the new type.
@@ -727,10 +726,10 @@ SubMesh.prototype.recalcNormals=function(flat,inward){
   }
   if((this.attributeBits&Mesh.LINES_BIT)!=0){
    Mesh._recalcNormalsLines(this.vertices,this.indices,
-     this.getStride(),3,flat,inward);  
+     this.getStride(),3,flat,inward);
   } else {
    Mesh._recalcNormals(this.vertices,this.indices,
-     this.getStride(),3,flat,inward);  
+     this.getStride(),3,flat,inward);
   }
   return this;
 };

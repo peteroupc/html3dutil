@@ -452,11 +452,58 @@ GLUtil._isPowerOfTwo=function(a){
 */
 function LightSource(position, ambient, diffuse, specular) {
  this.ambient=ambient || [0,0,0,1.0]
+ /**
+ * Light position.  An array of four numbers.
+* If the fourth element is 0, this is a directional light, shining an infinitely
+* long light at the direction given by the first three elements (the X, Y, and Z
+* coordinates respectively).  If the fourth element is 1, this is a point
+* light located at the position, in world space, given by the first three elements (the X, Y, and Z
+* coordinates respectively).
+*/
  this.position=position ? [position[0],position[1],position[2],1.0] :
    [0, 0, 1, 0];
+ /**
+ * A 3-element vector giving the diffuse color of the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ */
  this.diffuse=diffuse||[1,1,1];
+ /**
+ * A 3-element vector giving the color of specular highlights caused by
+ * the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ */
  this.specular=specular||[1,1,1];
 };
+/**
+* Sets parameters for this material object.
+* @param {object} params An object whose keys have
+* the possibilities given below, and whose values are those
+* allowed for each key.<ul>
+* <li><code>position</code> - Light position.
+* <li><code>ambient</code> - Not used in the default shader program.
+* <li><code>diffuse</code> - Diffuse color.
+* <li><code>specular</code> - Specular highlight color.
+* </ul>
+* If a value is null or undefined, it is ignored.
+* @return {glutil.Material} This object.
+*/
+LightSource.prototype.setParams=function(params){
+ if(params["ambient"]!=null){
+  this.ambient=GLUtil["toGLColor"](params.ambient);
+ }
+ if(params["position"]!=null){
+  var position=params["position"]
+  this.position=[position[0],position[1],position[2],
+    (position[3]==null) ? 0.0 : position[3]];
+ }
+ if(params["specular"]!=null){
+  this.specular=GLUtil["toGLColor"](params.specular);
+ }
+ if(params["diffuse"]!=null){
+  this.diffuse=GLUtil["toGLColor"](params.emission);
+ }
+ return this;
+}
 
 /**
 * A collection of light sources.  It stores the scene's
@@ -481,22 +528,15 @@ function Lights(){
    */
 Lights.MAX_LIGHTS = 3;
 /** @private */
-Lights._createLight=function(index, position, diffuse, specular,directional){
- if(diffuse!=null)diffuse=GLUtil["toGLColor"](diffuse)
- if(specular!=null)specular=GLUtil["toGLColor"](specular)
- var lightPosition=position ? [position[0],position[1],position[2],
-   directional ? 0.0 : 1.0] : (directional ?
-   [0, 0, 1, 0] :
-   [0,0,0,1]);
- var lightDiffuse=diffuse || (index==0 ? [1,1,1] : [0,0,0]);
- var lightSpecular=specular || (index==0 ? [1,1,1] : [0,0,0]);
- var light=new LightSource();
- light.ambient=[0,0,0,1.0]; // not currently used
- light.position=lightPosition;
- light.diffuse=lightDiffuse;
- light.specular=lightSpecular;
- return light;
+Lights._createNewLight=function(index){
+ var ret=new LightSource();
+ if(index!=0){
+  ret.diffuse=[0,0,0];
+  ret.specular=[0,0,0];
+ }
+ return ret;
 }
+
 /**
  * Sets a directional light.
  * @param {number} index Zero-based index of the light to set.  The first
@@ -504,19 +544,11 @@ Lights._createLight=function(index, position, diffuse, specular,directional){
  * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
- * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1), meaning white light. Can also be a string representing
-* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
- * the light, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1), meaning white. Can also be a string representing
-* an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
  * @return {Lights} This object.
  */
-Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
- this.lights[index]=Lights._createLight(index,direction,diffuse,specular,true);
+Lights.prototype.setDirectionalLight=function(index,direction){
+ if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ this.lights[index].setParams({"position":[direction[0],direction[1],direction[2],0]});
  return this;
 }
 /**
@@ -526,38 +558,11 @@ Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
  * coordinates, respectively, of the light, in world coordinates.  May be null, in which case the default
  * is (0, 0, 0).
- * @param {Array<number>} diffuse @see {@link glutil.Lights#setDirectionalLight}
- * @param {Array<number>} specular @see {@link glutil.Lights#setDirectionalLight}
  * @return {Lights} This object.
  */
-Lights.prototype.setPointLight=function(index,position,diffuse,specular){
- this.lights[index]=Lights._createLight(index,position,diffuse,specular,false);
- return this;
-}
-/**
- * Adds a directional light.
- * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
- * axes, respectively.  May be null, in which case the default
- * is (0, 0, 1).
- * @param {Array<number>} diffuse @see {@link glutil.Lights#setDirectionalLight}
- * @param {Array<number>} specular @see {@link glutil.Lights#setDirectionalLight}
- * @return {Lights} This object.
- */
-Lights.prototype.addDirectionalLight=function(position,diffuse,specular){
- this.lights.push(Lights._createLight(this.lights.length,position,diffuse,specular,true));
- return this;
-}
-/**
- * Adds a positional light.
- * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
- * coordinates, respectively, of the light, in world coordinates.  May be null, in which
- * case the default is (0, 0, 0).
- * @param {Array<number>} diffuse @see {@link glutil.Lights#setDirectionalLight}
- * @param {Array<number>} specular @see {@link glutil.Lights#setDirectionalLight}
- * @return {Lights} This object.
- */
-Lights.prototype.addPointLight=function(position,diffuse,specular){
- this.lights.push(Lights._createLight(this.lights.length,position,diffuse,specular,false));
+Lights.prototype.setPointLight=function(index,position){
+ if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ this.lights[index].setParams({"position":[position[0],position[1],position[2],1]});
  return this;
 }
 

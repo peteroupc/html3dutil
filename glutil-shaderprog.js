@@ -448,14 +448,14 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "  sdir=normalize((lt.position).xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else {\n" +
-"  vec3 vertexToLight=((lt.position)-viewWorldPosition).xyz;\n" +
+"  vec3 vertexToLight=(lt.position-viewWorldPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
 "  if(dist==0.0){\n" +
 "   sdir=vertexToLight;\n" +
 "   attenuation=1.0;\n" +
 "  } else {\n" +
 "   sdir=vertexToLight/dist; /* normalizes vertexToLight */\n" +
-"   attenuation=(1.0*dist);\n" +
+"   attenuation=(1.0/dist);\n" +
 "  }\n" +
 " }\n" +
 " return vec4(sdir,attenuation);\n" +
@@ -478,8 +478,8 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#define SET_LIGHTPOWER(i) "+
 " lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
-" phong+=vec3(lights[i].diffuse)*max(0.0,dot(transformedNormalVar," +
-"   lightPower[i].xyz))*lightPower[i].w*materialDiffuse;\n" +
+" phong+=vec3(lights[i].diffuse)*max(dot(transformedNormalVar," +
+"   lightPower[i].xyz),0.0)*lightPower[i].w*materialDiffuse;\n" +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
