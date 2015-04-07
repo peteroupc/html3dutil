@@ -54,6 +54,25 @@ MatrixStack.prototype.loadMatrix=function(mat){
  return this;
 }
 /**
+ * Modifies the matrix at the top of this stack by replacing it with the
+ * transpose of the given matrix.
+ * @param {Array<number>} mat A matrix whose transpose will
+ * replace the top of the stack.
+ * @return {MatrixStack} This object.
+*/
+MatrixStack.prototype.loadTransposeMatrix=function(mat){
+ var m=mat.slice(0,16);
+ var tmp;
+ tmp=m[1];m[1]=m[4];m[4]=tmp;
+ tmp=m[2];m[2]=m[8];m[8]=tmp;
+ tmp=m[3];m[3]=m[12];m[12]=tmp;
+ tmp=m[6];m[6]=m[9];m[9]=tmp;
+ tmp=m[7];m[7]=m[13];m[13]=tmp;
+ tmp=m[11];m[11]=m[14];m[14]=tmp;
+ this.stack[this.stack.length-1]=m;
+ return this;
+}
+/**
  * Modifies the matrix at the top of this stack by multiplying it by another matrix.
  * The matrices are multiplied such that the transformations
  * they describe happen in reverse order. For example, if the matrix
@@ -73,6 +92,33 @@ MatrixStack.prototype.multMatrix=function(mat){
 				mat[i+1] * curmat[j+4] +
 				mat[i+2] * curmat[j+8] +
 				mat[i+3] * curmat[j+12];
+    }
+ }
+ this.stack[this.stack.length-1]=dst;
+ return this;
+}
+/**
+ * Modifies the matrix at the top of this stack by multiplying it by the transpose of
+ * another matrix.
+ * The matrices are multiplied such that the transformations
+ * they describe happen in the order given. For example, if the matrix
+ * at the top of the stack describes a translation and the matrix
+ * passed to this method describes a scaling, the multiplied matrix will describe
+ * the effect of translation then scaling.
+ * @param {Array<number>} mat A matrix whose transpose the current
+ * matrix will be multiplied by.
+ * @return {MatrixStack} This object.
+ */
+MatrixStack.prototype.multTransposeMatrix=function(mat){
+ var curmat=this.stack[this.stack.length-1];
+ var dst=[];
+ for(var i = 0; i < 16; i+= 4){
+		for(var j = 0; j < 4; j++){
+			dst[i+j] =
+				curmat[i]   * mat[j]   +
+				curmat[i+1] * mat[j+4] +
+				curmat[i+2] * mat[j+8] +
+				curmat[i+3] * mat[j+12];
     }
  }
  this.stack[this.stack.length-1]=dst;

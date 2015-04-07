@@ -175,7 +175,7 @@ Example:
 
 ### Normals
 
-For lighting and shading to work correctly, you must specify normals for all the 
+For lighting and shading to work correctly, you must specify normals for all the
 vertices in the mesh.  After generating a mesh, you can use the recalcNormals()
 method, described below, to help in this.
 

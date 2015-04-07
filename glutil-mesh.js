@@ -62,11 +62,7 @@ Mesh._isCompatibleMode=function(oldMode,newMode){
  return false;
 }
 
-/** @private */
-Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
-  var normDir=(inward) ? 1 : -1;
-  var uniqueVertices={};
-  var len;
+Mesh._recalcNormalsStart=function(vertices,uniqueVertices,faces,stride,offset,flat){
   for(var i=0;i<vertices.length;i+=stride){
     vertices[i+offset]=0.0
     vertices[i+offset+1]=0.0
@@ -79,37 +75,10 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
      else uniqueVertices[uv]=[i+offset];
     }
   }
-  for(var i=0;i<faces.length;i+=3){
-    var v1=faces[i]*stride
-    var v2=faces[i+1]*stride
-    var v3=faces[i+2]*stride
-    var n1=[vertices[v2]-vertices[v3],vertices[v2+1]-vertices[v3+1],vertices[v2+2]-vertices[v3+2]]
-    var n2=[vertices[v1]-vertices[v3],vertices[v1+1]-vertices[v3+1],vertices[v1+2]-vertices[v3+2]]
-    // cross multiply n1 and n2
-    var x=(n1[1]*n2[2]-n1[2]*n2[1])
-    var y=(n1[2]*n2[0]-n1[0]*n2[2])
-    var z=(n1[0]*n2[1]-n1[1]*n2[0])
-    // normalize xyz vector
-    len=Math.sqrt(x*x+y*y+z*z);
-    if(len!=0){
-      len=1.0/len;
-      len*=normDir
-      x*=len;
-      y*=len;
-      z*=len;
-      // add normalized normal to each vertex of the face
-      vertices[v1+offset]+=x
-      vertices[v1+offset+1]+=y
-      vertices[v1+offset+2]+=z
-      vertices[v2+offset]+=x
-      vertices[v2+offset+1]+=y
-      vertices[v2+offset+2]+=z
-      vertices[v3+offset]+=x
-      vertices[v3+offset+1]+=y
-      vertices[v3+offset+2]+=z
-    }
-  }
-  if(!flat){
+}
+Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,flat){
+ var len;
+   if(!flat){
    // If smooth shading is requested, make sure
    // that every vertex with the same position has the
    // same normal
@@ -148,6 +117,82 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
     }
   }
 }
+
+/** @private */
+Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
+  var normDir=(inward) ? 1 : -1;
+  var uniqueVertices={};
+  var len;
+  Mesh._recalcNormalsStart(vertices,uniqueVertices,faces,stride,offset,flat);
+  for(var i=0;i<faces.length;i+=3){
+    var v1=faces[i]*stride
+    var v2=faces[i+1]*stride
+    var v3=faces[i+2]*stride
+    var n1=[vertices[v2]-vertices[v3],vertices[v2+1]-vertices[v3+1],vertices[v2+2]-vertices[v3+2]]
+    var n2=[vertices[v1]-vertices[v3],vertices[v1+1]-vertices[v3+1],vertices[v1+2]-vertices[v3+2]]
+    // cross multiply n1 and n2
+    var x=(n1[1]*n2[2]-n1[2]*n2[1])
+    var y=(n1[2]*n2[0]-n1[0]*n2[2])
+    var z=(n1[0]*n2[1]-n1[1]*n2[0])
+    // normalize xyz vector
+    len=Math.sqrt(x*x+y*y+z*z);
+    if(len!=0){
+      len=1.0/len;
+      len*=normDir
+      x*=len;
+      y*=len;
+      z*=len;
+      // add normalized normal to each vertex of the face
+      vertices[v1+offset]+=x
+      vertices[v1+offset+1]+=y
+      vertices[v1+offset+2]+=z
+      vertices[v2+offset]+=x
+      vertices[v2+offset+1]+=y
+      vertices[v2+offset+2]+=z
+      vertices[v3+offset]+=x
+      vertices[v3+offset+1]+=y
+      vertices[v3+offset+2]+=z
+    }
+  }
+  Mesh._recalcNormalsFinish(vertices,uniqueVertices,faces,stride,offset,flat);
+}
+
+/** @private */
+Mesh._recalcNormalsLines=function(vertices,faces,stride,offset,flat,inward){
+  var normDir=(inward) ? 1 : -1;
+  var uniqueVertices={};
+  var len;
+  Mesh._recalcNormalsStart(vertices,uniqueVertices,faces,stride,offset,flat);
+  for(var i=0;i<faces.length;i+=2){
+    var v1=faces[i]*stride
+    var v2=faces[i+1]*stride
+    var n1=[vertices[v2],vertices[v2+1],vertices[v2+2]]
+    var n2=[vertices[v1],vertices[v1+1],vertices[v1+2]]
+    // cross multiply n1 and n2
+    var x=(n1[1]*n2[2]-n1[2]*n2[1])
+    var y=(n1[2]*n2[0]-n1[0]*n2[2])
+    var z=(n1[0]*n2[1]-n1[1]*n2[0])
+    // normalize xyz vector
+    len=Math.sqrt(x*x+y*y+z*z);
+    if(len!=0){
+      len=1.0/len;
+      len*=normDir
+      x*=len;
+      y*=len;
+      z*=len;
+      // add normalized normal to each vertex of the face
+      vertices[v1+offset]+=x
+      vertices[v1+offset+1]+=y
+      vertices[v1+offset+2]+=z
+      vertices[v2+offset]+=x
+      vertices[v2+offset+1]+=y
+      vertices[v2+offset+2]+=z
+    }
+  }
+  Mesh._recalcNormalsFinish(vertices,uniqueVertices,faces,stride,offset,flat);
+}
+
+
 /**
  * Changes the primitive mode for this mesh.
  * Future vertices will be drawn as primitives of the new type.
@@ -360,7 +405,7 @@ Mesh.prototype.setColor3=function(r,g,b){
   */
  Mesh.prototype.recalcNormals=function(flat,inward){
   for(var i=0;i<this.subMeshes.length;i++){
-   if((this.subMeshes[i].attributeBits&Mesh.PRIMITIVES_BITS)==0){
+   if((this.subMeshes[i].attributeBits&Mesh.PRIMITIVES_BITS)!=Mesh.POINTS_BIT){
     this.subMeshes[i].recalcNormals(flat,inward);
    }
   }
@@ -680,8 +725,13 @@ SubMesh.prototype.recalcNormals=function(flat,inward){
   if(haveOtherAttributes || flat){
     this.makeRedundant();
   }
-  Mesh._recalcNormals(this.vertices,this.indices,
-    this.getStride(),3,flat,inward);
+  if((this.attributeBits&Mesh.LINES_BIT)!=0){
+   Mesh._recalcNormalsLines(this.vertices,this.indices,
+     this.getStride(),3,flat,inward);  
+  } else {
+   Mesh._recalcNormals(this.vertices,this.indices,
+     this.getStride(),3,flat,inward);  
+  }
   return this;
 };
 /** @private */
