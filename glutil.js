@@ -894,7 +894,7 @@ BufferedMesh.prototype.draw=function(program){
 * Deletes the vertex and index buffers associated with this object.
 */
 BufferedMesh.prototype.dispose=function(){
- for(var i=0;i<this.subMeshes;i++){
+ for(var i=0;i<this.subMeshes.length;i++){
   this.subMeshes[i].dispose();
  }
 }
@@ -921,6 +921,7 @@ function BufferedSubMesh(mesh, context){
  }
   this.verts=vertbuffer;
   this.faces=facebuffer;
+  this.numVertices=mesh.vertices.length/mesh.getStride();
   this.facesLength=mesh.indices.length;
   this.type=type;
   this.format=mesh.attributeBits;
@@ -1012,6 +1013,29 @@ BufferedSubMesh.prototype.draw=function(program){
   for(var i=0;i<boundAttributes.length;i++){
    context.disableVertexAttribArray(boundAttributes[i]);
   }
+}
+
+BufferedSubMesh.prototype.primitiveCount=function(){
+  if((this.format&Mesh.LINES_BIT)!=0)
+   return Math.floor(this.facesLength/2);
+  if((this.format&Mesh.POINTS_BIT)!=0)
+   return this.facesLength;
+  return Math.floor(this.facesLength/3);
+}
+
+BufferedMesh.prototype.vertexCount=function(){
+ var ret=0;
+ for(var i=0;i<this.subMeshes.length;i++){
+  ret+=this.subMeshes[i].numVertices;
+ }
+ return ret;
+}
+BufferedMesh.prototype.primitiveCount=function(){
+ var ret=0;
+ for(var i=0;i<this.subMeshes.length;i++){
+  ret+=this.subMeshes[i].primitiveCount();
+ }
+ return ret;
 }
 
 /////////////////////////////////
@@ -1711,10 +1735,22 @@ Scene3D.prototype._renderInner=function(){
   this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
+//  var vertices=0;
+//  var prims=0;
   for(var i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],this.program);
+//   vertices+=this.shapes[i].vertexCount();
+//   prims+=this.shapes[i].primitiveCount();
   }
+//  console.log("vertices: "+vertices+", primitives: "+prims)
   return this;
+}
+
+Shape.prototype.vertexCount=function(){
+ return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
+}
+Shape.prototype.primitiveCount=function(){
+ return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 }
 
 /**
