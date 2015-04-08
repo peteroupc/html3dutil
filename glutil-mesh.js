@@ -273,7 +273,8 @@ Mesh.prototype.merge=function(other){
   * defined (with vertex3()) will have this normal.  The new current
   * normal will apply to future vertices even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
-  * that mode.
+  * that mode.  The normal passed to this method will
+  * not automatically be normalized to unit length.
   * @param {number} x X-coordinate of the normal.
   * @param {number} y Y-coordinate of the normal.
   * @param {number} z Z-coordinate of the normal.
@@ -442,7 +443,7 @@ Mesh.prototype.normalizeNormals=function(){
  * Converts this mesh to a new mesh with triangles converted
  * to line segments.  The new mesh will reuse the vertices
  * contained in this one without copying the vertices.  Parts
- * of the mesh already consisting of line segments will remain
+ * of the mesh consisting of points or line segments will remain
  * unchanged.
  * @return {glutil.Mesh} A new mesh with triangles converted
  * to lines.
@@ -649,10 +650,9 @@ SubMesh.prototype.toWireFrame=function(){
 
 /** @private */
 SubMesh._isIdentityInUpperLeft=function(matrix){
- return
-    m[0]==1 && m[1]==0 && m[2]==0 &&
+ return (m[0]==1 && m[1]==0 && m[2]==0 &&
     m[4]==0 && m[5]==1 && m[6]==0 &&
-    m[8]==0 && m[9]==0 && m[10]==1;
+    m[8]==0 && m[9]==0 && m[10]==1) ? true : false;
 }
 /** @private */
 SubMesh.prototype.transform=function(matrix){
