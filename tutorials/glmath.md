@@ -141,8 +141,8 @@ where `tx` is added to the x-coordinate, `ty` is added to the y-coordinate, and
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + tz
 
-For example, we add the input x and `tx` to get the output x, and likewise for
-y and z.
+For example, we add the input x and `tx` to get the output x.  If `tx` is 0, x
+remains unchanged.  Likewise for y and z.
 
 Related functions:
 
@@ -327,9 +327,15 @@ which would look like:
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (cos &theta;) &#x22c5; **a**<sub>_y_</sub> + -(sin &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (sin &theta;) &#x22c5; **a**<sub>_y_</sub> + (cos &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
 
-Note that when we rotate a point about the X axis, the X coordinate is unchanged
+Note that:
+
+* When we rotate a point about the X axis, the X coordinate is unchanged
 and the Y and Z coordinates are adjusted in the rotation.  For rotations about the
 Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.
+* If the axis of rotation points toward the viewer, positive rotations mean
+counterclockwise rotation.  For example, 60 degrees about the axis means
+60 degrees counterclockwise, and negative 60 degrees means 60 degrees
+clockwise.
 
 As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
 &theta; = 60).
