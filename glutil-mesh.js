@@ -457,8 +457,14 @@ Mesh.prototype.toWireFrame=function(){
   }
   return mesh;
 }
-
-Mesh.prototype.setVertex=function(index, x, y, z){
+/**
+ * Not documented yet.
+ * @param {*} index
+ * @param {*} x
+ * @param {*} y
+ * @param {*} z
+ */
+Mesh.prototype.setVertex=function(index,x,y,z){
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
    var subMesh=this.subMeshes[i];
@@ -475,8 +481,14 @@ Mesh.prototype.setVertex=function(index, x, y, z){
   }
   return;
 }
-
-Mesh.prototype.setVertexNormal=function(index, x, y, z){
+/**
+ * Not documented yet.
+ * @param {*} index
+ * @param {*} x
+ * @param {*} y
+ * @param {*} z
+ */
+Mesh.prototype.setVertexNormal=function(index,x,y,z){
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
    var subMesh=this.subMeshes[i];
@@ -495,7 +507,10 @@ Mesh.prototype.setVertexNormal=function(index, x, y, z){
   }
   return;
 }
-
+/**
+ * Not documented yet.
+ * @param {*} index
+ */
 Mesh.prototype.getVertex=function(index){
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
@@ -511,7 +526,10 @@ Mesh.prototype.getVertex=function(index){
   }
   return null;
 }
-
+/**
+ * Not documented yet.
+ * @param {*} index
+ */
 Mesh.prototype.getVertexNormal=function(index){
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
@@ -532,7 +550,9 @@ Mesh.prototype.getVertexNormal=function(index){
   }
   return null;
 }
-
+/**
+ * Not documented yet.
+ */
 Mesh.prototype.vertexCount=function(){
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
@@ -781,7 +801,9 @@ Mesh.prototype.reverseWinding=function(){
   }
   return this;
 }
-
+/**
+ * Not documented yet.
+ */
 SubMesh.prototype.reverseWinding=function(){
   if((this.attributeBits&Mesh.PRIMITIVES_BITS)!=0){
    // Not a triangle mesh
