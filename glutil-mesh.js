@@ -8,7 +8,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
 /**
-* Specifies the triangles and lines that make up a geometric shape.
+* Specifies the triangles, lines, and points that make up a geometric shape.
+* Each vertex, that is, each point, each end of a line, and each corner
+* of a triangle, can also specify a color, normal, and texture coordinates.
 * See the "{@tutorial shapes}" tutorial.
 * @class
 * @alias glutil.Mesh
@@ -456,6 +458,89 @@ Mesh.prototype.toWireFrame=function(){
   return mesh;
 }
 
+Mesh.prototype.setVertex=function(index, x, y, z){
+  var count=0;
+  for(var i=0;i<this.subMeshes.length;i++){
+   var subMesh=this.subMeshes[i];
+   var c=subMesh.vertexCount();
+   var newcount=count+c;
+   if(index<newcount){
+    var idx=index-count;
+    idx*=subMesh.getStride();
+    subMesh.vertices[idx]=x;
+    subMesh.vertices[idx+1]=y;
+    subMesh.vertices[idx+2]=z;
+   }
+   count=newcount;
+  }
+  return;
+}
+
+Mesh.prototype.setVertexNormal=function(index, x, y, z){
+  var count=0;
+  for(var i=0;i<this.subMeshes.length;i++){
+   var subMesh=this.subMeshes[i];
+   var c=subMesh.vertexCount();
+   var newcount=count+c;
+   if(index<newcount){
+    var idx=index-count;
+    subMesh._rebuildVertices(Mesh.NORMALS_BIT);
+    idx*=subMesh.getStride();
+    idx+=Mesh.normalOffset(subMesh.attributeBits);
+    subMesh.vertices[idx]=x;
+    subMesh.vertices[idx+1]=y;
+    subMesh.vertices[idx+2]=z;
+   }
+   count=newcount;
+  }
+  return;
+}
+
+Mesh.prototype.getVertex=function(index){
+  var count=0;
+  for(var i=0;i<this.subMeshes.length;i++){
+   var subMesh=this.subMeshes[i];
+   var c=subMesh.vertexCount();
+   var newcount=count+c;
+   if(index<newcount){
+    var idx=index-count;
+    idx*=subMesh.getStride();
+    return subMesh.vertices.slice(idx,idx+3);
+   }
+   count=newcount;
+  }
+  return null;
+}
+
+Mesh.prototype.getVertexNormal=function(index){
+  var count=0;
+  for(var i=0;i<this.subMeshes.length;i++){
+   var subMesh=this.subMeshes[i];
+   var c=subMesh.vertexCount();
+   var newcount=count+c;
+   if(index<newcount){
+    if((subMesh.attributeBits&Mesh.NORMALS_BIT)!=0){
+     var idx=index-count;
+     idx*=subMesh.getStride();
+     idx+=Mesh.normalOffset(subMesh.attributeBits);
+     return subMesh.vertices.slice(idx,idx+3);
+    } else {
+     return [0,0,0];
+    }
+   }
+   count=newcount;
+  }
+  return null;
+}
+
+Mesh.prototype.vertexCount=function(){
+  var count=0;
+  for(var i=0;i<this.subMeshes.length;i++){
+   count+=this.subMeshes[i].vertexCount();
+  }
+  return count;
+}
+
 /** @private */
 function SubMesh(vertices,faces,format){
  this.vertices=vertices||[];
@@ -649,7 +734,7 @@ SubMesh.prototype.toWireFrame=function(){
 }
 
 /** @private */
-SubMesh._isIdentityInUpperLeft=function(matrix){
+SubMesh._isIdentityInUpperLeft=function(m){
  return (m[0]==1 && m[1]==0 && m[2]==0 &&
     m[4]==0 && m[5]==1 && m[6]==0 &&
     m[8]==0 && m[9]==0 && m[10]==1) ? true : false;
@@ -747,23 +832,19 @@ SubMesh.prototype.setColor3=function(r,g,b){
 };
 /** @private */
 Mesh.getStride=function(format){
-  format&=Mesh.ATTRIBUTES_BITS;
-  return [3,6,6,9,5,8,8,11][format];
+  return [3,6,6,9,5,8,8,11][format&Mesh.ATTRIBUTES_BITS];
  }
 /** @private */
 Mesh.normalOffset=function(format){
-  format&=Mesh.ATTRIBUTES_BITS;
-  return [-1,3,-1,3,-1,3,-1,3][format];
+  return [-1,3,-1,3,-1,3,-1,3][format&Mesh.ATTRIBUTES_BITS];
  }
 /** @private */
 Mesh.colorOffset=function(format){
-  format&=Mesh.ATTRIBUTES_BITS;
-  return [-1,-1,3,6,-1,-1,3,6][format];
+  return [-1,-1,3,6,-1,-1,3,6][format&Mesh.ATTRIBUTES_BITS];
  }
 /** @private */
 Mesh.texCoordOffset=function(format){
-  format&=Mesh.ATTRIBUTES_BITS;
-  return [-1,-1,-1,-1,3,6,6,9][format];
+  return [-1,-1,-1,-1,3,6,6,9][format&Mesh.ATTRIBUTES_BITS];
 }
 /**
  @private
@@ -837,7 +918,7 @@ Mesh.LINES = 3;
 Primitive mode for rendering a triangle fan.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the first vertex of the first triangle,
-the last vertex, and 1 new vertex.
+the previous vertex, and 1 new vertex.
  @const
 */
 Mesh.TRIANGLE_FAN = 4;

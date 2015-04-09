@@ -1014,7 +1014,9 @@ BufferedSubMesh.prototype.draw=function(program){
    context.disableVertexAttribArray(boundAttributes[i]);
   }
 }
-
+/**
+ * Not documented yet.
+ */
 BufferedSubMesh.prototype.primitiveCount=function(){
   if((this.format&Mesh.LINES_BIT)!=0)
    return Math.floor(this.facesLength/2);
@@ -1022,7 +1024,9 @@ BufferedSubMesh.prototype.primitiveCount=function(){
    return this.facesLength;
   return Math.floor(this.facesLength/3);
 }
-
+/**
+ * Not documented yet.
+ */
 BufferedMesh.prototype.vertexCount=function(){
  var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
@@ -1030,6 +1034,9 @@ BufferedMesh.prototype.vertexCount=function(){
  }
  return ret;
 }
+/**
+ * Not documented yet.
+ */
 BufferedMesh.prototype.primitiveCount=function(){
  var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
@@ -1504,6 +1511,8 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 }
 /**
 *  Sets this scene's view matrix to represent a camera view.
+* This method takes a camera's position (<code>eye</code>), and the point the camera is viewer
+* (<code>center</code>).
 * @param {Array<number>} eye A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<number>|undefined} center A 3-element vector specifying
@@ -1745,10 +1754,15 @@ Scene3D.prototype._renderInner=function(){
 //  console.log("vertices: "+vertices+", primitives: "+prims)
   return this;
 }
-
+/**
+ * Not documented yet.
+ */
 Shape.prototype.vertexCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 }
+/**
+ * Not documented yet.
+ */
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 }
