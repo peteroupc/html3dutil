@@ -458,13 +458,31 @@ Mesh.prototype.toWireFrame=function(){
   return mesh;
 }
 /**
- * Not documented yet.
- * @param {*} index
- * @param {*} x
- * @param {*} y
- * @param {*} z
+ * Sets the X, Y, and Z coordinates of the vertex with the
+ * given index.  Has no effect if the index is less than 0 or
+ * equals the number of vertices in this mesh or greater.
+ * @param {number} index Zero-based index of
+ * the vertex to set.
+  * The index ranges from 0 to less than
+ * the number of vertices in the mesh, not the
+ * number of vertex indices.
+* @param {number|Array<number>} x X coordinate of the vertex position.
+ * Can also be a 3-element array giving
+ * the X, Y, and Z coordinates, respectively, of the vertex
+ * position.
+ * @param {number} y Y coordinate of the vertex position.
+ * May be null or omitted if "x" is an array.
+ * @param {number} z Z coordinate of the vertex position.
+ * May be null or omitted if "x" is an array.
+ * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.setVertex=function(index,x,y,z){
+  if(index<0)return this;
+  if(typeof y=="undefined" && typeof z=="undefined"){
+   y=x[1];
+   z=x[2];
+   x=x[0];
+  }
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
    var subMesh=this.subMeshes[i];
@@ -476,20 +494,38 @@ Mesh.prototype.setVertex=function(index,x,y,z){
     subMesh.vertices[idx]=x;
     subMesh.vertices[idx+1]=y;
     subMesh.vertices[idx+2]=z;
+    break;
    }
    count=newcount;
   }
-  return;
+  return this;
 }
 /**
- * Not documented yet.
- * @param {*} index
- * @param {*} x
- * @param {*} y
- * @param {*} z
+ * Sets the normal associated with the vertex with the
+ * given index.  Has no effect if the index exceeds the number
+ * of vertices in the mesh.
+ * @param {number} index Zero-based index of
+ * the vertex to set.
+ * The index ranges from 0 to less than
+ * the number of vertices in the mesh, not the
+ * number of vertex indices.
+s * @param {number|Array<number>} x X coordinate of the vertex normal.
+ * Can also be a 3-element array giving
+ * the X, Y, and Z coordinates, respectively, of the vertex
+ * normal.
+ * @param {number} y Y coordinate of the vertex normal.
+ * May be null or omitted if "x" is an array.
+ * @param {number} z Z coordinate of the vertex normal.
+ * May be null or omitted if "x" is an array.
+ * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.setVertexNormal=function(index,x,y,z){
   var count=0;
+  if(typeof y=="undefined" && typeof z=="undefined"){
+   y=x[1];
+   z=x[2];
+   x=x[0];
+  }
   for(var i=0;i<this.subMeshes.length;i++){
    var subMesh=this.subMeshes[i];
    var c=subMesh.vertexCount();
@@ -502,16 +538,27 @@ Mesh.prototype.setVertexNormal=function(index,x,y,z){
     subMesh.vertices[idx]=x;
     subMesh.vertices[idx+1]=y;
     subMesh.vertices[idx+2]=z;
+    break;
    }
    count=newcount;
   }
-  return;
+  return this;
 }
 /**
- * Not documented yet.
- * @param {*} index
+ * Gets the position of the vertex with the given
+ * index in this mesh.
+ * @param {number} index Zero-based index of
+ * the vertex to get.
+ * The index ranges from 0 to less than
+ * the number of vertices in the mesh, not the
+ * number of vertex indices.
+ * @return {Array<number>} A 3-element array giving
+ * the X, Y, and Z coordinates, respectively, of the vertex
+ * position, or null if the index is less than 0 or
+ * equals the number of vertices in this mesh or greater.
  */
 Mesh.prototype.getVertex=function(index){
+  if(index<0)return null;
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
    var subMesh=this.subMeshes[i];
@@ -527,8 +574,19 @@ Mesh.prototype.getVertex=function(index){
   return null;
 }
 /**
- * Not documented yet.
- * @param {*} index
+ * Gets the normal of the vertex with the given
+ * index in this mesh.
+ * @param {number} index Zero-based index of
+ * the vertex normal to get.
+ * The index ranges from 0 to less than
+ * the number of vertices in the mesh, not the
+ * number of vertex indices.
+ * @return {Array<number>} A 3-element array giving
+ * the X, Y, and Z coordinates, respectively, of the vertex
+ * normal, or null if the index is less than 0 or
+ * equals the number of vertices in this mesh or greater.
+ * Returns (0,0,0) if the given vertex exists but doesn't define
+ * a normal.
  */
 Mesh.prototype.getVertexNormal=function(index){
   var count=0;
@@ -551,7 +609,8 @@ Mesh.prototype.getVertexNormal=function(index){
   return null;
 }
 /**
- * Not documented yet.
+ * Gets the number of vertices included in this mesh.
+ * @return {number}
  */
 Mesh.prototype.vertexCount=function(){
   var count=0;
@@ -801,9 +860,8 @@ Mesh.prototype.reverseWinding=function(){
   }
   return this;
 }
-/**
- * Not documented yet.
- */
+
+/** @private */
 SubMesh.prototype.reverseWinding=function(){
   if((this.attributeBits&Mesh.PRIMITIVES_BITS)!=0){
    // Not a triangle mesh
@@ -822,7 +880,7 @@ SubMesh.prototype.reverseWinding=function(){
 
 /** @private */
 SubMesh.prototype.recalcNormals=function(flat,inward){
-  var haveOtherAttributes=((this.attributeBits&(Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT))!=0);
+  var haveOtherAttributes=((this.attributeBits&(Mesh.ATTRIBUTES_BITS&~Mesh.NORMALS_BIT))!=0);
   this._rebuildVertices(Mesh.NORMALS_BIT);
   // No need to duplicate vertices if there are no other attributes
   // besides normals and smooth shading is requested; the
@@ -872,12 +930,12 @@ Mesh.texCoordOffset=function(format){
  @private
  @const
 */
-Mesh.ATTRIBUTES_BITS = 7;
+Mesh.ATTRIBUTES_BITS = 255;
 /**
  @private
  @const
 */
-Mesh.PRIMITIVES_BITS = 24;
+Mesh.PRIMITIVES_BITS = 768;
 /** The mesh contains normals for each vertex.
  @const
  @default
@@ -898,12 +956,12 @@ of triangles (3 vertices per line).
  @const
  @default
 */
-Mesh.LINES_BIT = 8;
+Mesh.LINES_BIT = 256;
 /** The mesh consists of points (1 vertex per line).
  @const
  @default
 */
-Mesh.POINTS_BIT = 16;
+Mesh.POINTS_BIT = 512;
 /**
 Primitive mode for rendering triangles, made up
 of 3 vertices each.
