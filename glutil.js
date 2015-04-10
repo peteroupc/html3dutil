@@ -739,7 +739,8 @@ Material.fromColor=function(r,g,b,a){
 
 /** Convenience method that returns a Material
  * object from a texture to apply to a 3D object's surface.
-* @param {string} texture URL of the texture data.  It will be loaded via
+* @param {glutil.Texture|string} texture {@link glutil.Texture} object, or a string with the
+* URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this constructor
 *  will not load that image yet.
 * @return {glutil.Material} The resulting material object.
@@ -1014,7 +1015,9 @@ BufferedSubMesh.prototype.draw=function(program){
    context.disableVertexAttribArray(boundAttributes[i]);
   }
 }
-
+/**
+ * @private
+ */
 BufferedSubMesh.prototype.primitiveCount=function(){
   if((this.format&Mesh.LINES_BIT)!=0)
    return Math.floor(this.facesLength/2);
@@ -1022,7 +1025,9 @@ BufferedSubMesh.prototype.primitiveCount=function(){
    return this.facesLength;
   return Math.floor(this.facesLength/3);
 }
-
+/**
+ * Not documented yet.
+ */
 BufferedMesh.prototype.vertexCount=function(){
  var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
@@ -1030,6 +1035,9 @@ BufferedMesh.prototype.vertexCount=function(){
  }
  return ret;
 }
+/**
+ * Not documented yet.
+ */
 BufferedMesh.prototype.primitiveCount=function(){
  var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
@@ -1747,10 +1755,15 @@ Scene3D.prototype._renderInner=function(){
 //  console.log("vertices: "+vertices+", primitives: "+prims)
   return this;
 }
-
+/**
+ * Not documented yet.
+ */
 Shape.prototype.vertexCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 }
+/**
+ * Not documented yet.
+ */
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 }
