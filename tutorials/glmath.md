@@ -435,10 +435,8 @@ elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4,
 6, and 9 respectively).  The effect is like reversing the angle of the rotation to reset an object
 to its original orientation.
 
-If a matrix uses some **combination** of translation, scaling, and rotation, the steps above
-are done as appropriate for that matrix to find its inverted version.
-
-Matrices that don't describe merely a translation, rotation, and scaling are more complicated
+Matrices that use some combination of translation, scaling, and rotation
+as well as other kinds of matrices are more complicated
 to invert.  In fact, some matrices can't be inverted at all.  The formula for inverting a general
 matrix is too complicated to discuss here.
 
