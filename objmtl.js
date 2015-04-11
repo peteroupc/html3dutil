@@ -90,12 +90,11 @@ ObjData.prototype._getMaterial=function(mesh){
 MtlData.prototype._resolveTextures=function(){
   for(var i=0;i<this.list.length;i++){
     var mtl=this.list[i].data;
-    if(mtl.textureName){
+    if(mtl.textureMap){
      var resolvedName=ObjData._resolvePath(
-       this.url,mtl.textureName);
-     //console.log(resolvedName)
-     this.list[i].data=new Texture(resolvedName)
-       .setParams(mtl);
+       this.url,mtl.textureMap.name);
+     this.list[i].data=mtl.copy()
+       .setParams({"textureMap":resolvedName});
     }
   }
 }
@@ -159,12 +158,8 @@ MtlData._getMaterial=function(mtl){
  var ret=new Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
-  ret=new TexturedMaterial(textureName).setParams({
-   "ambient":ambient,
-   "diffuse":diffuse,
-   "specular":specular,
-   "shininess":shininess,
-   "emission":emission
+  ret=ret.setParams({
+   "textureMap":textureName
   })
  }
  return ret;
