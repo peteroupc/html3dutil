@@ -366,7 +366,7 @@ So the rotated point would be at about (10, -15.98075, 32.3205).
 Related functions:
 
 * [GLMath.mat4rotated()]{@link glmath.GLMath.mat4rotated} -
- Returns a translation matrix
+ Returns a rotation matrix
 * [GLMath.mat4rotate()]{@link glmath.GLMath.mat4rotate} -
  Multiplies a matrix by a translation.
 
@@ -415,6 +415,37 @@ Related functions:
  Returns a frustum matrix
 * [GLMath.mat4perspective()]{@link glmath.GLMath.mat4perspective} -
  Returns a field-of-view perspective matrix
+
+**Matrix Inversions**
+
+An inverted matrix describes a transformation that undoes another transformation.  For
+example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
+size.
+
+To invert a **translation**, reverse the sign of the translation elements `tx`, `ty`, and `tz`
+and generate a new translation matrix with the new translation elements.  For example,
+to invert the translation (5, 2, -3), use the translation (-5, -2, 3).
+
+To invert a **scaling**, use the reciprocal of `sx`, `sy`, and `sz`
+and generate a new scaling matrix with those elements. (The reciprocal of a number is 1 divided
+by that number.) For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
+
+To invert a **rotation**, swap the 2nd and 5th elements of the matrix, the 3rd and 9th
+elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4, 2, 8,
+6, and 9 respectively).  The effect is like reversing the angle of the rotation to reset an object
+to its original orientation.
+
+If a matrix uses some **combination** of translation, scaling, and rotation, the steps above
+are done as appropriate for that matrix to find its inverted version.
+
+Matrices that don't describe merely a translation, rotation, and scaling are more complicated
+to invert.  In fact, some matrices can't be inverted at all.  The formula for inverting a general
+matrix is too complicated to discuss here.
+
+Related functions:
+
+* [GLMath.mat4invert()]{@link glmath.GLMath.mat4invert} -
+ Inverts a matrix
 
 Quaternions
 --------------
