@@ -1081,14 +1081,15 @@ mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
 * 10, 12, and 14).
 * @param {Array<number>} viewerPos A 3-element vector specifying
 * the camera position in world space.
-* @param {Array<number>|undefined} lookingAt A 3-element vector specifying
+* @param {Array<number>} [lookingAt] A 3-element vector specifying
 * the point in world space that the camera is looking at.  May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
-* @param {Array<number>|undefined} up A 3-element vector specifying
+* @param {Array<number>} [up] A 3-element vector specifying
 * the up-vector direction.  May be null or omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
 * vector must not point in the same or opposite direction as
-* the camera's view direction.
+* the camera's view direction. (For best results, rotate the vector (0, 1, 0)
+* so it points perpendicular to the camera's view direction.)
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4lookat:function(viewerPos,lookingAt,up){

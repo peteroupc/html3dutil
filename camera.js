@@ -164,7 +164,10 @@ Camera.prototype.turnHorizontal=function(angleDegrees){
 Camera.prototype.getPosition=function(){
   return this.position.slice(0,3);
 }
-
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.setDistance=function(dist){
  if(dist<0)throw new Error("invalid distance")
  if(dist<this.near)dist=this.near;

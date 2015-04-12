@@ -149,9 +149,9 @@ var GLUtil={
  * resolves after the given list of promises finishes
  * its work.
  * @param {Array<Promise>} promises - an array containing promise objects
- *  @param {Function|undefined} progressResolve - a function called as each
+ *  @param {Function} [progressResolve] - a function called as each
  *   individual promise is resolved; optional
- *  @param {Function|undefined} progressReject - a function called as each
+ *  @param {Function} [progressReject] - a function called as each
  *   individual promise is rejected; optional
  * @return {Promise} A promise that is never rejected and resolves when
 * all of the promises are each resolved or rejected. The result
@@ -774,7 +774,7 @@ var Texture=function(name){
 *  Loads a texture by its URL.
 * @param {string} name URL of the texture data.  It will be loaded via
 *  the JavaScript DOM's Image class
-* @param {Object|undefined} textureCache An object whose keys
+* @param {Object} [textureCache] An object whose keys
 * are the names of textures already loaded.  This will help avoid loading
 * the same texture more than once.  This parameter is optional
 * and may be omitted.
@@ -1450,9 +1450,9 @@ Scene3D.prototype.loadAndMapTexture=function(name){
 * Loads one or more textures from an image URL and uploads each of them
 * to a texture buffer object.
 * @param {Array<string>} textureFiles A list of URLs of the image to load.
-* @param {Function|undefined} resolved Called for each URL that is loaded successfully
+* @param {Function} [resolved] Called for each URL that is loaded successfully
 * and uploaded to a texture buffer (the argument will be a Texture object.)
-* @param {Function|undefined} rejected Called for each URL for which an error
+* @param {Function} [rejected] Called for each URL for which an error
 * occurs (the argument will be the data passed upon
 * rejection).
 * @return {Promise} A promise that is resolved when
@@ -1516,14 +1516,15 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * (<code>center</code>).
 * @param {Array<number>} eye A 3-element vector specifying
 * the camera position in world space.
-* @param {Array<number>|undefined} center A 3-element vector specifying
+* @param {Array<number>} [center] A 3-element vector specifying
 * the point in world space that the camera is looking at. May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
-* @param {Array<number>|undefined} up A 3-element vector specifying
+* @param {Array<number>} [up] A 3-element vector specifying
 * the up-vector direction.  May be null or omitted, in which case
 * the default is a vector pointing positive on the Y axis.  This
 * vector must not point in the same or opposite direction as
-* the camera's view direction.
+* the camera's view direction. (For best results, rotate the vector (0, 1, 0)
+* so it points perpendicular to the camera's view direction.)
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setLookAt=function(eye, center, up){
