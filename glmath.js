@@ -37,7 +37,9 @@ var GLMath={
  * each of two other vectors.  If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the sine of
  * the angle between them is equal to the length of their
- * cross product.<p>
+ * cross product. <small>(More formally, the length of the cross
+ * product equals |<b>a</b>| * |<b>b</b>| * sin &theta;
+ * where |<b>x</b>| is the length of vector <b>x</b>.)</small><p>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
  * follows:<pre>
  * <b>c</b>.x = <b>a</b>.y * <b>b</b>.z - <b>a</b>.z * <b>b</b>.y
@@ -59,6 +61,9 @@ return [a[1]*b[2]-a[2]*b[1],
  * If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
  * of the angle between them is equal to their dot product.
+ * <small>(More formally, the dot
+ * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
+ * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
  * @return {number} A number representing the dot product.

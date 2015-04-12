@@ -516,8 +516,17 @@ LightSource.prototype.setParams=function(params){
 function Lights(){
  this.lights=[new LightSource()];
  /**
- *  Ambient color for the scene.  In the absence of
- *  other lighting effects, all objects will be given this color.
+ *  Ambient color for the scene.  This is the color of the light
+ *  that shines on every part of every object equally and in
+ * every direction. In the absence of
+ *  other lighting effects, all objects will be given this color.<p>
+ *  <small>Ambient light is an efficient simulation of the
+ * real-world effect of light bouncing back and forth between
+ * many different objects in an area.  One example of this
+ * phenomenon is sunlight reaching an indoor room without
+ * directly hitting it, such that the sunlight reflects off the walls
+ * and so illuminates most of the room pretty much uniformly.
+ * Ambient lights simulate this phenomenon.</small>
  *  @default
  */
  this.sceneAmbient=[0.2,0.2,0.2];
