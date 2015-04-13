@@ -366,12 +366,12 @@ CurveEval.prototype.colorBezier=function(controlPoints,u1,u2){
  * and texture coordinates will be the same as they were before the method
  * started.
  * @param {number} u Point of the curve to evaluate (for
- * B&eacute;zier curve, generally within the range
+ * B&eacute;zier curves, generally within the range
  * given in the <code>vectorBezier</code>, <code>normalBezier</code>,
  * <code>colorBezier</code>, and <code>texCoordBezier</code> methods).
  * @return {CurveEval} This object.
  */
-CurveEval.prototype.evaluate=function(mesh,u){
+CurveEval.prototype.evalOne=function(mesh,u){
  var color=null;
  var normal=null;
  var texcoord=null;
@@ -437,7 +437,7 @@ CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
   mesh.mode(Mesh.LINE_STRIP)
  else return this;
  for(var i=0; i<=n; i++){
-  this.evaluate(mesh, u1+i*uv);
+  this.evalOne(mesh, u1+i*uv);
  }
  return this;
 }
@@ -595,7 +595,7 @@ SurfaceEval.prototype.colorBezier=function(controlPoints,u1,u2,v1,v2){
  * @param {number} v V-coordinate of the curve to evaluate.
  * @return {SurfaceEval} This object.
  */
-SurfaceEval.prototype.evaluate=function(mesh,u,v){
+SurfaceEval.prototype.evalOne=function(mesh,u,v){
  var color=null;
  var normal=null;
  var texcoord=null;
@@ -701,8 +701,8 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
    mesh.mode(Mesh.TRIANGLE_STRIP);
    for(var j=0;j<=un;j++){
     var jx=j*du+u1;
-    this.evaluate(mesh,jx,i*dv+v1);
-    this.evaluate(mesh,jx,(i+1)*dv+v1);
+    this.evalOne(mesh,jx,i*dv+v1);
+    this.evalOne(mesh,jx,(i+1)*dv+v1);
   }
   }
  } else if(mode==Mesh.POINTS){
@@ -710,7 +710,7 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
   for(var i=0;i<=vn;i++){
    for(var j=0;j<=un;j++){
     var jx=j*du+u1;
-    this.evaluate(mesh,jx,i*dv+v1);
+    this.evalOne(mesh,jx,i*dv+v1);
    }
   }
  } else if(mode==Mesh.LINES){
@@ -718,13 +718,13 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
    mesh.mode(Mesh.LINE_STRIP);
    for(var j=0;j<=un;j++){
     var jx=j*du+u1;
-    this.evaluate(mesh,jx,i*dv+v1);
+    this.evalOne(mesh,jx,i*dv+v1);
    }
   }
   for(var i=0;i<=un;i++){
    mesh.mode(Mesh.LINE_STRIP);
    for(var j=0;j<=vn;j++){
-    this.evaluate(mesh,i*du+u1,j*dv+v1);
+    this.evalOne(mesh,i*du+u1,j*dv+v1);
    }
   }
  }
