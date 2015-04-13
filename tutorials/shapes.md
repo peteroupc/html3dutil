@@ -15,11 +15,13 @@ the built-in shapes.
 * [platonic.html](https://peteroupc.github.io/html3dutil/platonic.html) - A demo featuring the five
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
 
-Here are the methods for creating built-in shapes.  All methods described
-below return a `Mesh` object that describes the triangles they
+### Built-In Shapes
+
+The `Meshes` class includes several handy methods for creating built-in shapes.
+All methods described below return a `Mesh` object that describes the triangles they
 are composed of.  See "Custom Shapes" below for more on meshes.
 
-### 3D Figures
+**3D Figures:**
 
 * [Meshes.createBox()]{@link glutil.Meshes.createBox} - Creates a cube or box.
 * [Meshes.createCylinder()]{@link glutil.Meshes.createCylinder} - Creates a cylinder or cone, not including the base
@@ -28,7 +30,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
 * [Meshes.createTorus()]{@link glutil.Meshes.createTorus} - Creates a torus (doughnut shape).
 * [Meshes.createSphere()]{@link glutil.Meshes.createSphere} - Creates a sphere.
 
-### 2D Figures
+**2D Figures:**
 
 * [Meshes.createDisk()]{@link glutil.Meshes.createDisk} - Creates a circular disk or a regular polygon, possibly
   with a hole in the middle.
@@ -39,7 +41,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
 ### Custom Shapes
 
 Also included is a `Mesh` class for defining shapes not given among the built-in ones.
-Shapes can consist of triangles or lines.
+Shapes can consist of triangles, lines of points.
 
 There are two ways for specifying shapes:  through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.
@@ -176,10 +178,19 @@ Example:
 ### Normals
 
 For lighting and shading to work correctly, you must specify normals for all the
-vertices in the mesh.  After generating a mesh, you can use the recalcNormals()
-method, described below, to help in this.
+vertices in the mesh.
 
-Note that the built-in methods that generate meshes will automatically
+#### What Are Normals?
+
+A surface normal vector is generally perpendicular to a surface's edges, and points
+away from the surface.  When light hits an object's surface, it will shine depending
+on how directly the light points to the surface.  It will shine the most if the light
+is directly opposite to its normal, and not at all if the light is perpendicular to the
+normal or in the same direction as the normal.
+
+#### Normals on Built-in Shapes
+
+The `Meshes` class includes built-in methods that will automatically
 specify the proper normals.
 
 #### recalcNormals()
@@ -245,8 +256,8 @@ Examples for setting position:
     // rotate the shape 40 units about X axis, 20 units about Y axis,
     // and 50 units about Z axis
     shape.setQuaternion(GLMath.quatFromEuler(40,20,50));
-    // rotate the shape 20 units about X axis and Y axis
-    shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,1,0));
+    // rotate the shape 20 units about Y axis
+    shape.setQuaternion(GLMath.quatFromAxisAngle(20,0,1,0));
     // scale the shape by 2x in all axes
     shape.setScale(2,2,2);
     // same, but passing an array
