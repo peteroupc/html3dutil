@@ -1,0 +1,145 @@
+<head>
+<meta charset=utf-8>
+<script type="text/javascript" src="glutil_min.js"></script>
+<script type="text/javascript" src="camera.js"></script>
+</head>
+<body>
+<a href="javascript:link1()">Ellipsoid</a>,
+<a href="javascript:link2()">Klein bottle</a>,
+<a href="javascript:link3()">M&ouml;bius strip</a>
+<br>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+var Ellipsoid=function(xRadius, yRadius, zRadius){
+ this.xRadius=xRadius;
+ this.yRadius=yRadius;
+ this.zRadius=zRadius;
+ this.evaluate=function(u,v,output){
+  u*=Math.PI*2;
+  v*=Math.PI;
+  output[0]=Math.cos(v)*Math.cos(u)*this.xRadius;
+  output[1]=Math.sin(v)*Math.cos(u)*this.yRadius;
+  output[2]=Math.sin(u)*this.zRadius;
+  return 3;
+ }
+}
+
+var KleinBottle=function(){
+ this.evaluate=function(u,v,output){
+  u*=Math.PI*2;
+  v*=Math.PI*2;
+  var x, y, z;
+  var sinu=Math.sin(u);
+  var sinv=Math.sin(v);
+  var cosu=Math.cos(u);
+  var cosv=Math.cos(v);
+  if(u<Math.PI){
+   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * cosu * cosv;
+   z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
+  } else {
+   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * Math.cos(v + Math.PI)
+   z = -8 * sinu
+  }
+  y = -2 * (1 - cosu / 2) * sinv;
+  output[0]=x/6;
+  output[1]=z/6;
+  output[2]=y/6;
+  return 3;
+ }
+}
+
+var MoebiusStrip=function(maj, a, b){
+ this.maj=maj==null ? 1.25 : maj
+ this.a=a==null ? 0.125 : a
+ this.b=b==null ? 0.5 : b
+ this.evaluate=function(u,v,output){
+  u*=Math.PI;
+  v*=Math.PI*2;
+  u=-u
+  var x, y, z;
+  var sinu=Math.sin(u);
+  var sinv=Math.sin(v);
+  var cosu=Math.cos(u);
+  var cosv=Math.cos(v);
+    x = this.a * cosv * cosu - this.b * sinv * sinu
+    z = this.a * cosv * sinu + this.b * sinv * cosu
+    y = (this.maj + x) * Math.sin(u*2)
+    x = (this.maj + x) * Math.cos(u*2)
+  output[0]=x;
+  output[1]=z;
+  output[2]=y;
+  return 3;
+ }
+}
+
+
+
+var ColorGradient={
+evaluate:function(u,v,output){
+ output[0]=1.0-u;
+ output[1]=v;
+ output[2]=u;
+ return 3;
+}
+}
+
+function makeMesh(func){
+  var mesh=new Mesh();
+  var ev=new SurfaceEval()
+    .vertex(func)
+    .color(ColorGradient)
+    .setAutoNormal(true)
+    .evalSurface(mesh,Mesh.TRIANGLES,50,50);
+  console.log(mesh)
+  return mesh;
+}
+
+function link1(){
+ if(shape)scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new Ellipsoid(0.8,0.4,0.8))));
+}
+
+function link2(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new KleinBottle())));
+}
+
+function link3(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new MoebiusStrip())));
+}
+
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  var camera=new Camera(scene,45,1,100);
+  camera.setDistance(5);
+  var shape=null;
+  link1();
+  scene.addShape(shape);
+  GLUtil.renderLoop(function(){
+   camera.update();
+   scene.render();
+  });
+
+//-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>

@@ -28,6 +28,8 @@ the built-in shapes.
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
 * [selfpulse.html](https://peteroupc.github.io/html3dutil/selfpulse.html) - Demonstrates
 a rotating, pulsating box.
+* [surfaces.html](https://peteroupc.github.io/html3dutil/surfaces.html) - Demonstrates
+using evaluators to generate parametric surfaces.
 
 Examples
 ---------
