@@ -703,11 +703,11 @@ function SubMesh(vertices,faces,format){
   if(currentMode==-1)throw new Error("mode() not called");
   this._rebuildVertices(state._elementsDefined);
   this.vertices.push(x,y,z);
-  if((this.attributeBits&Mesh.COLORS_BIT)!=0){
-   this.vertices.push(state.color[0],state.color[1],state.color[2]);
-  }
   if((this.attributeBits&Mesh.NORMALS_BIT)!=0){
    this.vertices.push(state.normal[0],state.normal[1],state.normal[2]);
+  }
+  if((this.attributeBits&Mesh.COLORS_BIT)!=0){
+   this.vertices.push(state.color[0],state.color[1],state.color[2]);
   }
   if((this.attributeBits&Mesh.TEXCOORDS_BIT)!=0){
    this.vertices.push(state.texCoord[0],state.texCoord[1]);

@@ -518,9 +518,9 @@ function Lights(){
  /**
  *  Ambient color for the scene.  This is the color of the light
  *  that shines on every part of every object equally and in
- * every direction. In the absence of
+ *  every direction. In the absence of
  *  other lighting effects, all objects will be given this color.<p>
- *  <small>Ambient light is an efficient simulation of the
+ *  <small>Ambient light is a simplified simulation of the
  * real-world effect of light bouncing back and forth between
  * many different objects in an area.  One example of this
  * phenomenon is sunlight reaching an indoor room without
@@ -1755,14 +1755,9 @@ Scene3D.prototype._renderInner=function(){
   this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
-//  var vertices=0;
-//  var prims=0;
   for(var i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],this.program);
-//   vertices+=this.shapes[i].vertexCount();
-//   prims+=this.shapes[i].primitiveCount();
   }
-//  console.log("vertices: "+vertices+", primitives: "+prims)
   return this;
 }
 /**
