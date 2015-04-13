@@ -159,17 +159,14 @@ function BezierCurve(cp, u1, u2){
  * in a B&eacute;zier curve.
  * @param {number} u Point on the curve to evaluate (generally within the range
  * given in the constructor).
- * @param {Array<number>} output Array where the result of
- * the evaluation will be stored.  A number of elements equal to the
- * length of a control point, as specified in the constructor, will be
- * written to the array, starting with the first element.
- * @return {number} Number of values written to the
- * output array, which is the length of control points associated with the
- * evaluator.
+ * @return An array of the result of
+ * the evaluation.  Its length will be equal to the
+ * length of a control point, as specified in the constructor.
  */
-BezierCurve.prototype.evaluate=function(u,output){
+BezierCurve.prototype.evaluate=function(u){
+ var output=[];
  this.evaluator.evaluate((u-this.uoffset)*this.umul,output);
- return this.k;
+ return output;
 }
 /**
  * A parametric evaluator for B&eacute;zier surfaces.<p>
@@ -231,18 +228,15 @@ function BezierSurface(cp, u1, u2, v1, v2){
  * @param {number} u U-coordinate of the surface to evaluate (generally within the range
  * given in the constructor).
  * @param {number} v V-coordinate of the surface to evaluate.
- * @param {Array<number>} output Array where the result of
- * the evaluation will be stored.  A number of elements equal to the
- * length of a control point, as specified in the constructor, will be
- * written to the array, starting with the first element.
- * @return {number} Number of values written to the
- * output array, which is the length of control points associated with the
- * evaluator.
+ * @return An array of the result of
+ * the evaluation.  Its length will be equal to the
+ * length of a control point, as specified in the constructor.
  */
  BezierSurface.prototype.evaluate=function(u,v, output){
+ var output=[];
  this.evaluator.evaluate((u-this.uoffset)*this.umul,
    (v-this.voffset)*this.vmul,output);
- return this.k;
+ return output;
 }
 
 /**
@@ -265,11 +259,8 @@ function CurveEval(){
 * named "evaluate".  It takes the following parameters in this order:<ul>
 * <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
 * <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
-* <li><code>output</code> - Array to store the result of the evaluation.  It is
-* expected to write 3 values to the array starting with the first element.
 * </ul>
-* The evaluator function returns the number of values it wrote to the "output"
-* array.
+* The evaluator function returns an array of the result of the evaluation.
 * @return {CurveEval} This object.
 */
 CurveEval.prototype.vertex=function(evaluator){
@@ -385,26 +376,23 @@ CurveEval.prototype.evaluate=function(mesh,u){
  var normal=null;
  var texcoord=null;
  if(this.colorCurve){
-  color=[];
-  this.colorCurve.evaluate(u,color);
+  color=this.colorCurve.evaluate(u);
  }
  if(this.texCoordCurve){
-  texcoord=[0,0];
-  this.texCoordCurve.evaluate(u,color);
+  texcoord=this.texCoordCurve.evaluate(u);
+  if(texcoord.length==1)texcoord.push(0);
  }
  if(this.normalCurve){
-  normal=[];
-  this.normalCurve.evaluate(u,color);
+  normal=this.normalCurve.evaluate(u);
  }
  if(this.vertexCurve){
-  var vertex=[];
   var oldColor=(color) ? mesh.color.slice(0,3) : null;
   var oldNormal=(normal) ? mesh.normal.slice(0,3) : null;
   var oldTexCoord=(texcoord) ? mesh.texCoord.slice(0,3) : null;
   if(color)mesh.color3(color[0],color[1],color[2]);
   if(normal)mesh.normal3(normal[0],normal[1],normal[2]);
   if(texcoord)mesh.texCoord3(texcoord[0],texcoord[1],texcoord[2]);
-  this.vertexCurve.evaluate(u,vertex);
+  var vertex=this.vertexCurve.evaluate(u);
   mesh.vertex3(vertex[0],vertex[1],vertex[2]);
   if(oldColor)mesh.color3(oldColor[0],oldColor[1],oldColor[2]);
   if(oldNormal)mesh.normal3(oldNormal[0],oldNormal[1],oldNormal[2]);
@@ -486,11 +474,8 @@ SurfaceEval.prototype.setAutoNormal=function(value){
 * named "evaluate".  It takes the following parameters in this order:<ul>
 * <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
 * <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
-* <li><code>output</code> - Array to store the result of the evaluation.  It is
-* expected to write 3 values to the array starting with the first element.
 * </ul>
-* The evaluator function returns the number of values it wrote to the "output"
-* array.
+* The evaluator function returns an array of the result of the evaluation.
 * @return {SurfaceEval} This object.
 */
 SurfaceEval.prototype.vertex=function(evaluator){
@@ -615,32 +600,28 @@ SurfaceEval.prototype.evaluate=function(mesh,u,v){
  var normal=null;
  var texcoord=null;
  if(this.colorSurface){
-  color=[];
-  this.colorSurface.evaluate(u,v,color);
+  color=this.colorSurface.evaluate(u,v);
  }
  if(this.texCoordSurface){
-  texcoord=[0,0];
-  this.texCoordSurface.evaluate(u,v,texcoord);
+  texcoord=this.texCoordSurface.evaluate(u,v);
+  if(texcoord.length==1)texcoord.push(0);
  }
  if(this.normalSurface && !this.autoNormal){
-  normal=[];
-  this.normalSurface.evaluate(u,v,normal);
+  normal=this.normalSurface.evaluate(u,v);
  }
  if(this.vertexSurface){
-  var vertex=[];
+  var vertex;
   var oldColor=(color) ? mesh.color.slice(0,3) : null;
   var oldNormal=(normal || this.autoNormal) ? mesh.normal.slice(0,3) : null;
   var oldTexCoord=(texcoord) ? mesh.texCoord.slice(0,3) : null;
   if(color)mesh.color3(color[0],color[1],color[2]);
-  this.vertexSurface.evaluate(u,v,vertex);
+  vertex=this.vertexSurface.evaluate(u,v);
   if(this.autoNormal){
    var du=0.001
    var dv=0.001
-   var vv=[];
-   var vu=[];
    // Find the derivatives of u and v
-   this.vertexSurface.evaluate(u+du,v,vu);
-   this.vertexSurface.evaluate(u,v+dv,vv);
+   var vu=this.vertexSurface.evaluate(u+du,v);
+   var vv=this.vertexSurface.evaluate(u,v+dv);
    GLMath.vec3subInPlace(vv,vertex);
    GLMath.vec3subInPlace(vu,vertex);
    // Divide by the deltas of u and v
