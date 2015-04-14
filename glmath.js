@@ -1059,7 +1059,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * Depth buffers often have 16 bits per pixel; each pixel isn't usually
  * a floating-point number.  If the difference between "far" and "near"
  * is too high, the depth buffer can't distinguish well between two objects
- * that are very close, especially if both objects are quite far in the distance.
+ * that are very close to each other, especially if both objects are quite far in the distance.
  * For best results:<ul>
  * <li>For <code>mat4perspective</code> and <code>mat4frustum</code>,
 * the "near" parameter should not be 0 or less, and should be set to the highest distance
@@ -1067,10 +1067,10 @@ mat4translate:function(mat,v3,v3y,v3z){
 * close, for example, 0.1 or 1.  This doesn't apply to <code>mat4ortho</code>.</li>
  * <li>The difference between "far" and "near" should not be greater than 65536
  * (the number of possible values per pixel in a 16-bit depth buffer) and should be
- * as small as the application can accept.  In any case, "far" cannot be less than
+ * as small as the application can accept.  In any case, "far" should not be less than
  * "near".</li>
  * </ul>
-* @param {number}  fovY Vertical field of view, in degrees. Should be less
+* @param {number}  fovY Y-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
