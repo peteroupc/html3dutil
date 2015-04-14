@@ -159,7 +159,7 @@ function BezierCurve(cp, u1, u2){
  * in a B&eacute;zier curve.
  * @param {number} u Point on the curve to evaluate (generally within the range
  * given in the constructor).
- * @return An array of the result of
+ * @return {Array<number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point, as specified in the constructor.
  */
@@ -228,7 +228,7 @@ function BezierSurface(cp, u1, u2, v1, v2){
  * @param {number} u U-coordinate of the surface to evaluate (generally within the range
  * given in the constructor).
  * @param {number} v V-coordinate of the surface to evaluate.
- * @return An array of the result of
+ * @return {Array<number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point, as specified in the constructor.
  */

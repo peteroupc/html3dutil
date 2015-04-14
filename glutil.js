@@ -1221,7 +1221,7 @@ function Scene3D(canvasOrContext){
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
  this.context.enable(this.context.DEPTH_TEST);
  this.context.depthFunc(this.context.LEQUAL);
- this.context.clearDepth(999999);
+ this.context.clearDepth(1.0);
  this._setClearColor();
  this.context.clear(
     this.context.COLOR_BUFFER_BIT |
@@ -1327,7 +1327,10 @@ Scene3D.prototype.createBuffer=function(){
 
 /**
 *  Sets this scene's projection matrix to a perspective projection.
-* @param {number}  fov Vertical field of view, in degrees. Should be less
+ * <p>
+ * For considerations when choosing the "near" and "far" parameters,
+ * see {@link glmath.GLMath.mat4perspective}.
+ * @param {number}  fov Vertical field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
@@ -1336,7 +1339,7 @@ Scene3D.prototype.createBuffer=function(){
 *  the scene's aspect ratio (getAspect()).
 * @param {number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
-* seen. This should be slightly greater than 0.
+* seen.
 * @param {number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
@@ -1353,6 +1356,9 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
 /**
  * Sets this scene's projection matrix to a perspective projection that defines
  * the view frustum, or the limits in the camera's view.
+ * <p>
+ * For considerations when choosing the "near" and "far" parameters,
+ * see {@link glmath.GLMath.mat4perspective}.
  * @param {number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {number} right X-coordinate of the point where the right
@@ -1363,7 +1369,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * clipping plane meets the near clipping plane.
 * @param {number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
-* seen. This should be slightly greater than 0.
+* seen.
 * @param {number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
@@ -1377,6 +1383,9 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
+ * <p>
+ * For considerations when choosing the "near" and "far" parameters,
+ * see {@link glmath.GLMath.mat4perspective}.
  * @param {number} left Leftmost coordinate of the 3D view.
  * @param {number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)

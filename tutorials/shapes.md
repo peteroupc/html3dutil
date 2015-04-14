@@ -41,7 +41,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
 ### Custom Shapes
 
 Also included is a `Mesh` class for defining shapes not given among the built-in ones.
-Shapes can consist of triangles, lines of points.
+Shapes can consist of triangles, lines, or points.
 
 There are two ways for specifying shapes:  through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.
@@ -182,9 +182,13 @@ vertices in the mesh.
 
 #### What Are Normals?
 
-A surface normal vector is generally perpendicular to a surface's edges, and points
-away from the surface.  When light hits an object's surface, it will shine depending
-on how directly the light points to the surface.  It will shine the most if the light
+A normal is a set of 3 numbers describing a particular direction.  Generally,
+a normal's direction is perpendicular to a surface's edges, and points
+away from the surface.
+
+Normals are important in the lighting and shading model.  When light
+hits an object's surface, the surface will shine depending on how directly the
+light points to the surface.  It will shine the most if the light
 is directly opposite to its normal, and not at all if the light is perpendicular to the
 normal or in the same direction as the normal.
 

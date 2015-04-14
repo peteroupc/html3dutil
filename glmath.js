@@ -1055,6 +1055,21 @@ mat4translate:function(mat,v3,v3y,v3z){
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
+ * <p><b>Choosing the "near" and "far" parameters:</b>
+ * Depth buffers often have 16 bits per pixel; each pixel isn't usually
+ * a floating-point number.  If the difference between "far" and "near"
+ * is too high, the depth buffer can't distinguish well between two objects
+ * that are very close, especially if both objects are quite far in the distance.
+ * For best results:<ul>
+ * <li>For <code>mat4perspective</code> and <code>mat4frustum</code>,
+* the "near" parameter should not be 0 or less, and should be set to the highest distance
+* from the camera that the application can afford to clip out for being too
+* close, for example, 0.1 or 1.  This doesn't apply to <code>mat4ortho</code>.</li>
+ * <li>The difference between "far" and "near" should not be greater than 65536
+ * (the number of possible values per pixel in a 16-bit depth buffer) and should be
+ * as small as the application can accept.  In any case, "far" cannot be less than
+ * "near".</li>
+ * </ul>
 * @param {number}  fovY Vertical field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
@@ -1064,18 +1079,18 @@ mat4translate:function(mat,v3,v3y,v3z){
 *  the scene's aspect ratio.
 * @param {number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
-* seen. This should be slightly greater than 0.
-* @param {number}  farZ The distance from the camera to
+* seen.
+* @param {number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
-mat4perspective:function(fovY,aspectRatio,nearZ,farZ){
+mat4perspective:function(fovY,aspectRatio,near,far){
  var f = 1/Math.tan(fovY*GLMath.PiDividedBy360);
- var nmf = nearZ-farZ;
+ var nmf = near-far;
  nmf=1/nmf;
  return [f/aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
-   nmf*(nearZ+farZ), -1, 0, 0, nmf*nearZ*farZ*2, 0]
+   nmf*(near+far), -1, 0, 0, nmf*near*far*2, 0]
 },
 /**
  * Returns a 4x4 matrix representing a camera view.<p>
@@ -1131,6 +1146,9 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
+ * <p>
+ * For considerations when choosing the "n" and "f" parameters,
+ * see {@link glmath.GLMath.mat4perspective}.
  * @param {number} l Leftmost coordinate of the 3D view.
  * @param {number} r Rightmost coordinate of the 3D view.
  * (Note that r can be greater than l or vice versa.)
@@ -1174,6 +1192,9 @@ mat4ortho2d:function(l,r,b,t){
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
+ * <p>
+ * For considerations when choosing the "n" and "f" parameters,
+ * see {@link glmath.GLMath.mat4perspective}.
  * @param {number} l X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {number} r X-coordinate of the point where the right
@@ -1184,7 +1205,7 @@ mat4ortho2d:function(l,r,b,t){
  * clipping plane meets the near clipping plane.
 * @param {number} n The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
-* seen. This should be slightly greater than 0.
+* seen.
 * @param {number} f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
