@@ -1059,7 +1059,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * Depth buffers often have 16 bits per pixel; each pixel isn't usually
  * a floating-point number.  If the ratio of "far" to "near"
  * is too high, the depth buffer can't distinguish well between two objects
- * that are very close to each other, especially if both objects are quite far in the distance.
+ * that are very close to each other and both quite far in the distance.
  * For best results:<ul>
  * <li>For <code>mat4perspective</code> and <code>mat4frustum</code>,
 * the "near" parameter should not be 0 or less, and should be set to the highest distance
