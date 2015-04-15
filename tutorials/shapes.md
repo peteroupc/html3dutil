@@ -56,7 +56,7 @@ Here's how.
     var vertices = [x1, y1, z1, x2, y2, z2, ... ];
 
 If you also specify normals, colors, or texture coordinates for each vertex, you must add
-them after each vertex position in that order: normals first, colors second, and texture
+them after each vertex position in this order: normals first, colors second, and texture
 coordinates last.  If you don't specify normals, colors, and/or texture coordinates per
 vertex, you can omit them.  The following are examples of this:
 

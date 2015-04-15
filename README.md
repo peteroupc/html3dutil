@@ -43,7 +43,8 @@ Examples
   scene.setPerspective(45,scene.getAspect(),0.1,100);
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
-  // Create a box mesh 10 units in size
+  // Create a box mesh 10 units in width, 20 units
+  // in height, and 20 units in depth
   var mesh=Meshes.createBox(10,10,10);
   // Create a shape based on the mesh and give it a red color
   var shape=scene.makeShape(mesh).setColor("red");
