@@ -1380,10 +1380,15 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  */
 Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
  if(aspect==null)aspect=this.getAspect();
- if(aspect<1 && aspect!=0){
-  return this.setOrtho(left,right,bottom/aspect,top/aspect,near,far);
+ if(aspect==0)aspect=1;
+ var xdist=Math.abs(right-left);
+ var ydist=Math.abs(top-bottom);
+ var boxAspect=xdist/ydist;
+ aspect/=boxAspect;
+ if(aspect<1){
+  return this.setOrtho(left,right,bottom/aspect,top/aspect,near,far); 
  } else {
-  return this.setOrtho(left*aspect,right*aspect,bottom,top,near,far);
+  return this.setOrtho(left/aspect,right/aspect,bottom,top,near,far);
  }
 }
 /**
