@@ -514,7 +514,7 @@ Mesh.prototype.setVertex=function(index,x,y,z){
  * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
-s * @param {number|Array<number>} x X coordinate of the vertex normal.
+ * @param {number|Array<number>} x X coordinate of the vertex normal.
  * Can also be a 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * normal.
