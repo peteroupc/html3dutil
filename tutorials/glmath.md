@@ -89,6 +89,9 @@ A quaternion is a 4-element array that describes a
 and the fourth component is the W component (cosine of half the angle).
 Functions dealing with quaternions begin with "quat".
 
+<small>A quaternion can be seen as an extension of complex numbers,
+with one real part (W), and three imaginary parts (X, Y, and Z).</small>
+
 The methods quatMultiply and quatFromEuler, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
@@ -111,6 +114,9 @@ rotations; pitch then yaw, or yaw then pitch?
 of angles is used. For example, a negative 30-degree
 pitch followed by a negative 20-degree roll does not undo a 30-degree
 pitch followed by a 20-degree roll.
+* Euler angles can cause a problem called "gimbal lock", in which a rotation along
+one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
+axis), so that a rotation along that axis will do nothing.
 
 Related functions:
 

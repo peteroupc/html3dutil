@@ -306,7 +306,7 @@ mat3identity:function(){
 mat4identity:function(){
  return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 },
-/** Returns the identity quaternion, (0, 0, 0, 1).
+/** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
  @return {Array<number>} */
 quatIdentity:function(){
  return [0,0,0,1];
@@ -841,16 +841,21 @@ mat4toMat3:function(m4){
  ]
 },
 /**
- * Inverts a 4x4 matrix, then transposes it. Returns
- * a new matrix.
+ * Returns the transpose of a 4x4 matrix.
  * @param {Array<number>} m4 A 4x4 matrix.
  * @return {Array<number>} The resulting 4x4 matrix.
- * Returns the identity matrix if this matrix is not invertible.
  */
-mat4inverseTranspose:function(m4){
- var mat=GLMath.mat4invert(m4);
- var tmp;
- tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
+mat4transpose:function(m4){
+ return mat4transposeInPlace(m4.slice(0,16));
+},
+/**
+ * Transposes a 4x4 matrix in place without creating
+ * a new matrix.
+ * @param {Array<number>} mat A 4x4 matrix.
+ * @return {Array<number>} The parameter "mat".
+ */
+mat4transposeInPlace:function(mat){
+ var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
  tmp=mat[2];mat[2]=mat[8];mat[8]=tmp;
  tmp=mat[3];mat[3]=mat[12];mat[12]=tmp;
  tmp=mat[6];mat[6]=mat[9];mat[9]=tmp;
@@ -860,7 +865,10 @@ mat4inverseTranspose:function(m4){
 },
 /**
 * Returns the transposed result of the inverted upper left corner of
-* the given 4x4 matrix.
+* the given 4x4 matrix.<p>
+* This is usually used to convert a model-view matrix to a matrix
+* for transforming surface normals in order to keep them perpendicular
+* to a surface transformed by the model-view matrix.
 * @param {Array<number>} m4 A 4x4 matrix.
 * @return {Array<number>} The resulting 3x3 matrix. If the matrix
 * can't be inverted, returns the identity 3x3 matrix.
@@ -1483,8 +1491,8 @@ GLMath.quatDot=GLMath.vec4dot;
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.quatLength}.
  * @function
- * @param {Array<number>} vec A quaternion.
- * @return {Array<number>} The parameter "vec".
+ * @param {Array<number>} quat A quaternion.
+ * @return {Array<number>} The parameter "quat".
  */
 GLMath.quatNormInPlace=GLMath.vec4normInPlace;
 /**
@@ -1494,7 +1502,7 @@ GLMath.quatNormInPlace=GLMath.vec4normInPlace;
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.quatLength}.
  * @function
- * @param {Array<number>} vec A quaternion.
+ * @param {Array<number>} quat A quaternion.
  * @return {Array<number>} The normalized quaternion.
  */
 GLMath.quatNorm=GLMath.vec4norm;
