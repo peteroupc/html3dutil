@@ -92,7 +92,7 @@ Functions dealing with quaternions begin with "quat".
 <small>A quaternion can be seen as an extension of complex numbers,
 with one real part (W), and three imaginary parts (X, Y, and Z).</small>
 
-The methods quatMultiply and quatFromEuler, among others, involve
+The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
@@ -100,30 +100,30 @@ before the first rotation.  Like matrix multiplication, quaternion
 multiplication is not commutative. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.
 
-### Euler angles and their disadvantages
+### Tait-Bryan angles and their disadvantages
 
-Euler angles (pitch, yaw, and roll angles) can also be used to describe 3D
+Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
 rotations, but they have disadvantages:
 
-* In general, the order of Euler angle rotations is important. For example, a 30-degree
+* In general, the order of Tait-Bryan angle rotations is important. For example, a 30-degree
 pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
 by a 30-degree roll.
-* There are multiple conventions for Euler angles, such as the order of
+* There are multiple conventions for Tait-Bryan angles, such as the order of
 rotations; pitch then yaw, or yaw then pitch?
-* Euler angle rotations are not easily reversible when the same order
+* Tait-Bryan angle rotations are not easily reversible when the same order
 of angles is used. For example, a negative 30-degree
 pitch followed by a negative 20-degree roll does not undo a 30-degree
 pitch followed by a 20-degree roll.
-* Euler angles can cause a problem called "gimbal lock", in which a rotation along
+* Tait-Bryan angles can cause a problem called "gimbal lock", in which a rotation along
 one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
 axis), so that a rotation along that axis will do nothing.
 
 Related functions:
 
-* [GLMath.quatFromEuler()]{@link glmath.GLMath.quatFromEuler} -
-Converts from Euler angles to a quaternion
-* [GLMath.quatToEuler()]{@link glmath.GLMath.quatToEuler} -
-Converts from a quaternion to Euler angles
+* [GLMath.quatFromTaitBryan()]{@link glmath.GLMath.quatFromTaitBryan} -
+Converts from Tait-Bryan angles to a quaternion
+* [GLMath.quatToTaitBryan()]{@link glmath.GLMath.quatToTaitBryan} -
+Converts from a quaternion to Tait-Bryan angles
 
 Matrix Details
 ------------
