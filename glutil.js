@@ -1362,7 +1362,8 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * plane and the top to the bottom.<p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the 3D scene's viewport
- * or otherwise moved so as to keep the 3D view from stretching or squishing.
+ * or otherwise moved so as to keep the entire view rectangle visible without stretching
+ * or squishing it.
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
@@ -1390,7 +1391,7 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  if(aspect<1){
   return this.setOrtho(left,right,bottom/aspect,top/aspect,near,far);
  } else {
-  return this.setOrtho(left/aspect,right/aspect,bottom,top,near,far);
+  return this.setOrtho(left*aspect,right*aspect,bottom,top,near,far);
  }
 }
 /**
@@ -1398,7 +1399,8 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * The near and far clipping planes will be set to -1 and 1, respectively.<p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the 3D scene's viewport
- * or otherwise moved so as to keep the 3D view from stretching or squishing.
+ * or otherwise moved so as to keep the entire view rectangle visible without stretching
+ * or squishing it.
  * @param {number} left Leftmost coordinate of the view rectangle.
  * @param {number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
