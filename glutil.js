@@ -629,7 +629,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for ambient reflection rather than this property.
  */
- this.ambient=ambient||[0.2,0.2,0.2];
+ this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
  /**
  * Diffuse reflection of this material.<p>
  * Diffuse reflection indicates how much an object reflects
@@ -639,14 +639,16 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * on how directly they face diffuse lights, diffuse reflection can contribute
  * much of the 3D effect of that object.  Diffuse reflection
  * depends on the color of diffuse lights.<p>
- * (0,0,0) means no diffuse reflection,
- * and (1,1,1) means total diffuse reflection.<p>
+ * (0,0,0,1) means no diffuse reflection,
+ * and (1,1,1,1) means total diffuse reflection.<p>
  * Setting ambient and diffuse reflection to the same value usually defines an object's
  * color.<p>
  * In the default shader program, if a mesh defines its own colors, those
- * colors are used for diffuse reflection rather than this property.
+ * colors are used for diffuse reflection rather than this property.<p>
+ * This value can have an optional fourth element giving the alpha component
+ * (0-1).  If this element is omitted, the default is 1.<p>
  */
- this.diffuse=diffuse||[0.8,0.8,0.8];
+ this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
  /** Specular highlight reflection of this material.
  * Specular reflection makes an object shiny, and it depends
  * on lights that give off specular highlights as well as on the color
@@ -656,7 +658,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * (0,0,0) means no specular reflection,
  * and (1,1,1) means total specular reflection.<p>
 */
- this.specular=specular||[0,0,0];
+ this.specular=specular ? specular.slice(0,3) : [0,0,0];
  /**
 * Additive color emitted by objects with this material.
 * Used for objects that glow on their own, among other things.
@@ -667,7 +669,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * For each of the three color components, positive values add to that component,
 * while negative values subtract from it. (0,0,0) means no additive color.
  */
- this.emission=emission||[0,0,0];
+ this.emission=emission ? emission.slice(0,3) : [0,0,0];
  this.texture=null;
 }
 /**

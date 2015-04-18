@@ -26,7 +26,8 @@ MaterialBinder.prototype.bind=function(program){
   "textureSize":[0,0],
   "mshin":this.mshade.shininess,
   "ma":[this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
-  "md":[this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2]],
+  "md":[this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
+    this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]],
   "ms":[this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
   "me":[this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
  });
