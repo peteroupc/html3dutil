@@ -30,8 +30,8 @@ MaterialBinder.prototype.bind=function(program){
   "ms":[this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
   "me":[this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
  });
- if(this.mshade.textureMap){
-  new TextureBinder(this.mshade.textureMap).bind(program);
+ if(this.mshade.texture){
+  new TextureBinder(this.mshade.texture).bind(program);
  }
  return this;
 }

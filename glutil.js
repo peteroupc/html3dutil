@@ -668,7 +668,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * while negative values subtract from it. (0,0,0) means no additive color.
  */
  this.emission=emission||[0,0,0];
- this.textureMap=null;
+ this.texture=null;
 }
 /**
 * Clones this object's parameters to a new Material
@@ -684,7 +684,7 @@ Material.prototype.copy=function(){
   this.specular.slice(0,this.specular.length),
   this.shininess,
   this.emission.slice(0,this.emission.length)
- ).setParams({"textureMap":this.textureMap});
+ ).setParams({"texture":this.texture});
 }
 /**
 * Sets parameters for this material object.
@@ -696,7 +696,7 @@ Material.prototype.copy=function(){
 * <li><code>specular</code> - Specular reflection (see {@link glutil.Material} constructor).
 * <li><code>shininess</code> - Specular reflection exponent (see {@link glutil.Material} constructor).
 * <li><code>emission</code> - Additive color (see {@link glutil.Material} constructor).
-* <li><code>textureMap</code> - {@link glutil.Texture} object, or a string with the URL of the texture
+* <li><code>texture</code> - {@link glutil.Texture} object, or a string with the URL of the texture
 * to use.
 * </ul>
 * If a value is null or undefined, it is ignored.
@@ -718,12 +718,12 @@ Material.prototype.setParams=function(params){
  if(params["shininess"]!=null){
   this.shininess=params.shininess;
  }
- if(params["textureMap"]!=null){
-   var param=params["textureMap"]
+ if(params["texture"]!=null){
+   var param=params["texture"]
    if(typeof param=="string"){
-    this.textureMap=new Texture(param)
+    this.texture=new Texture(param)
    } else {
-    this.textureMap=param
+    this.texture=param
    }
  }
  return this;
@@ -755,7 +755,7 @@ Material.fromColor=function(r,g,b,a){
 * @return {glutil.Material} The resulting material object.
  */
 Material.fromTexture=function(texture){
- return new Material().setParams({"textureMap":texture});
+ return new Material().setParams({"texture":texture});
 }
 
 ////////////////////
