@@ -675,7 +675,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * on lights that give off specular highlights as well as on the color
  * of those highlights. Similar to diffuse reflection, specular reflection
  * is affected by how directly each part of an object faces
- * a light that gives off specular highlights.
+ * a light that gives off specular highlights, but unlike diffuse light,
+ * specular light doesn't scatter very much to other parts of an object.
  * (0,0,0) means no specular reflection,
  * and (1,1,1) means total specular reflection.<p>
 */
@@ -1871,16 +1872,32 @@ Scene3D.prototype._renderInner=function(){
   return this;
 }
 
+/**
+* Represents a grouping of shapes.
+* @class
+* @alias glutil.ShapeGroup
+*/
 function ShapeGroup(){
  this.shapes=[];
  this.transform=new Transform();
 }
+/**
+ * Not documented yet.
+ * @param {*} shape
+ */
 ShapeGroup.prototype.addShape=function(shape){
  this.shapes.add(shape);
 }
+/**
+ * Not documented yet.
+ */
 ShapeGroup.prototype.getTransform=function(){
  return this.getTransform();
 }
+/**
+ * Not documented yet.
+ * @param {*} transform
+ */
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
@@ -1967,9 +1984,16 @@ Shape.prototype.copy=function(){
  ret.transform=this.getTransform().copy();
  return ret;
 }
+/**
+ * Not documented yet.
+ */
 Shape.prototype.getTransform=function(){
  return this.transform;
 }
+/**
+ * Not documented yet.
+ * @param {*} transform
+ */
 Shape.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;

@@ -34,7 +34,8 @@ var GLMath={
 /**
  * Finds the cross product of two 3-element vectors.
  * The cross product is the vector that is perpendicular to
- * each of two other vectors.  If both vectors are unit length
+ * each of two other vectors.<p>
+ * If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the sine of
  * the angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
@@ -58,12 +59,14 @@ return [a[1]*b[2]-a[2]*b[1],
 /**
  * Finds the dot product of two 3-element vectors. It's the
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
- * If both vectors are unit length
+ * <p>If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
  * of the angle between them is equal to their dot product.
  * <small>(More formally, the dot
  * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
+ * <p>A dot product of 0 indicates that the two vectors
+ * are <i>orthogonal</i> (perpendicular) to each other.
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
  * @return {number} A number representing the dot product.
@@ -1074,7 +1077,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * <li>For <code>mat4perspective</code> and <code>mat4frustum</code>,
 * the "near" parameter should not be 0 or less, and should be set to the highest distance
 * from the camera that the application can afford to clip out for being too
-* close, for example, 0.1, 1, or higher.  This doesn't apply to <code>mat4ortho</code>.</li>
+* close, for example, 0.5, 1, or higher.  This doesn't apply to <code>mat4ortho</code>.</li>
  * <li>The difference between "far" and "near" should not be greater than 65536
  * (the number of possible values per pixel in a 16-bit depth buffer) and should be
  * as small as the application can accept.  In any case, "far" should be greater than
