@@ -1865,29 +1865,253 @@ Scene3D.prototype._renderInner=function(){
   return this;
 }
 /**
- * Not documented yet.
+*  A class offering a convenient way to set a transformation
+* from one coordinate system to another.
+* @class
+* @alias glutil.Transform
+*/
+function Transform(){
+  /**
+  * A three-element array giving the scaling for an object's width,
+  * height, and depth, respectively.
+  * For each component, 1 means no scaling.
+  * The value given here is informational only and should not be modified directly.
+  * Use the setScale method to set this value.
+  * @default
+  */
+  this.scale=[1,1,1];
+  /**
+  * A three-element array giving the X, Y, and Z coordinates of the position
+  * of an object relative to its original position.
+  * The value given here is informational only and should not be modified directly.
+  * Use the setPosition method to set this value.
+  * @default
+  */
+  this.position=[0,0,0];
+  /**
+   * The rotation of an object in the form of a [quaternion]{@link glmath.GLMath}.
+   * The value given here is informational only and should not be modified directly.
+   * Use the setOrientation or setQuaternion method to set this value.
+   */
+  this.rotation=GLMath.quatIdentity();
+  this.complexMatrix=false;
+  this._matrixDirty=false;
+  /** @private */
+  this.matrix=GLMath.mat4identity();
+}
+
+/**
+ * Sets this shape's transformation matrix. This method
+ * will set the position, rotation, and scale properties
+ * accordingly to the matrix given.
+ * @param {Array<number>} value A 4x4 matrix.
+ * This method will copy the value of this parameter.
+ * @return {glutil.Shape} This object.
  */
-Shape.prototype.vertexCount=function(){
- return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
+Transform.prototype.setMatrix=function(value){
+ this._matrixDirty=false;
+ this.complexMatrix=true;
+ this.matrix=value.slice(0,16);
+ this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
+ this.rotation=GLMath.quatFromMat4(this.matrix);
+ this.rotation=GLMath.quatNormInPlace(this.rotation);
+ this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
+ return this;
+}
+
+/**
+* Resets this transform to the untransformed state.
+* @return {glutil.Transform} This object.
+*/
+Transform.prototype.resetTransform=function(){
+ this.matrix=GLMath.mat4identity();
+ this.position=[0,0,0];
+ this.scale=[1,1,1];
+ this.rotation=GLMath.quatIdentity();
+ this.complexMatrix=false;
+ this._matrixDirty=false;
+ return this;
 }
 /**
- * Not documented yet.
+ * Sets the scale of an object relative to its original
+ * size. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {number|Array<number>} x Scaling factor for this object's width.
+ *   If "y" and "z" are null or omitted, this can
+ * instead be a 3-element array giving the scaling factors
+ * for width, height, and depth, respectively.
+ * @param {number} y Scaling factor for this object's height.
+ * @param {number} z Scaling factor for this object's depth.
+* @return {glutil.Transform} This object.
  */
-Shape.prototype.primitiveCount=function(){
- return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
+Transform.prototype.setScale=function(x,y,z){
+  if(this.complexMatrix)return this;
+  if(x!=null && y==null && z==null){
+   if(x.constructor==Array)
+    this.scale=x.slice(0,3);
+   else
+    this.scale=[x,x,x];
+  } else {
+   this.scale=[x,y,z];
+  }
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets the relative position of an object from its original
+ * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array<number>|number} x Either the X-coordinate,
+ * or an array of 3 numbers giving the x, y, and z coordinates.
+ * @param {number} y The Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z The Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.setPosition=function(x,y,z){
+  if(this.complexMatrix)return this;
+  if(x!=null && y==null && z==null){
+   if(x.constructor==Array)
+    this.position=x.slice(0,3);
+   else
+    this.position=[x,x,x];
+  } else {
+   this.position=[x,y,z];
+  }
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets this object's orientation in the form of a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations). Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array<number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
+ * and {@link glmath.GLMath.quatFromTaitBryan}, among others.
+ * @return {glutil.Transform} This object.
+ * @example
+ * // Set an object's orientation to 30 degrees about the X-axis
+ * shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
+ * // Set an object's orientation to identity (no rotation)
+ * shape.setQuaternion(GLMath.quatIdentity());
+ * // Set an object's orientation to 30 degree pitch multiplied
+ * // by 40 degree roll
+ * shape.setQuaternion(GLMath.quatFromTaitBryan(30,0,40));
+ */
+Transform.prototype.setQuaternion=function(quat){
+  if(this.complexMatrix)return this;
+  this.rotation=quat.slice(0,4);
+  GLMath.quatNormInPlace(this.rotation);
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets this object's orientation in the form of an angle and an axis of
+ * rotation. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer, the angle's value is increasing in
+ * a counterclockwise direction.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.setOrientation=function(angle, v,vy,vz){
+ return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+}
+/**
+ * Combines an object's current rotation with another rotation
+ * described by a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations).  The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array<number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
+ * or {@link glmath.GLMath.quatFromTaitBryan}.
+ * @return {glutil.Transform} This object.
+ * @example
+ * // Combine an object's orientation with a rotation 20 degrees about the X-axis
+ * shape.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
+ * // Combine an object's orientation with identity (no rotation)
+ * shape.multQuaternion(GLMath.quatIdentity());
+ * // Combine an object's orientation with 30 degree pitch multiplied
+ * // by 40 degree roll
+ * shape.multQuaternion(GLMath.quatFromTaitBryan(30,0,40));
+ */
+Transform.prototype.multQuaternion=function(quat){
+  if(this.complexMatrix)return this;
+  this.rotation=GLMath.quatMultiply(this.rotation,quat);
+  GLMath.quatNormInPlace(this.rotation);
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Combines an object's current rotation with another rotation
+ * in the form of an angle and an axis of
+ * rotation. The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array<number>|number} angle The desired angle
+ * to rotate in degrees. See {@link glutil.Transform#setOrientation}.
+ * @param {Array<number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.multOrientation=function(angle, v,vy,vz){
+ return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+}
+/**
+ * Gets the transformation matrix used by an object.  It is a combination
+ * of the scale, position, and rotation properties,
+ * unless a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @return {Array<number>}
+ */
+Transform.prototype.getMatrix=function(){
+  if(this._matrixDirty){
+   this._matrixDirty=false;
+   // for best results, multiply in this order:
+   // 1. translation
+   this.matrix=GLMath.mat4translated(this.position[0],
+   this.position[1],this.position[2]);
+   // 2. rotation
+   if(!GLMath.quatIsIdentity(this.rotation)){
+    this.matrix=GLMath.mat4multiply(this.matrix,
+      GLMath.quatToMat4(this.rotation));
+   }
+   // 3. scaling
+   GLMath.mat4scaleInPlace(this.matrix,this.scale);
+  }
+  return this.matrix.slice(0,16);
 }
 
 /**
 * Makes a copy of this object.  The copied object
 * will have its own version of the rotation, scale,
-* position, matrix, and material data, but any texture
-* image data and vertex buffers will not be duplicated,
-* but rather just references to them will be used.
+* position, and matrix data.
 * @return {glutil.Shape} A copy of this object.
 */
-Shape.prototype.copy=function(){
- var ret=new Shape(this.bufferedMesh);
- ret.material=this.material.copy();
+Transform.prototype.copy=function(){
+ var ret=new Transform();
  ret.scale=this.scale.slice(0,this.scale.length);
  ret.position=this.position.slice(0,this.scale.length);
  ret.complexMatrix=this.complexMatrix;
@@ -1910,35 +2134,38 @@ Shape.prototype.copy=function(){
 function Shape(mesh){
   if(mesh==null)throw new Error("mesh is null");
   this.bufferedMesh=mesh;
+  this.transform=new Transform();
   this.material=new Material();
-  /**
-  * A three-element array giving the scaling of this object for this shape's width,
-  * height, and depth, respectively.
-  * For each component, 1 means no scaling.
-  * The value given here is informational only and should not be modified directly.
-  * Use the setScale method to set this value.
-  * @default
-  */
-  this.scale=[1,1,1];
-  /**
-  * A three-element array giving the X, Y, and Z coordinates of the position
-  * of this shape relative to its original position.
-  * The value given here is informational only and should not be modified directly.
-  * Use the setPosition method to set this value.
-  * @default
-  */
-  this.position=[0,0,0];
-  /**
-   * The rotation of this object in the form of a [quaternion]{@link glmath.GLMath}.
-   * The value given here is informational only and should not be modified directly.
-   * Use the setRotation or setQuaternion method to set this value.
-   */
-  this.rotation=GLMath.quatIdentity();
-  this.complexMatrix=false;
-  this._matrixDirty=false;
-  /** @private */
-  this.matrix=GLMath.mat4identity();
 }
+/**
+ * Not documented yet.
+ */
+Shape.prototype.vertexCount=function(){
+ return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
+}
+/**
+ * Not documented yet.
+ */
+Shape.prototype.primitiveCount=function(){
+ return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
+}
+
+/**
+* Makes a copy of this object.  The copied object
+* will have its own version of the transform and 
+* material data, but any texture
+* image data and vertex buffers will not be duplicated,
+* but rather just references to them will be used.
+* @return {glutil.Shape} A copy of this object.
+*/
+Shape.prototype.copy=function(){
+ var ret=new Shape(this.bufferedMesh);
+ ret.material=this.material.copy();
+ ret.transform=this.transform.copy();
+ return ret;
+}
+
+
 /**
  * Sets this shape's transformation matrix. This method
  * will set the position, rotation, and scale properties
@@ -1948,13 +2175,7 @@ function Shape(mesh){
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setMatrix=function(value){
- this._matrixDirty=false;
- this.complexMatrix=true;
- this.matrix=value.slice(0,16);
- this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
- this.rotation=GLMath.quatFromMat4(this.matrix);
- this.rotation=GLMath.quatNormInPlace(this.rotation);
- this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
+ this.transform.setMatrix(value);
  return this;
 }
 /**
@@ -2009,92 +2230,48 @@ Shape.prototype.resetTransform=function(){
 }
 /**
  * Sets the scale of this shape relative to its original
- * size. Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
- * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
- * @param {number|Array<number>} x Scaling factor for this object's width.
- *   If "y" and "z" are null or omitted, this can
- * instead be a 3-element array giving the scaling factors
- * for width, height, and depth, respectively.
+ * size. See {@link glutil.Transform.setScale}
+ * @param {number|Array<number>} x Scaling factor for this object's width,
+ * or a 3-element scaling array, as specified in {@link glutil.Transform.setScale}.
  * @param {number} y Scaling factor for this object's height.
  * @param {number} z Scaling factor for this object's depth.
 * @return {glutil.Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
-  if(this.complexMatrix)return this;
-  if(x!=null && y==null && z==null){
-   if(x.constructor==Array)
-    this.scale=x.slice(0,3);
-   else
-    this.scale=[x,x,x];
-  } else {
-   this.scale=[x,y,z];
-  }
-  this._matrixDirty=true;
+ this.transform.setScale();
   return this;
 }
 /**
  * Sets the relative position of this shape from its original
- * position.  Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
- * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
- * @param {Array<number>|number} x Either the X-coordinate,
- * or an array of 3 numbers giving the x, y, and z coordinates.
- * @param {number} y The Y-coordinate.
- * If "x" is an array, this parameter may be omitted.
- * @param {number} z The Z-coordinate.
- * If "x" is an array, this parameter may be omitted.
- * @return {glutil.Shape} This object.
+ * position.  See {@link glutil.Transform.setPosition}
+ * @param {number|Array<number>} x X coordinate
+ * or a 3-element position array, as specified in {@link glutil.Transform.setScale}.
+ * @param {number} y Y-coordinate.
+ * @param {number} z Z-coordinate.
+* @return {glutil.Scene3D} This object.
  */
 Shape.prototype.setPosition=function(x,y,z){
-  if(this.complexMatrix)return this;
-  if(x!=null && y==null && z==null){
-   if(x.constructor==Array)
-    this.position=x.slice(0,3);
-   else
-    this.position=[x,x,x];
-  } else {
-   this.position=[x,y,z];
-  }
-  this._matrixDirty=true;
+  this.transform.setPosition();
   return this;
 }
 /**
- * Sets this object's rotation in the form of a [quaternion]{@link glmath.GLMath} (a 4-element array
- * for describing 3D rotations). Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
- * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * Sets this object's orientation in the form of a [quaternion]{@link glmath.GLMath}.
+ * See {@link glutil.Transform.setQuaternion}.
  * @param {Array<number>} quat A four-element array describing the rotation.
- * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
- * and {@link glmath.GLMath.quatFromTaitBryan}, among others.
  * @return {glutil.Shape} This object.
- * @example
- * // Set this shape's rotation to 30 degrees about the X-axis
- * shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
- * // Set this shape's rotation to identity (no rotation)
- * shape.setQuaternion(GLMath.quatIdentity());
- * // Set this shape's rotation to 30 degree pitch multiplied
- * // by 40 degree roll
- * shape.setQuaternion(GLMath.quatFromTaitBryan(30,0,40));
  */
 Shape.prototype.setQuaternion=function(quat){
-  if(this.complexMatrix)return this;
-  this.rotation=quat.slice(0,4);
-  GLMath.quatNormInPlace(this.rotation);
-  this._matrixDirty=true;
+  this.transform.setQuaternion(quat);
   return this;
 }
 /**
- * Sets this object's rotation in the form of an angle and an axis of
- * rotation. Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
- * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * Sets this object's orientation in the form of an angle and an axis of
+ * rotation.
+ * See {@link glutil.Transform.setOrientation}.
  * @param {Array<number>|number} angle The desired angle
- * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.  If the axis of rotation
- * points toward the viewer, the angle's value is increasing in
- * a counterclockwise direction.
+ * to rotate in degrees, or a 4-element array as described in {@link glutil.Transform.setOrientation}.
  * @param {Array<number>|number} v X-component of the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
+ * of rotation or a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
  * @param {number} vy Y-component of the axis
  * of rotation.
@@ -2102,48 +2279,30 @@ Shape.prototype.setQuaternion=function(quat){
  * of rotation.
  * @return {glutil.Shape} This object.
  */
-Shape.prototype.setRotation=function(angle, v,vy,vz){
- return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+Shape.prototype.setOrientation=function(angle, v,vy,vz){
+  this.transform.setOrientation(angle,v,vy,vz);
+  return this;
 }
 /**
  * Combines this shape's current rotation with another rotation
- * described by a [quaternion]{@link glmath.GLMath} (a 4-element array
- * for describing 3D rotations).  The combined rotation will have the
- * same effect as the new rotation followed by the existing rotation.
- *  Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
- * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * described by a [quaternion]{@link glmath.GLMath}.
+  * See {@link glutil.Transform.multQuaternion}.
  * @param {Array<number>} quat A four-element array describing the rotation.
- * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
- * or {@link glmath.GLMath.quatFromTaitBryan}.
  * @return {glutil.Shape} This object.
- * @example
- * // Combine this shape's rotation with a rotation 20 degrees about the X-axis
- * shape.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
- * // Combine this shape's rotation with identity (no rotation)
- * shape.multQuaternion(GLMath.quatIdentity());
- * // Combine this shape's rotation with 30 degree pitch multiplied
- * // by 40 degree roll
- * shape.multQuaternion(GLMath.quatFromTaitBryan(30,0,40));
  */
 Shape.prototype.multQuaternion=function(quat){
-  if(this.complexMatrix)return this;
-  this.rotation=GLMath.quatMultiply(this.rotation,quat);
-  GLMath.quatNormInPlace(this.rotation);
-  this._matrixDirty=true;
+  this.transform.multQuaternion(angle,v,vy,vz);
   return this;
 }
 /**
- * Combines this shape's current rotation with another rotation
+ * Combines this shape's current orientation with another orientation
  * in the form of an angle and an axis of
- * rotation. The combined rotation will have the
- * same effect as the new rotation followed by the existing rotation.
- *  Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
- * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * rotation. 
+ * See {@link glutil.Transform.multOrientation}.
  * @param {Array<number>|number} angle The desired angle
- * to rotate in degrees. See {@link glutil.Shape#setRotation}.
+ * to rotate in degrees, or a 4-element array as described in {@link glutil.Transform.setOrientation}.
  * @param {Array<number>|number} v X-component of the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
+ * of rotation or a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
  * @param {number} vy Y-component of the axis
  * of rotation.
@@ -2151,32 +2310,17 @@ Shape.prototype.multQuaternion=function(quat){
  * of rotation.
  * @return {glutil.Shape} This object.
  */
-Shape.prototype.multRotation=function(angle, v,vy,vz){
- return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+Shape.prototype.multOrientation=function(angle, v,vy,vz){
+  this.transform.multOrientation(angle,v,vy,vz);
+  return this;
 }
 /**
- * Gets the transformation matrix used by this shape.  It is a combination
- * of the scale, position, and rotation properties,
- * unless a matrix was defined with {@link glutil.Shape#setMatrix}
- * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
- * @return {Array<number>}
+ * Gets the transformation matrix used by this shape.
+   * See {@link glutil.Transform.getMatrix}.
+ * @return {Array<number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix=function(){
-  if(this._matrixDirty){
-   this._matrixDirty=false;
-   // for best results, multiply in this order:
-   // 1. translation
-   this.matrix=GLMath.mat4translated(this.position[0],
-   this.position[1],this.position[2]);
-   // 2. rotation
-   if(!GLMath.quatIsIdentity(this.rotation)){
-    this.matrix=GLMath.mat4multiply(this.matrix,
-      GLMath.quatToMat4(this.rotation));
-   }
-   // 3. scaling
-   GLMath.mat4scaleInPlace(this.matrix,this.scale);
-  }
-  return this.matrix.slice(0,16);
+  return this.transform.getMatrix();
 }
 /////////////
 exports["BufferedMesh"]=BufferedMesh;

@@ -65,7 +65,7 @@ Examples
    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
    // Update the shape's rotation
    var q=GLMath.quatFromTaitBryan(rotation);
-   shape.setRotation(q);
+   shape.setOrientation(q);
    // Render the scene
    scene.render();
   });
