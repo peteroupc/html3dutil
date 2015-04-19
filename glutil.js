@@ -168,25 +168,21 @@ var GLUtil={
   return Promise.resolve({
     successes:[], failures:[]});
  }
- return new Promise(function(resolve, reject){
-  var ret={successes:[], failures:[]};
-  var totalPromises=promises.length;
-  var count=0;
-  for(var i=0;i<totalPromises;i++){
-   var promise=promises[i];
-   promise.then(function(result){
+ var ret={successes:[], failures:[]};
+ var retPromise=Promise.resolve(ret);
+ for(var i=0;i<totalPromises;i++){
+  var currPromise=promises[i];
+  retPromise=currPromise.then(function(result){
     ret.successes.push(result);
-    if(progressResolve)progressResolve(result);
-    count++;
-    if(count==totalPromises){ resolve(ret); }
-   }, function(result){
+    if(progressResolve)progressResolve(result);   
+    return Promise.resolve(ret);
+  },function(result){
     ret.failures.push(result);
     if(progressReject)progressReject(result);
-    count++;
-    if(count==totalPromises){ resolve(ret); }
-   });
-  }
- });
+    return Promise.resolve(ret);
+  });
+ }
+ return retPromise;
 },
 /**
 * Loads a file from a URL asynchronously, using XMLHttpRequest.
@@ -2000,9 +1996,9 @@ Shape.prototype.setTransform=function(transform){
 }
 /**
  * Sets the scale of this shape relative to its original
- * size. See {@link glutil.Transform.setScale}
+ * size. See {@link glutil.Transform#setScale}
  * @param {number|Array<number>} x Scaling factor for this object's width,
- * or a 3-element scaling array, as specified in {@link glutil.Transform.setScale}.
+ * or a 3-element scaling array, as specified in {@link glutil.Transform#setScale}.
  * @param {number} y Scaling factor for this object's height.
  * @param {number} z Scaling factor for this object's depth.
 * @return {glutil.Scene3D} This object.
@@ -2013,9 +2009,9 @@ Shape.prototype.setScale=function(x,y,z){
 }
 /**
  * Sets the relative position of this shape from its original
- * position.  See {@link glutil.Transform.setPosition}
+ * position.  See {@link glutil.Transform#setPosition}
  * @param {number|Array<number>} x X coordinate
- * or a 3-element position array, as specified in {@link glutil.Transform.setScale}.
+ * or a 3-element position array, as specified in {@link glutil.Transform#setScale}.
  * @param {number} y Y-coordinate.
  * @param {number} z Z-coordinate.
 * @return {glutil.Scene3D} This object.
@@ -2026,7 +2022,7 @@ Shape.prototype.setPosition=function(x,y,z){
 }
 /**
  * Sets this object's orientation in the form of a [quaternion]{@link glmath.GLMath}.
- * See {@link glutil.Transform.setQuaternion}.
+ * See {@link glutil.Transform#setQuaternion}.
  * @param {Array<number>} quat A four-element array describing the rotation.
  * @return {glutil.Shape} This object.
  */
@@ -2036,7 +2032,7 @@ Shape.prototype.setQuaternion=function(quat){
 }
 /**
  * Gets the transformation matrix used by this shape.
-   * See {@link glutil.Transform.getMatrix}.
+   * See {@link glutil.Transform#getMatrix}.
  * @return {Array<number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix=function(){
