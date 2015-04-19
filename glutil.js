@@ -1897,7 +1897,7 @@ Shape.prototype.primitiveCount=function(){
 
 /**
 * Makes a copy of this object.  The copied object
-* will have its own version of the transform and
+* will have its own version of the transform and 
 * material data, but any texture
 * image data and vertex buffers will not be duplicated,
 * but rather just references to them will be used.
@@ -1909,6 +1909,7 @@ Shape.prototype.copy=function(){
  ret.transform=this.transform.copy();
  return ret;
 }
+
 
 /**
  * Sets this shape's transformation matrix. This method
@@ -1982,7 +1983,7 @@ Shape.prototype.resetTransform=function(){
 * @return {glutil.Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
- this.transform.setScale();
+ this.transform.setScale(x,y,z);
   return this;
 }
 /**
@@ -1995,7 +1996,7 @@ Shape.prototype.setScale=function(x,y,z){
 * @return {glutil.Scene3D} This object.
  */
 Shape.prototype.setPosition=function(x,y,z){
-  this.transform.setPosition();
+  this.transform.setPosition(x,y,z);
   return this;
 }
 /**
@@ -2041,7 +2042,7 @@ Shape.prototype.multQuaternion=function(quat){
 /**
  * Combines this shape's current orientation with another orientation
  * in the form of an angle and an axis of
- * rotation.
+ * rotation. 
  * See {@link glutil.Transform.multOrientation}.
  * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees, or a 4-element array as described in {@link glutil.Transform.setOrientation}.
