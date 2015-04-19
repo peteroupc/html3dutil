@@ -169,20 +169,25 @@ var GLUtil={
     successes:[], failures:[]});
  }
  var ret={successes:[], failures:[]};
- var retPromise=Promise.resolve(ret);
- for(var i=0;i<totalPromises;i++){
-  var currPromise=promises[i];
-  retPromise=currPromise.then(function(result){
+ return new Promise(function(resolve, reject){
+  var ret={successes:[], failures:[]};
+  var totalPromises=promises.length;
+  var count=0;
+  for(var i=0;i<totalPromises;i++){
+   var promise=promises[i];
+   promise.then(function(result){
     ret.successes.push(result);
-    if(progressResolve)progressResolve(result);   
-    return Promise.resolve(ret);
-  },function(result){
+    if(progressResolve)progressResolve(result);
+    count++;
+    if(count==totalPromises){ resolve(ret); }
+   }, function(result){
     ret.failures.push(result);
     if(progressReject)progressReject(result);
-    return Promise.resolve(ret);
-  });
- }
- return retPromise;
+    count++;
+    if(count==totalPromises){ resolve(ret); }
+   });
+  }
+ });
 },
 /**
 * Loads a file from a URL asynchronously, using XMLHttpRequest.
