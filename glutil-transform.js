@@ -39,10 +39,23 @@ function Transform(){
   this.rotation=GLMath.quatIdentity();
   this.complexMatrix=false;
   this._matrixDirty=false;
+  this._isIdentity=true;
   /** @private */
   this.matrix=GLMath.mat4identity();
 }
-
+/**
+* Resets this shape to the untransformed state.
+* @return {glutil.Shape} This object.
+*/
+Transform.prototype.reset=function(){
+ this.matrix=GLMath.mat4identity();
+ this.position=[0,0,0];
+ this.scale=[1,1,1];
+ this.rotation=GLMath.quatIdentity();
+ this.complexMatrix=false;
+ this._matrixDirty=false;
+ return this;
+}
 /**
  * Sets this shape's transformation matrix. This method
  * will set the position, rotation, and scale properties
@@ -53,6 +66,7 @@ function Transform(){
  */
 Transform.prototype.setMatrix=function(value){
  this._matrixDirty=false;
+ this._isIdentity=false;
  this.complexMatrix=true;
  this.matrix=value.slice(0,16);
  this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
@@ -70,6 +84,7 @@ Transform.prototype.resetTransform=function(){
  this.matrix=GLMath.mat4identity();
  this.position=[0,0,0];
  this.scale=[1,1,1];
+ this._isIdentity=true;
  this.rotation=GLMath.quatIdentity();
  this.complexMatrix=false;
  this._matrixDirty=false;
@@ -97,6 +112,10 @@ Transform.prototype.setScale=function(x,y,z){
   } else {
    this.scale=[x,y,z];
   }
+  this._isIdentity=(this._isIdentity &&
+   this.scale[0]==1 &&
+   this.scale[1]==1 &&
+   this.scale[2]==1);
   this._matrixDirty=true;
   return this;
 }
@@ -122,6 +141,10 @@ Transform.prototype.setPosition=function(x,y,z){
   } else {
    this.position=[x,y,z];
   }
+  this._isIdentity=(this._isIdentity &&
+   this.position[0]==0 &&
+   this.position[1]==0 &&
+   this.position[2]==0);
   this._matrixDirty=true;
   return this;
 }
@@ -146,6 +169,7 @@ Transform.prototype.setQuaternion=function(quat){
   if(this.complexMatrix)return this;
   this.rotation=quat.slice(0,4);
   GLMath.quatNormInPlace(this.rotation);
+  this._isIdentity=false;
   this._matrixDirty=true;
   return this;
 }
@@ -197,6 +221,7 @@ Transform.prototype.multQuaternion=function(quat){
   if(this.complexMatrix)return this;
   this.rotation=GLMath.quatMultiply(this.rotation,quat);
   GLMath.quatNormInPlace(this.rotation);
+  this._isIdentity=false;
   this._matrixDirty=true;
   return this;
 }
@@ -230,6 +255,9 @@ Transform.prototype.multOrientation=function(angle, v,vy,vz){
  * @return {Array<number>}
  */
 Transform.prototype.getMatrix=function(){
+  if(this._isIdentity){
+   return GLMath.mat4identity();
+  }
   if(this._matrixDirty){
    this._matrixDirty=false;
    // for best results, multiply in this order:

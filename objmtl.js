@@ -28,12 +28,12 @@ function MtlData(){
  * @return {Array<Shape>} Array of shapes.
  */
 ObjData.prototype.toShape=function(scene){
- var multi=[];
+ var multi=new ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
   var shape=scene.makeShape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
-  multi.push(shape);
+  multi.addShape(shape);
  }
  return multi;
 }
@@ -46,13 +46,13 @@ ObjData.prototype.toShape=function(scene){
  * @return {Array<Shape>} Array of shapes.
  */
 ObjData.prototype.toShapeFromName=function(scene, name){
- var multi=[];
+ var multi=new ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
   if(this.meshes[i].name!=name)continue;
   var shape=scene.makeShape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
-  multi.push(shape);
+  multi.addShape(shape);
  }
  return multi;
 }

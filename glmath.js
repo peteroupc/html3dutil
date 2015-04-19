@@ -1581,6 +1581,9 @@ GLMath.RollPitchYaw = 4;
 * @const
 */
 GLMath.RollYawPitch = 5;
-
+/** @deprecated Renamed to quatToTaitBryan. */
+GLMath.quatToEuler=GLMath.quatToTaitBryan;
+/** @deprecated Renamed to quatFromTaitBryan. */
+GLMath.quatFromEuler=GLMath.quatFromTaitBryan;
 	exports["GLMath"]=GLMath;
 }));

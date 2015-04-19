@@ -266,9 +266,6 @@ Examples for setting position:
     shape.setScale(2,2,2);
     // same, but passing an array
     shape.setScale([2,2,2]);
-    // use an arbitrary 4x4 matrix, overriding position,
-    // scaling, and rotation
-    shape.setMatrix(...);
 
 If setMatrix wasn't called, then when the shape is rendered, it will generate
 a transformation matrix that has the effect of scaling, then rotating,
