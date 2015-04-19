@@ -66,7 +66,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
  * <p>A dot product of 0 indicates that the two vectors
- * are <i>orthogonal</i> (perpendicular) to each other.
+ * are <i>orthogonal</i> (perpendicular to each other).
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
  * @return {number} A number representing the dot product.
