@@ -479,7 +479,13 @@ function LightSource(position, ambient, diffuse, specular) {
 * @param {object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
-* <li><code>position</code> - Light position.
+* <li><code>position</code> - Light position.  An array of four numbers,
+* where the first three numbers are the X, Y, and Z components and the fourth
+* number is the W component.<ul>
+* <li>If W is 0, then X, Y, and Z specify a 3-element vector giving the direction
+* of the light; the light will shine everywhere in the given direction.
+* <li>If W is 0, then X, Y, and Z specify the position of the light in world
+* space; the light will shine brightest at the given position.</p>
 * <li><code>ambient</code> - Not used in the default shader program.
 * <li><code>diffuse</code> - Diffuse color.
 * <li><code>specular</code> - Specular highlight color.
@@ -545,34 +551,49 @@ Lights._createNewLight=function(index){
  }
  return ret;
 }
+/**
+ * Not documented yet.
+ * @param {*} index
+ * @return {LightSource} The corresponding light source object.
+ */
+Lights.prototype.getLight=function(index){
+ if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ return this.lights[index];
+}
+/**
+ * Not documented yet.
+ * @param {*} index
+ * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
+ * @return {Lights} This object.
+ */
+Lights.prototype.setParams=function(index,params){
+ this.getLight(index).setParams(params);
+ return this;
+}
 
 /**
  * Sets a directional light.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
+ * If the light doesn't exist at that index, it will be created.
  * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
- * axes, respectively.  May be null, in which case the default
- * is (0, 0, 1).
+ * axes, respectively.
  * @return {Lights} This object.
  */
 Lights.prototype.setDirectionalLight=function(index,direction){
- if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
- this.lights[index].setParams({"position":[direction[0],direction[1],direction[2],0]});
- return this;
+ return this.setParams({"position":[direction[0],direction[1],direction[2],0]});
 }
 /**
  * Sets a point light.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
+ * If the light doesn't exist at that index, it will be created.
  * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
- * coordinates, respectively, of the light, in world coordinates.  May be null, in which case the default
- * is (0, 0, 0).
+ * coordinates, respectively, of the light, in world coordinates.
  * @return {Lights} This object.
  */
 Lights.prototype.setPointLight=function(index,position){
- if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
- this.lights[index].setParams({"position":[position[0],position[1],position[2],1]});
- return this;
+ return this.setParams(index,{"position":[position[0],position[1],position[2],1]});
 }
 
 /**
@@ -1616,7 +1637,8 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  return this;
 }
 /**
-* Adds a 3D shape to this scene.
+* Adds a 3D shape to this scene.  Its reference, not a copy,
+* will be stored in the 3D scene's list of shapes.
 * @param {Shape|MultiShape} shape A 3D shape.
 * @return {glutil.Scene3D} This object.
 */
@@ -1669,6 +1691,16 @@ Scene3D.prototype.removeShape=function(shape){
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  this.lightSource.setDirectionalLight(index,position,diffuse,specular);
+ new LightsBinder(this.lightSource).bind(this.program);
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} index
+ * @param {*} params
+ */
+Scene3D.prototype.setLightParams=function(index,params){
+ this.lightSource.setParams(index,params);
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
@@ -2132,12 +2164,16 @@ Shape.prototype.multRotation=function(angle, v,vy,vz){
 Shape.prototype.getMatrix=function(){
   if(this._matrixDirty){
    this._matrixDirty=false;
+   // for best results, multiply in this order:
+   // 1. translation
    this.matrix=GLMath.mat4translated(this.position[0],
    this.position[1],this.position[2]);
+   // 2. rotation
    if(!GLMath.quatIsIdentity(this.rotation)){
     this.matrix=GLMath.mat4multiply(this.matrix,
       GLMath.quatToMat4(this.rotation));
    }
+   // 3. scaling
    GLMath.mat4scaleInPlace(this.matrix,this.scale);
   }
   return this.matrix.slice(0,16);
