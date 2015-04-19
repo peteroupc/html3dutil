@@ -2026,7 +2026,7 @@ Shape.prototype.setPosition=function(x,y,z){
   return this;
 }
 /**
- * Sets this object's orientation in the form of a [quaternion]{@link glmath.GLMath}.
+ * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link glutil.Transform#setQuaternion}.
  * @param {Array<number>} quat A four-element array describing the rotation.
  * @return {glutil.Shape} This object.

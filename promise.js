@@ -2,7 +2,7 @@
 	Any copyright is dedicated to the Public Domain.
 	http://creativecommons.org/publicdomain/zero/1.0/
 */
-// Note by Peter O., 2013-03-09: This file was taken
+// Note by Peter O., 2015-03-09: This file was taken
 // from https://github.com/ondras/promise/.
 (function (root, factory) {
 	if (typeof define === "function" && define["amd"]) {
