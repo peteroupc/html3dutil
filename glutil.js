@@ -581,7 +581,7 @@ Lights.prototype.setParams=function(index,params){
  * @return {Lights} This object.
  */
 Lights.prototype.setDirectionalLight=function(index,direction){
- return this.setParams({"position":[direction[0],direction[1],direction[2],0]});
+ return this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
 }
 /**
  * Sets a point light.

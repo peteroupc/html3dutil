@@ -953,7 +953,8 @@ mat4scaled:function(v3,v3y,v3z){
  * @param {number} vy Y coordinate.
  * @param {number} vz Z coordinate.
  * @param {number} vw W coordinate.  To transform a 3D
- * point, set W to 1.
+ * point, set W to 1; to transform a 2D
+ * point, set Z and W to 1.
  * @return {Array<number>} The transformed vector.
  */
 mat4transform:function(mat,v,vy,vz,vw){
@@ -1064,8 +1065,9 @@ mat4translate:function(mat,v3,v3y,v3z){
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * <p><b>Choosing the "near" and "far" parameters:</b>
- * Depth buffers often have 16 bits per pixel; each pixel isn't usually
- * a floating-point number.  If the ratio of "far" to "near"
+ * Depth buffers often have 16 bits per pixel, thus allowing only a limited
+ * range of possible values that, in addition, are not evenly spread within
+ * the range of "far" and "near".  If the ratio of "far" to "near"
  * is too high, the depth buffer can't distinguish well between two objects
  * that are very close to each other and both quite far in the distance.
  * For best results:<ul>
