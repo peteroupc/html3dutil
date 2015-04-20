@@ -18,18 +18,23 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /** @private */
 function MaterialBinder(mshade){
  this.mshade=mshade;
+ this.textureSize=[0,0];
 }
 
 MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
  program.setUniforms({
-  "textureSize":[0,0],
+  "textureSize":this.textureSize,
   "mshin":this.mshade.shininess,
-  "ma":[this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
-  "md":[this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
-    this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]],
-  "ms":[this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
-  "me":[this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
+  "ma":this.mshade.ambient.length==3 ? this.mshade.ambient :
+     [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
+  "md":this.mshade.diffuse.length==4 ? this.mshade.diffuse :
+    [this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
+       this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]],
+  "ms":this.mshade.specular.length==3 ? this.mshade.specular :
+     [this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
+  "me":this.mshade.emission.length==3 ? this.mshade.emission :
+     [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
  });
  if(this.mshade.texture){
   new TextureBinder(this.mshade.texture).bind(program);

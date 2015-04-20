@@ -151,13 +151,15 @@ ShaderProgram.prototype.use=function(){
  this.savedUniforms={};
  return this;
 }
+ShaderProgram.prototype._log=function(i,v){
+// console.log("setting "+i+": "+v);
+}
 /** @private */
 ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
   var isCurrentProgram=null;
       var v=uniforms[i];
       var uniform=this.get(i);
       if(uniform===null)return isCurrentProgram;
-//      console.log("setting "+i+": "+v);
       if(isCurrentProgram==null){
        isCurrentProgram=this.context.getParameter(
          this.context.CURRENT_PROGRAM)==this.program;
@@ -180,48 +182,60 @@ ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
        if(newUv){
         if(this.uniformTypes[i]==this.context.FLOAT){
          this.context.uniform1f(uniform, uv);
+        this._log(i,v);
         } else {
          this.context.uniform1i(uniform, uv);
+        this._log(i,v);
         }
        }
-      }      
+      }
       else if(v.length==3){
        if(!uv){
         this.uniformValues[i]=uv=v.slice(0,v.length)
         this.context.uniform3f(uniform, uv[0],uv[1],uv[2]);
+        this._log(i,v);
        } else if(uv[0]!=v[0] || uv[1]!=v[1] || uv[2]!=v[2]){
         uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2];
+        this._log(i,v);
         this.context.uniform3f(uniform, uv[0],uv[1],uv[2]);
        }
       } else if(v.length==2){
        if(!uv){
         this.uniformValues[i]=uv=v.slice(0,v.length)
         this.context.uniform2f(uniform, uv[0],uv[1]);
+        this._log(i,v);
        } else if(uv[0]!=v[0] || uv[1]!=v[1]){
         uv[0]=v[0]; uv[1]=v[1];
         this.context.uniform2f(uniform, uv[0],uv[1]);
+        this._log(i,v);
        }
       } else if(v.length==4){
        if(!uv){
         this.uniformValues[i]=uv=v.slice(0,v.length)
         this.context.uniform4f(uniform, uv[0],uv[1],uv[2],uv[3]);
+        this._log(i,v);
        } else if(uv[0]!=v[0] || uv[1]!=v[1] || uv[2]!=v[2] || uv[3]!=v[3]){
         uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2]; uv[3]=v[3];
         this.context.uniform4f(uniform, uv[0],uv[1],uv[2],uv[3]);
+        this._log(i,v);
        }
       } else if(v.length==16){
        if(!uv){
         this.uniformValues[i]=uv=v.slice(0,v.length)
         this.context.uniformMatrix4fv(uniform,false,uv);
+        this._log(i,v);
        } else if(ShaderProgram._copyIfDifferent(v,uv,16)){
         this.context.uniformMatrix4fv(uniform,false,uv);
+        this._log(i,v);
        }
       } else if(v.length==9){
        if(!uv){
         this.uniformValues[i]=uv=v.slice(0,v.length)
         this.context.uniformMatrix3fv(uniform,false,uv);
+        this._log(i,v);
        } else if(ShaderProgram._copyIfDifferent(v,uv,9)){
         this.context.uniformMatrix3fv(uniform,false,uv);
+        this._log(i,v);
        }
       }
       return isCurrentProgram;
@@ -256,7 +270,7 @@ ShaderProgram.prototype.setUniforms=function(uniforms){
   if(typeof Object.keys!=="undefined"){
     var keys=Object.keys(uniforms);for(var ki=0;ki<keys.length;ki++){var i=keys[ki];
      isCurrentProgram=this._setUniform(uniforms,i,isCurrentProgram);
-    }  
+    }
   } else {
     for(var i in uniforms){
      isCurrentProgram=this._setUniform(uniforms,i,isCurrentProgram);
