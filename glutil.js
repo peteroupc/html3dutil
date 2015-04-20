@@ -156,30 +156,48 @@ var GLUtil={
  * @return {Promise} A promise that is never rejected and resolves when
 * all of the promises are each resolved or rejected. The result
  * of the promise will be an object with
- * two keys:
+ * three keys:
  *  "successes" - contains a list of results from the
- *  promises that succeeded.
+ *  promises that succeeded, in the order in which those promises were listed.
  *  "failures" - contains a list of results from the
- *  promises that failed.
+ *  promises that failed, in the order in which those promises were listed.
+ *  "results" - contains a list of boolean values for each
+ * promise, in the order in which the promises were listed.
+ * True means success, and false means failure.
  */
 "getPromiseResults":function(promises,
    progressResolve, progressReject){
  if(!promises || promises.length==0){
   return Promise.resolve({
-    successes:[], failures:[]});
+    successes:[], failures:[], results:[]});
  }
- var ret={successes:[], failures:[]};
+ var ret={successes:[], failures:[], results:[]};
  var newPromises=[]
  for(var i=0;i<promises.length;i++){
+  var index=i;
   newPromises.push(promises[i].then(function(x){
-   ret.successes.push(x)
+   ret.successes[index]=x
    return true;
   },function(x){
-   ret.failures.push(x)
-   return true;
+   ret.failures[index]=x
+   return false;
   }));
  }
- return Promise.all(newPromises).then(function(x){
+ return Promise.all(newPromises).then(function(results){
+  // compact the successes and failures arrays
+  for(var i=0;i<ret.successes.length;i++){
+   if(typeof ret.successes[i]=="undefined"){
+    ret.successes.splice(i,1);
+    i-=1;
+   }
+  }
+  for(var i=0;i<ret.failures.length;i++){
+   if(typeof ret.failures[i]=="undefined"){
+    ret.failures.splice(i,1);
+    i-=1;
+   }
+  }
+  ret.results=results;
   return Promise.resolve(ret)
  });
 },
@@ -548,7 +566,9 @@ Lights._createNewLight=function(index){
 }
 /**
  * Not documented yet.
- * @param {*} index
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * If the light doesn't exist at that index, it will be created.
  * @return {LightSource} The corresponding light source object.
  */
 Lights.prototype.getLight=function(index){
@@ -557,7 +577,9 @@ Lights.prototype.getLight=function(index){
 }
 /**
  * Not documented yet.
- * @param {*} index
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * If the light doesn't exist at that index, it will be created.
  * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
  * @return {Lights} This object.
  */
@@ -1714,8 +1736,8 @@ Scene3D.prototype.setLightParams=function(index,params){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient=function(r,g,b,a){
- this.lightSource.ambient=GLUtil["toGLColor"](r,g,b,a);
- this.lightSource.ambient=this.lightSource.ambient.slice(0,4)
+ this.lightSource.sceneAmbient=GLUtil["toGLColor"](r,g,b,a);
+ this.lightSource.sceneAmbient=this.lightSource.sceneAmbient.slice(0,4)
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
