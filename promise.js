@@ -97,10 +97,6 @@
 		return thenPromise;
 	}
 
-	/**
-	 * Fulfill this promise with a given value
-	 * @param {any} value
-	 */
 	Promise.prototype.fulfill = function(value) {
 		if (this._state != 0) { return this; }
 
@@ -112,10 +108,6 @@
 		return this;
 	}
 
-	/**
-	 * Reject this promise with a given value
-	 * @param {any} value
-	 */
 	Promise.prototype.reject = function(value) {
 		if (this._state != 0) { return this; }
 
@@ -185,10 +177,6 @@
 		this.fulfill(x);
 	}
 
-	/**
-	 * Pass this promise's resolved value to another promise
-	 * @param {Promise} promise
-	 */
 	Promise.prototype.chain = function(promise) {
 		var resolve = function(value) {
 			promise.resolve(value);

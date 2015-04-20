@@ -169,24 +169,18 @@ var GLUtil={
     successes:[], failures:[]});
  }
  var ret={successes:[], failures:[]};
- return new Promise(function(resolve, reject){
-  var ret={successes:[], failures:[]};
-  var totalPromises=promises.length;
-  var count=0;
-  for(var i=0;i<totalPromises;i++){
-   var promise=promises[i];
-   promise.then(function(result){
-    ret.successes.push(result);
-    if(progressResolve)progressResolve(result);
-    count++;
-    if(count==totalPromises){ resolve(ret); }
-   }, function(result){
-    ret.failures.push(result);
-    if(progressReject)progressReject(result);
-    count++;
-    if(count==totalPromises){ resolve(ret); }
-   });
-  }
+ var newPromises=[]
+ for(var i=0;i<promises.length;i++){
+  newPromises.push(promises[i].then(function(x){
+   ret.successes.push(x)
+   return true;
+  },function(x){
+   ret.failures.push(x)
+   return true;
+  }));
+ }
+ return Promise.all(newPromises).then(function(x){
+  return Promise.resolve(ret)
  });
 },
 /**
