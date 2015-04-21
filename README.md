@@ -91,7 +91,6 @@ Version 0.2:
 
 - First Code Project release
 
-
 Source Code
 ---------
 Source code is available in the [project page](https://github.com/peteroupc/html3dutil).

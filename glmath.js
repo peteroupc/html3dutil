@@ -424,8 +424,7 @@ return r;
 },
 /**
  * Inverts the rotation given in this quaternion without normalizing it;
- * returns a new quaternion.  The conjugate represents the same
- * rotation as the original.
+ * returns a new quaternion.
  * @param {Array<number>} quat A quaternion, containing four elements.
  * @return {Array<number>}
  */
@@ -434,8 +433,7 @@ quatConjugate:function(quat){
 },
 /**
  * Inverts the rotation given in this quaternion, then normalizes the result;
- * returns a new quaternion. The inverse represents the same
- * rotation as the original.
+ * returns a new quaternion.
  * @param {Array<number>} quat A quaternion, containing four elements.
  * @return {Array<number>}
  */
@@ -605,15 +603,15 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
   if(mode==GLMath.PitchYawRoll || mode==GLMath.PitchRollYaw){
    var t7 = [rx*yx, ry * yx, rx * yy, ry * yy];
    if(mode==GLMath.PitchYawRoll)t7[0]=-t7[0];
-   t8 = [((t7[3] * px) + (t7[0] * py)), ((t7[1] * py) + (t7[2] * px)), ((t7[2] * py) - (t7[1] * px)), ((t7[3] * py) - (t7[0] * px))];
+   t8 = [t7[3] * px + t7[0] * py, t7[1] * py + t7[2] * px, t7[2] * py - t7[1] * px, t7[3] * py - t7[0] * px];
   } else if(mode==GLMath.YawPitchRoll || mode==GLMath.YawRollPitch){
    var t7 = [ry * px, rx * px, rx * py, ry * py];
    if(mode==GLMath.YawRollPitch)t7[1]=-t7[1];
-   t8 = [((t7[0] * yy) - (t7[2] * yx)), ((t7[3] * yx) + (t7[1] * yy)), ((t7[2] * yy) + (t7[0] * yx)), ((t7[3] * yy) - (t7[1] * yx))];
+   t8 = [t7[0] * yy - t7[2] * yx, t7[3] * yx + t7[1] * yy, t7[2] * yy + t7[0] * yx, t7[3] * yy - t7[1] * yx];
   } else {
    var t7 = [yy * px, yx * py, yx * px, yy * py];
    if(mode==GLMath.RollPitchYaw)t7[2]=-t7[2];
-   t8 = [((t7[0] * ry) + (t7[1] * rx)), ((t7[1] * ry) - (t7[0] * rx)), ((t7[3] * rx) + (t7[2] * ry)), ((t7[3] * ry) - (t7[2] * rx))];
+   t8 = [t7[0] * ry + t7[1] * rx, t7[1] * ry - t7[0] * rx, t7[3] * rx + t7[2] * ry, t7[3] * ry - t7[2] * rx];
   }
   return t8;
 },
