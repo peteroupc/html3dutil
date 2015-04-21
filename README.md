@@ -70,6 +70,28 @@ Examples
   });
 ```
 
+History
+---------
+Version 1.0:
+
+- Adds setOrtho2DAspect and setOrthoAspect methods to Scene3D
+- Adds mat4TransposeInPlace method and two constants to GLMath
+- Renames fromEuler and toEuler methods in GLMath to fromTaitBryan
+ and toTaitBryan
+- Modifies the Lights class
+- Allows alpha component in material diffuse
+- Optimizes setting uniforms in shader programs
+- Adds vertex2 method to Mesh class
+- New classes: Transform and ShapeGroup
+- Most methods that affect transforms removed, and their functionality
+  now uses a new getTransform method and the Transform class
+- Bug fixes
+
+Version 0.2:
+
+- First Code Project release
+
+
 Source Code
 ---------
 Source code is available in the [project page](https://github.com/peteroupc/html3dutil).
