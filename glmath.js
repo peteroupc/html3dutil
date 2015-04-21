@@ -6,6 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+
 /**
 * A collection of math functions for working
 * with vectors and matrices.<p>
@@ -13,15 +14,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @module glmath
 */
 (function (g,f) {
-	if (typeof define=="function" && define["amd"]) {
-		define([ "exports" ], f);
-	} else if (typeof exports=="object") {
-		f(exports);
-	} else {
-		f(g);
-	}
+ if (typeof define=="function" && define["amd"]) {
+  define([ "exports" ], f);
+ } else if (typeof exports=="object") {
+  f(exports);
+ } else {
+  f(g);
+ }
 }(this, function (exports) {
-	if (exports.GLMath) { return; }
+ if (exports.GLMath) { return; }
 
 /**
 * A collection of math functions for working
@@ -539,18 +540,18 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*GLMath.PiDividedBy360;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*GLMath.PiDividedBy360;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*GLMath.PiDividedBy360;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -585,13 +586,13 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  if(mode==null)mode=GLMath.RollPitchYaw;
  if(mode<0 || mode>=6)throw new Error("invalid mode");
  if(pitchDegrees.constructor==Array){
-  rollRad=pitchDegrees[2]*GLMath.PiDividedBy360;
-  pitchRad=pitchDegrees[0]*GLMath.PiDividedBy360;
-  yawRad=pitchDegrees[1]*GLMath.PiDividedBy360;
+  rollRad=((pitchDegrees[2]>=0 && pitchDegrees[2]<360) ? pitchDegrees[2] : ((pitchDegrees[2]%360)+(pitchDegrees[2]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  pitchRad=((pitchDegrees[0]>=0 && pitchDegrees[0]<360) ? pitchDegrees[0] : ((pitchDegrees[0]%360)+(pitchDegrees[0]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  yawRad=((pitchDegrees[1]>=0 && pitchDegrees[1]<360) ? pitchDegrees[1] : ((pitchDegrees[1]%360)+(pitchDegrees[1]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
  } else {
-  rollRad=rollDegrees*GLMath.PiDividedBy360;
-  pitchRad=pitchDegrees*GLMath.PiDividedBy360;
-  yawRad=yawDegrees*GLMath.PiDividedBy360;
+  rollRad=((rollDegrees>=0 && rollDegrees<360) ? rollDegrees : ((rollDegrees%360)+(rollDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  pitchRad=((pitchDegrees>=0 && pitchDegrees<360) ? pitchDegrees : ((pitchDegrees%360)+(pitchDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  yawRad=((yawDegrees>=0 && yawDegrees<360) ? yawDegrees : ((yawDegrees%360)+(yawDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
  }
   var px = Math.sin(pitchRad);
   var py = Math.cos(pitchRad);
@@ -652,7 +653,7 @@ quatToTaitBryan:function(a,mode){
   } else {
    c1=a[0]; c2=a[1]; c3=a[2];
   }
-	var sq1=c1*c1;
+ var sq1=c1*c1;
   var sq2=c2*c2;
   var sq3=c3*c3;
   var e1=Math.atan2(2*(c0*c1-e*c2*c3),1-(sq1+sq2)*2);
@@ -924,12 +925,12 @@ mat4scale:function(mat,v3,v3y,v3z){
       scaleY=v3[1];
       scaleZ=v3[2];
   }
-	return [
+ return [
   mat[0]*scaleX, mat[1]*scaleX, mat[2]*scaleX, mat[3]*scaleX,
   mat[4]*scaleY, mat[5]*scaleY, mat[6]*scaleY, mat[7]*scaleY,
   mat[8]*scaleZ, mat[9]*scaleZ, mat[10]*scaleZ, mat[11]*scaleZ,
   mat[12], mat[13], mat[14], mat[15]
-	];
+ ];
 },
 /**
  * Returns a 4x4 matrix representing a scaling transformation.
@@ -1099,7 +1100,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4perspective:function(fovY,aspectRatio,near,far){
- var f = 1/Math.tan(fovY*GLMath.PiDividedBy360);
+ var f = 1/Math.tan(((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*GLMath.PiDividedBy360);
  var nmf = near-far;
  nmf=1/nmf;
  return [f/aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
@@ -1286,13 +1287,13 @@ mat4scaleInPlace:function(mat,v3,v3y,v3z){
  */
 mat4multiply:function(a,b){
   var dst=[];
-	for(var i = 0; i < 16; i+= 4){
-		for(var j = 0; j < 4; j++){
-			dst[i+j] =
-				b[i]   * a[j]   +
-				b[i+1] * a[j+4] +
-				b[i+2] * a[j+8] +
-				b[i+3] * a[j+12];
+ for(var i = 0; i < 16; i+= 4){
+  for(var j = 0; j < 4; j++){
+   dst[i+j] =
+    b[i] * a[j] +
+    b[i+1] * a[j+4] +
+    b[i+2] * a[j+8] +
+    b[i+3] * a[j+12];
     }
   }
   return dst;
@@ -1311,10 +1312,10 @@ mat4multiply:function(a,b){
  * @return {Array<number>} The resulting quaternion.
 */
 quatMultiply:function(a,b){
-	return [
-	a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
-	a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
-	a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
+ return [
+ a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
+ a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
+ a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
     a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]]
 },
 /**
@@ -1344,18 +1345,18 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*GLMath.PiDividedBy180;
+ ang=((ang>=0 && ang<360) ? ang : ((ang%360)+(ang<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -1441,18 +1442,18 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*GLMath.PiDividedBy180;
+ ang=((ang>=0 && ang<360) ? ang : ((ang%360)+(ang<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -1608,5 +1609,5 @@ GLMath.RollYawPitch = 5;
 GLMath.quatToEuler=GLMath.quatToTaitBryan;
 /** @deprecated Renamed to quatFromTaitBryan. */
 GLMath.quatFromEuler=GLMath.quatFromTaitBryan;
-	exports["GLMath"]=GLMath;
+ exports["GLMath"]=GLMath;
 }));
