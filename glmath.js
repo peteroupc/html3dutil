@@ -36,10 +36,10 @@ var GLMath={
  * The cross product is the vector that is perpendicular to
  * each of two other vectors.<p>
  * If both vectors are unit length
- * (via {@link glmath.GLMath.vec3norm}), the sine of
- * the angle between them is equal to the length of their
+ * (via {@link glmath.GLMath.vec3norm}), the absolute value
+ * of the sine of the angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
- * product equals |<b>a</b>| * |<b>b</b>| * sin &theta;
+ * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta|;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small><p>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
  * follows:<pre>
@@ -424,16 +424,20 @@ return r;
 },
 /**
  * Inverts the rotation given in this quaternion without normalizing it;
- * returns a new quaternion.
+ * returns a new quaternion.  The conjugate represents the same
+ * rotation as the original.
  * @param {Array<number>} quat A quaternion, containing four elements.
+ * @return {Array<number>}
  */
 quatConjugate:function(quat){
  return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
 /**
  * Inverts the rotation given in this quaternion, then normalizes the result;
- * returns a new quaternion.
+ * returns a new quaternion. The inverse represents the same
+ * rotation as the original.
  * @param {Array<number>} quat A quaternion, containing four elements.
+ * @return {Array<number>}
  */
 quatInverse:function(quat){
  return GLMath.quatNormInPlace(
@@ -1085,9 +1089,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * </ul>
 * @param {number}  fovY Y-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
-* this number, the bigger close objects appear to be.  As a result,
-* zoom can be implemented by multiplying field of view by an
-* additional factor.)
+* this number, the bigger close objects appear to be.)
 * @param {number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @param {number} near The distance from the camera to
@@ -1118,8 +1120,9 @@ mat4perspective:function(fovY,aspectRatio,near,far){
 * the point in world space that the camera is looking at.  May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
 * @param {Array<number>} [up] A 3-element vector specifying
-* the up-vector direction.  May be null or omitted, in which case
-* the default is a vector pointing positive on the Y axis.  This
+* the direction from the center of the camera to its top. This parameter may
+* be null or omitted, in which case the default is the vector (0, 1, 0),
+* the vector that results when the camera is held upright.  This
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
@@ -1299,7 +1302,12 @@ mat4multiply:function(a,b){
 /**
 * Multiplies two quaternions, creating a composite rotation.
 * The quaternions are multiplied such that the second quaternion's
-* rotation happens before the first quaternion's rotation.
+* rotation happens before the first quaternion's rotation.<p>
+* Multiplying two unit quaternions (each with a length of 1) will result
+* in a unit quaternion.  However, for best results, you should
+* normalize the quaternions every few multiplications (using
+* quatNormalize or quatNormInPlace, since successive
+* multiplications can cause rounding errors.
  * @param {Array<number>} a The first quaternion.
  * @param {Array<number>} b The second quaternion.
  * @return {Array<number>} The resulting quaternion.
@@ -1534,6 +1542,18 @@ GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
  * @return {Array<number>}
  */
 GLMath.quatCopy=GLMath.vec4copy;
+/**
+ Closest approximation to pi times 2.
+ @const
+ @default
+*/
+GLMath.PiTimes2 = 6.283185307179586476925286766559;
+/**
+ Closest approximation to pi divided by 2.
+ @const
+ @default
+*/
+GLMath.HalfPi = 1.5707963267948966192313216916398;
 /**
  Closest approximation to pi divided by 180. Multiply by this number to convert degrees to radians.
  @const

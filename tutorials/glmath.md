@@ -532,8 +532,8 @@ and generate a new translation matrix with the new translation elements.  For ex
 to invert the translation (5, 2, -3), use the translation (-5, -2, 3).
 
 To invert a **scaling**, use the reciprocal of `sx`, `sy`, and `sz`
-and generate a new scaling matrix with those elements. (The reciprocal of a number is 1 divided
-by that number.) For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
+and generate a new scaling matrix with those elements.
+For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
 
 To invert a **rotation**, swap the 2nd and 5th elements of the matrix, the 3rd and 9th
 elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4, 2, 8,
