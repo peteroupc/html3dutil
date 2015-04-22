@@ -317,6 +317,7 @@ quatIdentity:function(){
 },
 /**
  * Returns a copy of a 4x4 matrix.
+ * @param {Array<number>} mat A 4x4 matrix.
  * @return {Array<number>}
  */
 mat4copy:function(mat){
@@ -324,10 +325,11 @@ mat4copy:function(mat){
 },
 /**
  * Returns a copy of a 4-element vector.
+ * @param {Array<number>} mat A 4-element vector.
  * @return {Array<number>}
  */
-vec4copy:function(mat){
- return mat.slice(0,4);
+vec4copy:function(vec){
+ return vec.slice(0,4);
 },
 /**
  * Finds the inverse of a 4x4 matrix.
@@ -433,10 +435,20 @@ quatConjugate:function(quat){
  return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
 /**
- * Inverts the rotation given in this quaternion, then normalizes the result;
+ * Inverts the rotation given in this quaternion;
  * returns a new quaternion.
  * @param {Array<number>} quat A quaternion, containing four elements.
  * @return {Array<number>}
+ */
+quatInvert:function(quat){
+ var lsq=1.0/GLMath.quatDot(quat,quat);
+ return GLMath.vec4scaleInPlace(lsq,
+  GLMath.quatConjugate(quat))
+},
+/**
+ * @deprecated This method incorrectly calculates a quaternion's
+ * inverse; use quatInvert instead.  This method will be changed to
+ * be equivalent to quatInvert in a future version.
  */
 quatInverse:function(quat){
  return GLMath.quatNormInPlace(
@@ -758,10 +770,12 @@ quatRotate:function(quat,angle,v,vy,vz){
     GLMath.quatFromAxisAngle(angle,v,vy,vz));
 },
 /**
- * Transforms a vector using a quaternion's rotation.
+ * Transforms a 4-element vector using a quaternion's rotation.
  * @param {Array<number>} q A quaternion describing
  * the rotation.
- * @param {Array<number>} v The vector to transform.
+ * @param {Array<number>} v A 4-element vector to transform.
+ * To transform a 3D point, set the vector's 4th element (zero-based
+ * index 3) to 1.
  * @return {Array<number>} The transformed vector.
  */
 quatTransform:function(q,v){
@@ -1188,7 +1202,9 @@ mat4ortho:function(l,r,b,t,n,f){
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
- * elements of the result (zero-based indices 8, 9, 10, and 11).
+ * elements of the result (zero-based indices 8, 9, 10, and 11).<p>
+ * This is the same as mat4ortho2d() with the near clipping plane
+ * set to -1 and the far clipping plane set to 1.
  * @param {number} l Leftmost coordinate of the 2D view.
  * @param {number} r Rightmost coordinate of the 2D view.
  * (Note that r can be greater than l or vice versa.)
@@ -1281,8 +1297,8 @@ mat4scaleInPlace:function(mat,v3,v3y,v3z){
  * matrix (input matrix) describes a translation and the second
  * matrix describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
- * @param {*} a The first matrix.
- * @param {*} b The second matrix.
+ * @param {Array<number>} a The first matrix.
+ * @param {Array<number>} b The second matrix.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4multiply:function(a,b){
