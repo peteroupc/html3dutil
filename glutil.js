@@ -653,12 +653,12 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
  /** Ambient reflection of this material.<p>
  * Ambient reflection indicates how much an object reflects
- * ambient colors, those that color pixels the same way regardless 
+ * ambient colors, those that color pixels the same way regardless
  * of direction or distance.
  * Because every part of an object will be shaded the same way by ambient
  * light, an object with just ambient reflection will not look much like a 3D object.<p>
  * This value is a 3-element array giving the red, green, and blue
- * components of the ambient reflection; the final ambient color depends 
+ * components of the ambient reflection; the final ambient color depends
  * on the ambient color of the scene.
  * (0,0,0) means no ambient reflection,
  * and (1,1,1) means total ambient reflection.<p>
@@ -669,13 +669,13 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  */
  this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
  /**
- * Diffuse reflection of this material. Diffuse reflection is the color that a material 
- * reflects equally in all directions. Because different parts of an object are shaded 
+ * Diffuse reflection of this material. Diffuse reflection is the color that a material
+ * reflects equally in all directions. Because different parts of an object are shaded
  * differently depending
  * on how directly they face diffuse lights, diffuse reflection can contribute
  * much of the 3D effect of that object.<p>
  * This value is a 4-element array giving the red, green, blue, and
- * alpha components of the diffuse reflection; the final diffuse color depends 
+ * alpha components of the diffuse reflection; the final diffuse color depends
  * on the reflected colors of lights that shine on the material.
  * (0,0,0,1) means no diffuse reflection,
  * and (1,1,1,1) means total diffuse reflection.<p>
@@ -694,7 +694,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * specular light doesn't scatter very much to other parts of an object.
  * Specular reflection can make an object shiny.
  * This value is a 3-element array giving the red, green, and blue
- * components of the ambient reflection; the final specular color depends 
+ * components of the ambient reflection; the final specular color depends
  * on the specular color of lights that shine on the material.
  * (0,0,0) means no specular reflection,
  * and (1,1,1) means total specular reflection.<p>
@@ -708,7 +708,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * default shader if [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting}
 * is called, disabling lighting calculations).<p>
 * This value is a 3-element array giving the red, green, and blue
-* components. 
+* components.
 * For each of the three color components, positive values add to that component,
 * while negative values subtract from it. (0,0,0) means no additive color.
  */
@@ -1642,8 +1642,8 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * the point in world space that the camera is looking at. May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
 * @param {Array<number>} [up] A 3-element vector specifying
-* the direction from the center of the camera to its top. This parameter may 
-* be null or omitted, in which case the default is the vector (0, 1, 0), 
+* the direction from the center of the camera to its top. This parameter may
+* be null or omitted, in which case the default is the vector (0, 1, 0),
 * the vector that results when the camera is held upright.  This
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)

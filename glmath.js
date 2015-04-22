@@ -40,7 +40,7 @@ var GLMath={
  * (via {@link glmath.GLMath.vec3norm}), the absolute value
  * of the sine of the angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
- * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta|;
+ * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small><p>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
  * follows:<pre>
