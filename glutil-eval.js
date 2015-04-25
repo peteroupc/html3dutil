@@ -256,9 +256,8 @@ function CurveEval(){
 /**
 * Specifies a parametric curve function for generating vertex positions.
 * @param {object} evaluator An object that must contain a function
-* named "evaluate".  It takes the following parameters in this order:<ul>
-* <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
-* <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
+* named "evaluate".  It takes the following parameter:<ul>
+* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
 * </ul>
 * The evaluator function returns an array of the result of the evaluation.
 * @return {CurveEval} This object.
@@ -413,7 +412,7 @@ CurveEval.prototype.evalOne=function(mesh,u){
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
  * May be omitted; default is 24.
  * @param {number} [u1] Starting point of the curve (within the range
- * given in the <code>vector</code>, normal</code>,
+ * given in the <code>vector</code>, <code>normal</code>,
  * <code>color</code>, and <code>texCoord</code> methods).
  *May be omitted; default is 0.
  * @param {number} [u2] Ending point of the curve (within the range
