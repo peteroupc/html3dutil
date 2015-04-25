@@ -25,7 +25,7 @@ function MtlData(){
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
  * @param {Scene3D} scene 3D scene to load the shape with.
- * @return {Array<Shape>} Array of shapes.
+ * @return {glutil.ShapeGroup} Group of shapes.
  */
 ObjData.prototype.toShape=function(scene){
  var multi=new ShapeGroup();
@@ -43,7 +43,7 @@ ObjData.prototype.toShape=function(scene){
  * @param {Scene3D} scene 3D scene to load the shape with.
  * @param {string} name Name from the OBJ file of the portion
  * of the model to use.
- * @return {Array<Shape>} Array of shapes.
+ * @return {glutil.ShapeGroup} Group of shapes.
  */
 ObjData.prototype.toShapeFromName=function(scene, name){
  var multi=new ShapeGroup();
