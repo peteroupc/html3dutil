@@ -1124,7 +1124,7 @@ BufferedMesh.prototype.primitiveCount=function(){
 function FrameBuffer(context, width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.context=context;
- this.textureUnit=0;
+ this.textureUnit=1;
  this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
@@ -1185,15 +1185,28 @@ FrameBuffer.prototype.bind=function(program){
   if(program.getContext()!=this.context){
    throw new Error("can't bind buffer: context mismatch");
   }
-  this.context.bindFramebuffer(
+ this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
+ this.context.framebufferTexture2D(
+   this.context.FRAMEBUFFER,this.context.COLOR_ATTACHMENT0,
+   this.context.TEXTURE_2D,this.colorTexture,0);
+ this.context.framebufferRenderbuffer(
+   this.context.FRAMEBUFFER,this.context.DEPTH_ATTACHMENT,
+   this.context.RENDERBUFFER,this.depthbuffer);
+ this.context.bindFramebuffer(
     this.context.FRAMEBUFFER,this.buffer);
 }
 /**
- * Unbinds this frame buffer from its associated WebGL context.
+ * Unbinds this frame buffer from its associated WebGL this.context.
  */
 FrameBuffer.prototype.unbind=function(){
-  this.context.bindFramebuffer(
+ this.context.bindFramebuffer(
     this.context.FRAMEBUFFER,null);
+ this.context.framebufferTexture2D(
+   this.context.FRAMEBUFFER,this.context.COLOR_ATTACHMENT0,
+   this.context.TEXTURE_2D,0,0);
+ this.context.framebufferRenderbuffer(
+   this.context.FRAMEBUFFER,this.context.DEPTH_ATTACHMENT,
+   this.context.RENDERBUFFER,0);
 }
 /**
  * Disposes all resources from this frame buffer object.
@@ -1370,7 +1383,18 @@ Scene3D.prototype.createBuffer=function(){
  return new FrameBuffer(this.context,
    this.getWidth(),this.getHeight());
 }
-
+/**
+ * Not documented yet.
+ */
+Scene3D.prototype.getProjectionMatrix=function(){
+ return this._projectionMatrix.slice(0,16);
+}
+/**
+ * Not documented yet.
+ */
+Scene3D.prototype.getViewMatrix=function(){
+ return this._viewMatrix.slice(0,16);
+}
 /**
 *  Sets this scene's projection matrix to a perspective projection.
  * <p>
@@ -1661,7 +1685,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
-* @param {Shape|MultiShape} shape A 3D shape.
+* @param {Shape|ShapeGroup} shape A 3D shape.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
@@ -1683,7 +1707,7 @@ Scene3D.prototype.makeShape=function(mesh){
 
 /**
 * Removes all instances of a 3D shape from this scene.
-* @param {Shape|MultiShape} shape The 3D shape to remove.
+* @param {Shape|ShapeGroup} shape The 3D shape to remove.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.removeShape=function(shape){
@@ -1779,6 +1803,7 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   uniforms["normalMatrix"]=invTrans;
   program.setUniforms(uniforms);
 }
+
 /**
  *  Renders all shapes added to this scene.
  *  This is usually called in a render loop, such
@@ -1797,8 +1822,8 @@ Scene3D.prototype.render=function(){
    // Render to the framebuffer, then to the main buffer via
    // a filter
    var oldProgram=this.program;
-   var oldProj=this._projectionMatrix.slice(0,16);
-   var oldView=this._viewMatrix.slice(0,16);
+   var oldProj=this.getProjectionMatrix();
+   var oldView=this.getViewMatrix();
    this.fbo.bind(this.program);
    this._renderInner();
    this.fbo.unbind();
@@ -1903,9 +1928,11 @@ function ShapeGroup(){
  this.transform=new Transform();
 }
 /**
- * Not documented yet.
- * @param {*} shape
- */
+* Adds a 3D shape to this shape group.  Its reference, not a copy,
+* will be stored in the list of shapes.
+* @param {Shape|ShapeGroup} shape A 3D shape.
+* @return {glutil.ShapeGroup} This object.
+*/
 ShapeGroup.prototype.addShape=function(shape){
  shape.parent=this;
  this.shapes.push(shape);
@@ -1916,6 +1943,9 @@ ShapeGroup.prototype.addShape=function(shape){
 ShapeGroup.prototype.getTransform=function(){
  return this.transform;
 }
+/**
+ * Not documented yet.
+ */
 ShapeGroup.prototype.getMatrix=function(){
  return this.getTransform().getMatrix();
 }
@@ -1927,14 +1957,30 @@ ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} x
+ * @param {*} y
+ * @param {*} z
+ */
 ShapeGroup.prototype.setPosition=function(x,y,z){
  this.transform.setPosition(x,y,z)
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} quat
+ */
 ShapeGroup.prototype.setQuaternion=function(quat){
  this.transform.setQuaternion(quat);
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} x
+ * @param {*} y
+ * @param {*} z
+ */
 ShapeGroup.prototype.setScale=function(x,y,z){
  this.transform.setScale(x,y,z);
  return this;
