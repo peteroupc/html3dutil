@@ -1124,7 +1124,10 @@ BufferedMesh.prototype.primitiveCount=function(){
 function FrameBuffer(context, width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.context=context;
- this.textureUnit=1;
+ // give the framebuffer its own texture unit, since the
+ // shader program may bind samplers to other texture
+ // units, such as texture unit 0
+ this.textureUnit=1; 
  this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
@@ -1160,13 +1163,6 @@ function FrameBuffer(context, width, height){
  this.context.renderbufferStorage(
    context.RENDERBUFFER,context.DEPTH_COMPONENT16,
    this.width,this.height);
- // attach color and depth buffers
- this.context.framebufferTexture2D(
-   context.FRAMEBUFFER,context.COLOR_ATTACHMENT0,
-   context.TEXTURE_2D,this.colorTexture,0);
- this.context.framebufferRenderbuffer(
-   context.FRAMEBUFFER,context.DEPTH_ATTACHMENT,
-   context.RENDERBUFFER,this.depthbuffer);
  this.context.bindFramebuffer(
    context.FRAMEBUFFER,oldBuffer);
 }
@@ -1186,27 +1182,27 @@ FrameBuffer.prototype.bind=function(program){
    throw new Error("can't bind buffer: context mismatch");
   }
  this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
+ this.context.bindFramebuffer(
+    this.context.FRAMEBUFFER,this.buffer);
  this.context.framebufferTexture2D(
    this.context.FRAMEBUFFER,this.context.COLOR_ATTACHMENT0,
    this.context.TEXTURE_2D,this.colorTexture,0);
  this.context.framebufferRenderbuffer(
    this.context.FRAMEBUFFER,this.context.DEPTH_ATTACHMENT,
    this.context.RENDERBUFFER,this.depthbuffer);
- this.context.bindFramebuffer(
-    this.context.FRAMEBUFFER,this.buffer);
 }
 /**
  * Unbinds this frame buffer from its associated WebGL this.context.
  */
 FrameBuffer.prototype.unbind=function(){
- this.context.bindFramebuffer(
-    this.context.FRAMEBUFFER,null);
  this.context.framebufferTexture2D(
    this.context.FRAMEBUFFER,this.context.COLOR_ATTACHMENT0,
-   this.context.TEXTURE_2D,0,0);
+   this.context.TEXTURE_2D,null,0);
  this.context.framebufferRenderbuffer(
    this.context.FRAMEBUFFER,this.context.DEPTH_ATTACHMENT,
-   this.context.RENDERBUFFER,0);
+   this.context.RENDERBUFFER,null);
+ this.context.bindFramebuffer(
+    this.context.FRAMEBUFFER,null);
 }
 /**
  * Disposes all resources from this frame buffer object.
@@ -1925,6 +1921,7 @@ Scene3D.prototype._renderInner=function(){
 */
 function ShapeGroup(){
  this.shapes=[];
+ this.parent=null;
  this.transform=new Transform();
 }
 /**
@@ -1947,11 +1944,16 @@ ShapeGroup.prototype.getTransform=function(){
  * Not documented yet.
  */
 ShapeGroup.prototype.getMatrix=function(){
- return this.getTransform().getMatrix();
+  var mat=this.getTransform().getMatrix();
+  if(this.parent!=null){
+   var pmat=this.parent.getMatrix();
+   mat=GLMath.mat4multiply(pmat,mat);
+  }
+  return mat;
 }
 /**
  * Not documented yet.
- * @param {*} transform
+ * @param {Transform} transform
  */
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
