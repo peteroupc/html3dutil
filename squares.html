@@ -1,6 +1,7 @@
 <meta charset=utf-8>
 <head>
 <script type="text/javascript" src="glutil_min.js"></script>
+<script type="text/javascript" src="frame.js"></script>
 </head>
 <h1>Shader Filters</h1>
 <a href="javascript:link1()">Grayscale</a>,
@@ -341,6 +342,7 @@ function blindsGroup(scene){
   // to Scene3D.
   var scene=new Scene3D((document.getElementById("canvas")));
   scene.setClearColor("white")
+  var fc=new FrameCounterDiv(scene)
   var blinds=blindsGroup(scene)
   var platonic=platonicGroup(scene)
   linknone();
@@ -370,6 +372,7 @@ function blindsGroup(scene){
    rotation[0]+=0.5;
    rotation[1]+=1;
    scene.render();
+   fc.update();
   });
 //-->
 </script>

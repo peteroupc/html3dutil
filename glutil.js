@@ -1127,7 +1127,7 @@ function FrameBuffer(context, width, height){
  // give the framebuffer its own texture unit, since the
  // shader program may bind samplers to other texture
  // units, such as texture unit 0
- this.textureUnit=1; 
+ this.textureUnit=1;
  this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
