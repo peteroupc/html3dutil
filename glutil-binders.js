@@ -134,6 +134,10 @@ TextureBinder.prototype.bind=function(program){
          context.getExtension("MOZ_EXT_texture_filter_anisotropic");
        if(texture.anisotropic==null){
         texture.anisotropic={};
+        texture.maxAnisotropy=1;
+       } else {
+        texture.maxAnisotropy=context.getParameter(
+          texture.anisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
        }
       }
       uniforms["sampler"]=texture.loadedTexture.textureUnit;
@@ -147,7 +151,7 @@ TextureBinder.prototype.bind=function(program){
        // Set anisotropy if anisotropic filtering is supported
        context.texParameteri(context.TEXTURE_2D,
         texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
-        context.getParameter(texture.anisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
+        texture.maxAnisotropy);
       }
       // set magnification
       context.texParameteri(context.TEXTURE_2D,
