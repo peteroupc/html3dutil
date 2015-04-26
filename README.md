@@ -75,6 +75,18 @@ Examples
 
 History
 ---------
+
+Version 1.1:
+
+- Add frame.js, a frame counter helper used in some of the demos
+- Add quatInvert method to the GLMath class
+- Fix texture mapping bugs
+- Expand use of the color3 method of the Mesh class
+- Optimize setUniforms method of the ShaderProgram class
+- Add movePosition method of the Transform class
+- New methods in the ShapeGroup and Scene3D classes
+- Bug fixes
+
 Version 1.0:
 
 - Adds setOrtho2DAspect and setOrthoAspect methods to Scene3D
