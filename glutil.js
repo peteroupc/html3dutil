@@ -1593,8 +1593,12 @@ Scene3D.prototype.loadTexture=function(name){
 * object), and is rejected when an error occurs.
 */
 Scene3D.prototype.loadAndMapTexture=function(name){
- return Texture.loadAndMapTexture(
-   name, this.context, this.textureCache);
+ var context=this.context;
+ return Texture.loadTexture(
+   name, this.context, this.textureCache).then(function(texture){
+    texture.loadedTexture=new LoadedTexture(texture,context);
+    return texture;
+  });
 }
 /**
 * Loads one or more textures from an image URL and uploads each of them
@@ -1615,10 +1619,7 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  var context=this.context;
  for(var i=0;i<textureFiles.length;i++){
   var objf=textureFiles[i];
-  var p=this.loadAndMapTexture(objf).then(function(texture){
-    texture.loadedTexture=new LoadedTexture(texture,context);
-  });
-  promises.push(p);
+  promises.push(this.loadAndMapTexture(objf));
  }
  return GLUtil.getPromiseResults(promises, resolve, reject);
 }

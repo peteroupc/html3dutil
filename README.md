@@ -38,6 +38,8 @@ a rotating, pulsating box.
 * [surfaces.html](https://peteroupc.github.io/html3dutil/surfaces.html) - Demonstrates
 using evaluators to generate parametric surfaces.
 * [stl.html](https://peteroupc.github.io/html3dutil/stl.html) - Demonstrates loading 3D models.
+* [textured.html](https://peteroupc.github.io/html3dutil/textured.html) - Demonstrates loading textures
+and applying them to 3D shapes.
 
 Examples
 ---------

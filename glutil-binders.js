@@ -62,6 +62,13 @@ function LoadedTexture(textureImage, context){
   if(GLUtil._isPowerOfTwo(textureImage.image.width) &&
       GLUtil._isPowerOfTwo(textureImage.image.height)){
     context.generateMipmap(context.TEXTURE_2D);
+  } else {
+    context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_MIN_FILTER, context.LINEAR);
+    context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+    context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
 }
 
@@ -145,7 +152,8 @@ TextureBinder.prototype.bind=function(program){
       // set magnification
       context.texParameteri(context.TEXTURE_2D,
        context.TEXTURE_MAG_FILTER, context.LINEAR);
-      if(texture.powerOfTwo){
+      if(GLUtil._isPowerOfTwo(texture.width) &&
+          GLUtil._isPowerOfTwo(texture.height)){
        // Enable mipmaps if texture's dimensions are powers of two
        context.texParameteri(context.TEXTURE_2D,
          context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
