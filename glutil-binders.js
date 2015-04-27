@@ -55,12 +55,18 @@ function LoadedTexture(textureImage, context){
   // to reestablish the lower left corner.
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
   context.bindTexture(context.TEXTURE_2D, this.loadedTexture);
-  context.texImage2D(context.TEXTURE_2D, 0,
-    context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
-    textureImage.image);
+  if(textureImage.image.constructor==Image){
+    context.texImage2D(context.TEXTURE_2D, 0,
+      context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
+      textureImage.image);
+  } else {
+   context.texImage2D(context.TEXTURE_2D, 0,
+     context.RGBA, textureImage.width, textureImage.height, 0,
+     context.RGBA, context.UNSIGNED_BYTE, textureImage.image);  
+  }
   // generate mipmaps for power-of-two textures
-  if(GLUtil._isPowerOfTwo(textureImage.image.width) &&
-      GLUtil._isPowerOfTwo(textureImage.image.height)){
+  if(GLUtil._isPowerOfTwo(textureImage.width) &&
+      GLUtil._isPowerOfTwo(textureImage.height)){
     context.generateMipmap(context.TEXTURE_2D);
   } else {
     context.texParameteri(context.TEXTURE_2D,
@@ -116,7 +122,8 @@ TextureBinder.prototype.bind=function(program){
  if(texture.image!==null && texture.loadedTexture===null){
       // load the image as a texture
       texture.loadedTexture=new LoadedTexture(texture,context);
- } else if(texture.image===null && texture.loadedTexture===null){
+ } else if(texture.image===null && texture.loadedTexture===null &&
+   texture.loadStatus==0){
       var thisObj=this;
       var prog=program;
       texture.loadImage().then(function(e){
