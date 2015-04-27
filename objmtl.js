@@ -43,7 +43,8 @@ ObjData.prototype.toShape=function(scene){
  * @param {Scene3D} scene 3D scene to load the shape with.
  * @param {string} name Name from the OBJ file of the portion
  * of the model to use.
- * @return {glutil.ShapeGroup} Group of shapes.
+ * @return {glutil.ShapeGroup} Group of shapes. The group
+ * will be empty if no shapes with the given name exist.
  */
 ObjData.prototype.toShapeFromName=function(scene, name){
  var multi=new ShapeGroup();
@@ -228,7 +229,7 @@ MtlData._loadMtl=function(str){
  var threeOrFourNumLine=new RegExp("^(Kd|Ka|Ks)\\s+"+number+"\\s+"+number
    +"\\s+"+number+"(?:\\s+"+number+")?\\s*$")
  var mapLine=new RegExp("^(map_Kd|map_bump|map_Ka|map_Ks)\\s+(.*?)\\s*$")
- var newmtlLine=new RegExp("^newmtl\\s+([^\\s]+)$")
+ var newmtlLine=new RegExp("^newmtl\\s+([^\\s]*)$")
  var faceStart=new RegExp("^f\\s+")
  var lines=str.split(/\r?\n/)
  var firstLine=true;
@@ -334,7 +335,7 @@ ObjData._loadObj=function(str){
  var vertexLine=new RegExp("^v\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*$")
  var uvLine=new RegExp("^vt\\s+"+number+"\\s+"+number+"(\\s+"+number+")?\\s*$")
  var smoothLine=new RegExp("^(s)\\s+(.*)$")
- var usemtlLine=new RegExp("^(usemtl|o|g)\\s+([^\\s]+)\\s*$")
+ var usemtlLine=new RegExp("^(usemtl|o|g)\\s+([^\\s]*)\\s*$")
  var mtllibLine=new RegExp("^(mtllib)\\s+(?![\\/\\\\])([^\\:\\?\\#\\s]+)\\s*$")
  var normalLine=new RegExp("^vn\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*")
  var faceStart=new RegExp("^f\\s+")
@@ -356,7 +357,6 @@ ObjData._loadObj=function(str){
  var oldObjName="";
  var seenFacesAfterObjName=false;
  var flat=false;
- var haveCalcedNormals=false;
  for(var i=0;i<lines.length;i++){
   var line=lines[i];
   // skip empty lines
@@ -506,6 +506,7 @@ ObjData._loadObj=function(str){
         mesh=new Mesh(resolvedVertices,faces,
           Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
         if(!haveNormals){
+         console.log("no normals")
          // No normals in this mesh, so calculate them
          mesh.recalcNormals(flat);
         }

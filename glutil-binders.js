@@ -55,7 +55,7 @@ function LoadedTexture(textureImage, context){
   // to reestablish the lower left corner.
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
   context.bindTexture(context.TEXTURE_2D, this.loadedTexture);
-  if(textureImage.image.constructor==Image){
+  if("src" in textureImage.image){
     context.texImage2D(context.TEXTURE_2D, 0,
       context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
       textureImage.image);
