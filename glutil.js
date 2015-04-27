@@ -521,7 +521,7 @@ LightSource.prototype.setParams=function(params){
   this.specular=GLUtil["toGLColor"](params.specular);
  }
  if(params["diffuse"]!=null){
-  this.diffuse=GLUtil["toGLColor"](params.emission);
+  this.diffuse=GLUtil["toGLColor"](params.diffuse);
  }
  return this;
 }
@@ -561,7 +561,7 @@ Lights.MAX_LIGHTS = 3;
 Lights._createNewLight=function(index){
  var ret=new LightSource();
  if(index!=0){
-  ret.diffuse=[0,0,0];
+  ret.diffuse=[0,0,0,0];
   ret.specular=[0,0,0];
  }
  return ret;
@@ -1791,7 +1791,8 @@ Scene3D.prototype.removeShape=function(shape){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
- this.lightSource.setDirectionalLight(index,position,diffuse,specular);
+ this.lightSource.setDirectionalLight(index,position)
+  .setParams(index,{"diffuse":diffuse,"specular":specular});
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
@@ -1840,7 +1841,8 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
- this.lightSource.setPointLight(index,position,diffuse,specular);
+ this.lightSource.setPointLight(index,position)
+   .setParams(index,{"diffuse":diffuse,"specular":specular});
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
