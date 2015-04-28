@@ -691,7 +691,7 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
    if(i+1==halfStacks && length>0){
     var sr2=sphereRatio*0.5;
     var hl=halfLength*2;
-    var endr2=12;
+    var endr2=1.0-sr2;
     var he=1.0-sphereRatio;
     for(var m=0;m<middleStacks;m++){
      var s=-halfLength+(m==0 ? 0 : (hl*m/middleStacks));
