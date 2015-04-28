@@ -29,6 +29,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
 * [Meshes.createClosedCylinder()]{@link glutil.Meshes.createClosedCylinder} - Creates a cylinder or cone, including the base or top.
 * [Meshes.createTorus()]{@link glutil.Meshes.createTorus} - Creates a torus (doughnut shape).
 * [Meshes.createSphere()]{@link glutil.Meshes.createSphere} - Creates a sphere.
+* [Meshes.createCapsule()]{@link glutil.Meshes.createCapsule} - Creates a capsule shape.
 
 **2D Figures:**
 

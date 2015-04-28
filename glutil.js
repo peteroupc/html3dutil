@@ -831,8 +831,10 @@ var Texture=function(name){
 
 /**
 *  Loads a texture by its URL.
-* @param {string} name URL of the texture data.  It will be loaded via
-*  the JavaScript DOM's Image class
+* @param {string} name URL of the texture data.  Images with a TGA
+* extension that use the RGBA or grayscale format are supported.  
+* Images supported by the browser will be loaded via
+* the JavaScript DOM's Image class.
 * @param {Object} [textureCache] An object whose keys
 * are the names of textures already loaded.  This will help avoid loading
 * the same texture more than once.  This parameter is optional
