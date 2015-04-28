@@ -304,26 +304,6 @@ MtlData._loadMtl=function(str){
  return {success: mtl};
 }
 ObjData._loadObj=function(str){
- function pushVertex(verts,faces,look,
-   v1,v2,v3,n1,n2,n3,u1,u2){
-   var lookBack=faces.length-Math.min(20,faces.length);
-   lookBack=Math.max(lookBack,look);
-   // check if a recently added vertex already has the given
-   // values
-   for(var i=faces.length-1;i>=lookBack;i--){
-    var vi=faces[i]*8;
-    if(verts[vi]==v1 && verts[vi+1]==v2 && verts[vi+2]==v3 &&
-        verts[vi+3]==n1 && verts[vi+4]==n2 && verts[vi+5]==n3 &&
-        verts[vi+6]==u1 && verts[vi+7]==u2){
-     // found it
-     faces.push(faces[i]);
-     return;
-    }
-   }
-   var ret=verts.length/8;
-   verts.push(v1,v2,v3,n1,n2,n3,u1,u2);
-   faces.push(ret);
- }
  var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)"
  var nonnegInteger="(\\d+)"
  var vertexOnly=new RegExp("^"+nonnegInteger+"($|\\s+)")
@@ -336,12 +316,13 @@ ObjData._loadObj=function(str){
  var uvLine=new RegExp("^vt\\s+"+number+"\\s+"+number+"(\\s+"+number+")?\\s*$")
  var smoothLine=new RegExp("^(s)\\s+(.*)$")
  var usemtlLine=new RegExp("^(usemtl|o|g)\\s+([^\\s]*)\\s*$")
- var mtllibLine=new RegExp("^(mtllib)\\s+(?![\\/\\\\])([^\\:\\?\\#\\s]+)\\s*$")
+ var mtllibLine=new RegExp("^(mtllib)\\s+(?![\\/\\\\])([^\\:\\?\\#\\t\\r\\n]+)\\s*$")
  var normalLine=new RegExp("^vn\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*")
  var faceStart=new RegExp("^f\\s+")
+ var lineStart=new RegExp("^l\\s+")
  var lines=str.split(/\r?\n/)
  var vertices=[];
- var resolvedVertices=[];
+ var currentMesh=new Mesh();
  var normals=[];
  var uvs=[];
  var faces=[];
@@ -349,10 +330,10 @@ ObjData._loadObj=function(str){
  var usemtl=null;
  var currentFaces=[];
  var ret=new ObjData();
+ var lastPrimitiveSeen=-1;
  var haveNormals=false;
- var lookBack=0;
  var vertexKind=-1;
- var mesh=null;
+ var mesh=new Mesh();
  var objName="";
  var oldObjName="";
  var seenFacesAfterObjName=false;
@@ -388,94 +369,94 @@ ObjData._loadObj=function(str){
     uvs.push([parseFloat(e[1]),parseFloat(e[2])]);
     continue;
   }
+  var prim=-1;
   e=faceStart.exec(line)
   if(e){
+   prim=Mesh.TRIANGLES;
+  } else {
+   e=lineStart.exec(line)
+   if(e){
+    prim=Mesh.LINES;
+   }
+  }
+  if(e && prim!=-1){
     var oldline=line;
     seenFacesAfterObjName=true;
     line=line.substr(e[0].length);
-    var faceCount=0;
-    var firstFace=faces.length;
-    currentFaces=[];
+    if(lastPrimitiveSeen!=-1 && lastPrimitiveSeen!=prim &&
+        mesh.vertexCount()>0){
+       if(!haveNormals){
+         // No normals in this mesh, so calculate them
+         mesh.recalcNormals(flat);
+      }
+      ret.meshes.push({
+          "name": seenFacesAfterObjName ? objName : oldObjName,
+          "usemtl": usemtl, "data": mesh});
+      vertexKind=-1;
+      lastPrimitiveSeen=-1;
+      haveNormals=false;
+      mesh=new Mesh();     
+    }
+    mesh.mode(prim==Mesh.TRIANGLES ?
+      Mesh.TRIANGLE_FAN :
+      Mesh.LINE_STRIP);
     while(line.length>0){
      e=vertexOnly.exec(line)
      if(e){
-      if(vertexKind!=0){
-       vertexKind=0;
-       lookBack=faces.length;
+      if(vertexKind!=0 || lastPrimitiveSeen!=prim){
+       vertexKind=0; // position only
       }
       var vtx=parseInt(e[1],10)-1;
-      pushVertex(resolvedVertices, faces, lookBack,
-        vertices[vtx][0],vertices[vtx][1],vertices[vtx][2],0,0,0,0,0);
-      currentFaces[faceCount]=faces[faces.length-1];
-      line=line.substr(e[0].length);
-      faceCount++;
+      mesh.normal3(0,0,0).texCoord2(0,0)
+        .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
+        line=line.substr(e[0].length);
       continue;
      }
      e=vertexNormalOnly.exec(line)
      if(e){
       if(vertexKind!=1){
-       vertexKind=1;
-       lookBack=faces.length;
+       vertexKind=1; // position/normal
       }
       var vtx=parseInt(e[1],10)-1;
       var norm=parseInt(e[2],10)-1;
       haveNormals=true;
-      pushVertex(resolvedVertices, faces, lookBack,
-        vertices[vtx][0],vertices[vtx][1],vertices[vtx][2],
-        normals[norm][0],normals[norm][1],normals[norm][2],0,0);
-      currentFaces[faceCount]=faces[faces.length-1];
-      line=line.substr(e[0].length);
-     faceCount++;
+      mesh.normal3(normals[norm][0],normals[norm][1],
+         normals[norm][2])
+        .texCoord2(0,0)
+        .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
+        line=line.substr(e[0].length);
       continue;
      }
      e=vertexUVOnly.exec(line)
      if(e){
-      if(vertexKind!=2){
-       vertexKind=2;
-       lookBack=faces.length;
+      if(vertexKind!=2 || lastPrimitiveSeen!=prim){
+       vertexKind=2; // position/UV
       }
       var vtx=parseInt(e[1],10)-1;
       var uv=parseInt(e[2],10)-1;
-      pushVertex(resolvedVertices, faces, lookBack,
-        vertices[vtx][0],vertices[vtx][1],vertices[vtx][2],
-        0,0,0,uvs[uv][0],uvs[uv][1]);
-      currentFaces[faceCount]=faces[faces.length-1];
-      line=line.substr(e[0].length);
-      faceCount++;
+      mesh.normal3(0,0,0)
+        .texCoord2(uvs[uv][0],uvs[uv][1])
+        .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
+        line=line.substr(e[0].length);
       continue;
      }
      e=vertexUVNormal.exec(line)
      if(e){
-      if(vertexKind!=3){
-       vertexKind=3;
-       lookBack=faces.length;
+      if(vertexKind!=3 || lastPrimitiveSeen!=prim){
+       vertexKind=3; // position/UV/normal
       }
       var vtx=parseInt(e[1],10)-1;
       var uv=parseInt(e[2],10)-1;
       var norm=parseInt(e[3],10)-1;
       haveNormals=true;
-      pushVertex(resolvedVertices, faces, lookBack,
-        vertices[vtx][0],vertices[vtx][1],vertices[vtx][2],
-        normals[norm][0],normals[norm][1],normals[norm][2],
-        uvs[uv][0],uvs[uv][1]);
-      currentFaces[faceCount]=faces[faces.length-1];
-      line=line.substr(e[0].length);
-      faceCount++;
+      mesh.normal3(normals[norm][0],normals[norm][1],
+         normals[norm][2])
+        .texCoord2(uvs[uv][0],uvs[uv][1])
+        .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
+        line=line.substr(e[0].length);
       continue;
      }
      return {"error": new Error("unsupported face: "+oldline)}
-    }
-    if(faceCount>=4){
-      // Add an additional triangle for each vertex after
-      // the third
-      var m=firstFace+3;
-      for(var k=3;k<faceCount;k++,m+=3){
-       faces[m]=currentFaces[0];
-       faces[m+1]=currentFaces[k-1];
-       faces[m+2]=currentFaces[k];
-      }
-    } else if(faceCount<3){
-     return {"error": "face has fewer than 3 vertices"}
     }
     continue;
   }
@@ -483,42 +464,35 @@ ObjData._loadObj=function(str){
   if(e){
     if(e[1]=="usemtl"){
       // Changes the material used
-      if(resolvedVertices.length>0){
-        mesh=new Mesh(resolvedVertices,faces,
-          Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
+      if(mesh.vertexCount()>0){
         if(!haveNormals){
          // No normals in this mesh, so calculate them
          mesh.recalcNormals(flat);
         }
         ret.meshes.push({
-          name: seenFacesAfterObjName ? objName : oldObjName,
-          usemtl: usemtl, data: mesh});
-        lookBack=0;
-        vertexKind=0;
-        resolvedVertices=[];
-        faces=[];
+          "name": seenFacesAfterObjName ? objName : oldObjName,
+          "usemtl": usemtl, "data": mesh});
+        vertexKind=-1;
+        lastPrimitiveSeen=-1;
         haveNormals=false;
+        mesh=new Mesh();
       }
       usemtl=e[2];
     } else if(e[1]=="g"){
       // Starts a new group
-      if(resolvedVertices.length>0){
-        mesh=new Mesh(resolvedVertices,faces,
-          Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
+      if(mesh.vertexCount()>0){
         if(!haveNormals){
-         console.log("no normals")
          // No normals in this mesh, so calculate them
          mesh.recalcNormals(flat);
         }
         ret.meshes.push({
-          name: seenFacesAfterObjName ? objName : oldObjName,
-          usemtl: usemtl, data: mesh});
-        lookBack=0;
-        vertexKind=0;
-        resolvedVertices=[];
-        faces=[];
-        usemtl=null;
+          "name": seenFacesAfterObjName ? objName : oldObjName,
+          "usemtl": usemtl, "data": mesh});
+        vertexKind=-1;
+        lastPrimitiveSeen=-1;
         haveNormals=false;
+        usemtl=nul;
+        mesh=new Mesh();
       }
       meshName=e[2];
     } else if(e[1]=="o"){
@@ -542,14 +516,12 @@ ObjData._loadObj=function(str){
   }
   return {"error": new Error("unsupported line: "+line)}
  }
- mesh=new Mesh(resolvedVertices,faces,
-          Mesh.NORMALS_BIT|Mesh.TEXCOORDS_BIT);
  if(!haveNormals){
    // No normals in this mesh, so calculate them
    mesh.recalcNormals(flat);
  }
  ret.meshes.push({
-          name: seenFacesAfterObjName ? objName : oldObjName,
-          usemtl: usemtl, data: mesh});
- return {success: ret};
+          "name": seenFacesAfterObjName ? objName : oldObjName,
+          "usemtl": usemtl, "data": mesh});
+ return {"success": ret};
 }

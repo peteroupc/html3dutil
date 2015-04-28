@@ -723,10 +723,38 @@ function SubMesh(vertices,faces,format){
   this.vertices=newVertices;
   this.attributeBits=newBits;
  }
+ this._setTriangle=function(vertexStartIndex,stride,i1,i2,i3){
+   var v1=i1*stride;
+   var v2=i2*stride;
+   var v3=i3*stride;
+   var triCount=0;
+   var tribits=0;
+   for(var i=vertexStartIndex-stride;
+     i>=0 && triCount<16 && tribits!=7;
+     i-=stride,triCount++){
+     var found=7;
+     for(var j=0;j<stride && found!=0;j++){
+        if((found&1)!=0 && this.vertices[v1+j]!=this.vertices[i+j]){
+         found&=~1;
+        }
+        if((found&2)!=0 && this.vertices[v2+j]!=this.vertices[i+j]){
+         found&=~2;
+        }
+        if((found&4)!=0 && this.vertices[v3+j]!=this.vertices[i+j]){
+         found&=~4;
+        }
+     }
+     if((found&1)!=0){ i1=i/stride; tribits|=1; break; }
+     if((found&2)!=0){ i2=i/stride; tribits|=2; break; }
+     if((found&4)!=0){ i3=i/stride; tribits|=4; break; }
+   }
+   this.indices.push(i1,i2,i3);
+ }
  this.vertex3=function(x,y,z,state){
   var currentMode=state.currentMode;
   if(currentMode==-1)throw new Error("mode() not called");
   this._rebuildVertices(state._elementsDefined);
+   var vertexStartIndex=this.vertices.length;
   this.vertices.push(x,y,z);
   if((this.attributeBits&Mesh.NORMALS_BIT)!=0){
    this.vertices.push(state.normal[0],state.normal[1],state.normal[2]);
@@ -750,7 +778,7 @@ function SubMesh(vertices,faces,format){
   } else if(currentMode==Mesh.TRIANGLES &&
      (this.vertices.length-this.startIndex)%(stride*3)==0){
    var index=(this.vertices.length/stride)-3;
-   this.indices.push(index,index+1,index+2);
+   this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
   } else if(currentMode==Mesh.LINES &&
      (this.vertices.length-this.startIndex)%(stride*2)==0){
    var index=(this.vertices.length/stride)-2;
@@ -759,7 +787,11 @@ function SubMesh(vertices,faces,format){
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-2;
    var firstIndex=(this.startIndex/stride);
-   this.indices.push(firstIndex,index,index+1);
+   if(firstIndex==index-1){
+     this._setTriangle(vertexStartIndex,stride,firstIndex,index,index+1);   
+   } else {
+     this.indices.push(firstIndex,index,index+1);   
+   }
   } else if(currentMode==Mesh.LINE_STRIP &&
      (this.vertices.length-this.startIndex)>=(stride*2)){
    var index=(this.vertices.length/stride)-2;
@@ -770,7 +802,10 @@ function SubMesh(vertices,faces,format){
   } else if(currentMode==Mesh.TRIANGLE_STRIP &&
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-3;
-   if((index&1)==0){
+   var firstIndex=(this.startIndex/stride);
+   if(index==firstIndex){
+     this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
+   } else if(((index-firstIndex)&1)==0){
      this.indices.push(index,index+1,index+2);
    } else {
      this.indices.push(index+1,index,index+2);
