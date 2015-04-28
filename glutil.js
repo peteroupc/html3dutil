@@ -176,9 +176,11 @@ var GLUtil={
  for(var i=0;i<promises.length;i++){
   var index=i;
   newPromises.push(promises[i].then(function(x){
+   if(progressResolve)progressResolve(x)
    ret.successes[index]=x
    return true;
   },function(x){
+   if(progressReject)progressReject(x)
    ret.failures[index]=x
    return false;
   }));
@@ -1674,8 +1676,9 @@ Scene3D.prototype.loadAndMapTexture=function(name){
 * rejection).
 * @return {Promise} A promise that is resolved when
 * all the URLs in the textureFiles array are either resolved or rejected.
-* The result will be an object with two properties: "successes" and "failures".
-* See GLUtil.getPromiseResults.
+* The result will be an object with three properties: 
+* "successes", "failures", and "results".
+* See {@link glutil.GLUtil.getPromiseResults}.
 */
 Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  var promises=[];

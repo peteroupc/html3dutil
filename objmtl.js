@@ -169,7 +169,7 @@ ObjData.loadMtlFromUrl=function(url){
  return GLUtil.loadFileFromUrl(url).then(
    function(e){
      var mtl=MtlData._loadMtl(e.data);
-     if(mtl.error)return Promise.reject({url:e.url, "error": mtl.error});
+     if(mtl.error)return Promise.reject({"url":e.url, "error": mtl.error});
      var mtldata=mtl.success;
      mtldata.url=e.url;
      mtldata._resolveTextures();
@@ -195,7 +195,7 @@ ObjData.loadObjFromUrl=function(url){
    function(e){
      var obj;
      obj=ObjData._loadObj(e.data);
-     if(obj.error)return Promise.reject({url:e.url, "error":obj.error});
+     if(obj.error)return Promise.reject({"url":e.url, "error":obj.error});
      obj=obj.success;
      obj.url=e.url;
      if(obj.mtllib){
@@ -320,6 +320,7 @@ ObjData._loadObj=function(str){
  var normalLine=new RegExp("^vn\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*")
  var faceStart=new RegExp("^f\\s+")
  var lineStart=new RegExp("^l\\s+")
+ var pointStart=new RegExp("^p\\s+")
  var lines=str.split(/\r?\n/)
  var vertices=[];
  var currentMesh=new Mesh();
@@ -377,6 +378,11 @@ ObjData._loadObj=function(str){
    e=lineStart.exec(line)
    if(e){
     prim=Mesh.LINES;
+   } else {
+    e=pointStart.exec(line)
+    if(e){
+     prim=Mesh.POINTS;
+    }
    }
   }
   if(e && prim!=-1){
@@ -399,7 +405,7 @@ ObjData._loadObj=function(str){
     }
     mesh.mode(prim==Mesh.TRIANGLES ?
       Mesh.TRIANGLE_FAN :
-      Mesh.LINE_STRIP);
+      (prim==Mesh.LINES ? Mesh.LINE_STRIP : Mesh.POINTS));
     while(line.length>0){
      e=vertexOnly.exec(line)
      if(e){
