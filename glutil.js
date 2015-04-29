@@ -1500,9 +1500,6 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
- * <p>
- * For considerations when choosing the "near" and "far" parameters,
- * see {@link glmath.GLMath.mat4perspective}.
  * @param {number} left Leftmost coordinate of the view rectangle.
  * @param {number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -1513,6 +1510,8 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
+ * This value should be greater than "near" and be set to the lowest value that
+ * the application can accept.
  * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
  * @return {glutil.Scene3D} This object.
@@ -1520,15 +1519,8 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
 Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
  if(aspect==null)aspect=this.getAspect();
  if(aspect==0)aspect=1;
- var xdist=Math.abs(right-left);
- var ydist=Math.abs(top-bottom);
- var boxAspect=xdist/ydist;
- aspect/=boxAspect;
- if(aspect<1){
-  return this.setOrtho(left,right,bottom/aspect,top/aspect,near,far);
- } else {
-  return this.setOrtho(left*aspect,right*aspect,bottom,top,near,far);
- }
+ return this.setProjectionMatrix(GLMath.mat4orthoAspect(
+   left,right,bottom,top,near,far,aspect));
 }
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
@@ -1581,9 +1573,6 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
- * <p>
- * For considerations when choosing the "near" and "far" parameters,
- * see {@link glmath.GLMath.mat4perspective}.
  * @param {number} left Leftmost coordinate of the 3D view.
  * @param {number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
@@ -1594,6 +1583,8 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
+ * This value should be greater than "near" and be set to the lowest value that
+ * the application can accept.
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){

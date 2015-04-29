@@ -1083,22 +1083,6 @@ mat4translate:function(mat,v3,v3y,v3z){
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * <p><b>Choosing the "near" and "far" parameters:</b>
- * Depth buffers often have 16 bits per pixel, thus allowing only a limited
- * range of possible values that, in addition, are not evenly spread within
- * the range of "far" and "near".  If the ratio of "far" to "near"
- * is too high, the depth buffer can't distinguish well between two objects
- * that are very close to each other and both quite far in the distance.
- * For best results:<ul>
- * <li>For <code>mat4perspective</code> and <code>mat4frustum</code>,
-* the "near" parameter should not be 0 or less, and should be set to the highest distance
-* from the camera that the application can afford to clip out for being too
-* close, for example, 0.5, 1, or higher.  This doesn't apply to <code>mat4ortho</code>.</li>
- * <li>The difference between "far" and "near" should not be greater than 65536
- * (the number of possible values per pixel in a 16-bit depth buffer) and should be
- * as small as the application can accept.  In any case, "far" should be greater than
- * "near".</li>
- * </ul>
 * @param {number}  fovY Y-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.)
@@ -1106,14 +1090,23 @@ mat4translate:function(mat,v3,v3y,v3z){
 *  the scene's aspect ratio.
 * @param {number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
-* seen.
+* seen.<p>This value should not be 0 or less, and should be set to the highest distance
+* from the camera that the application can afford to clip out for being too
+* close, for example, 0.5, 1, or higher. 
 * @param {number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.
+* to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+* is as small as the application can accept.<p>
+ * (Depth buffers often allow only 65536 possible values per pixel,
+ * which are more spread out toward the far clipping plane than toward the
+ * near plane due to the perspective projection.  The greater the ratio of "far" to 
+ * "near", the more the values spread out, and the more likely two objects close 
+ * to the far plane will have identical depth values.)
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4perspective:function(fovY,aspectRatio,near,far){
- var f = 1/Math.tan(((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*GLMath.PiDividedBy360);
+ var fov=((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+ var f = 1/Math.tan(fov);
  var nmf = near-far;
  nmf=1/nmf;
  return [f/aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
@@ -1174,9 +1167,6 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * <p>
- * For considerations when choosing the "n" and "f" parameters,
- * see {@link glmath.GLMath.mat4perspective}.
  * @param {number} l Leftmost coordinate of the 3D view.
  * @param {number} r Rightmost coordinate of the 3D view.
  * (Note that r can be greater than l or vice versa.)
@@ -1187,6 +1177,8 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
+ * This value should be greater than "n" and be set to the lowest value that
+ * the application can accept.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4ortho:function(l,r,b,t,n,f){
@@ -1196,13 +1188,36 @@ mat4ortho:function(l,r,b,t,n,f){
  return [2*width,0,0,0,0,2*height,0,0,0,0,-2*depth,0,
    -(l+r)*width,-(t+b)*height,-(n+f)*depth,1];
 },
+
+/**
+ * Returns a 4x4 matrix representing a perspective projection
+ * given an X-axis field of view.<p>
+ * This method assumes a right-hand coordinate system;
+ * see {@link glmath.GLMath.mat4perspective}.  For considerations 
+ * when choosing the "n" and "f" parameters,
+ * see {@link glmath.GLMath.mat4perspective}.
+* @param {number}  fovX X-axis field of view, in degrees. Should be less
+* than 180 degrees.  (The smaller
+* this number, the bigger close objects appear to be.)
+* @param {number}  aspectRatio The ratio of width to height of the viewport, usually
+*  the scene's aspect ratio.
+* @param {number} near The distance from the camera to
+* the near clipping plane. Objects closer than this distance won't be
+* seen.
+* @param {number} far The distance from the camera to
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
+ * @return {Array<number>} The resulting 4x4 matrix.
+ */
+mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
+ var fov=((fovX>=0 && fovX<360) ? fovX : ((fovX%360)+(fovX<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+ var fovY=GLMath.Num360DividedByPi*Math.atan2(Math.tan(fov),aspectRatio);
+ return GLMath.mat4perspective(fovY,aspectRatio,near,far);
+},
 /**
  * Returns a 4x4 matrix representing a 2D orthographic projection.<p>
- * This method assumes a right-handed coordinate system, such as
- * OpenGL's. To adjust the result of this method to a left-handed system,
- * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
- * elements of the result (zero-based indices 8, 9, 10, and 11).<p>
- * This is the same as mat4ortho2d() with the near clipping plane
+ * This method assumes a right-handed coordinate system; see mat4ortho().<p>
+ * This is the same as mat4ortho() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.
  * @param {number} l Leftmost coordinate of the 2D view.
  * @param {number} r Rightmost coordinate of the 2D view.
@@ -1214,6 +1229,66 @@ mat4ortho:function(l,r,b,t,n,f){
  */
 mat4ortho2d:function(l,r,b,t){
  return GLMath.mat4ortho2d(l,r,b,t,-1,1);
+},
+/**
+ * Returns a 4x4 matrix representing a 2D orthographic projection,
+ * retaining the view rectangle's aspect ratio.<p>
+ * If the view rectangle's aspect ratio doesn't match the desired aspect
+ * ratio, the view rectangle will be centered on the viewport
+ * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+ * or squishing it.<p>
+ * This is the same as mat4orthoAspect() with the near clipping plane
+ * set to -1 and the far clipping plane set to 1.<p>
+ * This method assumes a right-handed coordinate system; see mat4ortho().<p>
+ * @param {number} l Leftmost coordinate of the 2D view.
+ * @param {number} r Rightmost coordinate of the 2D view.
+ * (Note that r can be greater than l or vice versa.)
+ * @param {number} b Bottommost coordinate of the 2D view.
+ * @param {number} t Topmost coordinate of the 2D view.
+ * (Note that t can be greater than b or vice versa.)
+* @param {number}  aspect The ratio of width to height of the viewport, usually
+*  the scene's aspect ratio.
+* @return {Array<number>} The resulting 4x4 matrix.
+ */
+mat4ortho2dAspect:function(l,r,b,t,aspect){
+ return GLMath.mat4orthoAspect(l,r,b,t,-1,1,aspect);
+},
+/**
+ * Returns a 4x4 matrix representing an orthographic projection,
+ * retaining the view rectangle's aspect ratio.<p>
+ * If the view rectangle's aspect ratio doesn't match the desired aspect
+ * ratio, the view rectangle will be centered on the viewport
+ * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+ * or squishing it.<p>
+ * This is the same as mat4ortho() with the near clipping plane
+ * set to -1 and the far clipping plane set to 1.<p>
+ * This method assumes a right-handed coordinate system; see mat4ortho().
+ * @param {number} l Leftmost coordinate of the 3D view.
+ * @param {number} r Rightmost coordinate of the 3D view.
+ * (Note that r can be greater than l or vice versa.)
+ * @param {number} b Bottommost coordinate of the 3D view.
+ * @param {number} t Topmost coordinate of the 3D view.
+ * (Note that t can be greater than b or vice versa.)
+ * @param {number} n Distance from the camera to the near clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @param {number} f Distance from the camera to the far clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * This value should be greater than "n" and be set to the lowest value that
+ * the application can accept.
+* @param {number} aspect The ratio of width to height of the viewport, usually
+*  the scene's aspect ratio.
+* @return {Array<number>} The resulting 4x4 matrix.
+ */
+mat4orthoAspect:function(l,r,b,t,n,f,aspect){
+ var xdist=Math.abs(right-left);
+ var ydist=Math.abs(top-bottom);
+ var boxAspect=xdist/ydist;
+ aspect/=boxAspect;
+ if(aspect<1){
+  return GLMath.mat4ortho(left,right,bottom/aspect,top/aspect,near,far);
+ } else {
+  return GLMath.mat4ortho(left*aspect,right*aspect,bottom,top,near,far);
+ }
 },
 /**
  * Returns a 4x4 matrix representing a view frustum,
