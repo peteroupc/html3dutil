@@ -1280,14 +1280,14 @@ mat4ortho2dAspect:function(l,r,b,t,aspect){
 * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4orthoAspect:function(l,r,b,t,n,f,aspect){
- var xdist=Math.abs(right-left);
- var ydist=Math.abs(top-bottom);
+ var xdist=Math.abs(r-l);
+ var ydist=Math.abs(t-b);
  var boxAspect=xdist/ydist;
  aspect/=boxAspect;
  if(aspect<1){
-  return GLMath.mat4ortho(left,right,bottom/aspect,top/aspect,near,far);
+  return GLMath.mat4ortho(l,r,b/aspect,t/aspect,n,f);
  } else {
-  return GLMath.mat4ortho(left*aspect,right*aspect,bottom,top,near,far);
+  return GLMath.mat4ortho(l*aspect,r*aspect,b,t,n,f);
  }
 },
 /**

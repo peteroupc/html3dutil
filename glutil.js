@@ -826,7 +826,23 @@ var Texture=function(name){
  this.loadedTexture=null;
  this.name=name;
  this.width=0;
+ this.clamp=false;
  this.height=0;
+}
+
+/**
+* Sets the wrapping behavior of texture coordinates that 
+* fall out of range when using this texture.
+* @param {boolean} clamp If true, the image's texture
+* coordinates will be clamped to the range [0, 1].  If false,
+* the image's texture coordinates' fractional parts will
+* be used as the coordinates (causing wraparound).
+* The default is false.
+* @return {glutil.Texture} This object.
+*/
+Texture.prototype.setClamp=function(clamp){
+ this.clamp=clamp;
+ return this;
 }
 
 /**
@@ -859,6 +875,18 @@ Texture.loadTexture=function(name, textureCache){
   function(name){
     return Promise.reject(name.name);
   });
+}
+
+Texture.fromUint8Array=function(array, width, height){
+ if(width<0)throw new Error("width less than 0")
+ if(height<0)throw new Error("height less than 0")
+ if(array.length<width*height*4)throw new Error("array too short for texture")
+ var texImage=new Texture("")
+ texImage.image=array;
+ texImage.width=Math.ceil(width);
+ texImage.height=Math.ceil(height);
+ texImage.loadStatus=2;
+ return texImage;
 }
 
 /** @private */

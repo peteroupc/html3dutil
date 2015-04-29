@@ -163,24 +163,21 @@ TextureBinder.prototype.bind=function(program){
       // set magnification
       context.texParameteri(context.TEXTURE_2D,
        context.TEXTURE_MAG_FILTER, context.LINEAR);
+      var wrapMode=context.CLAMP_TO_EDGE;
       if(GLUtil._isPowerOfTwo(texture.width) &&
           GLUtil._isPowerOfTwo(texture.height)){
        // Enable mipmaps if texture's dimensions are powers of two
+       if(!texture.clamp)wrapMode=context.REPEAT;
        context.texParameteri(context.TEXTURE_2D,
          context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
-       context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_WRAP_S, context.REPEAT);
-       context.texParameteri(context.TEXTURE_2D,
-        context.TEXTURE_WRAP_T, context.REPEAT);
       } else {
        context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_MIN_FILTER, context.LINEAR);
-       // Other textures require this wrap mode
-       context.texParameteri(context.TEXTURE_2D,
-        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
-       context.texParameteri(context.TEXTURE_2D,
-        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
       }
+      context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_S, wrapMode);
+      context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_WRAP_T, wrapMode);
     }
 }
 
