@@ -1177,8 +1177,8 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * This value should be greater than "n" and be set to the lowest value that
- * the application can accept.
+ * (Note that n can be greater than f or vice versa.)  The absolute difference
+ * between n and f should be as small as the application can accept.
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4ortho:function(l,r,b,t,n,f){
@@ -1240,11 +1240,11 @@ mat4ortho2d:function(l,r,b,t){
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
  * This method assumes a right-handed coordinate system; see mat4ortho().<p>
- * @param {number} l Leftmost coordinate of the 2D view.
- * @param {number} r Rightmost coordinate of the 2D view.
+ * @param {number} l Leftmost coordinate of the view rectangle.
+ * @param {number} r Rightmost coordinate of the view rectangle.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 2D view.
- * @param {number} t Topmost coordinate of the 2D view.
+ * @param {number} b Bottommost coordinate of the view rectangle.
+ * @param {number} t Topmost coordinate of the view rectangle.
  * (Note that t can be greater than b or vice versa.)
 * @param {number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
@@ -1263,18 +1263,18 @@ mat4ortho2dAspect:function(l,r,b,t,aspect){
  * This is the same as mat4ortho() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
  * This method assumes a right-handed coordinate system; see mat4ortho().
- * @param {number} l Leftmost coordinate of the 3D view.
- * @param {number} r Rightmost coordinate of the 3D view.
+ * @param {number} l Leftmost coordinate of the view rectangle.
+ * @param {number} r Rightmost coordinate of the view rectangle.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 3D view.
- * @param {number} t Topmost coordinate of the 3D view.
+ * @param {number} b Bottommost coordinate of the view rectangle.
+ * @param {number} t Topmost coordinate of the view rectangle.
  * (Note that t can be greater than b or vice versa.)
  * @param {number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * This value should be greater than "n" and be set to the lowest value that
- * the application can accept.
+ * (Note that n can be greater than f or vice versa.)  The absolute difference
+ * between n and f should be as small as the application can accept.
 * @param {number} aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @return {Array<number>} The resulting 4x4 matrix.

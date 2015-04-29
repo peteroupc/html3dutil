@@ -1510,8 +1510,8 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * This value should be greater than "near" and be set to the lowest value that
- * the application can accept.
+ * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * between near and far should be as small as the application can accept.
  * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
  * @return {glutil.Scene3D} This object.
@@ -1583,8 +1583,8 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * This value should be greater than "near" and be set to the lowest value that
- * the application can accept.
+ * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * between near and far should be as small as the application can accept.
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
@@ -2027,6 +2027,46 @@ ShapeGroup.prototype.getMatrix=function(){
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
+}
+/**
+ * Not documented yet.
+ */
+ShapeGroup.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i<this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
+}
+/**
+ * Not documented yet.
+ */
+ShapeGroup.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i<this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
+}
+/**
+ * Not documented yet.
+ */
+Scene3D.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i<this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
+}
+/**
+ * Not documented yet.
+ */
+Scene3D.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i<this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
 }
 /**
  * Sets the relative position of the shapes in this group
