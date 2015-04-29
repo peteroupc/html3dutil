@@ -207,7 +207,7 @@ var GLUtil={
 * Loads a file from a URL asynchronously, using XMLHttpRequest.
 * @param {string} url URL of the file to load.
 * @param {string|null} responseType Expected data type of
-* the file.  Can be "json", "xml", "text", or "arraybuffer".  
+* the file.  Can be "json", "xml", "text", or "arraybuffer".
 * If null or omitted, the default is "text".
 * @return {Promise} A promise that resolves when the data
 * file is loaded successfully (the result will be an object with
@@ -831,7 +831,7 @@ var Texture=function(name){
 }
 
 /**
-* Sets the wrapping behavior of texture coordinates that 
+* Sets the wrapping behavior of texture coordinates that
 * fall out of range when using this texture.  This setting
 * will only have an effect on textures whose width and height
 * are both powers of two.  For other textures, this setting
@@ -852,7 +852,7 @@ Texture.prototype.setClamp=function(clamp){
 /**
 *  Loads a texture by its URL.
 * @param {string} name URL of the texture data.  Images with a TGA
-* extension that use the RGBA or grayscale format are supported.  
+* extension that use the RGBA or grayscale format are supported.
 * Images supported by the browser will be loaded via
 * the JavaScript DOM's Image class.
 * @param {Object} [textureCache] An object whose keys
@@ -881,6 +881,17 @@ Texture.loadTexture=function(name, textureCache){
   });
 }
 
+
+/**
+*  Creates a texture from a byte array specifying the texture data.
+* @param {Uint8Array} array A byte array containing the texture data,
+* with the pixels arranged in left-to-right rows from top to bottom.
+* Each pixel takes 4 bytes, where the bytes are the red, green, blue,
+* and alpha components, in that order.
+* @param {Uint8Array} width Width, in pixels, of the texture.
+* @param {Uint8Array} height Height, in pixels, of the texture.
+* @return {glutil.Texture} The new Texture object.
+*/
 Texture.fromUint8Array=function(array, width, height){
  if(width<0)throw new Error("width less than 0")
  if(height<0)throw new Error("height less than 0")
@@ -941,7 +952,7 @@ Texture.loadTga=function(name){
      arr[io+2]=col
      arr[io+3]=0xFF
      offset++;
-    }  
+    }
    }
    return {"width":width,"height":height,"image":arr}
   })
@@ -1701,7 +1712,7 @@ Scene3D.prototype.loadAndMapTexture=function(name){
 * rejection).
 * @return {Promise} A promise that is resolved when
 * all the URLs in the textureFiles array are either resolved or rejected.
-* The result will be an object with three properties: 
+* The result will be an object with three properties:
 * "successes", "failures", and "results".
 * See {@link glutil.GLUtil.getPromiseResults}.
 */

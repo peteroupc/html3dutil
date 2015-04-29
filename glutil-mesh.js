@@ -338,7 +338,7 @@ Mesh.prototype.normal3=function(x,y,z){
   } else {
    this.color[0]=x[0];
    this.color[1]=x[1];
-   this.color[2]=x[2];  
+   this.color[2]=x[2];
   }
   this._elementsDefined|=Mesh.COLORS_BIT;
   return this;
@@ -796,7 +796,7 @@ function SubMesh(vertices,faces,format){
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-2;
    var firstIndex=(this.startIndex/stride);
-   this._setTriangle(vertexStartIndex,stride,firstIndex,index,index+1);   
+   this._setTriangle(vertexStartIndex,stride,firstIndex,index,index+1);
   } else if(currentMode==Mesh.LINE_STRIP &&
      (this.vertices.length-this.startIndex)>=(stride*2)){
    var index=(this.vertices.length/stride)-2;

@@ -401,7 +401,7 @@ ObjData._loadObj=function(str){
       vertexKind=-1;
       lastPrimitiveSeen=-1;
       haveNormals=false;
-      mesh=new Mesh();     
+      mesh=new Mesh();
     }
     mesh.mode(prim==Mesh.TRIANGLES ?
       Mesh.TRIANGLE_FAN :

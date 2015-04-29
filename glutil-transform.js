@@ -171,12 +171,12 @@ Transform.prototype.movePosition=function(x,y,z){
    } else {
     this.position[0]+=x;
     this.position[1]+=x;
-    this.position[2]+=x;   
+    this.position[2]+=x;
    }
   } else {
     this.position[0]+=x;
     this.position[1]+=y;
-    this.position[2]+=z;   
+    this.position[2]+=z;
   }
   this._isIdentity=(this._isIdentity &&
    this.position[0]==0 &&

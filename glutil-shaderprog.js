@@ -166,7 +166,7 @@ ShaderProgram.prototype._saveIfNotCurrent=function(v,i,isCurrentProgram){
        // Save this uniform to write later
        this.savedUniforms[i]=(typeof v=="number") ? v : v.slice(0,v.length);
        this.uniformValues[i]=null;
-      } 
+      }
       return isCurrentProgram;
 }
 /** @private */

@@ -1103,15 +1103,15 @@ mat4translate:function(mat,v3,v3y,v3z){
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should not be 0 or less, and should be set to the highest distance
 * from the camera that the application can afford to clip out for being too
-* close, for example, 0.5, 1, or higher. 
+* close, for example, 0.5, 1, or higher.
 * @param {number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
  * (Depth buffers often allow only 65536 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
- * near plane due to the perspective projection.  The greater the ratio of "far" to 
- * "near", the more the values spread out, and the more likely two objects close 
+ * near plane due to the perspective projection.  The greater the ratio of "far" to
+ * "near", the more the values spread out, and the more likely two objects close
  * to the far plane will have identical depth values.)
  * @return {Array<number>} The resulting 4x4 matrix.
  */
@@ -1204,7 +1204,7 @@ mat4ortho:function(l,r,b,t,n,f){
  * Returns a 4x4 matrix representing a perspective projection
  * given an X-axis field of view.<p>
  * This method assumes a right-hand coordinate system;
- * see {@link glmath.GLMath.mat4perspective}.  For considerations 
+ * see {@link glmath.GLMath.mat4perspective}.  For considerations
  * when choosing the "n" and "f" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
 * @param {number}  fovX X-axis field of view, in degrees. Should be less

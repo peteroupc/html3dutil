@@ -517,8 +517,6 @@ Meshes.createSphere=function(radius, slices, stacks, flat, inside){
  return Meshes._createCapsule(radius,0,slices,stacks,1,flat,inside);
 }
 
-
-
 /**
 * Creates a mesh of a capsule, centered at the origin.
 * The length of the capsule will run along the z-axis. (If the capsule
@@ -528,16 +526,16 @@ Meshes.createSphere=function(radius, slices, stacks, flat, inside){
 * @param {number} radius Radius of each spherical
 * end of the capsule.
 * May be null or omitted, in which case the default is 1.
-* @param {number} length Length of the middle section. 
+* @param {number} length Length of the middle section.
 * May be null or omitted, in which case the default is 1.
 * If this value is 0, an approximation to a sphere will be generated.
 * @param {number} slices Number of vertical sections the capsule consists
 * of.  This function will create an octahedron if "slices" is 4 and "stacks" is 2.
 * Must be 3 or greater. May be null or omitted, in which case the default is 16.
-* @param {number} stacks Number of horizontal sections 
+* @param {number} stacks Number of horizontal sections
 * each spherical half consists of.
 * May be null or omitted, in which case the default is 8.
-* @param {number} middleStacks Number of vertical sections 
+* @param {number} middleStacks Number of vertical sections
 * the middle of the capsule consists of.
 * May be null or omitted, in which case the default is 1.
 * @param {boolean} flat If true, will generate normals such that the
@@ -630,7 +628,7 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
     txs=(i<halfStacks) ? texStart*sphereRatio :
      (1.0-(1.0-texStart)*sphereRatio)
     txe=(i<halfStacks) ? texEnd*sphereRatio :
-     (1.0-(1.0-texEnd)*sphereRatio)   
+     (1.0-(1.0-texEnd)*sphereRatio)
    }
    lastZeCen=zeCen;
    lastTex=texEnd;
