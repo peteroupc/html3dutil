@@ -142,6 +142,17 @@ a[1]*=scalar;
 a[2]*=scalar;
 return a;
 },
+
+/**
+ * Multiplies a 3-element vector by a factor
+ * and returns a new vector with the result.
+ * @param {Array<number>} a A 3-element vector.
+ * @param {number} scalar A factor to multiply.
+ * @return {Array<number>} The parameter "a".
+ */
+vec3scale:function(a,scalar){
+ return GLMath.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
+},
 /**
  * Does a linear interpolation between two 3-element vectors;
  * returns a new vector.

@@ -41,6 +41,8 @@ using evaluators to generate parametric surfaces.
 * [textured.html](https://peteroupc.github.io/html3dutil/textured.html) - Demonstrates loading textures
 and applying them to 3D shapes.
 * [tris.html](https://peteroupc.github.io/html3dutil/tris.html) - Demonstrates a particle system.
+* [gradient.html](https://peteroupc.github.io/html3dutil/gradient.html) - Demonstrates generating a custom
+texture -- a linear gradient from one color to another.
 
 Examples
 ---------

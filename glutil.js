@@ -832,7 +832,11 @@ var Texture=function(name){
 
 /**
 * Sets the wrapping behavior of texture coordinates that 
-* fall out of range when using this texture.
+* fall out of range when using this texture.  This setting
+* will only have an effect on textures whose width and height
+* are both powers of two.  For other textures, this setting
+* is ignored and out-of-range texture coordinates are
+* always clamped.
 * @param {boolean} clamp If true, the image's texture
 * coordinates will be clamped to the range [0, 1].  If false,
 * the image's texture coordinates' fractional parts will
