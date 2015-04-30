@@ -9,7 +9,8 @@ If you like this software, consider donating to me at this link: [http://upokece
 
 A public domain JavaScript library for easing the development of HTML 3D applications.
 
-API documentation is found at: [https://peteroupc.github.io/html3dutil](https://peteroupc.github.io/html3dutil)
+* Source code is available in the [project page](https://github.com/peteroupc/html3dutil).
+* API documentation is found at: [https://peteroupc.github.io/html3dutil](https://peteroupc.github.io/html3dutil)
 
 The file "glutil_min.js" is a minified single-file version of the library.  Include it in your HTML
 as follows:
@@ -44,6 +45,12 @@ and applying them to 3D shapes.
 * [gradient.html](https://peteroupc.github.io/html3dutil/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
 * [starfield.html](https://peteroupc.github.io/html3dutil/starfield.html) - Demo of a star field.
+
+Other Sites
+--------
+* CodePlex: https://html3dutil.codeplex.com/
+* Code Project: http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library
+* SourceForge: https://sourceforge.net/p/html3dutil
 
 Examples
 ---------
@@ -119,10 +126,6 @@ Version 1.0:
 Version 0.2:
 
 - First Code Project release
-
-Source Code
----------
-Source code is available in the [project page](https://github.com/peteroupc/html3dutil).
 
 About
 -----------
