@@ -883,6 +883,7 @@ Texture.loadTexture=function(name, textureCache){
   });
 }
 
+
 /**
 *  Creates a texture from a byte array specifying the texture data.
 * @param {Uint8Array} array A byte array containing the texture data,
@@ -1906,11 +1907,30 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  return this;
 }
 /** @private */
+Scene3D._isIdentityExceptTranslate=function(mat){
+return (
+    mat[0]==1 && mat[1]==0 && mat[2]==0 && mat[3]==0 &&
+    mat[4]==0 && mat[5]==1 && mat[6]==0 && mat[7]==0 &&
+    mat[8]==0 && mat[9]==0 && mat[10]==1 && mat[11]==0 &&
+    mat[15]==1
+ );
+};
+/** @private */
 Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
-  var viewWorld=GLMath.mat4multiply(this._viewMatrix,
+  var viewWorld;
+  if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
+   // view matrix is just a translation matrix, so that getting the model-view
+   // matrix amounts to simply adding the view's position
+   viewWorld=currentMatrix.slice(0,16);
+   viewWorld[13]+=this._viewMatrix[13];
+   viewWorld[14]+=this._viewMatrix[14];
+   viewWorld[15]+=this._viewMatrix[15];
+  } else {
+   viewWorld=GLMath.mat4multiply(this._viewMatrix,
     currentMatrix);
+  }
   var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
   uniforms["world"]=currentMatrix;
   uniforms["modelMatrix"]=currentMatrix;

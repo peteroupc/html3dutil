@@ -83,7 +83,14 @@ Transform.prototype.setMatrix=function(value){
 }
 Transform.prototype.isIdentity=function(){
  if(this._matrixDirty){
-  this.getMatrix();
+  if(this.complexMatrix){
+   this.getMatrix();
+  } else {
+   return this.position[0]==0 && this.position[1]==0 &&
+    this.position[2]==0 && this.scale[0]==1 &&
+    this.scale[1]==1 && this.scale[2]==1 &&
+    GLMath.quatIsIdentity(this.rotation);
+  }
  }
  return this._isIdentity;
 }
@@ -303,26 +310,35 @@ Transform.prototype.multOrientation=function(angle, v,vy,vz){
 Transform.prototype.getMatrix=function(){
   if(this._matrixDirty){
    this._matrixDirty=false;
-   // for best results, multiply in this order:
-   // 1. translation
+   if(GLMath.quatIsIdentity(this.rotation)){
+    this.matrix=[this.scale[0],0,0,0,0,
+     this.scale[1],0,0,0,0,
+     this.scale[2],0,
+     this.position[0],
+     this.position[1],
+     this.position[2],1]; 
+    this._isIdentity=(this.position[0]==0 && this.position[1]==0 &&
+     this.position[2]==0 && this.scale[0]==1 &&
+     this.scale[1]==1 && this.scale[2]==1);
+   } else {
+    // for best results, multiply in this order:
+    // 1. translation
    this.matrix=[1,0,0,0,0,1,0,0,0,0,1,0,
     this.position[0],
     this.position[1],
     this.position[2],1];
-   // 2. rotation
-   if(!GLMath.quatIsIdentity(this.rotation)){
+    // 2. rotation
     this.matrix=GLMath.mat4multiply(this.matrix,
       GLMath.quatToMat4(this.rotation));
+    // 3. scaling
+    GLMath.mat4scaleInPlace(this.matrix,this.scale);
+    this._isIdentity=(
+     m[0]==1 && m[1]==0 && m[2]==0 && m[3]==0 &&
+     m[4]==0 && m[5]==1 && m[6]==0 && m[7]==0 &&
+     m[8]==0 && m[9]==0 && m[10]==1 && m[11]==0 &&
+     m[12]==0 && m[13]==0 && m[14]==0 && m[15]==1
+    );
    }
-   // 3. scaling
-   GLMath.mat4scaleInPlace(this.matrix,this.scale);
-   var m=this.matrix
-   this._isIdentity=(
-    m[0]==1 && m[1]==0 && m[2]==0 && m[3]==0 &&
-    m[4]==0 && m[5]==1 && m[6]==0 && m[7]==0 &&
-    m[8]==0 && m[9]==0 && m[10]==1 && m[11]==0 &&
-    m[12]==0 && m[13]==0 && m[14]==0 && m[15]==1
-   );
   } else if(this._isIdentity){
    return GLMath.mat4identity();
   }
