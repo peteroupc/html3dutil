@@ -813,7 +813,9 @@ Material.fromTexture=function(texture){
 *  Specifies a texture, which can serve as image data applied to
 *  the surface of a shape, or even a 2-dimensional array of pixels
 *  used for some other purpose, such as a depth map, a height map,
-*  a bump map, a reflection map, and so on.
+*  a bump map, a reflection map, and so on.<p>
+* By default, texture coordinates go from (0,0) at the lower left corner
+* to (1,1) at the upper right corner.
 * @class
 * @alias glutil.Texture
 * @param {string} name URL of the texture data.  It will be loaded via
