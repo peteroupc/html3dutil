@@ -23,7 +23,11 @@ function MtlData(){
 }
 /**
  * Creates one or more 3D shapes from the data
- * in this OBJ file.
+ * in this OBJ file.<p>
+ * To use this class, you must include the script "objmtl.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="glutil_min.js">&lt;/script></pre>
  * @param {Scene3D} scene 3D scene to load the shape with.
  * @return {glutil.ShapeGroup} Group of shapes.
  */
