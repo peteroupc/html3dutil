@@ -79,6 +79,17 @@ Examples
 History
 ---------
 
+Version 1.2:
+
+- Support TGA textures
+- Camera class rewritten and support added for the mouse wheel
+and middle mouse button
+- Lines and points supported in OBJ files
+- Support loading custom textures from byte arrays
+- Add method to create capsule shapes in Meshes class
+- Mesh builder (vector3 method) avoids adding degenerate triangles
+- Optimizations and bug fixes
+
 Version 1.1:
 
 - Add frame.js, a frame counter helper used in some of the demos
