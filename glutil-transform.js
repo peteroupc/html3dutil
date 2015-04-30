@@ -54,6 +54,7 @@ Transform.prototype.reset=function(){
  this.rotation=GLMath.quatIdentity();
  this.complexMatrix=false;
  this._matrixDirty=false;
+ this._isIdentity=true;
  return this;
 }
 /**
@@ -66,16 +67,26 @@ Transform.prototype.reset=function(){
  */
 Transform.prototype.setMatrix=function(value){
  this._matrixDirty=false;
- this._isIdentity=false;
  this.complexMatrix=true;
  this.matrix=value.slice(0,16);
  this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
  this.rotation=GLMath.quatFromMat4(this.matrix);
  this.rotation=GLMath.quatNormInPlace(this.rotation);
  this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
+ this._isIdentity=(
+    value[0]==1 && value[1]==0 && value[2]==0 && value[3]==0 &&
+    value[4]==0 && value[5]==1 && value[6]==0 && value[7]==0 &&
+    value[8]==0 && value[9]==0 && value[10]==1 && value[11]==0 &&
+    value[12]==0 && value[13]==0 && value[14]==0 && value[15]==1
+ );
  return this;
 }
-
+Transform.prototype.isIdentity=function(){
+ if(this._matrixDirty){
+  this.getMatrix();
+ }
+ return this._isIdentity;
+}
 /**
 * Resets this transform to the untransformed state.
 * @return {glutil.Transform} This object.
@@ -206,7 +217,6 @@ Transform.prototype.setQuaternion=function(quat){
   if(this.complexMatrix)return this;
   this.rotation=quat.slice(0,4);
   GLMath.quatNormInPlace(this.rotation);
-  this._isIdentity=false;
   this._matrixDirty=true;
   return this;
 }
@@ -258,7 +268,6 @@ Transform.prototype.multQuaternion=function(quat){
   if(this.complexMatrix)return this;
   this.rotation=GLMath.quatNormInPlace(
    GLMath.quatMultiply(this.rotation,quat));
-  this._isIdentity=false;
   this._matrixDirty=true;
   return this;
 }
@@ -292,9 +301,6 @@ Transform.prototype.multOrientation=function(angle, v,vy,vz){
  * @return {Array<number>}
  */
 Transform.prototype.getMatrix=function(){
-  if(this._isIdentity){
-   return GLMath.mat4identity();
-  }
   if(this._matrixDirty){
    this._matrixDirty=false;
    // for best results, multiply in this order:
@@ -310,6 +316,15 @@ Transform.prototype.getMatrix=function(){
    }
    // 3. scaling
    GLMath.mat4scaleInPlace(this.matrix,this.scale);
+   var m=this.matrix
+   this._isIdentity=(
+    m[0]==1 && m[1]==0 && m[2]==0 && m[3]==0 &&
+    m[4]==0 && m[5]==1 && m[6]==0 && m[7]==0 &&
+    m[8]==0 && m[9]==0 && m[10]==1 && m[11]==0 &&
+    m[12]==0 && m[13]==0 && m[14]==0 && m[15]==1
+   );
+  } else if(this._isIdentity){
+   return GLMath.mat4identity();
   }
   return this.matrix.slice(0,16);
 }

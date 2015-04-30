@@ -883,7 +883,6 @@ Texture.loadTexture=function(name, textureCache){
   });
 }
 
-
 /**
 *  Creates a texture from a byte array specifying the texture data.
 * @param {Uint8Array} array A byte array containing the texture data,
@@ -1689,18 +1688,25 @@ Scene3D.prototype.loadTexture=function(name){
 /**
 * Loads a texture from an image URL and uploads it
 * to a texture buffer object.
-* @param {string} name URL of the image to load.
+* @param {string|glutil.Texture} texture String giving the
+* URL of the image to load, or
+* a Texture object whose data may or may not be loaded.
 * @return {Promise} A promise that is resolved when
 * the image is loaded successfully and uploaded
 * to a texture buffer (the result will be a Texture
 * object), and is rejected when an error occurs.
 */
-Scene3D.prototype.loadAndMapTexture=function(name){
+Scene3D.prototype.loadAndMapTexture=function(texture){
  var context=this.context;
- return Texture.loadTexture(
-   name, this.context, this.textureCache).then(function(texture){
-    texture.loadedTexture=new LoadedTexture(texture,context);
-    return texture;
+ var tex=null;
+ if(texture.constructor==Texture){
+   tex=texture.loadImage();
+ } else {
+   tex=Texture.loadTexture(texture, this.context, this.textureCache)
+ }
+ return tex.then(function(textureInner){
+    textureInner.loadedTexture=new LoadedTexture(textureInner,context);
+    return textureInner;
   });
 }
 /**
@@ -2058,10 +2064,19 @@ ShapeGroup.prototype.getTransform=function(){
  * Not documented yet.
  */
 ShapeGroup.prototype.getMatrix=function(){
-  var mat=this.getTransform().getMatrix();
+  var xform=this.getTransform();
+  var thisIdentity=xform.isIdentity();
   if(this.parent!=null){
    var pmat=this.parent.getMatrix();
-   mat=GLMath.mat4multiply(pmat,mat);
+   if(thisIdentity){
+    mat=GLMath.mat4multiply(pmat,xform.getMatrix());
+   } else if(GLMath.mat4isIdentity(pmat)){
+    mat=xform.getMatrix();
+   } else {
+    mat=pmat;
+   }
+  } else {
+   mat=xform.getMatrix();
   }
   return mat;
 }
@@ -2289,10 +2304,19 @@ Shape.prototype.setQuaternion=function(quat){
  * @return {Array<number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix=function(){
-  var mat=this.getTransform().getMatrix();
+  var xform=this.getTransform();
+  var thisIdentity=xform.isIdentity();
   if(this.parent!=null){
    var pmat=this.parent.getMatrix();
-   mat=GLMath.mat4multiply(pmat,mat);
+   if(thisIdentity){
+    mat=pmat;
+   } else if(GLMath.mat4isIdentity(pmat)){
+    mat=xform.getMatrix();
+   } else {
+    mat=GLMath.mat4multiply(pmat,xform.getMatrix());
+   }
+  } else {
+   mat=xform.getMatrix();
   }
   return mat;
 }

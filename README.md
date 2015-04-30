@@ -43,6 +43,7 @@ and applying them to 3D shapes.
 * [tris.html](https://peteroupc.github.io/html3dutil/tris.html) - Demonstrates a particle system.
 * [gradient.html](https://peteroupc.github.io/html3dutil/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
+* [starfield.html](https://peteroupc.github.io/html3dutil/starfield.html) - Demo of a star field.
 
 Examples
 ---------
