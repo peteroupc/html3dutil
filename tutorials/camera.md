@@ -11,11 +11,15 @@ The `Scene3D` class has a concept of a "projection transform" and a "view transf
     // points at (0, 2, 0), that is, up 2 units.
     scene.setLookAt([0,0,30], [0,2,0]);
 
-In 3D graphics, the two most commonly used projections are the perspective projection and the orthographic projection.  Both are described in detail below.
+In 3D graphics, two commonly used projections are the perspective projection and the orthographic projection.  Both are described in detail below.
 
 ### Perspective Projection
 
-A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects look bigger than more distant objects with the same size.  The `Scene3D` class's `setPerspective()` method defines a perspective projection.
+A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects look bigger than more distant objects with the same size. 
+
+The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also known as _clip coordinates_.  Since the graphics system (outside the HTML 3D library) only deals with 3D points, it divides the X, Y, and Z components by the W component to get the 3D point's _normalized device coordinates_ and achieve the perspective effect.
+
+The `Scene3D` class's `setPerspective()` and `setFrustum()` method define a perspective projection.  Both methods take a clipping range, `near` and `far`: objects closer than "near" units or beyond "far" units from the camera will be clipped out.  In effect, "far" can be seen as the distance to the "horizon" in the camera's view.
 
 ### Orthographic Projection
 
