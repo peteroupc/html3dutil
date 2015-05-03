@@ -162,6 +162,13 @@ function BezierCurve(cp, u1, u2){
  * @return {Array<number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point, as specified in the constructor.
+* @example
+* // Generate 11 points forming the B&eacute;zier curve.
+* // Assumes the curve was created with u1=0 and u2=1 (the default).
+* var points=[];
+* for(var i=0;i<=10;i++){
+*  points.push(curve.evaluate(i/10.0));
+* }
  */
 BezierCurve.prototype.evaluate=function(u){
  var output=[];

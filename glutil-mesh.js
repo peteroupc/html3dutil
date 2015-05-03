@@ -63,7 +63,7 @@ Mesh._isCompatibleMode=function(oldMode,newMode){
    return true;
  return false;
 }
-
+/** @private */
 Mesh._recalcNormalsStart=function(vertices,uniqueVertices,faces,stride,offset,flat){
   for(var i=0;i<vertices.length;i+=stride){
     vertices[i+offset]=0.0
@@ -78,6 +78,7 @@ Mesh._recalcNormalsStart=function(vertices,uniqueVertices,faces,stride,offset,fl
     }
   }
 }
+/** @private */
 Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,flat){
  var len;
    if(!flat){

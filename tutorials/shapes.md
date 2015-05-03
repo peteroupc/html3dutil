@@ -141,6 +141,8 @@ the first trangle, and 1 new vertex.
 The first 4 vertices make up the first quad, and each additional
 quad is made up of the last 2 vertices of the previous quad and
 2 new vertices.
+* `Mesh.LINE_STRIP` - A series of points making up a connected line segment path.
+* `Mesh.POINTS` - A series of points.
 
 (2) Call the `normal3()`, `color3()`, and `texCoord2()` methods, as needed, to set the
 next vertex's parameters.  You don't need to do this for each vertex if multiple
@@ -221,8 +223,7 @@ Example:
     // Both parameters can be omitted, setting both to false
     mesh = mesh.recalcNormals();
 
-Binding Shapes
-------------------
+## Binding Shapes
 
 Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
 in order to have it drawn.  This is where the `Shape` class comes into
@@ -240,11 +241,11 @@ Examples for setting appearance:
     shape.setColor("red"); // set the color to a CSS color
     shape.setColor("#338845"); // set the color to an HTML color
     shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
-    // set Phong material parameters: ambient, diffuse,
+    // set material parameters: ambient, diffuse,
     // specular, shininess (NOTE: if the mesh defines its own colors they
     // will override ambient and diffuse reflection given below)
     shape.setMaterial(new Material("blue","blue","white",30));
-    // set Phong material parameters: ambient, diffuse,
+    // set material parameters: ambient, diffuse,
     // specular, shininess, emission
     shape.setMaterial(new Material("lime","lime","white",30,[0.2,0.2,0.2]));
     // set a texture; this requires the mesh to have texture
