@@ -45,6 +45,7 @@ and applying them to 3D shapes.
 * [gradient.html](https://peteroupc.github.io/html3dutil/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
 * [starfield.html](https://peteroupc.github.io/html3dutil/starfield.html) - Demo of a star field.
+* [perspective.html](https://peteroupc.github.io/html3dutil/perspective.html) - Demonstrates a perspective projection.
 
 Other Sites
 --------
@@ -85,6 +86,11 @@ Examples
 
 History
 ---------
+
+Version 1.2.1:
+
+- Fix bug that occurs when a shape derived from a mesh that defines its own 
+colors is drawn before a shape derived from a mesh that doesn't define its own colors
 
 Version 1.2:
 

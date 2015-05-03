@@ -366,27 +366,51 @@ Mesh.prototype.normal3=function(x,y,z){
   * additional face index according to this mesh's current mode.
   * The vertex will adopt this mesh's current normal, color,
   * and texture coordinates if they have been defined.
-  * @param {number} x X-coordinate of the vertex.
-  * @param {number} y Y-coordinate of the vertex.
-  * @param {number} z Z-coordinate of the vertex.
+ * @param {Array<number>|number} x The X-coordinate.
+ *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
+ * @param {number} y The Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z The Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.vertex3=function(x,y,z){
   if(this.subMeshes.length==0){
    this.subMeshes.push(new SubMesh());
   }
-  this.subMeshes[this.subMeshes.length-1].vertex3(x,y,z,this);
+  var lastSubmesh=this.subMeshes[this.subMeshes.length-1];
+  if(x!=null && y==null && z==null){
+   if(typeof x!="number")
+    lastSubmesh.vertex3(x[0],x[1],x[2],this);
+   else
+    lastSubmesh.vertex3(x,x,x,this);
+  } else {
+   lastSubmesh.vertex3(x,y,z,this);
+  }
   return this;
  }
  /**
   * Adds a new vertex to this mesh.  The Z-coordinate will
   * be treated as 0.
-  * @param {number} x X-coordinate of the vertex.
-  * @param {number} y Y-coordinate of the vertex.
+ * @param {Array<number>|number} x The X-coordinate.
+ * If "y" is null or omitted, this is instead
+ * a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
+ * @param {number} y The Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
   * @return {glutil.Mesh} This object.
   */
- Mesh.prototype.vertex2=function(x,y,z){
-  return this.vertex3(x,y,0);
+ Mesh.prototype.vertex2=function(x,y){
+  if(x!=null && y==null && z==null){
+   if(typeof x!="number")
+    return this.vertex3(x[0],x[1],0.0);
+   else
+    return this.vertex3(x,x,0.0);
+  } else {
+   return this.vertex3(x,y,0.0);
+  }
  }
  /**
   * Sets all the vertices in this mesh to the given color.
