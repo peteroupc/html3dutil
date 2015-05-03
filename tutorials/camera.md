@@ -15,8 +15,8 @@ In 3D graphics, two commonly used projections are the perspective projection and
 
 ### Perspective Projection
 
-A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects 
-look bigger than more distant objects with the same size. 
+A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects
+look bigger than more distant objects with the same size.
 
 The 3D scene is contained in a so-called _view volume_, and only objects contained in the view volume
 will be visible.  The view volume is bounded on all six sides by six _clipping planes_:
@@ -36,9 +36,9 @@ the vertical visibility range.
 the far clipping plane segment.  This is because the four other clipping planes are not parallel and extend
 from the eye position.
 
-The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also 
-known as _clip coordinates_.  Since the graphics system (outside the HTML 3D library) only deals with 
-3D points, it divides the X, Y, and Z components by the W component to get the 3D point's _normalized 
+The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also
+known as _clip coordinates_.  Since the graphics system (outside the HTML 3D library) only deals with
+3D points, it divides the X, Y, and Z components by the W component to get the 3D point's _normalized
 device coordinates_ and achieve the perspective effect.
 
 The `Scene3D` class's [`setPerspective()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setPerspective)
@@ -71,7 +71,7 @@ of where they meet the near clipping plane.
 
 An orthographic projection is one in which the left and right clipping planes are parallel to each other,
 and the top and bottom clipping planes are parallel to each other.  This results in the near and far clipping
-planes having the same size, unlike in a perspective projection, and 
+planes having the same size, unlike in a perspective projection, and
 objects with the same size not varying in size with their depth.
 
 The `Scene3D` class's [`setOrtho()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrtho)
