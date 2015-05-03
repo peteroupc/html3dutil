@@ -450,6 +450,7 @@ InputTracker.ENTER=13;
 InputTracker.TAB=9;
 InputTracker.SHIFT=16;
 InputTracker.CTRL=17;
+InputTracker.ALT=18;
 InputTracker.ESC=27;
 InputTracker.SPACE=32;
 InputTracker.PAGEUP=33;
