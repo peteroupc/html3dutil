@@ -76,28 +76,6 @@ vec3dot:function(a,b){
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
 },
 /**
- * Adds two 3-element vectors and returns a new
- * vector with the result. Adding two vectors
- * is the same as adding each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The resulting 3-element vector.
- */
-vec3add:function(a,b){
-return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
-},
-/**
- * Subtracts two 3-element vectors and returns a new
- * vector with the result. Subtracting two vectors
- * is the same as subtracting each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The resulting 3-element vector.
- */
-vec3sub:function(a,b){
-return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
-},
-/**
  * Adds two 3-element vectors and stores
  * the result in the first vector. Adding two vectors
  * is the same as adding each of their components.
