@@ -492,7 +492,8 @@ function LightSource(position, ambient, diffuse, specular) {
  * reflection, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
  * A specular reflection is a reflection in the same angle as the light reaches
- * an object, like a mirror.
+ * an object, like a mirror.  Specular reflections can cause shiny
+ * highlights depending on the viewing angle.
  * The default is (1,1,1), or white.
  */
  this.specular=specular||[1,1,1];
