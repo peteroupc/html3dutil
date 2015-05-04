@@ -70,7 +70,7 @@ of where they meet the near clipping plane.
 
 #### Demo
 
-* [perspective.html](https://peteroupc.github.io/html3dutil/perspective.html) - Demonstrates a perspective projection.
+* [perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
 ### Orthographic Projection
 
@@ -80,7 +80,7 @@ planes having the same size, unlike in a perspective projection, and
 objects with the same size not varying in size with their depth.
 
 The `Scene3D` class's [`setOrtho()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrtho)
-and [`setOrthoAspect()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrthoAspect) methods 
+and [`setOrthoAspect()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrthoAspect) methods
 define an orthographic projection.
 
 **`scene3d.setOrtho(left, right, bottom, top, near, far)`**
@@ -101,12 +101,3 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 
 * `aspect` - Aspect ratio of the viewport.  May be omitted, in which case the scene's
 aspect ratio (`scene.getAspect()`) is used.
-
-
-
-
-
-
-
-
-

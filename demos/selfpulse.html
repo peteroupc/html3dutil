@@ -1,6 +1,6 @@
-<meta charset=utf-8>
 <head>
-<script type="text/javascript" src="glutil_min.js"></script>
+<meta charset=utf-8>
+<script type="text/javascript" src="../glutil_min.js"></script>
 </head>
 <body>
 <canvas width="600" height="450" id=canvas></canvas>
@@ -23,7 +23,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
   // Create a box mesh 10 units in size
-  var mesh=Meshes.createBox(10,20,20);
+  var mesh=Meshes.createBox(10,10,10);
   // Create a shape based on the mesh and give it a red color
   var shape=scene.makeShape(mesh).setColor("red");
   // Add the shape to the scene
@@ -31,7 +31,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // Set the starting rotation
   var rotation=[0,0,0];
   // Set up the render loop
+  var emissive=0; // initialize emissive
+  var step=0.01;
   GLUtil.renderLoop(function(){
+   // adjust emissive to give it a pulsing effect
+   if(emissive>0.5 || emissive<0)step=-step;
+   emissive+=step;
+   // apply emissive to each color component of the
+   // emission material
+   shape.material.setParams({
+    "emission":[emissive,emissive,emissive]
+   });
    rotation[0]+=.5; // Adjust x-rotation by .5 degree
    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
    // Update the shape's rotation

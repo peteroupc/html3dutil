@@ -43,6 +43,8 @@ The Scene3D class has a concept of a "projection transform" and a "view transfor
   scene.setLookAt([0,0,30], [0,2,0]);
 ```
 
+For more information, see the {@tutorial camera} tutorial.
+
 ### 3D Models
 
 Every 3D scene is made up of "meshes", or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `Mesh` class, or create a built-in geometric shape using a method in the `Meshes` class. The example below shows how you can create a box mesh:

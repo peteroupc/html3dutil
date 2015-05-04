@@ -34,7 +34,7 @@ The variables `textureURL1` and `textureURL2` are URL textures.
 
 ### Demos
 
-* [textured.html](https://peteroupc.github.io/html3dutil/textured.html) - Demonstrates loading textures
+* [textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
 and applying them to 3D shapes.
-* [gradient.html](https://peteroupc.github.io/html3dutil/gradient.html) - Demonstrates generating a custom
+* [gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.

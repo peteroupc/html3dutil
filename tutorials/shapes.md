@@ -1,5 +1,4 @@
-Creating Shapes
-------------------
+## Creating Shapes
 
 The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.
@@ -10,9 +9,9 @@ green square, and a purple cone on the second row.](shapes.png)
 
 Demos:
 
-* [shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) - Demonstrates
+* [shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
 the built-in shapes.
-* [platonic.html](https://peteroupc.github.io/html3dutil/platonic.html) - A demo featuring the five
+* [platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
 
 ### Built-In Shapes
@@ -170,7 +169,7 @@ you call `mesh.mode(Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will b
 
 Once you've created the mesh, you can use the `transform()` method to transform
 all the vertices in the mesh with a [4x4 matrix]{@tutorial glmath}.  The
-[shapes.html](https://peteroupc.github.io/html3dutil/shapes.html) demo uses
+[shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) demo uses
 this method to adjust some of the meshes to make them look better on the screen.
 Example:
 
