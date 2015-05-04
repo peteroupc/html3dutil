@@ -1,3 +1,13 @@
+## Introduction
+
+This article explains how my [HTML 3D Library](http://peteroupc.github.io/html3dutil)
+supports 3D shapes and how to use the library to create shapes, both built-in and custom
+shapes.
+
+**Visit the [library's Releases page](https://github.com/peteroupc/html3dutil/releases)
+for the latest version.** As of version 1.2.1, it includes
+the shapes.html and platonic.html demos mentioned in this article.
+
 ## Creating Shapes
 
 The HTML 3D library contains several methods for creating 3D shapes such
@@ -16,7 +26,7 @@ platonic solids.  Demonstrates how vertex and index arrays are built up to creat
 
 ### Built-In Shapes
 
-The `Meshes` class includes several handy methods for creating built-in shapes.
+The [`Meshes`]{@link glutil.Meshes} class includes several handy methods for creating built-in shapes.
 All methods described below return a `Mesh` object that describes the triangles they
 are composed of.  See "Custom Shapes" below for more on meshes.
 
@@ -94,12 +104,12 @@ line segment.
 Note that you must include a set of bits indicating what kind of data the vertex
 array contains.  (If none of the bits apply, use 0 or omit the "bits" parameter.) The bits are:
 
-* Mesh.NORMALS_BIT - if you included normals for each vertex (3 elements)
-* Mesh.COLORS_BIT - if you included colors for each vertex (3 elements)
-* Mesh.TEXCOORDS_BIT - if you included texture coordinates for each vertex (2 elements)
-* Mesh.LINES_BIT - if the mesh defines a set of lines rather than triangles
-* Mesh.POINTS_BIT - if the mesh defines a set of points (you can't set both LINES_BIT and
- POINTS_BIT).
+* `Mesh.NORMALS_BIT` - if you included normals for each vertex (3 elements)
+* `Mesh.COLORS_BIT` - if you included colors for each vertex (3 elements)
+* `Mesh.TEXCOORDS_BIT` - if you included texture coordinates for each vertex (2 elements)
+* `Mesh.LINES_BIT` - if the mesh defines a set of lines rather than triangles
+* vMesh.POINTS_BIT` - if the mesh defines a set of points (you can't set both `LINES_BIT` and
+ `POINTS_BIT`).
 
 The bits may be combined as in the following example:
 
@@ -159,7 +169,7 @@ were given:
 
     mesh.vertex3(x, y, z);
 
-You can also call the mode() method any time to change the primitive mode, even to
+You can also call the `mode()` method any time to change the primitive mode, even to
 the same mode.  What this does is reset the state of the primitive so that future vertices
 won't depend on previous vertices.  For example, if you define a `TRIANGLE_FAN`, and
 you call `mesh.mode(Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
@@ -225,15 +235,15 @@ Example:
 ## Binding Shapes
 
 Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the `Shape` class comes into
+in order to have it drawn.  This is where the [`Shape`]{@link glutil.Shape} class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:
 
-(1) Create a Shape object by passing the mesh to the 3D scene's `makeShape()` method:
+(1) Create a `Shape` object by passing the mesh to the 3D scene's `makeShape()` method:
 
     var shape = scene3d.makeShape(mesh);
 
-(2) You may also set the Shape's color, appearance, and position, using the examples below:
+(2) You may also set the `Shape`'s color, appearance, and position, using the examples below:
 
 Examples for setting appearance:
 
@@ -276,5 +286,5 @@ then translating (shifting) the shape in 3D space.
 
     scene3d.addShape(shape);
 
-Now, the next time `scene3d.render()` is called, the Scene3D will render the
+Now, the next time `scene3d.render()` is called, the [`Scene3D`]{@link glutil.Scene3D} will render the
 given shape to the scene.
