@@ -2080,6 +2080,7 @@ function ShapeGroup(){
 ShapeGroup.prototype.addShape=function(shape){
  shape.parent=this;
  this.shapes.push(shape);
+ return this;
 }
 /**
  * Not documented yet.
