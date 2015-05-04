@@ -108,7 +108,7 @@ array contains.  (If none of the bits apply, use 0 or omit the "bits" parameter.
 * `Mesh.COLORS_BIT` - if you included colors for each vertex (3 elements)
 * `Mesh.TEXCOORDS_BIT` - if you included texture coordinates for each vertex (2 elements)
 * `Mesh.LINES_BIT` - if the mesh defines a set of lines rather than triangles
-* vMesh.POINTS_BIT` - if the mesh defines a set of points (you can't set both `LINES_BIT` and
+* `Mesh.POINTS_BIT` - if the mesh defines a set of points (you can't set both `LINES_BIT` and
  `POINTS_BIT`).
 
 The bits may be combined as in the following example:
