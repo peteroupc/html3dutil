@@ -32,6 +32,10 @@ is not discussed in this article.
 clip space coordinates to _normalized device coordinates_, then _screen space_
 coordinates when drawing objects on the screen.
 
+## Projection Transform
+
+A _projection matrix_ transforms coordinates in camera space to _clip space_.
+
 Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below.
 
@@ -140,7 +144,7 @@ This method allows you to set the projection matrix to an arbitrary [4x4 matrix]
 
 * `matrix` - The 4x4 matrix to use.
 
-### View Transform
+## View Transform
 
 The view matrix transforms _world space_ coordinates, shared by every object in a scene, to _camera space_
 coordinates, in which the camera is located at the center of the coordinate system: (0, 0, 0).  A view matrix essentially rotates the camera and moves it to a given position in world space.  Specifically:

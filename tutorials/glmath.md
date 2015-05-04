@@ -134,7 +134,7 @@ the viewer_ whenever the x-axis points to the right and the y-axis points up.
 the viewer_ whenever the x-axis points to the right and the y-axis points up.
 
 If a GLMath method works differently in left- and right-handed coordinate systems,
-its description will note this. (In the absence of transformations, the coordinate
+its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)
 
 Matrix Details
