@@ -227,24 +227,28 @@ function perspectiveFrustum(fov,aspect,near,far,cameraPos,lookingAt){
  return frustum;
 }
 
+Mesh.prototype.vertex3v=function(x){
+ return this.vertex3(x[0],x[1],x[2]);
+}
+
 function frustumMesh(frustum){
  var mesh=new Mesh();
  var nearRect=frustum.nearClipPlane();
  var farRect=frustum.farClipPlane();
  mesh.color3("yellow");
  mesh.mode(Mesh.LINES);
- mesh.vertex3(nearRect[0]).vertex3(farRect[0]);
- mesh.vertex3(nearRect[1]).vertex3(farRect[1]);
- mesh.vertex3(nearRect[2]).vertex3(farRect[2]);
- mesh.vertex3(nearRect[3]).vertex3(farRect[3]);
+ mesh.vertex3v(nearRect[0]).vertex3v(farRect[0]);
+ mesh.vertex3v(nearRect[1]).vertex3v(farRect[1]);
+ mesh.vertex3v(nearRect[2]).vertex3v(farRect[2]);
+ mesh.vertex3v(nearRect[3]).vertex3v(farRect[3]);
  mesh.mode(Mesh.LINE_STRIP)
- mesh.vertex3(nearRect[0]).vertex3(nearRect[1])
-   .vertex3(nearRect[3]).vertex3(nearRect[2])
-   .vertex3(nearRect[0]);
+ mesh.vertex3v(nearRect[0]).vertex3v(nearRect[1])
+   .vertex3v(nearRect[3]).vertex3v(nearRect[2])
+   .vertex3v(nearRect[0]);
  mesh.mode(Mesh.LINE_STRIP)
- mesh.vertex3(farRect[0]).vertex3(farRect[1])
-   .vertex3(farRect[3]).vertex3(farRect[2])
-   .vertex3(farRect[0]);
+ mesh.vertex3v(farRect[0]).vertex3v(farRect[1])
+   .vertex3v(farRect[3]).vertex3v(farRect[2])
+   .vertex3v(farRect[0]);
  return mesh;
 }
 
