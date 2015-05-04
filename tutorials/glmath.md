@@ -54,9 +54,8 @@ before the other transformations.
 Rotation changes an object's orientation.
 
 To create a rotation matrix, use [GLMath.mat4rotated()]{@link glmath.GLMath.mat4rotated},
-and specify the angle (in degrees) to rotate, and the axis of rotation (three parameters for
-the X, Y, and Z components).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation
-around the X-axis, and (80, 0, 0, 1) means a 45-degree rotation around the Z-axis.
+and specify the angle (in degrees) to rotate, and the axis of rotation (a line that contains
+the origin and a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that contains the origin (0, 0, 0) and the point (0, 2, 3).
 
 To multiply an existing matrix by a rotation, use
 [GLMath.mat4rotate()]{@link glmath.GLMath.mat4rotate}.  This will put the rotation
@@ -125,6 +124,19 @@ Converts from Tait-Bryan angles to a quaternion
 * [GLMath.quatToTaitBryan()]{@link glmath.GLMath.quatToTaitBryan} -
 Converts from a quaternion to Tait-Bryan angles
 
+Coordinate Systems
+------------
+There are two conventions of 3D coordinate systems, left-handed and right-handed:
+
+* In a _left-handed_ coordinate system, like in legacy Direct3D, the z-axis points _away from
+the viewer_ whenever the x-axis points to the right and the y-axis points up.
+* In a _right-handed_ coordinate system, like in OpenGL, the z-axis points _toward
+the viewer_ whenever the x-axis points to the right and the y-axis points up.
+
+If a GLMath method works differently in left- and right-handed coordinate systems,
+its description will note this. (In the absence of transformations, the coordinate
+system is effectively left-handed.)
+
 Matrix Details
 ------------
 
@@ -170,11 +182,6 @@ element of the matrix is placed in columns, rather than in rows, as in the follo
 
 The numbers in brackets in the matrix above are the zero-based indices
 into the matrix arrays passed to GLMath's matrix methods.
-
-All functions dealing with matrices also assume
-a right-handed coordinate system (such as OpenGL's), in which the z-axis points
-toward (not away from) the viewer whenever the x-axis points to
-the right and the y-axis points up.
 
 ### Transforming Points
 

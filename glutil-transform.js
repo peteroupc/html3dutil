@@ -242,14 +242,15 @@ Transform.prototype.setQuaternion=function(quat){
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
  * points toward the viewer, the angle's value is increasing in
- * a counterclockwise direction.
- * @param {Array<number>|number} v X-component of the axis
+ * a counterclockwise direction for right-handed coordinate systems and
+ * in a clockwise direction for left-handed systems.
+ * @param {Array<number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the axis
+ * @param {number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the axis
+ * @param {number} vz Z-component of the point lying on the axis
  * of rotation.
  * @return {glutil.Transform} This object.
  */
@@ -292,13 +293,13 @@ Transform.prototype.multQuaternion=function(quat){
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
  * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees. See {@link glutil.Transform#setOrientation}.
- * @param {Array<number>|number} v X-component of the axis
+ * @param {Array<number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the axis
+ * @param {number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the axis
+ * @param {number} vz Z-component of the point lying on the axis
  * of rotation.
  * @return {glutil.Transform} This object.
  */
