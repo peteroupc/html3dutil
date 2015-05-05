@@ -17,6 +17,10 @@ blue, and alpha, in that order (where each element ranges from 0-1).
 The methods in this class treat arrays as vectors.  Functions dealing
 with vectors begin with "vec".
 
+If a 3D _position_ (point) is used in a 4-element vector function (one beginning
+with "vec4"), use 1 as the fourth element of the vector.  If a 3D _direction_
+is used in a 4-element vector function, use 0 as the fourth element.
+
 Matrices
 ------------
 
