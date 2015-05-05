@@ -357,12 +357,49 @@ mat4copy:function(mat){
  return mat.slice(0,16);
 },
 /**
+ * Returns a copy of a 3-element vector.
+ * @param {Array<number>} mat A 3-element vector.
+ * @return {Array<number>}
+ */
+vec3copy:function(vec){
+ return vec.slice(0,3);
+},
+/**
  * Returns a copy of a 4-element vector.
  * @param {Array<number>} mat A 4-element vector.
  * @return {Array<number>}
  */
 vec4copy:function(vec){
  return vec.slice(0,4);
+},
+/**
+ * Assigns the values of a 3-element vector into another
+ * 3-element vector.
+ * @param {Array<number>} dst The 3-element vector to
+ * assign to.
+ * @param {Array<number>} src The 3-element vector whose
+ * values will be copied.
+ * @return {Array<number>} The parameter "dst"
+ */
+vec3assign:function(dst,src){
+ dst[0]=src[0];
+ dst[1]=src[1];
+ dst[2]=src[2];
+ return dst;
+},
+/**
+ * Assigns the values of a 4-element vector into another
+ * 4-element vector.
+ * @param {Array<number>} src The 3-element vector whose
+ * values will be copied.
+ * @return {Array<number>} The parameter "dst"
+ */
+vec4assign:function(dst,src){
+ dst[0]=src[0];
+ dst[1]=src[1];
+ dst[2]=src[2];
+ dst[3]=src[3];
+ return dst;
 },
 /**
  * Returns whether a 4x4 matrix is the identity matrix.
@@ -488,8 +525,8 @@ quatConjugate:function(quat){
  */
 quatInvert:function(quat){
  var lsq=1.0/GLMath.quatDot(quat,quat);
- return GLMath.vec4scaleInPlace(lsq,
-  GLMath.quatConjugate(quat))
+ return GLMath.vec4scaleInPlace(
+  GLMath.quatConjugate(quat),lsq)
 },
 /**
  * @deprecated This method incorrectly calculates a quaternion's
