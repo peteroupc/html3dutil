@@ -133,7 +133,8 @@ aspect ratio (`scene.getAspect()`) is used.
 
 ### Other Projections
 
-There are other kinds of possible projections, such as oblique projections.  For these
+There are other kinds of possible projections, such as oblique projections
+or isometric projections.  For these
 and other projections, you can specify a custom projection matrix to the 3D scene using the
 [`setProjectionMatrix()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setProjectionMatrix)
 method.
