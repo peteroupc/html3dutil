@@ -561,14 +561,14 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef SHADING\n" +
 "varying vec4 viewWorldPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
-"vec4 calcLightPower(light lt, vec4 viewWorldPosition){\n" +
+"vec4 calcLightPower(light lt, vec4 vertexPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
 " if(lt.position.w == 0.0){ /* directional light */\n" +
 "  sdir=normalize((lt.position).xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else { /* point light */\n" +
-"  vec3 vertexToLight=(lt.position-viewWorldPosition).xyz;\n" +
+"  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
 "  if(dist==0.0){\n" +
 "   sdir=vertexToLight;\n" +
@@ -601,15 +601,15 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 " lightedColor+=vec3(lights[i].diffuse)*max(dot(transformedNormalVar," +
 "   lightPower[i].xyz),0.0)*lightPower[i].w*materialDiffuse;\n" +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n";
-for(var i=0;i<Lights.MAX_LIGHTS;i++){
- shader+="SET_LIGHTPOWER("+i+");\n";
-}
 shader+=""+
 "if(baseColor.a==0.0)discard;\n" +
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
 "vec3 lightedColor=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=vec3(md)*baseColor.rgb;\n";
+for(var i=0;i<Lights.MAX_LIGHTS;i++){
+ shader+="SET_LIGHTPOWER("+i+");\n";
+}
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="ADD_DIFFUSE("+i+");\n";
 }

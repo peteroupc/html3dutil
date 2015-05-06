@@ -195,8 +195,10 @@ LightsBinder.prototype.bind=function(program){
  uniforms["sceneAmbient"]=lightsObject.sceneAmbient.slice(0,3);
  for(var i=0;i<lightsObject.lights.length;i++){
   var lt=lightsObject.lights[i]
-  uniforms["lights["+i+"].diffuse"]=[lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],1];
-  uniforms["lights["+i+"].specular"]=[lt.specular[0],lt.specular[1],lt.specular[2],1];
+  uniforms["lights["+i+"].diffuse"]=[lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],
+    lt.diffuse.length>3 ? lt.diffuse[3] : 1];
+  uniforms["lights["+i+"].specular"]=[lt.specular[0],lt.specular[1],lt.specular[2],
+    lt.specular.length>3 ? lt.specular[3] : 1];
   uniforms["lights["+i+"].position"]=lightsObject.lights[i].position;
  }
  // Set empty values for undefined lights up to MAX_LIGHTS

@@ -449,7 +449,8 @@ Note that:
 and the Y and Z coordinates are adjusted in the rotation.  For rotations about the
 Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.
 * If the axis of rotation points toward the viewer, positive rotations mean
-counterclockwise rotation.  For example, 60 degrees about the axis means
+counterclockwise rotation in right-handed coordinate systems.  For example,
+60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.
 

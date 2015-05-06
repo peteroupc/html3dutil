@@ -1927,21 +1927,23 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
   var viewWorld;
-  if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
-   // view matrix is just a translation matrix, so that getting the model-view
-   // matrix amounts to simply adding the view's position
-   viewWorld=currentMatrix.slice(0,16);
-   viewWorld[13]+=this._viewMatrix[13];
-   viewWorld[14]+=this._viewMatrix[14];
-   viewWorld[15]+=this._viewMatrix[15];
-  } else {
-   viewWorld=GLMath.mat4multiply(this._viewMatrix,
-    currentMatrix);
+  if(program.get("modelViewMatrix")){
+   if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
+    // view matrix is just a translation matrix, so that getting the model-view
+    // matrix amounts to simply adding the view's position
+    viewWorld=currentMatrix.slice(0,16);
+    viewWorld[13]+=this._viewMatrix[13];
+    viewWorld[14]+=this._viewMatrix[14];
+    viewWorld[15]+=this._viewMatrix[15];
+   } else {
+    viewWorld=GLMath.mat4multiply(this._viewMatrix,
+     currentMatrix);
+   }
+   uniforms["modelViewMatrix"]=viewWorld;
   }
-  var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
+  var invTrans=GLMath.mat4inverseTranspose3(currentMatrix);
   uniforms["world"]=currentMatrix;
   uniforms["modelMatrix"]=currentMatrix;
-  uniforms["modelViewMatrix"]=viewWorld;
   uniforms["worldViewInvTrans3"]=invTrans;
   uniforms["normalMatrix"]=invTrans;
   program.setUniforms(uniforms);

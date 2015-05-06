@@ -977,9 +977,9 @@ mat4transposeInPlace:function(mat){
 /**
 * Returns the transposed result of the inverted upper left corner of
 * the given 4x4 matrix.<p>
-* This is usually used to convert a model-view matrix to a matrix
+* This is usually used to convert a world matrix to a matrix
 * for transforming surface normals in order to keep them perpendicular
-* to a surface transformed by the model-view matrix.
+* to a surface transformed by the world matrix.
 * @param {Array<number>} m4 A 4x4 matrix.
 * @return {Array<number>} The resulting 3x3 matrix. If the matrix
 * can't be inverted, returns the identity 3x3 matrix.
