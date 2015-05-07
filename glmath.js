@@ -985,6 +985,19 @@ mat4transposeInPlace:function(mat){
 * can't be inverted, returns the identity 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
+if(m4[1]==0 && m4[2]==0 && m4[4]==0 &&
+   m4[6]==0 && m4[8]==0 && m4[9]==0){
+ if(m4[0]==1 && m4[5]==1 && m4[10]==1){
+  // upper 3x3 is identity
+  return [1,0,0,0,1,0,0,0,1];
+ } else if(m4[0]*m4[5]*m4[10]!=0){
+  // upper 3x3 is simple scaling
+  return [1/m4[0],0,0,0,1/m4[5],0,0,0,1/m4[10]];
+ } else {
+  // upper 3x3 is uninvertable scaling
+  return [1,0,0,0,1,0,0,0,1];
+ }
+}
 var m=[m4[0],m4[1],m4[2],m4[4],m4[5],m4[6],
    m4[8],m4[9],m4[10]];
 var det=m[0] * m[4] * m[8] +
