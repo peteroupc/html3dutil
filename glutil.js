@@ -486,7 +486,7 @@ function LightSource(position, ambient, diffuse, specular) {
  * A diffuse reflection is a reflection that scatters evenly, in every direction.
  * The default is (1,1,1), or white.
  */
- this.diffuse=diffuse||[1,1,1];
+ this.diffuse=diffuse||[1,1,1,1];
  /**
  * A 3-element vector giving the color of the light when it causes a specular
  * reflection, in the red, green,
@@ -575,15 +575,30 @@ Lights._createNewLight=function(index){
  }
  return ret;
 }
+
+Lights.prototype.getCount=function(){
+ return this.lights.length;
+}
+
 /**
- * Not documented yet.
+ * Gets information about the light source at the given index.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @return {LightSource} The corresponding light source object.
  */
 Lights.prototype.getLight=function(index){
+ var oldLength=this.lights.length;
  if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ if(this.lights.length-oldLength>=2){
+  // Ensure existence of lights that come between the new
+  // light and the last light
+  for(var i=oldLength;i<this.lights.length;i++){
+   if(!this.lights[i]){
+    this.lights[i]=Lights._createNewLight(i);
+   }
+  }
+ }
  return this.lights[index];
 }
 /**

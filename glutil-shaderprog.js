@@ -598,9 +598,9 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#define SET_LIGHTPOWER(i) "+
 " lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
-" lightedColor+=vec3(lights[i].diffuse)*max(dot(transformedNormalVar," +
-"   lightPower[i].xyz),0.0)*lightPower[i].w*materialDiffuse;\n" +
-"vec4 lightPower["+Lights.MAX_LIGHTS+"];\n";
+" lightedColor+=vec3(lights[i].diffuse)*max(lightCosines[i],0.0)*lightPower[i].w*materialDiffuse;\n" +
+"vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
+"float lightCosines["+Lights.MAX_LIGHTS+"];\n";
 shader+=""+
 "if(baseColor.a==0.0)discard;\n" +
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
@@ -611,16 +611,17 @@ for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
 }
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
+ shader+="lightCosines["+i+"]=dot(transformedNormalVar,lightPower["+i+"].xyz);\n";
  shader+="ADD_DIFFUSE("+i+");\n";
 }
 shader+="#ifdef SPECULAR\n" +
+"bool spectmp;\n" +
 "// specular reflection\n" +
 "if((ms.x*ms.y*ms.z)!=0.0){\n" +
 "vec3 viewDirection=vec3(0,0,1.);\n" +
-"bool spectmp;\n" +
 "float specular;\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
-shader+="  spectmp = dot(transformedNormalVar, lightPower["+i+"].xyz) >= 0.0;\n" +
+shader+="  spectmp = lightCosines["+i+"] >= 0.0;\n" +
 "  if (spectmp) {\n" +
 "  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+
 "    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (transformedNormalVar, -lightPower["+i+"].xyz)*\n"+

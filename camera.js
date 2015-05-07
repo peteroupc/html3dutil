@@ -91,15 +91,20 @@ Camera.prototype._distance=function(){
  return GLMath.vec3length(rel);
 }
 /** @private */
-Camera.prototype._updateView=function(){
+Camera.prototype._getView=function(){
  var mat=GLMath.quatToMat4(this.rotation);
  var mat2=GLMath.mat4translated(-this.position[0],
   -this.position[1],-this.position[2]);
- var mat3=GLMath.mat4translated(-this.center[0],
-  -this.center[1],-this.center[2]);
  mat=GLMath.mat4multiply(mat2,mat);
- mat=GLMath.mat4multiply(mat,mat3);
- this.scene.setViewMatrix(mat);
+ mat=GLMath.mat4translate(mat,-this.center[0],
+  -this.center[1],-this.center[2]);
+ return mat;
+}
+
+
+/** @private */
+Camera.prototype._updateView=function(){
+ this.scene.setViewMatrix(this._getView());
  return this;
 }
 /**
@@ -257,14 +262,32 @@ Camera.prototype.moveVertical=function(dist){
  * @param {*} e
  */
 Camera.prototype.getPosition=function(){
-  return GLMath.vec3copy(this.position);
+  var view=this._getView();
+  var pos=GLMath.quatTransform(
+    GLMath.quatConjugate(this.rotation),
+    [this.position[0],this.position[1],this.position[2],1]);
+  GLMath.vec3subInPlace(pos,this.center);
+  return pos;
 }
+
+Camera.prototype.getVectorFromCenter=function(){
+  return GLMath.vec3normInPlace(this.getPosition());
+}
+
 /** @private */
 Camera.prototype._mousewheel=function(e){
  var ticks=e.delta/120.0;
  // mousewheel up (negative) means move forward,
  // mousewheel down (positive) means move back
  this.setDistance(this._distance()-0.6*ticks)
+}
+
+/** @private
+For backward compatibility only; will be removed in next major version */
+Camera.prototype._moveLight=function(){
+ if(this.scene.lightSource.getCount()==1){
+  this.scene.setDirectionalLight(0,this.getVectorFromCenter());
+ }
 }
 
 /**
@@ -275,17 +298,22 @@ Camera.prototype.update=function(){
  if(this.input.leftButton){
   if(this.trackballMode){
    this._trackball(delta.x,delta.y,0.3);
+   this._moveLight();
   } else {
    this._orbit(delta.x,delta.y,0.3);
+   this._moveLight();
   }
  } else if(this.input.middleButton){
    this._move(delta.x,delta.y,0.3);
+   this._moveLight();
  }
  if(this.input.keys[InputTracker.W]){
   this.setDistance(this.distance+0.2)
+  this._moveLight();
  }
  if(this.input.keys[InputTracker.S]){
   this.setDistance(this.distance-0.2)
+  this._moveLight();
  }
  this.persp.update();
  return this;
