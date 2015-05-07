@@ -2,6 +2,7 @@
 <meta charset=utf-8>
 <script type="text/javascript" src="../glutil_min.js"></script>
 <script type="text/javascript" src="../camera.js"></script>
+<script type="text/javascript" src="../frame.js"></script>
 </head>
 <body>
 <a href="javascript:sampleShape(0)">Sphere</a>,
@@ -61,6 +62,7 @@ function sampleShape(num){
   var camera=new Camera(scene,45,1,1000).setDistance(5)
    .turnVertical(-90)
   var xyz=new ShapeGroup();
+  var pc=new FrameCounterDiv(scene)
   var shape=null;
   var axisline=scene.makeShape(Meshes.createCapsule(0.005,10,6,4));
   var zaxis=axisline.copy().setColor("blue")
@@ -72,6 +74,7 @@ function sampleShape(num){
   scene.addShape(xyz);
   sampleShape(0);
   GLUtil.renderLoop(function(){
+   pc.update();
    camera.update();
    scene.render();
   });
