@@ -5,8 +5,11 @@ function Perspective(scene, fov, nearZ, farZ){
  this.near=nearZ;
  this.far=farZ;
  this.currentAspect=this.scene.getAspect();
- this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far); 
+ this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
 }
+/**
+ * Not documented yet.
+ */
 Perspective.prototype.update=function(){
  var aspect=this.scene.getAspect();
  if(aspect!=this.currentAspect){
@@ -86,6 +89,9 @@ Camera._moveTrans=function(vec, quat, dist, x, y, z){
  GLMath.vec3scaleInPlace(velocity,dist);
  GLMath.vec3addInPlace(vec,velocity);
 }
+/**
+ * Not documented yet.
+ *//** @private */
 Camera.prototype._distance=function(){
  var rel=GLMath.vec3sub(this.position,this.center);
  return GLMath.vec3length(rel);
@@ -100,7 +106,6 @@ Camera.prototype._getView=function(){
   -this.center[1],-this.center[2]);
  return mat;
 }
-
 
 /** @private */
 Camera.prototype._updateView=function(){
@@ -132,7 +137,7 @@ Camera.prototype._orbit=function(deltaMouseX,deltaMouseY,angleMultiplier){
   lat-=y;
   var pi2=Math.PI-0.00001;
   if(lat<0.00001){
-   y-=(0.00001-lat);   
+   y-=(0.00001-lat);
    lat=0.00001
   } else if(lat>pi2){
    y+=lat-pi2;
@@ -141,7 +146,6 @@ Camera.prototype._orbit=function(deltaMouseX,deltaMouseY,angleMultiplier){
   this.moveAngleVertical(y*GLMath.Num180DividedByPi)
   this._moveAngleFixedHorizontal(x);
 }
-
 
 /** @private */
 Camera.prototype._trackball=function(deltaMouseX,deltaMouseY,angleMultiplier){
@@ -175,6 +179,10 @@ Camera.prototype._moveAngleFixedVertical=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
 Camera.prototype.moveAngleVertical=function(angleDegrees){
  if(angleDegrees!=0){
   Camera._quatRotateRelative(this.dolly,angleDegrees,1,0,0);
@@ -183,6 +191,10 @@ Camera.prototype.moveAngleVertical=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
 Camera.prototype.moveAngleHorizontal=function(angleDegrees){
  if(angleDegrees!=0){
   Camera._quatRotateRelative(this.dolly,angleDegrees,0,1,0);
@@ -191,6 +203,10 @@ Camera.prototype.moveAngleHorizontal=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
 Camera.prototype.turnVertical=function(angleDegrees){
  if(angleDegrees!=0){
   var curDist=this._distance();
@@ -212,6 +228,12 @@ Camera.prototype.turnHorizontal=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} cx
+ * @param {*} cy
+ * @param {*} cz
+ */
 Camera.prototype.movePosition=function(cx,cy,cz){
  this.position[0]=cx;
  this.position[1]=cy;
@@ -219,9 +241,17 @@ Camera.prototype.movePosition=function(cx,cy,cz){
  this._updateView();
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveClose=function(dist){
  return this.setDistance(this._distance()-dist);
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveForward=function(dist){
  if(dist!=0){
   Camera._moveRelative(this.position,this.dolly,dist,0,0,-1);
@@ -229,6 +259,10 @@ Camera.prototype.moveForward=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveCenterHorizontal=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.center,this.dolly,dist,-1,0,0);
@@ -236,6 +270,10 @@ Camera.prototype.moveCenterHorizontal=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveCenterVertical=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.center,this.dolly,dist,0,1,0);
@@ -243,6 +281,10 @@ Camera.prototype.moveCenterVertical=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveHorizontal=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.position,this.dolly,dist,-1,0,0);
@@ -250,6 +292,10 @@ Camera.prototype.moveHorizontal=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveVertical=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.position,this.dolly,dist,0,1,0);
@@ -269,7 +315,9 @@ Camera.prototype.getPosition=function(){
   GLMath.vec3subInPlace(pos,this.center);
   return pos;
 }
-
+/**
+ * Not documented yet.
+ */
 Camera.prototype.getVectorFromCenter=function(){
   return GLMath.vec3normInPlace(this.getPosition());
 }

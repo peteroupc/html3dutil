@@ -81,6 +81,9 @@ Transform.prototype.setMatrix=function(value){
  );
  return this;
 }
+/**
+ * Not documented yet.
+ */
 Transform.prototype.isIdentity=function(){
  if(this._matrixDirty){
   if(this.complexMatrix){
@@ -322,7 +325,7 @@ Transform.prototype.getMatrix=function(){
      this.scale[2],0,
      this.position[0],
      this.position[1],
-     this.position[2],1]; 
+     this.position[2],1];
     this._isIdentity=(this.position[0]==0 && this.position[1]==0 &&
      this.position[2]==0 && this.scale[0]==1 &&
      this.scale[1]==1 && this.scale[2]==1);

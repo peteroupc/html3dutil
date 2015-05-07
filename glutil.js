@@ -575,7 +575,9 @@ Lights._createNewLight=function(index){
  }
  return ret;
 }
-
+/**
+ * Not documented yet.
+ */
 Lights.prototype.getCount=function(){
  return this.lights.length;
 }
@@ -904,7 +906,6 @@ Texture.loadTexture=function(name, textureCache){
     return Promise.reject(name.name);
   });
 }
-
 
 /**
 *  Creates a texture from a byte array specifying the texture data.
@@ -1764,12 +1765,18 @@ Scene3D.prototype._setIdentityMatrices=function(){
 }
 /** @private */
 Scene3D.prototype._updateMatrix=function(){
- this.program.setUniforms({
+ var uniforms={
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
- });
+ };
+ if(this.program.get("viewInvW")!=null){
+  var invView=GLMath.mat4invert(this._viewMatrix);
+  // calculate inverse(viewMatrix)*vec4(0,0,0,1.0)
+  uniforms["viewInvW"]=[invView[12],invView[13],invView[14],invView[15]];
+ }
+ this.program.setUniforms(uniforms);
 }
 /**
  * Sets the projection matrix for this object.  The projection
@@ -1942,7 +1949,7 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
   var viewWorld;
-  if(program.get("modelViewMatrix")){
+  if(program.get("modelViewMatrix")!=null){
    if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
     // view matrix is just a translation matrix, so that getting the model-view
     // matrix amounts to simply adding the view's position

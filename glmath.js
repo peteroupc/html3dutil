@@ -572,7 +572,7 @@ quatToMat4:function(quat){
 },
 /**
 * Calculates the angle and axis of rotation for this
-* quaternion. (The axis of rotation is a line that contains the 
+* quaternion. (The axis of rotation is a line that contains the
 * origin (0,0,0) and a 3D point.)
 * @param {Array<number>} a A quaternion.  Must be normalized.
 * @return  {Array<number>} A 4-element array giving the axis
@@ -614,7 +614,7 @@ quatFromVectors:function(vec1,vec2){
 },
 /**
  * Generates a quaternion from an angle and axis of rotation.
-  (The axis of rotation is a line that contains the 
+  (The axis of rotation is a line that contains the
 * origin (0,0,0) and a 3D point.)
  * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
@@ -728,7 +728,7 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
  * @return {Array<number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
- * angle, if the corresponding axis 
+ * angle, if the corresponding axis
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
