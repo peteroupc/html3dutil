@@ -87,13 +87,17 @@ Quaternions
 --------------
 
 A quaternion is a 4-element array that describes a
-3D rotation.  The first three elements are the X, Y, and Z components
-(axis of rotation multiplied by the sine of half the angle)
-and the fourth component is the W component (cosine of half the angle).
-Functions dealing with quaternions begin with "quat".
+3D rotation.  The first three elements (X, Y, and Z), represents
+an axis of rotation, and the fourth element is 
+the W component. Functions dealing with quaternions begin with 
+"quat".  A quaternion is generated as follows:
 
-<small>A quaternion can be seen as an extension of complex numbers,
-with one real part (W), and three imaginary parts (X, Y, and Z).</small>
+* Set X, Y, and Z to the axis of rotation multiplied by the sine of 
+half the angle.  This results in the same axis of rotation as before, 
+but in a different form.
+* Set W to the cosine of half the angle.
+
+### Multiplying quaternions
 
 The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
