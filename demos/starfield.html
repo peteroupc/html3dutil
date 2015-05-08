@@ -16,12 +16,11 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-
 function setStarPos(star, range){
    var x=0,y=0,z=0
    var centerZone=range/20;
    // avoid stars too close to the center
-   while(Math.abs(x)<centerZone){ 
+   while(Math.abs(x)<centerZone){
     x=Math.random()*range-range/2;
    }
    // avoid stars too close to the center
@@ -50,7 +49,7 @@ function moveStarField(group, range){
    setStarPos(group.shapes[i],range)
    group.shapes[i].getTransform().movePosition(0,0,-range);
   } else {
-   group.shapes[i].getTransform().movePosition(0,0,range/250);  
+   group.shapes[i].getTransform().movePosition(0,0,range/250);
   }
  }
 }

@@ -6,7 +6,7 @@ The variable `textureURL` is the URL of the texture to load.
 
 ```
   scene.loadAndMapTexture(textureURL).then(function(tex){
-    // texture is loaded, the Texture object is in the "tex" paramete
+    // texture is loaded, the Texture object is in the "tex" parameter
   }, function(error){
     // an error occurred
   });

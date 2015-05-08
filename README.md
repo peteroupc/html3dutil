@@ -43,6 +43,7 @@ using evaluators to generate parametric surfaces.
 * [demos/stl.html](https://peteroupc.github.io/html3dutil/demos/stl.html) - Demonstrates loading 3D models.
 * [demos/textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
 and applying them to 3D shapes.
+* [demos/triangle.html](https://peteroupc.github.io/html3dutil/demos/triangle.html) - Demonstrates drawing a triangle.
 * [demos/tris.html](https://peteroupc.github.io/html3dutil/demos/tris.html) - Demonstrates a particle system.
 * [demos/gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
@@ -51,9 +52,9 @@ texture -- a linear gradient from one color to another.
 
 Other Sites
 --------
-* CodePlex: https://html3dutil.codeplex.com/
-* Code Project: http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library
-* SourceForge: https://sourceforge.net/p/html3dutil
+* CodePlex: [https://html3dutil.codeplex.com/](https://html3dutil.codeplex.com/)
+* Code Project: [http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
+* SourceForge: [https://sourceforge.net/p/html3dutil](https://sourceforge.net/p/html3dutil)
 
 Examples
 ---------
@@ -91,7 +92,7 @@ History
 
 Version 1.2.1:
 
-- Fix bug that occurs when a shape derived from a mesh that defines its own 
+- Fix bug that occurs when a shape derived from a mesh that defines its own
 colors is drawn before a shape derived from a mesh that doesn't define its own colors
 
 Version 1.2:

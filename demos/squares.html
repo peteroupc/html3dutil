@@ -71,7 +71,7 @@ return ShaderProgram.makeEffect(context,[
 
 function makePixelate(context){
 return ShaderProgram.makeEffect(context,[
-"uniform float coarseness;", // coarseness in pixels; 1 means normal 
+"uniform float coarseness;", // coarseness in pixels; 1 means normal
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " float g=max(coarseness,1.0);",
 " float gridSizeX=textureSize.x/g;",
@@ -82,7 +82,6 @@ return ShaderProgram.makeEffect(context,[
 " return c;",
 "}"].join("\n"));
 }
-
 
 function makeKernelMatrix(context){
 return ShaderProgram.makeEffect(context,[
@@ -110,7 +109,6 @@ return ShaderProgram.makeEffect(context,[
 " return vec4(color.rgb,mainColor.a);",
 "}"].join("\n"));
 }
-
 
 function makeWave(context){
 return ShaderProgram.makeEffect(context,[
@@ -221,7 +219,6 @@ function linknone(){
   scene.useFilter(currentFilter);
  }
 }
-
 
 function tetrahedron(radius){
  // Build the array of vertices

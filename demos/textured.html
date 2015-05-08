@@ -18,7 +18,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 var Timer=function(){
  this.time=null
- this.hasPerformance=("performance" in window) 
+ this.hasPerformance=("performance" in window)
 }
 Timer.prototype.getTimeMod=function(mod){
  var t=(this.hasPerformance) ?
@@ -27,7 +27,7 @@ Timer.prototype.getTimeMod=function(mod){
   this.time=t
   return 0
  } else {
-  return (t-this.time)%mod 
+  return (t-this.time)%mod
  }
 }
 

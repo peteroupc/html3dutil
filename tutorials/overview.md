@@ -73,6 +73,8 @@ Here are some other built-in mesh methods. This article doesn't explain all the 
   `sweep` 360.</dd>
 </dl>
 
+For more information, see the {@tutorial shapes} tutorial.
+
 ### Shapes
 
 Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene's `makeShape()` method to convert the mesh to a shape. Now you can set the shape's properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D scene.

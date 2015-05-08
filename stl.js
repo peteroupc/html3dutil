@@ -13,7 +13,7 @@ if(!GLUtil){
 (function(GLUtil){
 var StlData={};
 /**
-* Loads a .STL file asynchronously. 
+* Loads a .STL file asynchronously.
 * To use this class, you must include the script "stl.js"; the
  * class is not included in the "glutil_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>

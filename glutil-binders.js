@@ -62,7 +62,7 @@ function LoadedTexture(textureImage, context){
   } else {
    context.texImage2D(context.TEXTURE_2D, 0,
      context.RGBA, textureImage.width, textureImage.height, 0,
-     context.RGBA, context.UNSIGNED_BYTE, textureImage.image);  
+     context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
   }
   // generate mipmaps for power-of-two textures
   if(GLUtil._isPowerOfTwo(textureImage.width) &&

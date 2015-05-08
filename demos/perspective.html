@@ -17,13 +17,12 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-
 /**
 * Finds the intersection point of three planes.
 * @param {Array<number>} p1 A four-element array
 * defining the first plane. The first three elements of the array
 * are the X, Y, and Z components of the plane's normal vector, and
-* the fourth element is the negative dot product of the plane's 
+* the fourth element is the negative dot product of the plane's
 * normal and any point on the plane.
 * @param {Array<number>} p2 A four-element array
 * defining the second plane.
@@ -85,7 +84,7 @@ GLMath.planeNormInPlace=function(plane){
 * (or frustum).
 * In this model, the eye, or camera, is placed at the top
 * of the pyramid, four planes are placed at the pyramid's
-* sides, one plane (the far plane) forms its base, and a 
+* sides, one plane (the far plane) forms its base, and a
 * final plane (the near plane) is the pyramid's chopped
 * off top.
 */
@@ -299,7 +298,7 @@ your mouse, you will see how the spheres are placed in relation
 to the projected view volume.  (Note that the view volume shown
 is smaller than the one that results by the scene's actual projection,
 in order to show the effect better.)  Spheres that would be clipped
-out by the wireframe volume are colored red.</p> 
+out by the wireframe volume are colored red.</p>
 
 <script>
 window.addEventListener("load",function(){
