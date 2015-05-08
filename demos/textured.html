@@ -35,7 +35,7 @@ Timer.prototype.getTimeMod=function(mod){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   var fc=new FrameCounterDiv(scene)
-  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  scene.setPerspective(45,scene.getClientAspect(),0.1,100);
   scene.setLookAt([0,0,40]);
   var timer=new Timer()
   scene.loadAndMapTexture("461223191.jpg").then(function(tex){

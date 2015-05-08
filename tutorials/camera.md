@@ -11,7 +11,7 @@ The [`Scene3D`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html) class
 
     // Set the perspective view.  Camera has a 45-degree field of view
     // and will see objects from 0.1 to 100 units away.
-    scene.setPerspective(45,scene.getAspect(),0.1,100);
+    scene.setPerspective(45,scene.getClientAspect(),0.1,100);
     // Move the camera back 40 units.
     scene.setLookAt([0,0,40]);
     // Move the camera back 30 units instead, and turn it so it
@@ -84,7 +84,7 @@ This method calculates the appropriate clipping planes given a field of view and
 and sets the scene's projection matrix accordingly.
 
 * `fov` - Vertical field of view, in degrees.
-* `aspect` - Aspect ratio of the scene.  You should usually use `scene3d.getAspect()`.
+* `aspect` - Aspect ratio of the scene.  You should usually use `scene3d.getClientAspect()`.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.
 
 **`scene3d.setFrustum(left, right, bottom, top, near, far)`**
@@ -129,7 +129,7 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 
 * `left`, `right`, `bottom`, `top`, `near`, `far` - Same as in `setOrtho`.
 * `aspect` - Aspect ratio of the viewport.  May be omitted, in which case the scene's
-aspect ratio (`scene.getAspect()`) is used.
+aspect ratio (`scene.getClientAspect()`) is used.
 
 ### Other Projections
 

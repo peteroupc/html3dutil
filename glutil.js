@@ -39,6 +39,46 @@ var GLUtil={
 /**
 * Creates an HTML canvas element, optionally appending
 * it to an existing HTML element.
+* @param {HTMLElement|null} parent If non-null, the parent
+* element of the new HTML canvas element. The element will be
+* appended as a child of this parent.
+* @param {number|null} width Width of the new canvas
+* element, or if null, the width a <code>canvas</code>
+* element would ordinarily have
+* under current CSS rules. The resulting width will be rounded up.
+* This parameter can't be a negative number.
+* @param {number|null} height Height of the new canvas
+* element, or if null, the height a <code>canvas</code>
+* element would ordinarily have
+* under current CSS rules. The resulting height will be rounded up.
+* This parameter can't be a negative number.
+* @return {HTMLCanvasElement} The resulting canvas element.
+*/
+"createCanvasElement":function(parent, width, height){
+ var canvas=document.createElement("canvas");
+ if(width==null){
+  canvas.width=Math.ceil(canvas.clientWidth)+"";
+ } else if(width<0){
+  throw new Error("width negative");
+ } else {
+  canvas.width=Math.ceil(width)+"";
+ }
+ if(height==null){
+  canvas.height=Math.ceil(canvas.clientHeight)+"";
+ } else if(height<0){
+  throw new Error("height negative");
+ } else {
+  canvas.height=Math.ceil(height)+"";
+ }
+ if(parent){
+  parent.appendChild(canvas);
+ }
+ return canvas;
+},
+/**
+* Creates an HTML canvas element, optionally appending
+* it to an existing HTML element.
+* @deprecated Use {@link glutil.GLUtil.createCanvasElement} instead.
 * @param {number|null} width Width of the new canvas
 * element, or if null, the value <code>window.innerWidth</code>.
 * The resulting width will be rounded up.
@@ -53,25 +93,9 @@ var GLUtil={
 * @return {HTMLCanvasElement} The resulting canvas element.
 */
 "createCanvas":function(width, height, parent){
- var canvas=document.createElement("canvas");
- if(width==null){
-  canvas.width=Math.ceil(window.innerWidth)+"";
- } else if(width<0){
-  throw new Error("width negative");
- } else {
-  canvas.width=Math.ceil(width)+"";
- }
- if(height==null){
-  canvas.height=Math.ceil(window.innerHeight)+"";
- } else if(height<0){
-  throw new Error("height negative");
- } else {
-  canvas.height=Math.ceil(height)+"";
- }
- if(parent){
-  parent.appendChild(canvas);
- }
- return canvas;
+ if(width==null)width=Math.ceil(window.innerWidth);
+ if(height==null)height=Math.ceil(window.innerHeight);
+ return GLUtil.createCanvasElement(parent,width,height);
 },
 /**
 * Creates a 3D rendering context from an HTML canvas element,
@@ -1413,8 +1437,8 @@ function Scene3D(canvasOrContext){
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
  this.lightSource=new Lights();
- this.width=Math.ceil(this.context.canvas.width*1.0);
- this.height=Math.ceil(this.context.canvas.height*1.0);
+ this.width=Math.ceil(this.context.drawingBufferWidth*1.0);
+ this.height=Math.ceil(this.context.drawingBufferHeight*1.0);
  this.context.viewport(0,0,this.width,this.height);
  this.context.enable(context.BLEND);
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
@@ -1590,6 +1614,15 @@ Scene3D.prototype.getHeight=function(){
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
 }
+/** Gets the ratio of width to height for this scene,
+* as actually displayed on the screen.
+* @return {number}
+*/
+Scene3D.prototype.getClientAspect=function(){
+ var ch=this.context.canvas.clientHeight;
+ if(ch<=0)return 1;
+ return this.context.canvas.clientWidth/ch;
+}
 /**
  * Creates a frame buffer object associated with this scene.
  * @return {FrameBuffer} A buffer with the same size as this scene.
@@ -1619,7 +1652,7 @@ Scene3D.prototype.getViewMatrix=function(){
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.)
 * @param {number}  aspect The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio (getAspect()).
+*  the scene's aspect ratio (getAspect() or getClientAspect()).
 * @param {number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.
@@ -1630,7 +1663,7 @@ Scene3D.prototype.getViewMatrix=function(){
 * @example
 * // Set the perspective projection.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
-* scene.setPerspective(45,scene.getAspect(),0.1,100);
+* scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 */
 Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  return this.setProjectionMatrix(GLMath.mat4perspective(fov,
