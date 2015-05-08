@@ -1436,9 +1436,12 @@ function Scene3D(canvasOrContext){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
+ this.autoResize=true;
  this.lightSource=new Lights();
- this.width=Math.ceil(this.context.drawingBufferWidth*1.0);
- this.height=Math.ceil(this.context.drawingBufferHeight*1.0);
+ this.width=Math.ceil(this.context.canvas.clientWidth*1.0);
+ this.height=Math.ceil(this.context.canvas.clientHeight*1.0);
+ this.context.canvas.width=this.width;
+ this.context.canvas.height=this.height;
  this.context.viewport(0,0,this.width,this.height);
  this.context.enable(context.BLEND);
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
@@ -1483,6 +1486,7 @@ Scene3D.CW = 1;
 * {@link Scene3D.FRONT}, or {@link Scene3D.FRONT_AND_BACK},
 * enables face culling of the specified faces.  For any other value,
 * disables face culling.  By default, face culling is disabled.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.cullFace=function(value){
  if(value==Scene3D.BACK ||
@@ -1521,6 +1525,7 @@ Scene3D.prototype._setFace=function(){
 * counterclockwise triangles are front-facing, which is the
 * default behavior.  If using a left-handed coordinate system,
 * set this value to {@link Scene3D.CW}.
+* @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.frontFace=function(value){
  if(value==Scene3D.CW){
@@ -1528,6 +1533,18 @@ Scene3D.prototype.frontFace=function(value){
  } else {
   this._frontFace=0;
  }
+ return this;
+}
+
+/**
+* Specifies whether to check whether to resize the canvas
+* when the render() method is called.
+* @param {boolean} value If true, will check whether to resize the canvas
+* when the render() method is called. Default is true.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.setAutoResize=function(value){
+ this.autoResize=!!value;
  return this;
 }
  /**
@@ -1836,7 +1853,7 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
  if(texture.constructor==Texture){
    tex=texture.loadImage();
  } else {
-   tex=Texture.loadTexture(texture, this.context, this.textureCache)
+   tex=Texture.loadTexture(texture, this.textureCache)
  }
  return tex.then(function(textureInner){
     textureInner.loadedTexture=new LoadedTexture(textureInner,context);
@@ -2095,6 +2112,18 @@ Scene3D.prototype._setupMatrices=function(shape,program){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(){
+  if(this.autoResize){
+   var c=this.context.canvas;
+   if(c.height!=c.clientHeight ||
+       c.width!=c.clientWidth){
+    // Resize the canvas if needed
+    var cw=c.clientWidth;
+    var ch=c.clientHeight;
+    c.width=cw;
+    c.height=ch;
+    this.context.viewport(0,0,cw,ch);
+   }
+  }
   this._setFace();
   if(typeof this.fboFilter!="undefined" && this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
