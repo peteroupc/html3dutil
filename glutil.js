@@ -1404,6 +1404,8 @@ function Scene3D(canvasOrContext){
    this._getDefines()+ShaderProgram.getDefaultFragment());
  /** An array of shapes that are part of the scene. */
  this.shapes=[];
+ this._frontFace=Scene3D.CCW;
+ this._cullFace=0;
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  this.textureCache={};
@@ -1418,6 +1420,7 @@ function Scene3D(canvasOrContext){
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
  this.context.enable(this.context.DEPTH_TEST);
  this.context.depthFunc(this.context.LEQUAL);
+ this.context.disable(this.context.CULL_FACE);
  this.context.clearDepth(1.0);
  this._setClearColor();
  this.context.clear(
@@ -1428,6 +1431,80 @@ function Scene3D(canvasOrContext){
 /** Returns the WebGL context associated with this scene. */
 Scene3D.prototype.getContext=function(){
  return this.context;
+}
+/** @const No face culling. */
+Scene3D.NONE = 0;
+/** @const Back side of a triangle.  By default, triangles with clockwise winding are back-facing. */
+Scene3D.BACK = 1;
+/** @const Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing. */
+Scene3D.FRONT = 2;
+/** @const Back and front sides of a triangle. */
+Scene3D.FRONT_AND_BACK = 3;
+/**
+* Counterclockwise winding. A triangle has counterclockwise winding if
+* its vertices are ordered such that the path from the first to second to third
+* to first vertex, in window coordinates (X and Y only), runs counterclockwise.
+* @const
+*/
+Scene3D.CCW = 0;
+/**
+* Clockwise winding, the opposite of counterclockwise winding.
+* @const
+*/
+Scene3D.CW = 1;
+/**
+* Specifies which kinds of triangle faces are culled (not drawn)
+* when rendering this scene.
+* @param {number} value If this is {@link Scene3D.BACK},
+* {@link Scene3D.FRONT}, or {@link Scene3D.FRONT_AND_BACK},
+* enables face culling of the specified faces.  For any other value,
+* disables face culling.  By default, face culling is disabled.
+*/
+Scene3D.prototype.cullFace=function(value){
+ if(value==Scene3D.BACK ||
+   value==Scene3D.FRONT ||
+   value==Scene3D.FRONT_AND_BACK){
+  this._cullFace=value;
+ } else {
+  this._cullFace=0;
+ }
+ return;
+}
+Scene3D.prototype._setFace=function(){
+ if(this._cullFace==Scene3D.BACK){
+  this.context.enable(this.context.CULL_FACE);
+  this.context.cullFace(this.context.BACK);
+ } else if(this._cullFace==Scene3D.FRONT){
+  this.context.enable(this.context.CULL_FACE);
+  this.context.cullFace(this.context.FRONT);
+ } else if(this._cullFace==Scene3D.FRONT_AND_BACK){
+  this.context.enable(this.context.CULL_FACE);
+  this.context.cullFace(this.context.FRONT_AND_BACK);
+ } else {
+  this.context.disable(this.context.CULL_FACE);
+ }
+ if(this._frontFace==Scene3D.CW){
+  this.context.frontFace(this.context.CW);
+ } else {
+  this.context.frontFace(this.context.CCW);
+ }
+ return this;
+}
+/**
+* Specifies the winding of front faces.
+* @param {number} value If this is {@link Scene3D.CW},
+* clockwise triangles are front-facing.  For any other value,
+* counterclockwise triangles are front-facing, which is the
+* default behavior.  If using a left-handed coordinate system,
+* set this value to {@link Scene3D.CW}.
+*/
+Scene3D.prototype.frontFace=function(value){
+ if(value==Scene3D.CW){
+  this._frontFace=value;
+ } else {
+  this._frontFace=0;
+ }
+ return this;
 }
  /**
   Gets the color used when clearing the screen each frame.
@@ -1985,6 +2062,7 @@ Scene3D.prototype._setupMatrices=function(shape,program){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(){
+  this._setFace();
   if(typeof this.fboFilter!="undefined" && this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
