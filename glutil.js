@@ -1476,13 +1476,21 @@ function Scene3D(canvasOrContext){
 Scene3D.prototype.getContext=function(){
  return this.context;
 }
-/** @const No face culling. */
+/** No face culling.
+@const  */
 Scene3D.NONE = 0;
-/** @const Back side of a triangle.  By default, triangles with clockwise winding are back-facing. */
+/** Back side of a triangle.  By default, triangles with clockwise winding are back-facing.
+@const */
 Scene3D.BACK = 1;
-/** @const Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing. */
+/**
+Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing.
+@const
+*/
 Scene3D.FRONT = 2;
-/** @const Back and front sides of a triangle. */
+/**
+Back and front sides of a triangle.
+@const
+*/
 Scene3D.FRONT_AND_BACK = 3;
 /**
 * Counterclockwise winding. A triangle has counterclockwise winding if
@@ -2017,9 +2025,10 @@ Scene3D.prototype.removeShape=function(shape){
  return this;
 }
 /**
- *
+ * Sets a light source in this scene to a directional light.
  * @param {number} index Zero-based index of the light to set.  The first
- * light has index 0, the second has index 1, and so on.
+ * light has index 0, the second has index 1, and so on.  Will be created
+ * if the light doesn't exist.
  * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
@@ -2039,9 +2048,12 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  return this;
 }
 /**
- * Not documented yet.
- * @param {*} index
- * @param {*} params
+ * Sets parameters for a light in this scene.
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.  Will be created
+ * if the light doesn't exist.
+ * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
+* @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setLightParams=function(index,params){
  this.lightSource.setParams(index,params);
@@ -2069,7 +2081,7 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
 }
 
 /**
- *
+ * Sets a light source in this scene to a point light
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<number>} position
@@ -2269,13 +2281,16 @@ ShapeGroup.prototype.addShape=function(shape){
  return this;
 }
 /**
- * Not documented yet.
+ * Gets a reference to the transform used by this shape group object.
+ * @return {glutil.Transform}
  */
 ShapeGroup.prototype.getTransform=function(){
  return this.transform;
 }
 /**
- * Not documented yet.
+ * Gets a copy of the transformation needed to transform
+ * this shape group's coordinates to world coordinates.
+ * @return {glutil.Transform} A 4x4 matrix.
  */
 ShapeGroup.prototype.getMatrix=function(){
   var xform=this.getTransform();
@@ -2303,7 +2318,8 @@ ShapeGroup.prototype.setTransform=function(transform){
  return this;
 }
 /**
- * Not documented yet.
+ * Gets the number of vertices composed by this all shapes in this shape group.
+ * @return {number}
  */
 ShapeGroup.prototype.vertexCount=function(){
  var c=0;
@@ -2313,7 +2329,9 @@ ShapeGroup.prototype.vertexCount=function(){
  return c;
 }
 /**
- * Not documented yet.
+ * Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this shape group.
+ * @return {number}
  */
 ShapeGroup.prototype.primitiveCount=function(){
  var c=0;
@@ -2323,7 +2341,9 @@ ShapeGroup.prototype.primitiveCount=function(){
  return c;
 }
 /**
- * Not documented yet.
+ * Gets the number of vertices composed by
+ * all shapes in this scene.
+ * @return {number}
  */
 Scene3D.prototype.vertexCount=function(){
  var c=0;
@@ -2333,7 +2353,9 @@ Scene3D.prototype.vertexCount=function(){
  return c;
 }
 /**
- * Not documented yet.
+* Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this scene.
+ * @return {number}
  */
 Scene3D.prototype.primitiveCount=function(){
  var c=0;
@@ -2399,13 +2421,17 @@ function Shape(mesh){
   this.parent=null;
 }
 /**
- * Not documented yet.
+ * Gets the number of vertices composed by
+ * all shapes in this scene.
+ * @return {number}
  */
 Shape.prototype.vertexCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 }
 /**
- * Not documented yet.
+* Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this scene.
+ * @return {number}
  */
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
