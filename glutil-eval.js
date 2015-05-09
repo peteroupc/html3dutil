@@ -178,7 +178,7 @@ BezierCurve.prototype.evaluate=function(u){
 /**
  * A parametric evaluator for B&eacute;zier surfaces.<p>
  * A B&eacute;zier surface is defined by a series of control points, where
- * the first and last control points on each corner define the endpoints of the surface, and
+ * the control points on each corner define the endpoints of the surface, and
  * the remaining control points define the surface's shape, though they don't
  * necessarily cross the surface.
  * @class
@@ -188,11 +188,11 @@ BezierCurve.prototype.evaluate=function(u){
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
- * curve along the V axis.  For example, a degree-3 (cubic) curve along the V axis
+ * surface along the V axis.  For example, a degree-3 (cubic) surface along the V axis
  * contains 4 control points, one in each control point array.  A degree of 1 on
  * both the U and V axes results in a flat surface.
  * <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
- * curve along the U axis.
+ * surface along the U axis.
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>

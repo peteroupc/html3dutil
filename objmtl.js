@@ -173,7 +173,11 @@ MtlData._getMaterial=function(mtl){
  }
  if(mtl.hasOwnProperty("Ke")){
   var ke=mtl["Ke"];
-  emission=[ke,ke,ke];
+  if(ke.length==1){
+   emission=[ke,ke,ke];
+  } else {
+   emission=xyzToRgb(ke);
+  }
  }
  if(mtl.hasOwnProperty("Ks")){
   specular=xyzToRgb(mtl["Ks"]);
@@ -212,12 +216,10 @@ ObjData.loadMtlFromUrl=function(url){
 Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available) asynchronously.
 @param {string} url The URL to load.
-@return {Promise} A promise that:
-- Resolves when:
-The OBJ file is loaded successfully, whether or not its associated
-MTL is also loaded successfully.  The result is an ObjData object.
-- Is rejected when:
-An error occurs when loading the OBJ file.
+@return {Promise} A promise that resolves when
+the OBJ file is loaded successfully, whether or not its associated
+MTL is also loaded successfully (the result is an ObjData object),
+and is rejected when an error occurs when loading the OBJ file.
 */
 ObjData.loadObjFromUrl=function(url){
  return GLUtil.loadFileFromUrl(url).then(
@@ -251,13 +253,15 @@ ObjData.loadObjFromUrl=function(url){
 MtlData._loadMtl=function(str){
  var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)"
  var nonnegInteger="(\\d+)"
- var oneNumLine=new RegExp("^(Ns|d|Tr|Ni|Ke)\\s+"+number+"\\s*$")
- var oneIntLine=new RegExp("^(illum)\\s+"+nonnegInteger+"\\s*$")
- var threeNumLine=new RegExp("^(Tf)\\s+"+number+"\\s+"+number
+ var oneNumLine=new RegExp("^[ \\t]*(Ns|d|Tr|Ni)\\s+"+number+"\\s*$")
+ var oneIntLine=new RegExp("^[ \\t]*(illum)\\s+"+nonnegInteger+"\\s*$")
+ var threeNumLine=new RegExp("^[ \\t]*(Tf)\\s+"+number+"\\s+"+number
    +"\\s+"+number+"\\s*$")
- var threeOrFourNumLine=new RegExp("^(Kd|Ka|Ks)\\s+"+number+"\\s+"+number
+ var oneOrThreeNumLine=new RegExp("^[ \\t]*(Ke)\\s+"+number+"(?:\\s+"+number
+   +"\\s+"+number+")?\\s*$")
+ var threeOrFourNumLine=new RegExp("^[ \\t]*(Kd|Ka|Ks)\\s+"+number+"\\s+"+number
    +"\\s+"+number+"(?:\\s+"+number+")?\\s*$")
- var mapLine=new RegExp("^(map_Kd|map_bump|map_Ka|map_Ks)\\s+(.*?)\\s*$")
+ var mapLine=new RegExp("^[ \\t]*(map_Kd|map_bump|map_Ka|map_Ks)\\s+(.*?)\\s*$")
  var newmtlLine=new RegExp("^newmtl\\s+([^\\s]*)$")
  var faceStart=new RegExp("^f\\s+")
  var lines=str.split(/\r?\n/)
@@ -303,6 +307,15 @@ MtlData._loadMtl=function(str){
   e=threeNumLine.exec(line)
   if(e){
     currentMat[e[1]]=[parseFloat(e[2]),parseFloat(e[3]),parseFloat(e[4])];
+    continue;
+  }
+  e=oneOrThreeNumLine.exec(line)
+  if(e){
+    if(e[3]){
+      currentMat[e[1]]=[parseFloat(e[2]),parseFloat(e[3]),parseFloat(e[4])];
+    } else {
+      currentMat[e[1]]=[parseFloat(e[2]),parseFloat(e[2]),parseFloat(e[2])];
+    }
     continue;
   }
   e=oneNumLine.exec(line)
@@ -526,7 +539,7 @@ ObjData._loadObj=function(str){
         vertexKind=-1;
         lastPrimitiveSeen=-1;
         haveNormals=false;
-        usemtl=nul;
+        usemtl=null;
         mesh=new Mesh();
       }
       meshName=e[2];

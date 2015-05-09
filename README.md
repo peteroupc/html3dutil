@@ -69,8 +69,6 @@ Examples
   var shape=scene.makeShape(mesh).setColor("red");
   // Add the shape to the scene
   scene.addShape(shape);
-  // Set the starting rotation
-  var rotation=[0,0,0];
   // Create a timer
   var timer={};
   // Set up the render loop
@@ -80,12 +78,13 @@ Examples
    scene.setPerspective(45,scene.getClientAspect(),0.1,100);
    // Move the camera back 40 units.
    scene.setLookAt([0,0,40]);
-   // Adjust x-rotation
-   rotation[0]=360*GLUtil.getTimePosition(timer,time,6000);
-   // Adjust y-rotation
-   rotation[1]=360*GLUtil.getTimePosition(timer,time,12000);
    // Update the shape's rotation
-   shape.setQuaternion(GLMath.quatFromTaitBryan(rotation));
+   var q=GLMath.quatFromTaitBryan(
+     360*GLUtil.getTimePosition(timer,time,6000),
+     360*GLUtil.getTimePosition(timer,time,12000),
+     0
+   );
+   shape.setQuaternion(q);
    // Render the scene
    scene.render();
   });

@@ -1,6 +1,6 @@
 ## Introduction
 
-This article describes projection and view transforms commonly used in 3D graphics,
+This tip describes projection and view transforms commonly used in 3D graphics,
 especially when using my [HTML 3D Library](http://peteroupc.github.io/html3dutil).
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
@@ -25,7 +25,7 @@ the HTML 3D library.
 
 * A _world matrix_ transforms an object's own coordinates to _world space_,
 the coordinate system shared by every object in the scene.  The world matrix
-is not discussed in this article.
+is not discussed in this page.
 * A _view matrix_ transforms coordinates in world space to _camera space_ or _eye space_.
 * A _projection matrix_ transforms coordinates in camera space to _clip space_.
 * Additionally, the graphics pipeline (outside the HTML 3D library) converts the
@@ -178,3 +178,10 @@ This is optional.  The default is [0, 1, 0].
 This method allows you to set the view matrix to an arbitrary [4x4 matrix]{@tutorial glmath}.
 
 * `matrix` - The 4x4 matrix to use.
+
+## Other Pages
+
+The following pages of mine on CodeProject also discuss this library:
+
+* [_Public-Domain HTML 3D Library_](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
+* [_Creating shapes using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
