@@ -2,6 +2,7 @@
 * Contains classes and methods for easing development
 * of WebGL applications.
 * @module glutil
+* @license CC0-1.0
 */
 (function (root, factory) {
 	if (typeof define === "function" && define["amd"]) {
@@ -14,6 +15,30 @@
 }(this, function (exports) {
 	if (exports.GLUtil) { return; }
 
+/*
+  Polyfills
+*/
+if(!window.requestAnimationFrame){
+ window.requestAnimationFrame=window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+ if(!window.requestAnimationFrame){
+  window.requestAnimationFrame=function(func){
+   window.setTimeout(function(){
+    func(window.performance.now());
+   },17);
+  }
+ }
+}
+if(!window.performance){
+ window.performance={};
+}
+if(!window.performance.now){
+ window.performance.now=function(){
+   return (new Date().getTime()*1000)-window.performance._startTime;
+ }
+ window.performance._startTime=new Date().getTime()*1000;
+}
+
 /**
 * Contains miscellaneous utility methods.
 * @class
@@ -22,17 +47,18 @@
 var GLUtil={
 /**
 * This method will call the function once before returning,
-* and queue requests to call that function once per frame.
-* (If the browser doesn't
-* support requestAnimationFrame or an equivalent, uses
-* setTimeout to implement this method.)
-* @param {Function} func The function to call.
+* and queue requests to call that function once per frame,
+* using <code>window.requestAnimationFrame</code>
+* or a "polyfill" method.
+* @param {Function} func The function to call.  The function
+* takes one parameter, "time", which is the number of
+* milliseconds since the page was loaded.
 */
 "renderLoop":function(func){
-  func();
-  var selfRefFunc=function(){
+  func(window.performance.now());
+  var selfRefFunc=function(time){
    window.requestAnimationFrame(selfRefFunc);
-   func();
+   func(time);
   };
   window.requestAnimationFrame(selfRefFunc);
 },
@@ -56,6 +82,9 @@ var GLUtil={
 */
 "createCanvasElement":function(parent, width, height){
  var canvas=document.createElement("canvas");
+ if(parent){
+  parent.appendChild(canvas);
+ }
  if(width==null){
   canvas.width=Math.ceil(canvas.clientWidth)+"";
  } else if(width<0){
@@ -69,9 +98,6 @@ var GLUtil={
   throw new Error("height negative");
  } else {
   canvas.height=Math.ceil(height)+"";
- }
- if(parent){
-  parent.appendChild(canvas);
  }
  return canvas;
 },
@@ -273,16 +299,6 @@ var GLUtil={
  });
 }
 };
-
-if(!window.requestAnimationFrame){
- window.requestAnimationFrame=window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
- if(!window.requestAnimationFrame){
-  window.requestAnimationFrame=function(func){
-   window.setTimeout(func,17);
-  }
- }
-}
 
 (function(exports){
 
@@ -1436,6 +1452,7 @@ function Scene3D(canvasOrContext){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
+ this.useDevicePixelRatio=false;
  this.autoResize=true;
  this.lightSource=new Lights();
  this.width=Math.ceil(this.context.canvas.clientWidth*1.0);
@@ -1535,9 +1552,8 @@ Scene3D.prototype.frontFace=function(value){
  }
  return this;
 }
-
 /**
-* Specifies whether to check whether to resize the canvas
+* Sets whether to check whether to resize the canvas
 * when the render() method is called.
 * @param {boolean} value If true, will check whether to resize the canvas
 * when the render() method is called. Default is true.
@@ -1605,27 +1621,37 @@ Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
- this.context.canvas.width=this.width+"";
- this.context.canvas.height=this.height+"";
+ this.context.canvas.width=this.width;
+ this.context.canvas.height=this.height;
  this.context.viewport(0,0,this.width,this.height);
   if(this.fbo!="undefined" && this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
   }
 }
-/** Gets the viewport width for this scene.
+/**
+* Gets the viewport width for this scene.
+* Note that if auto-resizing is enabled, this value may change
+* after each call to the render() method.
 * @return {number}
 */
 Scene3D.prototype.getWidth=function(){
  return this.width;
 }
-/** Gets the viewport height for this scene.
+/**
+* Gets the viewport height for this scene.
+* Note that if auto-resizing is enabled, this value may change
+* after each call to the render() method.
 * @return {number}
 */
 Scene3D.prototype.getHeight=function(){
  return this.height;
 }
-/** Gets the ratio of width to height for this scene.
+/**
+* Gets the ratio of width to height for this scene (getWidth()
+* divided by getHeight()).
+* Note that if auto-resizing is enabled, this value may change
+* after each call to the render() method.
 * @return {number}
 */
 Scene3D.prototype.getAspect=function(){
@@ -2117,11 +2143,7 @@ Scene3D.prototype.render=function(){
    if(c.height!=c.clientHeight ||
        c.width!=c.clientWidth){
     // Resize the canvas if needed
-    var cw=c.clientWidth;
-    var ch=c.clientHeight;
-    c.width=cw;
-    c.height=ch;
-    this.context.viewport(0,0,cw,ch);
+    this.setDimensions(c.clientWidth,c.clientHeight);
    }
   }
   this._setFace();

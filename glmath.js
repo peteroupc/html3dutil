@@ -12,6 +12,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * with vectors and matrices.<p>
 * See the tutorial "{@tutorial glmath}" for more information.
 * @module glmath
+* @license CC0-1.0
 */
 (function (g,f) {
  if (typeof define=="function" && define["amd"]) {
@@ -1751,19 +1752,20 @@ GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
  */
 GLMath.quatCopy=GLMath.vec4copy;
 /**
- Closest approximation to pi times 2.
+ Closest approximation to pi times 2, or a 360-degree turn in radians.
  @const
  @default
 */
 GLMath.PiTimes2 = 6.283185307179586476925286766559;
 /**
- Closest approximation to pi divided by 2.
+ Closest approximation to pi divided by 2, or a 90-degree turn in radians.
  @const
  @default
 */
 GLMath.HalfPi = 1.5707963267948966192313216916398;
 /**
- Closest approximation to pi divided by 180. Multiply by this number to convert degrees to radians.
+ Closest approximation to pi divided by 180, or the number
+ of radians in a degree. Multiply by this number to convert degrees to radians.
  @const
  @default
 */
@@ -1779,7 +1781,8 @@ GLMath.PiDividedBy360 = 0.00872664625997164788461845384244;
 */
 GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
- Closest approximation to 180 divided by pi. Multiply by this number to convert radians to degrees.
+ Closest approximation to 180 divided by pi, or the number of
+ degrees in a radian. Multiply by this number to convert radians to degrees.
  @const
  @default
 */
