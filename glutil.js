@@ -300,6 +300,78 @@ var GLUtil={
 }
 };
 
+/**
+* Gets the position of a time value within an interval.
+* This is useful for doing animation cycles lasting a certain number
+* of seconds, such as rotating a shape in a 5-second cycle.
+* This method may be called any number of times each frame.
+* @param {object} timer An object that will hold two
+* properties:<ul>
+* <li>"time" - initial time value, in milliseconds.
+* <li>"lastTime" - last known time value, in milliseconds.
+* Will be set to the value given in "timeInMs" before returning.
+* </ul>
+* The object should be initialized using the idiom <code>{}</code>
+* or <code>new Object()</code>.
+* @param {number} timeInMs A time value, in milliseconds.
+* This could be the parameter received in a
+* <code>requestAnimationFrame()</code> callback method.
+* </code>.
+* @param {number} interval The length of the interval
+* (animation cycle), in milliseconds.
+* @return {number} A value in the range [0, 1), where closer
+* to 0 means "timeInMs" lies
+* closer to the start, and closer to 1 means closer
+* to the end of the interval.  If an initial time wasn't set, returns 0.
+* @example <caption>The following code sets an angle of
+* rotation, in degrees, such that an object rotated with the
+* angle does a 360-degree turn in 5 seconds (5000 milliseconds).
+* The variable <code>time</code> is assumed to be a time
+* value in milliseconds, such as the parameter of a
+* <code>requestAnimationFrame()</code> callback method.
+* </caption>
+* var angle = 360 * GLUtil.getTimePosition(timer, time, 5000);
+*/
+GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
+ if(timer.time==null) {
+  timer.time=timeInMs;
+  timer.lastTime=timeInMs;
+  return 0;
+ } else {
+  if(timer.lastTime==null)timer.lastTime=timeInMs;
+  return (((timeInMs-timer.time)*1.0)%intervalInMs)/intervalInMs;
+ }
+};
+/**
+* Returns the number of frame-length intervals that occurred since
+* the last known time, where a frame's length is 1/60 of a second.
+* This method should be called only once each frame.
+* @param {object} timer An object described
+* in {@link glutil.GLUtil.newFrames}.
+* @param {number} timeInMs A time value, in milliseconds.
+* This could be the parameter received in a
+* <code>requestAnimationFrame()</code> callback method.
+* </code>.
+* @return {number} The number of frame-length intervals relative to
+* the last known time held in the parameter "timer".
+* The number can include fractional frames.  If an
+* initial time or last known time wasn't set, returns 0.
+*/
+GLUtil.newFrames=function(timer,timeInMs){
+ if(timer.time==null) {
+  timer.time=timeInMs;
+  timer.lastTime=timeInMs;
+  return 0;
+ } else if(timer.lastTime==null){
+  timer.lastTime=timeInMs;
+  return 0;
+ } else {
+  var diff=(timeInMs-timer.lastTime);
+  timer.lastTime=timeInMs;
+  return diff*60.0/1000.0;
+ }
+};
+
 (function(exports){
 
 var hlsToRgb=function(hls) {

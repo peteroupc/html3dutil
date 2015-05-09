@@ -1,4 +1,3 @@
-
 window.addEventListener("load",function(){
  var a=document.createElement("a")
  a.setAttribute("style","margin-left:2px;margin-top:2px;margin-bottom:2px;position:absolute;left:80%;top:0;"+
@@ -21,7 +20,7 @@ window.addEventListener("load",function(){
    } else {
     viewed=true;
     a.innerHTML="Hide Source"
-    e.style.display="block"   
+    e.style.display="block"
    }
  })
 })

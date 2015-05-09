@@ -59,88 +59,17 @@ function moveStarField(group, range,frames){
  }
 }
 
-
-/**
-* Stores time values to help enable frame-rate independent
-* animation.
-*/
-var Timer=function(){
- this.time=null;
- this.lastTime=null;
-}
-/**
-* Gets the position of a time value within an interval.
-* This is useful in animation cycles lasting a certain number
-* of seconds, such as rotating a shape in a 5-second cycle.
-* @param {number} timeInMs A time value, in milliseconds.
-* This could be the parameter received in a
-* <code>requestAnimationFrame()</code> callback method.
-* </code>.
-* @param {number} interval The length of the interval
-* (animation cycle), in milliseconds.
-* @return {number} A value in the range [0, 1), where closer
-* to 0 means closer to the start, and closer to 1 means closer
-* to the end of the interval.  If an initial time wasn't set
-* by this timer, returns 0.
-* @example <caption>The following code sets an angle of
-* rotation, in degrees, such that an object rotated with the
-* angle does a 360-degree turn in 5 seconds (5000 milliseconds).
-* The variable <code>time</code> is assumed to be a time
-* value in milliseconds, such as the parameter of a
-* <code>requestAnimationFrame()</code> callback method.
-* </code>
-* var angle = 360 * timer.getTimePosition(time, 5000);
-*/
-Timer.prototype.getTimePosition=function(timeInMs,intervalInMs){
- if(this.time==null) {
-  this.time=timeInMs;
-  this.lastTime=timeInMs;
-  return 0;
- } else {
-  if(this.lastTime==null)this.lastTime=timeInMs;
-  return ((timeInMs-this.time)%intervalInMs)/intervalInMs;
- }
-}
-/**
-* Returns the number of frames that occurred since
-* last time, where a frame is 1/60 of a second.
-* @param {number} timeInMs A time value, in milliseconds.
-* This could be the parameter received in a
-* <code>requestAnimationFrame()</code> callback method.
-* </code>.
-* @return {number} The number of frames relative to
-* the last time value passed to the newFrames() or 
-* getTimePosition() method.  The number can include 
-* fractional frames.  If an 
-* initial time or last time wasn't set by this timer, returns 0.
-*/
-Timer.prototype.newFrames=function(timeInMs){
- if(this.time==null) {
-  this.time=timeInMs;
-  this.lastTime=timeInMs;
-  return 0;
- } else if(this.lastTime==null){
-  this.lastTime=timeInMs;
-  return 0;
- } else {
-  var diff=(timeInMs-this.lastTime);
-  this.lastTime=timeInMs;
-  return diff*60.0/1000.0;
- }
-}
-
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .cullFace(Scene3D.BACK);
   var fc=new FrameCounterDiv(scene)
-  var timer=new Timer();
+  var timer={};
   scene.setPerspective(45,scene.getClientAspect(),5,1000).setLookAt([0,0,500]);
   var group=starField(scene,1000)
   scene.addShape(group);
-  timer.newFrames();
    GLUtil.renderLoop(function(time){
-    moveStarField(group,1000,timer.newFrames(time))
+    moveStarField(group,1000,GLUtil.newFrames(timer,time))
     fc.update()
     scene.render();
    })

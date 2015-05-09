@@ -390,17 +390,16 @@ function blindsGroup(scene){
   linknone();
   link2a();
   var rotation=[0,0,0];
+  var timer={};
   var c=[1,2,3,4,5,6,7,6,5,4,3,2]
-  var time=0
   var rot=0
-  GLUtil.renderLoop(function(){
+  GLUtil.renderLoop(function(time){
    if(currentFilter){
     currentFilter.setUniforms({
-      "coarseness":c[(Math.floor(time/5))%c.length],
-      "time":Math.floor(time/3)
+      "coarseness":c[Math.floor(c.length*GLUtil.getTimePosition(timer,time,1500))],
+      "time":100*GLUtil.getTimePosition(timer,time,5000)
     })
    }
-   time+=1
    for(var i=0;i<blinds.shapes.length;i++){
     blinds.shapes[i].setQuaternion(
       GLMath.quatFromAxisAngle(rot,0,1,0));
@@ -409,10 +408,9 @@ function blindsGroup(scene){
     platonic.shapes[i].setQuaternion(
       GLMath.quatFromTaitBryan(rotation));
    }
-   rot+=5
-   rot%=360
-   rotation[0]+=0.5;
-   rotation[1]+=1;
+   rot=360*GLUtil.getTimePosition(timer,time,2000);
+   rotation[0]=360*GLUtil.getTimePosition(timer,time,6000);
+   rotation[1]=360*GLUtil.getTimePosition(timer,time,12000);
    scene.render();
    fc.update();
   });
