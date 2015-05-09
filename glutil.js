@@ -1453,6 +1453,7 @@ function Scene3D(canvasOrContext){
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
  this.useDevicePixelRatio=false;
+ this._pixelRatio=1;
  this.autoResize=true;
  this.lightSource=new Lights();
  this.width=Math.ceil(this.context.canvas.clientWidth*1.0);
@@ -1521,7 +1522,7 @@ Scene3D.prototype.cullFace=function(value){
  } else {
   this._cullFace=0;
  }
- return;
+ return this;
 }
 Scene3D.prototype._setFace=function(){
  if(this._cullFace==Scene3D.BACK){
@@ -1569,6 +1570,26 @@ Scene3D.prototype.frontFace=function(value){
 */
 Scene3D.prototype.setAutoResize=function(value){
  this.autoResize=!!value;
+ return this;
+}
+/**
+* Sets whether to use the device's pixel ratio (if supported by
+* the browser) in addition to the canvas's size when setting
+* the viewport's dimensions.<p>
+* When this value changes, the Scene3D will automatically
+* adjust the viewport.
+* @param {boolean} value If true, use the device's pixel ratio
+* when setting the viewport's dimensions.  Default is true.
+* @return {glutil.Scene3D} This object.
+  */
+Scene3D.prototype.setUseDevicePixelRatio=function(value){
+ var oldvalue=!!this.useDevicePixelRatio;
+ this.useDevicePixelRatio=!!value;
+ this._pixelRatio=(this.useDevicePixelRatio && window.devicePixelRatio) ?
+   window.devicePixelRatio : 1;
+ if(oldvalue!=this.useDevicePixelRatio){
+  this.setDimensions(this.width,this.height);
+ }
  return this;
 }
  /**
@@ -1629,9 +1650,10 @@ Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
- this.context.canvas.width=this.width;
- this.context.canvas.height=this.height;
- this.context.viewport(0,0,this.width,this.height);
+ this.context.canvas.width=this.width*this._pixelRatio;
+ this.context.canvas.height=this.height*this._pixelRatio;
+ this.context.viewport(0,0,this.width*this._pixelRatio,
+   this.height*this._pixelRatio);
   if(this.fbo!="undefined" && this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
@@ -2152,8 +2174,8 @@ Scene3D.prototype._setupMatrices=function(shape,program){
 Scene3D.prototype.render=function(){
   if(this.autoResize){
    var c=this.context.canvas;
-   if(c.height!=c.clientHeight ||
-       c.width!=c.clientWidth){
+   if(c.height!=Math.ceil(c.clientHeight)*this._pixelRatio ||
+       c.width!=Math.ceil(c.clientWidth)*this._pixelRatio){
     // Resize the canvas if needed
     this.setDimensions(c.clientWidth,c.clientHeight);
    }
