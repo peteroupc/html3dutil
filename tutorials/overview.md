@@ -1,6 +1,6 @@
 ## How to Use
 
-1. **Download the HTML 3D library**.
+1. [**Download the HTML 3D library**](https://github.com/peteroupc/html3dutil/releases).
 2. Extract the file <i>"glutil_min.js"</i>, and write the following code in every HTML page where you will use the library.
 
         <script type="text/javascript" src="glutil_min.js"></script>

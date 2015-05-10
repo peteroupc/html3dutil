@@ -450,9 +450,10 @@ CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
 /**
 * An evaluator of parametric functions for generating
 * vertex positions, normals, colors, and texture coordinates
-* of a surface.
+* of a surface.<p>
+* See the {@tutorial surfaces} tutorial for more information.
 * @class
-* @alias SurfaceEval
+* @alias glutil.SurfaceEval
 */
 this.SurfaceEval=function(){
  this.colorSurface=null;
