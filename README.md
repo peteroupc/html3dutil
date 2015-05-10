@@ -93,6 +93,26 @@ Examples
 History
 ---------
 
+Version 1.3:
+
+- Camera class rewritten again, but backwards compatible with
+version 1.0
+- Add vec3add, vec3sub, vec3copy, vec3assign, vec4assign methods
+to GLMath
+- Fix quatInvert method and optimize mat4inverseTranspose
+method of GLMath
+- Add reverseNormals method to GLMath
+- Add createCanvasElement, getTimePosition, and newFrames methods to GLUtil
+- Deprecate createCanvas method of GLUtil
+- Improve renderLoop method of GLUtil
+- Improved specular highlights
+- Allow coordinate arrays in vertex2 and vertex3 methods of Mesh class
+- Resolve some autonormal degenerate cases in SurfaceEval class
+- Add getCount method to Lights class
+- Add face culling, auto resize, and pixel depth methods to Scene3D class
+- Add getClientAspect method to Scene3D class
+- Other fixes and improvements
+
 Version 1.2.1:
 
 - Fix bug that occurs when a shape derived from a mesh that defines its own
