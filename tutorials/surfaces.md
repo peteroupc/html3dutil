@@ -27,8 +27,8 @@ For example, if we have a parametric surface defined by the following functions:
 
 and we evaluate the UV point (2, 4), then we have:
 
-* **F**(2, 3) = [ 2 * 4, -2, 2 * sqrt(4) ];
-* **F**(2, 3) = [ 8, -2, 4 ];
+* **F**(2, 4) = [ 2 * 4, -2, 2 * sqrt(4) ];
+* **F**(2, 4) = [ 8, -2, 4 ];
 
 So (8, -2, 4) is one point that lies on this parametric surface, and any other point on the
 surface can be found by evaluating different UV points.  By the way, the surface looks like this:
@@ -37,7 +37,7 @@ surface can be found by evaluating different UV points.  By the way, the surface
 
 ## Parametric Surfaces in the HTML 3D Library
 
-The HTML 3D Library supports parametric surfaces using a class named `SurfaceEval`.  It helps
+The HTML 3D Library supports parametric surfaces using a class named [`SurfaceEval`](http://peteroupc.github.io/html3dutil/glutil.SurfaceEval.html).  It helps
 generate vertex coordinates, texture coordinates, normals, and colors using a parametric surface
 function.  The following helper function, `makeMesh`, generates a parametric surface mesh
 that was used to produce the pictures on this page.
@@ -145,6 +145,19 @@ and the API references for the [`Mesh`](http://peteroupc.github.io/html3dutil/gl
 ## Demo
 
 * [surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates parametric surfaces.
+
+This demo contains several examples of parametric surfaces.   The source code defines several classes that create evaluators of parametric surfaces:
+
+* `new Superellipsoid(xRadius, yRadius, zRadius, n, m)`<br>
+   Creates a "[superellipsoid](http://en.wikipedia.org/wiki/Superellipsoid)" shape, with a radius `xRadius` along the X-axis, `yRadius` along the Y-axis, and `zRadius` along the z-axis.  The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal ellipsoid.
+* `new Supertoroid(xRadius, yRadius, zRadius, innerRadius, n, m)`<br>
+   Creates a "[supertoroid](http://en.wikipedia.org/wiki/Supertoroid)" shape (with a hole in the middle), with a radius `xRadius` along the X-axis, `yRadius` along the Y-axis, and `zRadius` along the z-axis.  The inner radius will be `innerRadius`. The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal torus or toroid.
+* `new RevolutionSurface(func,minValue,maxValue)`<br>
+   Creates a [surface of revolution](http://en.wikipedia.org/wiki/Surface_of_revolution) of a single-parameter function `func`, from `minValue` to `maxValue`.
+* `new KleinBottle()`<br>Creates a Klein bottle.
+* `new MoebiusStrip()`<br>Creates a M&ouml;bius strip.
+
+These are only some of the many possible kinds of parametric surfaces.
 
 ## Other Pages
 

@@ -276,7 +276,7 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
  }
  for(var i=0;i<=slices;i++){
   var t=i*1.0/slices;
-  var angle=start+arcLength*t;
+  var angle=(t==1 && arcLength==twopi) ? start : start+arcLength*t;
   angle=(angle<0) ? twopi-(-angle)%twopi : angle%twopi;
   sc.push(Math.sin(angle),Math.cos(angle));
   tc.push(t);
@@ -371,14 +371,18 @@ Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
  var twopi=GLMath.PiTimes2;
  var sci=[];
  var scj=[];
- for(var i = 0; i <= crosswise; i++){
+ for(var i = 0; i < crosswise; i++){
   var u = i*twopi/crosswise;
   sci.push(Math.sin(u),Math.cos(u));
  }
- for(var i = 0; i <= lengthwise; i++){
+ sci.push(sci[0]);
+ sci.push(sci[1]);
+ for(var i = 0; i < lengthwise; i++){
   var u = i*twopi/lengthwise;
   scj.push(Math.sin(u),Math.cos(u));
  }
+ scj.push(scj[0]);
+ scj.push(scj[1]);
  for(var j = 0; j < lengthwise; j++){
   var v0 = (j)/lengthwise;
   var v1 = (j+1.0)/lengthwise;
