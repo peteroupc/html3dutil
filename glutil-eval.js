@@ -627,6 +627,7 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
    var dv=0.001
    // Find the partial derivatives of u and v
    var vu=this.vertexSurface.evaluate(u+du,v);
+   var vuz=vu[2];
    var vv=this.vertexSurface.evaluate(u,v+dv);
    GLMath.vec3subInPlace(vv,vertex);
    GLMath.vec3subInPlace(vu,vertex);
@@ -637,14 +638,19 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
    GLMath.vec3normInPlace(vv);
    if(GLMath.vec3length(vu)==0){
     // partial derivative of u is degenerate
-    //console.log([vu,vv]+" u degen")
+    //console.log([vu,vv,u,v]+" u degen")
     vu=vv;
    } else if(GLMath.vec3length(vv)!=0){
     vu=GLMath.vec3cross(vu,vv);
     GLMath.vec3normInPlace(vu);
    } else {
     // partial derivative of v is degenerate
-    //console.log([vu,vv]+" v degen")
+    //console.log([vu,vv,u,v]+" v degen")
+    if(vu[2]==vertex[2]){
+      // the close evaluation returns the same
+      // z as this evaluation
+      vu=[0,0,1];
+    }
    }
    mesh.normal3(vu[0],vu[1],vu[2]);
   } else if(normal){

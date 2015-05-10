@@ -6,7 +6,13 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/** @class OBJ file. */
+/**
+OBJ file.<p>
+ * To use this class, you must include the script "objmtl.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="glutil_min.js">&lt;/script></pre>
+@class */
 function ObjData(){
   /** URL of the OBJ file */
   this.url=null;
@@ -23,11 +29,7 @@ function MtlData(){
 }
 /**
  * Creates one or more 3D shapes from the data
- * in this OBJ file.<p>
- * To use this class, you must include the script "objmtl.js"; the
- * class is not included in the "glutil_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
- * &lt;script type="text/javascript" src="glutil_min.js">&lt;/script></pre>
+ * in this OBJ file.
  * @param {Scene3D} scene 3D scene to load the shape with.
  * @return {glutil.ShapeGroup} Group of shapes.
  */

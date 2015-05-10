@@ -42,9 +42,8 @@ orthographic projection, described below.
 ### Perspective Projection
 
 A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects
-look bigger than more distant objects with the same size.
-
-The perspective projection is similar to how our eyes see the world.
+look bigger than more distant objects with the same size, making the
+projection similar to how our eyes see the world.
 
 ![Two rows of spheres, and a drawing of a perspective view volume.](persp1.png)
 
