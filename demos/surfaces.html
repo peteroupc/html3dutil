@@ -14,6 +14,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:link1()">Superellipsoid</a>,
 <a href="javascript:link2()">Klein bottle</a>,
 <a href="javascript:link3()">M&ouml;bius strip</a>,
+<a href="javascript:link3a()">M&ouml;bius-like strip</a>,
 <a href="javascript:link4()">Surface of revolution for f(x) = sin x</a>,
 <a href="javascript:link5()">Surface of revolution for f(x) = x<sup>2</sup></a>,
 <a href="javascript:link6()">Supertoroid</a>
@@ -123,7 +124,25 @@ var KleinBottle=function(){
  }
 }
 
-var MoebiusStrip=function(maj, a, b){
+var MoebiusStrip=function(radius,width){
+ this.radius=radius==null ? 1 : radius;
+ this.width=width==null ? 0.5 : width;
+ this.evaluate=function(u,v){
+  u=-this.width+(this.width*2)*u;
+  v*=GLMath.PiTimes2;
+  var x, y, z;
+  var sinv=Math.sin(v);
+  var cosv=Math.cos(v);
+  var sinv2=Math.sin(v/2);
+  var tmp=u*Math.cos(v/2)+this.radius;
+  x=cosv*tmp;
+  y=sinv*tmp;
+  z=sinv2*u;
+  return [x,y,z]
+ }
+}
+
+var MoebiusLikeStrip=function(maj, a, b){
  this.maj=maj==null ? 1.25 : maj
  this.a=a==null ? 0.125 : a
  this.b=b==null ? 0.5 : b
@@ -192,6 +211,11 @@ function link3(){
  scene.addShape(shape=scene.makeShape(makeMesh(new MoebiusStrip())).setMaterial(material));
 }
 
+
+function link3a(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new MoebiusLikeStrip())).setMaterial(material));
+}
 function link4(){
  scene.removeShape(shape);
  scene.addShape(shape=scene.makeShape(makeMesh(new RevolutionSurface(function(x){

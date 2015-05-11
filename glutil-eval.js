@@ -8,6 +8,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 (function(global){
 /** @private */
+function BernsteinEval(order){
+ this.order=order;
+ this.n=this.order-1;
+}
+/** @private */
 BernsteinEval._binomial=[ [1],
   [1,1],
   [1,2,1],
@@ -40,11 +45,6 @@ BernsteinEval._factorial=function(n) {
   var result = 1;
   for (var i = n; i > 1; i--)result *= i;
   return result;
-}
-/** @private */
-function BernsteinEval(order){
- this.order=order;
- this.n=this.order-1;
 }
 /** @private */
 BernsteinEval.prototype.getFactor=function(t, i){
@@ -253,7 +253,7 @@ function BezierSurface(cp, u1, u2, v1, v2){
 * @class
 * @alias CurveEval
 */
-function CurveEval(){
+var CurveEval=function(){
  this.colorCurve=null;
  this.normalCurve=null;
  this.texCoordCurve=null;
@@ -455,7 +455,7 @@ CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
 * @class
 * @alias glutil.SurfaceEval
 */
-this.SurfaceEval=function(){
+var SurfaceEval=function(){
  this.colorSurface=null;
  this.normalSurface=null;
  this.texCoordSurface=null;
@@ -743,4 +743,6 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  }
  return this;
 }
+global.SurfaceEval=SurfaceEval;
+global.CurveEval=CurveEval;
 })(this);

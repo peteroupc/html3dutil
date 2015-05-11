@@ -86,8 +86,8 @@ The following code is a very simple surface evaluator.
     var evaluator = {
       "evaluate":function(u, v){
         // Take the U parameter as the X coordinate,
-        // the V parameter as the X coordinate, and 0 as
-        // coordinate.
+        // the V parameter as the Y coordinate, and 0 as
+        // the Z coordinate.
         return [u, v, 0];
       }
     }
