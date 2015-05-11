@@ -44,8 +44,10 @@ that was used to produce the pictures on this page.
 
 The comments explain how `makeMesh` works in detail.
 
-    function makeMesh(func){
-      // create a new mesh
+   function makeMesh(func,resolution){
+    // Default resolution is 50
+    if(resolution==null)resolution=50
+     // create a new mesh
      var mesh=new Mesh();
      // define a color gradient evaluator for
      // demonstration purposes.  Instead of X, Y, and Z,
@@ -56,9 +58,8 @@ The comments explain how `makeMesh` works in detail.
       evaluate:function(u,v){ return [1-u,v,u]; }
      }
      // generate the parametric surface.
-     // First, create a SurfaceEval object
+
      var ev=new SurfaceEval()
-    // Specify the vertex evaluator passed as _func_
       .vertex(func)
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
@@ -66,16 +67,16 @@ The comments explain how `makeMesh` works in detail.
     // which is required for lighting to work correctly
       .setAutoNormal(true)
     // Evaluate the surface and generate a triangle
-    // mesh, using 51 different U-coordinates ranging
-    // from 0 to 1 (50 subdivisions plus 1), and 51
+    // mesh, using resolution+1 different U-coordinates ranging
+    // from 0 to 1, and resolution+1
     // different V-coordinates ranging from 0 to 1
     // Instead of Mesh.TRIANGLES, we could use
     // Mesh.LINES to create a wireframe mesh,
     // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,Mesh.TRIANGLES,50,50);
-     // Surface generated, return the mesh
-     return mesh;
-   }
+      .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
+    // Surface generated, return the mesh
+    return mesh;
+  }
 
 In the HTML 3D Library, parametric surface objects define one method, "evaluate",
 which returns a 3D point given a U parameter and a V parameter.  (By default, U and
