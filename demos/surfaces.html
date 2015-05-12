@@ -249,15 +249,6 @@ function makeCurve(func){
     return mesh;
   }
 
-var evaluator={
- "evaluate":function(u,v){
-         // Extend the range of v
-         v*=Math.PI*2;
-         // Return circle coordinates.
-         return [u*Math.cos(v),u*Math.sin(v),-u];
-  }
-};
-
 function TorusKnot(p,q,outerRadius,innerRadius){
  this.p=p;
  this.q=q;
