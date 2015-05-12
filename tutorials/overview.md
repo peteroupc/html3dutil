@@ -60,7 +60,7 @@ The `Scene3D` class has a concept of a "projection transform" and a "view transf
 ```
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
-  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  scene.setPerspective(45,scene.getClientAspect(),0.1,100);
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
   // Move the camera back 30 units instead, and turn it so it
@@ -189,7 +189,7 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
       var scene=new Scene3D(document.getElementById("canvas"));
       // Set the perspective view.  Camera has a 45-degree field of view
       // and will see objects from 0.1 to 100 units away.
-      scene.setPerspective(45,scene.getAspect(),0.1,100);
+      scene.setPerspective(45,scene.getClientAspect(),0.1,100);
       // Move the camera back 40 units.
       scene.setLookAt([0,0,40]);
       // Create a box mesh 10 units in width, 20 units

@@ -47,7 +47,7 @@ BernsteinEval._factorial=function(n) {
   return result;
 }
 /** @private */
-BernsteinEval.prototype.getFactor=function(t, i){
+BernsteinEval.prototype.getFactor=function(u, i){
  var bino;
  if(i==0){
   return Math.pow(1-u,this.n-i);
@@ -88,26 +88,29 @@ BernsteinEvalSpline.prototype.evaluate=function(t, output){
 }
 /** @private */
 function BernsteinEvalSurface(controlPoints){
- if(!this.controlPoints||this.controlPoints.length==0)
+ if(!controlPoints||controlPoints.length==0)
   throw new Error("no control points")
  this.uorder=controlPoints.length;
  this.torder=controlPoints[0].length;
  this.k=controlPoints[0][0].length;
+ if(typeof this.k==="undefined")
+  throw new Error("probably not a 2D control point array")
  this.points=controlPoints;
- this.evaluator=new BernsteinEval(this.order);
+ this.evaluatorT=new BernsteinEval(this.torder);
+ this.evaluatorU=new BernsteinEval(this.uorder);
  this.bufferT=[];
  this.bufferU=[];
 }
 /** @private */
 BernsteinEvalSurface.prototype.evaluate=function(t, u, output){
- var bt=bufferT;
- var bu=bufferU;
+ var bt=this.bufferT;
+ var bu=this.bufferU;
  if(t==u){
-  bu=bufferT;
-  this.evaluator.getFactors(t, bufferT);
+  bu=this.bufferT;
+  this.evaluatorT.getFactors(t, this.bufferT);
  } else {
-  this.evaluator.getFactors(t, bufferT);
-  this.evaluator.getFactors(u, bufferU);
+  this.evaluatorT.getFactors(t, this.bufferT);
+  this.evaluatorU.getFactors(u, this.bufferU);
  }
  for(var i=0;i<this.k;i++){
   var value=0;
@@ -141,7 +144,7 @@ BernsteinEvalSurface.prototype.evaluate=function(t, u, output){
  * @param {number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
  * May be omitted; default is 1.
  */
-function BezierCurve(cp, u1, u2){
+var BezierCurve=function(cp, u1, u2){
  if(typeof u1=="undefined" && typeof u2=="undefined"){
   this.uoffset=0;
   this.umul=1;
@@ -209,7 +212,7 @@ BezierCurve.prototype.evaluate=function(u){
  * V-axis; it will correspond to 1.
  * May be omitted; default is 1.
  */
-function BezierSurface(cp, u1, u2, v1, v2){
+var BezierSurface=function(cp, u1, u2, v1, v2){
  if(typeof u1=="undefined" && typeof u2=="undefined" &&
     typeof v1=="undefined" && typeof v2=="undefined"){
   this.uoffset=0;
@@ -226,7 +229,7 @@ function BezierSurface(cp, u1, u2, v1, v2){
   this.voffset=v1;
   this.vmul=1.0/(v2-v1);
  }
- this.evaluator=new BernsteinEvalSpline(cp);
+ this.evaluator=new BernsteinEvalSurface(cp);
  this.k=this.evaluator.k;
 }
 /**
@@ -394,15 +397,18 @@ CurveEval.prototype.evalOne=function(mesh,u){
  if(this.vertexCurve){
   var oldColor=(color) ? mesh.color.slice(0,3) : null;
   var oldNormal=(normal) ? mesh.normal.slice(0,3) : null;
-  var oldTexCoord=(texcoord) ? mesh.texCoord.slice(0,3) : null;
+  var oldTexCoord=(texcoord) ? mesh.texCoord.slice(0,2) : null;
   if(color)mesh.color3(color[0],color[1],color[2]);
   if(normal)mesh.normal3(normal[0],normal[1],normal[2]);
-  if(texcoord)mesh.texCoord3(texcoord[0],texcoord[1],texcoord[2]);
+  if(texcoord)mesh.texCoord2(texcoord[0],texcoord[1]);
   var vertex=this.vertexCurve.evaluate(u);
-  mesh.vertex3(vertex[0],vertex[1],vertex[2]);
+  if(vertex.length==2)
+   mesh.vertex3(vertex[0],vertex[1],0.0);
+  else
+   mesh.vertex3(vertex[0],vertex[1],vertex[2]);
   if(oldColor)mesh.color3(oldColor[0],oldColor[1],oldColor[2]);
   if(oldNormal)mesh.normal3(oldNormal[0],oldNormal[1],oldNormal[2]);
-  if(oldTexCoord)mesh.texCoord3(oldTexCoord[0],oldTexCoord[1],oldTexCoord[2]);
+  if(oldTexCoord)mesh.texCoord2(oldTexCoord[0],oldTexCoord[1]);
  }
  return this;
 }
@@ -517,6 +523,11 @@ SurfaceEval.prototype.color=function(evaluator){
 * named "evaluate", giving 2 values as a result.  See {@link SurfaceEvals#vertex}.
 * </ul>
 * @return {SurfaceEval} This object.
+* @example <caption>The following example sets the surface
+* function to a linear evaluator. Thus, coordinates passed to the
+* evalOne and evalSurface methods will be interpolated as direct
+* texture coordinates.</caption>
+* surface.texCoord({"evaluate":function(u,v){ return [u,v] }});
 */
 SurfaceEval.prototype.texCoord=function(evaluator){
  this.texCoordSurface=evaluator;
@@ -628,8 +639,18 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
    var dv=0.001
    // Find the partial derivatives of u and v
    var vu=this.vertexSurface.evaluate(u+du,v);
+   if(vu[0]==0 && vu[1]==0 && vu[2]==0){
+    // too abrupt, try the other direction
+    du=-du;
+    vu=this.vertexSurface.evaluate(u+du,v);
+   }
    var vuz=vu[2];
    var vv=this.vertexSurface.evaluate(u,v+dv);
+   if(vv[0]==0 && vv[1]==0 && vv[2]==0){
+    // too abrupt, try the other direction
+    dv=-dv;
+    vv=this.vertexSurface.evaluate(u,v+dv);
+   }
    GLMath.vec3subInPlace(vv,vertex);
    GLMath.vec3subInPlace(vu,vertex);
    // Divide by the deltas of u and v
@@ -657,11 +678,11 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
   } else if(normal){
    mesh.normal3(normal[0],normal[1],normal[2]);
   }
-  if(texcoord)mesh.texCoord3(texcoord[0],texcoord[1],texcoord[2]);
+  if(texcoord)mesh.texCoord2(texcoord[0],texcoord[1]);
   mesh.vertex3(vertex[0],vertex[1],vertex[2]);
   if(oldColor)mesh.color3(oldColor[0],oldColor[1],oldColor[2]);
   if(oldNormal)mesh.normal3(oldNormal[0],oldNormal[1],oldNormal[2]);
-  if(oldTexCoord)mesh.texCoord3(oldTexCoord[0],oldTexCoord[1],oldTexCoord[2]);
+  if(oldTexCoord)mesh.texCoord2(oldTexCoord[0],oldTexCoord[1]);
  }
  return this;
 }
@@ -745,4 +766,6 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
 }
 global.SurfaceEval=SurfaceEval;
 global.CurveEval=CurveEval;
+global.BezierCurve=BezierCurve;
+global.BezierSurface=BezierSurface;
 })(this);

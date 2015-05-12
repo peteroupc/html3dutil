@@ -1596,6 +1596,9 @@ Scene3D.prototype.cullFace=function(value){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ *//** @private */
 Scene3D.prototype._setFace=function(){
  if(this._cullFace==Scene3D.BACK){
   this.context.enable(this.context.CULL_FACE);
