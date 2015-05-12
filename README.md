@@ -93,6 +93,13 @@ Examples
 History
 ---------
 
+Version 1.3.1:
+
+- Fixed touch events in some of the interactive demos
+- Fixed issues with BezierCurve, BezierSurface
+- Robustness improvement in autonormal feature of SurfaceEval
+- Correctness and other fixes
+
 Version 1.3:
 
 - Camera class rewritten again, but backwards compatible with

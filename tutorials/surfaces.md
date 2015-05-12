@@ -44,21 +44,20 @@ that was used to produce the pictures on this page.
 
 The comments explain how `makeMesh` works in detail.
 
-   function makeMesh(func,resolution){
-    // Default resolution is 50
-    if(resolution==null)resolution=50
-     // create a new mesh
-     var mesh=new Mesh();
-     // define a color gradient evaluator for
-     // demonstration purposes.  Instead of X, Y, and Z,
-     // generate a Red/Green/Blue color based on
-     // the same parameters U and V as the surface
-     // function for 3D points.
-     var colorGradient={
-      evaluate:function(u,v){ return [1-u,v,u]; }
-     }
+    function makeMesh(func,resolution){
+     // Default resolution is 50
+     if(resolution==null)resolution=50
+      // create a new mesh
+      var mesh=new Mesh();
+      // define a color gradient evaluator for
+      // demonstration purposes.  Instead of X, Y, and Z,
+      // generate a Red/Green/Blue color based on
+      // the same parameters U and V as the surface
+      // function for 3D points.
+      var colorGradient={
+       evaluate:function(u,v){ return [1-u,v,u]; }
+      }
      // generate the parametric surface.
-
      var ev=new SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
@@ -76,7 +75,7 @@ The comments explain how `makeMesh` works in detail.
       .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
     // Surface generated, return the mesh
     return mesh;
-  }
+    }
 
 In the HTML 3D Library, parametric surface objects define one method, "evaluate",
 which returns a 3D point given a U parameter and a V parameter.  (By default, U and
@@ -166,4 +165,4 @@ The following pages of mine on CodeProject also discuss this library:
 
 * [_Public-Domain HTML 3D Library_](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
 * [_Creating shapes using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
-* [_The "Camera" and the Perspective and View Transforms_](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
+* [_The "Camera" and the Projection and View Transforms_](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
