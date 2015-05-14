@@ -8,120 +8,29 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 (function(global){
 /** @private */
-function BernsteinEval(order){
- this.order=order;
- this.n=this.order-1;
+function BernsteinEvalSpline(cp){
+ var knots=[];
+ for(var i=0;i<cp.length;i++)knots.push(0);
+ for(var i=0;i<cp.length;i++)knots.push(1);
+ this.c=new BSplineCurve(cp,knots,0);
 }
 /** @private */
-BernsteinEval._binomial=[ [1],
-  [1,1],
-  [1,2,1],
-  [1,3,3,1],
-  [1,4,6,4,1],
-  [1,5,10,10,5,1],
-  [1,6,15,20,15,6,1],
-  [1,7,21,35,35,21,7,1],
-  [1,8,28,56,70,56,28,8,1],
-  [1,9,36,84,126,126,84,36,9,1],
-  [1,10,45,120,210,252,210,120,45,10,1],
-  [1,11,55,165,330,462,462,330,165,55,11,1],
-  [1,12,66,220,495,792,924,792,495,220,66,12,1],
-  [1,13,78,286,715,1287,1716,1716,1287,715,286,78,13,1],
-  [1,14,91,364,1001,2002,3003,3432,3003,2002,1001,364,91,14,1],
-  [1,15,105,455,1365,3003,5005,6435,6435,5005,3003,1365,
-  455,105,15,1],
-  [1,16,120,560,1820,4368,8008,11440,12870,11440,8008,4368,
-  1820,560,120,16,1],
-  [1,17,136,680,2380,6188,12376,19448,24310,24310,19448,12376,
-  6188,2380,680,136,17,1],
-  [1,18,153,816,3060,8568,18564,31824,43758,48620,43758,31824,
-  18564,8568,3060,816,153,18,1],
-  [1,19,171,969,3876,11628,27132,50388,75582,92378,92378,75582,
-  50388,27132,11628,3876,969,171,19,1],
-  [1,20,190,1140,4845,15504,38760,77520,125970,167960,184756,167960,
-  125970,77520,38760,15504,4845,1140,190,20,1] ];
+BernsteinEvalSpline.prototype.evaluate=function(u){
+ return this.c.evaluate(u);
+};
 /** @private */
-BernsteinEval._factorial=function(n) {
-  var result = 1;
-  for (var i = n; i > 1; i--)result *= i;
-  return result;
+function BernsteinEvalSurface(cp){
+ var knotsV=[], knotsU=[];
+ for(var i=0;i<cp.length;i++)knotsV.push(0);
+ for(var i=0;i<cp.length;i++)knotsV.push(1);
+ for(var i=0;i<cp[0].length;i++)knotsU.push(0);
+ for(var i=0;i<cp[0].length;i++)knotsU.push(1);
+ this.c=new BSplineSurface(cp,knotsU, knotsV,0);
 }
 /** @private */
-BernsteinEval.prototype.getFactor=function(u, i){
- var bino;
- if(i==0){
-  return Math.pow(1-u,this.n-i);
- } else if(i==this.n-1){
-  return Math.pow(u,i)*Math.pow(1-u,this.n-i);
- } else if(this.n<BernsteinEval._binomial.length){
-  var fac=Math.pow(u,i)*Math.pow(1-u,this.n-i);
-  return fac * BernsteinEval._factorial(this.n) /
-     (BernsteinEval._factorial(i) * BernsteinEval._factorial(this.n-i));
- } else {
-  var fac=Math.pow(u,i)*Math.pow(1-u,this.n-i);
-  return fac * BernsteinEval._binomial[this.n][i];
- }
-}
-/** @private */
-BernsteinEval.prototype.getFactors=function(t, output){
- for(var i=0;i<this.order;i++){
-  output[i]=this.getFactor(t, i);
- }
-}
-/** @private */
-function BernsteinEvalSpline(controlPoints){
- this.order=controlPoints.length;
- if(this.order<=0)throw new Error("no control points")
- this.k=controlPoints[0].length;
- this.points=controlPoints;
- this.evaluator=new BernsteinEval(this.order);
-}
-/** @private */
-BernsteinEvalSpline.prototype.evaluate=function(t, output){
- for(var i=0;i<this.k;i++){
-  var value=0;
-  for(var j=0;j<this.order;j++){
-   value+=this.points[j][i]*this.evaluator.getFactor(t, j);
-  }
-  output[i]=value;
- }
-}
-/** @private */
-function BernsteinEvalSurface(controlPoints){
- if(!controlPoints||controlPoints.length==0)
-  throw new Error("no control points")
- this.uorder=controlPoints.length;
- this.torder=controlPoints[0].length;
- this.k=controlPoints[0][0].length;
- if(typeof this.k==="undefined")
-  throw new Error("probably not a 2D control point array")
- this.points=controlPoints;
- this.evaluatorT=new BernsteinEval(this.torder);
- this.evaluatorU=new BernsteinEval(this.uorder);
- this.bufferT=[];
- this.bufferU=[];
-}
-/** @private */
-BernsteinEvalSurface.prototype.evaluate=function(t, u, output){
- var bt=this.bufferT;
- var bu=this.bufferU;
- if(t==u){
-  bu=this.bufferT;
-  this.evaluatorT.getFactors(t, this.bufferT);
- } else {
-  this.evaluatorT.getFactors(t, this.bufferT);
-  this.evaluatorU.getFactors(u, this.bufferU);
- }
- for(var i=0;i<this.k;i++){
-  var value=0;
-  for(var tt=0;tt<this.torder;tt++){
-   for(var uu=0;uu<this.uorder;uu++){
-    value+=this.points[uu][tt][i]*bt[tt]*bu[uu];
-   }
-  }
-  output[i]=value;
- }
-}
+BernsteinEvalSurface.prototype.evaluate=function(u,v){
+ return this.c.evaluate(u,v);
+};
 /**
  * A parametric evaluator for B&eacute;zier curves.<p>
  * A B&eacute;zier curve is defined by a series of control points, where
@@ -155,8 +64,7 @@ var BezierCurve=function(cp, u1, u2){
   this.umul=1.0/(u2-u1);
  }
  this.evaluator=new BernsteinEvalSpline(cp);
- this.k=this.evaluator.k;
-}
+};
 /**
  * Evaluates the curve function based on a point
  * in a B&eacute;zier curve.
@@ -174,9 +82,7 @@ var BezierCurve=function(cp, u1, u2){
 * }
  */
 BezierCurve.prototype.evaluate=function(u){
- var output=[];
- this.evaluator.evaluate((u-this.uoffset)*this.umul,output);
- return output;
+ return this.evaluator.evaluate((u-this.uoffset)*this.umul);
 }
 /**
  * A parametric evaluator for B&eacute;zier surfaces.<p>
@@ -230,7 +136,6 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
   this.vmul=1.0/(v2-v1);
  }
  this.evaluator=new BernsteinEvalSurface(cp);
- this.k=this.evaluator.k;
 }
 /**
  * Evaluates the surface function based on a point
@@ -243,10 +148,342 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
  * length of a control point, as specified in the constructor.
  */
  BezierSurface.prototype.evaluate=function(u,v, output){
+ return this.evaluator.evaluate((u-this.uoffset)*this.umul,
+   (v-this.voffset)*this.vmul);
+}
+
+/**
+* A parametric evaluator for B-spline (basis spline) curves.
+* @alias glutil.BSplineCurve
+ * @param {Array<Array<number>>} controlPoints An array of control points.  Each
+ * control point is an array with the same length as the other control points.
+ * It is assumed that the first control point's length represents the size of all the control
+ * points.
+* @param {Array<number>} knots Knot vector of the curve.
+* Its size must be at least 2 plus the number of control
+* points and not more than twice the number of control points.<p>
+* The length of this parameter minus 1, minus the number
+* of control points, represents the degree of the B-spline
+* curve.  For example, a degree-3 (cubic) B-spline curve contains 4 more
+* knots than the number of control points.  A degree of 1
+* results in a straight line segment.<p>
+* The knot vector must be a nondecreasing sequence and
+* the first knot must not equal the last.<p>
+* If the difference between one knot and the next isn't the same,
+* the curve is considered a <i>non-uniform</i>
+* B-spline curve.<p>
+* If there are N times 2 knots with the first N equal to 0 and the rest
+* equal to 1, where N is the number of control points,
+* the control points describe a <i>B&eacute;zier</i> curve, in which the
+* first and last control points match the curve's end points.<p>
+* @param {boolean|undefined} bits Bits for defining input
+* and controlling output.  One or more of WEIGHTED_BIT
+* and DIVIDE_BIT.  If null or omitted, no bits are set.
+*/
+function BSplineCurve(controlPoints, knots, bits){
+ if(controlPoints.length<=0)throw new Error();
+ if(!knots)throw new Error();
+ this.bits=bits||0;
+ var order=knots.length-controlPoints.length;
+ if(order<2 || order>controlPoints.length)
+  throw new Error();
+ BSplineCurve._checkKnots(knots);
+ this.cplen=controlPoints[0].length;
+ var cplenNeeded=1;
+ if((this.bits&(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!=0){
+  cplenNeeded=2;
+ }
+ if((this.bits&(BSplineCurve.WEIGHTED_BIT))!=0){
+  this.cplen--;
+ }
+ if(this.cplen<cplenNeeded)throw new Error();
+ this.knots=knots;
+ this.buffer=[];
+ this.controlPoints=controlPoints;
+}
+
+/**
+* Indicates whether the last coordinate of each control point is a
+* weight.  If some of the weights differ, the curve is
+* considered a <i>rational</i> B-spline curve.
+* If this bit is set, the length of each control point must be at least 2,
+* and points returned by the curve's <code>evaluate</code>
+* method will be in homogeneous coordinates.
+* @const
+* @default
+*/
+BSplineCurve.WEIGHTED_BIT = 1;
+/**
+* Indicates to divide each other coordinate of the returned point
+* by the last coordinate of the point and omit the last
+* coordinate.  This is used with WEIGHTED_BIT to convert
+* homogeneous coordinates to conventional coordinates.
+* If this bit is set, the length of each control point must be at least 2.
+* @const
+* @default
+*/
+BSplineCurve.DIVIDE_BIT = 2;
+/**
+* Indicates that each other coordinate of each control point
+* is premultiplied by the last coordinate of the point, that is,
+* each control point is in homogeneous coordinates.
+* Only used with WEIGHTED_BIT.
+* @const
+* @default
+*/
+BSplineCurve.HOMOGENEOUS_BIT = 4;
+/**
+* Combination of WEIGHTED_BIT and DIVIDE_BIT.
+* @const
+*/
+BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
+
+BSplineCurve._checkKnots=function(knots){
+ for(var i=1;i<knots.length;i++){
+  if(knots[i]<knots[i-1])
+   throw new Error();
+ }
+ if(knots[0]==knots[knots.length-1])throw new Error();
+}
+BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
+ var c=1;
+ for(var i=0;i<numPoints;i++){
+   buffer[i]=0;
+ }
+ if(t==kn[0] && false){
+  buffer[0]=1;
+ } else if(t==kn[kn.length-1]){
+  buffer[numPoints-1]=1;
+ } else {
+  var k=-1;
+  for(var i=0;i<=kn.length;i++){
+    if(kn[i]<=t && t<kn[i+1]){
+      k=i;
+      break;
+    }
+  }
+  if(k<0)return;
+  var tmp=[];
+  var c=k-1;
+  tmp[k]=1;
+  for(var kk=2;kk<=order;kk++,c--){
+   for(var i=c;i<=k;i++){
+    var ret=0,divisor=0;
+    var prv=(i<=c) ? 0 : tmp[i];
+    var nxt=(i>=k) ? 0 : tmp[i+1];
+    if(prv!=0){
+     divisor=kn[i+kk-1]-kn[i]
+     ret+=divisor==0 ? 0 : prv*(t-kn[i])/divisor;
+    }
+    if(nxt!=0){
+     var ikk=kn[i+kk];
+     divisor=ikk-kn[i+1]
+     ret+=divisor==0 ? 0 : nxt*(ikk-t)/divisor;
+    }
+    buffer[i]=ret;
+   }
+   if(kk<order){
+    for(var i=c;i<=k;i++){
+     tmp[i]=buffer[i];
+    }
+   }
+  }
+ }
+}
+
+/**
+ * Evaluates the curve function based on a point
+ * in a B-spline curve.
+ * @param {number} u Point on the curve to evaluate (from 0 through 1).
+ * @return {Array<number>} An array of the result of
+ * the evaluation.  Its length will be equal to the
+ * length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor.
+* @example
+* // Generate 11 points forming the B-spline curve.
+* var points=[];
+* for(var i=0;i<=10;i++){
+*  points.push(curve.evaluate(i/10.0));
+* }
+ */
+BSplineCurve.prototype.evaluate=function(u){
+  var numPoints=this.controlPoints.length;
+  var order=this.knots.length-numPoints;
+  var oldu=u
+  u=this.knots[order-1]+u*(this.knots[numPoints]-
+    this.knots[order-1]);
+  BSplineCurve._getFactors(this.knots, u, order, numPoints,
+     this.buffer);
+  if((this.bits&BSplineCurve.WEIGHTED_BIT)!=0){
+  // this is a weighted NURBS
+  var ret=[];
+  var weight=0;
+  for(var j=0;j<numPoints;j++){
+   weight+=this.buffer[j]*this.controlPoints[j][this.cplen];
+  }
+  for(var i=0;i<this.cplen+1;i++){
+   var point=0;
+   for(var j=0;j<numPoints;j++){
+    var homogen=(this.bits&BSplineCurve.HOMOGENEOUS_BIT)!=0;
+    var w=this.buffer[j];
+    if(!homogen)w*=this.controlPoints[j][this.cplen];
+    point+=this.controlPoints[j][i]*w;
+   }
+   ret[i]=point/weight;
+  }
+  if((this.bits&BSplineCurve.DIVIDE_BIT)!=0){
+   for(var i=0;i<this.cplen;i++){
+    ret[i]/=ret[this.cplen];
+   }
+   ret=ret.slice(0,this.cplen);
+  }
+  return ret;
+ } else {
+  var ret=[];
+  for(var i=0;i<this.cplen;i++){
+   var point=0;
+   for(var j=0;j<numPoints;j++){
+    point+=this.controlPoints[j][i]*this.buffer[j];
+   }
+   ret[i]=point;
+  }
+  if((this.bits&BSplineCurve.DIVIDE_BIT)!=0){
+   for(var i=0;i<this.cplen-1;i++){
+    ret[i]/=ret[this.cplen-1];
+   }
+   ret=ret.slice(0,this.cplen-1);
+  }
+  return ret;
+ }
+}
+
+/**
+* A parametric evaluator for B-spline (basis spline) surfaces.
+* @alias glutil.BSplineSurface
+ * @param {Array<Array<number>>} controlPoints An array of control point
+ * arrays, which in turn contain a number of control points.  Each
+ * control point is an array with the same length as the other control points.
+ * It is assumed that:<ul>
+ * <li>The length of this parameter is the number of control points in each row of
+ * the V axis.
+ * <li>The length of the first control point array is the number of control points in
+* each column of the U axis.
+ * <li>The first control point's length represents the size of all the control
+ * points.
+ * </ul>
+* @param {Array<number>} knotsU Knot vector of the curve, along the U-axis.
+* For more information, see {@link glutil.BSplineCurve}.
+* @param {Array<number>} knotsV Knot vector of the curve, along the V-axis.
+* @param {boolean|undefined} bits Bits for defining input
+* and controlling output.  One or more of WEIGHTED_BIT
+* and DIVIDE_BIT.  If null or omitted, no bits are set.
+*/
+function BSplineSurface(controlPoints, knotsU, knotsV, bits){
+ var vcplen=controlPoints.length;
+ if(vcplen<=0)throw new Error();
+ var ucplen=controlPoints[0].length;
+ if(ucplen<=0)throw new Error();
+ var cplen=controlPoints[0][0].length;
+ var cplenNeeded=1;
+ this.bits=bits||0;
+ if((this.bits&(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!=0){
+  cplenNeeded=2;
+ }
+ if((this.bits&(BSplineCurve.WEIGHTED_BIT|BSplineCurve.HOMOGENEOUS_BIT))!=0){
+  cplen--;
+ }
+ if(cplen<cplenNeeded)throw new Error();
+ if(!knotsU || !knotsV)throw new Error();
+ this.orderU=knotsU.length-ucplen;
+ this.orderV=knotsV.length-vcplen;
+ this.vcplen=vcplen;
+ this.ucplen=ucplen;
+ this.cplen=cplen;
+ if(this.orderU<2 || this.orderU>ucplen)throw new Error();
+ if(this.orderV<2 || this.orderV>vcplen)throw new Error();
+ BSplineCurve._checkKnots(knotsU);
+ BSplineCurve._checkKnots(knotsV);
+ this.knotsU=knotsU;
+ this.knotsV=knotsV;
+ this.bufferU=[];
+ this.bufferV=[];
+ this.controlPoints=controlPoints;
+}
+
+/**
+ * Evaluates the surface function based on a point
+ * in a B-spline surface.
+ * @param {number} u U-coordinate of the surface to evaluate (from 0 through 1).
+ * @param {number} v V-coordinate of the surface to evaluate.
+ * @return {Array<number>} An array of the result of
+ * the evaluation.  Its length will be equal to the
+ * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
+ */
+BSplineSurface.prototype.evaluate=function(u,v){
+  u=this.knotsU[this.orderU-1]+u*(this.knotsU[this.ucplen]-
+    this.knotsU[this.orderU-1]);
+  v=this.knotsV[this.orderV-1]+v*(this.knotsV[this.vcplen]-
+    this.knotsV[this.orderV-1]);
+  var bu=this.bufferU;
+  var bv=this.bufferV;
+  if(this.orderU==this.orderV){
+   BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
+     this.bufferU);
+   BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
+     this.bufferV);
+  } else {
+   BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
+     this.bufferU);
+   BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
+     this.bufferV);
+  }
  var output=[];
- this.evaluator.evaluate((u-this.uoffset)*this.umul,
-   (v-this.voffset)*this.vmul,output);
- return output;
+  if((this.bits&BSplineCurve.WEIGHTED_BIT)!=0){
+  // this is a weighted NURBS
+  var weight=0;
+  var homogen=(this.bits&BSplineCurve.HOMOGENEOUS_BIT)!=0;
+  for(var tt=0;tt<this.ucplen;tt++){
+    for(var uu=0;uu<this.vcplen;uu++){
+     var w=bu[tt]*bv[uu]*this.controlPoints[uu][tt][this.cplen];
+     weight+=w;
+    }
+  }
+  for(var i=0;i<this.cplen+1;i++){
+   var value=0;
+   var weight=0;
+   for(var tt=0;tt<this.ucplen;tt++){
+    for(var uu=0;uu<this.vcplen;uu++){
+     var w=bu[tt]*bv[uu];
+     if(!homogen)w*=this.controlPoints[uu][tt][this.cplen];
+     value+=this.controlPoints[uu][tt][i]*w;
+    }
+   }
+   output[i]=(weight==0) ? value : value/weight;
+  }
+  if((this.bits&BSplineCurve.DIVIDE_BIT)!=0){
+   for(var i=0;i<this.cplen;i++){
+    output[i]/=output[this.cplen];
+   }
+   output=output.slice(0,this.cplen)
+  }
+  return output;
+ } else {
+  for(var i=0;i<this.cplen;i++){
+   var value=0;
+   for(var tt=0;tt<this.ucplen;tt++){
+    for(var uu=0;uu<this.vcplen;uu++){
+     value+=this.controlPoints[uu][tt][i]*bu[tt]*bv[uu];
+    }
+   }
+   output[i]=value;
+  }
+  if((this.bits&BSplineCurve.DIVIDE_BIT)!=0){
+   for(var i=0;i<this.cplen-1;i++){
+    output[i]/=output[this.cplen-1];
+   }
+   output=output.slice(0,this.cplen-1)
+  }
+  return output;
+ }
 }
 
 /**
@@ -768,4 +1005,6 @@ global.SurfaceEval=SurfaceEval;
 global.CurveEval=CurveEval;
 global.BezierCurve=BezierCurve;
 global.BezierSurface=BezierSurface;
+global.BSplineCurve=BSplineCurve;
+global.BSplineSurface=BSplineSurface;
 })(this);
