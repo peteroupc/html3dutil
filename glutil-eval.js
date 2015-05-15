@@ -154,7 +154,8 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 
 /**
 * A parametric evaluator for B-spline (basis spline) curves.
-* @alias glutil.BSplineCurve
+* @class
+* @alias BSplineCurve
  * @param {Array<Array<number>>} controlPoints An array of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that the first control point's length represents the size of all the control
@@ -176,11 +177,12 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * equal to 1, where N is the number of control points,
 * the control points describe a <i>B&eacute;zier</i> curve, in which the
 * first and last control points match the curve's end points.<p>
-* @param {boolean|undefined} bits Bits for defining input
-* and controlling output.  One or more of WEIGHTED_BIT
-* and DIVIDE_BIT.  If null or omitted, no bits are set.
+* @param {boolean} [bits] Bits for defining input
+* and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
+* BSplineCurve.HOMOGENEOUS_BIT.
+* and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
 */
-function BSplineCurve(controlPoints, knots, bits){
+var BSplineCurve=function(controlPoints, knots, bits){
  if(controlPoints.length<=0)throw new Error();
  if(!knots)throw new Error();
  this.bits=bits||0;
@@ -250,7 +252,7 @@ BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
  for(var i=0;i<numPoints;i++){
    buffer[i]=0;
  }
- if(t==kn[0] && false){
+ if(t==kn[0]){
   buffer[0]=1;
  } else if(t==kn[kn.length-1]){
   buffer[numPoints-1]=1;
@@ -358,7 +360,8 @@ BSplineCurve.prototype.evaluate=function(u){
 
 /**
 * A parametric evaluator for B-spline (basis spline) surfaces.
-* @alias glutil.BSplineSurface
+* @class
+* @alias BSplineSurface
  * @param {Array<Array<number>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points.  Each
  * control point is an array with the same length as the other control points.
@@ -373,11 +376,12 @@ BSplineCurve.prototype.evaluate=function(u){
 * @param {Array<number>} knotsU Knot vector of the curve, along the U-axis.
 * For more information, see {@link glutil.BSplineCurve}.
 * @param {Array<number>} knotsV Knot vector of the curve, along the V-axis.
-* @param {boolean|undefined} bits Bits for defining input
-* and controlling output.  One or more of WEIGHTED_BIT
-* and DIVIDE_BIT.  If null or omitted, no bits are set.
+* @param {boolean} [bits] Bits for defining input
+* and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
+* BSplineCurve.HOMOGENEOUS_BIT.
+* and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
 */
-function BSplineSurface(controlPoints, knotsU, knotsV, bits){
+var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  var vcplen=controlPoints.length;
  if(vcplen<=0)throw new Error();
  var ucplen=controlPoints[0].length;
@@ -489,7 +493,16 @@ BSplineSurface.prototype.evaluate=function(u,v){
 /**
 * An evaluator of parametric curve functions for generating
 * vertex positions, normals, colors, and texture coordinates
-* of a curve.
+* of a curve.<p>
+* A parametric curve is a curve whose points are based on a
+* parametric curve function.  A curve function takes a number
+* (U) and returns a point (in 1, 2, 3 or more dimensions, but
+* usually 2 or 3).  For example, in 3 dimensions, a curve
+* function has the following form:<p>
+* <b>F</b>(u) = [ x(u), y(u), z(u) ]
+* where x(u) returns an X coordinate, y(u) a Y coordinate,
+* and z(u) returns a Z coordinate.<p>
+* For more information, see the {@tutorial surfaces} tutorial.
 * @class
 * @alias CurveEval
 */
