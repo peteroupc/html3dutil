@@ -1236,8 +1236,7 @@ function BufferedSubMesh(mesh, context){
   this.context=context;
 }
 /**
- * @private
- */
+ * @private */
 BufferedSubMesh.prototype.dispose=function(){
  if(this.verts!=null)
   this.context.deleteBuffer(this.verts);
@@ -1248,8 +1247,7 @@ BufferedSubMesh.prototype.dispose=function(){
 }
 
 /**
- * @private
- */
+ * @private */
 BufferedSubMesh.prototype.draw=function(program){
   // Binding phase
   function _vertexAttrib(context, attrib, size, type, stride, offset){
@@ -1325,8 +1323,7 @@ BufferedSubMesh.prototype.draw=function(program){
     this.type, 0);
 }
 /**
- * @private
- */
+ * @private */
 BufferedSubMesh.prototype.primitiveCount=function(){
   if((this.format&Mesh.LINES_BIT)!=0)
    return Math.floor(this.facesLength/2);

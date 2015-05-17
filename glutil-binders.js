@@ -20,7 +20,10 @@ function MaterialBinder(mshade){
  this.mshade=mshade;
  this.textureSize=[0,0];
 }
-
+/**
+ * Not documented yet.
+ * @param {*} program
+ */
 MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
  program.setUniforms({
@@ -77,7 +80,9 @@ function LoadedTexture(textureImage, context){
         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
 }
-
+/**
+ * Not documented yet.
+ */
 LoadedTexture.prototype.dispose=function(){
  if(this.loadedTexture){
   this.context.deleteTexture(this.loadedTexture);
@@ -89,7 +94,10 @@ LoadedTexture.prototype.dispose=function(){
 function FrameBufferMaterialBinder(fb){
  this.fb=fb;
 }
-
+/**
+ * Not documented yet.
+ * @param {*} program
+ */
 FrameBufferMaterialBinder.prototype.bind=function(program){
       var uniforms={};
       var textureUnit=0;
@@ -115,7 +123,10 @@ FrameBufferMaterialBinder.prototype.bind=function(program){
 function TextureBinder(tex){
  this.texture=tex;
 }
-
+/**
+ * Not documented yet.
+ * @param {*} program
+ */
 TextureBinder.prototype.bind=function(program){
  var texture=this.texture;
  var context=program.getContext();
@@ -186,7 +197,10 @@ TextureBinder.prototype.bind=function(program){
 function LightsBinder(lights){
  this.lights=lights;
 }
-
+/**
+ * Not documented yet.
+ * @param {*} program
+ */
 LightsBinder.prototype.bind=function(program){
  var lightsObject=this.lights;
  if(!lightsObject)return this;
@@ -227,5 +241,10 @@ Binders.getMaterialBinder=function(material){
  }
  }
  // Return an empty binding object
- return {bind:function(program){}};
+ return {
+/**
+ * Not documented yet.
+ * @param {*} program
+ */
+bind:function(program){}};
 }
