@@ -69,7 +69,7 @@ function ClockShape(scene){
    this.hour=hour
    this.minute=minute
    this.second=second
-   var hms=(hour%12)*60+minute*60+second;
+   var hms=(hour%12)*3600+minute*60+second;
    var hourhand=360*hms/(3600*12);
    var minutehand=360*(hms%3600)/(3600);
    var secondhand=360*(hms%60)/(60);
