@@ -114,10 +114,7 @@ function ClockShape(scene){
   scene.setClearColor("white")
    .cullFace(Scene3D.BACK)
   var camera=new Camera(scene,45,1,1000).setDistance(5)
-  var xyz=new ShapeGroup();
   var pc=new FrameCounterDiv(scene)
-  var shape=null;
-  scene.addShape(xyz);
   var clock=new ClockShape(scene);
   document.getElementById("colorsetting").addEventListener("change",
    function(e){ clock.setColor(e.target.value) });
