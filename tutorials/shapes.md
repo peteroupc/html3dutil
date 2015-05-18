@@ -325,7 +325,9 @@ featuring a wall clock.
 
 To create a shape group, call `new ShapeGroup()`. To add a `Shape` object to the group,
 call `shapeGroup.addShape(shape)`.  Note that you can only add shapes, not meshes,
-to a shape group, just as for a 3D scene.
+to a shape group, just as for a 3D scene.  A shape group, though, is perfectly allowed to contain
+other shape groups.
+
 ## Other Pages
 
 The following pages of mine on CodeProject also discuss this library:
