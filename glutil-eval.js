@@ -747,6 +747,19 @@ SurfaceEval.prototype.vertex=function(evaluator){
 }
 /**
 * Specifies a parametric surface function for generating normals.
+* <p>
+* To generate normals for a function for a regular surface (usually
+* a continuous, unbroken surface such as a sphere, disk, or open 
+* cylinder), find the partial derivative of
+* the function used for vertex calculation (we'll call it <b>F</b>) with
+* respect to u, then find the partial derivative of <b>F</b> with respect to
+* v, then take their cross product, then normalize the result to unit length.
+* In mathematical notation, this looks like:
+* <b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times; 
+* &#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n&prime;</b> = <b>c</b> / |<b>c</b>|.  
+* If autonormal is enabled, SurfaceEval uses an approximation to this approach,
+* as the SurfaceEval class doesn't know the implementation of the method used 
+* for vertex calculation.
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
 * </ul>
