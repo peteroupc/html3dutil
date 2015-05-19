@@ -756,7 +756,7 @@ SurfaceEval.prototype.vertex=function(evaluator){
 * v, then take their cross product, then normalize the result to unit length.
 * In mathematical notation, this looks like:
 * <b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times; 
-* &#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n&prime;</b> = <b>c</b> / |<b>c</b>|.  
+* &#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.  
 * If autonormal is enabled, SurfaceEval uses an approximation to this approach,
 * as the SurfaceEval class doesn't know the implementation of the method used 
 * for vertex calculation.
@@ -764,6 +764,28 @@ SurfaceEval.prototype.vertex=function(evaluator){
 * named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
 * </ul>
 * @return {SurfaceEval} This object.
+* @example <caption>The following example sets the normal generation
+* function for a parametric surface.  To illustrate how the method is derived
+* from the vector calculation method, that method is also given below.  To
+* derive the normal calculation, first look at the vector function:<p>
+* <b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
+* Then, find the partial derivatives with respect to u and v:<p>
+* &#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
+* &#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
+* Next, take their cross product:<p>
+* <b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
+* And finally, normalize the result:<p>
+* <b>n</b>(u, v) = <b>c</b>(u, v)/|<b>c</b>(u, v)|<p>
+*</caption>
+* surfaceEval.vertex({"evaluate":function(u,v){
+*  return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+* }})
+* .normal({"evaluate":function(u,v){
+*  return GLMath.vec3normInPlace([
+*   Math.cos(u)*-Math.sin(v)*Math.sin(u),
+*   Math.sin(u)*-Math.sin(v)*Math.sin(u),
+*   0]);
+* }})
 */
 SurfaceEval.prototype.normal=function(evaluator){
  this.normalSurface=evaluator;

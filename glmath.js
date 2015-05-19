@@ -865,10 +865,11 @@ quatRotate:function(quat,angle,v,vy,vz){
  * Transforms a 4-element vector using a quaternion's rotation.
  * @param {Array<number>} q A quaternion describing
  * the rotation.
- * @param {Array<number>} v A 4-element vector to transform.
- * To transform a 3D point, set the vector's 4th element (zero-based
- * index 3) to 1.
- * @return {Array<number>} The transformed vector.
+ * @param {Array<number>} v A 3- or 4-element vector to
+ * transform. To transform a 3D point represented as a 4-element
+ * vector, set the vector's 4th element (zero-based index 3) to 1.
+ * @return {Array<number>} A 4-element vector representing
+* the transformed vector.
  */
 quatTransform:function(q,v){
 var v1 = GLMath.vec3cross( q, v );
@@ -1770,10 +1771,12 @@ GLMath.HalfPi = 1.5707963267948966192313216916398;
 */
 GLMath.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
- @private */
+ @private
+@const */
 GLMath.PiDividedBy360 = 0.00872664625997164788461845384244;
 /**
- @private */
+ @private
+@const */
 GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
  Closest approximation to 180 divided by pi, or the number of
