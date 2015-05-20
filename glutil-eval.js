@@ -921,8 +921,8 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
   if(color)mesh.color3(color[0],color[1],color[2]);
   vertex=this.vertexSurface.evaluate(u,v);
   if(this.autoNormal){
-   var du=0.001
-   var dv=0.001
+   var du=0.00001
+   var dv=0.00001
    // Find the partial derivatives of u and v
    var vu=this.vertexSurface.evaluate(u+du,v);
    if(vu[0]==0 && vu[1]==0 && vu[2]==0){
