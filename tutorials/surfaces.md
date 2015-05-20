@@ -40,7 +40,8 @@ surface can be found by evaluating different UV points.  By the way, the surface
 The HTML 3D Library supports parametric surfaces using a class named [`SurfaceEval`](http://peteroupc.github.io/html3dutil/glutil.SurfaceEval.html).  It helps
 generate vertex coordinates, texture coordinates, normals, and colors using a parametric surface
 function.  The following helper function, `makeMesh`, generates a parametric surface mesh
-that was used to produce the pictures on this page.
+that was used to produce the pictures on this page. `makeMesh` is only included in the demo, not
+in the HTML 3D Library.
 
 The comments explain how `makeMesh` works in detail.
 
@@ -149,7 +150,8 @@ and the API references for the [`Mesh`](http://peteroupc.github.io/html3dutil/gl
 This demo contains several examples of parametric surfaces.   The source code defines several classes that create evaluators of parametric surfaces:
 
 * `new Superellipsoid(xRadius, yRadius, zRadius, n, m)`<br>
-   Creates a "[superellipsoid](http://en.wikipedia.org/wiki/Superellipsoid)" shape, with a radius `xRadius` along the X-axis, `yRadius` along the Y-axis, and `zRadius` along the z-axis.  The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal ellipsoid.
+   Creates a "[superellipsoid](http://en.wikipedia.org/wiki/Superellipsoid)" shape, with a radius `xRadius` along the X-axis,
+   `yRadius` along the Y-axis, and `zRadius` along the z-axis.  The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal ellipsoid.
 * `new Supertoroid(xRadius, yRadius, zRadius, innerRadius, n, m)`<br>
    Creates a "[supertoroid](http://en.wikipedia.org/wiki/Supertoroid)" shape (with a hole in the middle), with a radius `xRadius` along the X-axis, `yRadius` along the Y-axis, and `zRadius` along the z-axis.  The inner radius will be `innerRadius`. The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal torus or toroid.
 * `new RevolutionSurface(func,minValue,maxValue)`<br>
