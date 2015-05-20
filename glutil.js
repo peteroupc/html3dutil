@@ -1724,9 +1724,10 @@ Scene3D.prototype.setDimensions=function(width, height){
  this.context.canvas.height=this.height*this._pixelRatio;
  this.context.viewport(0,0,this.width*this._pixelRatio,
    this.height*this._pixelRatio);
-  if(this.fbo!="undefined" && this.fbo){
+  if(typeof this.fbo!="undefined" && this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
+   if(this.fboQuad)this.fboQuad.setMaterial(this.fbo);
   }
 }
 /**

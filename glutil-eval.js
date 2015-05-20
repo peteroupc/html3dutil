@@ -322,10 +322,10 @@ BSplineCurve.prototype.evaluate=function(u){
   for(var j=0;j<numPoints;j++){
    weight+=this.buffer[j]*this.controlPoints[j][this.cplen];
   }
+  var homogen=(this.bits&BSplineCurve.HOMOGENEOUS_BIT)!=0;
   for(var i=0;i<this.cplen+1;i++){
    var point=0;
    for(var j=0;j<numPoints;j++){
-    var homogen=(this.bits&BSplineCurve.HOMOGENEOUS_BIT)!=0;
     var w=this.buffer[j];
     if(!homogen)w*=this.controlPoints[j][this.cplen];
     point+=this.controlPoints[j][i]*w;

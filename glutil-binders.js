@@ -100,7 +100,6 @@ function FrameBufferMaterialBinder(fb){
  */
 FrameBufferMaterialBinder.prototype.bind=function(program){
       var uniforms={};
-      var textureUnit=0;
       uniforms["sampler"]=this.fb.textureUnit;
       uniforms["textureSize"]=[this.fb.width,this.fb.height];
       program.setUniforms(uniforms);
@@ -108,14 +107,16 @@ FrameBufferMaterialBinder.prototype.bind=function(program){
       ctx.activeTexture(ctx.TEXTURE0+this.fb.textureUnit);
       ctx.bindTexture(ctx.TEXTURE_2D,
         this.fb.colorTexture);
+      if(this.fb.colorTexture){
+       ctx.texParameteri(ctx.TEXTURE_2D,
+        ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
+       ctx.texParameteri(ctx.TEXTURE_2D,
+        ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
       ctx.texParameteri(ctx.TEXTURE_2D,
-       ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
-     ctx.texParameteri(ctx.TEXTURE_2D,
-      ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
-     ctx.texParameteri(ctx.TEXTURE_2D,
-      ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
-     ctx.texParameteri(ctx.TEXTURE_2D,
-      ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
+       ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
+      ctx.texParameteri(ctx.TEXTURE_2D,
+       ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
+     }
 }
 
 /////////////////////////////////
