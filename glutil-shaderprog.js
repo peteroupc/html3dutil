@@ -495,12 +495,12 @@ var shader="" +
 "attribute vec3 normal;\n" +
 "attribute vec2 uv;\n" +
 "attribute vec3 colorAttr;\n" +
-"uniform mat4 world;\n" +
-"uniform mat4 view;\n" +
+"uniform mat4 modelViewMatrix;\n" +
 "uniform mat4 projection;\n"+
 "varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n" +
 "#ifdef SHADING\n"+
+"uniform mat4 world;\n" +
 "uniform mat3 worldViewInvTrans3; /* internal */\n" +
 "varying vec4 worldPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
@@ -510,7 +510,7 @@ var shader="" +
 "positionVec4.w=1.0;\n"+
 "positionVec4.xyz=position;\n" +
 "gl_PointSize=1.0;\n" +
-"gl_Position=((projection*view)*world)*positionVec4;\n" +
+"gl_Position=(projection*modelViewMatrix)*positionVec4;\n" +
 "colorAttrVar=colorAttr;\n" +
 "uvVar=uv;\n" +
 "#ifdef SHADING\n"+
@@ -589,11 +589,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 " tmp.w=1.0;\n"+
 " tmp.xyz=colorAttrVar;\n"+
 " vec4 baseColor=mix(mix(\n"+
-"#ifdef SHADING\n" +
-"   vec4(1.0,1.0,1.0,md.a), /*when textures are not used*/\n" +
-"#else\n" +
 "   md, /*when textures are not used*/\n" +
-"#endif\n" +
 "   texture2D(sampler,uvVar), /*when textures are used*/\n"+
 "   useTexture), tmp, useColorAttr);\n"+
 "#ifdef SHADING\n" +
@@ -608,7 +604,7 @@ shader+=""+
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
 "vec3 lightedColor=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
-" vec3 materialDiffuse=vec3(md)*baseColor.rgb;\n";
+" vec3 materialDiffuse=baseColor.rgb;\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
  shader+="lightCosines["+i+"]=dot(transformedNormalVar,lightPower["+i+"].xyz);\n";

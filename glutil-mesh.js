@@ -671,6 +671,18 @@ Mesh.prototype.vertexCount=function(){
   }
   return count;
 }
+/**
+ * Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this mesh.
+ * @return {number}
+ */
+Mesh.prototype.primitiveCount=function(){
+  var count=0;
+  for(var i=0;i<this.subMeshes.length;i++){
+   count+=this.subMeshes[i].primitiveCount();
+  }
+  return count;
+}
 
 /** @private */
 function SubMesh(vertices,faces,format){
@@ -691,6 +703,12 @@ function SubMesh(vertices,faces,format){
  this.newPrimitive=function(m){
   this.startIndex=this.vertices.length;
   return this;
+ }
+ this.primitiveType=function(){
+  var primitive=Mesh.TRIANGLES;
+  if((this.format&Mesh.LINES_BIT)!=0)primitive=Mesh.LINES;
+  if((this.format&Mesh.POINTS_BIT)!=0)primitive=Mesh.POINTS;
+  return primitive;
  }
  /** @private */
  this._rebuildVertices=function(newAttributes){
@@ -864,6 +882,15 @@ SubMesh.prototype.makeRedundant=function(){
     existingIndices[index]=true;
   }
   return this;
+}
+/**
+ * @private */
+SubMesh.prototype.primitiveCount=function(){
+  if((this.attributeBits&Mesh.LINES_BIT)!=0)
+   return Math.floor(this.indices.length/2);
+  if((this.attributeBits&Mesh.POINTS_BIT)!=0)
+   return this.indices.length;
+  return Math.floor(this.indices.length/3);
 }
 /** @private */
 SubMesh.prototype.toWireFrame=function(){
