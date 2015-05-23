@@ -353,10 +353,10 @@ var dydy=dy+dy;
 var dxdx=dx+dx;
 if(dy>dx){
       var e = dxdx - dy;
-      var ddepth=(dy==0 || depth2-depth1) ? 0 : (depth2-depth1)/dy|0;
-      var sr=(dy==0 || rgb2[0]==rgb[0]) ? 0 : ((rgb2[0]-rgb[0])<<8)/dy|0;
-      var sg=(dy==0 || rgb2[1]==rgb[1]) ? 0 : ((rgb2[1]-rgb[1])<<8)/dy|0;
-      var sb=(dy==0 || rgb2[2]==rgb[2]) ? 0 : ((rgb2[2]-rgb[2])<<8)/dy|0;
+      var ddepth=(dy==0 || depth2-depth1) ? 0 : ((depth2-depth1)/dy)|0;
+      var sr=(dy==0 || rgb2[0]==rgb[0]) ? 0 : (((rgb2[0]-rgb[0])<<8)/dy)|0;
+      var sg=(dy==0 || rgb2[1]==rgb[1]) ? 0 : (((rgb2[1]-rgb[1])<<8)/dy)|0;
+      var sb=(dy==0 || rgb2[2]==rgb[2]) ? 0 : (((rgb2[2]-rgb[2])<<8)/dy)|0;
       for(var i = 0; i < dy; i++){
             Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
             while(e >= 0){
@@ -372,10 +372,10 @@ if(dy>dx){
       }
 } else {
       var e = dydy - dx;
-      var ddepth=(dx==0 || depth2-depth1) ? 0 : (depth2-depth1)/dx|0;
-      var sr=(dx==0 || rgb2[0]==rgb[0]) ? 0 : ((rgb2[0]-rgb[0])<<8)/dx|0;
-      var sg=(dx==0 || rgb2[1]==rgb[1]) ? 0 : ((rgb2[1]-rgb[1])<<8)/dx|0;
-      var sb=(dx==0 || rgb2[2]==rgb[2]) ? 0 : ((rgb2[2]-rgb[2])<<8)/dx|0;
+      var ddepth=(dx==0 || depth2-depth1) ? 0 : ((depth2-depth1)/dx)|0;
+      var sr=(dx==0 || rgb2[0]==rgb[0]) ? 0 : (((rgb2[0]-rgb[0])<<8)/dx)|0;
+      var sg=(dx==0 || rgb2[1]==rgb[1]) ? 0 : (((rgb2[1]-rgb[1])<<8)/dx)|0;
+      var sb=(dx==0 || rgb2[2]==rgb[2]) ? 0 : (((rgb2[2]-rgb[2])<<8)/dx)|0;
       for(var i = 0; i < dx; i++){
             Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
             while(e >= 0)
