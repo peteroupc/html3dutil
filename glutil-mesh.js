@@ -706,8 +706,8 @@ function SubMesh(vertices,faces,format){
  }
  this.primitiveType=function(){
   var primitive=Mesh.TRIANGLES;
-  if((this.format&Mesh.LINES_BIT)!=0)primitive=Mesh.LINES;
-  if((this.format&Mesh.POINTS_BIT)!=0)primitive=Mesh.POINTS;
+  if((this.attributeBits&Mesh.LINES_BIT)!=0)primitive=Mesh.LINES;
+  if((this.attributeBits&Mesh.POINTS_BIT)!=0)primitive=Mesh.POINTS;
   return primitive;
  }
  /** @private */

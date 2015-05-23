@@ -22,6 +22,8 @@ as follows:
 Overview
 ---------
 
+For detailed instructions on using this library and a summary of the library's features, visit:
+
 [https://peteroupc.github.io/html3dutil/tutorial-overview.html](https://peteroupc.github.io/html3dutil/tutorial-overview.html)
 
 Demos
