@@ -245,14 +245,6 @@ function isTriangleOutside(p1,p2,p3,width,height){
  var maxy=Math.max(p1[1],p2[1],p3[1]);
  var minx=Math.min(p1[0],p2[0],p3[0]);
  var miny=Math.min(p1[1],p2[1],p3[1]);
- if(maxx==Number.POSITIVE_INFINITY ||
-     minx==Number.NEGATIVE_INFINITY ||
-     maxy==Number.POSITIVE_INFINITY ||
-     miny==Number.NEGATIVE_INFINITY){
-  // Pathological case where one or more
-  // of the coordinates is infinity
-  return true;
- }
  if((minx>width && maxx>width) ||
      (minx<0 && maxx<0) ||
      (miny>height && maxy>height) ||
