@@ -762,7 +762,7 @@ SurfaceEval.prototype.vertex=function(evaluator){
 * as the SurfaceEval class doesn't know the implementation of the method used
 * for vertex calculation.<p>
 * (Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>
-* or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>u</i> is also
+* or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is also
 * called the <i>tangent vector</i>.)
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
