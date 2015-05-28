@@ -132,6 +132,20 @@ This filter is implemented in the method `ShaderProgram.getInvertEffect()`:
     "}"].join("\n"));
     }
 
+### Red Tint
+
+![Red Tint filtered image](filters9.png)
+
+The grayscale filter adds a hint of red to the image.
+
+    function makeRedTint(context){
+    return ShaderProgram.makeEffect(context,[
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+    " vec4 color=texture2D(sampler,uvCoord);",
+    " return vec4(color.r+0.3,color.g,color.b,color.a);",
+    "}"].join("\n"));
+    }
+
 ### Mirror Filter
 
 ![Mirror filtered image](filters7.png)

@@ -173,7 +173,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * If the difference between one knot and the next isn't the same,
 * the curve is considered a <i>non-uniform</i>
 * B-spline curve.<p>
-* If there are N times 2 knots with the first N equal to 0 and the rest
+* If there are N times 2 knots with the first N knots equal to 0 and the rest
 * equal to 1, where N is the number of control points,
 * the control points describe a <i>B&eacute;zier</i> curve, in which the
 * first and last control points match the curve's end points.<p>

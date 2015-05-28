@@ -112,7 +112,48 @@ var nextToken = function(tok) {
         }
        }
       }
-      passes = [["pow"], ["mul", "div"], ["plus", "minus"]];
+
+      prevNode = null;
+      prevNodeIndex = -1;
+      i = nodes.length-1;
+      while (i>=0) {
+      node = nodes[i];
+      if (!(c = node)) {
+        i = i+(1);
+        continue;};
+      if (node instanceof Operator && node.name=="pow") {
+        if(i==0)throw new Error("expressions expected before operator")
+        nextNode = nodes[i+(1)];
+        prevNode=nodes[i-1]
+        if (!(((c = ((d = Expression.isExpr(prevNode)) !== false && d !== null) ? d : !Expression.isExpr(nextNode))))) {
+          throw new Error("expressions expected between operator")};
+        if(prevNode instanceof Expression)throw new Error("prevNode should not be Expression");
+        if(prevNode instanceof Constant && prevNode.value<0){
+          op=new Operation("pow");
+          op.negative=true;
+          op.nodes.push(prevNode.negate());
+          op.nodes.push(nextNode);
+        } else {
+         op = new Operation((node.name=="minus") ? (("plus")) : (node.name));
+         var negative=(node.name=="minus");
+         op.nodes.push(prevNode);
+         op.nodes.push(negative ? nextNode.negate() : nextNode);
+        }
+        op.simplify();
+        nodes[i-1] = op;
+        nodes[i] = null;
+        nodes[i+1] = null;
+        prevNode = op;
+        i = i-(1);
+      } else if (node instanceof Operation) {
+        node.simplify();
+        prevNode = node;
+      } else {
+        prevNodeIndex = i;
+      };
+      i = i-1;};
+      Extras.compact(nodes);
+      passes = [["mul", "div"], ["plus", "minus"]];
       for (var pass__=0;pass__<(passes.length);pass__++){
       var pass=passes[pass__];
       prevNode = null;
