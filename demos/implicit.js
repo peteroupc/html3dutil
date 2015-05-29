@@ -453,6 +453,42 @@ ImplicitSurface._a2iTriangleConnectionTable = [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]
 
+
+ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ){  
+  var mx=0;
+  var mn=0;
+  var value=this.sampler.sample(fX,fY,fZ);
+  mx=mn=value;
+  value=this.sampler.sample(fX+fScaleX,fY,fZ);
+  mn=Math.min(mn,value);
+  mx=Math.max(mx,value);
+  if(mn<=0 && mx>=0)return true;
+  value=this.sampler.sample(fX,fY+fScaleY,fZ);
+  mn=Math.min(mn,value);
+  mx=Math.max(mx,value);
+  if(mn<=0 && mx>=0)return true;
+  value=this.sampler.sample(fX,fY,fZ+fScaleZ);
+  mn=Math.min(mn,value);
+  mx=Math.max(mx,value);
+  if(mn<=0 && mx>=0)return true;
+  value=this.sampler.sample(fX+fScaleX,fY+fScaleY,fZ);
+  mn=Math.min(mn,value);
+  mx=Math.max(mx,value);
+  if(mn<=0 && mx>=0)return true;
+  value=this.sampler.sample(fX,fY+fScaleY,fZ+fScaleZ);
+  mn=Math.min(mn,value);
+  mx=Math.max(mx,value);
+  if(mn<=0 && mx>=0)return true;
+  value=this.sampler.sample(fX+fScaleX,fY,fZ+fScaleZ);
+  mn=Math.min(mn,value);
+  mx=Math.max(mx,value);
+  if(mn<=0 && mx>=0)return true;
+  value=this.sampler.sample(fX+fScaleX,fY+fScaleY,fZ+fScaleZ);
+  mn=Math.min(mn,value);
+  mx=Math.max(mx,value);
+  return (mn<=0 && mx>=0);
+}
+
 ImplicitSurface.prototype._vMarchCube1=function(mesh, fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
 {  
  var  iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
@@ -564,6 +600,59 @@ ImplicitSurface.prototype._marchingTetrahedrons=function(mesh, fX,fY,fZ,fScaleX,
         }
 }
 
+ImplicitSurface.prototype.findBox=function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax){
+        var xstep=(xmax-xmin)/xsize;
+        var ystep=(ymax-ymin)/ysize;
+        var zstep=(zmax-zmin)/zsize;
+        var bounds=[0,0,0,0,0,0];
+        var first=true;
+        var x,y,z;
+        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
+        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
+        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
+           if(this._isOnSurface(x,y,z,xstep,ystep,zstep)){
+             if(first){
+               first=false;
+               bounds[0]=x;
+               bounds[1]=x+xstep;
+               bounds[2]=y;
+               bounds[3]=y+ystep;
+               bounds[4]=z;
+               bounds[5]=z+zstep;
+             } else {
+               bounds[0]=Math.min(bounds[0],x);
+               bounds[1]=Math.max(bounds[1],x+xstep);
+               bounds[2]=Math.min(bounds[2],y);
+               bounds[3]=Math.max(bounds[3],y+ystep);
+               bounds[4]=Math.min(bounds[4],z);
+               bounds[5]=Math.max(bounds[5],z+zstep);             
+             }
+           }
+        }
+        }
+        }
+}
+
+ImplicitSurface.prototype.evalSurfacePoints=function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax)
+{
+        mesh.mode(Mesh.POINTS);
+        var xstep=(xmax-xmin)/xsize;
+        var ystep=(ymax-ymin)/ysize;
+        var zstep=(zmax-zmin)/zsize;
+        var bounds=[0,0,0,0,0,0];
+        var first=true;
+        var x,y,z;
+        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
+        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
+        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
+           if(this._isOnSurface(x,y,z,xstep,ystep,zstep)){
+             mesh.vertex3(x+xstep/2,y+ystep/2,z+zstep/2);
+           }
+        }
+        }
+        }
+}
+
 ImplicitSurface.prototype.evalSurface=function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax)
 {
         mesh.mode(Mesh.TRIANGLES);
@@ -578,13 +667,49 @@ ImplicitSurface.prototype.evalSurface=function(mesh, xsize, ysize, zsize, xmin, 
         var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
-        for(var iX=0;iX < xsize; iX+=1){
-        var x=xmin+iX*xstep;
-        for(var iY=0;iY < ysize; iY+=1){
-        var y=ymin+iY*ystep;
-        for(var iZ=0;iZ < zsize; iZ+=1){
-           var z=zmin+iZ*zstep;
+        var bounds=[0,0,0,0,0,0];
+        var first=true;
+        var x,y,z;
+        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
+        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
+        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
+           if(this._isOnSurface(x,y,z,xstep,ystep,zstep)){
+             if(first){
+               first=false;
+               bounds[0]=x;
+               bounds[1]=x+xstep;
+               bounds[2]=y;
+               bounds[3]=y+ystep;
+               bounds[4]=z;
+               bounds[5]=z+zstep;
+             } else {
+               bounds[0]=Math.min(bounds[0],x);
+               bounds[1]=Math.max(bounds[1],x+xstep);
+               bounds[2]=Math.min(bounds[2],y);
+               bounds[3]=Math.max(bounds[3],y+ystep);
+               bounds[4]=Math.min(bounds[4],z);
+               bounds[5]=Math.max(bounds[5],z+zstep);             
+             }
+           }
+        }
+        }
+        }
+        xmin=bounds[0];
+        xmax=bounds[1];
+        ymin=bounds[2];
+        ymax=bounds[3];
+        zmin=bounds[4];
+        zmax=bounds[5];
+        var xstep=(xmax-xmin)/xsize;
+        var ystep=(ymax-ymin)/ysize;
+        var zstep=(zmax-zmin)/zsize;
+        if(xstep!=0 && ystep!=0 && zstep!=0){
+        var x,y,z;
+        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
+        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
+        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
            this._vMarchCube1(mesh, x,y,z,xstep,ystep,zstep,tmpobj);
+        }
         }
         }
         }

@@ -146,7 +146,6 @@ The red tint filter adds a hint of red to the image.
     "}"].join("\n"));
     }
 
-
 ### Mirror Filter
 
 ![Mirror filtered image](filters7.png)
