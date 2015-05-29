@@ -485,11 +485,7 @@ ImplicitSurface.prototype._vMarchCube1=function(mesh, fX,fY,fZ,fScaleX,fScaleY,f
         iEdgeFlags = ImplicitSurface._aiCubeEdgeFlags[iFlagIndex];
 
         //If the cube is entirely inside or outside of the surface, then there will be no intersections
-        if(iEdgeFlags == 0) 
-        {
-                return;
-        }
-
+        if(iEdgeFlags == 0)return;
         //Find the point of intersection of the surface with each edge
         //Then find the normal to the surface at those points
         for(iEdge = 0; iEdge < 12; iEdge++)
@@ -592,4 +588,27 @@ ImplicitSurface.prototype.evalSurface=function(mesh, xsize, ysize, zsize, xmin, 
         }
         }
         }
+}
+
+ImplicitSurface.union=function(a,b){
+  return {
+   "sample":function(x,y,z){
+     return Math.min(a.sample(x,y,z),b.sample(x,y,z));
+   }
+  }
+}
+ImplicitSurface.intersection=function(a,b){
+  return {
+   "sample":function(x,y,z){
+     return Math.max(a.sample(x,y,z),b.sample(x,y,z));
+   }
+  }
+}
+
+ImplicitSurface.difference=function(a,b){
+  return {
+   "sample":function(x,y,z){
+     return Math.max(a.sample(x,y,z),-b.sample(x,y,z));
+   }
+  }
 }
