@@ -434,8 +434,9 @@ function InputTracker(element){
    thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
    thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
    if(e.button!=-1){
- 	 thisObj.lastClient[0]=thisObj.clientX;
- 	 thisObj.lastClient[1]=thisObj.clientY;
+    // update mouse position to current click position
+    thisObj.lastClient[0]=thisObj.clientX;
+    thisObj.lastClient[1]=thisObj.clientY;
    }
   }
  }
