@@ -9,7 +9,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 // source code by Cory Gene Bloyd.
 
 /**
-* An evaluator for implicit surfaces. 
+* An evaluator for implicit surfaces.
 * @param {Object} func An object containing a single property,
 * "sample", which is a function that takes three parameters
 * specifying a 3-dimensional point:<ol>
@@ -41,7 +41,7 @@ ImplicitSurface._a2fEdgeDirection=[
 ]
 
 //a2iEdgeConnection lists the index of the endpoint vertices for each of the 12 edges of the cube
-ImplicitSurface._a2iEdgeConnection= 
+ImplicitSurface._a2iEdgeConnection=
 [
         [0,1], [1,2], [2,3], [3,0],
         [4,5], [5,6], [6,7], [7,4],
@@ -49,7 +49,7 @@ ImplicitSurface._a2iEdgeConnection=
 ];
 
 ImplicitSurface._aiTetrahedronEdgeFlags=[
-0x00, 0x0d, 0x13, 0x1e, 0x26, 0x2b, 0x35, 0x38, 0x38, 0x35, 0x2b, 0x26, 0x1e, 0x13, 0x0d, 0x00, 
+0x00, 0x0d, 0x13, 0x1e, 0x26, 0x2b, 0x35, 0x38, 0x38, 0x35, 0x2b, 0x26, 0x1e, 0x13, 0x0d, 0x00,
 ]
 
 // For each of the possible vertex states listed in aiTetrahedronEdgeFlags there is a specific triangulation
@@ -83,7 +83,7 @@ ImplicitSurface._a2iTetrahedronEdgeConnection =
         [0,1],  [1,2],  [2,0],  [0,3],  [1,3],  [2,3]
 ];
 
-//a2iTetrahedronEdgeConnection lists the index of verticies from a cube 
+//a2iTetrahedronEdgeConnection lists the index of verticies from a cube
 // that made up each of the six tetrahedrons within the cube
 ImplicitSurface._a2iTetrahedronsInACube=
 [
@@ -118,7 +118,7 @@ ImplicitSurface.prototype._vMarchTetrahedron=function(mesh, pasTetrahedronPositi
         //Find which vertices are inside of the surface and which are outside
         for(iVertex = 0; iVertex < 4; iVertex++)
         {
-                if(pafTetrahedronValue[iVertex] <= ImplicitSurface._TARGET_VALUE) 
+                if(pafTetrahedronValue[iVertex] <= ImplicitSurface._TARGET_VALUE)
                         iFlagIndex |= 1<<iVertex;
         }
         //Find which edges are intersected by the surface
@@ -135,15 +135,15 @@ ImplicitSurface.prototype._vMarchTetrahedron=function(mesh, pasTetrahedronPositi
                 {
                         iVert0 = ImplicitSurface._a2iTetrahedronEdgeConnection[iEdge][0];
                         iVert1 = ImplicitSurface._a2iTetrahedronEdgeConnection[iEdge][1];
-                        fOffset = ImplicitSurface._fGetOffset(pafTetrahedronValue[iVert0], pafTetrahedronValue[iVert1], 
+                        fOffset = ImplicitSurface._fGetOffset(pafTetrahedronValue[iVert0], pafTetrahedronValue[iVert1],
                            ImplicitSurface._TARGET_VALUE);
                         fInvOffset = 1.0 - fOffset;
 
                         tmpobj.asEdgeVertex[iEdge][0] = fInvOffset*pasTetrahedronPosition[iVert0][0]  +  fOffset*pasTetrahedronPosition[iVert1][0];
                         tmpobj.asEdgeVertex[iEdge][1] = fInvOffset*pasTetrahedronPosition[iVert0][1]  +  fOffset*pasTetrahedronPosition[iVert1][1];
                         tmpobj.asEdgeVertex[iEdge][2] = fInvOffset*pasTetrahedronPosition[iVert0][2]  +  fOffset*pasTetrahedronPosition[iVert1][2];
-                        
-                        this._getNormal(tmpobj.asEdgeNorm[iEdge], 
+
+                        this._getNormal(tmpobj.asEdgeNorm[iEdge],
                            tmpobj.asEdgeVertex[iEdge][0], tmpobj.asEdgeVertex[iEdge][1], tmpobj.asEdgeVertex[iEdge][2]);
                 }
         }
@@ -170,28 +170,28 @@ ImplicitSurface.prototype._vMarchTetrahedron=function(mesh, pasTetrahedronPositi
 // There are 12 edges.  For each entry in the table, if edge #n is intersected, then bit #n is set to 1
 
 ImplicitSurface._aiCubeEdgeFlags=[
-        0x000, 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c, 0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00, 
-        0x190, 0x099, 0x393, 0x29a, 0x596, 0x49f, 0x795, 0x69c, 0x99c, 0x895, 0xb9f, 0xa96, 0xd9a, 0xc93, 0xf99, 0xe90, 
-        0x230, 0x339, 0x033, 0x13a, 0x636, 0x73f, 0x435, 0x53c, 0xa3c, 0xb35, 0x83f, 0x936, 0xe3a, 0xf33, 0xc39, 0xd30, 
-        0x3a0, 0x2a9, 0x1a3, 0x0aa, 0x7a6, 0x6af, 0x5a5, 0x4ac, 0xbac, 0xaa5, 0x9af, 0x8a6, 0xfaa, 0xea3, 0xda9, 0xca0, 
-        0x460, 0x569, 0x663, 0x76a, 0x066, 0x16f, 0x265, 0x36c, 0xc6c, 0xd65, 0xe6f, 0xf66, 0x86a, 0x963, 0xa69, 0xb60, 
-        0x5f0, 0x4f9, 0x7f3, 0x6fa, 0x1f6, 0x0ff, 0x3f5, 0x2fc, 0xdfc, 0xcf5, 0xfff, 0xef6, 0x9fa, 0x8f3, 0xbf9, 0xaf0, 
-        0x650, 0x759, 0x453, 0x55a, 0x256, 0x35f, 0x055, 0x15c, 0xe5c, 0xf55, 0xc5f, 0xd56, 0xa5a, 0xb53, 0x859, 0x950, 
-        0x7c0, 0x6c9, 0x5c3, 0x4ca, 0x3c6, 0x2cf, 0x1c5, 0x0cc, 0xfcc, 0xec5, 0xdcf, 0xcc6, 0xbca, 0xac3, 0x9c9, 0x8c0, 
-        0x8c0, 0x9c9, 0xac3, 0xbca, 0xcc6, 0xdcf, 0xec5, 0xfcc, 0x0cc, 0x1c5, 0x2cf, 0x3c6, 0x4ca, 0x5c3, 0x6c9, 0x7c0, 
-        0x950, 0x859, 0xb53, 0xa5a, 0xd56, 0xc5f, 0xf55, 0xe5c, 0x15c, 0x055, 0x35f, 0x256, 0x55a, 0x453, 0x759, 0x650, 
-        0xaf0, 0xbf9, 0x8f3, 0x9fa, 0xef6, 0xfff, 0xcf5, 0xdfc, 0x2fc, 0x3f5, 0x0ff, 0x1f6, 0x6fa, 0x7f3, 0x4f9, 0x5f0, 
-        0xb60, 0xa69, 0x963, 0x86a, 0xf66, 0xe6f, 0xd65, 0xc6c, 0x36c, 0x265, 0x16f, 0x066, 0x76a, 0x663, 0x569, 0x460, 
-        0xca0, 0xda9, 0xea3, 0xfaa, 0x8a6, 0x9af, 0xaa5, 0xbac, 0x4ac, 0x5a5, 0x6af, 0x7a6, 0x0aa, 0x1a3, 0x2a9, 0x3a0, 
-        0xd30, 0xc39, 0xf33, 0xe3a, 0x936, 0x83f, 0xb35, 0xa3c, 0x53c, 0x435, 0x73f, 0x636, 0x13a, 0x033, 0x339, 0x230, 
-        0xe90, 0xf99, 0xc93, 0xd9a, 0xa96, 0xb9f, 0x895, 0x99c, 0x69c, 0x795, 0x49f, 0x596, 0x29a, 0x393, 0x099, 0x190, 
+        0x000, 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c, 0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00,
+        0x190, 0x099, 0x393, 0x29a, 0x596, 0x49f, 0x795, 0x69c, 0x99c, 0x895, 0xb9f, 0xa96, 0xd9a, 0xc93, 0xf99, 0xe90,
+        0x230, 0x339, 0x033, 0x13a, 0x636, 0x73f, 0x435, 0x53c, 0xa3c, 0xb35, 0x83f, 0x936, 0xe3a, 0xf33, 0xc39, 0xd30,
+        0x3a0, 0x2a9, 0x1a3, 0x0aa, 0x7a6, 0x6af, 0x5a5, 0x4ac, 0xbac, 0xaa5, 0x9af, 0x8a6, 0xfaa, 0xea3, 0xda9, 0xca0,
+        0x460, 0x569, 0x663, 0x76a, 0x066, 0x16f, 0x265, 0x36c, 0xc6c, 0xd65, 0xe6f, 0xf66, 0x86a, 0x963, 0xa69, 0xb60,
+        0x5f0, 0x4f9, 0x7f3, 0x6fa, 0x1f6, 0x0ff, 0x3f5, 0x2fc, 0xdfc, 0xcf5, 0xfff, 0xef6, 0x9fa, 0x8f3, 0xbf9, 0xaf0,
+        0x650, 0x759, 0x453, 0x55a, 0x256, 0x35f, 0x055, 0x15c, 0xe5c, 0xf55, 0xc5f, 0xd56, 0xa5a, 0xb53, 0x859, 0x950,
+        0x7c0, 0x6c9, 0x5c3, 0x4ca, 0x3c6, 0x2cf, 0x1c5, 0x0cc, 0xfcc, 0xec5, 0xdcf, 0xcc6, 0xbca, 0xac3, 0x9c9, 0x8c0,
+        0x8c0, 0x9c9, 0xac3, 0xbca, 0xcc6, 0xdcf, 0xec5, 0xfcc, 0x0cc, 0x1c5, 0x2cf, 0x3c6, 0x4ca, 0x5c3, 0x6c9, 0x7c0,
+        0x950, 0x859, 0xb53, 0xa5a, 0xd56, 0xc5f, 0xf55, 0xe5c, 0x15c, 0x055, 0x35f, 0x256, 0x55a, 0x453, 0x759, 0x650,
+        0xaf0, 0xbf9, 0x8f3, 0x9fa, 0xef6, 0xfff, 0xcf5, 0xdfc, 0x2fc, 0x3f5, 0x0ff, 0x1f6, 0x6fa, 0x7f3, 0x4f9, 0x5f0,
+        0xb60, 0xa69, 0x963, 0x86a, 0xf66, 0xe6f, 0xd65, 0xc6c, 0x36c, 0x265, 0x16f, 0x066, 0x76a, 0x663, 0x569, 0x460,
+        0xca0, 0xda9, 0xea3, 0xfaa, 0x8a6, 0x9af, 0xaa5, 0xbac, 0x4ac, 0x5a5, 0x6af, 0x7a6, 0x0aa, 0x1a3, 0x2a9, 0x3a0,
+        0xd30, 0xc39, 0xf33, 0xe3a, 0x936, 0x83f, 0xb35, 0xa3c, 0x53c, 0x435, 0x73f, 0x636, 0x13a, 0x033, 0x339, 0x230,
+        0xe90, 0xf99, 0xc93, 0xd9a, 0xa96, 0xb9f, 0x895, 0x99c, 0x69c, 0x795, 0x49f, 0x596, 0x29a, 0x393, 0x099, 0x190,
         0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c, 0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x000
 ]
 
 //  For each of the possible vertex states listed in aiCubeEdgeFlags there is a specific triangulation
 //  of the edge intersection points.  a2iTriangleConnectionTable lists all of them in the form of
 //  0-5 edge triples with the list terminated by the invalid value -1.
-//  For example: a2iTriangleConnectionTable[3] list the 2 triangles formed when corner[0] 
+//  For example: a2iTriangleConnectionTable[3] list the 2 triangles formed when corner[0]
 //  and corner[1] are inside of the surface, but the rest of the cube is not.
 // NOTE: This is the public domain table from Geoffrey Heller.
 ImplicitSurface._a2iTriangleConnectionTable = [
@@ -453,8 +453,7 @@ ImplicitSurface._a2iTriangleConnectionTable = [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]
 
-
-ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ){  
+ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ){
   var mx=0;
   var mn=0;
   var value=this.sampler.sample(fX,fY,fZ);
@@ -490,10 +489,10 @@ ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ
 }
 
 ImplicitSurface.prototype._vMarchCube1=function(mesh, fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
-{  
+{
  var  iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
   var   fOffset;
-  
+
         var mx=0;
         var mn=0;
         //Make a local copy of the cube's corner positions;
@@ -513,7 +512,7 @@ ImplicitSurface.prototype._vMarchCube1=function(mesh, fX,fY,fZ,fScaleX,fScaleY,f
         iFlagIndex = 0;
         for(iVertexTest = 0; iVertexTest < 8; iVertexTest++)
         {
-                if(tmpobj.afCubeValue[iVertexTest] <= ImplicitSurface._TARGET_VALUE) 
+                if(tmpobj.afCubeValue[iVertexTest] <= ImplicitSurface._TARGET_VALUE)
                         iFlagIndex |= 1<<iVertexTest;
         }
 
@@ -530,24 +529,23 @@ ImplicitSurface.prototype._vMarchCube1=function(mesh, fX,fY,fZ,fScaleX,fScaleY,f
                 if(iEdgeFlags & (1<<iEdge))
                 {
                         fOffset = ImplicitSurface._fGetOffset(
-                         tmpobj.afCubeValue[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ], 
-                                                     tmpobj.afCubeValue[ ImplicitSurface._a2iEdgeConnection[iEdge][1] ], 
+                         tmpobj.afCubeValue[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ],
+                                                     tmpobj.afCubeValue[ ImplicitSurface._a2iEdgeConnection[iEdge][1] ],
                   ImplicitSurface._TARGET_VALUE);
 
-                        tmpobj.asEdgeVertex[iEdge][0] = fX + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][0]  + 
+                        tmpobj.asEdgeVertex[iEdge][0] = fX + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][0]  +
                   fOffset * ImplicitSurface._a2fEdgeDirection[iEdge][0]) * fScaleX;
-                        tmpobj.asEdgeVertex[iEdge][1] = fY + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][1]  +  
+                        tmpobj.asEdgeVertex[iEdge][1] = fY + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][1]  +
                   fOffset * ImplicitSurface._a2fEdgeDirection[iEdge][1]) * fScaleY;
-                        tmpobj.asEdgeVertex[iEdge][2] = fZ + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][2]  +  
+                        tmpobj.asEdgeVertex[iEdge][2] = fZ + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][2]  +
                   fOffset * ImplicitSurface._a2fEdgeDirection[iEdge][2]) * fScaleZ;
 
-                        this._getNormal(tmpobj.asEdgeNorm[iEdge], 
-                     tmpobj.asEdgeVertex[iEdge][0], 
-                  tmpobj.asEdgeVertex[iEdge][1], 
+                        this._getNormal(tmpobj.asEdgeNorm[iEdge],
+                     tmpobj.asEdgeVertex[iEdge][0],
+                  tmpobj.asEdgeVertex[iEdge][1],
                   tmpobj.asEdgeVertex[iEdge][2]);
                 }
         }
-
 
         //Draw the triangles that were found.  There can be up to five per cube
         for(iTriangle = 0; iTriangle < 5; iTriangle++)
@@ -563,7 +561,6 @@ ImplicitSurface.prototype._vMarchCube1=function(mesh, fX,fY,fZ,fScaleX,fScaleY,f
                     }
         }
 }
-
 
 //vMarchCube2 performs the Marching Tetrahedrons algorithm on a single cube by making six calls to vMarchTetrahedron
 ImplicitSurface.prototype._marchingTetrahedrons=function(mesh, fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
@@ -625,7 +622,7 @@ ImplicitSurface.prototype.findBox=function(xsize, ysize, zsize, xmin, xmax, ymin
                bounds[2]=Math.min(bounds[2],y);
                bounds[3]=Math.max(bounds[3],y+ystep);
                bounds[4]=Math.min(bounds[4],z);
-               bounds[5]=Math.max(bounds[5],z+zstep);             
+               bounds[5]=Math.max(bounds[5],z+zstep);
              }
            }
         }
@@ -688,7 +685,7 @@ ImplicitSurface.prototype.evalSurface=function(mesh, xsize, ysize, zsize, xmin, 
                bounds[2]=Math.min(bounds[2],y);
                bounds[3]=Math.max(bounds[3],y+ystep);
                bounds[4]=Math.min(bounds[4],z);
-               bounds[5]=Math.max(bounds[5],z+zstep);             
+               bounds[5]=Math.max(bounds[5],z+zstep);
              }
            }
         }

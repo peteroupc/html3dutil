@@ -36,6 +36,8 @@ combining multiple meshes into one.
 the built-in shapes.
 * [demos/builtinshapes.html](https://peteroupc.github.io/html3dutil/demos/builtinshapes.html) - Interactive demo of
 the built-in shapes.
+* [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
+featuring a background with continuously drawn 3D shapes.
 * [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 * [demos/obj.html](https://peteroupc.github.io/html3dutil/demos/obj.html) - An object file loader.

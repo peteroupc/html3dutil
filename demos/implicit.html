@@ -113,7 +113,6 @@ function Cylinder(radius){
  }
 }
 
-
 function Ellipsoid(a,b,c){
  this.a=a*a;
  this.b=b*b;
@@ -122,7 +121,6 @@ function Ellipsoid(a,b,c){
   return (x*x/this.a)+(y*y/this.b)+(z*z/this.c)-1;
  }
 }
-
 
 function HyperboloidOneSheet(a,b,c){
  this.a=a*a;
@@ -215,7 +213,6 @@ function pushSetting(ranges,name,label,defvalue,min,max,step){
   updateShape();
  }))
 }
-
 
 function link1(){
  allsettings["current"]=1
