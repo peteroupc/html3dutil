@@ -28,37 +28,71 @@ For detailed instructions on using this library and a summary of the library's f
 
 Demos
 ---------
+
+### Simple Demos
+
 * [demos/simple.html](https://peteroupc.github.io/html3dutil/demos/simple.html) - A simple demo using this library.
-* [demos/squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates shader-based filters.
+* [demos/triangle.html](https://peteroupc.github.io/html3dutil/demos/triangle.html) - Demonstrates drawing a triangle.
+
+### Materials
+
+* [demos/selfpulse.html](https://peteroupc.github.io/html3dutil/demos/selfpulse.html) - Demonstrates
+a rotating, pulsating box.
+
+### Shapes and meshes
+
 * [demos/compositeMesh.html](https://peteroupc.github.io/html3dutil/demos/compositeMesh.html) - Demonstrates
 combining multiple meshes into one.
 * [demos/shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
 the built-in shapes.
 * [demos/builtinshapes.html](https://peteroupc.github.io/html3dutil/demos/builtinshapes.html) - Interactive demo of
 the built-in shapes.
-* [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
-featuring a background with continuously drawn 3D shapes.
-* [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
-featuring a wall clock.
-* [demos/obj.html](https://peteroupc.github.io/html3dutil/demos/obj.html) - An object file loader.
 * [demos/platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
-* [demos/selfpulse.html](https://peteroupc.github.io/html3dutil/demos/selfpulse.html) - Demonstrates
-a rotating, pulsating box.
+* [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
+featuring a wall clock.
+
+### Surfaces
+
 * [demos/surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates
 using evaluators to generate parametric surfaces.
+* [demos/surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates
+parametric surfaces, with a custom formula editor.
+* [demos/implicit.html](https://peteroupc.github.io/html3dutil/demos/implicit.html) - Demonstrates
+implicit surfaces.
+
+### Textures
+
+* [demos/textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
+and applying them to 3D shapes.
+* [demos/gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
+texture -- a linear gradient from one color to another.
+
+### Shaders
+
+* [demos/squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates shader-based filters.
+
+### Particle Systems
+
+* [demos/tris.html](https://peteroupc.github.io/html3dutil/demos/tris.html) - Demonstrates a particle system.
+* [demos/fallingballs.html](https://peteroupc.github.io/html3dutil/demos/fallingballs.html) - Demonstrates falling balls
+of different sizes.
+
+### Loading 3D Models
+
+* [demos/obj.html](https://peteroupc.github.io/html3dutil/demos/obj.html) - An object file loader.
+* [demos/stl.html](https://peteroupc.github.io/html3dutil/demos/stl.html) - Demonstrates loading 3D models.
+
+### Alternative Rendering
+
 * [demos/surfaces2d.html](https://peteroupc.github.io/html3dutil/demos/surfaces2d.html) - Same as the surfaces.html
 demo, but uses an experimental renderer using the HTML 2D Canvas instead of an HTML 3D context.  Only a limited
 set of features are currently supported.
-* [demos/surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates
-parametric surfaces, with a custom formula editor.
-* [demos/stl.html](https://peteroupc.github.io/html3dutil/demos/stl.html) - Demonstrates loading 3D models.
-* [demos/textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
-and applying them to 3D shapes.
-* [demos/triangle.html](https://peteroupc.github.io/html3dutil/demos/triangle.html) - Demonstrates drawing a triangle.
-* [demos/tris.html](https://peteroupc.github.io/html3dutil/demos/tris.html) - Demonstrates a particle system.
-* [demos/gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
-texture -- a linear gradient from one color to another.
+
+### Miscellaneous
+
+* [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
+featuring a background with continuously drawn 3D shapes.
 * [demos/starfield.html](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demo of a star field.
 * [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
