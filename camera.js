@@ -328,7 +328,12 @@ Camera.prototype._mousewheel=function(e){
  var ticks=e.delta/120.0;
  // mousewheel up (negative) means move forward,
  // mousewheel down (positive) means move back
- this.setDistance(this._distance()-0.6*ticks)
+ if (this.input.keys[InputTracker.SHIFT])
+  this.moveAngleVertical(ticks);
+ else if (this.input.keys[InputTracker.CTRL])
+  this.moveAngleHorizontal(ticks);
+ else
+  this.setDistance(this._distance()-5.0*ticks)
 }
 
 /** @private
@@ -344,21 +349,47 @@ Camera.prototype._moveLight=function(){
  */
 Camera.prototype.update=function(){
  var delta=this.input.deltaXY();
- if(this.input.leftButton){
-  if(this.trackballMode){
+
+ // zoom in/out
+ if(this.input.keys[InputTracker.UP] && this.input.keys[InputTracker.CTRL] && this.input.keys[InputTracker.SHIFT]){
+  this.setDistance(this._distance()-2)
+ }
+ else if(this.input.keys[InputTracker.DOWN] && this.input.keys[InputTracker.CTRL] && this.input.keys[InputTracker.SHIFT]){
+  this.setDistance(this._distance()+2)
+ }
+ // rotate camera position
+ else if(this.input.keys[InputTracker.UP] && this.input.keys[InputTracker.SHIFT]){
+  this.moveAngleVertical(-0.6);
+ }
+ else if(this.input.keys[InputTracker.DOWN] && this.input.keys[InputTracker.SHIFT]){
+  this.moveAngleVertical(0.6);
+ }
+ else if(this.input.keys[InputTracker.LEFT] && this.input.keys[InputTracker.SHIFT]){
+  this.moveAngleHorizontal(0.6);
+ }
+ else if(this.input.keys[InputTracker.RIGHT] && this.input.keys[InputTracker.SHIFT]){
+  this.moveAngleHorizontal(-0.6);
+ }
+ else if(this.input.leftButton && this.input.keys[InputTracker.SHIFT]){
    this._trackball(delta.x,delta.y,0.3);
-  } else {
-   this._orbit(delta.x,delta.y,0.3);
-  }
- } else if(this.input.middleButton){
-   this._move(delta.x,delta.y,0.3);
  }
- if(this.input.keys[InputTracker.A+22]){ // letter W
-  this.setDistance(this._distance()+0.2)
+ // move camera position
+ else if(this.input.keys[InputTracker.UP]){
+  this._move(0,2,1);
  }
- if(this.input.keys[InputTracker.A+18]){ // letter S
-  this.setDistance(this._distance()-0.2)
+ else if(this.input.keys[InputTracker.DOWN]){
+  this._move(0,-2,1);
  }
+ else if(this.input.keys[InputTracker.LEFT]){
+  this._move(2,0,1);
+ }
+ else if(this.input.keys[InputTracker.RIGHT]){
+  this._move(-2,0,1);
+ }
+ else if(this.input.leftButton){
+  this._move(delta.x,delta.y,0.3);
+ }
+
  this.persp.update();
  return this;
 }
