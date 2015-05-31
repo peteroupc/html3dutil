@@ -81,16 +81,16 @@ Every 3D scene is made up of "meshes", or the triangles, lines, and points that 
 
 Here are some other built-in mesh methods. This tip doesn&#39;t explain all the features or parameters in the `Meshes` class; for that, see the <a href="http://peteroupc.github.io/html3dutil/glutil.Meshes.html">Meshes API documentation</a>.
 <dl>
-	<dt>`Meshes.createSphere(radius)`</dt>
-	<dd>Creates a sphere with the given `radius`.</dd>
-	<dt>`Meshes.createCylinder(base, top, height)`</dt>
-	<dd>Creates a cylinder with the given `base` radius, `top` radius, and `height`. Can be used to create a cone if `base` or `top` is `0`.</dd>
-	<dt>`Meshes.createClosedCylinder(base, top, height)`</dt>
-	<dd>Like `createCylinder`, except it also covers the base and top.</dd>
-	<dt>`Meshes.createPartialDisk(inner, outer, start, sweep)`</dt>
-	<dd>Creates a circular ring, of radius `outer` with a hole of radius `inner`, starting at `start` degrees and sweeping `sweep` degrees.</dd>
-	<dt>`Meshes.createDisk(inner, outer)`</dt>
-	<dd>Same as calling `createPartialDisk` with `start` 0 and `sweep` 360.</dd>
+  <dt>`Meshes.createSphere(radius)`</dt>
+  <dd>Creates a sphere with the given `radius`.</dd>
+  <dt>`Meshes.createCylinder(base, top, height)`</dt>
+  <dd>Creates a cylinder with the given `base` radius, `top` radius, and `height`. Can be used to create a cone if `base` or `top` is `0`.</dd>
+  <dt>`Meshes.createClosedCylinder(base, top, height)`</dt>
+  <dd>Like `createCylinder`, except it also covers the base and top.</dd>
+  <dt>`Meshes.createPartialDisk(inner, outer, start, sweep)`</dt>
+  <dd>Creates a circular ring, of radius `outer` with a hole of radius `inner`, starting at `start` degrees and sweeping `sweep` degrees.</dd>
+  <dt>`Meshes.createDisk(inner, outer)`</dt>
+  <dd>Same as calling `createPartialDisk` with `start` 0 and `sweep` 360.</dd>
 </dl>
 
 For more information on meshes, see <a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib">_Creating shapes using the Public Domain HTML 3D Library_</a>.
@@ -114,18 +114,18 @@ The appearance of a 3D shape is known in the 3D graphics world as a "material". 
 
 Here are details on some of the `Shape` class&#39;s methods.
 <dl>
-	<dt>`<i>shape</i>.setPosition(x, y, z)`</dt>
-	<dd>Sets the shape&#39;s position to the given coordinates.</dd>
-	<dt>`<i>shape</i>.setScale(x, y, z)`</dt>
-	<dd>Sets the shape&#39;s scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.</dd>
-	<dt>`<i>shape</i>.getTransform().setOrientation(angle, x, y, z)`</dt>
-	<dd>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).</dd>
-	<dt>`<i>shape</i>.setColor(color)`</dt>
-	<dd>Gives the shape a particular color. `color` can be an HTML color ("#ff0000"), CSS color ("red"), RGB color("rgb(20, 30, 40)") or HSL color("hsl(20, 50%, 50%)"), or a set of values from 0 to 1 (example: `[1.0,0.5,0.0]`).</dd>
-	<dt>`<i>shape</i>.setTexture(name)`</dt>
-	<dd>Gives the shape a particular texture, with the URL `name`. The texture should be in the same origin as the Web page (which usually means the same directory).</dd>
-	<dt>`<i>shape</i>.copy()`</dt>
-	<dd>Creates a copy of this shape. Can be more efficient than calling `scene.makeShape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</dd>
+  <dt>`<i>shape</i>.setPosition(x, y, z)`</dt>
+  <dd>Sets the shape&#39;s position to the given coordinates.</dd>
+  <dt>`<i>shape</i>.setScale(x, y, z)`</dt>
+  <dd>Sets the shape&#39;s scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.</dd>
+  <dt>`<i>shape</i>.getTransform().setOrientation(angle, x, y, z)`</dt>
+  <dd>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).</dd>
+  <dt>`<i>shape</i>.setColor(color)`</dt>
+  <dd>Gives the shape a particular color. `color` can be an HTML color ("#ff0000"), CSS color ("red"), RGB color("rgb(20, 30, 40)") or HSL color("hsl(20, 50%, 50%)"), or a set of values from 0 to 1 (example: `[1.0,0.5,0.0]`).</dd>
+  <dt>`<i>shape</i>.setTexture(name)`</dt>
+  <dd>Gives the shape a particular texture, with the URL `name`. The texture should be in the same origin as the Web page (which usually means the same directory).</dd>
+  <dt>`<i>shape</i>.copy()`</dt>
+  <dd>Creates a copy of this shape. Can be more efficient than calling `scene.makeShape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</dd>
 </dl>
 
 ### The Render Loop
