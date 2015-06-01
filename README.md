@@ -52,12 +52,14 @@ platonic solids.  Demonstrates how vertex and index arrays are built up to creat
 * [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 
-### Surfaces
+### Curves and Surfaces
 
 * [demos/surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates
 using evaluators to generate parametric surfaces.
 * [demos/surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates
 parametric surfaces, with a custom formula editor.
+* [demos/curvesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates
+parametric curves, with a custom formula editor.
 * [demos/implicit.html](https://peteroupc.github.io/html3dutil/demos/implicit.html) - Demonstrates
 implicit surfaces.
 
