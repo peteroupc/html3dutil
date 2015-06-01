@@ -181,7 +181,7 @@ or the makeMesh class above.
       return retval;
      }
     }
-    
+
 And here's an example of its use.  We'll take the circle surface given above,
 and create a SurfaceShifter object that shifts the circle by 3 units horizontally
 and vertically (by default, the circle will be centered at the origin (0, 0, 0)).
@@ -216,10 +216,10 @@ curve can be a seen as a "warped" version of a line.
 
 One simple example of a parametric curve is a circle.  In fact, the same source
 code for the circle surface given above can also serve as the parametric curve
-function, since it only uses the variable _u_, not _v_.  
+function, since it only uses the variable _u_, not _v_.
 
-Note that any surface evaluator that only uses _u_ can easily serve as a 
-parametric curve evaluator, as can any surface in which the _v_ parameter is 
+Note that any surface evaluator that only uses _u_ can easily serve as a
+parametric curve evaluator, as can any surface in which the _v_ parameter is
 kept to the same value, such as 0, 1, or any other constant number.
 
 ### Generating Parametric Curves
@@ -264,9 +264,9 @@ Two other demos include a formula editor allowing you to experiment with
 parametric curves and surfaces, and to export them to source code appropriate
 for use in the Public Domain HTML 3D Library.
 
-* [curvesexpr.html](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates parametric 
+* [curvesexpr.html](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates parametric
 curves, with a custom formula editor.
-* [surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates parametric 
+* [surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates parametric
 surfaces, with a custom formula editor.
 
 ## Other Pages
