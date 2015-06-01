@@ -499,7 +499,7 @@ BSplineSurface.prototype.evaluate=function(u,v){
 * (U) and returns a point (in 1, 2, 3 or more dimensions, but
 * usually 2 or 3).  For example, in 3 dimensions, a curve
 * function has the following form:<p>
-* <b>F</b>(u) = [ x(u), y(u), z(u) ]
+* <b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
 * where x(u) returns an X coordinate, y(u) a Y coordinate,
 * and z(u) returns a Z coordinate.<p>
 * For more information, see the {@tutorial surfaces} tutorial.
