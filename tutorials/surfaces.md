@@ -1,6 +1,6 @@
 ## Introduction
 
-This tip describes parametric curves and surfaces and how to generate them using my
+This page describes parametric curves and surfaces and how to generate them using my
 public-domain [HTML 3D Library](http://peteroupc.github.io/html3dutil).
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
@@ -172,7 +172,7 @@ or the makeMesh class above.
      // Define the surface shifter function
      this.evaluate = function(u, v){
       // Get the coordinates from the source evaluator
-      var retval = this.evaluator(u, v);
+      var retval = this.evaluator.evaluate(u, v);
       // Shift the coordinates
       retval[0]+=this.x;
       retval[1]+=this.y;

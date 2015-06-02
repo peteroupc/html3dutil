@@ -28,6 +28,12 @@
 */
 ExtrudedTube._EPSILON=0.000001
 function ExtrudedTube(func, thickness, sweptCurve){
+ function distSq(a,b){
+  var dx=b[0]-a[0];
+  var dy=b[1]-a[1];
+  var dz=b[2]-a[2];
+  return dx*dx+dy*dy+dz*dz;
+ }
  this.thickness=thickness==null ? 0.125 : thickness;
  this.sweptCurve=sweptCurve;
  this.func=func;
@@ -36,11 +42,15 @@ function ExtrudedTube(func, thickness, sweptCurve){
  this.tangents=[];
  var res=50;
  var nextSample=null;
+ var firstSample=null;
  for(var i=0;i<=res;i++){
   var t=i/res;
   var e0=(nextSample) ? nextSample : func.evaluate(t);
+  e0[2]=0;
   var e01=func.evaluate(i==res ? t-ExtrudedTube._EPSILON : t+ExtrudedTube._EPSILON);
+  e01[2]=0;
   nextSample=(i==res) ? e0 : func.evaluate((i+1)/res);
+  if(i==0)firstSample=e0;
   var tangent=GLMath.vec3normInPlace(
     GLMath.vec3sub(e01,e0));
   if(t==1){
@@ -59,19 +69,38 @@ function ExtrudedTube(func, thickness, sweptCurve){
   this.bitangents[i]=bitangent;
   this.tangents[i]=tangent;
  }
+ var totaltheta=0;
+ if(firstSample && nextSample &&
+   distSq(firstSample,nextSample) < ExtrudedTube._EPSILON){
+  // curve's positions are the same at 0 and 1
+  this.normals[res]=this.normals[0];
+  this.tangents[res]=this.tangents[0];
+  this.bitangents[res]=this.bitangents[0];
+  for(var i=0;i<this.tangents.length-1;i++){
+   var bitangent=GLMath.vec3cross(this.tangents[i+1],this.tangents[i]);
+   if(GLMath.vec3dot(bitangent,bitangent)<ExtrudedTube._EPSILON){
+    this.normals[i+1]=this.normals[i];
+    this.bitangents[i]=GLMath.vec3normInPlace(bitangent);
+   } else {
+     GLMath.vec3normInPlace(bitangent);
+     var theta=Math.acos(GLMath.vec3dot(this.tangents[i],this.tangents[i+1]));
+     totaltheta+=theta*GLMath.Num180DividedByPi
+     var mat=GLMath.mat4rotated(-theta*GLMath.Num180DividedByPi,bitangent);
+     var norm=[];
+     var curnorm=this.normals[i]
+     norm[0]=curnorm[0] * mat[0] + curnorm[1] * mat[4] + curnorm[2] * mat[8];
+     norm[1]=curnorm[0] * mat[1] + curnorm[1] * mat[5] + curnorm[2] * mat[9];
+     norm[2]=curnorm[0] * mat[2] + curnorm[1] * mat[6] + curnorm[2] * mat[10];
+     this.normals[i+1]=GLMath.vec3normInPlace(norm);
+     this.bitangents[i]=bitangent;
+   }
+  }
+ }
 }
-// TODO: Implement parallel transport:
-// <http://www.cs.indiana.edu/pub/techreports/TR425.pdf>
 ExtrudedTube.prototype._getBasisVectors=function(u,val){
  var b,n,t;
  if(u>=0&& u<=1){
   var index=u*(this.bitangents.length-1);
-  if(Math.abs(index-Math.round(index))<ExtrudedTube._EPSILON){
-   index=Math.round(index);
-   b=this.bitangents[index];
-   n=this.normals[index];
-   t=this.tangents[index];
-  } else {
    index=Math.floor(index);
    var e0=this.func.evaluate(u);
    var e01=this.func.evaluate(u+ExtrudedTube._EPSILON);
@@ -81,10 +110,10 @@ ExtrudedTube.prototype._getBasisVectors=function(u,val){
     GLMath.vec3cross(this.bitangents[index],tangent))
    var bitangent=GLMath.vec3normInPlace(
     GLMath.vec3cross(tangent,normal));
+   
    b=bitangent;
    n=normal;
    t=tangent;
-  }
  } else {
   var e0=this.func.evaluate(u);
   var e01=this.func.evaluate(u+ExtrudedTube._EPSILON);
@@ -115,6 +144,12 @@ ExtrudedTube._normalFromTangent=function(tangent){
  }
  return normal;
 }
+/**
+* Generates a point on the extruded tube from the given u and v coordinates.
+* @param {number} u U coordinate.
+* @param {number} v V coordinate.
+* @return {Array<number>} A 3-element array specifying a 3D point.
+*/
 ExtrudedTube.prototype.evaluate=function(u, v){
  var basisVectors=[];
  var sample=this.func.evaluate(u);

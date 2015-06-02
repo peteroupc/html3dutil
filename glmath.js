@@ -1102,6 +1102,35 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
             x * mat[3] + y * mat[7] + z * mat[11] + w * mat[15]];
 },
 /**
+ * Transforms a 3-element vector with a 4x4 matrix and returns
+ * the transformed vector.
+ * @param {Array<number>} mat A 4x4 matrix.
+ * @param {Array<number>|number} v X coordinate.
+ * If "vy", "vz", and "vw" are omitted, this value can instead
+ * be a 4-element array giving the X, Y, Z, and W coordinates.
+ * @param {number} vy Y coordinate.
+ * @param {number} vz Z coordinate.
+ * @param {number} vw W coordinate.  To transform a 2D
+ * point, set Z to 1.
+ * @return {Array<number>} The transformed vector.
+ */
+mat4transformVec3:function(mat,v,vy,vz){
+  var x,y,z;
+  if(typeof vy!="undefined" && typeof vz!="undefined"){
+      x=v;
+      y=vy;
+      z=vz;
+  } else {
+      x=v[0];
+      y=v[1];
+      z=v[2];
+  }
+return [x * mat[0] + y * mat[4] + z * mat[8] + mat[12],
+            x * mat[1] + y * mat[5] + z * mat[9] + mat[13],
+            x * mat[2] + y * mat[6] + z * mat[10] + mat[14],
+            x * mat[3] + y * mat[7] + z * mat[11] + mat[15]];
+},
+/**
  * Transforms a 3-element vector with a 3x3 matrix and returns
  * the transformed vector.
  * @param {Array<number>} mat A 3x3 matrix.
