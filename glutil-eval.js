@@ -497,8 +497,8 @@ BSplineSurface.prototype.evaluate=function(u,v){
 * A parametric curve is a curve whose points are based on a
 * parametric curve function.  A curve function takes a number
 * (U) and returns a point (in 1, 2, 3 or more dimensions, but
-* usually 2 or 3).  For example, in 3 dimensions, a curve
-* function has the following form:<p>
+* usually 2 or 3) that lies on the curve.  For example, in 3
+* dimensions, a curve function has the following form:<p>
 * <b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
 * where x(u) returns an X coordinate, y(u) a Y coordinate,
 * and z(u) returns a Z coordinate.<p>
@@ -707,6 +707,16 @@ CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
 * An evaluator of parametric functions for generating
 * vertex positions, normals, colors, and texture coordinates
 * of a surface.<p>
+* A parametric surface is a surface whose points are based on a
+* parametric surface function.  A surface function takes two numbers
+* (U and V) and returns a point (in 1, 2, 3 or more dimensions, but
+* usually 2 or 3) that lies on the surface.  For example, in 3 
+* dimensions, a surface function has the following form:<p>
+* <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
+* where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
+* and z(u, v) returns a Z coordinate.<p>
+* For more information, see the {@tutorial surfaces} tutorial.
+* @class
 * See the {@tutorial surfaces} tutorial for more information.
 * @class
 * @alias glutil.SurfaceEval
