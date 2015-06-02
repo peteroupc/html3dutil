@@ -1,6 +1,8 @@
 /**
 * Evaluator for a parametric surface in the form
 * of a tube extruded from a parametric curve.
+* @class
+* @alias glutil.ExtrudedTube
 * @param {Object} func An object that must contain a function
 * named "evaluate", which takes the following parameter:<ul>
 * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
@@ -83,23 +85,49 @@ function ExtrudedTube(func, thickness, sweptCurve){
     this.bitangents[i]=GLMath.vec3normInPlace(bitangent);
    } else {
      GLMath.vec3normInPlace(bitangent);
-     var theta=Math.acos(GLMath.vec3dot(this.tangents[i],this.tangents[i+1]));
-     totaltheta+=theta*GLMath.Num180DividedByPi
-     var mat=GLMath.mat4rotated(-theta*GLMath.Num180DividedByPi,bitangent);
-     var norm=[];
-     var curnorm=this.normals[i]
-     norm[0]=curnorm[0] * mat[0] + curnorm[1] * mat[4] + curnorm[2] * mat[8];
-     norm[1]=curnorm[0] * mat[1] + curnorm[1] * mat[5] + curnorm[2] * mat[9];
-     norm[2]=curnorm[0] * mat[2] + curnorm[1] * mat[6] + curnorm[2] * mat[10];
+     // Both tangents will have been normalized, so cosTheta will be set to
+     // the cosine of the angle between them
+     var cosTheta=GLMath.vec3dot(this.tangents[i],this.tangents[i+1]);
+     var norm=ExtrudedTube._rotateVectorGivenCosine(this.normals[i],cosTheta,bitangent);
      this.normals[i+1]=GLMath.vec3normInPlace(norm);
      this.bitangents[i]=bitangent;
    }
   }
  }
 }
+// NOTE: Assumes cosineOfAngle ranges from -1 through 1 and that
+// rotationAxis is normalized
+ExtrudedTube._rotateVectorGivenCosine=function(vector, cosineOfAngle, rotationAxis){
+  var sineOfAngle = Math.sqrt(1.0 - cosineOfAngle * cosineOfAngle);
+  var t2 = rotationAxis[0] * sineOfAngle;
+  var t3 = rotationAxis[1] * sineOfAngle;
+  var t4 = rotationAxis[2] * sineOfAngle;
+  var t5 = 1.0 - cosineOfAngle;
+  var t6 = rotationAxis[0] * t5;
+  var t7 = rotationAxis[1] * t5;
+  var t8 = rotationAxis[2] * t5;
+  var t9 = [];
+  var t10 = [];
+  var t11 = [];
+  t9[0] = ((rotationAxis[0] * t6) + cosineOfAngle);
+  t9[1] = ((rotationAxis[1] * t6) + t4);
+  t9[2] = ((rotationAxis[0] * t8) - t3);
+  t10[0] = ((rotationAxis[0] * t7) - t4);
+  t10[1] = ((rotationAxis[1] * t7) + cosineOfAngle);
+  t10[2] = ((rotationAxis[1] * t8) + t2);
+  t11[0] = ((rotationAxis[0] * t8) + t3);
+  t11[1] = ((rotationAxis[1] * t8) - t2);
+  t11[2] = ((rotationAxis[2] * t8) + cosineOfAngle);
+  return [
+    (((t9[0] * vector[0]) + t10[0] * vector[1]) + t11[0] * vector[2]), 
+    (((t9[1] * vector[0]) + t10[1] * vector[1]) + t11[1] * vector[2]), 
+    (((t9[2] * vector[0]) + t10[2] * vector[1]) + t11[2] * vector[2])];
+}
+
 ExtrudedTube.prototype._getBasisVectors=function(u,val){
  var b,n,t;
- if(u>=0&& u<=1){
+ if(u>=0&& u<=1 && false){
+// if(u>=0&& u<=1){ // TODO
   var index=u*(this.bitangents.length-1);
    index=Math.floor(index);
    var e0=this.func.evaluate(u);
@@ -172,4 +200,31 @@ ExtrudedTube.prototype.evaluate=function(u, v){
   sz = sample[2]+(basisVectors[2]*t2+basisVectors[5]*t1)*this.thickness;
  }
  return [sx,sy,sz];
+}
+/**
+* Represents a knot given coefficients in the form of the Fourier series<p>
+* <b>F</b>(u) = &FourierKnot;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) +  <b>b</b> sin(<i>iu</i>).<p>
+* @class
+* @alias glutil.ExtrudedTube
+* @param {Array<Array<number>>} a
+* @param {Array<Array<number>>} b
+*/
+function FourierKnot(a,b){
+ this.a=a; // Cosine coefficients
+ this.b=b; // Sine coefficients
+ if(this.a.length!=this.b.length){
+  throw new Error("a and b must be the same length");
+ }
+ this.evaluate=function(u){
+  var ret=[0,0,0];
+  for(var i=0;i<this.a.length;i++){
+   var iu=(i+1)*u;
+   var c=Math.cos(iu);
+   var s=Math.sqrt(1-(c*c));
+   ret[0]+=this.a[0]*c+this.b[0]*s;
+   ret[1]+=this.a[1]*c+this.b[1]*s;
+   ret[2]+=this.a[2]*c+this.b[2]*s;
+  }
+  return ret;
+ }
 }

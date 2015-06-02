@@ -262,9 +262,15 @@ var GLUtil={
 * @return {Promise} A promise that resolves when the data
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "data", the
-* file's text or data), and is rejected when an error occurs (the
+* file's text or data), as given below, and is rejected when an error occurs (the
 * result may be an object with
-* one property: "url", the URL of the file).
+* one property: "url", the URL of the file).  If the promise resolves,
+* the parameter will be:<ul>
+* <li>For response type "xml", an XML document object.
+* <li>For response type "arraybuffer", an ArrayBuffer object.
+* <li>For response type "json", the JavaScript object decoded
+* from JSON.
+* <li>For any other type, a string of the file's text.</ul>
 */
 "loadFileFromUrl":function(url,responseType){
  var urlstr=url;
@@ -275,15 +281,12 @@ var GLUtil={
     var t=e.target;
     if(t.readyState==4){
      if(t.status>=200 && t.status<300){
-      var resp=t.response
-      if(!resp){
-       if(respType=="xml")resp=t.responseXML
-       else if(respType=="json")
+      if(respType=="xml")resp=t.responseXML
+      else if(respType=="json")
         resp=(t.responseJSON||JSON.parse(t.responseText))+""
-       else if(respType=="arraybuffer")
+      else if(respType=="arraybuffer")
         resp=t.response
-       else resp=t.responseText+""
-      }
+      else resp=t.responseText+""
       resolve({"url": urlstr, "data": resp});
      } else {
       reject({"url": urlstr});
