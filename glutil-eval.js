@@ -710,7 +710,7 @@ CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
 * A parametric surface is a surface whose points are based on a
 * parametric surface function.  A surface function takes two numbers
 * (U and V) and returns a point (in 1, 2, 3 or more dimensions, but
-* usually 2 or 3) that lies on the surface.  For example, in 3 
+* usually 2 or 3) that lies on the surface.  For example, in 3
 * dimensions, a surface function has the following form:<p>
 * <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
 * where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
