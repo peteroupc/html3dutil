@@ -10,9 +10,9 @@
 * The evaluator function returns a 3-element array: the first
 * element is the X coordinate of the curve's position, the second
 * element is the Y coordinate, and the third is the Z coordinate.
-* @param {number|undefined} thickness Radius of the
+* @param {number} [thickness] Radius of the
 * extruded tube.  If this parameter is null or omitted, the default is 0.125.
-* @param {Object|undefined} sweptCurve Object describing
+* @param {Object} [sweptCurve] Object describing
 * a curve to serve as the cross section of the extruded shape,
 * corresponding to the V coordinate of the ExtrudedTube's
 * "evaluate" method. If this parameter is null or omitted, uses a circular cross section <code>(sin(u),
@@ -37,6 +37,8 @@ function ExtrudedTube(func, thickness, sweptCurve){
  this.normals=[];
  this.bitangents=[];
  this.tangents=[];
+ this.vectorsCache=[];
+ this.vectorsCacheIndex=0;
  var isClosed=false;
  var res=50;
  var nextSample=null;
@@ -77,7 +79,6 @@ function ExtrudedTube(func, thickness, sweptCurve){
   this.normals[i]=normal;
   this.bitangents[i]=bitangent;
   this.tangents[i]=tangent;
-  //ExtrudedTube._checkBasisVectors(normal,bitangent,tangent);
  }
  if(isClosed && totalLength>0){
   // Adjust angles of bitangent and normal to prevent seams
@@ -92,32 +93,13 @@ function ExtrudedTube(func, thickness, sweptCurve){
    // tangent and each other
    this.normals[i+1]=GLMath.quatTransform(newq,this.normals[i+1]);
    this.bitangents[i+1]=GLMath.quatTransform(newq,this.bitangents[i+1]);
-   //ExtrudedTube._checkBasisVectors(this.normals[i+1],this.bitangents[i+1],this.tangents[i+1]);
   }
  }
- /*
- for(var i=0;i<=res;i++){
-  debugVec(samples[i],this.tangents[i],"blue")
-  debugVec(samples[i],this.bitangents[i],"green")
-  debugVec(samples[i],this.normals[i],"red")
- }
- */
 }
-/*
-ExtrudedTube._checkBasisVectors=function(nor,bit,tan){
-   var norbit=GLMath.vec3dot(nor,bit);
-   var nortan=GLMath.vec3dot(nor,tan);
-   var bittan=GLMath.vec3dot(bit,tan);
-   if(Math.abs(GLMath.vec3length(nor)-1)>0.00001)throw new Error("nor not unit length")
-   if(Math.abs(GLMath.vec3length(bit)-1)>0.00001)throw new Error("bit not unit length")
-   if(Math.abs(GLMath.vec3length(tan)-1)>0.00001)throw new Error("tan not unit length")
-   if(Math.abs(norbit)>0.00001)throw new Error("nor and bit not orthogonal")
-   if(Math.abs(nortan)>0.00001)throw new Error("nor and tan not orthogonal")
-   if(Math.abs(bittan)>0.00001)throw new Error("bit and tan not orthogonal")
-}
-*/
-ExtrudedTube.prototype._getBasisVectors=function(u,val){
+ExtrudedTube.prototype._getBasisVectors=function(u,sample){
  var b,n,t;
+ var val=[];
+ var cache=false;
  if(u>=0 && u<=1){
   var index=u*(this.bitangents.length-1);
   if(Math.abs(index-Math.round(index))<ExtrudedTube._EPSILON){
@@ -126,8 +108,15 @@ ExtrudedTube.prototype._getBasisVectors=function(u,val){
    n=this.normals[index];
    t=this.tangents[index];
   } else {
+   for(var i=0;i<this.vectorsCache.length;i+=2){
+    if(this.vectorsCache[i]==u){
+     this.cacheHits=(this.cacheHits||0)+1
+     return this.vectorsCache[i+1];
+    }
+   }
+   this.cacheMisses=(this.cacheMisses||0)+1
    index=Math.floor(index);
-   var e0=this.func.evaluate(u);
+   var e0=sample;
    var e01=this.func.evaluate(u+ExtrudedTube._EPSILON);
    var tangent=GLMath.vec3normInPlace(
     GLMath.vec3sub(e01,e0));
@@ -137,10 +126,18 @@ ExtrudedTube.prototype._getBasisVectors=function(u,val){
      GLMath.vec3cross(tangent,normal));
    b=bitangent;
    n=normal;
-   t=tangent;  
+   t=tangent;
+   cache=true;
   }
  } else {
-  var e0=this.func.evaluate(u);
+   for(var i=0;i<this.vectorsCache.length;i+=2){
+    if(this.vectorsCache[i]==u){
+     this.cacheHits=(this.cacheHits||0)+1
+     return this.vectorsCache[i+1];
+    }
+   }
+   this.cacheMisses=(this.cacheMisses||0)+1
+  var e0=sample;
   var e01=this.func.evaluate(u+ExtrudedTube._EPSILON);
   var tangent=GLMath.vec3normInPlace(
     GLMath.vec3sub(e01,e0));
@@ -150,8 +147,8 @@ ExtrudedTube.prototype._getBasisVectors=function(u,val){
   b=bitangent;
   n=normal;
   t=tangent;
+  cache=true;
  }
- //ExtrudedTube._checkBasisVectors(n,b,t);
  val[0]=n[0];
  val[1]=n[1];
  val[2]=n[2];
@@ -161,6 +158,12 @@ ExtrudedTube.prototype._getBasisVectors=function(u,val){
  val[6]=t[0];
  val[7]=t[1];
  val[8]=t[2];
+ if(cache){
+  if(this.vectorsCacheIndex>=400)this.vectorsCacheIndex=0;
+  this.vectorsCache[this.vectorsCacheIndex++]=u;
+  this.vectorsCache[this.vectorsCacheIndex++]=val;
+ }
+ return val;
 }
 ExtrudedTube._normalFromTangent=function(tangent){
  var normal=GLMath.vec3normInPlace(
@@ -177,9 +180,8 @@ ExtrudedTube._normalFromTangent=function(tangent){
 * @return {Array<number>} A 3-element array specifying a 3D point.
 */
 ExtrudedTube.prototype.evaluate=function(u, v){
- var basisVectors=[];
  var sample=this.func.evaluate(u);
- this._getBasisVectors(u,basisVectors);
+ var basisVectors=this._getBasisVectors(u,sample);
  var t1,t2,sx,sy,sz;
  if(this.sweptCurve){
   var vpos=this.sweptCurve.evaluate(v);
@@ -218,7 +220,7 @@ function FourierKnot(a,b){
   for(var i=0;i<this.a.length;i++){
    var iu=(i+1)*u;
    var c=Math.cos(iu);
-   var s=Math.sqrt(1-(c*c));
+   var s=Math.sin(iu);
    ret[0]+=this.a[0]*c+this.b[0]*s;
    ret[1]+=this.a[1]*c+this.b[1]*s;
    ret[2]+=this.a[2]*c+this.b[2]*s;
