@@ -39,7 +39,7 @@ var GLMath={
  * each of two other vectors.<p>
  * If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the absolute value
- * of the sine of the angle between them is equal to the length of their
+ * of the sine of the shortest angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
  * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small><p>
@@ -63,7 +63,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * <p>If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
- * of the angle between them is equal to their dot product.
+ * of the shortest angle between them is equal to their dot product.
  * <small>(More formally, the dot
  * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
@@ -862,12 +862,11 @@ quatRotate:function(quat,angle,v,vy,vz){
     GLMath.quatFromAxisAngle(angle,v,vy,vz));
 },
 /**
- * Transforms a 4-element vector using a quaternion's rotation.
+ * Transforms a 3- or 4-element vector using a quaternion's rotation.
  * @param {Array<number>} q A quaternion describing
  * the rotation.
  * @param {Array<number>} v A 3- or 4-element vector to
- * transform. To transform a 3D point represented as a 4-element
- * vector, set the vector's 4th element (zero-based index 3) to 1.
+ * transform. The fourth element, if any, is ignored.
  * @return {Array<number>} A 4-element vector representing
 * the transformed vector.
  */
