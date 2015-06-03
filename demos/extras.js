@@ -85,7 +85,11 @@ function ExtrudedTube(func, thickness, sweptCurve){
   var quat=GLMath.quatFromVectors(this.normals[res],this.normals[0]);
   var angle=GLMath.quatToAxisAngle(quat)[3];
   var runningLength=0;
-  for(var i=0;i<res;i++){
+  // Set basis vectors at ends to the same value
+  this.normals[res]=this.normals[0];
+  this.bitangents[res]=this.bitangents[0];
+  this.tangents[res]=this.tangents[0];
+  for(var i=0;i<res-1;i++){
    runningLength+=lengths[i];
    var lenproportion=runningLength/totalLength;
    var newq=GLMath.quatFromAxisAngle(angle*lenproportion,this.tangents[i+1]);
@@ -202,29 +206,32 @@ ExtrudedTube.prototype.evaluate=function(u, v){
  }
  return [sx,sy,sz];
 }
+
 /**
-* Represents a knot given coefficients in the form of the Fourier series<p>
-* <b>F</b>(u) = &FourierKnot;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) +  <b>b</b> sin(<i>iu</i>).<p>
-* @class
-* @alias glutil.ExtrudedTube
+* Represents a knot in the form of the Fourier series<p>
+* <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) +  <b>b</b> sin(<i>iu</i>).<p>
 * @param {Array<Array<number>>} a
 * @param {Array<Array<number>>} b
 */
 function FourierKnot(a,b){
  this.a=a; // Cosine coefficients
  this.b=b; // Sine coefficients
+ this.idx=0;
  if(this.a.length!=this.b.length){
   throw new Error("a and b must be the same length");
  }
  this.evaluate=function(u){
+  u*=GLMath.PiTimes2;
   var ret=[0,0,0];
   for(var i=0;i<this.a.length;i++){
    var iu=(i+1)*u;
    var c = Math.cos(iu);
    var s = (iu>=0 && iu<6.283185307179586) ? (iu<=3.141592653589793 ? Math.sqrt(1.0-c*c) : -Math.sqrt(1.0-c*c)) : Math.sin(iu);
-   ret[0]+=this.a[0]*c+this.b[0]*s;
-   ret[1]+=this.a[1]*c+this.b[1]*s;
-   ret[2]+=this.a[2]*c+this.b[2]*s;
+   var ai=this.a[i];
+   var bi=this.b[i];
+   ret[0]+=c*ai[0]+s*bi[0];
+   ret[1]+=c*ai[1]+s*bi[1];
+   ret[2]+=c*ai[2]+s*bi[2];
   }
   return ret;
  }

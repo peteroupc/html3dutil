@@ -119,8 +119,8 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
  for(var i=1;i<slices;i++){
   var t=i*1.0/slices;
   var angle=twopi*t;
-  var sangle=Math.sin(angle);
-  var cangle=Math.cos(angle);
+  var cangle = Math.cos(angle);
+  var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
   sc.push(sangle,cangle);
   tc.push(t);
  }
@@ -280,8 +280,8 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
   var t=i*1.0/slices;
   var angle=(t==1 && arcLength==twopi) ? start : start+arcLength*t;
   angle=(angle<0) ? twopi-(-angle)%twopi : angle%twopi;
-  var sangle=Math.sin(angle);
-  var cangle=Math.cos(angle);
+  var cangle = Math.cos(angle);
+  var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
   sc.push(sangle,cangle);
   tc.push(t);
  }
@@ -377,16 +377,16 @@ Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
  var scj=[];
  for(var i = 0; i < crosswise; i++){
   var u = i*twopi/crosswise;
-  var sangle=Math.sin(u);
-  var cangle=Math.cos(u);  
+  var cangle = Math.cos(u);
+  var sangle = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
   sci.push(sangle,cangle);
  }
  sci.push(sci[0]);
  sci.push(sci[1]);
  for(var i = 0; i < lengthwise; i++){
   var u = i*twopi/lengthwise;
-  var sangle=Math.sin(u);
-  var cangle=Math.cos(u);  
+  var cangle = Math.cos(u);
+  var sangle = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
   scj.push(sangle,cangle);
  }
  scj.push(scj[0]);
@@ -565,8 +565,8 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
  for(var i=1;i<slices;i++){
   var t=i*1.0/slices;
   var angle=twopi*t;
-  var sangle=Math.sin(u);
-  var cangle=Math.cos(u);  
+  var cangle = Math.cos(u);
+  var sangle = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
   sc.push(sangle,cangle);
   tc.push(t);
  }
