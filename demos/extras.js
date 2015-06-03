@@ -96,6 +96,7 @@ function ExtrudedTube(func, thickness, sweptCurve){
   }
  }
 }
+/** @private */
 ExtrudedTube.prototype._getBasisVectors=function(u,sample){
  var b,n,t;
  var val=[];
@@ -194,7 +195,7 @@ ExtrudedTube.prototype.evaluate=function(u, v){
  } else {
   var vt=GLMath.PiTimes2*v;
   t1 = Math.cos(vt);
-  t2 = Math.sin(vt);
+  t2 = (vt>=0 && vt<6.283185307179586) ? (vt<=3.141592653589793 ? Math.sqrt(1.0-t1*t1) : -Math.sqrt(1.0-t1*t1)) : Math.sin(vt);
   sx = sample[0]+(basisVectors[0]*t2+basisVectors[3]*t1)*this.thickness;
   sy = sample[1]+(basisVectors[1]*t2+basisVectors[4]*t1)*this.thickness;
   sz = sample[2]+(basisVectors[2]*t2+basisVectors[5]*t1)*this.thickness;
@@ -219,8 +220,8 @@ function FourierKnot(a,b){
   var ret=[0,0,0];
   for(var i=0;i<this.a.length;i++){
    var iu=(i+1)*u;
-   var c=Math.cos(iu);
-   var s=Math.sin(iu);
+   var c = Math.cos(iu);
+   var s = (iu>=0 && iu<6.283185307179586) ? (iu<=3.141592653589793 ? Math.sqrt(1.0-c*c) : -Math.sqrt(1.0-c*c)) : Math.sin(iu);
    ret[0]+=this.a[0]*c+this.b[0]*s;
    ret[1]+=this.a[1]*c+this.b[1]*s;
    ret[2]+=this.a[2]*c+this.b[2]*s;

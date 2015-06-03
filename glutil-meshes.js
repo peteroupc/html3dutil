@@ -119,7 +119,9 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
  for(var i=1;i<slices;i++){
   var t=i*1.0/slices;
   var angle=twopi*t;
-  sc.push(Math.sin(angle),Math.cos(angle));
+  var sangle=Math.sin(angle);
+  var cangle=Math.cos(angle);
+  sc.push(sangle,cangle);
   tc.push(t);
  }
  sc.push(0,1);
@@ -278,7 +280,9 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
   var t=i*1.0/slices;
   var angle=(t==1 && arcLength==twopi) ? start : start+arcLength*t;
   angle=(angle<0) ? twopi-(-angle)%twopi : angle%twopi;
-  sc.push(Math.sin(angle),Math.cos(angle));
+  var sangle=Math.sin(angle);
+  var cangle=Math.cos(angle);
+  sc.push(sangle,cangle);
   tc.push(t);
  }
  if(fullCircle){
@@ -373,13 +377,17 @@ Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
  var scj=[];
  for(var i = 0; i < crosswise; i++){
   var u = i*twopi/crosswise;
-  sci.push(Math.sin(u),Math.cos(u));
+  var sangle=Math.sin(u);
+  var cangle=Math.cos(u);  
+  sci.push(sangle,cangle);
  }
  sci.push(sci[0]);
  sci.push(sci[1]);
  for(var i = 0; i < lengthwise; i++){
   var u = i*twopi/lengthwise;
-  scj.push(Math.sin(u),Math.cos(u));
+  var sangle=Math.sin(u);
+  var cangle=Math.cos(u);  
+  scj.push(sangle,cangle);
  }
  scj.push(scj[0]);
  scj.push(scj[1]);
@@ -557,7 +565,9 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
  for(var i=1;i<slices;i++){
   var t=i*1.0/slices;
   var angle=twopi*t;
-  sc.push(Math.sin(angle),Math.cos(angle));
+  var sangle=Math.sin(u);
+  var cangle=Math.cos(u);  
+  sc.push(sangle,cangle);
   tc.push(t);
  }
  sc.push(0,1);

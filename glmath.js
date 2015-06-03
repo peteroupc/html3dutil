@@ -655,7 +655,7 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
 }
 var cost = Math.cos(ang);
-var sint = Math.sin(ang);
+var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
 var vec=GLMath.vec3normInPlace([v0,v1,v2]);
 var ret=[vec[0],vec[1],vec[2],cost];
 ret[0]*=sint;
@@ -696,12 +696,12 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
   pitchRad=((pitchDegrees>=0 && pitchDegrees<360) ? pitchDegrees : ((pitchDegrees%360)+(pitchDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
   yawRad=((yawDegrees>=0 && yawDegrees<360) ? yawDegrees : ((yawDegrees%360)+(yawDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
  }
-  var px = Math.sin(pitchRad);
   var py = Math.cos(pitchRad);
-  var yx = Math.sin(yawRad);
+  var px = (pitchRad>=0 && pitchRad<6.283185307179586) ? (pitchRad<=3.141592653589793 ? Math.sqrt(1.0-py*py) : -Math.sqrt(1.0-py*py)) : Math.sin(pitchRad);
   var yy = Math.cos(yawRad);
-  var rx = Math.sin(rollRad);
+  var yx = (yawRad>=0 && yawRad<6.283185307179586) ? (yawRad<=3.141592653589793 ? Math.sqrt(1.0-yy*yy) : -Math.sqrt(1.0-yy*yy)) : Math.sin(yawRad);
   var ry = Math.cos(rollRad);
+  var rx = (rollRad>=0 && rollRad<6.283185307179586) ? (rollRad<=3.141592653589793 ? Math.sqrt(1.0-ry*ry) : -Math.sqrt(1.0-ry*ry)) : Math.sin(rollRad);
   var t8;
   if(mode==GLMath.PitchYawRoll || mode==GLMath.PitchRollYaw){
    var t7 = [rx*yx, ry * yx, rx * yy, ry * yy];
@@ -1597,7 +1597,7 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
-var sint = Math.sin(ang);
+var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
 if( 1 == v0 && 0 == v1 && 0 == v2 ) {
   return [mat[0], mat[1], mat[2], mat[3],
   cost*mat[4]+mat[8]*sint, cost*mat[5]+mat[9]*sint, cost*mat[6]+mat[10]*sint, cost*mat[7]+mat[11]*sint,
@@ -1694,7 +1694,7 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
  ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
-var sint = Math.sin(ang);
+var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
 if( 1 == v0 && 0 == v1 && 0 == v2 ) {
   return[1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1]
 } else if( 0 == v0 && 1 == v1 && 0 == v2 ) {
