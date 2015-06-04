@@ -181,8 +181,9 @@ ExtrudedTube._normalFromTangent=function(tangent){
 }
 /**
 * Generates a point on the extruded tube from the given u and v coordinates.
-* @param {number} u U coordinate.
-* @param {number} v V coordinate.
+* @param {number} u U coordinate.  This will run the length of the curve.
+* @param {number} v V coordinate.  This will sweep around the extruded
+* tube.
 * @return {Array<number>} A 3-element array specifying a 3D point.
 */
 ExtrudedTube.prototype.evaluate=function(u, v){

@@ -56,6 +56,8 @@ featuring a wall clock.
 
 * [demos/surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates
 using evaluators to generate parametric surfaces.
+* [demos/curves.html](https://peteroupc.github.io/html3dutil/demos/curves.html) - Demonstrates
+using evaluators to generate parametric curves.
 * [demos/surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates
 parametric surfaces, with a custom formula editor.
 * [demos/curvesexpr.html](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates
