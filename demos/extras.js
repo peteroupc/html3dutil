@@ -173,6 +173,7 @@ ExtrudedTube.prototype._getBasisVectors=function(u,sample){
 ExtrudedTube._normalFromTangent=function(tangent){
  var normal=GLMath.vec3normInPlace(
    GLMath.vec3cross(tangent,[0,0,1]));
+ // if normal's length is close is 0, try another normal
  if(GLMath.vec3dot(normal,normal)<ExtrudedTube._EPSILON){
    normal=GLMath.vec3normInPlace(GLMath.vec3cross(tangent,[0,1,0]));
  }

@@ -570,7 +570,7 @@ CurveEval.prototype.texCoord=function(evaluator){
  */
 CurveEval.prototype.vertexBezier=function(controlPoints,u1,u2){
  this.vertexCurve=new BezierCurve(controlPoints,u1,u2);
- if(this.vertexCurve.k!=3)
+ if(controlPoints[0].length!=3)
    throw new Error("unsupported vertex length")
  return this;
 }
@@ -584,7 +584,7 @@ CurveEval.prototype.vertexBezier=function(controlPoints,u1,u2){
 */
 CurveEval.prototype.normalBezier=function(controlPoints,u1,u2){
  this.normalCurve=new BezierCurve(controlPoints,u1,u2);
- if(this.normalCurve.k!=3)
+ if(controlPoints[0].length!=3)
    throw new Error("invalid normal length")
  return this;
 }
@@ -598,7 +598,7 @@ CurveEval.prototype.normalBezier=function(controlPoints,u1,u2){
  */
 CurveEval.prototype.texCoordBezier=function(controlPoints,u1,u2){
  this.texCoordCurve=new BezierCurve(controlPoints,u1,u2);
- if(this.texCoordCurve.k!=1 && this.texCoordCurve.k!=2)
+ if(controlPoints[0].length!=1 && this.texCoordCurve.k!=2)
    throw new Error("unsupported texcoord length")
  return this;
 }
@@ -613,7 +613,7 @@ CurveEval.prototype.texCoordBezier=function(controlPoints,u1,u2){
  */
 CurveEval.prototype.colorBezier=function(controlPoints,u1,u2){
  this.colorCurve=new BezierCurve(controlPoints,u1,u2);
- if(this.colorCurve.k!=3)
+ if(controlPoints[0].length!=3)
    throw new Error("unsupported color length")
  return this;
 }
@@ -845,7 +845,7 @@ SurfaceEval.prototype.texCoord=function(evaluator){
  */
 SurfaceEval.prototype.vertexBezier=function(controlPoints,u1,u2,v1,v2){
  this.vertexSurface=new BezierSurface(controlPoints,u1,u2,v1,v2);
- if(this.vertexSurface.k!=3)
+ if(controlPoints[0][0].length!=3)
    throw new Error("unsupported vertex length")
  return this;
 }
@@ -861,7 +861,7 @@ SurfaceEval.prototype.vertexBezier=function(controlPoints,u1,u2,v1,v2){
 */
 SurfaceEval.prototype.normalBezier=function(controlPoints,u1,u2,v1,v2){
  this.normalSurface=new BezierSurface(controlPoints,u1,u2,v1,v2);
- if(this.normalSurface.k!=3)
+ if(controlPoints[0][0].length!=3)
    throw new Error("invalid normal length")
  return this;
 }
@@ -877,7 +877,7 @@ SurfaceEval.prototype.normalBezier=function(controlPoints,u1,u2,v1,v2){
  */
 SurfaceEval.prototype.texCoordBezier=function(controlPoints,u1,u2,v1,v2){
  this.texCoordSurface=new BezierSurface(controlPoints,u1,u2,v1,v2);
- if(this.texCoordSurface.k!=1 && this.texCoordSurface.k!=2)
+ if(controlPoints[0][0].length!=1 && controlPoints[0][0].length!=2)
    throw new Error("unsupported texcoord length")
  return this;
 }
@@ -894,7 +894,7 @@ SurfaceEval.prototype.texCoordBezier=function(controlPoints,u1,u2,v1,v2){
  */
 SurfaceEval.prototype.colorBezier=function(controlPoints,u1,u2,v1,v2){
  this.colorSurface=new BezierSurface(controlPoints,u1,u2,v1,v2);
- if(this.colorSurface.k!=3)
+ if(controlPoints[0][0].length!=3)
    throw new Error("unsupported color length")
  return this;
 }

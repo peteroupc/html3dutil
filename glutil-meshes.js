@@ -136,8 +136,10 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
    cosSlopeNorm=normDir;
   } else {
    slopeAngle=Math.atan2(baseRad-topRad,height);
-   sinSlopeNorm=Math.sin(slopeAngle)*normDir;
-   cosSlopeNorm=Math.cos(slopeAngle)*normDir;
+   cosSlopeNorm = Math.cos(slopeAngle);
+   sinSlopeNorm = (slopeAngle>=0 && slopeAngle<6.283185307179586) ? (slopeAngle<=3.141592653589793 ? Math.sqrt(1.0-cosSlopeNorm*cosSlopeNorm) : -Math.sqrt(1.0-cosSlopeNorm*cosSlopeNorm)) : Math.sin(slopeAngle);
+   sinSlopeNorm*=normDir;
+   cosSlopeNorm*=normDir;
   }
   for(var i=0;i<stacks;i++){
    var zStart=lastZ;
@@ -565,8 +567,8 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
  for(var i=1;i<slices;i++){
   var t=i*1.0/slices;
   var angle=twopi*t;
-  var cangle = Math.cos(u);
-  var sangle = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
+  var cangle = Math.cos(angle);
+  var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
   sc.push(sangle,cangle);
   tc.push(t);
  }
