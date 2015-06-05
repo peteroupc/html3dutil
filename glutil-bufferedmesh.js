@@ -128,13 +128,13 @@ BufferedSubMesh.prototype.draw=function(program){
   context.bindBuffer(context.ARRAY_BUFFER, this.verts);
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
   var format=this.format;
-  var stride=Mesh.getStride(format);
+  var stride=Mesh._getStride(format);
   var boundAttributes=[];
   var attr=program.get("position");
   boundAttributes.push(attr)
   _vertexAttrib(context,
     attr, 3, context.FLOAT, stride*4, 0);
-  var offset=Mesh.normalOffset(format);
+  var offset=Mesh._normalOffset(format);
   if(offset>=0){
    attr=program.get("normal");
    boundAttributes.push(attr)
@@ -145,7 +145,7 @@ BufferedSubMesh.prototype.draw=function(program){
    attr=program.get("normal");
    if(attr!==null)context.disableVertexAttribArray(attr);
   }
-  offset=Mesh.colorOffset(format);
+  offset=Mesh._colorOffset(format);
   if(offset>=0){
    program.setUniforms({"useColorAttr":1.0});
    attr=program.get("colorAttr");
@@ -158,7 +158,7 @@ BufferedSubMesh.prototype.draw=function(program){
    attr=program.get("colorAttr");
    if(attr!==null)context.disableVertexAttribArray(attr);
   }
-  offset=Mesh.texCoordOffset(format);
+  offset=Mesh._texCoordOffset(format);
   if(offset>=0){
    attr=program.get("uv");
    boundAttributes.push(attr)
