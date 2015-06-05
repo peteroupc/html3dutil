@@ -20,10 +20,7 @@ function MaterialBinder(mshade){
  this.mshade=mshade;
  this.textureSize=[0,0];
 }
-/**
- * Not documented yet.
- * @param {*} program
- */
+/** @private */
 MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
  program.setUniforms({
@@ -47,6 +44,7 @@ MaterialBinder.prototype.bind=function(program){
 
 //////////////////////////
 
+/** @private */
 function LoadedTexture(textureImage, context){
   context=GLUtil._toContext(context);
   this.context=context;
@@ -80,9 +78,7 @@ function LoadedTexture(textureImage, context){
         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
 }
-/**
- * Not documented yet.
- */
+/** @private */
 LoadedTexture.prototype.dispose=function(){
  if(this.loadedTexture){
   this.context.deleteTexture(this.loadedTexture);
@@ -94,10 +90,7 @@ LoadedTexture.prototype.dispose=function(){
 function FrameBufferMaterialBinder(fb){
  this.fb=fb;
 }
-/**
- * Not documented yet.
- * @param {*} program
- */
+/** @private */
 FrameBufferMaterialBinder.prototype.bind=function(program){
       var uniforms={};
       uniforms["sampler"]=this.fb.textureUnit;
@@ -124,10 +117,7 @@ FrameBufferMaterialBinder.prototype.bind=function(program){
 function TextureBinder(tex){
  this.texture=tex;
 }
-/**
- * Not documented yet.
- * @param {*} program
- */
+/** @private */
 TextureBinder.prototype.bind=function(program){
  var texture=this.texture;
  var context=program.getContext();
@@ -198,10 +188,7 @@ TextureBinder.prototype.bind=function(program){
 function LightsBinder(lights){
  this.lights=lights;
 }
-/**
- * Not documented yet.
- * @param {*} program
- */
+/** @private */
 LightsBinder.prototype.bind=function(program){
  var lightsObject=this.lights;
  if(!lightsObject)return this;
@@ -243,9 +230,6 @@ Binders.getMaterialBinder=function(material){
  }
  // Return an empty binding object
  return {
-/**
- * Not documented yet.
- * @param {*} program
- */
+/** @private */
 bind:function(program){}};
 }
