@@ -590,10 +590,13 @@ Operation.prototype.toJSString=function() {
         return ((a = this.negative) ? ("-") : (""))+(opArray.join("*"))
       } else if (this.operator=="div") {
         return ((a = this.negative) ? ("-") : (""))+(opArray.join("/"))
+      } else if (this.operator=="sqrt") {
+        var p1=opArray[0];
+        return ((a = this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),0.5))"
       } else if (this.operator=="pow") {
         var p1=opArray[0];
         var p2=opArray[1];
-        return ((a = this.negative) ? ("-") : (""))+"(Math.sign("+p1+")*Math.pow(Math.abs("+p1+"),"+p2+"))"
+        return ((a = this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),"+p2+"))"
       } else {
         var oper=this.operator
         if(oper=="ln")oper="log"
@@ -1145,6 +1148,3 @@ Constant.prototype.divide=function(x) {
     derivU[2].multiply(derivV[0]).subtract(derivU[0].multiply(derivV[2])),
     derivU[0].multiply(derivV[1]).subtract(derivU[1].multiply(derivV[0]))];
   }
-
-console.log(getExpression("sin(u)"))
-console.log(getExpression("sin(u)*"))
