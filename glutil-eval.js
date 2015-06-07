@@ -6,6 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+(function(global){
 /**
  * A parametric evaluator for B&eacute;zier curves.<p>
  * A B&eacute;zier curve is defined by a series of control points, where
@@ -1017,12 +1018,12 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
  this._restoreValues(mesh,values,0);
  return this;
 }
-/** @private 
+/** @private
  @const
 */
 var _OLD_VALUES_SIZE = 8;
 /** @private
- @const 
+ @const
 */
 var _RECORDED_VALUES_SIZE = 11;
 /** @private */
