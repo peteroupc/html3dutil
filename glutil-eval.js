@@ -154,7 +154,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * first and last control points match the curve's end points.<p>
 * @param {boolean} [bits] Bits for defining input
 * and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
-* BSplineCurve.HOMOGENEOUS_BIT.
+* BSplineCurve.HOMOGENEOUS_BIT,
 * and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
 */
 var BSplineCurve=function(controlPoints, knots, bits){
@@ -353,7 +353,7 @@ BSplineCurve.prototype.evaluate=function(u){
 * @param {Array<number>} knotsV Knot vector of the curve, along the V-axis.
 * @param {boolean} [bits] Bits for defining input
 * and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
-* BSplineCurve.HOMOGENEOUS_BIT.
+* BSplineCurve.HOMOGENEOUS_BIT,
 * and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
 */
 var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
@@ -387,28 +387,79 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  this.bufferV=[];
  this.controlPoints=controlPoints;
 }
-
-BSplineCurve.clamped=function(controlPoints,degree,flags){
+/**
+* Creates a B-spline curve with uniform knots, except that
+* the curve will start and end at the first and last control points.
+* @param {Array<Array<number>>} controlPoints Array of
+* control points as specified in the {@link glutil.BSplineCurve} constructor.
+* @param {number|undefined} degree Degree of the B-Spline
+* curve.  For example, 3 means a degree-3 (cubic) curve.
+* If null or omitted, the default is 3.
+* @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
+* @return {BSplineCurve}
+*/
+BSplineCurve.clamped=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
-   BSplineCurve.clampedKnots(controlPoints.length,degree),flags)
+   BSplineCurve.clampedKnots(controlPoints.length,degree),bits)
 }
-BSplineCurve.uniform=function(controlPoints,degree,flags){
+/**
+* Creates a B-spline curve with uniform knots.
+* @param {Array<Array<number>>} controlPoints Array of
+* control points as specified in the {@link glutil.BSplineCurve} constructor.
+* @param {number|undefined} degree Degree of the B-Spline
+* curve.  For example, 3 means a degree-3 (cubic) curve.
+* If null or omitted, the default is 3.
+* @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
+* @return {BSplineCurve}
+*/
+BSplineCurve.uniform=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
-   BSplineCurve.uniformKnots(controlPoints.length,degree),flags)
+   BSplineCurve.uniformKnots(controlPoints.length,degree),bits)
 }
-BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,flags){
+/**
+* Creates a B-spline surface with uniform knots, except that
+* the surface's edges lie on the edges of the control point array.
+* @param {Array<Array<Array<number>>>} controlPoints Array of
+* control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
+* @param {number|undefined} degreeU Degree of the B-Spline
+* surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
+* If null or omitted, the default is 3.
+* @param {number|undefined} degreeV Degree of the B-Spline
+* surface along the V-axis
+* If null or omitted, the default is 3.
+* @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
+* @return {BSplineSurface}
+*/
+BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
-   BSplineCurve.clampedKnots(controlPoints.length,degreeV),flags)
+   BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits)
 }
-BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,flags){
+/**
+* Creates a B-spline surface with uniform knots.
+* @param {Array<Array<Array<number>>>} controlPoints Array of
+* control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
+* @param {number|undefined} degreeU Degree of the B-Spline
+* surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
+* If null or omitted, the default is 3.
+* @param {number|undefined} degreeV Degree of the B-Spline
+* surface along the V-axis
+* If null or omitted, the default is 3.
+* @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
+* @return {BSplineSurface}
+*/
+BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
-   BSplineCurve.uniformKnots(controlPoints.length,degreeV),flags)
+   BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits)
 }
+/**
+* Not documented yet.
+*/
 BSplineCurve.uniformKnots=function(controlPoints,degree){
   if(typeof controlPoints=="object")
    controlPoints=controlPoints.length;
+  if(degree==null)degree=3
   if(controlPoints<degree+1)
    throw new Error("too few control points for degree "+degree+" curve")
   var order=degree+1;
@@ -418,9 +469,13 @@ BSplineCurve.uniformKnots=function(controlPoints,degree){
   }
   return ret;
 }
+/**
+* Not documented yet.
+*/
 BSplineCurve.clampedKnots=function(controlPoints,degree){
   if(typeof controlPoints=="object")
    controlPoints=controlPoints.length;
+  if(degree==null)degree=3
   if(controlPoints<degree+1)
    throw new Error("too few control points for degree "+degree+" curve")
   var order=degree+1;
@@ -586,6 +641,8 @@ CurveEval.prototype.texCoord=function(evaluator){
 }
 /**
  * Specifies a B&eacute;zier curve used for generating vertex positions.
+ * @deprecated Use the <code>vertex()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierCurve},
  * where each point is a 3-element array giving the x, y, and z coordinates of a vertex
  * position.
@@ -601,6 +658,8 @@ CurveEval.prototype.vertexBezier=function(controlPoints,u1,u2){
 }
 /**
  * Specifies a B&eacute;zier curve used for generating normals.
+ * @deprecated Use the <code>normal()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierCurve},
  * where each point is a 3-element array giving the x, y, and z coordinates of a normal.
  * @param {number} [u1] Starting point; see {@link BezierCurve}.
@@ -615,6 +674,8 @@ CurveEval.prototype.normalBezier=function(controlPoints,u1,u2){
 }
 /**
  * Specifies a B&eacute;zier curve used for generating texture coordinates.
+ * @deprecated Use the <code>texCoord()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierCurve},
  * where each point is a 1- or 2-element array giving the u and v texture coordinates.
  * @param {number} [u1] Starting point; see {@link BezierCurve}.
@@ -629,6 +690,8 @@ CurveEval.prototype.texCoordBezier=function(controlPoints,u1,u2){
 }
 /**
  * Specifies a B&eacute;zier curve used for generating color values.
+ * @deprecated Use the <code>colorBezier()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierCurve},
  * where each point is a 3-element array giving the red, green, and blue
  * values of a color.
@@ -717,12 +780,12 @@ CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
   u2=1.0;
  }
  if(mode==null)mode=Mesh.LINES;
- var uv=(u2-u1)/n;
  if(mode==Mesh.POINTS)
   mesh.mode(Mesh.POINTS)
  else if(mode==Mesh.LINES)
   mesh.mode(Mesh.LINE_STRIP)
  else return this;
+ var uv=(u2-u1)/n;
  for(var i=0; i<=n; i++){
   this.evalOne(mesh, u1+i*uv);
  }
@@ -859,6 +922,8 @@ SurfaceEval.prototype.texCoord=function(evaluator){
 }
 /**
  * Specifies a B&eacute;zier surface used for generating vertex positions.
+ * @deprecated Use the <code>vertex()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierSurface},
  * where each point is a 3-element array giving the x, y, and z coordinates of a vertex
  * position.
@@ -876,6 +941,8 @@ SurfaceEval.prototype.vertexBezier=function(controlPoints,u1,u2,v1,v2){
 }
 /**
  * Specifies a B&eacute;zier surface used for generating normals.
+ * @deprecated Use the <code>normal()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierSurface},
  * where each point is a 3-element array giving the x, y, and z coordinates of a normal.
  * @param {number} [u1] Starting point along the U axis; see {@link BezierSurface}.
@@ -892,6 +959,8 @@ SurfaceEval.prototype.normalBezier=function(controlPoints,u1,u2,v1,v2){
 }
 /**
  * Specifies a B&eacute;zier surface used for generating texture coordinates.
+ * @deprecated Use the <code>texCoord()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierSurface},
  * where each point is a 1- or 2-element array giving the u and v texture coordinates.
  * @param {number} [u1] Starting point along the U axis; see {@link BezierSurface}.
@@ -908,6 +977,8 @@ SurfaceEval.prototype.texCoordBezier=function(controlPoints,u1,u2,v1,v2){
 }
 /**
  * Specifies a B&eacute;zier surface used for generating color values.
+ * @deprecated Use the <code>color()</code> method instead with a
+ * BezierCurve object.
  * @param {Array<Array<number>>} controlPoints Control points as specified in {@link BezierSurface},
  * where each point is a 3-element array giving the red, green, and blue
  * values of a color.
@@ -946,9 +1017,13 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
  this._restoreValues(mesh,values,0);
  return this;
 }
-/** @private */
+/** @private 
+ @const
+*/
 var _OLD_VALUES_SIZE = 8;
-/** @private */
+/** @private
+ @const 
+*/
 var _RECORDED_VALUES_SIZE = 11;
 /** @private */
 SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index){
