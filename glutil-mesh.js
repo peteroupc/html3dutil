@@ -993,7 +993,26 @@ Mesh.prototype.reverseWinding=function(){
   }
   return this;
 }
-
+/**
+ * Enumerates the primitives (lines, triangles, and points) included
+ * in this mesh.
+ * @param {Function} func A function that will be called
+ * for each primitive in the mesh.  The function takes a single
+ * parameter, consisting of an array of one, two, or three vertex
+ * objects.  A point will have one vertex, a line two vertices and
+ * a triangle three.  Each vertex object may have these properties:<ul>
+ * <li>"position": A 3-element array of the vertex's position.
+ * Always present.
+ * <li>"normal": A 3-element array of the vertex's normal.
+ * May be absent.
+ * <li>"color": An at least 3-element array of the vertex's color.
+ * Each component generally ranges from 0 to 1. May be absent.
+ * <li>"uv": A 2-element array of the vertex's texture coordinates
+ * (the first element is U, the second is V).
+ * Each component generally ranges from 0 to 1. May be absent.
+ * </ul>
+ * @return {glutil.Mesh} This object.
+ */
 Mesh.prototype.enumPrimitives=function(func){
  for(var i=0;i<this.subMeshes.length;i++){
   var sm=this.subMeshes[i];

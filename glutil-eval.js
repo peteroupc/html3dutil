@@ -6,31 +6,6 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-(function(global){
-/** @private */
-function BernsteinEvalSpline(cp){
- var knots=[];
- for(var i=0;i<cp.length;i++)knots.push(0);
- for(var i=0;i<cp.length;i++)knots.push(1);
- this.c=new BSplineCurve(cp,knots,0);
-}
-/** @private */
-BernsteinEvalSpline.prototype.evaluate=function(u){
- return this.c.evaluate(u);
-};
-/** @private */
-function BernsteinEvalSurface(cp){
- var knotsV=[], knotsU=[];
- for(var i=0;i<cp.length;i++)knotsV.push(0);
- for(var i=0;i<cp.length;i++)knotsV.push(1);
- for(var i=0;i<cp[0].length;i++)knotsU.push(0);
- for(var i=0;i<cp[0].length;i++)knotsU.push(1);
- this.c=new BSplineSurface(cp,knotsU, knotsV,0);
-}
-/** @private */
-BernsteinEvalSurface.prototype.evaluate=function(u,v){
- return this.c.evaluate(u,v);
-};
 /**
  * A parametric evaluator for B&eacute;zier curves.<p>
  * A B&eacute;zier curve is defined by a series of control points, where
@@ -63,7 +38,7 @@ var BezierCurve=function(cp, u1, u2){
   this.uoffset=u1;
   this.umul=1.0/(u2-u1);
  }
- this.evaluator=new BernsteinEvalSpline(cp);
+ this.evaluator=BSplineCurve.clamped(cp,cp.length-1);
 };
 /**
  * Evaluates the curve function based on a point
@@ -135,7 +110,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
   this.voffset=v1;
   this.vmul=1.0/(v2-v1);
  }
- this.evaluator=new BernsteinEvalSurface(cp);
+ this.evaluator=BSplineSurface.clamped(cp,cp[0].length-1,cp.length-1);
 }
 /**
  * Evaluates the surface function based on a point
@@ -167,7 +142,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * of control points, represents the degree of the B-spline
 * curve.  For example, a degree-3 (cubic) B-spline curve contains 4 more
 * knots than the number of control points.  A degree of 1
-* results in a straight line segment.<p>
+* results in straight line segments.<p>
 * The knot vector must be a nondecreasing sequence and
 * the first knot must not equal the last.<p>
 * If the difference between one knot and the next isn't the same,
@@ -411,6 +386,56 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  this.bufferU=[];
  this.bufferV=[];
  this.controlPoints=controlPoints;
+}
+
+BSplineCurve.clamped=function(controlPoints,degree,flags){
+ return new BSplineCurve(controlPoints,
+   BSplineCurve.clampedKnots(controlPoints.length,degree),flags)
+}
+BSplineCurve.uniform=function(controlPoints,degree,flags){
+ return new BSplineCurve(controlPoints,
+   BSplineCurve.uniformKnots(controlPoints.length,degree),flags)
+}
+BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,flags){
+ return new BSplineSurface(controlPoints,
+   BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
+   BSplineCurve.clampedKnots(controlPoints.length,degreeV),flags)
+}
+BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,flags){
+ return new BSplineSurface(controlPoints,
+   BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
+   BSplineCurve.uniformKnots(controlPoints.length,degreeV),flags)
+}
+BSplineCurve.uniformKnots=function(controlPoints,degree){
+  if(typeof controlPoints=="object")
+   controlPoints=controlPoints.length;
+  if(controlPoints<degree+1)
+   throw new Error("too few control points for degree "+degree+" curve")
+  var order=degree+1;
+  var ret=[]
+  for(var i=0;i<controlPoints+order;i++){
+   ret.push(i)
+  }
+  return ret;
+}
+BSplineCurve.clampedKnots=function(controlPoints,degree){
+  if(typeof controlPoints=="object")
+   controlPoints=controlPoints.length;
+  if(controlPoints<degree+1)
+   throw new Error("too few control points for degree "+degree+" curve")
+  var order=degree+1;
+  var extras=controlPoints-degree;
+  var ret=[];
+  for(var i=0;i<order;i++){
+   ret.push(0)
+  }
+  for(var i=0;i<extras;i++){
+   ret.push(i+1);
+  }
+  for(var i=0;i<order;i++){
+   ret.push(extras+1);
+  }
+  return ret;
 }
 
 /**
