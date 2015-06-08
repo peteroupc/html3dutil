@@ -91,20 +91,25 @@ Superellipsoid.cospow=function(x,n){
   var r=Math.cos(x);
   return Math.sign(r)*Math.pow(Math.abs(r),n);
  }
+ 
 /**
-*
-*
-* @param {Function} phi Function of a single variable:
-* y = f(x).  This determines the "radius" of the surface
-* of revolution along the y-axis.
-* @param {Function} psi Function of a single variable
-* that transforms the value x: x = f(a).  If null, uses
-* the function x = f(a) = x.
-*
+* Parametric evaluator for a surface of revolution, which results by revolving
+* an X/Y curve around an axis.
+* @class
+* @alias SurfaceOfRevolution
+* @param {Function} curve Curve to rotate about the X-axis.
+* The curve function must contain a function
+* named "evaluate", which takes the following parameter:<ul>
+* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
+* </ul>
+* The evaluator function returns an array of at least 2 elements: the first
+* element is the X coordinate of the curve's position, and the second
+* element is the Y coordinate.
+* @param {number} minval Smallest U-coordinate.
+* @param {number} maxval Largest U-coordinate.
 */
-var SurfaceOfRevolution=function(phi,psi,minval,maxval){
- this.phi=phi;
- this.psi=psi;
+var SurfaceOfRevolution=function(curve,minval,maxval){
+ this.curve=curve
  this.minval=minval
  this.maxval=maxval
  this.evaluate=function(u,v){
@@ -113,26 +118,60 @@ var SurfaceOfRevolution=function(phi,psi,minval,maxval){
   u=minval+(maxval-minval)*u;
   var cosv = Math.cos(v);
   var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
-  var r=this.phi(u);
-  return [this.psi ? this.psi(u) : u,r*cosv,r*sinv];
+  var curvepos=this.curve.evaluate(u);
+  return [curvepos[0],curvepos[1]*cosv,curvepos[1]*sinv];
  }
 }
-
-var FunctionSurface={
-create:function(func,minval,maxval){
- return new SurfaceOfRevolution(func,null,minval,maxval);
+/**
+* Parametric evaluator for a surface of revolution whose curve is the graph of
+* a single-variable function.
+* @param {Function} func Function whose graph will be
+* rotated about the X-axis.  The function takes a number
+* as a single parameter and returns a number.
+* @param {number} minval Smallest parameter of the function.
+* @param {number} maxval Largest parameter of the function.
+* @return {SurfaceOfRevolution}
+*/
+SurfaceOfRevolution.fromFunction=function(func,minval,maxval){
+  return new SurfaceOfRevolution({
+    "evaluate":function(u){
+      return [u,func(u),0];
+    }},minval,maxval);
 }
-};
-
-var Torus={
-create:function(outerRadius,innerRadius,minval,maxval){
- return new SurfaceOfRevolution(function(v){
-  return outerRadius+innerRadius*Math.cos(v);
- },function(v){
-  return innerRadius+Math.sin(v);
- },minval,maxval);
+/**
+* Parametric evaluator for a torus, a special case of a surface of revolution.
+* @param {number} outerRadius Radius from the center to the innermost
+* part of the torus.
+* @param {number} innerRadius Radius from the inner edge to the innermost
+* part of the torus.
+* @param {Function|undefined} curve Object describing
+* a curve to serve as the cross section of the torus. 
+* The curve need not be closed; in fact, certain special surfaces can result
+* by leaving the ends open.
+* The curve function must contain a function
+* named "evaluate", which takes the following parameter:<ul>
+* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
+* </ul>
+* The evaluator function returns an array of at least 2 elements: the first
+* element is the X coordinate of the curve's position, and the second
+* element is the Y coordinate.  If null or omitted, uses a circular cross section.
+* @return {SurfaceOfRevolution}
+*/
+SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve){
+  if(!curve)curve={
+    "evaluate":function(u){
+      u*=GLMath.PiTimes2;
+      return [Math.sin(u),Math.cos(v)]
+    }
+  }
+  return new SurfaceOfRevolution({
+    "evaluate":function(u){
+      var curvept=curve.evaluate(u)
+      var x=innerRadius*curvept[1];
+      var y=outerRadius+innerRadius*curvept[0];
+      return [x,y,0];
+    }},0,GLMath.PiTimes2);
 }
-};
 
 var KleinBottle=function(){
  this.evaluate=function(u,v){
@@ -261,7 +300,7 @@ addLink("Klein bottle",function(){
 })
 addLink("Surface of revolution for f(x) = sin x",function(){
  pushSettings(function(allsettings){
-    return makeMesh(FunctionSurface.create(function(x){
+    return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
   return Math.sin(x)
  },-Math.PI,Math.PI))
  },{
@@ -269,7 +308,7 @@ addLink("Surface of revolution for f(x) = sin x",function(){
 })
 addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
  pushSettings(function(allsettings){
- return makeMesh(FunctionSurface.create(function(x){
+ return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
   return x*x
  },-1,1))
  },{

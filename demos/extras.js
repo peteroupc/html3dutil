@@ -173,8 +173,8 @@ _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
 * @param {Object} [sweptCurve] Object describing
 * a curve to serve as the cross section of the extruded shape,
 * corresponding to the V coordinate of the ExtrudedTube's
-* "evaluate" method. If this parameter is null or omitted, uses a circular cross section <code>(sin(u),
-* cos(u), 0)</code> in which the V coordinate ranges from 0 through
+* "evaluate" method. If this parameter is null or omitted, uses a circular cross section
+* in which the V coordinate ranges from 0 through
 * 1.  The curve object must contain a function
 * named "evaluate", with the same meaning as for the "func" parameter.<p>
 * The cross section will generally have a radius of 1 unit; bigger
