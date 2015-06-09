@@ -5,6 +5,7 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../extras/evaluators.js"></script>
 <script type="text/javascript" src="../extras/camera.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="extras.js"></script>
@@ -93,87 +94,6 @@ Superellipsoid.cospow=function(x,n){
   return Math.sign(r)*Math.pow(Math.abs(r),n);
  }
 
-/**
-* Parametric evaluator for a surface of revolution, which results by revolving
-* an X/Y curve around an axis.
-* @class
-* @alias SurfaceOfRevolution
-* @param {Function} curve Curve to rotate about the X-axis.
-* The curve function must contain a function
-* named "evaluate", which takes the following parameter:<ul>
-* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
-* </ul>
-* The evaluator function returns an array of at least 2 elements: the first
-* element is the X coordinate of the curve's position, and the second
-* element is the Y coordinate.
-* @param {number} minval Smallest U-coordinate.
-* @param {number} maxval Largest U-coordinate.
-*/
-var SurfaceOfRevolution=function(curve,minval,maxval){
- this.curve=curve
- this.minval=minval
- this.maxval=maxval
- this.evaluate=function(u,v){
-  v=1-v;
-  v*=GLMath.PiTimes2;
-  u=minval+(maxval-minval)*u;
-  var cosv = Math.cos(v);
-  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
-  var curvepos=this.curve.evaluate(u);
-  return [curvepos[0],curvepos[1]*cosv,curvepos[1]*sinv];
- }
-}
-/**
-* Parametric evaluator for a surface of revolution whose curve is the graph of
-* a single-variable function.
-* @param {Function} func Function whose graph will be
-* rotated about the X-axis.  The function takes a number
-* as a single parameter and returns a number.
-* @param {number} minval Smallest parameter of the function.
-* @param {number} maxval Largest parameter of the function.
-* @return {SurfaceOfRevolution}
-*/
-SurfaceOfRevolution.fromFunction=function(func,minval,maxval){
-  return new SurfaceOfRevolution({
-    "evaluate":function(u){
-      return [u,func(u),0];
-    }},minval,maxval);
-}
-/**
-* Parametric evaluator for a torus, a special case of a surface of revolution.
-* @param {number} outerRadius Radius from the center to the innermost
-* part of the torus.
-* @param {number} innerRadius Radius from the inner edge to the innermost
-* part of the torus.
-* @param {Function|undefined} curve Object describing
-* a curve to serve as the cross section of the torus.
-* The curve need not be closed; in fact, certain special surfaces can result
-* by leaving the ends open.
-* The curve function must contain a function
-* named "evaluate", which takes the following parameter:<ul>
-* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
-* </ul>
-* The evaluator function returns an array of at least 2 elements: the first
-* element is the X coordinate of the curve's position, and the second
-* element is the Y coordinate.  If null or omitted, uses a circular cross section.
-* @return {SurfaceOfRevolution}
-*/
-SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve){
-  if(!curve)curve={
-    "evaluate":function(u){
-      u*=GLMath.PiTimes2;
-      return [Math.sin(u),Math.cos(v)]
-    }
-  }
-  return new SurfaceOfRevolution({
-    "evaluate":function(u){
-      var curvept=curve.evaluate(u)
-      var x=innerRadius*curvept[1];
-      var y=outerRadius+innerRadius*curvept[0];
-      return [x,y,0];
-    }},0,GLMath.PiTimes2);
-}
-
 var KleinBottle=function(){
  this.evaluate=function(u,v){
   var cospi;
@@ -238,39 +158,6 @@ var MoebiusStrip=function(radius,width){
   return [x,y,z]
  }
 }
-   function makeMesh(func,resolution){
-    // Default resolution is 50
-    if(resolution==null)resolution=50
-     // create a new mesh
-     var mesh=new Mesh();
-     // define a color gradient evaluator for
-     // demonstration purposes.  Instead of X, Y, and Z,
-     // generate a Red/Green/Blue color based on
-     // the same parameters U and V as the surface
-     // function for 3D points.
-     var colorGradient={
-      "evaluate":function(u,v){ return [1-u,v,u]; }
-     }
-     // generate the parametric surface.
-
-     var ev=new SurfaceEval()
-      .vertex(func)
-    // Specify the color gradient evaluator defined above
-      .color(colorGradient)
-    // Generate normals for the parametric surface,
-    // which is required for lighting to work correctly
-      .setAutoNormal(true)
-    // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U-coordinates ranging
-    // from 0 to 1, and resolution+1
-    // different V-coordinates ranging from 0 to 1
-    // Instead of Mesh.TRIANGLES, we could use
-    // Mesh.LINES to create a wireframe mesh,
-    // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
-    // Surface generated, return the mesh
-    return mesh;
-  }
 
 var shapeGroup=new ShapeGroup();
 var allsettings={}

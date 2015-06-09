@@ -179,12 +179,15 @@ _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
 * @param {number} [thickness] Radius of the
 * extruded tube.  If this parameter is null or omitted, the default is 0.125.
 * @param {Object} [sweptCurve] Object describing
-* a curve to serve as the cross section of the extruded shape,
+* a two-dimensional curve to serve as the cross section of the extruded shape,
 * corresponding to the V coordinate of the CurveTube's
-* "evaluate" method. If this parameter is null or omitted, uses a circular cross section
+* "evaluate" method. 
+* If this parameter is null or omitted, uses a circular cross section
 * in which the V coordinate ranges from 0 through
 * 1.  The curve object must contain a function
-* named "evaluate", with the same meaning as for the "func" parameter.<p>
+* named "evaluate", with the same meaning as for the "func" parameter, 
+* except the third element, if any, of the return value is ignored.<p>
+* The curve need not be closed.<p>
 * The cross section will generally have a radius of 1 unit; bigger
 * or smaller cross sections will affect the meaning of the "thickness"
 * parameter.
@@ -214,16 +217,16 @@ CurveTube.prototype.evaluate=function(u, v){
   t1 = vpos[0];
   t2 = vpos[1];
   var t3=vpos[2];
-  sx = sampleX+(basisVectors[0]*t2+basisVectors[3]*t1+basisVectors[6]*t3)*this.thickness;
-  sy = sampleY+(basisVectors[1]*t2+basisVectors[4]*t1+basisVectors[7]*t3)*this.thickness;
-  sz = sampleZ+(basisVectors[2]*t2+basisVectors[5]*t1+basisVectors[8]*t3)*this.thickness;
+  sx = sampleX+(-basisVectors[0]*t1+basisVectors[3]*t2)*this.thickness;
+  sy = sampleY+(-basisVectors[1]*t1+basisVectors[4]*t2)*this.thickness;
+  sz = sampleZ+(-basisVectors[2]*t1+basisVectors[5]*t2)*this.thickness;
  } else {
   var vt=GLMath.PiTimes2*v;
   t1 = Math.cos(vt);
   t2 = (vt>=0 && vt<6.283185307179586) ? (vt<=3.141592653589793 ? Math.sqrt(1.0-t1*t1) : -Math.sqrt(1.0-t1*t1)) : Math.sin(vt);
-  sx = sampleX+(basisVectors[0]*t2+basisVectors[3]*t1)*this.thickness;
-  sy = sampleY+(basisVectors[1]*t2+basisVectors[4]*t1)*this.thickness;
-  sz = sampleZ+(basisVectors[2]*t2+basisVectors[5]*t1)*this.thickness;
+  sx = sampleX+(-basisVectors[0]*t1+basisVectors[3]*t2)*this.thickness;
+  sy = sampleY+(-basisVectors[1]*t1+basisVectors[4]*t2)*this.thickness;
+  sz = sampleZ+(-basisVectors[2]*t1+basisVectors[5]*t2)*this.thickness;
  }
  return [sx,sy,sz];
 }

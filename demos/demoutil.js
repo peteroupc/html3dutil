@@ -201,6 +201,44 @@ function pushSettings(updateMeshFunc,settings){
  setRanges(ranges);
  updateShape(updateMeshFunc);
 };
+
+
+   function makeMesh(func,resolutionU,resolutionV){
+    // Default resolution is 50
+    if(resolutionV==null)resolutionV=resolutionU
+    if(resolutionU==null)resolutionU=50
+    if(resolutionV==null)resolutionV=50
+     // create a new mesh
+     var mesh=new Mesh();
+     // define a color gradient evaluator for
+     // demonstration purposes.  Instead of X, Y, and Z,
+     // generate a Red/Green/Blue color based on
+     // the same parameters U and V as the surface
+     // function for 3D points.
+     var colorGradient={
+      "evaluate":function(u,v){ return [1-u,v,u]; }
+     }
+     // generate the parametric surface.
+
+     var ev=new SurfaceEval()
+      .vertex(func)
+    // Specify the color gradient evaluator defined above
+      .color(colorGradient)
+    // Generate normals for the parametric surface,
+    // which is required for lighting to work correctly
+      .setAutoNormal(true)
+    // Evaluate the surface and generate a triangle
+    // mesh, using resolution+1 different U-coordinates ranging
+    // from 0 to 1, and resolution+1
+    // different V-coordinates ranging from 0 to 1
+    // Instead of Mesh.TRIANGLES, we could use
+    // Mesh.LINES to create a wireframe mesh,
+    // or Mesh.POINTS to create a point mesh.
+      .evalSurface(mesh,Mesh.TRIANGLES,resolutionU,resolutionV);
+    // Surface generated, return the mesh
+    return mesh;
+  }
+
 window.addEventListener("load",function(){
  var a=document.createElement("a")
  a.setAttribute("style","margin-left:2px;margin-top:2px;margin-bottom:2px;position:absolute;left:80%;top:0;"+

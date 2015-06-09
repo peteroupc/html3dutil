@@ -1084,8 +1084,6 @@ SubMesh.prototype.reverseWinding=function(){
    // Not a triangle mesh
    return this;
   }
-  var lineIndices=[];
-  var existingLines={};
   for(var i=0;i<this.indices.length;i+=3){
     var f2=this.indices[i+1];
     var f3=this.indices[i+2];
