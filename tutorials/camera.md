@@ -1,11 +1,14 @@
-## Introduction
+## Introduction <a id=Introduction></a>
 
 This tip describes projection and view transforms commonly used in 3D graphics,
 especially when using my [HTML 3D Library](http://peteroupc.github.io/html3dutil).
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
+## Contents <a id=Contents></a>
 
-## The "Camera" and the Projection and View Transforms
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and the Projection and View Transforms](#The_Camera_and_the_Projection_and_View_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Other Pages](#Other_Pages)<br>
+
+## The "Camera" and the Projection and View Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a>
 
 The [`Scene3D`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html) class of the HTML 3D Library has a concept of a "projection transform" and a "view transform". If we use the concept of a "camera", the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. `Scene3D` has methods for setting all these attributes of this abstract "camera". Two of them are [`setPerspective()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setPerspective) and [`setLookAt()`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setLookAt), which are shown in the example below.
 
@@ -18,7 +21,7 @@ The [`Scene3D`](http://peteroupc.github.io/html3dutil/glutil.Scene3D.html) class
     // points at (0, 2, 0), that is, up 2 units.
     scene.setLookAt([0,0,30], [0,2,0]);
 
-### Overview of Transformations
+### Overview of Transformations <a id=Overview_of_Transformations></a>
 
 Here is an overview of transformations used in the graphics system and
 the HTML 3D library.
@@ -32,14 +35,14 @@ is not discussed in this page.
 clip space coordinates to _normalized device coordinates_, then _screen space_
 coordinates when drawing objects on the screen.
 
-## Projection Transform
+## Projection Transform <a id=Projection_Transform></a>
 
 A _projection matrix_ transforms coordinates in camera space to _clip space_.
 
 Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below.
 
-### Perspective Projection
+### Perspective Projection <a id=Perspective_Projection></a>
 
 A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects
 look bigger than more distant objects with the same size, making the
@@ -97,11 +100,11 @@ bound the view volume.  Their positions are chosen so that the result is a persp
 of where they meet the near clipping plane.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.
 
-#### Demo
+#### Demo <a id=Demo></a>
 
 * [perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
-### Orthographic Projection
+### Orthographic Projection <a id=Orthographic_Projection></a>
 
 An orthographic projection is one in which the left and right clipping planes are parallel to each other,
 and the top and bottom clipping planes are parallel to each other.  This results in the near and far clipping
@@ -132,7 +135,7 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 * `aspect` - Aspect ratio of the viewport.  May be omitted, in which case the scene's
 aspect ratio (`scene.getClientAspect()`) is used.
 
-### Other Projections
+### Other Projections <a id=Other_Projections></a>
 
 There are other kinds of possible projections, such as oblique projections
 or isometric projections.  For these
@@ -146,7 +149,7 @@ This method allows you to set the projection matrix to an arbitrary [4x4 matrix]
 
 * `matrix` - The 4x4 matrix to use.
 
-## View Transform
+## View Transform <a id=View_Transform></a>
 
 The view matrix transforms _world space_ coordinates, shared by every object in a scene, to _camera space_
 coordinates, in which the camera is located at the center of the coordinate system: (0, 0, 0).  A view matrix essentially rotates the camera and moves it to a given position in world space.  Specifically:
@@ -178,7 +181,7 @@ This method allows you to set the view matrix to an arbitrary [4x4 matrix]{@tuto
 
 * `matrix` - The 4x4 matrix to use.
 
-## Other Pages
+## Other Pages <a id=Other_Pages></a>
 
 The following pages of mine on CodeProject also discuss this library:
 

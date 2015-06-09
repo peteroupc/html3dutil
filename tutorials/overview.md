@@ -1,4 +1,8 @@
-## How to Use
+## Contents <a id=Contents></a>
+
+[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[Scene3D](#Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>[Example](#Example)<br>
+
+## How to Use <a id=How_to_Use></a>
 
 1. [**Download the HTML 3D library**](https://github.com/peteroupc/html3dutil/releases).
 2. Extract the file <i>"glutil_min.js"</i>, and write the following code in every HTML page where you will use the library.
@@ -20,7 +24,7 @@
         </script>
 
 This is an overview of most of the JavaScript classes available in this library:
-### List of Classes
+### List of Classes <a id=List_of_Classes></a>
 
 * `GLMath` - Contains math methods useful in 3D applications, such as matrices and vectors
 * `GLUtil` - Contains various utility methods in the HTML 3D Library
@@ -40,7 +44,7 @@ For much more information on all of these classes, see my <a href="https://peter
 
 The following sections detail how a 3D application using this library works.
 
-### Scene3D
+### Scene3D <a id=Scene3D></a>
 
 The `Scene3D` class represents a so-called "scene graph". It holds every 3D object which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s position, and light sources to illuminate the 3D scene, among many other things.
 
@@ -53,7 +57,7 @@ To create a `Scene3D`, you first need to find the HTML canvas in your JavaScript
   var scene=new Scene3D(canvas);
 ```
 
-### The "Camera"
+### The "Camera" <a id=The_Camera></a>
 
 The `Scene3D` class has a concept of a "projection transform" and a "view transform". If we use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `Scene3D` has methods for setting all these attributes of this abstract "camera". Two of them are `setPerspective()` and `setLookAt()`, which are shown in the example below.
 
@@ -69,7 +73,7 @@ The `Scene3D` class has a concept of a "projection transform" and a "view transf
 ```
 
 For more information, see _<a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The "Camera" and Perspective and View Transforms</a>_.
-### 3D Models
+### 3D Models <a id=3D_Models></a>
 
 Every 3D scene is made up of "meshes", or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `Mesh` class, or create a built-in geometric shape using a method in the `Meshes` class. The example below shows how you can create a box mesh:
 
@@ -94,7 +98,7 @@ Here are some other built-in mesh methods. This tip doesn&#39;t explain all the 
 </dl>
 
 For more information on meshes, see <a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib">_Creating shapes using the Public Domain HTML 3D Library_</a>.
-### Shapes
+### Shapes <a id=Shapes></a>
 
 Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene&#39;s `makeShape()` method to convert the mesh to a shape. Now you can set the shape&#39;s properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D scene.
 
@@ -128,7 +132,7 @@ Here are details on some of the `Shape` class&#39;s methods.
   <dd>Creates a copy of this shape. Can be more efficient than calling `scene.makeShape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</dd>
 </dl>
 
-### The Render Loop
+### The Render Loop <a id=The_Render_Loop></a>
 
 An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the `Scene3D.render()` method.&nbsp; Render loops are created using the `GLUtil.renderLoop()` method. Here is an example of a render loop.
 
@@ -142,7 +146,7 @@ An important part of a 3D application is the render loop. The render loop is a b
 ```
 
 The render loop method takes a parameter (here "time"), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.
-## A Skeleton for 3D Apps
+## A Skeleton for 3D Apps <a id=A_Skeleton_for_3D_Apps></a>
 
 The following is a minimal skeleton you can use for writing HTML apps using this library.
 
@@ -157,7 +161,7 @@ The following is a minimal skeleton you can use for writing HTML apps using this
     </script>
     </body>
 
-## Demos
+## Demos <a id=Demos></a>
 
 The following are HTML Web pages showing a variety of features of the HTML 3D library. Each demo includes source code for that demo at the bottom of the page.
 
@@ -174,7 +178,7 @@ The following are HTML Web pages showing a variety of features of the HTML 3D li
 * <a href="https://peteroupc.github.io/html3dutil/gradient.html">gradient.html</a> - Demonstrates generating a custom texture -- a linear gradient from one color to another.
 * <a href="https://peteroupc.github.io/html3dutil/starfield.html">starfield.html</a> - Demo of a star field.
 
-## Example
+## Example <a id=Example></a>
 
 The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the `<canvas>` element it uses on the page.
 

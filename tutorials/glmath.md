@@ -3,8 +3,11 @@ of math functions for working with vectors, matrices, and quaternions.
 
 Here is an overview of these three data types.
 
-Vectors
-------------
+## Contents <a id=Contents></a>
+
+[Contents](#Contents)<br>[Vectors](#Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Quaternions](#Quaternions)<br>&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles and their disadvantages](#Tait_Bryan_angles_and_their_disadvantages)<br>[Coordinate Systems](#Coordinate_Systems)<br>[Matrix Details](#Matrix_Details)<br>&nbsp;&nbsp;[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
+
+## Vectors <a id=Vectors></a>
 
 A vector is simply a set of 3 or 4 elements that are related
 to each other.  As such, a vector can symbolize a position, a direction,
@@ -21,15 +24,14 @@ If a 3D _position_ (point) is used in a 4-element vector function (one beginning
 with "vec4"), use 1 as the fourth element of the vector.  If a 3D _direction_
 is used in a 4-element vector function, use 0 as the fourth element.
 
-Matrices
-------------
+## Matrices <a id=Matrices></a>
 
 A matrix is a 16- or 9-element array that describes a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with "mat".
 
-### Translation
+### Translation <a id=Translation></a>
 
 A translation is a shifting of an object's position.
 
@@ -41,7 +43,7 @@ To multiply an existing matrix by a translation, use
 [GLMath.mat4translate()]{@link glmath.GLMath.mat4translate}.  This will put the translation
 before the other transformations.
 
-### Scaling
+### Scaling <a id=Scaling></a>
 
 Scaling changes an object's size.
 
@@ -53,7 +55,7 @@ To multiply an existing matrix by a scaling, use
 [GLMath.mat4scale()]{@link glmath.GLMath.mat4scale}.  This will put the scaling
 before the other transformations.
 
-### Rotation
+### Rotation <a id=Rotation></a>
 
 Rotation changes an object's orientation.
 
@@ -65,7 +67,7 @@ To multiply an existing matrix by a rotation, use
 [GLMath.mat4rotate()]{@link glmath.GLMath.mat4rotate}.  This will put the rotation
 before the other transformations.
 
-### Combining Transforms
+### Combining Transforms <a id=Combining_Transforms></a>
 
 The order in which you do transforms is important.  In general, scaling then translating is
 not the same as translating then scaling.  Assuming your geometry is centered at the origin
@@ -83,8 +85,7 @@ You can also multiply transforms using [GLMath.mat4multiply()]{@link glmath.GLMa
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.
 
-Quaternions
---------------
+## Quaternions <a id=Quaternions></a>
 
 A quaternion is a 4-element array that describes a
 3D rotation.  The first three elements (X, Y, and Z), represent
@@ -97,7 +98,7 @@ half the angle.  This results in the same axis of rotation as before,
 but in a different form.
 * Set W to the cosine of half the angle.
 
-### Multiplying quaternions
+### Multiplying quaternions <a id=Multiplying_quaternions></a>
 
 The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
@@ -107,7 +108,7 @@ before the first rotation.  Like matrix multiplication, quaternion
 multiplication is not commutative. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.
 
-### Tait-Bryan angles and their disadvantages
+### Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a>
 
 Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
 rotations, but they have disadvantages:
@@ -132,8 +133,8 @@ Converts from Tait-Bryan angles to a quaternion
 * [GLMath.quatToTaitBryan()]{@link glmath.GLMath.quatToTaitBryan} -
 Converts from a quaternion to Tait-Bryan angles
 
-Coordinate Systems
-------------
+## Coordinate Systems <a id=Coordinate_Systems></a>
+
 There are two conventions of 3D coordinate systems, left-handed and right-handed:
 
 * In a _left-handed_ coordinate system, like in legacy Direct3D, the z-axis points _away from
@@ -145,8 +146,7 @@ If a GLMath method works differently in left- and right-handed coordinate system
 its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)
 
-Matrix Details
-------------
+## Matrix Details <a id=Matrix_Details></a>
 
 This section contains more details on matrices.
 
@@ -191,7 +191,7 @@ element of the matrix is placed in columns, rather than in rows, as in the follo
 The numbers in brackets in the matrix above are the zero-based indices
 into the matrix arrays passed to GLMath's matrix methods.
 
-### Transforming Points
+### Transforming Points <a id=Transforming_Points></a>
 
 The transformation formula multiplies a matrix by a 3D point to change that point's
 position:
@@ -217,7 +217,7 @@ Related functions:
 * [GLMath.mat3transform()]{@link glmath.GLMath.mat3transform} -
  Transforms a 3-element vector with a 3x3 matrix
 
-### Translation
+### Translation <a id=Translation></a>
 
 A translation is a shifting of an object's position.  In a transformation matrix,
 this shifting effectively happens after all other transformations such as scaling and rotation.
@@ -271,7 +271,7 @@ Related functions:
 * [GLMath.mat4translate()]{@link glmath.GLMath.mat4translate} -
  Multiplies a matrix by a translation.
 
-### Scaling
+### Scaling <a id=Scaling></a>
 
 Scaling changes an object's size.  Scaling uses the 1st,
 6th, and 11th elements of the matrix as seen here:
@@ -337,7 +337,7 @@ Related functions:
 * [GLMath.mat4scaleInPlace()]{@link glmath.GLMath.mat4scaleInPlace} -
  Multiplies a matrix in place by a scaling.
 
-### Rotation
+### Rotation <a id=Rotation></a>
 
 Rotation changes an object's orientation.  Rotation uses the upper-left
 corner of a matrix.  Given an angle of rotation, &theta; (in radians; multiply
@@ -491,7 +491,7 @@ Related functions:
 * [GLMath.mat4rotate()]{@link glmath.GLMath.mat4rotate} -
  Multiplies a matrix by a translation.
 
-### Matrix Multiplication
+### Matrix Multiplication <a id=Matrix_Multiplication></a>
 
 Two matrices can be combined into a single transformation. To do so,
 the matrices are multiplied such that the transformations
@@ -513,7 +513,7 @@ Related functions:
 * [GLMath.mat4multiply()]{@link glmath.GLMath.mat4multiply} -
  Multiplies two matrices
 
-### Other Transformations
+### Other Transformations <a id=Other_Transformations></a>
 
 In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1).  (For that reason, they are called _affine transformations_, those that
@@ -537,7 +537,7 @@ Related functions:
 * [GLMath.mat4perspective()]{@link glmath.GLMath.mat4perspective} -
  Returns a field-of-view perspective matrix
 
-### Matrix Inversions
+### Matrix Inversions <a id=Matrix_Inversions></a>
 
 An inverted matrix describes a transformation that undoes another transformation.  For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original

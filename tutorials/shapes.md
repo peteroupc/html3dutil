@@ -1,4 +1,4 @@
-## Introduction
+## Introduction <a id=Introduction></a>
 
 This article explains how my [HTML 3D Library](http://peteroupc.github.io/html3dutil)
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
@@ -15,7 +15,11 @@ This page will discuss:
 * Binding meshes to shapes
 * Shape groups, or combinations of several shapes
 
-## Creating Shapes
+## Contents <a id=Contents></a>
+
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Creating Shapes](#Creating_Shapes)<br>&nbsp;&nbsp;[Built-In Shapes](#Built_In_Shapes)<br>&nbsp;&nbsp;[Custom Shapes](#Custom_Shapes)<br>&nbsp;&nbsp;[The Mesh Constructor](#The_Mesh_Constructor)<br>&nbsp;&nbsp;[Vertex Methods](#Vertex_Methods)<br>&nbsp;&nbsp;[Transforming the Mesh](#Transforming_the_Mesh)<br>&nbsp;&nbsp;[Normals](#Normals)<br>&nbsp;&nbsp;&nbsp;&nbsp;[What Are Normals?](#What_Are_Normals)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Normals on Built-in Shapes](#Normals_on_Built_in_Shapes)<br>&nbsp;&nbsp;&nbsp;&nbsp;[recalcNormals()](#recalcNormals)<br>[Binding Shapes](#Binding_Shapes)<br>[Shape Groups](#Shape_Groups)<br>[Other Pages](#Other_Pages)<br>
+
+## Creating Shapes <a id=Creating_Shapes></a>
 
 The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.
@@ -31,7 +35,7 @@ the built-in shapes.
 * [platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
 
-### Built-In Shapes
+### Built-In Shapes <a id=Built_In_Shapes></a>
 
 The [`Meshes`]{@link glutil.Meshes} class includes several handy methods for creating built-in shapes.
 All methods described below return a `Mesh` object that describes the triangles they
@@ -55,7 +59,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
   with a hole where the middle of the complete disk would be.
 * [Meshes.createPlane()]{@link glutil.Meshes.createPlane} - Creates a rectangle.
 
-### Custom Shapes
+### Custom Shapes <a id=Custom_Shapes></a>
 
 Also included is a `Mesh` class for defining shapes not given among the built-in ones.
 Shapes can consist of triangles, lines, or points.
@@ -63,7 +67,7 @@ Shapes can consist of triangles, lines, or points.
 There are two ways for specifying shapes:  through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.
 
-### The Mesh Constructor
+### The Mesh Constructor <a id=The_Mesh_Constructor></a>
 
 The Mesh constructor lets you define a shape from a predefined array of vertex data.
 Here's how.
@@ -128,7 +132,7 @@ Alternatively, you can call the Mesh constructor with no arguments:
 
 Doing so will create a mesh with no vertices.
 
-### Vertex Methods
+### Vertex Methods <a id=Vertex_Methods></a>
 
 Alternatively, or in addition, to the method described above,
 you can specify the mesh's shape by calling methods that give each vertex's position and parameters:
@@ -182,7 +186,7 @@ won't depend on previous vertices.  For example, if you define a `TRIANGLE_FAN`,
 you call `mesh.mode(Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
 "disconnected" from the previous one as far as the mesh object is concerned.
 
-### Transforming the Mesh
+### Transforming the Mesh <a id=Transforming_the_Mesh></a>
 
 Once you've created the mesh, you can use the `transform()` method to transform
 all the vertices in the mesh with a [4x4 matrix]{@tutorial glmath}.  The
@@ -194,12 +198,12 @@ Example:
     // Use the transform to double the mesh's size
     mesh = mesh.transform(matrix);
 
-### Normals
+### Normals <a id=Normals></a>
 
 For lighting and shading to work correctly, you must specify normals for all the
 vertices in the mesh.
 
-#### What Are Normals?
+#### What Are Normals? <a id=What_Are_Normals></a>
 
 A normal is a set of 3 numbers describing a particular direction.  Generally,
 a normal's direction is perpendicular to a surface's edges, and points
@@ -211,12 +215,12 @@ light points to the surface.  It will shine the most if the light
 is directly opposite to its normal, and not at all if the light is perpendicular to the
 normal or in the same direction as the normal.
 
-#### Normals on Built-in Shapes
+#### Normals on Built-in Shapes <a id=Normals_on_Built_in_Shapes></a>
 
 The `Meshes` class includes built-in methods that will automatically
 specify the proper normals.
 
-#### recalcNormals()
+#### recalcNormals() <a id=recalcNormals></a>
 
 You can use the `recalcNormals()` method to recalculate the mesh's normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
@@ -239,7 +243,7 @@ Example:
     // Both parameters can be omitted, setting both to false
     mesh = mesh.recalcNormals();
 
-## Binding Shapes
+## Binding Shapes <a id=Binding_Shapes></a>
 
 Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
 in order to have it drawn.  This is where the [`Shape`]{@link glutil.Shape} class comes into
@@ -296,7 +300,7 @@ then translating (shifting) the shape in 3D space.
 Now, the next time `scene3d.render()` is called, the [`Scene3D`]{@link glutil.Scene3D} will render the
 given shape to the scene.
 
-## Shape Groups
+## Shape Groups <a id=Shape_Groups></a>
 
 The `ShapeGroup` class represents a shape that's a combination of multiple shapes.  Usually,
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
@@ -328,7 +332,7 @@ call `shapeGroup.addShape(shape)`.  Note that you can only add shapes, not meshe
 to a shape group, just as for a 3D scene.  A shape group, though, is perfectly allowed to contain
 other shape groups.
 
-## Other Pages
+## Other Pages <a id=Other_Pages></a>
 
 The following pages of mine on CodeProject also discuss this library:
 

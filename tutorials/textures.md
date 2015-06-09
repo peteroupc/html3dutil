@@ -1,6 +1,10 @@
-## Sample Code for Loading Textures
+## Contents <a id=Contents></a>
 
-### Loading a single texture
+[Contents](#Contents)<br>[Sample Code for Loading Textures](#Sample_Code_for_Loading_Textures)<br>&nbsp;&nbsp;[Loading a single texture](#Loading_a_single_texture)<br>&nbsp;&nbsp;[Loading multiple textures](#Loading_multiple_textures)<br>&nbsp;&nbsp;[Demos](#Demos)<br>
+
+## Sample Code for Loading Textures <a id=Sample_Code_for_Loading_Textures></a>
+
+### Loading a single texture <a id=Loading_a_single_texture></a>
 
 The variable `textureURL` is the URL of the texture to load.
 
@@ -16,7 +20,7 @@ The variable `textureURL` is the URL of the texture to load.
   });
 ```
 
-### Loading multiple textures
+### Loading multiple textures <a id=Loading_multiple_textures></a>
 
 The variables `textureURL1` and `textureURL2` are URL textures.
 
@@ -36,7 +40,7 @@ The variables `textureURL1` and `textureURL2` are URL textures.
   });
 ```
 
-### Demos
+### Demos <a id=Demos></a>
 
 * [textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
 and applying them to 3D shapes.

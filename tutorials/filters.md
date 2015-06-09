@@ -1,12 +1,15 @@
-## Introduction
+## Introduction <a id=Introduction></a>
 
 This page describes what graphics filters are and how they work in my
 public domain [HTML 3D Library](http://peteroupc.github.io/html3dutil).
 It also describes several examples of graphics filters.
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
+## Contents <a id=Contents></a>
 
-## Graphics Filters
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Graphics Filters](#Graphics_Filters)<br>[Writing Graphics Filters](#Writing_Graphics_Filters)<br>[Using Graphics Filters](#Using_Graphics_Filters)<br>[Examples](#Examples)<br>&nbsp;&nbsp;[Grayscale](#Grayscale)<br>&nbsp;&nbsp;[Invert](#Invert)<br>&nbsp;&nbsp;[Red Tint](#Red_Tint)<br>&nbsp;&nbsp;[Mirror Filter](#Mirror_Filter)<br>&nbsp;&nbsp;[Matrix Filter](#Matrix_Filter)<br>&nbsp;&nbsp;[Pixelate Filter](#Pixelate_Filter)<br>&nbsp;&nbsp;[Wave Filter](#Wave_Filter)<br>&nbsp;&nbsp;[Waterpaint Filter](#Waterpaint_Filter)<br>[Other Pages](#Other_Pages)<br>
+
+## Graphics Filters <a id=Graphics_Filters></a>
 
 In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame.  They are implemented in a language called GLSL, or GL
@@ -21,7 +24,7 @@ For graphics filters to work, the 3D scene must be rendered to an off-screen buf
 a _frame buffer_.  The frame buffer acts like a 3D texture which will be rendered back to
 the screen with the help of the graphics filter's shader program.
 
-## Writing Graphics Filters
+## Writing Graphics Filters <a id=Writing_Graphics_Filters></a>
 
 In the HTML 3D Library, use the `makeEffect` method of the ShaderProgram class to create
 graphics filters:
@@ -73,7 +76,7 @@ A detailed treatment of GLSL is outside the scope of this page.  More informatio
 be found by searching the Web; note that there are many versions of GLSL and the one used
 in HTML applications is relatively basic nowadays.  Also see below for more examples of graphics filters.
 
-## Using Graphics Filters
+## Using Graphics Filters <a id=Using_Graphics_Filters></a>
 
 After a filter is created, it's very easy to use; it's simply set with the `useFilter` method of Scene3D.  After
 a filter is set, here's how it works:
@@ -99,7 +102,7 @@ Currently, the HTML 3D Library only supports one filter at a time, so if the HTM
 than one effect, say, a grayscale and blur, both effects need to be combined in the same graphics filter
 shader.
 
-## Examples
+## Examples <a id=Examples></a>
 
 * [squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates graphics filters.
 
@@ -108,13 +111,13 @@ of graphics filters implemented as shaders.
 
 Here are more details on the filters it includes.
 
-### Grayscale
+### Grayscale <a id=Grayscale></a>
 
 ![Grayscale filtered image](filters1.png)
 
 The grayscale filter, which converts the screen to black and white, was already given above.
 
-### Invert
+### Invert <a id=Invert></a>
 
 ![Invert filtered image](filters2.png)
 
@@ -132,7 +135,7 @@ This filter is implemented in the method `ShaderProgram.getInvertEffect()`:
     "}"].join("\n"));
     }
 
-### Red Tint
+### Red Tint <a id=Red_Tint></a>
 
 ![Red Tint filtered image](filters9.png)
 
@@ -146,7 +149,7 @@ The red tint filter adds a hint of red to the image.
     "}"].join("\n"));
     }
 
-### Mirror Filter
+### Mirror Filter <a id=Mirror_Filter></a>
 
 ![Mirror filtered image](filters7.png)
 
@@ -164,7 +167,7 @@ the current X coordinate).
 
 With a simple change, this filter can be modified to do a vertical flip (`1.0-uvCoord.y`) or even both flips.
 
-### Matrix Filter
+### Matrix Filter <a id=Matrix_Filter></a>
 
 ![Blur filtered image](filters4.png)
 ![Edge detect filtered image](filters8.png)
@@ -189,7 +192,7 @@ This filter is implemented in the function `makeKernelMatrix` in the demo.  It i
 the "blur" and "edge detect" effects.  The filter shows how it's possible for filters to read neighboring
 pixels, not just the current pixel, when implementing their effect.
 
-### Pixelate Filter
+### Pixelate Filter <a id=Pixelate_Filter></a>
 
 ![Pixelate filtered image](filters5.png)
 
@@ -213,7 +216,7 @@ each "pixelated" pixel takes up.
 
 The demo changes the "coarseness" parameter with time to animate the pixelation effect.
 
-### Wave Filter
+### Wave Filter <a id=Wave_Filter></a>
 
 ![Wave filtered image](filters3.png)
 
@@ -223,7 +226,7 @@ frame for the undulation effect.
 
 This filter is implemented in the function `makeWave` in the demo.
 
-### Waterpaint Filter
+### Waterpaint Filter <a id=Waterpaint_Filter></a>
 
 ![Waterpaint filtered image](filters6.png)
 
@@ -232,7 +235,7 @@ named "Themaister".
 
 This filter is implemented in the function `makeWaterpaint` in the demo.
 
-## Other Pages
+## Other Pages <a id=Other_Pages></a>
 
 The following pages of mine on CodeProject also discuss this library:
 
