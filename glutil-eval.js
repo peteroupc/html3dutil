@@ -480,7 +480,7 @@ BSplineCurve.clampedKnots=function(controlPoints,degree){
   if(controlPoints<degree+1)
    throw new Error("too few control points for degree "+degree+" curve")
   var order=degree+1;
-  var extras=controlPoints-degree;
+  var extras=controlPoints-order;
   var ret=[];
   for(var i=0;i<order;i++){
    ret.push(0)
