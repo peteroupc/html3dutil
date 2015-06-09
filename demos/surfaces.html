@@ -206,14 +206,16 @@ var MoebiusLikeStrip=function(maj, a, b){
   v*=GLMath.PiTimes2;
   u=-u
   var x, y, z;
-  var sinu=Math.sin(u);
-  var sinv=Math.sin(v);
-  var cosu=Math.cos(u);
-  var cosv=Math.cos(v);
+  var cosu = Math.cos(u);
+  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
+  var cosv = Math.cos(v);
+  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
     x = this.a * cosv * cosu - this.b * sinv * sinu
     z = this.a * cosv * sinu + this.b * sinv * cosu
-    y = (this.maj + x) * Math.sin(u*2)
-    x = (this.maj + x) * Math.cos(u*2)
+    var cosu2 = Math.cos(u*2);
+    var sinu2 = ((u*2)>=0 && (u*2)<6.283185307179586) ? ((u*2)<=3.141592653589793 ? Math.sqrt(1.0-cosu2*cosu2) : -Math.sqrt(1.0-cosu2*cosu2)) : Math.sin(u*2);
+    y = (this.maj + x) * sinu2
+    x = (this.maj + x) * cosu2
   return [x,z,y]
  }
 }
@@ -227,8 +229,9 @@ var MoebiusStrip=function(radius,width){
   var x, y, z;
   var cosv = Math.cos(v==1 ? 0 : v);
   var sinv = ((v==1 ? 0 : v)>=0 && (v==1 ? 0 : v)<6.283185307179586) ? ((v==1 ? 0 : v)<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v==1 ? 0 : v);
-  var sinv2=Math.sin(v/2);
-  var tmp=u*Math.cos(v/2)+this.radius;
+  var cosv2 = Math.cos(v/2);
+  var sinv2 = ((v/2)>=0 && (v/2)<6.283185307179586) ? ((v/2)<=3.141592653589793 ? Math.sqrt(1.0-cosv2*cosv2) : -Math.sqrt(1.0-cosv2*cosv2)) : Math.sin(v/2);
+  var tmp=u*cosv2+this.radius;
   x=cosv*tmp;
   y=sinv*tmp;
   z=sinv2*u;
