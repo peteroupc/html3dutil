@@ -202,7 +202,6 @@ function pushSettings(updateMeshFunc,settings){
  updateShape(updateMeshFunc);
 };
 
-
    function makeMesh(func,resolutionU,resolutionV){
     // Default resolution is 50
     if(resolutionV==null)resolutionV=resolutionU

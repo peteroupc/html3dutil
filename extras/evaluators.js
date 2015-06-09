@@ -1,4 +1,3 @@
-
 /*
 Written by Peter O. in 2015.
 
@@ -10,6 +9,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /**
 * Parametric evaluator for a surface of revolution, which results by revolving
 * an X/Y curve around an axis.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/evaluators.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
 * @alias SurfaceOfRevolution
 * @param {Function} curve Curve to rotate about the Z-axis.
@@ -46,7 +52,7 @@ var SurfaceOfRevolution=function(curve,minval,maxval){
  }
 }
 /**
-* Creates a parametric evaluator for a surface of revolution 
+* Creates a parametric evaluator for a surface of revolution
 * whose curve is the graph of a single-variable function.
 * @param {Function} func Function whose graph will be
 * rotated about the Z-axis.  The function takes a number
@@ -101,12 +107,19 @@ SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve){
 * Parametric evaluator for a
 * curve drawn by a circle that rolls along the inside
 * of another circle, whose position is fixed.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/evaluators.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
 * @param {number} outerRadius Radius of the circle whose position
 * is fixed.
 * @param {number} innerRadius Radius of the rolling circle.
 * A hypocycloid results when outerRadius=innerRadius.
-* @param {number} innerRadius Distance from the center of the
+* @param {number} distFromInnerCenter Distance from the center of the
 * rolling circle to the drawing pen.
 */
 function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
@@ -157,6 +170,22 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
    this.distFromInner*ratio);
  }
 }
+
+/**
+* Parametric evaluator for a
+* curve drawn by a circle that rolls along the X-axis.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/evaluators.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
+* @class
+* @param {number} radius Radius of the rolling circle.
+* @param {number} distFromCenter Distance from the center of the
+* rolling circle to the drawing pen.
+*/
 function Trochoid(radius, distFromCenter){
  this.inner=radius;
  this.distFromCenter=distFromCenter;
@@ -184,12 +213,19 @@ function Trochoid(radius, distFromCenter){
 * Parametric evaluator for a
 * curve drawn by a circle that rolls along the outside
 * of another circle, whose position is fixed.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/evaluators.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
 * @param {number} outerRadius Radius of the circle whose position
 * is fixed.
 * @param {number} innerRadius Radius of the rolling circle.
 * An epicycloid results when outerRadius=innerRadius.
-* @param {number} innerRadius Distance from the center of the
+* @param {number} distFromInnerCenter Distance from the center of the
 * rolling circle to the drawing pen.
 */
 function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){

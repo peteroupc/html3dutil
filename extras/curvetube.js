@@ -167,8 +167,15 @@ _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
 /**
 * Evaluator for a parametric surface in the form
 * of a tube extruded from a parametric curve.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/curvetube.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
 * @class
-* @alias glutil.CurveTube
+* @alias CurveTube
 * @param {Object} func An object that must contain a function
 * named "evaluate", which takes the following parameter:<ul>
 * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
@@ -181,11 +188,11 @@ _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
 * @param {Object} [sweptCurve] Object describing
 * a two-dimensional curve to serve as the cross section of the extruded shape,
 * corresponding to the V coordinate of the CurveTube's
-* "evaluate" method. 
+* "evaluate" method.
 * If this parameter is null or omitted, uses a circular cross section
 * in which the V coordinate ranges from 0 through
 * 1.  The curve object must contain a function
-* named "evaluate", with the same meaning as for the "func" parameter, 
+* named "evaluate", with the same meaning as for the "func" parameter,
 * except the third element, if any, of the return value is ignored.<p>
 * The curve need not be closed.<p>
 * The cross section will generally have a radius of 1 unit; bigger

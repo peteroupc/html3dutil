@@ -29,9 +29,16 @@ Perspective.prototype.update=function(){
 /**
 * A class for controlling the projection and
 * view of a 3D scene, in the nature of an abstract "camera".
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/camera.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
 * @class
 * @alias Camera
-* @param {glutil.Scene} A 3D scene to associate with this
+* @param {glutil.Scene} scene A 3D scene to associate with this
 * camera object.
 * @param {number}  fov Vertical field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
