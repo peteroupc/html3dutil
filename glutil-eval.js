@@ -393,7 +393,7 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
 * the curve will start and end at the first and last control points.
 * @param {Array<Array<number>>} controlPoints Array of
 * control points as specified in the {@link glutil.BSplineCurve} constructor.
-* @param {number|undefined} degree Degree of the B-Spline
+* @param {number} [degree] Degree of the B-Spline
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
@@ -407,7 +407,7 @@ BSplineCurve.clamped=function(controlPoints,degree,bits){
 * Creates a B-spline curve with uniform knots.
 * @param {Array<Array<number>>} controlPoints Array of
 * control points as specified in the {@link glutil.BSplineCurve} constructor.
-* @param {number|undefined} degree Degree of the B-Spline
+* @param {number} [degree] Degree of the B-Spline
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
@@ -422,10 +422,10 @@ BSplineCurve.uniform=function(controlPoints,degree,bits){
 * the surface's edges lie on the edges of the control point array.
 * @param {Array<Array<Array<number>>>} controlPoints Array of
 * control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
-* @param {number|undefined} degreeU Degree of the B-Spline
+* @param {number} [degreeU] Degree of the B-Spline
 * surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {number|undefined} degreeV Degree of the B-Spline
+* @param {number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
@@ -440,10 +440,10 @@ BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
 * Creates a B-spline surface with uniform knots.
 * @param {Array<Array<Array<number>>>} controlPoints Array of
 * control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
-* @param {number|undefined} degreeU Degree of the B-Spline
+* @param {number} [degreeU] Degree of the B-Spline
 * surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {number|undefined} degreeV Degree of the B-Spline
+* @param {number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
