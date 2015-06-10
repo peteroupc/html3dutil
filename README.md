@@ -166,7 +166,7 @@ Version 1.4:
 - Add setMaterial and removeShape methods to the ShapeGroup class
 - Default shader program now uses `modelViewMatrix` instead of
   separate `world` and `view` uniforms
-- FIx JSON issues in GLUtil.loadFileFromUrl method
+- Fix JSON issues in GLUtil.loadFileFromUrl method
 - Many new demos added
 - Add graphics filters tutorial and expanded several other tutorials
 

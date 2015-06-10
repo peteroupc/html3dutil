@@ -265,7 +265,7 @@ var GLUtil={
 * file's text or data), as given below, and is rejected when an error occurs (the
 * result may be an object with
 * one property: "url", the URL of the file).  If the promise resolves,
-* the parameter will be:<ul>
+* the parameter's "data" property will be:<ul>
 * <li>For response type "xml", an XML document object.
 * <li>For response type "arraybuffer", an ArrayBuffer object.
 * <li>For response type "json", the JavaScript object decoded

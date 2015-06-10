@@ -153,7 +153,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
- * @param {number} Desired radius of the curve.
+ * @param {number} radius Desired radius of the curve.
  * @return {Hypotrochoid}
  */
  this.scaleTo=function(radius){
@@ -257,7 +257,7 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
- * @param {number} Desired radius of the curve.
+ * @param {number} radius Desired radius of the curve.
  * @return {Epitrochoid}
  */
  this.scaleTo=function(radius){
