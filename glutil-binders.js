@@ -23,8 +23,11 @@ function MaterialBinder(mshade){
 /** @private */
 MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
- program.setUniforms({
-  "textureSize":this.textureSize,
+ var uniforms={
+  "textureSize":this.textureSize
+ }
+ program.setUniforms(uniforms);
+ uniforms={
   "mshin":this.mshade.shininess,
   "ma":this.mshade.ambient.length==3 ? this.mshade.ambient :
      [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
@@ -35,10 +38,16 @@ MaterialBinder.prototype.bind=function(program){
      [this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
   "me":this.mshade.emission.length==3 ? this.mshade.emission :
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
- });
+ };
  if(this.mshade.texture){
-  new TextureBinder(this.mshade.texture).bind(program);
+  new TextureBinder(this.mshade.texture).bind(program,0);
+  uniforms["sampler"]=0;
  }
+ if(this.mshade.specularMap){
+  new TextureBinder(this.mshade.specularMap).bind(program,1);
+  uniforms["specularMap"]=1;
+ }
+ program.setUniforms(uniforms);
  return this;
 }
 
@@ -48,9 +57,8 @@ MaterialBinder.prototype.bind=function(program){
 function LoadedTexture(textureImage, context){
   context=GLUtil._toContext(context);
   this.context=context;
-  this.textureUnit=0;
   this.loadedTexture=context.createTexture();
-  context.activeTexture(context.TEXTURE0+this.textureUnit);
+  context.activeTexture(context.TEXTURE0);
   // In WebGL, texture coordinates start at the upper left corner rather than
   // the lower left as in OpenGL and OpenGL ES, so we use this method call
   // to reestablish the lower left corner.
@@ -118,7 +126,8 @@ function TextureBinder(tex){
  this.texture=tex;
 }
 /** @private */
-TextureBinder.prototype.bind=function(program){
+TextureBinder.prototype.bind=function(program,textureUnit){
+ if(textureUnit==null)textureUnit=0;
  var texture=this.texture;
  var context=program.getContext();
  if(texture.image!==null && texture.loadedTexture===null){
@@ -149,10 +158,12 @@ TextureBinder.prototype.bind=function(program){
           texture.anisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
        }
       }
-      uniforms["sampler"]=texture.loadedTexture.textureUnit;
+      if(textureUnit==0){
+       uniforms["sampler"]=textureUnit;
+      }
       uniforms["textureSize"]=[texture.width,texture.height];
       program.setUniforms(uniforms);
-      context.activeTexture(context.TEXTURE0+texture.loadedTexture.textureUnit);
+      context.activeTexture(context.TEXTURE0+textureUnit);
       context.bindTexture(context.TEXTURE_2D,
         texture.loadedTexture.loadedTexture);
       // Set texture parameters
@@ -222,6 +233,7 @@ Binders.getMaterialBinder=function(material){
   return new MaterialBinder(material);
  }
  if(material instanceof Texture){
+  console.warn("Setting shape materials directly to textures is deprecated.");
   return new TextureBinder(material);
  }
  if(material instanceof FrameBuffer){

@@ -553,9 +553,12 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "uniform vec3 ms;\n" +
 "uniform float mshin;\n" +
 "uniform vec4 viewInvW;\n" +
+"#ifdef SPECULAR_MAP\n" +
+"uniform sampler2D specularMap;\n" +
 "#endif\n" +
 "#endif\n" +
-"uniform sampler2D sampler;\n" + // texture sampler
+"#endif\n" +
+"uniform sampler2D sampler;\n" +
 "uniform vec2 textureSize;\n" + // texture size (all zeros if textures not used)
 "uniform float useColorAttr;\n" + // use color attribute if 1
 "varying vec2 uvVar;\n"+
@@ -614,10 +617,15 @@ for(var i=0;i<Lights.MAX_LIGHTS;i++){
 }
 shader+="#ifdef SPECULAR\n" +
 "bool spectmp;\n" +
+"#ifdef SPECULAR_MAP\n" +
+"vec3 materialSpecular=ms*mix(vec3(1.,1.,1.),texture2D(specularMap,uvVar).rgb,useTexture);\n"+
+"#else\n" +
+"vec3 materialSpecular=ms;\n"+
+"#endif\n" +
 "// specular reflection\n" +
-"if((ms.x*ms.y*ms.z)!=0.0){\n" +
+"if(materialSpecular.x!=0. || materialSpecular.y!=0. || materialSpecular.z!=0.){\n" +
 "vec3 viewDirection=normalize((viewInvW-worldPositionVar).xyz);\n" +
-"float specular;\n";
+"float specular=0.0;\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
 shader+="  spectmp = lightCosines["+i+"] >= 0.0;\n" +
 "  if (spectmp) {\n" +
@@ -626,7 +634,7 @@ shader+="  spectmp = lightCosines["+i+"] >= 0.0;\n" +
 " transformedNormalVar), viewDirection);\n" +
 "    specular=max(specular,0.0);\n" +
 "    specular=pow(specular,mshin);\n"+
-"    lightedColor+=ms*specular*lightPower["+i+"].w*lightSpecular;\n" +
+"    lightedColor+=materialSpecular*specular*lightPower["+i+"].w*lightSpecular;\n" +
 "  }\n";
 }
 shader+="}\n";

@@ -79,9 +79,9 @@ GraphicsPath.prototype.getSubpaths=function(){
 /**
  * Not documented yet.
  * @param {number} flatness Desired minimum length of flattened line
- * segments when flattening curved portions of the path. 
+ * segments when flattening curved portions of the path.
  * This will be used to help limit the recursive flattening; it will
- * still only recurse up to its recursion depth (currently 10, but may 
+ * still only recurse up to its recursion depth (currently 10, but may
  * change).
  */
 GraphicsPath.prototype.flatten=function(flatness){

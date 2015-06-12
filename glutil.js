@@ -856,12 +856,21 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * while negative values subtract from it. (0,0,0) means no additive color.
  */
  this.emission=emission ? emission.slice(0,3) : [0,0,0];
+/**
+* Texture map for this material.
+*/
  this.texture=null;
+/**
+* Specular map texture, where each pixel is an additional factor to multiply the specular color by for
+* each texture coordinate (note that the material must have a specular color of other than the default
+* black for this to have an effect).  See {@link glutil.Material#specular}.
+*/
+ this.specularMap=null;
 }
 /**
 * Clones this object's parameters to a new Material
 * object and returns that object. The material's texture
-* map, if any, won't be cloned, but rather, a reference
+* maps, if any, won't be cloned, but rather, a reference
 * to the same object will be used.
 * @return {glutil.Material} A copy of this object.
 */
@@ -872,7 +881,10 @@ Material.prototype.copy=function(){
   this.specular.slice(0,this.specular.length),
   this.shininess,
   this.emission.slice(0,this.emission.length)
- ).setParams({"texture":this.texture});
+ ).setParams({
+   "texture":this.texture,
+   "specularMap":this.specularMap
+ });
 }
 /**
 * Sets parameters for this material object.
@@ -886,6 +898,8 @@ Material.prototype.copy=function(){
 * <li><code>emission</code> - Additive color (see {@link glutil.Material} constructor).
 * <li><code>texture</code> - {@link glutil.Texture} object, or a string with the URL of the texture
 * to use.
+* <li><code>specularMap</code> - {@link glutil.Texture} object, or a string with the URL, of a specular
+* map texture (see {@link glutil.Material#specularMap}).
 * </ul>
 * If a value is null or undefined, it is ignored.
 * @return {glutil.Material} This object.
@@ -912,6 +926,14 @@ Material.prototype.setParams=function(params){
     this.texture=new Texture(param)
    } else {
     this.texture=param
+   }
+ }
+ if(params["specularMap"]!=null){
+   var param=params["specularMap"]
+   if(typeof param=="string"){
+    this.specularMap=new Texture(param)
+   } else {
+    this.specularMap=param
    }
  }
  return this;
@@ -1364,9 +1386,9 @@ Scene3D.prototype._getDefines=function(){
  return ret;
 }
 /** @private */
-Scene3D.prototype._initProgramData=function(){
- new LightsBinder(this.lightSource).bind(this.program);
- this._updateMatrix();
+Scene3D.prototype._initProgramData=function(program){
+ new LightsBinder(this.lightSource).bind(program);
+ this._updateMatrix(program);
 }
 /**
 * Changes the active shader program for this scene
@@ -1378,16 +1400,32 @@ Scene3D.prototype.useProgram=function(program){
  if(!program)throw new Error("invalid program");
  program.use();
  this.program=program;
- this._initProgramData();
+ this._initProgramData(this.program);
  return this;
 }
+
+Scene3D.prototype._getSpecularMapShader=function(){
+ if(this.__specularMapShader){
+  return this.__specularMapShader;
+ }
+ var defines=this._getDefines();
+ defines+="#define SPECULAR_MAP\n";
+ this.__specularMapShader=new ShaderProgram(this.context,
+    defines+ShaderProgram.getDefaultVertex(),
+    defines+ShaderProgram.getDefaultFragment());
+ return this.__specularMapShader;
+}
+
 /** Changes the active shader program for this scene
 * to a program that doesn't support lighting.
+* @deprecated Use the <code>useProgram</code>
+* method instead.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.disableLighting=function(){
  this.lightingEnabled=false;
  if(this._is3d){
+  this.__specularMapShader=null;
   var program=new ShaderProgram(this.context,
     this._getDefines()+ShaderProgram.getDefaultVertex(),
     this._getDefines()+ShaderProgram.getDefaultFragment());
@@ -1711,22 +1749,22 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
 Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this._updateMatrix();
+ this._updateMatrix(this.program);
 }
 /** @private */
-Scene3D.prototype._updateMatrix=function(){
+Scene3D.prototype._updateMatrix=function(program){
  var uniforms={
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
  };
- if(this.program){
-  if(this.program.get("viewInvW")!=null){
+ if(program){
+  if(program.get("viewInvW")!=null){
    var invView=GLMath.mat4invert(this._viewMatrix);
    uniforms["viewInvW"]=[invView[12],invView[13],invView[14],invView[15]];
   }
-  this.program.setUniforms(uniforms);
+  program.setUniforms(uniforms);
  }
 }
 /**
@@ -1738,7 +1776,7 @@ Scene3D.prototype._updateMatrix=function(){
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
  this._projectionMatrix=GLMath.mat4copy(matrix);
- this._updateMatrix();
+ this._updateMatrix(this.program);
  return this;
 }
 /**
@@ -1749,7 +1787,7 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
  this._viewMatrix=GLMath.mat4copy(matrix);
- this._updateMatrix();
+ this._updateMatrix(this.program);
  return this;
 }
 /**
@@ -1774,7 +1812,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  up = up || [0,1,0];
  center = center || [0,0,0];
  this._viewMatrix=GLMath.mat4lookat(eye, center, up);
- this._updateMatrix();
+ this._updateMatrix(this.program);
  return this;
 }
 /**
@@ -1985,9 +2023,19 @@ Scene3D.prototype._renderShape=function(shape,program){
    this._renderShape(shape.shapes[i],program);
   }
  } else {
-   this._setupMatrices(shape,program);
-   Binders.getMaterialBinder(shape.material).bind(program);
-   shape.bufferedMesh.draw(program);
+   var prog=program;
+   if(shape.material instanceof Material &&
+       shape.material.specularMap){
+      var p=this._getSpecularMapShader();
+      this.useProgram(p);
+      prog=p;
+   }
+   this._setupMatrices(shape,prog);
+   Binders.getMaterialBinder(shape.material).bind(prog);
+   shape.bufferedMesh.draw(prog);
+   if(prog!=program){
+      this.useProgram(program);
+   }
  }
 }
 /**
@@ -2039,7 +2087,7 @@ Scene3D.prototype.useFilter=function(filterProgram){
 }
 /** @private */
 Scene3D.prototype._renderInner=function(){
-  this._updateMatrix();
+  this._updateMatrix(this.program);
   this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
