@@ -25,7 +25,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
 * </ul>
 * The evaluator function returns an array of at least 2 elements: the first
-* element is the X coordinate of the curve's position, and the second
+* element is the X coordinate of the curve's position (corresponding to
+* height), and the second
 * element is the Y coordinate (corresponding to
 * radius).<p>
 * If the curve function draws a curve that goes around the axis of rotation, such
@@ -91,11 +92,11 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
 * from beginning to end.
 * @param {number} minval Smallest parameter of the function.
 * This is a number of units from the origin along the axis of rotation.
-* @param {number} maxval Largest parameter of the function.  
+* @param {number} maxval Largest parameter of the function.
 * This is a number of units from the origin along the axis of rotation.
 * If _minval_ is greater than _maxval_, both values will be swapped.
-* @param {Array<number>|undefined} axis Axis of rotation, around which the 
-* function graph will be rotated to generate the surface of revolution. 
+* @param {Array<number>|undefined} axis Axis of rotation, around which the
+* function graph will be rotated to generate the surface of revolution.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
@@ -112,7 +113,7 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
 * var surf=SurfaceOfRevolution.fromFunction(
 *  function(x){  x+=3; return x/2; },
 * -3,7);
-* @example <caption>The following creates an evaluator for a cylinder 
+* @example <caption>The following creates an evaluator for a cylinder
 * which runs from 5 to 10 units, and with a radius of 2 units.</caption>
 * var surf=SurfaceOfRevolution.fromFunction(
 *  function(x){  return 2; }, // use a constant radius

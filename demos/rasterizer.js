@@ -727,6 +727,3 @@ Scene3D.prototype._renderShape=function(shape,data){
    }
  }
 }
-
-
-

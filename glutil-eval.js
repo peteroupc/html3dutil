@@ -602,6 +602,12 @@ var CurveEval=function(){
 * </ul>
 * The evaluator function returns an array of the result of the evaluation.
 * @return {CurveEval} This object.
+* @example <caption>The following function sets a circle as the curve
+* to use for generating vertex positions.</caption>
+* // "u" can range from 0 to 2*Math.PI
+* curveEval.vertex({"evaluate":function(u){
+*  return [Math.cos(u),Math.sin(u),0]
+* }});
 */
 CurveEval.prototype.vertex=function(evaluator){
  this.vertexCurve=evaluator;
