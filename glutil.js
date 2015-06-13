@@ -221,19 +221,28 @@ var GLUtil={
   return Promise.resolve({
     successes:[], failures:[], results:[]});
  }
+ function promiseResolveFunc(pr,ret,index){
+   return function(x){
+    if(pr)pr(x);
+    ret.successes[index]=x
+    return true;
+   }
+ }
+ function promiseRejectFunc(pr,ret,index){
+   return function(x){
+    if(pr)pr(x);
+    ret.failures[index]=x
+    return true;
+   }
+ }
  var ret={successes:[], failures:[], results:[]};
  var newPromises=[]
  for(var i=0;i<promises.length;i++){
   var index=i;
-  newPromises.push(promises[i].then(function(x){
-   if(progressResolve)progressResolve(x)
-   ret.successes[index]=x
-   return true;
-  },function(x){
-   if(progressReject)progressReject(x)
-   ret.failures[index]=x
-   return false;
-  }));
+  newPromises.push(promises[i].then(
+    promiseResolveFunc(progressResolve,ret,index),
+    promiseRejectFunc(progressReject,ret,index)
+  ));
  }
  return Promise.all(newPromises).then(function(results){
   // compact the successes and failures arrays
