@@ -1,4 +1,4 @@
-// Adapted from public domain Mozilla unit tests
+// Portions adapted from public domain Mozilla unit tests
 
 var EPSILON = 0.00001
 var FailedTests = 0;
@@ -34,7 +34,7 @@ function is(a,b,c){
 
 function isApprox(num1, num2, delta) {
   if (Math.abs(num1 - num2) > (delta || EPSILON)) {
-    info("isApprox expected " + num1 + ", got " + num2 + " instead.");
+    info("isApprox got " + num1 + ", expected " + num2 + " instead.");
     return false;
   }
   return true;
@@ -45,12 +45,12 @@ function isApproxVec(vec1, vec2, delta) {
   vec2 = Array.prototype.slice.call(vec2);
 
   if (vec1.length !== vec2.length) {
-    info("isApproxVec expected [" + vec1 + "], got [" + vec2 + "] instead.");
+    info("isApproxVec got [" + vec1 + "], expected [" + vec2 + "] instead.");
     return false;
   }
   for (var i = 0, len = vec1.length; i < len; i++) {
     if (!isApprox(vec1[i], vec2[i], delta)) {
-      info("isApproxVec expected [" + vec1 + "], got [" + vec2 + "] instead.");
+      info("isApproxVec got [" + vec1 + "], expected [" + vec2 + "] instead.");
       return false;
     }
   }
@@ -66,13 +66,24 @@ function isEqualVec(vec1, vec2) {
   }
   for (var i = 0, len = vec1.length; i < len; i++) {
     if (vec1[i] !== vec2[i]) {
-      info("isEqualVec expected [" + vec1 + "], got [" + vec2 + "] instead.");
+      info("isEqualVec got [" + vec1 + "], expected [" + vec2 + "] instead.");
       return false;
     }
   }
   return true;
 }
 function test(){
+  var mesh=new Mesh();
+  mesh.mode(Mesh.POINTS)
+  .vertex3(0,1,2)
+  .vertex3(1,2,3);
+  ok(isApproxVec(mesh.getBoundingBox(),[0,1,2,1,2,3]),"")
+  mesh.vertex3(-1,-2,-3)
+  ok(isApproxVec(mesh.getBoundingBox(),[-1,-2,-3,1,2,3]),"")
+  mesh.vertex3(4,5,6)
+  ok(isApproxVec(mesh.getBoundingBox(),[-1,-2,-3,4,5,6]),"")
+  mesh.vertex3(-0.5,4,0)
+  ok(isApproxVec(mesh.getBoundingBox(),[-1,-2,-3,4,5,6]),"")
   ok(isApproxVec(GLUtil.toGLColor("#f00"), [1, 0, 0, 1]),
     "The hex2rgba() function didn't calculate the 1st rgba values correctly.");
 

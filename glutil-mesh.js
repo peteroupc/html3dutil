@@ -1078,11 +1078,11 @@ Mesh.prototype.getBoundingBox=function(){
      ret[2]=ret[5]=v[vi+2];
     } else {
      ret[0]=Math.min(ret[0],v[vi]);
-     ret[3]=Math.max(ret[1],v[vi]);
-     ret[1]=Math.min(ret[2],v[vi+1]);
-     ret[4]=Math.max(ret[3],v[vi+1]);
-     ret[2]=Math.min(ret[4],v[vi+2]);
-     ret[5]=Math.max(ret[5],v[vi+2]);    
+     ret[3]=Math.max(ret[3],v[vi]);
+     ret[1]=Math.min(ret[1],v[vi+1]);
+     ret[4]=Math.max(ret[4],v[vi+1]);
+     ret[2]=Math.min(ret[2],v[vi+2]);
+     ret[5]=Math.max(ret[5],v[vi+2]);
     }
    }
   }
