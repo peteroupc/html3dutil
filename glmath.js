@@ -548,7 +548,7 @@ quatIsIdentity:function(quat){
 /**
  * Generates a 4x4 matrix describing the rotation
  * described by this quaternion.
- * @param {*} quat A quaternion.
+ * @param {Array<number>} quat A quaternion.
  */
 quatToMat4:function(quat){
   var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
@@ -573,8 +573,8 @@ quatToMat4:function(quat){
 },
 /**
 * Calculates the angle and axis of rotation for this
-* quaternion. (The axis of rotation is a line that contains the
-* origin (0,0,0) and a 3D point.)
+* quaternion. (The axis of rotation is a ray that starts at the
+* origin (0,0,0) and points toward a 3D point.)
 * @param {Array<number>} a A quaternion.  Must be normalized.
 * @return  {Array<number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -615,8 +615,8 @@ quatFromVectors:function(vec1,vec2){
 },
 /**
  * Generates a quaternion from an angle and axis of rotation.
-  (The axis of rotation is a line that contains the
-* origin (0,0,0) and a 3D point.)
+ (The axis of rotation is a ray that starts at the
+* origin (0,0,0) and points toward a 3D point.)
  * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
@@ -669,6 +669,8 @@ return ret;
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
+  (The axis of rotation is a ray that starts at the
+* origin (0,0,0) and points toward a 3D point.)
  * @param {number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.
 *  This can instead be a 3-element
  * array giving the rotation about the x-axis, y-axis, and z-axis,
@@ -885,7 +887,8 @@ q[2] * dot + v1[2] * q[3] - v2[2],
 },
 /**
  * Generates a quaternion from the rotation described in a 4x4 matrix.
- * The results are undefined if the matrix doesn't describe a rotation.
+ * The upper 3x3 portion of the matrix is used for this calculation.
+ * The results are undefined if the matrix includes shearing.
  * @param {Array<number>} m A 4x4 matrix.
  * @return {Array<number>} The resulting quaternion.
  */
@@ -1542,7 +1545,7 @@ mat4multiply:function(a,b){
 * Multiplying two unit quaternions (each with a length of 1) will result
 * in a unit quaternion.  However, for best results, you should
 * normalize the quaternions every few multiplications (using
-* quatNormalize or quatNormInPlace, since successive
+* quatNorm or quatNormInPlace), since successive
 * multiplications can cause rounding errors.
  * @param {Array<number>} a The first quaternion.
  * @param {Array<number>} b The second quaternion.

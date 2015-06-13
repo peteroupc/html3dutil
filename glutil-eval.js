@@ -914,7 +914,7 @@ SurfaceEval.prototype.color=function(evaluator){
 /**
 * Specifies a parametric surface function for generating texture coordinates.
 * @param {object} evaluator An object that must contain a function
-* named "evaluate", giving 2 values as a result.  See {@link SurfaceEvals#vertex}.
+* named "evaluate", giving 2 values as a result.  See {@link SurfaceEval#vertex}.
 * </ul>
 * @return {SurfaceEval} This object.
 * @example <caption>The following example sets the surface

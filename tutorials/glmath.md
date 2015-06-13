@@ -60,8 +60,8 @@ before the other transformations.
 Rotation changes an object's orientation.
 
 To create a rotation matrix, use [GLMath.mat4rotated()]{@link glmath.GLMath.mat4rotated},
-and specify the angle (in degrees) to rotate, and the axis of rotation (a line that contains
-the origin and a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that contains the origin (0, 0, 0) and the point (0, 2, 3).
+and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
+origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
 
 To multiply an existing matrix by a rotation, use
 [GLMath.mat4rotate()]{@link glmath.GLMath.mat4rotate}.  This will put the rotation
