@@ -24,7 +24,8 @@ function MaterialBinder(mshade){
 MaterialBinder.prototype.bind=function(program){
  if(!this.mshade)return this;
  var uniforms={
-  "textureSize":this.textureSize
+  "textureSize":this.textureSize,
+  "useSpecularMap":0
  }
  program.setUniforms(uniforms);
  uniforms={
@@ -41,11 +42,9 @@ MaterialBinder.prototype.bind=function(program){
  };
  if(this.mshade.texture){
   new TextureBinder(this.mshade.texture).bind(program,0);
-  uniforms["sampler"]=0;
  }
  if(this.mshade.specularMap){
   new TextureBinder(this.mshade.specularMap).bind(program,1);
-  uniforms["specularMap"]=1;
  }
  program.setUniforms(uniforms);
  return this;
@@ -160,8 +159,12 @@ TextureBinder.prototype.bind=function(program,textureUnit){
       }
       if(textureUnit==0){
        uniforms["sampler"]=textureUnit;
+       uniforms["textureSize"]=[texture.width,texture.height];
       }
-      uniforms["textureSize"]=[texture.width,texture.height];
+      if(textureUnit==1){
+       uniforms["specularMap"]=textureUnit;
+       uniforms["useSpecularMap"]=1;
+      }
       program.setUniforms(uniforms);
       context.activeTexture(context.TEXTURE0+textureUnit);
       context.bindTexture(context.TEXTURE_2D,

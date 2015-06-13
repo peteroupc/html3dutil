@@ -554,6 +554,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "uniform float mshin;\n" +
 "uniform vec4 viewInvW;\n" +
 "#ifdef SPECULAR_MAP\n" +
+"uniform float useSpecularMap;\n" +
 "uniform sampler2D specularMap;\n" +
 "#endif\n" +
 "#endif\n" +
@@ -618,7 +619,7 @@ for(var i=0;i<Lights.MAX_LIGHTS;i++){
 shader+="#ifdef SPECULAR\n" +
 "bool spectmp;\n" +
 "#ifdef SPECULAR_MAP\n" +
-"vec3 materialSpecular=ms*mix(vec3(1.,1.,1.),texture2D(specularMap,uvVar).rgb,useTexture);\n"+
+"vec3 materialSpecular=ms*mix(vec3(1.,1.,1.),texture2D(specularMap,uvVar).rgb,useSpecularMap);\n"+
 "#else\n" +
 "vec3 materialSpecular=ms;\n"+
 "#endif\n" +
