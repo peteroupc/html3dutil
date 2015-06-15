@@ -9,7 +9,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
 /**
 * A collection of math functions for working
-* with vectors and matrices.<p>
+* with vectors, matrices, quaternions, and other
+* mathematical objects.<p>
 * See the tutorial "{@tutorial glmath}" for more information.
 * @module glmath
 * @license CC0-1.0
@@ -1729,7 +1730,189 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 }
 }
 };
-/** Finds the dot product of two quaternions.
+
+/**
+* Normalizes this plane so that its normal is unit
+* length (unless all the normal's components are 0).
+* The plane's distance will be divided by the
+* normal's length.
+* @param {Array<number>} plane A four-element array
+* defining the plane. The first three elements of the array
+* are the X, Y, and Z components of the plane's normal vector, and
+* the fourth element is the shortest distance from the plane
+* to the origin, or if negative, from the origin to the plane,
+* divided by the normal's length.
+* @return {Array<number>} The parameter "plane".
+*/
+GLMath.planeNormInPlace=function(plane){
+ var x=plane[0];
+ var y=plane[1];
+ var z=plane[2];
+ var w=plane[3];
+ len=Math.sqrt(x*x+y*y+z*z);
+ if(len!=0){
+  len=1.0/len;
+  plane[0]*=len;
+  plane[1]*=len;
+  plane[2]*=len;
+  plane[3]*=len;
+ }
+ return plane;
+}
+
+/**
+* Finds the six clipping planes of a view frustum defined
+* by a 4x4 matrix. These six planes together form the
+* shape of a "chopped-off" pyramid (or frustum).<p>
+* In this model, the eye, or camera, is placed at the top
+* of the pyramid, four planes are placed at the pyramid's
+* sides, one plane (the far plane) forms its base, and a
+* final plane (the near plane) is the pyramid's chopped
+* off top.
+* @param {Array<number>} A 4x4 matrix.  This will
+* usually be a projection-view matrix (projection matrix
+* multiplied by view matrix).
+* @return {Array<Array<number>} An array of six
+* 4-element arrays representing the six clipping planes of the
+* view frustum.  In order, they are the left, right, top,
+* bottom, near, and far clipping planes.  All six planes
+* will be normalized.
+*/
+GLMath.mat4toFrustumPlanes=function(matrix){
+ var frustum=[[],[],[],[],[],[]]
+ // Left clipping plane
+ frustum[0]=GLMath.planeNormInPlace([
+  matrix[3]  + matrix[0],
+  matrix[7]  + matrix[4],
+  matrix[11] + matrix[8],
+  matrix[15] + matrix[12]
+ ])
+ // Right clipping plane
+ frustum[1]=GLMath.planeNormInPlace([
+  matrix[3]  - matrix[0],
+  matrix[7]  - matrix[4],
+  matrix[11] - matrix[8],
+  matrix[15] - matrix[12]
+ ])
+ // Top clipping plane
+ frustum[2]=GLMath.planeNormInPlace([
+  matrix[3]  - matrix[1],
+  matrix[7]  - matrix[5],
+  matrix[11] - matrix[9],
+  matrix[15] - matrix[13]
+ ])
+ // Bottom clipping plane
+ frustum[3]=GLMath.planeNormInPlace([
+  matrix[3]  + matrix[1],
+  matrix[7]  + matrix[5],
+  matrix[11] + matrix[9],
+  matrix[15] + matrix[13]
+ ])
+ // Near clipping plane
+ frustum[4]=GLMath.planeNormInPlace([
+  matrix[3]  + matrix[2],
+  matrix[7]  + matrix[6],
+  matrix[11] + matrix[10],
+  matrix[15] + matrix[14]
+ ])
+ // Far clipping plane
+ frustum[5]=GLMath.planeNormInPlace([
+  matrix[3]  - matrix[2],
+  matrix[7]  - matrix[6],
+  matrix[11] - matrix[10],
+  matrix[15] - matrix[14]
+ ])
+ return frustum
+}
+/**
+* Determines whether a sphere is at least
+* partially inside a view frustum.
+* @param {Array<Array<number>>} An array of six
+* 4-element arrays representing the six clipping planes of the
+* view frustum.  In order, they are the left, right, top,
+* bottom, near, and far clipping planes.
+* @param {number} x X coordinate of the sphere's center
+* in world space.
+* @param {number} y Y coordinate of the sphere's center
+* in world space.
+* @param {number} z Z coordinate of the sphere's center
+* in world space.
+* @param {number} radius Radius of the sphere
+* in world-space units.
+* @return {boolean} <code>true</code> if the sphere
+* is partially or totally
+* inside the frustum; <code>false</code> otherwise.
+*/
+GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
+ if(radius<0)throw new Error("radius is negative");
+ for(var i=0;i<6;i++){
+  var plane=frustum[i];
+  var dot=plane[3]+plane[0]*x+
+     plane[1]*y+plane[2]*z;
+  if(dot<-radius)return false;
+ }
+ return true;
+}
+
+/**
+* Determines whether an axis-aligned bounding box
+* is at least partially inside a view frustum.
+* @param {Array<Array<number>>} An array of six
+* 4-element arrays representing the six clipping planes of the
+* view frustum.  In order, they are the left, right, top,
+* bottom, near, and far clipping planes.
+* @param {Array<number>} box An axis-aligned bounding
+* box in world space, which is an array of six values.
+* The first three values are the smallest X, Y, and Z coordinates,
+* and the last three values are the largest X, Y, and Z
+* coordinates.
+* @return {boolean} <code>true</code> if the box
+* may be partially or totally
+* inside the frustum; <code>false</code> if the box is
+* definitely outside the frustum.
+*/
+GLMath.frustumHasBox=function(frustum, box){
+ for(var i=0;i<6;i++){
+  var plane=frustum[i];
+  if( ((((plane[0] * box[0]) + plane[1] * box[1]) + plane[2] * box[2]) + plane[3])<=0.0 &&
+      ((((plane[0] * box[3]) + plane[1] * box[4]) + plane[2] * box[5]) + plane[3])<=0.0 &&
+      ((((plane[0] * box[0]) + plane[1] * box[4]) + plane[2] * box[2]) + plane[3])<=0.0 &&
+      ((((plane[0] * box[0]) + plane[1] * box[4]) + plane[2] * box[5]) + plane[3])<=0.0 &&
+      ((((plane[0] * box[0]) + plane[1] * box[1]) + plane[2] * box[5]) + plane[3])<=0.0 &&
+      ((((plane[0] * box[3]) + plane[1] * box[4]) + plane[2] * box[2]) + plane[3])<=0.0 &&
+      ((((plane[0] * box[3]) + plane[1] * box[1]) + plane[2] * box[2]) + plane[3])<=0.0 &&
+      ((((plane[0] * box[3]) + plane[1] * box[1]) + plane[2] * box[5]) + plane[3])<=0.0){
+    return false;
+  }
+ }
+ return true;
+}
+/**
+* Determines whether a point is
+* outside or inside a view frustum.
+* @param {Array<Array<number>>} An array of six
+* 4-element arrays representing the six clipping planes of the
+* view frustum.  In order, they are the left, right, top,
+* bottom, near, and far clipping planes.
+* @param {number} x X coordinate of a point
+* in world space.
+* @param {number} y Y coordinate of a point
+* in world space.
+* @param {number} z Z coordinate of a point
+* in world space.
+* @return {boolean} true if the point is inside;
+* otherwise false;
+*/
+GLMath.frustumHasPoint=function(frustum, x, y, z){
+ for(var i=0;i<6;i++){
+  var d=frustum[i][0]*x+frustum[i][1]*y+
+     frustum[i][2]*z+frustum[i][3];
+  if(d<=0)return false;
+ }
+ return true;
+}
+/**
+* Finds the dot product of two quaternions.
 * It's equal to the sum of the products of
 * their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  @function

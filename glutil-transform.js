@@ -82,7 +82,8 @@ Transform.prototype.setMatrix=function(value){
  return this;
 }
 /**
- * Not documented yet.
+ * Returns whether this transform is the identity transform.
+ * @return {boolean}
  */
 Transform.prototype.isIdentity=function(){
  if(this._matrixDirty){
