@@ -22,6 +22,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 function BufferedMesh(mesh, context){
  this.subMeshes=[];
  this.context=GLUtil._toContext(context);
+ this._bounds=mesh.getBoundingBox();
  for(var i=0;i<mesh.subMeshes.length;i++){
   var sm=mesh.subMeshes[i];
   // skip empty submeshes
@@ -29,6 +30,10 @@ function BufferedMesh(mesh, context){
   this.subMeshes.push(new BufferedSubMesh(
     sm,this.context));
  }
+}
+/** @private */
+BufferedMesh.prototype._getBounds=function(){
+ return this._bounds;
 }
 /**
  * Returns the WebGL context associated with this object.

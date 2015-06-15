@@ -1062,15 +1062,10 @@ Mesh.prototype.getBoundingBox=function(){
  var ret=[inf,inf,inf,-inf,-inf,-inf];
  for(var i=0;i<this.subMeshes.length;i++){
   var sm=this.subMeshes[i];
-  var prim=sm.primitiveType();
   var stride=sm.getStride();
   var v=sm.vertices;
-  var primSize=3;
-  if(prim==Mesh.LINES)primSize=2;
-  if(prim==Mesh.POINTS)primSize=1;
-  for(var j=0;j<sm.indices.length;j+=primSize){
-   for(var k=0;k<primSize;k++){
-    var vi=sm.indices[j+k]*stride;
+  for(var j=0;j<sm.indices.length;j++){
+    var vi=sm.indices[j]*stride;
     if(empty){
      empty=false;
      ret[0]=ret[3]=v[vi];
@@ -1084,7 +1079,6 @@ Mesh.prototype.getBoundingBox=function(){
      ret[2]=Math.min(ret[2],v[vi+2]);
      ret[5]=Math.max(ret[5],v[vi+2]);
     }
-   }
   }
  }
  return ret;

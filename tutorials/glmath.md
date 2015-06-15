@@ -104,8 +104,8 @@ The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
-before the first rotation.  Like matrix multiplication, quaternion
-multiplication is not commutative. This multiplication behavior
+before the first rotation.  Like matrix multiplication, the
+order in which you multiply quaternions is important. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.
 
 ### Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a>

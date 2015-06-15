@@ -700,7 +700,8 @@ Lights._createNewLight=function(index){
  return ret;
 }
 /**
- * Not documented yet.
+ * Gets the number of lights defined in this object.
+ * @return {number}
  */
 Lights.prototype.getCount=function(){
  return this.lights.length;
@@ -1412,7 +1413,7 @@ Scene3D.prototype.useProgram=function(program){
  this._initProgramData(this.program);
  return this;
 }
-
+/** @private */
 Scene3D.prototype._getSpecularMapShader=function(){
  if(this.__specularMapShader){
   return this.__specularMapShader;
