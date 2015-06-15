@@ -397,8 +397,7 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
-* @return {BSplineCurve}
-*/
+* @return {BSplineCurve} Return value.*/
 BSplineCurve.clamped=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
    BSplineCurve.clampedKnots(controlPoints.length,degree),bits)
@@ -411,8 +410,7 @@ BSplineCurve.clamped=function(controlPoints,degree,bits){
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
-* @return {BSplineCurve}
-*/
+* @return {BSplineCurve} Return value.*/
 BSplineCurve.uniform=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
    BSplineCurve.uniformKnots(controlPoints.length,degree),bits)
@@ -429,8 +427,7 @@ BSplineCurve.uniform=function(controlPoints,degree,bits){
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
-* @return {BSplineSurface}
-*/
+* @return {BSplineSurface} Return value.*/
 BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
@@ -447,8 +444,7 @@ BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
-* @return {BSplineSurface}
-*/
+* @return {BSplineSurface} Return value.*/
 BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),

@@ -90,8 +90,7 @@ ShaderProgram.prototype.dispose=function(){
  this.uniformTypes={};
 }
 /** Gets the WebGL context associated with this shader program.
-* @return {WebGLRenderingContext}
-*/
+* @return {WebGLRenderingContext} Return value.*/
 ShaderProgram.prototype.getContext=function(){
  return this.context;
 }

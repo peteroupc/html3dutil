@@ -662,8 +662,7 @@ Mesh.prototype.getVertexNormal=function(index){
 }
 /**
  * Gets the number of vertices included in this mesh.
- * @return {number}
- */
+ * @return {number} Return value. */
 Mesh.prototype.vertexCount=function(){
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){
@@ -674,8 +673,7 @@ Mesh.prototype.vertexCount=function(){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
- * @return {number}
- */
+ * @return {number} Return value. */
 Mesh.prototype.primitiveCount=function(){
   var count=0;
   for(var i=0;i<this.subMeshes.length;i++){

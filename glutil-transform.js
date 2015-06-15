@@ -83,8 +83,7 @@ Transform.prototype.setMatrix=function(value){
 }
 /**
  * Returns whether this transform is the identity transform.
- * @return {boolean}
- */
+ * @return {boolean} Return value. */
 Transform.prototype.isIdentity=function(){
  if(this._matrixDirty){
   if(this.complexMatrix){
@@ -315,8 +314,7 @@ Transform.prototype.multOrientation=function(angle, v,vy,vz){
  * of the scale, position, and rotation properties,
  * unless a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 Transform.prototype.getMatrix=function(){
   if(this._matrixDirty){
    this._matrixDirty=false;

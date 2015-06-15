@@ -189,8 +189,7 @@ var GLUtil={
 },
 /**
 * Returns whether the given object is a 3D rendering context.
-* @return {boolean}
-*/
+* @return {boolean} Return value.*/
 "is3DContext":function(context){
  return context && ("compileShader" in context);
 },
@@ -701,8 +700,7 @@ Lights._createNewLight=function(index){
 }
 /**
  * Gets the number of lights defined in this object.
- * @return {number}
- */
+ * @return {number} Return value. */
 Lights.prototype.getCount=function(){
  return this.lights.length;
 }
@@ -1450,8 +1448,7 @@ Scene3D.prototype.disableLighting=function(){
 *  Will be rounded up.
 * @param {number} height Height of the scene, in pixels.
 *  Will be rounded up.
-* @return {number}
-*/
+* @return {number} Return value.*/
 Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
@@ -1476,8 +1473,7 @@ Scene3D.prototype._setDimensions3D=function(){
 * Gets the viewport width for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @return {number}
-*/
+* @return {number} Return value.*/
 Scene3D.prototype.getWidth=function(){
  return this.width;
 }
@@ -1485,8 +1481,7 @@ Scene3D.prototype.getWidth=function(){
 * Gets the viewport height for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @return {number}
-*/
+* @return {number} Return value.*/
 Scene3D.prototype.getHeight=function(){
  return this.height;
 }
@@ -1495,15 +1490,13 @@ Scene3D.prototype.getHeight=function(){
 * divided by getHeight()).
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @return {number}
-*/
+* @return {number} Return value.*/
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
 }
 /** Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
-* @return {number}
-*/
+* @return {number} Return value.*/
 Scene3D.prototype.getClientAspect=function(){
  var ch=this.context.canvas.clientHeight;
  if(ch<=0)return 1;
@@ -2134,8 +2127,7 @@ ShapeGroup.prototype.addShape=function(shape){
 }
 /**
  * Gets a reference to the transform used by this shape group object.
- * @return {glutil.Transform}
- */
+ * @return {glutil.Transform} Return value. */
 ShapeGroup.prototype.getTransform=function(){
  return this.transform;
 }
@@ -2199,8 +2191,7 @@ ShapeGroup.prototype.removeShape=function(shape){
 }
 /**
  * Gets the number of vertices composed by this all shapes in this shape group.
- * @return {number}
- */
+ * @return {number} Return value. */
 ShapeGroup.prototype.vertexCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -2211,8 +2202,7 @@ ShapeGroup.prototype.vertexCount=function(){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this shape group.
- * @return {number}
- */
+ * @return {number} Return value. */
 ShapeGroup.prototype.primitiveCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -2223,8 +2213,7 @@ ShapeGroup.prototype.primitiveCount=function(){
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @return {number}
- */
+ * @return {number} Return value. */
 Scene3D.prototype.vertexCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -2235,8 +2224,7 @@ Scene3D.prototype.vertexCount=function(){
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
- * @return {number}
- */
+ * @return {number} Return value. */
 Scene3D.prototype.primitiveCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -2306,16 +2294,14 @@ function Shape(mesh){
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @return {number}
- */
+ * @return {number} Return value. */
 Shape.prototype.vertexCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 }
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
- * @return {number}
- */
+ * @return {number} Return value. */
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 }

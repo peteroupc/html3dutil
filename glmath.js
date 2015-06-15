@@ -309,8 +309,7 @@ vec4norm:function(vec){
  * It's the same as the square root of the sum of the squares
  * of its components.
  * @param {Array<number>} a A 3-element vector.
- * @return {number}
- */
+ * @return {number} Return value. */
 vec3length:function(a){
  var dx=a[0];
  var dy=a[1];
@@ -322,8 +321,7 @@ vec3length:function(a){
  * It's the same as the square root of the sum of the squares
  * of its components.
  * @param {Array<number>} a A 4-element vector.
- * @return {number}
- */
+ * @return {number} Return value. */
 vec4length:function(a){
  var dx=a[0];
  var dy=a[1];
@@ -333,15 +331,13 @@ vec4length:function(a){
 },
 /**
  * Returns the identity 3x3 matrix.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 mat3identity:function(){
  return [1,0,0,0,1,0,0,0,1];
 },
 /**
  * Returns the identity 4x4 matrix.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 mat4identity:function(){
  return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 },
@@ -353,24 +349,21 @@ quatIdentity:function(){
 /**
  * Returns a copy of a 4x4 matrix.
  * @param {Array<number>} mat A 4x4 matrix.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 mat4copy:function(mat){
  return mat.slice(0,16);
 },
 /**
  * Returns a copy of a 3-element vector.
  * @param {Array<number>} vec A 3-element vector.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 vec3copy:function(vec){
  return vec.slice(0,3);
 },
 /**
  * Returns a copy of a 4-element vector.
  * @param {Array<number>} vec A 4-element vector.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 vec4copy:function(vec){
  return vec.slice(0,4);
 },
@@ -406,8 +399,7 @@ vec4assign:function(dst,src){
 /**
  * Returns whether a 4x4 matrix is the identity matrix.
  * @param {Array<number>} mat A 4x4 matrix.
- * @return {boolean}
- */
+ * @return {boolean} Return value. */
 mat4isIdentity:function(mat){
 return (
     mat[0]==1 && mat[1]==0 && mat[2]==0 && mat[3]==0 &&
@@ -514,8 +506,7 @@ return r;
  * Inverts the rotation given in this quaternion without normalizing it;
  * returns a new quaternion.
  * @param {Array<number>} quat A quaternion, containing four elements.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 quatConjugate:function(quat){
  return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
@@ -523,8 +514,7 @@ quatConjugate:function(quat){
  * Inverts the rotation given in this quaternion;
  * returns a new quaternion.
  * @param {Array<number>} quat A quaternion, containing four elements.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 quatInvert:function(quat){
  var lsq=1.0/GLMath.quatDot(quat,quat);
  return GLMath.vec4scaleInPlace(
@@ -541,8 +531,7 @@ quatInverse:function(quat){
 },
 /**
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
-* @return {boolean}
-*/
+* @return {boolean} Return value.*/
 quatIsIdentity:function(quat){
  return quat[0]==0 && quat[1]==0 && quat[2]==0 && quat[3]==1
 },
@@ -1769,7 +1758,7 @@ GLMath.planeNormInPlace=function(plane){
 * sides, one plane (the far plane) forms its base, and a
 * final plane (the near plane) is the pyramid's chopped
 * off top.
-* @param {Array<number>} A 4x4 matrix.  This will
+* @param {Array<number>} matrix A 4x4 matrix.  This will
 * usually be a projection-view matrix (projection matrix
 * multiplied by view matrix).
 * @return {Array<Array<number>} An array of six
@@ -1827,7 +1816,7 @@ GLMath.mat4toFrustumPlanes=function(matrix){
 /**
 * Determines whether a sphere is at least
 * partially inside a view frustum.
-* @param {Array<Array<number>>} An array of six
+* @param {Array<Array<number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
@@ -1857,7 +1846,7 @@ GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
 /**
 * Determines whether an axis-aligned bounding box
 * is at least partially inside a view frustum.
-* @param {Array<Array<number>>} An array of six
+* @param {Array<Array<number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
@@ -1890,7 +1879,7 @@ GLMath.frustumHasBox=function(frustum, box){
 /**
 * Determines whether a point is
 * outside or inside a view frustum.
-* @param {Array<Array<number>>} An array of six
+* @param {Array<Array<number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
@@ -1962,8 +1951,7 @@ GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
 /**
  * Returns a copy of a quaternion.
 * @function
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 GLMath.quatCopy=GLMath.vec4copy;
 /**
  Closest approximation to pi times 2, or a 360-degree turn in radians.
