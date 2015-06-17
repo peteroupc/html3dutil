@@ -45,6 +45,8 @@ function Mesh(vertices,indices,format){
  this.currentMode=-1;
  this.normal=[0,0,0];
  this.color=[0,0,0];
+ this.tangent=[0,0,0];
+ this.bitangent=[0,0,0];
  this.texCoord=[0,0];
 }
 /** @private */
@@ -443,6 +445,23 @@ Mesh.prototype.setColor3=function(r,g,b){
   return this;
 }
  /**
+  * Recalculates the tangent vectors for triangles
+  * in this mesh.  Tangent vectors are required for
+  * normal mapping (bump mapping) to work.
+  * This method only affects those parts of the mesh
+  * that define normals and texture coordinates.
+  * @return {glutil.Mesh} This object.
+  */
+ Mesh.prototype.recalcTangents=function(){
+  for(var i=0;i<this.subMeshes.length;i++){
+   if(this.subMeshes[i].primitiveType()==Mesh.TRIANGLES){
+    this.subMeshes[i].recalcTangents();
+   }
+  }
+  return this;
+ }
+
+/**
   * Recalculates the normal vectors for triangles
   * in this mesh.  For this to properly affect shading, each triangle in
   * the mesh must have its vertices defined in
@@ -459,7 +478,9 @@ Mesh.prototype.setColor3=function(r,g,b){
   */
  Mesh.prototype.recalcNormals=function(flat,inward){
   for(var i=0;i<this.subMeshes.length;i++){
-   if((this.subMeshes[i].attributeBits&Mesh.PRIMITIVES_BITS)!=Mesh.POINTS_BIT){
+   // TODO: Eliminate normal generation for lines
+   // in the next version
+   if(this.subMeshes[i].primitiveType()!=Mesh.POINTS){
     this.subMeshes[i].recalcNormals(flat,inward);
    }
   }
@@ -724,6 +745,10 @@ function SubMesh(vertices,faces,format){
    newStride+=3;
   if((newBits&Mesh.TEXCOORDS_BIT)!=0)
    newStride+=2;
+  if((newBits&Mesh.TANGENTS_BIT)!=0)
+   newStride+=3;
+  if((newBits&Mesh.BITANGENTS_BIT)!=0)
+   newStride+=3;
   for(var i=0;i<this.vertices.length;i+=currentStride){
    var vx=this.vertices[i];
    var vy=this.vertices[i+1];
@@ -760,6 +785,28 @@ function SubMesh(vertices,faces,format){
      newVertices.push(u,v);
     } else {
      newVertices.push(0,0);
+    }
+   }
+   if((newBits&Mesh.TANGENTS_BIT)!=0){
+    if((oldBits&Mesh.TANGENTS_BIT)!=0){
+     var x=this.vertices[s];
+     var y=this.vertices[s+1];
+     var z=this.vertices[s+2];
+     s+=3;
+     newVertices.push(x,y,z);
+    } else {
+     newVertices.push(0,0,0);
+    }
+   }
+   if((newBits&Mesh.BITANGENTS_BIT)!=0){
+    if((oldBits&Mesh.BITANGENTS_BIT)!=0){
+     var x=this.vertices[s];
+     var y=this.vertices[s+1];
+     var z=this.vertices[s+2];
+     s+=3;
+     newVertices.push(x,y,z);
+    } else {
+     newVertices.push(0,0,0);
     }
    }
   }
@@ -814,6 +861,12 @@ function SubMesh(vertices,faces,format){
   }
   if((this.attributeBits&Mesh.TEXCOORDS_BIT)!=0){
    this.vertices.push(state.texCoord[0],state.texCoord[1]);
+  }
+  if((this.attributeBits&Mesh.TANGENTS_BIT)!=0){
+   this.vertices.push(state.tangent[0],state.tangent[1],state.tangent[2]);
+  }
+  if((this.attributeBits&Mesh.BITANGENTS_BIT)!=0){
+   this.vertices.push(state.bitangent[0],state.bitangent[1],state.bitangent[2]);
   }
   var stride=this.getStride();
   if(currentMode==Mesh.QUAD_STRIP &&
@@ -1082,6 +1135,106 @@ Mesh.prototype.getBoundingBox=function(){
  return ret;
 }
 
+Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
+  var t1 = vertices[v2] - vertices[v1];
+  var t2 = vertices[v2+1] - vertices[v1+1];
+  var t3 = vertices[v2+2] - vertices[v1+2];
+  var t4 = vertices[v3] - vertices[v1];
+  var t5 = vertices[v3+1] - vertices[v1+1];
+  var t6 = vertices[v3+2] - vertices[v1+2];
+  var t7 = vertices[v2+uvOffset] - vertices[v1+uvOffset];
+  var t8 = vertices[v2+uvOffset+1] - vertices[v1+uvOffset+1];
+  var t9 = vertices[v3+uvOffset] - vertices[v1+uvOffset];
+  var t10 = vertices[v3+uvOffset+1] - vertices[v1+uvOffset+1];
+  var t11 = (1.0/(((t7 * t10) - t8 * t9)));
+  if(t11==0){
+   return [0,0,0,0,0,0];
+  }
+  var t12 = -t8;
+  var t13 = -t9;
+  var t14 = (((t10 * t1) + t12 * t4)) * t11;
+  var t15 = (((t10 * t2) + t12 * t5)) * t11;
+  var t16 = (((t10 * t3) + t12 * t6)) * t11;
+  var t17 = (((t13 * t1) + t7 * t4)) * t11;
+  var t18 = (((t13 * t2) + t7 * t5)) * t11;
+  var t19 = (((t13 * t3) + t7 * t6)) * t11;
+  return [t14,t15,t16,t17,t18,t19];
+}
+
+Mesh._recalcTangentsInternal=function(vertices,indices,stride,
+  uvOffset,normalOffset,tangentOffset){
+ // NOTE: no need to specify bitangent offset, since tangent
+ // and bitangent will always be contiguous
+ var vi=[0,0,0];
+ for(var i=0;i<indices.length;i+=3){
+  vi[0]=indices[i]*stride;
+  vi[1]=indices[i+1]*stride;
+  vi[2]=indices[i+2]*stride;
+  var ret=Mesh._findTangentAndBitangent(vertices,vi[0],vi[1],vi[2],uvOffset);
+  // NOTE: It would be more mathematically correct to use the inverse
+  // of the matrix
+  //     [ Ax Bx Nx ]
+  //     [ Ay By Ny ]
+  //     [ Az Bz Nz ]
+  // (where A and B are the tangent and bitangent and returned
+  // in _findTangentAndBitangent) as the tangent space
+  // transformation, that is, include three
+  // different vectors (tangent, bitangent, and modified normal).
+  // Instead we use the matrix
+  //    [ AAx AAy AAz ]
+  //    [ BBx BBy BBz ]
+  //    [ Nx  Ny  Nz ]
+  // (where AA and BB are the orthonormalized versions of the tangent
+  // and bitangent) as the tangent space transform, in order to avoid
+  // the need to also specify a transformed normal due to matrix inversion.
+  for(var j=0;j<3;j++){
+   var m=ret;
+   var vicur=vi[j];
+   var norm0=vertices[vicur+normalOffset];
+   var norm1=vertices[vicur+normalOffset+1];
+   var norm2=vertices[vicur+normalOffset+2];
+   var t20 = (((m[0] * norm0) + m[1] * norm1) + m[2] * norm2);
+   var tangent = GLMath.vec3normInPlace([
+    (m[0] - t20 * norm0),
+    (m[1] - t20 * norm1),
+    (m[2] - t20 * norm2)]);
+   var t22 = (((m[3] * norm0) + m[4] * norm1) + m[5] * norm2);
+   var t23 = (((m[3] * tangent[0]) + m[4] * tangent[1]) + m[5] * tangent[2]);
+   var bitangent = GLMath.vec3normInPlace([
+    ((m[3] - t22 * norm0) - t23 * tangent[0]),
+    ((m[4] - t22 * norm1) - t23 * tangent[1]),
+    ((m[5] - t22 * norm2) - t23 * tangent[2])]);
+   vertices[vicur+tangentOffset]=tangent[0];
+   vertices[vicur+tangentOffset+1]=tangent[1];
+   vertices[vicur+tangentOffset+2]=tangent[2];
+   vertices[vicur+tangentOffset+3]=bitangent[0];
+   vertices[vicur+tangentOffset+4]=bitangent[1];
+   vertices[vicur+tangentOffset+5]=bitangent[2];
+  }
+ }
+}
+/** @private */
+SubMesh.prototype.recalcTangents=function(){
+  var tangentBits=Mesh.TANGENTS_BIT|Mesh.BITANGENTS_BIT;
+  var haveOtherAttributes=((this.attributeBits&(Mesh.ATTRIBUTES_BITS&~tangentBits))!=0);
+  var uvOffset=Mesh._texCoordOffset(this.attributeBits);
+  var normalOffset=Mesh._normalOffset(this.attributeBits);
+  if(uvOffset<0 || normalOffset<0){
+   // can't generate tangents and bitangents
+   // without normals or texture coordinates.
+   return this;
+  }
+  this._rebuildVertices(tangentBits);
+  if(haveOtherAttributes){
+    this.makeRedundant();
+  }
+  if(this.primitiveType()==Mesh.TRIANGLES){
+   var tangentOffset=Mesh._tangentOffset(this.attributeBits);
+   Mesh._recalcTangentsInternal(this.vertices,this.indices,
+     this.getStride(),uvOffset,normalOffset,tangentOffset);
+   }
+  return this;
+};
 /**
 * Modifies this mesh by reversing the sign of normals it defines.
 * @return {glutil.Mesh} This object.
@@ -1141,7 +1294,7 @@ SubMesh.prototype.recalcNormals=function(flat,inward){
   if(haveOtherAttributes || flat){
     this.makeRedundant();
   }
-  if((this.attributeBits&Mesh.LINES_BIT)!=0){
+  if(this.primitiveType()==Mesh.LINES){
    Mesh._recalcNormalsLines(this.vertices,this.indices,
      this.getStride(),3,flat,inward);
   } else {
@@ -1164,19 +1317,41 @@ SubMesh.prototype.setColor3=function(r,g,b){
 };
 /** @private */
 Mesh._getStride=function(format){
-  return [3,6,6,9,5,8,8,11][format&Mesh.ATTRIBUTES_BITS];
+  var s=[3,6,6,9,5,8,8,11][format&(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
+  if((format&Mesh.TANGENTS_BIT)!=0)s+=3
+  if((format&Mesh.BITANGENTS_BIT)!=0)s+=3
+  return s
  }
 /** @private */
 Mesh._normalOffset=function(format){
-  return [-1,3,-1,3,-1,3,-1,3][format&Mesh.ATTRIBUTES_BITS];
+  return [-1,3,-1,3,-1,3,-1,3][format&(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
+ }
+/** @private */
+Mesh._tangentOffset=function(format){
+  var x=3;
+  if((format&Mesh.TANGENTS_BIT)==0)return -1;
+  if((format&Mesh.NORMALS_BIT)!=0)x+=3
+  if((format&Mesh.COLORS_BIT)!=0)x+=3
+  if((format&Mesh.TEXCOORDS_BIT)!=0)x+=2
+  return x;
+ }
+/** @private */
+Mesh._bitangentOffset=function(format){
+  var x=3;
+  if((format&Mesh.BITANGENTS_BIT)==0)return -1;
+  if((format&Mesh.NORMALS_BIT)!=0)x+=3
+  if((format&Mesh.COLORS_BIT)!=0)x+=3
+  if((format&Mesh.TEXCOORDS_BIT)!=0)x+=2
+  if((format&Mesh.TANGENTS_BIT)!=0)x+=3
+  return x;
  }
 /** @private */
 Mesh._colorOffset=function(format){
-  return [-1,-1,3,6,-1,-1,3,6][format&Mesh.ATTRIBUTES_BITS];
+  return [-1,-1,3,6,-1,-1,3,6][format&(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
  }
 /** @private */
 Mesh._texCoordOffset=function(format){
-  return [-1,-1,-1,-1,3,6,6,9][format&Mesh.ATTRIBUTES_BITS];
+  return [-1,-1,-1,-1,3,6,6,9][format&(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
 }
 /**
  @private */
@@ -1199,6 +1374,18 @@ Mesh.COLORS_BIT = 2;
  @default
 */
 Mesh.TEXCOORDS_BIT = 4;
+/**
+ The mesh contains tangent vectors for each vertex.
+ @const
+ @default
+*/
+Mesh.TANGENTS_BIT = 8;
+/**
+ The mesh contains bitangent vectors for each vertex.
+ @const
+ @default
+*/
+Mesh.BITANGENTS_BIT = 16;
 /** The mesh consists of lines (2 vertices per line) instead
 of triangles (3 vertices per line).
  @const

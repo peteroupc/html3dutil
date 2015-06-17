@@ -134,15 +134,12 @@ BufferedSubMesh.prototype.draw=function(program){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
   var format=this.format;
   var stride=Mesh._getStride(format);
-  var boundAttributes=[];
   var attr=program.get("position");
-  boundAttributes.push(attr)
   _vertexAttrib(context,
     attr, 3, context.FLOAT, stride*4, 0);
   var offset=Mesh._normalOffset(format);
   if(offset>=0){
    attr=program.get("normal");
-   boundAttributes.push(attr)
    _vertexAttrib(context,
     attr, 3,
     context.FLOAT, stride*4, offset*4);
@@ -154,7 +151,6 @@ BufferedSubMesh.prototype.draw=function(program){
   if(offset>=0){
    program.setUniforms({"useColorAttr":1.0});
    attr=program.get("colorAttr");
-   boundAttributes.push(attr)
    _vertexAttrib(context,
     attr, 3,
     context.FLOAT, stride*4, offset*4);
@@ -166,12 +162,31 @@ BufferedSubMesh.prototype.draw=function(program){
   offset=Mesh._texCoordOffset(format);
   if(offset>=0){
    attr=program.get("uv");
-   boundAttributes.push(attr)
    _vertexAttrib(context,
      attr, 2,
     context.FLOAT, stride*4, offset*4);
   } else {
    attr=program.get("uv");
+   if(attr!==null)context.disableVertexAttribArray(attr);
+  }
+  offset=Mesh._tangentOffset(format);
+  if(offset>=0){
+   attr=program.get("tangent");
+   _vertexAttrib(context,
+     attr, 3,
+    context.FLOAT, stride*4, offset*4);
+  } else {
+   attr=program.get("tangent");
+   if(attr!==null)context.disableVertexAttribArray(attr);
+  }
+  offset=Mesh._bitangentOffset(format);
+  if(offset>=0){
+   attr=program.get("bitangent");
+   _vertexAttrib(context,
+     attr, 3,
+    context.FLOAT, stride*4, offset*4);
+  } else {
+   attr=program.get("bitangent");
    if(attr!==null)context.disableVertexAttribArray(attr);
   }
   // Drawing phase

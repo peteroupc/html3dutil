@@ -482,7 +482,6 @@ Meshes.createPlane=function(width, height, widthDiv, heightDiv,inward){
  }
  return mesh;
 }
-
 /**
 * Creates a mesh of a sphere, centered at the origin.
 * See the "{@tutorial shapes}" tutorial.

@@ -874,6 +874,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * black for this to have an effect).  See {@link glutil.Material#specular}.
 */
  this.specularMap=null;
+ /** Not documented yet. */
+ this.normalMap=null;
 }
 /**
 * Clones this object's parameters to a new Material
@@ -891,7 +893,8 @@ Material.prototype.copy=function(){
   this.emission.slice(0,this.emission.length)
  ).setParams({
    "texture":this.texture,
-   "specularMap":this.specularMap
+   "specularMap":this.specularMap,
+   "normalMap":this.normalMap
  });
 }
 /**
@@ -908,6 +911,8 @@ Material.prototype.copy=function(){
 * to use.
 * <li><code>specularMap</code> - {@link glutil.Texture} object, or a string with the URL, of a specular
 * map texture (see {@link glutil.Material#specularMap}).
+* <li><code>normalMap</code> - {@link glutil.Texture} object, or a string with the URL, of a normal
+* map texture (see {@link glutil.Material#normalMap}).
 * </ul>
 * If a value is null or undefined, it is ignored.
 * @return {glutil.Material} This object.
@@ -942,6 +947,14 @@ Material.prototype.setParams=function(params){
     this.specularMap=new Texture(param)
    } else {
     this.specularMap=param
+   }
+ }
+ if(params["normalMap"]!=null){
+   var param=params["normalMap"]
+   if(typeof param=="string"){
+    this.normalMap=new Texture(param)
+   } else {
+    this.normalMap=param
    }
  }
  return this;
@@ -1387,8 +1400,10 @@ Scene3D.prototype.getClearColor=function(){
 /** @private */
 Scene3D.prototype._getDefines=function(){
  var ret="";
+  // TODO: Don't enable normal mapping by default, but
+  // compile normal map on demand
  if(this.lightingEnabled)
-  ret+="#define SHADING\n"
+  ret+="#define SHADING\n#define NORMAL_MAP\n"
  if(this.specularEnabled)
   ret+="#define SPECULAR\n"
  return ret;

@@ -489,34 +489,48 @@ var shader=""+
 * @return {string} The resulting shader text.
 */
 ShaderProgram.getDefaultVertex=function(){
-var shader="" +
-"attribute vec3 position;\n" +
-"attribute vec3 normal;\n" +
-"attribute vec2 uv;\n" +
-"attribute vec3 colorAttr;\n" +
-"uniform mat4 modelViewMatrix;\n" +
-"uniform mat4 projection;\n"+
-"varying vec2 uvVar;\n"+
-"varying vec3 colorAttrVar;\n" +
-"#ifdef SHADING\n"+
-"uniform mat4 world;\n" +
-"uniform mat3 worldViewInvTrans3; /* internal */\n" +
-"varying vec4 worldPositionVar;\n" +
-"varying vec3 transformedNormalVar;\n"+
-"#endif\n"+
-"void main(){\n" +
-"vec4 positionVec4;\n"+
-"positionVec4.w=1.0;\n"+
-"positionVec4.xyz=position;\n" +
-"gl_PointSize=1.0;\n" +
-"gl_Position=(projection*modelViewMatrix)*positionVec4;\n" +
-"colorAttrVar=colorAttr;\n" +
-"uvVar=uv;\n" +
-"#ifdef SHADING\n"+
-"transformedNormalVar=normalize(worldViewInvTrans3*normal);\n" +
-"worldPositionVar=world*positionVec4;\n" +
-"#endif\n"+
-"}";
+var shader=[
+"attribute vec3 position;",
+"attribute vec3 normal;",
+"attribute vec2 uv;",
+"attribute vec3 colorAttr;",
+"attribute vec3 tangent;",
+"attribute vec3 bitangent;",
+"uniform mat4 modelViewMatrix;",
+"uniform mat4 projection;",
+"varying vec2 uvVar;",
+"varying vec3 colorAttrVar;",
+"#ifdef SHADING",
+"uniform mat4 world;",
+"uniform mat3 worldViewInvTrans3; /* internal */",
+"varying vec4 worldPositionVar;",
+"#ifdef NORMAL_MAP",
+"uniform float useNormalMap;",
+"varying mat3 tbnMatrixVar;",
+"#endif",
+"varying vec3 transformedNormalVar;",
+"#endif",
+"void main(){",
+"vec4 positionVec4;",
+"positionVec4.w=1.0;",
+"positionVec4.xyz=position;",
+"gl_PointSize=1.0;",
+"gl_Position=(projection*modelViewMatrix)*positionVec4;",
+"colorAttrVar=colorAttr;",
+"uvVar=uv;",
+"#ifdef SHADING",
+"transformedNormalVar=normalize(worldViewInvTrans3*normal);",
+"#ifdef NORMAL_MAP",
+"if(useNormalMap==0.0){",
+"tbnMatrixVar=mat3(1.,0.,0.,0.,1.,0.,0.,0.,1.);",
+"} else {",
+"tbnMatrixVar=mat3(normalize(vec3(world*vec4(tangent,0.0))),",
+"   normalize(bitangent),transformedNormalVar);",
+"}",
+"#endif",
+"worldPositionVar=world*positionVec4;",
+"#endif",
+"}"].join("\n")
 return shader;
 };
 
@@ -556,6 +570,10 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "uniform float useSpecularMap;\n" +
 "uniform sampler2D specularMap;\n" +
 "#endif\n" +
+"#ifdef NORMAL_MAP\n" +
+"uniform float useNormalMap;" +
+"uniform sampler2D normalMap;\n" +
+"#endif\n" +
 "#endif\n" +
 "#endif\n" +
 "uniform sampler2D sampler;\n" +
@@ -566,6 +584,9 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef SHADING\n" +
 "varying vec4 worldPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
+"#ifdef NORMAL_MAP\n"+
+"varying mat3 tbnMatrixVar;\n" +
+"#endif\n"+
 "vec4 calcLightPower(light lt, vec4 vertexPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
@@ -588,6 +609,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#endif\n" +
 "void main(){\n" +
 " vec4 tmp;\n"+
+" vec3 normal;\n"+
 " float useTexture=sign(textureSize.x+textureSize.y);\n"+
 " tmp.w=1.0;\n"+
 " tmp.xyz=colorAttrVar;\n"+
@@ -596,6 +618,13 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "   texture2D(sampler,uvVar), /*when textures are used*/\n"+
 "   useTexture), tmp, useColorAttr);\n"+
 "#ifdef SHADING\n" +
+"#ifdef NORMAL_MAP\n" +
+"normal = mix(transformedNormalVar,"+
+" normalize(tbnMatrixVar*(2.0*texture2D(normalMap,uvVar).rgb - vec3(1.0))),"+
+" useNormalMap);\n" +
+"#else\n" +
+"normal = transformedNormalVar;\n" +
+"#endif\n" +
 "#define SET_LIGHTPOWER(i) "+
 " lightPower[i]=calcLightPower(lights[i],worldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
@@ -610,7 +639,7 @@ shader+=""+
 " vec3 materialDiffuse=baseColor.rgb;\n";
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
- shader+="lightCosines["+i+"]=dot(transformedNormalVar,lightPower["+i+"].xyz);\n";
+ shader+="lightCosines["+i+"]=dot(normal,lightPower["+i+"].xyz);\n";
 }
 for(var i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="ADD_DIFFUSE("+i+");\n";
@@ -630,7 +659,7 @@ for(var i=0;i<Lights.MAX_LIGHTS;i++){
 shader+="  spectmp = lightCosines["+i+"] >= 0.0;\n" +
 "  if (spectmp) {\n" +
 "  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+
-"    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (transformedNormalVar, -lightPower["+i+"].xyz)*\n"+
+"    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (normal, -lightPower["+i+"].xyz)*\n"+
 " transformedNormalVar), viewDirection);\n" +
 "    specular=max(specular,0.0);\n" +
 "    specular=pow(specular,mshin);\n"+
