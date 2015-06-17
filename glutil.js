@@ -770,8 +770,8 @@ Lights.prototype.setPointLight=function(index,position){
 * as well as a texture image to apply on that object's surface.<p>
 * The full structure is only used if the shader program supports lighting, as the
 * default shader program does.  If [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting} is called,
-* disabling lighting calculations in the default shader, the "ambient", "specular", "shininess",
-* and "emission" properties of this object are not used.
+* disabling lighting calculations in the default shader, only the "diffuse" and "texture"
+* properties of this object are used.
 * @class
 * @alias glutil.Material
 * @param {Array<number>} ambient Ambient reflection.
@@ -808,7 +808,9 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * ambient colors, those that color pixels the same way regardless
  * of direction or distance.
  * Because every part of an object will be shaded the same way by ambient
- * light, an object with just ambient reflection will not look much like a 3D object.<p>
+ * colors, an object with just ambient reflection will not look much like a 3D object.<p>
+ * (Ambient reflection simulates the effect of light being reflected multiple times
+ * from the same surface.)</p>
  * This value is a 3-element array giving the red, green, and blue
  * components of the ambient reflection; the final ambient color depends
  * on the ambient color of the scene.
@@ -869,12 +871,36 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 */
  this.texture=null;
 /**
-* Specular map texture, where each pixel is an additional factor to multiply the specular color by for
-* each texture coordinate (note that the material must have a specular color of other than the default
+* Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
+* each part of the object's surface (note that the material must have a specular color of other
+* than the default
 * black for this to have an effect).  See {@link glutil.Material#specular}.
 */
  this.specularMap=null;
- /** Not documented yet. */
+ /**
+ * Normal map (bump map) texture.  Normal maps are used either to add
+ * a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
+ * appearance with fewer polygons.<p>
+ * In a normal map texture, each pixel is a vector in which
+ each component (which usually ranges from 0-255 in most image formats) is scaled to
+ the range [-1, 1], where:
+<ul>
+<li>The pixel's red component is the vector's X component.
+<li>The pixel's green component is the vector's Y component.
+<li>The pixel's blue component is the vector's Z component.
+<li>An unchanged normal vector will have the value (0, 0, 1), which is usually
+the value (127, 127, 255) in most image formats.
+</ul>
+Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
+to the vector given in that pixel.  This tilt adjusts the normals used for the
+purpose of calculating lighting effects at that part of the surface.
+A strong tilt indicates strong relief detail at that point.
+*<p>
+* For normal mapping to work, an object's mesh must include normals,
+* tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
+* object only has normals and texture coordinates, the <code>recalcTangents()</code>
+* method can calculate
+*/
  this.normalMap=null;
 }
 /**
@@ -912,7 +938,7 @@ Material.prototype.copy=function(){
 * <li><code>specularMap</code> - {@link glutil.Texture} object, or a string with the URL, of a specular
 * map texture (see {@link glutil.Material#specularMap}).
 * <li><code>normalMap</code> - {@link glutil.Texture} object, or a string with the URL, of a normal
-* map texture (see {@link glutil.Material#normalMap}).
+* map (bump map) texture (see {@link glutil.Material#normalMap}).
 * </ul>
 * If a value is null or undefined, it is ignored.
 * @return {glutil.Material} This object.
