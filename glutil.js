@@ -890,6 +890,9 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 <li>The pixel's blue component is the vector's Z component.
 <li>An unchanged normal vector will have the value (0, 0, 1), which is usually
 the value (127, 127, 255) in most image formats.
+<li>The vector is normalized so its length is about equal to1.
+<li>The vector is expressed in tangent space, where the Z axis points outward
+and away from the surface's edges.
 </ul>
 Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
 to the vector given in that pixel.  This tilt adjusts the normals used for the
@@ -899,7 +902,7 @@ A strong tilt indicates strong relief detail at that point.
 * For normal mapping to work, an object's mesh must include normals,
 * tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
 * object only has normals and texture coordinates, the <code>recalcTangents()</code>
-* method can calculate
+* method can calculate the tangents and bitangents appropriate for normal mapping.
 */
  this.normalMap=null;
 }
