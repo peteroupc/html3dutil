@@ -93,7 +93,7 @@ an axis of rotation, and the fourth element is
 the W component. Functions dealing with quaternions begin with
 "quat".  A quaternion is generated as follows:
 
-* Set X, Y, and Z to the axis of rotation multiplied by the sine of
+* Set X, Y, and Z to the (normalized) axis of rotation multiplied by the sine of
 half the angle.  This results in the same axis of rotation as before,
 but in a different form.
 * Set W to the cosine of half the angle.
@@ -107,6 +107,19 @@ creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, the
 order in which you multiply quaternions is important. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.
+
+### Using Quaternions
+
+For best results when using quaternions: 
+
+* Store the orientation of each object as a single quaternion, created
+ with `quatIdentity()`.
+* As rotations happen each frame, convert the rotation (which may be
+  in pitch/yaw/roll or another form, depending on the input device) to a quaternion
+  and multiply that quaternion by the current orientation to get a new orientation
+  for that object.
+* Normalize the orientation quaternion (using `quatNorm()` or `quatNormInPlace()`)
+  every few frames.
 
 ### Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a>
 
@@ -132,6 +145,28 @@ Related functions:
 Converts from Tait-Bryan angles to a quaternion
 * [GLMath.quatToTaitBryan()]{@link glmath.GLMath.quatToTaitBryan} -
 Converts from a quaternion to Tait-Bryan angles
+
+## Planes
+
+A 4-element array can describe a 3D plane in the following manner:
+
+* The 4 elements, labeled A, B, C, and D in that order, describe a plane
+ whose points satisfy the equation:
+ <blockquote>Ax + By + Cz + D = 0</blockquote>, where x, y, and z are the
+ coordinates of any point lying on the plane.
+* A, B, and C are 
+ the X, Y, and Z components of the plane's normal vector.
+* D is the shortest distance in the normal's direction from the plane to the origin, 
+ or if negative, in the opposite direction from the origin to the plane, divided 
+ by the normal's length.  Alternatively, D is the negative dot product of the
+ plane's normal and any point on the plane.
+ 
+There is one method that deals with planes:
+
+* [GLMath.planeNormInPlace()]{@link glmath.GLMath.planeNormInPlace} -
+Converts the plane to a form in which its normal is unit length.
+
+
 
 ## Coordinate Systems <a id=Coordinate_Systems></a>
 

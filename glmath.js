@@ -37,13 +37,23 @@ var GLMath={
 /**
  * Finds the cross product of two 3-element vectors.
  * The cross product is the vector that is perpendicular to
- * each of two other vectors.<p>
- * If both vectors are unit length
+ * each of two other vectors (called A and B). The following are properties of
+ * the cross product:<ul>
+ * <li>There are two possible vectors perpendicular to two other
+ vectors, and they each point in opposite directions.  If point A, point B, and the point
+(0,0,0), in that order, are oriented counterclockwise, and the triangle 
+they form is directly in front of the viewer, then the cross product:<ul>
+<li>Points "toward the viewer" in a right-handed coordinate system, or 
+<li>Points "away from the viewer" in a left-handed system.</ul>
+The reverse is true if the points are oriented clockwise.
+<p>Switching the order of the two vectors results in a cross product
+vector in the opposite direction.
+<p>If A and B are unit length vectors,
  * (via {@link glmath.GLMath.vec3norm}), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
  * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
- * where |<b>x</b>| is the length of vector <b>x</b>.)</small><p>
+ * where |<b>x</b>| is the length of vector <b>x</b>.)</small></ul>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
  * follows:<pre>
  * <b>c</b>.x = <b>a</b>.y * <b>b</b>.z - <b>a</b>.z * <b>b</b>.y
@@ -89,7 +99,7 @@ vec3add:function(a,b){
 return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
 },
 /**
- * Subtracts two 3-element vectors and returns a new
+ * Subtracts the second vector from the first vector and returns a new
  * vector with the result. Subtracting two vectors
  * is the same as subtracting each of their components.
  * @param {Array<number>} a The first 3-element vector.
@@ -98,6 +108,17 @@ return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
  */
 vec3sub:function(a,b){
 return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
+},
+/**
+ * Multiplies two vectors and returns a new
+ * vector with the result. Multiplying two vectors
+ * is the same as multiplying each of their components.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @return {Array<number>} The resulting 3-element vector.
+ */
+vec3mul:function(a,b){
+return [a[0]*b[0],a[1]*b[1],a[2]*b[2]];
 },
 /**
  * Adds two 3-element vectors and stores
@@ -118,7 +139,7 @@ a[2]+=b2;
 return a;
 },
 /**
- * Subtracts two 3-element vectors and stores
+ * Subtracts the second vector from the first vector and stores
  * the result in the first vector. Subtracting two vectors
  * is the same as subtracting each of their components.
  * @param {Array<number>} a The first 3-element vector.
@@ -291,7 +312,6 @@ vec4normInPlace:function(vec){
 vec3norm:function(vec){
  return GLMath.vec3normInPlace([vec[0],vec[1],vec[2]]);
 },
-
 /**
  * Returns a normalized version of a 4-element vector.
  * When a vector is normalized, the distance from the origin
