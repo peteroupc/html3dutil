@@ -110,7 +110,7 @@ is opposite to that in the D3DX and DirectXMath libraries.
 
 ### Using Quaternions
 
-For best results when using quaternions: 
+For best results when using quaternions:
 
 * Store the orientation of each object as a single quaternion, created
  with `quatIdentity()`.
@@ -154,19 +154,17 @@ A 4-element array can describe a 3D plane in the following manner:
  whose points satisfy the equation:
  <blockquote>Ax + By + Cz + D = 0</blockquote>, where x, y, and z are the
  coordinates of any point lying on the plane.
-* A, B, and C are 
+* A, B, and C are
  the X, Y, and Z components of the plane's normal vector.
-* D is the shortest distance in the normal's direction from the plane to the origin, 
- or if negative, in the opposite direction from the origin to the plane, divided 
+* D is the shortest distance in the normal's direction from the plane to the origin,
+ or if negative, in the opposite direction from the origin to the plane, divided
  by the normal's length.  Alternatively, D is the negative dot product of the
  plane's normal and any point on the plane.
- 
+
 There is one method that deals with planes:
 
 * [GLMath.planeNormInPlace()]{@link glmath.GLMath.planeNormInPlace} -
 Converts the plane to a form in which its normal is unit length.
-
-
 
 ## Coordinate Systems <a id=Coordinate_Systems></a>
 
