@@ -41,9 +41,9 @@ var GLMath={
  * the cross product:<ul>
  * <li>There are two possible vectors perpendicular to two other
  vectors, and they each point in opposite directions.  If point A, point B, and the point
-(0,0,0), in that order, are oriented counterclockwise, and the triangle 
+(0,0,0), in that order, are oriented counterclockwise, and the triangle
 they form is directly in front of the viewer, then the cross product:<ul>
-<li>Points "toward the viewer" in a right-handed coordinate system, or 
+<li>Points "toward the viewer" in a right-handed coordinate system, or
 <li>Points "away from the viewer" in a left-handed system.</ul>
 The reverse is true if the points are oriented clockwise.
 <p>Switching the order of the two vectors results in a cross product
@@ -1768,7 +1768,23 @@ GLMath.planeNormInPlace=function(plane){
  }
  return plane;
 }
-
+/**
+* Normalizes this plane so that its normal is unit
+* length (unless all the normal's components are 0).
+* The plane's distance will be divided by the
+* normal's length.  Returns a new plane.
+* @param {Array<number>} plane A four-element array
+* defining the plane. The first three elements of the array
+* are the X, Y, and Z components of the plane's normal vector, and
+* the fourth element is the shortest distance from the plane
+* to the origin, or if negative, from the origin to the plane,
+* divided by the normal's length.
+* @return {Array<number>} A normalized version of
+* the plane.
+*/
+GLMath.planeNorm=function(plane){
+ return GLMath.planeNormInPlace(plane.slice(0,4));
+}
 /**
 * Finds the six clipping planes of a view frustum defined
 * by a 4x4 matrix. These six planes together form the
