@@ -11,14 +11,14 @@ Here is an overview of these three data types.
 
 A vector is simply a set of 3 or 4 elements that are related
 to each other.  As such, a vector can symbolize a position, a direction,
-a ray, a color, or anything else.
+a ray, a color, or anything else.  The methods in this class treat arrays
+as vectors.  Functions dealing with vectors begin with "vec".
 
 If a vector describes a position, direction,
 or normal, the four elements are given as X, Y, Z, and W, in that order.
+
 If a vector describes a color, the four elements are given as red, green,
 blue, and alpha, in that order (where each element ranges from 0-1).
-The methods in this class treat arrays as vectors.  Functions dealing
-with vectors begin with "vec".
 
 If a 3D _position_ (point) is used in a 4-element vector function (one beginning
 with "vec4"), use 1 as the fourth element of the vector.  If a 3D _direction_
@@ -156,7 +156,7 @@ A 4-element array can describe a 3D plane in the following manner:
  coordinates of any point lying on the plane.
 * A, B, and C are
  the X, Y, and Z components of the plane's normal vector.
-* D is the shortest distance in the normal's direction from the plane to the origin,
+* D is the distance in the normal's direction from the plane to the origin,
  or if negative, in the opposite direction from the origin to the plane, divided
  by the normal's length.  Alternatively, D is the negative dot product of the
  plane's normal and any point on the plane.
@@ -177,7 +177,51 @@ the viewer_ whenever the x-axis points to the right and the y-axis points up.
 
 If a GLMath method works differently in left- and right-handed coordinate systems,
 its description will note this. (In the absence of z-axis transformations, the coordinate
-system is effectively left-handed.)
+system is effectively left-handed.)  The differences are also noted below.
+
+### Differences in Behavior
+
+**Cross product (`vec3cross(A, B)`):**
+
+* If the cross product of A and B has a positive Z component, it points toward the viewer
+(outward) in a right-handed coordinate system, and away from the viewer (inward) in
+a left-handed system.  The reverse is true if the Z component is negative.
+* Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+Assume the X axis points to the right and the Y axis points up.
+If the cross product of A and B has a positive Z component, the triangle's points are
+oriented counterclockwise; otherwise, clockwise.  (If the Y axis points down, the reverse is
+true.)
+
+**Projection matrix (such as `mat4perspective`, `mat4ortho`):**
+
+Returns a result for right-handed coordinate systems.  For left-handed systems,
+reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
+indices 8, 9, 10, and 11).
+
+**Look-at matrix (`mat4lookat`):**
+
+Returns a result for right-handed coordinate systems.  For left-handed systems,
+reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
+13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
+10, 12, and 14).
+
+**Rotation angles (such as used in `mat4rotate` and `quatRotate`):**
+
+If the axis of rotation points toward the viewer, the angle runs:
+
+* Right handed: Counterclockwise if the angle's value is positive, clockwise if negative.
+* Left handed: Clockwise if the angle's value is positive, counterclockwise if positive.
+
+**Normals and triangle orientation**
+
+The orientation of a triangle formed by points A, B, and C can be found by applying the rules
+for the cross product of the two vectors (C minus A) and (C minus B),
+in that order.
+
+The resulting cross product is that triangle's _normal_.  For each normal
+to point outward, as it usually is, each triangle should be oriented
+counterclockwise for right-handed coordinate systems and clockwise for left-handed
+systems.
 
 ## Matrix Details <a id=Matrix_Details></a>
 
