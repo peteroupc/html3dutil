@@ -35,23 +35,20 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 var GLMath={
 /**
- * Finds the cross product of two 3-element vectors.
- * The cross product is the vector that is perpendicular to
- * each of two other vectors (called A and B).
+ * Finds the cross product of two 3-element vectors (called A and B).
  * The following are properties of
  * the cross product:<ul>
+ * <li>The cross product will be a vector that is perpendicular to both A and B.
+<li>If the cross product's Z component is positive, it points toward the viewer
+  (outward) in a right-handed coordinate system, and away from the viewer (inward) in
+  a left-handed system.  The reverse is true if the Z component is negative.
+<li>Switching the order of A and B results in a cross product
+vector with the same length but opposite direction.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 Assume the X axis points to the right and the Y axis points up.
 If the cross product of A and B has a positive Z component, the triangle's points are
 oriented counterclockwise; otherwise, clockwise.  (If the Y axis points down, the reverse is
-true.)</ul>
-The reverse is true if the cross product has a negative Z component.
-<li>If the cross product of A and B has a positive Z component, it points toward the viewer
-  (outward) in a right-handed coordinate system, and away from the viewer (inward) in
-  a left-handed system.  The reverse is true if the Z component is negative.
-<li>Switching the order of the two vectors results in a cross product
-vector in the opposite direction.  This occurs because generally, there are two different
-vectors that are perpendicular to the vectors A and B.
+true.)
 <li>If A and B are unit length vectors,
  * (via {@link glmath.GLMath.vec3norm}), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
@@ -67,6 +64,17 @@ vectors that are perpendicular to the vectors A and B.
  * @param {Array<number>} a The first vector.
  * @param {Array<number>} b The second vector.
  * @return {Array<number>} A 3-element vector containing the cross product.
+ * @example <caption>The following example uses the cross product to
+ * calculate a triangle's normal vector.</caption>
+ var a=triangle[0];
+ var b=triangle[1];
+ var c=triangle[2];
+ // Find vector from C to A
+ var da=GLMath.vec3sub(c,a);
+ // Find vector from C to B
+ var db=GLMath.vec3sub(c,b);
+ // The triangle's normal is the cross product of da and db
+ var normal=GLMath.vec3cross(da,db);
  */
 vec3cross:function(a,b){
 return [a[1]*b[2]-a[2]*b[1],
@@ -602,6 +610,7 @@ quatIsIdentity:function(quat){
  * Generates a 4x4 matrix describing the rotation
  * described by this quaternion.
  * @param {Array<number>} quat A quaternion.
+ * @return {Array<number>} Return value.
  */
 quatToMat4:function(quat){
   var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;

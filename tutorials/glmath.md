@@ -5,7 +5,7 @@ Here is an overview of these three data types.
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[Vectors](#Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Quaternions](#Quaternions)<br>&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles and their disadvantages](#Tait_Bryan_angles_and_their_disadvantages)<br>[Coordinate Systems](#Coordinate_Systems)<br>[Matrix Details](#Matrix_Details)<br>&nbsp;&nbsp;[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
+[Contents](#Contents)<br>[Vectors](#Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Quaternions](#Quaternions)<br>&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles and their disadvantages](#Tait_Bryan_angles_and_their_disadvantages)<br>[Planes](#Planes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>[Matrix Details](#Matrix_Details)<br>&nbsp;&nbsp;[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
 
 ## Vectors <a id=Vectors></a>
 
@@ -108,7 +108,7 @@ before the first rotation.  Like matrix multiplication, the
 order in which you multiply quaternions is important. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.
 
-### Using Quaternions
+### Using Quaternions <a id=Using_Quaternions></a>
 
 For best results when using quaternions:
 
@@ -146,7 +146,7 @@ Converts from Tait-Bryan angles to a quaternion
 * [GLMath.quatToTaitBryan()]{@link glmath.GLMath.quatToTaitBryan} -
 Converts from a quaternion to Tait-Bryan angles
 
-## Planes
+## Planes <a id=Planes></a>
 
 A 4-element array can describe a 3D plane in the following manner:
 
@@ -179,7 +179,7 @@ If a GLMath method works differently in left- and right-handed coordinate system
 its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)  The differences are also noted below.
 
-### Differences in Behavior
+### Differences in Behavior <a id=Differences_in_Behavior></a>
 
 **Cross product (`vec3cross(A, B)`):**
 
