@@ -72,6 +72,7 @@ BufferedMesh.prototype.dispose=function(){
  for(var i=0;i<this.subMeshes.length;i++){
   this.subMeshes[i].dispose();
  }
+ this.subMeshes=[];
 }
 /** @private */
 function BufferedSubMesh(mesh, context){

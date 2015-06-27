@@ -1212,7 +1212,7 @@ Texture.prototype.loadImage=function(){
  * Disposes the texture data in this object.
  */
 Texture.prototype.dispose=function(){
- if(this.loadedTexture==null){
+ if(this.loadedTexture!=null){
   this.loadedTexture.dispose();
   this.loadedTexture=null;
  }

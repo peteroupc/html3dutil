@@ -39,9 +39,6 @@ var GLMath={
  * The following are properties of
  * the cross product:<ul>
  * <li>The cross product will be a vector that is perpendicular to both A and B.
-<li>If the cross product's Z component is positive, it points toward the viewer
-  (outward) in a right-handed coordinate system, and away from the viewer (inward) in
-  a left-handed system.  The reverse is true if the Z component is negative.
 <li>Switching the order of A and B results in a cross product
 vector with the same length but opposite direction.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
@@ -70,9 +67,9 @@ true.)
  var b=triangle[1];
  var c=triangle[2];
  // Find vector from C to A
- var da=GLMath.vec3sub(c,a);
+ var da=GLMath.vec3sub(a,c);
  // Find vector from C to B
- var db=GLMath.vec3sub(c,b);
+ var db=GLMath.vec3sub(b,c);
  // The triangle's normal is the cross product of da and db
  var normal=GLMath.vec3cross(da,db);
  */
