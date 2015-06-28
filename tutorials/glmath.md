@@ -192,8 +192,8 @@ system. The reverse is true if the Z component is negative.
 * Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 Assume the X axis points to the right and the Y axis points up.
 If the cross product of A and B has a positive Z component, the triangle's points are
-oriented counterclockwise; otherwise, clockwise.  (If the Y axis points down, the reverse is
-true.)
+oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and
+the Y axis down, the reverse is true.)
 
 **Projection matrix (such as `mat4perspective`, `mat4ortho`):**
 
