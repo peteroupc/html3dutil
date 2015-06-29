@@ -183,9 +183,9 @@ system is effectively left-handed.)  The differences are also noted below.
 
 **3D Vectors**
 
-* If a 3D vector's Z component is positive, it points toward the viewer (outward) in a 
-right-handed coordinate system, and away from the viewer (inward) in a left-handed 
-system. The reverse is true if the Z component is negative. 
+* If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
+right-handed coordinate system, and away from the viewer (inward) in a left-handed
+system. The reverse is true if the Z component is negative.
 
 **Cross product (`vec3cross(A, B)`):**
 
