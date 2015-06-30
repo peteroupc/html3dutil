@@ -152,7 +152,8 @@ A 4-element array can describe a 3D plane in the following manner:
 
 * The 4 elements, labeled A, B, C, and D in that order, describe a plane
  whose points satisfy the equation:
- <blockquote>Ax + By + Cz + D = 0</blockquote>, where x, y, and z are the
+ <blockquote>Ax + By + Cz + D = 0</blockquote>
+ where x, y, and z are the
  coordinates of any point lying on the plane.
 * A, B, and C are
  the X, Y, and Z components of the plane's normal vector.
@@ -183,13 +184,13 @@ system is effectively left-handed.)  The differences are also noted below.
 
 **3D Vectors**
 
-* If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
+If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
 system. The reverse is true if the Z component is negative.
 
 **Cross product (`vec3cross(A, B)`):**
 
-* Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 Assume the X axis points to the right and the Y axis points up.
 If the cross product of A and B has a positive Z component, the triangle's points are
 oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and
@@ -218,7 +219,7 @@ If the axis of rotation points toward the viewer, the angle runs:
 **Normals and triangle orientation**
 
 The orientation of a triangle formed by points A, B, and C can be found by applying the rules
-for the cross product of the two vectors (C minus A) and (C minus B),
+for the cross product of the two vectors (A minus C) and (B minus C),
 in that order.
 
 The resulting cross product is that triangle's _normal_.  For each normal
