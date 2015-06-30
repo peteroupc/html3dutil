@@ -136,7 +136,12 @@ var GLUtil={
   if(!canvasElement)return null;
   if(!canvasElement.getContext)return null;
   var context=null;
-  var options={"antialias":true,"preserveDrawingBuffer":true};
+  var options={"preserveDrawingBuffer":true};
+  if(window.devicePixelRatio && window.devicePixelRatio>1){
+   options.antialias=false;
+  } else {
+   options.antialias=true;
+  }
   try { context=canvasElement.getContext("webgl", options);
   } catch(e) { context=null; }
   if(!context){
