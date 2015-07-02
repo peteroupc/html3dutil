@@ -1,7 +1,3 @@
-## Contents <a id=Contents></a>
-
-[Contents](#Contents)<br>[Matrix Details](#Matrix_Details)<br>&nbsp;&nbsp;[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
-
 ## Matrix Details <a id=Matrix_Details></a>
 
 A matrix is a 16- or 9-element array that describes a
@@ -10,6 +6,12 @@ include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with "mat".
 
 This section contains detailed information on matrices.
+
+## Contents <a id=Contents></a>
+
+[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>&nbsp;&nbsp;[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
+
+## Arrangement <a id=Arrangement></a>
 
 All functions dealing with 4x4 matrices assume that
 the translation elements in x, y, and z are located in the

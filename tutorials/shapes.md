@@ -35,6 +35,11 @@ the built-in shapes.
 * [platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
 
+Examples:
+
+See [Examples of Creating Meshes on the Fly](https://peteroupc.github.io/html3dutil/tutorial.meshexamples.html) for
+examples of 3D models that can be created using the Mesh class and built-in shapes.
+
 ### Built-In Shapes <a id=Built_In_Shapes></a>
 
 The [`Meshes`]{@link glutil.Meshes} class includes several handy methods for creating built-in shapes.

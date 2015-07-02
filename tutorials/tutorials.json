@@ -8,5 +8,6 @@
 "shapes":{"title":"Creating Shapes"},
 "surfaces":{"title":"Parametric Curves and Parametric Surfaces"},
 "textures":{"title":"Texture Examples"},
-"matrixdetails":{"title":"Matrix Details"}
+"matrixdetails":{"title":"Matrix Details"},
+"meshexamples":{"title":"Examples of Creating Meshes on the Fly"}
 }

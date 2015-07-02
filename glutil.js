@@ -1877,6 +1877,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
+ // TODO: Add "shape.parent=null" in version 2.0
  this.shapes.push(shape);
  return this;
 }
