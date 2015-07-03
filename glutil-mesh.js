@@ -24,7 +24,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * </ul>
 * For bump mapping to work properly, a mesh needs to define
 * normals, tangents, bitangents, and texture coordinates.<p>
-* See the "{@tutorial shapes}" tutorial.
+* See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
 * @class
 * @alias glutil.Mesh
 * @param {Array<number>} [vertices] An array that contains data on each
