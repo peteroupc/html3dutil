@@ -2,7 +2,27 @@ This page contains source code for creating various kinds of 3D models on the fl
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[Cone](#Cone)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>
+[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Cone](#Cone)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>
+
+## 3D Line <a id=3D_Line></a>
+
+This method creates a thin line-like 3D object.
+
+    // point1, point2 - end points of the line
+    // thickness - thickness of the line in units, default 1
+    function create3DLine(point1,point2,thickness){
+      if(thickness==null)thickness=1
+      var vector=GLMath.vec3sub(point1,point2);
+      var dist=GLMath.vec3length(vector);
+      var normVector=GLMath.vec3norm(vector);
+      var midPoint=GLMath.vec3lerp(point1,point2,0.5);
+      var line=Meshes.createCapsule(thickness/2,dist,6,4);
+      var matrix=GLMath.quatToMat4(GLMath.quatFromVectors([0,0,1],normVector));
+      matrix[12]=midPoint[0]
+      matrix[13]=midPoint[1]
+      matrix[14]=midPoint[2]
+      return line.transform(matrix);
+    }
 
 ## Cone <a id=Cone></a>
 
