@@ -1,13 +1,11 @@
 {
 "camera":{"title":"The \"Camera\" and the Projection and View Transforms"},
 "filters":{"title":"Graphics Filters"},
-"glmath":{"title":"GLMath Math Library",
-"children":["matrixdetails"]
-},
+"glmath":{"title":"GLMath Math Library"},
+"matrixdetails":{"title":"Matrix Details"},
 "overview":{"title":"Library Overview"},
 "shapes":{"title":"Creating Shapes"},
 "surfaces":{"title":"Parametric Curves and Parametric Surfaces"},
 "textures":{"title":"Texture Examples"},
-"matrixdetails":{"title":"Matrix Details"},
 "meshexamples":{"title":"Examples of Creating Meshes on the Fly"}
 }

@@ -1851,7 +1851,7 @@ GLMath.planeNorm=function(plane){
 * @param {Array<number>} matrix A 4x4 matrix.  This will
 * usually be a projection-view matrix (projection matrix
 * multiplied by view matrix).
-* @return {Array<Array<number>} An array of six
+* @return {Array<Array<number>>} An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.  All six planes

@@ -144,7 +144,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * curve.  For example, a degree-3 (cubic) B-spline curve contains 4 more
 * knots than the number of control points.  A degree of 1
 * results in straight line segments.<p>
-* The knot vector must be a nondecreasing sequence and
+* The knot vector must be a monotonically nondecreasing sequence and
 * the first knot must not equal the last.<p>
 * If the difference between one knot and the next isn't the same,
 * the curve is considered a <i>non-uniform</i>
