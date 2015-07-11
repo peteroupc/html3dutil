@@ -53,8 +53,7 @@ function Transform(){
   * Returns a copy of a three-element array giving the scaling for an object's width,
   * height, and depth, respectively.
   * For each component, 1 means no scaling.
-  * @return {Array<number>}
-   */
+  * @return {Array<number>} Return value.   */
 Transform.prototype.getScale=function(){
  if(!this.complexMatrix){
   return this.scale.slice(0,3)
@@ -65,8 +64,7 @@ Transform.prototype.getScale=function(){
   /**
   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
   * of an object relative to its original position.
-  * @return {Array<number>}
-   */
+  * @return {Array<number>} Return value.   */
 Transform.prototype.getPosition=function(){
  if(!this.complexMatrix){
   return this.position.slice(0,3)
@@ -76,8 +74,7 @@ Transform.prototype.getPosition=function(){
 }
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
-   * @return {Array<number>}
-   */
+   * @return {Array<number>} Return value.   */
 Transform.prototype.getQuaternion=function(){
  if(!this.complexMatrix){
   return this.rotation.slice(0,4)

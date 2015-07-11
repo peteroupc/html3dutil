@@ -2178,10 +2178,17 @@ ShapeGroup.prototype.addShape=function(shape){
  this.shapes.push(shape);
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} value
+ */
 ShapeGroup.prototype.setVisible=function(value){
  this.visible=!!value
  return this
 }
+/**
+ * Not documented yet.
+ */
 ShapeGroup.prototype.getVisible=function(){
  return this.visible
 }
@@ -2368,10 +2375,17 @@ Shape.prototype.vertexCount=function(){
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 }
+/**
+ * Not documented yet.
+ * @param {*} value
+ */
 Shape.prototype.setVisible=function(value){
  this.visible=!!value
  return this
 }
+/**
+ * Not documented yet.
+ */
 Shape.prototype.getVisible=function(){
  return this.visible
 }
