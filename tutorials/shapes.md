@@ -329,7 +329,7 @@ are added to a single ShapeGroup which represents the whole clock:
 
 The demo for the clock is:
 
-* [clock.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) - A demo
+* [clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 
 To create a shape group, call `new ShapeGroup()`. To add a `Shape` object to the group,

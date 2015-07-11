@@ -2075,6 +2075,7 @@ Scene3D.prototype.render=function(){
 /** @private */
 Scene3D.prototype._renderShape=function(shape,program){
  if(shape.constructor==ShapeGroup){
+  if(!shape.visible)return
   for(var i=0;i<shape.shapes.length;i++){
    this._renderShape(shape.shapes[i],program);
   }
@@ -2163,6 +2164,7 @@ Scene3D.prototype._renderInner=function(){
 function ShapeGroup(){
  this.shapes=[];
  this.parent=null;
+ this.visible=true;
  this.transform=new Transform();
 }
 /**
@@ -2175,6 +2177,13 @@ ShapeGroup.prototype.addShape=function(shape){
  shape.parent=this;
  this.shapes.push(shape);
  return this;
+}
+ShapeGroup.prototype.setVisible=function(value){
+ this.visible=!!value
+ return this
+}
+ShapeGroup.prototype.getVisible=function(){
+ return this.visible
 }
 /**
  * Gets a reference to the transform used by this shape group object.
@@ -2343,6 +2352,7 @@ function Shape(mesh){
   this.transform=new Transform();
   this.material=new Material();
   this.parent=null;
+  this.visible=true;
 }
 /**
  * Gets the number of vertices composed by
@@ -2358,7 +2368,13 @@ Shape.prototype.vertexCount=function(){
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 }
-
+Shape.prototype.setVisible=function(value){
+ this.visible=!!value
+ return this
+}
+Shape.prototype.getVisible=function(){
+ return this.visible
+}
 /**
 * Sets material parameters that give the shape a certain color.
 * However, if the mesh defines its own colors, those colors will take
@@ -2418,7 +2434,7 @@ Shape.prototype.getTransform=function(){
 }
 /** @private */
 Shape.prototype.isCulled=function(frustum){
- if(!this.bufferedMesh)return true;
+ if(!this.bufferedMesh||!this.visible)return true;
  var bounds=this.bufferedMesh._getBounds();
  var matrix=this.getMatrix();
  if(!GLMath.mat4isIdentity(matrix)){
