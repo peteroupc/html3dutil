@@ -99,6 +99,8 @@ set of features are currently supported.
 
 * [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
 featuring a background with continuously drawn 3D shapes.
+* [demos/animation.html](https://peteroupc.github.io/html3dutil/demos/animation.html) - A demo
+illustrating a simple animation of 3D shapes.
 * [demos/starfield.html](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demo of a star field.
 * [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
