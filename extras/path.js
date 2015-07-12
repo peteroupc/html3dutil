@@ -9,6 +9,13 @@ CurvePath.LINE=1
 CurvePath.QUAD=2
 CurvePath.CUBIC=3
 CurvePath.ARC=4
+/**
+* Returns whether the curve path is incomplete
+* because of an error in parsing the curve string.
+* This flag will be reset if a moveTo command,
+* closePath command, or another line segment
+* is added to the path.
+* @return {boolean} Return value.*/
 CurvePath.prototype.isIncomplete=function(){
  return this.incomplete
 }
@@ -26,25 +33,95 @@ CurvePath._endPoint=function(a){
   return [a[a.length-2],a[a.length-1]]
  }
 }
-CurvePath._point=function(a,t){
- if(a[0]==CurvePath.CLOSE){
+CurvePath._point=function(seg,t){
+ if(seg[0]==CurvePath.CLOSE){
   return [0,0]
- } else if(a[0]==CurvePath.LINE){
+ } else if(seg[0]==CurvePath.LINE){
   return [
-   a[1]+(a[3]-a[1])*t,
-   a[2]+(a[4]-a[2])*t
+   seg[1]+(seg[3]-seg[1])*t,
+   seg[2]+(seg[4]-seg[2])*t
   ]
+ } else if(seg[0]==CurvePath.QUAD){
+  var mt=1-t;
+  var mtsq=mt*mt;
+  var mt2=(mt+mt);
+  var a,b;
+  a=seg[1]*mtsq;
+  b=seg[3]*mt2;
+  var x=a+t*(b+t*seg[5]);
+  a=seg[2]*mtsq;
+  b=seg[4]*mt2
+  var y=a+t*(b+t*seg[6]);
+  return [x,y]
+ } else if(seg[0]==CurvePath.CUBIC){
+  var a=(seg[3]-seg[1])*3;
+  var b=(seg[5]-seg[3])*3-a;
+  var c=seg[7]-a-b-seg[1];
+  var x=seg[1]+t*(a+t*(b+t*c));
+  a=(seg[4]-seg[2])*3;
+  b=(seg[6]-seg[4])*3-a;
+  c=seg[8]-a-b-seg[2];
+  var y=seg[2]+t*(a+t*(b+t*c));
+  return [x,y]
  } else {
   throw new Error("not yet implemented")
  }
 }
+
+CurvePath._calcCubicLength=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,depth){
+ if(depth==null)depth=0
+ if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a3-a5-a5+a7)+
+    Math.abs(a2-a4-a4+a6)+Math.abs(a4-a6-a6+a8)<=flatness){
+  var dx=a7-a1
+  var dy=a8-a2
+  var length=Math.sqrt(dx*dx+dy*dy)
+  list.push(t1,t2,length)
+ } else {
+  var x1=(a1+a3)*0.5
+  var x2=(a3+a5)*0.5
+  var xc1=(x1+x2)*0.5
+  var x3=(a5+a7)*0.5
+  var xc2=(x2+x3)*0.5
+  var xd=(xc1+xc2)*0.5
+  var y1=(a2+a4)*0.5
+  var y2=(a4+a6)*0.5
+  var yc1=(y1+y2)*0.5
+  var y3=(a6+a8)*0.5
+  var yc2=(y2+y3)*0.5
+  var yd=(yc1+yc2)*0.5
+  var tmid=(t1+t2)*0.5
+  CurvePath._calcCubicLength(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,depth+1)
+  CurvePath._calcCubicLength(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,list,flatness,depth+1)
+ }
+}
+
+CurvePath._calcQuadLength=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,depth){
+ if(depth==null)depth=0
+ if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a2-a4-a4+a6)<=flatness){
+  var dx=a5-a1
+  var dy=a6-a2
+  var length=Math.sqrt(dx*dx+dy*dy)
+  list.push(t1,t2,length)
+ } else {
+  var x1=(a1+a3)*0.5
+  var x2=(a3+a5)*0.5
+  var xc=(x1+x2)*0.5
+  var y1=(a2+a4)*0.5
+  var y2=(a4+a6)*0.5
+  var yc=(y1+y2)*0.5
+  CurvePath._calcQuadLength(a1,a2,x1,y1,xc,yc,t1,tmid,list,flatness,depth+1)
+  CurvePath._calcQuadLength(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,depth+1)
+ }
+}
+/** @private */
 CurvePath.prototype._start=function(){
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
-  if(s[0]!=CurvePath.CLOSE)return CurvePath._startPoint(s)  
+  if(s[0]!=CurvePath.CLOSE)return CurvePath._startPoint(s)
  }
  return [0,0]
 }
+/** @private */
 CurvePath.prototype._end=function(){
  for(var i=this.segments.length-1;i>=0;i--){
   var s=this.segments[i]
@@ -63,6 +140,9 @@ CurvePath._length=function(a){
   throw new Error("not yet implemented")
  }
 }
+/**
+ * Not documented yet.
+ */
 CurvePath.prototype.pathLength=function(){
  if(this.segments.length==0)return 0;
  var totalLength=0
@@ -73,7 +153,19 @@ CurvePath.prototype.pathLength=function(){
  }
  return totalLength;
 }
-CurvePath.prototype.getPoints=function(numPoints){
+/**
+* Gets an array of points evenly spaced across the length
+* of the path.
+* @param {*} numPoints
+* @param {*} flatness
+* @return {Array<Array<number>>} Array of points lying on
+* the path and evenly spaced across the length of the path,
+* starting and ending with the path's endpoints.  Returns
+* an empty array if <i>numPoints</i> is less than 1.  Returns
+* an array consisting of the start point if <i>numPoints</i>
+* is 1.
+*/
+CurvePath.prototype.getPoints=function(numPoints,flatness){
  if(numPoints<1)return []
  if(numPoints==1){
   return [this._start()]
@@ -81,13 +173,35 @@ CurvePath.prototype.getPoints=function(numPoints){
  if(numPoints==2){
   return [this._start(),this._end()]
  }
+ if(flatness==null)flatness=1.0
  var steps=numPoints-1
  var lengths=[]
+ var flattenedCurves=[]
+ var curFlat=0
  var totalLength=0
  var curLength=0
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
-  var len=CurvePath._length(s)
+  var len=0
+  if(s[0]==CurvePath.QUAD){
+   var flat=[]
+   CurvePath._calcQuadLength(s[1],s[2],s[3],s[4],
+     s[5],s[6],0.0,1.0,flat,flatness*2)
+   for(var j=0;j<flat.length;j+=3){
+    len+=flat[j+2]
+   }
+   flattenedCurves.push(flat)
+  } else if(s[0]==CurvePath.CUBIC){
+   var flat=[]
+   CurvePath._calcCubicLength(s[1],s[2],s[3],s[4],
+     s[5],s[6],s[7],s[8],0.0,1.0,flat,flatness*4)
+   for(var j=0;j<flat.length;j+=3){
+    len+=flat[j+2]
+   }
+   flattenedCurves.push(flat)
+  } else {
+   len=CurvePath._length(s)
+  }
   lengths.push(len)
   totalLength+=len
  }
@@ -98,7 +212,28 @@ CurvePath.prototype.getPoints=function(numPoints){
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
   var segLength=lengths[i]
-  if(s[0]!=CurvePath.CLOSE && segLength>0){
+  if(s[0]==CurvePath.QUAD || s[0]==CurvePath.CUBIC){
+   var flatCurve=flattenedCurves[curFlat]
+   if(segLength>0){
+    for(var j=0;j<flatCurve.length;j+=3){
+     var flatSegLength=flatCurve[j+2]
+     if(flatSegLength>0){
+      var endLen=curLength+flatSegLength;
+      while(endLen>=nextStep && count<numPoints-1){
+       var t=(flatSegLength-(endLen-nextStep))/flatSegLength
+       t=flatCurve[j]+(flatCurve[j+1]-flatCurve[j])*t;
+       ret.push(CurvePath._point(s,t));
+       count++
+       nextStep+=stepLength
+       if(count>=numPoints-1)
+        break;
+      }
+     }
+     curLength+=flatSegLength
+    }
+   }
+   curFlat++;
+  } else if(s[0]==CurvePath.LINE && segLength>0){
    var endLen=curLength+segLength;
    while(endLen>=nextStep && count<numPoints-1){
     var t=(segLength-(endLen-nextStep))/segLength
@@ -108,8 +243,8 @@ CurvePath.prototype.getPoints=function(numPoints){
     if(count>=numPoints-1)
      break;
    }
+   curLength+=segLength
   }
-  curLength+=lengths[i]
  }
  while(ret.length<numPoints-1){
   ret.push(ret[ret.length-1])
@@ -119,6 +254,7 @@ CurvePath.prototype.getPoints=function(numPoints){
 }
 /**
  * Not documented yet.
+ * @return {CurvePath} This object.
  */
 CurvePath.prototype.closePath=function(){
  if(this.startPos[0]!=this.endPos[0] ||
@@ -128,11 +264,14 @@ CurvePath.prototype.closePath=function(){
  if(this.segments.length>0){
   this.segments.push([CurvePath.CLOSE])
  }
+ this.incomplete=false
+ return this;
 }
 /**
  * Not documented yet.
  * @param {*} x
  * @param {*} y
+ * @return {CurvePath} This object.
  */
 CurvePath.prototype.moveTo=function(x,y){
  this.startPos[0]=x
@@ -146,6 +285,7 @@ CurvePath.prototype.moveTo=function(x,y){
  * Not documented yet.
  * @param {*} x
  * @param {*} y
+ * @return {CurvePath} This object.
  */
 CurvePath.prototype.lineTo=function(x,y){
  this.segments.push([CurvePath.LINE,
@@ -161,10 +301,11 @@ CurvePath.prototype.lineTo=function(x,y){
  * @param {*} y
  * @param {*} x2
  * @param {*} x2
+ * @return {CurvePath} This object.
  */
-CurvePath.prototype.quadTo=function(x,y,x2,x2){
+CurvePath.prototype.quadTo=function(x,y,x2,y2){
  this.segments.push([CurvePath.QUAD,
-  this.endPos[0],this.endPos[1],x,y,x2,x2])
+  this.endPos[0],this.endPos[1],x,y,x2,y2])
  this.endPos[0]=x2
  this.endPos[1]=y2
  this.incomplete=false
@@ -178,10 +319,11 @@ CurvePath.prototype.quadTo=function(x,y,x2,x2){
  * @param {*} x2
  * @param {*} x3
  * @param {*} x3
+ * @return {CurvePath} This object.
  */
-CurvePath.prototype.cubicTo=function(x,y,x2,x2,x3,x3){
+CurvePath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
  this.segments.push([CurvePath.CUBIC,
-  this.endPos[0],this.endPos[1],x,y,x2,x2,x3,x3])
+  this.endPos[0],this.endPos[1],x,y,x2,y2,x3,y3])
  this.endPos[0]=x3
  this.endPos[1]=y3
  this.incomplete=false
@@ -306,6 +448,7 @@ CurvePath._nextNumber=function(str,index,afterSep){
  }
  return ret
 }
+
 CurvePath.fromString=function(str){
  var index=[0]
  var started=false
