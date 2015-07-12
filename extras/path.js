@@ -1,3 +1,6 @@
+/**
+* Represents a two-dimensional path.
+*/
 function GraphicsPath(){
  this.segments=[]
  this.incomplete=false
@@ -137,6 +140,9 @@ GraphicsPath.prototype._end=function(){
  }
  return [0,0]
 }
+/**
+ * Not documented yet.
+ */
 GraphicsPath.prototype.toString=function(){
  var oldpos=null
  var ret=""
@@ -193,7 +199,7 @@ GraphicsPath._length=function(a,flatness){
 }
 /**
  * Finds the approximate length of this path.
-* @param {number|undefined} flatness When curves are decomposed to
+* @param {number} [flatness] When curves are decomposed to
 * line segments for the purpose of calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
@@ -203,6 +209,7 @@ GraphicsPath._length=function(a,flatness){
 GraphicsPath.prototype.pathLength=function(flatness){
  if(this.segments.length==0)return 0;
  var totalLength=0
+ if(flatness==null)flatness=1.0
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
   var len=GraphicsPath._length(s,flatness)
@@ -213,7 +220,7 @@ GraphicsPath.prototype.pathLength=function(flatness){
 /**
 * Gets an array of line segments approximating
 * the path.
-* @param {number|undefined} flatness When curves are decomposed to
+* @param {number} [flatness] When curves are decomposed to
 * line segments for the purpose of calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
@@ -224,6 +231,7 @@ GraphicsPath.prototype.pathLength=function(flatness){
 */
 GraphicsPath.prototype.getLines=function(flatness){
  var ret=[]
+ if(flatness==null)flatness=1.0
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
   var len=0
@@ -233,7 +241,7 @@ GraphicsPath.prototype.getLines=function(flatness){
   } else if(s[0]==GraphicsPath.CUBIC){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
      s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*4,0)
-  } else {
+  } else if(s[0]!=GraphicsPath.CLOSE){
    ret.push([s[1],s[2],s[3],s[4]])
   }
  }
@@ -242,7 +250,7 @@ GraphicsPath.prototype.getLines=function(flatness){
 /**
 * Gets an array of points evenly spaced across the length
 * of the path.
-* @param {number|undefined} flatness When curves are decomposed to
+* @param {number} [flatness] When curves are decomposed to
 * line segments for the purpose of calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
