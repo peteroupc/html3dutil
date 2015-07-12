@@ -1,14 +1,14 @@
-function CurvePath(){
+function GraphicsPath(){
  this.segments=[]
  this.incomplete=false
  this.startPos=[0,0]
  this.endPos=[0,0]
 }
-CurvePath.CLOSE=0
-CurvePath.LINE=1
-CurvePath.QUAD=2
-CurvePath.CUBIC=3
-CurvePath.ARC=4
+GraphicsPath.CLOSE=0
+GraphicsPath.LINE=1
+GraphicsPath.QUAD=2
+GraphicsPath.CUBIC=3
+GraphicsPath.ARC=4
 /**
 * Returns whether the curve path is incomplete
 * because of an error in parsing the curve string.
@@ -16,32 +16,32 @@ CurvePath.ARC=4
 * closePath command, or another line segment
 * is added to the path.
 * @return {boolean} Return value.*/
-CurvePath.prototype.isIncomplete=function(){
+GraphicsPath.prototype.isIncomplete=function(){
  return this.incomplete
 }
-CurvePath._startPoint=function(a){
- if(a[0]==CurvePath.CLOSE){
+GraphicsPath._startPoint=function(a){
+ if(a[0]==GraphicsPath.CLOSE){
   return [0,0]
  } else {
   return [a[1],a[2]]
  }
 }
-CurvePath._endPoint=function(a){
- if(a[0]==CurvePath.CLOSE){
+GraphicsPath._endPoint=function(a){
+ if(a[0]==GraphicsPath.CLOSE){
   return [0,0]
  } else {
   return [a[a.length-2],a[a.length-1]]
  }
 }
-CurvePath._point=function(seg,t){
- if(seg[0]==CurvePath.CLOSE){
+GraphicsPath._point=function(seg,t){
+ if(seg[0]==GraphicsPath.CLOSE){
   return [0,0]
- } else if(seg[0]==CurvePath.LINE){
+ } else if(seg[0]==GraphicsPath.LINE){
   return [
    seg[1]+(seg[3]-seg[1])*t,
    seg[2]+(seg[4]-seg[2])*t
   ]
- } else if(seg[0]==CurvePath.QUAD){
+ } else if(seg[0]==GraphicsPath.QUAD){
   var mt=1-t;
   var mtsq=mt*mt;
   var mt2=(mt+mt);
@@ -53,7 +53,7 @@ CurvePath._point=function(seg,t){
   b=seg[4]*mt2
   var y=a+t*(b+t*seg[6]);
   return [x,y]
- } else if(seg[0]==CurvePath.CUBIC){
+ } else if(seg[0]==GraphicsPath.CUBIC){
   var a=(seg[3]-seg[1])*3;
   var b=(seg[5]-seg[3])*3-a;
   var c=seg[7]-a-b-seg[1];
@@ -68,14 +68,18 @@ CurvePath._point=function(seg,t){
  }
 }
 
-CurvePath._calcCubicLength=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,depth){
+GraphicsPath._flattenCubic=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,mode,depth){
  if(depth==null)depth=0
  if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a3-a5-a5+a7)+
     Math.abs(a2-a4-a4+a6)+Math.abs(a4-a6-a6+a8)<=flatness){
-  var dx=a7-a1
-  var dy=a8-a2
-  var length=Math.sqrt(dx*dx+dy*dy)
-  list.push(t1,t2,length)
+  if(mode==0){
+   list.push([a1,a2,a7,a8])
+  } else {
+   var dx=a7-a1
+   var dy=a8-a2
+   var length=Math.sqrt(dx*dx+dy*dy)
+   list.push(t1,t2,length)
+  }
  } else {
   var x1=(a1+a3)*0.5
   var x2=(a3+a5)*0.5
@@ -90,18 +94,22 @@ CurvePath._calcCubicLength=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,
   var yc2=(y2+y3)*0.5
   var yd=(yc1+yc2)*0.5
   var tmid=(t1+t2)*0.5
-  CurvePath._calcCubicLength(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,depth+1)
-  CurvePath._calcCubicLength(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,list,flatness,depth+1)
+  GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1)
+  GraphicsPath._flattenCubic(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,list,flatness,mode,depth+1)
  }
 }
 
-CurvePath._calcQuadLength=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,depth){
+GraphicsPath._flattenQuad=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,mode,depth){
  if(depth==null)depth=0
  if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a2-a4-a4+a6)<=flatness){
-  var dx=a5-a1
-  var dy=a6-a2
-  var length=Math.sqrt(dx*dx+dy*dy)
-  list.push(t1,t2,length)
+  if(mode==0){
+   list.push([a1,a2,a5,a6])
+  } else {
+   var dx=a5-a1
+   var dy=a6-a2
+   var length=Math.sqrt(dx*dx+dy*dy)
+   list.push(t1,t2,length)
+  }
  } else {
   var x1=(a1+a3)*0.5
   var x2=(a3+a5)*0.5
@@ -109,79 +117,135 @@ CurvePath._calcQuadLength=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,depth){
   var y1=(a2+a4)*0.5
   var y2=(a4+a6)*0.5
   var yc=(y1+y2)*0.5
-  CurvePath._calcQuadLength(a1,a2,x1,y1,xc,yc,t1,tmid,list,flatness,depth+1)
-  CurvePath._calcQuadLength(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,depth+1)
+  GraphicsPath._flattenQuad(a1,a2,x1,y1,xc,yc,t1,tmid,list,flatness,mode,depth+1)
+  GraphicsPath._flattenQuad(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,mode,depth+1)
  }
 }
 /** @private */
-CurvePath.prototype._start=function(){
+GraphicsPath.prototype._start=function(){
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
-  if(s[0]!=CurvePath.CLOSE)return CurvePath._startPoint(s)
+  if(s[0]!=GraphicsPath.CLOSE)return GraphicsPath._startPoint(s)
  }
  return [0,0]
 }
 /** @private */
-CurvePath.prototype._end=function(){
+GraphicsPath.prototype._end=function(){
  for(var i=this.segments.length-1;i>=0;i--){
   var s=this.segments[i]
-  if(s[0]!=CurvePath.CLOSE)return CurvePath._endPoint(s)
+  if(s[0]!=GraphicsPath.CLOSE)return GraphicsPath._endPoint(s)
  }
  return [0,0]
 }
-CurvePath.prototype.toString=function(){
+GraphicsPath.prototype.toString=function(){
  var oldpos=null
  var ret=""
  for(var i=0;i<this.segments.length;i++){
   var a=this.segments[i]
-  if(a[0]==CurvePath.CLOSE){
+  if(a[0]==GraphicsPath.CLOSE){
    ret+="Z"
   } else {
-   var start=CurvePath._startPoint(a)
+   var start=GraphicsPath._startPoint(a)
    if(!oldpos || oldpos[0]!=start[0] || oldpos[1]!=start[1]){
     ret+="M"+start[0]+","+start[1]
    }
-   if(a[0]==CurvePath.LINE){
+   if(a[0]==GraphicsPath.LINE){
     ret+="L"+a[3]+","+a[4]
    }
-   if(a[0]==CurvePath.QUAD){
+   if(a[0]==GraphicsPath.QUAD){
     ret+="Q"+a[3]+","+a[4]+","+a[5]+","+a[6]
    }
-   if(a[0]==CurvePath.CUBIC){
+   if(a[0]==GraphicsPath.CUBIC){
     ret+="C"+a[3]+","+a[4]+","+a[5]+","+a[6]+","+a[7]+","+a[8]
    }
   }
  }
+ return ret
 }
-CurvePath._length=function(a){
- if(a[0]==CurvePath.LINE){
+GraphicsPath._length=function(a,flatness){
+ if(a[0]==GraphicsPath.LINE){
   var dx=a[3]-a[1]
   var dy=a[4]-a[2]
   return Math.sqrt(dx*dx+dy*dy)
- } else if(a[0]==CurvePath.CLOSE){
+ } else if(a[0]==GraphicsPath.QUAD){
+   var flat=[]
+   var len=0
+   GraphicsPath._flattenQuad(a[1],a[2],a[3],a[4],
+     a[5],a[6],0.0,1.0,flat,flatness*2,1)
+   for(var j=0;j<flat.length;j+=3){
+    len+=flat[j+2]
+   }
+   return len
+  } else if(a[0]==GraphicsPath.CUBIC){
+   var flat=[]
+   var len=0
+   GraphicsPath._flattenCubic(a[1],a[2],a[3],a[4],
+     a[5],a[6],a[7],a[8],0.0,1.0,flat,flatness*4,1)
+   for(var j=0;j<flat.length;j+=3){
+    len+=flat[j+2]
+   }
+   return len
+ } else if(a[0]==GraphicsPath.CLOSE){
   return 0
  } else {
   throw new Error("not yet implemented")
  }
 }
 /**
- * Not documented yet.
+ * Finds the approximate length of this path.
+* @param {number|undefined} flatness When curves are decomposed to
+* line segments for the purpose of calculating their length, the
+* segments will be close to the true path of the curve by this
+* value, given in units.  If null or omitted, default is 1.
+ * @return {number} Approximate length of this path
+ * in units.
  */
-CurvePath.prototype.pathLength=function(){
+GraphicsPath.prototype.pathLength=function(flatness){
  if(this.segments.length==0)return 0;
  var totalLength=0
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
-  var len=CurvePath._length(s)
+  var len=GraphicsPath._length(s,flatness)
   totalLength+=len
  }
  return totalLength;
 }
 /**
+* Gets an array of line segments approximating
+* the path.
+* @param {number|undefined} flatness When curves are decomposed to
+* line segments for the purpose of calculating their length, the
+* segments will be close to the true path of the curve by this
+* value, given in units.  If null or omitted, default is 1.
+* @return {Array<Array<number>>} Array of line segments.
+* Each line segment is an array of four numbers: the X and
+* Y coordinates of the start point, respectively, then the X and
+* Y coordinates of the end point, respectively.
+*/
+GraphicsPath.prototype.getLines=function(flatness){
+ var ret=[]
+ for(var i=0;i<this.segments.length;i++){
+  var s=this.segments[i]
+  var len=0
+  if(s[0]==GraphicsPath.QUAD){
+   GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
+     s[5],s[6],0.0,1.0,ret,flatness*2,0)
+  } else if(s[0]==GraphicsPath.CUBIC){
+   GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
+     s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*4,0)
+  } else {
+   ret.push([s[1],s[2],s[3],s[4]])
+  }
+ }
+ return ret
+}
+/**
 * Gets an array of points evenly spaced across the length
 * of the path.
-* @param {*} numPoints
-* @param {*} flatness
+* @param {number|undefined} flatness When curves are decomposed to
+* line segments for the purpose of calculating their length, the
+* segments will be close to the true path of the curve by this
+* value, given in units.  If null or omitted, default is 1.
 * @return {Array<Array<number>>} Array of points lying on
 * the path and evenly spaced across the length of the path,
 * starting and ending with the path's endpoints.  Returns
@@ -189,7 +253,7 @@ CurvePath.prototype.pathLength=function(){
 * an array consisting of the start point if <i>numPoints</i>
 * is 1.
 */
-CurvePath.prototype.getPoints=function(numPoints,flatness){
+GraphicsPath.prototype.getPoints=function(numPoints,flatness){
  if(numPoints<1)return []
  if(numPoints==1){
   return [this._start()]
@@ -207,24 +271,24 @@ CurvePath.prototype.getPoints=function(numPoints,flatness){
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
   var len=0
-  if(s[0]==CurvePath.QUAD){
+  if(s[0]==GraphicsPath.QUAD){
    var flat=[]
-   CurvePath._calcQuadLength(s[1],s[2],s[3],s[4],
-     s[5],s[6],0.0,1.0,flat,flatness*2)
+   GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
+     s[5],s[6],0.0,1.0,flat,flatness*2,1)
    for(var j=0;j<flat.length;j+=3){
     len+=flat[j+2]
    }
    flattenedCurves.push(flat)
-  } else if(s[0]==CurvePath.CUBIC){
+  } else if(s[0]==GraphicsPath.CUBIC){
    var flat=[]
-   CurvePath._calcCubicLength(s[1],s[2],s[3],s[4],
-     s[5],s[6],s[7],s[8],0.0,1.0,flat,flatness*4)
+   GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
+     s[5],s[6],s[7],s[8],0.0,1.0,flat,flatness*4,1)
    for(var j=0;j<flat.length;j+=3){
     len+=flat[j+2]
    }
    flattenedCurves.push(flat)
   } else {
-   len=CurvePath._length(s)
+   len=GraphicsPath._length(s,0)
   }
   lengths.push(len)
   totalLength+=len
@@ -236,7 +300,7 @@ CurvePath.prototype.getPoints=function(numPoints,flatness){
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
   var segLength=lengths[i]
-  if(s[0]==CurvePath.QUAD || s[0]==CurvePath.CUBIC){
+  if(s[0]==GraphicsPath.QUAD || s[0]==GraphicsPath.CUBIC){
    var flatCurve=flattenedCurves[curFlat]
    if(segLength>0){
     for(var j=0;j<flatCurve.length;j+=3){
@@ -246,7 +310,7 @@ CurvePath.prototype.getPoints=function(numPoints,flatness){
       while(endLen>=nextStep && count<numPoints-1){
        var t=(flatSegLength-(endLen-nextStep))/flatSegLength
        t=flatCurve[j]+(flatCurve[j+1]-flatCurve[j])*t;
-       ret.push(CurvePath._point(s,t));
+       ret.push(GraphicsPath._point(s,t));
        count++
        nextStep+=stepLength
        if(count>=numPoints-1)
@@ -257,11 +321,11 @@ CurvePath.prototype.getPoints=function(numPoints,flatness){
     }
    }
    curFlat++;
-  } else if(s[0]==CurvePath.LINE && segLength>0){
+  } else if(s[0]==GraphicsPath.LINE && segLength>0){
    var endLen=curLength+segLength;
    while(endLen>=nextStep && count<numPoints-1){
     var t=(segLength-(endLen-nextStep))/segLength
-    ret.push(CurvePath._point(s,t));
+    ret.push(GraphicsPath._point(s,t));
     count++
     nextStep+=stepLength
     if(count>=numPoints-1)
@@ -278,15 +342,15 @@ CurvePath.prototype.getPoints=function(numPoints,flatness){
 }
 /**
  * Not documented yet.
- * @return {CurvePath} This object.
+ * @return {GraphicsPath} This object.
  */
-CurvePath.prototype.closePath=function(){
+GraphicsPath.prototype.closePath=function(){
  if(this.startPos[0]!=this.endPos[0] ||
    this.startPos[1]!=this.endPos[1]){
   this.lineTo(this.startPos[0],this.startPos[1])
  }
  if(this.segments.length>0){
-  this.segments.push([CurvePath.CLOSE])
+  this.segments.push([GraphicsPath.CLOSE])
  }
  this.incomplete=false
  return this;
@@ -295,9 +359,9 @@ CurvePath.prototype.closePath=function(){
  * Not documented yet.
  * @param {*} x
  * @param {*} y
- * @return {CurvePath} This object.
+ * @return {GraphicsPath} This object.
  */
-CurvePath.prototype.moveTo=function(x,y){
+GraphicsPath.prototype.moveTo=function(x,y){
  this.startPos[0]=x
  this.startPos[1]=y
  this.endPos[0]=x
@@ -309,10 +373,10 @@ CurvePath.prototype.moveTo=function(x,y){
  * Not documented yet.
  * @param {*} x
  * @param {*} y
- * @return {CurvePath} This object.
+ * @return {GraphicsPath} This object.
  */
-CurvePath.prototype.lineTo=function(x,y){
- this.segments.push([CurvePath.LINE,
+GraphicsPath.prototype.lineTo=function(x,y){
+ this.segments.push([GraphicsPath.LINE,
   this.endPos[0],this.endPos[1],x,y])
  this.endPos[0]=x
  this.endPos[1]=y
@@ -325,10 +389,10 @@ CurvePath.prototype.lineTo=function(x,y){
  * @param {*} y
  * @param {*} x2
  * @param {*} x2
- * @return {CurvePath} This object.
+ * @return {GraphicsPath} This object.
  */
-CurvePath.prototype.quadTo=function(x,y,x2,y2){
- this.segments.push([CurvePath.QUAD,
+GraphicsPath.prototype.quadTo=function(x,y,x2,y2){
+ this.segments.push([GraphicsPath.QUAD,
   this.endPos[0],this.endPos[1],x,y,x2,y2])
  this.endPos[0]=x2
  this.endPos[1]=y2
@@ -343,17 +407,17 @@ CurvePath.prototype.quadTo=function(x,y,x2,y2){
  * @param {*} x2
  * @param {*} x3
  * @param {*} x3
- * @return {CurvePath} This object.
+ * @return {GraphicsPath} This object.
  */
-CurvePath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
- this.segments.push([CurvePath.CUBIC,
+GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
+ this.segments.push([GraphicsPath.CUBIC,
   this.endPos[0],this.endPos[1],x,y,x2,y2,x3,y3])
  this.endPos[0]=x3
  this.endPos[1]=y3
  this.incomplete=false
  return this
 }
-CurvePath._nextAfterWs=function(str,index){
+GraphicsPath._nextAfterWs=function(str,index){
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0])
   index[0]++
@@ -363,7 +427,7 @@ CurvePath._nextAfterWs=function(str,index){
  }
  return -1
 }
-CurvePath._nextAfterSep=function(str,index){
+GraphicsPath._nextAfterSep=function(str,index){
  var comma=false
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0])
@@ -378,17 +442,17 @@ CurvePath._nextAfterSep=function(str,index){
  }
  return -1
 }
-CurvePath._peekNextNumber=function(str,index){
+GraphicsPath._peekNextNumber=function(str,index){
  var oldindex=index[0]
- var ret=CurvePath._nextNumber(str,index,true)!=null
+ var ret=GraphicsPath._nextNumber(str,index,true)!=null
  index[0]=oldindex
  return ret
 }
-CurvePath._nextNumber=function(str,index,afterSep){
+GraphicsPath._nextNumber=function(str,index,afterSep){
  var oldindex=index[0]
  var c=(afterSep) ?
-   CurvePath._nextAfterSep(str,index) :
-   CurvePath._nextAfterWs(str,index)
+   GraphicsPath._nextAfterSep(str,index) :
+   GraphicsPath._nextAfterWs(str,index)
  var startIndex=index[0]-1
  var dot=false
  var digit=false
@@ -473,13 +537,13 @@ CurvePath._nextNumber=function(str,index,afterSep){
  return ret
 }
 
-CurvePath.fromString=function(str){
+GraphicsPath.fromString=function(str){
  var index=[0]
  var started=false
- var ret=new CurvePath()
+ var ret=new GraphicsPath()
  var failed=false;
  while(!failed && index[0]<str.length){
-  var c=CurvePath._nextAfterWs(str,index)
+  var c=GraphicsPath._nextAfterWs(str,index)
   if(!started && c!=0x4d && c!=0x6d){
    // not a move-to command when path
    // started
@@ -496,11 +560,11 @@ CurvePath.fromString=function(str){
    case 0x4d:case 0x6d:{ // 'M', 'm'
     var sep=false
     while(true){
-     var curx=(c==0x6d) ? this.endPos[0] : 0
-     var cury=(c==0x6d) ? this.endPos[1] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curx=(c==0x6d) ? ret.endPos[0] : 0
+     var cury=(c==0x6d) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     var y=CurvePath._nextNumber(str,index,true)
+     var y=GraphicsPath._nextNumber(str,index,true)
      if(y==null){ failed=true;break; }
      if(sep)ret.lineTo(curx+x,cury+y)
      else ret.moveTo(curx+x,cury+y);
@@ -512,11 +576,11 @@ CurvePath.fromString=function(str){
    case 0x4c:case 0x6c:{ // 'L', 'l'
     var sep=false
     while(true){
-     var curx=(c==0x6c) ? this.endPos[0] : 0
-     var cury=(c==0x6c) ? this.endPos[1] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curx=(c==0x6c) ? ret.endPos[0] : 0
+     var cury=(c==0x6c) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     var y=CurvePath._nextNumber(str,index,true)
+     var y=GraphicsPath._nextNumber(str,index,true)
      if(y==null){ failed=true;break; }
      ret.lineTo(curx+x,cury+y);
      sep=true;
@@ -526,10 +590,10 @@ CurvePath.fromString=function(str){
    case 0x48:case 0x68:{ // 'H', 'h'
     var sep=false
     while(true){
-     var curpt=(c==0x68) ? this.endPos[0] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curpt=(c==0x68) ? ret.endPos[0] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     ret.lineTo(curpt+x,this.endPos[1]);
+     ret.lineTo(curpt+x,ret.endPos[1]);
      sep=true;
     }
     break;
@@ -537,10 +601,10 @@ CurvePath.fromString=function(str){
    case 0x56:case 0x76:{ // 'V', 'v'
     var sep=false
     while(true){
-     var curpt=(c==0x76) ? this.endPos[1] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curpt=(c==0x76) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     ret.lineTo(this.endPos[0],curpt+x);
+     ret.lineTo(ret.endPos[0],curpt+x);
      sep=true;
     }
     break;
@@ -548,19 +612,19 @@ CurvePath.fromString=function(str){
    case 0x43:case 0x63:{ // 'C', 'c'
     var sep=false
     while(true){
-     var curx=(c==0x63) ? this.endPos[0] : 0
-     var cury=(c==0x63) ? this.endPos[1] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curx=(c==0x63) ? ret.endPos[0] : 0
+     var cury=(c==0x63) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     var y=CurvePath._nextNumber(str,index,true)
+     var y=GraphicsPath._nextNumber(str,index,true)
      if(y==null){ failed=true;break; }
-     var x2=CurvePath._nextNumber(str,index,true)
+     var x2=GraphicsPath._nextNumber(str,index,true)
      if(x2==null){ failed=true;break; }
-     var y2=CurvePath._nextNumber(str,index,true)
+     var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
-     var x3=CurvePath._nextNumber(str,index,true)
+     var x3=GraphicsPath._nextNumber(str,index,true)
      if(x3==null){ failed=true;break; }
-     var y3=CurvePath._nextNumber(str,index,true)
+     var y3=GraphicsPath._nextNumber(str,index,true)
      if(y3==null){ failed=true;break; }
      ret.cubicTo(curx+x,cury+y,curx+x2,cury+y2,
        curx+x3,cury+y3);
@@ -571,15 +635,15 @@ CurvePath.fromString=function(str){
    case 0x51:case 0x71:{ // 'Q', 'q'
     var sep=false
     while(true){
-     var curx=(c==0x71) ? this.endPos[0] : 0
-     var cury=(c==0x71) ? this.endPos[1] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curx=(c==0x71) ? ret.endPos[0] : 0
+     var cury=(c==0x71) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     var y=CurvePath._nextNumber(str,index,true)
+     var y=GraphicsPath._nextNumber(str,index,true)
      if(y==null){ failed=true;break; }
-     var x2=CurvePath._nextNumber(str,index,true)
+     var x2=GraphicsPath._nextNumber(str,index,true)
      if(x2==null){ failed=true;break; }
-     var y2=CurvePath._nextNumber(str,index,true)
+     var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
      ret.quadTo(curx+x,cury+y,curx+x2,cury+y2);
      sep=true;
@@ -589,20 +653,20 @@ CurvePath.fromString=function(str){
    case 0x53:case 0x73:{ // 'S', 's'
     var sep=false
     while(true){
-     var curx=(c==0x73) ? this.endPos[0] : 0
-     var cury=(c==0x73) ? this.endPos[1] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curx=(c==0x73) ? ret.endPos[0] : 0
+     var cury=(c==0x73) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     var y=CurvePath._nextNumber(str,index,true)
+     var y=GraphicsPath._nextNumber(str,index,true)
      if(y==null){ failed=true;break; }
-     var x2=CurvePath._nextNumber(str,index,true)
+     var x2=GraphicsPath._nextNumber(str,index,true)
      if(x2==null){ failed=true;break; }
-     var y2=CurvePath._nextNumber(str,index,true)
+     var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
      var xcp=curx
      var ycp=cury
      if(ret.segments.length>0 &&
-        ret.segments[ret.segments.length-1][0]==CurvePath.CUBIC){
+        ret.segments[ret.segments.length-1][0]==GraphicsPath.CUBIC){
         xcp=ret.segments[ret.segments.length-1][5]
         ycp=ret.segments[ret.segments.length-1][6]
      }
@@ -614,16 +678,16 @@ CurvePath.fromString=function(str){
    case 0x54:case 0x74:{ // 'T', 't'
     var sep=false
     while(true){
-     var curx=(c==0x74) ? this.endPos[0] : 0
-     var cury=(c==0x74) ? this.endPos[1] : 0
-     var x=CurvePath._nextNumber(str,index,sep)
+     var curx=(c==0x74) ? ret.endPos[0] : 0
+     var cury=(c==0x74) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
-     var y=CurvePath._nextNumber(str,index,true)
+     var y=GraphicsPath._nextNumber(str,index,true)
      if(y==null){ failed=true;break; }
      var xcp=curx
      var ycp=cury
      if(ret.segments.length>0 &&
-        ret.segments[ret.segments.length-1][0]==CurvePath.QUAD){
+        ret.segments[ret.segments.length-1][0]==GraphicsPath.QUAD){
         xcp=ret.segments[ret.segments.length-1][3]
         ycp=ret.segments[ret.segments.length-1][4]
      }
