@@ -129,6 +129,30 @@ CurvePath.prototype._end=function(){
  }
  return [0,0]
 }
+CurvePath.prototype.toString=function(){
+ var oldpos=null
+ var ret=""
+ for(var i=0;i<this.segments.length;i++){
+  var a=this.segments[i]
+  if(a[0]==CurvePath.CLOSE){
+   ret+="Z"
+  } else {
+   var start=CurvePath._startPoint(a)
+   if(!oldpos || oldpos[0]!=start[0] || oldpos[1]!=start[1]){
+    ret+="M"+start[0]+","+start[1]
+   }
+   if(a[0]==CurvePath.LINE){
+    ret+="L"+a[3]+","+a[4]
+   }
+   if(a[0]==CurvePath.QUAD){
+    ret+="Q"+a[3]+","+a[4]+","+a[5]+","+a[6]
+   }
+   if(a[0]==CurvePath.CUBIC){
+    ret+="C"+a[3]+","+a[4]+","+a[5]+","+a[6]+","+a[7]+","+a[8]
+   }
+  }
+ }
+}
 CurvePath._length=function(a){
  if(a[0]==CurvePath.LINE){
   var dx=a[3]-a[1]
