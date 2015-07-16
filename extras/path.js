@@ -1,5 +1,21 @@
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
 /**
 * Represents a two-dimensional path.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/path.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
+* @class
 */
 function GraphicsPath(){
  this.segments=[]
@@ -16,7 +32,7 @@ GraphicsPath.ARC=4
 * Returns whether the curve path is incomplete
 * because of an error in parsing the curve string.
 * This flag will be reset if a moveTo command,
-* closePath command, or another line segment
+* closePath command, or another path segment
 * is added to the path.
 * @return {boolean} Return value.*/
 GraphicsPath.prototype.isIncomplete=function(){
@@ -55,7 +71,7 @@ GraphicsPath._point=function(seg,t){
   a=seg[2]*mtsq;
   b=seg[4]*mt2
   var y=a+t*(b+t*seg[6]);
-  return [x,y]
+  return [x,y];
  } else if(seg[0]==GraphicsPath.CUBIC){
   var a=(seg[3]-seg[1])*3;
   var b=(seg[5]-seg[3])*3-a;
@@ -65,7 +81,25 @@ GraphicsPath._point=function(seg,t){
   b=(seg[6]-seg[4])*3-a;
   c=seg[8]-a-b-seg[2];
   var y=seg[2]+t*(a+t*(b+t*c));
-  return [x,y]
+  return [x,y];
+ } else if(seg[0]==GraphicsPath.ARC){
+  if(t==0)return [seg[1],seg[2]]
+  if(t==1)return [seg[8],seg[9]]
+  var rx=seg[3]
+  var ry=seg[4]
+  var cx=seg[10]
+  var cy=seg[11]
+  var theta=seg[12]
+  var delta=seg[13]
+  var rot=seg[5]
+  var angle=theta+delta*t
+  var cr = Math.cos(rot);
+  var sr = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-cr*cr) : -Math.sqrt(1.0-cr*cr)) : Math.sin(rot);
+  var ca = Math.cos(angle);
+  var sa = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(angle);
+  return [
+   cr*ca*rx-sr*sa*ry+cx,
+   sr*ca*rx+cr*sa*ry+cy]
  } else {
   throw new Error("not yet implemented")
  }
@@ -202,12 +236,12 @@ GraphicsPath._length=function(a,flatness){
   var theta=a[12]
   var theta2=a[13]
   return GraphicsPath._ellipticArcLength(rx,ry,theta,theta2)
- } else if(a[0]==GraphicsPath.CLOSE){
-  return 0
  } else {
-  throw new Error("not yet implemented")
+  return 0
  }
 }
+
+
 /**
  * Finds the approximate length of this path.
 * @param {number} [flatness] When quadratic and cubic
@@ -232,7 +266,8 @@ GraphicsPath.prototype.pathLength=function(flatness){
 /**
 * Gets an array of line segments approximating
 * the path.
-* @param {number} [flatness] When curves are decomposed to
+* @param {number} [flatness] When quadratic and cubic
+* curves are decomposed to
 * line segments for the purpose of calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
@@ -264,6 +299,7 @@ GraphicsPath.prototype.getLines=function(flatness){
 /**
 * Gets an array of points evenly spaced across the length
 * of the path.
+* @param {number} numPoints Number of points to return.
 * @param {number} [flatness] When curves are decomposed to
 * line segments for the purpose of calculating their length, the
 * segments will be close to the true path of the curve by this
@@ -324,7 +360,8 @@ GraphicsPath.prototype.getPoints=function(numPoints,flatness){
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i]
   var segLength=lengths[i]
-  if(s[0]==GraphicsPath.QUAD || s[0]==GraphicsPath.CUBIC){
+  if(s[0]==GraphicsPath.QUAD || s[0]==GraphicsPath.CUBIC ||
+     s[0]==GraphicsPath.ARC){
    var flatCurve=flattenedCurves[curFlat]
    if(segLength>0){
     for(var j=0;j<flatCurve.length;j+=3){
@@ -528,26 +565,6 @@ GraphicsPath._vecangle=function(a,b,c,d){
  if(sgn<0)ret=-ret
  return ret
 }
-GraphicsPath._arcPoint=function(rx,ry,cx,cy,theta,delta,rot,t){
-  if(t==0)return [a[1],a[2]]
-  if(t==1)return [a[8],a[9]]
-  var rx=a[3]
-  var ry=a[4]
-  var cx=a[10]
-  var cy=a[11]
-  var theta=a[12]
-  var delta=a[13]
-  var rot=a[5]
-  var angle=theta+delta*t
-  var cr = Math.cos(rot);
-  var sr = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-cr*cr) : -Math.sqrt(1.0-cr*cr)) : Math.sin(rot);
-  var ca = Math.cos(angle);
-  var sa = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(angle);
-  return [
-   cr*ca*rx-sr*sa*ry+cx,
-   sr*ca*rx+cr*sa*ry+cy]
-}
-
 GraphicsPath._arcToCenterParam=function(a){
  var x1=a[1]
  var y1=a[2]
@@ -583,7 +600,9 @@ GraphicsPath._arcToCenterParam=function(a){
  var vecy=(y1p-cyp)/ry
  var nvecx=(-x1p-cxp)/rx
  var nvecy=(-y1p-cyp)/ry
- var theta1=GraphicsPath._vecangle(1,0,vecx,vecy)
+ var cosTheta1=vecx/Math.sqrt(vecx*vecx+vecy*vecy)
+ var theta1=Math.acos(cosTheta1)
+ if(vecy<0)theta1=-theta1
  var delta=GraphicsPath._vecangle(vecx,vecy,nvecx,nvecy)
  delta=(delta<0) ? GLMath.PiTimes2+delta : delta;
  if(!a[7] && delta>0){
@@ -781,7 +800,12 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
  }
  return ret
 }
-
+/**
+*
+* @param {string} A string, in the SVG path format, representing
+* a two-dimensional path.
+* @return {GraphicsPath}
+*/
 GraphicsPath.fromString=function(str){
  var index=[0]
  var started=false
