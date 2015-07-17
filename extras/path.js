@@ -241,7 +241,6 @@ GraphicsPath._length=function(a,flatness){
  }
 }
 
-
 /**
  * Finds the approximate length of this path.
 * @param {number} [flatness] When quadratic and cubic
@@ -791,6 +790,15 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
     }
     return ret
    }
+  }
+  if(!digit){
+    index[0]=oldindex
+    return null
+  }
+ } else {
+  if(!digit){
+    index[0]=oldindex
+    return null
   }
  }
  ret=parseFloat(str.substr(startIndex,str.length-startIndex))
