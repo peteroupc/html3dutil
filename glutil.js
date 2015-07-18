@@ -2243,7 +2243,6 @@ ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
 }
-
 /**
  * Sets the material used by all shapes in this shape group.
  * @param {glutil.Material} material

@@ -238,13 +238,17 @@ LightsBinder.prototype.bind=function(program){
 ///////////////////////
 
 var Binders={};
+Binders._texturedeprecation=false
 Binders.getMaterialBinder=function(material){
  if(material){
  if(material instanceof Material){
   return new MaterialBinder(material);
  }
  if(material instanceof Texture){
-  console.warn("Setting shape materials directly to textures is deprecated.");
+  if(!Binders._texturedeprecation){
+   console.warn("Setting shape materials directly to textures is deprecated.  Use Material.fromTexture instead.");
+   Binders._texturedeprecation=true
+  }
   return new TextureBinder(material);
  }
  if(material instanceof FrameBuffer){
