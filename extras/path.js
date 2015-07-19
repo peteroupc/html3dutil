@@ -617,50 +617,50 @@ GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
 * or the upper limit to integration.  If xmax is less than xmin,
 * this results in a negative integral.
 * @param {Number} [maxIter] Maximum iterations.
-* If null or undefined, will iterate indefinitely.
+* If null or undefined, does 8 iterations.
 * @returns The approximate integral of _func_ between
 * _xmin_ and _xmax_.
 */
 GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
- var oldVal=0;
- var first=true;
- var res=8;
- var integral=0;
- var step=(xmax-xmin)/res;
- var firstx=func(xmin);
- // 9-point Newton-Cotes integration
- var coeff=[989,5888,-928,10496,-4540,10496,-928,5888,989];
- var chunk=step*0.0002821869488536155 // =step*4/14175
- var steps=coeff.length-1
- var count=0
- while(true){
-  var curVal=0;
-  oldx=firstx;
-  for(var i=0;i<res;i+=steps){
-   var s=0;
-   var last=0;
-   for(var j=0;j<coeff.length;j++){
-    var f=(j==0) ? oldx : func(xmin+step*(i+j));
-    last=f;
-    s+=f*coeff[j];
-   }
-   curVal+=chunk*s;
-   oldx=last;
-  }
-  if(!first && curVal==oldVal){
-   return curVal;
-  } else {
-   oldVal=curVal;
-   res*=2
-   step*=0.5;
-   chunk*=0.5;
-   first=false;
-  }
-  if(maxIter!=null){
-   count+=1
-   if(count>=maxIter)return curVal
-  }
+ if(xmax==xmin)return 0;
+ if(xmax<xmin){
+  return GraphicsPath._numIntegrate(func,xmax,xmin,maxIter)
  }
+ if(maxIter==null)maxIter=8
+ if(maxIter<=0)return 0;
+ // Romberg integration
+ var matrix=[0]
+ var hk=(xmax-xmin)
+ var lasthk=hk
+ var klimit=0
+ for(var k=1;k<=maxIter;k++){
+  if(k==1){
+   matrix[k]=hk*0.5*(func(xmin)+func(xmax))
+   klimit=1
+  } else {
+   var tmp=0
+   for(var j=1;j<=klimit;j++){
+    tmp+=func(xmin+(j-0.5)*lasthk)
+   }
+   tmp*=lasthk
+   matrix[k]=(matrix[k-1]+tmp)*0.5   
+   klimit<<=1
+  }
+  lasthk=hk
+  hk/=2
+ }
+ var mxi=maxIter+1
+ var pj1=4
+ for(var j=2;j<=maxIter;j++){
+  var prev=matrix[j-1]
+  for(var i=j;i<=maxIter;i++){
+   var cur=matrix[i]
+   matrix[i]=(cur*pj1-prev)/(pj1-1)
+   prev=cur
+  }
+  pj1*=4
+ }
+ return matrix[matrix.length-1]
 }
 GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
  if(startAngle==endAngle || xRadius<=0 || yRadius<=0)return 0
@@ -676,7 +676,7 @@ GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
   return Math.sqrt(1-s*s*eccSq);
  }
  return Math.abs(mx*GraphicsPath._numIntegrate(
-   ellipticIntegrand,startAngle,endAngle,7))
+   ellipticIntegrand,startAngle,endAngle,12))
 }
 GraphicsPath._vecangle=function(a,b,c,d){
  var dot=a*c+b*d
@@ -1181,7 +1181,7 @@ Triangulate._LinkedList.prototype.addIfMissing=function(item){
  }
 }
 Triangulate._LinkedList.prototype.add=function(item){
- var itemIndex=(this.lastRemovedIndex==-1) ?
+ var itemIndex=(this.lastRemovedIndex==-1) ? 
    this.items.length : this.lastRemovedIndex
  this.lastRemovedIndex=-1
  this.items[itemIndex]=item
@@ -1201,15 +1201,15 @@ Triangulate._NEXT=3
 Triangulate._pointInTri=function(vertices,i1,i2,i3,pt){
   var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
   var t2 = Math.min (vertices[i3+1], vertices[i1+1]);
-  var t=(((vertices[i1+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i3+0])) &&
+  var t=(((vertices[i1+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i3+0])) && 
   (((vertices[pt+1] - t2) * (Math.max (vertices[i3+0], vertices[i1+0]) - t1)) < ((Math.max (vertices[i3+1], vertices[i1+1]) - t2) * (vertices[pt+0] - t1))));
   var t4 = Math.min (vertices[i1+0], vertices[i2+0]);
   var t5 = Math.min (vertices[i1+1], vertices[i2+1]);
-  t^=(((vertices[i2+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i1+0])) &&
+  t^=(((vertices[i2+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i1+0])) && 
    (((vertices[pt+1] - t5) * (Math.max (vertices[i1+0], vertices[i2+0]) - t4)) < ((Math.max (vertices[i1+1], vertices[i2+1]) - t5) * (vertices[pt+0] - t4))));
   var t7 = Math.min (vertices[i2+0], vertices[i3+0]);
   var t8 = Math.min (vertices[i2+1], vertices[i3+1]);
-  t^=(((vertices[i3+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i2+0])) &&
+  t^=(((vertices[i3+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i2+0])) && 
    (((vertices[pt+1] - t8) * (Math.max (vertices[i2+0], vertices[i3+0]) - t7)) < ((Math.max (vertices[i2+1], vertices[i3+1]) - t8) * (vertices[pt+0] - t7))));
   return t
 }
@@ -1251,7 +1251,7 @@ Triangulate._triangulate=function(vertices,tris){
  var vertLength=vertices.length
  // For convenience, eliminate the last
  // vertex if it matches the first vertex
- if(vertLength>=4 &&
+ if(vertLength>=4 && 
     vertices[0]==vertices[vertLength-2] &&
     vertices[1]==vertices[vertLength-1]){
   vertLength-=2
