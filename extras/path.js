@@ -574,7 +574,7 @@ GraphicsPath.prototype.lineTo=function(x,y){
  * @param {*} y2
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.quadTo=function(x,y,x2,y2){
+GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
  this.segments.push([GraphicsPath.QUAD,
   this.endPos[0],this.endPos[1],x,y,x2,y2])
  this.endPos[0]=x2
@@ -592,7 +592,7 @@ GraphicsPath.prototype.quadTo=function(x,y,x2,y2){
  * @param {*} y3
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
+GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
  this.segments.push([GraphicsPath.CUBIC,
   this.endPos[0],this.endPos[1],x,y,x2,y2,x3,y3])
  this.endPos[0]=x3
@@ -643,7 +643,7 @@ GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
     tmp+=func(xmin+(j-0.5)*lasthk)
    }
    tmp*=lasthk
-   matrix[k]=(matrix[k-1]+tmp)*0.5   
+   matrix[k]=(matrix[k-1]+tmp)*0.5
    klimit<<=1
   }
   lasthk=hk
@@ -677,7 +677,7 @@ GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
   return Math.sqrt(1-s*s*eccSq);
  }
  return Math.abs(mx*GraphicsPath._numIntegrate(
-   ellipticIntegrand,startAngle,endAngle,12))
+   ellipticIntegrand,startAngle,endAngle,10))
 }
 GraphicsPath._vecangle=function(a,b,c,d){
  var dot=a*c+b*d
@@ -688,7 +688,7 @@ GraphicsPath._vecangle=function(a,b,c,d){
  if(sgn<0)ret=-ret
  return ret
 }
-GraphicsPath._arcToCenterParam=function(a){
+GraphicsPath._arcSvgToCenterParam=function(a){
  var x1=a[1]
  var y1=a[2]
  var x2=a[8]
@@ -736,6 +736,7 @@ GraphicsPath._arcToCenterParam=function(a){
  delta+=theta1
  return [cx,cy,theta1,delta]
 }
+
 /**
  * Not documented yet.
  * @param {*} rx
@@ -747,7 +748,7 @@ GraphicsPath._arcToCenterParam=function(a){
  * @param {*} y2
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.arcTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
+GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  if(rx==0 || ry==0){
   return this.lineTo(x2,y2);
  }
@@ -770,7 +771,7 @@ GraphicsPath.prototype.arcTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  }
  var arc=[GraphicsPath.ARC,
   x1,y1,rx,ry,rot,!!largeArc,!!sweep,x2,y2]
- var cp=GraphicsPath._arcToCenterParam(arc)
+ var cp=GraphicsPath._arcSvgToCenterParam(arc)
  arc[10]=cp[0]
  arc[11]=cp[1]
  arc[12]=cp[2]
@@ -1025,7 +1026,7 @@ GraphicsPath.fromString=function(str){
      if(x3==null){ failed=true;break; }
      var y3=GraphicsPath._nextNumber(str,index,true)
      if(y3==null){ failed=true;break; }
-     ret.cubicTo(curx+x,cury+y,curx+x2,cury+y2,
+     ret.bezierCurveTo(curx+x,cury+y,curx+x2,cury+y2,
        curx+x3,cury+y3);
      sep=true;
     }
@@ -1044,7 +1045,7 @@ GraphicsPath.fromString=function(str){
      if(x2==null){ failed=true;break; }
      var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
-     ret.quadTo(curx+x,cury+y,curx+x2,cury+y2);
+     ret.quadraticCurveTo(curx+x,cury+y,curx+x2,cury+y2);
      sep=true;
     }
     break;
@@ -1067,7 +1068,7 @@ GraphicsPath.fromString=function(str){
      if(x2==null){ failed=true;break; }
      var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
-     ret.arcTo(x+curx,y+cury,rot,largeArc!=0x30,
+     ret.arcSvgTo(x+curx,y+cury,rot,largeArc!=0x30,
        sweep!=0x30,x2+curx,y2+cury);
      sep=true;
     }
@@ -1093,7 +1094,7 @@ GraphicsPath.fromString=function(str){
         xcp=ret.segments[ret.segments.length-1][5]
         ycp=ret.segments[ret.segments.length-1][6]
      }
-     ret.cubicTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury,x2+curx,y2+cury);
+     ret.bezierCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury,x2+curx,y2+cury);
      sep=true;
     }
     break;
@@ -1116,7 +1117,7 @@ GraphicsPath.fromString=function(str){
      }
      x+=curx
      y+=cury
-     ret.quadTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury);
+     ret.quadraticCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury);
      sep=true;
     }
     break;
@@ -1182,7 +1183,7 @@ Triangulate._LinkedList.prototype.addIfMissing=function(item){
  }
 }
 Triangulate._LinkedList.prototype.add=function(item){
- var itemIndex=(this.lastRemovedIndex==-1) ? 
+ var itemIndex=(this.lastRemovedIndex==-1) ?
    this.items.length : this.lastRemovedIndex
  this.lastRemovedIndex=-1
  this.items[itemIndex]=item
@@ -1202,15 +1203,15 @@ Triangulate._NEXT=3
 Triangulate._pointInTri=function(vertices,i1,i2,i3,pt){
   var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
   var t2 = Math.min (vertices[i3+1], vertices[i1+1]);
-  var t=(((vertices[i1+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i3+0])) && 
+  var t=(((vertices[i1+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i3+0])) &&
   (((vertices[pt+1] - t2) * (Math.max (vertices[i3+0], vertices[i1+0]) - t1)) < ((Math.max (vertices[i3+1], vertices[i1+1]) - t2) * (vertices[pt+0] - t1))));
   var t4 = Math.min (vertices[i1+0], vertices[i2+0]);
   var t5 = Math.min (vertices[i1+1], vertices[i2+1]);
-  t^=(((vertices[i2+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i1+0])) && 
+  t^=(((vertices[i2+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i1+0])) &&
    (((vertices[pt+1] - t5) * (Math.max (vertices[i1+0], vertices[i2+0]) - t4)) < ((Math.max (vertices[i1+1], vertices[i2+1]) - t5) * (vertices[pt+0] - t4))));
   var t7 = Math.min (vertices[i2+0], vertices[i3+0]);
   var t8 = Math.min (vertices[i2+1], vertices[i3+1]);
-  t^=(((vertices[i3+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i2+0])) && 
+  t^=(((vertices[i3+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i2+0])) &&
    (((vertices[pt+1] - t8) * (Math.max (vertices[i2+0], vertices[i3+0]) - t7)) < ((Math.max (vertices[i2+1], vertices[i3+1]) - t8) * (vertices[pt+0] - t7))));
   return t
 }
@@ -1252,7 +1253,7 @@ Triangulate._triangulate=function(vertices,tris){
  var vertLength=vertices.length
  // For convenience, eliminate the last
  // vertex if it matches the first vertex
- if(vertLength>=4 && 
+ if(vertLength>=4 &&
     vertices[0]==vertices[vertLength-2] &&
     vertices[1]==vertices[vertLength-1]){
   vertLength-=2
