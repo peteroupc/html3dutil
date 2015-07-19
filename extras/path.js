@@ -647,15 +647,16 @@ GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
    klimit<<=1
   }
   lasthk=hk
-  hk/=2
+  hk*=0.5
  }
  var mxi=maxIter+1
  var pj1=4
  for(var j=2;j<=maxIter;j++){
   var prev=matrix[j-1]
+  var recipPj1m1=1.0/(pj1-1);
   for(var i=j;i<=maxIter;i++){
    var cur=matrix[i]
-   matrix[i]=(cur*pj1-prev)/(pj1-1)
+   matrix[i]=(cur*pj1-prev)*recipPj1m1
    prev=cur
   }
   pj1*=4
