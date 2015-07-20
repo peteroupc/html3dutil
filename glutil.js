@@ -608,11 +608,11 @@ function LightSource(position, ambient, diffuse, specular) {
  this.position=position ? [position[0],position[1],position[2],1.0] :
    [0, 0, 1, 0];
  /**
- * A 3-element vector giving the color of the light when it causes a diffuse
+ * A 4-element vector giving the color of the light when it causes a diffuse
  * reflection, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
  * A diffuse reflection is a reflection that scatters evenly, in every direction.
- * The default is (1,1,1), or white.
+ * The default is (1,1,1,1), or white.
  */
  this.diffuse=diffuse||[1,1,1,1];
  /**
@@ -639,8 +639,13 @@ function LightSource(position, ambient, diffuse, specular) {
 * <li>If W is 1, then X, Y, and Z specify the position of the light in world
 * space; the light will shine brightest, and in every direction, at the given position.</ul>
 * <li><code>ambient</code> - Not used in the default shader program.
-* <li><code>diffuse</code> - Diffuse color.
-* <li><code>specular</code> - Specular highlight color.
+* <li><code>diffuse</code> - A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ * The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+* <li><code>specular</code> - A 3- or 4-element vector giving the color of specular highlights caused by
+ * the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ * The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * </ul>
 * If a value is null or undefined, it is ignored.
 * @return {glutil.Material} This object.
@@ -1928,13 +1933,13 @@ Scene3D.prototype.removeShape=function(shape){
  * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
- * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
+ * @param {Array<number>} [diffuse] A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
+ * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+ * @param {Array<number>} [specular] A 3- or 4-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
+ * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
@@ -1981,13 +1986,13 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<number>} position
- * @param {Array<number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
+ * @param {Array<number>} [diffuse] A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
- * @param {Array<number>} specular A 3-element vector giving the color of specular highlights caused by
+ * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+ * @param {Array<number>} [specular] A 3- or 4-element vector giving the color of specular highlights caused by
  * the light, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
- * May be null, in which case the default is (1, 1, 1).
+ * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){

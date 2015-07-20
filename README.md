@@ -45,6 +45,8 @@ a rotating, pulsating box.
 combining multiple meshes into one.
 * [demos/shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
 the built-in shapes.
+* [demos/newshapes.html](https://peteroupc.github.io/html3dutil/demos/newshapes.html) - Fancier
+demo of some of the built-in shapes.
 * [demos/builtinshapes.html](https://peteroupc.github.io/html3dutil/demos/builtinshapes.html) - Interactive demo of
 the built-in shapes.
 * [demos/platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
