@@ -1077,7 +1077,7 @@ GraphicsPath.prototype.rect=function(x,y,w,h){
 /**
 * Creates a graphics path from a string whose format follows
 * the SVG specification.
-* @param {string} A string, in the SVG path format, representing
+* @param {string} str A string, in the SVG path format, representing
 * a two-dimensional path.  An SVG path consists of a number of
 * path segments, starting with a single letter, as follows:
 * <ul>
