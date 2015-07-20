@@ -2,7 +2,7 @@ This page contains source code for creating various kinds of 3D models on the fl
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Cone](#Cone)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>
+[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Cone](#Cone)<br>[Floor](#Floor)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>
 
 ## 3D Line <a id=3D_Line></a>
 
@@ -32,6 +32,43 @@ This method creates a cone that's closed at its base.
 
     function createClosedCone(radius,height,slices){
       return Meshes.createClosedCylinder(radius,0,height,slices,1);
+    }
+
+## Floor <a id=Floor></a>
+
+This method creates a flat tiled floor.
+
+![Image of a floor](floor.png)
+
+    // xStart, yStart - X and Y coordinates of the start of the floor
+    // width, height - Width and height of the floor
+    // tileSize - Size of each floor tile
+    // z - Z-coordinate where the floor will be placed (optional,
+    //  default 0)
+    function makeFloor(xStart,yStart,width,height,tileSize,z){
+     if(z==null)z=0.0
+     var mesh=new Mesh()
+     var tilesX=Math.ceil(width/tileSize)
+     var tilesY=Math.ceil(height/tileSize)
+     var lastY=(height-(tilesY*tileSize))/tileSize
+     var lastX=(width-(tilesX*tileSize))/tileSize
+     if(lastY<=0)lastY=1.0
+     if(lastX<=0)lastX=1.0
+     mesh.normal3(0,0,1)
+     for(var y=0;y<tilesY;y++){
+      var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
+      var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
+      for(var x=0;x<tilesX;x++){
+       var endX=(x==tilesX-1) ? lastX : 1.0
+       var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
+       mesh.mode(Mesh.TRIANGLE_STRIP)
+         .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
+         .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
+         .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
+         .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
+      }
+     }
+     return mesh
     }
 
 ## Striped Disk <a id=Striped_Disk></a>
