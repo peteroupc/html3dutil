@@ -158,6 +158,40 @@ Examples
 History
 ---------
 
+Version 1.5:
+
+- Add support for specular maps and normal maps, including
+ in the JSON mesh format and MTL material format.
+- To support normal maps, extra methods for bitangents and
+ tangents were added to the Mesh class.
+- Added six new demos and modified several others
+- Support 24-bit color versions of TGA files
+- Scene3D now does frustum culling of its shapes
+- Fixed vertex normal calculation in the recalcNormals()
+ method of the Mesh class.
+- Allow two-element arrays to be passed to the Mesh class's
+ texCoord3() method.
+- Add getBoundingBox method to the Mesh class.
+- Add the setVisible method to the Shape and ShapeGroup
+ classes.
+- Allow reading OBJ files with negative reference numbers
+- Add path.js (2D graphics paths) to extras
+- Added an "axis" parameter to the SurfaceOfRevolution
+ constructor and fromFunction method
+- Add vec3negate, vec3negateInPlace, vec3mul, and plane
+ and frustum methods to the GLMath class
+- Deprecate the practice of setting shape materials directly
+ to textures (calling the Shape#setMaterial method with a
+ Texture object rather than a Material object).
+- Deprecate certain properties of Transform that shouldn't
+ be exposed as a public API and add corresponding methods
+ for those properties
+- Fix getPromiseResults
+- Documentation added in many places
+- "meshexamples.md" demo added and other demos edited
+ or rearranged
+- Other changes and fixes
+
 Version 1.4:
 
 - Fixed camera.js issues (thanks to the user "the-sz" on GitHub)
