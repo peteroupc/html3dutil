@@ -54,6 +54,11 @@ platonic solids.  Demonstrates how vertex and index arrays are built up to creat
 * [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 
+### Paths
+
+* [demos/marchingdots.html](https://peteroupc.github.io/html3dutil/demos/marchingdots.html) - Demo
+of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.
+
 ### Curves and Surfaces
 
 * [demos/surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates
