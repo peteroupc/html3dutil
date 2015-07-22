@@ -96,6 +96,8 @@ Mesh._recalcNormalsStart=function(vertices,uniqueVertices,faces,stride,offset,fl
 /** @private */
 Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,flat){
  var len;
+ var dupverts=[]
+ var dupvertcount=0
    if(!flat){
    // If smooth shading is requested, make sure
    // that every vertex with the same position has the
@@ -104,19 +106,37 @@ Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,f
     var v=uniqueVertices[key]
     if(v && v.constructor==Array && v.length>=2){
      var v0=v[0];
-     // Add the normals of duplicate vertices
-     // to the first vertex
+     var avgx=vertices[v0]
+     var avgy=vertices[v0+1]
+     var avgz=vertices[v0+2]
+     dupverts[0]=avgx
+     dupverts[1]=avgy
+     dupverts[2]=avgz
+     dupvertcount=3
      for(var i=1;i<v.length;i++){
-      vertices[v0]+=vertices[v[i]]
-      vertices[v0+1]+=vertices[v[i]+1]
-      vertices[v0+2]+=vertices[v[i]+2]
+      var dupfound=false
+      var nx=vertices[v[i]]
+      var ny=vertices[v[i]+1]
+      var nz=vertices[v[i]+2]
+      for(var j=0;j<dupvertcount;j+=3){
+       if(nx==dupverts[j] && ny==dupverts[j+1] && nz==dupverts[j+2]){
+        dupfound=true
+        break
+       }
+      }
+      if(!dupfound){
+       dupverts[dupvertcount++]=nx
+       dupverts[dupvertcount++]=ny
+       dupverts[dupvertcount++]=nz
+       avgx+=nx
+       avgy+=ny
+       avgy+=nz
+      }
      }
-     // Propagate the first vertex's normal to the
-     // other vertices
-     for(var i=1;i<v.length;i++){
-      vertices[v[i]]=vertices[v0]
-      vertices[v[i]+1]=vertices[v0+1]
-      vertices[v[i]+2]=vertices[v0+2]
+     for(var i=0;i<v.length;i++){
+      vertices[v[i]]=avgx
+      vertices[v[i]+1]=avgy
+      vertices[v[i]+2]=avgz
      }
     }
    }

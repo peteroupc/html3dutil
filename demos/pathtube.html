@@ -56,7 +56,7 @@ function pathFloor(path, z, flatness){
  return mesh
 }
 
-function makeTubeFromPath(flatness,thickness){
+function makeTubeFromPath(path,flatness,thickness){
  var mesh=new Mesh()
  var curves=path.getCurves(flatness)
  var resolution=Math.ceil(curves.getLength()*2/3)
@@ -75,7 +75,7 @@ function makeTubeFromPath(flatness,thickness){
   scene.setDirectionalLight(0,[0,-3,1.2],[1,1,1])
   scene.setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
    var mesh=null
-   mesh=makeTubeFromPath(0.2,2)
+   mesh=makeTubeFromPath(path,0.2,2)
    scene.addShape(
     scene.makeShape(mesh).setColor("blue"))
    scene.addShape(
