@@ -7,5 +7,6 @@
 "shapes":{"title":"Creating Shapes"},
 "surfaces":{"title":"Parametric Curves and Parametric Surfaces"},
 "textures":{"title":"Texture Examples"},
-"meshexamples":{"title":"Examples of Creating Meshes on the Fly"}
+"meshexamples":{"title":"Examples of Creating Meshes on the Fly"},
+"history":{"title":"Older Version History"}
 }
