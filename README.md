@@ -58,6 +58,8 @@ featuring a wall clock.
 
 * [demos/marchingdots.html](https://peteroupc.github.io/html3dutil/demos/marchingdots.html) - Demo
 of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.
+* [demos/pathtube.html](https://peteroupc.github.io/html3dutil/demos/pathtube.html) - Demo
+of a tube formed by a path curve.
 
 ### Curves and Surfaces
 
