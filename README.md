@@ -158,6 +158,15 @@ Examples
 History
 ---------
 
+Version 1.5.1:
+
+- Fixed bug in normal calculation
+- Make certain changes to the demos to ensure compatibility with the
+ next major version
+- Fix curve returned by GraphicsPath#getCurves() so that closed paths
+ remain smooth at their endpoints when a curve tube is generated from
+ them
+
 Version 1.5:
 
 - Add support for specular maps and normal maps, including
