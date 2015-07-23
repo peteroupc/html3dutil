@@ -130,10 +130,10 @@ Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,f
        dupverts[dupvertcount++]=nz
        avgx+=nx
        avgy+=ny
-       avgy+=nz
+       avgz+=nz
       }
-     }
-     for(var i=0;i<v.length;i++){
+    }
+    for(var i=0;i<v.length;i++){
       vertices[v[i]]=avgx
       vertices[v[i]+1]=avgy
       vertices[v[i]+2]=avgz
