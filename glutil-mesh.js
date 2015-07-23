@@ -130,7 +130,7 @@ Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,f
        dupverts[dupvertcount++]=nz
        avgx+=nx
        avgy+=ny
-       avgy+=nz
+       avgz+=nz
       }
      }
      for(var i=0;i<v.length;i++){
