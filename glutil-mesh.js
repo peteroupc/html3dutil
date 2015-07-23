@@ -195,41 +195,6 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
   Mesh._recalcNormalsFinish(vertices,uniqueVertices,faces,stride,offset,flat);
 }
 
-/** @private */
-Mesh._recalcNormalsLines=function(vertices,faces,stride,offset,flat,inward){
-  var normDir=(inward) ? 1 : -1;
-  var uniqueVertices={};
-  var len;
-  Mesh._recalcNormalsStart(vertices,uniqueVertices,faces,stride,offset,flat);
-  for(var i=0;i<faces.length;i+=2){
-    var v1=faces[i]*stride
-    var v2=faces[i+1]*stride
-    var n1=[vertices[v2],vertices[v2+1],vertices[v2+2]]
-    var n2=[vertices[v1],vertices[v1+1],vertices[v1+2]]
-    // cross multiply n1 and n2
-    var x=(n1[1]*n2[2]-n1[2]*n2[1])
-    var y=(n1[2]*n2[0]-n1[0]*n2[2])
-    var z=(n1[0]*n2[1]-n1[1]*n2[0])
-    // normalize xyz vector
-    len=Math.sqrt(x*x+y*y+z*z);
-    if(len!=0){
-      len=1.0/len;
-      len*=normDir
-      x*=len;
-      y*=len;
-      z*=len;
-      // add normalized normal to each vertex of the face
-      vertices[v1+offset]+=x
-      vertices[v1+offset+1]+=y
-      vertices[v1+offset+2]+=z
-      vertices[v2+offset]+=x
-      vertices[v2+offset+1]+=y
-      vertices[v2+offset+2]+=z
-    }
-  }
-  Mesh._recalcNormalsFinish(vertices,uniqueVertices,faces,stride,offset,flat);
-}
-
 /**
  * Changes the primitive mode for this mesh.
  * Future vertices will be drawn as primitives of the new type.
@@ -409,7 +374,9 @@ Mesh.prototype.bitangent3=function(x,y,z){
  /**
   * Transforms the positions and normals of all the vertices currently
   * in this mesh, using a 4x4 matrix.  The matrix won't affect
-  * vertices added afterwards.  Future vertices should not be
+  * vertices added afterwards. Also, resets the primitive
+  * mode (see {@link glutil.Mesh#mode}) so that future vertices given
+  * will not build upon previous vertices. Future vertices should not be
   * added after calling this method without calling mode() first.
   * @param {Array<number>} matrix A 4x4 matrix describing
   * the transformation.
@@ -596,9 +563,8 @@ Mesh.prototype.setColor3=function(r,g,b){
   */
  Mesh.prototype.recalcNormals=function(flat,inward){
   for(var i=0;i<this.subMeshes.length;i++){
-   // TODO: Eliminate normal generation for lines
-   // in the next version
-   if(this.subMeshes[i].primitiveType()!=Mesh.POINTS){
+   var primtype=this.subMeshes[i].primitiveType()
+   if(primtype!=Mesh.POINTS && primtype!=Mesh.LINES){
     this.subMeshes[i].recalcNormals(flat,inward);
    }
   }
@@ -1132,11 +1098,7 @@ SubMesh.prototype.transform=function(matrix){
      v[i+normalOffset+2]=xform[2];
     }
   }
-  // TODO: Planned for 2.0.  Once implemented,
-  // Mesh#transform will say:  "Also, resets the primitive
-  // mode (see {@link glutil.Mesh#mode}) so that future vertices given
-  // will not build upon previous vertices."
-  //this.newPrimitive();
+  this.newPrimitive();
   return this;
 }
 
@@ -1415,10 +1377,8 @@ SubMesh.prototype.recalcNormals=function(flat,inward){
   if(haveOtherAttributes || flat){
     this.makeRedundant();
   }
-  if(this.primitiveType()==Mesh.LINES){
-   Mesh._recalcNormalsLines(this.vertices,this.indices,
-     this.getStride(),3,flat,inward);
-  } else {
+  var primtype=this.primitiveType()
+  if(primtype!=Mesh.LINES && primtype!=Mesh.POINTS){
    Mesh._recalcNormals(this.vertices,this.indices,
      this.getStride(),3,flat,inward);
   }

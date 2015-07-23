@@ -102,28 +102,6 @@ var GLUtil={
  return canvas;
 },
 /**
-* Creates an HTML canvas element, optionally appending
-* it to an existing HTML element.
-* @deprecated Use {@link glutil.GLUtil.createCanvasElement} instead.
-* @param {number|null} width Width of the new canvas
-* element, or if null, the value <code>window.innerWidth</code>.
-* The resulting width will be rounded up.
-* This parameter can't be a negative number.
-* @param {number|null} height Height of the new canvas
-* element, or if null, the value <code>window.innerHeight</code>.
-* The resulting height will be rounded up.
-* This parameter can't be a negative number.
-* @param {HTMLElement|null} parent If non-null, the parent
-* element of the new HTML canvas element. The element will be
-* appended as a child of this parent.
-* @return {HTMLCanvasElement} The resulting canvas element.
-*/
-"createCanvas":function(width, height, parent){
- if(width==null)width=Math.ceil(window.innerWidth);
- if(height==null)height=Math.ceil(window.innerHeight);
- return GLUtil["createCanvasElement"](parent,width,height);
-},
-/**
 * Creates a 3D rendering context from an HTML canvas element,
 * falling back to a 2D context if that fails.
 * @param {HTMLCanvasElement} canvasElement An HTML
@@ -1489,25 +1467,6 @@ Scene3D.prototype._getSpecularMapShader=function(){
     defines+ShaderProgram.getDefaultFragment());
  return this.__specularMapShader;
 }
-
-/** Changes the active shader program for this scene
-* to a program that doesn't support lighting.
-* @deprecated Use the <code>useProgram</code>
-* method instead.
-* @return {glutil.Scene3D} This object.
-*/
-Scene3D.prototype.disableLighting=function(){
- this.lightingEnabled=false;
- if(this._is3d){
-  this.__specularMapShader=null;
-  var program=new ShaderProgram(this.context,
-    this._getDefines()+ShaderProgram.getDefaultVertex(),
-    this._getDefines()+ShaderProgram.getDefaultFragment());
-  return this.useProgram(program);
- } else {
-  return this;
- }
-}
 /**
 * Sets the viewport width and height for this scene.
 * @param {number} width Width of the scene, in pixels.
@@ -1890,11 +1849,12 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
+* Its parent will be set to no parent.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
- // TODO: Add "shape.parent=null" in version 2.0
+ shape.parent=null;
  this.shapes.push(shape);
  return this;
 }
@@ -2549,24 +2509,6 @@ Shape.prototype.getMatrix=function(){
   }
   return mat;
 }
-/////////////
-// Deprecated methods
-/** @deprecated Use Shape.getTransform().multQuaternion(...) instead. */
-Shape.prototype.multQuaternion=function(x){
- this.getTransform().multQuaternion(x);
- return this;
-}
-/** @deprecated Use Shape.getTransform().multOrientation(...) instead. */
-Shape.prototype.multRotation=function(a,b,c,d){
- this.getTransform().multRotation(a,b,c,d);
- return this;
-}
-/** @deprecated Use Shape.getTransform().setOrientation(...) instead. */
-Shape.prototype.setRotation=function(a,b,c,d){
- this.getTransform().setOrientation(a,b,c,d);
- return this;
-}
-
 /////////////
 exports["ShapeGroup"]=ShapeGroup;
 exports["Lights"]=Lights;
