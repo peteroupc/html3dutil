@@ -331,12 +331,12 @@ var GLUtil={
 * var angle = 360 * GLUtil.getTimePosition(timer, time, 5000);
 */
 GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
- if(timer.time===null) {
+ if(((typeof timer.time==="undefined" || timer.time===null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
  } else {
-  if(timer.lastTime===null)timer.lastTime=timeInMs;
+  if(((typeof timer.lastTime==="undefined" || timer.lastTime===null)))timer.lastTime=timeInMs;
   return (((timeInMs-timer.time)*1.0)%intervalInMs)/intervalInMs;
  }
 };
@@ -356,11 +356,11 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * initial time or last known time wasn't set, returns 0.
 */
 GLUtil.newFrames=function(timer,timeInMs){
- if(timer.time===null) {
+ if(((typeof timer.time==="undefined" || timer.time===null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
- } else if(timer.lastTime===null){
+ } else if(((typeof timer.lastTime==="undefined" || timer.lastTime===null))){
   timer.lastTime=timeInMs;
   return 0;
  } else {
@@ -633,18 +633,18 @@ function LightSource(position, ambient, diffuse, specular) {
 * @return {glutil.Material} This object.
 */
 LightSource.prototype.setParams=function(params){
- if(params.ambient!==null){
+ if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){
   this.ambient=GLUtil.toGLColor(params.ambient);
  }
- if(params.position!==null){
+ if(((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && params.position!==null))))))){
   var position=params.position;
   this.position=[position[0],position[1],position[2],
     (position[3]===null) ? 0.0 : position[3]];
  }
- if(params.specular!==null){
+ if(((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && params.specular!==null))))))){
   this.specular=GLUtil.toGLColor(params.specular);
  }
- if(params.diffuse!==null){
+ if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
  }
  return this;
@@ -940,22 +940,22 @@ Material.prototype.copy=function(){
 */
 Material.prototype.setParams=function(params){
  var param;
- if(params.ambient!==null){
+ if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){
   this.ambient=GLUtil.toGLColor(params.ambient);
  }
- if(params.diffuse!==null){
+ if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
  }
- if(params.specular!==null){
+ if(((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && params.specular!==null))))))){
   this.specular=GLUtil.toGLColor(params.specular);
  }
- if(params.emission!==null){
+ if(((typeof params.emission!=="undefined" && ((typeof params.emission!=="undefined" && ((typeof params.emission!=="undefined" && params.emission!==null))))))){
   this.emission=GLUtil.toGLColor(params.emission);
  }
- if(params.shininess!==null){
+ if(((typeof params.shininess!=="undefined" && ((typeof params.shininess!=="undefined" && ((typeof params.shininess!=="undefined" && params.shininess!==null))))))){
   this.shininess=params.shininess;
  }
- if(params.texture!==null){
+ if(((typeof params.texture!=="undefined" && ((typeof params.texture!=="undefined" && ((typeof params.texture!=="undefined" && params.texture!==null))))))){
    param=params.texture;
    if(typeof param==="string"){
     this.texture=new Texture(param);
@@ -963,7 +963,7 @@ Material.prototype.setParams=function(params){
     this.texture=param;
    }
  }
- if(params.specularMap!==null){
+ if(((typeof params.specularMap!=="undefined" && ((typeof params.specularMap!=="undefined" && ((typeof params.specularMap!=="undefined" && params.specularMap!==null))))))){
    param=params.specularMap;
    if(typeof param==="string"){
     this.specularMap=new Texture(param);
@@ -971,7 +971,7 @@ Material.prototype.setParams=function(params){
     this.specularMap=param;
    }
  }
- if(params.normalMap!==null){
+ if(((typeof params.normalMap!=="undefined" && ((typeof params.normalMap!=="undefined" && ((typeof params.normalMap!=="undefined" && params.normalMap!==null))))))){
    param=params.normalMap;
    if(typeof param==="string"){
     this.normalMap=new Texture(param);
@@ -1606,7 +1606,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
- if((aspect===null || typeof aspect==="undefined"))aspect=this.getAspect();
+ if((aspect===null || typeof aspect==="undefined"))aspect=this.getClientAspect();
  if(aspect===0)aspect=1;
  return this.setProjectionMatrix(GLMath.mat4orthoAspect(
    left,right,bottom,top,near,far,aspect));
@@ -1797,7 +1797,8 @@ Scene3D.prototype._updateMatrix=function(program){
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
   };
-  if(program.get("viewInvW")!==null){
+  var viewInvW=program.get("viewInvW")
+  if(viewInvW!==null && typeof viewInvW!=="undefined"){
    var invView=GLMath.mat4invert(this._viewMatrix);
    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
   }
@@ -1981,7 +1982,8 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
   var viewWorld;
-  if(program.get("modelViewMatrix")!==null){
+  var mvm=program.get("modelViewMatrix")
+  if(mvm!=null){
    if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
     // view matrix is just a translation matrix, so that getting the model-view
     // matrix amounts to simply adding the view's position

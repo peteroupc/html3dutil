@@ -142,10 +142,10 @@ TextureBinder.prototype.bind=function(program,textureUnit){
 if((textureUnit===null || typeof textureUnit==="undefined"))textureUnit=0;
  var texture=this.texture;
  var context=program.getContext();
- if(texture.image!==null && texture.loadedTexture===null){
+ if(((typeof texture.image!=="undefined" && ((typeof texture.image!=="undefined" && ((typeof texture.image!=="undefined" && texture.image!==null)))))) && ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null))))))){
       // load the image as a texture
       texture.loadedTexture=new LoadedTexture(texture,context);
- } else if(texture.image===null && texture.loadedTexture===null &&
+ } else if(((typeof texture.image==="undefined" || ((typeof texture.image==="undefined" || ((typeof texture.image==="undefined" || texture.image===null)))))) && ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null)))))) &&
    texture.loadStatus===0){
       var thisObj=this;
       var prog=program;
@@ -155,14 +155,14 @@ if((textureUnit===null || typeof textureUnit==="undefined"))textureUnit=0;
       });
       return;
  }
- if (texture.loadedTexture!==null) {
+ if (((typeof texture.loadedTexture!=="undefined" && ((typeof texture.loadedTexture!=="undefined" && ((typeof texture.loadedTexture!=="undefined" && texture.loadedTexture!==null))))))) {
       var uniforms={};
-      if(texture.anisotropic===null){
+      if(((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || texture.anisotropic===null))))))){
        // Try to load anisotropic filtering extension
        texture.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
          context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
          context.getExtension("MOZ_EXT_texture_filter_anisotropic");
-       if(texture.anisotropic===null){
+       if(((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || texture.anisotropic===null))))))){
         texture.anisotropic={};
         texture.maxAnisotropy=1;
        } else {
