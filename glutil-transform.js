@@ -126,18 +126,12 @@ if(this._matrixDirty){
 };
 /**
 * Resets this transform to the untransformed state.
+* (Same as "reset"; use that method instead.)
 * @return {glutil.Transform} This object.
 */
 Transform.prototype.resetTransform=function(){
  "use strict";
-this.matrix=GLMath.mat4identity();
- this.position=[0,0,0];
- this.scale=[1,1,1];
- this._isIdentity=true;
- this.rotation=GLMath.quatIdentity();
- this.complexMatrix=false;
- this._matrixDirty=false;
- return this;
+ return this.resetTransform();
 };
 /**
  * Sets the scale of an object relative to its original

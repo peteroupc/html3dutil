@@ -18,16 +18,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @class
 */
 function GraphicsPath(){
- this.segments=[]
- this.incomplete=false
- this.startPos=[0,0]
- this.endPos=[0,0]
+ "use strict";
+this.segments=[];
+ this.incomplete=false;
+ this.startPos=[0,0];
+ this.endPos=[0,0];
 }
-GraphicsPath.CLOSE=0
-GraphicsPath.LINE=1
-GraphicsPath.QUAD=2
-GraphicsPath.CUBIC=3
-GraphicsPath.ARC=4
+GraphicsPath.CLOSE=0;
+GraphicsPath.LINE=1;
+GraphicsPath.QUAD=2;
+GraphicsPath.CUBIC=3;
+GraphicsPath.ARC=4;
 /**
 * Returns whether the curve path is incomplete
 * because of an error in parsing the curve string.
@@ -36,123 +37,130 @@ GraphicsPath.ARC=4
 * is added to the path.
 * @return {boolean} Return value.*/
 GraphicsPath.prototype.isIncomplete=function(){
- return this.incomplete
-}
+ "use strict";
+return this.incomplete;
+};
 GraphicsPath._startPoint=function(a){
- if(a[0]==GraphicsPath.CLOSE){
-  return [0,0]
+ "use strict";
+if(a[0]===GraphicsPath.CLOSE){
+  return [0,0];
  } else {
-  return [a[1],a[2]]
+  return [a[1],a[2]];
  }
-}
+};
 GraphicsPath._endPoint=function(a){
- if(a[0]==GraphicsPath.CLOSE){
-  return [0,0]
- } else if(a[0]==GraphicsPath.ARC){
-  return [a[8],a[9]]
+ "use strict";
+if(a[0]===GraphicsPath.CLOSE){
+  return [0,0];
+ } else if(a[0]===GraphicsPath.ARC){
+  return [a[8],a[9]];
  } else {
-  return [a[a.length-2],a[a.length-1]]
+  return [a[a.length-2],a[a.length-1]];
  }
-}
+};
 GraphicsPath._point=function(seg,t){
- if(seg[0]==GraphicsPath.CLOSE){
-  return [0,0]
- } else if(seg[0]==GraphicsPath.LINE){
+ "use strict";
+ var a,b,x,y;
+if(seg[0]===GraphicsPath.CLOSE){
+  return [0,0];
+ } else if(seg[0]===GraphicsPath.LINE){
   return [
    seg[1]+(seg[3]-seg[1])*t,
    seg[2]+(seg[4]-seg[2])*t
-  ]
- } else if(seg[0]==GraphicsPath.QUAD){
+  ];
+ } else if(seg[0]===GraphicsPath.QUAD){
   var mt=1-t;
   var mtsq=mt*mt;
   var mt2=(mt+mt);
-  var a,b;
   a=seg[1]*mtsq;
   b=seg[3]*mt2;
-  var x=a+t*(b+t*seg[5]);
+  x=a+t*(b+t*seg[5]);
   a=seg[2]*mtsq;
-  b=seg[4]*mt2
-  var y=a+t*(b+t*seg[6]);
+  b=seg[4]*mt2;
+  y=a+t*(b+t*seg[6]);
   return [x,y];
- } else if(seg[0]==GraphicsPath.CUBIC){
-  var a=(seg[3]-seg[1])*3;
-  var b=(seg[5]-seg[3])*3-a;
+ } else if(seg[0]===GraphicsPath.CUBIC){
+  a=(seg[3]-seg[1])*3;
+  b=(seg[5]-seg[3])*3-a;
   var c=seg[7]-a-b-seg[1];
-  var x=seg[1]+t*(a+t*(b+t*c));
+  x=seg[1]+t*(a+t*(b+t*c));
   a=(seg[4]-seg[2])*3;
   b=(seg[6]-seg[4])*3-a;
   c=seg[8]-a-b-seg[2];
-  var y=seg[2]+t*(a+t*(b+t*c));
+  y=seg[2]+t*(a+t*(b+t*c));
   return [x,y];
- } else if(seg[0]==GraphicsPath.ARC){
-  if(t==0)return [seg[1],seg[2]]
-  if(t==1)return [seg[8],seg[9]]
-  var rx=seg[3]
-  var ry=seg[4]
-  var cx=seg[10]
-  var cy=seg[11]
-  var theta=seg[12]
-  var delta=(seg[13]-seg[12])
-  var rot=seg[5]
-  var angle=theta+delta*t
+ } else if(seg[0]===GraphicsPath.ARC){
+  if(t===0)return [seg[1],seg[2]];
+  if(t===1)return [seg[8],seg[9]];
+  var rx=seg[3];
+  var ry=seg[4];
+  var cx=seg[10];
+  var cy=seg[11];
+  var theta=seg[12];
+  var delta=(seg[13]-seg[12]);
+  var rot=seg[5];
+  var angle=theta+delta*t;
   var cr = Math.cos(rot);
   var sr = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-cr*cr) : -Math.sqrt(1.0-cr*cr)) : Math.sin(rot);
   var ca = Math.cos(angle);
   var sa = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(angle);
   return [
    cr*ca*rx-sr*sa*ry+cx,
-   sr*ca*rx+cr*sa*ry+cy]
+   sr*ca*rx+cr*sa*ry+cy];
  } else {
-  return [0,0]
+  return [0,0];
  }
-}
+};
 
 /** @private */
 GraphicsPath._subdivide2=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tcut,list,flatness,mode,depth){
-   var x1=a1+(a3-a1)*tcut
-   var x2=a3+(a5-a3)*tcut
-   var xc1=x1+(x2-x1)*tcut
-   var x3=a5+(a7-a5)*tcut
-   var xc2=x2+(x3-x2)*tcut
-   var xd=xc1+(xc2-xc1)*tcut
-   var y1=a2+(a4-a2)*tcut
-   var y2=a4+(a6-a4)*tcut
-   var yc1=y1+(y2-y1)*tcut
-   var y3=a6+(a8-a6)*tcut
-   var yc2=y2+(y3-y2)*tcut
-   var yd=yc1+(yc2-yc1)*tcut
-   var tmid=t1+(t2-t1)*tcut
-   GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1)
-   GraphicsPath._flattenCubic(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,list,flatness,mode,depth+1)
-}
+   "use strict";
+var x1=a1+(a3-a1)*tcut;
+   var x2=a3+(a5-a3)*tcut;
+   var xc1=x1+(x2-x1)*tcut;
+   var x3=a5+(a7-a5)*tcut;
+   var xc2=x2+(x3-x2)*tcut;
+   var xd=xc1+(xc2-xc1)*tcut;
+   var y1=a2+(a4-a2)*tcut;
+   var y2=a4+(a6-a4)*tcut;
+   var yc1=y1+(y2-y1)*tcut;
+   var y3=a6+(a8-a6)*tcut;
+   var yc2=y2+(y3-y2)*tcut;
+   var yd=yc1+(yc2-yc1)*tcut;
+   var tmid=t1+(t2-t1)*tcut;
+   GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1);
+   GraphicsPath._flattenCubic(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,list,flatness,mode,depth+1);
+};
 /** @private */
 GraphicsPath._subdivide3=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tcut,tcut2,list,flatness,mode,depth){
-   var x1=a1+(a3-a1)*tcut
-   var x2=a3+(a5-a3)*tcut
-   var xc1=x1+(x2-x1)*tcut
-   var x3=a5+(a7-a5)*tcut
-   var xc2=x2+(x3-x2)*tcut
-   var xd=xc1+(xc2-xc1)*tcut
-   var y1=a2+(a4-a2)*tcut
-   var y2=a4+(a6-a4)*tcut
-   var yc1=y1+(y2-y1)*tcut
-   var y3=a6+(a8-a6)*tcut
-   var yc2=y2+(y3-y2)*tcut
-   var yd=yc1+(yc2-yc1)*tcut
-   var tmid=t1+(t2-t1)*tcut
+   "use strict";
+var x1=a1+(a3-a1)*tcut;
+   var x2=a3+(a5-a3)*tcut;
+   var xc1=x1+(x2-x1)*tcut;
+   var x3=a5+(a7-a5)*tcut;
+   var xc2=x2+(x3-x2)*tcut;
+   var xd=xc1+(xc2-xc1)*tcut;
+   var y1=a2+(a4-a2)*tcut;
+   var y2=a4+(a6-a4)*tcut;
+   var yc1=y1+(y2-y1)*tcut;
+   var y3=a6+(a8-a6)*tcut;
+   var yc2=y2+(y3-y2)*tcut;
+   var yd=yc1+(yc2-yc1)*tcut;
+   var tmid=t1+(t2-t1)*tcut;
    var tcutx=(tcut2-tmid)/(t2-tmid);
-   GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1)
-   GraphicsPath._subdivide2(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,tcutx,list,flatness,mode,depth+1)
-}
+   GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1);
+   GraphicsPath._subdivide2(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,tcutx,list,flatness,mode,depth+1);
+};
 
 GraphicsPath._flattenCubic=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,mode,depth){
- if(depth==null)depth=0
+ "use strict";
+if((depth===null || typeof depth==="undefined"))depth=0;
  /* if(depth<1){
   // subdivide the curve at the inflection points
   var ax=a1-3*a3+3*a5-a7
   var ay=a2-3*a4+3*a6-a8
-  var tx=(ax==0) ? -1 : (a1-2*a3+a5)/ax
-  var ty=(ay==0) ? -1 : (a2-2*a4+a6)/ay
+  var tx=(ax === 0) ? -1 : (a1-2*a3+a5)/ax
+  var ty=(ay === 0) ? -1 : (a2-2*a4+a6)/ay
   if(tx>=1)tx=-1
   if(ty>=1)ty=-1
   if(tx>0 && ty>0){
@@ -170,160 +178,167 @@ GraphicsPath._flattenCubic=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,
  }*/
  if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a3-a5-a5+a7)+
     Math.abs(a2-a4-a4+a6)+Math.abs(a4-a6-a6+a8)<=flatness){
-  if(mode==0){
-   list.push([a1,a2,a7,a8])
+  if(mode === 0){
+   list.push([a1,a2,a7,a8]);
   } else {
-   var dx=a7-a1
-   var dy=a8-a2
-   var length=Math.sqrt(dx*dx+dy*dy)
-   list.push(t1,t2,length)
+   var dx=a7-a1;
+   var dy=a8-a2;
+   var length=Math.sqrt(dx*dx+dy*dy);
+   list.push(t1,t2,length);
   }
  } else {
-  GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,0.5,list,flatness,mode,depth)
+  GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,0.5,list,flatness,mode,depth);
  }
-}
+};
 
 GraphicsPath._flattenQuad=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,mode,depth){
- if(depth==null)depth=0
+ "use strict";
+if((depth===null || typeof depth==="undefined"))depth=0;
  if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a2-a4-a4+a6)<=flatness){
-  if(mode==0){
-   list.push([a1,a2,a5,a6])
+  if(mode === 0){
+   list.push([a1,a2,a5,a6]);
   } else {
-   var dx=a5-a1
-   var dy=a6-a2
-   var length=Math.sqrt(dx*dx+dy*dy)
-   list.push(t1,t2,length)
+   var dx=a5-a1;
+   var dy=a6-a2;
+   var length=Math.sqrt(dx*dx+dy*dy);
+   list.push(t1,t2,length);
   }
  } else {
-  var x1=(a1+a3)*0.5
-  var x2=(a3+a5)*0.5
-  var xc=(x1+x2)*0.5
-  var y1=(a2+a4)*0.5
-  var y2=(a4+a6)*0.5
-  var yc=(y1+y2)*0.5
-  var tmid=(t1+t2)*0.5
-  GraphicsPath._flattenQuad(a1,a2,x1,y1,xc,yc,t1,tmid,list,flatness,mode,depth+1)
-  GraphicsPath._flattenQuad(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,mode,depth+1)
+  var x1=(a1+a3)*0.5;
+  var x2=(a3+a5)*0.5;
+  var xc=(x1+x2)*0.5;
+  var y1=(a2+a4)*0.5;
+  var y2=(a4+a6)*0.5;
+  var yc=(y1+y2)*0.5;
+  var tmid=(t1+t2)*0.5;
+  GraphicsPath._flattenQuad(a1,a2,x1,y1,xc,yc,t1,tmid,list,flatness,mode,depth+1);
+  GraphicsPath._flattenQuad(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,mode,depth+1);
  }
-}
+};
 
 GraphicsPath._flattenArc=function(a,t1,t2,list,flatness,mode,depth){
- var rot=a[5]
+ "use strict";
+var rot=a[5];
  var crot = Math.cos(rot);
  var srot = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
- var ellipseInfo=[a[3],a[4],a[10],a[11],crot,srot]
+ var ellipseInfo=[a[3],a[4],a[10],a[11],crot,srot];
  GraphicsPath._flattenArcInternal(ellipseInfo,a[1],a[2],a[8],a[9],a[12],a[13],t1,t2,list,flatness,mode,depth);
-}
+};
 GraphicsPath._flattenArcInternal=function(ellipseInfo,x1,y1,x2,y2,theta1,theta2,t1,t2,list,flatness,mode,depth){
- if(depth==null)depth=0
- var thetaMid=(theta1+theta2)*0.5
- var tmid=(t1+t2)*0.5
+ "use strict";
+if((depth===null || typeof depth==="undefined"))depth=0;
+ var thetaMid=(theta1+theta2)*0.5;
+ var tmid=(t1+t2)*0.5;
  var ca = Math.cos(thetaMid);
  var sa = (thetaMid>=0 && thetaMid<6.283185307179586) ? (thetaMid<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(thetaMid);
- var xmid = ellipseInfo[4]*ca*ellipseInfo[0]-ellipseInfo[5]*sa*ellipseInfo[1]+ellipseInfo[2]
- var ymid = ellipseInfo[5]*ca*ellipseInfo[0]+ellipseInfo[4]*sa*ellipseInfo[1]+ellipseInfo[3]
+ var xmid = ellipseInfo[4]*ca*ellipseInfo[0]-ellipseInfo[5]*sa*ellipseInfo[1]+ellipseInfo[2];
+ var ymid = ellipseInfo[5]*ca*ellipseInfo[0]+ellipseInfo[4]*sa*ellipseInfo[1]+ellipseInfo[3];
  if(depth>=20 || Math.abs(x1-xmid-xmid+x2)+Math.abs(y1-ymid-ymid+y2)<=flatness){
-  if(mode==0){
-   list.push([x1,y1,xmid,ymid])
-   list.push([xmid,ymid,x2,y2])
+  if(mode === 0){
+   list.push([x1,y1,xmid,ymid]);
+   list.push([xmid,ymid,x2,y2]);
   } else {
-   var dx=xmid-x1
-   var dy=ymid-y1
-   var length=Math.sqrt(dx*dx+dy*dy)
-   list.push(t1,tmid,length)
-   dx=x2-xmid
-   dy=y2-ymid
-   length=Math.sqrt(dx*dx+dy*dy)
-   list.push(tmid,t2,length)
+   var dx=xmid-x1;
+   var dy=ymid-y1;
+   var length=Math.sqrt(dx*dx+dy*dy);
+   list.push(t1,tmid,length);
+   dx=x2-xmid;
+   dy=y2-ymid;
+   length=Math.sqrt(dx*dx+dy*dy);
+   list.push(tmid,t2,length);
   }
  } else {
-  GraphicsPath._flattenArcInternal(ellipseInfo,x1,y1,xmid,ymid,theta1,thetaMid,t1,tmid,list,flatness,mode,depth+1)
-  GraphicsPath._flattenArcInternal(ellipseInfo,xmid,ymid,x2,y2,thetaMid,theta2,tmid,t2,list,flatness,mode,depth+1)
+  GraphicsPath._flattenArcInternal(ellipseInfo,x1,y1,xmid,ymid,theta1,thetaMid,t1,tmid,list,flatness,mode,depth+1);
+  GraphicsPath._flattenArcInternal(ellipseInfo,xmid,ymid,x2,y2,thetaMid,theta2,tmid,t2,list,flatness,mode,depth+1);
  }
-}
+};
 /** @private */
 GraphicsPath.prototype._start=function(){
- for(var i=0;i<this.segments.length;i++){
-  var s=this.segments[i]
-  if(s[0]!=GraphicsPath.CLOSE)return GraphicsPath._startPoint(s)
+ "use strict";
+for(var i=0;i<this.segments.length;i++){
+  var s=this.segments[i];
+  if(s[0]!==GraphicsPath.CLOSE)return GraphicsPath._startPoint(s);
  }
- return [0,0]
-}
+ return [0,0];
+};
 /** @private */
 GraphicsPath.prototype._end=function(){
- for(var i=this.segments.length-1;i>=0;i--){
-  var s=this.segments[i]
-  if(s[0]!=GraphicsPath.CLOSE)return GraphicsPath._endPoint(s)
+ "use strict";
+for(var i=this.segments.length-1;i>=0;i--){
+  var s=this.segments[i];
+  if(s[0]!==GraphicsPath.CLOSE)return GraphicsPath._endPoint(s);
  }
- return [0,0]
-}
+ return [0,0];
+};
 /**
  * Returns this path in the form of a string in SVG path format.
  * See {@link GraphicsPath.fromString}.
  * @return {string} A string describing the path in the SVG path
   format. */
 GraphicsPath.prototype.toString=function(){
- var oldpos=null
- var ret=""
+ "use strict";
+var oldpos=null;
+ var ret="";
  for(var i=0;i<this.segments.length;i++){
-  var a=this.segments[i]
-  if(a[0]==GraphicsPath.CLOSE){
-   ret+="Z"
+  var a=this.segments[i];
+  if(a[0]===GraphicsPath.CLOSE){
+   ret+="Z";
   } else {
-   var start=GraphicsPath._startPoint(a)
-   if(!oldpos || oldpos[0]!=start[0] || oldpos[1]!=start[1]){
-    ret+="M"+start[0]+","+start[1]
+   var start=GraphicsPath._startPoint(a);
+   if(!oldpos || oldpos[0]!==start[0] || oldpos[1]!==start[1]){
+    ret+="M"+start[0]+","+start[1];
    }
-   if(a[0]==GraphicsPath.LINE){
-    ret+="L"+a[3]+","+a[4]
+   if(a[0]===GraphicsPath.LINE){
+    ret+="L"+a[3]+","+a[4];
    }
-   if(a[0]==GraphicsPath.QUAD){
-    ret+="Q"+a[3]+","+a[4]+","+a[5]+","+a[6]
+   if(a[0]===GraphicsPath.QUAD){
+    ret+="Q"+a[3]+","+a[4]+","+a[5]+","+a[6];
    }
-   if(a[0]==GraphicsPath.CUBIC){
-    ret+="C"+a[3]+","+a[4]+","+a[5]+","+a[6]+","+a[7]+","+a[8]
+   if(a[0]===GraphicsPath.CUBIC){
+    ret+="C"+a[3]+","+a[4]+","+a[5]+","+a[6]+","+a[7]+","+a[8];
    }
-   if(a[0]==GraphicsPath.ARC){
+   if(a[0]===GraphicsPath.ARC){
     ret+="A"+a[3]+","+a[4]+","+(a[5]*180/Math.PI)+","+
-      (a[6] ? "1" : "0")+(a[7] ? "1" : "0")+a[8]+","+a[9]
+      (a[6] ? "1" : "0")+(a[7] ? "1" : "0")+a[8]+","+a[9];
    }
   }
  }
- return ret
-}
+ return ret;
+};
 GraphicsPath._length=function(a,flatness){
- if(a[0]==GraphicsPath.LINE){
-  var dx=a[3]-a[1]
-  var dy=a[4]-a[2]
-  return Math.sqrt(dx*dx+dy*dy)
- } else if(a[0]==GraphicsPath.QUAD){
-   var flat=[]
-   var len=0
+ "use strict";
+if(a[0]===GraphicsPath.LINE){
+  var dx=a[3]-a[1];
+  var dy=a[4]-a[2];
+  return Math.sqrt(dx*dx+dy*dy);
+ } else if(a[0]===GraphicsPath.QUAD){
+   var flat=[];
+   var len=0;
    GraphicsPath._flattenQuad(a[1],a[2],a[3],a[4],
-     a[5],a[6],0.0,1.0,flat,flatness*2,1)
+     a[5],a[6],0.0,1.0,flat,flatness*2,1);
    for(var j=0;j<flat.length;j+=3){
-    len+=flat[j+2]
+    len+=flat[j+2];
    }
-   return len
-  } else if(a[0]==GraphicsPath.CUBIC){
-   var flat=[]
-   var len=0
+   return len;
+  } else if(a[0]===GraphicsPath.CUBIC){
+   flat=[];
+   len=0;
    GraphicsPath._flattenCubic(a[1],a[2],a[3],a[4],
-     a[5],a[6],a[7],a[8],0.0,1.0,flat,flatness*2,1)
-   for(var j=0;j<flat.length;j+=3){
-    len+=flat[j+2]
+     a[5],a[6],a[7],a[8],0.0,1.0,flat,flatness*2,1);
+   for(j=0;j<flat.length;j+=3){
+    len+=flat[j+2];
    }
-   return len
- } else if(a[0]==GraphicsPath.ARC){
-  var rx=a[3]
-  var ry=a[4]
-  var theta=a[12]
-  var theta2=a[13]
-  return GraphicsPath._ellipticArcLength(rx,ry,theta,theta2)
+   return len;
+ } else if(a[0]===GraphicsPath.ARC){
+  var rx=a[3];
+  var ry=a[4];
+  var theta=a[12];
+  var theta2=a[13];
+  return GraphicsPath._ellipticArcLength(rx,ry,theta,theta2);
  } else {
-  return 0
+  return 0;
  }
-}
+};
 
 /**
  * Finds the approximate length of this path.
@@ -336,16 +351,17 @@ GraphicsPath._length=function(a,flatness){
  * in units.
  */
 GraphicsPath.prototype.pathLength=function(flatness){
- if(this.segments.length==0)return 0;
- var totalLength=0
- if(flatness==null)flatness=1.0
+ "use strict";
+if(this.segments.length === 0)return 0;
+ var totalLength=0;
+ if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
  for(var i=0;i<this.segments.length;i++){
-  var s=this.segments[i]
-  var len=GraphicsPath._length(s,flatness)
-  totalLength+=len
+  var s=this.segments[i];
+  var len=GraphicsPath._length(s,flatness);
+  totalLength+=len;
  }
  return totalLength;
-}
+};
 /**
 * Gets an array of line segments approximating
 * the path.
@@ -359,89 +375,94 @@ GraphicsPath.prototype.pathLength=function(flatness){
 * Y coordinates of the end point, respectively.
 */
 GraphicsPath.prototype.getLines=function(flatness){
- var ret=[]
- if(flatness==null)flatness=1.0
+ "use strict";
+var ret=[];
+ if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
  for(var i=0;i<this.segments.length;i++){
-  var s=this.segments[i]
-  var len=0
-  if(s[0]==GraphicsPath.QUAD){
+  var s=this.segments[i];
+  var len=0;
+  if(s[0]===GraphicsPath.QUAD){
    GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
-     s[5],s[6],0.0,1.0,ret,flatness*2,0)
-  } else if(s[0]==GraphicsPath.CUBIC){
+     s[5],s[6],0.0,1.0,ret,flatness*2,0);
+  } else if(s[0]===GraphicsPath.CUBIC){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
-     s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*2,0)
-  } else if(s[0]==GraphicsPath.ARC){
-   GraphicsPath._flattenArc(s,0.0,1.0,ret,flatness*2,0)
-  } else if(s[0]!=GraphicsPath.CLOSE){
-   ret.push([s[1],s[2],s[3],s[4]])
+     s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*2,0);
+  } else if(s[0]===GraphicsPath.ARC){
+   GraphicsPath._flattenArc(s,0.0,1.0,ret,flatness*2,0);
+  } else if(s[0]!==GraphicsPath.CLOSE){
+   ret.push([s[1],s[2],s[3],s[4]]);
   }
  }
- return ret
-}
+ return ret;
+};
 
 GraphicsPath._accBounds=function(ret,first,s,t){
- if(t>=0 && t<=1){
-  var pt=GraphicsPath._point(s,t)
+ "use strict";
+if(t>=0 && t<=1){
+  var pt=GraphicsPath._point(s,t);
   if(first){
-   ret[0]=ret[2]=pt[0]
-   ret[1]=ret[3]=pt[1]
+   ret[0]=ret[2]=pt[0];
+   ret[1]=ret[3]=pt[1];
   } else {
-   ret[0]=Math.min(pt[0],ret[0])
-   ret[1]=Math.min(pt[1],ret[1])
-   ret[2]=Math.max(pt[0],ret[2])
-   ret[3]=Math.max(pt[1],ret[3])
+   ret[0]=Math.min(pt[0],ret[0]);
+   ret[1]=Math.min(pt[1],ret[1]);
+   ret[2]=Math.max(pt[0],ret[2]);
+   ret[3]=Math.max(pt[1],ret[3]);
   }
  }
-}
+};
 GraphicsPath._accBoundsArc=function(ret,first,rx,ry,cphi,sphi,cx,cy,angle){
- var ca = Math.cos(angle);
+ "use strict";
+var ca = Math.cos(angle);
  var sa = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(angle);
- var px=cphi*ca*rx-sphi*sa*ry+cx
- var py=sphi*ca*rx+cphi*sa*ry+cy
+ var px=cphi*ca*rx-sphi*sa*ry+cx;
+ var py=sphi*ca*rx+cphi*sa*ry+cy;
  if(first){
-  ret[0]=ret[2]=px
-  ret[1]=ret[3]=py
+  ret[0]=ret[2]=px;
+  ret[1]=ret[3]=py;
  } else {
-  ret[0]=Math.min(px,ret[0])
-  ret[1]=Math.min(py,ret[1])
-  ret[2]=Math.max(px,ret[2])
-  ret[3]=Math.max(py,ret[3])
+  ret[0]=Math.min(px,ret[0]);
+  ret[1]=Math.min(py,ret[1]);
+  ret[2]=Math.max(px,ret[2]);
+  ret[3]=Math.max(py,ret[3]);
  }
-}
+};
 GraphicsPath._normAngle=function(angle){
- var twopi=GLMath.PiTimes2;
- var normAngle=angle
+ "use strict";
+var twopi=GLMath.PiTimes2;
+ var normAngle=angle;
  if(normAngle>=0){
-  normAngle=(normAngle<twopi) ? normAngle : normAngle%twopi
+  normAngle=(normAngle<twopi) ? normAngle : normAngle%twopi;
  } else {
   normAngle%=twopi;
   normAngle+=twopi;
  }
- return normAngle
-}
+ return normAngle;
+};
 GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
- var twopi=GLMath.PiTimes2
- var diff=endAngle-startAngle
- if(Math.abs(diff)>=twopi)return true
- var normAngle=GraphicsPath._normAngle(angle)
- var normStart=GraphicsPath._normAngle(startAngle)
- var normEnd=GraphicsPath._normAngle(endAngle)
- if(startAngle==endAngle){
-  return normAngle==normStart
+ "use strict";
+var twopi=GLMath.PiTimes2;
+ var diff=endAngle-startAngle;
+ if(Math.abs(diff)>=twopi)return true;
+ var normAngle=GraphicsPath._normAngle(angle);
+ var normStart=GraphicsPath._normAngle(startAngle);
+ var normEnd=GraphicsPath._normAngle(endAngle);
+ if(startAngle===endAngle){
+  return normAngle===normStart;
  } else if(startAngle<endAngle){
   if(normStart<normEnd){
-   return normAngle>=normStart && normAngle<=normEnd
+   return normAngle>=normStart && normAngle<=normEnd;
   } else {
-   return normAngle>=normStart || normAngle<=normEnd
+   return normAngle>=normStart || normAngle<=normEnd;
   }
  } else {
   if(normEnd<normStart){
-   return normAngle>=normEnd && normAngle<=normStart
+   return normAngle>=normEnd && normAngle<=normStart;
   } else {
-   return normAngle>=normEnd || normAngle<=normStart
+   return normAngle>=normEnd || normAngle<=normStart;
   }
  }
-}
+};
 /**
 * Calculates an axis-aligned bounding box that tightly
 * fits this graphics path.
@@ -452,132 +473,134 @@ GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
 * returns the array (Infinity, Infinity, -Infinity, -Infinity).
 */
 GraphicsPath.prototype.getBounds=function(){
- var inf=Number.POSITIVE_INFINITY;
- var ret=[inf,inf,-inf,inf]
- var first=true
+ "use strict";
+var inf=Number.POSITIVE_INFINITY;
+ var ret=[inf,inf,-inf,inf];
+ var first=true;
  for(var i=0;i<this.segments.length;i++){
-  var s=this.segments[i]
-  var len=0
-  if(s[0]==GraphicsPath.CLOSE)continue
-  var endpt=GraphicsPath._endPoint(s)
-  var x1=s[1],y1=s[2],x2=endpt[0],y2=endpt[1]
+  var s=this.segments[i];
+  var len=0;
+  if(s[0]===GraphicsPath.CLOSE)continue;
+  var endpt=GraphicsPath._endPoint(s);
+  var x1=s[1],y1=s[2],x2=endpt[0],y2=endpt[1];
   if(first){
-    ret[0]=Math.min(x1,x2)
-    ret[1]=Math.min(y1,y2)
-    ret[2]=Math.max(x1,x2)
-    ret[3]=Math.max(y1,y2)
+    ret[0]=Math.min(x1,x2);
+    ret[1]=Math.min(y1,y2);
+    ret[2]=Math.max(x1,x2);
+    ret[3]=Math.max(y1,y2);
   } else {
-    ret[0]=Math.min(x1,x2,ret[0])
-    ret[1]=Math.min(y1,y2,ret[1])
-    ret[2]=Math.max(x1,x2,ret[2])
-    ret[3]=Math.max(y1,y2,ret[3])
+    ret[0]=Math.min(x1,x2,ret[0]);
+    ret[1]=Math.min(y1,y2,ret[1]);
+    ret[2]=Math.max(x1,x2,ret[2]);
+    ret[3]=Math.max(y1,y2,ret[3]);
   }
-  first=false
-  if(s[0]==GraphicsPath.QUAD){
-   x2=s[5]
-   y2=s[6]
-   var ax=x1-2*s[3]+x2
-   var ay=y1-2*s[4]+y2
-   if(ax!=0){
-    GraphicsPath._accBounds(ret,first,s,(x1-s[3])/ax)
+  first=false;
+  if(s[0]===GraphicsPath.QUAD){
+   x2=s[5];
+   y2=s[6];
+   var ax=x1-2*s[3]+x2;
+   var ay=y1-2*s[4]+y2;
+   if(ax!==0){
+    GraphicsPath._accBounds(ret,first,s,(x1-s[3])/ax);
    }
-   if(ay!=0){
-    GraphicsPath._accBounds(ret,first,s,(y1-s[4])/ay)
+   if(ay!==0){
+    GraphicsPath._accBounds(ret,first,s,(y1-s[4])/ay);
    }
-  } else if(s[0]==GraphicsPath.CUBIC){
-   x2=s[7]
-   y2=s[8]
-   var denomX=x1-3*s[3]+3*s[5]-x2
-   var denomY=y1-3*s[4]+3*s[6]-y2
-   if(denomX!=0 || denomY!=0){
-    var ax=x1-2*s[3]+s[5]
-    var ay=y1-2*s[4]+s[6]
-    var bx=s[3]*s[3]+s[5]*s[5]-s[5]*(x1+s[3])+x2*(x1-s[3])
-    var by=s[4]*s[4]+s[6]*s[6]-s[6]*(y1+s[4])+y2*(y1-s[4])
-    if(bx>=0 && denomX!=0){
+  } else if(s[0]===GraphicsPath.CUBIC){
+   x2=s[7];
+   y2=s[8];
+   var denomX=x1-3*s[3]+3*s[5]-x2;
+   var denomY=y1-3*s[4]+3*s[6]-y2;
+   if(denomX!==0 || denomY!==0){
+    ax=x1-2*s[3]+s[5];
+    ay=y1-2*s[4]+s[6];
+    var bx=s[3]*s[3]+s[5]*s[5]-s[5]*(x1+s[3])+x2*(x1-s[3]);
+    var by=s[4]*s[4]+s[6]*s[6]-s[6]*(y1+s[4])+y2*(y1-s[4]);
+    if(bx>=0 && denomX!==0){
      bx=Math.sqrt(bx);
-     GraphicsPath._accBounds(ret,first,s,(ax-bx)/denomX)
-     GraphicsPath._accBounds(ret,first,s,(ax+bx)/denomX)
+     GraphicsPath._accBounds(ret,first,s,(ax-bx)/denomX);
+     GraphicsPath._accBounds(ret,first,s,(ax+bx)/denomX);
     }
-    if(by>=0 && denomY!=0){
+    if(by>=0 && denomY!==0){
      by=Math.sqrt(by);
-     GraphicsPath._accBounds(ret,first,s,(ay-by)/denomY)
-     GraphicsPath._accBounds(ret,first,s,(ay+by)/denomY)
+     GraphicsPath._accBounds(ret,first,s,(ay-by)/denomY);
+     GraphicsPath._accBounds(ret,first,s,(ay+by)/denomY);
     }
    }
-  } else if(s[0]==GraphicsPath.ARC){
-    var rx=s[3]
-    var ry=s[4]
-    var cx=s[10]
-    var cy=s[11]
-    var theta=s[12]
-    var delta=s[13]
-    var rot=s[5]
+  } else if(s[0]===GraphicsPath.ARC){
+    var rx=s[3];
+    var ry=s[4];
+    var cx=s[10];
+    var cy=s[11];
+    var theta=s[12];
+    var delta=s[13];
+    var rot=s[5];
     var cosp = Math.cos(rot);
     var sinp = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-cosp*cosp) : -Math.sqrt(1.0-cosp*cosp)) : Math.sin(rot);
-    var angles=[]
-    var angle
-    if(cosp!=0){
+    var angles=[];
+    var angle;
+    if(cosp!==0){
      angle=Math.atan2(-ry*sinp/cosp,rx);
-     angles.push(angle,angle+Math.PI)
+     angles.push(angle,angle+Math.PI);
     }
-    if(sinp!=0){
+    if(sinp!==0){
      angle=Math.atan2(ry*cosp/sinp,rx);
-     angles.push(angle,angle+Math.PI)
+     angles.push(angle,angle+Math.PI);
     }
-    for(var i=0;i<angles.length;i++){
+    for(i=0;i<angles.length;i++){
      if(GraphicsPath._angleInRange(angles[i],theta,delta)){
-       GraphicsPath._accBoundsArc(ret,first,rx,ry,cosp,sinp,cx,cy,angles[i])
+       GraphicsPath._accBoundsArc(ret,first,rx,ry,cosp,sinp,cx,cy,angles[i]);
      }
     }
   }
  }
- return ret
-}
+ return ret;
+};
 
 /** @private */
 GraphicsPath.prototype._getSubpaths=function(flatness){
- var tmp=[]
- var subpaths=[]
- if(flatness==null)flatness=1.0
- var lastptx=0
- var lastpty=0
- var first=true
- var curPath=null
+ "use strict";
+var tmp=[];
+ var subpaths=[];
+ if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
+ var lastptx=0;
+ var lastpty=0;
+ var first=true;
+ var curPath=null;
  for(var i=0;i<this.segments.length;i++){
-  var s=this.segments[i]
-  var len=0
-  var startpt=GraphicsPath._startPoint(s)
-  var endpt=GraphicsPath._endPoint(s)
-  tmp.length=0
-  if(s[0]!=GraphicsPath.CLOSE){
-   if(first || lastptx!=startpt[0] || lastpty!=startpt[1]){
-    curPath=startpt
-    subpaths.push(curPath)
-    first=false
+  var s=this.segments[i];
+  var len=0;
+  var startpt=GraphicsPath._startPoint(s);
+  var endpt=GraphicsPath._endPoint(s);
+  tmp.length=0;
+  if(s[0]!==GraphicsPath.CLOSE){
+   if(first || lastptx!==startpt[0] || lastpty!==startpt[1]){
+    curPath=startpt;
+    subpaths.push(curPath);
+    first=false;
    }
-   lastptx=endpt[0]
-   lastpty=endpt[1]
+   lastptx=endpt[0];
+   lastpty=endpt[1];
   }
-  if(s[0]==GraphicsPath.QUAD){
+  if(s[0]===GraphicsPath.QUAD){
    GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
-     s[5],s[6],0.0,1.0,tmp,flatness*2,0)
+     s[5],s[6],0.0,1.0,tmp,flatness*2,0);
    for(var j=0;j<tmp.length;j++){
-    curPath.push(tmp[j][2])
-    curPath.push(tmp[j][3])
+    curPath.push(tmp[j][2]);
+    curPath.push(tmp[j][3]);
    }
-  } else if(s[0]==GraphicsPath.CUBIC){
+  } else if(s[0]===GraphicsPath.CUBIC){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
-     s[5],s[6],s[7],s[8],0.0,1.0,tmp,flatness*2,0)
-   for(var j=0;j<tmp.length;j++){
-    curPath.push(tmp[j][2])
-    curPath.push(tmp[j][3])
+     s[5],s[6],s[7],s[8],0.0,1.0,tmp,flatness*2,0);
+   for(j=0;j<tmp.length;j++){
+    curPath.push(tmp[j][2]);
+    curPath.push(tmp[j][3]);
    }
-  } else if(s[0]==GraphicsPath.ARC){
-   GraphicsPath._flattenArc(s,0.0,1.0,tmp,flatness*2,0)
-   for(var j=0;j<tmp.length;j++){
-    curPath.push(tmp[j][2])
-    curPath.push(tmp[j][3])
+  } else if(s[0]===GraphicsPath.ARC){
+   GraphicsPath._flattenArc(s,0.0,1.0,tmp,flatness*2,0);
+   for(j=0;j<tmp.length;j++){
+    curPath.push(tmp[j][2]);
+    curPath.push(tmp[j][3]);
    }
   } else if(s[0]!=GraphicsPath.CLOSE){
    curPath.push(s[3])
@@ -628,8 +651,8 @@ GraphicsPath._CurveList.prototype.getLength=function(){
  return this.totalLength;
 }
 GraphicsPath._CurveList.prototype.evaluate=function(u){
- if(this.curves.length==0)return [0,0,0]
- if(this.curves.length==1)return this.curves[0].evaluate(u)
+ if(this.curves.length === 0)return [0,0,0]
+ if(this.curves.length === 1)return this.curves[0].evaluate(u)
  if(u<0)u=0;
  if(u>1)u=1;
  var partialLen=u*this.totalLength;
@@ -681,7 +704,7 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
   if(u<0)u=0;
   else if(u>1)u=1;
  }
- if(this.segments.length==0)return [0,0,0]
+ if(this.segments.length === 0)return [0,0,0]
  var partialLen=u*this.totalLength;
  var left=0
  var right=this.segments.length;
@@ -693,7 +716,7 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
   if((partialLen>=segstart && partialLen<segend) ||
      (partialLen==segend && mid+1==this.segments.length)){
    var seginfo=seg[3]
-   var t=(u==1) ? 1.0 : (partialLen-segstart)/seg[1]
+   var t=(u === 1) ? 1.0 : (partialLen-segstart)/seg[1]
    if(seg[0]==GraphicsPath.LINE){
     var x=seginfo[1]+(seginfo[3]-seginfo[1])*t
     var y=seginfo[2]+(seginfo[4]-seginfo[2])*t
@@ -713,7 +736,7 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
      if(segPartialLen>=partStart && segPartialLen<=partEnd){
       var tStart=segParts[partIndex]
       var tEnd=segParts[partIndex+1]
-      var partT=(u==1) ? 1.0 : tStart+((segPartialLen-partStart)/partLength)*(tEnd-tStart)
+      var partT=(u === 1) ? 1.0 : tStart+((segPartialLen-partStart)/partLength)*(tEnd-tStart)
       var point=GraphicsPath._point(seginfo,partT)
       point[2]=0
       return point
@@ -854,10 +877,10 @@ GraphicsPath.prototype.getCurves=function(flatness){
 */
 GraphicsPath.prototype.getPoints=function(numPoints,flatness){
  if(numPoints<1)return []
- if(numPoints==1){
+ if(numPoints === 1){
   return [this._start()]
  }
- if(numPoints==2){
+ if(numPoints === 2){
   return [this._start(),this._end()]
  }
  var curves=this.getCurves(flatness)
@@ -921,13 +944,13 @@ GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
   var t2 = y1 - y0;
   var t3 = [x2 - x0, y2 - y0];
   var denom=((t1 * t1) + t2 * t2);
-  if(denom==0){
+  if(denom === 0){
    return true; // first two points are the same
   }
   var t4 = (((t1 * t3[0]) + t2 * t3[1]) / denom);
   var t5 = [(x0 + t4 * t1), (y0 + t4 * t2)];
   var t6 = [x2 - t5[0], y2 - t5[1]];
-  return ((t6[0] * t6[0]) + t6[1] * t6[1])==0;
+  return ((t6[0] * t6[0]) + t6[1] * t6[1]) === 0;
 }
 /**
  * Adds path segments in the form of a circular arc to this path,
@@ -952,7 +975,7 @@ GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
  }
  var x0=this.endPos[0]
  var y0=this.endPos[1]
- if(radius==0 || (x0==x1 && y0==y1) || (x1==x2 && y1==y2) ||
+ if(radius === 0 || (x0==x1 && y0==y1) || (x1==x2 && y1==y2) ||
    GraphicsPath._areCollinear(x0,y0,x1,y1,x2,y2)){
   return this.lineTo(x1,y1)
  }
@@ -999,7 +1022,7 @@ GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
  var startY=y+radius*Math.sin(startAngle);
  var endX=x+radius*Math.cos(endAngle);
  var endY=y+radius*Math.sin(endAngle);
- if((startX==endX && startY==endY) || radius==0){
+ if((startX==endX && startY==endY) || radius === 0){
     return this.lineTo(startX,startY).lineTo(endX,endY);
  }
  if((!ccw && (endAngle-startAngle)>=twopi) ||
@@ -1012,7 +1035,7 @@ GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
  var delta=endAngle-startAngle;
  if(delta>=twopi || delta<0){
  var d=delta%twopi
- if(d==0 && delta!=0){
+ if(d === 0 && delta!=0){
   return this.lineTo(startX,startY)
        .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
        .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
@@ -1097,7 +1120,7 @@ GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
  var lasthk=hk
  var klimit=0
  for(var k=1;k<=maxIter;k++){
-  if(k==1){
+  if(k === 1){
    matrix[k]=hk*0.5*(func(xmin)+func(xmax))
    klimit=1
   } else {
@@ -1229,7 +1252,7 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
- if(rx==0 || ry==0){
+ if(rx === 0 || ry === 0){
   return this.lineTo(x2,y2);
  }
  var x1=this.endPos[0]
@@ -1270,7 +1293,7 @@ GraphicsPath._nextAfterWs=function(str,index){
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0])
   index[0]++
-  if(c==0x20 || c==0x0d || c==0x09 || c==0x0a || c==0x0c)
+  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c)
    continue;
   return c
  }
@@ -1282,11 +1305,11 @@ GraphicsPath._nextAfterSepReq=function(str,index){
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0])
   index[0]++
-  if(c==0x20 || c==0x0d || c==0x09 || c==0x0a || c==0x0c){
+  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c){
    havesep=true
    continue;
   }
-  if(!comma && c==0x2c){
+  if(!comma && c === 0x2c){
    havesep=true
    comma=true
    continue;
@@ -1300,9 +1323,9 @@ GraphicsPath._nextAfterSep=function(str,index){
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0])
   index[0]++
-  if(c==0x20 || c==0x0d || c==0x09 || c==0x0a || c==0x0c)
+  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c)
    continue;
-  if(!comma && c==0x2c){
+  if(!comma && c === 0x2c){
    comma=true
    continue;
   }
@@ -1330,7 +1353,7 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
  var digit=false
  var exponent=false
  var ret;
- if(c==0x2e)dot=true
+ if(c === 0x2e)dot=true
  else if(c>=0x30 && c<=0x39)digit=true
  else if(c!=0x2d && c!=0x2b){
     index[0]=oldindex
@@ -1339,7 +1362,7 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0])
   index[0]++
-  if(c==0x2e){
+  if(c === 0x2e){
    if(dot){
     index[0]=oldindex
     return null
@@ -1347,7 +1370,7 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
    dot=true
   } else if(c>=0x30 && c<=0x39){
    digit=true
-  } else if(c==0x45 || c==0x65){
+  } else if(c === 0x45 || c === 0x65){
    if(!digit){
     index[0]=oldindex
     return null
@@ -1494,8 +1517,8 @@ GraphicsPath.fromString=function(str){
    case 0x4d:case 0x6d:{ // 'M', 'm'
     var sep=false
     while(true){
-     var curx=(c==0x6d) ? ret.endPos[0] : 0
-     var cury=(c==0x6d) ? ret.endPos[1] : 0
+     var curx=(c === 0x6d) ? ret.endPos[0] : 0
+     var cury=(c === 0x6d) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      var y=GraphicsPath._nextNumber(str,index,true)
@@ -1510,8 +1533,8 @@ GraphicsPath.fromString=function(str){
    case 0x4c:case 0x6c:{ // 'L', 'l'
     var sep=false
     while(true){
-     var curx=(c==0x6c) ? ret.endPos[0] : 0
-     var cury=(c==0x6c) ? ret.endPos[1] : 0
+     var curx=(c === 0x6c) ? ret.endPos[0] : 0
+     var cury=(c === 0x6c) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      var y=GraphicsPath._nextNumber(str,index,true)
@@ -1524,7 +1547,7 @@ GraphicsPath.fromString=function(str){
    case 0x48:case 0x68:{ // 'H', 'h'
     var sep=false
     while(true){
-     var curpt=(c==0x68) ? ret.endPos[0] : 0
+     var curpt=(c === 0x68) ? ret.endPos[0] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      ret.lineTo(curpt+x,ret.endPos[1]);
@@ -1535,7 +1558,7 @@ GraphicsPath.fromString=function(str){
    case 0x56:case 0x76:{ // 'V', 'v'
     var sep=false
     while(true){
-     var curpt=(c==0x76) ? ret.endPos[1] : 0
+     var curpt=(c === 0x76) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      ret.lineTo(ret.endPos[0],curpt+x);
@@ -1546,8 +1569,8 @@ GraphicsPath.fromString=function(str){
    case 0x43:case 0x63:{ // 'C', 'c'
     var sep=false
     while(true){
-     var curx=(c==0x63) ? ret.endPos[0] : 0
-     var cury=(c==0x63) ? ret.endPos[1] : 0
+     var curx=(c === 0x63) ? ret.endPos[0] : 0
+     var cury=(c === 0x63) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      var y=GraphicsPath._nextNumber(str,index,true)
@@ -1569,8 +1592,8 @@ GraphicsPath.fromString=function(str){
    case 0x51:case 0x71:{ // 'Q', 'q'
     var sep=false
     while(true){
-     var curx=(c==0x71) ? ret.endPos[0] : 0
-     var cury=(c==0x71) ? ret.endPos[1] : 0
+     var curx=(c === 0x71) ? ret.endPos[0] : 0
+     var cury=(c === 0x71) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      var y=GraphicsPath._nextNumber(str,index,true)
@@ -1587,8 +1610,8 @@ GraphicsPath.fromString=function(str){
    case 0x41:case 0x61:{ // 'A', 'a'
     var sep=false
     while(true){
-     var curx=(c==0x61) ? ret.endPos[0] : 0
-     var cury=(c==0x61) ? ret.endPos[1] : 0
+     var curx=(c === 0x61) ? ret.endPos[0] : 0
+     var cury=(c === 0x61) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      var y=GraphicsPath._nextNumber(str,index,true)
@@ -1611,8 +1634,8 @@ GraphicsPath.fromString=function(str){
    case 0x53:case 0x73:{ // 'S', 's'
     var sep=false
     while(true){
-     var curx=(c==0x73) ? ret.endPos[0] : 0
-     var cury=(c==0x73) ? ret.endPos[1] : 0
+     var curx=(c === 0x73) ? ret.endPos[0] : 0
+     var cury=(c === 0x73) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      var y=GraphicsPath._nextNumber(str,index,true)
@@ -1636,8 +1659,8 @@ GraphicsPath.fromString=function(str){
    case 0x54:case 0x74:{ // 'T', 't'
     var sep=false
     while(true){
-     var curx=(c==0x74) ? ret.endPos[0] : 0
-     var cury=(c==0x74) ? ret.endPos[1] : 0
+     var curx=(c === 0x74) ? ret.endPos[0] : 0
+     var cury=(c === 0x74) ? ret.endPos[1] : 0
      var x=GraphicsPath._nextNumber(str,index,sep)
      if(x==null){ if(!sep)failed=true;break; }
      var y=GraphicsPath._nextNumber(str,index,true)
@@ -1755,7 +1778,7 @@ Triangulate._vertClass=function(verts,index,ori){
  var prevVert=verts[index+2]
  var nextVert=verts[index+3]
  var curori=Triangulate._triOrient(verts,prevVert,index,nextVert)
- if(curori==0 || curori==ori){
+ if(curori === 0 || curori==ori){
   // This is a convex vertex, find out whether this
   // is an ear
   var prevVert=verts[index+2]
@@ -1775,7 +1798,7 @@ Triangulate._vertClass=function(verts,index,ori){
 Triangulate._triOrient=function(vertices,i1,i2,i3){
  var ori=vertices[i1]*vertices[i2+1]-vertices[i1+1]*vertices[i2]
  ori+=vertices[i3]*vertices[i1+1]-vertices[i1+1]*vertices[i1]
- return ori==0 ? 0 : (ori<0 ? -1 : 1)
+ return ori === 0 ? 0 : (ori<0 ? -1 : 1)
 }
 Triangulate._triangulate=function(vertices,tris){
  if(vertices.length<6){
@@ -1790,7 +1813,7 @@ Triangulate._triangulate=function(vertices,tris){
     vertices[1]==vertices[vertLength-1]){
   vertLength-=2
  }
- if(vertLength==6){
+ if(vertLength === 6){
   // just one triangle
   tris.push(vertices.slice(0))
   return
@@ -1804,8 +1827,8 @@ Triangulate._triangulate=function(vertices,tris){
    ori+=vertices[i]*vertices[i+3]-vertices[i+1]*vertices[i+2];
   }
  }
- ori=(ori==0) ? 0 : (ori<0 ? -1 : 1);
- if(ori==0){
+ ori=(ori === 0) ? 0 : (ori<0 ? -1 : 1);
+ if(ori === 0){
   // Zero area or even a certain self-intersecting
   // polygon
   return
@@ -1828,7 +1851,7 @@ Triangulate._triangulate=function(vertices,tris){
   verts.push(x,y,0,0)
  }
  for(var index=0;index<verts.length;index+=4){
-  var prevVert=(index==0) ? verts.length-4 : index-4
+  var prevVert=(index === 0) ? verts.length-4 : index-4
   var nextVert=(index==verts.length-4) ? 0 : index+4
   verts[index+Triangulate._PREV]=prevVert
   verts[index+Triangulate._NEXT]=nextVert

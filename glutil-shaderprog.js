@@ -542,7 +542,7 @@ var shader=[
 "#ifdef SHADING",
 "transformedNormalVar=normalize(worldViewInvTrans3*normal);",
 "#ifdef NORMAL_MAP",
-"if(useNormalMap === 0.0){",
+"if(useNormalMap ="+"= 0.0){",
 "tbnMatrixVar=mat3(1.,0.,0.,0.,1.,0.,0.,0.,1.);",
 "} else {",
 "tbnMatrixVar=mat3(normalize(vec3(world*vec4(tangent,0.0))),",
@@ -565,6 +565,7 @@ return shader;
 */
 ShaderProgram.getDefaultFragment=function(){
 "use strict";
+var i;
 var shader=ShaderProgram.fragmentShaderHeader() +
  // if shading is disabled, this is solid color instead of material diffuse
  "uniform vec4 md;\n" +
@@ -612,13 +613,13 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "vec4 calcLightPower(light lt, vec4 vertexPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
-" if(lt.position.w === 0.0){ /* directional light */\n" +
+" if(lt.position.w ="+"= 0.0){ /* directional light */\n" +
 "  sdir=normalize((lt.position).xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else { /* point light */\n" +
 "  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
-"  if(dist === 0.0){\n" +
+"  if(dist ="+"= 0.0){\n" +
 "   sdir=vertexToLight;\n" +
 "   attenuation=1.0;\n" +
 "  } else {\n" +
@@ -654,12 +655,12 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
 "float lightCosines["+Lights.MAX_LIGHTS+"];\n";
 shader+=""+
-"if(baseColor.a === 0.0)discard;\n" +
+"if(baseColor.a ="+"= 0.0)discard;\n" +
 "vec3 materialAmbient=ma; /* ambient*/\n" +
 "vec3 lightedColor=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=baseColor.rgb;\n";
-for(var i=0;i<Lights.MAX_LIGHTS;i++){
+for(i=0;i<Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
  shader+="lightCosines["+i+"]=dot(normal,lightPower["+i+"].xyz);\n";
 }
