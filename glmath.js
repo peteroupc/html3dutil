@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/* global define, exports */
 /**
 * A collection of math functions for working
 * with vectors, matrices, quaternions, and other
@@ -16,15 +16,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @license CC0-1.0
 */
 (function (g,f) {
- if (typeof define=="function" && define["amd"]) {
+ "use strict";
+if (typeof define==="function" && define.amd) {
   define([ "exports" ], f);
- } else if (typeof exports=="object") {
+ } else if (typeof exports==="object") {
   f(exports);
  } else {
   f(g);
  }
 }(this, function (exports) {
- if (exports.GLMath) { return; }
+ "use strict";
+if (exports.GLMath) { return; }
 
 /**
 * A collection of math functions for working
@@ -318,8 +320,8 @@ vec3normInPlace:function(vec){
  var x=vec[0];
  var y=vec[1];
  var z=vec[2];
- len=Math.sqrt(x*x+y*y+z*z);
- if(len!=0){
+ var len=Math.sqrt(x*x+y*y+z*z);
+ if(len!==0){
   len=1.0/len;
   vec[0]*=len;
   vec[1]*=len;
@@ -341,8 +343,8 @@ vec4normInPlace:function(vec){
  var y=vec[1];
  var z=vec[2];
  var w=vec[3];
- len=Math.sqrt(x*x+y*y+z*z+w*w);
- if(len!=0){
+ var len=Math.sqrt(x*x+y*y+z*z+w*w);
+ if(len!==0){
   len=1.0/len;
   vec[0]*=len;
   vec[1]*=len;
@@ -473,10 +475,10 @@ vec4assign:function(dst,src){
  * @return {boolean} Return value. */
 mat4isIdentity:function(mat){
 return (
-    mat[0]==1 && mat[1]==0 && mat[2]==0 && mat[3]==0 &&
-    mat[4]==0 && mat[5]==1 && mat[6]==0 && mat[7]==0 &&
-    mat[8]==0 && mat[9]==0 && mat[10]==1 && mat[11]==0 &&
-    mat[12]==0 && mat[13]==0 && mat[14]==0 && mat[15]==1
+    mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
+    mat[4]===0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
+    mat[8]===0 && mat[9] === 0 && mat[10] === 1 && mat[11] === 0 &&
+    mat[12]===0 && mat[13] === 0 && mat[14] === 0 && mat[15] === 1
  );
 },
 /**
@@ -549,9 +551,9 @@ var tvar59 = tvar4-tvar25;
 var det = tvar45*tvar57 + tvar6*tvar50 + tvar9*tvar53 + tvar42*tvar54 + tvar7*tvar55 +
 tvar10*tvar58 + tvar43*tvar56 + tvar46*tvar59 + tvar11*tvar48 + tvar44*tvar49 +
 tvar47*tvar51 + tvar8*tvar52;
-if(det==0)return GLMath.mat4identity();
+if(det===0)return GLMath.mat4identity();
 det=1.0/det;
-var r=[]
+var r=[];
 r[0] = m[6]*tvar10 - m[7]*tvar7 + tvar41*m[14] - m[5]*tvar11 - tvar38*m[15] + m[5]*tvar8;
 r[1] = m[3]*tvar7 - m[2]*tvar10 - tvar29*m[14] + m[1]*tvar11 + tvar23*m[15] - m[1]*tvar8;
 r[2] = m[13]*tvar54 + m[14]*tvar56 + m[15]*tvar49;
@@ -589,13 +591,13 @@ quatConjugate:function(quat){
 quatInvert:function(quat){
  var lsq=1.0/GLMath.quatDot(quat,quat);
  return GLMath.vec4scaleInPlace(
-  GLMath.quatConjugate(quat),lsq)
+  GLMath.quatConjugate(quat),lsq);
 },
 /**
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * @return {boolean} Return value.*/
 quatIsIdentity:function(quat){
- return quat[0]==0 && quat[1]==0 && quat[2]==0 && quat[3]==1
+ return quat[0]===0 && quat[1] === 0 && quat[2] === 0 && quat[3] === 1;
 },
 /**
  * Generates a 4x4 matrix describing the rotation
@@ -622,7 +624,7 @@ quatToMat4:function(quat){
     xy - wz, 1 - (xx + zz), yz + wx,0,
     xz + wy, yz - wx, 1 - (xx + yy),0,
     0,0,0,1
-  ]
+  ];
 },
 /**
 * Calculates the angle and axis of rotation for this
@@ -644,7 +646,7 @@ quatToAxisAngle:function(a){
   return [a[0]*d,a[1]*d,a[2]*d,
     Math.acos(w)*GLMath.Num360DividedByPi];
  } else {
-  return [0,1,0,0]
+  return [0,1,0,0];
  }
 },
 /**
@@ -662,7 +664,7 @@ quatFromVectors:function(vec1,vec2){
   var ret=GLMath.vec3cross(vec1,vec2);
   var vecLengths=Math.sqrt(GLMath.vec3dot(vec1,vec1))*
             Math.sqrt(GLMath.vec3dot(vec2,vec2));
-  if(vecLengths==0)vecLengths=1; // degenerate case
+  if(vecLengths===0)vecLengths=1; // degenerate case
   ret[3]=vecLengths+GLMath.vec3dot(vec1,vec2);
   return GLMath.quatNormInPlace(ret);
 },
@@ -690,12 +692,12 @@ quatFromVectors:function(vec1,vec2){
  */
 quatFromAxisAngle:function(angle,v,vy,vz){
 var v0,v1,v2,ang;
-if(typeof vy!="undefined" && typeof vz!="undefined"){
+if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
  ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
-} else if(typeof v=="undefined"){
+} else if(typeof v==="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
@@ -740,9 +742,9 @@ return ret;
  */
 quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  var rollRad,pitchRad,yawRad;
- if(mode==null)mode=GLMath.RollPitchYaw;
+ if((mode===null || typeof mode==="undefined"))mode=GLMath.RollPitchYaw;
  if(mode<0 || mode>=6)throw new Error("invalid mode");
- if(pitchDegrees.constructor==Array){
+ if(pitchDegrees.constructor===Array){
   rollRad=((pitchDegrees[2]>=0 && pitchDegrees[2]<360) ? pitchDegrees[2] : ((pitchDegrees[2]%360)+(pitchDegrees[2]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
   pitchRad=((pitchDegrees[0]>=0 && pitchDegrees[0]<360) ? pitchDegrees[0] : ((pitchDegrees[0]%360)+(pitchDegrees[0]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
   yawRad=((pitchDegrees[1]>=0 && pitchDegrees[1]<360) ? pitchDegrees[1] : ((pitchDegrees[1]%360)+(pitchDegrees[1]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
@@ -757,18 +759,18 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
   var yx = (yawRad>=0 && yawRad<6.283185307179586) ? (yawRad<=3.141592653589793 ? Math.sqrt(1.0-yy*yy) : -Math.sqrt(1.0-yy*yy)) : Math.sin(yawRad);
   var ry = Math.cos(rollRad);
   var rx = (rollRad>=0 && rollRad<6.283185307179586) ? (rollRad<=3.141592653589793 ? Math.sqrt(1.0-ry*ry) : -Math.sqrt(1.0-ry*ry)) : Math.sin(rollRad);
-  var t8;
-  if(mode==GLMath.PitchYawRoll || mode==GLMath.PitchRollYaw){
-   var t7 = [rx*yx, ry * yx, rx * yy, ry * yy];
-   if(mode==GLMath.PitchYawRoll)t7[0]=-t7[0];
+  var t8,t7;
+  if(mode===GLMath.PitchYawRoll || mode===GLMath.PitchRollYaw){
+   t7 = [rx*yx, ry * yx, rx * yy, ry * yy];
+   if(mode===GLMath.PitchYawRoll)t7[0]=-t7[0];
    t8 = [t7[3] * px + t7[0] * py, t7[1] * py + t7[2] * px, t7[2] * py - t7[1] * px, t7[3] * py - t7[0] * px];
-  } else if(mode==GLMath.YawPitchRoll || mode==GLMath.YawRollPitch){
-   var t7 = [ry * px, rx * px, rx * py, ry * py];
-   if(mode==GLMath.YawRollPitch)t7[1]=-t7[1];
+  } else if(mode===GLMath.YawPitchRoll || mode===GLMath.YawRollPitch){
+   t7 = [ry * px, rx * px, rx * py, ry * py];
+   if(mode===GLMath.YawRollPitch)t7[1]=-t7[1];
    t8 = [t7[0] * yy - t7[2] * yx, t7[3] * yx + t7[1] * yy, t7[2] * yy + t7[0] * yx, t7[3] * yy - t7[1] * yx];
   } else {
-   var t7 = [yy * px, yx * py, yx * px, yy * py];
-   if(mode==GLMath.RollPitchYaw)t7[2]=-t7[2];
+   t7 = [yy * px, yx * py, yx * px, yy * py];
+   if(mode===GLMath.RollPitchYaw)t7[2]=-t7[2];
    t8 = [t7[0] * ry + t7[1] * rx, t7[1] * ry - t7[0] * rx, t7[3] * rx + t7[2] * ry, t7[3] * ry - t7[2] * rx];
   }
   return t8;
@@ -793,19 +795,19 @@ quatToTaitBryan:function(a,mode){
   var c0=a[3];
   var c1,c2,c3;
   var e=1;
-  if(mode==null)mode=GLMath.RollPitchYaw;
+  if((mode===null || typeof mode==="undefined"))mode=GLMath.RollPitchYaw;
   if(mode<0 || mode>=6)throw new Error("invalid mode");
-  if(mode==GLMath.RollPitchYaw){
+  if(mode===GLMath.RollPitchYaw){
    c1=a[1]; c2=a[0]; c3=a[2];
    e=-1;
-  } else if(mode==GLMath.PitchYawRoll){
+  } else if(mode===GLMath.PitchYawRoll){
    c1=a[2]; c2=a[1]; c3=a[0];
    e=-1;
-  } else if(mode==GLMath.PitchRollYaw){
+  } else if(mode===GLMath.PitchRollYaw){
    c1=a[1]; c2=a[2]; c3=a[0];
-  } else if(mode==GLMath.YawPitchRoll){
+  } else if(mode===GLMath.YawPitchRoll){
    c1=a[2]; c2=a[0]; c3=a[1];
-  } else if(mode==GLMath.YawRollPitch){
+  } else if(mode===GLMath.YawRollPitch){
    c1=a[0]; c2=a[2]; c3=a[1];
    e=-1;
   } else {
@@ -820,9 +822,9 @@ quatToTaitBryan:function(a,mode){
   if(sine<-1.0)sine=-1.0; // for stability
   var e2=Math.asin(sine);
   var e3=Math.atan2(2*(c0*c3-e*c1*c2),1-(sq2+sq3)*2);
-  e1*=GLMath.Num180DividedByPi
-  e2*=GLMath.Num180DividedByPi
-  e3*=GLMath.Num180DividedByPi
+  e1*=GLMath.Num180DividedByPi;
+  e2*=GLMath.Num180DividedByPi;
+  e3*=GLMath.Num180DividedByPi;
   // Singularity near the poles
   if(Math.abs(e2-90)<0.000001 ||
       Math.abs(e2+90)<0.000001){
@@ -832,15 +834,15 @@ quatToTaitBryan:function(a,mode){
   }
   // Return the pitch/yaw/roll angles in the standard order
   var angles=[];
-  if(mode==GLMath.RollPitchYaw){
+  if(mode===GLMath.RollPitchYaw){
    angles[0]=e2; angles[1]=e1; angles[2]=e3;
-  } else if(mode==GLMath.PitchYawRoll){
+  } else if(mode===GLMath.PitchYawRoll){
    angles[0]=e3; angles[1]=e2; angles[2]=e1;
-  } else if(mode==GLMath.PitchRollYaw){
+  } else if(mode===GLMath.PitchRollYaw){
    angles[0]=e3; angles[1]=e1; angles[2]=e2;
-  } else if(mode==GLMath.YawPitchRoll){
+  } else if(mode===GLMath.YawPitchRoll){
    angles[0]=e2; angles[1]=e3; angles[2]=e1;
-  } else if(mode==GLMath.YawRollPitch){
+  } else if(mode===GLMath.YawRollPitch){
    angles[0]=e1; angles[1]=e3; angles[2]=e2;
   } else {
    angles[0]=e1; angles[1]=e2; angles[2]=e3;
@@ -869,7 +871,7 @@ quatSlerp:function(q1,q2,factor){
  if(cosval>-1){
   if(cosval<1){
    angle=Math.acos(cosval);
-   if(angle==0)return qd.slice(0,4);
+   if(angle===0)return qd.slice(0,4);
   }
   else return qd.slice(0,4);
  } else {
@@ -936,7 +938,7 @@ return [
 q[0] * dot + v1[0] * q[3] - v2[0],
 q[1] * dot + v1[1] * q[3] - v2[1],
 q[2] * dot + v1[2] * q[3] - v2[2],
-1]
+1];
 },
 /**
  * Generates a quaternion from the rotation described in a 4x4 matrix.
@@ -946,7 +948,7 @@ q[2] * dot + v1[2] * q[3] - v2[2],
  * @return {Array<number>} The resulting quaternion.
  */
 quatFromMat4:function(m){
-var ret=[]
+var ret=[];
  var xy=m[1];
  var xz=m[2];
  var yx=m[4];
@@ -954,10 +956,11 @@ var ret=[]
  var zx=m[8];
  var zy=m[9];
  var trace = m[0] + m[5] + m[10];
+ var s,t;
 if (trace >= 0.0)
 {
-var s = Math.sqrt(trace + 1.0) * 0.5;
-var t = 0.25/s;
+s = Math.sqrt(trace + 1.0) * 0.5;
+t = 0.25/s;
 ret[0] = (yz - zy) * t;
 ret[1] = (zx - xz) * t;
 ret[2] = (xy - yx) * t;
@@ -966,8 +969,8 @@ ret[3] = s;
 else if((m[0] > m[5]) && (m[0] > m[10]))
 {
 // s=4*x
-var s = Math.sqrt(1.0+m[0]-m[5]-m[10]) * 0.5;
-var t = 0.25/s;
+s = Math.sqrt(1.0+m[0]-m[5]-m[10]) * 0.5;
+t = 0.25/s;
 ret[0] = s;
 ret[1] = (yx + xy) * t;
 ret[2] = (xz + zx) * t;
@@ -976,8 +979,8 @@ ret[3] = (yz - zy) * t;
 else if(m[5] > m[10])
 {
 // s=4*y
-var s = Math.sqrt(1.0+m[5]-m[0]-m[10]) * 0.5;
-var t = 0.25/s;
+s = Math.sqrt(1.0+m[5]-m[0]-m[10]) * 0.5;
+t = 0.25/s;
 ret[0] = (yx + xy) * t;
 ret[1] = s;
 ret[2] = (zy + yz) * t;
@@ -986,14 +989,14 @@ ret[3] = (zx - xz) * t;
 else
 {
 // s=4*z
-var s = Math.sqrt(1.0+m[10]-m[0]-m[5]) * 0.5;
-var t = 0.25/s;
+s = Math.sqrt(1.0+m[10]-m[0]-m[5]) * 0.5;
+t = 0.25/s;
 ret[0] = (zx + xz) * t;
 ret[1] = (zy + yz) * t;
 ret[2] = s;
 ret[3] = (xy - yx) * t;
 }
-return ret
+return ret;
 },
 /**
  * Returns the upper-left part of a 4x4 matrix as a new
@@ -1006,7 +1009,7 @@ mat4toMat3:function(m4){
   m4[0],m4[1],m4[2],
   m4[4],m4[5],m4[6],
   m4[8],m4[9],m4[10]
- ]
+ ];
 },
 /**
  * Returns the transpose of a 4x4 matrix.
@@ -1014,7 +1017,7 @@ mat4toMat3:function(m4){
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4transpose:function(m4){
- return mat4transposeInPlace(m4.slice(0,16));
+ return GLMath.mat4transposeInPlace(m4.slice(0,16));
 },
 /**
  * Transposes a 4x4 matrix in place without creating
@@ -1042,12 +1045,12 @@ mat4transposeInPlace:function(mat){
 * can't be inverted, returns the identity 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
-if(m4[1]==0 && m4[2]==0 && m4[4]==0 &&
-   m4[6]==0 && m4[8]==0 && m4[9]==0){
- if(m4[0]==1 && m4[5]==1 && m4[10]==1){
+if(m4[1]===0 && m4[2] === 0 && m4[4] === 0 &&
+   m4[6] === 0 && m4[8] === 0 && m4[9] === 0){
+ if(m4[0] === 1 && m4[5] === 1 && m4[10] === 1){
   // upper 3x3 is identity
   return [1,0,0,0,1,0,0,0,1];
- } else if(m4[0]*m4[5]*m4[10]!=0){
+ } else if(m4[0]*m4[5]*m4[10]!==0){
   // upper 3x3 is simple scaling
   return [1/m4[0],0,0,0,1/m4[5],0,0,0,1/m4[10]];
  } else {
@@ -1063,7 +1066,7 @@ m[6] * m[1] * m[5] -
 m[6] * m[4] * m[2] -
 m[3] * m[1] * m[8] -
 m[0] * m[7] * m[5];
-if(det==0) {
+if(det===0) {
 return [1,0,0,0,1,0,0,0,1];
 }
 det=1.0/det;
@@ -1076,7 +1079,7 @@ return [
  (m[1] * m[6] - m[0] * m[7])*det,
  (-m[2] * m[4] + m[1] * m[5])*det,
  (m[2] * m[3] - m[0] * m[5])*det,
- (-m[1] * m[3] + m[0] * m[4])*det]
+ (-m[1] * m[3] + m[0] * m[4])*det];
 },
 /**
  * Multiplies a 4x4 matrix by a scaling transformation.
@@ -1090,7 +1093,7 @@ return [
  */
 mat4scale:function(mat,v3,v3y,v3z){
   var scaleX,scaleY,scaleZ;
-  if(typeof v3y!="undefined" && typeof v3z!="undefined"){
+  if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       scaleX=v3;
       scaleY=v3y;
       scaleZ=v3z;
@@ -1117,10 +1120,10 @@ mat4scale:function(mat,v3,v3y,v3z){
  * @return {Array<number>} The resulting 4x4 matrix.
  */
 mat4scaled:function(v3,v3y,v3z){
-  if(typeof v3y!="undefined" && typeof v3z!="undefined"){
-   return [v3,0,0,0,0,v3y,0,0,0,0,v3z,0,0,0,0,1]
+  if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
+   return [v3,0,0,0,0,v3y,0,0,0,0,v3z,0,0,0,0,1];
   } else {
-   return [v3[0],0,0,0,0,v3[1],0,0,0,0,v3[2],0,0,0,0,1]
+   return [v3[0],0,0,0,0,v3[1],0,0,0,0,v3[2],0,0,0,0,1];
   }
 },
 /**
@@ -1139,8 +1142,8 @@ mat4scaled:function(v3,v3y,v3z){
  */
 mat4transform:function(mat,v,vy,vz,vw){
   var x,y,z,w;
-  if(typeof vy!="undefined" && typeof vz!="undefined" &&
-      typeof vw!="undefined"){
+  if(typeof vy!=="undefined" && typeof vz!=="undefined" &&
+      typeof vw!=="undefined"){
       x=v;
       y=vy;
       z=vz;
@@ -1171,7 +1174,7 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
  */
 mat4transformVec3:function(mat,v,vy,vz){
   var x,y,z;
-  if(typeof vy!="undefined" && typeof vz!="undefined"){
+  if(typeof vy!=="undefined" && typeof vz!=="undefined"){
       x=v;
       y=vy;
       z=vz;
@@ -1199,7 +1202,7 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + mat[12],
  */
 mat3transform:function(mat,v,vy,vz){
   var x,y,z;
-  if(typeof vy!="undefined" && typeof vz!="undefined"){
+  if(typeof vy!=="undefined" && typeof vz!=="undefined"){
       x=v;
       y=vy;
       z=vz;
@@ -1224,7 +1227,7 @@ return [x * mat[0] + y * mat[3] + z * mat[6],
  */
 mat4translated:function(v3,v3y,v3z){
   var x,y,z;
-  if(typeof v3y!="undefined" && typeof v3z!="undefined"){
+  if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       x=v3;
       y=v3y;
       z=v3z;
@@ -1233,7 +1236,7 @@ mat4translated:function(v3,v3y,v3z){
       y=v3[1];
       z=v3[2];
   }
-  return [1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1]
+  return [1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1];
 },
 /**
  * Multiplies a 4x4 matrix by a translation transformation.
@@ -1248,7 +1251,7 @@ mat4translated:function(v3,v3y,v3z){
  */
 mat4translate:function(mat,v3,v3y,v3z){
   var x,y,z;
-  if(typeof v3y!="undefined" && typeof v3z!="undefined"){
+  if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       x=v3;
       y=v3y;
       z=v3z;
@@ -1265,7 +1268,7 @@ mat4translate:function(mat,v3,v3y,v3z){
   mat[1] * x + mat[5] * y + mat[9] * z + mat[13],
   mat[2] * x + mat[6] * y + mat[10] * z + mat[14],
   mat[3] * x + mat[7] * y + mat[11] * z + mat[15]
-  ]
+  ];
 },
 /**
  * Returns a 4x4 matrix representing a perspective projection.<p>
@@ -1301,7 +1304,7 @@ mat4perspective:function(fovY,aspectRatio,near,far){
  var nmf = near-far;
  nmf=1/nmf;
  return [f/aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
-   nmf*(near+far), -1, 0, 0, nmf*near*far*2, 0]
+   nmf*(near+far), -1, 0, 0, nmf*near*far*2, 0];
 },
 /**
  * Returns a 4x4 matrix representing a camera view.<p>
@@ -1326,7 +1329,7 @@ mat4perspective:function(fovY,aspectRatio,near,far){
  */
 mat4lookat:function(viewerPos,lookingAt,up){
  if(!up)up=[0,1,0];
- if(!lookingAt)lookingAt=[0,0,0]
+ if(!lookingAt)lookingAt=[0,0,0];
  var f=[lookingAt[0]-viewerPos[0],lookingAt[1]-viewerPos[1],lookingAt[2]-viewerPos[2]];
  var len=GLMath.vec3length(f);
  if(len<1e-6){
@@ -1546,7 +1549,7 @@ return [
  */
 mat4scaleInPlace:function(mat,v3,v3y,v3z){
   var x,y,z;
-  if(typeof v3y!="undefined" && typeof v3z!="undefined"){
+  if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       x=v3;
       y=v3y;
       z=v3z;
@@ -1611,7 +1614,7 @@ quatMultiply:function(a,b){
  a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
  a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
  a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
-    a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]]
+    a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]];
 },
 /**
  * Multiplies a 4x4 matrix by a rotation transformation,
@@ -1637,12 +1640,12 @@ quatMultiply:function(a,b){
  */
 mat4rotate:function(mat,angle,v,vy,vz){
 var v0,v1,v2,ang;
-if(typeof vy!="undefined" && typeof vz!="undefined"){
+if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
  ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
-} else if(typeof v=="undefined"){
+} else if(typeof v==="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
@@ -1656,21 +1659,21 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
 }
 var cost = Math.cos(ang);
 var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
-if( 1 == v0 && 0 == v1 && 0 == v2 ) {
+if( 1 === v0 && 0=== v1 && 0=== v2 ) {
   return [mat[0], mat[1], mat[2], mat[3],
   cost*mat[4]+mat[8]*sint, cost*mat[5]+mat[9]*sint, cost*mat[6]+mat[10]*sint, cost*mat[7]+mat[11]*sint,
   cost*mat[8]-sint*mat[4], cost*mat[9]-sint*mat[5], cost*mat[10]-sint*mat[6], cost*mat[11]-sint*mat[7],
-  mat[12], mat[13], mat[14], mat[15]]
-} else if( 0 == v0 && 1 == v1 && 0 == v2 ) {
+  mat[12], mat[13], mat[14], mat[15]];
+} else if( 0 === v0 && 1=== v1 && 0=== v2 ) {
 return [cost*mat[0]-sint*mat[8], cost*mat[1]-sint*mat[9], cost*mat[2]-sint*mat[10], cost*mat[3]-sint*mat[11],
   mat[4], mat[5], mat[6], mat[7],
   cost*mat[8]+mat[0]*sint, cost*mat[9]+mat[1]*sint, cost*mat[10]+mat[2]*sint, cost*mat[11]+mat[3]*sint,
-  mat[12], mat[13], mat[14], mat[15]]
-} else if( 0 == v0 && 0 == v1 && 1 == v2 ) {
+  mat[12], mat[13], mat[14], mat[15]];
+} else if( 0 === v0 && 0=== v1 && 1=== v2 ) {
  return [cost*mat[0]+mat[4]*sint, cost*mat[1]+mat[5]*sint, cost*mat[2]+mat[6]*sint, cost*mat[3]+mat[7]*sint,
   cost*mat[4]-sint*mat[0], cost*mat[5]-sint*mat[1], cost*mat[6]-sint*mat[2], cost*mat[7]-sint*mat[3],
-  mat[8], mat[9], mat[10], mat[11], mat[12], mat[13], mat[14], mat[15]]
-} else if(0==v0 && 0 == v1 && 0==v2){
+  mat[8], mat[9], mat[10], mat[11], mat[12], mat[13], mat[14], mat[15]];
+} else if(0===v0 && 0=== v1 && 0===v2){
  return mat.slice(0,16);
 } else {
 var iscale = 1.0 / Math.sqrt(v0*v0+v1*v1+v2*v2);
@@ -1687,7 +1690,7 @@ var yz = v1 * v2;
 var xs = v0 * sint;
 var ys = v1 * sint;
 var zs = v2 * sint;
-var v1 = mcos*x2;
+v1 = mcos*x2;
 var v10 = mcos*yz;
 var v12 = mcos*z2;
 var v3 = mcos*xy;
@@ -1734,12 +1737,12 @@ mat[12], mat[13], mat[14], mat[15]];
  */
 mat4rotated:function(angle,v,vy,vz){
 var v0,v1,v2,ang;
-if(typeof vy!="undefined" && typeof vz!="undefined"){
+if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
  ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
-} else if(typeof v=="undefined"){
+} else if(typeof v==="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
@@ -1753,13 +1756,13 @@ if(typeof vy!="undefined" && typeof vz!="undefined"){
 }
 var cost = Math.cos(ang);
 var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
-if( 1 == v0 && 0 == v1 && 0 == v2 ) {
-  return[1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1]
-} else if( 0 == v0 && 1 == v1 && 0 == v2 ) {
-return [cost, 0, -sint, 0, 0, 1, 0, 0, sint, 0, cost, 0, 0, 0, 0, 1]
-} else if( 0 == v0 && 0 == v1 && 1 == v2 ) {
- return [cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-} else if(0==v0 && 0 == v1 && 0==v2){
+if( 1 === v0 && 0=== v1 && 0=== v2 ) {
+  return[1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1];
+} else if( 0 === v0 && 1=== v1 && 0=== v2 ) {
+return [cost, 0, -sint, 0, 0, 1, 0, 0, sint, 0, cost, 0, 0, 0, 0, 1];
+} else if( 0 === v0 && 0=== v1 && 1=== v2 ) {
+ return [cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+} else if(0===v0 && 0=== v1 && 0===v2){
  return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 } else {
 var iscale = 1.0 / Math.sqrt(v0*v0+v1*v1+v2*v2);
@@ -1776,9 +1779,9 @@ var xs = v0 * sint;
 var ys = v1 * sint;
 var zs = v2 * sint;
 var mcos = 1.0 - cost;
-var v0 = mcos*xy;
-var v1 = mcos*xz;
-var v2 = mcos*yz;
+v0 = mcos*xy;
+v1 = mcos*xz;
+v2 = mcos*yz;
 return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
   v2-xs, cost+mcos*z2, 0, 0, 0, 0, 1];
 }
@@ -1803,8 +1806,8 @@ GLMath.planeNormInPlace=function(plane){
  var y=plane[1];
  var z=plane[2];
  var w=plane[3];
- len=Math.sqrt(x*x+y*y+z*z);
- if(len!=0){
+ var len=Math.sqrt(x*x+y*y+z*z);
+ if(len!==0){
   len=1.0/len;
   plane[0]*=len;
   plane[1]*=len;
@@ -1812,7 +1815,7 @@ GLMath.planeNormInPlace=function(plane){
   plane[3]*=len;
  }
  return plane;
-}
+};
 /**
 * Normalizes this plane so that its normal is unit
 * length (unless all the normal's components are 0).
@@ -1829,7 +1832,7 @@ GLMath.planeNormInPlace=function(plane){
 */
 GLMath.planeNorm=function(plane){
  return GLMath.planeNormInPlace(plane.slice(0,4));
-}
+};
 /**
 * Finds the six clipping planes of a view frustum defined
 * by a 4x4 matrix. These six planes together form the
@@ -1849,51 +1852,51 @@ GLMath.planeNorm=function(plane){
 * will be normalized.
 */
 GLMath.mat4toFrustumPlanes=function(matrix){
- var frustum=[[],[],[],[],[],[]]
+ var frustum=[[],[],[],[],[],[]];
  // Left clipping plane
  frustum[0]=GLMath.planeNormInPlace([
   matrix[3]  + matrix[0],
   matrix[7]  + matrix[4],
   matrix[11] + matrix[8],
   matrix[15] + matrix[12]
- ])
+ ]);
  // Right clipping plane
  frustum[1]=GLMath.planeNormInPlace([
   matrix[3]  - matrix[0],
   matrix[7]  - matrix[4],
   matrix[11] - matrix[8],
   matrix[15] - matrix[12]
- ])
+ ]);
  // Top clipping plane
  frustum[2]=GLMath.planeNormInPlace([
   matrix[3]  - matrix[1],
   matrix[7]  - matrix[5],
   matrix[11] - matrix[9],
   matrix[15] - matrix[13]
- ])
+ ]);
  // Bottom clipping plane
  frustum[3]=GLMath.planeNormInPlace([
   matrix[3]  + matrix[1],
   matrix[7]  + matrix[5],
   matrix[11] + matrix[9],
   matrix[15] + matrix[13]
- ])
+ ]);
  // Near clipping plane
  frustum[4]=GLMath.planeNormInPlace([
   matrix[3]  + matrix[2],
   matrix[7]  + matrix[6],
   matrix[11] + matrix[10],
   matrix[15] + matrix[14]
- ])
+ ]);
  // Far clipping plane
  frustum[5]=GLMath.planeNormInPlace([
   matrix[3]  - matrix[2],
   matrix[7]  - matrix[6],
   matrix[11] - matrix[10],
   matrix[15] - matrix[14]
- ])
- return frustum
-}
+ ]);
+ return frustum;
+};
 /**
 * Determines whether a sphere is at least
 * partially inside a view frustum.
@@ -1922,7 +1925,7 @@ GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
   if(dot<-radius)return false;
  }
  return true;
-}
+};
 
 /**
 * Determines whether an axis-aligned bounding box
@@ -1956,7 +1959,7 @@ GLMath.frustumHasBox=function(frustum, box){
   }
  }
  return true;
-}
+};
 /**
 * Determines whether a point is
 * outside or inside a view frustum.
@@ -1980,7 +1983,7 @@ GLMath.frustumHasPoint=function(frustum, x, y, z){
   if(d<=0)return false;
  }
  return true;
-}
+};
 /**
 * Finds the dot product of two quaternions.
 * It's equal to the sum of the products of
@@ -2104,5 +2107,5 @@ GLMath.RollYawPitch = 5;
  * @param {Array<number>} quat A quaternion, containing four elements.
  * @return {Array<number>} Return value. */
 GLMath.quatInverse=GLMath.quatInvert;
- exports["GLMath"]=GLMath;
+ exports.GLMath=GLMath;
 }));

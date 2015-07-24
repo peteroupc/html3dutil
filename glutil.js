@@ -4,8 +4,10 @@
 * @module glutil
 * @license CC0-1.0
 */
+/* global Binders, BufferedMesh, FrameBuffer, GLMath, JSON, LightsBinder, LoadedTexture, Mesh, Promise, ShaderProgram, Transform, define, exports */
 (function (root, factory) {
-  if (typeof define === "function" && define["amd"]) {
+  "use strict";
+if (typeof define === "function" && define.amd) {
     define([ "exports" ], factory);
   } else if (typeof exports === "object") {
     factory(exports);
@@ -13,7 +15,8 @@
     factory(root);
   }
 }(this, function (exports) {
-  if (exports.GLUtil) { return; }
+  "use strict";
+if (exports.GLUtil) { return; }
 
 /*
   Polyfills
@@ -26,7 +29,7 @@ if(!window.requestAnimationFrame){
    window.setTimeout(function(){
     func(window.performance.now());
    },17);
-  }
+  };
  }
 }
 if(!window.performance){
@@ -35,7 +38,7 @@ if(!window.performance){
 if(!window.performance.now){
  window.performance.now=function(){
    return (new Date().getTime()*1000)-window.performance._startTime;
- }
+ };
  window.performance._startTime=new Date().getTime()*1000;
 }
 
@@ -85,14 +88,14 @@ var GLUtil={
  if(parent){
   parent.appendChild(canvas);
  }
- if(width==null){
+ if((width===null || typeof width==="undefined")){
   canvas.width=Math.ceil(canvas.clientWidth)+"";
  } else if(width<0){
   throw new Error("width negative");
  } else {
   canvas.width=Math.ceil(width)+"";
  }
- if(height==null){
+ if((height===null || typeof height==="undefined")){
   canvas.height=Math.ceil(canvas.clientHeight)+"";
  } else if(height<0){
   throw new Error("height negative");
@@ -121,24 +124,24 @@ var GLUtil={
    options.antialias=true;
   }
   try { context=canvasElement.getContext("webgl", options);
-  } catch(e) { context=null; }
+  } catch(ex) { context=null; }
   if(!context){
     try { context=canvasElement.getContext("experimental-webgl", options);
-    } catch(e) { context=null; }
+    } catch(ex) { context=null; }
   }
   if(!context){
     try { context=canvasElement.getContext("moz-webgl", options);
-    } catch(e) { context=null; }
+    } catch(ex) { context=null; }
   }
   if(!context){
     try { context=canvasElement.getContext("webkit-3d", options);
-    } catch(e) { context=null; }
+    } catch(ex) { context=null; }
   }
   if(!context){
     try { context=canvasElement.getContext("2d", options);
-    } catch(e) { context=null; }
+    } catch(ex) { context=null; }
   }
-  if(GLUtil["is3DContext"](context)){
+  if(GLUtil.is3DContext(context)){
    context.getExtension("OES_element_index_uint");
   }
   return context;
@@ -155,13 +158,13 @@ var GLUtil={
 * is null or not an HTML canvas element.
 */
 "get3DContext":function(canvasElement,err){
-  var c=GLUtil["get3DOr2DContext"](canvasElement);
+  var c=GLUtil.get3DOr2DContext(canvasElement);
   var errmsg=null;
   if(!c && window.WebGLShader){
     errmsg="Failed to initialize graphics support required by this page.";
-  } else if(window.WebGLShader && !GLUtil["is3DContext"](c)){
+  } else if(window.WebGLShader && !GLUtil.is3DContext(c)){
     errmsg="This page requires WebGL, but it failed to start. Your computer might not support WebGL.";
-  } else if(!c || !GLUtil["is3DContext"](c)){
+  } else if(!c || !GLUtil.is3DContext(c)){
     errmsg="This page requires a WebGL-supporting browser.";
   }
   if(errmsg){
@@ -199,26 +202,26 @@ var GLUtil={
  */
 "getPromiseResults":function(promises,
    progressResolve, progressReject){
- if(!promises || promises.length==0){
+ if(!promises || promises.length===0){
   return Promise.resolve({
     successes:[], failures:[], results:[]});
  }
  function promiseResolveFunc(pr,ret,index){
    return function(x){
     if(pr)pr(x);
-    ret.successes[index]=x
+    ret.successes[index]=x;
     return true;
-   }
+   };
  }
  function promiseRejectFunc(pr,ret,index){
    return function(x){
     if(pr)pr(x);
-    ret.failures[index]=x
+    ret.failures[index]=x;
     return true;
-   }
+   };
  }
  var ret={successes:[], failures:[], results:[]};
- var newPromises=[]
+ var newPromises=[];
  for(var i=0;i<promises.length;i++){
   var index=i;
   newPromises.push(promises[i].then(
@@ -229,19 +232,19 @@ var GLUtil={
  return Promise.all(newPromises).then(function(results){
   // compact the successes and failures arrays
   for(var i=0;i<ret.successes.length;i++){
-   if(typeof ret.successes[i]=="undefined"){
+   if(typeof ret.successes[i]==="undefined"){
     ret.successes.splice(i,1);
     i-=1;
    }
   }
-  for(var i=0;i<ret.failures.length;i++){
-   if(typeof ret.failures[i]=="undefined"){
+  for(i=0;i<ret.failures.length;i++){
+   if(typeof ret.failures[i]==="undefined"){
     ret.failures.splice(i,1);
     i-=1;
    }
   }
   ret.results=results;
-  return Promise.resolve(ret)
+  return Promise.resolve(ret);
  });
 },
 /**
@@ -270,14 +273,15 @@ var GLUtil={
    var xhr=new XMLHttpRequest();
    xhr.onreadystatechange=function(e){
     var t=e.target;
-    if(t.readyState==4){
+    if(t.readyState===4){
      if(t.status>=200 && t.status<300){
-      if(respType=="xml")resp=t.responseXML
-      else if(respType=="json")
-        resp=("response" in t) ? t.response : JSON.parse(t.responseText)
-      else if(respType=="arraybuffer")
-        resp=t.response
-      else resp=t.responseText+""
+      var resp="";
+      if(respType==="xml")resp=t.responseXML;
+      else if(respType==="json")
+        resp=("response" in t) ? t.response : JSON.parse(t.responseText);
+      else if(respType==="arraybuffer")
+        resp=t.response;
+      else resp=t.responseText+"";
       resolve({"url": urlstr, "data": resp});
      } else {
       reject({"url": urlstr});
@@ -286,9 +290,9 @@ var GLUtil={
    };
    xhr.onerror=function(e){
     reject({"url": urlstr, "error": e});
-   }
+   };
    xhr.open("get", url, true);
-   xhr.responseType=respType
+   xhr.responseType=respType;
    xhr.send();
  });
 }
@@ -327,12 +331,12 @@ var GLUtil={
 * var angle = 360 * GLUtil.getTimePosition(timer, time, 5000);
 */
 GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
- if(timer.time==null) {
+ if(timer.time===null) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
  } else {
-  if(timer.lastTime==null)timer.lastTime=timeInMs;
+  if(timer.lastTime===null)timer.lastTime=timeInMs;
   return (((timeInMs-timer.time)*1.0)%intervalInMs)/intervalInMs;
  }
 };
@@ -352,11 +356,11 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * initial time or last known time wasn't set, returns 0.
 */
 GLUtil.newFrames=function(timer,timeInMs){
- if(timer.time==null) {
+ if(timer.time===null) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
- } else if(timer.lastTime==null){
+ } else if(timer.lastTime===null){
   timer.lastTime=timeInMs;
   return 0;
  } else {
@@ -369,7 +373,7 @@ GLUtil.newFrames=function(timer,timeInMs){
 (function(exports){
 
 var hlsToRgb=function(hls) {
- "use strict";
+
 var hueval=hls[0]*1.0;//[0-360)
  var lum=hls[1]*1.0;//[0-255]
  var sat=hls[2]*1.0;//[0-255]
@@ -409,13 +413,13 @@ var hueval=hls[0]*1.0;//[0-360)
  return [(r<0 ? 0 : (r>255 ? 255 : r)),
    (g<0 ? 0 : (g>255 ? 255 : g)),
    (bl<0 ? 0 : (bl>255 ? 255 : bl))];
-}
+};
 // Converts a representation of a color to its RGB form
 // Returns a 4-item array containing the intensity of red,
 // green, blue, and alpha (each from 0-255)
 // Returns null if the color can't be converted
 var colorToRgba=function(x){
- "use strict";
+
  function parsePercent(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>100 ? 100 : c))*255/100; }
  function parseAlpha(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>1 ? 1 : c))*255; }
  function parseByte(x){ var c; return ((c=parseInt(x,10))<0 ? 0 : (c>255 ? 255 : c)); }
@@ -451,7 +455,7 @@ var e=null;
   if(x==="transparent")return [0,0,0,0];
   return null;
  }
-}
+};
 /**
 * Creates a 4-element array representing a color.  Each element
 * can range from 0 to 1 and specifies the red, green, blue or alpha
@@ -504,9 +508,9 @@ var e=null;
 * @return the color as a 4-element array; if the color is
 * invalid, returns [0,0,0,0] (transparent black).
 */
-exports["toGLColor"]=function(r,g,b,a){
- if(r==null)return [0,0,0,0];
- if(typeof r=="string"){
+exports.toGLColor=function(r,g,b,a){
+ if((r===null || typeof r==="undefined"))return [0,0,0,0];
+ if(typeof r==="string"){
    var rgba=colorToRgba(r) || [0,0,0,0];
    var mul=1.0/255;
    rgba[0]*=mul;
@@ -515,20 +519,20 @@ exports["toGLColor"]=function(r,g,b,a){
    rgba[3]*=mul;
    return rgba;
  }
- if(typeof r=="number" &&
-     typeof g=="number" && typeof b=="number"){
-   return [r,g,b,(typeof a!="number") ? 1.0 : a];
- } else if(r.constructor==Array){
+ if(typeof r==="number" &&
+     typeof g==="number" && typeof b==="number"){
+   return [r,g,b,(typeof a!=="number") ? 1.0 : a];
+ } else if(r.constructor===Array){
    return [r[0]||0,r[1]||0,r[2]||0,
-     (typeof r[3]!="number") ? 1.0 : r[3]];
+     (typeof r[3]!=="number") ? 1.0 : r[3]];
  } else {
    return r || [0,0,0,0];
  }
-}
+};
 
 var namedColors=null;
 var setUpNamedColors=function(){
-  "use strict";
+
 if(!namedColors){
     var nc=("aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff,"+
 "blueviolet,8a2be2,brown,a52a2a,burlywood,deb887,cadetblue,5f9ea0,chartreuse,7fff00,chocolate,d2691e,coral,ff7f50,cornflowerblue,6495ed,cornsilk,fff8dc,"+
@@ -557,15 +561,15 @@ if(!namedColors){
 /** @private */
 GLUtil._toContext=function(context){
  return (context && context.getContext) ? context.getContext() : context;
-}
+};
 /** @private */
 GLUtil._isPowerOfTwo=function(a){
-   if(Math.floor(a)!=a || a<=0)return false;
-   while(a>1 && (a&1)==0){
+   if(Math.floor(a)!==a || a<=0)return false;
+   while(a>1 && (a&1)===0){
     a>>=1;
    }
-   return (a==1);
-}
+   return (a===1);
+};
 ///////////////////////
 
 /**
@@ -574,7 +578,7 @@ GLUtil._isPowerOfTwo=function(a){
 * @alias glutil.LightSource
 */
 function LightSource(position, ambient, diffuse, specular) {
- this.ambient=ambient || [0,0,0,1.0]
+ this.ambient=ambient || [0,0,0,1.0];
  /**
  * Light position.  An array of four numbers.
 * If the fourth element is 0, this is a directional light, shining an infinitely
@@ -603,7 +607,7 @@ function LightSource(position, ambient, diffuse, specular) {
  * The default is (1,1,1), or white.
  */
  this.specular=specular||[1,1,1];
-};
+}
 /**
 * Sets parameters for this material object.
 * @param {object} params An object whose keys have
@@ -629,22 +633,22 @@ function LightSource(position, ambient, diffuse, specular) {
 * @return {glutil.Material} This object.
 */
 LightSource.prototype.setParams=function(params){
- if(params["ambient"]!=null){
-  this.ambient=GLUtil["toGLColor"](params.ambient);
+ if(params.ambient!==null){
+  this.ambient=GLUtil.toGLColor(params.ambient);
  }
- if(params["position"]!=null){
-  var position=params["position"]
+ if(params.position!==null){
+  var position=params.position;
   this.position=[position[0],position[1],position[2],
-    (position[3]==null) ? 0.0 : position[3]];
+    (position[3]===null) ? 0.0 : position[3]];
  }
- if(params["specular"]!=null){
-  this.specular=GLUtil["toGLColor"](params.specular);
+ if(params.specular!==null){
+  this.specular=GLUtil.toGLColor(params.specular);
  }
- if(params["diffuse"]!=null){
-  this.diffuse=GLUtil["toGLColor"](params.diffuse);
+ if(params.diffuse!==null){
+  this.diffuse=GLUtil.toGLColor(params.diffuse);
  }
  return this;
-}
+};
 
 /**
 * A collection of light sources.  It stores the scene's
@@ -680,18 +684,18 @@ Lights.MAX_LIGHTS = 3;
 /** @private */
 Lights._createNewLight=function(index){
  var ret=new LightSource();
- if(index!=0){
+ if(index!==0){
   ret.diffuse=[0,0,0,0];
   ret.specular=[0,0,0];
  }
  return ret;
-}
+};
 /**
  * Gets the number of lights defined in this object.
  * @return {number} Return value. */
 Lights.prototype.getCount=function(){
  return this.lights.length;
-}
+};
 
 /**
  * Gets information about the light source at the given index.
@@ -713,7 +717,7 @@ Lights.prototype.getLight=function(index){
   }
  }
  return this.lights[index];
-}
+};
 /**
  * Not documented yet.
  * @param {number} index Zero-based index of the light to set.  The first
@@ -725,7 +729,7 @@ Lights.prototype.getLight=function(index){
 Lights.prototype.setParams=function(index,params){
  this.getLight(index).setParams(params);
  return this;
-}
+};
 
 /**
  * Sets a directional light.
@@ -738,7 +742,7 @@ Lights.prototype.setParams=function(index,params){
  */
 Lights.prototype.setDirectionalLight=function(index,direction){
  return this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
-}
+};
 /**
  * Sets a point light.
  * @param {number} index Zero-based index of the light to set.  The first
@@ -750,7 +754,7 @@ Lights.prototype.setDirectionalLight=function(index,direction){
  */
 Lights.prototype.setPointLight=function(index,position){
  return this.setParams(index,{"position":[position[0],position[1],position[2],1]});
-}
+};
 
 /**
 * Specifies parameters for geometry materials, which describe the appearance of a
@@ -781,16 +785,16 @@ Lights.prototype.setPointLight=function(index,position){
 */
 function Material(ambient, diffuse, specular,shininess,emission) {
  //console.log([ambient,diffuse,specular,shininess,emission]+"")
- if(ambient!=null)ambient=GLUtil["toGLColor"](ambient)
- if(diffuse!=null)diffuse=GLUtil["toGLColor"](diffuse)
- if(specular!=null)specular=GLUtil["toGLColor"](specular)
- if(emission!=null)emission=GLUtil["toGLColor"](emission)
+ if((ambient!==null && typeof ambient!=="undefined"))ambient=GLUtil.toGLColor(ambient);
+ if((diffuse!==null && typeof diffuse!=="undefined"))diffuse=GLUtil.toGLColor(diffuse);
+ if((specular!==null && typeof specular!=="undefined"))specular=GLUtil.toGLColor(specular);
+ if((emission!==null && typeof emission!=="undefined"))emission=GLUtil.toGLColor(emission);
  /** Specular highlight exponent of this material.
 * The greater the number, the more concentrated the specular
 * highlights are.  The lower the number, the more extended the highlights are.
 * Ranges from 0 through 128.
 */
- this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
+ this.shininess=((shininess===null || typeof shininess==="undefined")) ? 0 : Math.min(Math.max(0,shininess),128);
  /** Ambient reflection of this material.<p>
  * Ambient reflection indicates how much an object reflects
  * ambient colors, those that color pixels the same way regardless
@@ -913,7 +917,7 @@ Material.prototype.copy=function(){
    "specularMap":this.specularMap,
    "normalMap":this.normalMap
  });
-}
+};
 /**
 * Sets parameters for this material object.
 * @param {object} params An object whose keys have
@@ -935,47 +939,48 @@ Material.prototype.copy=function(){
 * @return {glutil.Material} This object.
 */
 Material.prototype.setParams=function(params){
- if(params["ambient"]!=null){
-  this.ambient=GLUtil["toGLColor"](params.ambient);
+ var param;
+ if(params.ambient!==null){
+  this.ambient=GLUtil.toGLColor(params.ambient);
  }
- if(params["diffuse"]!=null){
-  this.diffuse=GLUtil["toGLColor"](params.diffuse);
+ if(params.diffuse!==null){
+  this.diffuse=GLUtil.toGLColor(params.diffuse);
  }
- if(params["specular"]!=null){
-  this.specular=GLUtil["toGLColor"](params.specular);
+ if(params.specular!==null){
+  this.specular=GLUtil.toGLColor(params.specular);
  }
- if(params["emission"]!=null){
-  this.emission=GLUtil["toGLColor"](params.emission);
+ if(params.emission!==null){
+  this.emission=GLUtil.toGLColor(params.emission);
  }
- if(params["shininess"]!=null){
+ if(params.shininess!==null){
   this.shininess=params.shininess;
  }
- if(params["texture"]!=null){
-   var param=params["texture"]
-   if(typeof param=="string"){
-    this.texture=new Texture(param)
+ if(params.texture!==null){
+   param=params.texture;
+   if(typeof param==="string"){
+    this.texture=new Texture(param);
    } else {
-    this.texture=param
+    this.texture=param;
    }
  }
- if(params["specularMap"]!=null){
-   var param=params["specularMap"]
-   if(typeof param=="string"){
-    this.specularMap=new Texture(param)
+ if(params.specularMap!==null){
+   param=params.specularMap;
+   if(typeof param==="string"){
+    this.specularMap=new Texture(param);
    } else {
-    this.specularMap=param
+    this.specularMap=param;
    }
  }
- if(params["normalMap"]!=null){
-   var param=params["normalMap"]
-   if(typeof param=="string"){
-    this.normalMap=new Texture(param)
+ if(params.normalMap!==null){
+   param=params.normalMap;
+   if(typeof param==="string"){
+    this.normalMap=new Texture(param);
    } else {
-    this.normalMap=param
+    this.normalMap=param;
    }
  }
  return this;
-}
+};
 /** Convenience method that returns a Material
  * object from an RGBA color.
 * @param {Array<number>|number|string} r Array of three or
@@ -990,9 +995,9 @@ Material.prototype.setParams=function(params){
 * @return {glutil.Material} The resulting material object.
  */
 Material.fromColor=function(r,g,b,a){
- var color=GLUtil["toGLColor"](r,g,b,a);
+ var color=GLUtil.toGLColor(r,g,b,a);
  return new Material(color,color);
-}
+};
 
 /** Convenience method that returns a Material
  * object from a texture to apply to a 3D object's surface.
@@ -1004,7 +1009,7 @@ Material.fromColor=function(r,g,b,a){
  */
 Material.fromTexture=function(texture){
  return new Material().setParams({"texture":texture});
-}
+};
 
 ////////////////////
 
@@ -1029,7 +1034,7 @@ var Texture=function(name){
  this.width=0;
  this.clamp=false;
  this.height=0;
-}
+};
 
 /**
 * Sets the wrapping behavior of texture coordinates that
@@ -1048,7 +1053,7 @@ var Texture=function(name){
 Texture.prototype.setClamp=function(clamp){
  this.clamp=clamp;
  return this;
-}
+};
 
 /**
 *  Loads a texture by its URL.
@@ -1080,7 +1085,7 @@ Texture.loadTexture=function(name, textureCache){
   function(name){
     return Promise.reject(name.name);
   });
-}
+};
 
 /**
 *  Creates a texture from a byte array specifying the texture data.
@@ -1093,16 +1098,16 @@ Texture.loadTexture=function(name, textureCache){
 * @return {glutil.Texture} The new Texture object.
 */
 Texture.fromUint8Array=function(array, width, height){
- if(width<0)throw new Error("width less than 0")
- if(height<0)throw new Error("height less than 0")
- if(array.length<width*height*4)throw new Error("array too short for texture")
- var texImage=new Texture("")
+ if(width<0)throw new Error("width less than 0");
+ if(height<0)throw new Error("height less than 0");
+ if(array.length<width*height*4)throw new Error("array too short for texture");
+ var texImage=new Texture("");
  texImage.image=array;
  texImage.width=Math.ceil(width);
  texImage.height=Math.ceil(height);
  texImage.loadStatus=2;
  return texImage;
-}
+};
 
 /** @private */
 Texture.loadTga=function(name){
@@ -1113,62 +1118,63 @@ Texture.loadTga=function(name){
    var id=view.getUint8(0);
    var cmaptype=view.getUint8(1);
    var imgtype=view.getUint8(2);
-   if(imgtype!=2 && imgtype!=3){
+   if(imgtype!==2 && imgtype!==3){
     return Promise.reject(new Error("unsupported image type"));
    }
    var xorg=view.getUint16(8,true);
    var yorg=view.getUint16(10,true);
-   if(xorg!=0 || yorg!=0){
+   if(xorg!==0 || yorg!==0){
     return Promise.reject(new Error("unsupported origins"));
    }
    var width=view.getUint16(12,true);
    var height=view.getUint16(14,true);
-   if(width==0 || height==0){
+   if(width===0 || height === 0){
     return Promise.reject(new Error("invalid width or height"));
    }
    var pixelsize=view.getUint8(16);
-   if(!(pixelsize==32 && imgtype==2) &&
-      !(pixelsize==24 && imgtype==2) &&
-      !(pixelsize==8 && imgtype==3)){
+   if(!(pixelsize===32 && imgtype === 2) &&
+      !(pixelsize===24 && imgtype === 2) &&
+      !(pixelsize===8 && imgtype === 3)){
     return Promise.reject(new Error("unsupported pixelsize"));
    }
    var size=width*height;
    if(size>buf.data.length){
     return Promise.reject(new Error("size too big"));
    }
+   var i;
    var arr=new Uint8Array(size*4);
    var offset=18;
    var io=0;
-   if(pixelsize==32 && imgtype==2){
-    for(var i=0,io=0;i<size;i++,io+=4){
-     arr[io+2]=view.getUint8(offset)
-     arr[io+1]=view.getUint8(offset+1)
-     arr[io]=view.getUint8(offset+2)
-     arr[io+3]=view.getUint8(offset+3)
+   if(pixelsize===32 && imgtype === 2){
+    for(i=0,io=0;i<size;i++,io+=4){
+     arr[io+2]=view.getUint8(offset);
+     arr[io+1]=view.getUint8(offset+1);
+     arr[io]=view.getUint8(offset+2);
+     arr[io+3]=view.getUint8(offset+3);
      offset+=4;
     }
-   } else if(pixelsize==24 && imgtype==2){
-    for(var i=0,io=0;i<size;i++,io+=4){
-     arr[io+2]=view.getUint8(offset)
-     arr[io+1]=view.getUint8(offset+1)
-     arr[io]=view.getUint8(offset+2)
-     arr[io+3]=0xFF
+   } else if(pixelsize===24 && imgtype === 2){
+    for(i=0,io=0;i<size;i++,io+=4){
+     arr[io+2]=view.getUint8(offset);
+     arr[io+1]=view.getUint8(offset+1);
+     arr[io]=view.getUint8(offset+2);
+     arr[io+3]=0xFF;
      offset+=3;
     }
-   } else if(pixelsize==8 && imgtype==3){
-    for(var i=0,io=0;i<size;i++,io+=4){
+   } else if(pixelsize===8 && imgtype === 3){
+    for(i=0,io=0;i<size;i++,io+=4){
      var col=view.getUint8(offset);
-     arr[io]=col
-     arr[io+1]=col
-     arr[io+2]=col
-     arr[io+3]=0xFF
+     arr[io]=col;
+     arr[io+1]=col;
+     arr[io+2]=col;
+     arr[io+3]=0xFF;
      offset++;
     }
    }
-   buf.data=null
-   return {"width":width,"height":height,"image":arr}
-  })
-}
+   buf.data=null;
+   return {"width":width,"height":height,"image":arr};
+  });
+};
 
 /** @private */
 Texture.prototype.loadImage=function(){
@@ -1200,23 +1206,23 @@ Texture.prototype.loadImage=function(){
    thisImage.height=target.height;
    thisImage.loadStatus=2;
    resolve(thisImage);
-  }
+  };
   image.onerror=function(e){
    thisImage.loadStatus=-1;
    reject({"name":thisName,"error":e});
-  }
+  };
   image.src=thisName;
  });
-}
+};
 /**
  * Disposes the texture data in this object.
  */
 Texture.prototype.dispose=function(){
- if(this.loadedTexture!=null){
+ if(this.loadedTexture!==null){
   this.loadedTexture.dispose();
   this.loadedTexture=null;
  }
-}
+};
 
 ////////////////////////////////////////
 
@@ -1245,9 +1251,9 @@ Texture.prototype.dispose=function(){
  */
 function Scene3D(canvasOrContext){
  var context=canvasOrContext;
- if(typeof canvasOrContext.getContext=="function"){
+ if(typeof canvasOrContext.getContext==="function"){
   // This might be a canvas, so create a WebGL context.
-  if(HTMLCanvasElement && context.constructor==HTMLCanvasElement){
+  if(HTMLCanvasElement && context.constructor===HTMLCanvasElement){
    context=GLUtil.get3DContext(canvasOrContext);
   } else {
    context=GLUtil._toContext(context);
@@ -1275,7 +1281,7 @@ function Scene3D(canvasOrContext){
  this.context.canvas.width=this.width;
  this.context.canvas.height=this.height;
  this.program=null;
- this._is3d=GLUtil["is3DContext"](this.context);
+ this._is3d=GLUtil.is3DContext(this.context);
  this._init3DContext();
 }
 /** @private */
@@ -1296,11 +1302,11 @@ Scene3D.prototype._init3DContext=function(){
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
  this.useProgram(this.program);
-}
+};
 /** Returns the WebGL context associated with this scene. */
 Scene3D.prototype.getContext=function(){
  return this.context;
-}
+};
 /** No face culling.
 @const  */
 Scene3D.NONE = 0;
@@ -1339,37 +1345,37 @@ Scene3D.CW = 1;
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.cullFace=function(value){
- if(value==Scene3D.BACK ||
-   value==Scene3D.FRONT ||
-   value==Scene3D.FRONT_AND_BACK){
+ if(value===Scene3D.BACK ||
+   value===Scene3D.FRONT ||
+   value===Scene3D.FRONT_AND_BACK){
   this._cullFace=value;
  } else {
   this._cullFace=0;
  }
  return this;
-}
+};
 /** @private */
 Scene3D.prototype._setFace=function(){
  if(!this._is3d)return;
- if(this._cullFace==Scene3D.BACK){
+ if(this._cullFace===Scene3D.BACK){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.BACK);
- } else if(this._cullFace==Scene3D.FRONT){
+ } else if(this._cullFace===Scene3D.FRONT){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.FRONT);
- } else if(this._cullFace==Scene3D.FRONT_AND_BACK){
+ } else if(this._cullFace===Scene3D.FRONT_AND_BACK){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.FRONT_AND_BACK);
  } else {
   this.context.disable(this.context.CULL_FACE);
  }
- if(this._frontFace==Scene3D.CW){
+ if(this._frontFace===Scene3D.CW){
   this.context.frontFace(this.context.CW);
  } else {
   this.context.frontFace(this.context.CCW);
  }
  return this;
-}
+};
 /**
 * Specifies the winding of front faces.
 * @param {number} value If this is {@link Scene3D.CW},
@@ -1380,13 +1386,13 @@ Scene3D.prototype._setFace=function(){
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.frontFace=function(value){
- if(value==Scene3D.CW){
+ if(value===Scene3D.CW){
   this._frontFace=value;
  } else {
   this._frontFace=0;
  }
  return this;
-}
+};
 /**
 * Sets whether to check whether to resize the canvas
 * when the render() method is called.
@@ -1397,7 +1403,7 @@ Scene3D.prototype.frontFace=function(value){
 Scene3D.prototype.setAutoResize=function(value){
  this.autoResize=!!value;
  return this;
-}
+};
 /**
 * Sets whether to use the device's pixel ratio (if supported by
 * the browser) in addition to the canvas's size when setting
@@ -1413,11 +1419,11 @@ Scene3D.prototype.setUseDevicePixelRatio=function(value){
  this.useDevicePixelRatio=!!value;
  this._pixelRatio=(this.useDevicePixelRatio && window.devicePixelRatio) ?
    window.devicePixelRatio : 1;
- if(oldvalue!=this.useDevicePixelRatio){
+ if(oldvalue!==this.useDevicePixelRatio){
   this.setDimensions(this.width,this.height);
  }
  return this;
-}
+};
  /**
   Gets the color used when clearing the screen each frame.
    @return {Array<number>} An array of four numbers, from 0 through
@@ -1425,23 +1431,23 @@ Scene3D.prototype.setUseDevicePixelRatio=function(value){
    */
 Scene3D.prototype.getClearColor=function(){
  return this.clearColor.slice(0,4);
-}
+};
 /** @private */
 Scene3D.prototype._getDefines=function(){
  var ret="";
   // TODO: Don't enable normal mapping by default, but
   // compile normal map on demand
  if(this.lightingEnabled)
-  ret+="#define SHADING\n#define NORMAL_MAP\n"
+  ret+="#define SHADING\n#define NORMAL_MAP\n";
  if(this.specularEnabled)
-  ret+="#define SPECULAR\n"
+  ret+="#define SPECULAR\n";
  return ret;
-}
+};
 /** @private */
 Scene3D.prototype._initProgramData=function(program){
  new LightsBinder(this.lightSource).bind(program);
  this._updateMatrix(program);
-}
+};
 /**
 * Changes the active shader program for this scene
 * and prepares this object for the new program.
@@ -1454,7 +1460,7 @@ Scene3D.prototype.useProgram=function(program){
  this.program=program;
  this._initProgramData(this.program);
  return this;
-}
+};
 /** @private */
 Scene3D.prototype._getSpecularMapShader=function(){
  if(this.__specularMapShader){
@@ -1466,7 +1472,7 @@ Scene3D.prototype._getSpecularMapShader=function(){
     defines+ShaderProgram.getDefaultVertex(),
     defines+ShaderProgram.getDefaultFragment());
  return this.__specularMapShader;
-}
+};
 /**
 * Sets the viewport width and height for this scene.
 * @param {number} width Width of the scene, in pixels.
@@ -1481,19 +1487,19 @@ Scene3D.prototype.setDimensions=function(width, height){
  this.context.canvas.width=this.width*this._pixelRatio;
  this.context.canvas.height=this.height*this._pixelRatio;
  this._setDimensions3D();
-}
+};
 /** @private */
 Scene3D.prototype._setDimensions3D=function(){
  if(this._is3d){
   this.context.viewport(0,0,this.width*this._pixelRatio,
    this.height*this._pixelRatio);
  }
- if(typeof this.fbo!="undefined" && this.fbo){
+ if(typeof this.fbo!=="undefined" && this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
    if(this.fboQuad)this.fboQuad.setMaterial(this.fbo);
   }
-}
+};
 /**
 * Gets the viewport width for this scene.
 * Note that if auto-resizing is enabled, this value may change
@@ -1501,7 +1507,7 @@ Scene3D.prototype._setDimensions3D=function(){
 * @return {number} Return value.*/
 Scene3D.prototype.getWidth=function(){
  return this.width;
-}
+};
 /**
 * Gets the viewport height for this scene.
 * Note that if auto-resizing is enabled, this value may change
@@ -1509,7 +1515,7 @@ Scene3D.prototype.getWidth=function(){
 * @return {number} Return value.*/
 Scene3D.prototype.getHeight=function(){
  return this.height;
-}
+};
 /**
 * Gets the ratio of width to height for this scene (getWidth()
 * divided by getHeight()).
@@ -1518,7 +1524,7 @@ Scene3D.prototype.getHeight=function(){
 * @return {number} Return value.*/
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
-}
+};
 /** Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
 * @return {number} Return value.*/
@@ -1526,7 +1532,7 @@ Scene3D.prototype.getClientAspect=function(){
  var ch=this.context.canvas.clientHeight;
  if(ch<=0)return 1;
  return this.context.canvas.clientWidth/ch;
-}
+};
 /**
  * Creates a frame buffer object associated with this scene.
  * @return {FrameBuffer} A buffer with the same size as this scene.
@@ -1534,19 +1540,19 @@ Scene3D.prototype.getClientAspect=function(){
 Scene3D.prototype.createBuffer=function(){
  return new FrameBuffer(this.context,
    this.getWidth(),this.getHeight());
-}
+};
 /**
  * Not documented yet.
  */
 Scene3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
-}
+};
 /**
  * Not documented yet.
  */
 Scene3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
-}
+};
 /**
 *  Sets this scene's projection matrix to a perspective projection.
  * <p>
@@ -1573,7 +1579,7 @@ Scene3D.prototype.getViewMatrix=function(){
 Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  return this.setProjectionMatrix(GLMath.mat4perspective(fov,
    aspect,near,far));
-}
+};
 
 /**
  * Sets this scene's projection matrix to an orthographic projection.
@@ -1600,11 +1606,11 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
- if(aspect==null)aspect=this.getAspect();
- if(aspect==0)aspect=1;
+ if((aspect===null || typeof aspect==="undefined"))aspect=this.getAspect();
+ if(aspect===0)aspect=1;
  return this.setProjectionMatrix(GLMath.mat4orthoAspect(
    left,right,bottom,top,near,far,aspect));
-}
+};
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.<p>
@@ -1624,7 +1630,7 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  */
 Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
-}
+};
 
 /**
  * Sets this scene's projection matrix to a perspective projection that defines
@@ -1651,7 +1657,7 @@ Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
 Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4frustum(
    left, right, top, bottom, near, far));
-}
+};
 /**
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
@@ -1673,7 +1679,7 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4ortho(
    left, right, bottom, top, near, far));
-}
+};
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
@@ -1688,7 +1694,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
 Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
  return this.setProjectionMatrix(GLMath.mat4ortho(
    left, right, bottom, top, -1, 1));
-}
+};
 /** @private */
 Scene3D.prototype._setClearColor=function(){
   if(this._is3d){
@@ -1696,7 +1702,7 @@ Scene3D.prototype._setClearColor=function(){
      this.clearColor[2],this.clearColor[3]);
   }
   return this;
-}
+};
 
 /**
 * Sets the color used when clearing the screen each frame.
@@ -1713,9 +1719,9 @@ Scene3D.prototype._setClearColor=function(){
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setClearColor=function(r,g,b,a){
- this.clearColor=GLUtil["toGLColor"](r,g,b,a);
+ this.clearColor=GLUtil.toGLColor(r,g,b,a);
  return this._setClearColor();
-}
+};
 /**
 * Loads a texture from an image URL.
 * @param {string} name URL of the image to load.
@@ -1725,7 +1731,7 @@ Scene3D.prototype.setClearColor=function(r,g,b,a){
 */
 Scene3D.prototype.loadTexture=function(name){
  return Texture.loadTexture(name, this.textureCache);
-}
+};
 /**
 * Loads a texture from an image URL and uploads it
 * to a texture buffer object.
@@ -1740,16 +1746,16 @@ Scene3D.prototype.loadTexture=function(name){
 Scene3D.prototype.loadAndMapTexture=function(texture){
  var context=this.context;
  var tex=null;
- if(texture.constructor==Texture){
+ if(texture.constructor===Texture){
    tex=texture.loadImage();
  } else {
-   tex=Texture.loadTexture(texture, this.textureCache)
+   tex=Texture.loadTexture(texture, this.textureCache);
  }
  return tex.then(function(textureInner){
     textureInner.loadedTexture=new LoadedTexture(textureInner,context);
     return textureInner;
   });
-}
+};
 /**
 * Loads one or more textures from an image URL and uploads each of them
 * to a texture buffer object.
@@ -1773,13 +1779,13 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
   promises.push(this.loadAndMapTexture(objf));
  }
  return GLUtil.getPromiseResults(promises, resolve, reject);
-}
+};
 /** @private */
 Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._updateMatrix(this.program);
-}
+};
 /** @private */
 Scene3D.prototype._updateMatrix=function(program){
  var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
@@ -1791,13 +1797,13 @@ Scene3D.prototype._updateMatrix=function(program){
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
   };
-  if(program.get("viewInvW")!=null){
+  if(program.get("viewInvW")!==null){
    var invView=GLMath.mat4invert(this._viewMatrix);
-   uniforms["viewInvW"]=[invView[12],invView[13],invView[14],invView[15]];
+   uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
   }
   program.setUniforms(uniforms);
  }
-}
+};
 /**
  * Sets the projection matrix for this object.  The projection
  * matrix can also be set using the {@link glutil.Scene3D#setFrustum}, {@link glutil.Scene3D#setOrtho},
@@ -1809,7 +1815,7 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
  this._projectionMatrix=GLMath.mat4copy(matrix);
  this._updateMatrix(this.program);
  return this;
-}
+};
 /**
 *  Sets this scene's view matrix. The view matrix can also
 * be set using the {@link glutil.Scene3D#setLookAt} method.
@@ -1820,7 +1826,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
  this._viewMatrix=GLMath.mat4copy(matrix);
  this._updateMatrix(this.program);
  return this;
-}
+};
 /**
 *  Sets this scene's view matrix to represent a camera view.
 * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
@@ -1845,7 +1851,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  this._viewMatrix=GLMath.mat4lookat(eye, center, up);
  this._updateMatrix(this.program);
  return this;
-}
+};
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
@@ -1857,7 +1863,7 @@ Scene3D.prototype.addShape=function(shape){
  shape.parent=null;
  this.shapes.push(shape);
  return this;
-}
+};
 /**
  * Creates a vertex buffer from a geometric mesh and
  * returns a shape object.
@@ -1869,7 +1875,7 @@ Scene3D.prototype.addShape=function(shape){
 Scene3D.prototype.makeShape=function(mesh){
  var buffer=new BufferedMesh(mesh,this.context);
  return new Shape(buffer);
-}
+};
 
 /**
 * Removes all instances of a 3D shape from this scene.
@@ -1878,13 +1884,13 @@ Scene3D.prototype.makeShape=function(mesh){
 */
 Scene3D.prototype.removeShape=function(shape){
  for(var i=0;i<this.shapes.length;i++){
-   if(this.shapes[i]==shape){
+   if(this.shapes[i]===shape){
      this.shapes.splice(i,1);
      i--;
    }
  }
  return this;
-}
+};
 /**
  * Sets a light source in this scene to a directional light.
  * @param {number} index Zero-based index of the light to set.  The first
@@ -1907,7 +1913,7 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
   .setParams(index,{"diffuse":diffuse,"specular":specular});
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
-}
+};
 /**
  * Sets parameters for a light in this scene.
  * @param {number} index Zero-based index of the light to set.  The first
@@ -1920,7 +1926,7 @@ Scene3D.prototype.setLightParams=function(index,params){
  this.lightSource.setParams(index,params);
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
-}
+};
 /**
  * Sets the color of the scene's ambient light.
 * @param {Array<number>|number|string} r Array of three or
@@ -1935,11 +1941,11 @@ Scene3D.prototype.setLightParams=function(index,params){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient=function(r,g,b,a){
- this.lightSource.sceneAmbient=GLUtil["toGLColor"](r,g,b,a);
- this.lightSource.sceneAmbient=this.lightSource.sceneAmbient.slice(0,4)
+ this.lightSource.sceneAmbient=GLUtil.toGLColor(r,g,b,a);
+ this.lightSource.sceneAmbient=this.lightSource.sceneAmbient.slice(0,4);
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
-}
+};
 
 /**
  * Sets a light source in this scene to a point light
@@ -1960,14 +1966,14 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
    .setParams(index,{"diffuse":diffuse,"specular":specular});
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
-}
+};
 /** @private */
 Scene3D._isIdentityExceptTranslate=function(mat){
 return (
-    mat[0]==1 && mat[1]==0 && mat[2]==0 && mat[3]==0 &&
-    mat[4]==0 && mat[5]==1 && mat[6]==0 && mat[7]==0 &&
-    mat[8]==0 && mat[9]==0 && mat[10]==1 && mat[11]==0 &&
-    mat[15]==1
+    mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
+    mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
+    mat[8] === 0 && mat[9] === 0 && mat[10] === 1 && mat[11] === 0 &&
+    mat[15] === 1
  );
 };
 /** @private */
@@ -1975,7 +1981,7 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
   var viewWorld;
-  if(program.get("modelViewMatrix")!=null){
+  if(program.get("modelViewMatrix")!==null){
    if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
     // view matrix is just a translation matrix, so that getting the model-view
     // matrix amounts to simply adding the view's position
@@ -1987,15 +1993,15 @@ Scene3D.prototype._setupMatrices=function(shape,program){
     viewWorld=GLMath.mat4multiply(this._viewMatrix,
      currentMatrix);
    }
-   uniforms["modelViewMatrix"]=viewWorld;
+   uniforms.modelViewMatrix=viewWorld;
   }
   var invTrans=GLMath.mat4inverseTranspose3(currentMatrix);
-  uniforms["world"]=currentMatrix;
-  uniforms["modelMatrix"]=currentMatrix;
-  uniforms["worldViewInvTrans3"]=invTrans;
-  uniforms["normalMatrix"]=invTrans;
+  uniforms.world=currentMatrix;
+  uniforms.modelMatrix=currentMatrix;
+  uniforms.worldViewInvTrans3=invTrans;
+  uniforms.normalMatrix=invTrans;
   program.setUniforms(uniforms);
-}
+};
 
 /**
  *  Renders all shapes added to this scene.
@@ -2013,14 +2019,14 @@ Scene3D.prototype._setupMatrices=function(shape,program){
 Scene3D.prototype.render=function(){
   if(this.autoResize){
    var c=this.context.canvas;
-   if(c.height!=Math.ceil(c.clientHeight)*this._pixelRatio ||
-       c.width!=Math.ceil(c.clientWidth)*this._pixelRatio){
+   if(c.height!==Math.ceil(c.clientHeight)*this._pixelRatio ||
+       c.width!==Math.ceil(c.clientWidth)*this._pixelRatio){
     // Resize the canvas if needed
     this.setDimensions(c.clientWidth,c.clientHeight);
    }
   }
   this._setFace();
-  if(typeof this.fboFilter!="undefined" && this.fboFilter){
+  if(typeof this.fboFilter!=="undefined" && this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
    var oldProgram=this.program;
@@ -2047,12 +2053,12 @@ Scene3D.prototype.render=function(){
    if(this._is3d)this.context.flush();
    return this;
  }
-}
+};
 
 /** @private */
 Scene3D.prototype._renderShape=function(shape,program){
- if(shape.constructor==ShapeGroup){
-  if(!shape.visible)return
+ if(shape.constructor===ShapeGroup){
+  if(!shape.visible)return;
   for(var i=0;i<shape.shapes.length;i++){
    this._renderShape(shape.shapes[i],program);
   }
@@ -2068,12 +2074,12 @@ Scene3D.prototype._renderShape=function(shape,program){
     this._setupMatrices(shape,prog);
     Binders.getMaterialBinder(shape.material).bind(prog);
     shape.bufferedMesh.draw(prog);
-    if(prog!=program){
+    if(prog!==program){
       this.useProgram(program);
     }
   }
  }
-}
+};
 /**
  * Uses a shader program to apply a texture filter after the
  * scene is rendered.  If a filter program is used, the scene will
@@ -2090,20 +2096,20 @@ Scene3D.prototype._renderShape=function(shape,program){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.useFilter=function(filterProgram){
- if(filterProgram==null){
+ if((filterProgram===null || typeof filterProgram==="undefined")){
   this.fboFilter=null;
  } else {
-  if(typeof filterProgram=="string"){
+  if(typeof filterProgram==="string"){
    // Assume the string is GLSL source code
    this.fboFilter=ShaderProgram.makeEffect(this.context,
     filterProgram);
   } else {
    this.fboFilter=filterProgram;
   }
-  if(typeof this.fbo=="undefined" || !this.fbo){
+  if(typeof this.fbo==="undefined" || !this.fbo){
    this.fbo=this.createBuffer();
   }
-  if(typeof this.fboQuad=="undefined" || !this.fboQuad){
+  if(typeof this.fboQuad==="undefined" || !this.fboQuad){
    var width=this.getWidth();
    var height=this.getHeight();
    // Create a mesh of a rectangle that will
@@ -2120,7 +2126,7 @@ Scene3D.prototype.useFilter=function(filterProgram){
   }
  }
  return this;
-}
+};
 /** @private */
 Scene3D.prototype._renderInner=function(){
   this._updateMatrix(this.program);
@@ -2131,7 +2137,7 @@ Scene3D.prototype._renderInner=function(){
    this._renderShape(this.shapes[i],this.program);
   }
   return this;
-}
+};
 
 /**
 * Represents a grouping of shapes.
@@ -2160,27 +2166,27 @@ ShapeGroup.prototype.addShape=function(shape){
  shape.parent=this;
  this.shapes.push(shape);
  return this;
-}
+};
 /**
  * Not documented yet.
  * @param {*} value
  */
 ShapeGroup.prototype.setVisible=function(value){
- this.visible=!!value
- return this
-}
+ this.visible=!!value;
+ return this;
+};
 /**
  * Not documented yet.
  */
 ShapeGroup.prototype.getVisible=function(){
- return this.visible
-}
+ return this.visible;
+};
 /**
  * Gets a reference to the transform used by this shape group object.
  * @return {glutil.Transform} Return value. */
 ShapeGroup.prototype.getTransform=function(){
  return this.transform;
-}
+};
 /**
  * Gets a copy of the transformation needed to transform
  * this shape group's coordinates to world coordinates.
@@ -2189,7 +2195,8 @@ ShapeGroup.prototype.getTransform=function(){
 ShapeGroup.prototype.getMatrix=function(){
   var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
-  if(this.parent!=null){
+  var mat;
+  if(this.parent!==null){
    var pmat=this.parent.getMatrix();
    if(thisIdentity){
     mat=GLMath.mat4multiply(pmat,xform.getMatrix());
@@ -2202,7 +2209,7 @@ ShapeGroup.prototype.getMatrix=function(){
    mat=xform.getMatrix();
   }
   return mat;
-}
+};
 /**
  * Sets the transform used by this shape group.  Child
  * shapes can set their own transforms, in which case, the
@@ -2213,7 +2220,7 @@ ShapeGroup.prototype.getMatrix=function(){
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
-}
+};
 /**
  * Sets the material used by all shapes in this shape group.
  * @param {glutil.Material} material
@@ -2223,7 +2230,7 @@ ShapeGroup.prototype.setMaterial=function(material){
   this.shapes[i].setMaterial(material);
  }
  return this;
-}
+};
 /**
 * Removes all instances of a 3D shape from this shape group
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
@@ -2231,13 +2238,13 @@ ShapeGroup.prototype.setMaterial=function(material){
 */
 ShapeGroup.prototype.removeShape=function(shape){
  for(var i=0;i<this.shapes.length;i++){
-   if(this.shapes[i]==shape){
+   if(this.shapes[i]===shape){
      this.shapes.splice(i,1);
      i--;
    }
  }
  return this;
-}
+};
 /**
  * Gets the number of vertices composed by this all shapes in this shape group.
  * @return {number} Return value. */
@@ -2247,7 +2254,7 @@ ShapeGroup.prototype.vertexCount=function(){
   c+=this.shapes[i].vertexCount();
  }
  return c;
-}
+};
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this shape group.
@@ -2258,7 +2265,7 @@ ShapeGroup.prototype.primitiveCount=function(){
   c+=this.shapes[i].primitiveCount();
  }
  return c;
-}
+};
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
@@ -2269,7 +2276,7 @@ Scene3D.prototype.vertexCount=function(){
   c+=this.shapes[i].vertexCount();
  }
  return c;
-}
+};
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
@@ -2280,7 +2287,7 @@ Scene3D.prototype.primitiveCount=function(){
   c+=this.shapes[i].primitiveCount();
  }
  return c;
-}
+};
 /**
  * Sets the relative position of the shapes in this group
  * from their original position.
@@ -2294,9 +2301,9 @@ Scene3D.prototype.primitiveCount=function(){
 * @return {glutil.Scene3D} This object.
  */
 ShapeGroup.prototype.setPosition=function(x,y,z){
- this.transform.setPosition(x,y,z)
+ this.transform.setPosition(x,y,z);
  return this;
-}
+};
 /**
  * Sets this shape group's orientation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link glutil.Transform#setQuaternion}.
@@ -2308,7 +2315,7 @@ ShapeGroup.prototype.setPosition=function(x,y,z){
 ShapeGroup.prototype.setQuaternion=function(quat){
  this.transform.setQuaternion(quat);
  return this;
-}
+};
 /**
  * Sets the scale of this shape group relative to its original
  * size. See {@link glutil.Transform#setScale}.
@@ -2323,7 +2330,7 @@ ShapeGroup.prototype.setQuaternion=function(quat){
 ShapeGroup.prototype.setScale=function(x,y,z){
  this.transform.setScale(x,y,z);
  return this;
-}
+};
 /**
 * An object that associates a geometric mesh (the shape of the object) with
 *  material data (which defines what is seen on the object's surface)
@@ -2336,7 +2343,7 @@ ShapeGroup.prototype.setScale=function(x,y,z){
 * method instead.
   */
 function Shape(mesh){
-  if(mesh==null)throw new Error("mesh is null");
+  if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
   this.bufferedMesh=mesh;
   this.transform=new Transform();
   this.material=new Material();
@@ -2349,28 +2356,28 @@ function Shape(mesh){
  * @return {number} Return value. */
 Shape.prototype.vertexCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
-}
+};
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
  * @return {number} Return value. */
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
-}
+};
 /**
  * Not documented yet.
  * @param {*} value
  */
 Shape.prototype.setVisible=function(value){
- this.visible=!!value
- return this
-}
+ this.visible=!!value;
+ return this;
+};
 /**
  * Not documented yet.
  */
 Shape.prototype.getVisible=function(){
- return this.visible
-}
+ return this.visible;
+};
 /**
 * Sets material parameters that give the shape a certain color.
 * However, if the mesh defines its own colors, those colors will take
@@ -2389,7 +2396,7 @@ Shape.prototype.getVisible=function(){
 Shape.prototype.setColor=function(r,g,b,a){
  this.material=Material.fromColor(r,g,b,a);
  return this;
-}
+};
 /**
  * Sets this shape's material to a texture with the given URL.
  * @param {string} name {@link glutil.Texture} object, or a string with the
@@ -2401,7 +2408,7 @@ Shape.prototype.setColor=function(r,g,b,a){
 Shape.prototype.setTexture=function(name){
  this.material=Material.fromTexture(name);
  return this;
-}
+};
 /**
 * Sets this shape's material parameters.
 * @param {Material} material
@@ -2410,7 +2417,7 @@ Shape.prototype.setTexture=function(name){
 Shape.prototype.setMaterial=function(material){
  this.material=material;
  return this;
-}
+};
 /**
 * Makes a copy of this object.  The copied object
 * will have its own version of the transform and
@@ -2424,13 +2431,13 @@ Shape.prototype.copy=function(){
  ret.material=this.material.copy();
  ret.transform=this.getTransform().copy();
  return ret;
-}
+};
 /**
  * Not documented yet.
  */
 Shape.prototype.getTransform=function(){
  return this.transform;
-}
+};
 /** @private */
 Shape.prototype.isCulled=function(frustum){
  if(!this.bufferedMesh||!this.visible)return true;
@@ -2442,7 +2449,7 @@ Shape.prototype.isCulled=function(frustum){
   bounds=[mn[0],mn[1],mn[2],mx[0],mx[1],mx[2]];
  }
  return !GLMath.frustumHasBox(frustum,bounds);
-}
+};
 /**
  * Not documented yet.
  * @param {*} transform
@@ -2450,7 +2457,7 @@ Shape.prototype.isCulled=function(frustum){
 Shape.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
-}
+};
 /**
  * Sets the scale of this shape relative to its original
  * size. See {@link glutil.Transform#setScale}
@@ -2463,7 +2470,7 @@ Shape.prototype.setTransform=function(transform){
 Shape.prototype.setScale=function(x,y,z){
   this.getTransform().setScale(x,y,z);
   return this;
-}
+};
 /**
  * Sets the relative position of this shape from its original
  * position.  See {@link glutil.Transform#setPosition}
@@ -2476,7 +2483,7 @@ Shape.prototype.setScale=function(x,y,z){
 Shape.prototype.setPosition=function(x,y,z){
   this.getTransform().setPosition(x,y,z);
   return this;
-}
+};
 /**
  * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link glutil.Transform#setQuaternion}.
@@ -2486,7 +2493,7 @@ Shape.prototype.setPosition=function(x,y,z){
 Shape.prototype.setQuaternion=function(quat){
   this.getTransform().setQuaternion(quat);
   return this;
-}
+};
 /**
  * Gets the transformation matrix used by this shape.
    * See {@link glutil.Transform#getMatrix}.
@@ -2495,7 +2502,8 @@ Shape.prototype.setQuaternion=function(quat){
 Shape.prototype.getMatrix=function(){
   var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
-  if(this.parent!=null){
+  var mat;
+  if(this.parent!==null){
    var pmat=this.parent.getMatrix();
    if(thisIdentity){
     mat=pmat;
@@ -2508,14 +2516,14 @@ Shape.prototype.getMatrix=function(){
    mat=xform.getMatrix();
   }
   return mat;
-}
+};
 /////////////
-exports["ShapeGroup"]=ShapeGroup;
-exports["Lights"]=Lights;
-exports["LightSource"]=LightSource;
-exports["Texture"]=Texture;
-exports["Material"]=Material;
-exports["Shape"]=Shape;
-exports["Scene3D"]=Scene3D;
-exports["GLUtil"]=GLUtil;
+exports.ShapeGroup=ShapeGroup;
+exports.Lights=Lights;
+exports.LightSource=LightSource;
+exports.Texture=Texture;
+exports.Material=Material;
+exports.Shape=Shape;
+exports.Scene3D=Scene3D;
+exports.GLUtil=GLUtil;
 }));

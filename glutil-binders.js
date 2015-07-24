@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/* global BufferedMesh, BufferedSubMesh, FrameBuffer, GLUtil, Lights, Material, Mesh */
 /**
 * Contains classes that implement methods
 * binding certain HTML 3D Library objects
@@ -17,28 +17,35 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
 /** @private */
 function MaterialBinder(mshade){
- this.mshade=mshade;
+ "use strict";
+this.mshade=mshade;
  this.textureSize=[0,0];
 }
 /** @private */
+var TextureBinder=function(tex){
+ "use strict";
+this.texture=tex;
+};
+/** @private */
 MaterialBinder.prototype.bind=function(program){
- if(!this.mshade)return this;
+ "use strict";
+if(!this.mshade)return this;
  var uniforms={
   "textureSize":this.textureSize,
   "useSpecularMap":0,
   "useNormalMap":0
- }
+ };
  program.setUniforms(uniforms);
  uniforms={
   "mshin":this.mshade.shininess,
-  "ma":this.mshade.ambient.length==3 ? this.mshade.ambient :
+  "ma":this.mshade.ambient.length===3 ? this.mshade.ambient :
      [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
-  "md":this.mshade.diffuse.length==4 ? this.mshade.diffuse :
+  "md":this.mshade.diffuse.length===4 ? this.mshade.diffuse :
     [this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
        this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]],
-  "ms":this.mshade.specular.length==3 ? this.mshade.specular :
+  "ms":this.mshade.specular.length===3 ? this.mshade.specular :
      [this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
-  "me":this.mshade.emission.length==3 ? this.mshade.emission :
+  "me":this.mshade.emission.length===3 ? this.mshade.emission :
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
  };
  if(this.mshade.texture){
@@ -52,13 +59,14 @@ MaterialBinder.prototype.bind=function(program){
  }
  program.setUniforms(uniforms);
  return this;
-}
+};
 
 //////////////////////////
 
 /** @private */
 function LoadedTexture(textureImage, context){
-  context=GLUtil._toContext(context);
+  "use strict";
+context=GLUtil._toContext(context);
   this.context=context;
   this.loadedTexture=context.createTexture();
   context.activeTexture(context.TEXTURE0);
@@ -91,23 +99,26 @@ function LoadedTexture(textureImage, context){
 }
 /** @private */
 LoadedTexture.prototype.dispose=function(){
- if(this.loadedTexture){
+ "use strict";
+if(this.loadedTexture){
   this.context.deleteTexture(this.loadedTexture);
  }
-}
+};
 
 /////////////////////////////////
 
 function FrameBufferMaterialBinder(fb){
- this.fb=fb;
+ "use strict";
+this.fb=fb;
 }
 /** @private */
 FrameBufferMaterialBinder.prototype.bind=function(program){
-      var uniforms={};
-      uniforms["sampler"]=this.fb.textureUnit;
-      uniforms["textureSize"]=[this.fb.width,this.fb.height];
+      "use strict";
+var uniforms={};
+      uniforms.sampler=this.fb.textureUnit;
+      uniforms.textureSize=[this.fb.width,this.fb.height];
       program.setUniforms(uniforms);
-      var ctx=program.getContext()
+      var ctx=program.getContext();
       ctx.activeTexture(ctx.TEXTURE0+this.fb.textureUnit);
       ctx.bindTexture(ctx.TEXTURE_2D,
         this.fb.colorTexture);
@@ -121,23 +132,21 @@ FrameBufferMaterialBinder.prototype.bind=function(program){
       ctx.texParameteri(ctx.TEXTURE_2D,
        ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
      }
-}
+};
 
 /////////////////////////////////
 
-function TextureBinder(tex){
- this.texture=tex;
-}
 /** @private */
 TextureBinder.prototype.bind=function(program,textureUnit){
- if(textureUnit==null)textureUnit=0;
+ "use strict";
+if((textureUnit===null || typeof textureUnit==="undefined"))textureUnit=0;
  var texture=this.texture;
  var context=program.getContext();
  if(texture.image!==null && texture.loadedTexture===null){
       // load the image as a texture
       texture.loadedTexture=new LoadedTexture(texture,context);
  } else if(texture.image===null && texture.loadedTexture===null &&
-   texture.loadStatus==0){
+   texture.loadStatus===0){
       var thisObj=this;
       var prog=program;
       texture.loadImage().then(function(e){
@@ -148,12 +157,12 @@ TextureBinder.prototype.bind=function(program,textureUnit){
  }
  if (texture.loadedTexture!==null) {
       var uniforms={};
-      if(texture.anisotropic==null){
+      if(texture.anisotropic===null){
        // Try to load anisotropic filtering extension
        texture.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
          context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
          context.getExtension("MOZ_EXT_texture_filter_anisotropic");
-       if(texture.anisotropic==null){
+       if(texture.anisotropic===null){
         texture.anisotropic={};
         texture.maxAnisotropy=1;
        } else {
@@ -161,24 +170,24 @@ TextureBinder.prototype.bind=function(program,textureUnit){
           texture.anisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
        }
       }
-      if(textureUnit==0){
-       uniforms["sampler"]=textureUnit;
-       uniforms["textureSize"]=[texture.width,texture.height];
+      if(textureUnit===0){
+       uniforms.sampler=textureUnit;
+       uniforms.textureSize=[texture.width,texture.height];
       }
-      if(textureUnit==1){
-       uniforms["specularMap"]=textureUnit;
-       uniforms["useSpecularMap"]=1;
+      if(textureUnit===1){
+       uniforms.specularMap=textureUnit;
+       uniforms.useSpecularMap=1;
       }
-      if(textureUnit==2){
-       uniforms["normalMap"]=textureUnit;
-       uniforms["useNormalMap"]=1;
+      if(textureUnit===2){
+       uniforms.normalMap=textureUnit;
+       uniforms.useNormalMap=1;
       }
       program.setUniforms(uniforms);
       context.activeTexture(context.TEXTURE0+textureUnit);
       context.bindTexture(context.TEXTURE_2D,
         texture.loadedTexture.loadedTexture);
       // Set texture parameters
-      if(typeof texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!="undefined"){
+      if(typeof texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!=="undefined"){
        // Set anisotropy if anisotropic filtering is supported
        context.texParameteri(context.TEXTURE_2D,
         texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
@@ -203,22 +212,24 @@ TextureBinder.prototype.bind=function(program,textureUnit){
       context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_WRAP_T, wrapMode);
     }
-}
+};
 
 //////////////////////////
 
 function LightsBinder(lights){
- this.lights=lights;
+ "use strict";
+this.lights=lights;
 }
 /** @private */
 LightsBinder.prototype.bind=function(program){
- var lightsObject=this.lights;
+ "use strict";
+var lightsObject=this.lights;
  if(!lightsObject)return this;
  if(!program)return this;
  var uniforms={};
- uniforms["sceneAmbient"]=lightsObject.sceneAmbient.slice(0,3);
+ uniforms.sceneAmbient=lightsObject.sceneAmbient.slice(0,3);
  for(var i=0;i<lightsObject.lights.length;i++){
-  var lt=lightsObject.lights[i]
+  var lt=lightsObject.lights[i];
   uniforms["lights["+i+"].diffuse"]=[lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],
     lt.diffuse.length>3 ? lt.diffuse[3] : 1];
   uniforms["lights["+i+"].specular"]=[lt.specular[0],lt.specular[1],lt.specular[2],
@@ -226,20 +237,21 @@ LightsBinder.prototype.bind=function(program){
   uniforms["lights["+i+"].position"]=lightsObject.lights[i].position;
  }
  // Set empty values for undefined lights up to MAX_LIGHTS
- for(var i=lightsObject.lights.length;i<Lights.MAX_LIGHTS;i++){
+ for(i=lightsObject.lights.length;i<Lights.MAX_LIGHTS;i++){
   uniforms["lights["+i+"].diffuse"]=[0,0,0,1];
   uniforms["lights["+i+"].specular"]=[0,0,0,1];
   uniforms["lights["+i+"].position"]=[0,0,0,0];
  }
  program.setUniforms(uniforms);
  return this;
-}
+};
 
 ///////////////////////
 
 var Binders={};
 Binders.getMaterialBinder=function(material){
- if(material){
+ "use strict";
+if(material){
  if(material instanceof Material){
   return new MaterialBinder(material);
  }
@@ -251,4 +263,4 @@ Binders.getMaterialBinder=function(material){
  return {
 /** @private */
 bind:function(program){}};
-}
+};

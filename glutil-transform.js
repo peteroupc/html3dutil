@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/* global GLMath */
 /**
 *  A class offering a convenient way to set a transformation
 * from one coordinate system to another.
@@ -15,7 +15,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 function Transform(){
   /** @private */
-  this.scale=[1,1,1];
+  "use strict";
+this.scale=[1,1,1];
   /** @private */
   this.position=[0,0,0];
   /** @private */
@@ -35,40 +36,44 @@ function Transform(){
   * For each component, 1 means no scaling.
   * @return {Array<number>} Return value.   */
 Transform.prototype.getScale=function(){
- if(!this.complexMatrix){
-  return this.scale.slice(0,3)
+ "use strict";
+if(!this.complexMatrix){
+  return this.scale.slice(0,3);
  } else {
-  return [this.matrix[0],this.matrix[5],this.matrix[10]]
+  return [this.matrix[0],this.matrix[5],this.matrix[10]];
  }
-}
+};
   /**
   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
   * of an object relative to its original position.
   * @return {Array<number>} Return value.   */
 Transform.prototype.getPosition=function(){
- if(!this.complexMatrix){
-  return this.position.slice(0,3)
+ "use strict";
+if(!this.complexMatrix){
+  return this.position.slice(0,3);
  } else {
-  return [this.matrix[12],this.matrix[13],this.matrix[14]]
+  return [this.matrix[12],this.matrix[13],this.matrix[14]];
  }
-}
+};
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
    * @return {Array<number>} Return value.   */
 Transform.prototype.getQuaternion=function(){
- if(!this.complexMatrix){
-  return this.rotation.slice(0,4)
+ "use strict";
+if(!this.complexMatrix){
+  return this.rotation.slice(0,4);
  } else {
   return GLMath.quatNormInPlace(
-    GLMath.quatFromMat4(this.matrix))
+    GLMath.quatFromMat4(this.matrix));
  }
-}
+};
 /**
 * Resets this shape to the untransformed state.
 * @return {glutil.Shape} This object.
 */
 Transform.prototype.reset=function(){
- this.matrix=GLMath.mat4identity();
+ "use strict";
+this.matrix=GLMath.mat4identity();
  this.position=[0,0,0];
  this.scale=[1,1,1];
  this.rotation=GLMath.quatIdentity();
@@ -76,7 +81,7 @@ Transform.prototype.reset=function(){
  this._matrixDirty=false;
  this._isIdentity=true;
  return this;
-}
+};
 /**
  * Sets this shape's transformation matrix. This method
  * will set the position, rotation, and scale properties
@@ -86,7 +91,8 @@ Transform.prototype.reset=function(){
  * @return {glutil.Transform} This object.
  */
 Transform.prototype.setMatrix=function(value){
- this._matrixDirty=false;
+ "use strict";
+this._matrixDirty=false;
  this.complexMatrix=true;
  this.matrix=value.slice(0,16);
  this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
@@ -94,35 +100,37 @@ Transform.prototype.setMatrix=function(value){
  this.rotation=GLMath.quatNormInPlace(this.rotation);
  this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
  this._isIdentity=(
-    value[0]==1 && value[1]==0 && value[2]==0 && value[3]==0 &&
-    value[4]==0 && value[5]==1 && value[6]==0 && value[7]==0 &&
-    value[8]==0 && value[9]==0 && value[10]==1 && value[11]==0 &&
-    value[12]==0 && value[13]==0 && value[14]==0 && value[15]==1
+    value[0]===1 && value[1] === 0 && value[2] === 0 && value[3] === 0 &&
+    value[4]===0 && value[5] === 1 && value[6] === 0 && value[7] === 0 &&
+    value[8]===0 && value[9] === 0 && value[10] === 1 && value[11] === 0 &&
+    value[12]===0 && value[13] === 0 && value[14] === 0 && value[15] === 1
  );
  return this;
-}
+};
 /**
  * Returns whether this transform is the identity transform.
  * @return {boolean} Return value. */
 Transform.prototype.isIdentity=function(){
- if(this._matrixDirty){
+ "use strict";
+if(this._matrixDirty){
   if(this.complexMatrix){
    this.getMatrix();
   } else {
-   return this.position[0]==0 && this.position[1]==0 &&
-    this.position[2]==0 && this.scale[0]==1 &&
-    this.scale[1]==1 && this.scale[2]==1 &&
+   return this.position[0]===0 && this.position[1] === 0 &&
+    this.position[2]===0 && this.scale[0] === 1 &&
+    this.scale[1]===1 && this.scale[2] === 1 &&
     GLMath.quatIsIdentity(this.rotation);
   }
  }
  return this._isIdentity;
-}
+};
 /**
 * Resets this transform to the untransformed state.
 * @return {glutil.Transform} This object.
 */
 Transform.prototype.resetTransform=function(){
- this.matrix=GLMath.mat4identity();
+ "use strict";
+this.matrix=GLMath.mat4identity();
  this.position=[0,0,0];
  this.scale=[1,1,1];
  this._isIdentity=true;
@@ -130,7 +138,7 @@ Transform.prototype.resetTransform=function(){
  this.complexMatrix=false;
  this._matrixDirty=false;
  return this;
-}
+};
 /**
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
@@ -145,9 +153,10 @@ Transform.prototype.resetTransform=function(){
 * @return {glutil.Transform} This object.
  */
 Transform.prototype.setScale=function(x,y,z){
-  if(this.complexMatrix)return this;
-  if(x!=null && y==null && z==null){
-   if(typeof x!="number")
+  "use strict";
+if(this.complexMatrix)return this;
+  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
+   if(typeof x!=="number")
     this.scale=[x[0],x[1],x[2]];
    else
     this.scale=[x,x,x];
@@ -155,12 +164,12 @@ Transform.prototype.setScale=function(x,y,z){
    this.scale=[x,y,z];
   }
   this._isIdentity=(this._isIdentity &&
-   this.scale[0]==1 &&
-   this.scale[1]==1 &&
-   this.scale[2]==1);
+   this.scale[0]===1 &&
+   this.scale[1]===1 &&
+   this.scale[2]===1);
   this._matrixDirty=true;
   return this;
-}
+};
 /**
  * Sets the relative position of an object from its original
  * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
@@ -176,9 +185,10 @@ Transform.prototype.setScale=function(x,y,z){
  * @return {glutil.Transform} This object.
  */
 Transform.prototype.setPosition=function(x,y,z){
-  if(this.complexMatrix)return this;
-  if(x!=null && y==null && z==null){
-   if(typeof x!="number")
+  "use strict";
+if(this.complexMatrix)return this;
+  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
+   if(typeof x!=="number")
     this.position=[x[0],x[1],x[2]];
    else
     this.position=[x,x,x];
@@ -186,12 +196,12 @@ Transform.prototype.setPosition=function(x,y,z){
    this.position=[x,y,z];
   }
   this._isIdentity=(this._isIdentity &&
-   this.position[0]==0 &&
-   this.position[1]==0 &&
-   this.position[2]==0);
+   this.position[0]===0 &&
+   this.position[1]===0 &&
+   this.position[2]===0);
   this._matrixDirty=true;
   return this;
-}
+};
 
 /**
  * Moves the relative position of an object from its original
@@ -208,9 +218,10 @@ Transform.prototype.setPosition=function(x,y,z){
  * @return {glutil.Transform} This object.
  */
 Transform.prototype.movePosition=function(x,y,z){
-  if(this.complexMatrix)return this;
-  if(x!=null && y==null && z==null){
-   if(typeof x!="number"){
+  "use strict";
+if(this.complexMatrix)return this;
+  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
+   if(typeof x!=="number"){
     this.position[0]+=x[0];
     this.position[1]+=x[1];
     this.position[2]+=x[2];
@@ -225,12 +236,12 @@ Transform.prototype.movePosition=function(x,y,z){
     this.position[2]+=z;
   }
   this._isIdentity=(this._isIdentity &&
-   this.position[0]==0 &&
-   this.position[1]==0 &&
-   this.position[2]==0);
+   this.position[0]===0 &&
+   this.position[1]===0 &&
+   this.position[2]===0);
   this._matrixDirty=true;
   return this;
-}
+};
 /**
  * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
  * for describing 3D rotations). Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
@@ -249,12 +260,13 @@ Transform.prototype.movePosition=function(x,y,z){
  * transform.setQuaternion(GLMath.quatFromTaitBryan(30,0,40));
  */
 Transform.prototype.setQuaternion=function(quat){
-  if(this.complexMatrix)return this;
+  "use strict";
+if(this.complexMatrix)return this;
   this.rotation=quat.slice(0,4);
   GLMath.quatNormInPlace(this.rotation);
   this._matrixDirty=true;
   return this;
-}
+};
 /**
  * Sets this object's orientation in the form of an angle and an axis of
  * rotation. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
@@ -278,8 +290,9 @@ Transform.prototype.setQuaternion=function(quat){
  * @return {glutil.Transform} This object.
  */
 Transform.prototype.setOrientation=function(angle, v,vy,vz){
- return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
-}
+ "use strict";
+return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+};
 /**
  * Combines an object's current rotation with another rotation
  * described by a [quaternion]{@tutorial glmath} (a 4-element array
@@ -301,12 +314,13 @@ Transform.prototype.setOrientation=function(angle, v,vy,vz){
  * transform.multQuaternion(GLMath.quatFromTaitBryan(30,0,40));
  */
 Transform.prototype.multQuaternion=function(quat){
-  if(this.complexMatrix)return this;
+  "use strict";
+if(this.complexMatrix)return this;
   this.rotation=GLMath.quatNormInPlace(
    GLMath.quatMultiply(this.rotation,quat));
   this._matrixDirty=true;
   return this;
-}
+};
 /**
  * Combines an object's current rotation with another rotation
  * in the form of an angle and an axis of
@@ -327,8 +341,9 @@ Transform.prototype.multQuaternion=function(quat){
  * @return {glutil.Transform} This object.
  */
 Transform.prototype.multOrientation=function(angle, v,vy,vz){
- return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
-}
+ "use strict";
+return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+};
 /**
  * Gets the transformation matrix used by an object.  It is a combination
  * of the scale, position, and rotation properties,
@@ -336,7 +351,8 @@ Transform.prototype.multOrientation=function(angle, v,vy,vz){
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
  * @return {Array<number>} Return value. */
 Transform.prototype.getMatrix=function(){
-  if(this._matrixDirty){
+  "use strict";
+if(this._matrixDirty){
    this._matrixDirty=false;
    if(GLMath.quatIsIdentity(this.rotation)){
     this.matrix=[this.scale[0],0,0,0,0,
@@ -345,9 +361,9 @@ Transform.prototype.getMatrix=function(){
      this.position[0],
      this.position[1],
      this.position[2],1];
-    this._isIdentity=(this.position[0]==0 && this.position[1]==0 &&
-     this.position[2]==0 && this.scale[0]==1 &&
-     this.scale[1]==1 && this.scale[2]==1);
+    this._isIdentity=(this.position[0]===0 && this.position[1] === 0 &&
+     this.position[2]===0 && this.scale[0] === 1 &&
+     this.scale[1]===1 && this.scale[2] === 1);
    } else {
     // for best results, multiply in this order:
     // 1. translation
@@ -362,17 +378,17 @@ Transform.prototype.getMatrix=function(){
     GLMath.mat4scaleInPlace(this.matrix,this.scale);
     var m=this.matrix;
     this._isIdentity=(
-     m[0]==1 && m[1]==0 && m[2]==0 && m[3]==0 &&
-     m[4]==0 && m[5]==1 && m[6]==0 && m[7]==0 &&
-     m[8]==0 && m[9]==0 && m[10]==1 && m[11]==0 &&
-     m[12]==0 && m[13]==0 && m[14]==0 && m[15]==1
+     m[0]===1 && m[1] === 0 && m[2] === 0 && m[3] === 0 &&
+     m[4]===0 && m[5] === 1 && m[6] === 0 && m[7] === 0 &&
+     m[8]===0 && m[9] === 0 && m[10] === 1 && m[11] === 0 &&
+     m[12]===0 && m[13] === 0 && m[14] === 0 && m[15] === 1
     );
    }
   } else if(this._isIdentity){
    return GLMath.mat4identity();
   }
   return this.matrix.slice(0,16);
-}
+};
 
 /**
 * Makes a copy of this object.  The copied object
@@ -381,11 +397,12 @@ Transform.prototype.getMatrix=function(){
 * @return {glutil.Transform} A copy of this object.
 */
 Transform.prototype.copy=function(){
- var ret=new Transform();
+ "use strict";
+var ret=new Transform();
  ret.scale=this.scale.slice(0,this.scale.length);
  ret.position=this.position.slice(0,this.scale.length);
  ret.complexMatrix=this.complexMatrix;
  ret._matrixDirty=this._matrixDirty;
  ret.matrix=this.matrix.slice(0,this.matrix.length);
  return ret;
-}
+};

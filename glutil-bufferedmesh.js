@@ -6,76 +6,11 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/* global GLUtil, Mesh */
 
-/**
-* A geometric mesh in the form of vertex buffer objects.
-* @class
-* @alias glutil.BufferedMesh
-* @param {glutil.Mesh} mesh A geometric mesh object.
-* @param {WebGLRenderingContext|object} context A WebGL context to
-*  create vertex buffers from, or an object, such as Scene3D, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context. (Note that this constructor uses
-*  a WebGL context rather than a shader program because
-*  vertex buffer objects are not specific to shader programs.)
-*/
-function BufferedMesh(mesh, context){
- this.subMeshes=[];
- this.context=GLUtil._toContext(context);
- this._bounds=mesh.getBoundingBox();
- for(var i=0;i<mesh.subMeshes.length;i++){
-  var sm=mesh.subMeshes[i];
-  // skip empty submeshes
-  if(sm.indices.length==0)continue;
-  this.subMeshes.push(new BufferedSubMesh(
-    sm,this.context));
- }
-}
 /** @private */
-BufferedMesh.prototype._getBounds=function(){
- return this._bounds;
-}
-/**
- * Returns the WebGL context associated with this object.
- * @return {WebGLRenderingContext}
- */
-BufferedMesh.prototype.getContext=function(){
- return this.context;
-}
-/** @private */
-BufferedMesh.prototype.getFormat=function(){
- var format=0;
- for(var i=0;i<this.subMeshes.length;i++){
-  var sm=this.subMeshes[i];
-  format|=sm.format;
- }
- return format;
-}
-
-/**
-* Binds the buffers in this object to attributes according
-* to their data format, and draws the elements in this mesh
-* according to the data in its vertex buffers.
-* @param {glutil.ShaderProgram} program A shader program object to get
-* the IDs from for attributes named "position", "normal",
-* "colorAttr", and "uv", and the "useColorAttr" uniform.
-*/
-BufferedMesh.prototype.draw=function(program){
- for(var i=0;i<this.subMeshes.length;i++){
-  this.subMeshes[i].draw(program);
- }
-}
-/**
-* Deletes the vertex and index buffers associated with this object.
-*/
-BufferedMesh.prototype.dispose=function(){
- for(var i=0;i<this.subMeshes.length;i++){
-  this.subMeshes[i].dispose();
- }
- this.subMeshes=[];
-}
-/** @private */
-function BufferedSubMesh(mesh, context){
+var BufferedSubMesh=function(mesh, context){
+ "use strict";
  var vertbuffer=context.createBuffer();
  var facebuffer=context.createBuffer();
  context.bindBuffer(context.ARRAY_BUFFER, vertbuffer);
@@ -102,33 +37,108 @@ function BufferedSubMesh(mesh, context){
   this.type=type;
   this.format=mesh.attributeBits;
   this.context=context;
+};
+/**
+* A geometric mesh in the form of vertex buffer objects.
+* @class
+* @alias glutil.BufferedMesh
+* @param {glutil.Mesh} mesh A geometric mesh object.
+* @param {WebGLRenderingContext|object} context A WebGL context to
+*  create vertex buffers from, or an object, such as Scene3D, that
+* implements a no-argument <code>getContext</code> method
+* that returns a WebGL context. (Note that this constructor uses
+*  a WebGL context rather than a shader program because
+*  vertex buffer objects are not specific to shader programs.)
+*/
+function BufferedMesh(mesh, context){
+ "use strict";
+this.subMeshes=[];
+ this.context=GLUtil._toContext(context);
+ this._bounds=mesh.getBoundingBox();
+ for(var i=0;i<mesh.subMeshes.length;i++){
+  var sm=mesh.subMeshes[i];
+  // skip empty submeshes
+  if(sm.indices.length===0)continue;
+  this.subMeshes.push(new BufferedSubMesh(
+    sm,this.context));
+ }
 }
+/** @private */
+BufferedMesh.prototype._getBounds=function(){
+ "use strict";
+return this._bounds;
+};
+/**
+ * Returns the WebGL context associated with this object.
+ * @return {WebGLRenderingContext}
+ */
+BufferedMesh.prototype.getContext=function(){
+ "use strict";
+return this.context;
+};
+/** @private */
+BufferedMesh.prototype.getFormat=function(){
+ "use strict";
+var format=0;
+ for(var i=0;i<this.subMeshes.length;i++){
+  var sm=this.subMeshes[i];
+  format|=sm.format;
+ }
+ return format;
+};
+
+/**
+* Binds the buffers in this object to attributes according
+* to their data format, and draws the elements in this mesh
+* according to the data in its vertex buffers.
+* @param {glutil.ShaderProgram} program A shader program object to get
+* the IDs from for attributes named "position", "normal",
+* "colorAttr", and "uv", and the "useColorAttr" uniform.
+*/
+BufferedMesh.prototype.draw=function(program){
+ "use strict";
+for(var i=0;i<this.subMeshes.length;i++){
+  this.subMeshes[i].draw(program);
+ }
+};
+/**
+* Deletes the vertex and index buffers associated with this object.
+*/
+BufferedMesh.prototype.dispose=function(){
+ "use strict";
+for(var i=0;i<this.subMeshes.length;i++){
+  this.subMeshes[i].dispose();
+ }
+ this.subMeshes=[];
+};
 /**
  * @private */
 BufferedSubMesh.prototype.dispose=function(){
- if(this.verts!=null)
+ "use strict";
+if(this.verts!==null)
   this.context.deleteBuffer(this.verts);
- if(this.faces!=null)
+ if(this.faces!==null)
   this.context.deleteBuffer(this.faces);
  this.verts=null;
  this.faces=null;
-}
+};
 
 /**
  * @private */
 BufferedSubMesh.prototype.draw=function(program){
   // Binding phase
-  function _vertexAttrib(context, attrib, size, type, stride, offset){
-    if(attrib!==null){
+  "use strict";
+function _vertexAttrib(context, attrib, size, type, stride, offset){
+    if((attrib!==null && typeof attrib!=="undefined")){
       context.enableVertexAttribArray(attrib);
       context.vertexAttribPointer(attrib,size,type,false,stride,offset);
     }
   }
   var context=program.getContext();
-  if(this.verts==null || this.faces==null){
+  if(this.verts===null || this.face===null){
    throw new Error("mesh buffer disposed");
   }
-  if(context!=this.context){
+  if(context!==this.context){
    throw new Error("can't bind mesh: context mismatch");
   }
   context.bindBuffer(context.ARRAY_BUFFER, this.verts);
@@ -146,7 +156,7 @@ BufferedSubMesh.prototype.draw=function(program){
     context.FLOAT, stride*4, offset*4);
   } else {
    attr=program.get("normal");
-   if(attr!==null)context.disableVertexAttribArray(attr);
+   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
   }
   offset=Mesh._colorOffset(format);
   if(offset>=0){
@@ -158,7 +168,7 @@ BufferedSubMesh.prototype.draw=function(program){
   } else {
    program.setUniforms({"useColorAttr":0.0});
    attr=program.get("colorAttr");
-   if(attr!==null)context.disableVertexAttribArray(attr);
+   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
   }
   offset=Mesh._texCoordOffset(format);
   if(offset>=0){
@@ -168,7 +178,7 @@ BufferedSubMesh.prototype.draw=function(program){
     context.FLOAT, stride*4, offset*4);
   } else {
    attr=program.get("uv");
-   if(attr!==null)context.disableVertexAttribArray(attr);
+   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
   }
   offset=Mesh._tangentOffset(format);
   if(offset>=0){
@@ -178,7 +188,7 @@ BufferedSubMesh.prototype.draw=function(program){
     context.FLOAT, stride*4, offset*4);
   } else {
    attr=program.get("tangent");
-   if(attr!==null)context.disableVertexAttribArray(attr);
+   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
   }
   offset=Mesh._bitangentOffset(format);
   if(offset>=0){
@@ -188,51 +198,54 @@ BufferedSubMesh.prototype.draw=function(program){
     context.FLOAT, stride*4, offset*4);
   } else {
    attr=program.get("bitangent");
-   if(attr!==null)context.disableVertexAttribArray(attr);
+   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
   }
   // Drawing phase
-  var context=program.getContext();
-  if(this.verts==null || this.faces==null){
+  context=program.getContext();
+  if(this.verts===null || this.face===null){
    throw new Error("mesh buffer disposed");
   }
-  if(context!=this.context){
+  if(context!==this.context){
    throw new Error("can't bind mesh: context mismatch");
   }
   var primitive=context.TRIANGLES;
-  if((this.format&Mesh.LINES_BIT)!=0)primitive=context.LINES;
-  if((this.format&Mesh.POINTS_BIT)!=0)primitive=context.POINTS;
+  if((this.format&Mesh.LINES_BIT)!==0)primitive=context.LINES;
+  if((this.format&Mesh.POINTS_BIT)!==0)primitive=context.POINTS;
   context.drawElements(primitive,
     this.facesLength,
     this.type, 0);
-}
+};
 /**
  * @private */
 BufferedSubMesh.prototype.primitiveCount=function(){
-  if((this.format&Mesh.LINES_BIT)!=0)
+  "use strict";
+if((this.format&Mesh.LINES_BIT)!==0)
    return Math.floor(this.facesLength/2);
-  if((this.format&Mesh.POINTS_BIT)!=0)
+  if((this.format&Mesh.POINTS_BIT)!==0)
    return this.facesLength;
   return Math.floor(this.facesLength/3);
-}
+};
 /**
  * Not documented yet.
  */
 BufferedMesh.prototype.vertexCount=function(){
- var ret=0;
+ "use strict";
+var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
   ret+=this.subMeshes[i].numVertices;
  }
  return ret;
-}
+};
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
 * @return {number}
 */
 BufferedMesh.prototype.primitiveCount=function(){
- var ret=0;
+ "use strict";
+var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
   ret+=this.subMeshes[i].primitiveCount();
  }
  return ret;
-}
+};

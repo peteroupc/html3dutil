@@ -17,7 +17,8 @@
 * Fractional values are rounded up.
 */
 function FrameBuffer(context, width, height){
- if(width<0 || height<0)throw new Error("width or height negative");
+ "use strict";
+if(width<0 || height<0)throw new Error("width or height negative");
  this.context=context;
  // give the framebuffer its own texture unit, since the
  // shader program may bind samplers to other texture
@@ -66,14 +67,16 @@ function FrameBuffer(context, width, height){
  * @return {WebGLRenderingContext}
  */
 FrameBuffer.prototype.getContext=function(){
- return this.context;
-}
+ "use strict";
+return this.context;
+};
 /**
  * Not documented yet.
  * @param {glutil.ShaderProgram} program
  */
 FrameBuffer.prototype.bind=function(program){
-  if(program.getContext()!=this.context){
+  "use strict";
+if(program.getContext()!==this.context){
    throw new Error("can't bind buffer: context mismatch");
   }
  this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
@@ -85,12 +88,13 @@ FrameBuffer.prototype.bind=function(program){
  this.context.framebufferRenderbuffer(
    this.context.FRAMEBUFFER,this.context.DEPTH_ATTACHMENT,
    this.context.RENDERBUFFER,this.depthbuffer);
-}
+};
 /**
  * Unbinds this frame buffer from its associated WebGL this.context.
  */
 FrameBuffer.prototype.unbind=function(){
- this.context.framebufferTexture2D(
+ "use strict";
+this.context.framebufferTexture2D(
    this.context.FRAMEBUFFER,this.context.COLOR_ATTACHMENT0,
    this.context.TEXTURE_2D,null,0);
  this.context.framebufferRenderbuffer(
@@ -98,18 +102,19 @@ FrameBuffer.prototype.unbind=function(){
    this.context.RENDERBUFFER,null);
  this.context.bindFramebuffer(
     this.context.FRAMEBUFFER,null);
-}
+};
 /**
  * Disposes all resources from this frame buffer object.
  */
 FrameBuffer.prototype.dispose=function(){
- if(this.buffer!=null)
+ "use strict";
+if(this.buffer!==null)
   this.context.deleteFramebuffer(this.buffer);
- if(this.depthbuffer!=null)
+ if(this.depthbuffer!==null)
   this.context.deleteRenderbuffer(this.depthbuffer);
- if(this.colorTexture!=null)
+ if(this.colorTexture!==null)
   this.context.deleteTexture(this.colorTexture);
  this.buffer=null;
  this.depthbuffer=null;
  this.colorTexture=null;
-}
+};
