@@ -107,8 +107,67 @@ GraphicsPath._point=function(seg,t){
  }
 }
 
+/** @private */
+GraphicsPath._subdivide2=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tcut,list,flatness,mode,depth){
+   var x1=a1+(a3-a1)*tcut
+   var x2=a3+(a5-a3)*tcut
+   var xc1=x1+(x2-x1)*tcut
+   var x3=a5+(a7-a5)*tcut
+   var xc2=x2+(x3-x2)*tcut
+   var xd=xc1+(xc2-xc1)*tcut
+   var y1=a2+(a4-a2)*tcut
+   var y2=a4+(a6-a4)*tcut
+   var yc1=y1+(y2-y1)*tcut
+   var y3=a6+(a8-a6)*tcut
+   var yc2=y2+(y3-y2)*tcut
+   var yd=yc1+(yc2-yc1)*tcut
+   var tmid=t1+(t2-t1)*tcut
+   GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1)
+   GraphicsPath._flattenCubic(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,list,flatness,mode,depth+1)
+}
+/** @private */
+GraphicsPath._subdivide3=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tcut,tcut2,list,flatness,mode,depth){
+   var x1=a1+(a3-a1)*tcut
+   var x2=a3+(a5-a3)*tcut
+   var xc1=x1+(x2-x1)*tcut
+   var x3=a5+(a7-a5)*tcut
+   var xc2=x2+(x3-x2)*tcut
+   var xd=xc1+(xc2-xc1)*tcut
+   var y1=a2+(a4-a2)*tcut
+   var y2=a4+(a6-a4)*tcut
+   var yc1=y1+(y2-y1)*tcut
+   var y3=a6+(a8-a6)*tcut
+   var yc2=y2+(y3-y2)*tcut
+   var yd=yc1+(yc2-yc1)*tcut
+   var tmid=t1+(t2-t1)*tcut
+   var tcutx=(tcut2-tmid)/(t2-tmid);
+   GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1)
+   GraphicsPath._subdivide2(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,tcutx,list,flatness,mode,depth+1)
+}
+
 GraphicsPath._flattenCubic=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,mode,depth){
  if(depth==null)depth=0
+ /* if(depth<1){
+  // subdivide the curve at the inflection points
+  var ax=a1-3*a3+3*a5-a7
+  var ay=a2-3*a4+3*a6-a8
+  var tx=(ax==0) ? -1 : (a1-2*a3+a5)/ax
+  var ty=(ay==0) ? -1 : (a2-2*a4+a6)/ay
+  if(tx>=1)tx=-1
+  if(ty>=1)ty=-1
+  if(tx>0 && ty>0){
+   var tmin=Math.min(tx,ty)
+   var tmax=Math.max(tx,ty)
+   GraphicsPath._subdivide3(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tmin,tmax,list,flatness,mode,depth)
+   return
+  } else if(tx>0){
+   GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tx,list,flatness,mode,depth)
+   return
+  } else if(ty>0){
+   GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,ty,list,flatness,mode,depth)
+   return
+  }
+ }*/
  if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a3-a5-a5+a7)+
     Math.abs(a2-a4-a4+a6)+Math.abs(a4-a6-a6+a8)<=flatness){
   if(mode==0){
@@ -120,21 +179,7 @@ GraphicsPath._flattenCubic=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,
    list.push(t1,t2,length)
   }
  } else {
-  var x1=(a1+a3)*0.5
-  var x2=(a3+a5)*0.5
-  var xc1=(x1+x2)*0.5
-  var x3=(a5+a7)*0.5
-  var xc2=(x2+x3)*0.5
-  var xd=(xc1+xc2)*0.5
-  var y1=(a2+a4)*0.5
-  var y2=(a4+a6)*0.5
-  var yc1=(y1+y2)*0.5
-  var y3=(a6+a8)*0.5
-  var yc2=(y2+y3)*0.5
-  var yd=(yc1+yc2)*0.5
-  var tmid=(t1+t2)*0.5
-  GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1)
-  GraphicsPath._flattenCubic(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,list,flatness,mode,depth+1)
+  GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,0.5,list,flatness,mode,depth)
  }
 }
 
@@ -333,6 +378,163 @@ GraphicsPath.prototype.getLines=function(flatness){
  }
  return ret
 }
+
+GraphicsPath._accBounds=function(ret,first,s,t){
+ if(t>=0 && t<=1){
+  var pt=GraphicsPath._point(s,t)
+  if(first){
+   ret[0]=ret[2]=pt[0]
+   ret[1]=ret[3]=pt[1]
+  } else {
+   ret[0]=Math.min(pt[0],ret[0])
+   ret[1]=Math.min(pt[1],ret[1])
+   ret[2]=Math.max(pt[0],ret[2])
+   ret[3]=Math.max(pt[1],ret[3])
+  }
+ }
+}
+GraphicsPath._accBoundsArc=function(ret,first,rx,ry,cphi,sphi,cx,cy,angle){
+ var ca = Math.cos(angle);
+ var sa = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(angle);
+ var px=cphi*ca*rx-sphi*sa*ry+cx
+ var py=sphi*ca*rx+cphi*sa*ry+cy
+ if(first){
+  ret[0]=ret[2]=px
+  ret[1]=ret[3]=py
+ } else {
+  ret[0]=Math.min(px,ret[0])
+  ret[1]=Math.min(py,ret[1])
+  ret[2]=Math.max(px,ret[2])
+  ret[3]=Math.max(py,ret[3])
+ }
+}
+GraphicsPath._normAngle=function(angle){
+ var twopi=Math.PI*2;
+ var normAngle=angle
+ if(normAngle>=0){
+  normAngle=(normAngle<twopi) ? normAngle : normAngle%twopi
+ } else {
+  normAngle%=twopi;
+  normAngle+=twopi;
+ }
+ return normAngle
+}
+GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
+ var twopi=Math.PI*2
+ var diff=endAngle-startAngle
+ if(Math.abs(diff)>=twopi)return true
+ var normAngle=GraphicsPath._normAngle(angle)
+ var normStart=GraphicsPath._normAngle(startAngle)
+ var normEnd=GraphicsPath._normAngle(endAngle)
+ if(startAngle==endAngle){
+  return normAngle==normStart
+ } else if(startAngle<endAngle){
+  if(normStart<normEnd){
+   return normAngle>=normStart && normAngle<=normEnd
+  } else {
+   return normAngle>=normStart || normAngle<=normEnd
+  }
+ } else {
+  if(normEnd<normStart){
+   return normAngle>=normEnd && normAngle<=normStart
+  } else {
+   return normAngle>=normEnd || normAngle<=normStart
+  }
+ }
+}
+/**
+* Calculates an axis-aligned bounding box that tightly
+* fits this graphics path.
+* @return {Array<number>} An array of four numbers
+* describing the bounding box.  The first two are
+* the lowest X and Y coordinates, and the last two are
+* the highest X and Y coordinates.  If the path is empty,
+* returns the array (Infinity, Infinity, -Infinity, -Infinity).
+*/
+GraphicsPath.prototype.getBounds=function(){
+ var inf=Number.POSITIVE_INFINITY;
+ var ret=[inf,inf,-inf,inf]
+ var first=true
+ for(var i=0;i<this.segments.length;i++){
+  var s=this.segments[i]
+  var len=0
+  if(s[0]==GraphicsPath.CLOSE)continue
+  var endpt=GraphicsPath._endPoint(s)
+  var x1=s[1],y1=s[2],x2=endpt[0],y2=endpt[1]
+  if(first){
+    ret[0]=Math.min(x1,x2)
+    ret[1]=Math.min(y1,y2)
+    ret[2]=Math.max(x1,x2)
+    ret[3]=Math.max(y1,y2)
+  } else {
+    ret[0]=Math.min(x1,x2,ret[0])
+    ret[1]=Math.min(y1,y2,ret[1])
+    ret[2]=Math.max(x1,x2,ret[2])
+    ret[3]=Math.max(y1,y2,ret[3])
+  }
+  first=false
+  if(s[0]==GraphicsPath.QUAD){
+   x2=s[5]
+   y2=s[6]
+   var ax=x1-2*s[3]+x2
+   var ay=y1-2*s[4]+y2
+   if(ax!=0){
+    GraphicsPath._accBounds(ret,first,s,(x1-s[3])/ax)
+   }
+   if(ay!=0){
+    GraphicsPath._accBounds(ret,first,s,(y1-s[4])/ay)
+   }
+  } else if(s[0]==GraphicsPath.CUBIC){
+   x2=s[7]
+   y2=s[8]
+   var denomX=x1-3*s[3]+3*s[5]-x2
+   var denomY=y1-3*s[4]+3*s[6]-y2
+   if(denomX!=0 || denomY!=0){
+    var ax=x1-2*s[3]+s[5]
+    var ay=y1-2*s[4]+s[6]
+    var bx=s[3]*s[3]+s[5]*s[5]-s[5]*(x1+s[3])+x2*(x1-s[3])
+    var by=s[4]*s[4]+s[6]*s[6]-s[6]*(y1+s[4])+y2*(y1-s[4])
+    if(bx>=0 && denomX!=0){
+     bx=Math.sqrt(bx);
+     GraphicsPath._accBounds(ret,first,s,(ax-bx)/denomX)
+     GraphicsPath._accBounds(ret,first,s,(ax+bx)/denomX)
+    }
+    if(by>=0 && denomY!=0){
+     by=Math.sqrt(by);
+     GraphicsPath._accBounds(ret,first,s,(ay-by)/denomY)
+     GraphicsPath._accBounds(ret,first,s,(ay+by)/denomY)
+    }
+   }
+  } else if(s[0]==GraphicsPath.ARC){
+    var rx=s[3]
+    var ry=s[4]
+    var cx=s[10]
+    var cy=s[11]
+    var theta=s[12]
+    var delta=s[13]
+    var rot=s[5]
+    var sinp=Math.sin(rot)
+    var cosp=Math.cos(rot)
+    var angles=[]
+    var angle
+    if(cosp!=0){
+     angle=Math.atan2(-ry*sinp/cosp,rx);
+     angles.push(angle,angle+Math.PI)
+    }
+    if(sinp!=0){
+     angle=Math.atan2(ry*cosp/sinp,rx);
+     angles.push(angle,angle+Math.PI)
+    }
+    for(var i=0;i<angles.length;i++){
+     if(GraphicsPath._angleInRange(angles[i],theta,delta)){
+       GraphicsPath._accBoundsArc(ret,first,rx,ry,cosp,sinp,cx,cy,angles[i])
+     }
+    }
+  }
+ }
+ return ret
+}
+
 /** @private */
 GraphicsPath.prototype._getSubpaths=function(flatness){
  var tmp=[]
@@ -1035,6 +1237,7 @@ GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  if(x1==x2 && y1==y2){
   return this;
  }
+ rot%=360;
  rot*=Math.PI/180;
  rx=Math.abs(rx);
  ry=Math.abs(ry);
@@ -1462,6 +1665,7 @@ GraphicsPath.fromString=function(str){
  return ret
 }
 
+/** @private */
 var Triangulate={}
 Triangulate._LinkedList=function(){
  this.items=[]
