@@ -409,7 +409,7 @@ GraphicsPath._accBoundsArc=function(ret,first,rx,ry,cphi,sphi,cx,cy,angle){
  }
 }
 GraphicsPath._normAngle=function(angle){
- var twopi=Math.PI*2;
+ var twopi=GLMath.PiTimes2;
  var normAngle=angle
  if(normAngle>=0){
   normAngle=(normAngle<twopi) ? normAngle : normAngle%twopi
@@ -420,7 +420,7 @@ GraphicsPath._normAngle=function(angle){
  return normAngle
 }
 GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
- var twopi=Math.PI*2
+ var twopi=GLMath.PiTimes2
  var diff=endAngle-startAngle
  if(Math.abs(diff)>=twopi)return true
  var normAngle=GraphicsPath._normAngle(angle)
@@ -513,8 +513,8 @@ GraphicsPath.prototype.getBounds=function(){
     var theta=s[12]
     var delta=s[13]
     var rot=s[5]
-    var sinp=Math.sin(rot)
-    var cosp=Math.cos(rot)
+    var cosp = Math.cos(rot);
+    var sinp = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-cosp*cosp) : -Math.sqrt(1.0-cosp*cosp)) : Math.sin(rot);
     var angles=[]
     var angle
     if(cosp!=0){
