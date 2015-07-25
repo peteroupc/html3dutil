@@ -36,15 +36,15 @@ var a, x = null, e = null, t = null, token = null;
     x = tok[0];
     if (x.length===(0)) {
       return ["end", null];}
-    a=x.match(/^\s*(-?\d+(\.\d*)?)\s*/)
+    a=x.match(/^\s*(-?\d+(\.\d*)?)\s*/);
     if (a) {
       e = a[0];
       t = a[1];
       token = ["constant", t*1.0];
       tok[0] = x.substr(e.length,x.length);
-      return token
+      return token;
     }
-    a = x.match(/^\s*([\+\-\*\/\(\)\^])\s*/)
+    a = x.match(/^\s*([\+\-\*\/\(\)\^])\s*/);
     if(a) {
       e = a[0];
       t = a[1];
@@ -63,31 +63,31 @@ var a, x = null, e = null, t = null, token = null;
         token = "pow";}
       token = [token, null];
       tok[0] = x.substr(e.length,x.length);
-      return token
+      return token;
     }
-    a=x.match(/^\s*(sin|cos|sqrt|tan|acos|asin|atan|ln|abs)\s*/i)
+    a=x.match(/^\s*(sin|cos|sqrt|tan|acos|asin|atan|ln|abs)\s*/i);
     if(a){
       e = a[0];
       t = a[1].toLowerCase();
       token = ["function", t];
       tok[0] = x.substr(e.length,x.length);
-      return token
+      return token;
     }
-    a = x.match(/^\s*(pi|e)\s*/)
+    a = x.match(/^\s*(pi|e)\s*/);
     if(a){
       e = a[0];
       t = a[1];
       token = ["knownconstant", t];
       tok[0] = x.substr(e.length,x.length);
-      return token
+      return token;
     }
-    a = x.match(/^\s*([a-z])/)
+    a = x.match(/^\s*([a-z])/);
     if (a) {
       e = a[0];
       t = a[1];
       token = ["variable", t];
       tok[0] = x.substr(e.length,x.length);
-      return token
+      return token;
     }
     throw new Error("unexpected token");
   };
@@ -357,7 +357,7 @@ var j;
           this.nodes.push(realnode);}
           this.nodes[i] = null;
           done = false;
-        } else if (node instanceof Operation && node.operator=="div" && this.operator=="mul") {
+        } else if (node instanceof Operation && node.operator==="div" && this.operator==="mul") {
           if (((c = (d = (e = (f = ((g = node.nodes.length===(2)) ? (!(node.negative)) : g), f !== false && (f!==null && typeof f!=="undefined") ? (!(this.negative)) : f), e !== false && (e!==null && typeof e!=="undefined") ? (!(node.nodes[0].constantValue())) : e), d !== false && (d!==null && typeof d!=="undefined") ?node.nodes[1].constantValue() : d)))) {
             this.nodes.push(node.nodes[0]);
             this.nodes.push(new Constant((1.0)/(node.nodes[1].constantValue())));
