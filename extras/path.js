@@ -6,6 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/* global GLMath */
 /**
 * Represents a two-dimensional path.
 * <p>This class is considered a supplementary class to the
@@ -24,6 +25,8 @@ this.segments=[];
  this.startPos=[0,0];
  this.endPos=[0,0];
 }
+/** @private */
+var Triangulate={};
 GraphicsPath.CLOSE=0;
 GraphicsPath.LINE=1;
 GraphicsPath.QUAD=2;
@@ -841,7 +844,7 @@ var subpaths=[];
       s[0]===GraphicsPath.ARC){
    var pieces=[];
    var cumulativeLengths=[];
-   len=0
+   len=0;
    if(s[0]===GraphicsPath.QUAD){
     GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
       s[5],s[6],0.0,1.0,pieces,flatness*2,1);
@@ -912,7 +915,7 @@ if(numPoints<1)return [];
  */
 GraphicsPath.prototype.closePath=function(){
  "use strict";
-if(this.startPos[0]!=this.endPos[0] ||
+if(this.startPos[0]!==this.endPos[0] ||
    this.startPos[1]!==this.endPos[1]){
   this.lineTo(this.startPos[0],this.startPos[1]);
  }
@@ -921,7 +924,7 @@ if(this.startPos[0]!=this.endPos[0] ||
  }
  this.incomplete=false;
  return this;
-}
+};
 /**
  * Moves the current start position and end position to the given position.
  * @param {number} x X-coordinate of the position.
@@ -929,13 +932,14 @@ if(this.startPos[0]!=this.endPos[0] ||
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.moveTo=function(x,y){
- this.startPos[0]=x
- this.startPos[1]=y
- this.endPos[0]=x
- this.endPos[1]=y
- this.incomplete=false
- return this
-}
+ "use strict";
+this.startPos[0]=x;
+ this.startPos[1]=y;
+ this.endPos[0]=x;
+ this.endPos[1]=y;
+ this.incomplete=false;
+ return this;
+};
 /**
  * Adds a line segment to the path, starting
  * at the path's end position, then
@@ -945,16 +949,18 @@ GraphicsPath.prototype.moveTo=function(x,y){
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.lineTo=function(x,y){
- this.segments.push([GraphicsPath.LINE,
-  this.endPos[0],this.endPos[1],x,y])
- this.endPos[0]=x
- this.endPos[1]=y
- this.incomplete=false
- return this
-}
+ "use strict";
+this.segments.push([GraphicsPath.LINE,
+  this.endPos[0],this.endPos[1],x,y]);
+ this.endPos[0]=x;
+ this.endPos[1]=y;
+ this.incomplete=false;
+ return this;
+};
 
 GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
-  var t1 = x1 - x0;
+  "use strict";
+var t1 = x1 - x0;
   var t2 = y1 - y0;
   var t3 = [x2 - x0, y2 - y0];
   var denom=((t1 * t1) + t2 * t2);
@@ -965,7 +971,7 @@ GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
   var t5 = [(x0 + t4 * t1), (y0 + t4 * t2)];
   var t6 = [x2 - t5[0], y2 - t5[1]];
   return ((t6[0] * t6[0]) + t6[1] * t6[1]) === 0;
-}
+};
 /**
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization specified in the "arcTo" method of the
@@ -984,14 +990,15 @@ GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
- if(radius<0){
-  throw new Error("IndexSizeError")
+ "use strict";
+if(radius<0){
+  throw new Error("IndexSizeError");
  }
- var x0=this.endPos[0]
- var y0=this.endPos[1]
- if(radius === 0 || (x0==x1 && y0==y1) || (x1==x2 && y1==y2) ||
+ var x0=this.endPos[0];
+ var y0=this.endPos[1];
+ if(radius === 0 || (x0===x1 && y0===y1) || (x1===x2 && y1===y2) ||
    GraphicsPath._areCollinear(x0,y0,x1,y1,x2,y2)){
-  return this.lineTo(x1,y1)
+  return this.lineTo(x1,y1);
  }
   var t1 = [x0 - x1, y0 - y1];
   var t2 = 1.0/Math.sqrt(((t1[0] * t1[0]) + t1[1] * t1[1]));
@@ -1008,7 +1015,7 @@ GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
   this.lineTo(startTangent[0],startTangent[1]);
   var sweep=(cross<0);
   return this.arcSvgTo(radius,radius,0,false,sweep,endTangent[0],endTangent[1]);
-}
+};
 /**
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization specified in the "arc" method of the
@@ -1026,17 +1033,18 @@ GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
- if(radius<0){
-  throw new Error("IndexSizeError")
+ "use strict";
+if(radius<0){
+  throw new Error("IndexSizeError");
  }
- var x0=this.endPos[0]
- var y0=this.endPos[1]
+ var x0=this.endPos[0];
+ var y0=this.endPos[1];
  var twopi=GLMath.PiTimes2;
  var startX=x+radius*Math.cos(startAngle);
  var startY=y+radius*Math.sin(startAngle);
  var endX=x+radius*Math.cos(endAngle);
  var endY=y+radius*Math.sin(endAngle);
- if((startX==endX && startY==endY) || radius === 0){
+ if((startX===endX && startY===endY) || radius === 0){
     return this.lineTo(startX,startY).lineTo(endX,endY);
  }
  if((!ccw && (endAngle-startAngle)>=twopi) ||
@@ -1044,25 +1052,25 @@ GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
     return this.lineTo(startX,startY)
        .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
        .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
-       .lineTo(startX,startY)
+       .lineTo(startX,startY);
 } else {
  var delta=endAngle-startAngle;
  if(delta>=twopi || delta<0){
- var d=delta%twopi
- if(d === 0 && delta!=0){
+ var d=delta%twopi;
+ if(d === 0 && delta!==0){
   return this.lineTo(startX,startY)
        .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
        .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
-       .lineTo(startX,startY)
+       .lineTo(startX,startY);
  }
- delta=d
+ delta=d;
 }
-var largeArc=(Math.abs(delta)>Math.PI)^(ccw)^(startAngle>endAngle)
-var sweep=(delta>0)^(ccw)^(startAngle>endAngle)
+var largeArc=(Math.abs(delta)>Math.PI)^(ccw)^(startAngle>endAngle);
+var sweep=(delta>0)^(ccw)^(startAngle>endAngle);
 return this.lineTo(startX,startY)
       .arcSvgTo(radius,radius,0,largeArc,sweep,endX,endY);
  }
-}
+};
 
 /**
  * Adds a quadratic B&eacute;zier curve to this path starting
@@ -1074,13 +1082,14 @@ return this.lineTo(startX,startY)
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
- this.segments.push([GraphicsPath.QUAD,
-  this.endPos[0],this.endPos[1],x,y,x2,y2])
- this.endPos[0]=x2
- this.endPos[1]=y2
- this.incomplete=false
- return this
-}
+ "use strict";
+this.segments.push([GraphicsPath.QUAD,
+  this.endPos[0],this.endPos[1],x,y,x2,y2]);
+ this.endPos[0]=x2;
+ this.endPos[1]=y2;
+ this.incomplete=false;
+ return this;
+};
 /**
  * Adds a cubic B&eacute;zier curve to this path starting
  * at this path's current position.
@@ -1093,13 +1102,14 @@ GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
- this.segments.push([GraphicsPath.CUBIC,
-  this.endPos[0],this.endPos[1],x,y,x2,y2,x3,y3])
- this.endPos[0]=x3
- this.endPos[1]=y3
- this.incomplete=false
- return this
-}
+ "use strict";
+this.segments.push([GraphicsPath.CUBIC,
+  this.endPos[0],this.endPos[1],x,y,x2,y2,x3,y3]);
+ this.endPos[0]=x3;
+ this.endPos[1]=y3;
+ this.incomplete=false;
+ return this;
+};
 /**
 * Estimates the integral of a function.  The integral
 * is the area between the function's graph and the X-axis,
@@ -1122,128 +1132,133 @@ GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
 * _xmin_ and _xmax_.
 */
 GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
- if(xmax==xmin)return 0;
+ "use strict";
+if(xmax===xmin)return 0;
  if(xmax<xmin){
-  return GraphicsPath._numIntegrate(func,xmax,xmin,maxIter)
+  return GraphicsPath._numIntegrate(func,xmax,xmin,maxIter);
  }
- if(maxIter==null)maxIter=8
+ if((maxIter===null || typeof maxIter==="undefined"))maxIter=8;
  if(maxIter<=0)return 0;
  // Romberg integration
- var matrix=[0]
- var hk=(xmax-xmin)
- var lasthk=hk
- var klimit=0
+ var matrix=[0];
+ var j;
+ var hk=(xmax-xmin);
+ var lasthk=hk;
+ var klimit=0;
  for(var k=1;k<=maxIter;k++){
   if(k === 1){
-   matrix[k]=hk*0.5*(func(xmin)+func(xmax))
-   klimit=1
+   matrix[k]=hk*0.5*(func(xmin)+func(xmax));
+   klimit=1;
   } else {
-   var tmp=0
-   for(var j=1;j<=klimit;j++){
-    tmp+=func(xmin+(j-0.5)*lasthk)
+   var tmp=0;
+   for(j=1;j<=klimit;j++){
+    tmp+=func(xmin+(j-0.5)*lasthk);
    }
-   tmp*=lasthk
-   matrix[k]=(matrix[k-1]+tmp)*0.5
-   klimit<<=1
+   tmp*=lasthk;
+   matrix[k]=(matrix[k-1]+tmp)*0.5;
+   klimit<<=1;
   }
-  lasthk=hk
-  hk*=0.5
+  lasthk=hk;
+  hk*=0.5;
  }
- var mxi=maxIter+1
- var pj1=4
- for(var j=2;j<=maxIter;j++){
-  var prev=matrix[j-1]
+ var mxi=maxIter+1;
+ var pj1=4;
+ for(j=2;j<=maxIter;j++){
+  var prev=matrix[j-1];
   var recipPj1m1=1.0/(pj1-1);
   for(var i=j;i<=maxIter;i++){
-   var cur=matrix[i]
-   matrix[i]=(cur*pj1-prev)*recipPj1m1
-   prev=cur
+   var cur=matrix[i];
+   matrix[i]=(cur*pj1-prev)*recipPj1m1;
+   prev=cur;
   }
-  pj1*=4
+  pj1*=4;
  }
- return matrix[matrix.length-1]
-}
+ return matrix[matrix.length-1];
+};
 GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
- if(startAngle==endAngle || xRadius<=0 || yRadius<=0)return 0
- if(xRadius==yRadius){
+ "use strict";
+if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
+ if(xRadius===yRadius){
   // for circular arc length this is extremely simple
   return Math.abs((endAngle-startAngle)*xRadius);
  }
- var mn=Math.min(xRadius,yRadius)
- var mx=Math.max(xRadius,yRadius)
- var eccSq=1-(mn*mn)/(mx*mx)
+ var mn=Math.min(xRadius,yRadius);
+ var mx=Math.max(xRadius,yRadius);
+ var eccSq=1-(mn*mn)/(mx*mx);
  var ellipticIntegrand=function(x){
   var s=Math.sin(x);
   return Math.sqrt(1-s*s*eccSq);
- }
+ };
  return Math.abs(mx*GraphicsPath._numIntegrate(
-   ellipticIntegrand,startAngle,endAngle,10))
-}
+   ellipticIntegrand,startAngle,endAngle,10));
+};
 GraphicsPath._vecangle=function(a,b,c,d){
- var dot=a*c+b*d
- var denom=Math.sqrt(a*a+b*b)*Math.sqrt(c*c+d*d)
- dot/=denom
- var sgn=a*d-b*c
+ "use strict";
+var dot=a*c+b*d;
+ var denom=Math.sqrt(a*a+b*b)*Math.sqrt(c*c+d*d);
+ dot/=denom;
+ var sgn=a*d-b*c;
  // avoid NaN when dot is just slightly out of range
  // for acos
- if(dot<-1)dot=-1
- else if(dot>1)dot=1
- var ret=Math.acos(dot)
- if(sgn<0)ret=-ret
- return ret
-}
+ if(dot<-1)dot=-1;
+ else if(dot>1)dot=1;
+ var ret=Math.acos(dot);
+ if(sgn<0)ret=-ret;
+ return ret;
+};
 GraphicsPath._arcSvgToCenterParam=function(a){
- var x1=a[1]
- var y1=a[2]
- var x2=a[8]
- var y2=a[9]
- var rx=a[3]
- var ry=a[4]
- var rot=a[5]
- var xmid=(x1-x2)*0.5
- var ymid=(y1-y2)*0.5
- var xpmid=(x1+x2)*0.5
- var ypmid=(y1+y2)*0.5
+ "use strict";
+var x1=a[1];
+ var y1=a[2];
+ var x2=a[8];
+ var y2=a[9];
+ var rx=a[3];
+ var ry=a[4];
+ var rot=a[5];
+ var xmid=(x1-x2)*0.5;
+ var ymid=(y1-y2)*0.5;
+ var xpmid=(x1+x2)*0.5;
+ var ypmid=(y1+y2)*0.5;
  var crot = Math.cos(rot);
  var srot = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
- var x1p=crot*xmid+srot*ymid
- var y1p=crot*ymid-srot*xmid
- var rxsq=rx*rx
- var rysq=ry*ry
- var x1psq=x1p*x1p
- var y1psq=y1p*y1p
- var rx_xy=rxsq*y1psq+rysq*x1psq
- var cxsqrt=Math.sqrt(Math.max(0,(rxsq*rysq-rx_xy)/rx_xy))
- var cxp=(rx*y1p)*cxsqrt/ry
- var cyp=(ry*x1p)*cxsqrt/rx
- if(a[6]==a[7]){
-  cxp=-cxp
+ var x1p=crot*xmid+srot*ymid;
+ var y1p=crot*ymid-srot*xmid;
+ var rxsq=rx*rx;
+ var rysq=ry*ry;
+ var x1psq=x1p*x1p;
+ var y1psq=y1p*y1p;
+ var rx_xy=rxsq*y1psq+rysq*x1psq;
+ var cxsqrt=Math.sqrt(Math.max(0,(rxsq*rysq-rx_xy)/rx_xy));
+ var cxp=(rx*y1p)*cxsqrt/ry;
+ var cyp=(ry*x1p)*cxsqrt/rx;
+ if(a[6]===a[7]){
+  cxp=-cxp;
  } else {
-  cyp=-cyp
+  cyp=-cyp;
  }
- var cx=crot*cxp-srot*cyp+xpmid
- var cy=srot*cxp+crot*cyp+ypmid
- var vecx=(x1p-cxp)/rx
- var vecy=(y1p-cyp)/ry
- var nvecx=(-x1p-cxp)/rx
- var nvecy=(-y1p-cyp)/ry
- var cosTheta1=vecx/Math.sqrt(vecx*vecx+vecy*vecy)
+ var cx=crot*cxp-srot*cyp+xpmid;
+ var cy=srot*cxp+crot*cyp+ypmid;
+ var vecx=(x1p-cxp)/rx;
+ var vecy=(y1p-cyp)/ry;
+ var nvecx=(-x1p-cxp)/rx;
+ var nvecy=(-y1p-cyp)/ry;
+ var cosTheta1=vecx/Math.sqrt(vecx*vecx+vecy*vecy);
  // avoid NaN when cosTheta1 is just slightly out of range
  // for acos
- if(cosTheta1<-1)cosTheta1=-1
- else if(cosTheta1>1)cosTheta1=1
- var theta1=Math.acos(cosTheta1)
- if(vecy<0)theta1=-theta1
- var delta=GraphicsPath._vecangle(vecx,vecy,nvecx,nvecy)
+ if(cosTheta1<-1)cosTheta1=-1;
+ else if(cosTheta1>1)cosTheta1=1;
+ var theta1=Math.acos(cosTheta1);
+ if(vecy<0)theta1=-theta1;
+ var delta=GraphicsPath._vecangle(vecx,vecy,nvecx,nvecy);
  delta=(delta<0) ? GLMath.PiTimes2+delta : delta;
  if(!a[7] && delta>0){
-  delta-=GLMath.PiTimes2
+  delta-=GLMath.PiTimes2;
  } else if(a[7] && delta<0){
-  delta+=GLMath.PiTimes2
+  delta+=GLMath.PiTimes2;
  }
- delta+=theta1
- return [cx,cy,theta1,delta]
-}
+ delta+=theta1;
+ return [cx,cy,theta1,delta];
+};
 
 /**
  * Adds path segments in the form of an elliptical arc to this path,
@@ -1266,194 +1281,201 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
- if(rx === 0 || ry === 0){
+ "use strict";
+if(rx === 0 || ry === 0){
   return this.lineTo(x2,y2);
  }
- var x1=this.endPos[0]
- var y1=this.endPos[1]
- if(x1==x2 && y1==y2){
+ var x1=this.endPos[0];
+ var y1=this.endPos[1];
+ if(x1===x2 && y1===y2){
   return this;
  }
  rot%=360;
  rot*=Math.PI/180;
  rx=Math.abs(rx);
  ry=Math.abs(ry);
- var xmid=(x1-x2)*0.5
- var ymid=(y1-y2)*0.5
+ var xmid=(x1-x2)*0.5;
+ var ymid=(y1-y2)*0.5;
  var crot = Math.cos(rot);
  var srot = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
- var x1p=crot*xmid+srot*ymid
- var y1p=crot*ymid-srot*xmid
+ var x1p=crot*xmid+srot*ymid;
+ var y1p=crot*ymid-srot*xmid;
  var lam=(x1p*x1p)/(rx*rx)+(y1p*y1p)/(ry*ry);
  if(lam>1){
-  lam=Math.sqrt(lam)
-  rx*=lam
-  ry*=lam
+  lam=Math.sqrt(lam);
+  rx*=lam;
+  ry*=lam;
  }
  var arc=[GraphicsPath.ARC,
-  x1,y1,rx,ry,rot,!!largeArc,!!sweep,x2,y2]
- var cp=GraphicsPath._arcSvgToCenterParam(arc)
- arc[10]=cp[0]
- arc[11]=cp[1]
- arc[12]=cp[2]
- arc[13]=cp[3]
- this.segments.push(arc)
- this.endPos[0]=x2
- this.endPos[1]=y2
- this.incomplete=false
- return this
-}
+  x1,y1,rx,ry,rot,!!largeArc,!!sweep,x2,y2];
+ var cp=GraphicsPath._arcSvgToCenterParam(arc);
+ arc[10]=cp[0];
+ arc[11]=cp[1];
+ arc[12]=cp[2];
+ arc[13]=cp[3];
+ this.segments.push(arc);
+ this.endPos[0]=x2;
+ this.endPos[1]=y2;
+ this.incomplete=false;
+ return this;
+};
 GraphicsPath._nextAfterWs=function(str,index){
- while(index[0]<str.length){
-  var c=str.charCodeAt(index[0])
-  index[0]++
+ "use strict";
+while(index[0]<str.length){
+  var c=str.charCodeAt(index[0]);
+  index[0]++;
   if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c)
    continue;
-  return c
+  return c;
  }
- return -1
-}
+ return -1;
+};
 GraphicsPath._nextAfterSepReq=function(str,index){
- var comma=false
- var havesep=false
+ "use strict";
+var comma=false;
+ var havesep=false;
  while(index[0]<str.length){
-  var c=str.charCodeAt(index[0])
-  index[0]++
+  var c=str.charCodeAt(index[0]);
+  index[0]++;
   if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c){
-   havesep=true
+   havesep=true;
    continue;
   }
   if(!comma && c === 0x2c){
-   havesep=true
-   comma=true
+   havesep=true;
+   comma=true;
    continue;
   }
-  return (!havesep) ? -1 : c
+  return (!havesep) ? -1 : c;
  }
- return -1
-}
+ return -1;
+};
 GraphicsPath._nextAfterSep=function(str,index){
- var comma=false
+ "use strict";
+var comma=false;
  while(index[0]<str.length){
-  var c=str.charCodeAt(index[0])
-  index[0]++
+  var c=str.charCodeAt(index[0]);
+  index[0]++;
   if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c)
    continue;
   if(!comma && c === 0x2c){
-   comma=true
+   comma=true;
    continue;
   }
-  return c
+  return c;
  }
- return -1
-}
+ return -1;
+};
 GraphicsPath._peekNextNumber=function(str,index){
- var oldindex=index[0]
- var ret=GraphicsPath._nextNumber(str,index,true)!=null
- index[0]=oldindex
- return ret
-}
+ "use strict";
+var oldindex=index[0];
+ var ret=GraphicsPath._nextNumber(str,index,true)!==null;
+ index[0]=oldindex;
+ return ret;
+};
 GraphicsPath._notFinite=function(n){
- return isNaN(n) || n==Number.POSITIVE_INFINITY ||
-   n==Number.NEGATIVE_INFINITY
-}
+ "use strict";
+return isNaN(n) || n===Number.POSITIVE_INFINITY ||
+   n===Number.NEGATIVE_INFINITY;
+};
 GraphicsPath._nextNumber=function(str,index,afterSep){
- var oldindex=index[0]
+ "use strict";
+var oldindex=index[0];
  var c=(afterSep) ?
    GraphicsPath._nextAfterSep(str,index) :
-   GraphicsPath._nextAfterWs(str,index)
- var startIndex=index[0]-1
- var dot=false
- var digit=false
- var exponent=false
+   GraphicsPath._nextAfterWs(str,index);
+ var startIndex=index[0]-1;
+ var dot=false;
+ var digit=false;
+ var exponent=false;
  var ret;
- if(c === 0x2e)dot=true
- else if(c>=0x30 && c<=0x39)digit=true
- else if(c!=0x2d && c!=0x2b){
-    index[0]=oldindex
-    return null
+ if(c === 0x2e)dot=true;
+ else if(c>=0x30 && c<=0x39)digit=true;
+ else if(c!==0x2d && c!==0x2b){
+    index[0]=oldindex;
+    return null;
    }
  while(index[0]<str.length){
-  var c=str.charCodeAt(index[0])
-  index[0]++
+  c=str.charCodeAt(index[0]);
+  index[0]++;
   if(c === 0x2e){
    if(dot){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
    }
-   dot=true
+   dot=true;
   } else if(c>=0x30 && c<=0x39){
-   digit=true
+   digit=true;
   } else if(c === 0x45 || c === 0x65){
    if(!digit){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
    }
-   exponent=true
-   break
+   exponent=true;
+   break;
   } else {
    if(!digit){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
    }
-   index[0]--
-   ret=parseFloat(str.substr(startIndex,index[0]-startIndex))
+   index[0]--;
+   ret=parseFloat(str.substr(startIndex,index[0]-startIndex));
    if(GraphicsPath._notFinite(ret)){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
    }
-   return ret
+   return ret;
   }
  }
  if(exponent){
-  var c=str.charCodeAt(index[0])
+  c=str.charCodeAt(index[0]);
   if(c<0){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
    }
-  index[0]++
-  digit=false
-  if(c>=0x30 && c<=0x39)digit=true
-  else if(c!=0x2d && c!=0x2b){
-    index[0]=oldindex
-    return null
+  index[0]++;
+  digit=false;
+  if(c>=0x30 && c<=0x39)digit=true;
+  else if(c!==0x2d && c!==0x2b){
+    index[0]=oldindex;
+    return null;
    }
   while(index[0]<str.length){
-   var c=str.charCodeAt(index[0])
-   index[0]++
+   c=str.charCodeAt(index[0]);
+   index[0]++;
    if(c>=0x30 && c<=0x39){
-    digit=true
+    digit=true;
    } else {
     if(!digit){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
     }
-    index[0]--
-    ret=parseFloat(str.substr(startIndex,index[0]-startIndex))
+    index[0]--;
+    ret=parseFloat(str.substr(startIndex,index[0]-startIndex));
     if(GraphicsPath._notFinite(ret)){
-     index[0]=oldindex
-     return null
+     index[0]=oldindex;
+     return null;
     }
-    return ret
+    return ret;
    }
   }
   if(!digit){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
   }
  } else {
   if(!digit){
-    index[0]=oldindex
-    return null
+    index[0]=oldindex;
+    return null;
   }
  }
- ret=parseFloat(str.substr(startIndex,str.length-startIndex))
+ ret=parseFloat(str.substr(startIndex,str.length-startIndex));
  if(GraphicsPath._notFinite(ret)){
-  index[0]=oldindex
-  return null
+  index[0]=oldindex;
+  return null;
  }
- return ret
-}
+ return ret;
+};
 /**
  * Not documented yet.
  * @param {number} x
@@ -1462,10 +1484,11 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
  * @param {number} height
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.rect=function(x,y,w,h){
- return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
-   .lineTo(x,y+height).closePath().moveTo(x,y)
-}
+GraphicsPath.prototype.rect=function(x,y,width,height){
+ "use strict";
+return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
+   .lineTo(x,y+height).closePath().moveTo(x,y);
+};
 
 /**
 * Creates a graphics path from a string whose format follows
@@ -1510,13 +1533,15 @@ GraphicsPath.prototype.rect=function(x,y,w,h){
 * var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
 */
 GraphicsPath.fromString=function(str){
- var index=[0]
- var started=false
- var ret=new GraphicsPath()
+ "use strict";
+var index=[0];
+ var started=false;
+ var ret=new GraphicsPath();
  var failed=false;
+ var sep,curx,cury,x,y,curpt,x2,y2,xcp,ycp;
  while(!failed && index[0]<str.length){
-  var c=GraphicsPath._nextAfterWs(str,index)
-  if(!started && c!=0x4d && c!=0x6d){
+  var c=GraphicsPath._nextAfterWs(str,index);
+  if(!started && c!==0x4d && c!==0x6d){
    // not a move-to command when path
    // started
     failed=true;break;
@@ -1525,78 +1550,78 @@ GraphicsPath.fromString=function(str){
   // command yet because it's not yet fully specified
   switch(c){
    case 0x5a:case 0x7a:{ // 'Z', 'z'
-    ret.closePath()
+    ret.closePath();
     break;
    }
    case 0x4d:case 0x6d:{ // 'M', 'm'
-    var sep=false
+    sep=false;
     while(true){
-     var curx=(c === 0x6d) ? ret.endPos[0] : 0
-     var cury=(c === 0x6d) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
-     var y=GraphicsPath._nextNumber(str,index,true)
-     if(y==null){ failed=true;break; }
-     if(sep)ret.lineTo(curx+x,cury+y)
+     curx=(c === 0x6d) ? ret.endPos[0] : 0;
+     cury=(c === 0x6d) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
+     y=GraphicsPath._nextNumber(str,index,true);
+     if((y===null || typeof y==="undefined")){ failed=true;break; }
+     if(sep)ret.lineTo(curx+x,cury+y);
      else ret.moveTo(curx+x,cury+y);
      sep=true;
     }
-    started=true
+    started=true;
     break;
    }
    case 0x4c:case 0x6c:{ // 'L', 'l'
-    var sep=false
+    sep=false;
     while(true){
-     var curx=(c === 0x6c) ? ret.endPos[0] : 0
-     var cury=(c === 0x6c) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
-     var y=GraphicsPath._nextNumber(str,index,true)
-     if(y==null){ failed=true;break; }
+     curx=(c === 0x6c) ? ret.endPos[0] : 0;
+     cury=(c === 0x6c) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
+     y=GraphicsPath._nextNumber(str,index,true);
+     if((y===null || typeof y==="undefined")){ failed=true;break; }
      ret.lineTo(curx+x,cury+y);
      sep=true;
     }
     break;
    }
    case 0x48:case 0x68:{ // 'H', 'h'
-    var sep=false
+    sep=false;
     while(true){
-     var curpt=(c === 0x68) ? ret.endPos[0] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
+     curpt=(c === 0x68) ? ret.endPos[0] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
      ret.lineTo(curpt+x,ret.endPos[1]);
      sep=true;
     }
     break;
    }
    case 0x56:case 0x76:{ // 'V', 'v'
-    var sep=false
+    sep=false;
     while(true){
-     var curpt=(c === 0x76) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
+     curpt=(c === 0x76) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
      ret.lineTo(ret.endPos[0],curpt+x);
      sep=true;
     }
     break;
    }
    case 0x43:case 0x63:{ // 'C', 'c'
-    var sep=false
+    sep=false;
     while(true){
-     var curx=(c === 0x63) ? ret.endPos[0] : 0
-     var cury=(c === 0x63) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
-     var y=GraphicsPath._nextNumber(str,index,true)
-     if(y==null){ failed=true;break; }
-     var x2=GraphicsPath._nextNumber(str,index,true)
-     if(x2==null){ failed=true;break; }
-     var y2=GraphicsPath._nextNumber(str,index,true)
-     if(y2==null){ failed=true;break; }
-     var x3=GraphicsPath._nextNumber(str,index,true)
-     if(x3==null){ failed=true;break; }
-     var y3=GraphicsPath._nextNumber(str,index,true)
-     if(y3==null){ failed=true;break; }
+     curx=(c === 0x63) ? ret.endPos[0] : 0;
+     cury=(c === 0x63) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
+     y=GraphicsPath._nextNumber(str,index,true);
+     if((y===null || typeof y==="undefined")){ failed=true;break; }
+     x2=GraphicsPath._nextNumber(str,index,true);
+     if((x2===null || typeof x2==="undefined")){ failed=true;break; }
+     y2=GraphicsPath._nextNumber(str,index,true);
+     if((y2===null || typeof y2==="undefined")){ failed=true;break; }
+     var x3=GraphicsPath._nextNumber(str,index,true);
+     if((x3===null || typeof x3==="undefined")){ failed=true;break; }
+     var y3=GraphicsPath._nextNumber(str,index,true);
+     if((y3===null || typeof y3==="undefined")){ failed=true;break; }
      ret.bezierCurveTo(curx+x,cury+y,curx+x2,cury+y2,
        curx+x3,cury+y3);
      sep=true;
@@ -1604,66 +1629,66 @@ GraphicsPath.fromString=function(str){
     break;
    }
    case 0x51:case 0x71:{ // 'Q', 'q'
-    var sep=false
+    sep=false;
     while(true){
-     var curx=(c === 0x71) ? ret.endPos[0] : 0
-     var cury=(c === 0x71) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
-     var y=GraphicsPath._nextNumber(str,index,true)
-     if(y==null){ failed=true;break; }
-     var x2=GraphicsPath._nextNumber(str,index,true)
-     if(x2==null){ failed=true;break; }
-     var y2=GraphicsPath._nextNumber(str,index,true)
-     if(y2==null){ failed=true;break; }
+     curx=(c === 0x71) ? ret.endPos[0] : 0;
+     cury=(c === 0x71) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
+     y=GraphicsPath._nextNumber(str,index,true);
+     if((y===null || typeof y==="undefined")){ failed=true;break; }
+     x2=GraphicsPath._nextNumber(str,index,true);
+     if((x2===null || typeof x2==="undefined")){ failed=true;break; }
+     y2=GraphicsPath._nextNumber(str,index,true);
+     if((y2===null || typeof y2==="undefined")){ failed=true;break; }
      ret.quadraticCurveTo(curx+x,cury+y,curx+x2,cury+y2);
      sep=true;
     }
     break;
    }
    case 0x41:case 0x61:{ // 'A', 'a'
-    var sep=false
+    sep=false;
     while(true){
-     var curx=(c === 0x61) ? ret.endPos[0] : 0
-     var cury=(c === 0x61) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
-     var y=GraphicsPath._nextNumber(str,index,true)
-     if(y==null){ failed=true;break; }
-     var rot=GraphicsPath._nextNumber(str,index,true)
-     if(rot==null){ failed=true;break; }
-     var largeArc=GraphicsPath._nextAfterSepReq(str,index)
-     var sweep=GraphicsPath._nextAfterSep(str,index)
-     if(largeArc==-1 || sweep==-1){ failed=true;break; }
-     var x2=GraphicsPath._nextNumber(str,index,true)
-     if(x2==null){ failed=true;break; }
-     var y2=GraphicsPath._nextNumber(str,index,true)
-     if(y2==null){ failed=true;break; }
-     ret.arcSvgTo(x+curx,y+cury,rot,largeArc!=0x30,
-       sweep!=0x30,x2+curx,y2+cury);
+     curx=(c === 0x61) ? ret.endPos[0] : 0;
+     cury=(c === 0x61) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
+     y=GraphicsPath._nextNumber(str,index,true);
+     if((y===null || typeof y==="undefined")){ failed=true;break; }
+     var rot=GraphicsPath._nextNumber(str,index,true);
+     if((rot===null || typeof rot==="undefined")){ failed=true;break; }
+     var largeArc=GraphicsPath._nextAfterSepReq(str,index);
+     var sweep=GraphicsPath._nextAfterSep(str,index);
+     if(largeArc===-1 || sweep===-1){ failed=true;break; }
+     x2=GraphicsPath._nextNumber(str,index,true);
+     if((x2===null || typeof x2==="undefined")){ failed=true;break; }
+     y2=GraphicsPath._nextNumber(str,index,true);
+     if((y2===null || typeof y2==="undefined")){ failed=true;break; }
+     ret.arcSvgTo(x+curx,y+cury,rot,largeArc!==0x30,
+       sweep!==0x30,x2+curx,y2+cury);
      sep=true;
     }
     break;
    }
    case 0x53:case 0x73:{ // 'S', 's'
-    var sep=false
+    sep=false;
     while(true){
-     var curx=(c === 0x73) ? ret.endPos[0] : 0
-     var cury=(c === 0x73) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
-     var y=GraphicsPath._nextNumber(str,index,true)
-     if(y==null){ failed=true;break; }
-     var x2=GraphicsPath._nextNumber(str,index,true)
-     if(x2==null){ failed=true;break; }
-     var y2=GraphicsPath._nextNumber(str,index,true)
-     if(y2==null){ failed=true;break; }
-     var xcp=curx
-     var ycp=cury
+     curx=(c === 0x73) ? ret.endPos[0] : 0;
+     cury=(c === 0x73) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
+     y=GraphicsPath._nextNumber(str,index,true);
+     if((y===null || typeof y==="undefined")){ failed=true;break; }
+     x2=GraphicsPath._nextNumber(str,index,true);
+     if((x2===null || typeof x2==="undefined")){ failed=true;break; }
+     y2=GraphicsPath._nextNumber(str,index,true);
+     if((y2===null || typeof y2==="undefined")){ failed=true;break; }
+     xcp=curx;
+     ycp=cury;
      if(ret.segments.length>0 &&
-        ret.segments[ret.segments.length-1][0]==GraphicsPath.CUBIC){
-        xcp=ret.segments[ret.segments.length-1][5]
-        ycp=ret.segments[ret.segments.length-1][6]
+        ret.segments[ret.segments.length-1][0]===GraphicsPath.CUBIC){
+        xcp=ret.segments[ret.segments.length-1][5];
+        ycp=ret.segments[ret.segments.length-1][6];
      }
      ret.bezierCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury,x2+curx,y2+cury);
      sep=true;
@@ -1671,23 +1696,23 @@ GraphicsPath.fromString=function(str){
     break;
    }
    case 0x54:case 0x74:{ // 'T', 't'
-    var sep=false
+    sep=false;
     while(true){
-     var curx=(c === 0x74) ? ret.endPos[0] : 0
-     var cury=(c === 0x74) ? ret.endPos[1] : 0
-     var x=GraphicsPath._nextNumber(str,index,sep)
-     if(x==null){ if(!sep)failed=true;break; }
-     var y=GraphicsPath._nextNumber(str,index,true)
-     if(y==null){ failed=true;break; }
-     var xcp=curx
-     var ycp=cury
+     curx=(c === 0x74) ? ret.endPos[0] : 0;
+     cury=(c === 0x74) ? ret.endPos[1] : 0;
+     x=GraphicsPath._nextNumber(str,index,sep);
+     if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
+     y=GraphicsPath._nextNumber(str,index,true);
+     if((y===null || typeof y==="undefined")){ failed=true;break; }
+     xcp=curx;
+     ycp=cury;
      if(ret.segments.length>0 &&
-        ret.segments[ret.segments.length-1][0]==GraphicsPath.QUAD){
-        xcp=ret.segments[ret.segments.length-1][3]
-        ycp=ret.segments[ret.segments.length-1][4]
+        ret.segments[ret.segments.length-1][0]===GraphicsPath.QUAD){
+        xcp=ret.segments[ret.segments.length-1][3];
+        ycp=ret.segments[ret.segments.length-1][4];
      }
-     x+=curx
-     y+=cury
+     x+=curx;
+     y+=cury;
      ret.quadraticCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury);
      sep=true;
     }
@@ -1695,147 +1720,156 @@ GraphicsPath.fromString=function(str){
    }
    default:
     ret.incomplete=true;
-    return ret
+    return ret;
   }
  }
- if(failed)ret.incomplete=true
- return ret
-}
+ if(failed)ret.incomplete=true;
+ return ret;
+};
 
-/** @private */
-var Triangulate={}
 Triangulate._LinkedList=function(){
- this.items=[]
- this.firstItem=-1
- this.lastItem=-1
- this.lastRemovedIndex=-1
-}
+ "use strict";
+this.items=[];
+ this.firstItem=-1;
+ this.lastItem=-1;
+ this.lastRemovedIndex=-1;
+};
 Triangulate._LinkedList.prototype.list=function(list){
- var index=this.firstItem
- var listidx=0
+ "use strict";
+var index=this.firstItem;
+ var listidx=0;
  while(index>=0){
-  list[listidx++]=this.items[index]
-  index=this.items[index+2]
+  list[listidx++]=this.items[index];
+  index=this.items[index+2];
  }
- return listidx
-}
+ return listidx;
+};
 Triangulate._LinkedList.prototype.contains=function(item){
- var index=this.firstItem
+ "use strict";
+var index=this.firstItem;
  while(index>=0){
-  if(item==this.items[index])return true
-  index=this.items[index+2]
+  if(item===this.items[index])return true;
+  index=this.items[index+2];
  }
- return false
-}
+ return false;
+};
 Triangulate._LinkedList.prototype.remove=function(item){
- var index=this.firstItem
+ "use strict";
+var index=this.firstItem;
  while(index>=0){
-  if(this.items[index]==item){
-   this.lastRemovedIndex=index
-   var prevItem=this.items[index+1]
-   var nextItem=this.items[index+2]
+  if(this.items[index]===item){
+   this.lastRemovedIndex=index;
+   var prevItem=this.items[index+1];
+   var nextItem=this.items[index+2];
    if(prevItem>=0){
-    this.items[prevItem+2]=nextItem
+    this.items[prevItem+2]=nextItem;
    } else {
-    this.firstItem=nextItem
+    this.firstItem=nextItem;
    }
    if(nextItem>=0){
-    this.items[nextItem+1]=prevItem
+    this.items[nextItem+1]=prevItem;
    } else {
-    this.lastItem=prevItem
+    this.lastItem=prevItem;
    }
-   return
+   return;
   }
-  index=this.items[index+2]
+  index=this.items[index+2];
  }
-}
+};
 Triangulate._LinkedList.prototype.addIfMissing=function(item){
- if(!this.contains(item)){
-  this.add(item)
+ "use strict";
+if(!this.contains(item)){
+  this.add(item);
  }
-}
+};
 Triangulate._LinkedList.prototype.add=function(item){
- var itemIndex=(this.lastRemovedIndex==-1) ?
-   this.items.length : this.lastRemovedIndex
- this.lastRemovedIndex=-1
- this.items[itemIndex]=item
+ "use strict";
+var itemIndex=(this.lastRemovedIndex===-1) ?
+   this.items.length : this.lastRemovedIndex;
+ this.lastRemovedIndex=-1;
+ this.items[itemIndex]=item;
  if(this.lastItem>=0)
-  this.items[this.lastItem+2]=itemIndex // prev's next
- this.items[itemIndex+1]=this.lastItem // current's prev
- this.items[itemIndex+2]=-1 // current's next
- this.lastItem=itemIndex
- if(this.firstItem<0)this.firstItem=itemIndex
-}
+  this.items[this.lastItem+2]=itemIndex; // prev's next
+ this.items[itemIndex+1]=this.lastItem; // current's prev
+ this.items[itemIndex+2]=-1; // current's next
+ this.lastItem=itemIndex;
+ if(this.firstItem<0)this.firstItem=itemIndex;
+};
 
-Triangulate._CONVEX=1
-Triangulate._EAR=2
-Triangulate._REFLEX=3
-Triangulate._PREV=2
-Triangulate._NEXT=3
+Triangulate._CONVEX=1;
+Triangulate._EAR=2;
+Triangulate._REFLEX=3;
+Triangulate._PREV=2;
+Triangulate._NEXT=3;
 Triangulate._pointInTri=function(vertices,i1,i2,i3,pt){
-  var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
+  "use strict";
+var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
   var t2 = Math.min (vertices[i3+1], vertices[i1+1]);
-  var t=(((vertices[i1+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i3+0])) &&
+  var t=(((vertices[i1+0] < vertices[pt+0]) === (vertices[pt+0] <= vertices[i3+0])) &&
   (((vertices[pt+1] - t2) * (Math.max (vertices[i3+0], vertices[i1+0]) - t1)) < ((Math.max (vertices[i3+1], vertices[i1+1]) - t2) * (vertices[pt+0] - t1))));
   var t4 = Math.min (vertices[i1+0], vertices[i2+0]);
   var t5 = Math.min (vertices[i1+1], vertices[i2+1]);
-  t^=(((vertices[i2+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i1+0])) &&
+  t^=(((vertices[i2+0] < vertices[pt+0]) === (vertices[pt+0] <= vertices[i1+0])) &&
    (((vertices[pt+1] - t5) * (Math.max (vertices[i1+0], vertices[i2+0]) - t4)) < ((Math.max (vertices[i1+1], vertices[i2+1]) - t5) * (vertices[pt+0] - t4))));
   var t7 = Math.min (vertices[i2+0], vertices[i3+0]);
   var t8 = Math.min (vertices[i2+1], vertices[i3+1]);
-  t^=(((vertices[i3+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i2+0])) &&
+  t^=(((vertices[i3+0] < vertices[pt+0]) === (vertices[pt+0] <= vertices[i2+0])) &&
    (((vertices[pt+1] - t8) * (Math.max (vertices[i2+0], vertices[i3+0]) - t7)) < ((Math.max (vertices[i2+1], vertices[i3+1]) - t8) * (vertices[pt+0] - t7))));
-  return t
-}
+  return t;
+};
 
 Triangulate._vertClass=function(verts,index,ori){
- var prevVert=verts[index+2]
- var nextVert=verts[index+3]
- var curori=Triangulate._triOrient(verts,prevVert,index,nextVert)
- if(curori === 0 || curori==ori){
+ "use strict";
+var prevVert=verts[index+2];
+ var nextVert=verts[index+3];
+ var curori=Triangulate._triOrient(verts,prevVert,index,nextVert);
+ if(curori === 0 || curori===ori){
   // This is a convex vertex, find out whether this
   // is an ear
-  var prevVert=verts[index+2]
-  var nextVert=verts[index+3]
+  prevVert=verts[index+2];
+  nextVert=verts[index+3];
   for(var i=0;i<verts.length;i+=4){
-   if(i!=prevVert && i!=nextVert && i!=index){
+   if(i!==prevVert && i!==nextVert && i!==index){
     if(Triangulate._pointInTri(verts,prevVert,index,nextVert,i)){
-     return Triangulate._CONVEX
+     return Triangulate._CONVEX;
     }
    }
   }
-  return Triangulate._EAR
+  return Triangulate._EAR;
  } else {
   return Triangulate._REFLEX;
  }
-}
+};
 Triangulate._triOrient=function(vertices,i1,i2,i3){
- var ori=vertices[i1]*vertices[i2+1]-vertices[i1+1]*vertices[i2]
- ori+=vertices[i3]*vertices[i1+1]-vertices[i1+1]*vertices[i1]
- return ori === 0 ? 0 : (ori<0 ? -1 : 1)
-}
+ "use strict";
+var ori=vertices[i1]*vertices[i2+1]-vertices[i1+1]*vertices[i2];
+ ori+=vertices[i3]*vertices[i1+1]-vertices[i1+1]*vertices[i1];
+ return ori === 0 ? 0 : (ori<0 ? -1 : 1);
+};
 Triangulate._triangulate=function(vertices,tris){
- if(vertices.length<6){
+ "use strict";
+if(vertices.length<6){
   // too few vertices for a triangulation
-  return
+  return;
  }
- var vertLength=vertices.length
+ var i;
+ var vertLength=vertices.length;
  // For convenience, eliminate the last
  // vertex if it matches the first vertex
  if(vertLength>=4 &&
-    vertices[0]==vertices[vertLength-2] &&
-    vertices[1]==vertices[vertLength-1]){
-  vertLength-=2
+    vertices[0]===vertices[vertLength-2] &&
+    vertices[1]===vertices[vertLength-1]){
+  vertLength-=2;
  }
  if(vertLength === 6){
   // just one triangle
-  tris.push(vertices.slice(0))
-  return
+  tris.push(vertices.slice(0));
+  return;
  }
  // Find the prevailing orientation of the polygon
- var ori=0
- for(var i=0;i<vertices.length;i+=2){
-  if(i==vertices.length-2){
+ var ori=0;
+ for(i=0;i<vertices.length;i+=2){
+  if(i===vertices.length-2){
    ori+=vertices[i]*vertices[1]-vertices[i+1]*vertices[0];
   } else {
    ori+=vertices[i]*vertices[i+3]-vertices[i+1]*vertices[i+2];
@@ -1845,81 +1879,82 @@ Triangulate._triangulate=function(vertices,tris){
  if(ori === 0){
   // Zero area or even a certain self-intersecting
   // polygon
-  return
+  return;
  }
- var verts=[]
- var tmp=[]
- var reflex=new Triangulate._LinkedList()
- var ears=new Triangulate._LinkedList()
- var lastX=-1
- var lastY=-1
- for(var i=0;i<vertLength;i+=2){
-  var x=vertices[i]
-  var y=vertices[i+1]
-  if(i>0 && x==lastX && y==lastY){
+ var verts=[];
+ var tmp=[];
+ var reflex=new Triangulate._LinkedList();
+ var ears=new Triangulate._LinkedList();
+ var lastX=-1;
+ var lastY=-1;
+ var prevVert,nextVert;
+ for(i=0;i<vertLength;i+=2){
+  var x=vertices[i];
+  var y=vertices[i+1];
+  if(i>0 && x===lastX && y===lastY){
    // skip consecutive duplicate points
    continue;
   }
-  lastX=x
-  lastY=y
-  verts.push(x,y,0,0)
+  lastX=x;
+  lastY=y;
+  verts.push(x,y,0,0);
  }
  for(var index=0;index<verts.length;index+=4){
-  var prevVert=(index === 0) ? verts.length-4 : index-4
-  var nextVert=(index==verts.length-4) ? 0 : index+4
-  verts[index+Triangulate._PREV]=prevVert
-  verts[index+Triangulate._NEXT]=nextVert
+  prevVert=(index === 0) ? verts.length-4 : index-4;
+  nextVert=(index===verts.length-4) ? 0 : index+4;
+  verts[index+Triangulate._PREV]=prevVert;
+  verts[index+Triangulate._NEXT]=nextVert;
  }
- for(var index=0;index<verts.length;index+=4){
-  var vertexClass=Triangulate._vertClass(verts,index,ori)
-  if(vertexClass==Triangulate._EAR)
-   ears.add(index)
-  else if(vertexClass==Triangulate._REFLEX)
-   reflex.add(index)
+ for(index=0;index<verts.length;index+=4){
+  var vertexClass=Triangulate._vertClass(verts,index,ori);
+  if(vertexClass===Triangulate._EAR)
+   ears.add(index);
+  else if(vertexClass===Triangulate._REFLEX)
+   reflex.add(index);
  }
  while(true){
-  var earLength=ears.list(tmp)
+  var earLength=ears.list(tmp);
   if(earLength<=0)break;
-  for(var i=0;i<earLength;i++){
-   var ear=tmp[i]
+  for(i=0;i<earLength;i++){
+   var ear=tmp[i];
    //console.log("processing "+[ear/4,prevVert/4,nextVert/4])
-   var prevVert=verts[ear+Triangulate._PREV]
-   var nextVert=verts[ear+Triangulate._NEXT]
-   if(ear==prevVert || ear==nextVert || prevVert==nextVert){
-    ears.remove(ear)
+   prevVert=verts[ear+Triangulate._PREV];
+   nextVert=verts[ear+Triangulate._NEXT];
+   if(ear===prevVert || ear===nextVert || prevVert===nextVert){
+    ears.remove(ear);
     continue;
    }
    // remove the ear from the linked list
-   verts[prevVert+Triangulate._NEXT]=nextVert
-   verts[nextVert+Triangulate._PREV]=prevVert
+   verts[prevVert+Triangulate._NEXT]=nextVert;
+   verts[nextVert+Triangulate._PREV]=prevVert;
    tris.push([
     verts[prevVert],verts[prevVert+1],
     verts[ear],verts[ear+1],
-    verts[nextVert],verts[nextVert+1]])
-   ears.remove(ear)
+    verts[nextVert],verts[nextVert+1]]);
+   ears.remove(ear);
    // reclassify vertices
-   var prevClass=Triangulate._vertClass(verts,prevVert,ori)
-   var nextClass=Triangulate._vertClass(verts,nextVert,ori)
-   if(prevClass!=Triangulate._REFLEX){
-    reflex.remove(prevVert)
+   var prevClass=Triangulate._vertClass(verts,prevVert,ori);
+   var nextClass=Triangulate._vertClass(verts,nextVert,ori);
+   if(prevClass!==Triangulate._REFLEX){
+    reflex.remove(prevVert);
    } else {
-    reflex.addIfMissing(prevVert)
+    reflex.addIfMissing(prevVert);
    }
-   if(prevClass!=Triangulate._EAR){
-    ears.remove(prevVert)
+   if(prevClass!==Triangulate._EAR){
+    ears.remove(prevVert);
    } else {
-    ears.addIfMissing(prevVert)
+    ears.addIfMissing(prevVert);
    }
-   if(nextClass!=Triangulate._REFLEX){
-    reflex.remove(nextVert)
+   if(nextClass!==Triangulate._REFLEX){
+    reflex.remove(nextVert);
    } else {
-    reflex.addIfMissing(nextVert)
+    reflex.addIfMissing(nextVert);
    }
-   if(nextClass!=Triangulate._EAR){
-    ears.remove(nextVert)
+   if(nextClass!==Triangulate._EAR){
+    ears.remove(nextVert);
    } else {
-    ears.addIfMissing(nextVert)
+    ears.addIfMissing(nextVert);
    }
   }
  }
-}
+};

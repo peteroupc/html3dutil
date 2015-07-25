@@ -1797,7 +1797,7 @@ Scene3D.prototype._updateMatrix=function(program){
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
   };
-  var viewInvW=program.get("viewInvW")
+  var viewInvW=program.get("viewInvW");
   if(viewInvW!==null && typeof viewInvW!=="undefined"){
    var invView=GLMath.mat4invert(this._viewMatrix);
    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
@@ -1982,8 +1982,8 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
   var viewWorld;
-  var mvm=program.get("modelViewMatrix")
-  if(mvm!=null){
+  var mvm=program.get("modelViewMatrix");
+  if((mvm!==null && typeof mvm!=="undefined")){
    if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
     // view matrix is just a translation matrix, so that getting the model-view
     // matrix amounts to simply adding the view's position
