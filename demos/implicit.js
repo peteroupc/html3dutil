@@ -456,7 +456,7 @@ ImplicitSurface._a2iTriangleConnectionTable = [
     [ 8, 0, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ];
-
+/** @private */
 ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ){
   "use strict";
 var mx=0;

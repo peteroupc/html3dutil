@@ -19,7 +19,7 @@ var fillOffset=0;
    fillOffset++;
   }
  }
- arr.length=fillOffset;
+ arr.splice(fillOffset,arr.length-(fillOffset));
 },
 "includes":function(arr,value){
  "use strict";
@@ -400,7 +400,7 @@ var j;
             }
             if(!found){
              // no non-zero nodes after the first
-             this.nodes.length=1;
+             this.nodes.splice(0,this.nodes.length);
              this.nodes[0]=new Constant(0);
              return this;
             }
@@ -422,17 +422,17 @@ var j;
             this.nodes[i] = null;
             done = false;
           } else if (cv===(0)) {
-            this.nodes.length=0;
+            this.nodes.splice(0,this.nodes.length);
             this.nodes[0] = new Constant(0);
             return this;
           } else if (((c = (d = ((e = cv===(-1)) ? i===(0) : e), d !== false && (d!==null && typeof d!=="undefined") ?this.nodes.length===(2) : d)))) {
             neg = this.nodes[1].negate();
-            this.nodes.length=0;
+            this.nodes.splice(0,this.nodes.length);
             this.nodes[0] = neg;
             return this;
           } else if (((c = (d = ((e = cv===(-1)) ? i===(1) : e), d !== false && (d!==null && typeof d!=="undefined") ?this.nodes.length===(2) : d)))) {
             neg = this.nodes[0].negate();
-            this.nodes.length=0;
+            this.nodes.splice(0,this.nodes.length);
             this.nodes[0] = neg;
             return this;
           } else if ((cv!==null && typeof cv!=="undefined") && (constVals!==null && typeof constVals!=="undefined")) {
