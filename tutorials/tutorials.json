@@ -6,6 +6,7 @@
 "overview":{"title":"Library Overview"},
 "shapes":{"title":"Creating Shapes"},
 "surfaces":{"title":"Parametric Curves and Parametric Surfaces"},
+"paths":{"title":"2-Dimensional Graphics Paths"},
 "textures":{"title":"Texture Examples"},
 "meshexamples":{"title":"Examples of Creating Meshes on the Fly"},
 "history":{"title":"Older Version History"}
