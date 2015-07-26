@@ -653,10 +653,7 @@ CurveEval.prototype.texCoord=function(evaluator){
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {number} u Point of the curve to evaluate (for
- * B&eacute;zier curves, generally within the range
- * given in the <code>vectorBezier</code>, <code>normalBezier</code>,
- * <code>colorBezier</code>, and <code>texCoordBezier</code> methods).
+ * @param {number} u Point of the curve to evaluate.
  * @return {CurveEval} This object.
  */
 CurveEval.prototype.evalOne=function(mesh,u){
@@ -868,10 +865,7 @@ SurfaceEval.prototype.texCoord=function(evaluator){
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {number} u U-coordinate of the curve to evaluate (for
- * B&eacute;zier surfaces, generally within the range
- * given in the <code>vectorBezier</code>, <code>normalBezier</code>,
- * <code>colorBezier</code>, and <code>texCoordBezier</code> methods).
+ * @param {number} u U-coordinate of the curve to evaluate
  * @param {number} v V-coordinate of the curve to evaluate.
  * @return {SurfaceEval} This object.
  */
