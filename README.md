@@ -58,6 +58,9 @@ featuring a wall clock.
 
 * [demos/marchingdots.html](https://peteroupc.github.io/html3dutil/demos/marchingdots.html) - Demo
 of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.
+* [demos/polyclip.html](https://peteroupc.github.io/html3dutil/demos/polyclip.html) -
+Similar to "marchingdots.html", but now uses the union of two circles as a path to demonstrate polygon
+clipping.
 * [demos/pathtube.html](https://peteroupc.github.io/html3dutil/demos/pathtube.html) - Demo
 of a tube formed by a path curve.
 * [demos/pathshapes.html](https://peteroupc.github.io/html3dutil/demos/pathshapes.html) - Demo
