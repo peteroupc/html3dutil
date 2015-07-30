@@ -25,13 +25,13 @@ the same value.
 
 For example, if we have a parametric surface defined by the following functions:
 
-* _x_(u, v) = u * v
+* _x_(u, v) = u \* v
 * _y_(u, v) = -u
-* _z_(u, v) = u * sqrt(v)
+* _z_(u, v) = u \* sqrt(v)
 
 and we evaluate the UV point (2, 4), then we have:
 
-* **F**(2, 4) = [ 2 * 4, -2, 2 * sqrt(4) ];
+* **F**(2, 4) = [ 2 \* 4, -2, 2 \* sqrt(4) ];
 * **F**(2, 4) = [ 8, -2, 4 ];
 
 So (8, -2, 4) is one point that lies on this parametric surface, and any other point on the
