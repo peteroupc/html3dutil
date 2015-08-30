@@ -12,7 +12,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 var BufferedSubMesh=function(mesh, context){
  "use strict";
  var vertbuffer=context.createBuffer();
+ if(!vertbuffer)throw new Error("can't create vertex buffer")
  var facebuffer=context.createBuffer();
+ if(!facebuffer)throw new Error("can't create face buffer")
  context.bindBuffer(context.ARRAY_BUFFER, vertbuffer);
  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, facebuffer);
  context.bufferData(context.ARRAY_BUFFER,
