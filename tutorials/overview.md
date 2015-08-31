@@ -154,8 +154,9 @@ The render loop method takes a parameter (here "time"), containing the number of
 
 The following is a minimal skeleton you can use for writing HTML apps using this library.
 
-    <meta charset=utf-8>
     <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
     <script type="text/javascript" src="glutil_min.js"></script>
     </head>
     <body style="margin:0px">
