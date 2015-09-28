@@ -705,7 +705,7 @@ CurveEval.prototype.evalOne=function(mesh,u){
  * <code>color</code>, and <code>texCoord</code> methods).
  *May be omitted; default is 0.
  * @param {number} [u2] Ending point of the curve (within the range
- * given in the <code>vector</code>, normal</code>,
+ * given in the <code>vector</code>, <code>normal</code>,
  * <code>color</code>, and <code>texCoord</code> methods).
  *May be omitted; default is 1.
  * @return {CurveEval} This object.

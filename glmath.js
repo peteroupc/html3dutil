@@ -91,7 +91,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * <ul>
  * <li>If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
- * of the shortest angle between them is equal to their dot product.
+ * of the angle between them is equal to their dot product.
  * <small>(More formally, the dot
  * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
