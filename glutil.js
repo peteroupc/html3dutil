@@ -74,12 +74,12 @@ var GLUtil={
 * @param {number|null} width Width of the new canvas
 * element, or if null, the width a <code>canvas</code>
 * element would ordinarily have
-* under current CSS rules. The resulting width will be rounded up.
+* under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up.
 * This parameter can't be a negative number.
 * @param {number|null} height Height of the new canvas
 * element, or if null, the height a <code>canvas</code>
 * element would ordinarily have
-* under current CSS rules. The resulting height will be rounded up.
+* under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up.
 * This parameter can't be a negative number.
 * @return {HTMLCanvasElement} The resulting canvas element.
 */
