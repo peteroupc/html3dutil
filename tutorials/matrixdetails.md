@@ -76,11 +76,6 @@ For 3x3 matrices, the elements are arranged in the following order:
  <mtd><mi>matrix[5]</mi></mtd>
  <mtd><mi>matrix[8]</mi></mtd>
  </mtr>
- <mtr>
- <mtd><mi>matrix[3]</mi></mtd>
- <mtd><mi>matrix[7]</mi></mtd>
- <mtd><mi>matrix[11]</mi></mtd>
- </mtr>
 </mtable>
 </mfenced>
 </math>
