@@ -590,10 +590,11 @@ function LightSource(position, ambient, diffuse, specular) {
  this.position=position ? [position[0],position[1],position[2],1.0] :
    [0, 0, 1, 0];
  /**
- * A 4-element vector giving the color of the light when it causes a diffuse
- * reflection, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * A diffuse reflection is a reflection that scatters evenly, in every direction.
+ * A 4-element vector giving an additional color to multiply with the diffusion
+ * color of each object (which is also called "albedo"), in the red, green,
+ * and blue components respectively. Diffuse color is the color
+ * seen when light passes through a material and bounces back (diffusion).  Each component ranges from 0 to 1.
+ * The simulated diffusion scatters evenly, in every direction.
  * The default is (1,1,1,1), or white.
  */
  this.diffuse=diffuse||[1,1,1,1];
@@ -621,7 +622,8 @@ function LightSource(position, ambient, diffuse, specular) {
 * <li>If W is 1, then X, Y, and Z specify the position of the light in world
 * space; the light will shine brightest, and in every direction, at the given position.</ul>
 * <li><code>ambient</code> - Not used in the default shader program.
-* <li><code>diffuse</code> - A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
+* <li><code>diffuse</code> - A 3- or 4-element vector giving an additional color to multiply with the diffusion
+ * color of each object (which is also called "albedo"), in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
  * The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
 * <li><code>specular</code> - A 3- or 4-element vector giving the color of specular highlights caused by
@@ -766,12 +768,12 @@ Lights.prototype.setPointLight=function(index,position){
 * properties of this object are used.
 * @class
 * @alias glutil.Material
-* @param {Array<number>} ambient Ambient reflection.
+* @param {Array<number>} ambient Ambient color.
 * Can be an array of three numbers,
 * ranging from 0 to 1 and giving the red, green, and blue components, respectively,
 * or can be a string representing an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * May be null or omitted; default is (0.2, 0.2, 0.2).
-* @param {Array<number>} diffuse Diffuse reflection.  A color with the same format
+* @param {Array<number>} diffuse Diffusion color (also called "albedo").  A color with the same format
 * as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).
 * @param {Array<number>} specular Specular highlight reflection.
 * A color with the same format as for "ambient".
@@ -795,8 +797,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * Ranges from 0 through 128.
 */
  this.shininess=((shininess===null || typeof shininess==="undefined")) ? 0 : Math.min(Math.max(0,shininess),128);
- /** Ambient reflection of this material.<p>
- * Ambient reflection indicates how much an object reflects
+ /** Ambient color of this material.<p>
+ * Ambient color indicates how much an object reflects
  * ambient colors, those that color pixels the same way regardless
  * of direction or distance.
  * Because every part of an object will be shaded the same way by ambient
@@ -808,27 +810,27 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * on the ambient color of the scene.
  * (0,0,0) means no ambient reflection,
  * and (1,1,1) means total ambient reflection.<p>
- * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * Setting ambient reflection and diffusion color to the same value usually defines an object's
  * color.<p>
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for ambient reflection rather than this property.
  */
  this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
  /**
- * Diffuse reflection of this material. Diffuse reflection is the color that a material
- * reflects equally in all directions. Because different parts of an object are shaded
+ * Diffusion color of this material (also called "albedo"). This is the color seen when light passes through this material
+ * and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
  * differently depending
- * on how directly they face diffuse lights, diffuse reflection can contribute
+ * on how directly they face diffuse lights, diffusion can contribute
  * much of the 3D effect of that object.<p>
  * This value is a 4-element array giving the red, green, blue, and
- * alpha components of the diffuse reflection; the final diffuse color depends
- * on the reflected colors of lights that shine on the material.
- * (0,0,0,1) means no diffuse reflection,
- * and (1,1,1,1) means total diffuse reflection.<p>
- * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * alpha components of the diffusion; the final diffusion color depends
+ * on the diffusion colors of lights that shine on the material.
+ * (0,0,0,1) means no diffusion,
+ * and (1,1,1,1) means total diffusion.<p>
+ * Setting ambient and diffusion to the same value usually defines an object's
  * color.<p>
  * In the default shader program, if a mesh defines its own colors, those
- * colors are used for diffuse reflection rather than this property.<p>
+ * colors are used for diffusion rather than this property.<p>
  * This value can have an optional fourth element giving the alpha component
  * (0-1).  If this element is omitted, the default is 1.<p>
  */
@@ -924,7 +926,7 @@ Material.prototype.copy=function(){
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
 * <li><code>ambient</code> - Ambient reflection (see {@link glutil.Material} constructor).
-* <li><code>diffuse</code> - Diffuse reflection (see {@link glutil.Material} constructor).
+* <li><code>diffuse</code> - Diffusion (see {@link glutil.Material} constructor).
 * <li><code>specular</code> - Specular reflection (see {@link glutil.Material} constructor).
 * <li><code>shininess</code> - Specular reflection exponent (see {@link glutil.Material} constructor).
 * <li><code>emission</code> - Additive color (see {@link glutil.Material} constructor).
