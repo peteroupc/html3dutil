@@ -843,8 +843,10 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * This value is a 3-element array giving the red, green, and blue
  * components of the specular reflection; the final specular color depends
  * on the specular color of lights that shine on the material.
- * (0,0,0) means no specular reflection,
- * and (1,1,1) means total specular reflection.<p>
+ * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
+ * The specular color is usually grayscale
+ * (all three components are the same), but can be colored if the material represents an
+* uncoated metal of some sort. If this element is omitted, the default is (0,0,0).<p>
 */
  this.specular=specular ? specular.slice(0,3) : [0,0,0];
  /**
@@ -857,7 +859,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * This value is a 3-element array giving the red, green, and blue
 * components.
 * For each of the three color components, positive values add to that component,
-* while negative values subtract from it. (0,0,0) means no additive color.
+* while negative values subtract from it. (0,0,0), the default, means no additive color.
  */
  this.emission=emission ? emission.slice(0,3) : [0,0,0];
 /**
@@ -867,8 +869,10 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 /**
 * Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
 * each part of the object's surface (note that the material must have a specular color of other
-* than the default
-* black for this to have an effect).  See {@link glutil.Material#specular}.
+* than the default black for this to have an effect).
+* The specular map is usually grayscale (all three components are the same in each pixel),
+* but can be colored if the material represents an uncoated metal of some sort (in which case the specular
+* color property should be (1,1,1) or another grayscale color). See {@link glutil.Material#specular}.
 */
  this.specularMap=null;
  /**
