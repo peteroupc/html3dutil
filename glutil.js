@@ -671,7 +671,7 @@ function Lights(){
  * real-world effect of light bouncing back and forth between
  * many different objects in an area.  One example of this
  * phenomenon is sunlight reaching an indoor room without
- * directly hitting it, such that the sunlight reflects off the walls
+ * directly hitting it, such that the sunlight bounces off the walls
  * and so illuminates most of the room pretty much uniformly.
  * Ambient lights simulate this phenomenon.</small>
  *  @default
@@ -760,7 +760,7 @@ Lights.prototype.setPointLight=function(index,position){
 
 /**
 * Specifies parameters for geometry materials, which describe the appearance of a
-* 3D object. This includes how an object reflects or absorbs light, as well
+* 3D object. This includes how an object scatters, reflects, or absorbs light, as well
 * as well as a texture image to apply on that object's surface.<p>
 * The full structure is only used if the shader program supports lighting, as the
 * default shader program does.  If [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting} is called,
@@ -798,22 +798,22 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 */
  this.shininess=((shininess===null || typeof shininess==="undefined")) ? 0 : Math.min(Math.max(0,shininess),128);
  /** Ambient color of this material.<p>
- * Ambient color indicates how much an object reflects
- * ambient colors, those that color pixels the same way regardless
+ * Ambient color indicates how much an object's color is affected by ambient
+ * lights, those that color pixels the same way regardless
  * of direction or distance.
  * Because every part of an object will be shaded the same way by ambient
- * colors, an object with just ambient reflection will not look much like a 3D object.<p>
- * (Ambient reflection simulates the effect of light being reflected multiple times
+ * colors, an object with just ambient color will not look much like a 3D object.<p>
+ * (Ambient color simulates the effect of light being scattered multiple times
  * from the same surface.)</p>
  * This value is a 3-element array giving the red, green, and blue
- * components of the ambient reflection; the final ambient color depends
+ * components of the ambient color; the final ambient color depends
  * on the ambient color of the scene.
- * (0,0,0) means no ambient reflection,
- * and (1,1,1) means total ambient reflection.<p>
- * Setting ambient reflection and diffusion color to the same value usually defines an object's
+ * (0,0,0) means no ambient color,
+ * and (1,1,1) means total ambient color.<p>
+ * Setting ambient color and diffusion color to the same value usually defines an object's
  * color.<p>
  * In the default shader program, if a mesh defines its own colors, those
- * colors are used for ambient reflection rather than this property.
+ * colors are used for ambient color rather than this property.
  */
  this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
  /**
@@ -925,7 +925,7 @@ Material.prototype.copy=function(){
 * @param {object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
-* <li><code>ambient</code> - Ambient reflection (see {@link glutil.Material} constructor).
+* <li><code>ambient</code> - Ambient color (see {@link glutil.Material} constructor).
 * <li><code>diffuse</code> - Diffusion (see {@link glutil.Material} constructor).
 * <li><code>specular</code> - Specular reflection (see {@link glutil.Material} constructor).
 * <li><code>shininess</code> - Specular reflection exponent (see {@link glutil.Material} constructor).
@@ -1019,7 +1019,7 @@ Material.fromTexture=function(texture){
 *  Specifies a texture, which can serve as image data applied to
 *  the surface of a shape, or even a 2-dimensional array of pixels
 *  used for some other purpose, such as a depth map, a height map,
-*  a bump map, a reflection map, and so on.<p>
+*  a bump map, a specular map, and so on.<p>
 * By default, texture coordinates go from (0,0) at the lower left corner
 * to (1,1) at the upper right corner.
 * @class
