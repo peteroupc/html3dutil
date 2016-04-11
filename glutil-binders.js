@@ -19,7 +19,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 function MaterialBinder(mshade){
  "use strict";
 this.mshade=mshade;
- this.textureSize=[0,0];
 }
 /** @private */
 var TextureBinder=function(tex){
@@ -31,23 +30,24 @@ MaterialBinder.prototype.bind=function(program){
  "use strict";
 if(!this.mshade)return this;
  var uniforms={
-  "textureSize":this.textureSize,
   "useSpecularMap":0,
-  "useNormalMap":0
- };
- program.setUniforms(uniforms);
- uniforms={
-  "mshin":this.mshade.shininess,
-  "ma":this.mshade.ambient.length===3 ? this.mshade.ambient :
-     [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]],
+  "useNormalMap":0,
+  "textureSize":[0,0],
   "md":this.mshade.diffuse.length===4 ? this.mshade.diffuse :
     [this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
-       this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]],
-  "ms":this.mshade.specular.length===3 ? this.mshade.specular :
-     [this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]],
-  "me":this.mshade.emission.length===3 ? this.mshade.emission :
-     [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]]
+       this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]]
  };
+ if(!this.mshade.basic){
+  uniforms["mshin"]=this.mshade.shininess;
+  uniforms["ma"]=this.mshade.ambient.length===3 ? this.mshade.ambient :
+     [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]];
+  uniforms["ms"]=this.mshade.specular.length===3 ? this.mshade.specular :
+     [this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]];
+  uniforms["me"]=this.mshade.emission.length===3 ? this.mshade.emission :
+     [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]];
+ }
+ console.log(uniforms.md+"")
+ program.setUniforms(uniforms);
  if(this.mshade.texture){
   new TextureBinder(this.mshade.texture).bind(program,0);
  }
@@ -57,7 +57,6 @@ if(!this.mshade)return this;
  if(this.mshade.normalMap){
   new TextureBinder(this.mshade.normalMap).bind(program,2);
  }
- program.setUniforms(uniforms);
  return this;
 };
 
@@ -202,7 +201,9 @@ if((textureUnit===null || typeof textureUnit==="undefined"))textureUnit=0;
        // Enable mipmaps if texture's dimensions are powers of two
        if(!texture.clamp)wrapMode=context.REPEAT;
        context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
+         context.TEXTURE_MIN_FILTER, context.LINEAR);
+     //  context.texParameteri(context.TEXTURE_2D,
+     //    context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
       } else {
        context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_MIN_FILTER, context.LINEAR);
