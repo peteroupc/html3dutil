@@ -46,7 +46,6 @@ if(!this.mshade)return this;
   uniforms["me"]=this.mshade.emission.length===3 ? this.mshade.emission :
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]];
  }
- console.log(uniforms.md+"")
  program.setUniforms(uniforms);
  if(this.mshade.texture){
   new TextureBinder(this.mshade.texture).bind(program,0);
