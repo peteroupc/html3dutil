@@ -92,7 +92,7 @@ function TextFont(fontinfo,chars,pages,kernings,common,fileUrl){
 }
 TextFont._toArray=function(str,minLength){
  var spl
- if(typeof str=="string"){
+ if(typeof str==="string"){
   spl=str.split(",")
   for(var i=0;i<spl.length;i++){
    spl[i]=parseInt(spl[i])
@@ -101,7 +101,7 @@ TextFont._toArray=function(str,minLength){
   spl=[]
  }
  for(var i=spl.length;i<minLength;i++){
-  spl.push(0) 
+  spl.push(0)
  }
  return spl
 }
@@ -121,10 +121,10 @@ TextFont.prototype.makeShapeMeshes=function(str, xPos, yPos, height){
   } else if(c>=0xd800 && c<0xe000){
    c=0xfffd
   }
-  if(c==0x0a){
+  if(c === 0x0a){
    yPos+=this.common.lineHeight*scale;
    xPos=startXPos;
-   lastChar=c; 
+   lastChar=c;
    continue;
   }
   var ch=this.chars[c]||this.chars[0]||null
@@ -155,13 +155,13 @@ TextFont.prototype.makeShapeMeshes=function(str, xPos, yPos, height){
      .vertex2(vx2,vy2);
    if(lastChar!=-1){
     if(this.kern[lastChar] && this.kern[lastChar][c]){
-     xPos+=this.kern[lastChar][c].amount*scale;    
+     xPos+=this.kern[lastChar][c].amount*scale;
     }
    }
    xPos+=ch.xadvance*scale;
   }
   lastChar=c;
- } 
+ }
  return meshesForPage;
 }
 TextFont._resolvePath=function(path, name){
@@ -197,11 +197,11 @@ TextFont._elementToObject=function(element){
 TextFont._loadXmlFontInner=function(data){
  var doc=data.data
  var commons=doc.getElementsByTagName("common")
- if(commons.length==0)return null;
+ if(commons.length === 0)return null;
  var infos=doc.getElementsByTagName("info")
- if(infos.length==0)return null;
+ if(infos.length === 0)return null;
  var pages=doc.getElementsByTagName("page")
- if(pages.length==0)return null;
+ if(pages.length === 0)return null;
  var chars=doc.getElementsByTagName("char")
  var kernings=doc.getElementsByTagName("kerning")
  var xchars=[]
@@ -211,7 +211,7 @@ TextFont._loadXmlFontInner=function(data){
  var xinfos=TextFont._elementToObject(infos[0])
  for(var i=0;i<pages.length;i++){
   var p=TextFont._elementToObject(pages[i])
-  xpages[p.id]=TextFont._resolvePath(data.url,p["file"]);
+  xpages[p.id]=TextFont._resolvePath(data.url,p.file);
  }
  for(var i=0;i<chars.length;i++){
   var p=TextFont._elementToObject(chars[i])
@@ -253,24 +253,24 @@ TextFont._loadTextFontInner=function(data){
      rest=rest.substr(e[1].length);
    }
    if(word=="page"){
-    pages[hash["id"]|0]=TextFont._resolvePath(data.url,hash["file"]);
+    pages[hash.id|0]=TextFont._resolvePath(data.url,hash.file);
    }
-   if(word=="char" && hash["id"]!=null){
-    chars[hash["id"]|0]=hash;
+   if(word=="char" && hash.id!=null){
+    chars[hash.id|0]=hash;
    }
    if(word=="common"){
     if(common)return null;
     common=hash
    }
-   if(word=="kerning" && hash["first"]!=null){
+   if(word=="kerning" && hash.first!=null){
     kernings.push(hash)
    }
-   if(word=="info" && hash["face"]!=null){
+   if(word=="info" && hash.face!=null){
     if(fontinfo)return null;
     fontinfo=hash
    }
   }
-  if(!fontinfo || !common || pages.length==0){
+  if(!fontinfo || !common || pages.length === 0){
    return null;
   }
   return new TextFont(fontinfo,chars,pages,kernings,common,data.url)
@@ -308,7 +308,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 return shader;
 };
 
-GLUtil["TextFont"]=TextFont;
-GLUtil["TextRenderer"]=TextRenderer;
+GLUtil.TextFont=TextFont;
+GLUtil.TextRenderer=TextRenderer;
 
 })(GLUtil);

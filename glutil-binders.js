@@ -38,12 +38,12 @@ if(!this.mshade)return this;
        this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]]
  };
  if(!this.mshade.basic){
-  uniforms["mshin"]=this.mshade.shininess;
-  uniforms["ma"]=this.mshade.ambient.length===3 ? this.mshade.ambient :
+  uniforms.mshin=this.mshade.shininess;
+  uniforms.ma=this.mshade.ambient.length===3 ? this.mshade.ambient :
      [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]];
-  uniforms["ms"]=this.mshade.specular.length===3 ? this.mshade.specular :
+  uniforms.ms=this.mshade.specular.length===3 ? this.mshade.specular :
      [this.mshade.specular[0],this.mshade.specular[1],this.mshade.specular[2]];
-  uniforms["me"]=this.mshade.emission.length===3 ? this.mshade.emission :
+  uniforms.me=this.mshade.emission.length===3 ? this.mshade.emission :
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]];
  }
  program.setUniforms(uniforms);

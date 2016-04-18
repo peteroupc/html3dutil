@@ -345,7 +345,7 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * the last known time, where a frame's length is 1/60 of a second.
 * This method should be called only once each frame.
 * @param {object} timer An object described
-* in {@link glutil.GLUtil.newFrames}.
+* in {@link glutil.GLUtil.getTimePosition}.
 * @param {number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * <code>requestAnimationFrame()</code> callback method.
@@ -793,7 +793,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  if((emission!==null && typeof emission!=="undefined"))emission=GLUtil.toGLColor(emission);
  /** Specular highlight exponent of this material.
 * The greater the number, the more concentrated the specular
-* highlights are.  The lower the number, the more extended the highlights are.
+* highlights are (and the smoother the material behaves).
+* The lower the number, the more extended the highlights are (and the rougher the material behaves).
 * Ranges from 0 through 128.
 */
  this.shininess=((shininess===null || typeof shininess==="undefined")) ? 0 : Math.min(Math.max(0,shininess),128);
@@ -835,7 +836,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * (0-1).  If this element is omitted, the default is 1.<p>
  */
  this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
- /** 
+ /**
  * Specular highlight reflection of this material.
  * Specular reflection is a reflection in the same angle as
  * the light reaches the material, similar to a mirror.  As a result, depending
@@ -844,7 +845,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * This value is a 3-element array giving the red, green, and blue
  * components of the specular reflection; the final specular color depends
  * on the specular color of lights that shine on the material.
- * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection, 
+ * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
  * The specular color is usually grayscale
  * (all three components are the same), but can be colored if the material represents an
 * uncoated metal of some sort. If this element is omitted, the default is (0,0,0).<p>
@@ -872,7 +873,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
 * each part of the object's surface (note that the material must have a specular color of other
 * than the default black for this to have an effect).
-* The specular map is usually grayscale (all three components are the same in each pixel), 
+* The specular map is usually grayscale (all three components are the same in each pixel),
 * but can be colored if the material represents an uncoated metal of some sort (in which case the specular
 * color property should be (1,1,1) or another grayscale color). See {@link glutil.Material#specular}.
 */
@@ -1249,7 +1250,6 @@ Texture.prototype.dispose=function(){
  }
 };
 
-
 /**
 * Gets the name of this texture.
 */
@@ -1303,7 +1303,7 @@ function Scene3D(canvasOrContext){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
- this._programs={}
+ this._programs=[]
  this.useDevicePixelRatio=false;
  this._pixelRatio=1;
  this.autoResize=true;
@@ -1312,7 +1312,6 @@ function Scene3D(canvasOrContext){
  this.height=Math.ceil(this.context.canvas.clientHeight*1.0);
  this.context.canvas.width=this.width;
  this.context.canvas.height=this.height;
- this.program=null;
  this._is3d=GLUtil.is3DContext(this.context);
  this._init3DContext();
 }
@@ -1320,10 +1319,10 @@ function Scene3D(canvasOrContext){
 Scene3D.prototype._init3DContext=function(){
  if(!this._is3d)return;
  var params={};
- params.lightingEnabled=true;
- params.specularEnabled=true;
- params.normalEnabled=true;
- this.defaultShaderProgram=this._getProgram(params);
+ var flags=Scene3D.LIGHTING_ENABLED |
+  Scene3D.NORMAL_ENABLED |
+  Scene3D.SPECULAR_ENABLED;
+ this.defaultShaderProgram=this._getProgram(flags);
  this.program=null;
  this.context.viewport(0,0,this.width,this.height);
  this.context.enable(this.context.BLEND);
@@ -1338,22 +1337,21 @@ Scene3D.prototype._init3DContext=function(){
     this.context.DEPTH_BUFFER_BIT);
  this._useProgramInternal(this.defaultShaderProgram);
 };
-Scene3D.prototype._getProgram=function(params){
- var pid="shading="+params.lightingEnabled+","+
-   "normal="+params.normalEnabled+","+
-   "specular="+params.specularEnabled;
- if(this._programs[pid]){
-  return this._programs[pid];
+Scene3D.prototype._getProgram=function(flags){
+ if(this._programs[flags]){
+  return this._programs[flags];
  }
  var defines=""
- if(params.lightingEnabled)defines+="#define SHADING\n";
- if(params.normalEnabled||params.specularEnabled)defines+="#define SPECULAR\n";
- if(params.normalEnabled)defines+="#define NORMAL_MAP\n";
- if(params.specularEnabled)defines+="#define SPECULAR_MAP\n";
+ if((flags&Scene3D.LIGHTING_ENABLED)!=0)
+   defines+="#define SHADING\n";
+ if((flags&Scene3D.NORMAL_ENABLED)!=0)
+   defines+="#define NORMAL_MAP\n#define SPECULAR\n";
+ if((flags&Scene3D.SPECULAR_ENABLED)!=0)
+   defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
  var prog=new ShaderProgram(this.context,
    defines+ShaderProgram.getDefaultVertex(),
    defines+ShaderProgram.getDefaultFragment());
- this._programs[pid]=prog;
+ this._programs[flags]=prog;
  return prog;
 }
 /** Returns the WebGL context associated with this scene. */
@@ -1486,16 +1484,11 @@ Scene3D.prototype.getClearColor=function(){
  return this.clearColor.slice(0,4);
 };
 /** @private */
-Scene3D.prototype._initProgramData=function(program){
- new LightsBinder(this.lightSource).bind(program);
- this._updateMatrix(program);
-};
 Scene3D.prototype._useProgramInternal=function(program){
  if(!program)throw new Error("invalid program");
  if(this.program!=program){
   program.use();
   this.program=program;
-  this._initProgramData(this.program);
  }
  return this;
 };
@@ -1821,26 +1814,12 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
 Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this._updateMatrix(this.program);
+ this._updateFrustum();
 };
 /** @private */
-Scene3D.prototype._updateMatrix=function(program){
+Scene3D.prototype._updateFrustum=function(){
  var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
  this._frustum=GLMath.mat4toFrustumPlanes(projView);
- if(program){
-  var uniforms={
-   "view":this._viewMatrix,
-   "projection":this._projectionMatrix,
-   "viewMatrix":this._viewMatrix,
-   "projectionMatrix":this._projectionMatrix
-  };
-  var viewInvW=program.get("viewInvW");
-  if(viewInvW!==null && typeof viewInvW!=="undefined"){
-   var invView=GLMath.mat4invert(this._viewMatrix);
-   uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
-  }
-  program.setUniforms(uniforms);
- }
 };
 /**
  * Sets the projection matrix for this object.  The projection
@@ -1851,7 +1830,7 @@ Scene3D.prototype._updateMatrix=function(program){
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
  this._projectionMatrix=GLMath.mat4copy(matrix);
- this._updateMatrix(this.program);
+ this._updateFrustum();
  return this;
 };
 /**
@@ -1862,7 +1841,7 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
  this._viewMatrix=GLMath.mat4copy(matrix);
- this._updateMatrix(this.program);
+ this._updateFrustum();
  return this;
 };
 /**
@@ -1887,7 +1866,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  up = up || [0,1,0];
  center = center || [0,0,0];
  this._viewMatrix=GLMath.mat4lookat(eye, center, up);
- this._updateMatrix(this.program);
+ this._updateFrustum();
  return this;
 };
 /**
@@ -1949,7 +1928,6 @@ Scene3D.prototype.removeShape=function(shape){
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  this.lightSource.setDirectionalLight(index,position)
   .setParams(index,{"diffuse":diffuse,"specular":specular});
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 /**
@@ -1962,7 +1940,6 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  */
 Scene3D.prototype.setLightParams=function(index,params){
  this.lightSource.setParams(index,params);
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 /**
@@ -1981,7 +1958,6 @@ Scene3D.prototype.setLightParams=function(index,params){
 Scene3D.prototype.setAmbient=function(r,g,b,a){
  this.lightSource.sceneAmbient=GLUtil.toGLColor(r,g,b,a);
  this.lightSource.sceneAmbient=this.lightSource.sceneAmbient.slice(0,4);
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 
@@ -2002,7 +1978,6 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  this.lightSource.setPointLight(index,position)
    .setParams(index,{"diffuse":diffuse,"specular":specular});
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 /** @private */
@@ -2019,6 +1994,15 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
   var viewWorld;
+  uniforms.view=this._viewMatrix;
+  uniforms.projection=this._projectionMatrix;
+  uniforms.viewMatrix=this._viewMatrix;
+  uniforms.projectionMatrix=this._projectionMatrix;
+  var viewInvW=program.get("viewInvW");
+  if(viewInvW!==null && typeof viewInvW!=="undefined"){
+   var invView=GLMath.mat4invert(this._viewMatrix);
+   uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
+  }
   var mvm=program.get("modelViewMatrix");
   if((mvm!==null && typeof mvm!=="undefined")){
    if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
@@ -2068,9 +2052,9 @@ Scene3D.prototype.render=function(){
   if(typeof this.fboFilter!=="undefined" && this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
-   var oldProgram=this.program;
    var oldProj=this.getProjectionMatrix();
    var oldView=this.getViewMatrix();
+   // TODO: Get rid of this.program here
    this.fbo.bind(this.program);
    this._renderInner();
    this.fbo.unbind();
@@ -2079,11 +2063,11 @@ Scene3D.prototype.render=function(){
     this.context.COLOR_BUFFER_BIT|this.context.DEPTH_BUFFER_BIT);
    this._setIdentityMatrices();
    // Do the rendering to main buffer
-   this._renderShape(this.fboQuad,this.fboFilter);
-   // Restore old matrices and program
+   this.fboQuad.setShader(this.fboFilter);
+   this._renderShape(this.fboQuad);
+   // Restore old matrices
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
-   this._useProgramInternal(oldProgram);
    this.context.flush();
    return this;
   } else {
@@ -2094,31 +2078,33 @@ Scene3D.prototype.render=function(){
  }
 };
 
+Scene3D.LIGHTING_ENABLED = 1;
+Scene3D.SPECULAR_ENABLED = 2;
+Scene3D.NORMAL_ENABLED = 4;
+
 /** @private */
-Scene3D.prototype._renderShape=function(shape,program){
- // TODO: Remove "program" parameter
+Scene3D.prototype._renderShape=function(shape){
  if(shape.constructor===ShapeGroup){
   if(!shape.visible)return;
   for(var i=0;i<shape.shapes.length;i++){
-   this._renderShape(shape.shapes[i],program);
+   this._renderShape(shape.shapes[i]);
   }
  } else {
    if(!shape.isCulled(this._frustum)){
     var prog=program;
     var params={};
-    params.lightingEnabled=false;
-    params.specularEnabled=false;
-    params.normalEnabled=false;
+    var flags=0;
     if(shape.material instanceof Material){
-     params.lightingEnabled=!shape.material.basic;
-     params.specularEnabled=!!shape.material.specularMap;
-     params.normalEnabled=!!shape.material.normalMap;
+     flags|=(!shape.material.basic) ? Scene3D.LIGHTING_ENABLED : 0;
+     flags|=(!!shape.material.specularMap) ? Scene3D.SPECULAR_ENABLED : 0;
+     flags|=(!!shape.material.normalMap) ? Scene3D.NORMAL_ENABLED : 0;
      prog=shape.material.shader ?
        shape.material.shader : this._getProgram(params);
     } else {
-     prog=this._getProgram(params);    
+     prog=this._getProgram(params);
     }
     this._useProgramInternal(prog);
+    new LightsBinder(this.lightSource).bind(prog);
     this._setupMatrices(shape,prog);
     Binders.getMaterialBinder(shape.material).bind(prog);
     shape.bufferedMesh.draw(prog);
@@ -2174,12 +2160,11 @@ Scene3D.prototype.useFilter=function(filterProgram){
 };
 /** @private */
 Scene3D.prototype._renderInner=function(){
-  this._updateMatrix(this.program);
   this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
   for(var i=0;i<this.shapes.length;i++){
-   this._renderShape(this.shapes[i],this.program);
+   this._renderShape(this.shapes[i]);
   }
   return this;
 };
@@ -2301,7 +2286,7 @@ ShapeGroup.prototype.removeShape=function(shape){
  return this;
 };
 /**
- * Gets the number of vertices composed by this all shapes in this shape group.
+ * Gets the number of vertices composed by all shapes in this shape group.
  * @return {number} Return value. */
 ShapeGroup.prototype.vertexCount=function(){
  var c=0;
@@ -2460,7 +2445,7 @@ Shape.prototype.setColor=function(r,g,b,a){
   return this;
 };
 /**
- * Sets this shape's material to a texture with the given URL.
+ * Sets material parameters that give the shape a texture with the given URL.
  * @param {string} name {@link glutil.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this method

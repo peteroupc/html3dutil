@@ -103,6 +103,10 @@ of different sizes.
 * [demos/obj.html](https://peteroupc.github.io/html3dutil/demos/obj.html) - An object file loader.
 * [demos/stl.html](https://peteroupc.github.io/html3dutil/demos/stl.html) - Demonstrates loading 3D models.
 
+### Text
+
+* [demos/text.html](https://peteroupc.github.io/html3dutil/demos/text.html) - Demonstrates loading bitmap fonts and displaying text with them.
+
 ### Alternative Rendering
 
 * [demos/surfaces2d.html](https://peteroupc.github.io/html3dutil/demos/surfaces2d.html) - Same as the surfaces.html
