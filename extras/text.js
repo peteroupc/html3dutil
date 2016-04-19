@@ -10,11 +10,33 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 (function(GLUtil){
 "use strict";
 if(!GLUtil){ GLUtil={}; }
+
+/**
+* Renderer for bitmap fonts.  This class supports traditional bitmap
+* fonts and signed distance field fonts.<p>
+* In a signed distance field font, each pixel's alpha value depends on the
+* distance from that location to the edge of the glyph.  A pixel alpha less
+* than 0.5 (127 in most image formats) means the pixel is outside the
+* glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
+* outside the glyph) and 1 (for outside the glyph) means the pixel is
+* outside a buffer zone formed by the glyph's outline.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/text.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
+* @class
+* @alias TextRenderer
+* @param {glutil.Scene3D} scene 3D scene to load font textures with.
+*/
 function TextRenderer(scene){
  this.scene=scene;
  this.shader=new ShaderProgram(scene,null,TextRenderer._textShader());
  this.fontTextures=[]
 }
+/** @private */
 TextRenderer.prototype._getFontTextures=function(tf){
  for(var i=0;i<this.fontTextures.length;i++){
   if(this.fontTextures[i][0]==tf){
@@ -23,6 +45,7 @@ TextRenderer.prototype._getFontTextures=function(tf){
  }
  return []
 }
+/** @private */
 TextRenderer.prototype._setFontTextures=function(tf,ft){
  for(var i=0;i<this.fontTextures.length;i++){
   if(this.fontTextures[i][0]==tf){
@@ -32,6 +55,22 @@ TextRenderer.prototype._setFontTextures=function(tf,ft){
  }
  this.fontTextures.push([tf,ft]);
 }
+/**
+* Creates a 3D shape containing the primitives needed to
+* draw text in the given position, size, and color.
+* @param {TextFont} font The bitmap font to use when drawing the text.
+* @param {String} string The text to draw.  Line breaks ("\n") are recognized
+* by this method.
+* @param {Number} xPos X-coordinate of the top left corner of the text.
+* @param {Number} yPos Y-coordinate of the top left corner of the text.
+* @param {Number} height Size of the text in units.
+* @param {string|Array<number>} [color] The color to draw the text with.
+* An array of three or
+* four color components; or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* If null or omitted, the bitmap font is assumed to be a signed distance field
+* font.
+*/
 TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
  var group=new ShapeGroup();
  var fontTextures=this._getFontTextures(font);

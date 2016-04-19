@@ -836,6 +836,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * (0-1).  If this element is omitted, the default is 1.<p>
  */
  this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
+ // TODO: Consider changing default value of specular to 1
  /**
  * Specular highlight reflection of this material.
  * Specular reflection is a reflection in the same angle as
@@ -1320,10 +1321,9 @@ Scene3D.prototype._init3DContext=function(){
  if(!this._is3d)return;
  var params={};
  var flags=Scene3D.LIGHTING_ENABLED |
-  Scene3D.NORMAL_ENABLED |
-  Scene3D.SPECULAR_ENABLED;
- this.defaultShaderProgram=this._getProgram(flags);
- this.program=null;
+  Scene3D.SPECULAR_ENABLED |
+  Scene3D.SPECULAR_MAP_ENABLED;
+ this._getProgram(flags);
  this.context.viewport(0,0,this.width,this.height);
  this.context.enable(this.context.BLEND);
  this.context.blendFunc(this.context.SRC_ALPHA,this.context.ONE_MINUS_SRC_ALPHA);
@@ -1335,7 +1335,6 @@ Scene3D.prototype._init3DContext=function(){
  this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
- this._useProgramInternal(this.defaultShaderProgram);
 };
 Scene3D.prototype._getProgram=function(flags){
  if(this._programs[flags]){
@@ -1344,10 +1343,13 @@ Scene3D.prototype._getProgram=function(flags){
  var defines=""
  if((flags&Scene3D.LIGHTING_ENABLED)!=0)
    defines+="#define SHADING\n";
- if((flags&Scene3D.NORMAL_ENABLED)!=0)
-   defines+="#define NORMAL_MAP\n#define SPECULAR\n";
  if((flags&Scene3D.SPECULAR_ENABLED)!=0)
+   defines+="#define SPECULAR\n";
+ if((flags&Scene3D.NORMAL_ENABLED)!=0)
+   defines+="#define NORMAL_MAP\n";
+ if((flags&Scene3D.SPECULAR_MAP_ENABLED)!=0)
    defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
+   console.log(defines+ShaderProgram.getDefaultFragment());
  var prog=new ShaderProgram(this.context,
    defines+ShaderProgram.getDefaultVertex(),
    defines+ShaderProgram.getDefaultFragment());
@@ -1483,25 +1485,18 @@ Scene3D.prototype.setUseDevicePixelRatio=function(value){
 Scene3D.prototype.getClearColor=function(){
  return this.clearColor.slice(0,4);
 };
-/** @private */
-Scene3D.prototype._useProgramInternal=function(program){
- if(!program)throw new Error("invalid program");
- if(this.program!=program){
-  program.use();
-  this.program=program;
- }
- return this;
-};
 /**
-* Changes the active shader program for this scene
-* and prepares this object for the new program.
-* @deprecated
+* Has no effect. (In previous versions, this method changed
+* the active shader program for this scene
+* and prepares this object for the new program.)
+* @deprecated Instead of this method, use the "setShader" program of individual shapes
+* to set the shader programs they use.
 * @param {glutil.ShaderProgram} program The shader program to use.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.useProgram=function(program){
- // TODO: Compatibility mode if this method is used
- throw new Error("This method is obsolete.");
+ console.warn("The 'useProgram' method is obsolete.  Instead of this method, "+
+   "use the 'setShader' program of individual shapes to set the shader programs they use.");
 }
 /**
 * Sets the viewport width and height for this scene.
@@ -1572,13 +1567,13 @@ Scene3D.prototype.createBuffer=function(){
    this.getWidth(),this.getHeight());
 };
 /**
- * Not documented yet.
+ * Gets the current projection matrix for this scene.
  */
 Scene3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
- * Not documented yet.
+ * Gets the current view matrix for this scene.
  */
 Scene3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
@@ -1990,19 +1985,21 @@ return (
  );
 };
 /** @private */
-Scene3D.prototype._setupMatrices=function(shape,program){
+Scene3D.prototype._setupMatrices=function(shape,program,projAndView){
   var uniforms={};
-  var currentMatrix=shape.getMatrix();
   var viewWorld;
-  uniforms.view=this._viewMatrix;
-  uniforms.projection=this._projectionMatrix;
-  uniforms.viewMatrix=this._viewMatrix;
-  uniforms.projectionMatrix=this._projectionMatrix;
-  var viewInvW=program.get("viewInvW");
-  if(viewInvW!==null && typeof viewInvW!=="undefined"){
-   var invView=GLMath.mat4invert(this._viewMatrix);
-   uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
+  if(projAndView){
+   uniforms.view=this._viewMatrix;
+   uniforms.projection=this._projectionMatrix;
+   uniforms.viewMatrix=this._viewMatrix;
+   uniforms.projectionMatrix=this._projectionMatrix;
+   var viewInvW=program.get("viewInvW");
+   if(viewInvW!==null && typeof viewInvW!=="undefined"){
+    var invView=GLMath.mat4invert(this._viewMatrix);
+    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
+   }
   }
+  var currentMatrix=shape.getMatrix();
   var mvm=program.get("modelViewMatrix");
   if((mvm!==null && typeof mvm!=="undefined")){
    if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
@@ -2054,11 +2051,8 @@ Scene3D.prototype.render=function(){
    // a filter
    var oldProj=this.getProjectionMatrix();
    var oldView=this.getViewMatrix();
-   // TODO: Get rid of this.program here
-   this.fbo.bind(this.program);
    this._renderInner();
-   this.fbo.unbind();
-   this._useProgramInternal(this.fboFilter);
+   this.fboFilter.use();
    this.context.clear(
     this.context.COLOR_BUFFER_BIT|this.context.DEPTH_BUFFER_BIT);
    this._setIdentityMatrices();
@@ -2079,33 +2073,42 @@ Scene3D.prototype.render=function(){
 };
 
 Scene3D.LIGHTING_ENABLED = 1;
-Scene3D.SPECULAR_ENABLED = 2;
+Scene3D.SPECULAR_MAP_ENABLED = 2;
 Scene3D.NORMAL_ENABLED = 4;
+Scene3D.SPECULAR_ENABLED = 2;
 
 /** @private */
-Scene3D.prototype._renderShape=function(shape){
+Scene3D.prototype._renderShape=function(shape, renderContext){
  if(shape.constructor===ShapeGroup){
   if(!shape.visible)return;
   for(var i=0;i<shape.shapes.length;i++){
-   this._renderShape(shape.shapes[i]);
+   this._renderShape(shape.shapes[i], renderContext);
   }
  } else {
    if(!shape.isCulled(this._frustum)){
-    var prog=program;
+    var prog=null;
     var params={};
     var flags=0;
     if(shape.material instanceof Material){
      flags|=(!shape.material.basic) ? Scene3D.LIGHTING_ENABLED : 0;
-     flags|=(!!shape.material.specularMap) ? Scene3D.SPECULAR_ENABLED : 0;
+     flags|=(shape.material.specular[0]!=0 ||
+        shape.material.specular[1]!=0 ||
+        shape.material.specular[2]!=0) ? Scene3D.SPECULAR_ENABLED : 0;
+     flags|=(!!shape.material.specularMap) ? Scene3D.SPECULAR_MAP_ENABLED : 0;
      flags|=(!!shape.material.normalMap) ? Scene3D.NORMAL_ENABLED : 0;
      prog=shape.material.shader ?
-       shape.material.shader : this._getProgram(params);
+       shape.material.shader : this._getProgram(flags);
     } else {
-     prog=this._getProgram(params);
+     prog=this._getProgram(flags);
     }
-    this._useProgramInternal(prog);
-    new LightsBinder(this.lightSource).bind(prog);
-    this._setupMatrices(shape,prog);
+    var projAndView=false;
+    if(renderContext.prog!=prog){
+     prog.use();
+     projAndView=true;
+     new LightsBinder(this.lightSource).bind(prog);
+     renderContext.prog=prog;
+    }
+    this._setupMatrices(shape,prog,projAndView);
     Binders.getMaterialBinder(shape.material).bind(prog);
     shape.bufferedMesh.draw(prog);
   }
@@ -2163,8 +2166,9 @@ Scene3D.prototype._renderInner=function(){
   this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
+  var rc={};
   for(var i=0;i<this.shapes.length;i++){
-   this._renderShape(this.shapes[i]);
+   this._renderShape(this.shapes[i],rc);
   }
   return this;
 };
