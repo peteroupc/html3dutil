@@ -7,6 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global Lights, console */
+
 /**
 * Represents a WebGL shader program.  A shader program in
 * WebGL consists of a vertex shader (which processes vertices),
@@ -50,6 +51,8 @@ context= (context.getContext) ? context.getContext() : context;
  this.uniformValues={};
  this.uniformTypes={};
  this.savedUniforms={};
+ this.CURRENT_PROGRAM=context.CURRENT_PROGRAM;
+ this.FLOAT=context.FLOAT;
  if((prog!==null && typeof prog!=="undefined")){
   this.attributes=[];
   var name=null;
@@ -68,10 +71,10 @@ context= (context.getContext) ? context.getContext() : context;
   }
   count = context.getProgramParameter(prog, context.ACTIVE_UNIFORMS);
   for (i = 0; i < count; ++i) {
-   var uniformInfo=context.getActiveUniform(prog, i);
+   var uniformInfo=this.context.getActiveUniform(prog, i);
    if((uniformInfo!==null && typeof uniformInfo!=="undefined")){
     name = uniformInfo.name;
-    ret[name] = context.getUniformLocation(prog, name);
+    ret[name] = this.context.getUniformLocation(prog, name);
     this.uniformTypes[name] = uniformInfo.type;
    }
   }
@@ -167,7 +170,7 @@ ShaderProgram.prototype._saveIfNotCurrent=function(v,i,isCurrentProgram){
 this._log(i,v);
      if((isCurrentProgram===null || typeof isCurrentProgram==="undefined")){
        isCurrentProgram=this.context.getParameter(
-         this.context.CURRENT_PROGRAM)===this.program;
+         this.CURRENT_PROGRAM)===this.program;
       }
       if(!isCurrentProgram){
        // Save this uniform to write later
@@ -195,7 +198,7 @@ isCurrentProgram=null;
         newUv=true;
        }
        if(newUv){
-         if(this.uniformTypes[i]===this.context.FLOAT){
+         if(this.uniformTypes[i]===this.FLOAT){
           if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
            return isCurrentProgram;
          this.context.uniform1f(uniform, uv);
@@ -285,7 +288,8 @@ isCurrentProgram=null;
 * value is the value to set
 * to that uniform.  Uniform values that are 3- or 4-element
 * vectors must be 3 or 4 elements long, respectively.  Uniforms
-* that are 4x4 matrices must be 16 elements long.  Keys to
+* that are 4x4 matrices must be 16 elements long.   Uniforms
+* that are 3x3 matrices must be 9 elements long. Keys to
 * uniforms that don't exist in this program are ignored.  See also
 * the "name" parameter of the {@link glutil.ShaderProgram#get}
 * method for more information on
@@ -526,7 +530,6 @@ var shader=[
 "uniform mat3 worldViewInvTrans3; /* internal */",
 "varying vec4 worldPositionVar;",
 "#ifdef NORMAL_MAP",
-"uniform float useNormalMap;",
 "varying mat3 tbnMatrixVar;",
 "#endif",
 "varying vec3 transformedNormalVar;",
@@ -542,12 +545,8 @@ var shader=[
 "#ifdef SHADING",
 "transformedNormalVar=normalize(worldViewInvTrans3*normal);",
 "#ifdef NORMAL_MAP",
-"if(useNormalMap ="+"= 0.0){",
-"tbnMatrixVar=mat3(1.,0.,0.,0.,1.,0.,0.,0.,1.);",
-"} else {",
 "tbnMatrixVar=mat3(normalize(vec3(world*vec4(tangent,0.0))),",
 "   normalize(bitangent),transformedNormalVar);",
-"}",
 "#endif",
 "worldPositionVar=world*positionVec4;",
 "#endif",
@@ -590,11 +589,9 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "uniform float mshin;\n" +
 "uniform vec4 viewInvW;\n" +
 "#ifdef SPECULAR_MAP\n" +
-"uniform float useSpecularMap;\n" +
 "uniform sampler2D specularMap;\n" +
 "#endif\n" +
 "#ifdef NORMAL_MAP\n" +
-"uniform float useNormalMap;" +
 "uniform sampler2D normalMap;\n" +
 "#endif\n" +
 "#endif\n" +
@@ -642,14 +639,10 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "   useTexture), tmp, useColorAttr);\n"+
 "#ifdef SHADING\n" +
 "#ifdef NORMAL_MAP\n" +
-"normal = mix(transformedNormalVar,"+
-" normalize(tbnMatrixVar*(2.0*texture2D(normalMap,uvVar).rgb - vec3(1.0))),"+
-" useNormalMap);\n" +
+"normal = normalize(tbnMatrixVar*(2.0*texture2D(normalMap,uvVar).rgb - vec3(1.0)));\n" +
 "#else\n" +
 "normal = transformedNormalVar;\n" +
 "#endif\n" +
-"#define SET_LIGHTPOWER(i) "+
-" lightPower[i]=calcLightPower(lights[i],worldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
 " lightedColor+=vec3(lights[i].diffuse)*max(lightCosines[i],0.0)*lightPower[i].w*materialDiffuse;\n" +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
@@ -661,7 +654,7 @@ shader+=""+
 " // diffuse\n"+
 " vec3 materialDiffuse=baseColor.rgb;\n";
 for(i=0;i<Lights.MAX_LIGHTS;i++){
- shader+="SET_LIGHTPOWER("+i+");\n";
+ shader+="lightPower["+i+"]=calcLightPower(lights["+i+"],worldPositionVar);\n";
  shader+="lightCosines["+i+"]=dot(normal,lightPower["+i+"].xyz);\n";
 }
 for(i=0;i<Lights.MAX_LIGHTS;i++){
@@ -669,10 +662,9 @@ for(i=0;i<Lights.MAX_LIGHTS;i++){
 }
 shader+="#ifdef SPECULAR\n" +
 "bool spectmp;\n" +
+"vec3 materialSpecular=ms;\n" +
 "#ifdef SPECULAR_MAP\n" +
-"vec3 materialSpecular=ms*mix(vec3(1.,1.,1.),texture2D(specularMap,uvVar).rgb,useSpecularMap);\n"+
-"#else\n" +
-"vec3 materialSpecular=ms;\n"+
+"materialSpecular*=texture2D(specularMap,uvVar).rgb;\n"+
 "#endif\n" +
 "// specular reflection\n" +
 "if(materialSpecular.x!=0. || materialSpecular.y!=0. || materialSpecular.z!=0.){\n" +

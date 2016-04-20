@@ -21,18 +21,17 @@ function MaterialBinder(mshade){
 this.mshade=mshade;
 }
 /** @private */
-var TextureBinder=function(tex){
- "use strict";
-this.texture=tex;
-};
+MaterialBinder._textureSizeZeroZero=[0,0];
 /** @private */
 MaterialBinder.prototype.bind=function(program){
  "use strict";
-if(!this.mshade)return this;
+ if(!this.mshade)return this;
+ if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array")}
+ if(this.mshade.ambient.length!==3){console.warn("creating new ambient array")}
+ if(this.mshade.specular.length!==3){console.warn("creating new specular array")}
+ if(this.mshade.emission.length!==3){console.warn("creating new emission array")}
  var uniforms={
-  "useSpecularMap":0,
-  "useNormalMap":0,
-  "textureSize":[0,0],
+  "textureSize":MaterialBinder._textureSizeZeroZero,
   "md":this.mshade.diffuse.length===4 ? this.mshade.diffuse :
     [this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
        this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]]
@@ -47,15 +46,9 @@ if(!this.mshade)return this;
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]];
  }
  program.setUniforms(uniforms);
- if(this.mshade.texture){
-  new TextureBinder(this.mshade.texture).bind(program,0);
- }
- if(this.mshade.specularMap){
-  new TextureBinder(this.mshade.specularMap).bind(program,1);
- }
- if(this.mshade.normalMap){
-  new TextureBinder(this.mshade.normalMap).bind(program,2);
- }
+ MaterialBinder.bindTexture(this.mshade.texture,program,0);
+ MaterialBinder.bindTexture(this.mshade.specularMap,program,1);
+ MaterialBinder.bindTexture(this.mshade.normalMap,program,2);
  return this;
 };
 
@@ -135,15 +128,16 @@ var uniforms={};
 /////////////////////////////////
 
 /** @private */
-TextureBinder.prototype.bind=function(program,textureUnit){
+MaterialBinder.bindTexture=function(texture,program,textureUnit){
  "use strict";
-if((textureUnit===null || typeof textureUnit==="undefined"))textureUnit=0;
- var texture=this.texture;
+ if(!texture)return;
  var context=program.getContext();
- if(((typeof texture.image!=="undefined" && ((typeof texture.image!=="undefined" && ((typeof texture.image!=="undefined" && texture.image!==null)))))) && ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null))))))){
+ if(typeof texture.image!=="undefined" && texture.image!==null &&
+     (typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null) ){
       // load the image as a texture
       texture.loadedTexture=new LoadedTexture(texture,context);
- } else if(((typeof texture.image==="undefined" || ((typeof texture.image==="undefined" || ((typeof texture.image==="undefined" || texture.image===null)))))) && ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || ((typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null)))))) &&
+ } else if((typeof texture.image==="undefined" || texture.image===null) &&
+     (typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null) &&
    texture.loadStatus===0){
       var thisObj=this;
       var prog=program;
@@ -174,11 +168,9 @@ if((textureUnit===null || typeof textureUnit==="undefined"))textureUnit=0;
       }
       if(textureUnit===1){
        uniforms.specularMap=textureUnit;
-       uniforms.useSpecularMap=1;
       }
       if(textureUnit===2){
        uniforms.normalMap=textureUnit;
-       uniforms.useNormalMap=1;
       }
       program.setUniforms(uniforms);
       context.activeTexture(context.TEXTURE0+textureUnit);
@@ -200,9 +192,7 @@ if((textureUnit===null || typeof textureUnit==="undefined"))textureUnit=0;
        // Enable mipmaps if texture's dimensions are powers of two
        if(!texture.clamp)wrapMode=context.REPEAT;
        context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_MIN_FILTER, context.LINEAR);
-     //  context.texParameteri(context.TEXTURE_2D,
-     //    context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
+         context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
       } else {
        context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_MIN_FILTER, context.LINEAR);

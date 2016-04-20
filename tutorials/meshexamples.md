@@ -2,7 +2,7 @@ This page contains source code for creating various kinds of 3D models on the fl
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Cone](#Cone)<br>[Floor](#Floor)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>
+[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Cone](#Cone)<br>[Floor](#Floor)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>[Miscellaneous](#Miscellaneous)<br>
 
 ## 3D Line <a id=3D_Line></a>
 
@@ -112,4 +112,38 @@ This method creates a washer-shaped 3D model.
       top.transform(GLMath.mat4translated(0,0,height));
       // merge the base and the top
       return innerCylinder.merge(outerCylinder).merge(base).merge(top);
+    }
+
+## Miscellaneous <a id=Miscellaneous></a>
+
+    function extrudePath(path, zStart, zEnd, flatness){
+     var lines=path.getLines(flatness)
+     var mesh=new Mesh().mode(Mesh.TRIANGLES)
+     var z1=Math.min(zStart,zEnd)
+     var z2=Math.max(zStart,zEnd)
+     for(var i=0;i<lines.length;i++){
+      var line=lines[i]
+      mesh.vertex3(line[0],line[1],z1)
+       .vertex3(line[0],line[1],z2)
+       .vertex3(line[2],line[3],z1)
+       .vertex3(line[2],line[3],z1)
+       .vertex3(line[0],line[1],z2)
+       .vertex3(line[2],line[3],z2)
+     }
+     mesh.recalcNormals()
+     return mesh
+    }
+    // Demonstrates making a mesh plane from triangles
+    function createPathDisk(path, z, flatness){
+     if(z==null)z=0
+     var tris=path.getTriangles(flatness);
+     var mesh=new Mesh().mode(Mesh.TRIANGLES)
+       .normal3(0,0,1);
+     for(var i=0;i<tris.length;i++){
+      var tri=tris[i]
+      mesh.vertex3(tri[0],tri[1],z)
+       .vertex3(tri[2],tri[3],z)
+       .vertex3(tri[4],tri[5],z)
+     }
+     return mesh
     }

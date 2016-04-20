@@ -959,15 +959,19 @@ Material.prototype.setParams=function(params){
  var param;
  if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){
   this.ambient=GLUtil.toGLColor(params.ambient);
+  if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3)
  }
  if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
+  if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4)
  }
  if(((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && params.specular!==null))))))){
   this.specular=GLUtil.toGLColor(params.specular);
+  if(this.specular.length>3)this.specular=this.specular.slice(0,3)
  }
  if(((typeof params.emission!=="undefined" && ((typeof params.emission!=="undefined" && ((typeof params.emission!=="undefined" && params.emission!==null))))))){
   this.emission=GLUtil.toGLColor(params.emission);
+  if(this.emission.length>3)this.emission=this.emission.slice(0,3)
  }
  if(((typeof params.shininess!=="undefined" && ((typeof params.shininess!=="undefined" && ((typeof params.shininess!=="undefined" && params.shininess!==null))))))){
   this.shininess=params.shininess;
@@ -1336,6 +1340,7 @@ Scene3D.prototype._init3DContext=function(){
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
 };
+/** @private */
 Scene3D.prototype._getProgram=function(flags){
  if(this._programs[flags]){
   return this._programs[flags];
@@ -1349,7 +1354,6 @@ Scene3D.prototype._getProgram=function(flags){
    defines+="#define NORMAL_MAP\n";
  if((flags&Scene3D.SPECULAR_MAP_ENABLED)!=0)
    defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
-   console.log(defines+ShaderProgram.getDefaultFragment());
  var prog=new ShaderProgram(this.context,
    defines+ShaderProgram.getDefaultVertex(),
    defines+ShaderProgram.getDefaultFragment());

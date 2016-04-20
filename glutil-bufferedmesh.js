@@ -203,12 +203,8 @@ function _vertexAttrib(context, attrib, size, type, stride, offset){
    if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
   }
   // Drawing phase
-  context=program.getContext();
   if(this.verts===null || this.face===null){
    throw new Error("mesh buffer disposed");
-  }
-  if(context!==this.context){
-   throw new Error("can't bind mesh: context mismatch");
   }
   var primitive=context.TRIANGLES;
   if((this.format&Mesh.LINES_BIT)!==0)primitive=context.LINES;
