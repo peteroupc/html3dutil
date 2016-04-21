@@ -2293,6 +2293,37 @@ ShapeGroup.prototype.removeShape=function(shape){
  }
  return this;
 };
+ShapeGroup.prototype.getBounds=function(){
+ var ret=[0,0,0,0,0,0];
+ var first=true;
+ for(var i=0;i<this.shapes.length;i++){
+  var b=this.shapes[i].getBounds();
+  if(!GLMath.boxIsEmpty(b)){
+   if(first){
+    ret[0]=b[0];
+    ret[1]=b[1];
+    ret[2]=b[2];
+    ret[3]=b[3];
+    ret[4]=b[4];
+    ret[5]=b[5];
+    first=false;
+   } else {
+    ret[0]=Math.min(b[0],ret[0]);
+    ret[1]=Math.min(b[1],ret[1]);
+    ret[2]=Math.min(b[2],ret[2]);
+    ret[3]=Math.max(b[3],ret[3]);
+    ret[4]=Math.max(b[4],ret[4]);
+    ret[5]=Math.max(b[5],ret[5]);
+   }
+  }
+ }
+ if(first){
+  return [0,0,0,-1,-1,-1];
+ } else {
+  return ret;
+ }
+};
+
 /**
  * Gets the number of vertices composed by all shapes in this shape group.
  * @return {number} Return value. */
@@ -2531,6 +2562,20 @@ Shape.prototype.copy=function(){
 Shape.prototype.getTransform=function(){
  return this.transform;
 };
+Shape.prototype.getBounds=function(){
+ if(!this.bufferedMesh){
+  return [0,0,0,-1,-1,-1];
+ }
+ var bounds=this.bufferedMesh._getBounds();
+ var matrix=this.getMatrix();
+ if(!GLMath.mat4isIdentity(matrix)){
+  var mn=GLMath.mat4transformVec3(matrix,bounds[0],bounds[1],bounds[2]);
+  var mx=GLMath.mat4transformVec3(matrix,bounds[3],bounds[4],bounds[5]);
+  bounds=[mn[0],mn[1],mn[2],mx[0],mx[1],mx[2]];
+ } else {
+  return bounds.slice(0,6);
+ }
+}
 /** @private */
 Shape.prototype.isCulled=function(frustum){
  if(!this.bufferedMesh||!this.visible)return true;

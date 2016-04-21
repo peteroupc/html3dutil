@@ -125,35 +125,26 @@ if(this.verts!==null)
  this.faces=null;
 };
 
-/**
- * @private */
-BufferedSubMesh.prototype.draw=function(program){
-  // Binding phase
-  "use strict";
-function _vertexAttrib(context, attrib, size, type, stride, offset){
+BufferedSubMesh._vertexAttrib=function(context, attrib, size, type, stride, offset){
     if((attrib!==null && typeof attrib!=="undefined")){
       context.enableVertexAttribArray(attrib);
       context.vertexAttribPointer(attrib,size,type,false,stride,offset);
     }
-  }
-  var context=program.getContext();
-  if(this.verts===null || this.face===null){
-   throw new Error("mesh buffer disposed");
-  }
-  if(context!==this.context){
-   throw new Error("can't bind mesh: context mismatch");
-  }
+}
+/**
+ * @private */
+BufferedSubMesh.prototype._prepareDraw=function(program, context){
   context.bindBuffer(context.ARRAY_BUFFER, this.verts);
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
   var format=this.format;
   var stride=Mesh._getStride(format);
   var attr=program.get("position");
-  _vertexAttrib(context,
+  BufferedSubMesh._vertexAttrib(context,
     attr, 3, context.FLOAT, stride*4, 0);
   var offset=Mesh._normalOffset(format);
   if(offset>=0){
    attr=program.get("normal");
-   _vertexAttrib(context,
+   BufferedSubMesh._vertexAttrib(context,
     attr, 3,
     context.FLOAT, stride*4, offset*4);
   } else {
@@ -164,7 +155,7 @@ function _vertexAttrib(context, attrib, size, type, stride, offset){
   if(offset>=0){
    program.setUniforms({"useColorAttr":1.0});
    attr=program.get("colorAttr");
-   _vertexAttrib(context,
+   BufferedSubMesh._vertexAttrib(context,
     attr, 3,
     context.FLOAT, stride*4, offset*4);
   } else {
@@ -175,7 +166,7 @@ function _vertexAttrib(context, attrib, size, type, stride, offset){
   offset=Mesh._texCoordOffset(format);
   if(offset>=0){
    attr=program.get("uv");
-   _vertexAttrib(context,
+   BufferedSubMesh._vertexAttrib(context,
      attr, 2,
     context.FLOAT, stride*4, offset*4);
   } else {
@@ -185,7 +176,7 @@ function _vertexAttrib(context, attrib, size, type, stride, offset){
   offset=Mesh._tangentOffset(format);
   if(offset>=0){
    attr=program.get("tangent");
-   _vertexAttrib(context,
+   BufferedSubMesh._vertexAttrib(context,
      attr, 3,
     context.FLOAT, stride*4, offset*4);
   } else {
@@ -195,13 +186,27 @@ function _vertexAttrib(context, attrib, size, type, stride, offset){
   offset=Mesh._bitangentOffset(format);
   if(offset>=0){
    attr=program.get("bitangent");
-   _vertexAttrib(context,
+   BufferedSubMesh._vertexAttrib(context,
      attr, 3,
     context.FLOAT, stride*4, offset*4);
   } else {
    attr=program.get("bitangent");
    if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
   }
+}
+/**
+ * @private */
+BufferedSubMesh.prototype.draw=function(program){
+  // Binding phase
+  "use strict";
+  var context=program.getContext();
+  if(this.verts===null || this.face===null){
+   throw new Error("mesh buffer disposed");
+  }
+  if(context!==this.context){
+   throw new Error("can't bind mesh: context mismatch");
+  }
+  this._prepareDraw(program,context);
   // Drawing phase
   if(this.verts===null || this.face===null){
    throw new Error("mesh buffer disposed");

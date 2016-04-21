@@ -1167,8 +1167,7 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
  * If "vy", "vz", and "vw" are omitted, this value can instead
  * be a 4-element array giving the X, Y, Z, and W coordinates.
  * @param {number} vy Y coordinate.
- * @param {number} vz Z coordinate.
- * @param {number} vw W coordinate.  To transform a 2D
+ * @param {number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
  * @return {Array<number>} The transformed vector.
  */
@@ -1273,7 +1272,7 @@ mat4translate:function(mat,v3,v3y,v3z){
 /**
  * Returns a 4x4 matrix representing a perspective projection.<p>
  * This method assumes a right-handed coordinate system, such as
- * OpenGL's. To adjust the result of this method to a left-handed system,
+ * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {number}  fovY Y-axis field of view, in degrees. Should be less
@@ -1309,7 +1308,7 @@ mat4perspective:function(fovY,aspectRatio,near,far){
 /**
  * Returns a 4x4 matrix representing a camera view.<p>
  * This method assumes a right-handed coordinate system, such as
- * OpenGL's. To adjust the result of this method to a left-handed system,
+ * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
  * 10, 12, and 14).
@@ -1358,7 +1357,7 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
  * This method assumes a right-handed coordinate system, such as
- * OpenGL's. To adjust the result of this method to a left-handed system,
+ * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l Leftmost coordinate of the 3D view.
@@ -1387,7 +1386,7 @@ mat4ortho:function(l,r,b,t,n,f){
  * Returns a 4x4 matrix representing a perspective projection,
  * given an X-axis field of view.</p>
  * This method assumes a right-handed coordinate system, such as
- * OpenGL's. To adjust the result of this method to a left-handed system,
+ * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {number}  fovX X-axis field of view, in degrees. Should be less
@@ -1497,7 +1496,7 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
  * Returns a 4x4 matrix representing a perspective projection
  * in the form of a view frustum, or the limits in the camera's view.<p>
  * This method assumes a right-handed coordinate system, such as
- * OpenGL's. To adjust the result of this method to a left-handed system,
+ * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {number} l X-coordinate of the point where the left
@@ -1926,7 +1925,22 @@ GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
  }
  return true;
 };
-
+/**
+* Determines whether a bounding box is empty.
+* This is determined if the minimum coordinate
+* is larger than the corresponding maximum coordinate.
+* @param {Array<number>} An axis-aligned bounding
+* box in world space, which is an array of six values.
+* The first three values are the smallest X, Y, and Z coordinates,
+* and the last three values are the largest X, Y, and Z
+* coordinates.
+* @return {boolean} <code>true</code> if at least one
+* of the minimum coordinates is greater than its
+* corresponding maximum coordinate; otherwise, <code>false</code>.
+*/
+GLMath.boxIsEmpty=function(box){
+ return !(box[0]<=box[3] && box[1]<=box[4] && box[2]<=box[5]);
+};
 /**
 * Determines whether an axis-aligned bounding box
 * is at least partially inside a view frustum.
@@ -1942,19 +1956,27 @@ GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
 * @return {boolean} <code>true</code> if the box
 * may be partially or totally
 * inside the frustum; <code>false</code> if the box is
-* definitely outside the frustum.
+* definitely outside the frustum, or if the box is empty
+* (see "boxIsEmpty").
 */
 GLMath.frustumHasBox=function(frustum, box){
+ if(GLMath.boxIsEmpty(box)){
+  return false;
+ }
  for(var i=0;i<6;i++){
   var plane=frustum[i];
-  if( ((((plane[0] * box[0]) + plane[1] * box[1]) + plane[2] * box[2]) + plane[3])<=0.0 &&
-      ((((plane[0] * box[3]) + plane[1] * box[4]) + plane[2] * box[5]) + plane[3])<=0.0 &&
-      ((((plane[0] * box[0]) + plane[1] * box[4]) + plane[2] * box[2]) + plane[3])<=0.0 &&
-      ((((plane[0] * box[0]) + plane[1] * box[4]) + plane[2] * box[5]) + plane[3])<=0.0 &&
-      ((((plane[0] * box[0]) + plane[1] * box[1]) + plane[2] * box[5]) + plane[3])<=0.0 &&
-      ((((plane[0] * box[3]) + plane[1] * box[4]) + plane[2] * box[2]) + plane[3])<=0.0 &&
-      ((((plane[0] * box[3]) + plane[1] * box[1]) + plane[2] * box[2]) + plane[3])<=0.0 &&
-      ((((plane[0] * box[3]) + plane[1] * box[1]) + plane[2] * box[5]) + plane[3])<=0.0){
+  var p3=plane[3];
+  var p0b0 = plane[0]*box[0];
+  var p2b2 = plane[2]*box[2];
+  var p1b1 = plane[1]*box[1];
+  if( (((p0b0 + p1b1) + p2b2) + p3)<=0.0 &&
+      ((((plane[0] * box[3]) + plane[1] * box[4]) + plane[2] * box[5]) + p3)<=0.0 &&
+      (((p0b0 + plane[1] * box[4]) + p2b2) + p3)<=0.0 &&
+      (((p0b0 + plane[1] * box[4]) + plane[2] * box[5]) + p3)<=0.0 &&
+      (((p0b0 + p1b1) + plane[2] * box[5]) + p3)<=0.0 &&
+      ((((plane[0] * box[3]) + plane[1] * box[4]) + p2b2) + p3)<=0.0 &&
+      ((((plane[0] * box[3]) + p1b1) + p2b2) + p3)<=0.0 &&
+      ((((plane[0] * box[3]) + p1b1) + plane[2] * box[5]) + p3)<=0.0){
     return false;
   }
  }
