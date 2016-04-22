@@ -129,6 +129,11 @@ TextRenderer.prototype.loadFont=function(fontFileName){
    return thisObject._loadPages(f)
  });
 }
+/**
+* Represents a bitmap font.
+* @class
+* @alias TextFont
+*/
 function TextFont(fontinfo,chars,pages,kernings,common,fileUrl){
  this.info=fontinfo
  this.common=common

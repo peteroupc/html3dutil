@@ -455,6 +455,9 @@ BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
 };
 /**
 * Not documented yet.
+* @param {number} controlPoints
+* @param {number} degree
+* @return {Array<number>} A uniform knot vector.
 */
 BSplineCurve.uniformKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
@@ -471,6 +474,9 @@ BSplineCurve.uniformKnots=function(controlPoints,degree){
 };
 /**
 * Not documented yet.
+* @param {number} controlPoints
+* @param {number} degree
+* @return {Array<number>} A clamped knot vector.
 */
 BSplineCurve.clampedKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
