@@ -875,7 +875,7 @@ quatNlerp:function(q1,q2,factor){
   } else {
     return GLMath.quatNormInPlace([t2 + t6, t3 + t7, t4 + t8, t5 + t9]);
   }
-}
+},
 /**
  * Does a spherical linear interpolation between two quaternions;
  * returns a new quaternion.
@@ -955,17 +955,13 @@ quatRotate:function(quat,angle,v,vy,vz){
 * the transformed vector.
  */
 quatTransform:function(q,v){
-var v1 = GLMath.vec3cross( q, v );
-v1[0] += v[0] * q[3];
-v1[1] += v[1] * q[3];
-v1[2] += v[2] * q[3];
-var v2 = GLMath.vec3cross( v1, q );
-var dot = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
-return [
-q[0] * dot + v1[0] * q[3] - v2[0],
-q[1] * dot + v1[1] * q[3] - v2[1],
-q[2] * dot + v1[2] * q[3] - v2[2],
-1];
+  var t1 = (((q[1] * v[2]) - q[2] * v[1]) + v[0] * q[3]);
+  var t2 = (((q[2] * v[0]) - q[0] * v[2]) + v[1] * q[3]);
+  var t3 = (((q[0] * v[1]) - q[1] * v[0]) + v[2] * q[3]);
+  var t4 = (((q[0] * v[0]) + q[1] * v[1]) + q[2] * v[2]);
+  return [(((t1 * q[3]) - ((t2 * q[2]) - t3 * q[1])) + q[0] * t4),
+    (((t2 * q[3]) - ((t3 * q[0]) - t1 * q[2])) + q[1] * t4),
+    (((t3 * q[3]) - ((t1 * q[1]) - t2 * q[0])) + q[2] * t4), 1.0];
 },
 /**
  * Generates a quaternion from the rotation described in a 4x4 matrix.
@@ -1864,7 +1860,7 @@ GLMath.planeNorm=function(plane){
 * by a 4x4 matrix. These six planes together form the
 * shape of a "chopped-off" pyramid (or frustum).<p>
 * In this model, the eye, or camera, is placed at the top
-* of the pyramid, four planes are placed at the pyramid's
+* of the pyramid (before being chopped off), four planes are placed at the pyramid's
 * sides, one plane (the far plane) forms its base, and a
 * final plane (the near plane) is the pyramid's chopped
 * off top.

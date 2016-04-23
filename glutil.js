@@ -873,10 +873,13 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 /**
 * Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
 * each part of the object's surface (note that the material must have a specular color of other
-* than the default black for this to have an effect).
+* than the default black for this to have an effect).<p>
 * The specular map is usually grayscale (all three components are the same in each pixel),
 * but can be colored if the material represents an uncoated metal of some sort (in which case the specular
-* color property should be (1,1,1) or another grayscale color). See {@link glutil.Material#specular}.
+* color property should be (1,1,1) or another grayscale color). See {@link glutil.Material#specular}.<p>
+* Any image used for specular maps should not be in JPEG format or any other 
+* format that uses lossy compression, as compression artifacts can result in inaccurate
+* specular factors in certain areas.
 */
  this.specularMap=null;
  /**
@@ -899,7 +902,10 @@ and away from the surface's edges.
 Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
 to the vector given in that pixel.  This tilt adjusts the normals used for the
 purpose of calculating lighting effects at that part of the surface.
-A strong tilt indicates strong relief detail at that point.
+A strong tilt indicates strong relief detail at that point.<p>
+* Any image used for normal maps should not be in JPEG format or any other 
+* format that uses lossy compression, as compression artifacts can result in inaccurate
+* normals in certain areas.
 *<p>
 * For normal mapping to work, an object's mesh must include normals,
 * tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
@@ -1274,9 +1280,7 @@ Texture.prototype.getName=function(){
  *<li> A texture cache.</li>
  *<li> A screen-clearing background color.</li>
  *</ul>
- * When a Scene3D object is created, it compiles and loads
- * a default shader program that enables lighting parameters,
- * and sets the projection and view matrices to identity.
+ * When a Scene3D object is created, it sets the projection and view matrices to identity.
  * The default lighting for the scene will have a default
 * ambient color and one directional light source.
 *  @class
@@ -1339,6 +1343,7 @@ Scene3D.prototype._init3DContext=function(){
  this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
+ this._setIdentityMatrices();
 };
 /** @private */
 Scene3D.prototype._getProgram=function(flags){
@@ -2577,7 +2582,14 @@ Shape.prototype.getBounds=function(){
  if(!GLMath.mat4isIdentity(matrix)){
   var mn=GLMath.mat4transformVec3(matrix,bounds[0],bounds[1],bounds[2]);
   var mx=GLMath.mat4transformVec3(matrix,bounds[3],bounds[4],bounds[5]);
-  bounds=[mn[0],mn[1],mn[2],mx[0],mx[1],mx[2]];
+  return [
+   Math.min(mn[0],mx[0]),
+   Math.min(mn[1],mx[1]),
+   Math.min(mn[2],mx[2]),
+   Math.max(mn[0],mx[0]),
+   Math.max(mn[1],mx[1]),
+   Math.max(mn[2],mx[2])
+  ];
  } else {
   return bounds.slice(0,6);
  }
@@ -2585,14 +2597,7 @@ Shape.prototype.getBounds=function(){
 /** @private */
 Shape.prototype.isCulled=function(frustum){
  if(!this.bufferedMesh||!this.visible)return true;
- var bounds=this.bufferedMesh._getBounds();
- var matrix=this.getMatrix();
- if(!GLMath.mat4isIdentity(matrix)){
-  var mn=GLMath.mat4transformVec3(matrix,bounds[0],bounds[1],bounds[2]);
-  var mx=GLMath.mat4transformVec3(matrix,bounds[3],bounds[4],bounds[5]);
-  bounds=[mn[0],mn[1],mn[2],mx[0],mx[1],mx[2]];
- }
- return !GLMath.frustumHasBox(frustum,bounds);
+ return !GLMath.frustumHasBox(frustum,this.getBounds());
 };
 /**
  * Not documented yet.

@@ -38,7 +38,19 @@ var BufferedSubMesh=function(mesh, context){
   this.facesLength=mesh.indices.length;
   this.type=type;
   this.format=mesh.attributeBits;
+  this._stride=Mesh._getStride(this.format);
   this.context=context;
+  this._lastKnownProgram=null;
+  this._attribLocations=[];
+  this._attribsUsed=[
+   0,
+   Mesh._normalOffset(this.format),
+   Mesh._colorOffset(this.format),
+   Mesh._texCoordOffset(this.format),
+   Mesh._tangentOffset(this.format),
+   Mesh._bitangentOffset(this.format)
+  ];
+  this._sizes=[3,3,3,2,3,3];
 };
 /**
 * A geometric mesh in the form of vertex buffer objects.
@@ -123,76 +135,48 @@ if(this.verts!==null)
   this.context.deleteBuffer(this.faces);
  this.verts=null;
  this.faces=null;
+ this._lastKnownProgram=null;
+ this._attribLocations=[];
 };
 
-BufferedSubMesh._vertexAttrib=function(context, attrib, size, type, stride, offset){
-    if((attrib!==null && typeof attrib!=="undefined")){
-      context.enableVertexAttribArray(attrib);
-      context.vertexAttribPointer(attrib,size,type,false,stride,offset);
-    }
+BufferedSubMesh.prototype._getAttribLocations=function(program,context){
+ if(this._lastKnownProgram!=program){
+  this._lastKnownProgram=program;
+  this._attribLocations=[
+    program.get("position"),
+    program.get("normal"),
+    program.get("colorAttr"),
+    program.get("uv"),
+    program.get("tangent"),
+    program.get("bitangent")];
+  for(var i=0;i<6;i++){
+   if(this._attribLocations[i]==null){
+    this._attribLocations[i]=-1;
+   }
+  }
+ }
 }
+
 /**
  * @private */
 BufferedSubMesh.prototype._prepareDraw=function(program, context){
   context.bindBuffer(context.ARRAY_BUFFER, this.verts);
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
-  var format=this.format;
-  var stride=Mesh._getStride(format);
-  var attr=program.get("position");
-  BufferedSubMesh._vertexAttrib(context,
-    attr, 3, context.FLOAT, stride*4, 0);
-  var offset=Mesh._normalOffset(format);
-  if(offset>=0){
-   attr=program.get("normal");
-   BufferedSubMesh._vertexAttrib(context,
-    attr, 3,
-    context.FLOAT, stride*4, offset*4);
-  } else {
-   attr=program.get("normal");
-   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
+  this._getAttribLocations(program,context);
+  for(var i=0;i<this._attribLocations.length;i++){
+   var attrib=this._attribLocations[i];
+   if(attrib>=0){
+    if(this._attribsUsed[i]>=0){
+      context.enableVertexAttribArray(attrib);
+      context.vertexAttribPointer(attrib, this._sizes[i],
+        context.FLOAT, false,this._stride*4, this._attribsUsed[i]*4);
+    } else {
+      context.disableVertexAttribArray(attrib);
+    }
+   }
   }
-  offset=Mesh._colorOffset(format);
-  if(offset>=0){
-   program.setUniforms({"useColorAttr":1.0});
-   attr=program.get("colorAttr");
-   BufferedSubMesh._vertexAttrib(context,
-    attr, 3,
-    context.FLOAT, stride*4, offset*4);
-  } else {
-   program.setUniforms({"useColorAttr":0.0});
-   attr=program.get("colorAttr");
-   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
-  }
-  offset=Mesh._texCoordOffset(format);
-  if(offset>=0){
-   attr=program.get("uv");
-   BufferedSubMesh._vertexAttrib(context,
-     attr, 2,
-    context.FLOAT, stride*4, offset*4);
-  } else {
-   attr=program.get("uv");
-   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
-  }
-  offset=Mesh._tangentOffset(format);
-  if(offset>=0){
-   attr=program.get("tangent");
-   BufferedSubMesh._vertexAttrib(context,
-     attr, 3,
-    context.FLOAT, stride*4, offset*4);
-  } else {
-   attr=program.get("tangent");
-   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
-  }
-  offset=Mesh._bitangentOffset(format);
-  if(offset>=0){
-   attr=program.get("bitangent");
-   BufferedSubMesh._vertexAttrib(context,
-     attr, 3,
-    context.FLOAT, stride*4, offset*4);
-  } else {
-   attr=program.get("bitangent");
-   if((attr!==null && typeof attr!=="undefined"))context.disableVertexAttribArray(attr);
-  }
+  var useColorAttr=(this._attribsUsed[2]>=0) ? 1.0 : 0.0;
+  program.setUniforms({"useColorAttr":useColorAttr});
 }
 /**
  * @private */
@@ -208,9 +192,6 @@ BufferedSubMesh.prototype.draw=function(program){
   }
   this._prepareDraw(program,context);
   // Drawing phase
-  if(this.verts===null || this.face===null){
-   throw new Error("mesh buffer disposed");
-  }
   var primitive=context.TRIANGLES;
   if((this.format&Mesh.LINES_BIT)!==0)primitive=context.LINES;
   if((this.format&Mesh.POINTS_BIT)!==0)primitive=context.POINTS;
