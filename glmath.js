@@ -850,6 +850,33 @@ quatToTaitBryan:function(a,mode){
   return angles;
 },
 /**
+ * Does a linear interpolation between two quaternions;
+ * returns a new quaternion.
+ * @param {Array<number>} q1 The first quaternion.  Should be normalized.
+ * @param {Array<number>} q2 The second quaternion.  Should be normalized.
+ * @param {number} factor A value from 0 through 1.  Closer to 0 means
+ * closer to q1, and closer to 1 means closer to q2.
+ * @return {Array<number>} The interpolated quaternion,
+ * which will be normalized.
+*/
+quatNlerp:function(q1,q2,factor){
+  var t1 = 1.0 - factor;
+  var t2 = q1[0] * t1;
+  var t3 = q1[1] * t1;
+  var t4 = q1[2] * t1;
+  var t5 = q1[3] * t1;
+  var t6 = q2[0] * factor;
+  var t7 = q2[1] * factor;
+  var t8 = q2[2] * factor;
+  var t9 = q2[3] * factor;
+  var t10 = ((((q1[0] * q2[0]) + q1[1] * q2[1]) + q1[2] * q2[2]) + q1[3] * q2[3]);
+  if ((t10 < 0.0)) {
+    return GLMath.quatNormInPlace([t2 - t6, t3 - t7, t4 - t8, t5 - t9]);
+  } else {
+    return GLMath.quatNormInPlace([t2 + t6, t3 + t7, t4 + t8, t5 + t9]);
+  }
+}
+/**
  * Does a spherical linear interpolation between two quaternions;
  * returns a new quaternion.
  * This method is useful for smoothly animating between the two

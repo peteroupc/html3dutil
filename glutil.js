@@ -2293,6 +2293,9 @@ ShapeGroup.prototype.removeShape=function(shape){
  }
  return this;
 };
+/**
+ * Not documented yet.
+ */
 ShapeGroup.prototype.getBounds=function(){
  var ret=[0,0,0,0,0,0];
  var first=true;
@@ -2562,6 +2565,9 @@ Shape.prototype.copy=function(){
 Shape.prototype.getTransform=function(){
  return this.transform;
 };
+/**
+ * Not documented yet.
+ */
 Shape.prototype.getBounds=function(){
  if(!this.bufferedMesh){
   return [0,0,0,-1,-1,-1];
