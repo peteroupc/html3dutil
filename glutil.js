@@ -143,6 +143,7 @@ var GLUtil={
   }
   if(GLUtil.is3DContext(context)){
    context.getExtension("OES_element_index_uint");
+   context.getExtension("OES_standard_derivatives");
   }
   return context;
 },

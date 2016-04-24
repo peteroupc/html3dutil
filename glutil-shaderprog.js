@@ -81,6 +81,17 @@ context= (context.getContext) ? context.getContext() : context;
   this.actives=ret;
  }
 }
+
+/** @private */
+ShaderProgram.supportsDerivatives=function(context){
+ context= (context.getContext) ? context.getContext() : context;
+ if(context.getExtension("OES_standard_derivatives")){
+   return true;
+ } else {
+   return false;
+ }
+}
+
 /** Disposes resources from this shader program.
 */
 ShaderProgram.prototype.dispose=function(){
