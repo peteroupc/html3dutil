@@ -49,7 +49,7 @@ if(!window.performance.now){
 */
 var GLUtil={
 /**
-* This method will call the function once before returning,
+* This method will call a function once before returning,
 * and queue requests to call that function once per frame,
 * using <code>window.requestAnimationFrame</code>
 * or a "polyfill" method.

@@ -959,8 +959,8 @@ quatTransform:function(q,v){
   var t2 = (((q[2] * v[0]) - q[0] * v[2]) + v[1] * q[3]);
   var t3 = (((q[0] * v[1]) - q[1] * v[0]) + v[2] * q[3]);
   var t4 = (((q[0] * v[0]) + q[1] * v[1]) + q[2] * v[2]);
-  return [(((t1 * q[3]) - ((t2 * q[2]) - t3 * q[1])) + q[0] * t4),
-    (((t2 * q[3]) - ((t3 * q[0]) - t1 * q[2])) + q[1] * t4),
+  return [(((t1 * q[3]) - ((t2 * q[2]) - t3 * q[1])) + q[0] * t4), 
+    (((t2 * q[3]) - ((t3 * q[0]) - t1 * q[2])) + q[1] * t4), 
     (((t3 * q[3]) - ((t1 * q[1]) - t2 * q[0])) + q[2] * t4), 1.0];
 },
 /**
@@ -1313,7 +1313,7 @@ mat4translate:function(mat,v3,v3y,v3z){
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
- * (Depth buffers often allow only 65536 possible values per pixel,
+ * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
@@ -1427,7 +1427,7 @@ mat4ortho:function(l,r,b,t,n,f){
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
- * (Depth buffers often allow only 65536 possible values per pixel,
+ * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
@@ -1539,7 +1539,7 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
- * (Depth buffers often allow only 65536 possible values per pixel,
+ * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
