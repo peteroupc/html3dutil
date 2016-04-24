@@ -413,9 +413,8 @@ for(var i=0;i<this.subMeshes.length;i++){
   * color will apply to future vertices even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.  Only the red, green, and blue components will be used.
-  * @param {Array<number>|number|string} r Array of three or
-  * four color components; or the red color component (0-1); or a string
-  * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+  * @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+  * or the red color component (0-1).
   * @param {number} g Green color component (0-1).
   * May be null or omitted if a string or array is given as the "r" parameter.
   * @param {number} b Blue color component (0-1).
@@ -530,9 +529,9 @@ if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined"))
  /**
   * Sets all the vertices in this mesh to the given color.
   * This method doesn't change this mesh's current color.
-  * @param {number} r Red component of the color (0-1).
-  * Can also be a string
-  * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+  * Only the color's red, green, and blue components will be used.
+  * @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+  * or the red color component (0-1).
   * @param {number} g Green component of the color (0-1).
   * May be null or omitted if a string is given as the "r" parameter.
   * @param {number} b Blue component of the color (0-1).

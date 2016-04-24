@@ -131,7 +131,9 @@ var uniforms={};
 MaterialBinder.bindTexture=function(texture,program,textureUnit){
  "use strict";
  if(!texture)return;
+ var isFrameBuffer=(texture instanceof Framebuffer)
  var context=program.getContext();
+ if(!isFrameBuffer){
  if(typeof texture.image!=="undefined" && texture.image!==null &&
      (typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null) ){
       // load the image as a texture
@@ -147,9 +149,10 @@ MaterialBinder.bindTexture=function(texture,program,textureUnit){
       });
       return;
  }
- if (((typeof texture.loadedTexture!=="undefined" && ((typeof texture.loadedTexture!=="undefined" && ((typeof texture.loadedTexture!=="undefined" && texture.loadedTexture!==null))))))) {
+ }
+ if ((texture.loadedTexture!=null) || isFrameBuffer) {
       var uniforms={};
-      if(((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || texture.anisotropic===null))))))){
+      if((texture.anisotropic==null) && !isFrameBuffer){
        // Try to load anisotropic filtering extension
        texture.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
          context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
@@ -174,33 +177,48 @@ MaterialBinder.bindTexture=function(texture,program,textureUnit){
       }
       program.setUniforms(uniforms);
       context.activeTexture(context.TEXTURE0+textureUnit);
-      context.bindTexture(context.TEXTURE_2D,
-        texture.loadedTexture.loadedTexture);
-      // Set texture parameters
-      if(typeof texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!=="undefined"){
-       // Set anisotropy if anisotropic filtering is supported
-       context.texParameteri(context.TEXTURE_2D,
-        texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
-        texture.maxAnisotropy);
-      }
-      // set magnification
-      context.texParameteri(context.TEXTURE_2D,
-       context.TEXTURE_MAG_FILTER, context.LINEAR);
-      var wrapMode=context.CLAMP_TO_EDGE;
-      if(GLUtil._isPowerOfTwo(texture.width) &&
-          GLUtil._isPowerOfTwo(texture.height)){
-       // Enable mipmaps if texture's dimensions are powers of two
-       if(!texture.clamp)wrapMode=context.REPEAT;
-       context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
+      if(isFrameBuffer) {
+       ctx.bindTexture(ctx.TEXTURE_2D,
+         texture.colorTexture);
+       if(texture.colorTexture){
+        ctx.texParameteri(ctx.TEXTURE_2D,
+         ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
+        ctx.texParameteri(ctx.TEXTURE_2D,
+         ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
+        ctx.texParameteri(ctx.TEXTURE_2D,
+         ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
+        ctx.texParameteri(ctx.TEXTURE_2D,
+         ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
+       }
       } else {
+       context.bindTexture(context.TEXTURE_2D,
+        texture.loadedTexture.loadedTexture);
+       // Set texture parameters
+       if(typeof texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!=="undefined"){
+        // Set anisotropy if anisotropic filtering is supported
+        context.texParameteri(context.TEXTURE_2D,
+         texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
+         texture.maxAnisotropy);
+       }
+       // set magnification
        context.texParameteri(context.TEXTURE_2D,
-        context.TEXTURE_MIN_FILTER, context.LINEAR);
-      }
-      context.texParameteri(context.TEXTURE_2D,
+        context.TEXTURE_MAG_FILTER, context.LINEAR);
+       var wrapMode=context.CLAMP_TO_EDGE;
+       if(GLUtil._isPowerOfTwo(texture.width) &&
+          GLUtil._isPowerOfTwo(texture.height)){
+         // Enable mipmaps if texture's dimensions are powers of two
+         if(!texture.clamp)wrapMode=context.REPEAT;
+         context.texParameteri(context.TEXTURE_2D,
+           context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
+       } else {
+        context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_MIN_FILTER, context.LINEAR);
+       }
+       context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_WRAP_S, wrapMode);
-      context.texParameteri(context.TEXTURE_2D,
+       context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_WRAP_T, wrapMode);
+      }
     }
 };
 
@@ -244,9 +262,6 @@ Binders.getMaterialBinder=function(material){
 if(material){
  if(material instanceof Material){
   return new MaterialBinder(material);
- }
- if(material instanceof FrameBuffer){
-  return new FrameBufferMaterialBinder(material);
  }
  }
  // Return an empty binding object
