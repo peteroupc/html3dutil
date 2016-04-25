@@ -9,15 +9,16 @@ Here is an overview of these three data types.
 
 ## Vectors <a id=Vectors></a>
 
-A vector is simply a set of 3 or 4 elements that are related
+A vector is simply an array of elements that are related
 to each other.  As such, a vector can symbolize a position, a direction,
 a ray, a color, or anything else.  The methods in this class treat arrays
 as vectors.  Functions dealing with vectors begin with "vec".
+Many of GLMath's functions use 3- or 4-element vectors.
 
-If a vector describes a position, direction,
-or normal, the four elements are given as X, Y, Z, and W, in that order.
+If a 4-element vector describes a position, direction,
+or normal, the elements are given as X, Y, Z, and W, in that order.
 
-If a vector describes a color, the four elements are given as red, green,
+If a 4-element vector describes a color, the elements are given as red, green,
 blue, and alpha, in that order (where each element ranges from 0-1).
 
 If a 3D _position_ (point) is used in a 4-element vector function (one beginning
@@ -88,7 +89,8 @@ of doing the second matrix's transform, then the first matrix's transform.
 ## Quaternions <a id=Quaternions></a>
 
 A quaternion is a 4-element array that describes a
-3D rotation.  The first three elements (X, Y, and Z), represent
+3D rotation.  It works like a vector in many cases.
+The first three elements (X, Y, and Z), represent
 an axis of rotation, and the fourth element is
 the W component. Functions dealing with quaternions begin with
 "quat".  A quaternion is generated as follows:

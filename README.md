@@ -106,6 +106,7 @@ of different sizes.
 ### Text
 
 * [demos/text.html](https://peteroupc.github.io/html3dutil/demos/text.html) - Demonstrates loading bitmap fonts and displaying text with them.
+* [demos/textwith3D.html](https://peteroupc.github.io/html3dutil/demos/textwith3d.html) - Demonstrates showing bitmap font text on top of a 3D animation.
 
 ### Alternative Rendering
 

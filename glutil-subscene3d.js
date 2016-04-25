@@ -59,19 +59,40 @@ Subscene3D._setupMatrices=function(
   program.setUniforms(uniforms);
 };
 
-/**
- * Gets the current projection matrix for this scene.
- * @return {Array<number>}
- */
 Subscene3D.prototype.setProjectionMatrix=function(mat){
  this._projectionMatrix=mat.slice(0,16)
+ this._frustum=null
+ return this;
 };
-/**
- * Gets the current view matrix for this scene.
- * @return {Array<number>}
- */
+
+Subscene3D.prototype.getContext=function(){
+ return this.parent.getContext();
+}
+
+// TODO: Consider making Camera classes instead
+// of keeping projection and view matrices
+
+Subscene3D.prototype.setPerspectiveAspect=function(fov,near,far){
+ return this.setProjectionMatrix(GLMath.mat4perspective(fov,
+   this.parent.getClientAspect(),near,far));
+};
+
+Subscene3D.prototype.setLookAt=function(eye,center,up){
+ return this.setViewMatrix(GLMath.mat4lookat(eye,center,up));
+};
+
+Subscene3D.prototype.setOrthoAspect=function(a,b,c,d,e,f){
+ return this.setProjectionMatrix(GLMath.mat4orthoAspect(a,b,c,d,e,f,this.parent.getClientAspect()));
+};
+
+Subscene3D.prototype.setOrtho2DAspect=function(a,b,c,d){
+ return this.setProjectionMatrix(GLMath.mat4ortho2dAspect(a,b,c,d,this.parent.getClientAspect()));
+};
+
 Subscene3D.prototype.setViewMatrix=function(mat){
  this._viewMatrix=mat.slice(0,16)
+ this._frustum=null
+ return this;
 };
 /**
  * Gets the current projection matrix for this scene.
@@ -162,6 +183,14 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
   }
  }
 };
+
+Subscene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
+ return this.parent.loadAndMapTextures(textureFiles,resolve,reject);
+}
+
+Subscene3D.prototype.makeShape=function(mesh){
+ return this.parent.makeShape(mesh)
+}
 
 Subscene3D.prototype.render=function(){
   var rc={};

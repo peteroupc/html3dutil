@@ -1038,6 +1038,41 @@ Texture.prototype.getName=function(){
  return name;
 }
 
+///////////
+/**
+* Not documented yet.
+* @class glutil.RenderPass3D
+* @param {Subscene3D} subScene
+* @param {Object} parameters
+*/
+function RenderPass3D(subScene,parameters){
+ /** The scene to render. */
+ this.subScene=subScene;
+ /** Whether to clear the color buffer before rendering the scene.
+  @default */
+ this.clearColor=true;
+ /** Whether to clear the depth buffer before rendering the scene.
+  @default */
+ this.clearDepth=true;
+ /** Whether to clear the stencil buffer before rendering the scene.
+  @default */
+ this.clearStencil=true;
+ this.setParams(parameters)
+}
+
+RenderPass3D.prototype.setParams=function(parameters){
+ if(!parameters)return;
+ if(typeof parameters["clearColor"]!=="undefined"){
+  this.clearColor=parameters["clearColor"]
+ }
+ if(typeof parameters["clearDepth"]!=="undefined"){
+  this.clearDepth=parameters["clearDepth"]
+ }
+ if(typeof parameters["clearStencil"]!=="undefined"){
+  this.clearStencil=parameters["clearStencil"]
+ }
+}
+
 ////////////////////////////////////////
 
 /**
@@ -1074,7 +1109,10 @@ function Scene3D(canvasOrContext){
  this.context=context;
  this.textureCache={};
  this._renderedOutsideScene=false;
- /** An array of shapes that are part of the scene. */
+ /** An array of shapes that are part of the scene.
+   @deprecated Shapes should now be managed in Subscene3D objects,
+   rather than through this class.
+   */
  this.shapes=[];
  this._frontFace=Scene3D.CCW;
  this._cullFace=Scene3D.NONE;
@@ -1108,9 +1146,6 @@ Scene3D.prototype._init3DContext=function(){
  this.context.disable(this.context.CULL_FACE);
  this.context.clearDepth(1.0);
  this._setClearColor();
- this.context.clear(
-    this.context.COLOR_BUFFER_BIT |
-    this.context.DEPTH_BUFFER_BIT);
  this._setIdentityMatrices();
 };
 
@@ -1641,6 +1676,21 @@ Scene3D.prototype.vertexCount=function(){
  }
  return c;
 };
+
+Scene3D.prototype.clear=function(){
+ if(this._is3d){
+    this.context.clear(
+     this.context.COLOR_BUFFER_BIT |
+     this.context.DEPTH_BUFFER_BIT |
+     this.context.STENCIL_BUFFER_BIT);
+  }
+}
+
+Scene3D.prototype.clearDepth=function(){
+ if(this._is3d){
+    this.context.clear(this.context.DEPTH_BUFFER_BIT);
+  }
+}
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
@@ -1826,29 +1876,27 @@ if(this._renderedOutsideScene){
  return this;
 };
 
-Scene3D.prototype.clear=function(){
- if(this._is3d){
-    this.context.clear(
-     this.context.COLOR_BUFFER_BIT |
-     this.context.DEPTH_BUFFER_BIT |
-     this.context.STENCIL_BUFFER_BIT);
-  }
-}
-
-Scene3D.prototype.clearDepth=function(){
- if(this._is3d){
-    this.context.clear(this.context.DEPTH_BUFFER_BIT);
-  }
+Scene3D.prototype._clearForPass=function(pass){
+ var flags=0;
+ if(pass.clearColor)flags|=this.context.COLOR_BUFFER_BIT;
+ if(pass.clearDepth)flags|=this.context.DEPTH_BUFFER_BIT;
+ if(pass.clearStencil)flags|=this.context.STENCIL_BUFFER_BIT;
+ if(this._is3d && flags!=0){
+  this.context.clear(flags);
+ }
 }
 
 /**
  *  Renders all shapes added to this scene.
  *  This is usually called in a render loop, such
- *  as {@link glutil.GLUtil.renderLoop}.
- * @param {glutil.Subscene3D} A scene to draw.  Can be null.
+ *  as {@link glutil.GLUtil.renderLoop}.<p>
+ * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
+ * buffer and depth buffer. This compatibility option may be dropped in the future.
+ * @param {Array<RenderPass3D>} An array of scenes
+ * to draw. Can be null.
  * @return {glutil.Scene3D} This object.
  */
-Scene3D.prototype.render=function(subScene){
+Scene3D.prototype.render=function(renderPasses){
   if(this.autoResize){
    var c=this.context.canvas;
    if(c.height!==Math.ceil(c.clientHeight)*this._pixelRatio ||
@@ -1858,16 +1906,19 @@ Scene3D.prototype.render=function(subScene){
    }
   }
   this._setFace();
-  if(!subScene){
-   subScene=this._subScene;
-   if(this._is3d){
-    this.clear();
-   }
+  if(renderPasses==null){
+    if(this._is3d){
+      this.context.clear(this.context.COLOR_BUFFER_BIT |
+        this.context.DEPTH_BUFFER_BIT);
+    }
+    this._subScene.render();
+  } else {
+    this._renderedOutsideScene=true;
+    for(var i=0;i<renderPasses.length;i++){
+      this._clearForPass(renderPasses[i]);
+      renderPasses[i].subScene.render();
+    }
   }
-  if(subScene!=this._subScene){
-   this._renderedOutsideScene=true;
-  }
-  subScene.render();
   if(this._is3d)this.context.flush();
   return this;
 };
@@ -2384,6 +2435,7 @@ Shape.prototype.getMatrix=function(){
   return mat;
 };
 /////////////
+exports.RenderPass3D=RenderPass3D;
 exports.ShapeGroup=ShapeGroup;
 exports.Lights=Lights;
 exports.LightSource=LightSource;

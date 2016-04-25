@@ -392,7 +392,7 @@ shader+=ShaderProgram.fragmentShaderHeader() +
 "void main(){\n" +
 " float d=texture2D(sampler, uvVar).a;\n"
 if(derivs){
-shader+=" float dsmooth=length(vec2(dFdx(d), dFdy(d)));\n";
+shader+=" float dsmooth=length(vec2(dFdx(d),dFdy(d)))*0.75;\n";
 } else {
 shader+=" float dsmooth=0.06;\n";
 }
