@@ -12,8 +12,44 @@ function Subscene3D(scene){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this.lightSource=new Lights();
+ this._projectionUpdater=null;
  this._frustum=null;
  this.shapes=[];
+}
+Subscene3D._PerspectiveView=function(scene,fov,near,far){
+ this.fov=fov;
+ this.near=near;
+ this.far=far;
+ this.scene=scene;
+ this.lastAspect=null;
+ this.update=function(){
+  var aspect=this.scene.parent.getClientAspect();
+  if(aspect!=this.lastAspect){
+   this.lastAspect=aspect;
+   this.scene.setProjectionMatrix(
+     GLMath.mat4perspective(this.fov,aspect,this.near,this.far));
+  }
+ }
+ this.update();
+}
+Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
+ this.a=a;
+ this.b=b;
+ this.c=c;
+ this.d=d;
+ this.e=e;
+ this.f=f;
+ this.scene=scene;
+ this.lastAspect=null;
+ this.update=function(){
+  var aspect=this.scene.parent.getClientAspect();
+  if(aspect!=this.lastAspect){
+   this.lastAspect=aspect;
+   this.scene.setProjectionMatrix(
+     GLMath.mat4orthoAspect(this.a,this.b,this.c,this.d,this.e,this.f,aspect));
+  }
+ }
+ this.update();
 }
 
 /** @private */
@@ -58,37 +94,68 @@ Subscene3D._setupMatrices=function(
   uniforms.normalMatrix=invTrans;
   program.setUniforms(uniforms);
 };
-
+/**
+ * Not documented yet.
+ * @param {*} mat
+ */
 Subscene3D.prototype.setProjectionMatrix=function(mat){
  this._projectionMatrix=mat.slice(0,16)
  this._frustum=null
  return this;
 };
-
+/**
+ * Not documented yet.
+ */
 Subscene3D.prototype.getContext=function(){
  return this.parent.getContext();
 }
-
-// TODO: Consider making Camera classes instead
-// of keeping projection and view matrices
-
-Subscene3D.prototype.setPerspectiveAspect=function(fov,near,far){
- return this.setProjectionMatrix(GLMath.mat4perspective(fov,
-   this.parent.getClientAspect(),near,far));
+/**
+ * Not documented yet.
+ * @param {*} fov
+ * @param {*} near
+ * @param {*} far
+ */
+Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
+ this._projectionUpdater=new Subscene3D._PerspectiveView(this,fov,near,far);
+ return this;
 };
-
+/**
+ * Not documented yet.
+ * @param {*} eye
+ * @param {*} center
+ * @param {*} up
+ */
 Subscene3D.prototype.setLookAt=function(eye,center,up){
  return this.setViewMatrix(GLMath.mat4lookat(eye,center,up));
 };
-
-Subscene3D.prototype.setOrthoAspect=function(a,b,c,d,e,f){
- return this.setProjectionMatrix(GLMath.mat4orthoAspect(a,b,c,d,e,f,this.parent.getClientAspect()));
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} c
+ * @param {*} d
+ * @param {*} e
+ * @param {*} f
+ */
+Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
+ this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,e,f);
+ return this;
 };
-
-Subscene3D.prototype.setOrtho2DAspect=function(a,b,c,d){
- return this.setProjectionMatrix(GLMath.mat4ortho2dAspect(a,b,c,d,this.parent.getClientAspect()));
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} c
+ * @param {*} d
+ */
+Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
+ this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,-1,1);
+ return this;
 };
-
+/**
+ * Not documented yet.
+ * @param {*} mat
+ */
 Subscene3D.prototype.setViewMatrix=function(mat){
  this._viewMatrix=mat.slice(0,16)
  this._frustum=null
@@ -96,19 +163,17 @@ Subscene3D.prototype.setViewMatrix=function(mat){
 };
 /**
  * Gets the current projection matrix for this scene.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 Subscene3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
- * @return {Array<number>}
- */
+ * @return {Array<number>} Return value. */
 Subscene3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
 };
-
+/** @private */
 Subscene3D.prototype._getFrustum=function(){
  if(this._frustum==null){
   var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
@@ -116,7 +181,9 @@ Subscene3D.prototype._getFrustum=function(){
  }
  return this._frustum;
 }
-
+/**
+ * Not documented yet.
+ */
 Subscene3D.prototype.getLightSource=function(){
  return this.lightSource;
 };
@@ -183,19 +250,48 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
   }
  }
 };
-
-Subscene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
+/**
+ * Not documented yet.
+ * @param {*} textureFiles
+ * @param {*} resolve
+ * @param {*} reject
+ */
+Subscene3D.prototype.loadAndMapTextures=function(textureFiles,resolve,reject){
  return this.parent.loadAndMapTextures(textureFiles,resolve,reject);
 }
-
+/**
+ * Not documented yet.
+ * @param {*} mesh
+ */
 Subscene3D.prototype.makeShape=function(mesh){
  return this.parent.makeShape(mesh)
 }
-
+/**
+ * Not documented yet.
+ */
 Subscene3D.prototype.render=function(){
   var rc={};
+  if(this._projectionUpdater){
+   this._projectionUpdater.update();
+  }
   for(var i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],rc);
   }
   return this;
 };
+
+Subscene3D.forFilter=function(scene, fbo, shader){
+  var ret=new Subscene3D(scene);
+  var mesh=new Mesh(
+     [-1,1,0,0,1,
+      -1,-1,0,0,0,
+      1,1,0,1,1,
+      1,-1,0,1,0],
+     [0,1,2,2,1,3],
+     Mesh.TEXCOORDS_BIT);
+  ret.addShape(ret.makeShape(mesh).setParams({
+     "texture":fbo,
+     "shader":shader
+   }));
+   return ret;
+}

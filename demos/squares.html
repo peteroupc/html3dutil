@@ -136,7 +136,7 @@ function setKernelMatrix(program,matrix){
  for(var i=0;i<9;i++){
   mat[i]=matrix[i]/weight;
  }
- currentFilter.setUniforms({
+ program.setUniforms({
    "matrix":mat
  })
 }
@@ -214,28 +214,28 @@ function link1(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeGrayscale(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link1a(){
  if(scene){
-  scene.setOrtho(-1,1,-1,1,-10,10);
-  scene.removeShape(platonic);
-  scene.addShape(blinds);
+  subScene.setProjectionMatrix(GLMath.mat4ortho(-1,1,-1,1,-10,10));
+  subScene.removeShape(platonic);
+  subScene.addShape(blinds);
  }
 }
 function link2a(){
  if(scene){
-  scene.setOrthoAspect(-20,20,-10,10,-20,20);
-  scene.removeShape(blinds);
-  scene.addShape(platonic);
+  subScene.orthoAspect(-20,20,-10,10,-20,20);
+  subScene.removeShape(blinds);
+  subScene.addShape(platonic);
  }
 }
 function link2(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=ShaderProgram.getInvertEffect(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -243,7 +243,7 @@ function link3(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeWave(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -252,28 +252,28 @@ function link4(){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeKernelMatrix(scene);
   setKernelMatrix(currentFilter,[1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9])
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link5(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makePixelate(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link6(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeWaterpaint(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link7(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeMirror(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link8(){
@@ -281,7 +281,7 @@ function link8(){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeKernelMatrix(scene);
   setKernelMatrix(currentFilter,[0,1,0,1,-4,1,0,1,0])
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -289,7 +289,7 @@ function link9(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeRedTint(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -297,14 +297,14 @@ function link10(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeWarp(scene);
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function linknone(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=null;
-  scene.useFilter(currentFilter);
+  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -442,10 +442,13 @@ function blindsGroup(scene){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D((document.getElementById("canvas")));
+  var fbo=new FrameBuffer(scene,scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
+  var subScene=new SubScene3D(scene)
+  var renders=[new RenderPass3D(subScene,{"frameBuffer":fbo})]
   var fc=new FrameCounterDiv(scene)
-  var blinds=blindsGroup(scene)
-  var platonic=platonicGroup(scene)
+  var blinds=blindsGroup(subScene)
+  var platonic=platonicGroup(subScene)
   linknone();
   link2a();
   var rotation=[0,0,0];
@@ -470,7 +473,7 @@ function blindsGroup(scene){
    rot=360*GLUtil.getTimePosition(timer,time,2000);
    rotation[0]=360*GLUtil.getTimePosition(timer,time,6000);
    rotation[1]=360*GLUtil.getTimePosition(timer,time,12000);
-   scene.render();
+   scene.render(renders);
    fc.update();
   });
 //-->

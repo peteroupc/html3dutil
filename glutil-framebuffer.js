@@ -23,7 +23,7 @@ if(width<0 || height<0)throw new Error("width or height negative");
  // give the framebuffer its own texture unit, since the
  // shader program may bind samplers to other texture
  // units, such as texture unit 0
- this.textureUnit=1;
+ this.textureUnit=3;
  this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
@@ -64,14 +64,16 @@ if(width<0 || height<0)throw new Error("width or height negative");
 }
 /**
  * Gets the WebGL context associated with this frame buffer.
- * @return {WebGLRenderingContext}
- */
+ * @return {WebGLRenderingContext} Return value. */
 FrameBuffer.prototype.getContext=function(){
  "use strict";
 return this.context;
 };
 /**
- * Not documented yet.
+ * Binds this frame buffer to the WebGL context associated with
+ * it.  Future draw calls that use the WebGL context will be rendered
+ * to this frame buffer until it's unbound with the {@link glutil.FrameBuffer#unbind}
+ * method.
  * @param {glutil.ShaderProgram} [program] Not used.
  */
 FrameBuffer.prototype.bind=function(){

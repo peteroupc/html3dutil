@@ -58,6 +58,7 @@ var BufferedSubMesh=function(mesh, context){
   ];
   this._sizes=[3,3,3,2,3,3];
 };
+/** @private */
 BufferedSubMesh.prototype._getVaoExtension=function(context){
  if(this.arrayObjectExtContext==context){
   return this.arrayObjectExt;
@@ -97,8 +98,7 @@ return this._bounds;
 };
 /**
  * Returns the WebGL context associated with this object.
- * @return {WebGLRenderingContext}
- */
+ * @return {WebGLRenderingContext} Return value. */
 BufferedMesh.prototype.getContext=function(){
  "use strict";
 return this.context;
@@ -155,7 +155,7 @@ if(this.verts!==null)
  this._lastKnownProgram=null;
  this._attribLocations=[];
 };
-
+/** @private */
 BufferedSubMesh.prototype._getAttribLocations=function(program,context){
  if(this._lastKnownProgram!=program){
   this._lastKnownProgram=program;
@@ -254,8 +254,7 @@ var ret=0;
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @return {number}
-*/
+* @return {number} Return value.*/
 BufferedMesh.prototype.primitiveCount=function(){
  "use strict";
 var ret=0;
