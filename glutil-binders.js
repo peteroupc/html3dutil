@@ -131,7 +131,7 @@ var uniforms={};
 MaterialBinder.bindTexture=function(texture,program,textureUnit){
  "use strict";
  if(!texture)return;
- var isFrameBuffer=(texture instanceof Framebuffer)
+ var isFrameBuffer=(texture instanceof FrameBuffer)
  var context=program.getContext();
  if(!isFrameBuffer){
  if(typeof texture.image!=="undefined" && texture.image!==null &&

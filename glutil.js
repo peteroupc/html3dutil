@@ -590,6 +590,15 @@ GLUtil._isPowerOfTwo=function(a){
    }
    return (a===1);
 };
+/** @private */
+GLUtil._isIdentityExceptTranslate=function(mat){
+return (
+    mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
+    mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
+    mat[8] === 0 && mat[9] === 0 && mat[10] === 1 && mat[11] === 0 &&
+    mat[15] === 1
+ );
+};
 ///////////////////////
 
 /**
@@ -1064,19 +1073,18 @@ function Scene3D(canvasOrContext){
  }
  this.context=context;
  this.textureCache={};
+ this._renderedOutsideScene=false;
  /** An array of shapes that are part of the scene. */
  this.shapes=[];
  this._frontFace=Scene3D.CCW;
  this._cullFace=Scene3D.NONE;
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
- this._projectionMatrix=GLMath.mat4identity();
- this._viewMatrix=GLMath.mat4identity();
+ this._subScene=new Subscene3D(this);
  this._programs=new Scene3D.ProgramCache(context);
  this.useDevicePixelRatio=false;
  this._pixelRatio=1;
  this.autoResize=true;
- this.lightSource=new Lights();
  this.width=Math.ceil(this.context.canvas.clientWidth*1.0);
  this.height=Math.ceil(this.context.canvas.clientHeight*1.0);
  this.context.canvas.width=this.width;
@@ -1105,7 +1113,6 @@ Scene3D.prototype._init3DContext=function(){
     this.context.DEPTH_BUFFER_BIT);
  this._setIdentityMatrices();
 };
-
 
 Scene3D.LIGHTING_ENABLED = 1;
 Scene3D.SPECULAR_MAP_ENABLED = 2;
@@ -1339,7 +1346,8 @@ Scene3D.prototype.getHeight=function(){
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
 };
-/** Gets the ratio of width to height for this scene,
+/**
+* Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
 * @return {number} Return value.*/
 Scene3D.prototype.getClientAspect=function(){
@@ -1357,14 +1365,24 @@ Scene3D.prototype.createBuffer=function(){
 };
 /**
  * Gets the current projection matrix for this scene.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+ * @return {Array<number>}
  */
 Scene3D.prototype.getProjectionMatrix=function(){
- return this._projectionMatrix.slice(0,16);
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
+return this.Subscene3D._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+ * @return {Array<number>}
  */
 Scene3D.prototype.getViewMatrix=function(){
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
  return this._viewMatrix.slice(0,16);
 };
 /**
@@ -1372,6 +1390,7 @@ Scene3D.prototype.getViewMatrix=function(){
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
@@ -1403,6 +1422,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} left Leftmost coordinate of the view rectangle.
  * @param {number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -1432,6 +1452,7 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} left Leftmost coordinate of the view rectangle.
  * @param {number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -1452,6 +1473,7 @@ Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {number} right X-coordinate of the point where the right
@@ -1476,6 +1498,7 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} left Leftmost coordinate of the 3D view.
  * @param {number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
@@ -1497,6 +1520,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} left Leftmost coordinate of the 2D view.
  * @param {number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
@@ -1632,29 +1656,36 @@ Scene3D.prototype.primitiveCount=function(){
  * Sets the projection matrix for this object.  The projection
  * matrix can also be set using the {@link glutil.Scene3D#setFrustum}, {@link glutil.Scene3D#setOrtho},
  * {@link glutil.Scene3D#setOrtho2D}, and {@link glutil.Scene3D#setPerspective} methods.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
- this._projectionMatrix=GLMath.mat4copy(matrix);
- this._updateFrustum();
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
+this._subScene.setProjectionMatrix(matrix);
  return this;
 };
 /**
 *  Sets this scene's view matrix. The view matrix can also
 * be set using the {@link glutil.Scene3D#setLookAt} method.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<number>} matrix A 16-element matrix (4x4).
  * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
- this._viewMatrix=GLMath.mat4copy(matrix);
- this._updateFrustum();
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
+this._subScene.setViewMatrix(matrix);
  return this;
 };
 /**
 *  Sets this scene's view matrix to represent a camera view.
 * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
 * (<code>center</code>).
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<number>} eye A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<number>} [center] A 3-element vector specifying
@@ -1680,12 +1711,11 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
- shape.parent=null;
- this.shapes.push(shape);
+  this._subScene.addShape(shape);
  return this;
 };
 /**
- * Creates a vertex buffer from a geometric mesh and
+ * Creates a buffer from a geometric mesh and
  * returns a shape object.
  * @param {glutil.Mesh} mesh A geometric mesh object.  The shape
  * created will use the mesh in its current state and won't
@@ -1703,19 +1733,19 @@ Scene3D.prototype.makeShape=function(mesh){
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.removeShape=function(shape){
- for(var i=0;i<this.shapes.length;i++){
-   if(this.shapes[i]===shape){
-     this.shapes.splice(i,1);
-     i--;
-   }
- }
+  this._subScene.removeShape(shape);
  return this;
 };
+/** @private */
 Scene3D.prototype.getLightSource=function(){
- return this.lightSource;
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
+ return this._subScene.getLightSource();
 };
 /**
  * Sets a light source in this scene to a directional light.
+* @deprecated Use the LightSource method setDirectionalLight instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -1730,11 +1760,15 @@ Scene3D.prototype.getLightSource=function(){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
  this.getLightSource().setDirectionalLight(index,position,diffuse,specular);
  return this;
 };
 /**
  * Sets parameters for a light in this scene.
+* @deprecated Use the LightSource method setLightParams instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -1742,12 +1776,16 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setLightParams=function(index,params){
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
  this.getLightSource().setParams(index,params);
  return this;
 };
 
 /**
  * Sets the color of the scene's ambient light.
+* @deprecated Use the LightSource method setAmbient instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
@@ -1760,12 +1798,16 @@ Scene3D.prototype.setLightParams=function(index,params){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient=function(r,g,b,a){
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
  this.getLightSource().setAmbient(r,g,b,a);
  return this;
 };
 
 /**
- * Sets a light source in this scene to a point light
+ * Sets a light source in this scene to a point light.
+ * @deprecated Use the LightSource method setPointLight instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<number>} position
@@ -1777,76 +1819,36 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
- this.lightSource.setPointLight(index,position)
-   .setParams(index,{"diffuse":diffuse,"specular":specular});
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
+ this.getLightSource().setPointLight(index,position,diffuse,specular);
  return this;
 };
-/** @private */
-Scene3D._isIdentityExceptTranslate=function(mat){
-return (
-    mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
-    mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
-    mat[8] === 0 && mat[9] === 0 && mat[10] === 1 && mat[11] === 0 &&
-    mat[15] === 1
- );
-};
-/** @private */
-Scene3D._setupMatrices=function(
-  program,
-  projMatrix,
-  viewMatrix,
-  worldMatrix,
-  projAndView){
-  var uniforms={};
-  var viewWorld;
-  if(projAndView){
-   uniforms.view=viewMatrix;
-   uniforms.projection=projMatrix;
-   uniforms.viewMatrix=viewMatrix;
-   uniforms.projectionMatrix=projMatrix;
-   var viewInvW=program.get("viewInvW");
-   if(viewInvW!==null && typeof viewInvW!=="undefined"){
-    var invView=GLMath.mat4invert(viewMatrix);
-    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
-   }
+
+Scene3D.prototype.clear=function(){
+ if(this._is3d){
+    this.context.clear(
+     this.context.COLOR_BUFFER_BIT |
+     this.context.DEPTH_BUFFER_BIT |
+     this.context.STENCIL_BUFFER_BIT);
   }
-  var mvm=program.get("modelViewMatrix");
-  if((mvm!==null && typeof mvm!=="undefined")){
-   if(Scene3D._isIdentityExceptTranslate(viewMatrix)){
-    // view matrix is just a translation matrix, so that getting the model-view
-    // matrix amounts to simply adding the view's position
-    viewWorld=worldMatrix.slice(0,16);
-    viewWorld[12]+=viewMatrix[12];
-    viewWorld[13]+=viewMatrix[13];
-    viewWorld[14]+=viewMatrix[14];
-   } else {
-    viewWorld=GLMath.mat4multiply(viewMatrix,
-     worldMatrix);
-   }
-   uniforms.modelViewMatrix=viewWorld;
+}
+
+Scene3D.prototype.clearDepth=function(){
+ if(this._is3d){
+    this.context.clear(this.context.DEPTH_BUFFER_BIT);
   }
-  var invTrans=GLMath.mat4inverseTranspose3(worldMatrix);
-  uniforms.world=worldMatrix;
-  uniforms.modelMatrix=worldMatrix;
-  uniforms.worldViewInvTrans3=invTrans;
-  uniforms.normalMatrix=invTrans;
-  program.setUniforms(uniforms);
-};
+}
 
 /**
  *  Renders all shapes added to this scene.
  *  This is usually called in a render loop, such
- *  as {@link glutil.GLUtil.renderLoop}.<p>
- * This method may set the following uniforms if they exist in the
- * shader program:<ul>
- * <li><code>projection</code>, <code>projectionMatrix</code>: this scene's
- * projection matrix
- * <li><code>view</code>, <code>viewMatrix</code>: this scene's view
- * matrix
- * </ul>
+ *  as {@link glutil.GLUtil.renderLoop}.
+ * @param {glutil.Subscene3D} A scene to draw.  Can be null.
  * @return {glutil.Scene3D} This object.
  */
-Scene3D.prototype.render=function(){
+Scene3D.prototype.render=function(subScene){
   if(this.autoResize){
    var c=this.context.canvas;
    if(c.height!==Math.ceil(c.clientHeight)*this._pixelRatio ||
@@ -1856,48 +1858,20 @@ Scene3D.prototype.render=function(){
    }
   }
   this._setFace();
-  this._renderInner();
+  if(!subScene){
+   subScene=this._subScene;
+   if(this._is3d){
+    this.clear();
+   }
+  }
+  if(subScene!=this._subScene){
+   this._renderedOutsideScene=true;
+  }
+  subScene.render();
   if(this._is3d)this.context.flush();
   return this;
 };
 
-
-/** @private */
-Scene3D.prototype._renderShape=function(shape, renderContext){
- if(shape.constructor===ShapeGroup){
-  if(!shape.visible)return;
-  for(var i=0;i<shape.shapes.length;i++){
-   this._renderShape(shape.shapes[i], renderContext);
-  }
- } else {
-   if(!shape.isCulled(this._frustum)){
-    var prog=null;
-    var params={};
-    var flags=0;
-    if(shape.material instanceof Material){
-     prog=shape.material.shader ?
-       shape.material.shader : 
-       this._programs.getProgram(Scene3D._materialToFlags(shape.material));
-    } else {
-     prog=this._programs.getProgram(0);
-    }
-    var projAndView=false;
-    if(renderContext.prog!=prog){
-     prog.use();
-     projAndView=true;
-     new LightsBinder(this.lightSource).bind(prog);
-     renderContext.prog=prog;
-    }
-    Scene3D._setupMatrices(prog,
-      this._projectionMatrix,
-      this._viewMatrix,
-      shape.getMatrix(),
-      projAndView);
-    Binders.getMaterialBinder(shape.material).bind(prog);
-    shape.bufferedMesh.draw(prog);
-  }
- }
-};
 /**
  * Uses a shader program to apply a texture filter after the
  * scene is rendered.  If a filter program is used, the scene will
@@ -1946,18 +1920,6 @@ Scene3D.prototype.useFilter=function(filterProgram){
  }
  return this;
 };
-/** @private */
-Scene3D.prototype._renderInner=function(){
-  this.context.clear(
-    this.context.COLOR_BUFFER_BIT |
-    this.context.DEPTH_BUFFER_BIT);
-  var rc={};
-  for(var i=0;i<this.shapes.length;i++){
-   this._renderShape(this.shapes[i],rc);
-  }
-  return this;
-};
-
 /**
 * Represents a grouping of shapes.
 * @class
@@ -2179,7 +2141,7 @@ ShapeGroup.prototype.setScale=function(x,y,z){
 * See the "{@tutorial shapes}" tutorial.
  *  @class
 * @alias glutil.Shape
-* @param {BufferedMesh} mesh A mesh in the form of a vertex buffer object.
+* @param {BufferedMesh} mesh A mesh in the form of a buffer object.
 * For {@link glutil.Mesh} objects, use the {@link glutil.Scene3D#makeShape}
 * method instead.
   */
@@ -2309,7 +2271,7 @@ Shape.prototype.setMaterial=function(material){
 * Makes a copy of this object.  The copied object
 * will have its own version of the transform and
 * material data, but any texture
-* image data and vertex buffers will not be duplicated,
+* image data and buffered meshes will not be duplicated,
 * but rather just references to them will be used.
 * @return {glutil.Shape} A copy of this object.
 */

@@ -14,11 +14,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * see the {@link glutil.Material#setParams} method.</i>
 * @class
 * @alias glutil.Material
-* @param {Array<number>} [ambient] Ambient color.
-* @param {Array<number>} [diffuse] Diffusion color (also called "albedo").
-* @param {Array<number>} [specular] Specular highlight reflection.
+* @param {Array<number>} [ambient] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color.
+* @param {Array<number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffusion color (also called "albedo").
+* @param {Array<number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the specular highlight reflection.
 * @param {Array<number>} [shininess] Specular highlight exponent of this material.
-* @param {Array<number>} [emission] Additive color emitted by an object.
+* @param {Array<number>} [emission] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the additive color emitted by an object.
 */
 function Material(ambient, diffuse, specular,shininess,emission) {
  //console.log([ambient,diffuse,specular,shininess,emission]+"")

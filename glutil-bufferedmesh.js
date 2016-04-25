@@ -12,9 +12,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 var BufferedSubMesh=function(mesh, context){
  "use strict";
  var vertbuffer=context.createBuffer();
- if(!vertbuffer)throw new Error("can't create vertex buffer")
+ if(!vertbuffer)throw new Error("can't create buffer")
  var facebuffer=context.createBuffer();
  if(!facebuffer)throw new Error("can't create face buffer")
+ this.arrayObjectExt=context.getExtension("OES_vertex_array_object")
+ this.arrayObjectExtContext=context;
+ this.vao=null;
+ if(this.arrayObjectExt){
+   this.vao=this.arrayObjectExt.createVertexArrayOES();
+ }
  context.bindBuffer(context.ARRAY_BUFFER, vertbuffer);
  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, facebuffer);
  context.bufferData(context.ARRAY_BUFFER,
@@ -52,17 +58,24 @@ var BufferedSubMesh=function(mesh, context){
   ];
   this._sizes=[3,3,3,2,3,3];
 };
+BufferedSubMesh.prototype._getVaoExtension=function(context){
+ if(this.arrayObjectExtContext==context){
+  return this.arrayObjectExt;
+ } else {
+  return context.getExtension("OES_vertex_array_object")
+ }
+}
 /**
-* A geometric mesh in the form of vertex buffer objects.
+* A geometric mesh in the form of buffer objects.
 * @class
 * @alias glutil.BufferedMesh
 * @param {glutil.Mesh} mesh A geometric mesh object.
 * @param {WebGLRenderingContext|object} context A WebGL context to
-*  create vertex buffers from, or an object, such as Scene3D, that
+*  create a buffer from, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context. (Note that this constructor uses
 *  a WebGL context rather than a shader program because
-*  vertex buffer objects are not specific to shader programs.)
+*  buffer objects are not specific to shader programs.)
 */
 function BufferedMesh(mesh, context){
  "use strict";
@@ -104,7 +117,7 @@ var format=0;
 /**
 * Binds the buffers in this object to attributes according
 * to their data format, and draws the elements in this mesh
-* according to the data in its vertex buffers.
+* according to the data in its buffers.
 * @param {glutil.ShaderProgram} program A shader program object to get
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
@@ -133,8 +146,12 @@ if(this.verts!==null)
   this.context.deleteBuffer(this.verts);
  if(this.faces!==null)
   this.context.deleteBuffer(this.faces);
+ if(this.vao!==null){
+  this.arrayObjectExt.deleteVertexArrayOES(this.vao);
+ }
  this.verts=null;
  this.faces=null;
+ this.vao=null;
  this._lastKnownProgram=null;
  this._attribLocations=[];
 };
@@ -154,24 +171,34 @@ BufferedSubMesh.prototype._getAttribLocations=function(program,context){
     this._attribLocations[i]=-1;
    }
   }
+  return true;
  }
+ return false;
 }
 
 /**
  * @private */
 BufferedSubMesh.prototype._prepareDraw=function(program, context){
-  context.bindBuffer(context.ARRAY_BUFFER, this.verts);
-  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
-  this._getAttribLocations(program,context);
-  for(var i=0;i<this._attribLocations.length;i++){
-   var attrib=this._attribLocations[i];
-   if(attrib>=0){
-    if(this._attribsUsed[i]>=0){
+  var rebind=this._getAttribLocations(program,context);
+  var vaoExt=this._getVaoExtension(context);
+  if(this.vao) {
+   vaoExt.bindVertexArrayOES(this.vao);
+  } else {
+   rebind=true;
+  }
+  if(rebind) {
+   context.bindBuffer(context.ARRAY_BUFFER, this.verts);
+   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
+   for(var i=0;i<this._attribLocations.length;i++){
+    var attrib=this._attribLocations[i];
+    if(attrib>=0){
+     if(this._attribsUsed[i]>=0){
       context.enableVertexAttribArray(attrib);
       context.vertexAttribPointer(attrib, this._sizes[i],
         context.FLOAT, false,this._stride*4, this._attribsUsed[i]*4);
-    } else {
+     } else {
       context.disableVertexAttribArray(attrib);
+     }
     }
    }
   }
@@ -198,6 +225,10 @@ BufferedSubMesh.prototype.draw=function(program){
   context.drawElements(primitive,
     this.facesLength,
     this.type, 0);
+  var vaoExt=this._getVaoExtension(context);
+  if(this.vao) {
+   vaoExt.bindVertexArrayOES(null);
+  }
 };
 /**
  * @private */
