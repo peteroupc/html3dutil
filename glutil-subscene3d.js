@@ -281,6 +281,9 @@ Subscene3D.prototype.render=function(){
 };
 
 Subscene3D.forFilter=function(scene, fbo, shader){
+  if(shader==null){
+    shader=ShaderProgram.makeCopyEffect(scene);
+  }
   var ret=new Subscene3D(scene);
   var mesh=new Mesh(
      [-1,1,0,0,1,
@@ -289,9 +292,9 @@ Subscene3D.forFilter=function(scene, fbo, shader){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      Mesh.TEXCOORDS_BIT);
-  ret.addShape(ret.makeShape(mesh).setParams({
-     "texture":fbo,
-     "shader":shader
-   }));
+  var shape=ret.makeShape(mesh)
+  shape.setTexture(fbo);
+  shape.setShader(shader);
+  ret.addShape(shape);
    return ret;
 }

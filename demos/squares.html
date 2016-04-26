@@ -444,8 +444,11 @@ function blindsGroup(scene){
   var scene=new Scene3D((document.getElementById("canvas")));
   var fbo=new FrameBuffer(scene,scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
-  var subScene=new SubScene3D(scene)
-  var renders=[new RenderPass3D(subScene,{"frameBuffer":fbo})]
+  var subScene=new Subscene3D(scene)
+  var renders=[
+    new RenderPass3D(subScene,{"frameBuffer":fbo}),
+    new RenderPass3D(Subscene3D.forFilter(scene,fbo));  
+  ]
   var fc=new FrameCounterDiv(scene)
   var blinds=blindsGroup(subScene)
   var platonic=platonicGroup(subScene)

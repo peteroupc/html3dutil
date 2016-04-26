@@ -832,10 +832,10 @@ Scene3D.prototype.render=function(renderPasses){
     this._renderedOutsideScene=true;
     for(var i=0;i<renderPasses.length;i++){
       var pass=renderPasses[i];
-      if(pass.frameBuffer)frameBuffer.bind();
+      if(pass.frameBuffer)pass.frameBuffer.bind();
       this._clearForPass(pass);
       renderPasses[i].subScene.render();
-      if(pass.frameBuffer)frameBuffer.unbind();
+      if(pass.frameBuffer)pass.frameBuffer.unbind();
     }
   }
   if(this._is3d)this.context.flush();

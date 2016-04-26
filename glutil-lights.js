@@ -1,4 +1,3 @@
-
 /**
 * A collection of light sources.  It stores the scene's
 * ambient color as well as data on one or more light sources.

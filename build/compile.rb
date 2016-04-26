@@ -15,34 +15,41 @@ def normalizeFile(f)
   utf8edit(f){|data| normalizeLines(data) }
 end
 
-def normalizeAndCompile(input, output, advanced=false)
-  return if !FileTest.exist?(input)
-  normalizeFile(input)
-  utf8edit(output,true){|data|
-   formatting=(false) ? "--formatting PRETTY_PRINT" : ""
-   opt=(advanced) ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS"
-   cmd="java -jar compiler.jar #{formatting} "+
+$compilerJar=File.expand_path("compiler.jar")
+
+def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
+  for input in inputArray
+    return if !FileTest.exist?(input)
+    normalizeFile(input)
+  end
+  inputs=inputArray.transform{|x| "--js #{ffq(x)}" }.join(" ")
+  sourceMap=output+".map"
+  formatting=(false) ? "--formatting PRETTY_PRINT" : ""
+  opt=(advanced) ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS"
+  cmd="java -jar #{ffq($compilerJar)} #{formatting} "+
      "--generate_exports --language_in ECMASCRIPT6 --language_out ECMASCRIPT3 "+
-     "--compilation_level #{opt} --create_source_map #{ffq(input)} #{ffq(input)}"
-   olddata=data
-   log=""
-   tmppath("err.log"){|errlog|
+     "--compilation_level #{opt} #{inputs} "+
+     (useSourceMap ? "--create_source_map #{sourceMap} " : "")+
+     "--js_output_file #{ffq(output)}"
+  log=""
+  tmppath("err.log"){|errlog|
     data=runcmd(cmd,errlog)
     log=utf8read(errlog)
-   }
-   puts log if log.length>0
-   data=normalizeLines(data)
-   # sanity check: don't overwrite if new data is empty
-   next data.length==0 ? olddata : data
   }
+  puts log if log.length>0
+  if FileTest.exist?(output)
+   utf8edit(output){|data|
+     data=normalizeLines(data)
+     if useSourceMap
+       data+="/*# sourceMappingURL="+File.basename(sourceMap)+" */\n"
+     end
+     next data
+   }
+  end
 end
 
-tmppath("glutil.js"){|tmp|
- utf8write(
-  utf8read("../promise.js")+";\n"+
-  utf8read("../glmath.js")+";\n"+
-  utf8read("../glutil.js")+";\n"+
-  (Dir.glob("../glutil-*.js").transform{|x| utf8read(x) }.join(";\n"))+";\n"+
-  ";\n",tmp)
- normalizeAndCompile(tmp,"../glutil_min.js")
+Dir.chdir(".."){
+ files=%w( promise.js glmath.js glutil.js )
+ files|=Dir.glob("glutil-*.js")
+ normalizeAndCompile(files,"glutil_min.js")
 }

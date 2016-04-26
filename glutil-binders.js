@@ -178,17 +178,17 @@ MaterialBinder.bindTexture=function(texture,program,textureUnit){
       program.setUniforms(uniforms);
       context.activeTexture(context.TEXTURE0+textureUnit);
       if(isFrameBuffer) {
-       ctx.bindTexture(ctx.TEXTURE_2D,
+       context.bindTexture(context.TEXTURE_2D,
          texture.colorTexture);
        if(texture.colorTexture){
-        ctx.texParameteri(ctx.TEXTURE_2D,
-         ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
-        ctx.texParameteri(ctx.TEXTURE_2D,
-         ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
-        ctx.texParameteri(ctx.TEXTURE_2D,
-         ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
-        ctx.texParameteri(ctx.TEXTURE_2D,
-         ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
+        context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_MAG_FILTER, context.NEAREST);
+        context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_MIN_FILTER, context.NEAREST);
+        context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+        context.texParameteri(context.TEXTURE_2D,
+         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
        }
       } else {
        context.bindTexture(context.TEXTURE_2D,
