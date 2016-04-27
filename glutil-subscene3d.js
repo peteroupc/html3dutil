@@ -237,7 +237,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
     if(renderContext.prog!=prog){
      prog.use();
      projAndView=true;
-     new LightsBinder(this.lightSource).bind(prog);
+     new GLUtil._LightsBinder(this.lightSource).bind(prog);
      renderContext.prog=prog;
     }
     Subscene3D._setupMatrices(prog,
@@ -245,7 +245,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       this._viewMatrix,
       shape.getMatrix(),
       projAndView);
-    Binders.getMaterialBinder(shape.material).bind(prog);
+    Subscene3D._getMaterialBinder(shape.material).bind(prog);
     shape.bufferedMesh.draw(prog);
   }
  }
@@ -298,3 +298,16 @@ Subscene3D.forFilter=function(scene, fbo, shader){
   ret.addShape(shape);
    return ret;
 }
+
+Subscene3D._getMaterialBinder=function(material){
+ "use strict";
+if(material){
+ if(material instanceof Material){
+  return new GLUtil._MaterialBinder(material);
+ }
+ }
+ // Return an empty binding object
+ return {
+/** @private */
+bind:function(program){}};
+};

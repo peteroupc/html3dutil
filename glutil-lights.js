@@ -67,7 +67,7 @@ Lights.prototype.getLight=function(index){
  return this.lights[index];
 };
 /**
- * Not documented yet.
+ * Sets parameters for the light source at the given index.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.

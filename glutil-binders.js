@@ -16,14 +16,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 ///////////////////////
 
 /** @private */
-function MaterialBinder(mshade){
+GLUtil._MaterialBinder=function(mshade){
  "use strict";
 this.mshade=mshade;
 }
 /** @private */
-MaterialBinder._textureSizeZeroZero=[0,0];
+GLUtil._MaterialBinder._textureSizeZeroZero=[0,0];
 /** @private */
-MaterialBinder.prototype.bind=function(program){
+GLUtil._MaterialBinder.prototype.bind=function(program){
  "use strict";
  if(!this.mshade)return this;
  if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array")}
@@ -31,7 +31,7 @@ MaterialBinder.prototype.bind=function(program){
  if(this.mshade.specular.length!==3){console.warn("creating new specular array")}
  if(this.mshade.emission.length!==3){console.warn("creating new emission array")}
  var uniforms={
-  "textureSize":MaterialBinder._textureSizeZeroZero,
+  "textureSize":GLUtil._MaterialBinder._textureSizeZeroZero,
   "md":this.mshade.diffuse.length===4 ? this.mshade.diffuse :
     [this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
        this.mshade.diffuse.length<4 ? 1.0 : this.mshade.diffuse[3]]
@@ -46,16 +46,16 @@ MaterialBinder.prototype.bind=function(program){
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]];
  }
  program.setUniforms(uniforms);
- MaterialBinder.bindTexture(this.mshade.texture,program,0);
- MaterialBinder.bindTexture(this.mshade.specularMap,program,1);
- MaterialBinder.bindTexture(this.mshade.normalMap,program,2);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.texture,program,0);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.specularMap,program,1);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.normalMap,program,2);
  return this;
 };
 
 //////////////////////////
 
 /** @private */
-function LoadedTexture(textureImage, context){
+GLUtil._LoadedTexture=function(textureImage, context){
   "use strict";
 context=GLUtil._toContext(context);
   this.context=context;
@@ -89,46 +89,16 @@ context=GLUtil._toContext(context);
   }
 }
 /** @private */
-LoadedTexture.prototype.dispose=function(){
+GLUtil._LoadedTexture.prototype.dispose=function(){
  "use strict";
 if(this.loadedTexture){
   this.context.deleteTexture(this.loadedTexture);
  }
 };
-
-/////////////////////////////////
-
-function FrameBufferMaterialBinder(fb){
- "use strict";
-this.fb=fb;
-}
-/** @private */
-FrameBufferMaterialBinder.prototype.bind=function(program){
-      "use strict";
-var uniforms={};
-      uniforms.sampler=this.fb.textureUnit;
-      uniforms.textureSize=[this.fb.width,this.fb.height];
-      program.setUniforms(uniforms);
-      var ctx=program.getContext();
-      ctx.activeTexture(ctx.TEXTURE0+this.fb.textureUnit);
-      ctx.bindTexture(ctx.TEXTURE_2D,
-        this.fb.colorTexture);
-      if(this.fb.colorTexture){
-       ctx.texParameteri(ctx.TEXTURE_2D,
-        ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
-       ctx.texParameteri(ctx.TEXTURE_2D,
-        ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
-      ctx.texParameteri(ctx.TEXTURE_2D,
-       ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
-      ctx.texParameteri(ctx.TEXTURE_2D,
-       ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
-     }
-};
-
 /////////////////////////////////
 
 /** @private */
-MaterialBinder.bindTexture=function(texture,program,textureUnit){
+GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit){
  "use strict";
  if(!texture)return;
  var isFrameBuffer=(texture instanceof FrameBuffer)
@@ -137,7 +107,7 @@ MaterialBinder.bindTexture=function(texture,program,textureUnit){
  if(typeof texture.image!=="undefined" && texture.image!==null &&
      (typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null) ){
       // load the image as a texture
-      texture.loadedTexture=new LoadedTexture(texture,context);
+      texture.loadedTexture=new GLUtil._LoadedTexture(texture,context);
  } else if((typeof texture.image==="undefined" || texture.image===null) &&
      (typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null) &&
    texture.loadStatus===0){
@@ -224,12 +194,13 @@ MaterialBinder.bindTexture=function(texture,program,textureUnit){
 
 //////////////////////////
 
-function LightsBinder(lights){
+/** @private */
+GLUtil._LightsBinder=function(lights){
  "use strict";
 this.lights=lights;
 }
 /** @private */
-LightsBinder.prototype.bind=function(program){
+GLUtil._LightsBinder.prototype.bind=function(program){
  "use strict";
 var lightsObject=this.lights;
  if(!lightsObject)return this;
@@ -255,17 +226,3 @@ var lightsObject=this.lights;
 };
 
 ///////////////////////
-
-var Binders={};
-Binders.getMaterialBinder=function(material){
- "use strict";
-if(material){
- if(material instanceof Material){
-  return new MaterialBinder(material);
- }
- }
- // Return an empty binding object
- return {
-/** @private */
-bind:function(program){}};
-};

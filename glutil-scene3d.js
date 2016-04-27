@@ -808,11 +808,14 @@ Scene3D.prototype._clearForPass=function(pass){
  *  as {@link glutil.GLUtil.renderLoop}.<p>
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
- * @param {Array<RenderPass3D>} An array of scenes
- * to draw. Can be null.
+ * @param {Array<glutil.RenderPass3D>|glutil.Subscene3D} An array of scenes
+ * to draw, or a single subscene to render. Can be null.
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(renderPasses){
+  if(renderPasses instanceof Subscene3D){
+    return this.render([new RenderPass3D(renderPasses)])
+  }
   if(this.autoResize){
    var c=this.context.canvas;
    if(c.height!==Math.ceil(c.clientHeight)*this._pixelRatio ||
