@@ -7,13 +7,13 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global GLUtil, Mesh, Promise */
-(function(GLUtil){
+(function(exports){
 "use strict";
 if(!GLUtil){ GLUtil={}; }
 
 /**
-* Renderer for bitmap fonts.  This class supports traditional bitmap
-* fonts and signed distance field fonts.<p>
+* Renderer for drawing text using bitmap fonts.  This class supports 
+* traditional bitmap fonts and signed distance field fonts.<p>
 * Bitmap fonts consist of a font definition file (".fnt" or ".xml") and one
 * or more bitmaps containing the shape of each font glyph.  The glyphs
 * are packed so they take as little space as possible and the glyphs don't
@@ -24,11 +24,20 @@ if(!GLUtil){ GLUtil={}; }
 * glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
 * outside the glyph) and 1 (for outside the glyph) means the pixel is
 * outside a buffer zone formed by the glyph's outline.<p>
-* The font definition file formats supported are text (".fnt") and XML (".xml").
+* The font definition file formats supported are text (".fnt"),
+* JSON (".json"), and XML (".xml").
 * The text file format is specified at
 * <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
 * page</a> (note that this method doesn't currently support the binary
 * version described in that page).  The XML format is very similar to the text file format.
+* The JSON format is described at 
+* <a href="https://github.com/Jam3/load-bmfont/blob/master/json-spec.md">this
+* page</a>.
+* <p>
+* See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
+* for a list of bitmap font generation tools. (No one tool is recommended over any
+* other, and the mention of this link is not an endorsement or sponsorship
+* of any particular tool.)
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
@@ -64,6 +73,7 @@ TextRenderer.prototype._setFontTextures=function(tf,ft){
  }
  this.fontTextures.push([tf,ft]);
 }
+
 /**
 * Creates a 3D shape containing the primitives needed to
 * draw text in the given position, size, and color.
@@ -117,13 +127,14 @@ TextRenderer.prototype._loadPages=function(font){
  })
 }
 /**
-* Loads a bitmap font definition from a text file or an XML file,
+* Loads a bitmap font definition from a text file, JSON, or XML file,
 * as well as the bitmaps used by that font, and maps them
 * to WebGL textures.  See {@link TextRenderer} for
 * more information.
-* @param {string} fontFileName The URL of the font data text file
+* @param {string} fontFileName The URL of the font data file
 * to load.  If the string ends in ".xml", the font data is assumed to
-* be in XML; otherwise, in text.
+* be in XML; otherwise, if the string ends in ".json", the font data is assumed to
+* be in JSON; otherwise, in text.
 * @return {Promise<TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
@@ -136,6 +147,9 @@ TextRenderer.prototype.loadFont=function(fontFileName){
 }
 /**
 * Represents a bitmap font.
+* NOTE: The constructor should not be called directly by applications.
+* Use the {@link TextFont.load} method to get a TextFont object.  This
+* constructor's parameters are undocumented and are subject to change.
 * @class
 * @alias TextFont
 */
@@ -157,12 +171,15 @@ function TextFont(fontinfo,chars,pages,kernings,common,fileUrl){
  }
 }
 TextFont._toArray=function(str,minLength){
- var spl
+ var spl;
  if(typeof str==="string"){
   spl=str.split(",")
   for(var i=0;i<spl.length;i++){
    spl[i]=parseInt(spl[i])
   }
+ } else if(str!=null &&
+   str.constructor==Array && str.length>=minLength){
+  return str;
  } else {
   spl=[]
  }
@@ -171,6 +188,59 @@ TextFont._toArray=function(str,minLength){
  }
  return spl
 }
+
+/**
+ * Calculates the width and height of a text string when
+ * drawn using this font.
+ * @param {String} str A text string.
+ * @param {Number} height The line height to use when
+ * measuring the text.  Cannot be less than 0.
+ * @return {Array<number>} An array of two numbers;
+ * the first is the width of the string, and the second is the
+ * height of the string (taking into account line feed characters,
+ * U+000A, that break lines).
+ */
+TextFont.prototype.measure=function(str,height){
+ if(height<0)throw new Error;
+ var haveChar=false;
+ var scale=height/this.common.lineHeight;
+ var lastChar=-1;
+ var xSize=0;
+ var xPos=0;
+ var yPos=0;
+ for(var i=0;i<str.length;i++){
+  var c=str.charCodeAt(i);
+  if(c>=0xd800 && c<0xdc00 && i+1<str.length){
+   c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
+          0xdc00);
+   i++;
+  } else if(c>=0xd800 && c<0xe000){
+   c=0xfffd
+  }
+  if(c === 0x0a){
+   yPos+=this.common.lineHeight*scale;
+   xPos=0;
+   lastChar=c;
+   continue;
+  }
+  var ch=this.chars[c]||this.chars[0]||null
+  if(ch){
+   xSize=Math.max(xSize,xPos+ch.width*scale);
+   haveChar=true;
+   if(lastChar!=-1){
+    if(this.kern[lastChar] && this.kern[lastChar][c]){
+     xPos+=this.kern[lastChar][c].amount*scale;
+    }
+   }
+   xPos+=ch.xadvance*scale;
+  }
+  lastChar=c;
+ }
+ var ySize=yPos;
+ if(haveChar)ySize+=this.common.lineHeight*scale;
+ return [xSize,ySize];
+}
+
 /**
  * Not documented yet.
  * @param {*} str
@@ -267,6 +337,29 @@ TextFont._elementToObject=function(element){
  return x;
 }
 
+TextFont._loadJsonFontInner=function(data){
+ var xchars=[]
+ var xpages=[]
+ var xkernings=[]
+ var json=data.data
+ if(!json.pages || !json.chars || !json.info ||
+   !json.common){
+   return null;
+ }
+  for(var i=0;i<json.chars.length;i++){
+   xchars[json.chars[i].id]=json.chars[i]
+  }
+  for(var i=0;i<json.pages.length;i++){
+   var p=json.pages[i]
+   xpages[i]=TextFont._resolvePath(data.url,p);
+  }
+ if(json.kernings){
+   xkernings=json.kernings
+ }
+ return new TextFont(json.info,xchars,xpages,xkernings,
+   json.common,data.url)
+}
+
 TextFont._loadXmlFontInner=function(data){
  var doc=data.data
  var commons=doc.getElementsByTagName("common")
@@ -349,12 +442,13 @@ TextFont._loadTextFontInner=function(data){
   return new TextFont(fontinfo,chars,pages,kernings,common,data.url)
 }
 /**
-* Loads a bitmap font definition from a text file or an XML file.
+* Loads a bitmap font definition from a text file, JSON, or XML file.
 * Note that this method only loads the font data and not the bitmaps
 * used to represent the font.
-* @param {string} fontFileName The URL of the font data text file
+* @param {string} fontFileName The URL of the font data file
 * to load.  If the string ends in ".xml", the font data is assumed to
-* be in XML; otherwise, in text.
+* be in XML; otherwise, if the string ends in ".json", the font data is assumed to
+* be in JSON; otherwise, in text.
 * @return {Promise<TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
@@ -364,6 +458,12 @@ TextFont.load=function(fontFileName){
   return GLUtil.loadFileFromUrl(fontFileName,"xml").then(
    function(data){
     var ret=TextFont._loadXmlFontInner(data)
+    return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
+   })
+ } else if((/\.json$/i.exec(fontFileName))){
+  return GLUtil.loadFileFromUrl(fontFileName,"json").then(
+   function(data){
+    var ret=TextFont._loadJsonFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else {
@@ -401,7 +501,7 @@ shader+=" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\
 return shader;
 };
 
-GLUtil.TextFont=TextFont;
-GLUtil.TextRenderer=TextRenderer;
+exports.TextFont=TextFont;
+exports.TextRenderer=TextRenderer;
 
-})(GLUtil);
+})(this);
