@@ -12,9 +12,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 if(!GLUtil){ GLUtil={}; }
 
 /**
-* Renderer for drawing text using bitmap fonts.  This class supports 
+* Renderer for drawing text using bitmap fonts.  This class supports
 * traditional bitmap fonts and signed distance field fonts.<p>
-* Bitmap fonts consist of a font definition file (".fnt" or ".xml") and one
+* Bitmap fonts consist of a font definition file and one
 * or more bitmaps containing the shape of each font glyph.  The glyphs
 * are packed so they take as little space as possible and the glyphs don't
 * overlap each other.<p>
@@ -22,15 +22,14 @@ if(!GLUtil){ GLUtil={}; }
 * distance from that location to the edge of the glyph.  A pixel alpha less
 * than 0.5 (127 in most image formats) means the pixel is outside the
 * glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
-* outside the glyph) and 1 (for outside the glyph) means the pixel is
+* outside the glyph) and 1 (for inside the glyph) means the pixel is
 * outside a buffer zone formed by the glyph's outline.<p>
 * The font definition file formats supported are text (".fnt"),
-* JSON (".json"), and XML (".xml").
-* The text file format is specified at
+* JSON (".json"), binary (".fnt" or ".bin"), and XML (".xml").
+* The text and binary file formats are specified at
 * <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
-* page</a> (note that this method doesn't currently support the binary
-* version described in that page).  The XML format is very similar to the text file format.
-* The JSON format is described at 
+* page</a>.  The XML format is very similar to the text file format.
+* The JSON format is described at
 * <a href="https://github.com/Jam3/load-bmfont/blob/master/json-spec.md">this
 * page</a>.
 * <p>
@@ -75,7 +74,7 @@ TextRenderer.prototype._setFontTextures=function(tf,ft){
 }
 
 /**
-* Creates a 3D shape containing the primitives needed to
+* Creates a shape containing the primitives needed to
 * draw text in the given position, size, and color.
 * @param {TextFont} font The bitmap font to use when drawing the text.
 * @param {String} string The text to draw.  Line breaks ("\n") are recognized
@@ -127,14 +126,17 @@ TextRenderer.prototype._loadPages=function(font){
  })
 }
 /**
-* Loads a bitmap font definition from a text file, JSON, or XML file,
+* Loads a bitmap font definition from a file,
 * as well as the bitmaps used by that font, and maps them
 * to WebGL textures.  See {@link TextRenderer} for
 * more information.
 * @param {string} fontFileName The URL of the font data file
-* to load.  If the string ends in ".xml", the font data is assumed to
-* be in XML; otherwise, if the string ends in ".json", the font data is assumed to
-* be in JSON; otherwise, in text.
+* to load.  The following file extensions are read as the following formats:<ul>
+* <li>".xml": XML</li>
+* <li>".json": JSON</li>
+* <li>".bin": Binary</li>
+* <li>".fnt": Text or binary</li>
+* <li>All others: Text</li></ul>
 * @return {Promise<TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
@@ -390,6 +392,185 @@ TextFont._loadXmlFontInner=function(data){
  return new TextFont(xinfos,xchars,xpages,xkernings,xcommons,data.url)
 }
 
+TextFont._decodeUtf8=function(data,offset,endOffset){
+var ret=[];
+var cp,bytesSeen;
+var bytesNeeded=0;
+var lower=0x80;
+var upper=0xbf;
+ if(offset>endOffset)throw new Error();
+ while (true) {
+          if (offset >= endOffset) {
+            if (bytesNeeded != 0) {
+              return null;
+            }
+            return ret.join("");
+          }
+          var b = data.getUint8(offset++);
+          if (bytesNeeded == 0) {
+            if ((b & 0x7f) == b) {
+              ret.push(String.fromCharCode(b));
+              continue;
+            } else if (b >= 0xc2 && b <= 0xdf) {
+              bytesNeeded = 1;
+              cp = (b - 0xc0) << 6;
+            } else if (b >= 0xe0 && b <= 0xef) {
+              lower = (b == 0xe0) ? 0xa0 : 0x80;
+              upper = (b == 0xed) ? 0x9f : 0xbf;
+              bytesNeeded = 2;
+              cp = (b - 0xe0) << 12;
+            } else if (b >= 0xf0 && b <= 0xf4) {
+              lower = (b == 0xf0) ? 0x90 : 0x80;
+              upper = (b == 0xf4) ? 0x8f : 0xbf;
+              bytesNeeded = 3;
+              cp = (b - 0xf0) << 18;
+            } else {
+              return null;
+            }
+            continue;
+          }
+          if (b < lower || b > upper) {
+            return null;
+          } else {
+            lower = 0x80;
+            upper = 0xbf;
+            ++bytesSeen;
+            cp += (b - 0x80) << (6 * (bytesNeeded - bytesSeen));
+            if (bytesSeen != bytesNeeded) {
+              continue;
+            }
+            var cpRet = cp;
+            cp = 0;
+            bytesSeen = 0;
+            bytesNeeded = 0;
+            if(cpRet>=0x10000){
+              ret.push(String.fromCharCode(((cpRet - 0x10000) >> 10) + 0xd800));
+              ret.push(String.fromCharCode(((cpRet - 0x10000) & 0x3ff) + 0xdc00));
+            } else {
+              ret.push(String.fromCharCode(cpRet));
+            }
+          }
+        }
+}
+
+TextFont._loadBinaryFontInner=function(data){
+ var view=new DataView(data.data)
+ var offset=4;
+ if(view.getUint8(0)!=66||
+  view.getUint8(1)!=77||
+  view.getUint8(2)!=70||
+  view.getUint8(3)!=3){
+  throw new Error()
+   return null;
+ }
+ var info={}
+ var chars=[]
+ var pages=[]
+ var kernings=[]
+ var commons={}
+ var havetype=[false,false,false,false,false,false]
+ function utf8stringsize(view,startIndex,endIndex){
+   for(var i=startIndex;i<endIndex;i++){
+     if(view.getUint8(i)==0){
+      return (i-startIndex)
+     }
+   }
+   return -1
+ }
+ function utf8string(view,startIndex,endIndex){
+   for(var i=startIndex;i<endIndex;i++){
+     if(view.getUint8(i)==0){
+      return TextFont._decodeUtf8(view,startIndex,i);
+     }
+   }
+   return null
+ }
+ while (offset<view.byteLength) {
+  var type=view.getUint8(offset)
+  var size=view.getUint32(offset+1,true)
+  if(type==null || type<1 || type>5){return null;}
+  if(havetype[type]){return null;}
+  var newOffset=offset+5+size;
+  havetype[type]=true
+  offset+=5
+  switch(type){
+   case 1:
+    if(size<14){return null;}
+    info.fontSize=view.getInt16(offset,true);
+    info.bitField=view.getUint8(offset+2);
+    var cs=view.getUint8(offset+3);
+    // return null if charset is unsupported
+    if(cs!=0){return null;}
+    info.charSet=""; // ignore charSet field, not used
+    info.stretchH=view.getUint16(offset+4,true)
+    info.aa=view.getUint8(offset+6)
+    info.padding=[
+      view.getUint8(offset+7),
+      view.getUint8(offset+8),
+      view.getUint8(offset+9),
+      view.getUint8(offset+10)],
+    info.spacing=[
+      view.getUint8(offset+11),
+      view.getUint8(offset+12)]
+    info.outline=view.getUint8(offset+13)
+    info.fontName=utf8string(view,offset+14,offset+size)
+    if(info.fontName==null){return null;}
+    break;
+   case 2:
+    commons.lineHeight=view.getUint16(offset,true)
+    commons.base=view.getUint16(offset+2,true)
+    commons.scaleW=view.getUint16(offset+4,true)
+    commons.scaleH=view.getUint16(offset+6,true)
+    commons.pages=view.getUint16(offset+8,true)
+    commons.bitField=view.getUint8(offset+10)
+    commons.alphaChnl=view.getUint8(offset+11)
+    commons.redChnl=view.getUint8(offset+12)
+    commons.greenChnl=view.getUint8(offset+13)
+    commons.blueChnl=view.getUint8(offset+14)
+    break;
+   case 3:
+    var ss=utf8stringsize(view,offset,offset+size)
+    if(ss<0){return null}
+    for(var x=0;x<size;x+=ss+1){
+     var name=utf8string(view,offset,offset+ss+1)
+     if(name==null){return null}
+     pages.push(TextFont._resolvePath(data.url,name))
+     offset+=ss+1
+    }
+    break;
+   case 4:
+    for(var x=0;x<size;x+=20){
+     var ch={}
+     ch.id=view.getUint32(offset,true)
+     ch.x=view.getUint16(offset+4,true)
+     ch.y=view.getUint16(offset+6,true)
+     ch.width=view.getUint16(offset+8,true)
+     ch.height=view.getUint16(offset+10,true)
+     ch.xoffset=view.getInt16(offset+12,true)
+     ch.yoffset=view.getInt16(offset+14,true)
+     ch.xadvance=view.getInt16(offset+16,true)
+     ch.page=view.getUint8(offset+18)
+     ch.chnl=view.getUint8(offset+19)
+     offset+=20
+     chars[ch.id]=ch
+    }
+    break;
+   case 5:
+    for(var x=0;x<size;x+=10){
+     var ch={}
+     ch.first=view.getUint32(offset,true)
+     ch.second=view.getUint32(offset+4,true)
+     ch.amount=view.getInt16(offset+8,true)
+     kernings.push(ch)
+    }
+  }
+  offset=newOffset;
+ }
+if(!havetype[1] || !havetype[2] || !havetype[3]){
+  return null;}
+ return new TextFont(info,chars,pages,kernings,commons,data.url)
+}
+
 TextFont._loadTextFontInner=function(data){
   var text=data.data
   var lines=text.split(/\r?\n/)
@@ -442,13 +623,16 @@ TextFont._loadTextFontInner=function(data){
   return new TextFont(fontinfo,chars,pages,kernings,common,data.url)
 }
 /**
-* Loads a bitmap font definition from a text file, JSON, or XML file.
+* Loads a bitmap font definition from a file.
 * Note that this method only loads the font data and not the bitmaps
 * used to represent the font.
 * @param {string} fontFileName The URL of the font data file
-* to load.  If the string ends in ".xml", the font data is assumed to
-* be in XML; otherwise, if the string ends in ".json", the font data is assumed to
-* be in JSON; otherwise, in text.
+* to load.  The following file extensions are read as the following formats:<ul>
+* <li>".xml": XML</li>
+* <li>".json": JSON</li>
+* <li>".bin": Binary</li>
+* <li>".fnt": Text or binary</li>
+* <li>All others: Text</li></ul>
 * @return {Promise<TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
@@ -458,6 +642,28 @@ TextFont.load=function(fontFileName){
   return GLUtil.loadFileFromUrl(fontFileName,"xml").then(
    function(data){
     var ret=TextFont._loadXmlFontInner(data)
+    return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
+   })
+ } else if((/\.bin$/i.exec(fontFileName))){
+  return GLUtil.loadFileFromUrl(fontFileName,"arraybuffer").then(
+   function(data){
+    var ret=TextFont._loadBinaryFontInner(data)
+    return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
+   },function(e){
+    console.log(e)
+   })
+ } else if((/\.fnt$/i.exec(fontFileName))){
+  return GLUtil.loadFileFromUrl(fontFileName,"arraybuffer").then(
+   function(data){
+    var view=new DataView(data.data)
+    var ret=null;
+    if(view.getUint8(0)==66 && view.getUint8(1)==77 && view.getUint8(2)==70) {
+     ret=TextFont._loadBinaryFontInner(data)
+    } else {
+     var view=new DataView(data.data)
+     ret=TextFont._loadTextFontInner({
+       "url":data.url,"data":TextFont._decodeUtf8(view,0,view.byteLength)})
+    }
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else if((/\.json$/i.exec(fontFileName))){
