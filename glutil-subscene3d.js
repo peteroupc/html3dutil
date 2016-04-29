@@ -71,6 +71,11 @@ Subscene3D._setupMatrices=function(
     var invView=GLMath.mat4invert(viewMatrix);
     uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
    }
+   viewInvW=program.get("projView");
+   if(viewInvW!==null && typeof viewInvW!=="undefined"){
+    var projView=GLMath.mat4multiply(projMatrix,viewMatrix);
+    uniforms.projView=projView;
+   }
   }
   var mvm=program.get("modelViewMatrix");
   if((mvm!==null && typeof mvm!=="undefined")){

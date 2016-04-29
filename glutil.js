@@ -117,7 +117,8 @@ var GLUtil={
   if(!canvasElement)return null;
   if(!canvasElement.getContext)return null;
   var context=null;
-  var options={"preserveDrawingBuffer":true};
+  var options={"preserveDrawingBuffer":true,
+    "alpha":false};
   if(window.devicePixelRatio && window.devicePixelRatio>1){
    options.antialias=false;
   } else {
