@@ -563,6 +563,7 @@ TextFont._loadBinaryFontInner=function(data){
      ch.amount=view.getInt16(offset+8,true)
      kernings.push(ch)
     }
+    break;
   }
   offset=newOffset;
  }
