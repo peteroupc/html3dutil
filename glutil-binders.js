@@ -199,27 +199,37 @@ GLUtil._LightsBinder=function(lights){
  "use strict";
 this.lights=lights;
 }
+GLUtil._LightsBinder.emptyW1 = [0,0,0,1];
+GLUtil._LightsBinder.emptyW0 = [0,0,0,0];
+GLUtil._LightsBinder.emptyAtten = [1,0,0,0];
 /** @private */
-GLUtil._LightsBinder.prototype.bind=function(program){
+GLUtil._LightsBinder.prototype.bind=function(program,viewMatrix){
  "use strict";
 var lightsObject=this.lights;
  if(!lightsObject)return this;
  if(!program)return this;
  var uniforms={};
- uniforms.sceneAmbient=lightsObject.sceneAmbient.slice(0,3);
+ uniforms.sceneAmbient= lightsObject.sceneAmbient.length===3 ?
+    lightsObject.sceneAmbient : lightsObject.sceneAmbient.slice(0,3);
  for(var i=0;i<lightsObject.lights.length;i++){
   var lt=lightsObject.lights[i];
-  uniforms["lights["+i+"].diffuse"]=[lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],
-    lt.diffuse.length>3 ? lt.diffuse[3] : 1];
-  uniforms["lights["+i+"].specular"]=[lt.specular[0],lt.specular[1],lt.specular[2],
-    lt.specular.length>3 ? lt.specular[3] : 1];
-  uniforms["lights["+i+"].position"]=lightsObject.lights[i].position;
+  var ltname="lights["+i+"]";
+  uniforms[ltname+".diffuse"]=lt.diffuse.length===4 ?
+    lt.diffuse : [lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],1];
+  uniforms[ltname+".specular"]=lt.specular.length===4 ?
+    lt.specular : [lt.specular[0],lt.specular[1],lt.specular[2],1];
+  var pos=GLMath.mat4transform(viewMatrix,lightsObject.lights[i].position)
+  uniforms[ltname+".position"]=pos;
+  uniforms[ltname+".atten"]=[lt.constantAttenuation,
+    lt.linearAttenuation,lt.quadraticAttenuation,0.0];
  }
  // Set empty values for undefined lights up to MAX_LIGHTS
  for(i=lightsObject.lights.length;i<Lights.MAX_LIGHTS;i++){
-  uniforms["lights["+i+"].diffuse"]=[0,0,0,1];
-  uniforms["lights["+i+"].specular"]=[0,0,0,1];
-  uniforms["lights["+i+"].position"]=[0,0,0,0];
+  var ltname="lights["+i+"]";
+  uniforms[ltname+".diffuse"]=GLUtil._LightsBinder.emptyW1;
+  uniforms[ltname+".specular"]=GLUtil._LightsBinder.emptyW1;
+  uniforms[ltname+".position"]=GLUtil._LightsBinder.emptyW0;
+  uniforms[ltname+".atten"]=GLUtil._LightsBinder.emptyAtten;
  }
  program.setUniforms(uniforms);
  return this;

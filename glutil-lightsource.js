@@ -13,7 +13,7 @@ function LightSource(position, ambient, diffuse, specular) {
  this.ambient=ambient || [0,0,0,1.0];
  /**
  * Light position.  An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
-<li>    If W is 0, then X, Y, and Z specify a 3-element vector giving the direction of the light; the light will shine everywhere in the given direction.
+<li>    If W is 0, then X, Y, and Z specify a 3-element vector giving the direction from the origin toward the light; the light will shine everywhere in the given direction.
  <li>   If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul>
 */
  this.position=position ? [position[0],position[1],position[2],1.0] :
@@ -31,12 +31,18 @@ function LightSource(position, ambient, diffuse, specular) {
  * A 3-element vector giving the color of the light when it causes a specular
  * reflection, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
- * A specular reflection is a reflection in the same angle as the light reaches
- * an object, like a mirror.  Specular reflections can cause shiny
+ * A specular reflection is a reflection in the opposite direction from the direction
+ * the light reaches the object in, like a mirror.  Specular reflections can cause shiny
  * highlights depending on the viewing angle.
  * The default is (1,1,1), or white.
  */
  this.specular=specular||[1,1,1];
+ /** */
+ this.constantAttenuation=1.0;
+ /** */
+ this.linearAttenuation=0.0;
+ /** */
+ this.quadraticAttenuation=0.0;
 }
 /**
 * Sets parameters for this material object.
@@ -69,6 +75,15 @@ LightSource.prototype.setParams=function(params){
  }
  if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
+ }
+ if(typeof params.constantAttenuation!="undefined"){
+  this.constantAttenuation=params.constantAttenuation;
+ }
+ if(typeof params.linearAttenuation!="undefined"){
+  this.linearAttenuation=params.linearAttenuation;
+ }
+ if(typeof params.constantAttenuation!="undefined"){
+  this.quadraticAttenuation=params.quadraticAttenuation;
  }
  return this;
 };

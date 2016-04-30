@@ -547,33 +547,34 @@ var shader=[
 "attribute vec3 colorAttr;",
 "attribute vec3 tangent;",
 "attribute vec3 bitangent;",
-"uniform mat4 projView;",
-"uniform mat4 world;",
-"varying vec2 uvVar;",
-"varying vec3 colorAttrVar;",
+"uniform mat4 projection;",
+"uniform mat4 modelViewMatrix;",
 "#ifdef SHADING",
-"uniform mat3 worldViewInvTrans3; /* internal */",
-"varying vec4 worldPositionVar;",
+"uniform mat3 normalMatrix; /* internal */",
 "#ifdef NORMAL_MAP",
+"uniform mat4 world;",
 "varying mat3 tbnMatrixVar;",
 "#endif",
+"varying vec4 viewPositionVar;",
 "varying vec3 transformedNormalVar;",
 "#endif",
+"varying vec2 uvVar;",
+"varying vec3 colorAttrVar;",
 "void main(){",
 "vec4 positionVec4;",
 "positionVec4.w=1.0;",
 "positionVec4.xyz=position;",
 "gl_PointSize=1.0;",
-"gl_Position=(projView*world)*positionVec4;",
+"gl_Position=(projection*modelViewMatrix)*positionVec4;",
 "colorAttrVar=colorAttr;",
 "uvVar=uv;",
 "#ifdef SHADING",
-"transformedNormalVar=normalize(worldViewInvTrans3*normal);",
+"transformedNormalVar=normalize(normalMatrix*normal);",
 "#ifdef NORMAL_MAP",
 "tbnMatrixVar=mat3(normalize(vec3(world*vec4(tangent,0.0))),",
 "   normalize(bitangent),transformedNormalVar);",
 "#endif",
-"worldPositionVar=world*positionVec4;",
+"viewPositionVar=modelViewMatrix*positionVec4;",
 "#endif",
 "}"].join("\n");
 return shader;
@@ -598,11 +599,12 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 // NOTE: These struct members must be aligned to
 // vec4 size; otherwise, Chrome may have issues retaining
 // the value of lights[i].specular, causing flickering
-" vec4 position; /* source light direction */\n" +
+" vec4 position; /* source light direction/position, in camera/eye space */\n" +
 " vec4 diffuse; /* source light diffuse color */\n" +
 "#ifdef SPECULAR\n" +
 " vec4 specular; /* source light specular color */\n" +
 "#endif\n" +
+" vec4 atten; /* source light attenuation */\n" +
 "};\n" +
 "const int MAX_LIGHTS = "+Lights.MAX_LIGHTS+"; /* internal */\n" +
 "uniform vec3 sceneAmbient;\n" +
@@ -612,7 +614,6 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef SPECULAR\n" +
 "uniform vec3 ms;\n" +
 "uniform float mshin;\n" +
-"uniform vec4 viewInvW;\n" +
 "#ifdef SPECULAR_MAP\n" +
 "uniform sampler2D specularMap;\n" +
 "#endif\n" +
@@ -627,7 +628,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n" +
 "#ifdef SHADING\n" +
-"varying vec4 worldPositionVar;\n" +
+"varying vec4 viewPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
 "#ifdef NORMAL_MAP\n"+
 "varying mat3 tbnMatrixVar;\n" +
@@ -640,14 +641,10 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "  attenuation=1.0;\n" +
 " } else { /* point light */\n" +
 "  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
-"  float dist=length(vertexToLight);\n" +
-"  if(dist ="+"= 0.0){\n" +
-"   sdir=vertexToLight;\n" +
-"   attenuation=1.0;\n" +
-"  } else {\n" +
-"   sdir=vertexToLight/dist; /* normalizes vertexToLight */\n" +
-"   attenuation=(1.0/dist);\n" +
-"  }\n" +
+"  float dsSquared=dot(vertexToLight,vertexToLight);\n" +
+"  sdir=inversesqrt(ds)*vertexToLight;\n" +
+"  float attenDivisor=max(0.0001,lt.atten.x+lt.atten.y*sqrt(ds)+lt.atten.z*dsSquared);\n" +
+"  attenuation=1.0/attenDivisor;\n" +
 " }\n" +
 " return vec4(sdir,attenuation);\n" +
 "}\n" +
@@ -668,8 +665,6 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#else\n" +
 "normal = transformedNormalVar;\n" +
 "#endif\n" +
-"#define ADD_DIFFUSE(i) "+
-" lightedColor+=vec3(lights[i].diffuse)*max(lightCosines[i],0.0)*lightPower[i].w*materialDiffuse;\n" +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
 "float lightCosines["+Lights.MAX_LIGHTS+"];\n";
 shader+=""+
@@ -679,11 +674,11 @@ shader+=""+
 " // diffuse\n"+
 " vec3 materialDiffuse=baseColor.rgb;\n";
 for(i=0;i<Lights.MAX_LIGHTS;i++){
- shader+="lightPower["+i+"]=calcLightPower(lights["+i+"],worldPositionVar);\n";
- shader+="lightCosines["+i+"]=dot(normal,lightPower["+i+"].xyz);\n";
-}
-for(i=0;i<Lights.MAX_LIGHTS;i++){
- shader+="ADD_DIFFUSE("+i+");\n";
+ shader+="lightPower["+i+"]=calcLightPower(lights["+i+"],viewPositionVar);\n";
+ shader+=" /* Lambert diffusion term */\n";
+ shader+="lightCosines["+i+"]=clamp(dot(normal,lightPower["+i+"].xyz),0.0,1.0);\n";
+ shader+="lightedColor+=lights["+i+"].diffuse.xyz*lightCosines["+i+"]*\n";
+ shader+="   lightPower["+i+"].w*materialDiffuse;\n";
 }
 shader+="#ifdef SPECULAR\n" +
 "bool spectmp;\n" +
@@ -693,17 +688,14 @@ shader+="#ifdef SPECULAR\n" +
 "#endif\n" +
 "// specular reflection\n" +
 "if(materialSpecular.x!=0. || materialSpecular.y!=0. || materialSpecular.z!=0.){\n" +
-"vec3 viewDirection=normalize((viewInvW-worldPositionVar).xyz);\n" +
-"float specular=0.0;\n";
+"vec3 viewDirection=normalize((-viewPositionVar).xyz);\n";
 for(i=0;i<Lights.MAX_LIGHTS;i++){
-shader+="  spectmp = lightCosines["+i+"] >= 0.0;\n" +
+shader+="  spectmp = lightCosines["+i+"] > 0.0;\n" +
 "  if (spectmp) {\n" +
-"  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+
-"    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (normal, -lightPower["+i+"].xyz)*\n"+
-" transformedNormalVar), viewDirection);\n" +
-"    specular=max(specular,0.0);\n" +
+"    /* Blinn-Phong specular term */\n"+
+"    float specular=clamp(dot(normalize(viewDirection+lightPower["+i+"].xyz),normal),0.0,1.0);\n" +
 "    specular=pow(specular,mshin);\n"+
-"    lightedColor+=materialSpecular*specular*lightPower["+i+"].w*lightSpecular;\n" +
+"    lightedColor+=materialSpecular*specular*lightPower["+i+"].w*lights["+i+"].specular;\n" +
 "  }\n";
 }
 shader+="}\n";

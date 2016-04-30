@@ -77,6 +77,10 @@ Subscene3D._setupMatrices=function(
     uniforms.projView=projView;
    }
   }
+  var invTrans=GLMath.mat4inverseTranspose3(worldMatrix);
+  uniforms.world=worldMatrix;
+  uniforms.modelMatrix=worldMatrix;
+  uniforms.normalMatrix=invTrans;
   var mvm=program.get("modelViewMatrix");
   if((mvm!==null && typeof mvm!=="undefined")){
    if(GLUtil._isIdentityExceptTranslate(viewMatrix)){
@@ -91,12 +95,13 @@ Subscene3D._setupMatrices=function(
      worldMatrix);
    }
    uniforms.modelViewMatrix=viewWorld;
-  }
-  var invTrans=GLMath.mat4inverseTranspose3(worldMatrix);
-  uniforms.world=worldMatrix;
-  uniforms.modelMatrix=worldMatrix;
-  uniforms.worldViewInvTrans3=invTrans;
+
+  var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
+  uniforms.world=viewWorld;
+  uniforms.modelMatrix=viewWorld;
   uniforms.normalMatrix=invTrans;
+
+  }
   program.setUniforms(uniforms);
 };
 /**
@@ -242,7 +247,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
     if(renderContext.prog!=prog){
      prog.use();
      projAndView=true;
-     new GLUtil._LightsBinder(this.lightSource).bind(prog);
+     new GLUtil._LightsBinder(this.lightSource).bind(prog,this._viewMatrix);
      renderContext.prog=prog;
     }
     Subscene3D._setupMatrices(prog,
