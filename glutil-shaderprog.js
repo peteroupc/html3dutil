@@ -642,8 +642,8 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 " } else { /* point light */\n" +
 "  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
 "  float dsSquared=dot(vertexToLight,vertexToLight);\n" +
-"  sdir=inversesqrt(ds)*vertexToLight;\n" +
-"  float attenDivisor=max(0.0001,lt.atten.x+lt.atten.y*sqrt(ds)+lt.atten.z*dsSquared);\n" +
+"  sdir=inversesqrt(dsSquared)*vertexToLight;\n" +
+"  float attenDivisor=max(0.0001,lt.atten.x+lt.atten.y*sqrt(dsSquared)+lt.atten.z*dsSquared);\n" +
 "  attenuation=1.0/attenDivisor;\n" +
 " }\n" +
 " return vec4(sdir,attenuation);\n" +

@@ -82,7 +82,7 @@ LightSource.prototype.setParams=function(params){
  if(typeof params.linearAttenuation!="undefined"){
   this.linearAttenuation=params.linearAttenuation;
  }
- if(typeof params.constantAttenuation!="undefined"){
+ if(typeof params.quadraticAttenuation!="undefined"){
   this.quadraticAttenuation=params.quadraticAttenuation;
  }
  return this;
