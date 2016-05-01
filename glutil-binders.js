@@ -220,8 +220,8 @@ var lightsObject=this.lights;
     lt.specular : [lt.specular[0],lt.specular[1],lt.specular[2],1];
   var pos=GLMath.mat4transform(viewMatrix,lightsObject.lights[i].position)
   uniforms[ltname+".position"]=pos;
-  uniforms[ltname+".atten"]=[lt.constantAttenuation,
-    lt.linearAttenuation,lt.quadraticAttenuation,0.0];
+  uniforms[ltname+".radius"]=[Math.max(0.0,lt.radius*lt.radius*lt.radius*lt.radius),
+    0,0,0];
  }
  // Set empty values for undefined lights up to MAX_LIGHTS
  for(i=lightsObject.lights.length;i<Lights.MAX_LIGHTS;i++){
@@ -229,7 +229,7 @@ var lightsObject=this.lights;
   uniforms[ltname+".diffuse"]=GLUtil._LightsBinder.emptyW1;
   uniforms[ltname+".specular"]=GLUtil._LightsBinder.emptyW1;
   uniforms[ltname+".position"]=GLUtil._LightsBinder.emptyW0;
-  uniforms[ltname+".atten"]=GLUtil._LightsBinder.emptyAtten;
+  uniforms[ltname+".radius"]=GLUtil._LightsBinder.emptyW0;
  }
  program.setUniforms(uniforms);
  return this;

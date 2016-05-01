@@ -749,8 +749,8 @@ var mesh=new Mesh();
      mesh.normal3(0,0,inward ? -1 : 1).texCoord2(0.5,0.5).vertex2(0,0);
      for(var i=0;i<points*2;i++){
       var angle=deg360*i*recipPts2;
-      var sangle=Math.sin(angle);
-      var cangle=Math.cos(angle);
+      var cangle = Math.cos(angle);
+      var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
       var radius=(i&1)==0 ? firstRadius : secondRadius;
       var x=-sangle*radius;
       var y=cangle*radius;
@@ -768,6 +768,5 @@ var mesh=new Mesh();
        .vertex2(startX,startY);
      return mesh;
     }
-
 
 this.Meshes=Meshes;

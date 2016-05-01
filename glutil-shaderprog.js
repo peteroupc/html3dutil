@@ -604,7 +604,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef SPECULAR\n" +
 " vec4 specular; /* source light specular color */\n" +
 "#endif\n" +
-" vec4 atten; /* source light attenuation */\n" +
+" vec4 radius; /* light radius */\n" +
 "};\n" +
 "const int MAX_LIGHTS = "+Lights.MAX_LIGHTS+"; /* internal */\n" +
 "uniform vec3 sceneAmbient;\n" +
@@ -643,8 +643,17 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
 "  float dsSquared=dot(vertexToLight,vertexToLight);\n" +
 "  sdir=inversesqrt(dsSquared)*vertexToLight;\n" +
-"  float attenDivisor=max(0.0001,lt.atten.x+lt.atten.y*sqrt(dsSquared)+lt.atten.z*dsSquared);\n" +
-"  attenuation=1.0/attenDivisor;\n" +
+"  if(lt.radius.x==0.0) {\n" +
+"    attenuation=1.0; /* Unlimited extent */\n" +
+"  } else {\n" +
+// See page 32-33 of
+// <http://www.frostbite.com/wp-content/uploads/2014/11/course_notes_moving_frostbite_to_pbr_v2.pdf>
+"   float radiusPow4=lt.radius.x; /* Radius is light's radius to power of 4 */\n" +
+"   float distPow4=dsSquared*dsSquared;\n" +
+"   float attenDivisor=max(0.0001,dsSquared);\n" +
+"   float cut=clamp(1.0-distPow4/radiusPow4,0.0,1.0);\n" +
+"   attenuation=(1.0/attenDivisor)*cut*cut;\n" +
+"  }\n" +
 " }\n" +
 " return vec4(sdir,attenuation);\n" +
 "}\n" +
@@ -695,7 +704,7 @@ shader+="  spectmp = lightCosines["+i+"] > 0.0;\n" +
 "    /* Blinn-Phong specular term */\n"+
 "    float specular=clamp(dot(normalize(viewDirection+lightPower["+i+"].xyz),normal),0.0,1.0);\n" +
 "    specular=pow(specular,mshin);\n"+
-"    lightedColor+=materialSpecular*specular*lightPower["+i+"].w*lights["+i+"].specular;\n" +
+"    lightedColor+=materialSpecular*specular*lightPower["+i+"].w*lights["+i+"].specular.xyz;\n" +
 "  }\n";
 }
 shader+="}\n";

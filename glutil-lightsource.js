@@ -37,12 +37,11 @@ function LightSource(position, ambient, diffuse, specular) {
  * The default is (1,1,1), or white.
  */
  this.specular=specular||[1,1,1];
- /** */
- this.constantAttenuation=1.0;
- /** */
- this.linearAttenuation=0.0;
- /** */
- this.quadraticAttenuation=0.0;
+ /**
+ Radius of the light source.  If 0, the light's intensity doesn't change
+ with distance.
+ @default */
+ this.radius=0.0;
 }
 /**
 * Sets parameters for this material object.
@@ -76,14 +75,8 @@ LightSource.prototype.setParams=function(params){
  if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
  }
- if(typeof params.constantAttenuation!="undefined"){
-  this.constantAttenuation=params.constantAttenuation;
- }
- if(typeof params.linearAttenuation!="undefined"){
-  this.linearAttenuation=params.linearAttenuation;
- }
- if(typeof params.quadraticAttenuation!="undefined"){
-  this.quadraticAttenuation=params.quadraticAttenuation;
+ if(typeof params.radius!="undefined"){
+  this.radius=params.radius;
  }
  return this;
 };

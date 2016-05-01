@@ -11,7 +11,7 @@ function Subscene3D(scene){
  this.parent=scene;
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this.lightSource=new Lights();
+ this.lights=new Lights();
  this._projectionUpdater=null;
  this._frustum=null;
  this.shapes=[];
@@ -194,8 +194,8 @@ Subscene3D.prototype._getFrustum=function(){
 /**
  * Not documented yet.
  */
-Subscene3D.prototype.getLightSource=function(){
- return this.lightSource;
+Subscene3D.prototype.getLights=function(){
+ return this.lights;
 };
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
@@ -247,7 +247,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
     if(renderContext.prog!=prog){
      prog.use();
      projAndView=true;
-     new GLUtil._LightsBinder(this.lightSource).bind(prog,this._viewMatrix);
+     new GLUtil._LightsBinder(this.lights).bind(prog,this._viewMatrix);
      renderContext.prog=prog;
     }
     Subscene3D._setupMatrices(prog,
