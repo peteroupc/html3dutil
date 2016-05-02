@@ -255,7 +255,8 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       this._viewMatrix,
       shape.getMatrix(),
       projAndView);
-    Subscene3D._getMaterialBinder(shape.material).bind(prog);
+    Subscene3D._getMaterialBinder(shape.material).bind(prog,
+      this.parent._textureLoader);
     shape.bufferedMesh.draw(prog);
   }
  }

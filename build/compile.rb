@@ -51,5 +51,5 @@ end
 Dir.chdir(".."){
  files=%w( promise.js glmath.js glutil.js )
  files|=Dir.glob("glutil-*.js")
- normalizeAndCompile(files,"glutil_min.js")
+ normalizeAndCompile(files,"glutil_min.js",false,false)
 }

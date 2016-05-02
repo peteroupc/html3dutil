@@ -7,14 +7,13 @@
 * to (1,1) at the upper right corner.
 * @class
 * @alias glutil.Texture
-* @param {string} name URL of the texture data.  It will be loaded via
-*  the JavaScript DOM's Image class.  However, this constructor
-*  will not load that image yet.
+* @param {string} name URL of the texture data.  Based on the
+* URL, the texture may be loaded via the JavaScript DOM's Image
+* class.  However, this constructor will not load that image yet.
 */
 var Texture=function(name){
  this.image=null;
  this.loadStatus=0;
- this.loadedTexture=null;
  this.name=name;
  this.width=0;
  this.clamp=false;
@@ -28,9 +27,9 @@ var Texture=function(name){
 * are both powers of two.  For other textures, this setting
 * is ignored and out-of-range texture coordinates are
 * always clamped.
-* @param {boolean} clamp If true, the image's texture
+* @param {boolean} clamp If true, the texture's texture
 * coordinates will be clamped to the range [0, 1].  If false,
-* the image's texture coordinates' fractional parts will
+* the fractional parts of the texture coordinates'
 * be used as the coordinates (causing wraparound).
 * The default is false.
 * @return {glutil.Texture} This object.
@@ -200,13 +199,10 @@ Texture.prototype.loadImage=function(){
  });
 };
 /**
- * Disposes the texture data in this object.
+ * Has no effect.  Previously, would dispose
+ * the texture data in this object.
  */
 Texture.prototype.dispose=function(){
- if(this.loadedTexture!==null){
-  this.loadedTexture.dispose();
-  this.loadedTexture=null;
- }
 };
 
 /**

@@ -22,6 +22,7 @@ function Scene3D(canvasOrContext){
  }
  this.context=context;
  this.textureCache={};
+ this._textureLoader=new TextureLoader();
  this._renderedOutsideScene=false;
  /** An array of shapes that are part of the scene.
    @deprecated Shapes should now be managed in Subscene3D objects,
@@ -516,7 +517,7 @@ Scene3D.prototype.setClearColor=function(r,g,b,a){
 * object), and is rejected when an error occurs.
 */
 Scene3D.prototype.loadTexture=function(name){
- return Texture.loadTexture(name, this.textureCache);
+ return this._textureLoader.loadTexture(name);
 };
 /**
 * Loads a texture from an image URL and uploads it
@@ -533,12 +534,13 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
  var context=this.context;
  var tex=null;
  if(texture.constructor===Texture){
-   tex=texture.loadImage();
+  return this.loadAndMapTexture(texture.name);
  } else {
-   tex=Texture.loadTexture(texture, this.textureCache);
+   tex=this.loadTexture(texture);
  }
+ var thisObject=this;
  return tex.then(function(textureInner){
-    textureInner.loadedTexture=new GLUtil._LoadedTexture(textureInner,context);
+    thisObject._textureLoader.mapTexture(textureInner,thisObject);
     return textureInner;
   });
 };

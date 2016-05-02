@@ -181,6 +181,33 @@ var GLUtil={
 "is3DContext":function(context){
  return context && ("compileShader" in context);
 },
+
+/**
+* Utility function that returns a promise that
+ * resolves or is rejected after the given list of promises finishes
+ * its work.
+ * @param {Array<Promise>} promises - an array containing promise objects
+ *  @param {Function} [progressResolve] - a function called as each
+ *   individual promise is resolved; optional
+ *  @param {Function} [progressReject] - a function called as each
+ *   individual promise is rejected; optional
+ * @return {Promise} A promise that is resolves when
+* all of the promises are each resolved.
+ * Will be rejected if any of the promises is rejected. Whether
+ * the return value's promise is resolved or rejected, the result
+ * will be an object as specified in {@link glutil.GLUtil.getPromiseResults}.</ul>
+ */
+"getPromiseResultsAll":function(promises,
+   progressResolve, progressReject){
+   return GLUtil.getPromiseResults(promises,progressResolve,progressReject)
+     .then(function(results){
+      if(results.failures.length>0){
+       return Promise.reject(results);
+      } else {
+       return Promise.resolve(results);
+      }
+     });
+},
 /**
 * Utility function that returns a promise that
  * resolves after the given list of promises finishes

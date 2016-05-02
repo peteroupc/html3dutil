@@ -21,14 +21,22 @@ function FrameBuffer(context, width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  context= (context.getContext) ? context.getContext() : context;
  this.context=context;
+ this._init(context,width,height);
  // give the framebuffer its own texture unit, since the
  // shader program may bind samplers to other texture
  // units, such as texture unit 0
  this.textureUnit=3;
+}
+/** @private */
+FrameBuffer.prototype._init=function(context,width,height){
  this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
+ /** The frame buffer's width.
+  @readonly */
  this.width=Math.ceil(width);
+ /** The frame buffer's height.
+  @readonly */
  this.height=Math.ceil(height);
  this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
  this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
@@ -64,6 +72,17 @@ function FrameBuffer(context, width, height){
    context.FRAMEBUFFER,oldBuffer);
 }
 /**
+ * Not documented yet.
+ * @param {*} width
+ * @param {*} height
+ */
+FrameBuffer.prototype.resize=function(width,height){
+ this.dispose();
+ this.init(width,height);
+ return this;
+}
+
+/**
  * Gets the WebGL context associated with this frame buffer.
  * @return {WebGLRenderingContext} Return value. */
 FrameBuffer.prototype.getContext=function(){
@@ -75,7 +94,7 @@ return this.context;
  * it.  Future draw calls that use the WebGL context will be rendered
  * to this frame buffer until it's unbound with the {@link glutil.FrameBuffer#unbind}
  * method.
- * @param {glutil.ShaderProgram} [program] Not used.
+ * @return {glutil.FrameBuffer} This object.
  */
 FrameBuffer.prototype.bind=function(){
   "use strict";
@@ -88,6 +107,7 @@ FrameBuffer.prototype.bind=function(){
  this.context.framebufferRenderbuffer(
    this.context.FRAMEBUFFER,this.context.DEPTH_ATTACHMENT,
    this.context.RENDERBUFFER,this.depthbuffer);
+ return this;
 };
 /**
  * Unbinds this frame buffer from its associated WebGL context.

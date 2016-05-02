@@ -652,7 +652,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "   float distPow4=dsSquared*dsSquared;\n" +
 "   float attenDivisor=max(0.0001,dsSquared);\n" +
 "   float cut=clamp(1.0-distPow4/radiusPow4,0.0,1.0);\n" +
-"   attenuation=(1.0/attenDivisor)*cut*cut;\n" +
+"   attenuation=(cut*cut)/attenDivisor;\n" +
 "  }\n" +
 " }\n" +
 " return vec4(sdir,attenuation);\n" +
@@ -672,7 +672,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef NORMAL_MAP\n" +
 "normal = normalize(tbnMatrixVar*(2.0*texture2D(normalMap,uvVar).rgb - vec3(1.0)));\n" +
 "#else\n" +
-"normal = transformedNormalVar;\n" +
+"normal = normalize(transformedNormalVar);\n" +
 "#endif\n" +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
 "float lightCosines["+Lights.MAX_LIGHTS+"];\n";

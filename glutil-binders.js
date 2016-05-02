@@ -23,7 +23,7 @@ this.mshade=mshade;
 /** @private */
 GLUtil._MaterialBinder._textureSizeZeroZero=[0,0];
 /** @private */
-GLUtil._MaterialBinder.prototype.bind=function(program){
+GLUtil._MaterialBinder.prototype.bind=function(program,loader){
  "use strict";
  if(!this.mshade)return this;
  if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array")}
@@ -46,9 +46,9 @@ GLUtil._MaterialBinder.prototype.bind=function(program){
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]];
  }
  program.setUniforms(uniforms);
- GLUtil._MaterialBinder.bindTexture(this.mshade.texture,program,0);
- GLUtil._MaterialBinder.bindTexture(this.mshade.specularMap,program,1);
- GLUtil._MaterialBinder.bindTexture(this.mshade.normalMap,program,2);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.texture,program,0,loader);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.specularMap,program,1,loader);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.normalMap,program,2,loader);
  return this;
 };
 
@@ -57,7 +57,7 @@ GLUtil._MaterialBinder.prototype.bind=function(program){
 /** @private */
 GLUtil._LoadedTexture=function(textureImage, context){
   "use strict";
-context=GLUtil._toContext(context);
+  context=GLUtil._toContext(context);
   this.context=context;
   this.loadedTexture=context.createTexture();
   context.activeTexture(context.TEXTURE0);
@@ -98,19 +98,16 @@ if(this.loadedTexture){
 /////////////////////////////////
 
 /** @private */
-GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit){
+GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit,loader){
  "use strict";
  if(!texture)return;
  var isFrameBuffer=(texture instanceof FrameBuffer)
  var context=program.getContext();
+ var loadedTexture=null;
  if(!isFrameBuffer){
- if(typeof texture.image!=="undefined" && texture.image!==null &&
-     (typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null) ){
-      // load the image as a texture
-      texture.loadedTexture=new GLUtil._LoadedTexture(texture,context);
- } else if((typeof texture.image==="undefined" || texture.image===null) &&
-     (typeof texture.loadedTexture==="undefined" || texture.loadedTexture===null) &&
-   texture.loadStatus===0){
+ loadedTexture=loader.mapTexture(texture,context);
+ if((typeof texture.image==="undefined" || texture.image===null)  &&
+    texture.loadStatus===0){
       var thisObj=this;
       var prog=program;
       texture.loadImage().then(function(e){
@@ -120,21 +117,8 @@ GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit){
       return;
  }
  }
- if ((texture.loadedTexture!=null) || isFrameBuffer) {
+ if ((loadedTexture!=null) || isFrameBuffer) {
       var uniforms={};
-      if((texture.anisotropic==null) && !isFrameBuffer){
-       // Try to load anisotropic filtering extension
-       texture.anisotropic=context.getExtension("EXT_texture_filter_anisotropic") ||
-         context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
-         context.getExtension("MOZ_EXT_texture_filter_anisotropic");
-       if(((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || ((typeof texture.anisotropic==="undefined" || texture.anisotropic===null))))))){
-        texture.anisotropic={};
-        texture.maxAnisotropy=1;
-       } else {
-        texture.maxAnisotropy=context.getParameter(
-          texture.anisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-       }
-      }
       if(textureUnit===0){
        uniforms.sampler=textureUnit;
        uniforms.textureSize=[texture.width,texture.height];
@@ -162,14 +146,9 @@ GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit){
        }
       } else {
        context.bindTexture(context.TEXTURE_2D,
-        texture.loadedTexture.loadedTexture);
+        loadedTexture.loadedTexture);
        // Set texture parameters
-       if(typeof texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT!=="undefined"){
-        // Set anisotropy if anisotropic filtering is supported
-        context.texParameteri(context.TEXTURE_2D,
-         texture.anisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
-         texture.maxAnisotropy);
-       }
+       loader._setMaxAnisotropy(context);
        // set magnification
        context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_MAG_FILTER, context.LINEAR);
