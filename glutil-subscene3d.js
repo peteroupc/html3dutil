@@ -16,13 +16,17 @@ function Subscene3D(scene){
  this._frustum=null;
  this.shapes=[];
 }
+/** @private */
 Subscene3D._PerspectiveView=function(scene,fov,near,far){
  this.fov=fov;
  this.near=near;
  this.far=far;
  this.scene=scene;
  this.lastAspect=null;
- this.update=function(){
+/**
+ * Not documented yet.
+ */
+this.update=function(){
   var aspect=this.scene.parent.getClientAspect();
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
@@ -32,6 +36,7 @@ Subscene3D._PerspectiveView=function(scene,fov,near,far){
  }
  this.update();
 }
+/** @private */
 Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
  this.a=a;
  this.b=b;
@@ -41,7 +46,10 @@ Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
  this.f=f;
  this.scene=scene;
  this.lastAspect=null;
- this.update=function(){
+/**
+ * Not documented yet.
+ */
+this.update=function(){
   var aspect=this.scene.parent.getClientAspect();
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
@@ -104,13 +112,24 @@ Subscene3D._setupMatrices=function(
   }
   program.setUniforms(uniforms);
 };
+/** @private */
+Subscene3D._isSameMatrix=function(a,b){
+ return (a[0]==b[0] && a[1]==b[1] && a[2]==b[2] &&
+   a[3]==b[3] && a[4]==b[4] && a[5]==b[5] &&
+   a[6]==b[6] && a[7]==b[7] && a[8]==b[8] &&
+   a[9]==b[9] && a[10]==b[10] && a[11]==b[11] &&
+   a[12]==b[12] && a[13]==b[13] && a[14]==b[14] &&
+   a[15]==b[15]);
+}
 /**
  * Not documented yet.
  * @param {*} mat
  */
 Subscene3D.prototype.setProjectionMatrix=function(mat){
- this._projectionMatrix=mat.slice(0,16)
- this._frustum=null
+ if(!Subscene3D._isSameMatrix(this._projectionMatrix)){
+  this._projectionMatrix=mat.slice(0,16)
+  this._frustum=null
+ }
  return this;
 };
 /**
@@ -167,8 +186,10 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  * @param {*} mat
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
- this._viewMatrix=mat.slice(0,16)
- this._frustum=null
+ if(!Subscene3D._isSameMatrix(this._viewMatrix)){
+  this._viewMatrix=mat.slice(0,16)
+  this._frustum=null
+ }
  return this;
 };
 /**
@@ -290,8 +311,13 @@ Subscene3D.prototype.render=function(){
   }
   return this;
 };
-
-Subscene3D.forFilter=function(scene, fbo, shader){
+/**
+ * Not documented yet.
+ * @param {*} scene
+ * @param {*} fbo
+ * @param {*} shader
+ */
+Subscene3D.forFilter=function(scene,fbo,shader){
   if(shader==null){
     shader=ShaderProgram.makeCopyEffect(scene);
   }
@@ -309,7 +335,7 @@ Subscene3D.forFilter=function(scene, fbo, shader){
   ret.addShape(shape);
    return ret;
 }
-
+/** @private */
 Subscene3D._getMaterialBinder=function(material){
  "use strict";
 if(material){

@@ -1260,7 +1260,7 @@ var empty=true;
  }
  return ret;
 };
-
+/** @private */
 Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
   "use strict";
 var t1 = vertices[v2] - vertices[v1];
@@ -1288,9 +1288,8 @@ var t1 = vertices[v2] - vertices[v1];
   var t19 = (((t13 * t3) + t7 * t6)) * t11;
   return [t14,t15,t16,t17,t18,t19];
 };
-
-Mesh._recalcTangentsInternal=function(vertices,indices,stride,
-  uvOffset,normalOffset,tangentOffset){
+/** @private */
+Mesh._recalcTangentsInternal=function(vertices,indices,stride,uvOffset,normalOffset,tangentOffset){
  // NOTE: no need to specify bitangent offset, since tangent
  // and bitangent will always be contiguous (this method will
  // always be called after the recalcTangents method ensures

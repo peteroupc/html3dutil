@@ -324,6 +324,7 @@ var isCurrentProgram=null;
   }
   return this;
 };
+/** @private */
 ShaderProgram._copyIfDifferent=function(src,dst,len){
  "use strict";
 for(var i=0;i<len;i++){
@@ -414,7 +415,10 @@ shader+="\n\nvoid main(){\n" +
 "}";
 return shader;
 };
-
+/**
+ * Not documented yet.
+ * @param {*} context
+ */
 ShaderProgram.makeCopyEffect=function(context){
 "use strict";
 var shader=ShaderProgram.fragmentShaderHeader();
@@ -643,7 +647,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
 "  float dsSquared=dot(vertexToLight,vertexToLight);\n" +
 "  sdir=inversesqrt(dsSquared)*vertexToLight;\n" +
-"  if(lt.radius.x==0.0) {\n" +
+"  if(lt.radius.x === 0.0) {\n" +
 "    attenuation=1.0; /* Unlimited extent */\n" +
 "  } else {\n" +
 // See page 32-33 of

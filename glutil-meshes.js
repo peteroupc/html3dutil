@@ -550,7 +550,8 @@ if((stacks===null || typeof stacks==="undefined"))stacks=8;
  if(stacks<1)throw new Error("too few stacks");
  return Meshes._createCapsule(radius,length,slices,stacks*2,middleStacks,flat,inside);
 };
-Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, flat, inside){
+/** @private */
+Meshes._createCapsule=function(radius,length,slices,stacks,middleStacks,flat,inside){
  "use strict";
 var mesh=new Mesh();
  if((slices===null || typeof slices==="undefined"))slices=16;
@@ -751,12 +752,12 @@ var mesh=new Mesh();
       var angle=deg360*i*recipPts2;
       var cangle = Math.cos(angle);
       var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
-      var radius=(i&1)==0 ? firstRadius : secondRadius;
+      var radius=(i&1) === 0 ? firstRadius : secondRadius;
       var x=-sangle*radius;
       var y=cangle*radius;
       var tcx=(1+x*recipRadius)*0.5;
       var tcy=(1+y*recipRadius)*0.5;
-      if(i==0){
+      if(i === 0){
        startX=x;
        startY=y;
       }

@@ -217,7 +217,7 @@ BSplineCurve.HOMOGENEOUS_BIT = 4;
 * @const
 */
 BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
-
+/** @private */
 BSplineCurve._checkKnots=function(knots){
  for(var i=1;i<knots.length;i++){
   if(knots[i]<knots[i-1])
@@ -225,6 +225,7 @@ BSplineCurve._checkKnots=function(knots){
  }
  if(knots[0]===knots[knots.length-1])throw new Error();
 };
+/** @private */
 BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
  var c=1;
  for(var i=0;i<numPoints;i++){

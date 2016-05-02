@@ -26,16 +26,16 @@ function RenderPass3D(subScene,parameters){
  */
 RenderPass3D.prototype.setParams=function(parameters){
  if(!parameters)return;
- if(typeof parameters["clearColor"]!=="undefined"){
-  this.clearColor=parameters["clearColor"]
+ if(typeof parameters.clearColor!=="undefined"){
+  this.clearColor=parameters.clearColor
  }
- if(typeof parameters["clearDepth"]!=="undefined"){
-  this.clearDepth=parameters["clearDepth"]
+ if(typeof parameters.clearDepth!=="undefined"){
+  this.clearDepth=parameters.clearDepth
  }
- if(typeof parameters["clearStencil"]!=="undefined"){
-  this.clearStencil=parameters["clearStencil"]
+ if(typeof parameters.clearStencil!=="undefined"){
+  this.clearStencil=parameters.clearStencil
  }
- if(typeof parameters["frameBuffer"]!=="undefined"){
-  this.frameBuffer=parameters["frameBuffer"]
+ if(typeof parameters.frameBuffer!=="undefined"){
+  this.frameBuffer=parameters.frameBuffer
  }
 }

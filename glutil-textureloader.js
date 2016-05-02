@@ -41,6 +41,25 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
   return ret
  }
 }
+/**
+ * Not documented yet.
+ * @param {*} textures
+ * @param {*} resolve
+ * @param {*} reject
+ */
+TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
+ context= (context.getContext) ? context.getContext() : context;
+ var promises=[]
+ for(var i=0;i<textures.length;i++){
+  promises.push(this.loadTexture(textures[i]));
+ }
+ return GLUtil.getPromiseResultsAll(textures,resolve,reject);
+}
+/**
+ * Not documented yet.
+ * @param {*} textures
+ * @param {*} context
+ */
 TextureLoader.prototype.mapTextures=function(textures,context){
  context= (context.getContext) ? context.getContext() : context;
  for(var i=0;i<textures.length;i++){

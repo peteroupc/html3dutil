@@ -58,8 +58,7 @@ function rotateVec(vec,angle){
   scene.setClearColor("white");
   scene.setDirectionalLight(0,[0,-3,1.2],[1,1,1])
   scene.setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
-  scene.loadAndMapTextures(["461223191.jpg"]).then(function(results){
-   if(results.failures.length>0)return
+  scene.loadAndMapTexturesAll(["461223191.jpg"]).then(function(results)
    var mesh=null
    scene.addShape(
     scene.makeShape(makeFloor(-5,-5,10,10,1)).setTexture(results.successes[0]))

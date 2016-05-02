@@ -568,6 +568,22 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  }
  return GLUtil.getPromiseResults(promises, resolve, reject);
 };
+/**
+ * Not documented yet.
+ * @param {*} textureFiles
+ * @param {*} resolve
+ * @param {*} reject
+ */
+Scene3D.prototype.loadAndMapTexturesAll=function(textureFiles,resolve,reject){
+ var promises=[];
+ var context=this.context;
+ for(var i=0;i<textureFiles.length;i++){
+  var objf=textureFiles[i];
+  promises.push(this.loadAndMapTexture(objf));
+ }
+ return GLUtil.getPromiseResultsAll(promises, resolve, reject);
+};
+
 /** @private */
 Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
