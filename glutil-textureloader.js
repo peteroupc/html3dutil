@@ -7,6 +7,11 @@ function TextureLoader(){
  this.textureImages={};
  this.maxAnisotropy=[];
 }
+
+TextureLoader.prototype.getTexture=function(name){
+ return this.textureImages[name]||null;
+}
+
 /**
  * Not documented yet.
  * @param {*} name
@@ -49,12 +54,11 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
  * @param {*} reject
  */
 TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
- context= (context.getContext) ? context.getContext() : context;
  var promises=[]
  for(var i=0;i<textures.length;i++){
   promises.push(this.loadTexture(textures[i]));
  }
- return GLUtil.getPromiseResultsAll(textures,resolve,reject);
+ return GLUtil.getPromiseResultsAll(promises,resolve,reject);
 }
 /**
  * Not documented yet.
