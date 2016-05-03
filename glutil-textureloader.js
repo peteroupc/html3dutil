@@ -31,11 +31,12 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
          context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
          context.getExtension("MOZ_EXT_texture_filter_anisotropic")
  if(!ext){
-  ma.push([context,1,-1])
+  ma.push([context,1,-1,null])
   return 1
  } else {
-  var cnst=ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT;
-  var ret=context.getParameter(cnst);
+  var cnst=ext.TEXTURE_MAX_ANISOTROPY_EXT;
+  var ret=context.getParameter(
+    ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
   ma.push([context,ret,cnst])
   context.texParameteri(context.TEXTURE_2D,cnst,ret);
   return ret
@@ -85,7 +86,7 @@ TextureLoader.prototype.mapTexture=function(texture,context){
  return loadedTex;
 }
 /**
- * Not documented yet.
+ * Disposes all resources used by this texture loader.
  */
 TextureLoader.prototype.dispose=function(){
  for(var tex in this.textureImages){

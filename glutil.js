@@ -191,10 +191,11 @@ var GLUtil={
  *   individual promise is resolved; optional
  *  @param {Function} [progressReject] - a function called as each
  *   individual promise is rejected; optional
- * @return {Promise} A promise that is resolves when
-* all of the promises are each resolved.
- * Will be rejected if any of the promises is rejected. Whether
- * the return value's promise is resolved or rejected, the result
+ * @return {Promise} A promise that is resolved when
+* all of the promises are each resolved; the result will
+* be an array of results from those promises,
+* in the order in which those promises were listed.
+ * Will be rejected if any of the promises is rejected; the result
  * will be an object as specified in {@link glutil.GLUtil.getPromiseResults}.</ul>
  */
 "getPromiseResultsAll":function(promises,
@@ -204,7 +205,7 @@ var GLUtil={
       if(results.failures.length>0){
        return Promise.reject(results);
       } else {
-       return Promise.resolve(results);
+       return Promise.resolve(results.successes);
       }
      });
 },

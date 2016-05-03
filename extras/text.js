@@ -119,7 +119,7 @@ TextRenderer.prototype._loadPages=function(font){
  var thisObject=this;
  return this.scene.loadAndMapTextures(textures).then(function(r){
   if(r.failures.length>0) {
-   return Promise.reject({"url":font.fileUrl});
+   return Promise.reject({"url":font.fileUrl,"results":r});
   }
   thisObject._setFontTextures(font,r.successes);
   return Promise.resolve(font);
@@ -138,7 +138,7 @@ TextRenderer.prototype._loadPages=function(font){
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
 * @return {Promise<TextFont>} A promise that is resolved
-* when the font data is loaded successfully (the result will be
+* when the font data and all the textures it uses are loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
 */
 TextRenderer.prototype.loadFont=function(fontFileName){
