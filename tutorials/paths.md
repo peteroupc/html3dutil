@@ -44,8 +44,8 @@ The following are examples of SVG path strings:
 
 The "M" command moves the current position, the "L", "H", and "V" commands create
 lines, the "Q", "C", "S", and "T" commands create B&eacute;zier curves, the "A" command
-creates elliptical arcs, and the "Z" command closes the path.
-If the letters are lower-cased, X and Y coordinates are relative to the current position.
+creates elliptical arcs, and the "Z" command closes the path. If the letters are
+lower-cased, X and Y coordinates are relative to the current position.
 
 For more information, see the {@link GraphicsPath.fromString} method documentation.
 That method is also how you create a 2D path from an SVG path string, as in this

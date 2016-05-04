@@ -9,7 +9,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /* global GLMath, Mesh */
 /**
 * Contains methods that create meshes
-* of common geometric shapes.
+* of various geometric shapes.
 * @class
 * @alias glutil.Meshes
 */
@@ -143,9 +143,10 @@ var mesh=new Mesh();
    sinSlopeNorm*=normDir;
    cosSlopeNorm*=normDir;
   }
+  var recipstacks=1.0/(stacks);
   for(i=0;i<stacks;i++){
    var zStart=lastZ;
-   var zEnd=(i+1)/stacks;
+   var zEnd=(i+1==stacks) ? 1.0 : (i+1)*recipstacks;
    var zStartHeight=height*zStart;
    var zEndHeight=height*zEnd;
    var radiusStart=lastRad;
@@ -174,6 +175,67 @@ var mesh=new Mesh();
   }
  }
  return flat ? mesh.recalcNormals(flat,inside) : mesh;
+};
+
+Meshes.createLathe=function(points, slices, flat, inside){
+ "use strict";
+ // NOTE: Y-coordinate should not be the same from one point to the next
+ var mesh=new Mesh();
+ if(points.length<4)throw new Error("too few points");
+ if((slices===null || typeof slices==="undefined"))slices=32;
+ if(slices<=2)throw new Error("too few slices");
+ if((points.length%1)!=0)throw new Error("points array length is not an even number");
+for(var i=0;i<points.length;i+=2){
+ if(points[i<<1]<0)throw new Error("point's x is less than 0")
+}
+ var sc=[0,1]; // sin(0), cos(0)
+ var tc=[0];
+ var i;
+ var twopi=GLMath.PiTimes2;
+ for(i=1;i<slices;i++){
+  var t=i*1.0/slices;
+  var angle=twopi*t;
+  var cangle = Math.cos(angle);
+  var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
+  sc.push(sangle,cangle);
+  tc.push(t);
+ }
+ sc.push(0,1);
+ tc.push(1);
+ var slicesTimes2=slices*2;
+  var lastZ=0;
+  var lastRad=baseRad;
+  var stacks=(points.length/2)-1;
+  var recipstacks=1.0/stacks;
+  for(i=0;i<stacks;i++){
+   var zStart=lastZ;
+   var zEnd=(i+1==stacks) ? 1.0 : (i+1)*recipstacks;
+   var index=i<<1;
+   var zsh=points[index+1];
+   var zeh=points[index+3];
+   var zStartHeight=Math.min(zsh,zeh);
+   var zEndHeight=Math.max(zsh,zeh);
+   var radiusStart=points[index];
+   var radiusEnd=points[index+2];
+   lastZ=zEnd;
+   lastRad=radiusEnd;
+   mesh.mode(Mesh.TRIANGLE_STRIP);
+   mesh.texCoord2(1,zStart);
+   mesh.vertex3(0,radiusStart,zStartHeight);
+   mesh.texCoord2(1,zEnd);
+   mesh.vertex3(0,radiusEnd,zEndHeight);
+   for(var k=2,j=1;k<=slicesTimes2;k+=2,j++){
+    var tx=tc[j];
+    var x,y;
+    x=sc[k];
+    y=sc[k+1];
+     mesh.texCoord2(1-tx,zStart);
+     mesh.vertex3(x*radiusStart,y*radiusStart,zStartHeight);
+     mesh.texCoord2(1-tx,zEnd);
+     mesh.vertex3(x*radiusEnd,y*radiusEnd,zEndHeight);
+   }
+  }
+ return mesh.recalcNormals(flat,inside);
 };
 
 /**
@@ -280,6 +342,7 @@ var mesh=new Mesh();
  if(sweep===0)sweep=360;
  var sc=[];
  var tc=[];
+ var i;
  var twopi=GLMath.PiTimes2;
  var arcLength=(sweep===360) ? twopi : sweep*GLMath.PiDividedBy180;
  start=start*GLMath.PiDividedBy180;
@@ -722,7 +785,7 @@ var mesh=new Mesh();
 };
 
     /**
-    * Creates a mesh in the form of a 2D n-pointed star.
+    * Creates a mesh in the form of a two-dimensional n-pointed star.
     * @param {number} points Number of points in the star.
     * Must be 2 or greater.
     * @param {number} firstRadius First radius of the star.
@@ -744,7 +807,7 @@ var mesh=new Mesh();
      var outer=true;
      var startX=0;
      var startY=0;
-     var deg360=Math.PI*2;
+     var deg360=GLMath.PiTimes2;
      var recipPts2=1.0/(points*2);
      var recipRadius=1.0/Math.max(firstRadius,secondRadius);
      mesh.normal3(0,0,inward ? -1 : 1).texCoord2(0.5,0.5).vertex2(0,0);

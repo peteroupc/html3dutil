@@ -7,7 +7,10 @@ function TextureLoader(){
  this.textureImages={};
  this.maxAnisotropy=[];
 }
-
+/**
+ * Not documented yet.
+ * @param {*} name
+ */
 TextureLoader.prototype.getTexture=function(name){
  return this.textureImages[name]||null;
 }
@@ -52,11 +55,51 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
  * @param {*} textures
  * @param {*} resolve
  * @param {*} reject
+ * @return {Promise<glutil.Texture>} A promise as described in
+ * {@link glutil.GLUtil.getPromiseResultsAll}.  If the promise
+ * resolves, each item in the resulting array will be a loaded
+ * {@link glutil.Texture} object.
  */
 TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
  var promises=[]
  for(var i=0;i<textures.length;i++){
   promises.push(this.loadTexture(textures[i]));
+ }
+ return GLUtil.getPromiseResultsAll(promises,resolve,reject);
+}
+/**
+ * Not documented yet.
+ * @param {string} texture
+ * @param {*} context
+ * @return {Promise<glutil.Texture>} A promise that resolves when
+ * the texture is loaded successfully (the result will be a Texture object)
+ * and is rejected when an error occurs.
+ */
+TextureLoader.prototype.loadAndMapTexture=function(texture,context){
+  context= (context.getContext) ? context.getContext() : context;
+  var thisObject=this;
+  return this.loadTexture(texture).then(function(tex){
+      thisObject.mapTexture(tex,context);
+      return Promise.resolve(tex);
+  });
+}
+/**
+ * Not documented yet.
+ * @param {Array<string>} textures
+ * @param {*} context
+ * @param {*} resolve
+ * @param {*} reject
+ * @return {Promise<glutil.Texture>} A promise as described in
+ * {@link glutil.GLUtil.getPromiseResultsAll}.  If the promise
+ * resolves, each item in the resulting array will be a loaded
+ * {@link glutil.Texture} object.
+ */
+TextureLoader.prototype.loadAndMapTexturesAll=function(textures,context,resolve,reject){
+ context= (context.getContext) ? context.getContext() : context;
+ var promises=[]
+ var thisObject=this;
+ for(var i=0;i<textures.length;i++){
+  promises.push(this.loadAndMapTexture(textures[i],context));
  }
  return GLUtil.getPromiseResultsAll(promises,resolve,reject);
 }

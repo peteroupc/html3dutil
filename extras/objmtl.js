@@ -134,7 +134,7 @@ for(var i=0;i<this.list.length;i++){
     var mtl=this.list[i].data;
     if(mtl.texture){
      var resolvedName=ObjData._resolvePath(
-       this.url,mtl.texture.name);
+       this.url,mtl.texture);
      this.list[i].data=mtl.copy()
        .setParams({"texture":resolvedName});
     }

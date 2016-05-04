@@ -36,8 +36,7 @@ this._initialize(vertices,faces,format);
 * @param {Array<number>} [vertices] An array that contains data on each
 * vertex of the mesh.
 * Each vertex is made up of the same number of elements, as defined in
-* format. If null or omitted, creates an initially empty mesh.
-* May be null or omitted, in which case an empty vertex array is used.
+* format. May be null or omitted, in which case an empty vertex array is used.
 * @param {Array<number>} [indices] An array of vertex indices.  Each trio of
 * indices specifies a separate triangle, or each pair of indices specifies
 * a line segment.

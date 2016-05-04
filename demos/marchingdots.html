@@ -90,7 +90,7 @@ var points=path.getPoints(50,0.2)
   var anim=null
   var timer={}
   GLUtil.renderLoop(function(time){
-   sub.setPerspective(45,scene.getClientAspect(),1,1000)
+   sub.perspectiveAspect(45,1,1000)
    sub.setLookAt([22.5,22.5-3*8,1.2*50],[22.5,22.5,0],[0,0,1])
    var t=GLUtil.getTimePosition(timer,time,1000)
    pointMarch(group,curves,t)

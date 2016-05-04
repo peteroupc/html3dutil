@@ -292,14 +292,16 @@ Scene3D.prototype.getHeight=function(){
 * divided by getHeight()).
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @return {number} Return value.*/
+* @return {number} Aspect ratio, or 1 if height is 0.*/
 Scene3D.prototype.getAspect=function(){
- return this.getWidth()/this.getHeight();
+ var ch=this.getHeight();
+ if(ch<=0)return 1;
+ return this.getWidth()/ch;
 };
 /**
 * Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
-* @return {number} Return value.*/
+* @return {number} Aspect ratio, or 1 if height is 0.*/
 Scene3D.prototype.getClientAspect=function(){
  var ch=this.context.canvas.clientHeight;
  if(ch<=0)return 1;
@@ -511,6 +513,8 @@ Scene3D.prototype.setClearColor=function(r,g,b,a){
 };
 /**
 * Loads a texture from an image URL.
+* @deprecated Use the TextureLoader method loadTexture or
+* loadTexturesAll instead.
 * @param {string} name URL of the image to load.
 * @return {Promise} A promise that is resolved when
 * the image is loaded successfully (the result will be a Texture
@@ -522,6 +526,8 @@ Scene3D.prototype.loadTexture=function(name){
 /**
 * Loads a texture from an image URL and uploads it
 * to a texture buffer object.
+* @deprecated Use the TextureLoader method loadAndMapTexturesAll
+* instead.
 * @param {string|glutil.Texture} texture String giving the
 * URL of the image to load, or
 * a Texture object whose data may or may not be loaded.
@@ -547,6 +553,8 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
 /**
 * Loads one or more textures from an image URL and uploads each of them
 * to a texture buffer object.
+* @deprecated Use the TextureLoader method loadAndMapTexturesAll
+* instead.
 * @param {Array<string>} textureFiles A list of URLs of the image to load.
 * @param {Function} [resolve] Called for each URL that is loaded successfully
 * and uploaded to a texture buffer (the argument will be a Texture object.)
@@ -568,22 +576,6 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  }
  return GLUtil.getPromiseResults(promises, resolve, reject);
 };
-/**
- * Not documented yet.
- * @param {*} textureFiles
- * @param {*} resolve
- * @param {*} reject
- */
-Scene3D.prototype.loadAndMapTexturesAll=function(textureFiles,resolve,reject){
- var promises=[];
- var context=this.context;
- for(var i=0;i<textureFiles.length;i++){
-  var objf=textureFiles[i];
-  promises.push(this.loadAndMapTexture(objf));
- }
- return GLUtil.getPromiseResultsAll(promises, resolve, reject);
-};
-
 /** @private */
 Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
@@ -872,6 +864,7 @@ Scene3D.prototype.render=function(renderPasses){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.useFilter=function(filterProgram){
-  console.warn("Has no effect.");
+  console.warn("The useFilter method has no effect. Use the {@link Subscene3D.forFilter} method to "+
+    "create a subscene for rendering filter effects from a frame buffer.");
   return this;
 };

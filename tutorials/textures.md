@@ -2,14 +2,24 @@
 
 [Contents](#Contents)<br>[Sample Code for Loading Textures](#Sample_Code_for_Loading_Textures)<br>&nbsp;&nbsp;[Loading a single texture](#Loading_a_single_texture)<br>&nbsp;&nbsp;[Loading multiple textures](#Loading_multiple_textures)<br>&nbsp;&nbsp;[Demos](#Demos)<br>
 
+## Texture Loaders
+
+A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL contexts.
+
 ## Sample Code for Loading Textures <a id=Sample_Code_for_Loading_Textures></a>
 
 ### Loading a single texture <a id=Loading_a_single_texture></a>
 
-The variable `textureURL` is the URL of the texture to load.
+The `loadAndMapTexture` method of `TextureLoader` returns a promise, which will receive either
+the texture loaded or an error.  Loading a texture often happens asynchronously, so code that
+follows the `loadAndMapTexture` call (and its corresponding `then` calls) will generally run without
+waiting for the texture to finish loading.
+
+In the sample code below, the variable `textureURL` is the URL of the texture to load.
 
 ```
-  scene.loadAndMapTexture(textureURL).then(function(tex){
+  var loader=new TextureLoader();
+  loader.loadAndMapTexture(textureURL, scene).then(function(tex){
     // texture is loaded, the Texture object is in the "tex" parameter
     // Now create a sphere
     var mesh=Meshes.createSphere(1);
@@ -25,18 +35,23 @@ The variable `textureURL` is the URL of the texture to load.
 The variables `textureURL1` and `textureURL2` are URL textures.
 
 ```
-  scene.loadAndMapTextures([
+  var loader=new TextureLoader();
+  loader.loadAndMapTexturesAll([
    textureURL1,
    textureURL2
-  ]).then(function(res){
-    if(res.failures.length>0){
-      // Some of the textures failed to load
-    } else {
-      for(var i=0;i<res.successes.length;i++){
-        var texture=res.successes[i];
+  ], scene).then(function(res){
+      for(var i=0;i<res.length;i++){
+        var texture=res[i];
         // deal with the texture (a Texture object)
       }
-    }
+  }, function(res){
+   // Some or all of the textures failed to load
+   if(res.failures.length>0){
+     // We have some failing textures
+   }
+   if(res.successes.length>0){
+     // We have some succeeding textures
+   }
   });
 ```
 

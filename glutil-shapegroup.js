@@ -90,6 +90,17 @@ ShapeGroup.prototype.setMaterial=function(material){
  }
  return this;
 };
+
+/**
+ * Sets the texture used by all shapes in this shape group.
+ * @param {glutil.Material} material
+ */
+ShapeGroup.prototype.setTexture=function(material){
+ for(var i=0;i<this.shapes.length;i++){
+  this.shapes[i].setTexture(material);
+ }
+ return this;
+};
 /**
  * Sets the shader program used by all shapes in this shape group.
  * @param {glutil.Material} material

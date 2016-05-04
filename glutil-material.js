@@ -159,8 +159,8 @@ A strong tilt indicates strong relief detail at that point.<p>
  */
  this.basic=false;
  /**
- * Not documented yet.
-* @default
+ * Shader program to use when rendering objects with this material.
+ * @default
  */
  this.shader=null;
 }
@@ -210,7 +210,8 @@ Material.prototype.copy=function(){
 * map texture (see {@link glutil.Material#specularMap}).
 * <li><code>normalMap</code> - {@link glutil.Texture} object, or a string with the URL, of a normal
 * map (bump map) texture (see {@link glutil.Material#normalMap}).
-* <li><code>shader</code> - {@link glutil.ShaderProgram} object for a WebGL shader program.
+* <li><code>shader</code> - {@link glutil.ShaderProgram} object for a WebGL shader program
+* to use when rendering objects with this material.
 * </ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
 * @return {glutil.Material} This object.

@@ -105,7 +105,6 @@ GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit,loader){
  var context=program.getContext();
  var loadedTexture=null;
  if(!isFrameBuffer){
- loadedTexture=loader.mapTexture(texture,context);
  if((typeof texture.image==="undefined" || texture.image===null)  &&
     texture.loadStatus===0){
       var thisObj=this;
@@ -115,6 +114,8 @@ GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit,loader){
         thisObj.bind(prog);
       });
       return;
+ } else {
+  loadedTexture=loader.mapTexture(texture,context);
  }
  }
  if ((loadedTexture!=null) || isFrameBuffer) {

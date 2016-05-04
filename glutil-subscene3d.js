@@ -74,11 +74,6 @@ Subscene3D._setupMatrices=function(
    uniforms.projection=projMatrix;
    uniforms.viewMatrix=viewMatrix;
    uniforms.projectionMatrix=projMatrix;
-   var viewInvW=program.get("viewInvW");
-   if(viewInvW!==null && typeof viewInvW!=="undefined"){
-    var invView=GLMath.mat4invert(viewMatrix);
-    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
-   }
    viewInvW=program.get("projView");
    if(viewInvW!==null && typeof viewInvW!=="undefined"){
     var projView=GLMath.mat4multiply(projMatrix,viewMatrix);
@@ -282,15 +277,6 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
   }
  }
 };
-/**
- * Not documented yet.
- * @param {*} textureFiles
- * @param {*} resolve
- * @param {*} reject
- */
-Subscene3D.prototype.loadAndMapTexturesAll=function(textureFiles,resolve,reject){
- return this.parent.loadAndMapTexturesAll(textureFiles,resolve,reject);
-}
 /**
  * Not documented yet.
  * @param {*} mesh

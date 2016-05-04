@@ -73,8 +73,8 @@ function sampleShape(num){
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white");
+  var scene=new Scene3D(document.getElementById("canvas"))
+   .setClearColor("white");
   var camera=new Camera(scene,45,1,1000).setDistance(5)
    .turnVertical(-90)
   var xyz=new ShapeGroup();
