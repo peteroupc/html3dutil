@@ -435,7 +435,7 @@ return new ShaderProgram(context,
 
 /**
 * Generates a shader program for applying
-* a raster effect to a texture.
+* a raster effect (postprocessing effect) to a texture.
 * @param {WebGLRenderingContext|object} context A WebGL context associated with the
 * compiled shader program, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method

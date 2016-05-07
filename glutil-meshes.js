@@ -176,8 +176,14 @@ var mesh=new Mesh();
  }
  return flat ? mesh.recalcNormals(flat,inside) : mesh;
 };
-
-Meshes.createLathe=function(points, slices, flat, inside){
+/**
+ * Not documented yet.
+ * @param {*} points
+ * @param {*} slices
+ * @param {*} flat
+ * @param {*} inside
+ */
+Meshes.createLathe=function(points,slices,flat,inside){
  "use strict";
  // NOTE: Y-coordinate should not be the same from one point to the next
  var mesh=new Mesh();

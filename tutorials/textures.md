@@ -1,8 +1,8 @@
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[Sample Code for Loading Textures](#Sample_Code_for_Loading_Textures)<br>&nbsp;&nbsp;[Loading a single texture](#Loading_a_single_texture)<br>&nbsp;&nbsp;[Loading multiple textures](#Loading_multiple_textures)<br>&nbsp;&nbsp;[Demos](#Demos)<br>
+[Contents](#Contents)<br>[Texture Loaders](#Texture_Loaders)<br>[Sample Code for Loading Textures](#Sample_Code_for_Loading_Textures)<br>&nbsp;&nbsp;[Loading a single texture](#Loading_a_single_texture)<br>&nbsp;&nbsp;[Loading multiple textures](#Loading_multiple_textures)<br>&nbsp;&nbsp;[Demos](#Demos)<br>
 
-## Texture Loaders
+## Texture Loaders <a id=Texture_Loaders></a>
 
 A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL contexts.
 

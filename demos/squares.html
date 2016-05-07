@@ -19,6 +19,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:link7()">Mirror</a>,
 <a href="javascript:link8()">Edge detect</a>,
 <a href="javascript:link9()">Red Tint</a>,
+<a href="javascript:link9a()">Blue Tint</a>,
 <a href="javascript:link10()">Warp</a>,
 <a href="javascript:linknone()">No filters</a><br>
 <a href="javascript:link1a()">Blinds</a>,
@@ -170,7 +171,7 @@ return ShaderProgram.makeEffect(context,[
 
 function makeWave(context){
 return ShaderProgram.makeEffect(context,[
-"uniform float time;",
+"uniform float time; // range [0,100)",
 "const float pi = 3.14159265;",
 "float interp(float t){",
 " return sin(t*pi*2.0);",
@@ -199,6 +200,14 @@ return ShaderProgram.makeEffect(context,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
 " return vec4(color.r+0.3,color.g,color.b,color.a);",
+"}"].join("\n"));
+}
+
+function makeBlueTint(context){
+return ShaderProgram.makeEffect(context,[
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" vec4 color=texture2D(sampler,uvCoord);",
+" return vec4(color.r,color.g,color.b+0.3,color.a);",
 "}"].join("\n"));
 }
 
@@ -445,6 +454,7 @@ function blindsGroup(scene){
   var fbo=new FrameBuffer(scene,scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
   var subScene=new Subscene3D(scene)
+  subScene.getLights().setDefaults();
   var renders=[
     new RenderPass3D(subScene,{"frameBuffer":fbo}),
     new RenderPass3D(Subscene3D.forFilter(scene,fbo))
@@ -459,6 +469,7 @@ function blindsGroup(scene){
   var c=[1,2,3,4,5,6,7,6,5,4,3,2]
   var rot=0
   GLUtil.renderLoop(function(time){
+   fbo.resize(scene.getWidth(),scene.getHeight());
    if(currentFilter){
     currentFilter.setUniforms({
       "coarseness":c[Math.floor(c.length*GLUtil.getTimePosition(timer,time,1500))],

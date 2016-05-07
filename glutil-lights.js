@@ -7,7 +7,7 @@
 * @alias glutil.Lights
 */
 function Lights(){
- this.lights=[new LightSource()];
+ this.lights=[];
  /**
  *  Ambient color for the scene.  This is the color of the light
  *  that shines on every part of every object equally and in
@@ -24,6 +24,19 @@ function Lights(){
  */
  this.sceneAmbient=[0.2,0.2,0.2];
 }
+
+Lights.prototype.setDefaults=function(){
+ var ls=new LightSource().setParams({
+  ambient:[0,0,0,1],
+  position:[0,0,1,0],
+  diffuse:[1,1,1,1],
+  specular:[1,1,1],
+  radius:0.0
+ });
+ this.lights=[ls];
+ this.sceneAmbient=[0.2,0.2,0.2];
+}
+
 /** Maximum number of lights supported
    by the default shader program.
    @const

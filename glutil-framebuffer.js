@@ -72,13 +72,21 @@ FrameBuffer.prototype._init=function(context,width,height){
    context.FRAMEBUFFER,oldBuffer);
 }
 /**
- * Not documented yet.
- * @param {*} width
- * @param {*} height
+ * Resizes the frame buffer to a new width and height,
+ * if either differs from the current width or height.
+* @param {number} width New width, in pixels, of the frame buffer.
+* Fractional values are rounded up.
+* @param {number} height New height, in pixels, of the frame buffer.
+* Fractional values are rounded up.
+* @return {glutil.FrameBuffer} This object.
  */
 FrameBuffer.prototype.resize=function(width,height){
- this.dispose();
- this.init(width,height);
+ width=Math.ceil(width);
+ height=Math.ceil(height);
+ if(width!=this.width || height!=this.height){
+  this.dispose();
+  this.init(width,height);
+ }
  return this;
 }
 

@@ -31,7 +31,7 @@ graphics filters:
 
 * The `ShaderProgram` class holds data on shader programs.  Each shader program consists
 of a _vertex shader_ and a _fragment shader_.  Graphics filters are essentially part of a fragment shader
-and thus processes pixels.  (Vertex shaders, which process vertices of triangles, lines, and points,
+and thus process pixels.  (Vertex shaders, which process vertices of triangles, lines, and points,
 are not discussed on this page.)
 * The `makeEffect` method creates a shader program and compiles it, using the graphics
 filter as part of the program's fragment shader.  Since shader programs must also have a vertex
@@ -78,7 +78,11 @@ in HTML applications is relatively basic nowadays.  Also see below for more exam
 
 ## Using Graphics Filters <a id=Using_Graphics_Filters></a>
 
-After a filter is created, it's very easy to use; it's simply set with the `useFilter` method of Scene3D.  After
+After a filter is created, it's very easy to use.
+
+TODO: Update this section to reflect major overhaul in use of graphics filters.
+
+It's simply set with the `useFilter` method of Scene3D.  After
 a filter is set, here's how it works:
 
 * When the `useFilter` method is called to set a new graphics filter, the HTML 3D Library creates a
@@ -98,10 +102,6 @@ a filter is set, here's how it works:
       The graphics filter can either use the current pixel's color or change it for each pixel.
       As a result, a "filtered" version of the current frame will be drawn.
 
-Currently, the HTML 3D Library only supports one filter at a time, so if the HTML app needs to use more
-than one effect, say, a grayscale and blur, both effects need to be combined in the same graphics filter
-shader.
-
 ## Examples <a id=Examples></a>
 
 * [squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates graphics filters.
@@ -109,7 +109,7 @@ shader.
 The demo [squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) includes a number
 of graphics filters implemented as shaders.
 
-Here are more details on the filters it includes.
+Here are more details on some of the filters it includes.
 
 ### Grayscale <a id=Grayscale></a>
 

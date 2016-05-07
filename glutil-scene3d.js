@@ -29,6 +29,7 @@ function Scene3D(canvasOrContext){
    rather than through this class.
    */
  this.shapes=[];
+ this._errors=true;
  this._frontFace=Scene3D.CCW;
  this._cullFace=Scene3D.NONE;
  this.clearColor=[0,0,0,1];
@@ -43,26 +44,24 @@ function Scene3D(canvasOrContext){
  this.context.canvas.width=this.width;
  this.context.canvas.height=this.height;
  this._is3d=GLUtil.is3DContext(this.context);
- this._init3DContext();
+ if(this._is3d){
+  var params={};
+  var flags=Scene3D.LIGHTING_ENABLED |
+   Scene3D.SPECULAR_ENABLED |
+   Scene3D.SPECULAR_MAP_ENABLED;
+  this._programs.getProgram(flags);
+  this.context.viewport(0,0,this.width,this.height);
+  this.context.enable(this.context.BLEND);
+  this.context.blendFunc(this.context.SRC_ALPHA,this.context.ONE_MINUS_SRC_ALPHA);
+  this.context.enable(this.context.DEPTH_TEST);
+  this.context.depthFunc(this.context.LEQUAL);
+  this.context.disable(this.context.CULL_FACE);
+  this.context.clearDepth(1.0);
+  this._setClearColor();
+  this._setIdentityMatrices();
+  this._setFace();
+ }
 }
-/** @private */
-Scene3D.prototype._init3DContext=function(){
- if(!this._is3d)return;
- var params={};
- var flags=Scene3D.LIGHTING_ENABLED |
-  Scene3D.SPECULAR_ENABLED |
-  Scene3D.SPECULAR_MAP_ENABLED;
- this._programs.getProgram(flags);
- this.context.viewport(0,0,this.width,this.height);
- this.context.enable(this.context.BLEND);
- this.context.blendFunc(this.context.SRC_ALPHA,this.context.ONE_MINUS_SRC_ALPHA);
- this.context.enable(this.context.DEPTH_TEST);
- this.context.depthFunc(this.context.LEQUAL);
- this.context.disable(this.context.CULL_FACE);
- this.context.clearDepth(1.0);
- this._setClearColor();
- this._setIdentityMatrices();
-};
 
 Scene3D.LIGHTING_ENABLED = 1;
 Scene3D.SPECULAR_MAP_ENABLED = 2;
@@ -320,16 +319,18 @@ Scene3D.prototype.createBuffer=function(){
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @return {Array<number>} Return value. */
 Scene3D.prototype.getProjectionMatrix=function(){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
-return this.Subscene3D._projectionMatrix.slice(0,16);
+return this._subScene._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @return {Array<number>} Return value. */
 Scene3D.prototype.getViewMatrix=function(){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
@@ -580,23 +581,6 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
 Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this._updateFrustum();
-};
-/** @private */
-Scene3D.prototype._updateFrustum=function(){
- var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
- this._frustum=GLMath.mat4toFrustumPlanes(projView);
-};
-/**
- * Gets the number of vertices composed by
- * all shapes in this scene.
- * @return {number} Return value. */
-Scene3D.prototype.vertexCount=function(){
- var c=0;
- for(var i=0;i<this.shapes.length;i++){
-  c+=this.shapes[i].vertexCount();
- }
- return c;
 };
 /**
  * Not documented yet.
@@ -618,15 +602,28 @@ Scene3D.prototype.clearDepth=function(){
   }
 }
 /**
+ * Gets the number of vertices composed by
+ * all shapes in this scene.
+ * @deprecated Use the vertexCount method of Subscene3D objects instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+ * @return {number} Return value. */
+Scene3D.prototype.vertexCount=function(){
+if(this._errors)throw new Error();
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
+return this._subScene.vertexCount();
+};
+/**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
- * @return {number} Return value. */
+* @deprecated  Use the primitiveCount method of Subscene3D objects instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @return {number} Return value. */
 Scene3D.prototype.primitiveCount=function(){
- var c=0;
- for(var i=0;i<this.shapes.length;i++){
-  c+=this.shapes[i].primitiveCount();
- }
- return c;
+if(this._errors)throw new Error();
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
+return this._subScene.primitiveCount();
 };
 /**
  * Sets the projection matrix for this object.  The projection
@@ -637,6 +634,7 @@ Scene3D.prototype.primitiveCount=function(){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
@@ -651,6 +649,7 @@ this._subScene.setProjectionMatrix(matrix);
  * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
@@ -687,7 +686,8 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
-  this._subScene.addShape(shape);
+ if(this._errors)throw new Error();
+ this._subScene.addShape(shape);
  return this;
 };
 /**
@@ -709,11 +709,16 @@ Scene3D.prototype.makeShape=function(mesh){
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.removeShape=function(shape){
-  this._subScene.removeShape(shape);
+if(this._errors)throw new Error();
+ if(this._renderedOutsideScene){
+  throw new Error("A non-default scene has been rendered, so this method is disabled.");
+ }
+ this._subScene.removeShape(shape);
  return this;
 };
 /** @private */
 Scene3D.prototype.getLights=function(){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
@@ -721,7 +726,7 @@ if(this._renderedOutsideScene){
 };
 /**
  * Sets a light source in this scene to a directional light.
-* @deprecated Use the LightSource method setDirectionalLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setDirectionalLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -736,6 +741,7 @@ if(this._renderedOutsideScene){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
@@ -744,7 +750,7 @@ if(this._renderedOutsideScene){
 };
 /**
  * Sets parameters for a light in this scene.
-* @deprecated Use the LightSource method setLightParams instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setParams instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -752,6 +758,7 @@ if(this._renderedOutsideScene){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setLightParams=function(index,params){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
@@ -761,7 +768,7 @@ if(this._renderedOutsideScene){
 
 /**
  * Sets the color of the scene's ambient light.
-* @deprecated Use the LightSource method setAmbient instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setAmbient instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
@@ -774,6 +781,7 @@ if(this._renderedOutsideScene){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient=function(r,g,b,a){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
@@ -795,6 +803,7 @@ if(this._renderedOutsideScene){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
+if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }

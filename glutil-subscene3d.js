@@ -138,6 +138,7 @@ Subscene3D.prototype.getContext=function(){
  * @param {*} fov
  * @param {*} near
  * @param {*} far
+ * @return {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
  this._projectionUpdater=new Subscene3D._PerspectiveView(this,fov,near,far);
@@ -148,6 +149,7 @@ Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
  * @param {*} eye
  * @param {*} center
  * @param {*} up
+ * @return {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setLookAt=function(eye,center,up){
  return this.setViewMatrix(GLMath.mat4lookat(eye,center,up));
@@ -160,6 +162,7 @@ Subscene3D.prototype.setLookAt=function(eye,center,up){
  * @param {*} d
  * @param {*} e
  * @param {*} f
+ * @return {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
  this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,e,f);
@@ -171,6 +174,7 @@ Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
  * @param {*} b
  * @param {*} c
  * @param {*} d
+ * @return {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,-1,1);
@@ -179,6 +183,7 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
 /**
  * Not documented yet.
  * @param {*} mat
+ * @return {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
  if(!Subscene3D._isSameMatrix(this._viewMatrix,mat)){
@@ -209,6 +214,7 @@ Subscene3D.prototype._getFrustum=function(){
 }
 /**
  * Not documented yet.
+ * @return {glutil.Lights} Return value.
  */
 Subscene3D.prototype.getLights=function(){
  return this.lights;
@@ -225,6 +231,30 @@ Subscene3D.prototype.addShape=function(shape){
  this.shapes.push(shape);
  return this;
 };
+
+/**
+ * Gets the number of vertices composed by
+ * all shapes in this scene.
+ * @return {number} Return value. */
+Subscene3D.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i<this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
+};
+/**
+* Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this scene.
+ * @return {number} Return value. */
+Subscene3D.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i<this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
+};
+
 /**
 * Removes all instances of a 3D shape from this scene.
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.

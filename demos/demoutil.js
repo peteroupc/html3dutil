@@ -128,7 +128,7 @@ var settings=document.getElementById("settings-link");
     new Material().setParams({
      "diffuse":"black",
      "specular":"white",
-     "shininess":10
+     "shininess":32
     })));
 }
 

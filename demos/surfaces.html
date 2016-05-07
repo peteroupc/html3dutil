@@ -205,6 +205,14 @@ addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
  },{
  });
 })
+addLink("...for f(x) = x<sup>2</sup>+0.01",function(){
+ pushSettings(function(allsettings){
+ return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
+  return x*x+0.01
+ },-1,1,[1,0,0]))
+ },{
+ });
+})
 addLink("Cylinder",function(){
  pushSettings(function(allsettings){
     return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
