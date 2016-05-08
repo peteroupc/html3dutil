@@ -103,7 +103,7 @@ function link4(){
   // Generate a red-blue gradient texture
   var tex=horizontalGradient("red","blue");
    var mesh=Meshes.createBox(10,20,20);
-   var shape=scene.makeShape(mesh).setTexture(tex)
+   var shape=new Shape(mesh).setTexture(tex)
    scene.addShape(shape);
    var timer={};
    GLUtil.renderLoop(function(time){

@@ -162,7 +162,7 @@ function frustumMesh(frustum){
   var mesh=frustumMesh(frustum);
   var spheres=new ShapeGroup();
   var radius=0.3;
-  var sphere=scene.makeShape(Meshes.createSphere(radius));
+  var sphere=new Shape(Meshes.createSphere(radius));
   for(var i=-10; i<=10;i++){
    var shape=sphere.copy().setPosition(1,-1,i)
    if(!GLMath.frustumHasSphere(frustum,1,-1,i,radius)){
@@ -179,7 +179,7 @@ function frustumMesh(frustum){
    }
     spheres.addShape(shape);
   }
-  scene.addShape(scene.makeShape(mesh));
+  scene.addShape(new Shape(mesh));
   scene.addShape(spheres);
   // Set up the render loop
   GLUtil.renderLoop(function(){

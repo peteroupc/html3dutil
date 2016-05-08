@@ -24,7 +24,7 @@ In the sample code below, the variable `textureURL` is the URL of the texture to
     // Now create a sphere
     var mesh=Meshes.createSphere(1);
     // Make a shape using the texture
-    var shape=scene.makeShape(mesh).setTexture(texture);
+    var shape=new Shape(mesh).setTexture(texture);
   }, function(error){
     // an error occurred
   });

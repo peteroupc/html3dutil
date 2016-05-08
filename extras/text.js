@@ -23,7 +23,8 @@ if(!GLUtil){ GLUtil={}; }
 * than 0.5 (127 in most image formats) means the pixel is outside the
 * glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
 * outside the glyph) and 1 (for inside the glyph) means the pixel is
-* outside a buffer zone formed by the glyph's outline.<p>
+* outside a buffer zone formed by the glyph's outline.  Each glyph is usually
+* given extra space to accommodate the signed distance field information.<p>
 * The font definition file formats supported are text (".fnt"),
 * JSON (".json"), binary (".fnt" or ".bin"), and XML (".xml").
 * The text and binary file formats are specified at
@@ -96,7 +97,7 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
  for(var i=0;i<meshesForPage.length;i++){
   var mfp=meshesForPage[i];
   if(!mfp || !fontTextures[i])continue;
-  var sh=this.scene.makeShape(mfp);
+  var sh=new Shape(mfp);
   var material=new Material(
      color||[0,0,0,0],
      color||[0,0,0,0]).setParams({
@@ -617,10 +618,20 @@ TextFont._loadTextFontInner=function(data){
   return new TextFont(fontinfo,chars,pages,kernings,common,data.url)
 }
 /**
- * Not documented yet.
- * @param {*} fontFileName
- * @param {*} textureLoader
- */
+* Loads a bitmap font definition from a file along with the textures
+* used by that font.
+* @param {string} fontFileName The URL of the font data file
+* to load.  The following file extensions are read as the following formats:<ul>
+* <li>".xml": XML</li>
+* <li>".json": JSON</li>
+* <li>".bin": Binary</li>
+* <li>".fnt": Text or binary</li>
+* <li>All others: Text</li></ul>
+ * @param {glutil.TextureLoader} textureLoader
+* @return {Promise} A promise that is resolved
+* when the font data and textures are loaded successfully (the result will be
+* a TextFont object), and is rejected when an error occurs.
+*/
 TextFont.loadWithTextures=function(fontFileName,textureLoader){
  if(!textureLoader){
   return TextFont.load(fontFileName);

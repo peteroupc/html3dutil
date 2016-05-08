@@ -411,20 +411,20 @@ function platonicGroup(scene){
   var mesh=Meshes.createBox(dims,dims,dims);
   var group=new ShapeGroup();
   group.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
+    new Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron
   mesh=Meshes.createSphere(size,4,2,true);
   group.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
+    new Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
   mesh=icosahedron(size);
   group.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
+    new Shape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
   mesh=tetrahedron(size);
   group.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
+    new Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
   mesh=dodecahedron(size);
   group.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
+    new Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
   return group
 }
 
@@ -438,7 +438,7 @@ function blindsGroup(scene){
     var xx=((x/100)+1)/2
     var yy=((y/100)+1)/2
     var mesh=Meshes.createPlane(0.2,0.2);
-    group.addShape(scene.makeShape(mesh)
+    group.addShape(new Shape(mesh)
       .setColor(color ? [0,xx,yy] : [1,0.7,0.7])
       .setPosition(x/100+0.1,y/100+0.1,0));
     color=!color;

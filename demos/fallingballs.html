@@ -130,7 +130,7 @@ CubicBody.prototype.integrate=function(timeStep){
 
 function Particles(scene,count,width,height){
  this.shapes=new ShapeGroup();
- var sphere=scene.makeShape(Meshes.createSphere(1,64,64));
+ var sphere=new Shape(Meshes.createSphere(1,64,64));
  this.bodies=[];
  this.bounds=[0,0,-5000,width,height,5000];
  for(var i=0;i<count;i++){

@@ -112,6 +112,17 @@ ShapeGroup.prototype.setShader=function(material){
  return this;
 };
 /**
+ * Sets material parameters for all shapes in this shape group.
+ * @ {Object} params An object described in {@link glutil.Material#setParams}.
+ * @ {glutil.Shape} This object.
+ */
+Shape.prototype.setMaterialParams=function(params){
+ for(var i=0;i<this.shapes.length;i++){
+  this.shapes[i].setMaterialParams(params);
+ }
+ return this;
+};
+/**
 * Removes all instances of a 3D shape from this shape group
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
 * @return {glutil.ShapeGroup} This object.

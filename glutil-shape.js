@@ -1,22 +1,33 @@
 /**
-* An object that associates a geometric mesh (the shape of the object) with
-*  material data (which defines what is seen on the object's surface)
+ * An object that associates a geometric mesh (the shape of the object) with
+ *  material data (which defines what is seen on the object's surface)
  * and a transformation matrix (which defines the object's position and size).
-* See the "{@tutorial shapes}" tutorial.
+ * See the "{@tutorial shapes}" tutorial.
  *  @class
-* @alias glutil.Shape
-* @param {BufferedMesh} mesh A mesh in the form of a buffer object.
-* For {@link glutil.Mesh} objects, use the {@link glutil.Scene3D#makeShape}
-* method instead.
+ * @alias glutil.Shape
+* @param {glutil.BufferedMesh} mesh A mesh in the form of a buffer object.
+* For {@link glutil.Mesh} objects, the shape
+ * created will use the mesh in its current state and won't
+ * track future changes.  <i>Using BufferedMesh objects as the parameter
+ * is deprecated.</i>
   */
 function Shape(mesh){
   if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
-  this.bufferedMesh=mesh;
+  if(mesh instanceof Mesh){
+   this.bufferedMesh=new MeshBuffer(mesh);
+  } else {
+   if(!Shape._bufferedMeshWarning && mesh instanceof BufferedMesh){
+    console.warn("Using a BufferedMesh in Shape objects is deprecated.")
+    Shape._bufferedMeshWarning=true
+   }
+   this.bufferedMesh=mesh;
+  }
   this.transform=new Transform();
   this.material=new Material();
   this.parent=null;
   this.visible=true;
 }
+Shape._bufferedMeshWarning=false;
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
@@ -40,7 +51,8 @@ Shape.prototype.setVisible=function(value){
  return this;
 };
 /**
- * Not documented yet.
+ * Gets whether this shape will be drawn on rendering.
+ * @return {Boolean} True if this shape will be visible; otherwise, false.
  */
 Shape.prototype.getVisible=function(){
  return this.visible;
@@ -63,13 +75,8 @@ Shape.prototype.getVisible=function(){
  * @return {glutil.Shape} This object.
 */
 Shape.prototype.setColor=function(r,g,b,a){
- if(this.material){
-   var c=GLUtil.toGLColor(r,g,b,a);
-   this.material.setParams({"ambient":c,"diffuse":c})
-  } else {
-   this.material=Material.fromColor(r,g,b,a);
-  }
-  return this;
+  var c=GLUtil.toGLColor(r,g,b,a);
+  return this.setMaterialParams({"ambient":c,"diffuse":c})
 };
 /**
  * Sets material parameters that give the shape a texture with the given URL.
@@ -80,12 +87,7 @@ Shape.prototype.setColor=function(r,g,b,a){
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setTexture=function(name){
- if(this.material){
-   this.material.setParams({"texture":name})
- } else {
-   this.material=Material.fromTexture(name);
- }
- return this;
+ return this.setMaterialParams({"texture":name});
 };
 /**
  * Sets this shape's material to a shader with the given URL.
@@ -93,10 +95,18 @@ Shape.prototype.setTexture=function(name){
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setShader=function(shader){
+ return this.setMaterialParams({"shader":shader});
+};
+/**
+ * Sets parameters of this shape's material.
+ * @ {} params An object described in {@link glutil.Material#setParams}.
+ * @ {} This object.
+ */
+Shape.prototype.setMaterialParams=function(shader){
  if(this.material){
-   this.material.setParams({"shader":shader})
+   this.material.setParams(params)
  } else {
-   this.material=Material.forShader(shader);
+   this.material=new Material().setParams(params)
  }
  return this;
 };
@@ -106,9 +116,8 @@ Shape.prototype.setShader=function(shader){
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this method
 *  will not load that image if it hasn't been loaded yet.
-* @param {Array<number>|number|string} r Array of three or
-* four color components; or the red color component (0-1); or a string
-* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+* or the red color component (0-1).
 * @param {number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {number} b Blue color component (0-1).
@@ -119,8 +128,12 @@ Shape.prototype.setShader=function(shader){
  * @return {glutil.Shape} This object.
 */
 Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
- this.material=Material.fromColor(r,g,b,a).setParams({"texture":name});
- return this;
+ var c=GLUtil.toGLColor(r,g,b,a);
+ return this.setMaterialParams({
+  "texture":name,
+  "ambient":c,
+  "diffuse":c
+ });
 };
 /**
 * Sets this shape's material parameters.

@@ -142,7 +142,7 @@ a mesh with an evaluator and add it to the 3D scene, you then need to do:
 
     // Assumes that a Scene3D object named _scene_ was previously defined.
     // Create a 3D shape using the makeMesh method given earlier on this page
-    var shape = scene.makeShape(makeMesh(evaluator));
+    var shape = new Shape(makeMesh(evaluator));
     // Add the shape to the 3D scene
     scene.addShape(shape);
 

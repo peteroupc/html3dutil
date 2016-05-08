@@ -41,9 +41,11 @@ this.url=null;
  */
 ObjData.prototype.toShape=function(scene){
  "use strict";
+ // TODO: temporary
+ if(arguments.length!=0)throw new Error();
 var multi=new ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
-  var shape=scene.makeShape(this.meshes[i].data);
+  var shape=new Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.addShape(shape);
@@ -76,18 +78,20 @@ ObjData.prototype.loadTextures=function(scene,resolved,rejected){
 /**
  * Creates one or more 3D shapes from the named portion
  * of the data in this OBJ file.
- * @param {Scene3D} scene 3D scene to load the shape with.
  * @param {string} name Name from the OBJ file of the portion
  * of the model to use.
  * @return {glutil.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
  */
-ObjData.prototype.toShapeFromName=function(scene, name){
+ObjData.prototype.toShapeFromName=function(name){
  "use strict";
+ // TODO: temporary
+ if(name instanceof Scene3D ||
+  name instanceof Subscene3D)throw new Error();
 var multi=new ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
   if(this.meshes[i].name!==name)continue;
-  var shape=scene.makeShape(this.meshes[i].data);
+  var shape=new Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.addShape(shape);

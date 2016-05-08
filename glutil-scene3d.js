@@ -23,6 +23,7 @@ function Scene3D(canvasOrContext){
  this.context=context;
  this.textureCache={};
  this._textureLoader=new TextureLoader();
+ this._meshLoader=new BufferedMesh._MeshLoader();
  this._renderedOutsideScene=false;
  /** An array of shapes that are part of the scene.
    @deprecated Shapes should now be managed in Subscene3D objects,
@@ -34,7 +35,9 @@ function Scene3D(canvasOrContext){
  this._cullFace=Scene3D.NONE;
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
+ // NOTE: Exists for compatibility only
  this._subScene=new Subscene3D(this);
+ this._subScene.getLights().setDefaults();
  this._programs=new Scene3D.ProgramCache(context);
  this.useDevicePixelRatio=false;
  this._pixelRatio=1;
@@ -58,7 +61,6 @@ function Scene3D(canvasOrContext){
   this.context.disable(this.context.CULL_FACE);
   this.context.clearDepth(1.0);
   this._setClearColor();
-  this._setIdentityMatrices();
   this._setFace();
  }
 }
@@ -577,11 +579,6 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  }
  return GLUtil.getPromiseResults(promises, resolve, reject);
 };
-/** @private */
-Scene3D.prototype._setIdentityMatrices=function(){
- this._projectionMatrix=GLMath.mat4identity();
- this._viewMatrix=GLMath.mat4identity();
-};
 /**
  * Not documented yet.
  */
@@ -682,25 +679,34 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
+* @deprecated Use the addShape method of individual Subscene3D instances
+* instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom
+* Subscene3D.  This compatibility behavior may be dropped in the future.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
-* @return {glutil.Scene3D} This object.
-*/
+* @return {glutil.Scene3D} This object.*/
 Scene3D.prototype.addShape=function(shape){
- if(this._errors)throw new Error();
+if(this._errors)throw new Error();
+if(this._renderedOutsideScene){
+ throw new Error("A non-default scene has been rendered, so this method is disabled.");
+}
  this._subScene.addShape(shape);
  return this;
 };
 /**
  * Creates a buffer from a geometric mesh and
  * returns a shape object.
+ * @deprecated Use the Shape constructor instead.
  * @param {glutil.Mesh} mesh A geometric mesh object.  The shape
  * created will use the mesh in its current state and won't
  * track future changes.
  * @return {glutil.Shape} The generated shape object.
  */
 Scene3D.prototype.makeShape=function(mesh){
- var buffer=new BufferedMesh(mesh,this.context);
- return new Shape(buffer);
+if(this._errors)throw new Error();
+ if(this._renderedOutsideScene){
+  throw new Error("A non-default scene has been rendered, so this method is disabled.");
+ }
+ return new Shape(mesh);
 };
 
 /**

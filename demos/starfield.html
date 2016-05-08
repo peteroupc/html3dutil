@@ -39,7 +39,7 @@ function setStarPos(star, range){
 function starField(scene, range){
   var group=new ShapeGroup();
   // use a crude white sphere to represent a star
-  var star=scene.makeShape(Meshes.createSphere(range/1000,4,3)).setColor("white");
+  var star=new Shape(Meshes.createSphere(range/1000,4,3)).setColor("white");
   for(var i=0;i<200;i++){
    group.addShape(setStarPos(star.copy(),range))
   }

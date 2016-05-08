@@ -124,7 +124,7 @@ var settings=document.getElementById("settings-link");
     }
   }
   shapeGroup.removeShape(shapeGroup.shapes[0]);
-  shapeGroup.addShape(scene.makeShape(func(allsettings)).setMaterial(
+  shapeGroup.addShape(new Shape(func(allsettings)).setMaterial(
     new Material().setParams({
      "diffuse":"black",
      "specular":"white",

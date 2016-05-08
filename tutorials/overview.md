@@ -14,7 +14,7 @@ This tip will include information on how to use the HTML 3D library, an overview
 
 ## Contents <a id=Contents></a>
 
-[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[Scene3D](#Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>[Example](#Example)<br>
+[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[Scene3D](#Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Alternative Rendering](#Alternative_Rendering)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>
 
 ## How to Use <a id=How_to_Use></a>
 
@@ -107,10 +107,11 @@ Here are some other built-in mesh methods. This tip doesn&#39;t explain all the 
 For more information on meshes, see <a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib">_Creating shapes using the Public Domain HTML 3D Library_</a>.
 ### Shapes <a id=Shapes></a>
 
-Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene&#39;s `makeShape()` method to convert the mesh to a shape. Now you can set the shape&#39;s properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D scene.
+Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
+Use the `Shape` constructor method to convert the mesh to a shape. Now you can set the shape&#39;s properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D scene.
 
     // Create a shape based on the mesh
-    var shape=scene.makeShape(mesh);
+    var shape=new Shape(mesh);
     // Make it red (you can also use the HTML color string
     // "#FF0000" instead)
     shape.setColor("red");
@@ -134,7 +135,7 @@ Here are details on some of the `Shape` class&#39;s methods.
   * <dfn>`<i>shape</i>.setTexture(name)`</dfn>
   <br>Gives the shape a particular texture, with the URL `name`. The texture should be in the same origin as the Web page (which usually means the same directory).
   * <dfn>`<i>shape</i>.copy()`</dfn>
-  <br>Creates a copy of this shape. Can be more efficient than calling `scene.makeShape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.
+  <br>Creates a copy of this shape. Can be more efficient than calling `new Shape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.
 
 ### The Render Loop <a id=The_Render_Loop></a>
 
@@ -168,18 +169,98 @@ The following is a minimal skeleton you can use for writing HTML apps using this
 
 The following are HTML Web pages showing a variety of features of the HTML 3D library. Each demo includes source code for that demo at the bottom of the page.
 
-* <a href="https://peteroupc.github.io/html3dutil/simple.html">simple.html</a> - A simple demo using this library
-* <a href="https://peteroupc.github.io/html3dutil/squares.html">squares.html</a> - Demonstrates shader-based filters
-* <a href="https://peteroupc.github.io/html3dutil/compositeMesh.html">compositeMesh.html</a> - Demonstrates combining multiple meshes (3D models) into one
-* <a href="https://peteroupc.github.io/html3dutil/shapes.html">shapes.html</a> - Demonstrates the built-in shapes
-* <a href="https://peteroupc.github.io/html3dutil/platonic.html">platonic.html</a> - A demo featuring the five platonic solids. Demonstrates how vertex and index arrays are built up to create geometric meshes
-* <a href="https://peteroupc.github.io/html3dutil/selfpulse.html">selfpulse.html</a> - Demonstrates a rotating, pulsating box.
-* <a href="https://peteroupc.github.io/html3dutil/surfaces.html">surfaces.html</a> - Demonstrates using evaluators to generate parametric surfaces.
-* <a href="https://peteroupc.github.io/html3dutil/stl.html">stl.html</a> - Demonstrates loading 3D models.
-* <a href="https://peteroupc.github.io/html3dutil/textured.html">textured.html</a> - Demonstrates loading textures and applying them to 3D shapes.
-* <a href="https://peteroupc.github.io/html3dutil/tris.html">tris.html</a> - Demonstrates a particle system
-* <a href="https://peteroupc.github.io/html3dutil/gradient.html">gradient.html</a> - Demonstrates generating a custom texture -- a linear gradient from one color to another.
-* <a href="https://peteroupc.github.io/html3dutil/starfield.html">starfield.html</a> - Demo of a star field.
+### Simple Demos <a id=Simple_Demos></a>
+
+* [demos/simple.html](https://peteroupc.github.io/html3dutil/demos/simple.html) - A simple demo using this library.
+* [demos/triangle.html](https://peteroupc.github.io/html3dutil/demos/triangle.html) - Demonstrates drawing a triangle.
+
+### Materials <a id=Materials></a>
+
+* [demos/selfpulse.html](https://peteroupc.github.io/html3dutil/demos/selfpulse.html) - Demonstrates
+a rotating, pulsating box.
+
+### Shapes and meshes <a id=Shapes_and_meshes></a>
+
+* [demos/compositeMesh.html](https://peteroupc.github.io/html3dutil/demos/compositeMesh.html) - Demonstrates
+combining multiple meshes into one.
+* [demos/shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
+the built-in shapes.
+* [demos/newshapes.html](https://peteroupc.github.io/html3dutil/demos/newshapes.html) - Fancier
+demo of some of the built-in shapes.
+* [demos/builtinshapes.html](https://peteroupc.github.io/html3dutil/demos/builtinshapes.html) - Interactive demo of
+the built-in shapes.
+* [demos/platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
+platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
+* [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
+featuring a wall clock.
+
+### Paths <a id=Paths></a>
+
+* [demos/marchingdots.html](https://peteroupc.github.io/html3dutil/demos/marchingdots.html) - Demo
+of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.
+* [demos/polyclip.html](https://peteroupc.github.io/html3dutil/demos/polyclip.html) -
+Similar to "marchingdots.html", but now uses the union of two circles as a path to demonstrate polygon
+clipping.
+* [demos/pathtube.html](https://peteroupc.github.io/html3dutil/demos/pathtube.html) - Demo
+of a tube formed by a path curve.
+* [demos/pathshapes.html](https://peteroupc.github.io/html3dutil/demos/pathshapes.html) - Demo
+of 3D and 2D shapes generated by a 2D path.
+
+### Curves and Surfaces <a id=Curves_and_Surfaces></a>
+
+* [demos/surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates
+using evaluators to generate parametric surfaces.
+* [demos/curves.html](https://peteroupc.github.io/html3dutil/demos/curves.html) - Demonstrates
+using evaluators to generate parametric curves.
+* [demos/surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates
+parametric surfaces, with a custom formula editor.
+* [demos/curvesexpr.html](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates
+parametric curves, with a custom formula editor.
+* [demos/implicit.html](https://peteroupc.github.io/html3dutil/demos/implicit.html) - Demonstrates
+implicit surfaces.
+
+### Textures <a id=Textures></a>
+
+* [demos/textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
+and applying them to 3D shapes.
+* [demos/specular.html](https://peteroupc.github.io/html3dutil/demos/specular.html) - Demonstrates using
+textures as specular reflection maps.
+* [demos/gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
+texture -- a linear gradient from one color to another.
+
+### Shaders <a id=Shaders></a>
+
+* [demos/squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates shader-based filters.
+
+### Particle Systems <a id=Particle_Systems></a>
+
+* [demos/tris.html](https://peteroupc.github.io/html3dutil/demos/tris.html) - Demonstrates a particle system.
+* [demos/fallingballs.html](https://peteroupc.github.io/html3dutil/demos/fallingballs.html) - Demonstrates falling balls
+of different sizes.
+
+### Loading 3D Models <a id=Loading_3D_Models></a>
+
+* [demos/obj.html](https://peteroupc.github.io/html3dutil/demos/obj.html) - An object file loader.
+* [demos/stl.html](https://peteroupc.github.io/html3dutil/demos/stl.html) - Demonstrates loading 3D models.
+
+### Text <a id=Text></a>
+
+* [demos/textwith3D.html](https://peteroupc.github.io/html3dutil/demos/textwith3d.html) - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.
+
+### Alternative Rendering <a id=Alternative_Rendering></a>
+
+* [demos/surfaces2d.html](https://peteroupc.github.io/html3dutil/demos/surfaces2d.html) - Same as the surfaces.html
+demo, but uses an experimental renderer using the HTML 2D Canvas instead of an HTML 3D context.  Only a limited
+set of features are currently supported.
+
+### Miscellaneous <a id=Miscellaneous></a>
+
+* [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
+featuring a background with continuously drawn 3D shapes.
+* [demos/animation.html](https://peteroupc.github.io/html3dutil/demos/animation.html) - A demo
+illustrating a simple animation of 3D shapes.
+* [demos/starfield.html](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demo of a star field.
+* [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
 ## Example <a id=Example></a>
 
@@ -203,7 +284,7 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
       // in height, and 20 units in depth
       var mesh=Meshes.createBox(10,20,20);
       // Create a shape based on the mesh and give it a red color
-      var shape=scene.makeShape(mesh).setColor("red");
+      var shape=new Shape(mesh).setColor("red");
       // Add the shape to the scene
       scene.addShape(shape);
       // Set the starting rotation

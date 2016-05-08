@@ -6,7 +6,11 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/**
+* @class
+* @alias glutil.Subscene3D
+* @param {Scene3D} scene
+*/
 function Subscene3D(scene){
  this.parent=scene;
  this._projectionMatrix=GLMath.mat4identity();
@@ -303,16 +307,17 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       projAndView);
     Subscene3D._getMaterialBinder(shape.material).bind(prog,
       this.parent._textureLoader);
-    shape.bufferedMesh.draw(prog);
+    this.parent._meshLoader.draw(shape.bufferedMesh,prog);
   }
  }
 };
 /**
  * Not documented yet.
- * @param {*} mesh
+ * @deprecated
+ * @param {glutil.Mesh} mesh
  */
 Subscene3D.prototype.makeShape=function(mesh){
- return this.parent.makeShape(mesh)
+ return new Shape(mesh)
 }
 /**
  * Not documented yet.

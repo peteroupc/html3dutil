@@ -1,6 +1,8 @@
 /**
 * An object that caches loaded textures and uploads them
 * to WebGL contexts.
+* @class
+* @alias glutil.TextureLoader
 */
 function TextureLoader(){
  this.loadedTextures=[];

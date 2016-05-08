@@ -192,7 +192,8 @@ Material.prototype.copy=function(){
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
 * <li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties
-* of this material are used.
+* of this material are used, and the object with this material will be drawn without
+* regard to lighting.
 * <li><code>ambient</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color. (See {@link glutil.Material#ambient}.)
 * The default is (0.2, 0.2, 0.2).
 * <li><code>diffuse</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving
@@ -218,26 +219,26 @@ Material.prototype.copy=function(){
 */
 Material.prototype.setParams=function(params){
  var param;
- if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){
+ if((typeof params.ambient !== "undefined" && params.ambient !== null)){
   this.ambient=GLUtil.toGLColor(params.ambient);
   if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3)
  }
- if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
+ if((typeof params.diffuse !== "undefined" && params.diffuse !== null)){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
   if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4)
  }
- if(((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && params.specular!==null))))))){
+ if((typeof params.specular !== "undefined" && params.specular !== null)){
   this.specular=GLUtil.toGLColor(params.specular);
   if(this.specular.length>3)this.specular=this.specular.slice(0,3)
  }
- if(((typeof params.emission!=="undefined" && ((typeof params.emission!=="undefined" && ((typeof params.emission!=="undefined" && params.emission!==null))))))){
+ if((typeof params.emission !== "undefined" && params.emission !== null)){
   this.emission=GLUtil.toGLColor(params.emission);
   if(this.emission.length>3)this.emission=this.emission.slice(0,3)
  }
- if(((typeof params.shininess!=="undefined" && ((typeof params.shininess!=="undefined" && ((typeof params.shininess!=="undefined" && params.shininess!==null))))))){
+ if((typeof params.shininess !== "undefined" && params.shininess !== null)){
   this.shininess=params.shininess;
  }
- if(((typeof params.texture!=="undefined" && ((typeof params.texture!=="undefined" && ((typeof params.texture!=="undefined" && params.texture!==null))))))){
+ if((typeof params.texture !== "undefined" && params.texture !== null)){
    param=params.texture;
    if(typeof param==="string"){
     this.texture=new Texture(param);
@@ -245,7 +246,7 @@ Material.prototype.setParams=function(params){
     this.texture=param;
    }
  }
- if(((typeof params.specularMap!=="undefined" && ((typeof params.specularMap!=="undefined" && ((typeof params.specularMap!=="undefined" && params.specularMap!==null))))))){
+ if((typeof params.specularMap !== "undefined" && params.specularMap !== null)){
    param=params.specularMap;
    if(typeof param==="string"){
     this.specularMap=new Texture(param);
@@ -253,7 +254,7 @@ Material.prototype.setParams=function(params){
     this.specularMap=param;
    }
  }
- if(((typeof params.normalMap!=="undefined" && ((typeof params.normalMap!=="undefined" && ((typeof params.normalMap!=="undefined" && params.normalMap!==null))))))){
+ if((typeof params.normalMap !== "undefined" && params.normalMap !== null)){
    param=params.normalMap;
    if(typeof param==="string"){
     this.normalMap=new Texture(param);
@@ -261,10 +262,10 @@ Material.prototype.setParams=function(params){
     this.normalMap=param;
    }
  }
- if(typeof params.basic!="undefined"){
+ if(typeof params.basic!="undefined" && params.basic!==null){
   this.basic=params.basic;
  }
- if(typeof params.shader!="undefined"){
+ if(typeof params.shader!="undefined" && params.shader!==null){
   this.shader=params.shader;
  }
  return this;

@@ -51,7 +51,7 @@ TriangleParticles.prototype.update=function(time){
  }
 }
 TriangleParticles.makeShapeFromTri=function(tri,shape){
- var sh=scene.makeShape(new Mesh()
+ var sh=new Shape(new Mesh()
    .mode(Mesh.TRIANGLES)
    .normal3(0,0,1)
    .color3(tri.color)

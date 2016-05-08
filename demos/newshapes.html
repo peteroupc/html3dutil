@@ -33,15 +33,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   loader.loadAndMapTexturesAll(["461223191.jpg"],sub).then(function(results){
    var mesh=null
    sub.addShape(
-    sub.makeShape(makeFloor(-5,-5,10,10,1)).setTexture(results[0]))
+    new Shape(makeFloor(-5,-5,10,10,1)).setTexture(results[0]))
    mesh=Meshes.createSphere(0.5)
-   sub.addShape(sub.makeShape(mesh).setColor("red").setPosition(1.5,0,0.5));
+   sub.addShape(new Shape(mesh).setColor("red").setPosition(1.5,0,0.5));
    mesh=Meshes.createClosedCylinder(0.5,0.5,1)
-   sub.addShape(sub.makeShape(mesh).setColor("yellow").setPosition(0,1.5,0));
+   sub.addShape(new Shape(mesh).setColor("yellow").setPosition(0,1.5,0));
    mesh=Meshes.createCylinder(0.5,0,1)
-   sub.addShape(sub.makeShape(mesh).setColor("blue").setPosition(0,-1.5,0));
+   sub.addShape(new Shape(mesh).setColor("blue").setPosition(0,-1.5,0));
    mesh=Meshes.createTorus(0.2,0.5)
-   sub.addShape(sub.makeShape(mesh).setColor("rebeccapurple").setPosition(-1.5,0,0.2));
+   sub.addShape(new Shape(mesh).setColor("rebeccapurple").setPosition(-1.5,0,0.2));
   })
   var anim=null
   var timer={}

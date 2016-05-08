@@ -42,13 +42,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   ],sub).then(function(textures){
    // create a stack of washers, each with different sizes
    for(var i=0;i<shapecolors.length;i++){
-    var s=scene.makeShape(createWasher(0.5,shapesizes[i],0.1,32)).setColor(shapecolors[i])
+    var s=new Shape(createWasher(0.5,shapesizes[i],0.1,32)).setColor(shapecolors[i])
       .setVisible(false)
     shapes.push(s)
     sub.addShape(s)
    }
    sub.addShape(
-    sub.makeShape(makeFloor(-5,-5,10,10,1)).setTexture(textures[0]))
+    new Shape(makeFloor(-5,-5,10,10,1)).setTexture(textures[0]))
    // Start the render loop
   var anim=null
   var timer={}

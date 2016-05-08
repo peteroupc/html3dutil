@@ -123,7 +123,7 @@ function createSampleShape(index){
 function sampleShape(num){
  if(shape)scene.removeShape(shape);
  var cs=document.getElementById("colorsetting").value
- scene.addShape(shape=scene.makeShape(createSampleShape(num)).setColor(cs))
+ scene.addShape(shape=new Shape(createSampleShape(num)).setColor(cs))
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
@@ -134,7 +134,7 @@ function sampleShape(num){
   var xyz=new ShapeGroup();
   var pc=new FrameCounterDiv(scene)
   var shape=null;
-  var axisline=scene.makeShape(Meshes.createCapsule(0.005,10,6,4));
+  var axisline=new Shape(Meshes.createCapsule(0.005,10,6,4));
   var zaxis=axisline.copy().setColor("blue")
   var yaxis=axisline.copy().setColor("green");
   yaxis.getTransform().setOrientation(90,1,0,0);

@@ -33,7 +33,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    "specular.png"
    ],scene).then(function(tex){
    var mesh=Meshes.createBox(10,20,20);
-   var shape=scene.makeShape(mesh).setMaterial(new Material()
+   var shape=new Shape(mesh).setMaterial(new Material()
     .setParams({
      "diffuse":"white",
      "specular":"white",

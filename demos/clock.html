@@ -50,14 +50,14 @@ function ClockShape(scene){
    .transform(frontTransform)
  var back=Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
    .transform(GLMath.mat4translated(0,0,-0.05));
- clock.addShape(scene.makeShape(border));
- clock.addShape(scene.makeShape(front));
- clock.addShape(scene.makeShape(back));
- clock.addShape(scene.makeShape(hourhand));
- clock.addShape(scene.makeShape(minutehand));
- clock.addShape(scene.makeShape(secondhand));
- clock.addShape(scene.makeShape(center));
- clock.addShape(scene.makeShape(twelveoclock));
+ clock.addShape(new Shape(border));
+ clock.addShape(new Shape(front));
+ clock.addShape(new Shape(back));
+ clock.addShape(new Shape(hourhand));
+ clock.addShape(new Shape(minutehand));
+ clock.addShape(new Shape(secondhand));
+ clock.addShape(new Shape(center));
+ clock.addShape(new Shape(twelveoclock));
  scene.addShape(clock);
  this.shape=clock;
  this.hour=-1;
