@@ -25,13 +25,14 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   //
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("#f0f0f0");
   var textSub=new Subscene3D(scene)
-    .ortho2DAspect(0,640,480,0);
+    .orthoAspect(0,640,480,0,-1,1);
   var figureSub=new Subscene3D(scene)
     .perspectiveAspect(45,0.1,100)
     .setLookAt([0,0,40]);

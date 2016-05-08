@@ -1,4 +1,4 @@
-/* global Material, Mesh, MeshJSON, SurfaceEval, alert, allsettings, scene, shapeGroup */
+/* global Material, Mesh, MeshJSON, SurfaceEval, alert, allsettings, shapeGroup */
 function formulaEditorHelp(){
 "use strict";
 if(typeof alert!=="undefined"){

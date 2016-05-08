@@ -114,17 +114,18 @@ function ClockShape(scene){
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
    .cullFace(Scene3D.BACK)
-  var camera=new Camera(scene,45,1,1000).setDistance(5)
-  var pc=new FrameCounterDiv(scene)
-  var clock=new ClockShape(scene);
+  var sub=new Subscene3D(scene);
+  var camera=new Camera(sub,45,1,1000).setDistance(5)
+  var pc=new FrameCounterDiv(sub)
+  var clock=new ClockShape(sub);
   document.getElementById("colorsetting").addEventListener("change",
    function(e){ clock.setColor(e.target.value) });
   GLUtil.renderLoop(function(){
    clock.update();
    pc.update();
    camera.update();
-   scene.setDirectionalLight(0,camera.getPosition());
-   scene.render();
+   sub.getLights().setDirectionalLight(0,camera.getPosition());
+   scene.render(sub);
   });
 //-->
 </script>

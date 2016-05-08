@@ -85,7 +85,7 @@ FrameBuffer.prototype.resize=function(width,height){
  height=Math.ceil(height);
  if(width!=this.width || height!=this.height){
   this.dispose();
-  this.init(width,height);
+  this._init(this.context,width,height);
  }
  return this;
 }
@@ -138,7 +138,7 @@ FrameBuffer.prototype.dispose=function(){
  "use strict";
 if(this.buffer!==null){
    var oldBuffer=this.context.getParameter(
-    context.FRAMEBUFFER_BINDING);
+    this.context.FRAMEBUFFER_BINDING);
    if(oldBuffer==this.buffer){
      this.unbind();
    }

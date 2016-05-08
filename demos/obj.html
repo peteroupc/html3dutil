@@ -31,16 +31,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
-  var loader=new TextureLoader();
   scene.setClearColor("white");
-  var camera=new Camera(scene,45,1,1000).setDistance(5);
+  var sub=new Subscene3D(scene);
+  var loader=new TextureLoader();
+  var camera=new Camera(sub,45,1,1000).setDistance(5);
   var startfunc=null
   var shape=null
   addLink("Toboggan",startfunc=function(){
   ObjData.loadObjFromUrlWithTextures("toboggan.obj",loader)
    .then(function(mesh){
-    scene.removeShape(shape)
-    scene.addShape(shape=mesh.toShape(scene));
+    sub.removeShape(shape)
+    sub.addShape(shape=mesh.toShape());
     camera.setDistance(5)
   })
   })
@@ -49,16 +50,16 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     ObjData.loadObjFromUrl("spot_quadrangulated.obj"),
     loader.loadTexture("spot_texture.png")
   ]).then(function(results){
-    scene.removeShape(shape)
-    scene.addShape(shape=results[0].toShape(scene).setTexture(results[1]));
+    sub.removeShape(shape)
+    sub.addShape(shape=results[0].toShape().setTexture(results[1]));
    camera.setDistance(3)
   })
   })
   startfunc()
   GLUtil.renderLoop(function(){
    camera.update();
-   scene.setDirectionalLight(0,camera.getPosition());
-   scene.render();
+   sub.getLights().setDirectionalLight(0,camera.getPosition());
+   scene.render(sub);
   });
 //-->
 </script>

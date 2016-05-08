@@ -263,6 +263,8 @@ BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
     return;
    }
   }
+ // TODO: Investigate why flickering occurs when buffered meshes
+ // are loaded this way
   var bm=new BufferedMesh(meshBuffer,prog);
   this.meshes.push([meshBuffer,context,bm]);
  }

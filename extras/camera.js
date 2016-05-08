@@ -14,18 +14,26 @@ if(nearZ<=0)throw new Error("invalid nearZ");
  this.scene=scene;
  this.near=nearZ;
  this.far=farZ;
- this.currentAspect=this.scene.getClientAspect();
- this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ if(this.scene instanceof Scene3D){
+   this.currentAspect=this.scene.getClientAspect();
+   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ } else {
+   this.scene.perspectiveAspect(this.fov,this.near,this.far);
+ }
 }
 /**
  * Not documented yet.
  */
 Perspective.prototype.update=function(){
  "use strict";
-var aspect=this.scene.getClientAspect();
- if(aspect!==this.currentAspect){
-  this.currentAspect=aspect;
-  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ if(this.scene instanceof Scene3D){
+  var aspect=this.scene.getClientAspect();
+  if(aspect!==this.currentAspect){
+   this.currentAspect=aspect;
+   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+  }
+ } else {
+   this.scene.perspectiveAspect(this.fov,this.near,this.far);
  }
 };
 

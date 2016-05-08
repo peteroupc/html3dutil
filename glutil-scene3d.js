@@ -65,6 +65,7 @@ function Scene3D(canvasOrContext){
  }
 }
 
+// TODO: Implement TEXTURE_ENABLED
 Scene3D.LIGHTING_ENABLED = 1;
 Scene3D.SPECULAR_MAP_ENABLED = 2;
 Scene3D.NORMAL_ENABLED = 4;
