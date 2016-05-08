@@ -610,9 +610,8 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#endif\n" +
 " vec4 radius; /* light radius */\n" +
 "};\n" +
-"const int MAX_LIGHTS = "+Lights.MAX_LIGHTS+"; /* internal */\n" +
 "uniform vec3 sceneAmbient;\n" +
-"uniform light lights[MAX_LIGHTS];\n" +
+"uniform light lights["+Lights.MAX_LIGHTS+"];\n" +
 "uniform vec3 ma;\n" +
 "uniform vec3 me;\n" +
 "#ifdef SPECULAR\n" +
@@ -626,8 +625,9 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#endif\n" +
 "#endif\n" +
 "#endif\n" +
+"#ifdef TEXTURE\n" +
 "uniform sampler2D sampler;\n" +
-"uniform vec2 textureSize;\n" + // texture size (all zeros if textures not used)
+"#endif\n" +
 "uniform float useColorAttr;\n" + // use color attribute if 1
 "varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n" +
@@ -665,13 +665,17 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "void main(){\n" +
 " vec4 tmp;\n"+
 " vec3 normal;\n"+
-" float useTexture=sign(textureSize.x+textureSize.y);\n"+
 " tmp.w=1.0;\n"+
 " tmp.xyz=colorAttrVar;\n"+
-" vec4 baseColor=mix(mix(\n"+
-"   md, /*when textures are not used*/\n" +
-"   texture2D(sampler,uvVar), /*when textures are used*/\n"+
-"   useTexture), tmp, useColorAttr);\n"+
+"#ifdef TEXTURE\n" +
+" vec4 baseColor=mix(\n"+
+"   texture2D(sampler,uvVar),\n"+
+"   tmp, useColorAttr);\n"+
+"#else\n" +
+" vec4 baseColor=mix(\n"+
+"   md,\n"+
+"   tmp, useColorAttr);\n"+
+"#endif\n" +
 "#ifdef SHADING\n" +
 "#ifdef NORMAL_MAP\n" +
 "normal = normalize(tbnMatrixVar*(2.0*texture2D(normalMap,uvVar).rgb - vec3(1.0)));\n" +
