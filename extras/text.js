@@ -83,7 +83,7 @@ TextRenderer.prototype._setFontTextures=function(font,textureList){
 * @param {Number} xPos X-coordinate of the top left corner of the text.
 * @param {Number} yPos Y-coordinate of the top left corner of the text.
 * @param {Number} height Size of the text in units.
-* @param {string|Array<number>} [color] The color to draw the text with.
+* @param {string|Array<Number>} [color] The color to draw the text with.
 * An array of three or
 * four color components; or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
@@ -115,14 +115,14 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
 * as well as the bitmaps used by that font, and maps them
 * to WebGL textures.  See {@link TextRenderer} for
 * more information.
-* @param {string} fontFileName The URL of the font data file
+* @param {String} fontFileName The URL of the font data file
 * to load.  The following file extensions are read as the following formats:<ul>
 * <li>".xml": XML</li>
 * <li>".json": JSON</li>
 * <li>".bin": Binary</li>
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
-* @return {Promise<TextFont>} A promise that is resolved
+* @returns {Promise<TextFont>} A promise that is resolved
 * when the font data and all the textures it uses are loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
 */
@@ -190,7 +190,7 @@ TextFont._toArray=function(str,minLength){
  * @param {String} str A text string.
  * @param {Number} height The line height to use when
  * measuring the text.  Cannot be less than 0.
- * @return {Array<number>} An array of two numbers;
+ * @returns {Array<Number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).
@@ -620,7 +620,7 @@ TextFont._loadTextFontInner=function(data){
 /**
 * Loads a bitmap font definition from a file along with the textures
 * used by that font.
-* @param {string} fontFileName The URL of the font data file
+* @param {String} fontFileName The URL of the font data file
 * to load.  The following file extensions are read as the following formats:<ul>
 * <li>".xml": XML</li>
 * <li>".json": JSON</li>
@@ -628,7 +628,7 @@ TextFont._loadTextFontInner=function(data){
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
  * @param {glutil.TextureLoader} textureLoader
-* @return {Promise} A promise that is resolved
+* @returns {Promise} A promise that is resolved
 * when the font data and textures are loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
 */
@@ -655,14 +655,14 @@ TextFont.loadWithTextures=function(fontFileName,textureLoader){
 * Loads a bitmap font definition from a file.
 * Note that this method only loads the font data and not the bitmaps
 * used to represent the font.
-* @param {string} fontFileName The URL of the font data file
+* @param {String} fontFileName The URL of the font data file
 * to load.  The following file extensions are read as the following formats:<ul>
 * <li>".xml": XML</li>
 * <li>".json": JSON</li>
 * <li>".bin": Binary</li>
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
-* @return {Promise<TextFont>} A promise that is resolved
+* @returns {Promise<TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
 */

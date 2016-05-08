@@ -37,7 +37,7 @@ this.url=null;
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
  * @param {Scene3D} scene 3D scene to load the shape with.
- * @return {glutil.ShapeGroup} Group of shapes.
+ * @returns {glutil.ShapeGroup} Group of shapes.
  */
 ObjData.prototype.toShape=function(scene){
  "use strict";
@@ -78,9 +78,9 @@ ObjData.prototype.loadTextures=function(scene,resolved,rejected){
 /**
  * Creates one or more 3D shapes from the named portion
  * of the data in this OBJ file.
- * @param {string} name Name from the OBJ file of the portion
+ * @param {String} name Name from the OBJ file of the portion
  * of the model to use.
- * @return {glutil.ShapeGroup} Group of shapes. The group
+ * @returns {glutil.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
  */
 ObjData.prototype.toShapeFromName=function(name){
@@ -271,8 +271,8 @@ ObjData.loadObjFromUrlWithTextures=function(url,textureLoader){
 /**
 Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available) asynchronously.
-@param {string} url The URL to load.
-@return {Promise} A promise that resolves when
+@param {String} url The URL to load.
+@returns {Promise} A promise that resolves when
 the OBJ file is loaded successfully, whether or not its associated
 MTL is also loaded successfully (the result is an ObjData object),
 and is rejected when an error occurs when loading the OBJ file.

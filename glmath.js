@@ -61,9 +61,9 @@ true.)  The triangle's area is half of the cross product's length.
  * <b>c</b>.y = <b>a</b>.z * <b>b</b>.x - <b>a</b>.x * <b>b</b>.z
  * <b>c</b>.z = <b>a</b>.x * <b>b</b>.y - <b>a</b>.y * <b>b</b>.x
  * </pre>
- * @param {Array<number>} a The first vector.
- * @param {Array<number>} b The second vector.
- * @return {Array<number>} A 3-element vector containing the cross product.
+ * @param {Array<Number>} a The first vector.
+ * @param {Array<Number>} b The second vector.
+ * @returns {Array<Number>} A 3-element vector containing the cross product.
  * @example <caption>The following example uses the cross product to
  * calculate a triangle's normal vector and its area.</caption>
  var a=triangle[0];
@@ -104,9 +104,9 @@ return [a[1]*b[2]-a[2]*b[1],
  * <li>If the two vectors are the same, the return value indicates
  * the vector's length squared.  This is illustrated in the example.
  * </ul>
- * @param {Array<number>} a The first vector.
- * @param {Array<number>} b The second vector.
- * @return {number} A number representing the dot product.
+ * @param {Array<Number>} a The first vector.
+ * @param {Array<Number>} b The second vector.
+ * @returns {Number} A number representing the dot product.
  * @example <caption>The following shows a fast way to compare
  * a vector's length using the dot product.</caption>
  * // Check if the vector's length squared is less than 20 units squared
@@ -121,9 +121,9 @@ return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
  * Adds two 3-element vectors and returns a new
  * vector with the result. Adding two vectors
  * is the same as adding each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The resulting 3-element vector.
+ * @param {Array<Number>} a The first 3-element vector.
+ * @param {Array<Number>} b The second 3-element vector.
+ * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3add:function(a,b){
 return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
@@ -132,9 +132,9 @@ return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
  * Subtracts the second vector from the first vector and returns a new
  * vector with the result. Subtracting two vectors
  * is the same as subtracting each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The resulting 3-element vector.
+ * @param {Array<Number>} a The first 3-element vector.
+ * @param {Array<Number>} b The second 3-element vector.
+ * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3sub:function(a,b){
 return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
@@ -143,8 +143,8 @@ return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
  * Negates a 3-element vector and returns a new
  * vector with the result. Negating a vector
  * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 3-element vector.
- * @return {Array<number>} The resulting 3-element vector.
+ * @param {Array<Number>} a A 3-element vector.
+ * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3negate:function(a){
 return [-a[0],-a[1],-a[2]];
@@ -153,8 +153,8 @@ return [-a[0],-a[1],-a[2]];
  * Negates a 3-element vector in place.
 Negating a vector
  * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 3-element vector.
- * @return {Array<number>} The parameter "a".
+ * @param {Array<Number>} a A 3-element vector.
+ * @returns {Array<Number>} The parameter "a".
  */
 vec3negateInPlace:function(a){
 a[0]=-a[0];
@@ -166,9 +166,9 @@ return a;
  * Multiplies two vectors and returns a new
  * vector with the result. Multiplying two vectors
  * is the same as multiplying each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The resulting 3-element vector.
+ * @param {Array<Number>} a The first 3-element vector.
+ * @param {Array<Number>} b The second 3-element vector.
+ * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3mul:function(a,b){
 return [a[0]*b[0],a[1]*b[1],a[2]*b[2]];
@@ -177,9 +177,9 @@ return [a[0]*b[0],a[1]*b[1],a[2]*b[2]];
  * Adds two 3-element vectors and stores
  * the result in the first vector. Adding two vectors
  * is the same as adding each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The parameter "a"
+ * @param {Array<Number>} a The first 3-element vector.
+ * @param {Array<Number>} b The second 3-element vector.
+ * @returns {Array<Number>} The parameter "a"
  */
 vec3addInPlace:function(a,b){
 // Use variables in case a and b are the same
@@ -195,9 +195,9 @@ return a;
  * Subtracts the second vector from the first vector and stores
  * the result in the first vector. Subtracting two vectors
  * is the same as subtracting each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The parameter "a"
+ * @param {Array<Number>} a The first 3-element vector.
+ * @param {Array<Number>} b The second 3-element vector.
+ * @returns {Array<Number>} The parameter "a"
  */
 vec3subInPlace:function(a,b){
 // Use variables in case a and b are the same
@@ -213,9 +213,9 @@ return a;
  * Multiplies two 3-element vectors and stores
  * the result in the first vector. Multiplying two vectors
  * is the same as multiplying each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @return {Array<number>} The parameter "a"
+ * @param {Array<Number>} a The first 3-element vector.
+ * @param {Array<Number>} b The second 3-element vector.
+ * @returns {Array<Number>} The parameter "a"
  */
 vec3mulInPlace:function(a,b){
 // Use variables in case a and b are the same
@@ -230,9 +230,9 @@ return a;
 /**
  * Multiplies each element of a 3-element vector by a factor
  * and stores the result in that vector.
- * @param {Array<number>} a A 3-element vector.
- * @param {number} scalar A factor to multiply.
- * @return {Array<number>} The parameter "a".
+ * @param {Array<Number>} a A 3-element vector.
+ * @param {Number} scalar A factor to multiply.
+ * @returns {Array<Number>} The parameter "a".
  */
 vec3scaleInPlace:function(a,scalar){
 a[0]*=scalar;
@@ -244,9 +244,9 @@ return a;
 /**
  * Multiplies a 3-element vector by a factor
  * and returns a new vector with the result.
- * @param {Array<number>} a A 3-element vector.
- * @param {number} scalar A factor to multiply.
- * @return {Array<number>} The parameter "a".
+ * @param {Array<Number>} a A 3-element vector.
+ * @param {Number} scalar A factor to multiply.
+ * @returns {Array<Number>} The parameter "a".
  */
 vec3scale:function(a,scalar){
  return GLMath.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
@@ -254,11 +254,11 @@ vec3scale:function(a,scalar){
 /**
  * Does a linear interpolation between two 3-element vectors;
  * returns a new vector.
- * @param {Array<number>} v1 The first vector.
- * @param {Array<number>} v2 The second vector.
- * @param {number} factor A value from 0 through 1.  Closer to 0 means
+ * @param {Array<Number>} v1 The first vector.
+ * @param {Array<Number>} v2 The second vector.
+ * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2.
- * @return {Array<number>} The interpolated vector.
+ * @returns {Array<Number>} The interpolated vector.
  */
 vec3lerp:function(v1,v2,factor){
  return [
@@ -270,8 +270,8 @@ vec3lerp:function(v1,v2,factor){
 /**
  * Finds the dot product of two 4-element vectors. It's the
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
- * @param {Array<number>} a The first 4-element vector.
- * @param {Array<number>} b The second 4-element vector.
+ * @param {Array<Number>} a The first 4-element vector.
+ * @param {Array<Number>} b The second 4-element vector.
  */
 vec4dot:function(a,b){
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
@@ -279,9 +279,9 @@ return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
 /**
  * Multiplies each element of a 4-element vector by a factor
  * and stores the result in that vector.
- * @param {Array<number>} a A 4-element vector.
- * @param {number} scalar A factor to multiply.
- * @return {Array<number>} The parameter "a".
+ * @param {Array<Number>} a A 4-element vector.
+ * @param {Number} scalar A factor to multiply.
+ * @returns {Array<Number>} The parameter "a".
  */
 vec4scaleInPlace:function(a,scalar){
 a[0]*=scalar;
@@ -293,11 +293,11 @@ return a;
 /**
  * Does a linear interpolation between two 4-element vectors;
  * returns a new vector.
- * @param {Array<number>} v1 The first vector.
- * @param {Array<number>} v2 The second vector.
- * @param {number} factor A value from 0 through 1.  Closer to 0 means
+ * @param {Array<Number>} v1 The first vector.
+ * @param {Array<Number>} v2 The second vector.
+ * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2.
- * @return {Array<number>} The interpolated vector.
+ * @returns {Array<Number>} The interpolated vector.
  */
 vec4lerp:function(v1,v2,factor){
  return [
@@ -313,8 +313,8 @@ vec4lerp:function(v1,v2,factor){
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.vec3length}.
- * @param {Array<number>} vec A 3-element vector.
- * @return {Array<number>} The parameter "vec".
+ * @param {Array<Number>} vec A 3-element vector.
+ * @returns {Array<Number>} The parameter "vec".
  */
 vec3normInPlace:function(vec){
  var x=vec[0];
@@ -335,8 +335,8 @@ vec3normInPlace:function(vec){
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.vec4length}.
- * @param {Array<number>} vec A 4-element vector.
- * @return {Array<number>} The parameter "vec".
+ * @param {Array<Number>} vec A 4-element vector.
+ * @returns {Array<Number>} The parameter "vec".
  */
 vec4normInPlace:function(vec){
  var x=vec[0];
@@ -359,8 +359,8 @@ vec4normInPlace:function(vec){
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.vec3length}.
- * @param {Array<number>} vec A 3-element vector.
- * @return {Array<number>} The resulting vector.
+ * @param {Array<Number>} vec A 3-element vector.
+ * @returns {Array<Number>} The resulting vector.
  */
 vec3norm:function(vec){
  return GLMath.vec3normInPlace([vec[0],vec[1],vec[2]]);
@@ -371,8 +371,8 @@ vec3norm:function(vec){
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.vec4length}.
- * @param {Array<number>} vec A 4-element vector.
- * @return {Array<number>} The resulting vector.
+ * @param {Array<Number>} vec A 4-element vector.
+ * @returns {Array<Number>} The resulting vector.
  */
 vec4norm:function(vec){
  return GLMath.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
@@ -381,8 +381,8 @@ vec4norm:function(vec){
  * Returns the distance of this 3-element vector from the origin.
  * It's the same as the square root of the sum of the squares
  * of its components.
- * @param {Array<number>} a A 3-element vector.
- * @return {number} Return value. */
+ * @param {Array<Number>} a A 3-element vector.
+ * @returns {Number} Return value. */
 vec3length:function(a){
  var dx=a[0];
  var dy=a[1];
@@ -393,8 +393,8 @@ vec3length:function(a){
  * Returns the distance of this 4-element vector from the origin.
  * It's the same as the square root of the sum of the squares
  * of its components.
- * @param {Array<number>} a A 4-element vector.
- * @return {number} Return value. */
+ * @param {Array<Number>} a A 4-element vector.
+ * @returns {Number} Return value. */
 vec4length:function(a){
  var dx=a[0];
  var dy=a[1];
@@ -404,50 +404,50 @@ vec4length:function(a){
 },
 /**
  * Returns the identity 3x3 matrix.
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 mat3identity:function(){
  return [1,0,0,0,1,0,0,0,1];
 },
 /**
  * Returns the identity 4x4 matrix.
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 mat4identity:function(){
  return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 },
 /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
- @return {Array<number>} */
+ @returns {Array<Number>} */
 quatIdentity:function(){
  return [0,0,0,1];
 },
 /**
  * Returns a copy of a 4x4 matrix.
- * @param {Array<number>} mat A 4x4 matrix.
- * @return {Array<number>} Return value. */
+ * @param {Array<Number>} mat A 4x4 matrix.
+ * @returns {Array<Number>} Return value. */
 mat4copy:function(mat){
  return mat.slice(0,16);
 },
 /**
  * Returns a copy of a 3-element vector.
- * @param {Array<number>} vec A 3-element vector.
- * @return {Array<number>} Return value. */
+ * @param {Array<Number>} vec A 3-element vector.
+ * @returns {Array<Number>} Return value. */
 vec3copy:function(vec){
  return vec.slice(0,3);
 },
 /**
  * Returns a copy of a 4-element vector.
- * @param {Array<number>} vec A 4-element vector.
- * @return {Array<number>} Return value. */
+ * @param {Array<Number>} vec A 4-element vector.
+ * @returns {Array<Number>} Return value. */
 vec4copy:function(vec){
  return vec.slice(0,4);
 },
 /**
  * Assigns the values of a 3-element vector into another
  * 3-element vector.
- * @param {Array<number>} dst The 3-element vector to
+ * @param {Array<Number>} dst The 3-element vector to
  * assign to.
- * @param {Array<number>} src The 3-element vector whose
+ * @param {Array<Number>} src The 3-element vector whose
  * values will be copied.
- * @return {Array<number>} The parameter "dst"
+ * @returns {Array<Number>} The parameter "dst"
  */
 vec3assign:function(dst,src){
  dst[0]=src[0];
@@ -458,9 +458,9 @@ vec3assign:function(dst,src){
 /**
  * Assigns the values of a 4-element vector into another
  * 4-element vector.
- * @param {Array<number>} src The 3-element vector whose
+ * @param {Array<Number>} src The 3-element vector whose
  * values will be copied.
- * @return {Array<number>} The parameter "dst"
+ * @returns {Array<Number>} The parameter "dst"
  */
 vec4assign:function(dst,src){
  dst[0]=src[0];
@@ -471,8 +471,8 @@ vec4assign:function(dst,src){
 },
 /**
  * Returns whether a 4x4 matrix is the identity matrix.
- * @param {Array<number>} mat A 4x4 matrix.
- * @return {boolean} Return value. */
+ * @param {Array<Number>} mat A 4x4 matrix.
+ * @returns {Boolean} Return value. */
 mat4isIdentity:function(mat){
 return (
     mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
@@ -483,8 +483,8 @@ return (
 },
 /**
  * Finds the inverse of a 4x4 matrix.
- * @param {Array<number>} m A 4x4 matrix.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @param {Array<Number>} m A 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  * Returns the identity matrix if this matrix is not invertible.
  */
 mat4invert:function(m){
@@ -578,16 +578,16 @@ return r;
 /**
  * Inverts the rotation given in this quaternion without normalizing it;
  * returns a new quaternion.
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @return {Array<number>} Return value. */
+ * @param {Array<Number>} quat A quaternion, containing four elements.
+ * @returns {Array<Number>} Return value. */
 quatConjugate:function(quat){
  return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
 /**
  * Inverts the rotation given in this quaternion;
  * returns a new quaternion.
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @return {Array<number>} Return value. */
+ * @param {Array<Number>} quat A quaternion, containing four elements.
+ * @returns {Array<Number>} Return value. */
 quatInvert:function(quat){
  var lsq=1.0/GLMath.quatDot(quat,quat);
  return GLMath.vec4scaleInPlace(
@@ -595,15 +595,15 @@ quatInvert:function(quat){
 },
 /**
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
-* @return {boolean} Return value.*/
+* @returns {Boolean} Return value.*/
 quatIsIdentity:function(quat){
  return quat[0]===0 && quat[1] === 0 && quat[2] === 0 && quat[3] === 1;
 },
 /**
  * Generates a 4x4 matrix describing the rotation
  * described by this quaternion.
- * @param {Array<number>} quat A quaternion.
- * @return {Array<number>} Return value.
+ * @param {Array<Number>} quat A quaternion.
+ * @returns {Array<Number>} Return value.
  */
 quatToMat4:function(quat){
   var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
@@ -630,8 +630,8 @@ quatToMat4:function(quat){
 * Calculates the angle and axis of rotation for this
 * quaternion. (The axis of rotation is a ray that starts at the
 * origin (0,0,0) and points toward a 3D point.)
-* @param {Array<number>} a A quaternion.  Must be normalized.
-* @return  {Array<number>} A 4-element array giving the axis
+* @param {Array<Number>} a A quaternion.  Must be normalized.
+* @returns {Array<Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
@@ -655,9 +655,9 @@ quatToAxisAngle:function(a){
  * will describe the rotation required to rotate
  * the ray described in the first vector toward the ray described
  * in the second vector.  The vectors need not be normalized.
- * @param {Array<number>} vec1 The first 3-element vector.
-* @param {Array<number>} vec2 The second 3-element vector.
- * @return {Array<number>} The generated quaternion, which
+ * @param {Array<Number>} vec1 The first 3-element vector.
+* @param {Array<Number>} vec2 The second 3-element vector.
+ * @returns {Array<Number>} The generated quaternion, which
  * will be normalized.
  */
 quatFromVectors:function(vec1,vec2){
@@ -672,23 +672,23 @@ quatFromVectors:function(vec1,vec2){
  * Generates a quaternion from an angle and axis of rotation.
  (The axis of rotation is a ray that starts at the
 * origin (0,0,0) and points toward a 3D point.)
- * @param {Array<number>|number} angle The desired angle
+ * @param {Array<Number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.
- * @param {Array<number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.  If the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {Array<number>} The generated quaternion.
+ * @returns {Array<Number>} The generated quaternion.
  */
 quatFromAxisAngle:function(angle,v,vy,vz){
 var v0,v1,v2,ang;
@@ -726,19 +726,19 @@ return ret;
  * in a clockwise direction for left-handed systems.
   (The axis of rotation is a ray that starts at the
 * origin (0,0,0) and points toward a 3D point.)
- * @param {number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.
+ * @param {Number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.
 *  This can instead be a 3-element
  * array giving the rotation about the x-axis, y-axis, and z-axis,
  * respectively.
- * @param {number} yawDegrees Rotation about the y-axis (left or right turn), in degrees.
+ * @param {Number} yawDegrees Rotation about the y-axis (left or right turn), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
+ * @param {Number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {number|null} mode Specifies the order in which the rotations will occur (in terms of their effect).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
  * and GLMath.RollYawPitch. If null or omitted, the rotation will be
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
- * @return {Array<number>} The generated quaternion.
+ * @returns {Array<Number>} The generated quaternion.
  */
 quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  var rollRad,pitchRad,yawRad;
@@ -778,13 +778,13 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
- * @param {Array<number>} a A quaternion.  Should be normalized.
+ * @param {Array<Number>} a A quaternion.  Should be normalized.
  * @param {number|null} mode Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the GLMath constants such as GLMath.PitchYawRoll
  * and GLMath.RollYawPitch. If null or omitted, the rotation will be
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
- * @return {Array<number>} A 3-element array containing the
+ * @returns {Array<Number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
  * angle, if the corresponding axis
  * points toward the viewer, a positive value means the angle runs in
@@ -852,11 +852,11 @@ quatToTaitBryan:function(a,mode){
 /**
  * Does a linear interpolation between two quaternions;
  * returns a new quaternion.
- * @param {Array<number>} q1 The first quaternion.  Should be normalized.
- * @param {Array<number>} q2 The second quaternion.  Should be normalized.
- * @param {number} factor A value from 0 through 1.  Closer to 0 means
+ * @param {Array<Number>} q1 The first quaternion.  Should be normalized.
+ * @param {Array<Number>} q2 The second quaternion.  Should be normalized.
+ * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
- * @return {Array<number>} The interpolated quaternion,
+ * @returns {Array<Number>} The interpolated quaternion,
  * which will be normalized.
 */
 quatNlerp:function(q1,q2,factor){
@@ -881,11 +881,11 @@ quatNlerp:function(q1,q2,factor){
  * returns a new quaternion.
  * This method is useful for smoothly animating between the two
  * rotations they describe.
- * @param {Array<number>} q1 The first quaternion.  Should be normalized.
- * @param {Array<number>} q2 The second quaternion.  Should be normalized.
- * @param {number} factor A value from 0 through 1.  Closer to 0 means
+ * @param {Array<Number>} q1 The first quaternion.  Should be normalized.
+ * @param {Array<Number>} q2 The second quaternion.  Should be normalized.
+ * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
- * @return {Array<number>} The interpolated quaternion.
+ * @returns {Array<Number>} The interpolated quaternion.
  */
 quatSlerp:function(q1,q2,factor){
  var cosval=GLMath.quatDot(q1,q2);
@@ -923,7 +923,7 @@ quatSlerp:function(q1,q2,factor){
  * This method is equivalent to the following:<pre>
  * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
  * </pre>
- * @param {Array<number>|number} angle The desired angle
+ * @param {Array<Number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -931,15 +931,15 @@ quatSlerp:function(q1,q2,factor){
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {Array<number>} The resulting quaternion.
+ * @returns {Array<Number>} The resulting quaternion.
  */
 quatRotate:function(quat,angle,v,vy,vz){
   return GLMath.quatMultiply(quat,
@@ -947,11 +947,11 @@ quatRotate:function(quat,angle,v,vy,vz){
 },
 /**
  * Transforms a 3- or 4-element vector using a quaternion's rotation.
- * @param {Array<number>} q A quaternion describing
+ * @param {Array<Number>} q A quaternion describing
  * the rotation.
- * @param {Array<number>} v A 3- or 4-element vector to
+ * @param {Array<Number>} v A 3- or 4-element vector to
  * transform. The fourth element, if any, is ignored.
- * @return {Array<number>} A 4-element vector representing
+ * @returns {Array<Number>} A 4-element vector representing
 * the transformed vector.
  */
 quatTransform:function(q,v){
@@ -967,8 +967,8 @@ quatTransform:function(q,v){
  * Generates a quaternion from the rotation described in a 4x4 matrix.
  * The upper 3x3 portion of the matrix is used for this calculation.
  * The results are undefined if the matrix includes shearing.
- * @param {Array<number>} m A 4x4 matrix.
- * @return {Array<number>} The resulting quaternion.
+ * @param {Array<Number>} m A 4x4 matrix.
+ * @returns {Array<Number>} The resulting quaternion.
  */
 quatFromMat4:function(m){
 var ret=[];
@@ -1024,8 +1024,8 @@ return ret;
 /**
  * Returns the upper-left part of a 4x4 matrix as a new
  * 3x3 matrix.
- * @param {Array<number>} m4 A 4x4 matrix.
- * @return {Array<number>} The resulting 3x3 matrix.
+ * @param {Array<Number>} m4 A 4x4 matrix.
+ * @returns {Array<Number>} The resulting 3x3 matrix.
  */
 mat4toMat3:function(m4){
  return [
@@ -1036,8 +1036,8 @@ mat4toMat3:function(m4){
 },
 /**
  * Returns the transpose of a 4x4 matrix.
- * @param {Array<number>} m4 A 4x4 matrix.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @param {Array<Number>} m4 A 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4transpose:function(m4){
  return GLMath.mat4transposeInPlace(m4.slice(0,16));
@@ -1045,8 +1045,8 @@ mat4transpose:function(m4){
 /**
  * Transposes a 4x4 matrix in place without creating
  * a new matrix.
- * @param {Array<number>} mat A 4x4 matrix.
- * @return {Array<number>} The parameter "mat".
+ * @param {Array<Number>} mat A 4x4 matrix.
+ * @returns {Array<Number>} The parameter "mat".
  */
 mat4transposeInPlace:function(mat){
  var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
@@ -1067,8 +1067,8 @@ mat4transposeInPlace:function(mat){
 * input matrix uses only rotations, translations, and/or uniform scaling
 * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 * be used instead of the inverse-transpose matrix to transform the normals.
-* @param {Array<number>} m4 A 4x4 matrix.
-* @return {Array<number>} The resulting 3x3 matrix. If the matrix
+* @param {Array<Number>} m4 A 4x4 matrix.
+* @returns {Array<Number>} The resulting 3x3 matrix. If the matrix
 * can't be inverted, returns the identity 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
@@ -1110,13 +1110,13 @@ return [
 },
 /**
  * Multiplies a 4x4 matrix by a scaling transformation.
- * @param {Array<number>|number} v3 Scaling factor along the
+ * @param {Array<Number>|number} v3 Scaling factor along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scaling factors along the X, Y, and
  * Z axes.
- * @param {number} v3y Scaling factor along the Y axis.
- * @param {number} v3z Scaling factor along the Z axis.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @param {Number} v3y Scaling factor along the Y axis.
+ * @param {Number} v3z Scaling factor along the Z axis.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4scale:function(mat,v3,v3y,v3z){
   var scaleX,scaleY,scaleZ;
@@ -1138,13 +1138,13 @@ mat4scale:function(mat,v3,v3y,v3z){
 },
 /**
  * Returns a 4x4 matrix representing a scaling transformation.
- * @param {Array<number>|number} v3 Scaling factor along the
+ * @param {Array<Number>|number} v3 Scaling factor along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scaling factors along the X, Y, and
  * Z axes.
- * @param {number} v3y Scaling factor along the Y axis.
- * @param {number} v3z Scaling factor along the Z axis.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @param {Number} v3y Scaling factor along the Y axis.
+ * @param {Number} v3z Scaling factor along the Z axis.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4scaled:function(v3,v3y,v3z){
   if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
@@ -1156,16 +1156,16 @@ mat4scaled:function(v3,v3y,v3z){
 /**
  * Transforms a 4-element vector with a 4x4 matrix and returns
  * the transformed vector.
- * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>|number} v X coordinate.
+ * @param {Array<Number>} mat A 4x4 matrix.
+ * @param {Array<Number>|number} v X coordinate.
  * If "vy", "vz", and "vw" are omitted, this value can instead
  * be a 4-element array giving the X, Y, Z, and W coordinates.
- * @param {number} vy Y coordinate.
- * @param {number} vz Z coordinate.
- * @param {number} vw W coordinate.  To transform a 3D
+ * @param {Number} vy Y coordinate.
+ * @param {Number} vz Z coordinate.
+ * @param {Number} vw W coordinate.  To transform a 3D
  * point, set W to 1; to transform a 2D
  * point, set Z and W to 1.
- * @return {Array<number>} The transformed vector.
+ * @returns {Array<Number>} The transformed vector.
  */
 mat4transform:function(mat,v,vy,vz,vw){
   var x,y,z,w;
@@ -1189,14 +1189,14 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
 /**
  * Transforms a 3-element vector with a 4x4 matrix and returns
  * the transformed vector.
- * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>|number} v X coordinate.
+ * @param {Array<Number>} mat A 4x4 matrix.
+ * @param {Array<Number>|number} v X coordinate.
  * If "vy", "vz", and "vw" are omitted, this value can instead
  * be a 4-element array giving the X, Y, Z, and W coordinates.
- * @param {number} vy Y coordinate.
- * @param {number} vz Z coordinate. To transform a 2D
+ * @param {Number} vy Y coordinate.
+ * @param {Number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
- * @return {Array<number>} The transformed vector.
+ * @returns {Array<Number>} The transformed vector.
  */
 mat4transformVec3:function(mat,v,vy,vz){
   var x,y,z;
@@ -1217,14 +1217,14 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + mat[12],
 /**
  * Transforms a 3-element vector with a 3x3 matrix and returns
  * the transformed vector.
- * @param {Array<number>} mat A 3x3 matrix.
- * @param {Array<number>|number} v X coordinate.
+ * @param {Array<Number>} mat A 3x3 matrix.
+ * @param {Array<Number>|number} v X coordinate.
  * If "vy", and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
- * @param {number} vy Y coordinate.
- * @param {number} vz Z coordinate.  To transform a 2D
+ * @param {Number} vy Y coordinate.
+ * @param {Number} vz Z coordinate.  To transform a 2D
  * point, set Z to 1.
- * @return {Array<number>} The transformed vector.
+ * @returns {Array<Number>} The transformed vector.
  */
 mat3transform:function(mat,v,vy,vz){
   var x,y,z;
@@ -1243,13 +1243,13 @@ return [x * mat[0] + y * mat[3] + z * mat[6],
 },
 /**
  * Returns a 4x4 matrix representing a translation.
- * @param {Array<number>|number} v3 Translation along the
+ * @param {Array<Number>|number} v3 Translation along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the translations along the X, Y, and
  * Z axes.
- * @param {number} v3y Translation along the Y axis.
- * @param {number} v3z Translation along the Z axis.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @param {Number} v3y Translation along the Y axis.
+ * @param {Number} v3z Translation along the Z axis.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4translated:function(v3,v3y,v3z){
   var x,y,z;
@@ -1266,14 +1266,14 @@ mat4translated:function(v3,v3y,v3z){
 },
 /**
  * Multiplies a 4x4 matrix by a translation transformation.
- * @param {Array<number>} mat The matrix to multiply.
- * @param {Array<number>|number} v3 Translation along the
+ * @param {Array<Number>} mat The matrix to multiply.
+ * @param {Array<Number>|number} v3 Translation along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the translations along the X, Y, and
  * Z axes.
- * @param {number} v3y Translation along the Y axis.
- * @param {number} v3z Translation along the Z axis.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @param {Number} v3y Translation along the Y axis.
+ * @param {Number} v3z Translation along the Z axis.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4translate:function(mat,v3,v3y,v3z){
   var x,y,z;
@@ -1302,18 +1302,18 @@ mat4translate:function(mat,v3,v3y,v3z){
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {number}  fovY Y-axis field of view, in degrees. Should be less
+* @param {Number}  fovY Y-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
-* @param {number}  aspectRatio The ratio of width to height of the viewport, usually
+* @param {Number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @param {number} near The distance from the camera to
+* @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should not be 0 or less, and should be set to the highest distance
 * from the camera that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
-* @param {number} far The distance from the camera to
+* @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
@@ -1322,7 +1322,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
  * to the far plane will have identical depth values.)
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4perspective:function(fovY,aspectRatio,near,far){
  var fov=((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*GLMath.PiDividedBy360;
@@ -1339,19 +1339,19 @@ mat4perspective:function(fovY,aspectRatio,near,far){
  * such as in legacy Direct3D, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
  * 10, 12, and 14).
-* @param {Array<number>} viewerPos A 3-element vector specifying
+* @param {Array<Number>} viewerPos A 3-element vector specifying
 * the camera position in world space.
-* @param {Array<number>} [lookingAt] A 3-element vector specifying
+* @param {Array<Number>} [lookingAt] A 3-element vector specifying
 * the point in world space that the camera is looking at.  May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
-* @param {Array<number>} [up] A 3-element vector specifying
+* @param {Array<Number>} [up] A 3-element vector specifying
 * the direction from the center of the camera to its top. This parameter may
 * be null or omitted, in which case the default is the vector (0, 1, 0),
 * the vector that results when the camera is held upright.  This
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4lookat:function(viewerPos,lookingAt,up){
  if(!up)up=[0,1,0];
@@ -1387,19 +1387,19 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {number} l Leftmost coordinate of the 3D view.
- * @param {number} r Rightmost coordinate of the 3D view.
+ * @param {Number} l Leftmost coordinate of the 3D view.
+ * @param {Number} r Rightmost coordinate of the 3D view.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 3D view.
- * @param {number} t Topmost coordinate of the 3D view.
+ * @param {Number} b Bottommost coordinate of the 3D view.
+ * @param {Number} t Topmost coordinate of the 3D view.
  * (Note that t can be greater than b or vice versa.)
- * @param {number} n Distance from the camera to the near clipping
+ * @param {Number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @param {number} f Distance from the camera to the far clipping
+ * @param {Number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * (Note that n can be greater than f or vice versa.)  The absolute difference
  * between n and f should be as small as the application can accept.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho:function(l,r,b,t,n,f){
  var width=1/(r-l);
@@ -1416,18 +1416,18 @@ mat4ortho:function(l,r,b,t,n,f){
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {number}  fovX X-axis field of view, in degrees. Should be less
+* @param {Number}  fovX X-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
-* @param {number}  aspectRatio The ratio of width to height of the viewport, usually
+* @param {Number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @param {number} near The distance from the camera to
+* @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should not be 0 or less, and should be set to the highest distance
 * from the camera that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
-* @param {number} far The distance from the camera to
+* @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
@@ -1436,7 +1436,7 @@ mat4ortho:function(l,r,b,t,n,f){
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
  * to the far plane will have identical depth values.)
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
  var fov=((fovX>=0 && fovX<360) ? fovX : ((fovX%360)+(fovX<0 ? 360 : 0)))*GLMath.PiDividedBy360;
@@ -1448,13 +1448,13 @@ mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
  * This method assumes a right-handed coordinate system; see mat4ortho().<p>
  * This is the same as mat4ortho() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.
- * @param {number} l Leftmost coordinate of the 2D view.
- * @param {number} r Rightmost coordinate of the 2D view.
+ * @param {Number} l Leftmost coordinate of the 2D view.
+ * @param {Number} r Rightmost coordinate of the 2D view.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 2D view.
- * @param {number} t Topmost coordinate of the 2D view.
+ * @param {Number} b Bottommost coordinate of the 2D view.
+ * @param {Number} t Topmost coordinate of the 2D view.
  * (Note that t can be greater than b or vice versa.)
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho2d:function(l,r,b,t){
  return GLMath.mat4ortho2d(l,r,b,t,-1,1);
@@ -1469,15 +1469,15 @@ mat4ortho2d:function(l,r,b,t){
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
  * This method assumes a right-handed coordinate system; see mat4ortho().<p>
- * @param {number} l Leftmost coordinate of the view rectangle.
- * @param {number} r Rightmost coordinate of the view rectangle.
+ * @param {Number} l Leftmost coordinate of the view rectangle.
+ * @param {Number} r Rightmost coordinate of the view rectangle.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the view rectangle.
- * @param {number} t Topmost coordinate of the view rectangle.
+ * @param {Number} b Bottommost coordinate of the view rectangle.
+ * @param {Number} t Topmost coordinate of the view rectangle.
  * (Note that t can be greater than b or vice versa.)
-* @param {number}  aspect The ratio of width to height of the viewport, usually
+* @param {Number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @return {Array<number>} The resulting 4x4 matrix.
+* @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho2dAspect:function(l,r,b,t,aspect){
  return GLMath.mat4orthoAspect(l,r,b,t,-1,1,aspect);
@@ -1492,21 +1492,21 @@ mat4ortho2dAspect:function(l,r,b,t,aspect){
  * This is the same as mat4ortho() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
  * This method assumes a right-handed coordinate system; see mat4ortho().
- * @param {number} l Leftmost coordinate of the view rectangle.
- * @param {number} r Rightmost coordinate of the view rectangle.
+ * @param {Number} l Leftmost coordinate of the view rectangle.
+ * @param {Number} r Rightmost coordinate of the view rectangle.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the view rectangle.
- * @param {number} t Topmost coordinate of the view rectangle.
+ * @param {Number} b Bottommost coordinate of the view rectangle.
+ * @param {Number} t Topmost coordinate of the view rectangle.
  * (Note that t can be greater than b or vice versa.)
- * @param {number} n Distance from the camera to the near clipping
+ * @param {Number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @param {number} f Distance from the camera to the far clipping
+ * @param {Number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * (Note that n can be greater than f or vice versa.)  The absolute difference
  * between n and f should be as small as the application can accept.
-* @param {number} aspect The ratio of width to height of the viewport, usually
+* @param {Number} aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @return {Array<number>} The resulting 4x4 matrix.
+* @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4orthoAspect:function(l,r,b,t,n,f,aspect){
  var xdist=Math.abs(r-l);
@@ -1526,20 +1526,20 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {number} l X-coordinate of the point where the left
+ * @param {Number} l X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
- * @param {number} r X-coordinate of the point where the right
+ * @param {Number} r X-coordinate of the point where the right
  * clipping plane meets the near clipping plane.
- * @param {number} b Y-coordinate of the point where the bottom
+ * @param {Number} b Y-coordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
- * @param {number} t Y-coordinate of the point where the top
+ * @param {Number} t Y-coordinate of the point where the top
  * clipping plane meets the near clipping plane.
-* @param {number} near The distance from the camera to
+* @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should not be 0 or less, and should be set to the highest distance
 * from the camera that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
-* @param {number} far The distance from the camera to
+* @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
@@ -1548,7 +1548,7 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
  * to the far plane will have identical depth values.)
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4frustum:function(l,r,b,t,near,far){
  var dn=2*near;
@@ -1564,14 +1564,14 @@ return [
 /**
  * Modifies a 4x4 matrix by multiplying it by a
  * scaling transformation.
- * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>|number} v3 Scale factor along the
+ * @param {Array<Number>} mat A 4x4 matrix.
+ * @param {Array<Number>|number} v3 Scale factor along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scale factors along the X, Y, and
  * Z axes.
- * @param {number} v3y Scale factor along the Y axis.
- * @param {number} v3z Scale factor along the Z axis.
- * @return {Array<number>} The same parameter as "mat".
+ * @param {Number} v3y Scale factor along the Y axis.
+ * @param {Number} v3z Scale factor along the Z axis.
+ * @returns {Array<Number>} The same parameter as "mat".
  */
 mat4scaleInPlace:function(mat,v3,v3y,v3z){
   var x,y,z;
@@ -1605,9 +1605,9 @@ mat4scaleInPlace:function(mat,v3,v3y,v3z){
  * matrix (input matrix) describes a translation and the second
  * matrix describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
- * @param {Array<number>} a The first matrix.
- * @param {Array<number>} b The second matrix.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @param {Array<Number>} a The first matrix.
+ * @param {Array<Number>} b The second matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4multiply:function(a,b){
   var dst=[];
@@ -1631,9 +1631,9 @@ mat4multiply:function(a,b){
 * normalize the quaternions every few multiplications (using
 * quatNorm or quatNormInPlace), since successive
 * multiplications can cause rounding errors.
- * @param {Array<number>} a The first quaternion.
- * @param {Array<number>} b The second quaternion.
- * @return {Array<number>} The resulting quaternion.
+ * @param {Array<Number>} a The first quaternion.
+ * @param {Array<Number>} b The second quaternion.
+ * @returns {Array<Number>} The resulting quaternion.
 */
 quatMultiply:function(a,b){
  return [
@@ -1645,8 +1645,8 @@ quatMultiply:function(a,b){
 /**
  * Multiplies a 4x4 matrix by a rotation transformation,
  * and returns a new matrix.
- * @param {Array<number>} mat A 4x4 matrix to multiply.
- * @param {Array<number>|number} angle The desired angle
+ * @param {Array<Number>} mat A 4x4 matrix to multiply.
+ * @param {Array<Number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -1654,15 +1654,15 @@ quatMultiply:function(a,b){
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4rotate:function(mat,angle,v,vy,vz){
 var v0,v1,v2,ang;
@@ -1743,7 +1743,7 @@ mat[12], mat[13], mat[14], mat[15]];
 },
 /**
  * Returns a 4x4 matrix representing a rotation transformation.
- * @param {Array<number>|number} angle The desired angle
+ * @param {Array<Number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -1751,15 +1751,15 @@ mat[12], mat[13], mat[14], mat[15]];
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {Array<number>} The resulting 4x4 matrix.
+ * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4rotated:function(angle,v,vy,vz){
 var v0,v1,v2,ang;
@@ -1819,13 +1819,13 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 * length (unless all the normal's components are 0).
 * The plane's distance will be divided by the
 * normal's length.
-* @param {Array<number>} plane A four-element array
+* @param {Array<Number>} plane A four-element array
 * defining the plane. The first three elements of the array
 * are the X, Y, and Z components of the plane's normal vector, and
 * the fourth element is the shortest distance from the plane
 * to the origin, or if negative, from the origin to the plane,
 * divided by the normal's length.
-* @return {Array<number>} The parameter "plane".
+* @returns {Array<Number>} The parameter "plane".
 */
 GLMath.planeNormInPlace=function(plane){
  var x=plane[0];
@@ -1847,13 +1847,13 @@ GLMath.planeNormInPlace=function(plane){
 * length (unless all the normal's components are 0).
 * The plane's distance will be divided by the
 * normal's length.  Returns a new plane.
-* @param {Array<number>} plane A four-element array
+* @param {Array<Number>} plane A four-element array
 * defining the plane. The first three elements of the array
 * are the X, Y, and Z components of the plane's normal vector, and
 * the fourth element is the shortest distance from the plane
 * to the origin, or if negative, from the origin to the plane,
 * divided by the normal's length.
-* @return {Array<number>} A normalized version of
+* @returns {Array<Number>} A normalized version of
 * the plane.
 */
 GLMath.planeNorm=function(plane){
@@ -1868,10 +1868,10 @@ GLMath.planeNorm=function(plane){
 * sides, one plane (the far plane) forms its base, and a
 * final plane (the near plane) is the pyramid's chopped
 * off top.
-* @param {Array<number>} matrix A 4x4 matrix.  This will
+* @param {Array<Number>} matrix A 4x4 matrix.  This will
 * usually be a projection-view matrix (projection matrix
 * multiplied by view matrix).
-* @return {Array<Array<number>>} An array of six
+* @returns {Array<Array<Number>>} An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.  All six planes
@@ -1926,19 +1926,19 @@ GLMath.mat4toFrustumPlanes=function(matrix){
 /**
 * Determines whether a sphere is at least
 * partially inside a view frustum.
-* @param {Array<Array<number>>} frustum An array of six
+* @param {Array<Array<Number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
-* @param {number} x X coordinate of the sphere's center
+* @param {Number} x X coordinate of the sphere's center
 * in world space.
-* @param {number} y Y coordinate of the sphere's center
+* @param {Number} y Y coordinate of the sphere's center
 * in world space.
-* @param {number} z Z coordinate of the sphere's center
+* @param {Number} z Z coordinate of the sphere's center
 * in world space.
-* @param {number} radius Radius of the sphere
+* @param {Number} radius Radius of the sphere
 * in world-space units.
-* @return {boolean} <code>true</code> if the sphere
+* @returns {Boolean} <code>true</code> if the sphere
 * is partially or totally
 * inside the frustum; <code>false</code> otherwise.
 */
@@ -1956,12 +1956,12 @@ GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
 * Determines whether a bounding box is empty.
 * This is determined if the minimum coordinate
 * is larger than the corresponding maximum coordinate.
-* @param {Array<number>} An axis-aligned bounding
+* @param {Array<Number>} An axis-aligned bounding
 * box in world space, which is an array of six values.
 * The first three values are the smallest X, Y, and Z coordinates,
 * and the last three values are the largest X, Y, and Z
 * coordinates.
-* @return {boolean} <code>true</code> if at least one
+* @returns {Boolean} <code>true</code> if at least one
 * of the minimum coordinates is greater than its
 * corresponding maximum coordinate; otherwise, <code>false</code>.
 */
@@ -1971,16 +1971,16 @@ GLMath.boxIsEmpty=function(box){
 /**
 * Determines whether an axis-aligned bounding box
 * is at least partially inside a view frustum.
-* @param {Array<Array<number>>} frustum An array of six
+* @param {Array<Array<Number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
-* @param {Array<number>} box An axis-aligned bounding
+* @param {Array<Number>} box An axis-aligned bounding
 * box in world space, which is an array of six values.
 * The first three values are the smallest X, Y, and Z coordinates,
 * and the last three values are the largest X, Y, and Z
 * coordinates.
-* @return {boolean} <code>true</code> if the box
+* @returns {Boolean} <code>true</code> if the box
 * may be partially or totally
 * inside the frustum; <code>false</code> if the box is
 * definitely outside the frustum, or if the box is empty
@@ -2012,17 +2012,17 @@ GLMath.frustumHasBox=function(frustum, box){
 /**
 * Determines whether a point is
 * outside or inside a view frustum.
-* @param {Array<Array<number>>} frustum An array of six
+* @param {Array<Array<Number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
-* @param {number} x X coordinate of a point
+* @param {Number} x X coordinate of a point
 * in world space.
-* @param {number} y Y coordinate of a point
+* @param {Number} y Y coordinate of a point
 * in world space.
-* @param {number} z Z coordinate of a point
+* @param {Number} z Z coordinate of a point
 * in world space.
-* @return {boolean} true if the point is inside;
+* @returns {Boolean} true if the point is inside;
 * otherwise false;
 */
 GLMath.frustumHasPoint=function(frustum, x, y, z){
@@ -2038,9 +2038,9 @@ GLMath.frustumHasPoint=function(frustum, x, y, z){
 * It's equal to the sum of the products of
 * their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  @function
- @param {Array<number>} a The first quaternion.
- @param {Array<number>} b The second quaternion.
- @return {number} */
+ @param {Array<Number>} a The first quaternion.
+ @param {Array<Number>} b The second quaternion.
+ @returns {Number} */
 GLMath.quatDot=GLMath.vec4dot;
 /**
  * Converts a quaternion to its normalized version.
@@ -2049,8 +2049,8 @@ GLMath.quatDot=GLMath.vec4dot;
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.quatLength}.
  * @function
- * @param {Array<number>} quat A quaternion.
- * @return {Array<number>} The parameter "quat".
+ * @param {Array<Number>} quat A quaternion.
+ * @returns {Array<Number>} The parameter "quat".
  */
 GLMath.quatNormInPlace=GLMath.vec4normInPlace;
 /**
@@ -2060,8 +2060,8 @@ GLMath.quatNormInPlace=GLMath.vec4normInPlace;
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.GLMath.quatLength}.
  * @function
- * @param {Array<number>} quat A quaternion.
- * @return {Array<number>} The normalized quaternion.
+ * @param {Array<Number>} quat A quaternion.
+ * @returns {Array<Number>} The normalized quaternion.
  */
 GLMath.quatNorm=GLMath.vec4norm;
 /**
@@ -2069,22 +2069,22 @@ GLMath.quatNorm=GLMath.vec4norm;
 * It's the same as the square root of the sum of the squares
 * of its components.
 * @function
- @param {Array<number>} quat The quaternion.
-  @return {number} */
+ @param {Array<Number>} quat The quaternion.
+  @returns {Number} */
 GLMath.quatLength=GLMath.vec4length;
 /**
  * Multiplies each element of a quaternion by a factor
  * and stores the result in that quaternion.
  * @function
- * @param {Array<number>} a A quaternion.
- * @param {number} scalar A factor to multiply.
- * @return {Array<number>} The parameter "a".
+ * @param {Array<Number>} a A quaternion.
+ * @param {Number} scalar A factor to multiply.
+ * @returns {Array<Number>} The parameter "a".
  */
 GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
 /**
  * Returns a copy of a quaternion.
 * @function
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 GLMath.quatCopy=GLMath.vec4copy;
 /**
  Closest approximation to pi times 2, or a 360-degree turn in radians.
@@ -2153,8 +2153,8 @@ GLMath.RollYawPitch = 5;
 /**
  * Inverts the rotation given in this quaternion;
  * returns a new quaternion; same as the quatInverse method.
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @return {Array<number>} Return value. */
+ * @param {Array<Number>} quat A quaternion, containing four elements.
+ * @returns {Array<Number>} Return value. */
 GLMath.quatInverse=GLMath.quatInvert;
  exports.GLMath=GLMath;
 }));

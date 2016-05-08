@@ -142,11 +142,11 @@ Scene3D.CW = 1;
 /**
 * Specifies which kinds of triangle faces are culled (not drawn)
 * when rendering this scene.
-* @param {number} value If this is {@link Scene3D.BACK},
+* @param {Number} value If this is {@link Scene3D.BACK},
 * {@link Scene3D.FRONT}, or {@link Scene3D.FRONT_AND_BACK},
 * enables face culling of the specified faces.  For any other value,
 * disables face culling.  By default, face culling is disabled.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.cullFace=function(value){
  if(value===Scene3D.BACK ||
@@ -182,12 +182,12 @@ Scene3D.prototype._setFace=function(){
 };
 /**
 * Specifies the winding of front faces.
-* @param {number} value If this is {@link Scene3D.CW},
+* @param {Number} value If this is {@link Scene3D.CW},
 * clockwise triangles are front-facing.  For any other value,
 * counterclockwise triangles are front-facing, which is the
 * default behavior.  If using a left-handed coordinate system,
 * set this value to {@link Scene3D.CW}.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.frontFace=function(value){
  if(value===Scene3D.CW){
@@ -200,9 +200,9 @@ Scene3D.prototype.frontFace=function(value){
 /**
 * Sets whether to check whether to resize the canvas
 * when the render() method is called.
-* @param {boolean} value If true, will check whether to resize the canvas
+* @param {Boolean} value If true, will check whether to resize the canvas
 * when the render() method is called. Default is true.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setAutoResize=function(value){
  this.autoResize=!!value;
@@ -214,9 +214,9 @@ Scene3D.prototype.setAutoResize=function(value){
 * the viewport's dimensions.<p>
 * When this value changes, the Scene3D will automatically
 * adjust the viewport.
-* @param {boolean} value If true, use the device's pixel ratio
+* @param {Boolean} value If true, use the device's pixel ratio
 * when setting the viewport's dimensions.  Default is true.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
   */
 Scene3D.prototype.setUseDevicePixelRatio=function(value){
  var oldvalue=!!this.useDevicePixelRatio;
@@ -230,7 +230,7 @@ Scene3D.prototype.setUseDevicePixelRatio=function(value){
 };
  /**
   Gets the color used when clearing the screen each frame.
-   @return {Array<number>} An array of four numbers, from 0 through
+   @returns {Array<Number>} An array of four numbers, from 0 through
    1, specifying the red, green, blue, and alpha components of the color.
    */
 Scene3D.prototype.getClearColor=function(){
@@ -243,7 +243,7 @@ Scene3D.prototype.getClearColor=function(){
 * @deprecated Instead of this method, use the "setShader" program of individual shapes
 * to set the shader programs they use.
 * @param {glutil.ShaderProgram} program The shader program to use.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.useProgram=function(program){
  console.warn("The 'useProgram' method is obsolete.  Instead of this method, "+
@@ -251,11 +251,11 @@ Scene3D.prototype.useProgram=function(program){
 }
 /**
 * Sets the viewport width and height for this scene.
-* @param {number} width Width of the scene, in pixels.
+* @param {Number} width Width of the scene, in pixels.
 *  Will be rounded up.
-* @param {number} height Height of the scene, in pixels.
+* @param {Number} height Height of the scene, in pixels.
 *  Will be rounded up.
-* @return {number} Return value.*/
+* @returns {Number} Return value.*/
 Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
@@ -276,7 +276,7 @@ Scene3D.prototype.setDimensions=function(width, height){
 * Gets the viewport width for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @return {number} Return value.*/
+* @returns {Number} Return value.*/
 Scene3D.prototype.getWidth=function(){
  return this.width;
 };
@@ -284,7 +284,7 @@ Scene3D.prototype.getWidth=function(){
 * Gets the viewport height for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @return {number} Return value.*/
+* @returns {Number} Return value.*/
 Scene3D.prototype.getHeight=function(){
  return this.height;
 };
@@ -293,7 +293,7 @@ Scene3D.prototype.getHeight=function(){
 * divided by getHeight()).
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @return {number} Aspect ratio, or 1 if height is 0.*/
+* @returns {Number} Aspect ratio, or 1 if height is 0.*/
 Scene3D.prototype.getAspect=function(){
  var ch=this.getHeight();
  if(ch<=0)return 1;
@@ -302,7 +302,7 @@ Scene3D.prototype.getAspect=function(){
 /**
 * Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
-* @return {number} Aspect ratio, or 1 if height is 0.*/
+* @returns {Number} Aspect ratio, or 1 if height is 0.*/
 Scene3D.prototype.getClientAspect=function(){
  var ch=this.context.canvas.clientHeight;
  if(ch<=0)return 1;
@@ -310,7 +310,7 @@ Scene3D.prototype.getClientAspect=function(){
 };
 /**
  * Creates a frame buffer object associated with this scene.
- * @return {FrameBuffer} A buffer with the same size as this scene.
+ * @returns {FrameBuffer} A buffer with the same size as this scene.
  */
 Scene3D.prototype.createBuffer=function(){
  return new FrameBuffer(this.context,
@@ -319,7 +319,7 @@ Scene3D.prototype.createBuffer=function(){
 /**
  * Gets the current projection matrix for this scene.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 Scene3D.prototype.getProjectionMatrix=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -330,7 +330,7 @@ return this._subScene._projectionMatrix.slice(0,16);
 /**
  * Gets the current view matrix for this scene.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 Scene3D.prototype.getViewMatrix=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -344,19 +344,19 @@ if(this._renderedOutsideScene){
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number}  fov Y-axis field of view, in degrees. Should be less
+ * @param {Number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
-* @param {number}  aspect The ratio of width to height of the viewport, usually
+* @param {Number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio (getAspect() or getClientAspect()).
-* @param {number} near The distance from the camera to
+* @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.
-* @param {number}  far The distance from the camera to
+* @param {Number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 * @example
 * // Set the perspective projection.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
@@ -376,21 +376,21 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} left Leftmost coordinate of the view rectangle.
- * @param {number} right Rightmost coordinate of the view rectangle.
+ * @param {Number} left Leftmost coordinate of the view rectangle.
+ * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
- * @param {number} bottom Bottommost coordinate of the view rectangle.
- * @param {number} top Topmost coordinate of the view rectangle.
+ * @param {Number} bottom Bottommost coordinate of the view rectangle.
+ * @param {Number} top Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
- * @param {number} near Distance from the camera to the near clipping
+ * @param {Number} near Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @param {number} far Distance from the camera to the far clipping
+ * @param {Number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * (Note that near can be greater than far or vice versa.)  The absolute difference
  * between near and far should be as small as the application can accept.
- * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
+ * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
- * @return {glutil.Scene3D} This object.
+ * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
  if((aspect===null || typeof aspect==="undefined"))aspect=this.getClientAspect();
@@ -406,15 +406,15 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} left Leftmost coordinate of the view rectangle.
- * @param {number} right Rightmost coordinate of the view rectangle.
+ * @param {Number} left Leftmost coordinate of the view rectangle.
+ * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
- * @param {number} bottom Bottommost coordinate of the view rectangle.
- * @param {number} top Topmost coordinate of the view rectangle.
+ * @param {Number} bottom Bottommost coordinate of the view rectangle.
+ * @param {Number} top Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
- * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
+ * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
- * @return {glutil.Scene3D} This object.
+ * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
@@ -427,21 +427,21 @@ Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} left X-coordinate of the point where the left
+ * @param {Number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
- * @param {number} right X-coordinate of the point where the right
+ * @param {Number} right X-coordinate of the point where the right
  * clipping plane meets the near clipping plane.
- * @param {number} bottom Y-coordinate of the point where the bottom
+ * @param {Number} bottom Y-coordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
- * @param {number} top Y-coordinate of the point where the top
+ * @param {Number} top Y-coordinate of the point where the top
  * clipping plane meets the near clipping plane.
-* @param {number} near The distance from the camera to
+* @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.
-* @param {number}  far The distance from the camera to
+* @param {Number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4frustum(
@@ -452,19 +452,19 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} left Leftmost coordinate of the 3D view.
- * @param {number} right Rightmost coordinate of the 3D view.
+ * @param {Number} left Leftmost coordinate of the 3D view.
+ * @param {Number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
- * @param {number} bottom Bottommost coordinate of the 3D view.
- * @param {number} top Topmost coordinate of the 3D view.
+ * @param {Number} bottom Bottommost coordinate of the 3D view.
+ * @param {Number} top Topmost coordinate of the 3D view.
  * (Note that top can be greater than bottom or vice versa.)
- * @param {number} near Distance from the camera to the near clipping
+ * @param {Number} near Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @param {number} far Distance from the camera to the far clipping
+ * @param {Number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * (Note that near can be greater than far or vice versa.)  The absolute difference
  * between near and far should be as small as the application can accept.
- * @return {glutil.Scene3D} This object.
+ * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(GLMath.mat4ortho(
@@ -474,13 +474,13 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} left Leftmost coordinate of the 2D view.
- * @param {number} right Rightmost coordinate of the 2D view.
+ * @param {Number} left Leftmost coordinate of the 2D view.
+ * @param {Number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
- * @param {number} bottom Bottommost coordinate of the 2D view.
- * @param {number} top Topmost coordinate of the 2D view.
+ * @param {Number} bottom Bottommost coordinate of the 2D view.
+ * @param {Number} top Topmost coordinate of the 2D view.
  * (Note that top can be greater than bottom or vice versa.)
- * @return {glutil.Scene3D} This object.
+ * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
  return this.setProjectionMatrix(GLMath.mat4ortho(
@@ -498,17 +498,17 @@ Scene3D.prototype._setClearColor=function(){
 /**
 * Sets the color used when clearing the screen each frame.
 * This color is black by default.
-* @param {Array<number>|number|string} r Array of three or
+* @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setClearColor=function(r,g,b,a){
  this.clearColor=GLUtil.toGLColor(r,g,b,a);
@@ -518,8 +518,8 @@ Scene3D.prototype.setClearColor=function(r,g,b,a){
 * Loads a texture from an image URL.
 * @deprecated Use the TextureLoader method loadTexture or
 * loadTexturesAll instead.
-* @param {string} name URL of the image to load.
-* @return {Promise} A promise that is resolved when
+* @param {String} name URL of the image to load.
+* @returns {Promise} A promise that is resolved when
 * the image is loaded successfully (the result will be a Texture
 * object), and is rejected when an error occurs.
 */
@@ -534,7 +534,7 @@ Scene3D.prototype.loadTexture=function(name){
 * @param {string|glutil.Texture} texture String giving the
 * URL of the image to load, or
 * a Texture object whose data may or may not be loaded.
-* @return {Promise} A promise that is resolved when
+* @returns {Promise} A promise that is resolved when
 * the image is loaded successfully and uploaded
 * to a texture buffer (the result will be a Texture
 * object), and is rejected when an error occurs.
@@ -558,13 +558,13 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
 * to a texture buffer object.
 * @deprecated Use the TextureLoader method loadAndMapTexturesAll
 * instead.
-* @param {Array<string>} textureFiles A list of URLs of the image to load.
+* @param {Array<String>} textureFiles A list of URLs of the image to load.
 * @param {Function} [resolve] Called for each URL that is loaded successfully
 * and uploaded to a texture buffer (the argument will be a Texture object.)
 * @param {Function} [reject] Called for each URL for which an error
 * occurs (the argument will be the data passed upon
 * rejection).
-* @return {Promise} A promise that is resolved when
+* @returns {Promise} A promise that is resolved when
 * all the URLs in the textureFiles array are either resolved or rejected.
 * The result will be an object with three properties:
 * "successes", "failures", and "results".
@@ -602,7 +602,7 @@ Scene3D.prototype.clearDepth=function(){
  * Gets the number of vertices composed by
  * all shapes in this scene.
  * @deprecated Use the vertexCount method of Subscene3D objects instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Scene3D.prototype.vertexCount=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -614,7 +614,7 @@ return this._subScene.vertexCount();
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
 * @deprecated  Use the primitiveCount method of Subscene3D objects instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
-* @return {number} Return value. */
+* @returns {Number} Return value. */
 Scene3D.prototype.primitiveCount=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -627,8 +627,8 @@ return this._subScene.primitiveCount();
  * matrix can also be set using the {@link glutil.Scene3D#setFrustum}, {@link glutil.Scene3D#setOrtho},
  * {@link glutil.Scene3D#setOrtho2D}, and {@link glutil.Scene3D#setPerspective} methods.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {Array<number>} matrix A 16-element matrix (4x4).
- * @return {glutil.Scene3D} This object.
+ * @param {Array<Number>} matrix A 16-element matrix (4x4).
+ * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
 if(this._errors)throw new Error();
@@ -642,8 +642,8 @@ this._subScene.setProjectionMatrix(matrix);
 *  Sets this scene's view matrix. The view matrix can also
 * be set using the {@link glutil.Scene3D#setLookAt} method.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {Array<number>} matrix A 16-element matrix (4x4).
- * @return {glutil.Scene3D} This object.
+ * @param {Array<Number>} matrix A 16-element matrix (4x4).
+ * @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
 if(this._errors)throw new Error();
@@ -658,19 +658,19 @@ this._subScene.setViewMatrix(matrix);
 * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
 * (<code>center</code>).
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
-* @param {Array<number>} eye A 3-element vector specifying
+* @param {Array<Number>} eye A 3-element vector specifying
 * the camera position in world space.
-* @param {Array<number>} [center] A 3-element vector specifying
+* @param {Array<Number>} [center] A 3-element vector specifying
 * the point in world space that the camera is looking at. May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
-* @param {Array<number>} [up] A 3-element vector specifying
+* @param {Array<Number>} [up] A 3-element vector specifying
 * the direction from the center of the camera to its top. This parameter may
 * be null or omitted, in which case the default is the vector (0, 1, 0),
 * the vector that results when the camera is held upright.  This
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.setLookAt=function(eye, center, up){
  return this.setViewMatrix(GLMath.mat4lookat(eye, center, up));
@@ -683,7 +683,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 * instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom
 * Subscene3D.  This compatibility behavior may be dropped in the future.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
-* @return {glutil.Scene3D} This object.*/
+* @returns {glutil.Scene3D} This object.*/
 Scene3D.prototype.addShape=function(shape){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -699,7 +699,7 @@ if(this._renderedOutsideScene){
  * @param {glutil.Mesh} mesh A geometric mesh object.  The shape
  * created will use the mesh in its current state and won't
  * track future changes.
- * @return {glutil.Shape} The generated shape object.
+ * @returns {glutil.Shape} The generated shape object.
  */
 Scene3D.prototype.makeShape=function(mesh){
 if(this._errors)throw new Error();
@@ -712,7 +712,7 @@ if(this._errors)throw new Error();
 /**
 * Removes all instances of a 3D shape from this scene.
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
 */
 Scene3D.prototype.removeShape=function(shape){
 if(this._errors)throw new Error();
@@ -733,18 +733,18 @@ if(this._renderedOutsideScene){
 /**
  * Sets a light source in this scene to a directional light.
 * @deprecated Use the Lights method setDirectionalLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
- * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
+ * @param {Array<Number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
- * @param {Array<number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffuse color of the light.
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 if(this._errors)throw new Error();
@@ -757,11 +757,11 @@ if(this._renderedOutsideScene){
 /**
  * Sets parameters for a light in this scene.
 * @deprecated Use the Lights method setParams instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
  * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setLightParams=function(index,params){
 if(this._errors)throw new Error();
@@ -775,16 +775,16 @@ if(this._renderedOutsideScene){
 /**
  * Sets the color of the scene's ambient light.
 * @deprecated Use the Lights method setAmbient instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
-* @param {Array<number>|number|string} r Array of three or
+* @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * Currently not used.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient=function(r,g,b,a){
 if(this._errors)throw new Error();
@@ -798,15 +798,15 @@ if(this._renderedOutsideScene){
 /**
  * Sets a light source in this scene to a point light.
  * @deprecated Use the LightSource method setPointLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
- * @param {number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
- * @param {Array<number>} position
- * @param {Array<number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the diffuse color of the light.
+ * @param {Array<Number>} position
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
 if(this._errors)throw new Error();
@@ -835,7 +835,7 @@ Scene3D.prototype._clearForPass=function(pass){
  * buffer and depth buffer. This compatibility option may be dropped in the future.
  * @param {Array<glutil.RenderPass3D>|glutil.Subscene3D} An array of scenes
  * to draw, or a single subscene to render. Can be null.
- * @return {glutil.Scene3D} This object.
+ * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(renderPasses){
   if(renderPasses instanceof Subscene3D){
@@ -876,7 +876,7 @@ Scene3D.prototype.render=function(renderPasses){
  * @deprecated Use the {@link Subscene3D.forFilter} method to create a subscene
  * for rendering filter effects from a frame buffer.
  * @param {ShaderProgram|string|null} filterProgram Not used.
- * @return {glutil.Scene3D} This object.
+ * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.useFilter=function(filterProgram){
   console.warn("The useFilter method has no effect. Use the {@link Subscene3D.forFilter} method to "+

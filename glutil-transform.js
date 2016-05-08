@@ -34,7 +34,7 @@ this.scale=[1,1,1];
   * Returns a copy of a three-element array giving the scaling for an object's width,
   * height, and depth, respectively.
   * For each component, 1 means no scaling.
-  * @return {Array<number>} Return value.   */
+  * @returns {Array<Number>} Return value.   */
 Transform.prototype.getScale=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -46,7 +46,7 @@ if(!this.complexMatrix){
   /**
   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
   * of an object relative to its original position.
-  * @return {Array<number>} Return value.   */
+  * @returns {Array<Number>} Return value.   */
 Transform.prototype.getPosition=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -57,7 +57,7 @@ if(!this.complexMatrix){
 };
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
-   * @return {Array<number>} Return value.   */
+   * @returns {Array<Number>} Return value.   */
 Transform.prototype.getQuaternion=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -69,7 +69,7 @@ if(!this.complexMatrix){
 };
 /**
 * Resets this shape to the untransformed state.
-* @return {glutil.Shape} This object.
+* @returns {glutil.Shape} This object.
 */
 Transform.prototype.reset=function(){
  "use strict";
@@ -86,9 +86,9 @@ this.matrix=GLMath.mat4identity();
  * Sets this shape's transformation matrix. This method
  * will set the position, rotation, and scale properties
  * accordingly to the matrix given.
- * @param {Array<number>} value A 4x4 matrix.
+ * @param {Array<Number>} value A 4x4 matrix.
  * This method will copy the value of this parameter.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.setMatrix=function(value){
  "use strict";
@@ -109,7 +109,7 @@ this._matrixDirty=false;
 };
 /**
  * Returns whether this transform is the identity transform.
- * @return {boolean} Return value. */
+ * @returns {Boolean} Return value. */
 Transform.prototype.isIdentity=function(){
  "use strict";
 if(this._matrixDirty){
@@ -127,7 +127,7 @@ if(this._matrixDirty){
 /**
 * Resets this transform to the untransformed state.
 * (Same as "reset"; use that method instead.)
-* @return {glutil.Transform} This object.
+* @returns {glutil.Transform} This object.
 */
 Transform.prototype.resetTransform=function(){
  "use strict";
@@ -137,14 +137,14 @@ Transform.prototype.resetTransform=function(){
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {number|Array<number>} x Scaling factor for this object's width.
+ * @param {number|Array<Number>} x Scaling factor for this object's width.
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the scaling factors
  * for width, height, and depth, respectively, or a single number
  * giving the scaling factor for all three dimensions.
- * @param {number} y Scaling factor for this object's height.
- * @param {number} z Scaling factor for this object's depth.
-* @return {glutil.Transform} This object.
+ * @param {Number} y Scaling factor for this object's height.
+ * @param {Number} z Scaling factor for this object's depth.
+* @returns {glutil.Transform} This object.
  */
 Transform.prototype.setScale=function(x,y,z){
   "use strict";
@@ -168,15 +168,15 @@ if(this.complexMatrix)return this;
  * Sets the relative position of an object from its original
  * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array<number>|number} x The X-coordinate.
+ * @param {Array<Number>|number} x The X-coordinate.
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} y The Y-coordinate.
+ * @param {Number} y The Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z The Z-coordinate.
+ * @param {Number} z The Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.setPosition=function(x,y,z){
   "use strict";
@@ -201,15 +201,15 @@ if(this.complexMatrix)return this;
  * Moves the relative position of an object from its original
  * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array<number>|number} x Number to add to the X-coordinate,
+ * @param {Array<Number>|number} x Number to add to the X-coordinate,
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number
  * to add to all three coordinates.
- * @param {number} y Number to add to the Y-coordinate.
+ * @param {Number} y Number to add to the Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z Number to add to the Z-coordinate.
+ * @param {Number} z Number to add to the Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.movePosition=function(x,y,z){
   "use strict";
@@ -240,10 +240,10 @@ if(this.complexMatrix)return this;
  * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
  * for describing 3D rotations). Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array<number>} quat A four-element array describing the rotation.
+ * @param {Array<Number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * and {@link glmath.GLMath.quatFromTaitBryan}, among others.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  * @example
  * // Set an object's orientation to 30 degrees about the X-axis
  * transform.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
@@ -265,7 +265,7 @@ if(this.complexMatrix)return this;
  * Sets this object's orientation in the form of an angle and an axis of
  * rotation. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array<number>|number} angle The desired angle
+ * @param {Array<Number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -273,15 +273,15 @@ if(this.complexMatrix)return this;
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.setOrientation=function(angle, v,vy,vz){
  "use strict";
@@ -294,10 +294,10 @@ return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
  * same effect as the new rotation followed by the existing rotation.
  *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array<number>} quat A four-element array describing the rotation.
+ * @param {Array<Number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * or {@link glmath.GLMath.quatFromTaitBryan}.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  * @example
  * // Combine an object's orientation with a rotation 20 degrees about the X-axis
  * transform.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
@@ -322,17 +322,17 @@ if(this.complexMatrix)return this;
  * same effect as the new rotation followed by the existing rotation.
  *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array<number>|number} angle The desired angle
+ * @param {Array<Number>|number} angle The desired angle
  * to rotate in degrees. See {@link glutil.Transform#setOrientation}.
- * @param {Array<number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.multOrientation=function(angle, v,vy,vz){
  "use strict";
@@ -343,7 +343,7 @@ return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
  * of the scale, position, and rotation properties,
  * unless a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 Transform.prototype.getMatrix=function(){
   "use strict";
 if(this._matrixDirty){
@@ -388,7 +388,7 @@ if(this._matrixDirty){
 * Makes a copy of this object.  The copied object
 * will have its own version of the rotation, scale,
 * position, and matrix data.
-* @return {glutil.Transform} A copy of this object.
+* @returns {glutil.Transform} A copy of this object.
 */
 Transform.prototype.copy=function(){
  "use strict";

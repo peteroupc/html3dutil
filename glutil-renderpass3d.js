@@ -1,8 +1,8 @@
 /**
 * Not documented yet.
 * @class glutil.RenderPass3D
-* @param {Subscene3D} subScene
-* @param {Object} parameters
+* @param {*} subScene
+* @param {*} parameters
 */
 function RenderPass3D(subScene,parameters){
  /** The scene to render. */

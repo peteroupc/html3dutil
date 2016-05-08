@@ -142,7 +142,7 @@ Subscene3D.prototype.getContext=function(){
  * @param {*} fov
  * @param {*} near
  * @param {*} far
- * @return {glutil.Subscene3D} This object.
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
  this._projectionUpdater=new Subscene3D._PerspectiveView(this,fov,near,far);
@@ -153,7 +153,7 @@ Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
  * @param {*} eye
  * @param {*} center
  * @param {*} up
- * @return {glutil.Subscene3D} This object.
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setLookAt=function(eye,center,up){
  return this.setViewMatrix(GLMath.mat4lookat(eye,center,up));
@@ -166,7 +166,7 @@ Subscene3D.prototype.setLookAt=function(eye,center,up){
  * @param {*} d
  * @param {*} e
  * @param {*} f
- * @return {glutil.Subscene3D} This object.
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
  this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,e,f);
@@ -178,7 +178,7 @@ Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
  * @param {*} b
  * @param {*} c
  * @param {*} d
- * @return {glutil.Subscene3D} This object.
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,-1,1);
@@ -187,7 +187,7 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
 /**
  * Not documented yet.
  * @param {*} mat
- * @return {glutil.Subscene3D} This object.
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
  if(!Subscene3D._isSameMatrix(this._viewMatrix,mat)){
@@ -198,13 +198,13 @@ Subscene3D.prototype.setViewMatrix=function(mat){
 };
 /**
  * Gets the current projection matrix for this scene.
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 Subscene3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
- * @return {Array<number>} Return value. */
+ * @returns {Array<Number>} Return value. */
 Subscene3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
 };
@@ -218,17 +218,24 @@ Subscene3D.prototype._getFrustum=function(){
 }
 /**
  * Not documented yet.
- * @return {glutil.Lights} Return value.
+ * @returns {glutil.Lights} Return value.
  */
 Subscene3D.prototype.getLights=function(){
  return this.lights;
 };
 /**
+ * Not documented yet.
+ */
+Subscene3D.prototype.getClientAspect=function(){
+ return this.parent.getClientAspect();
+};
+
+/**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
-* @return {glutil.Subscene3D} This object.
+* @returns {glutil.Subscene3D} This object.
 */
 Subscene3D.prototype.addShape=function(shape){
  shape.parent=null;
@@ -239,7 +246,7 @@ Subscene3D.prototype.addShape=function(shape){
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Subscene3D.prototype.vertexCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -250,7 +257,7 @@ Subscene3D.prototype.vertexCount=function(){
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Subscene3D.prototype.primitiveCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -262,7 +269,7 @@ Subscene3D.prototype.primitiveCount=function(){
 /**
 * Removes all instances of a 3D shape from this scene.
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
-* @return {glutil.Subscene3D} This object.
+* @returns {glutil.Subscene3D} This object.
 */
 Subscene3D.prototype.removeShape=function(shape){
  for(var i=0;i<this.shapes.length;i++){

@@ -24,7 +24,9 @@ function Lights(){
  */
  this.sceneAmbient=[0.2,0.2,0.2];
 }
-
+/**
+ * Not documented yet.
+ */
 Lights.prototype.setDefaults=function(){
  var ls=new LightSource().setParams({
   ambient:[0,0,0,1],
@@ -53,17 +55,17 @@ Lights._createNewLight=function(index){
 };
 /**
  * Gets the number of lights defined in this object.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Lights.prototype.getCount=function(){
  return this.lights.length;
 };
 
 /**
  * Gets information about the light source at the given index.
- * @param {number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @return {LightSource} The corresponding light source object.
+ * @returns {LightSource} The corresponding light source object.
  */
 Lights.prototype.getLight=function(index){
  var oldLength=this.lights.length;
@@ -81,11 +83,11 @@ Lights.prototype.getLight=function(index){
 };
 /**
  * Sets parameters for the light source at the given index.
- * @param {number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
- * @return {Lights} This object.
+ * @returns {Lights} This object.
  */
 Lights.prototype.setParams=function(index,params){
  this.getLight(index).setParams(params);
@@ -94,18 +96,18 @@ Lights.prototype.setParams=function(index,params){
 
 /**
  * Sets a directional light.
- * @param {number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @param {Array<number>} direction A 3-element vector giving the direction of the light, along the X, Y, and Z
+ * @param {Array<Number>} direction A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.
- * @param {Array<number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the diffuse color of the light.
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the diffuse color of the light.
  * If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the specular highlight color will
  * remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
- * @return {Lights} This object.
+ * @returns {Lights} This object.
  */
 Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
@@ -117,14 +119,14 @@ Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
 };
 /**
  * Sets a point light.
- * @param {number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @param {Array<number>} position A 3-element vector giving the X, Y, and Z
+ * @param {Array<Number>} position A 3-element vector giving the X, Y, and Z
  * coordinates, respectively, of the light, in world coordinates.
- * @param {Array<number>} [diffuse] Diffuse color, as described in {@link glutil.Lights.setDirectionalLight}.
- * @param {Array<number>} [specular] Specular color, as described in {@link glutil.Lights.setDirectionalLight}.
- * @return {Lights} This object.
+ * @param {Array<Number>} [diffuse] Diffuse color, as described in {@link glutil.Lights.setDirectionalLight}.
+ * @param {Array<Number>} [specular] Specular color, as described in {@link glutil.Lights.setDirectionalLight}.
+ * @returns {Lights} This object.
  */
 Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
@@ -137,16 +139,16 @@ Lights.prototype.setPointLight=function(index,position,diffuse,specular){
 
 /**
  * Sets the color of the scene's ambient light.
-* @param {Array<number>|number|string} r Array of three or
+* @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * Currently not used.
-* @return {glutil.Scene3D} This object.
+* @returns {glutil.Scene3D} This object.
  */
 Lights.prototype.setAmbient=function(r,g,b,a){
  this.sceneAmbient=GLUtil.toGLColor(r,g,b,a);

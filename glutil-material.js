@@ -14,11 +14,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * see the {@link glutil.Material#setParams} method.</i>
 * @class
 * @alias glutil.Material
-* @param {Array<number>} [ambient] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color.
-* @param {Array<number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffusion color (also called "albedo").
-* @param {Array<number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the specular highlight reflection.
-* @param {Array<number>} [shininess] Specular highlight exponent of this material.
-* @param {Array<number>} [emission] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the additive color emitted by an object.
+* @param {Array<Number>} [ambient] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color.
+* @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffusion color (also called "albedo").
+* @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the specular highlight reflection.
+* @param {Array<Number>} [shininess] Specular highlight exponent of this material.
+* @param {Array<Number>} [emission] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the additive color emitted by an object.
 */
 function Material(ambient, diffuse, specular,shininess,emission) {
  //console.log([ambient,diffuse,specular,shininess,emission]+"")
@@ -169,7 +169,7 @@ A strong tilt indicates strong relief detail at that point.<p>
 * object and returns that object. The material's texture
 * maps and shader program, if any, won't be cloned, but rather, a reference
 * to the same object will be used.
-* @return {glutil.Material} A copy of this object.
+* @returns {glutil.Material} A copy of this object.
 */
 Material.prototype.copy=function(){
  return new Material(
@@ -215,7 +215,7 @@ Material.prototype.copy=function(){
 * to use when rendering objects with this material.
 * </ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
-* @return {glutil.Material} This object.
+* @returns {glutil.Material} This object.
 */
 Material.prototype.setParams=function(params){
  var param;
@@ -272,16 +272,16 @@ Material.prototype.setParams=function(params){
 };
 /** Convenience method that returns a Material
  * object from an RGBA color.
-* @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+* @param {Array<Number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
 * or the red color component (0-1).
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @return {glutil.Material} The resulting material object.
+* @returns {glutil.Material} The resulting material object.
  */
 Material.fromColor=function(r,g,b,a){
  var color=GLUtil.toGLColor(r,g,b,a);
@@ -294,7 +294,7 @@ Material.fromColor=function(r,g,b,a){
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this constructor
 *  will not load that image yet.
-* @return {glutil.Material} The resulting material object.
+* @returns {glutil.Material} The resulting material object.
  */
 Material.fromTexture=function(texture){
  return new Material().setParams({"texture":texture});

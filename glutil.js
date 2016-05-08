@@ -81,7 +81,7 @@ var GLUtil={
 * element would ordinarily have
 * under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up.
 * This parameter can't be a negative number.
-* @return {HTMLCanvasElement} The resulting canvas element.
+* @returns {HTMLCanvasElement} The resulting canvas element.
 */
 "createCanvasElement":function(parent, width, height){
  var canvas=document.createElement("canvas");
@@ -109,7 +109,7 @@ var GLUtil={
 * falling back to a 2D context if that fails.
 * @param {HTMLCanvasElement} canvasElement An HTML
 * canvas element.
-* @return {WebGLRenderingContext} A 3D or 2D rendering context, or null
+* @returns {WebGLRenderingContext} A 3D or 2D rendering context, or null
 * if an error occurred in creating the context. Returns null if "canvasElement"
 * is null or not an HTML canvas element.
 */
@@ -155,7 +155,7 @@ var GLUtil={
 * @param {function} err A function to call if an error occurs in creating
 * the context.  The function takes one parameter consisting of a human-
 * readable error message.  If "err" is null, window.alert() will be used instead.
-* @return {WebGLRenderingContext} A 3D rendering context, or null
+* @returns {WebGLRenderingContext} A 3D rendering context, or null
 * if an error occurred in creating the context.  Returns null if "canvasElement"
 * is null or not an HTML canvas element.
 */
@@ -177,7 +177,7 @@ var GLUtil={
 },
 /**
 * Returns whether the given object is a 3D rendering context.
-* @return {boolean} Return value.*/
+* @returns {Boolean} Return value.*/
 "is3DContext":function(context){
  return context && ("compileShader" in context);
 },
@@ -191,7 +191,7 @@ var GLUtil={
  *   individual promise is resolved; optional
  *  @param {Function} [progressReject] - a function called as each
  *   individual promise is rejected; optional
- * @return {Promise} A promise that is resolved when
+ * @returns {Promise} A promise that is resolved when
 * all of the promises are each resolved; the result will
 * be an array of results from those promises,
 * in the order in which those promises were listed.
@@ -218,7 +218,7 @@ var GLUtil={
  *   individual promise is resolved; optional
  *  @param {Function} [progressReject] - a function called as each
  *   individual promise is rejected; optional
- * @return {Promise} A promise that is never rejected and resolves when
+ * @returns {Promise} A promise that is never rejected and resolves when
 * all of the promises are each resolved or rejected. The result
  * of the promise will be an object with
  * three keys:<ul>
@@ -279,11 +279,11 @@ var GLUtil={
 },
 /**
 * Loads a file from a URL asynchronously, using XMLHttpRequest.
-* @param {string} url URL of the file to load.
+* @param {String} url URL of the file to load.
 * @param {string|null} responseType Expected data type of
 * the file.  Can be "json", "xml", "text", or "arraybuffer".
 * If null or omitted, the default is "text".
-* @return {Promise} A promise that resolves when the data
+* @returns {Promise} A promise that resolves when the data
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "data", the
 * file's text or data), as given below, and is rejected when an error occurs (the
@@ -341,13 +341,13 @@ var GLUtil={
 * </ul>
 * The object should be initialized using the idiom <code>{}</code>
 * or <code>new Object()</code>.
-* @param {number} timeInMs A time value, in milliseconds.
+* @param {Number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * <code>requestAnimationFrame()</code> callback method.
 * </code>.
-* @param {number} intervalInMs The length of the interval
+* @param {Number} intervalInMs The length of the interval
 * (animation cycle), in milliseconds.
-* @return {number} A value in the range [0, 1), where closer
+* @returns {Number} A value in the range [0, 1), where closer
 * to 0 means "timeInMs" lies
 * closer to the start, and closer to 1 means closer
 * to the end of the interval.  If an initial time wasn't set, returns 0.
@@ -376,11 +376,11 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * This method should be called only once each frame.
 * @param {object} timer An object described
 * in {@link glutil.GLUtil.getTimePosition}.
-* @param {number} timeInMs A time value, in milliseconds.
+* @param {Number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * <code>requestAnimationFrame()</code> callback method.
 * </code>.
-* @return {number} The number of frame-length intervals relative to
+* @returns {Number} The number of frame-length intervals relative to
 * the last known time held in the parameter "timer".
 * The number can include fractional frames.  If an
 * initial time or last known time wasn't set, returns 0.
@@ -534,7 +534,7 @@ var clampRgba=function(x){
 * For more information:
 * [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
 * @alias glutil.GLUtil.toGLColor
-* @param {Array<number>|number|string} r One of the following:<ul>
+* @param {Array<Number>|number|string} r One of the following:<ul>
 * <li>A <b>color vector or string</b>, which can be one of these:<ul>
 * <li>An array of three color components, each of which ranges from 0 to 1.
 The three components are red, green, and blue in that order.</li>
@@ -545,14 +545,14 @@ The three components are red, green, blue, and alpha in that order.</li>
 * <li>A number specifying the red component.  Must range from 0 to 1.</li>
 * </ul>
 * Returns (0,0,0,0) if this value is null.
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @return the color as a 4-element array; if the color is
+* @returns the color as a 4-element array; if the color is
 * invalid, returns [0,0,0,0] (transparent black). Numbers less
 * than 0 are clamped to 0, and numbers greater than 1 are
 * clamped to 1.

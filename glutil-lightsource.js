@@ -57,7 +57,7 @@ function LightSource(position, ambient, diffuse, specular) {
  * The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * </ul>
 * If a value is null or undefined, it is ignored.
-* @return {glutil.Material} This object.
+* @returns {glutil.Material} This object.
 */
 LightSource.prototype.setParams=function(params){
  if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){

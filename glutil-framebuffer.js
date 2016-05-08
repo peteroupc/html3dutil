@@ -11,9 +11,9 @@
 * WebGL context to associate with this buffer, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
-* @param {number} width Width, in pixels, of the frame buffer.
+* @param {Number} width Width, in pixels, of the frame buffer.
 * Fractional values are rounded up.
-* @param {number} height Height, in pixels, of the frame buffer.
+* @param {Number} height Height, in pixels, of the frame buffer.
 * Fractional values are rounded up.
 */
 function FrameBuffer(context, width, height){
@@ -74,11 +74,11 @@ FrameBuffer.prototype._init=function(context,width,height){
 /**
  * Resizes the frame buffer to a new width and height,
  * if either differs from the current width or height.
-* @param {number} width New width, in pixels, of the frame buffer.
+* @param {Number} width New width, in pixels, of the frame buffer.
 * Fractional values are rounded up.
-* @param {number} height New height, in pixels, of the frame buffer.
+* @param {Number} height New height, in pixels, of the frame buffer.
 * Fractional values are rounded up.
-* @return {glutil.FrameBuffer} This object.
+* @returns {glutil.FrameBuffer} This object.
  */
 FrameBuffer.prototype.resize=function(width,height){
  width=Math.ceil(width);
@@ -92,7 +92,7 @@ FrameBuffer.prototype.resize=function(width,height){
 
 /**
  * Gets the WebGL context associated with this frame buffer.
- * @return {WebGLRenderingContext} Return value. */
+ * @returns {WebGLRenderingContext} Return value. */
 FrameBuffer.prototype.getContext=function(){
  "use strict";
 return this.context;
@@ -102,7 +102,7 @@ return this.context;
  * it.  Future draw calls that use the WebGL context will be rendered
  * to this frame buffer until it's unbound with the {@link glutil.FrameBuffer#unbind}
  * method.
- * @return {glutil.FrameBuffer} This object.
+ * @returns {glutil.FrameBuffer} This object.
  */
 FrameBuffer.prototype.bind=function(){
   "use strict";

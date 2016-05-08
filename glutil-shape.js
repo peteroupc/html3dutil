@@ -31,14 +31,14 @@ Shape._bufferedMeshWarning=false;
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Shape.prototype.vertexCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 };
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 };
@@ -52,7 +52,7 @@ Shape.prototype.setVisible=function(value){
 };
 /**
  * Gets whether this shape will be drawn on rendering.
- * @return {Boolean} True if this shape will be visible; otherwise, false.
+ * @returns {Boolean} True if this shape will be visible; otherwise, false.
  */
 Shape.prototype.getVisible=function(){
  return this.visible;
@@ -63,16 +63,16 @@ Shape.prototype.getVisible=function(){
 * colors.)
 * However, if the mesh defines its own colors, those colors will take
 * precedence over the color given in this method.
-* @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+* @param {Array<Number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
 * or the red color component (0-1).
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
- * @return {glutil.Shape} This object.
+ * @returns {glutil.Shape} This object.
 */
 Shape.prototype.setColor=function(r,g,b,a){
   var c=GLUtil.toGLColor(r,g,b,a);
@@ -80,11 +80,11 @@ Shape.prototype.setColor=function(r,g,b,a){
 };
 /**
  * Sets material parameters that give the shape a texture with the given URL.
- * @param {string} name {@link glutil.Texture} object, or a string with the
+ * @param {String} name {@link glutil.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this method
 *  will not load that image if it hasn't been loaded yet.
- * @return {glutil.Shape} This object.
+ * @returns {glutil.Shape} This object.
  */
 Shape.prototype.setTexture=function(name){
  return this.setMaterialParams({"texture":name});
@@ -92,17 +92,17 @@ Shape.prototype.setTexture=function(name){
 /**
  * Sets this shape's material to a shader with the given URL.
  * @param {glutil.ShaderProgram} shader
- * @return {glutil.Shape} This object.
+ * @returns {glutil.Shape} This object.
  */
 Shape.prototype.setShader=function(shader){
  return this.setMaterialParams({"shader":shader});
 };
 /**
  * Sets parameters of this shape's material.
- * @ {} params An object described in {@link glutil.Material#setParams}.
- * @ {} This object.
+ * @param {*} params An object described in {@link glutil.Material#setParams}.
+ * @param {*} This object.
  */
-Shape.prototype.setMaterialParams=function(shader){
+Shape.prototype.setMaterialParams=function(params){
  if(this.material){
    this.material.setParams(params)
  } else {
@@ -112,20 +112,20 @@ Shape.prototype.setMaterialParams=function(shader){
 };
 /**
 * Sets this shape's material to the given texture and color.
- * @param {string} name {@link glutil.Texture} object, or a string with the
+ * @param {String} name {@link glutil.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this method
 *  will not load that image if it hasn't been loaded yet.
-* @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+* @param {Array<Number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
 * or the red color component (0-1).
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
- * @return {glutil.Shape} This object.
+ * @returns {glutil.Shape} This object.
 */
 Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
  var c=GLUtil.toGLColor(r,g,b,a);
@@ -138,7 +138,7 @@ Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
 /**
 * Sets this shape's material parameters.
 * @param {Material} material
- * @return {glutil.Shape} This object.
+ * @returns {glutil.Shape} This object.
 */
 Shape.prototype.setMaterial=function(material){
  this.material=material;
@@ -150,7 +150,7 @@ Shape.prototype.setMaterial=function(material){
 * material data, but any texture
 * image data and buffered meshes will not be duplicated,
 * but rather just references to them will be used.
-* @return {glutil.Shape} A copy of this object.
+* @returns {glutil.Shape} A copy of this object.
 */
 Shape.prototype.copy=function(){
  var ret=new Shape(this.bufferedMesh);
@@ -204,11 +204,11 @@ Shape.prototype.setTransform=function(transform){
 /**
  * Sets the scale of this shape relative to its original
  * size. See {@link glutil.Transform#setScale}
- * @param {number|Array<number>} x Scaling factor for this object's width,
+ * @param {number|Array<Number>} x Scaling factor for this object's width,
  * or a 3-element scaling array, as specified in {@link glutil.Transform#setScale}.
- * @param {number} y Scaling factor for this object's height.
- * @param {number} z Scaling factor for this object's depth.
-* @return {glutil.Scene3D} This object.
+ * @param {Number} y Scaling factor for this object's height.
+ * @param {Number} z Scaling factor for this object's depth.
+* @returns {glutil.Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
   this.getTransform().setScale(x,y,z);
@@ -217,11 +217,11 @@ Shape.prototype.setScale=function(x,y,z){
 /**
  * Sets the relative position of this shape from its original
  * position.  See {@link glutil.Transform#setPosition}
- * @param {number|Array<number>} x X coordinate
+ * @param {number|Array<Number>} x X coordinate
  * or a 3-element position array, as specified in {@link glutil.Transform#setScale}.
- * @param {number} y Y-coordinate.
- * @param {number} z Z-coordinate.
-* @return {glutil.Scene3D} This object.
+ * @param {Number} y Y-coordinate.
+ * @param {Number} z Z-coordinate.
+* @returns {glutil.Scene3D} This object.
  */
 Shape.prototype.setPosition=function(x,y,z){
   this.getTransform().setPosition(x,y,z);
@@ -230,8 +230,8 @@ Shape.prototype.setPosition=function(x,y,z){
 /**
  * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link glutil.Transform#setQuaternion}.
- * @param {Array<number>} quat A four-element array describing the rotation.
- * @return {glutil.Shape} This object.
+ * @param {Array<Number>} quat A four-element array describing the rotation.
+ * @returns {glutil.Shape} This object.
  */
 Shape.prototype.setQuaternion=function(quat){
   this.getTransform().setQuaternion(quat);
@@ -240,7 +240,7 @@ Shape.prototype.setQuaternion=function(quat){
 /**
  * Gets the transformation matrix used by this shape.
    * See {@link glutil.Transform#getMatrix}.
- * @return {Array<number>} The current transformation matrix.
+ * @returns {Array<Number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix=function(){
   var xform=this.getTransform();

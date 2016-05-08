@@ -19,7 +19,7 @@ function ShapeGroup(){
 * Adds a 3D shape to this shape group.  Its reference, not a copy,
 * will be stored in the list of shapes.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
-* @return {glutil.ShapeGroup} This object.
+* @returns {glutil.ShapeGroup} This object.
 */
 ShapeGroup.prototype.addShape=function(shape){
  shape.parent=this;
@@ -42,14 +42,14 @@ ShapeGroup.prototype.getVisible=function(){
 };
 /**
  * Gets a reference to the transform used by this shape group object.
- * @return {glutil.Transform} Return value. */
+ * @returns {glutil.Transform} Return value. */
 ShapeGroup.prototype.getTransform=function(){
  return this.transform;
 };
 /**
  * Gets a copy of the transformation needed to transform
  * this shape group's coordinates to world coordinates.
- * @return {glutil.Transform} A 4x4 matrix.
+ * @returns {glutil.Transform} A 4x4 matrix.
  */
 ShapeGroup.prototype.getMatrix=function(){
   var xform=this.getTransform();
@@ -116,7 +116,7 @@ ShapeGroup.prototype.setShader=function(material){
  * @ {Object} params An object described in {@link glutil.Material#setParams}.
  * @ {glutil.Shape} This object.
  */
-Shape.prototype.setMaterialParams=function(params){
+ShapeGroup.prototype.setMaterialParams=function(params){
  for(var i=0;i<this.shapes.length;i++){
   this.shapes[i].setMaterialParams(params);
  }
@@ -125,7 +125,7 @@ Shape.prototype.setMaterialParams=function(params){
 /**
 * Removes all instances of a 3D shape from this shape group
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
-* @return {glutil.ShapeGroup} This object.
+* @returns {glutil.ShapeGroup} This object.
 */
 ShapeGroup.prototype.removeShape=function(shape){
  for(var i=0;i<this.shapes.length;i++){
@@ -172,7 +172,7 @@ ShapeGroup.prototype.getBounds=function(){
 
 /**
  * Gets the number of vertices composed by all shapes in this shape group.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 ShapeGroup.prototype.vertexCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -183,7 +183,7 @@ ShapeGroup.prototype.vertexCount=function(){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this shape group.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 ShapeGroup.prototype.primitiveCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -197,11 +197,11 @@ ShapeGroup.prototype.primitiveCount=function(){
  * See {@link glutil.Transform#setPosition}
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
- * @param {number|Array<number>} x X coordinate
+ * @param {number|Array<Number>} x X coordinate
  * or a 3-element position array, as specified in {@link glutil.Transform#setScale}.
- * @param {number} y Y-coordinate.
- * @param {number} z Z-coordinate.
-* @return {glutil.Scene3D} This object.
+ * @param {Number} y Y-coordinate.
+ * @param {Number} z Z-coordinate.
+* @returns {glutil.Scene3D} This object.
  */
 ShapeGroup.prototype.setPosition=function(x,y,z){
  this.transform.setPosition(x,y,z);
@@ -212,8 +212,8 @@ ShapeGroup.prototype.setPosition=function(x,y,z){
  * See {@link glutil.Transform#setQuaternion}.
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
- * @param {Array<number>} quat A four-element array describing the rotation.
- * @return {glutil.Shape} This object.
+ * @param {Array<Number>} quat A four-element array describing the rotation.
+ * @returns {glutil.Shape} This object.
  */
 ShapeGroup.prototype.setQuaternion=function(quat){
  this.transform.setQuaternion(quat);
@@ -224,11 +224,11 @@ ShapeGroup.prototype.setQuaternion=function(quat){
  * size. See {@link glutil.Transform#setScale}.
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
- * @param {number|Array<number>} x Scaling factor for this object's width,
+ * @param {number|Array<Number>} x Scaling factor for this object's width,
  * or a 3-element scaling array, as specified in {@link glutil.Transform#setScale}.
- * @param {number} y Scaling factor for this object's height.
- * @param {number} z Scaling factor for this object's depth.
-* @return {glutil.Scene3D} This object.
+ * @param {Number} y Scaling factor for this object's height.
+ * @param {Number} z Scaling factor for this object's depth.
+* @returns {glutil.Scene3D} This object.
  */
 ShapeGroup.prototype.setScale=function(x,y,z){
  this.transform.setScale(x,y,z);

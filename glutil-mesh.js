@@ -33,15 +33,15 @@ this._initialize(vertices,faces,format);
 * See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
 * @class
 * @alias glutil.Mesh
-* @param {Array<number>} [vertices] An array that contains data on each
+* @param {Array<Number>} [vertices] An array that contains data on each
 * vertex of the mesh.
 * Each vertex is made up of the same number of elements, as defined in
 * format. May be null or omitted, in which case an empty vertex array is used.
-* @param {Array<number>} [indices] An array of vertex indices.  Each trio of
+* @param {Array<Number>} [indices] An array of vertex indices.  Each trio of
 * indices specifies a separate triangle, or each pair of indices specifies
 * a line segment.
 * If null or omitted, creates an initially empty mesh.
-* @param {number} [format] A set of bit flags depending on the kind of data
+* @param {Number} [format] A set of bit flags depending on the kind of data
 * each vertex contains.  Each vertex contains 3 elements plus:<ul>
 *  <li> 3 more elements if Mesh.NORMALS_BIT is set, plus
 *  <li> 3 more elements if Mesh.COLORS_BIT is set, plus
@@ -218,10 +218,10 @@ var normDir=(inward) ? -1 : 1;
  * to have a mesh with triangles, then call this method, say,
  * with <code>Mesh.LINE_STRIP</code> to add line segments
  * to that mesh.
- * @param {number} m A primitive type.  One of the following:
+ * @param {Number} m A primitive type.  One of the following:
  * Mesh.TRIANGLES, Mesh.LINES, Mesh.LINE_STRIP, Mesh.TRIANGLE_STRIP,
  * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.
- * @return {glutil.Mesh} This object.
+ * @returns {glutil.Mesh} This object.
  */
 Mesh.prototype.mode=function(m){
  "use strict";
@@ -251,7 +251,7 @@ if(m<0)throw new Error("invalid mode");
  * will not build upon previous vertices.
  * @param {glutil.Mesh} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
- * @return {glutil.Mesh} This object.
+ * @returns {glutil.Mesh} This object.
  * @example
  * // Use the following idiom to make a copy of a geometric mesh:
  * var copiedMesh = new Mesh().merge(meshToCopy);
@@ -300,15 +300,15 @@ var lastMesh=this.subMeshes[this.subMeshes.length-1];
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.  The normal passed to this method will
   * not automatically be normalized to unit length.
-  * @param {number} x X-coordinate of the normal.
+  * @param {Number} x X-coordinate of the normal.
    *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
-  * @param {number} y Y-coordinate of the normal.
+  * @param {Number} y Y-coordinate of the normal.
  * If "x" is an array, this parameter may be omitted.
-  * @param {number} z Z-coordinate of the normal.
+  * @param {Number} z Z-coordinate of the normal.
  * If "x" is an array, this parameter may be omitted.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
 Mesh.prototype.normal3=function(x,y,z){
   "use strict";
@@ -332,15 +332,15 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.  The tangent passed to this method will
   * not automatically be normalized to unit length.
-  * @param {number} x X-coordinate of the tangent vector.
+  * @param {Number} x X-coordinate of the tangent vector.
    *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
-  * @param {number} y Y-coordinate of the tangent vector.
+  * @param {Number} y Y-coordinate of the tangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @param {number} z Z-coordinate of the tangent vector.
+  * @param {Number} z Z-coordinate of the tangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
 Mesh.prototype.tangent3=function(x,y,z){
   "use strict";
@@ -364,15 +364,15 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.  The bitangent passed to this method will
   * not automatically be normalized to unit length.
-  * @param {number} x X-coordinate of the bitangent vector.
+  * @param {Number} x X-coordinate of the bitangent vector.
    *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
-  * @param {number} y Y-coordinate of the bitangent vector.
+  * @param {Number} y Y-coordinate of the bitangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @param {number} z Z-coordinate of the bitangent vector.
+  * @param {Number} z Z-coordinate of the bitangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
 Mesh.prototype.bitangent3=function(x,y,z){
   "use strict";
@@ -395,9 +395,9 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * mode (see {@link glutil.Mesh#mode}) so that future vertices given
   * will not build upon previous vertices. Future vertices should not be
   * added after calling this method without calling mode() first.
-  * @param {Array<number>} matrix A 4x4 matrix describing
+  * @param {Array<Number>} matrix A 4x4 matrix describing
   * the transformation.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
  Mesh.prototype.transform=function(matrix){
   "use strict";
@@ -412,13 +412,13 @@ for(var i=0;i<this.subMeshes.length;i++){
   * color will apply to future vertices even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.  Only the red, green, and blue components will be used.
-  * @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+  * @param {Array<Number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
   * or the red color component (0-1).
-  * @param {number} g Green color component (0-1).
+  * @param {Number} g Green color component (0-1).
   * May be null or omitted if a string or array is given as the "r" parameter.
-  * @param {number} b Blue color component (0-1).
+  * @param {Number} b Blue color component (0-1).
   * May be null or omitted if a string or array is given as the "r" parameter.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
  Mesh.prototype.color3=function(r,g,b){
   "use strict";
@@ -450,13 +450,13 @@ if(typeof r==="string"){
   Texture coordinates are a set of 2 values each ranging from 0 to
 * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
 * right corner (by default).
-  * @param {number} u X-coordinate of the texture, from 0-1.
+  * @param {Number} u X-coordinate of the texture, from 0-1.
    *   If "v" are null or omitted, this is instead
  *  a 3-element array giving the X and Y coordinates, or a single number
  * giving the coordinate for all three dimensions.
-  * @param {number} v Y-coordinate of the texture, from 0-1.
+  * @param {Number} v Y-coordinate of the texture, from 0-1.
   * If "u" is an array, this parameter can be omitted.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
  Mesh.prototype.texCoord2=function(u,v){
  "use strict";
@@ -475,15 +475,15 @@ if(typeof u==="number" && typeof v==="number"){
   * additional face index according to this mesh's current mode.
   * The vertex will adopt this mesh's current normal, color,
   * and texture coordinates if they have been defined.
- * @param {Array<number>|number} x The X-coordinate.
+ * @param {Array<Number>|number} x The X-coordinate.
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} y The Y-coordinate.
+ * @param {Number} y The Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z The Z-coordinate.
+ * @param {Number} z The Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
  Mesh.prototype.vertex3=function(x,y,z){
   "use strict";
@@ -504,13 +504,13 @@ if(this.subMeshes.length===0){
  /**
   * Adds a new vertex to this mesh.  The Z-coordinate will
   * be treated as 0.
- * @param {Array<number>|number} x The X-coordinate.
+ * @param {Array<Number>|number} x The X-coordinate.
  * If "y" is null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} y The Y-coordinate.
+ * @param {Number} y The Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
  Mesh.prototype.vertex2=function(x,y){
   "use strict";
@@ -529,13 +529,13 @@ if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined"))
   * Sets all the vertices in this mesh to the given color.
   * This method doesn't change this mesh's current color.
   * Only the color's red, green, and blue components will be used.
-  * @param {Array<number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+  * @param {Array<Number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
   * or the red color component (0-1).
-  * @param {number} g Green component of the color (0-1).
+  * @param {Number} g Green component of the color (0-1).
   * May be null or omitted if a string is given as the "r" parameter.
-  * @param {number} b Blue component of the color (0-1).
+  * @param {Number} b Blue component of the color (0-1).
   * May be null or omitted if a string is given as the "r" parameter.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
 Mesh.prototype.setColor3=function(r,g,b){
   "use strict";
@@ -559,7 +559,7 @@ var rr=r;
   * normal mapping (bump mapping) to work.
   * This method only affects those parts of the mesh
   * that define normals and texture coordinates.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
  Mesh.prototype.recalcTangents=function(){
   "use strict";
@@ -577,14 +577,14 @@ for(var i=0;i<this.subMeshes.length;i++){
   * the mesh must have its vertices defined in
   * counterclockwise order.  Each normal calculated will
   * be normalized to unit length (unless the normal is (0,0,0)).
-  * @param {boolean} flat If true, each triangle in the mesh
+  * @param {Boolean} flat If true, each triangle in the mesh
   * will have the same normal, which usually leads to a flat
   * appearance.  If false, each unique vertex in the mesh
   * will have its own normal, which usually leads to a smooth
   * appearance.
-  * @param {boolean} inward If true, the generated normals
+  * @param {Boolean} inward If true, the generated normals
   * will point inward; otherwise, outward.
-  * @return {glutil.Mesh} This object.
+  * @returns {glutil.Mesh} This object.
   */
  Mesh.prototype.recalcNormals=function(flat,inward){
   "use strict";
@@ -599,7 +599,7 @@ for(var i=0;i<this.subMeshes.length;i++){
 /**
  * Modifies this mesh by normalizing the normals it defines
  * to unit length.
- * @return {glutil.Mesh} This object.
+ * @returns {glutil.Mesh} This object.
  */
 Mesh.prototype.normalizeNormals=function(){
   "use strict";
@@ -630,7 +630,7 @@ for(var i=0;i<this.subMeshes.length;i++){
  * contained in this one without copying the vertices.  Parts
  * of the mesh consisting of points or line segments will remain
  * unchanged.
- * @return {glutil.Mesh} A new mesh with triangles converted
+ * @returns {glutil.Mesh} A new mesh with triangles converted
  * to lines.
  */
 Mesh.prototype.toWireFrame=function(){
@@ -645,20 +645,20 @@ var mesh=new Mesh();
  * Sets the X, Y, and Z coordinates of the vertex with the
  * given index.  Has no effect if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
- * @param {number} index Zero-based index of
+ * @param {Number} index Zero-based index of
  * the vertex to set.
   * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
-* @param {number|Array<number>} x X coordinate of the vertex position.
+* @param {number|Array<Number>} x X coordinate of the vertex position.
  * Can also be a 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * position.
- * @param {number} y Y coordinate of the vertex position.
+ * @param {Number} y Y coordinate of the vertex position.
  * May be null or omitted if "x" is an array.
- * @param {number} z Z coordinate of the vertex position.
+ * @param {Number} z Z coordinate of the vertex position.
  * May be null or omitted if "x" is an array.
- * @return {glutil.Mesh} This object.
+ * @returns {glutil.Mesh} This object.
  */
 Mesh.prototype.setVertex=function(index,x,y,z){
   "use strict";
@@ -689,20 +689,20 @@ if(index<0)return this;
  * Sets the normal associated with the vertex with the
  * given index.  Has no effect if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
- * @param {number} index Zero-based index of
+ * @param {Number} index Zero-based index of
  * the vertex to set.
  * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
- * @param {number|Array<number>} x X coordinate of the vertex normal.
+ * @param {number|Array<Number>} x X coordinate of the vertex normal.
  * Can also be a 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * normal.
- * @param {number} y Y coordinate of the vertex normal.
+ * @param {Number} y Y coordinate of the vertex normal.
  * May be null or omitted if "x" is an array.
- * @param {number} z Z coordinate of the vertex normal.
+ * @param {Number} z Z coordinate of the vertex normal.
  * May be null or omitted if "x" is an array.
- * @return {glutil.Mesh} This object.
+ * @returns {glutil.Mesh} This object.
  */
 Mesh.prototype.setVertexNormal=function(index,x,y,z){
   "use strict";
@@ -734,12 +734,12 @@ if(index<0)return this;
 /**
  * Gets the position of the vertex with the given
  * index in this mesh.
- * @param {number} index Zero-based index of
+ * @param {Number} index Zero-based index of
  * the vertex to get.
  * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
- * @return {Array<number>} A 3-element array giving
+ * @returns {Array<Number>} A 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * position, or null if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
@@ -764,12 +764,12 @@ if(index<0)return null;
 /**
  * Gets the normal of the vertex with the given
  * index in this mesh.
- * @param {number} index Zero-based index of
+ * @param {Number} index Zero-based index of
  * the vertex normal to get.
  * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
- * @return {Array<number>} A 3-element array giving
+ * @returns {Array<Number>} A 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * normal, or null if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
@@ -799,7 +799,7 @@ var count=0;
 };
 /**
  * Gets the number of vertices included in this mesh.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Mesh.prototype.vertexCount=function(){
   "use strict";
 var count=0;
@@ -811,7 +811,7 @@ var count=0;
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
- * @return {number} Return value. */
+ * @returns {Number} Return value. */
 Mesh.prototype.primitiveCount=function(){
   "use strict";
 var count=0;
@@ -1147,7 +1147,7 @@ var stride=this.getStride();
 /**
 * Reverses the winding order of the triangles in this mesh
 * by swapping the second and third vertex indices of each one.
-* @return {glutil.Mesh} This object.
+* @returns {glutil.Mesh} This object.
 * @example <caption>
 * The following code generates a mesh that survives face culling,
 * since the same triangles occur on each side of the mesh, but
@@ -1185,7 +1185,7 @@ for(var i=0;i<this.subMeshes.length;i++){
  * (the first element is U, the second is V).
  * Each component generally ranges from 0 to 1. May be absent.
  * </ul>
- * @return {glutil.Mesh} This object.
+ * @returns {glutil.Mesh} This object.
  */
 Mesh.prototype.enumPrimitives=function(func){
  "use strict";
@@ -1367,7 +1367,7 @@ var tangentBits=Mesh.TANGENTS_BIT|Mesh.BITANGENTS_BIT;
 };
 /**
 * Modifies this mesh by reversing the sign of normals it defines.
-* @return {glutil.Mesh} This object.
+* @returns {glutil.Mesh} This object.
 * @example <caption>
 * The following code generates a two-sided mesh, where
 * the normals on each side face in the opposite direction.

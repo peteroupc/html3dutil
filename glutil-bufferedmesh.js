@@ -26,7 +26,8 @@ var BufferedSubMesh=function(mesh, context){
  }
  context.bindBuffer(context.ARRAY_BUFFER, this.verts);
  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
- context.bufferData(context.ARRAY_BUFFER, smb.vertices, context.STATIC_DRAW);
+ context.bufferData(context.ARRAY_BUFFER,
+    smb.vertices, context.STATIC_DRAW);
  context.bufferData(context.ELEMENT_ARRAY_BUFFER,
     smb.indices, context.STATIC_DRAW);
  var type=context.UNSIGNED_SHORT;
@@ -52,8 +53,8 @@ BufferedSubMesh.prototype._getVaoExtension=function(context){
 * A geometric mesh in the form of buffer objects.
 * @class
 * @alias glutil.BufferedMesh
-* @ {} mesh A geometric mesh object.
-* @ {} context A WebGL context to
+* @param {glutil.Mesh} mesh A geometric mesh object.
+* @param {WebGLRenderingContext|object} context A WebGL context to
 *  create a buffer from, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context. (Note that this constructor uses
@@ -88,7 +89,7 @@ return this._bounds;
 };
 /**
  * Returns the WebGL context associated with this object.
- * @ {} Return value. */
+ * @returns {WebGLRenderingContext} Return value. */
 BufferedMesh.prototype.getContext=function(){
  "use strict";
 return this.context;
@@ -108,7 +109,7 @@ BufferedMesh.prototype.getFormat=function(){
 * Binds the buffers in this object to attributes according
 * to their data format, and draws the elements in this mesh
 * according to the data in its buffers.
-* @ {} program A shader program object to get
+* @param {glutil.ShaderProgram} program A shader program object to get
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
 */
@@ -141,6 +142,7 @@ if(this.verts!==null)
  }
  this.verts=null;
  this.indices=null;
+ this.smb=null;
  this.vao=null;
  this._lastKnownProgram=null;
  this._attribLocations=[];
@@ -185,7 +187,7 @@ BufferedSubMesh.prototype._prepareDraw=function(program, context){
      if(this.smb._attribsUsed[i]>=0){
       context.enableVertexAttribArray(attrib);
       context.vertexAttribPointer(attrib, this.smb._sizes[i],
-        context.FLOAT, false,this._stride*4, this.smb._attribsUsed[i]*4);
+        context.FLOAT, false,this.smb._stride*4, this.smb._attribsUsed[i]*4);
      } else {
       context.disableVertexAttribArray(attrib);
      }
@@ -210,8 +212,8 @@ BufferedSubMesh.prototype.draw=function(program){
   this._prepareDraw(program,context);
   // Drawing phase
   var primitive=context.TRIANGLES;
-  if((this.format&Mesh.LINES_BIT)!==0)primitive=context.LINES;
-  if((this.format&Mesh.POINTS_BIT)!==0)primitive=context.POINTS;
+  if((this.smb.format&Mesh.LINES_BIT)!==0)primitive=context.LINES;
+  if((this.smb.format&Mesh.POINTS_BIT)!==0)primitive=context.POINTS;
   context.drawElements(primitive,
     this.smb.facesLength,
     this.type, 0);
@@ -234,7 +236,7 @@ var ret=0;
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @ {} Return value.*/
+* @returns {Number} Return value.*/
 BufferedMesh.prototype.primitiveCount=function(){
  "use strict";
 var ret=0;

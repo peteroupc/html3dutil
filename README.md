@@ -134,22 +134,23 @@ Examples
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
-  // Create a box mesh 10 units in width, 20 units
-  // in height, and 20 units in depth
-  var mesh=Meshes.createBox(10,10,10);
+  var sub=new Subscene3D(scene)
+   // Set the perspective view.  Camera has a 45-degree field of view
+   // and will see objects from 0.1 to 100 units away.
+   .perspectiveAspect(45,0.1,100)
+   // Move the camera back 40 units.
+   .setLookAt([0,0,40]);
+  sub.getLights().setDefaults();
+  // Create a box mesh 10 units in size
+  var mesh=Meshes.createBox(10,20,20);
   // Create a shape based on the mesh and give it a red color
-  var shape=scene.makeShape(mesh).setColor("red");
+  var shape=new Shape(mesh).setColor("red");
   // Add the shape to the scene
-  scene.addShape(shape);
+  sub.addShape(shape);
   // Create a timer
   var timer={};
   // Set up the render loop
   GLUtil.renderLoop(function(time){
-   // Set the perspective view.  Camera has a 45-degree field of view
-   // and will see objects from 0.1 to 100 units away.
-   scene.setPerspective(45,scene.getClientAspect(),0.1,100);
-   // Move the camera back 40 units.
-   scene.setLookAt([0,0,40]);
    // Update the shape's rotation
    var q=GLMath.quatFromTaitBryan(
      360*GLUtil.getTimePosition(timer,time,6000),
@@ -158,7 +159,7 @@ Examples
    );
    shape.setQuaternion(q);
    // Render the scene
-   scene.render();
+   scene.render(sub);
   });
 ```
 

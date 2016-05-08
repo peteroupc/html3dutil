@@ -57,7 +57,7 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
  * @param {*} textures
  * @param {*} resolve
  * @param {*} reject
- * @return {Promise<glutil.Texture>} A promise as described in
+ * @returns {Promise<glutil.Texture>} A promise as described in
  * {@link glutil.GLUtil.getPromiseResultsAll}.  If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link glutil.Texture} object.
@@ -71,9 +71,9 @@ TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
 }
 /**
  * Not documented yet.
- * @param {string} texture
+ * @param {String} texture
  * @param {*} context
- * @return {Promise<glutil.Texture>} A promise that resolves when
+ * @returns {Promise<glutil.Texture>} A promise that resolves when
  * the texture is loaded successfully (the result will be a Texture object)
  * and is rejected when an error occurs.
  */
@@ -87,11 +87,11 @@ TextureLoader.prototype.loadAndMapTexture=function(texture,context){
 }
 /**
  * Not documented yet.
- * @param {Array<string>} textures
+ * @param {Array<String>} textures
  * @param {*} context
  * @param {*} resolve
  * @param {*} reject
- * @return {Promise<glutil.Texture>} A promise as described in
+ * @returns {Promise<glutil.Texture>} A promise as described in
  * {@link glutil.GLUtil.getPromiseResultsAll}.  If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link glutil.Texture} object.

@@ -106,7 +106,7 @@ if(this.program){
  this.uniformTypes={};
 };
 /** Gets the WebGL context associated with this shader program.
-* @return {WebGLRenderingContext} Return value.*/
+* @returns {WebGLRenderingContext} Return value.*/
 ShaderProgram.prototype.getContext=function(){
  "use strict";
 return this.context;
@@ -116,14 +116,14 @@ return this.context;
 * (Although the location may change each time the shader program
 * is linked, that normally only happens upon construction
 * in the case of ShaderProgram.)
-* @param {string} name The name of an attribute or uniform defined in either the
+* @param {String} name The name of an attribute or uniform defined in either the
 * vertex or fragment shader of this shader program.  If the uniform or attribute
 * is an array, each element in the array is named as in these examples:
 * "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
 * "unif.member1", "unif.member2".  If it's an array of struct, each
 * member is named as in these examples: "unif[0].member1",
 * "unif[0].member2".
-* @return {number|WebGLUniformLocation|null} The location of the uniform or attribute
+* @returns {number|WebGLUniformLocation|null} The location of the uniform or attribute
 * name, or null if it doesn't exist.
 */
 ShaderProgram.prototype.get=function(name){
@@ -135,9 +135,9 @@ var ret=this.actives[name];
 * Gets the value of the given uniform in this program. This method
 * may be called at any time, even if this program is not currently the
 * active program in the WebGL context.
-* @param {string} name The name of a uniform defined in either the
+* @param {String} name The name of a uniform defined in either the
 * vertex or fragment shader of this shader program.  See get().
-* @return {*} The uniform's value, or null if it doesn't exist or if
+* @returns {*} The uniform's value, or null if it doesn't exist or if
 * an attribute is named, not a uniform.
 */
 ShaderProgram.prototype.getUniform=function(name){
@@ -162,7 +162,7 @@ var loc=(typeof name==="string") ? this.get(name) : name;
 * program.<p>
 * Changing the context's active program doesn't reset the uniform
 * variables associated with the previous program.
-* @return {glutil.ShaderProgram} This object.
+* @returns {glutil.ShaderProgram} This object.
 */
 ShaderProgram.prototype.use=function(){
  "use strict";
@@ -305,7 +305,7 @@ isCurrentProgram=null;
 * the "name" parameter of the {@link glutil.ShaderProgram#get}
 * method for more information on
 * uniform names.
-* @return {glutil.ShaderProgram} This object.
+* @returns {glutil.ShaderProgram} This object.
 */
 ShaderProgram.prototype.setUniforms=function(uniforms){
   "use strict";
@@ -396,8 +396,8 @@ return "" +
 /**
 * Generates source code for a fragment shader for applying
 * a raster effect to a texture.
-* @param {string} functionCode See ShaderProgram.makeEffect().
-* @return {string} The source text of the resulting fragment shader.
+* @param {String} functionCode See ShaderProgram.makeEffect().
+* @returns {String} The source text of the resulting fragment shader.
 */
 ShaderProgram.makeEffectFragment=function(functionCode){
 "use strict";
@@ -440,7 +440,7 @@ return new ShaderProgram(context,
 * compiled shader program, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
-* @param {string} functionCode A string giving shader code
+* @param {String} functionCode A string giving shader code
 * in OpenGL ES Shading Language (GLSL) that must contain
 * a function with the following signature:
 * <pre>
@@ -452,7 +452,7 @@ return new ShaderProgram(context,
 * and the return value is the new color at the given texture coordinates.  Besides
 * this requirement, the shader code is also free to define additional uniforms,
 * constants, functions, and so on (but not another "main" function).
-* @return {glutil.ShaderProgram} The resulting shader program.
+* @returns {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.makeEffect=function(context,functionCode){
  "use strict";
@@ -466,7 +466,7 @@ return new ShaderProgram(context,
 * compiled shader program, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
-* @return {glutil.ShaderProgram} The resulting shader program.
+* @returns {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.getInvertEffect=function(context){
 "use strict";
@@ -484,7 +484,7 @@ return ShaderProgram.makeEffect(context,
 * compiled shader program, or an object, such as Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
-* @return {glutil.ShaderProgram} The resulting shader program.
+* @returns {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.getEdgeDetectEffect=function(context){
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
@@ -540,7 +540,7 @@ var shader=""+
 /**
 * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
 * at the start of the return value enables the lighting model.
-* @return {string} The resulting shader text.
+* @returns {String} The resulting shader text.
 */
 ShaderProgram.getDefaultVertex=function(){
 "use strict";
@@ -590,7 +590,7 @@ return shader;
 * Putting "#define SPECULAR\n"
 * at the start of the return value enables specular highlights (as long
 * as SHADING is also enabled).
-* @return {string} The resulting shader text.
+* @returns {String} The resulting shader text.
 */
 ShaderProgram.getDefaultFragment=function(){
 "use strict";

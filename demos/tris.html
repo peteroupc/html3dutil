@@ -51,7 +51,7 @@ TriangleParticles.prototype.update=function(time){
  }
 }
 TriangleParticles.makeShapeFromTri=function(tri,shape){
- var sh=new Shape(new Mesh()
+ var sh=scene.makeShape(new Mesh()
    .mode(Mesh.TRIANGLES)
    .normal3(0,0,1)
    .color3(tri.color)
@@ -111,7 +111,7 @@ TriangleParticles.generateTri=function(width,height){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-  var subscene=new Subscene3D(scene);
+  var sub=new Subscene3D(scene);
   var tris=new TriangleParticles(sub,200);
   // Set up the render loop
   GLUtil.renderLoop(function(time){

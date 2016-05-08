@@ -7,7 +7,7 @@
 * to (1,1) at the upper right corner.
 * @class
 * @alias glutil.Texture
-* @param {string} name URL of the texture data.  Based on the
+* @param {String} name URL of the texture data.  Based on the
 * URL, the texture may be loaded via the JavaScript DOM's Image
 * class.  However, this constructor will not load that image yet.
 */
@@ -27,12 +27,12 @@ var Texture=function(name){
 * are both powers of two.  For other textures, this setting
 * is ignored and out-of-range texture coordinates are
 * always clamped.
-* @param {boolean} clamp If true, the texture's texture
+* @param {Boolean} clamp If true, the texture's texture
 * coordinates will be clamped to the range [0, 1].  If false,
 * the fractional parts of the texture coordinates'
 * be used as the coordinates (causing wraparound).
 * The default is false.
-* @return {glutil.Texture} This object.
+* @returns {glutil.Texture} This object.
 */
 Texture.prototype.setClamp=function(clamp){
  this.clamp=clamp;
@@ -41,7 +41,7 @@ Texture.prototype.setClamp=function(clamp){
 
 /**
 *  Loads a texture by its URL.
-* @param {string} name URL of the texture data.  Images with a TGA
+* @param {String} name URL of the texture data.  Images with a TGA
 * extension that use the RGBA or grayscale format are supported.
 * Images supported by the browser will be loaded via
 * the JavaScript DOM's Image class.
@@ -49,7 +49,7 @@ Texture.prototype.setClamp=function(clamp){
 * are the names of textures already loaded.  This will help avoid loading
 * the same texture more than once.  This parameter is optional
 * and may be omitted.
-* @return {Promise} A promise that resolves when the texture
+* @returns {Promise} A promise that resolves when the texture
 * is fully loaded.  If it resolves, the result will be a Texture object.
 */
 Texture.loadTexture=function(name, textureCache){
@@ -79,7 +79,7 @@ Texture.loadTexture=function(name, textureCache){
 * and alpha components, in that order.
 * @param {Uint8Array} width Width, in pixels, of the texture.
 * @param {Uint8Array} height Height, in pixels, of the texture.
-* @return {glutil.Texture} The new Texture object.
+* @returns {glutil.Texture} The new Texture object.
 */
 Texture.fromUint8Array=function(array, width, height){
  if(width<0)throw new Error("width less than 0");
