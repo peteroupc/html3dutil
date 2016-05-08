@@ -65,11 +65,11 @@ function Scene3D(canvasOrContext){
  }
 }
 
-// TODO: Implement TEXTURE_ENABLED
 Scene3D.LIGHTING_ENABLED = 1;
 Scene3D.SPECULAR_MAP_ENABLED = 2;
 Scene3D.NORMAL_ENABLED = 4;
 Scene3D.SPECULAR_ENABLED = 8;
+Scene3D.TEXTURE_ENABLED = 16;
 
 /** @private */
 Scene3D._materialToFlags=function(material){
@@ -80,6 +80,7 @@ Scene3D._materialToFlags=function(material){
         material.specular[2]!=0) ? Scene3D.SPECULAR_ENABLED : 0;
      flags|=(!!material.specularMap) ? Scene3D.SPECULAR_MAP_ENABLED : 0;
      flags|=(!!material.normalMap) ? Scene3D.NORMAL_ENABLED : 0;
+     flags|=(!!material.texture) ? Scene3D.TEXTURE_ENABLED : 0;
      return flags;
 }
 
@@ -100,6 +101,8 @@ Scene3D.ProgramCache.prototype.getProgram=function(flags){
    defines+="#define SPECULAR\n";
  if((flags&Scene3D.NORMAL_ENABLED)!=0)
    defines+="#define NORMAL_MAP\n";
+ if((flags&Scene3D.TEXTURE_ENABLED)!=0)
+   defines+="#define TEXTURE\n";
  if((flags&Scene3D.SPECULAR_MAP_ENABLED)!=0)
    defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
  var prog=new ShaderProgram(this.context,
