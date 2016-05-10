@@ -31,14 +31,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   //
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("#f0f0f0");
-  var textSub=new Subscene3D(scene)
+  var textSub=new Subscene3D()
     .orthoAspect(0,640,480,0,-1,1);
-  var figureSub=new Subscene3D(scene)
+  var figureSub=new Subscene3D()
     .perspectiveAspect(45,0.1,100)
     .setLookAt([0,0,40]);
   figureSub.getLights().setDefaults();
   var mesh=Meshes.createBox(10,20,20);
-  var shape2=figureSub.makeShape(mesh).setColor("#e0e0e0");
+  var shape2=new Shape(mesh).setColor("#e0e0e0");
   figureSub.addShape(shape2);
   var passes=[
    new RenderPass3D(figureSub),

@@ -11,8 +11,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @alias glutil.Subscene3D
 * @param {Scene3D} scene
 */
-function Subscene3D(scene){
- this.parent=scene;
+function Subscene3D(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this.lights=new Lights();
@@ -131,12 +130,6 @@ Subscene3D.prototype.setProjectionMatrix=function(mat){
  }
  return this;
 };
-/**
- * Not documented yet.
- */
-Subscene3D.prototype.getContext=function(){
- return this.parent.getContext();
-}
 /**
  * Not documented yet.
  * @param {*} fov
@@ -283,7 +276,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
    this._renderShape(shape.shapes[i], renderContext);
   }
  } else {
-   if(!shape.isCulled(this._getFrustum())){
+   if(shape.visible && !shape.isCulled(this._getFrustum())){
     var prog=null;
     var params={};
     var flags=0;
@@ -326,10 +319,10 @@ Subscene3D.prototype.resize=function(width, height) {
 /**
  * Not documented yet.
  */
-Subscene3D.prototype.render=function(){
+Subscene3D.prototype.render=function(scene){
   var rc={};
-  rc.scene=this.parent;
-  rc.context=this.parent.getContext();
+  rc.scene=scene;
+  rc.context=scene.getContext();
   for(var i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],rc);
   }

@@ -1,7 +1,5 @@
 /**
- * A holder object representing a 3D scene.</li>
- *</ul>
- * When a Scene3D object is created, it sets the projection and view matrices to identity.
+ * A holder object representing a 3D scene.
 *  @class
 * @alias glutil.Scene3D
  * @param {WebGLRenderingContext|object} canvasOrContext
@@ -36,7 +34,7 @@ function Scene3D(canvasOrContext){
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  // NOTE: Exists for compatibility only
- this._subScene=new Subscene3D(this);
+ this._subScene=new Subscene3D();
  this._subScene.getLights().setDefaults();
  this._programs=new Scene3D.ProgramCache();
  this.useDevicePixelRatio=false;
@@ -889,7 +887,7 @@ Scene3D.prototype.render=function(renderPasses){
       if(pass.frameBuffer)pass.frameBuffer.bind();
       this._clearForPass(pass);
       renderPasses[i].subScene.resize(width,height);
-      renderPasses[i].subScene.render();
+      renderPasses[i].subScene.render(this);
       if(pass.frameBuffer)pass.frameBuffer.unbind();
     }
   }

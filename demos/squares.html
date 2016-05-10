@@ -453,7 +453,7 @@ function blindsGroup(scene){
   var scene=new Scene3D((document.getElementById("canvas")));
   var fbo=new FrameBuffer(scene,scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
-  var subScene=new Subscene3D(scene)
+  var subScene=new Subscene3D()
   subScene.getLights().setDefaults();
   var renders=[
     new RenderPass3D(subScene,{"frameBuffer":fbo}),

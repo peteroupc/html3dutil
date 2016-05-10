@@ -74,7 +74,7 @@ var points=path.getPoints(50,0.2)
 
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new Subscene3D(scene);
+  var sub=new Subscene3D();
   var fc=new FrameCounterDiv(scene)
   var group=new ShapeGroup()
   sub.getLights().setDirectionalLight(0,[0,-3,1.2],[1,1,1])

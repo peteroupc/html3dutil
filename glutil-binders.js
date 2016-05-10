@@ -23,7 +23,7 @@ this.mshade=mshade;
 /** @private */
 GLUtil._MaterialBinder._textureSizeZeroZero=[0,0];
 /** @private */
-GLUtil._MaterialBinder.prototype.bind=function(program,loader){
+GLUtil._MaterialBinder.prototype.bind=function(program,context,loader){
  "use strict";
  if(!this.mshade)return this;
  if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array")}
@@ -46,9 +46,9 @@ GLUtil._MaterialBinder.prototype.bind=function(program,loader){
      [this.mshade.emission[0],this.mshade.emission[1],this.mshade.emission[2]];
  }
  program.setUniforms(uniforms);
- GLUtil._MaterialBinder.bindTexture(this.mshade.texture,program,0,loader);
- GLUtil._MaterialBinder.bindTexture(this.mshade.specularMap,program,1,loader);
- GLUtil._MaterialBinder.bindTexture(this.mshade.normalMap,program,2,loader);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.texture,context,program,0,loader);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.specularMap,context,program,1,loader);
+ GLUtil._MaterialBinder.bindTexture(this.mshade.normalMap,context,program,2,loader);
  return this;
 };
 

@@ -26,7 +26,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
     .cullFace(Scene3D.BACK);
-  var sub=new Subscene3D(scene)
+  var sub=new Subscene3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
    .perspectiveAspect(45,0.1,100)
