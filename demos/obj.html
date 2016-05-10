@@ -34,7 +34,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   scene.setClearColor("white");
   var sub=new Subscene3D(scene);
   var loader=new TextureLoader();
-  var camera=new Camera(sub,45,1,1000).setDistance(5);
+  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5);
   var startfunc=null
   var shape=null
   addLink("Toboggan",startfunc=function(){

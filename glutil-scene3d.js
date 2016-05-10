@@ -38,7 +38,7 @@ function Scene3D(canvasOrContext){
  // NOTE: Exists for compatibility only
  this._subScene=new Subscene3D(this);
  this._subScene.getLights().setDefaults();
- this._programs=new Scene3D.ProgramCache(context);
+ this._programs=new Scene3D.ProgramCache();
  this.useDevicePixelRatio=false;
  this._pixelRatio=1;
  this.autoResize=true;
@@ -52,7 +52,7 @@ function Scene3D(canvasOrContext){
   var flags=Scene3D.LIGHTING_ENABLED |
    Scene3D.SPECULAR_ENABLED |
    Scene3D.SPECULAR_MAP_ENABLED;
-  this._programs.getProgram(flags);
+  this._programs.getProgram(flags,this.context);
   this.context.viewport(0,0,this.width,this.height);
   this.context.enable(this.context.BLEND);
   this.context.blendFunc(this.context.SRC_ALPHA,this.context.ONE_MINUS_SRC_ALPHA);
@@ -63,6 +63,12 @@ function Scene3D(canvasOrContext){
   this._setClearColor();
   this._setFace();
  }
+}
+/**
+ * Not documented yet.
+ */
+Scene3D.prototype.getCanvas=function(){
+ return this.context.canvas;
 }
 
 Scene3D.LIGHTING_ENABLED = 1;
@@ -83,16 +89,22 @@ Scene3D._materialToFlags=function(material){
      flags|=(!!material.texture) ? Scene3D.TEXTURE_ENABLED : 0;
      return flags;
 }
-
 /** @private */
-Scene3D.ProgramCache=function(context){
- this.context=context;
+Scene3D.ProgramCache=function(){
  this._programs=[];
 }
 /** @private */
-Scene3D.ProgramCache.prototype.getProgram=function(flags){
- if(this._programs[flags]){
-  return this._programs[flags];
+Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
+ if(!context)throw new Error();
+ var pf=this._programs[flags];
+ if(pf){
+  for(var i=0;i<pf.length;i++){
+   if(pf[i][0]==context) {
+    return pf[i][1];
+   }
+  }
+ } else {
+  this._programs[flags]=[];
  }
  var defines=""
  if((flags&Scene3D.LIGHTING_ENABLED)!=0)
@@ -105,10 +117,10 @@ Scene3D.ProgramCache.prototype.getProgram=function(flags){
    defines+="#define TEXTURE\n";
  if((flags&Scene3D.SPECULAR_MAP_ENABLED)!=0)
    defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
- var prog=new ShaderProgram(this.context,
+ var prog=new ShaderProgram(context,
    defines+ShaderProgram.getDefaultVertex(),
    defines+ShaderProgram.getDefaultFragment());
- this._programs[flags]=prog;
+ this._programs[flags].push([context,prog]);
  return prog;
 }
 /** Returns the WebGL context associated with this scene. */
@@ -303,14 +315,22 @@ Scene3D.prototype.getAspect=function(){
  if(ch<=0)return 1;
  return this.getWidth()/ch;
 };
+/** @private */
+Scene3D.prototype.getClientWidth=function(){
+ return this.context.canvas.clientWidth;
+}
+/** @private */
+Scene3D.prototype.getClientHeight=function(){
+ return this.context.canvas.clientHeight;
+}
 /**
 * Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
 * @returns {Number} Aspect ratio, or 1 if height is 0.*/
 Scene3D.prototype.getClientAspect=function(){
- var ch=this.context.canvas.clientHeight;
+ var ch=this.getClientHeight();
  if(ch<=0)return 1;
- return this.context.canvas.clientWidth/ch;
+ return this.getClientWidth()/ch;
 };
 /**
  * Creates a frame buffer object associated with this scene.
@@ -347,7 +367,7 @@ if(this._renderedOutsideScene){
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4perspective}. This compatibility behavior may be dropped in the future.
  * @param {Number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
@@ -379,7 +399,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4orthoAspect}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -430,7 +450,7 @@ Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4frustum}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {Number} right X-coordinate of the point where the right
@@ -455,7 +475,7 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 3D view.
  * @param {Number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
@@ -477,7 +497,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho2d}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 2D view.
  * @param {Number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
@@ -862,10 +882,13 @@ Scene3D.prototype.render=function(renderPasses){
     this._subScene.render();
   } else {
     this._renderedOutsideScene=true;
+    var width=this.getClientWidth();
+    var height=this.getClientHeight();
     for(var i=0;i<renderPasses.length;i++){
       var pass=renderPasses[i];
       if(pass.frameBuffer)pass.frameBuffer.bind();
       this._clearForPass(pass);
+      renderPasses[i].subScene.resize(width,height);
       renderPasses[i].subScene.render();
       if(pass.frameBuffer)pass.frameBuffer.unbind();
     }

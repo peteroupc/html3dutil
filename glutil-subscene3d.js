@@ -30,8 +30,8 @@ Subscene3D._PerspectiveView=function(scene,fov,near,far){
 /**
  * Not documented yet.
  */
-this.update=function(){
-  var aspect=this.scene.parent.getClientAspect();
+this.update=function(width,height){
+  var aspect=width*1.0/height;
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
@@ -53,8 +53,8 @@ Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
 /**
  * Not documented yet.
  */
-this.update=function(){
-  var aspect=this.scene.parent.getClientAspect();
+this.update=function(width, height){
+  var aspect=width*1.0/height;
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
@@ -223,12 +223,6 @@ Subscene3D.prototype._getFrustum=function(){
 Subscene3D.prototype.getLights=function(){
  return this.lights;
 };
-/**
- * Not documented yet.
- */
-Subscene3D.prototype.getClientAspect=function(){
- return this.parent.getClientAspect();
-};
 
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
@@ -296,9 +290,11 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
     if(shape.material instanceof Material){
      prog=shape.material.shader ?
        shape.material.shader :
-       this.parent._programs.getProgram(Scene3D._materialToFlags(shape.material));
+       renderContext.scene._programs.getProgram(Scene3D._materialToFlags(shape.material),
+         renderContext.context);
     } else {
-     prog=this.parent._programs.getProgram(0);
+     prog=renderContext.scene._programs.getProgram(0,
+       renderContext.context);
     }
     var projAndView=false;
     if(renderContext.prog!=prog){
@@ -313,27 +309,27 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       shape.getMatrix(),
       projAndView);
     Subscene3D._getMaterialBinder(shape.material).bind(prog,
-      this.parent._textureLoader);
-    this.parent._meshLoader.draw(shape.bufferedMesh,prog);
+      renderContext.context,
+      renderContext.scene._textureLoader);
+    renderContext.scene._meshLoader.draw(shape.bufferedMesh,prog);
   }
  }
 };
-/**
- * Not documented yet.
- * @deprecated
- * @param {glutil.Mesh} mesh
- */
-Subscene3D.prototype.makeShape=function(mesh){
- return new Shape(mesh)
+
+/** @private */
+Subscene3D.prototype.resize=function(width, height) {
+ if(this._projectionUpdater){
+   this._projectionUpdater.update(width, height);
+ }
 }
+
 /**
  * Not documented yet.
  */
 Subscene3D.prototype.render=function(){
   var rc={};
-  if(this._projectionUpdater){
-   this._projectionUpdater.update();
-  }
+  rc.scene=this.parent;
+  rc.context=this.parent.getContext();
   for(var i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],rc);
   }
@@ -357,7 +353,7 @@ Subscene3D.forFilter=function(scene,fbo,shader){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      Mesh.TEXCOORDS_BIT);
-  var shape=ret.makeShape(mesh)
+  var shape=new Shape(mesh)
   shape.setTexture(fbo);
   shape.setShader(shader);
   ret.addShape(shape);

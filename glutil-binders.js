@@ -98,11 +98,10 @@ if(this.loadedTexture){
 /////////////////////////////////
 
 /** @private */
-GLUtil._MaterialBinder.bindTexture=function(texture,program,textureUnit,loader){
+GLUtil._MaterialBinder.bindTexture=function(texture,context,program,textureUnit,loader){
  "use strict";
  if(!texture)return;
  var isFrameBuffer=(texture instanceof FrameBuffer)
- var context=program.getContext();
  var loadedTexture=null;
  if(!isFrameBuffer){
  if((typeof texture.image==="undefined" || texture.image===null)  &&

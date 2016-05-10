@@ -230,10 +230,10 @@ MeshJSON._Model=function(mesh){
  "use strict";
 this.meshes=[mesh];
  this.materials=[null];
- this.toShape=function(scene){
+ this.toShape=function(){
   var group=new ShapeGroup();
   for(var i=0;i<this.meshes.length;i++){
-   var shape=scene.makeShape(this.meshes[i]);
+   var shape=new Shape(this.meshes[i]);
    if(this.materials[i])shape.setMaterial(this.materials[i]);
    group.addShape(shape);
   }

@@ -1,5 +1,5 @@
 /*
-Written by Peter O. in 2015.
+Written by Peter O. in 2016.
 
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/

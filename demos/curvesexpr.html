@@ -213,7 +213,7 @@ function link0(){
   scene.setClearColor("white")
   scene.cullFace(Scene3D.FRONT)
   var sub=new Subscene3D(scene)
-  var camera=new Camera(sub,45,1,100);
+  var camera=new Camera(sub,45,1,100, scene.getCanvas());
   camera.setDistance(5);
   var pc=new PrimitiveCounter(sub)
   link0();

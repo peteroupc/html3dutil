@@ -31,9 +31,9 @@ var BufferedSubMesh=function(mesh, context){
  context.bufferData(context.ELEMENT_ARRAY_BUFFER,
     smb.indices, context.STATIC_DRAW);
  var type=context.UNSIGNED_SHORT;
- if(smb.indexBufferSize==4){
+ if(smb.indexBufferSize === 4){
   type=context.UNSIGNED_INT;
- } else if(smb.indexBufferSize==1){
+ } else if(smb.indexBufferSize === 1){
   type=context.UNSIGNED_BYTE;
  }
   this.type=type;
@@ -51,6 +51,9 @@ BufferedSubMesh.prototype._getVaoExtension=function(context){
 }
 /**
 * A geometric mesh in the form of buffer objects.
+* @deprecated This class is likely
+* to become a private class. Use the MeshBuffer class instead, which
+* is not coupled to WebGL contexts.
 * @class
 * @alias glutil.BufferedMesh
 * @param {glutil.Mesh} mesh A geometric mesh object.
@@ -89,6 +92,7 @@ return this._bounds;
 };
 /**
  * Returns the WebGL context associated with this object.
+ * @deprecated
  * @returns {WebGLRenderingContext} Return value. */
 BufferedMesh.prototype.getContext=function(){
  "use strict";
@@ -223,8 +227,8 @@ BufferedSubMesh.prototype.draw=function(program){
   }
 };
 /**
- * Not documented yet.
- */
+ * Gets the number of vertices composed by all shapes in this mesh.
+* @returns {Number} Return value.*/
 BufferedMesh.prototype.vertexCount=function(){
  "use strict";
 var ret=0;
@@ -259,14 +263,13 @@ BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
   for(var i=0;i<this.meshes.length;i++){
    var m=this.meshes[i];
    if(m[0]==meshBuffer && m[1]==context){
-    m[2].draw(prog)
+    m[2].draw(prog);
     return;
    }
   }
- // TODO: Investigate why flickering occurs when buffered meshes
- // are loaded this way
   var bm=new BufferedMesh(meshBuffer,prog);
   this.meshes.push([meshBuffer,context,bm]);
+  bm.draw(prog);
  }
 }
 /** @private */

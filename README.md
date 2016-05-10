@@ -107,12 +107,6 @@ of different sizes.
 
 * [demos/textwith3D.html](https://peteroupc.github.io/html3dutil/demos/textwith3d.html) - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.
 
-### Alternative Rendering
-
-* [demos/surfaces2d.html](https://peteroupc.github.io/html3dutil/demos/surfaces2d.html) - Same as the surfaces.html
-demo, but uses an experimental renderer using the HTML 2D Canvas instead of an HTML 3D context.  Only a limited
-set of features are currently supported.
-
 ### Miscellaneous
 
 * [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
