@@ -257,6 +257,7 @@ BufferedMesh._MeshLoader=function(){
 /** @private */
 BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
  if(meshBuffer instanceof BufferedMesh){
+  // NOTE: Using BufferedMesh objects directly in Shapes is deprecated
   meshBuffer.draw(prog);
  } else {
   var context=prog.getContext();

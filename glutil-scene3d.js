@@ -908,3 +908,13 @@ Scene3D.prototype.useFilter=function(filterProgram){
     "create a subscene for rendering filter effects from a frame buffer.");
   return this;
 };
+
+/** @private */
+Scene3D.supportsDerivatives=function(context){
+ context= (context.getContext) ? context.getContext() : context;
+ if(context.getExtension("OES_standard_derivatives")){
+   return true;
+ } else {
+   return false;
+ }
+}

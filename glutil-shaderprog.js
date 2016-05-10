@@ -24,57 +24,68 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * log is output to the JavaScript console.
 * @class
 * @alias glutil.ShaderProgram
-* @param {WebGLRenderingContext|object} context A WebGL context associated with the
-* compiled shader program, or an object, such as Scene3D, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context.
 * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
 * ES Shading Language (GLSL).  If null, a default
 * vertex shader is used instead.
 * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
 */
-function ShaderProgram(context, vertexShader, fragmentShader){
+function ShaderInfo(vertexShader, fragmentShader){
  "use strict";
-context= (context.getContext) ? context.getContext() : context;
  if((vertexShader===null || typeof vertexShader==="undefined")){
-  vertexShader=ShaderProgram.getDefaultVertex();
+  vertexShader=ShaderInfo.getDefaultVertex();
  }
  if((fragmentShader===null || typeof fragmentShader==="undefined")){
-  fragmentShader=ShaderProgram.getDefaultFragment();
+  fragmentShader=ShaderInfo.getDefaultFragment();
  }
- var prog=ShaderProgram._compileShaders(context,vertexShader,fragmentShader);
- this.program=prog;
- this.attributes={};
- this.context=context;
- this.actives={};
+ this.vertexShader=vertexShader;
+ this.fragmentShader=fragmentShader;
  this.uniformValues={};
+}
+
+function ShaderProgram(context, vertexShader,fragmentShader) {
+ this._init(context,new ShaderInfo(vertexShader,fragmentShader));
+}
+ShaderProgram._fromShader=function(context,shader){
+ var ret=new ShaderProgram(null);
+ ret._init(context,shader);
+ return ret;
+}
+ShaderProgram.prototype._init=function(context, shaderInfo) {
+ if(!context)return;
+ context=(context.getContext) ? context.getContext() : context;
+ this.shaderInfo=shaderInfo.copy();
+ this.context=context;
+ this.prog=ShaderProgram._compileShaders(context,
+   shaderInfo.vertexShader,
+   shaderInfo.fragmentShader);
+ this.actives={}
+ this.attributes=[];
  this.uniformTypes={};
  this.savedUniforms={};
- this.CURRENT_PROGRAM=context.CURRENT_PROGRAM;
- this.FLOAT=context.FLOAT;
- if((prog!==null && typeof prog!=="undefined")){
-  this.attributes=[];
+ this.CURRENT_PROGRAM=35725;
+ this.FLOAT=5126;
+ if((this.prog!==null && typeof this.prog!=="undefined")){
   var name=null;
   var ret={};
-  var count= context.getProgramParameter(prog, context.ACTIVE_ATTRIBUTES);
+  var count= context.getProgramParameter(this.prog, context.ACTIVE_ATTRIBUTES);
   for (var i = 0; i < count; ++i) {
-   var attributeInfo=context.getActiveAttrib(prog, i);
+   var attributeInfo=context.getActiveAttrib(this.prog, i);
    if((attributeInfo!==null && typeof attributeInfo!=="undefined")){
     name=attributeInfo.name;
-    var attr=context.getAttribLocation(prog, name);
+    var attr=context.getAttribLocation(this.prog, name);
     if(attr>=0){
      this.attributes.push(attr);
      ret[name]=attr;
     }
    }
   }
-  count = context.getProgramParameter(prog, context.ACTIVE_UNIFORMS);
+  count = context.getProgramParameter(this.prog, context.ACTIVE_UNIFORMS);
   for (i = 0; i < count; ++i) {
-   var uniformInfo=this.context.getActiveUniform(prog, i);
+   var uniformInfo=this.context.getActiveUniform(this.prog, i);
    if((uniformInfo!==null && typeof uniformInfo!=="undefined")){
     name = uniformInfo.name;
-    ret[name] = this.context.getUniformLocation(prog, name);
+    ret[name] = this.context.getUniformLocation(this.prog, name);
     this.uniformTypes[name] = uniformInfo.type;
    }
   }
@@ -82,14 +93,10 @@ context= (context.getContext) ? context.getContext() : context;
  }
 }
 
-/** @private */
-ShaderProgram.supportsDerivatives=function(context){
- context= (context.getContext) ? context.getContext() : context;
- if(context.getExtension("OES_standard_derivatives")){
-   return true;
- } else {
-   return false;
- }
+ShaderInfo.prototype.copy=function(){
+ var sp=new ShaderInfo(this.vertexShader,this.fragmentShader);
+ sp.setUniforms(this.uniformValues);
+ return sp;
 }
 
 /** Disposes resources from this shader program.
@@ -105,9 +112,98 @@ if(this.program){
  this.attributes={};
  this.uniformTypes={};
 };
+
+ShaderProgram.prototype.getContext=function(){
+ return this.context;
+}
+ShaderProgram.prototype._setUniform=function(uniforms,i){
+  "use strict";
+      var uniform=this.get(i);
+      if((uniform===null || typeof uniform==="undefined"))return;
+      var uv=uniforms[i];
+      if(typeof uv==="number"){
+         if(this.uniformTypes[i]===this.FLOAT){
+         this.context.uniform1f(uniform, uv);
+        } else {
+         this.context.uniform1i(uniform, uv);
+       }
+      }
+      else if(uv.length===3){
+        this.context.uniform3fv(uniform, uv);
+      } else if(uv.length===2){
+        this.context.uniform2fv(uniform, uv);
+      } else if(uv.length===4){
+        this.context.uniform4fv(uniform, uv);
+      } else if(uv.length===16){
+        this.context.uniformMatrix4fv(uniform,false,uv);
+      } else if(uv.length===9){
+        this.context.uniformMatrix3fv(uniform,false,uv);
+      }
+};
+
+/** @private */
+ShaderInfo.prototype._setUniform=function(uniforms,i,changedUniforms){
+  "use strict";
+isCurrentProgram=null;
+      var v=uniforms[i];
+      var uv=this.uniformValues[i];
+      if(typeof v==="number"){
+       var newUv=false;
+       if((uv===null || typeof uv==="undefined")){
+        this.uniformValues[i]=uv=v;
+        newUv=true;
+       } else if(uv!==v){
+        uv=v;
+        this.uniformValues[i]=v;
+        newUv=true;
+       }
+       if(newUv){
+        if(changedUniforms)changedUniforms[i]=uv;
+       }
+      } else if(v.length===3){
+       if(!uv){
+        this.uniformValues[i]=uv=v.slice(0,v.length);
+        if(changedUniforms)changedUniforms[i]=v.slice(0,v.length);
+       } else if(uv[0]!==v[0] || uv[1]!==v[1] || uv[2]!==v[2]){
+        uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2];
+        if(changedUniforms)changedUniforms[i]=uv.slice(0,uv.length);
+       }
+      } else if(v.length===2){
+       if(!uv){
+        this.uniformValues[i]=uv=v.slice(0,v.length);
+        if(changedUniforms)changedUniforms[i]=v.slice(0,v.length);
+       } else if(uv[0]!==v[0] || uv[1]!==v[1]){
+        uv[0]=v[0]; uv[1]=v[1];
+        if(changedUniforms)changedUniforms[i]=uv.slice(0,uv.length);
+       }
+      } else if(v.length===4){
+       if(!uv){
+        this.uniformValues[i]=uv=v.slice(0,v.length);
+        if(changedUniforms)changedUniforms[i]=v.slice(0,v.length);
+       } else if(uv[0]!==v[0] || uv[1]!==v[1] || uv[2]!==v[2] || uv[3]!==v[3]){
+        uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2]; uv[3]=v[3];
+        if(changedUniforms)changedUniforms[i]=uv.slice(0,uv.length);
+       }
+      } else if(v.length===16){
+       if(!uv){
+        this.uniformValues[i]=uv=v.slice(0,v.length);
+        if(changedUniforms)changedUniforms[i]=v.slice(0,v.length);
+       } else if(ShaderInfo._copyIfDifferent(v,uv,16)){
+        if(changedUniforms)changedUniforms[i]=uv.slice(0,uv.length);
+       }
+      } else if(v.length===9){
+       if(!uv){
+        this.uniformValues[i]=uv=v.slice(0,v.length);
+        if(changedUniforms)changedUniforms[i]=v.slice(0,v.length);
+       } else if(ShaderInfo._copyIfDifferent(v,uv,9)){
+        if(changedUniforms)changedUniforms[i]=uv.slice(0,uv.length);
+       }
+      }
+};
+
 /** Gets the WebGL context associated with this shader program.
 * @returns {WebGLRenderingContext} Return value.*/
-ShaderProgram.prototype.getContext=function(){
+ShaderInfo.prototype.getContext=function(){
  "use strict";
 return this.context;
 };
@@ -115,7 +211,7 @@ return this.context;
 * Gets the location of the given uniform or attribute's name in this program.
 * (Although the location may change each time the shader program
 * is linked, that normally only happens upon construction
-* in the case of ShaderProgram.)
+* in the case of ShaderInfo.)
 * @param {String} name The name of an attribute or uniform defined in either the
 * vertex or fragment shader of this shader program.  If the uniform or attribute
 * is an array, each element in the array is named as in these examples:
@@ -148,184 +244,71 @@ var loc=(typeof name==="string") ? this.get(name) : name;
  if(loc===null || typeof loc==="number")return null;
  // using a cache since context.getUniform can be slow with
  // repeated calls
- var uv=this.uniformValues[name];
+ var uv=this.shaderInfo.uniformValues[name];
  if((uv===null || typeof uv==="undefined")){
   return this.context.getUniform(this.program,loc);
  } else {
   return (uv instanceof Array) ? uv.slice(0,uv.length) : uv;
  }
 };
-/**
-* Makes this program the active program for the WebGL context.
-* This method also sets uniforms that couldn't be applied by the
-* setUniforms() method because the context used a different
-* program.<p>
-* Changing the context's active program doesn't reset the uniform
-* variables associated with the previous program.
-* @returns {glutil.ShaderProgram} This object.
-*/
-ShaderProgram.prototype.use=function(){
- "use strict";
-this.context.useProgram(this.program);
- this.setUniforms(this.savedUniforms);
- this.savedUniforms={};
- return this;
-};
-/** @private */
-ShaderProgram.prototype._log=function(i,v){
- //console.log("setting "+i+": "+v);
-};
-/** @private */
-ShaderProgram.prototype._saveIfNotCurrent=function(v,i,isCurrentProgram){
-     "use strict";
-this._log(i,v);
-     if((isCurrentProgram===null || typeof isCurrentProgram==="undefined")){
-       isCurrentProgram=this.context.getParameter(
-         this.CURRENT_PROGRAM)===this.program;
-      }
-      if(!isCurrentProgram){
-       // Save this uniform to write later
-       this.savedUniforms[i]=(typeof v==="number") ? v : v.slice(0,v.length);
-       this.uniformValues[i]=null;
-      }
-      return isCurrentProgram;
-};
-/** @private */
-ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
-  "use strict";
-isCurrentProgram=null;
-      var v=uniforms[i];
-      var uniform=this.get(i);
-      if((uniform===null || typeof uniform==="undefined"))return isCurrentProgram;
-      var uv=this.uniformValues[i];
-      if(typeof v==="number"){
-       var newUv=false;
-       if((uv===null || typeof uv==="undefined")){
-        this.uniformValues[i]=uv=v;
-        newUv=true;
-       } else if(uv!==v){
-        uv=v;
-        this.uniformValues[i]=v;
-        newUv=true;
-       }
-       if(newUv){
-         if(this.uniformTypes[i]===this.FLOAT){
-          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-           return isCurrentProgram;
-         this.context.uniform1f(uniform, uv);
-        } else {
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-         this.context.uniform1i(uniform, uv);
-        }
-       }
-      }
-      else if(v.length===3){
-       if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length);
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniform3fv(uniform, uv);
-       } else if(uv[0]!==v[0] || uv[1]!==v[1] || uv[2]!==v[2]){
-        uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2];
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniform3fv(uniform, uv);
-       }
-      } else if(v.length===2){
-       if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length);
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniform2fv(uniform, uv);
-       } else if(uv[0]!==v[0] || uv[1]!==v[1]){
-        uv[0]=v[0]; uv[1]=v[1];
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniform2fv(uniform, uv);
-       }
-      } else if(v.length===4){
-       if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length);
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniform4fv(uniform, uv);
-       } else if(uv[0]!==v[0] || uv[1]!==v[1] || uv[2]!==v[2] || uv[3]!==v[3]){
-        uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2]; uv[3]=v[3];
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniform4fv(uniform, uv);
-       }
-      } else if(v.length===16){
-       if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length);
-        if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniformMatrix4fv(uniform,false,uv);
-       } else if(ShaderProgram._copyIfDifferent(v,uv,16)){
-          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniformMatrix4fv(uniform,false,uv);
-       }
-      } else if(v.length===9){
-       if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length);
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniformMatrix3fv(uniform,false,uv);
-       } else if(ShaderProgram._copyIfDifferent(v,uv,9)){
-         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
-          return isCurrentProgram;
-        this.context.uniformMatrix3fv(uniform,false,uv);
-       }
-      }
-      return isCurrentProgram;
-};
-/**
-* Sets uniform variables for this program.  Uniform variables
-* are called uniform because they uniformly apply to all vertices
-* in a primitive, and are not different per vertex.<p>
-* This method may be called at any time, even if this program is not currently the
-* active program in the WebGL context.  In that case, this method will instead
-* save the uniforms to write them later the next time this program
-* becomes the currently active program (via the use() method).<p>
-* Once the uniform is written to the program, it will be retained even
-* after a different program becomes the active program. (It will only
-* be reset if this program is re-linked, which won't normally happen
-* in the case of the ShaderProgram class.)
-* @param {Object} uniforms A hash of key/value pairs.  Each key is
-* the name of a uniform (see {@link glutil.ShaderProgram#get}
-* for more information), and each
-* value is the value to set
-* to that uniform.  Uniform values that are 3- or 4-element
-* vectors must be 3 or 4 elements long, respectively.  Uniforms
-* that are 4x4 matrices must be 16 elements long.   Uniforms
-* that are 3x3 matrices must be 9 elements long. Keys to
-* uniforms that don't exist in this program are ignored.  See also
-* the "name" parameter of the {@link glutil.ShaderProgram#get}
-* method for more information on
-* uniform names.
-* @returns {glutil.ShaderProgram} This object.
-*/
-ShaderProgram.prototype.setUniforms=function(uniforms){
+
+ShaderInfo.prototype.setUniforms=function(uniforms, changedUniforms){
   "use strict";
   var i;
-var isCurrentProgram=null;
   if(typeof Object.keys!=="undefined"){
     var keys=Object.keys(uniforms);
     for(var ki=0;ki<keys.length;ki++){
      i=keys[ki];
-     isCurrentProgram=this._setUniform(uniforms,i,isCurrentProgram);
+     this._setUniform(uniforms,i,changedUniforms);
     }
   } else {
     for(i in uniforms){
-     isCurrentProgram=this._setUniform(uniforms,i,isCurrentProgram);
+     this._setUniform(uniforms,i,changedUniforms);
     }
   }
   return this;
 };
+ShaderProgram.prototype._setSavedUniforms=function(){
+  var i;
+  var uniformsLength=0;
+  if(typeof Object.keys!=="undefined"){
+     var keys=Object.keys(this.savedUniforms);
+    uniformsLength=keys.length;
+    for(var ki=0;ki<uniformsLength;ki++){
+      i=keys[ki];
+      this._setUniform(this.savedUniforms,i);
+    }
+  } else {
+    for(i in this.savedUniforms){
+     this._setUniform(this.savedUniforms,i);
+     uniformsLength++;
+    }
+  }
+  return uniformsLength;
+}
+ShaderProgram.prototype.use=function(){
+  "use strict";
+  this.context.useProgram(this.prog);
+  if(this._setSavedUniforms()>0){
+   this.savedUniforms={};
+  }
+  return this;
+};
+ShaderProgram.prototype.setUniforms=function(uniforms){
+  "use strict";
+  var i;
+  this.shaderInfo.setUniforms(uniforms,this.savedUniforms);
+  if(this.context.getParameter(
+         this.CURRENT_PROGRAM)===this.prog) {
+   if(this._setSavedUniforms()>0){
+    this.savedUniforms={};
+   }
+  }
+  return this;
+};
+
 /** @private */
-ShaderProgram._copyIfDifferent=function(src,dst,len){
+ShaderInfo._copyIfDifferent=function(src,dst,len){
  "use strict";
 for(var i=0;i<len;i++){
   if(src[i]!==dst[i]){
@@ -339,6 +322,7 @@ for(var i=0;i<len;i++){
  }
  return false;
 };
+
 /** @private */
 ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
   "use strict";

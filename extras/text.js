@@ -713,9 +713,8 @@ TextFont.load=function(fontFileName){
 TextRenderer._textShader=function(scene){
 "use strict";
 var i;
-
 var shader=""
-var derivs=ShaderProgram.supportsDerivatives(scene);
+var derivs=Scene3D.supportsDerivatives(scene);
 if(derivs){
  shader+="#extension GL_OES_standard_derivatives : enable\n"
 }
@@ -731,6 +730,30 @@ shader+=" float dsmooth=length(vec2(dFdx(d),dFdy(d)))*0.75;\n";
 } else {
 shader+=" float dsmooth=0.06;\n";
 }
+shader+=" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\n" +
+"}";
+return shader;
+};
+TextRenderer._textShader=function(scene){
+"use strict";
+var i;
+var shader=""
+var derivs=Scene3D.supportsDerivatives(scene);
+shader+="#ifdef GL_OES_standard_derivatives\n"
+shader+="#extension GL_OES_standard_derivatives : enable\n"
+shader+="#endif\n"
+shader+=ShaderProgram.fragmentShaderHeader() +
+"uniform vec4 md;\n" +
+"uniform sampler2D sampler;\n" +
+"varying vec2 uvVar;\n"+
+"varying vec3 colorAttrVar;\n" +
+"void main(){\n" +
+" float d=texture2D(sampler, uvVar).a;\n"
+shader+="#ifdef GL_OES_standard_derivatives\n"
+shader+=" float dsmooth=length(vec2(dFdx(d),dFdy(d)))*0.75;\n";
+shader+="#else\n"
+shader+=" float dsmooth=0.06;\n";
+shader+="#endif\n"
 shader+=" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\n" +
 "}";
 return shader;
