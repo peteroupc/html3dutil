@@ -90,6 +90,25 @@ Scene3D._materialToFlags=function(material){
 /** @private */
 Scene3D.ProgramCache=function(){
  this._programs=[];
+ this._customPrograms=[]
+}
+/** @private */
+Scene3D.ProgramCache.prototype.getCustomProgram=function(info, context){
+ if(!context)throw new Error();
+ if(info instanceof ShaderProgram){
+  // NOTE: Using ShaderProgram objects in materials is deprecated
+  return info;
+ }
+ for(var i=0;i<this._customPrograms.length;i++){
+  var p=this._customPrograms[i];
+  if(p[0]==info && p[1]==context){
+   p[2]._update();
+   return p[2];
+  }
+ }
+ var prog=ShaderProgram._fromShaderInfo(context,info);
+ this._customPrograms.push([info,context,prog]);
+ return prog;
 }
 /** @private */
 Scene3D.ProgramCache.prototype.getProgram=function(flags, context){

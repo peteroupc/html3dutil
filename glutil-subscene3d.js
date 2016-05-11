@@ -178,8 +178,8 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  return this;
 };
 /**
- * Not documented yet.
- * @param {*} mat
+ * Sets the current view matrix for this scene.
+ * @param {Array<Number>} mat
  * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
@@ -282,7 +282,8 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
     var flags=0;
     if(shape.material instanceof Material){
      prog=shape.material.shader ?
-       shape.material.shader :
+       renderContext.scene._programs.getCustomProgram(
+         shape.material.shader, renderContext.context) :
        renderContext.scene._programs.getProgram(Scene3D._materialToFlags(shape.material),
          renderContext.context);
     } else {

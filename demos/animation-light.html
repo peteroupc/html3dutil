@@ -39,7 +39,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // load the floor texture
   loader.loadAndMapTexturesAll([
     "461223191.jpg"
-  ],sub).then(function(textures){
+  ],scene).then(function(textures){
    // create a stack of washers, each with different sizes
    for(var i=0;i<shapecolors.length;i++){
     var s=new Shape(createWasher(0.5,shapesizes[i],0.1,32)).setColor(shapecolors[i])

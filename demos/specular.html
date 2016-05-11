@@ -38,7 +38,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   loader.loadAndMapTexturesAll([
    "461223191.jpg",
    "specular.png"
-   ],sub).then(function(tex){
+   ],scene).then(function(tex){
    var mesh=Meshes.createBox(10,20,20);
    var shape=new Shape(mesh).setMaterialParams({
      "diffuse":"white",

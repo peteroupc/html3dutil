@@ -37,7 +37,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   var loader=new TextureLoader();
   loader.loadAndMapTexturesAll([
    "461223191.jpg"
-   ],sub).then(function(tex){
+   ],scene).then(function(tex){
    var mesh=Meshes.createBox(10,20,20);
    var shape=new Shape(mesh).setTexture(tex[0])
    sub.addShape(shape);

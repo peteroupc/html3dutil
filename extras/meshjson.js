@@ -253,9 +253,8 @@ this.meshes=[mesh];
 * in the Public Domain HTML 3D Library.
 * @returns {Promise} A promise that, when resolved, exposes an object
 * that implements the following property:
-* <ul><li><code>toShape(scene)</code> - Gets a {@link glutil.ShapeGroup}
-* describing the 3D mesh.  <code>scene</code> is a {@link glutil.Scene3D}
-* object that the shape group belongs to.
+* <ul><li><code>toShape()</code> - Gets a {@link glutil.ShapeGroup}
+* describing the 3D mesh.
 * </ul>
 */
 MeshJSON.loadJSON=function(url){

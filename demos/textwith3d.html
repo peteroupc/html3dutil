@@ -45,7 +45,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    new RenderPass3D(textSub,{"clearColor":false})
   ]
   var timer={}
-  var textrnd=new TextRenderer(textSub);
+  var textrnd=new TextRenderer(scene);
   GLUtil.getPromiseResultsAll([
    textrnd.loadFont("black-chancery.fnt"),
    textrnd.loadFont("aileron-bold-red.fnt")
