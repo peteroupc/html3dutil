@@ -42,12 +42,18 @@ function ShaderInfo(vertexShader, fragmentShader){
  this.fragmentShader=fragmentShader;
  this.uniformValues={};
 }
+/**
+ * Not documented yet.
+ */
 ShaderInfo.prototype.copy=function(){
  var sp=new ShaderInfo(this.vertexShader,this.fragmentShader);
  sp.setUniforms(this.uniformValues);
  return sp;
 }
-
+/**
+ * Not documented yet.
+ * @param {*} uniforms
+ */
 ShaderInfo.prototype.setUniforms=function(uniforms){
  ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,null);
  return this;
@@ -111,7 +117,8 @@ isCurrentProgram=null;
        }
       }
 };
-ShaderInfo._setUniformsInternal=function(uniforms, outputUniforms, changedUniforms){
+/** @private */
+ShaderInfo._setUniformsInternal=function(uniforms,outputUniforms,changedUniforms){
   "use strict";
   var i;
   if(typeof Object.keys!=="undefined"){
@@ -130,12 +137,14 @@ ShaderInfo._setUniformsInternal=function(uniforms, outputUniforms, changedUnifor
 function ShaderProgram(context, vertexShader,fragmentShader) {
  this._init(context,new ShaderInfo(vertexShader,fragmentShader));
 }
+/** @private */
 ShaderProgram._fromShaderInfo=function(context,shader){
  var ret=new ShaderProgram(null);
  ret._init(context,shader);
  return ret;
 }
-ShaderProgram.prototype._init=function(context, shaderInfo) {
+/** @private */
+ShaderProgram.prototype._init=function(context,shaderInfo) {
  if(!context)return;
  context=(context.getContext) ? context.getContext() : context;
  this.shaderInfo=shaderInfo;
@@ -193,10 +202,13 @@ if(this.program){
  this.attributes={};
  this.uniformTypes={};
 };
-
+/**
+ * Not documented yet.
+ */
 ShaderProgram.prototype.getContext=function(){
  return this.context;
 }
+/** @private */
 ShaderProgram.prototype._setUniformInternal=function(uniforms,i){
   "use strict";
       var uniform=this.get(i);
@@ -266,7 +278,7 @@ var loc=(typeof name==="string") ? this.get(name) : name;
   return (uv instanceof Array) ? uv.slice(0,uv.length) : uv;
  }
 };
-
+/** @private */
 ShaderProgram.prototype._setSavedUniforms=function(){
   var i;
   var uniformsLength=0;
@@ -285,6 +297,9 @@ ShaderProgram.prototype._setSavedUniforms=function(){
   }
   return uniformsLength;
 }
+/**
+ * Not documented yet.
+ */
 ShaderProgram.prototype.use=function(){
   "use strict";
   this.context.useProgram(this.prog);
@@ -293,11 +308,16 @@ ShaderProgram.prototype.use=function(){
   }
   return this;
 };
+/** @private */
 ShaderProgram.prototype._update=function(){
   ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
    this.uniformValues,this.savedUniforms);
   return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} uniforms
+ */
 ShaderProgram.prototype.setUniforms=function(uniforms){
   "use strict";
   var i;

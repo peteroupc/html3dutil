@@ -303,6 +303,7 @@ var GLUtil={
    var xhr=new XMLHttpRequest();
    xhr.onreadystatechange=function(e){
     var t=e.target;
+    //console.log([t.readyState,t.status,urlstr])
     if(t.readyState===4){
      if(t.status>=200 && t.status<300){
       var resp="";
@@ -319,6 +320,7 @@ var GLUtil={
     }
    };
    xhr.onerror=function(e){
+    //console.log([urlstr,e])
     reject({"url": urlstr, "error": e});
    };
    xhr.open("get", url, true);

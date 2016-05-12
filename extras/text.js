@@ -47,7 +47,7 @@ if(!GLUtil){ GLUtil={}; }
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
 * @alias TextRenderer
-* @param {glutil.Scene3D|glutil.Subscene3D} scene 3D scene to load font textures with.
+* @param {glutil.Scene3D} scene 3D scene to load font textures with.
 */
 function TextRenderer(scene){
  this.scene=scene;
@@ -711,7 +711,7 @@ TextFont.load=function(fontFileName){
    })
  }
 }
-
+/** @private */
 TextRenderer._textShader=function(){
 "use strict";
 var i;

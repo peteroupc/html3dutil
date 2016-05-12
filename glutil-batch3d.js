@@ -8,10 +8,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /**
 * @class
-* @alias glutil.Subscene3D
+* @alias glutil.Batch3D
 * @param {Scene3D} scene
 */
-function Subscene3D(){
+function Batch3D(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this.lights=new Lights();
@@ -20,7 +20,7 @@ function Subscene3D(){
  this.shapes=[];
 }
 /** @private */
-Subscene3D._PerspectiveView=function(scene,fov,near,far){
+Batch3D._PerspectiveView=function(scene,fov,near,far){
  this.fov=fov;
  this.near=near;
  this.far=far;
@@ -40,7 +40,7 @@ this.update=function(width,height){
  this.update();
 }
 /** @private */
-Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
+Batch3D._OrthoView=function(scene,a,b,c,d,e,f){
  this.a=a;
  this.b=b;
  this.c=c;
@@ -64,7 +64,7 @@ this.update=function(width, height){
 }
 
 /** @private */
-Subscene3D._setupMatrices=function(
+Batch3D._setupMatrices=function(
   program,
   projMatrix,
   viewMatrix,
@@ -111,7 +111,7 @@ Subscene3D._setupMatrices=function(
   program.setUniforms(uniforms);
 };
 /** @private */
-Subscene3D._isSameMatrix=function(a,b){
+Batch3D._isSameMatrix=function(a,b){
  return (a[0]==b[0] && a[1]==b[1] && a[2]==b[2] &&
    a[3]==b[3] && a[4]==b[4] && a[5]==b[5] &&
    a[6]==b[6] && a[7]==b[7] && a[8]==b[8] &&
@@ -123,8 +123,8 @@ Subscene3D._isSameMatrix=function(a,b){
  * Not documented yet.
  * @param {*} mat
  */
-Subscene3D.prototype.setProjectionMatrix=function(mat){
- if(!Subscene3D._isSameMatrix(this._projectionMatrix,mat)){
+Batch3D.prototype.setProjectionMatrix=function(mat){
+ if(!Batch3D._isSameMatrix(this._projectionMatrix,mat)){
   this._projectionMatrix=mat.slice(0,16)
   this._frustum=null
  }
@@ -135,10 +135,10 @@ Subscene3D.prototype.setProjectionMatrix=function(mat){
  * @param {*} fov
  * @param {*} near
  * @param {*} far
- * @returns {glutil.Subscene3D} This object.
+ * @returns {glutil.Batch3D} This object.
  */
-Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
- this._projectionUpdater=new Subscene3D._PerspectiveView(this,fov,near,far);
+Batch3D.prototype.perspectiveAspect=function(fov,near,far){
+ this._projectionUpdater=new Batch3D._PerspectiveView(this,fov,near,far);
  return this;
 };
 /**
@@ -146,9 +146,9 @@ Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
  * @param {*} eye
  * @param {*} center
  * @param {*} up
- * @returns {glutil.Subscene3D} This object.
+ * @returns {glutil.Batch3D} This object.
  */
-Subscene3D.prototype.setLookAt=function(eye,center,up){
+Batch3D.prototype.setLookAt=function(eye,center,up){
  return this.setViewMatrix(GLMath.mat4lookat(eye,center,up));
 };
 /**
@@ -159,10 +159,10 @@ Subscene3D.prototype.setLookAt=function(eye,center,up){
  * @param {*} d
  * @param {*} e
  * @param {*} f
- * @returns {glutil.Subscene3D} This object.
+ * @returns {glutil.Batch3D} This object.
  */
-Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
- this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,e,f);
+Batch3D.prototype.orthoAspect=function(a,b,c,d,e,f){
+ this._projectionUpdater=new Batch3D._OrthoView(this,a,b,c,d,e,f);
  return this;
 };
 /**
@@ -171,38 +171,38 @@ Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
  * @param {*} b
  * @param {*} c
  * @param {*} d
- * @returns {glutil.Subscene3D} This object.
+ * @returns {glutil.Batch3D} This object.
  */
-Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
- this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,-1,1);
+Batch3D.prototype.ortho2DAspect=function(a,b,c,d){
+ this._projectionUpdater=new Batch3D._OrthoView(this,a,b,c,d,-1,1);
  return this;
 };
 /**
- * Sets the current view matrix for this scene.
+ * Sets the current view matrix for this batch of shapes.
  * @param {Array<Number>} mat
- * @returns {glutil.Subscene3D} This object.
+ * @returns {glutil.Batch3D} This object.
  */
-Subscene3D.prototype.setViewMatrix=function(mat){
- if(!Subscene3D._isSameMatrix(this._viewMatrix,mat)){
+Batch3D.prototype.setViewMatrix=function(mat){
+ if(!Batch3D._isSameMatrix(this._viewMatrix,mat)){
   this._viewMatrix=mat.slice(0,16)
   this._frustum=null
  }
  return this;
 };
 /**
- * Gets the current projection matrix for this scene.
+ * Gets the current projection matrix for this batch of shapes.
  * @returns {Array<Number>} Return value. */
-Subscene3D.prototype.getProjectionMatrix=function(){
+Batch3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
- * Gets the current view matrix for this scene.
+ * Gets the current view matrix for this batch of shapes.
  * @returns {Array<Number>} Return value. */
-Subscene3D.prototype.getViewMatrix=function(){
+Batch3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
 };
 /** @private */
-Subscene3D.prototype._getFrustum=function(){
+Batch3D.prototype._getFrustum=function(){
  if(this._frustum==null){
   var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
   this._frustum=GLMath.mat4toFrustumPlanes(projView);
@@ -213,18 +213,18 @@ Subscene3D.prototype._getFrustum=function(){
  * Not documented yet.
  * @returns {glutil.Lights} Return value.
  */
-Subscene3D.prototype.getLights=function(){
+Batch3D.prototype.getLights=function(){
  return this.lights;
 };
 
 /**
-* Adds a 3D shape to this scene.  Its reference, not a copy,
+* Adds a 3D shape to this batch of shapes.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
-* @returns {glutil.Subscene3D} This object.
+* @returns {glutil.Batch3D} This object.
 */
-Subscene3D.prototype.addShape=function(shape){
+Batch3D.prototype.addShape=function(shape){
  shape.parent=null;
  this.shapes.push(shape);
  return this;
@@ -232,9 +232,9 @@ Subscene3D.prototype.addShape=function(shape){
 
 /**
  * Gets the number of vertices composed by
- * all shapes in this scene.
+ * all shapes in this batch of shapes.
  * @returns {Number} Return value. */
-Subscene3D.prototype.vertexCount=function(){
+Batch3D.prototype.vertexCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
   c+=this.shapes[i].vertexCount();
@@ -243,9 +243,9 @@ Subscene3D.prototype.vertexCount=function(){
 };
 /**
 * Gets the number of primitives (triangles, lines,
-* and points) composed by all shapes in this scene.
+* and points) composed by all shapes in this batch of shapes.
  * @returns {Number} Return value. */
-Subscene3D.prototype.primitiveCount=function(){
+Batch3D.prototype.primitiveCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
   c+=this.shapes[i].primitiveCount();
@@ -254,11 +254,11 @@ Subscene3D.prototype.primitiveCount=function(){
 };
 
 /**
-* Removes all instances of a 3D shape from this scene.
+* Removes all instances of a 3D shape from this batch of shapes.
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
-* @returns {glutil.Subscene3D} This object.
+* @returns {glutil.Batch3D} This object.
 */
-Subscene3D.prototype.removeShape=function(shape){
+Batch3D.prototype.removeShape=function(shape){
  for(var i=0;i<this.shapes.length;i++){
    if(this.shapes[i]===shape){
      this.shapes.splice(i,1);
@@ -269,7 +269,7 @@ Subscene3D.prototype.removeShape=function(shape){
 };
 
 /** @private */
-Subscene3D.prototype._renderShape=function(shape, renderContext){
+Batch3D.prototype._renderShape=function(shape, renderContext){
  if(shape.constructor===ShapeGroup){
   if(!shape.visible)return;
   for(var i=0;i<shape.shapes.length;i++){
@@ -297,12 +297,12 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
      new GLUtil._LightsBinder(this.lights).bind(prog,this._viewMatrix);
      renderContext.prog=prog;
     }
-    Subscene3D._setupMatrices(prog,
+    Batch3D._setupMatrices(prog,
       this._projectionMatrix,
       this._viewMatrix,
       shape.getMatrix(),
       projAndView);
-    Subscene3D._getMaterialBinder(shape.material).bind(prog,
+    Batch3D._getMaterialBinder(shape.material).bind(prog,
       renderContext.context,
       renderContext.scene._textureLoader);
     renderContext.scene._meshLoader.draw(shape.bufferedMesh,prog);
@@ -311,7 +311,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
 };
 
 /** @private */
-Subscene3D.prototype.resize=function(width, height) {
+Batch3D.prototype.resize=function(width, height) {
  if(this._projectionUpdater){
    this._projectionUpdater.update(width, height);
  }
@@ -320,7 +320,7 @@ Subscene3D.prototype.resize=function(width, height) {
 /**
  * Not documented yet.
  */
-Subscene3D.prototype.render=function(scene){
+Batch3D.prototype.render=function(scene){
   var rc={};
   rc.scene=scene;
   rc.context=scene.getContext();
@@ -335,11 +335,11 @@ Subscene3D.prototype.render=function(scene){
  * @param {*} fbo
  * @param {*} shader
  */
-Subscene3D.forFilter=function(scene,fbo,shader){
+Batch3D.forFilter=function(scene,fbo,shader){
   if(shader==null){
     shader=ShaderProgram.makeCopyEffect(scene);
   }
-  var ret=new Subscene3D(scene);
+  var ret=new Batch3D(scene);
   var mesh=new Mesh(
      [-1,1,0,0,1,
       -1,-1,0,0,0,
@@ -354,7 +354,7 @@ Subscene3D.forFilter=function(scene,fbo,shader){
    return ret;
 }
 /** @private */
-Subscene3D._getMaterialBinder=function(material){
+Batch3D._getMaterialBinder=function(material){
  "use strict";
 if(material){
  if(material instanceof Material){

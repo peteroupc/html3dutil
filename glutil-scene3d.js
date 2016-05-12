@@ -24,7 +24,7 @@ function Scene3D(canvasOrContext){
  this._meshLoader=new BufferedMesh._MeshLoader();
  this._renderedOutsideScene=false;
  /** An array of shapes that are part of the scene.
-   @deprecated Shapes should now be managed in Subscene3D objects,
+   @deprecated Shapes should now be managed in Batch3D objects,
    rather than through this class.
    */
  this.shapes=[];
@@ -34,7 +34,7 @@ function Scene3D(canvasOrContext){
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  // NOTE: Exists for compatibility only
- this._subScene=new Subscene3D();
+ this._subScene=new Batch3D();
  this._subScene.getLights().setDefaults();
  this._programs=new Scene3D.ProgramCache();
  this.useDevicePixelRatio=false;
@@ -359,7 +359,7 @@ Scene3D.prototype.createBuffer=function(){
 };
 /**
  * Gets the current projection matrix for this scene.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value. */
 Scene3D.prototype.getProjectionMatrix=function(){
 if(this._errors)throw new Error();
@@ -370,7 +370,7 @@ return this._subScene._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value. */
 Scene3D.prototype.getViewMatrix=function(){
 if(this._errors)throw new Error();
@@ -384,7 +384,7 @@ if(this._renderedOutsideScene){
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
-* @deprecated Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4perspective}. This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4perspective}. This compatibility behavior may be dropped in the future.
  * @param {Number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
@@ -416,7 +416,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4orthoAspect}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4orthoAspect}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -446,7 +446,7 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -467,7 +467,7 @@ Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
-* @deprecated Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4frustum}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4frustum}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {Number} right X-coordinate of the point where the right
@@ -492,7 +492,7 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
-* @deprecated  Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 3D view.
  * @param {Number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
@@ -514,7 +514,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
-* @deprecated  Instead of this method, use {@link glmath.Subscene3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho2d}.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho2d}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 2D view.
  * @param {Number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
@@ -642,7 +642,7 @@ Scene3D.prototype.clearDepth=function(){
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @deprecated Use the vertexCount method of Subscene3D objects instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+ * @deprecated Use the vertexCount method of Batch3D objects instead.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Number} Return value. */
 Scene3D.prototype.vertexCount=function(){
 if(this._errors)throw new Error();
@@ -654,7 +654,7 @@ return this._subScene.vertexCount();
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
-* @deprecated  Use the primitiveCount method of Subscene3D objects instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Use the primitiveCount method of Batch3D objects instead.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
 * @returns {Number} Return value. */
 Scene3D.prototype.primitiveCount=function(){
 if(this._errors)throw new Error();
@@ -667,7 +667,7 @@ return this._subScene.primitiveCount();
  * Sets the projection matrix for this object.  The projection
  * matrix can also be set using the {@link glutil.Scene3D#setFrustum}, {@link glutil.Scene3D#setOrtho},
  * {@link glutil.Scene3D#setOrtho2D}, and {@link glutil.Scene3D#setPerspective} methods.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {glutil.Scene3D} This object.
  */
@@ -682,7 +682,7 @@ this._subScene.setProjectionMatrix(matrix);
 /**
 *  Sets this scene's view matrix. The view matrix can also
 * be set using the {@link glutil.Scene3D#setLookAt} method.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {glutil.Scene3D} This object.
 */
@@ -698,7 +698,7 @@ this._subScene.setViewMatrix(matrix);
 *  Sets this scene's view matrix to represent a camera view.
 * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
 * (<code>center</code>).
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<Number>} eye A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<Number>} [center] A 3-element vector specifying
@@ -720,9 +720,9 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
-* @deprecated Use the addShape method of individual Subscene3D instances
-* instead.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom
-* Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the addShape method of individual Batch3D instances
+* instead.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom
+* Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
 * @returns {glutil.Scene3D} This object.*/
 Scene3D.prototype.addShape=function(shape){
@@ -773,7 +773,7 @@ if(this._renderedOutsideScene){
 };
 /**
  * Sets a light source in this scene to a directional light.
-* @deprecated Use the Lights method setDirectionalLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setDirectionalLight instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -797,7 +797,7 @@ if(this._renderedOutsideScene){
 };
 /**
  * Sets parameters for a light in this scene.
-* @deprecated Use the Lights method setParams instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setParams instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -815,7 +815,7 @@ if(this._renderedOutsideScene){
 
 /**
  * Sets the color of the scene's ambient light.
-* @deprecated Use the Lights method setAmbient instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setAmbient instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
@@ -838,7 +838,7 @@ if(this._renderedOutsideScene){
 
 /**
  * Sets a light source in this scene to a point light.
- * @deprecated Use the LightSource method setPointLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+ * @deprecated Use the LightSource method setPointLight instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<Number>} position
@@ -874,12 +874,12 @@ Scene3D.prototype._clearForPass=function(pass){
  *  as {@link glutil.GLUtil.renderLoop}.<p>
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
- * @param {Array<glutil.RenderPass3D>|glutil.Subscene3D} An array of scenes
+ * @param {Array<glutil.RenderPass3D>|glutil.Batch3D} An array of scenes
  * to draw, or a single subscene to render. Can be null.
  * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(renderPasses){
-  if(renderPasses instanceof Subscene3D){
+  if(renderPasses instanceof Batch3D){
     return this.render([new RenderPass3D(renderPasses)])
   }
   if(this.autoResize){
@@ -917,13 +917,13 @@ Scene3D.prototype.render=function(renderPasses){
 /**
  * Has no effect. (Previously, used a shader program to apply a texture filter after the
  * scene is rendered.)
- * @deprecated Use the {@link Subscene3D.forFilter} method to create a subscene
+ * @deprecated Use the {@link Batch3D.forFilter} method to create a subscene
  * for rendering filter effects from a frame buffer.
  * @param {ShaderProgram|string|null} filterProgram Not used.
  * @returns {glutil.Scene3D} This object.
  */
 Scene3D.prototype.useFilter=function(filterProgram){
-  console.warn("The useFilter method has no effect. Use the {@link Subscene3D.forFilter} method to "+
+  console.warn("The useFilter method has no effect. Use the {@link Batch3D.forFilter} method to "+
     "create a subscene for rendering filter effects from a frame buffer.");
   return this;
 };

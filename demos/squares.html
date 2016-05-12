@@ -223,7 +223,7 @@ function link1(){
  if(scene){
 
   currentFilter=makeGrayscale(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link1a(){
@@ -244,7 +244,7 @@ function link2(){
  if(scene){
 
   currentFilter=ShaderProgram.getInvertEffect(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -252,7 +252,7 @@ function link3(){
  if(scene){
 
   currentFilter=makeWave(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -261,28 +261,28 @@ function link4(){
 
   currentFilter=makeKernelMatrix(scene);
   setKernelMatrix(currentFilter,[1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9])
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link5(){
  if(scene){
 
   currentFilter=makePixelate(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link6(){
  if(scene){
 
   currentFilter=makeWaterpaint(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link7(){
  if(scene){
 
   currentFilter=makeMirror(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link8(){
@@ -290,7 +290,7 @@ function link8(){
 
   currentFilter=makeKernelMatrix(scene);
   setKernelMatrix(currentFilter,[0,1,0,1,-4,1,0,1,0])
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -298,7 +298,7 @@ function link9(){
  if(scene){
 
   currentFilter=makeRedTint(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -306,7 +306,7 @@ function link9a(){
  if(scene){
 
   currentFilter=makeBlueTint(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -314,14 +314,14 @@ function link10(){
  if(scene){
 
   currentFilter=makeWarp(scene);
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function linknone(){
  if(scene){
 
   currentFilter=null;
-  renders[1]=new RenderPass3D(Subscene3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -461,11 +461,11 @@ function blindsGroup(scene){
   var scene=new Scene3D((document.getElementById("canvas")));
   var fbo=new FrameBuffer(scene,scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
-  var subScene=new Subscene3D()
+  var subScene=new Batch3D()
   subScene.getLights().setDefaults();
   var renders=[
     new RenderPass3D(subScene,{"frameBuffer":fbo}),
-    new RenderPass3D(Subscene3D.forFilter(scene,fbo))
+    new RenderPass3D(Batch3D.forFilter(scene,fbo))
   ]
   var fc=new FrameCounterDiv(scene)
   var blinds=blindsGroup(subScene)

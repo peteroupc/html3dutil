@@ -112,7 +112,7 @@ function shiny(color){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .cullFace(Scene3D.BACK);
-  var sub=new Subscene3D()
+  var sub=new Batch3D()
    .orthoAspect(-20,20,-10,10,-20,20);
   sub.getLights().setDefaults();
   var mesh;

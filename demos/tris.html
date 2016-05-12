@@ -111,7 +111,7 @@ TriangleParticles.generateTri=function(width,height){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-  var sub=new Subscene3D();
+  var sub=new Batch3D();
   var tris=new TriangleParticles(sub,200,scene.getWidth(),scene.getHeight());
   // Set up the render loop
   GLUtil.renderLoop(function(time){

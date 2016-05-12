@@ -140,7 +140,7 @@ CanvasBackground.prototype.start=function(){
  var rgb=this.constructor.hls2rgb(this.hls);
  this.rend=new Scene3D(this.canvas)
     .setClearColor(rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0, 1.0);
- this.scene=new Subscene3D();
+ this.scene=new Batch3D();
  this.scene.getLights().setDirectionalLight(0, [0,0,-1])
  this.cubeMesh=new Shape(Meshes.createBox(2,2,2));
  this.sphereMesh=new Shape(Meshes.createSphere());
