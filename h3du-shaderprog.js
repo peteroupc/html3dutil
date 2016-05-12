@@ -14,7 +14,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * and a fragment shader (which processes pixels).  Shader programs
 * are specially designed for running on a graphics processing unit,
 * or GPU.<p>
-* When the ShaderProgram constructor is called, it will compile
+* When the H3DU.ShaderProgram constructor is called, it will compile
 * and link a shader program from the source text passed to it, but
 * it won't use that program until the use() method is called.  If the
 * program is compiled and linked successfully, the constructor
@@ -23,20 +23,20 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * If compiling or linking the shader program fails, a diagnostic
 * log is output to the JavaScript console.
 * @class
-* @alias glutil.ShaderProgram
+* @alias H3DU.ShaderProgram
 * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
 * ES Shading Language (GLSL).  If null, a default
 * vertex shader is used instead.
 * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
 */
-function ShaderInfo(vertexShader, fragmentShader){
+H3DU.ShaderInfo = function(vertexShader, fragmentShader){
  "use strict";
  if((vertexShader===null || typeof vertexShader==="undefined")){
-  vertexShader=ShaderProgram.getDefaultVertex();
+  vertexShader=H3DU.ShaderProgram.getDefaultVertex();
  }
  if((fragmentShader===null || typeof fragmentShader==="undefined")){
-  fragmentShader=ShaderProgram.getDefaultFragment();
+  fragmentShader=H3DU.ShaderProgram.getDefaultFragment();
  }
  this.vertexShader=vertexShader;
  this.fragmentShader=fragmentShader;
@@ -45,8 +45,8 @@ function ShaderInfo(vertexShader, fragmentShader){
 /**
  * Not documented yet.
  */
-ShaderInfo.prototype.copy=function(){
- var sp=new ShaderInfo(this.vertexShader,this.fragmentShader);
+H3DU.ShaderInfo.prototype.copy=function(){
+ var sp=new H3DU.ShaderInfo(this.vertexShader,this.fragmentShader);
  sp.setUniforms(this.uniformValues);
  return sp;
 }
@@ -54,12 +54,12 @@ ShaderInfo.prototype.copy=function(){
  * Not documented yet.
  * @param {*} uniforms
  */
-ShaderInfo.prototype.setUniforms=function(uniforms){
- ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,null);
+H3DU.ShaderInfo.prototype.setUniforms=function(uniforms){
+ H3DU.ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,null);
  return this;
 }
 /** @private */
-ShaderInfo._setUniformInternal=function(uniforms,uniformValues,i,changedUniforms){
+H3DU.ShaderInfo._setUniformInternal=function(uniforms,uniformValues,i,changedUniforms){
   "use strict";
 isCurrentProgram=null;
       var v=uniforms[i];
@@ -105,51 +105,56 @@ isCurrentProgram=null;
        if(!uv){
         uniformValues[i]=uv=v.slice(0,v.length);
         if(changedUniforms)changedUniforms[i]=v.slice(0,v.length);
-       } else if(ShaderInfo._copyIfDifferent(v,uv,16)){
+       } else if(H3DU.ShaderInfo._copyIfDifferent(v,uv,16)){
         if(changedUniforms)changedUniforms[i]=uv.slice(0,uv.length);
        }
       } else if(v.length===9){
        if(!uv){
         uniformValues[i]=uv=v.slice(0,v.length);
         if(changedUniforms)changedUniforms[i]=v.slice(0,v.length);
-       } else if(ShaderInfo._copyIfDifferent(v,uv,9)){
+       } else if(H3DU.ShaderInfo._copyIfDifferent(v,uv,9)){
         if(changedUniforms)changedUniforms[i]=uv.slice(0,uv.length);
        }
       }
 };
 /** @private */
-ShaderInfo._setUniformsInternal=function(uniforms,outputUniforms,changedUniforms){
+H3DU.ShaderInfo._setUniformsInternal=function(uniforms,outputUniforms,changedUniforms){
   "use strict";
   var i;
   if(typeof Object.keys!=="undefined"){
     var keys=Object.keys(uniforms);
     for(var ki=0;ki<keys.length;ki++){
      i=keys[ki];
-     ShaderInfo._setUniformInternal(uniforms,outputUniforms, i,changedUniforms);
+     H3DU.ShaderInfo._setUniformInternal(uniforms,outputUniforms, i,changedUniforms);
     }
   } else {
     for(i in uniforms){
-     ShaderInfo._setUniformInternal(uniforms,outputUniforms, i,changedUniforms);
+     H3DU.ShaderInfo._setUniformInternal(uniforms,outputUniforms, i,changedUniforms);
     }
   }
 };
-
-function ShaderProgram(context, vertexShader,fragmentShader) {
- this._init(context,new ShaderInfo(vertexShader,fragmentShader));
+/**
+ * Not documented yet.
+ * @param {*} context
+ * @param {*} vertexShader
+ * @param {*} fragmentShader
+ */
+H3DU.ShaderProgram=function(context,vertexShader,fragmentShader) {
+ this._init(context,new H3DU.ShaderInfo(vertexShader,fragmentShader));
 }
 /** @private */
-ShaderProgram._fromShaderInfo=function(context,shader){
- var ret=new ShaderProgram(null);
+H3DU.ShaderProgram._fromShaderInfo=function(context,shader){
+ var ret=new H3DU.ShaderProgram(null);
  ret._init(context,shader);
  return ret;
 }
 /** @private */
-ShaderProgram.prototype._init=function(context,shaderInfo) {
+H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
  if(!context)return;
  context=(context.getContext) ? context.getContext() : context;
  this.shaderInfo=shaderInfo;
  this.context=context;
- this.prog=ShaderProgram._compileShaders(context,
+ this.prog=H3DU.ShaderProgram._compileShaders(context,
    shaderInfo.vertexShader,
    shaderInfo.fragmentShader);
  this.uniformValues={};
@@ -157,7 +162,7 @@ ShaderProgram.prototype._init=function(context,shaderInfo) {
  this.attributes=[];
  this.uniformTypes={};
  this.savedUniforms={};
- ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
+ H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
   this.uniformValues,this.savedUniforms);
  this.CURRENT_PROGRAM=35725;
  this.FLOAT=5126;
@@ -191,7 +196,7 @@ ShaderProgram.prototype._init=function(context,shaderInfo) {
 
 /** Disposes resources from this shader program.
 */
-ShaderProgram.prototype.dispose=function(){
+H3DU.ShaderProgram.prototype.dispose=function(){
  "use strict";
 if(this.program){
   this.context.deleteProgram(this.program);
@@ -205,11 +210,11 @@ if(this.program){
 /**
  * Not documented yet.
  */
-ShaderProgram.prototype.getContext=function(){
+H3DU.ShaderProgram.prototype.getContext=function(){
  return this.context;
 }
 /** @private */
-ShaderProgram.prototype._setUniformInternal=function(uniforms,i){
+H3DU.ShaderProgram.prototype._setUniformInternal=function(uniforms,i){
   "use strict";
       var uniform=this.get(i);
       if((uniform===null || typeof uniform==="undefined"))return;
@@ -238,7 +243,7 @@ ShaderProgram.prototype._setUniformInternal=function(uniforms,i){
 * Gets the location of the given uniform or attribute's name in this program.
 * (Although the location may change each time the shader program
 * is linked, that normally only happens upon construction
-* in the case of ShaderInfo.)
+* in the case of H3DU.ShaderInfo.)
 * @param {String} name The name of an attribute or uniform defined in either the
 * vertex or fragment shader of this shader program.  If the uniform or attribute
 * is an array, each element in the array is named as in these examples:
@@ -249,7 +254,7 @@ ShaderProgram.prototype._setUniformInternal=function(uniforms,i){
 * @returns {number|WebGLUniformLocation|null} The location of the uniform or attribute
 * name, or null if it doesn't exist.
 */
-ShaderProgram.prototype.get=function(name){
+H3DU.ShaderProgram.prototype.get=function(name){
  "use strict";
 var ret=this.actives[name];
  return ((ret===null || typeof ret==="undefined")) ? null : ret;
@@ -263,7 +268,7 @@ var ret=this.actives[name];
 * @returns {*} The uniform's value, or null if it doesn't exist or if
 * an attribute is named, not a uniform.
 */
-ShaderProgram.prototype.getUniform=function(name){
+H3DU.ShaderProgram.prototype.getUniform=function(name){
  "use strict";
 var loc=(typeof name==="string") ? this.get(name) : name;
  // If "loc" is a number that means it's an attribute, not a uniform;
@@ -279,7 +284,7 @@ var loc=(typeof name==="string") ? this.get(name) : name;
  }
 };
 /** @private */
-ShaderProgram.prototype._setSavedUniforms=function(){
+H3DU.ShaderProgram.prototype._setSavedUniforms=function(){
   var i;
   var uniformsLength=0;
   if(typeof Object.keys!=="undefined"){
@@ -300,7 +305,7 @@ ShaderProgram.prototype._setSavedUniforms=function(){
 /**
  * Not documented yet.
  */
-ShaderProgram.prototype.use=function(){
+H3DU.ShaderProgram.prototype.use=function(){
   "use strict";
   this.context.useProgram(this.prog);
   if(this._setSavedUniforms()>0){
@@ -309,8 +314,8 @@ ShaderProgram.prototype.use=function(){
   return this;
 };
 /** @private */
-ShaderProgram.prototype._update=function(){
-  ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
+H3DU.ShaderProgram.prototype._update=function(){
+  H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
    this.uniformValues,this.savedUniforms);
   return this;
 }
@@ -318,10 +323,10 @@ ShaderProgram.prototype._update=function(){
  * Not documented yet.
  * @param {*} uniforms
  */
-ShaderProgram.prototype.setUniforms=function(uniforms){
+H3DU.ShaderProgram.prototype.setUniforms=function(uniforms){
   "use strict";
   var i;
-  ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,
+  H3DU.ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,
    this.savedUniforms);
   if(this.context.getParameter(
          this.CURRENT_PROGRAM)===this.prog) {
@@ -333,7 +338,7 @@ ShaderProgram.prototype.setUniforms=function(uniforms){
 };
 
 /** @private */
-ShaderInfo._copyIfDifferent=function(src,dst,len){
+H3DU.ShaderInfo._copyIfDifferent=function(src,dst,len){
  "use strict";
 for(var i=0;i<len;i++){
   if(src[i]!==dst[i]){
@@ -349,7 +354,7 @@ for(var i=0;i<len;i++){
 };
 
 /** @private */
-ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
+H3DU.ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
   "use strict";
 function compileShader(context, kind, text){
     var shader=context.createShader(kind);
@@ -391,7 +396,7 @@ function compileShader(context, kind, text){
   return program;
 };
 /** @private */
-ShaderProgram.fragmentShaderHeader=function(){
+H3DU.ShaderProgram.fragmentShaderHeader=function(){
 "use strict";
 return "" +
 "#ifdef GL_ES\n" +
@@ -405,12 +410,12 @@ return "" +
 /**
 * Generates source code for a fragment shader for applying
 * a raster effect to a texture.
-* @param {String} functionCode See ShaderProgram.makeEffect().
+* @param {String} functionCode See H3DU.ShaderProgram.makeEffect().
 * @returns {String} The source text of the resulting fragment shader.
 */
-ShaderProgram.makeEffectFragment=function(functionCode){
+H3DU.ShaderProgram.makeEffectFragment=function(functionCode){
 "use strict";
-var shader=ShaderProgram.fragmentShaderHeader();
+var shader=H3DU.ShaderProgram.fragmentShaderHeader();
 shader+=""+
 "uniform sampler2D sampler;\n" + // texture sampler
 "uniform vec2 textureSize;\n" + // texture size
@@ -427,9 +432,9 @@ return shader;
 /**
  * Not documented yet.
  */
-ShaderProgram.makeCopyEffect=function(){
+H3DU.ShaderProgram.makeCopyEffect=function(){
 "use strict";
-var shader=ShaderProgram.fragmentShaderHeader();
+var shader=H3DU.ShaderProgram.fragmentShaderHeader();
 shader+=""+
 "uniform sampler2D sampler;\n" + // texture sampler
 "varying vec2 uvVar;\n"+
@@ -437,8 +442,8 @@ shader+=""+
 shader+="\n\nvoid main(){\n" +
 " gl_FragColor=texture2D(sampler,uvVar);\n" +
 "}";
-return new ShaderInfo(
-   ShaderProgram.getBasicVertex(),shader);
+return new H3DU.ShaderInfo(
+   H3DU.ShaderProgram.getBasicVertex(),shader);
 };
 
 /**
@@ -457,22 +462,22 @@ return new ShaderInfo(
 * and the return value is the new color at the given texture coordinates.  Besides
 * this requirement, the shader code is also free to define additional uniforms,
 * constants, functions, and so on (but not another "main" function).
-* @returns {glutil.ShaderInfo} The resulting shader program.
+* @returns {H3DU.ShaderInfo} The resulting shader program.
 */
-ShaderProgram.makeEffect=function(context,functionCode){
+H3DU.ShaderProgram.makeEffect=function(context,functionCode){
  "use strict";
-return new ShaderInfo(
-   ShaderProgram.getBasicVertex(),
-   ShaderProgram.makeEffectFragment(functionCode));
+return new H3DU.ShaderInfo(
+   H3DU.ShaderProgram.getBasicVertex(),
+   H3DU.ShaderProgram.makeEffectFragment(functionCode));
 };
 /**
 * Generates a shader program that inverts the colors of a texture.
 * @param {*} [context] No longer used; ignored.
-* @returns {glutil.ShaderInfo} The resulting shader program.
+* @returns {H3DU.ShaderInfo} The resulting shader program.
 */
-ShaderProgram.getInvertEffect=function(){
+H3DU.ShaderProgram.getInvertEffect=function(){
 "use strict";
-return ShaderProgram.makeEffect(null,
+return H3DU.ShaderProgram.makeEffect(null,
 [
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
@@ -483,13 +488,13 @@ return ShaderProgram.makeEffect(null,
 * Generates a shader program that generates a two-color texture showing
 * the source texture's edges.
 * @param {*} [context] No longer used; ignored.
-* @returns {glutil.ShaderInfo} The resulting shader program.
+* @returns {H3DU.ShaderInfo} The resulting shader program.
 */
-ShaderProgram.getEdgeDetectEffect=function(){
+H3DU.ShaderProgram.getEdgeDetectEffect=function(){
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
 "use strict";
-return ShaderProgram.makeEffect(null,
+return H3DU.ShaderProgram.makeEffect(null,
 ["float luma(vec3 color) {",
 " return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
 "}",
@@ -518,7 +523,7 @@ return ShaderProgram.makeEffect(null,
 };
 
 /** @private */
-ShaderProgram.getBasicVertex=function(){
+H3DU.ShaderProgram.getBasicVertex=function(){
 "use strict";
 var shader=""+
 "attribute vec3 position;\n" +
@@ -541,7 +546,7 @@ var shader=""+
 * at the start of the return value enables the lighting model.
 * @returns {String} The resulting shader text.
 */
-ShaderProgram.getDefaultVertex=function(){
+H3DU.ShaderProgram.getDefaultVertex=function(){
 "use strict";
 var shader=[
 "attribute vec3 position;",
@@ -591,10 +596,10 @@ return shader;
 * as SHADING is also enabled).
 * @returns {String} The resulting shader text.
 */
-ShaderProgram.getDefaultFragment=function(){
+H3DU.ShaderProgram.getDefaultFragment=function(){
 "use strict";
 var i;
-var shader=ShaderProgram.fragmentShaderHeader() +
+var shader=H3DU.ShaderProgram.fragmentShaderHeader() +
  // if shading is disabled, this is solid color instead of material diffuse
  "uniform vec4 md;\n" +
 "#ifdef SHADING\n" +

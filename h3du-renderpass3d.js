@@ -1,10 +1,10 @@
 /**
 * Not documented yet.
-* @class glutil.RenderPass3D
+* @class H3DU.RenderPass3D
 * @param {*} subScene
 * @param {*} parameters
 */
-function RenderPass3D(subScene,parameters){
+H3DU.RenderPass3D = function(subScene,parameters){
  /** The scene to render. */
  this.subScene=subScene;
  /** Whether to clear the color buffer before rendering the scene.
@@ -24,7 +24,7 @@ function RenderPass3D(subScene,parameters){
  * Not documented yet.
  * @param {*} parameters
  */
-RenderPass3D.prototype.setParams=function(parameters){
+H3DU.RenderPass3D.prototype.setParams=function(parameters){
  if(!parameters)return;
  if(typeof parameters.clearColor!=="undefined"){
   this.clearColor=parameters.clearColor

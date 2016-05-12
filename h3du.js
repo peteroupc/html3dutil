@@ -4,7 +4,7 @@
 * @module glutil
 * @license CC0-1.0
 */
-/* global Binders, BufferedMesh, FrameBuffer, GLMath, JSON, LightsBinder, LoadedTexture, Mesh, Promise, ShaderProgram, Transform, define, exports */
+/* global Binders, H3DU.BufferedMesh, H3DU.FrameBuffer, H3DU.Math, JSON, LightsBinder, LoadedTexture, H3DU.Mesh, Promise, H3DU.ShaderProgram, H3DU.Transform, define, exports */
 (function (root, factory) {
   "use strict";
 if (typeof define === "function" && define.amd) {
@@ -16,7 +16,7 @@ if (typeof define === "function" && define.amd) {
   }
 }(this, function (exports) {
   "use strict";
-if (exports.GLUtil) { return; }
+if (exports.H3DU) { return; }
 
 /*
   Polyfills
@@ -45,9 +45,9 @@ if(!window.performance.now){
 /**
 * Contains miscellaneous utility methods.
 * @class
-* @alias glutil.GLUtil
+* @alias H3DU
 */
-var GLUtil={
+var H3DU={
 /**
 * This method will call a function once before returning,
 * and queue requests to call that function once per frame,
@@ -142,7 +142,7 @@ var GLUtil={
     try { context=canvasElement.getContext("2d", options);
     } catch(ex) { context=null; }
   }
-  if(GLUtil.is3DContext(context)){
+  if(H3DU.is3DContext(context)){
    context.getExtension("OES_element_index_uint");
    context.getExtension("OES_standard_derivatives");
   }
@@ -160,13 +160,13 @@ var GLUtil={
 * is null or not an HTML canvas element.
 */
 "get3DContext":function(canvasElement,err){
-  var c=GLUtil.get3DOr2DContext(canvasElement);
+  var c=H3DU.get3DOr2DContext(canvasElement);
   var errmsg=null;
   if(!c && window.WebGLShader){
     errmsg="Failed to initialize graphics support required by this page.";
-  } else if(window.WebGLShader && !GLUtil.is3DContext(c)){
+  } else if(window.WebGLShader && !H3DU.is3DContext(c)){
     errmsg="This page requires WebGL, but it failed to start. Your computer might not support WebGL.";
-  } else if(!c || !GLUtil.is3DContext(c)){
+  } else if(!c || !H3DU.is3DContext(c)){
     errmsg="This page requires a WebGL-supporting browser.";
   }
   if(errmsg){
@@ -196,11 +196,11 @@ var GLUtil={
 * be an array of results from those promises,
 * in the order in which those promises were listed.
  * Will be rejected if any of the promises is rejected; the result
- * will be an object as specified in {@link glutil.GLUtil.getPromiseResults}.</ul>
+ * will be an object as specified in {@link H3DU.getPromiseResults}.</ul>
  */
 "getPromiseResultsAll":function(promises,
    progressResolve, progressReject){
-   return GLUtil.getPromiseResults(promises,progressResolve,progressReject)
+   return H3DU.getPromiseResults(promises,progressResolve,progressReject)
      .then(function(results){
       if(results.failures.length>0){
        return Promise.reject(results);
@@ -360,9 +360,9 @@ var GLUtil={
 * value in milliseconds, such as the parameter of a
 * <code>requestAnimationFrame()</code> callback method.
 * </caption>
-* var angle = 360 * GLUtil.getTimePosition(timer, time, 5000);
+* var angle = 360 * H3DU.getTimePosition(timer, time, 5000);
 */
-GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
+H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
  if(((typeof timer.time==="undefined" || timer.time===null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
@@ -377,7 +377,7 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * the last known time, where a frame's length is 1/60 of a second.
 * This method should be called only once each frame.
 * @param {object} timer An object described
-* in {@link glutil.GLUtil.getTimePosition}.
+* in {@link H3DU.getTimePosition}.
 * @param {Number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * <code>requestAnimationFrame()</code> callback method.
@@ -387,7 +387,7 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * The number can include fractional frames.  If an
 * initial time or last known time wasn't set, returns 0.
 */
-GLUtil.newFrames=function(timer,timeInMs){
+H3DU.newFrames=function(timer,timeInMs){
  if(((typeof timer.time==="undefined" || timer.time===null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
@@ -535,7 +535,7 @@ var clampRgba=function(x){
 * </ul>
 * For more information:
 * [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
-* @alias glutil.GLUtil.toGLColor
+* @alias H3DU.toGLColor
 * @param {Array<Number>|number|string} r One of the following:<ul>
 * <li>A <b>color vector or string</b>, which can be one of these:<ul>
 * <li>An array of three color components, each of which ranges from 0 to 1.
@@ -607,14 +607,14 @@ if(!namedColors){
     }
   }
 };
-})(GLUtil);
+})(H3DU);
 
 /** @private */
-GLUtil._toContext=function(context){
+H3DU._toContext=function(context){
  return (context && context.getContext) ? context.getContext() : context;
 };
 /** @private */
-GLUtil._isPowerOfTwo=function(a){
+H3DU._isPowerOfTwo=function(a){
    if(Math.floor(a)!==a || a<=0)return false;
    while(a>1 && (a&1)===0){
     a>>=1;
@@ -622,7 +622,7 @@ GLUtil._isPowerOfTwo=function(a){
    return (a===1);
 };
 /** @private */
-GLUtil._isIdentityExceptTranslate=function(mat){
+H3DU._isIdentityExceptTranslate=function(mat){
 return (
     mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
     mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
@@ -630,12 +630,5 @@ return (
     mat[15] === 1
  );
 };
-
-/////////////
-exports.Lights=Lights;
-exports.LightSource=LightSource;
-exports.Texture=Texture;
-exports.Material=Material;
-exports.Scene3D=Scene3D;
-exports.GLUtil=GLUtil;
+exports.H3DU=H3DU;
 }));

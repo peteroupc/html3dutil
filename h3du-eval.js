@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath, Mesh */
+/* global H3DU.Math, H3DU.Mesh */
 (function(global){
 "use strict";
 /**
@@ -16,7 +16,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  * the remaining control points define the curve's shape, though they don't
  * necessarily cross the curve.
  * @class
- * @alias BezierCurve
+ * @alias H3DU.BezierCurve
  * @param {Array<Array<Number>>} controlPoints An array of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
@@ -31,7 +31,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
  * May be omitted; default is 1.
  */
-var BezierCurve=function(cp, u1, u2){
+H3DU.BezierCurve=function(cp, u1, u2){
  if(typeof u1==="undefined" && typeof u2==="undefined"){
   this.uoffset=0;
   this.umul=1;
@@ -41,7 +41,7 @@ var BezierCurve=function(cp, u1, u2){
   this.uoffset=u1;
   this.umul=1.0/(u2-u1);
  }
- this.evaluator=BSplineCurve.clamped(cp,cp.length-1);
+ this.evaluator=H3DU.BSplineCurve.clamped(cp,cp.length-1);
 };
 /**
  * Evaluates the curve function based on a point
@@ -59,7 +59,7 @@ var BezierCurve=function(cp, u1, u2){
 *  points.push(curve.evaluate(i/10.0));
 * }
  */
-BezierCurve.prototype.evaluate=function(u){
+H3DU.BezierCurve.prototype.evaluate=function(u){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul);
 };
 /**
@@ -96,7 +96,7 @@ BezierCurve.prototype.evaluate=function(u){
  * V-axis; it will correspond to 1.
  * May be omitted; default is 1.
  */
-var BezierSurface=function(cp, u1, u2, v1, v2){
+H3DU.BezierSurface=function(cp, u1, u2, v1, v2){
  if(typeof u1==="undefined" && typeof u2==="undefined" &&
     typeof v1==="undefined" && typeof v2==="undefined"){
   this.uoffset=0;
@@ -125,7 +125,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
  * the evaluation.  Its length will be equal to the
  * length of a control point, as specified in the constructor.
  */
- BezierSurface.prototype.evaluate=function(u,v, output){
+H3DU.BezierSurface.prototype.evaluate=function(u,v, output){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul,
    (v-this.voffset)*this.vmul);
 };
@@ -133,7 +133,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 /**
 * A parametric evaluator for B-spline (basis spline) curves.
 * @class
-* @alias BSplineCurve
+* @alias H3DU.BSplineCurve
  * @param {Array<Array<Number>>} controlPoints An array of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that the first control point's length represents the size of all the control
@@ -156,24 +156,24 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * the control points describe a <i>B&eacute;zier</i> curve, in which the
 * first and last control points match the curve's end points.<p>
 * @param {Boolean} [bits] Bits for defining input
-* and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
-* BSplineCurve.HOMOGENEOUS_BIT,
-* and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
+* and controlling output.  Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
+* H3DU.BSplineCurve.HOMOGENEOUS_BIT,
+* and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
 */
-var BSplineCurve=function(controlPoints, knots, bits){
+H3DU.BSplineCurve=function(controlPoints, knots, bits){
  if(controlPoints.length<=0)throw new Error();
  if(!knots)throw new Error();
  this.bits=bits||0;
  var order=knots.length-controlPoints.length;
  if(order<2 || order>controlPoints.length)
   throw new Error();
- BSplineCurve._checkKnots(knots);
+ H3DU.BSplineCurve._checkKnots(knots);
  this.cplen=controlPoints[0].length;
  var cplenNeeded=1;
- if((this.bits&(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!==0){
+ if((this.bits&(H3DU.BSplineCurve.WEIGHTED_BIT|H3DU.BSplineCurve.DIVIDE_BIT))!==0){
   cplenNeeded=2;
  }
- if((this.bits&(BSplineCurve.WEIGHTED_BIT))!==0){
+ if((this.bits&(H3DU.BSplineCurve.WEIGHTED_BIT))!==0){
   this.cplen--;
  }
  if(this.cplen<cplenNeeded)throw new Error();
@@ -192,7 +192,7 @@ var BSplineCurve=function(controlPoints, knots, bits){
 * @const
 * @default
 */
-BSplineCurve.WEIGHTED_BIT = 1;
+H3DU.BSplineCurve.WEIGHTED_BIT = 1;
 /**
 * Indicates to divide each other coordinate of the returned point
 * by the last coordinate of the point and omit the last
@@ -202,7 +202,7 @@ BSplineCurve.WEIGHTED_BIT = 1;
 * @const
 * @default
 */
-BSplineCurve.DIVIDE_BIT = 2;
+H3DU.BSplineCurve.DIVIDE_BIT = 2;
 /**
 * Indicates that each other coordinate of each control point
 * was premultiplied by the last coordinate of the point, that is,
@@ -211,14 +211,14 @@ BSplineCurve.DIVIDE_BIT = 2;
 * @const
 * @default
 */
-BSplineCurve.HOMOGENEOUS_BIT = 4;
+H3DU.BSplineCurve.HOMOGENEOUS_BIT = 4;
 /**
 * Combination of WEIGHTED_BIT and DIVIDE_BIT.
 * @const
 */
-BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
+H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
 /** @private */
-BSplineCurve._checkKnots=function(knots){
+H3DU.BSplineCurve._checkKnots=function(knots){
  for(var i=1;i<knots.length;i++){
   if(knots[i]<knots[i-1])
    throw new Error();
@@ -226,7 +226,7 @@ BSplineCurve._checkKnots=function(knots){
  if(knots[0]===knots[knots.length-1])throw new Error();
 };
 /** @private */
-BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
+H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
  var c=1;
  for(var i=0;i<numPoints;i++){
    buffer[i]=0;
@@ -286,23 +286,23 @@ BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
 *  points.push(curve.evaluate(i/10.0));
 * }
  */
-BSplineCurve.prototype.evaluate=function(u){
+H3DU.BSplineCurve.prototype.evaluate=function(u){
   var numPoints=this.controlPoints.length;
   var order=this.knots.length-numPoints;
   var oldu=u;
   u=this.knots[order-1]+u*(this.knots[numPoints]-
     this.knots[order-1]);
-  BSplineCurve._getFactors(this.knots, u, order, numPoints,
+  H3DU.BSplineCurve._getFactors(this.knots, u, order, numPoints,
      this.buffer);
   var ret=[];
   var i,j,point;
-  if((this.bits&BSplineCurve.WEIGHTED_BIT)!==0){
+  if((this.bits&H3DU.BSplineCurve.WEIGHTED_BIT)!==0){
   // this is a weighted NURBS
   var weight=0;
   for(j=0;j<numPoints;j++){
    weight+=this.buffer[j]*this.controlPoints[j][this.cplen];
   }
-  var homogen=(this.bits&BSplineCurve.HOMOGENEOUS_BIT)!==0;
+  var homogen=(this.bits&H3DU.BSplineCurve.HOMOGENEOUS_BIT)!==0;
   for(i=0;i<this.cplen+1;i++){
    point=0;
    for(j=0;j<numPoints;j++){
@@ -312,7 +312,7 @@ BSplineCurve.prototype.evaluate=function(u){
    }
    ret[i]=point/weight;
   }
-  if((this.bits&BSplineCurve.DIVIDE_BIT)!==0){
+  if((this.bits&H3DU.BSplineCurve.DIVIDE_BIT)!==0){
    for(i=0;i<this.cplen;i++){
     ret[i]/=ret[this.cplen];
    }
@@ -328,7 +328,7 @@ BSplineCurve.prototype.evaluate=function(u){
    }
    ret[i]=point;
   }
-  if((this.bits&BSplineCurve.DIVIDE_BIT)!==0){
+  if((this.bits&H3DU.BSplineCurve.DIVIDE_BIT)!==0){
    for(i=0;i<this.cplen-1;i++){
     ret[i]/=ret[this.cplen-1];
    }
@@ -354,12 +354,12 @@ BSplineCurve.prototype.evaluate=function(u){
  * points.
  * </ul>
 * @param {Array<Number>} knotsU Knot vector of the curve, along the U-axis.
-* For more information, see {@link glutil.BSplineCurve}.
+* For more information, see {@link H3DU.BSplineCurve}.
 * @param {Array<Number>} knotsV Knot vector of the curve, along the V-axis.
 * @param {Boolean} [bits] Bits for defining input
-* and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
-* BSplineCurve.HOMOGENEOUS_BIT,
-* and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
+* and controlling output.  Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
+* H3DU.BSplineCurve.HOMOGENEOUS_BIT,
+* and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
 */
 var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  var vcplen=controlPoints.length;
@@ -369,10 +369,10 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  var cplen=controlPoints[0][0].length;
  var cplenNeeded=1;
  this.bits=bits||0;
- if((this.bits&(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!==0){
+ if((this.bits&(H3DU.BSplineCurve.WEIGHTED_BIT|H3DU.BSplineCurve.DIVIDE_BIT))!==0){
   cplenNeeded=2;
  }
- if((this.bits&(BSplineCurve.WEIGHTED_BIT|BSplineCurve.HOMOGENEOUS_BIT))!==0){
+ if((this.bits&(H3DU.BSplineCurve.WEIGHTED_BIT|H3DU.BSplineCurve.HOMOGENEOUS_BIT))!==0){
   cplen--;
  }
  if(cplen<cplenNeeded)throw new Error();
@@ -384,8 +384,8 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  this.cplen=cplen;
  if(this.orderU<2 || this.orderU>ucplen)throw new Error();
  if(this.orderV<2 || this.orderV>vcplen)throw new Error();
- BSplineCurve._checkKnots(knotsU);
- BSplineCurve._checkKnots(knotsV);
+ H3DU.BSplineCurve._checkKnots(knotsU);
+ H3DU.BSplineCurve._checkKnots(knotsV);
  this.knotsU=knotsU;
  this.knotsV=knotsV;
  this.bufferU=[];
@@ -396,63 +396,63 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
 * Creates a B-spline curve with uniform knots, except that
 * the curve will start and end at the first and last control points.
 * @param {Array<Array<Number>>} controlPoints Array of
-* control points as specified in the {@link glutil.BSplineCurve} constructor.
+* control points as specified in the {@link H3DU.BSplineCurve} constructor.
 * @param {Number} [degree] Degree of the B-Spline
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
-* @returns {BSplineCurve} Return value.*/
-BSplineCurve.clamped=function(controlPoints,degree,bits){
- return new BSplineCurve(controlPoints,
-   BSplineCurve.clampedKnots(controlPoints.length,degree),bits);
+* @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
+* @returns {H3DU.BSplineCurve} Return value.*/
+H3DU.BSplineCurve.clamped=function(controlPoints,degree,bits){
+ return new H3DU.BSplineCurve(controlPoints,
+   H3DU.BSplineCurve.clampedKnots(controlPoints.length,degree),bits);
 };
 /**
 * Creates a B-spline curve with uniform knots.
 * @param {Array<Array<Number>>} controlPoints Array of
-* control points as specified in the {@link glutil.BSplineCurve} constructor.
+* control points as specified in the {@link H3DU.BSplineCurve} constructor.
 * @param {Number} [degree] Degree of the B-Spline
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
-* @returns {BSplineCurve} Return value.*/
-BSplineCurve.uniform=function(controlPoints,degree,bits){
- return new BSplineCurve(controlPoints,
-   BSplineCurve.uniformKnots(controlPoints.length,degree),bits);
+* @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
+* @returns {H3DU.BSplineCurve} Return value.*/
+H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits){
+ return new H3DU.BSplineCurve(controlPoints,
+   H3DU.BSplineCurve.uniformKnots(controlPoints.length,degree),bits);
 };
 /**
 * Creates a B-spline surface with uniform knots, except that
 * the surface's edges lie on the edges of the control point array.
 * @param {Array<Array<Array<Number>>>} controlPoints Array of
-* control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
+* control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
 * @param {Number} [degreeU] Degree of the B-Spline
 * surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
 * If null or omitted, the default is 3.
-* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
+* @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
 * @returns {BSplineSurface} Return value.*/
 BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
-   BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
-   BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits);
+   H3DU.BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
+   H3DU.BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits);
 };
 /**
 * Creates a B-spline surface with uniform knots.
 * @param {Array<Array<Array<Number>>>} controlPoints Array of
-* control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
+* control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
 * @param {Number} [degreeU] Degree of the B-Spline
 * surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
 * If null or omitted, the default is 3.
-* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
+* @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
 * @returns {BSplineSurface} Return value.*/
 BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
-   BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
-   BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits);
+   H3DU.BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
+   H3DU.BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits);
 };
 /**
 * Not documented yet.
@@ -460,7 +460,7 @@ BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
 * @param {Number} degree
 * @returns {Array<Number>} A uniform knot vector.
 */
-BSplineCurve.uniformKnots=function(controlPoints,degree){
+H3DU.BSplineCurve.uniformKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
   if((degree===null || typeof degree==="undefined"))degree=3;
@@ -479,7 +479,7 @@ BSplineCurve.uniformKnots=function(controlPoints,degree){
 * @param {Number} degree
 * @returns {Array<Number>} A clamped knot vector.
 */
-BSplineCurve.clampedKnots=function(controlPoints,degree){
+H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
   if((degree===null || typeof degree==="undefined"))degree=3;
@@ -518,21 +518,21 @@ BSplineSurface.prototype.evaluate=function(u,v){
   var bv=this.bufferV;
   var tt,uu,w,i,value;
   if(this.orderU===this.orderV){
-   BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
+   H3DU.BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
      this.bufferU);
-   BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
+   H3DU.BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
      this.bufferV);
   } else {
-   BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
+   H3DU.BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
      this.bufferU);
-   BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
+   H3DU.BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
      this.bufferV);
   }
  var output=[];
-  if((this.bits&BSplineCurve.WEIGHTED_BIT)!==0){
+  if((this.bits&H3DU.BSplineCurve.WEIGHTED_BIT)!==0){
   // this is a weighted NURBS
   var weight=0;
-  var homogen=(this.bits&BSplineCurve.HOMOGENEOUS_BIT)!==0;
+  var homogen=(this.bits&H3DU.BSplineCurve.HOMOGENEOUS_BIT)!==0;
   for(tt=0;tt<this.ucplen;tt++){
     for(uu=0;uu<this.vcplen;uu++){
      w=bu[tt]*bv[uu]*this.controlPoints[uu][tt][this.cplen];
@@ -551,7 +551,7 @@ BSplineSurface.prototype.evaluate=function(u,v){
    }
    output[i]=(weight===0) ? value : value/weight;
   }
-  if((this.bits&BSplineCurve.DIVIDE_BIT)!==0){
+  if((this.bits&H3DU.BSplineCurve.DIVIDE_BIT)!==0){
    for(i=0;i<this.cplen;i++){
     output[i]/=output[this.cplen];
    }
@@ -568,7 +568,7 @@ BSplineSurface.prototype.evaluate=function(u,v){
    }
    output[i]=value;
   }
-  if((this.bits&BSplineCurve.DIVIDE_BIT)!==0){
+  if((this.bits&H3DU.BSplineCurve.DIVIDE_BIT)!==0){
    for(i=0;i<this.cplen-1;i++){
     output[i]/=output[this.cplen-1];
    }
@@ -592,9 +592,9 @@ BSplineSurface.prototype.evaluate=function(u,v){
 * and z(u) returns a Z coordinate.<p>
 * For more information, see the {@tutorial surfaces} tutorial.
 * @class
-* @alias CurveEval
+* @alias H3DU.CurveEval
 */
-var CurveEval=function(){
+H3DU.CurveEval=function(){
  this.colorCurve=null;
  this.normalCurve=null;
  this.texCoordCurve=null;
@@ -608,7 +608,7 @@ var CurveEval=function(){
 * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
 * </ul>
 * The evaluator function returns an array of the result of the evaluation.
-* @returns {CurveEval} This object.
+* @returns {H3DU.CurveEval} This object.
 * @example <caption>The following function sets a circle as the curve
 * to use for generating vertex positions.</caption>
 * // "u" can range from 0 to 2*Math.PI
@@ -616,54 +616,54 @@ var CurveEval=function(){
 *  return [Math.cos(u),Math.sin(u),0]
 * }});
 */
-CurveEval.prototype.vertex=function(evaluator){
+H3DU.CurveEval.prototype.vertex=function(evaluator){
  this.vertexCurve=evaluator;
  return this;
 };
 /**
 * Specifies a parametric curve function for generating normals.
 * @param {object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link CurveEval#vertex}.
+* named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
-* @returns {CurveEval} This object.
+* @returns {H3DU.CurveEval} This object.
 */
-CurveEval.prototype.normal=function(evaluator){
+H3DU.CurveEval.prototype.normal=function(evaluator){
  this.normalCurve=evaluator;
  return this;
 };
 /**
 * Specifies a parametric curve function for generating color values.
 * @param {object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link CurveEval#vertex}.
+* named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
-* @returns {CurveEval} This object.
+* @returns {H3DU.CurveEval} This object.
 */
-CurveEval.prototype.color=function(evaluator){
+H3DU.CurveEval.prototype.color=function(evaluator){
  this.colorCurve=evaluator;
  return this;
 };
 /**
 * Specifies a parametric curve function for generating texture coordinates.
 * @param {object} evaluator An object that must contain a function
-* named "evaluate", giving 2 values as a result.  See {@link CurveEval#vertex}.
+* named "evaluate", giving 2 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
-* @returns {CurveEval} This object.
+* @returns {H3DU.CurveEval} This object.
 */
-CurveEval.prototype.texCoord=function(evaluator){
+H3DU.CurveEval.prototype.texCoord=function(evaluator){
  this.texCoordCurve=evaluator;
  return this;
 };
 /**
  * Generates vertex positions and attributes based on a point
  * in a parametric curve.
- * @param {glutil.Mesh} mesh Mesh where vertex positions and attributes
+ * @param {H3DU.Mesh} mesh H3DU.Mesh where vertex positions and attributes
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
  * @param {Number} u Point of the curve to evaluate.
- * @returns {CurveEval} This object.
+ * @returns {H3DU.CurveEval} This object.
  */
-CurveEval.prototype.evalOne=function(mesh,u){
+H3DU.CurveEval.prototype.evalOne=function(mesh,u){
  var color=null;
  var normal=null;
  var texcoord=null;
@@ -698,11 +698,11 @@ CurveEval.prototype.evalOne=function(mesh,u){
 /**
  * Generates vertices and attribute values that follow a parametric curve
  * function.
- * @param {glutil.Mesh} mesh A geometric mesh where the vertices will be
+ * @param {H3DU.Mesh} mesh A geometric mesh where the vertices will be
  * generated.
- * @param {Number} [mode] If this value is Mesh.LINES, or is null
+ * @param {Number} [mode] If this value is H3DU.Mesh.LINES, or is null
 * or omitted, generates
- * a series of lines defining the curve. If this value is Mesh.POINTS,
+ * a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
  * generates a series of points along the curve.  For any other value,
  * this method has no effect.
  * @param {Number} [n] Number of subdivisions of the curve to be drawn.
@@ -715,20 +715,20 @@ CurveEval.prototype.evalOne=function(mesh,u){
  * given in the <code>vector</code>, <code>normal</code>,
  * <code>color</code>, and <code>texCoord</code> methods).
  *May be omitted; default is 1.
- * @returns {CurveEval} This object.
+ * @returns {H3DU.CurveEval} This object.
  */
-CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
+H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
  if(typeof n==="undefined")n=24;
  if(n<=0)throw new Error("invalid n");
  if(typeof u1==="undefined" && typeof u2==="undefined"){
   u1=0.0;
   u2=1.0;
  }
- if((mode===null || typeof mode==="undefined"))mode=Mesh.LINES;
- if(mode===Mesh.POINTS)
-  mesh.mode(Mesh.POINTS);
- else if(mode===Mesh.LINES)
-  mesh.mode(Mesh.LINE_STRIP);
+ if((mode===null || typeof mode==="undefined"))mode=H3DU.Mesh.LINES;
+ if(mode===H3DU.Mesh.POINTS)
+  mesh.mode(H3DU.Mesh.POINTS);
+ else if(mode===H3DU.Mesh.LINES)
+  mesh.mode(H3DU.Mesh.LINE_STRIP);
  else return this;
  var uv=(u2-u1)/n;
  for(var i=0; i<=n; i++){
@@ -752,9 +752,9 @@ CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
 * @class
 * See the {@tutorial surfaces} tutorial for more information.
 * @class
-* @alias glutil.SurfaceEval
+* @alias H3DU.SurfaceEval
 */
-var SurfaceEval=function(){
+H3DU.SurfaceEval=function(){
  this.colorSurface=null;
  this.normalSurface=null;
  this.texCoordSurface=null;
@@ -768,9 +768,9 @@ var SurfaceEval=function(){
  * By default, normals won't be generated automatically.
  * @param {Boolean} value Either true or false.  True means normals
  * will automatically be generated; false means they won't.
- * @returns {SurfaceEval} This object.
+ * @returns {H3DU.SurfaceEval} This object.
  */
-SurfaceEval.prototype.setAutoNormal=function(value){
+H3DU.SurfaceEval.prototype.setAutoNormal=function(value){
  this.autoNormal=!!value;
  return this;
 };
@@ -782,9 +782,9 @@ SurfaceEval.prototype.setAutoNormal=function(value){
 * <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
 * </ul>
 * The evaluator function returns an array of the result of the evaluation.
-* @returns {SurfaceEval} This object.
+* @returns {H3DU.SurfaceEval} This object.
 */
-SurfaceEval.prototype.vertex=function(evaluator){
+H3DU.SurfaceEval.prototype.vertex=function(evaluator){
  this.vertexSurface=evaluator;
  return this;
 };
@@ -801,16 +801,16 @@ SurfaceEval.prototype.vertex=function(evaluator){
 * In mathematical notation, this looks like:
 * <b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times;
 * &#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
-* If autonormal is enabled (see setAutoNormal()), SurfaceEval uses an approximation to this approach,
-* as the SurfaceEval class doesn't know the implementation of the method used
+* If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
+* as the H3DU.SurfaceEval class doesn't know the implementation of the method used
 * for vertex calculation.<p>
 * (Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>
 * or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is also
 * called the <i>tangent vector</i>.)
 * @param {object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
+* named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
-* @returns {SurfaceEval} This object.
+* @returns {H3DU.SurfaceEval} This object.
 * @example <caption>The following example sets the normal generation
 * function for a parametric surface.  To illustrate how the method is derived
 * from the vector calculation method, that method is also given below.  To
@@ -828,55 +828,55 @@ SurfaceEval.prototype.vertex=function(evaluator){
 *  return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
 * }})
 * .normal({"evaluate":function(u,v){
-*  return GLMath.vec3normInPlace([
+*  return H3DU.Math.vec3normInPlace([
 *   Math.cos(u)*-Math.sin(v)*Math.sin(u),
 *   Math.sin(u)*-Math.sin(v)*Math.sin(u),
 *   0]);
 * }})
 */
-SurfaceEval.prototype.normal=function(evaluator){
+H3DU.SurfaceEval.prototype.normal=function(evaluator){
  this.normalSurface=evaluator;
  return this;
 };
 /**
 * Specifies a parametric surface function for generating color values.
 * @param {object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
+* named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
-* @returns {SurfaceEval} This object.
+* @returns {H3DU.SurfaceEval} This object.
 */
-SurfaceEval.prototype.color=function(evaluator){
+H3DU.SurfaceEval.prototype.color=function(evaluator){
  this.colorSurface=evaluator;
  return this;
 };
 /**
 * Specifies a parametric surface function for generating texture coordinates.
 * @param {object} evaluator An object that must contain a function
-* named "evaluate", giving 2 values as a result.  See {@link SurfaceEval#vertex}.
+* named "evaluate", giving 2 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
-* @returns {SurfaceEval} This object.
+* @returns {H3DU.SurfaceEval} This object.
 * @example <caption>The following example sets the surface
 * function to a linear evaluator. Thus, coordinates passed to the
 * evalOne and evalSurface methods will be interpolated as direct
 * texture coordinates.</caption>
 * surface.texCoord({"evaluate":function(u,v){ return [u,v] }});
 */
-SurfaceEval.prototype.texCoord=function(evaluator){
+H3DU.SurfaceEval.prototype.texCoord=function(evaluator){
  this.texCoordSurface=evaluator;
  return this;
 };
 /**
  * Generates vertex positions and attributes based on a point
  * in a parametric surface.
- * @param {glutil.Mesh} mesh Mesh where vertex positions and attributes
+ * @param {H3DU.Mesh} mesh H3DU.Mesh where vertex positions and attributes
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
  * @param {Number} u U-coordinate of the curve to evaluate
  * @param {Number} v V-coordinate of the curve to evaluate.
- * @returns {SurfaceEval} This object.
+ * @returns {H3DU.SurfaceEval} This object.
  */
-SurfaceEval.prototype.evalOne=function(mesh,u,v){
+H3DU.SurfaceEval.prototype.evalOne=function(mesh,u,v){
  var values=[];
  this._saveValues(mesh,values,0);
  this._record(u,v,values,_OLD_VALUES_SIZE);
@@ -893,12 +893,12 @@ var _OLD_VALUES_SIZE = 8;
 */
 var _RECORDED_VALUES_SIZE = 11;
 /** @private */
-SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index){
+H3DU.SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index){
  this._record(u,v,buffer,index);
  this._playBack(mesh,buffer,index);
 };
 /** @private */
-SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
+H3DU.SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
  if(this.colorSurface){
   buffer[index+3]=mesh.color[0];
   buffer[index+4]=mesh.color[1];
@@ -915,7 +915,7 @@ SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
  }
 };
 /** @private */
-SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
+H3DU.SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
  if(this.colorSurface){
   mesh.color3(buffer[index+3],buffer[index+4],buffer[index+5]);
  }
@@ -927,7 +927,7 @@ SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
  }
 };
 /** @private */
-SurfaceEval.prototype._record=function(u,v,buffer,index){
+H3DU.SurfaceEval.prototype._record=function(u,v,buffer,index){
  var normal=null;
  if(this.colorSurface){
   var color=this.colorSurface.evaluate(u,v);
@@ -968,20 +968,20 @@ SurfaceEval.prototype._record=function(u,v,buffer,index){
     dv=-dv;
     vv=this.vertexSurface.evaluate(u,v+dv);
    }
-   GLMath.vec3subInPlace(vv,vertex);
-   GLMath.vec3subInPlace(vu,vertex);
+   H3DU.Math.vec3subInPlace(vv,vertex);
+   H3DU.Math.vec3subInPlace(vu,vertex);
    // Divide by the deltas of u and v
-   GLMath.vec3scaleInPlace(vu,1.0/du);
-   GLMath.vec3scaleInPlace(vv,1.0/dv);
-   GLMath.vec3normInPlace(vu);
-   GLMath.vec3normInPlace(vv);
-   if(GLMath.vec3length(vu) === 0){
+   H3DU.Math.vec3scaleInPlace(vu,1.0/du);
+   H3DU.Math.vec3scaleInPlace(vv,1.0/dv);
+   H3DU.Math.vec3normInPlace(vu);
+   H3DU.Math.vec3normInPlace(vv);
+   if(H3DU.Math.vec3length(vu) === 0){
     // partial derivative of u is degenerate
     //console.log([vu,vv,u,v]+" u degen")
     vu=vv;
-   } else if(GLMath.vec3length(vv)!==0){
-    vu=GLMath.vec3cross(vu,vv);
-    GLMath.vec3normInPlace(vu);
+   } else if(H3DU.Math.vec3length(vv)!==0){
+    vu=H3DU.Math.vec3cross(vu,vv);
+    H3DU.Math.vec3normInPlace(vu);
    } else {
     // partial derivative of v is degenerate
     //console.log([vu,vv,u,v]+" v degen")
@@ -998,7 +998,7 @@ SurfaceEval.prototype._record=function(u,v,buffer,index){
  }
 };
 /** @private */
-SurfaceEval.prototype._playBack=function(mesh,buffer,index){
+H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  if(this.vertexSurface){
   if(this.colorSurface){
    mesh.color3(buffer[index+6],buffer[index+7],buffer[index+8]);
@@ -1016,14 +1016,14 @@ SurfaceEval.prototype._playBack=function(mesh,buffer,index){
 /**
  * Generates the vertex positions and attributes of a parametric
  * surface.
- * @param {glutil.Mesh} mesh Mesh where vertex positions and attributes
+ * @param {H3DU.Mesh} mesh H3DU.Mesh where vertex positions and attributes
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {Number} [mode] If this value is Mesh.TRIANGLES, or is null
+ * @param {Number} [mode] If this value is H3DU.Mesh.TRIANGLES, or is null
  * or omitted, generates a series of triangles defining the surface.  If
- * this value is Mesh.LINES, generates
- * a series of lines defining the curve. If this value is Mesh.POINTS,
+ * this value is H3DU.Mesh.LINES, generates
+ * a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
  * generates a series of points along the curve.  For any other value,
  * this method has no effect.
  * @param {Number} [un] Number of subdivisions along the U-axis.
@@ -1038,14 +1038,14 @@ SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  * Default is 0.
  * @param {Number} [v2] Ending U-coordinate of the surface to evaluate.
  * Default is 1.
- * @returns {SurfaceEval} This object.
+ * @returns {H3DU.SurfaceEval} This object.
  */
-SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
+H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  if(typeof un==="undefined")un=24;
  if(typeof vn==="undefined")vn=24;
  if(un<=0)throw new Error("invalid un");
  if(vn<=0)throw new Error("invalid vn");
- if((mode===null || typeof mode==="undefined"))mode=Mesh.TRIANGLES;
+ if((mode===null || typeof mode==="undefined"))mode=H3DU.Mesh.TRIANGLES;
  if(typeof v1==="undefined" && typeof v2==="undefined"){
   v1=0.0;
   v2=1.0;
@@ -1057,12 +1057,12 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  var du=(u2-u1)/un;
  var dv=(v2-v1)/vn;
  var i,j,jx,prevIndex;
- if(mode===Mesh.TRIANGLES){
+ if(mode===H3DU.Mesh.TRIANGLES){
   var oldValues=[];
   var previousValues=[];
   this._saveValues(mesh,oldValues,0);
   for(i=0;i<vn;i++){
-   mesh.mode(Mesh.TRIANGLE_STRIP);
+   mesh.mode(H3DU.Mesh.TRIANGLE_STRIP);
    for(j=0,prevIndex=0;j<=un;
       j++,prevIndex+=_RECORDED_VALUES_SIZE){
     jx=j*du+u1;
@@ -1079,24 +1079,24 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
    }
   }
   this._restoreValues(mesh,oldValues,0);
- } else if(mode===Mesh.POINTS){
-  mesh.mode(Mesh.POINTS);
+ } else if(mode===H3DU.Mesh.POINTS){
+  mesh.mode(H3DU.Mesh.POINTS);
   for(i=0;i<=vn;i++){
    for(j=0;j<=un;j++){
     jx=j*du+u1;
     this.evalOne(mesh,jx,i*dv+v1);
    }
   }
- } else if(mode===Mesh.LINES){
+ } else if(mode===H3DU.Mesh.LINES){
   for(i=0;i<=vn;i++){
-   mesh.mode(Mesh.LINE_STRIP);
+   mesh.mode(H3DU.Mesh.LINE_STRIP);
    for(j=0;j<=un;j++){
     jx=j*du+u1;
     this.evalOne(mesh,jx,i*dv+v1);
    }
   }
   for(i=0;i<=un;i++){
-   mesh.mode(Mesh.LINE_STRIP);
+   mesh.mode(H3DU.Mesh.LINE_STRIP);
    for(j=0;j<=vn;j++){
     this.evalOne(mesh,i*du+u1,j*dv+v1);
    }
@@ -1104,10 +1104,10 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  }
  return this;
 };
-global.SurfaceEval=SurfaceEval;
-global.CurveEval=CurveEval;
-global.BezierCurve=BezierCurve;
+global.H3DU.SurfaceEval=H3DU.SurfaceEval;
+global.H3DU.CurveEval=H3DU.CurveEval;
+global.H3DU.BezierCurve=H3DU.BezierCurve;
 global.BezierSurface=BezierSurface;
-global.BSplineCurve=BSplineCurve;
+global.H3DU.BSplineCurve=H3DU.BSplineCurve;
 global.BSplineSurface=BSplineSurface;
 })(this);

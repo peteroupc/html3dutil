@@ -11,21 +11,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * 3D object. This includes how an object scatters, reflects, or absorbs light, as well
 * as well as a texture image to apply on that object's surface.<p>
 * <i>For more information on this constructor's parameters,
-* see the {@link glutil.Material#setParams} method.</i>
+* see the {@link H3DU.Material#setParams} method.</i>
 * @class
-* @alias glutil.Material
-* @param {Array<Number>} [ambient] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color.
-* @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffusion color (also called "albedo").
-* @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the specular highlight reflection.
+* @alias H3DU.Material
+* @param {Array<Number>} [ambient] A [color vector or string]{@link H3DU.toGLColor} giving the ambient color.
+* @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffusion color (also called "albedo").
+* @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the specular highlight reflection.
 * @param {Array<Number>} [shininess] Specular highlight exponent of this material.
-* @param {Array<Number>} [emission] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the additive color emitted by an object.
+* @param {Array<Number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
 */
-function Material(ambient, diffuse, specular,shininess,emission) {
+H3DU.Material = function(ambient, diffuse, specular,shininess,emission) {
  //console.log([ambient,diffuse,specular,shininess,emission]+"")
- if((ambient!==null && typeof ambient!=="undefined"))ambient=GLUtil.toGLColor(ambient);
- if((diffuse!==null && typeof diffuse!=="undefined"))diffuse=GLUtil.toGLColor(diffuse);
- if((specular!==null && typeof specular!=="undefined"))specular=GLUtil.toGLColor(specular);
- if((emission!==null && typeof emission!=="undefined"))emission=GLUtil.toGLColor(emission);
+ if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambient);
+ if((diffuse!==null && typeof diffuse!=="undefined"))diffuse=H3DU.toGLColor(diffuse);
+ if((specular!==null && typeof specular!=="undefined"))specular=H3DU.toGLColor(specular);
+ if((emission!==null && typeof emission!=="undefined"))emission=H3DU.toGLColor(emission);
  /** Specular highlight exponent of this material.
 * The greater the number, the more concentrated the specular
 * highlights are (and the smoother the material behaves).
@@ -92,7 +92,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * Used for objects that glow on their own, among other things.
 * Each part of the object will be affected by the additive color the
 * same way regardless of lighting (this property won't be used in the
-* default shader if [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting}
+* default shader if [H3DU.Scene3D.disableLighting()]{@link H3DU.Scene3D#disableLighting}
 * is called, disabling lighting calculations).<p>
 * This value is a 3-element array giving the red, green, and blue
 * components.
@@ -101,7 +101,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  */
  this.emission=emission ? emission.slice(0,3) : [0,0,0];
 /**
-* Texture for this material.  Each color in the texture
+* H3DU.Texture for this material.  Each color in the texture
 * sets the diffusion (also called "albedo")
 * of each part of the material.
 * @default
@@ -113,7 +113,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * than the default black for this to have an effect).<p>
 * The specular map is usually grayscale (all three components are the same in each pixel),
 * but can be colored if the material represents an uncoated metal of some sort (in which case the specular
-* color property should be (1,1,1) or another grayscale color). See {@link glutil.Material#specular}.<p>
+* color property should be (1,1,1) or another grayscale color). See {@link H3DU.Material#specular}.<p>
 * Any texture used for specular maps should not be in JPEG format or any other
 * format that uses lossy compression, as compression artifacts can result in inaccurate
 * specular factors in certain areas.
@@ -146,7 +146,7 @@ A strong tilt indicates strong relief detail at that point.<p>
 * normals in certain areas.
 *<p>
 * For normal mapping to work, an object's mesh must include normals,
-* tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
+* tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
 * object only has normals and texture coordinates, the <code>recalcTangents()</code>
 * method can calculate the tangents and bitangents appropriate for normal mapping.
 * @default
@@ -165,14 +165,14 @@ A strong tilt indicates strong relief detail at that point.<p>
  this.shader=null;
 }
 /**
-* Clones this object's parameters to a new Material
+* Clones this object's parameters to a new H3DU.Material
 * object and returns that object. The material's texture
 * maps and shader program, if any, won't be cloned, but rather, a reference
 * to the same object will be used.
-* @returns {glutil.Material} A copy of this object.
+* @returns {H3DU.Material} A copy of this object.
 */
-Material.prototype.copy=function(){
- return new Material(
+H3DU.Material.prototype.copy=function(){
+ return new H3DU.Material(
   this.ambient.slice(0,this.ambient.length),
   this.diffuse.slice(0,this.diffuse.length),
   this.specular.slice(0,this.specular.length),
@@ -194,45 +194,45 @@ Material.prototype.copy=function(){
 * <li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties
 * of this material are used, and the object with this material will be drawn without
 * regard to lighting.
-* <li><code>ambient</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color. (See {@link glutil.Material#ambient}.)
+* <li><code>ambient</code> - A [color vector or string]{@link H3DU.toGLColor} giving the ambient color. (See {@link H3DU.Material#ambient}.)
 * The default is (0.2, 0.2, 0.2).
-* <li><code>diffuse</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving
-* the diffusion color (also called "albedo"). (See {@link glutil.Material#diffuse}.) The default is (0.8, 0.8, 0.8).
-* <li><code>specular</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving
-* the specular reflection.  (See {@link glutil.Material#specular}.) The default is (0,0,0), meaning no specular highlights.
-* <li><code>shininess</code> - Specular reflection exponent.  (See {@link glutil.Material#shininess}).
+* <li><code>diffuse</code> - A [color vector or string]{@link H3DU.toGLColor} giving
+* the diffusion color (also called "albedo"). (See {@link H3DU.Material#diffuse}.) The default is (0.8, 0.8, 0.8).
+* <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving
+* the specular reflection.  (See {@link H3DU.Material#specular}.) The default is (0,0,0), meaning no specular highlights.
+* <li><code>shininess</code> - Specular reflection exponent.  (See {@link H3DU.Material#shininess}).
 * Ranges from 0 through 128. The default is 0.
-* <li><code>emission</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving
-* the additive color.  (See {@link glutil.Material#emission}.) If this is an array, its numbers can
+* <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
+* the additive color.  (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
 * range from -1 to 1. The default is (0,0,0).
-* <li><code>texture</code> - {@link glutil.Texture} object, or a string with the URL of the texture
+* <li><code>texture</code> - {@link H3DU.Texture} object, or a string with the URL of the texture
 * to use.
-* <li><code>specularMap</code> - {@link glutil.Texture} object, or a string with the URL, of a specular
-* map texture (see {@link glutil.Material#specularMap}).
-* <li><code>normalMap</code> - {@link glutil.Texture} object, or a string with the URL, of a normal
-* map (bump map) texture (see {@link glutil.Material#normalMap}).
-* <li><code>shader</code> - {@link glutil.ShaderProgram} object for a WebGL shader program
+* <li><code>specularMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a specular
+* map texture (see {@link H3DU.Material#specularMap}).
+* <li><code>normalMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a normal
+* map (bump map) texture (see {@link H3DU.Material#normalMap}).
+* <li><code>shader</code> - {@link H3DU.ShaderProgram} object for a WebGL shader program
 * to use when rendering objects with this material.
 * </ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
-* @returns {glutil.Material} This object.
+* @returns {H3DU.Material} This object.
 */
-Material.prototype.setParams=function(params){
+H3DU.Material.prototype.setParams=function(params){
  var param;
  if((typeof params.ambient !== "undefined" && params.ambient!==null)){
-  this.ambient=GLUtil.toGLColor(params.ambient);
+  this.ambient=H3DU.toGLColor(params.ambient);
   if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3)
  }
  if((typeof params.diffuse !== "undefined" && params.diffuse!==null)){
-  this.diffuse=GLUtil.toGLColor(params.diffuse);
+  this.diffuse=H3DU.toGLColor(params.diffuse);
   if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4)
  }
  if((typeof params.specular !== "undefined" && params.specular!==null)){
-  this.specular=GLUtil.toGLColor(params.specular);
+  this.specular=H3DU.toGLColor(params.specular);
   if(this.specular.length>3)this.specular=this.specular.slice(0,3)
  }
  if((typeof params.emission !== "undefined" && params.emission!==null)){
-  this.emission=GLUtil.toGLColor(params.emission);
+  this.emission=H3DU.toGLColor(params.emission);
   if(this.emission.length>3)this.emission=this.emission.slice(0,3)
  }
  if((typeof params.shininess !== "undefined" && params.shininess!==null)){
@@ -241,7 +241,7 @@ Material.prototype.setParams=function(params){
  if((typeof params.texture !== "undefined" && params.texture!==null)){
    param=params.texture;
    if(typeof param==="string"){
-    this.texture=new Texture(param);
+    this.texture=new H3DU.Texture(param);
    } else {
     this.texture=param;
    }
@@ -249,7 +249,7 @@ Material.prototype.setParams=function(params){
  if((typeof params.specularMap !== "undefined" && params.specularMap!==null)){
    param=params.specularMap;
    if(typeof param==="string"){
-    this.specularMap=new Texture(param);
+    this.specularMap=new H3DU.Texture(param);
    } else {
     this.specularMap=param;
    }
@@ -257,7 +257,7 @@ Material.prototype.setParams=function(params){
  if((typeof params.normalMap !== "undefined" && params.normalMap!==null)){
    param=params.normalMap;
    if(typeof param==="string"){
-    this.normalMap=new Texture(param);
+    this.normalMap=new H3DU.Texture(param);
    } else {
     this.normalMap=param;
    }
@@ -270,9 +270,9 @@ Material.prototype.setParams=function(params){
  }
  return this;
 };
-/** Convenience method that returns a Material
+/** Convenience method that returns an H3DU.Material
  * object from an RGBA color.
-* @param {Array<Number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+* @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
 * or the red color component (0-1).
 * @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
@@ -281,28 +281,28 @@ Material.prototype.setParams=function(params){
 * @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @returns {glutil.Material} The resulting material object.
+* @returns {H3DU.Material} The resulting material object.
  */
-Material.fromColor=function(r,g,b,a){
- var color=GLUtil.toGLColor(r,g,b,a);
- return new Material(color,color);
+H3DU.Material.fromColor=function(r,g,b,a){
+ var color=H3DU.toGLColor(r,g,b,a);
+ return new H3DU.Material(color,color);
 };
 
-/** Convenience method that returns a Material
+/** Convenience method that returns an H3DU.Material
  * object from a texture to apply to a 3D object's surface.
-* @param {glutil.Texture|string} texture {@link glutil.Texture} object, or a string with the
+* @param {H3DU.Texture|string} texture {@link H3DU.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this constructor
 *  will not load that image yet.
-* @returns {glutil.Material} The resulting material object.
+* @returns {H3DU.Material} The resulting material object.
  */
-Material.fromTexture=function(texture){
- return new Material().setParams({"texture":texture});
+H3DU.Material.fromTexture=function(texture){
+ return new H3DU.Material().setParams({"texture":texture});
 };
 
 /**
 * Not documented yet.
 */
-Material.forShader=function(shader){
- return new Material().setParams({"shader":shader});
+H3DU.Material.forShader=function(shader){
+ return new H3DU.Material().setParams({"shader":shader});
 }

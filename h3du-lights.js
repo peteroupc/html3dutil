@@ -4,9 +4,9 @@
 * When constructed, the default lighting will have a default
 * ambient color and one directional light source.
 * @class
-* @alias glutil.Lights
+* @alias H3DU.Lights
 */
-function Lights(){
+H3DU.Lights = function(){
  this.lights=[];
  /**
  *  Ambient color for the scene.  This is the color of the light
@@ -27,8 +27,8 @@ function Lights(){
 /**
  * Not documented yet.
  */
-Lights.prototype.setDefaults=function(){
- var ls=new LightSource().setParams({
+H3DU.Lights.prototype.setDefaults=function(){
+ var ls=new H3DU.LightSource().setParams({
   ambient:[0,0,0,1],
   position:[0,0,1,0],
   diffuse:[1,1,1,1],
@@ -43,10 +43,10 @@ Lights.prototype.setDefaults=function(){
    by the default shader program.
    @const
    */
-Lights.MAX_LIGHTS = 3;
+H3DU.Lights.MAX_LIGHTS = 3;
 /** @private */
-Lights._createNewLight=function(index){
- var ret=new LightSource();
+H3DU.Lights._createNewLight=function(index){
+ var ret=new H3DU.LightSource();
  if(index!==0){
   ret.diffuse=[0,0,0,0];
   ret.specular=[0,0,0];
@@ -56,7 +56,7 @@ Lights._createNewLight=function(index){
 /**
  * Gets the number of lights defined in this object.
  * @returns {Number} Return value. */
-Lights.prototype.getCount=function(){
+H3DU.Lights.prototype.getCount=function(){
  return this.lights.length;
 };
 
@@ -67,15 +67,15 @@ Lights.prototype.getCount=function(){
  * If the light doesn't exist at that index, it will be created.
  * @returns {LightSource} The corresponding light source object.
  */
-Lights.prototype.getLight=function(index){
+H3DU.Lights.prototype.getLight=function(index){
  var oldLength=this.lights.length;
- if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ if(!this.lights[index])this.lights[index]=H3DU.Lights._createNewLight(index);
  if(this.lights.length-oldLength>=2){
   // Ensure existence of lights that come between the new
   // light and the last light
   for(var i=oldLength;i<this.lights.length;i++){
    if(!this.lights[i]){
-    this.lights[i]=Lights._createNewLight(i);
+    this.lights[i]=H3DU.Lights._createNewLight(i);
    }
   }
  }
@@ -86,10 +86,10 @@ Lights.prototype.getLight=function(index){
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
- * @returns {Lights} This object.
+ * @param {object} params An object as described in {@link H3DU.LightSource.setParams}.
+ * @returns {H3DU.Lights} This object.
  */
-Lights.prototype.setParams=function(index,params){
+H3DU.Lights.prototype.setParams=function(index,params){
  this.getLight(index).setParams(params);
  return this;
 };
@@ -101,15 +101,15 @@ Lights.prototype.setParams=function(index,params){
  * If the light doesn't exist at that index, it will be created.
  * @param {Array<Number>} direction A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the diffuse color of the light.
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor}  giving the diffuse color of the light.
  * If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor}  giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the specular highlight color will
  * remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
- * @returns {Lights} This object.
+ * @returns {H3DU.Lights} This object.
  */
-Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
+H3DU.Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
  if(diffuse!=null)
    ret=ret.setParams(index,{"diffuse":diffuse});
@@ -124,11 +124,11 @@ Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  * If the light doesn't exist at that index, it will be created.
  * @param {Array<Number>} position A 3-element vector giving the X, Y, and Z
  * coordinates, respectively, of the light, in world coordinates.
- * @param {Array<Number>} [diffuse] Diffuse color, as described in {@link glutil.Lights.setDirectionalLight}.
- * @param {Array<Number>} [specular] Specular color, as described in {@link glutil.Lights.setDirectionalLight}.
- * @returns {Lights} This object.
+ * @param {Array<Number>} [diffuse] Diffuse color, as described in {@link H3DU.Lights.setDirectionalLight}.
+ * @param {Array<Number>} [specular] Specular color, as described in {@link H3DU.Lights.setDirectionalLight}.
+ * @returns {H3DU.Lights} This object.
  */
-Lights.prototype.setPointLight=function(index,position,diffuse,specular){
+H3DU.Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
  if(diffuse!=null)
    ret=ret.setParams(index,{"diffuse":diffuse});
@@ -141,16 +141,16 @@ Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  * Sets the color of the scene's ambient light.
 * @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
-* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* specifying an [HTML or CSS color]{@link H3DU.toGLColor}.
 * @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {Number} [a] Alpha color component (0-1).
 * Currently not used.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
  */
-Lights.prototype.setAmbient=function(r,g,b,a){
- this.sceneAmbient=GLUtil.toGLColor(r,g,b,a);
+H3DU.Lights.prototype.setAmbient=function(r,g,b,a){
+ this.sceneAmbient=H3DU.toGLColor(r,g,b,a);
  return this;
 }

@@ -7,14 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global define, exports */
-/**
-* A collection of math functions for working
-* with vectors, matrices, quaternions, and other
-* mathematical objects.<p>
-* See the tutorial "{@tutorial glmath}" for more information.
-* @module glmath
-* @license CC0-1.0
-*/
 (function (g,f) {
  "use strict";
 if (typeof define==="function" && define.amd) {
@@ -26,16 +18,21 @@ if (typeof define==="function" && define.amd) {
  }
 }(this, function (exports) {
  "use strict";
-if (exports.GLMath) { return; }
 
+if(!exports.H3DU){
+ exports.H3DU = {};
+}
+if (exports.H3DU.Math) { return; }
+var H3DU=exports.H3DU;
 /**
 * A collection of math functions for working
-* with vectors and matrices.<p>
+* with vectors, matrices, quaternions, and other
+* mathematical objects.<p>
 * See the tutorial "{@tutorial glmath}" for more information.
 * @class
-* @alias glmath.GLMath
+* @alias H3DU.Math
 */
-var GLMath={
+H3DU.Math={
 /**
  * Finds the cross product of two 3-element vectors (called A and B).
  * The following are properties of
@@ -50,7 +47,7 @@ oriented counterclockwise; otherwise, clockwise.  (If the X axis points right an
 axis down, the reverse is
 true.)  The triangle's area is half of the cross product's length.
 <li>If A and B are unit length vectors,
- * (via {@link glmath.GLMath.vec3norm}), the absolute value
+ * (via {@link glmath.H3DU.Math.vec3norm}), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
  * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
@@ -70,13 +67,13 @@ true.)  The triangle's area is half of the cross product's length.
  var b=triangle[1];
  var c=triangle[2];
  // Find vector from C to A
- var da=GLMath.vec3sub(a,c);
+ var da=H3DU.Math.vec3sub(a,c);
  // Find vector from C to B
- var db=GLMath.vec3sub(b,c);
+ var db=H3DU.Math.vec3sub(b,c);
  // The triangle's normal is the cross product of da and db
- var normal=GLMath.vec3cross(da,db);
+ var normal=H3DU.Math.vec3cross(da,db);
  // Find the triangle's area
- var area=GLMath.vec3length(normal)*0.5;
+ var area=H3DU.Math.vec3length(normal)*0.5;
  */
 vec3cross:function(a,b){
 return [a[1]*b[2]-a[2]*b[1],
@@ -90,7 +87,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * The dot product has the following properties:
  * <ul>
  * <li>If both vectors are unit length
- * (via {@link glmath.GLMath.vec3norm}), the cosine
+ * (via {@link glmath.H3DU.Math.vec3norm}), the cosine
  * of the angle between them is equal to their dot product.
  * <small>(More formally, the dot
  * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
@@ -110,7 +107,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * @example <caption>The following shows a fast way to compare
  * a vector's length using the dot product.</caption>
  * // Check if the vector's length squared is less than 20 units squared
- * if(GLMath.vec3dot(vector, vector)<20*20){
+ * if(H3DU.Math.vec3dot(vector, vector)<20*20){
  *  // The vector's length is shorter than 20 units
  * }
  */
@@ -249,7 +246,7 @@ return a;
  * @returns {Array<Number>} The parameter "a".
  */
 vec3scale:function(a,scalar){
- return GLMath.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
+ return H3DU.Math.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
 },
 /**
  * Does a linear interpolation between two 3-element vectors;
@@ -312,7 +309,7 @@ vec4lerp:function(v1,v2,factor){
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.GLMath.vec3length}.
+ * by its [length]{@link glmath.H3DU.Math.vec3length}.
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The parameter "vec".
  */
@@ -334,7 +331,7 @@ vec3normInPlace:function(vec){
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.GLMath.vec4length}.
+ * by its [length]{@link glmath.H3DU.Math.vec4length}.
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The parameter "vec".
  */
@@ -358,24 +355,24 @@ vec4normInPlace:function(vec){
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.GLMath.vec3length}.
+ * by its [length]{@link glmath.H3DU.Math.vec3length}.
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The resulting vector.
  */
 vec3norm:function(vec){
- return GLMath.vec3normInPlace([vec[0],vec[1],vec[2]]);
+ return H3DU.Math.vec3normInPlace([vec[0],vec[1],vec[2]]);
 },
 /**
  * Returns a normalized version of a 4-element vector.
  * When a vector is normalized, the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.GLMath.vec4length}.
+ * by its [length]{@link glmath.H3DU.Math.vec4length}.
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The resulting vector.
  */
 vec4norm:function(vec){
- return GLMath.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
+ return H3DU.Math.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
 },
 /**
  * Returns the distance of this 3-element vector from the origin.
@@ -551,7 +548,7 @@ var tvar59 = tvar4-tvar25;
 var det = tvar45*tvar57 + tvar6*tvar50 + tvar9*tvar53 + tvar42*tvar54 + tvar7*tvar55 +
 tvar10*tvar58 + tvar43*tvar56 + tvar46*tvar59 + tvar11*tvar48 + tvar44*tvar49 +
 tvar47*tvar51 + tvar8*tvar52;
-if(det===0)return GLMath.mat4identity();
+if(det===0)return H3DU.Math.mat4identity();
 det=1.0/det;
 var r=[];
 r[0] = m[6]*tvar10 - m[7]*tvar7 + tvar41*m[14] - m[5]*tvar11 - tvar38*m[15] + m[5]*tvar8;
@@ -589,9 +586,9 @@ quatConjugate:function(quat){
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
 quatInvert:function(quat){
- var lsq=1.0/GLMath.quatDot(quat,quat);
- return GLMath.vec4scaleInPlace(
-  GLMath.quatConjugate(quat),lsq);
+ var lsq=1.0/H3DU.Math.quatDot(quat,quat);
+ return H3DU.Math.vec4scaleInPlace(
+  H3DU.Math.quatConjugate(quat),lsq);
 },
 /**
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
@@ -644,7 +641,7 @@ quatToAxisAngle:function(a){
  if(d>0){
   d=1/Math.sqrt(d);
   return [a[0]*d,a[1]*d,a[2]*d,
-    Math.acos(w)*GLMath.Num360DividedByPi];
+    Math.acos(w)*H3DU.Math.Num360DividedByPi];
  } else {
   return [0,1,0,0];
  }
@@ -661,12 +658,12 @@ quatToAxisAngle:function(a){
  * will be normalized.
  */
 quatFromVectors:function(vec1,vec2){
-  var ret=GLMath.vec3cross(vec1,vec2);
-  var vecLengths=Math.sqrt(GLMath.vec3dot(vec1,vec1))*
-            Math.sqrt(GLMath.vec3dot(vec2,vec2));
+  var ret=H3DU.Math.vec3cross(vec1,vec2);
+  var vecLengths=Math.sqrt(H3DU.Math.vec3dot(vec1,vec1))*
+            Math.sqrt(H3DU.Math.vec3dot(vec2,vec2));
   if(vecLengths===0)vecLengths=1; // degenerate case
-  ret[3]=vecLengths+GLMath.vec3dot(vec1,vec2);
-  return GLMath.quatNormInPlace(ret);
+  ret[3]=vecLengths+H3DU.Math.vec3dot(vec1,vec2);
+  return H3DU.Math.quatNormInPlace(ret);
 },
 /**
  * Generates a quaternion from an angle and axis of rotation.
@@ -696,22 +693,22 @@ if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
 } else if(typeof v==="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
 }
 var cost = Math.cos(ang);
 var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
-var vec=GLMath.vec3normInPlace([v0,v1,v2]);
+var vec=H3DU.Math.vec3normInPlace([v0,v1,v2]);
 var ret=[vec[0],vec[1],vec[2],cost];
 ret[0]*=sint;
 ret[1]*=sint;
@@ -735,23 +732,23 @@ return ret;
  * @param {Number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {number|null} mode Specifies the order in which the rotations will occur (in terms of their effect).
- * Is one of the GLMath constants such as GLMath.PitchYawRoll
- * and GLMath.RollYawPitch. If null or omitted, the rotation will be
+ * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
+ * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
  * @returns {Array<Number>} The generated quaternion.
  */
 quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  var rollRad,pitchRad,yawRad;
- if((mode===null || typeof mode==="undefined"))mode=GLMath.RollPitchYaw;
+ if((mode===null || typeof mode==="undefined"))mode=H3DU.Math.RollPitchYaw;
  if(mode<0 || mode>=6)throw new Error("invalid mode");
  if(pitchDegrees.constructor===Array){
-  rollRad=((pitchDegrees[2]>=0 && pitchDegrees[2]<360) ? pitchDegrees[2] : ((pitchDegrees[2]%360)+(pitchDegrees[2]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
-  pitchRad=((pitchDegrees[0]>=0 && pitchDegrees[0]<360) ? pitchDegrees[0] : ((pitchDegrees[0]%360)+(pitchDegrees[0]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
-  yawRad=((pitchDegrees[1]>=0 && pitchDegrees[1]<360) ? pitchDegrees[1] : ((pitchDegrees[1]%360)+(pitchDegrees[1]<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  rollRad=((pitchDegrees[2]>=0 && pitchDegrees[2]<360) ? pitchDegrees[2] : ((pitchDegrees[2]%360)+(pitchDegrees[2]<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
+  pitchRad=((pitchDegrees[0]>=0 && pitchDegrees[0]<360) ? pitchDegrees[0] : ((pitchDegrees[0]%360)+(pitchDegrees[0]<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
+  yawRad=((pitchDegrees[1]>=0 && pitchDegrees[1]<360) ? pitchDegrees[1] : ((pitchDegrees[1]%360)+(pitchDegrees[1]<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
  } else {
-  rollRad=((rollDegrees>=0 && rollDegrees<360) ? rollDegrees : ((rollDegrees%360)+(rollDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
-  pitchRad=((pitchDegrees>=0 && pitchDegrees<360) ? pitchDegrees : ((pitchDegrees%360)+(pitchDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
-  yawRad=((yawDegrees>=0 && yawDegrees<360) ? yawDegrees : ((yawDegrees%360)+(yawDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  rollRad=((rollDegrees>=0 && rollDegrees<360) ? rollDegrees : ((rollDegrees%360)+(rollDegrees<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
+  pitchRad=((pitchDegrees>=0 && pitchDegrees<360) ? pitchDegrees : ((pitchDegrees%360)+(pitchDegrees<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
+  yawRad=((yawDegrees>=0 && yawDegrees<360) ? yawDegrees : ((yawDegrees%360)+(yawDegrees<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
  }
   var py = Math.cos(pitchRad);
   var px = (pitchRad>=0 && pitchRad<6.283185307179586) ? (pitchRad<=3.141592653589793 ? Math.sqrt(1.0-py*py) : -Math.sqrt(1.0-py*py)) : Math.sin(pitchRad);
@@ -760,17 +757,17 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
   var ry = Math.cos(rollRad);
   var rx = (rollRad>=0 && rollRad<6.283185307179586) ? (rollRad<=3.141592653589793 ? Math.sqrt(1.0-ry*ry) : -Math.sqrt(1.0-ry*ry)) : Math.sin(rollRad);
   var t8,t7;
-  if(mode===GLMath.PitchYawRoll || mode===GLMath.PitchRollYaw){
+  if(mode===H3DU.Math.PitchYawRoll || mode===H3DU.Math.PitchRollYaw){
    t7 = [rx*yx, ry * yx, rx * yy, ry * yy];
-   if(mode===GLMath.PitchYawRoll)t7[0]=-t7[0];
+   if(mode===H3DU.Math.PitchYawRoll)t7[0]=-t7[0];
    t8 = [t7[3] * px + t7[0] * py, t7[1] * py + t7[2] * px, t7[2] * py - t7[1] * px, t7[3] * py - t7[0] * px];
-  } else if(mode===GLMath.YawPitchRoll || mode===GLMath.YawRollPitch){
+  } else if(mode===H3DU.Math.YawPitchRoll || mode===H3DU.Math.YawRollPitch){
    t7 = [ry * px, rx * px, rx * py, ry * py];
-   if(mode===GLMath.YawRollPitch)t7[1]=-t7[1];
+   if(mode===H3DU.Math.YawRollPitch)t7[1]=-t7[1];
    t8 = [t7[0] * yy - t7[2] * yx, t7[3] * yx + t7[1] * yy, t7[2] * yy + t7[0] * yx, t7[3] * yy - t7[1] * yx];
   } else {
    t7 = [yy * px, yx * py, yx * px, yy * py];
-   if(mode===GLMath.RollPitchYaw)t7[2]=-t7[2];
+   if(mode===H3DU.Math.RollPitchYaw)t7[2]=-t7[2];
    t8 = [t7[0] * ry + t7[1] * rx, t7[1] * ry - t7[0] * rx, t7[3] * rx + t7[2] * ry, t7[3] * ry - t7[2] * rx];
   }
   return t8;
@@ -781,8 +778,8 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * @param {Array<Number>} a A quaternion.  Should be normalized.
  * @param {number|null} mode Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
- * Is one of the GLMath constants such as GLMath.PitchYawRoll
- * and GLMath.RollYawPitch. If null or omitted, the rotation will be
+ * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
+ * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
  * @returns {Array<Number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
@@ -795,19 +792,19 @@ quatToTaitBryan:function(a,mode){
   var c0=a[3];
   var c1,c2,c3;
   var e=1;
-  if((mode===null || typeof mode==="undefined"))mode=GLMath.RollPitchYaw;
+  if((mode===null || typeof mode==="undefined"))mode=H3DU.Math.RollPitchYaw;
   if(mode<0 || mode>=6)throw new Error("invalid mode");
-  if(mode===GLMath.RollPitchYaw){
+  if(mode===H3DU.Math.RollPitchYaw){
    c1=a[1]; c2=a[0]; c3=a[2];
    e=-1;
-  } else if(mode===GLMath.PitchYawRoll){
+  } else if(mode===H3DU.Math.PitchYawRoll){
    c1=a[2]; c2=a[1]; c3=a[0];
    e=-1;
-  } else if(mode===GLMath.PitchRollYaw){
+  } else if(mode===H3DU.Math.PitchRollYaw){
    c1=a[1]; c2=a[2]; c3=a[0];
-  } else if(mode===GLMath.YawPitchRoll){
+  } else if(mode===H3DU.Math.YawPitchRoll){
    c1=a[2]; c2=a[0]; c3=a[1];
-  } else if(mode===GLMath.YawRollPitch){
+  } else if(mode===H3DU.Math.YawRollPitch){
    c1=a[0]; c2=a[2]; c3=a[1];
    e=-1;
   } else {
@@ -822,27 +819,27 @@ quatToTaitBryan:function(a,mode){
   if(sine<-1.0)sine=-1.0; // for stability
   var e2=Math.asin(sine);
   var e3=Math.atan2(2*(c0*c3-e*c1*c2),1-(sq2+sq3)*2);
-  e1*=GLMath.Num180DividedByPi;
-  e2*=GLMath.Num180DividedByPi;
-  e3*=GLMath.Num180DividedByPi;
+  e1*=H3DU.Math.Num180DividedByPi;
+  e2*=H3DU.Math.Num180DividedByPi;
+  e3*=H3DU.Math.Num180DividedByPi;
   // Singularity near the poles
   if(Math.abs(e2-90)<0.000001 ||
       Math.abs(e2+90)<0.000001){
     e3=0;
-    e1=Math.atan2(c1,c0)*GLMath.Num180DividedByPi;
+    e1=Math.atan2(c1,c0)*H3DU.Math.Num180DividedByPi;
     if(isNaN(e1))e1=0;
   }
   // Return the pitch/yaw/roll angles in the standard order
   var angles=[];
-  if(mode===GLMath.RollPitchYaw){
+  if(mode===H3DU.Math.RollPitchYaw){
    angles[0]=e2; angles[1]=e1; angles[2]=e3;
-  } else if(mode===GLMath.PitchYawRoll){
+  } else if(mode===H3DU.Math.PitchYawRoll){
    angles[0]=e3; angles[1]=e2; angles[2]=e1;
-  } else if(mode===GLMath.PitchRollYaw){
+  } else if(mode===H3DU.Math.PitchRollYaw){
    angles[0]=e3; angles[1]=e1; angles[2]=e2;
-  } else if(mode===GLMath.YawPitchRoll){
+  } else if(mode===H3DU.Math.YawPitchRoll){
    angles[0]=e2; angles[1]=e3; angles[2]=e1;
-  } else if(mode===GLMath.YawRollPitch){
+  } else if(mode===H3DU.Math.YawRollPitch){
    angles[0]=e1; angles[1]=e3; angles[2]=e2;
   } else {
    angles[0]=e1; angles[1]=e2; angles[2]=e3;
@@ -871,9 +868,9 @@ quatNlerp:function(q1,q2,factor){
   var t9 = q2[3] * factor;
   var t10 = ((((q1[0] * q2[0]) + q1[1] * q2[1]) + q1[2] * q2[2]) + q1[3] * q2[3]);
   if ((t10 < 0.0)) {
-    return GLMath.quatNormInPlace([t2 - t6, t3 - t7, t4 - t8, t5 - t9]);
+    return H3DU.Math.quatNormInPlace([t2 - t6, t3 - t7, t4 - t8, t5 - t9]);
   } else {
-    return GLMath.quatNormInPlace([t2 + t6, t3 + t7, t4 + t8, t5 + t9]);
+    return H3DU.Math.quatNormInPlace([t2 + t6, t3 + t7, t4 + t8, t5 + t9]);
   }
 },
 /**
@@ -888,11 +885,11 @@ quatNlerp:function(q1,q2,factor){
  * @returns {Array<Number>} The interpolated quaternion.
  */
 quatSlerp:function(q1,q2,factor){
- var cosval=GLMath.quatDot(q1,q2);
+ var cosval=H3DU.Math.quatDot(q1,q2);
  var qd=q2;
  if(cosval<0){
   qd=[-q2[0],-q2[1],-q2[2],-q2[3]];
-  cosval=GLMath.quatDot(q1,qd);
+  cosval=H3DU.Math.quatDot(q1,qd);
  }
  var angle=0;
  if(cosval>-1){
@@ -942,8 +939,8 @@ quatSlerp:function(q1,q2,factor){
  * @returns {Array<Number>} The resulting quaternion.
  */
 quatRotate:function(quat,angle,v,vy,vz){
-  return GLMath.quatMultiply(quat,
-    GLMath.quatFromAxisAngle(angle,v,vy,vz));
+  return H3DU.Math.quatMultiply(quat,
+    H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
 },
 /**
  * Transforms a 3- or 4-element vector using a quaternion's rotation.
@@ -1040,7 +1037,7 @@ mat4toMat3:function(m4){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4transpose:function(m4){
- return GLMath.mat4transposeInPlace(m4.slice(0,16));
+ return H3DU.Math.mat4transposeInPlace(m4.slice(0,16));
 },
 /**
  * Transposes a 4x4 matrix in place without creating
@@ -1325,7 +1322,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4perspective:function(fovY,aspectRatio,near,far){
- var fov=((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*GLMath.PiDividedBy360;
+ var fov=((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
  var f = 1/Math.tan(fov);
  var nmf = near-far;
  nmf=1/nmf;
@@ -1357,27 +1354,27 @@ mat4lookat:function(viewerPos,lookingAt,up){
  if(!up)up=[0,1,0];
  if(!lookingAt)lookingAt=[0,0,0];
  var f=[lookingAt[0]-viewerPos[0],lookingAt[1]-viewerPos[1],lookingAt[2]-viewerPos[2]];
- var len=GLMath.vec3length(f);
+ var len=H3DU.Math.vec3length(f);
  if(len<1e-6){
-   return GLMath.mat4identity();
+   return H3DU.Math.mat4identity();
  }
  // normalize "f"
  len=1.0/len;
  f[0]*=len;
  f[1]*=len;
  f[2]*=len;
- up=GLMath.vec3norm(up);
- var s=GLMath.vec3cross(f,up);
- GLMath.vec3normInPlace(s);
- var u=GLMath.vec3cross(s,f);
- GLMath.vec3normInPlace(u);
+ up=H3DU.Math.vec3norm(up);
+ var s=H3DU.Math.vec3cross(f,up);
+ H3DU.Math.vec3normInPlace(s);
+ var u=H3DU.Math.vec3cross(s,f);
+ H3DU.Math.vec3normInPlace(u);
  f[0]=-f[0];
  f[1]=-f[1];
  f[2]=-f[2];
  return [s[0],u[0],f[0],0,s[1],u[1],f[1],0,s[2],u[2],f[2],0,
-    -GLMath.vec3dot(viewerPos,s),
-    -GLMath.vec3dot(viewerPos,u),
-    -GLMath.vec3dot(viewerPos,f),1];
+    -H3DU.Math.vec3dot(viewerPos,s),
+    -H3DU.Math.vec3dot(viewerPos,u),
+    -H3DU.Math.vec3dot(viewerPos,f),1];
 },
 /**
  * Returns a 4x4 matrix representing an orthographic projection.
@@ -1439,9 +1436,9 @@ mat4ortho:function(l,r,b,t,n,f){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
- var fov=((fovX>=0 && fovX<360) ? fovX : ((fovX%360)+(fovX<0 ? 360 : 0)))*GLMath.PiDividedBy360;
- var fovY=GLMath.Num360DividedByPi*Math.atan2(Math.tan(fov),aspectRatio);
- return GLMath.mat4perspective(fovY,aspectRatio,near,far);
+ var fov=((fovX>=0 && fovX<360) ? fovX : ((fovX%360)+(fovX<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
+ var fovY=H3DU.Math.Num360DividedByPi*Math.atan2(Math.tan(fov),aspectRatio);
+ return H3DU.Math.mat4perspective(fovY,aspectRatio,near,far);
 },
 /**
  * Returns a 4x4 matrix representing a 2D orthographic projection.<p>
@@ -1457,7 +1454,7 @@ mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho2d:function(l,r,b,t){
- return GLMath.mat4ortho2d(l,r,b,t,-1,1);
+ return H3DU.Math.mat4ortho2d(l,r,b,t,-1,1);
 },
 /**
  * Returns a 4x4 matrix representing a 2D orthographic projection,
@@ -1480,7 +1477,7 @@ mat4ortho2d:function(l,r,b,t){
 * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho2dAspect:function(l,r,b,t,aspect){
- return GLMath.mat4orthoAspect(l,r,b,t,-1,1,aspect);
+ return H3DU.Math.mat4orthoAspect(l,r,b,t,-1,1,aspect);
 },
 /**
  * Returns a 4x4 matrix representing an orthographic projection,
@@ -1532,7 +1529,7 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
      l+=(newDim-w)*0.5
     }
   };
-  return GLMath.mat4ortho(l,r,b,t,n,f);
+  return H3DU.Math.mat4ortho(l,r,b,t,n,f);
 },
 /**
  * Returns a 4x4 matrix representing a perspective projection
@@ -1685,18 +1682,18 @@ if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*H3DU.Math.PiDividedBy180;
 } else if(typeof v==="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=((ang>=0 && ang<360) ? ang : ((ang%360)+(ang<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ ang=((ang>=0 && ang<360) ? ang : ((ang%360)+(ang<0 ? 360 : 0)))*H3DU.Math.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*H3DU.Math.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
@@ -1782,18 +1779,18 @@ if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*H3DU.Math.PiDividedBy180;
 } else if(typeof v==="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=((ang>=0 && ang<360) ? ang : ((ang%360)+(ang<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ ang=((ang>=0 && ang<360) ? ang : ((ang%360)+(ang<0 ? 360 : 0)))*H3DU.Math.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ ang=((angle>=0 && angle<360) ? angle : ((angle%360)+(angle<0 ? 360 : 0)))*H3DU.Math.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
@@ -1842,7 +1839,7 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 * divided by the normal's length.
 * @returns {Array<Number>} The parameter "plane".
 */
-GLMath.planeNormInPlace=function(plane){
+H3DU.Math.planeNormInPlace=function(plane){
  var x=plane[0];
  var y=plane[1];
  var z=plane[2];
@@ -1871,8 +1868,8 @@ GLMath.planeNormInPlace=function(plane){
 * @returns {Array<Number>} A normalized version of
 * the plane.
 */
-GLMath.planeNorm=function(plane){
- return GLMath.planeNormInPlace(plane.slice(0,4));
+H3DU.Math.planeNorm=function(plane){
+ return H3DU.Math.planeNormInPlace(plane.slice(0,4));
 };
 /**
 * Finds the six clipping planes of a view frustum defined
@@ -1892,45 +1889,45 @@ GLMath.planeNorm=function(plane){
 * bottom, near, and far clipping planes.  All six planes
 * will be normalized.
 */
-GLMath.mat4toFrustumPlanes=function(matrix){
+H3DU.Math.mat4toFrustumPlanes=function(matrix){
  var frustum=[[],[],[],[],[],[]];
  // Left clipping plane
- frustum[0]=GLMath.planeNormInPlace([
+ frustum[0]=H3DU.Math.planeNormInPlace([
   matrix[3]  + matrix[0],
   matrix[7]  + matrix[4],
   matrix[11] + matrix[8],
   matrix[15] + matrix[12]
  ]);
  // Right clipping plane
- frustum[1]=GLMath.planeNormInPlace([
+ frustum[1]=H3DU.Math.planeNormInPlace([
   matrix[3]  - matrix[0],
   matrix[7]  - matrix[4],
   matrix[11] - matrix[8],
   matrix[15] - matrix[12]
  ]);
  // Top clipping plane
- frustum[2]=GLMath.planeNormInPlace([
+ frustum[2]=H3DU.Math.planeNormInPlace([
   matrix[3]  - matrix[1],
   matrix[7]  - matrix[5],
   matrix[11] - matrix[9],
   matrix[15] - matrix[13]
  ]);
  // Bottom clipping plane
- frustum[3]=GLMath.planeNormInPlace([
+ frustum[3]=H3DU.Math.planeNormInPlace([
   matrix[3]  + matrix[1],
   matrix[7]  + matrix[5],
   matrix[11] + matrix[9],
   matrix[15] + matrix[13]
  ]);
  // Near clipping plane
- frustum[4]=GLMath.planeNormInPlace([
+ frustum[4]=H3DU.Math.planeNormInPlace([
   matrix[3]  + matrix[2],
   matrix[7]  + matrix[6],
   matrix[11] + matrix[10],
   matrix[15] + matrix[14]
  ]);
  // Far clipping plane
- frustum[5]=GLMath.planeNormInPlace([
+ frustum[5]=H3DU.Math.planeNormInPlace([
   matrix[3]  - matrix[2],
   matrix[7]  - matrix[6],
   matrix[11] - matrix[10],
@@ -1957,7 +1954,7 @@ GLMath.mat4toFrustumPlanes=function(matrix){
 * is partially or totally
 * inside the frustum; <code>false</code> otherwise.
 */
-GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
+H3DU.Math.frustumHasSphere=function(frustum, x, y, z, radius){
  if(radius<0)throw new Error("radius is negative");
  for(var i=0;i<6;i++){
   var plane=frustum[i];
@@ -1980,7 +1977,7 @@ GLMath.frustumHasSphere=function(frustum, x, y, z, radius){
 * of the minimum coordinates is greater than its
 * corresponding maximum coordinate; otherwise, <code>false</code>.
 */
-GLMath.boxIsEmpty=function(box){
+H3DU.Math.boxIsEmpty=function(box){
  return !(box[0]<=box[3] && box[1]<=box[4] && box[2]<=box[5]);
 };
 /**
@@ -2001,8 +1998,8 @@ GLMath.boxIsEmpty=function(box){
 * definitely outside the frustum, or if the box is empty
 * (see "boxIsEmpty").
 */
-GLMath.frustumHasBox=function(frustum, box){
- if(GLMath.boxIsEmpty(box)){
+H3DU.Math.frustumHasBox=function(frustum, box){
+ if(H3DU.Math.boxIsEmpty(box)){
   return false;
  }
  for(var i=0;i<6;i++){
@@ -2040,7 +2037,7 @@ GLMath.frustumHasBox=function(frustum, box){
 * @returns {Boolean} true if the point is inside;
 * otherwise false;
 */
-GLMath.frustumHasPoint=function(frustum, x, y, z){
+H3DU.Math.frustumHasPoint=function(frustum, x, y, z){
  for(var i=0;i<6;i++){
   var d=frustum[i][0]*x+frustum[i][1]*y+
      frustum[i][2]*z+frustum[i][3];
@@ -2056,29 +2053,29 @@ GLMath.frustumHasPoint=function(frustum, x, y, z){
  @param {Array<Number>} a The first quaternion.
  @param {Array<Number>} b The second quaternion.
  @returns {Number} */
-GLMath.quatDot=GLMath.vec4dot;
+H3DU.Math.quatDot=H3DU.Math.vec4dot;
 /**
  * Converts a quaternion to its normalized version.
  * When a quaternion is normalized, the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
- * by its [length]{@link glmath.GLMath.quatLength}.
+ * by its [length]{@link glmath.H3DU.Math.quatLength}.
  * @function
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The parameter "quat".
  */
-GLMath.quatNormInPlace=GLMath.vec4normInPlace;
+H3DU.Math.quatNormInPlace=H3DU.Math.vec4normInPlace;
 /**
  * Converts a quaternion to its normalized version; returns a new quaternion.
  * When a quaternion is normalized, the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
- * by its [length]{@link glmath.GLMath.quatLength}.
+ * by its [length]{@link glmath.H3DU.Math.quatLength}.
  * @function
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The normalized quaternion.
  */
-GLMath.quatNorm=GLMath.vec4norm;
+H3DU.Math.quatNorm=H3DU.Math.vec4norm;
 /**
 * Returns the distance of this quaternion from the origin.
 * It's the same as the square root of the sum of the squares
@@ -2086,7 +2083,7 @@ GLMath.quatNorm=GLMath.vec4norm;
 * @function
  @param {Array<Number>} quat The quaternion.
   @returns {Number} */
-GLMath.quatLength=GLMath.vec4length;
+H3DU.Math.quatLength=H3DU.Math.vec4length;
 /**
  * Multiplies each element of a quaternion by a factor
  * and stores the result in that quaternion.
@@ -2095,81 +2092,80 @@ GLMath.quatLength=GLMath.vec4length;
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The parameter "a".
  */
-GLMath.quatScaleInPlace=GLMath.vec4scaleInPlace;
+H3DU.Math.quatScaleInPlace=H3DU.Math.vec4scaleInPlace;
 /**
  * Returns a copy of a quaternion.
 * @function
  * @returns {Array<Number>} Return value. */
-GLMath.quatCopy=GLMath.vec4copy;
+H3DU.Math.quatCopy=H3DU.Math.vec4copy;
 /**
  Closest approximation to pi times 2, or a 360-degree turn in radians.
  @const
  @default
 */
-GLMath.PiTimes2 = 6.283185307179586476925286766559;
+H3DU.Math.PiTimes2 = 6.283185307179586476925286766559;
 /**
  Closest approximation to pi divided by 2, or a 90-degree turn in radians.
  @const
  @default
 */
-GLMath.HalfPi = 1.5707963267948966192313216916398;
+H3DU.Math.HalfPi = 1.5707963267948966192313216916398;
 /**
  Closest approximation to pi divided by 180, or the number
  of radians in a degree. Multiply by this number to convert degrees to radians.
  @const
  @default
 */
-GLMath.PiDividedBy180 = 0.01745329251994329576923690768489;
+H3DU.Math.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
  @private
 @const */
-GLMath.PiDividedBy360 = 0.00872664625997164788461845384244;
+H3DU.Math.PiDividedBy360 = 0.00872664625997164788461845384244;
 /**
  @private
 @const */
-GLMath.Num360DividedByPi = 114.59155902616464175359630962821;
+H3DU.Math.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
  Closest approximation to 180 divided by pi, or the number of
  degrees in a radian. Multiply by this number to convert radians to degrees.
  @const
  @default
 */
-GLMath.Num180DividedByPi = 57.295779513082320876798154814105;
+H3DU.Math.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
 * Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
 * @const
 */
-GLMath.PitchYawRoll = 0;
+H3DU.Math.PitchYawRoll = 0;
 /**
 * Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
 * @const
 */
-GLMath.PitchRollYaw = 1;
+H3DU.Math.PitchRollYaw = 1;
 /**
 * Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 * @const
 */
-GLMath.YawPitchRoll = 2;
+H3DU.Math.YawPitchRoll = 2;
 /**
 * Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 * @const
 */
-GLMath.YawRollPitch = 3;
+H3DU.Math.YawRollPitch = 3;
 /**
 * Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
 * @const
 */
-GLMath.RollPitchYaw = 4;
+H3DU.Math.RollPitchYaw = 4;
 /**
 * Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 * @const
 */
-GLMath.RollYawPitch = 5;
+H3DU.Math.RollYawPitch = 5;
 /**
  * Inverts the rotation given in this quaternion;
  * returns a new quaternion; same as the quatInverse method.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
-GLMath.quatInverse=GLMath.quatInvert;
- exports.GLMath=GLMath;
+H3DU.Math.quatInverse=H3DU.Math.quatInvert;
 }));

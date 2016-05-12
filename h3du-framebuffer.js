@@ -1,14 +1,14 @@
 /**
 * Represents an off-screen frame buffer.<p>
-* When FrameBuffer's
+* When H3DU.FrameBuffer's
 * constructor is called, it will create a texture buffer with the given
 * width and height and a depth buffer with the same dimensions,
 * and will bind both to the frame buffer.  The frame buffer currently
 * bound to the WebGL context will remain unchanged.
 * @class
-* @alias glutil.FrameBuffer
+* @alias H3DU.FrameBuffer
 * @param {WebGLRenderingContext|object} context
-* WebGL context to associate with this buffer, or an object, such as Scene3D, that
+* WebGL context to associate with this buffer, or an object, such as H3DU.Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
 * @param {Number} width Width, in pixels, of the frame buffer.
@@ -16,7 +16,7 @@
 * @param {Number} height Height, in pixels, of the frame buffer.
 * Fractional values are rounded up.
 */
-function FrameBuffer(context, width, height){
+H3DU.FrameBuffer = function(context, width, height){
  "use strict";
  if(width<0 || height<0)throw new Error("width or height negative");
  context= (context.getContext) ? context.getContext() : context;
@@ -29,7 +29,7 @@ function FrameBuffer(context, width, height){
  this._init(context,width,height);
  }
 /** @private */
-FrameBuffer.prototype._init=function(context,width,height){
+H3DU.FrameBuffer.prototype._init=function(context,width,height){
  this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
@@ -79,9 +79,9 @@ FrameBuffer.prototype._init=function(context,width,height){
 * Fractional values are rounded up.
 * @param {Number} height New height, in pixels, of the frame buffer.
 * Fractional values are rounded up.
-* @returns {glutil.FrameBuffer} This object.
+* @returns {H3DU.FrameBuffer} This object.
  */
-FrameBuffer.prototype.resize=function(width,height){
+H3DU.FrameBuffer.prototype.resize=function(width,height){
  width=Math.ceil(width);
  height=Math.ceil(height);
  if(width!=this.width || height!=this.height){
@@ -94,18 +94,18 @@ FrameBuffer.prototype.resize=function(width,height){
 /**
  * Gets the WebGL context associated with this frame buffer.
  * @returns {WebGLRenderingContext} Return value. */
-FrameBuffer.prototype.getContext=function(){
+H3DU.FrameBuffer.prototype.getContext=function(){
  "use strict";
 return this.context;
 };
 /**
  * Binds this frame buffer to the WebGL context associated with
  * it.  Future draw calls that use the WebGL context will be rendered
- * to this frame buffer until it's unbound with the {@link glutil.FrameBuffer#unbind}
+ * to this frame buffer until it's unbound with the {@link H3DU.FrameBuffer#unbind}
  * method.
- * @returns {glutil.FrameBuffer} This object.
+ * @returns {H3DU.FrameBuffer} This object.
  */
-FrameBuffer.prototype.bind=function(){
+H3DU.FrameBuffer.prototype.bind=function(){
   "use strict";
  this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
  this.context.bindFramebuffer(
@@ -121,7 +121,7 @@ FrameBuffer.prototype.bind=function(){
 /**
  * Unbinds this frame buffer from its associated WebGL context.
  */
-FrameBuffer.prototype.unbind=function(){
+H3DU.FrameBuffer.prototype.unbind=function(){
  "use strict";
 this.context.framebufferTexture2D(
    this.context.FRAMEBUFFER,this.context.COLOR_ATTACHMENT0,
@@ -135,7 +135,7 @@ this.context.framebufferTexture2D(
 /**
  * Disposes all resources from this frame buffer object.
  */
-FrameBuffer.prototype.dispose=function(){
+H3DU.FrameBuffer.prototype.dispose=function(){
  "use strict";
 if(this.buffer!==null){
    var oldBuffer=this.context.getParameter(

@@ -2,9 +2,9 @@
 * An object that caches loaded textures and uploads them
 * to WebGL contexts.
 * @class
-* @alias glutil.TextureLoader
+* @alias H3DU.TextureLoader
 */
-function TextureLoader(){
+H3DU.TextureLoader = function(){
  this.loadedTextures=[];
  this.textureImages={};
  this.maxAnisotropy=[];
@@ -13,7 +13,7 @@ function TextureLoader(){
  * Not documented yet.
  * @param {*} name
  */
-TextureLoader.prototype.getTexture=function(name){
+H3DU.TextureLoader.prototype.getTexture=function(name){
  return this.textureImages[name]||null;
 }
 
@@ -21,11 +21,11 @@ TextureLoader.prototype.getTexture=function(name){
  * Not documented yet.
  * @param {*} name
  */
-TextureLoader.prototype.loadTexture=function(name){
- return Texture.loadTexture(name,this.textureImages);
+H3DU.TextureLoader.prototype.loadTexture=function(name){
+ return H3DU.Texture.loadTexture(name,this.textureImages);
 }
 /** @private */
-TextureLoader.prototype._setMaxAnisotropy=function(context){
+H3DU.TextureLoader.prototype._setMaxAnisotropy=function(context){
  context= (context.getContext) ? context.getContext() : context;
  var ma=this.maxAnisotropy;
  for(var i=0;i<ma.length;i++){
@@ -57,27 +57,27 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
  * @param {*} textures
  * @param {*} resolve
  * @param {*} reject
- * @returns {Promise<glutil.Texture>} A promise as described in
- * {@link glutil.GLUtil.getPromiseResultsAll}.  If the promise
+ * @returns {Promise<H3DU.Texture>} A promise as described in
+ * {@link H3DU.getPromiseResultsAll}.  If the promise
  * resolves, each item in the resulting array will be a loaded
- * {@link glutil.Texture} object.
+ * {@link H3DU.Texture} object.
  */
-TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
+H3DU.TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
  var promises=[]
  for(var i=0;i<textures.length;i++){
   promises.push(this.loadTexture(textures[i]));
  }
- return GLUtil.getPromiseResultsAll(promises,resolve,reject);
+ return H3DU.getPromiseResultsAll(promises,resolve,reject);
 }
 /**
  * Not documented yet.
  * @param {String} texture
  * @param {*} context
- * @returns {Promise<glutil.Texture>} A promise that resolves when
- * the texture is loaded successfully (the result will be a Texture object)
+ * @returns {Promise<H3DU.Texture>} A promise that resolves when
+ * the texture is loaded successfully (the result will be an H3DU.Texture object)
  * and is rejected when an error occurs.
  */
-TextureLoader.prototype.loadAndMapTexture=function(texture,context){
+H3DU.TextureLoader.prototype.loadAndMapTexture=function(texture,context){
   context= (context.getContext) ? context.getContext() : context;
   var thisObject=this;
   return this.loadTexture(texture).then(function(tex){
@@ -91,26 +91,26 @@ TextureLoader.prototype.loadAndMapTexture=function(texture,context){
  * @param {*} context
  * @param {*} resolve
  * @param {*} reject
- * @returns {Promise<glutil.Texture>} A promise as described in
- * {@link glutil.GLUtil.getPromiseResultsAll}.  If the promise
+ * @returns {Promise<H3DU.Texture>} A promise as described in
+ * {@link H3DU.getPromiseResultsAll}.  If the promise
  * resolves, each item in the resulting array will be a loaded
- * {@link glutil.Texture} object.
+ * {@link H3DU.Texture} object.
  */
-TextureLoader.prototype.loadAndMapTexturesAll=function(textures,context,resolve,reject){
+H3DU.TextureLoader.prototype.loadAndMapTexturesAll=function(textures,context,resolve,reject){
  context= (context.getContext) ? context.getContext() : context;
  var promises=[]
  var thisObject=this;
  for(var i=0;i<textures.length;i++){
   promises.push(this.loadAndMapTexture(textures[i],context));
  }
- return GLUtil.getPromiseResultsAll(promises,resolve,reject);
+ return H3DU.getPromiseResultsAll(promises,resolve,reject);
 }
 /**
  * Not documented yet.
  * @param {*} textures
  * @param {*} context
  */
-TextureLoader.prototype.mapTextures=function(textures,context){
+H3DU.TextureLoader.prototype.mapTextures=function(textures,context){
  context= (context.getContext) ? context.getContext() : context;
  for(var i=0;i<textures.length;i++){
   this.mapTexture(textures[i],context);
@@ -122,7 +122,7 @@ TextureLoader.prototype.mapTextures=function(textures,context){
  * @param {*} texture
  * @param {*} context
  */
-TextureLoader.prototype.mapTexture=function(texture,context){
+H3DU.TextureLoader.prototype.mapTexture=function(texture,context){
  context= (context.getContext) ? context.getContext() : context;
  var lt=this.loadedTextures;
  for(var i=0;i<lt.length;i++){
@@ -130,14 +130,14 @@ TextureLoader.prototype.mapTexture=function(texture,context){
    return lt[i][2];
   }
  }
- var loadedTex=new GLUtil._LoadedTexture(texture,context);
+ var loadedTex=new H3DU._LoadedTexture(texture,context);
  lt.push([texture,context,loadedTex])
  return loadedTex;
 }
 /**
  * Disposes all resources used by this texture loader.
  */
-TextureLoader.prototype.dispose=function(){
+H3DU.TextureLoader.prototype.dispose=function(){
  for(var tex in this.textureImages){
   this.textureImages[tex].dispose();
  }

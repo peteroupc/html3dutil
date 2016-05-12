@@ -1,9 +1,9 @@
 /**
 * Specifies parameters for light sources.
 * @class
-* @alias glutil.LightSource
+* @alias H3DU.LightSource
 */
-function LightSource(position, ambient, diffuse, specular) {
+H3DU.LightSource = function(position, ambient, diffuse, specular) {
  /**
  * A 4-element vector giving an additional color to multiply with the ambient
  * color of each object, in the red, green,
@@ -48,20 +48,20 @@ function LightSource(position, ambient, diffuse, specular) {
 * @param {object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
-* <li><code>position</code> - Light position.  (See {@link glutil.LightSource#position}.)
+* <li><code>position</code> - Light position.  (See {@link H3DU.LightSource#position}.)
 * <li><code>ambient</code> - Not used in the default shader program.
-* <li><code>diffuse</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving an additional color to multiply with the diffusion
+* <li><code>diffuse</code> - A [color vector or string]{@link H3DU.toGLColor} giving an additional color to multiply with the diffusion
  * color of each object (which is also called "albedo").
  * The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
-* <li><code>specular</code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the color of specular highlights caused by the light.
+* <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by the light.
  * The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * </ul>
 * If a value is null or undefined, it is ignored.
-* @returns {glutil.Material} This object.
+* @returns {H3DU.Material} This object.
 */
-LightSource.prototype.setParams=function(params){
+H3DU.LightSource.prototype.setParams=function(params){
  if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){
-  this.ambient=GLUtil.toGLColor(params.ambient);
+  this.ambient=H3DU.toGLColor(params.ambient);
   this.ambient=this.ambient.slice(0,4);
  }
  if(((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && params.position!==null))))))){
@@ -70,10 +70,10 @@ LightSource.prototype.setParams=function(params){
     (position[3]===null) ? 0.0 : position[3]];
  }
  if(((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && params.specular!==null))))))){
-  this.specular=GLUtil.toGLColor(params.specular);
+  this.specular=H3DU.toGLColor(params.specular);
  }
  if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
-  this.diffuse=GLUtil.toGLColor(params.diffuse);
+  this.diffuse=H3DU.toGLColor(params.diffuse);
  }
  if(typeof params.radius!="undefined"){
   this.radius=params.radius;

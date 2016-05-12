@@ -1,42 +1,42 @@
 /**
  * A holder object representing a 3D scene.
 *  @class
-* @alias glutil.Scene3D
+* @alias H3DU.Scene3D
  * @param {WebGLRenderingContext|object} canvasOrContext
  * A WebGL 3D context to associate with this scene, or an HTML
- * canvas element to create a WebGL context from, or an object, such as Scene3D, that
+ * canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
  */
-function Scene3D(canvasOrContext){
+H3DU.Scene3D = function(canvasOrContext){
  var context=canvasOrContext;
  if(typeof canvasOrContext.getContext==="function"){
   // This might be a canvas, so create a WebGL context.
   if(HTMLCanvasElement && context.constructor===HTMLCanvasElement){
-   context=GLUtil.get3DContext(canvasOrContext);
+   context=H3DU.get3DContext(canvasOrContext);
   } else {
-   context=GLUtil._toContext(context);
+   context=H3DU._toContext(context);
   }
  }
  this.context=context;
  this.textureCache={};
- this._textureLoader=new TextureLoader();
- this._meshLoader=new BufferedMesh._MeshLoader();
+ this._textureLoader=new H3DU.TextureLoader();
+ this._meshLoader=new H3DU.BufferedMesh._MeshLoader();
  this._renderedOutsideScene=false;
  /** An array of shapes that are part of the scene.
-   @deprecated Shapes should now be managed in Batch3D objects,
+   @deprecated Shapes should now be managed in H3DU.Batch3D objects,
    rather than through this class.
    */
  this.shapes=[];
- this._errors=true;
- this._frontFace=Scene3D.CCW;
- this._cullFace=Scene3D.NONE;
+ this._errors=false;
+ this._frontFace=H3DU.Scene3D.CCW;
+ this._cullFace=H3DU.Scene3D.NONE;
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  // NOTE: Exists for compatibility only
- this._subScene=new Batch3D();
+ this._subScene=new H3DU.Batch3D();
  this._subScene.getLights().setDefaults();
- this._programs=new Scene3D.ProgramCache();
+ this._programs=new H3DU.Scene3D.ProgramCache();
  this.useDevicePixelRatio=false;
  this._pixelRatio=1;
  this.autoResize=true;
@@ -44,12 +44,12 @@ function Scene3D(canvasOrContext){
  this.height=Math.ceil(this.context.canvas.clientHeight*1.0);
  this.context.canvas.width=this.width;
  this.context.canvas.height=this.height;
- this._is3d=GLUtil.is3DContext(this.context);
+ this._is3d=H3DU.is3DContext(this.context);
  if(this._is3d){
   var params={};
-  var flags=Scene3D.LIGHTING_ENABLED |
-   Scene3D.SPECULAR_ENABLED |
-   Scene3D.SPECULAR_MAP_ENABLED;
+  var flags=H3DU.Scene3D.LIGHTING_ENABLED |
+   H3DU.Scene3D.SPECULAR_ENABLED |
+   H3DU.Scene3D.SPECULAR_MAP_ENABLED;
   this._programs.getProgram(flags,this.context);
   this.context.viewport(0,0,this.width,this.height);
   this.context.enable(this.context.BLEND);
@@ -65,38 +65,38 @@ function Scene3D(canvasOrContext){
 /**
  * Not documented yet.
  */
-Scene3D.prototype.getCanvas=function(){
+H3DU.Scene3D.prototype.getCanvas=function(){
  return this.context.canvas;
 }
 
-Scene3D.LIGHTING_ENABLED = 1;
-Scene3D.SPECULAR_MAP_ENABLED = 2;
-Scene3D.NORMAL_ENABLED = 4;
-Scene3D.SPECULAR_ENABLED = 8;
-Scene3D.TEXTURE_ENABLED = 16;
+H3DU.Scene3D.LIGHTING_ENABLED = 1;
+H3DU.Scene3D.SPECULAR_MAP_ENABLED = 2;
+H3DU.Scene3D.NORMAL_ENABLED = 4;
+H3DU.Scene3D.SPECULAR_ENABLED = 8;
+H3DU.Scene3D.TEXTURE_ENABLED = 16;
 
 /** @private */
-Scene3D._materialToFlags=function(material){
+H3DU.Scene3D._materialToFlags=function(material){
  var flags=0;
-     flags|=(!material.basic) ? Scene3D.LIGHTING_ENABLED : 0;
+     flags|=(!material.basic) ? H3DU.Scene3D.LIGHTING_ENABLED : 0;
      flags|=(material.specular[0]!=0 ||
         material.specular[1]!=0 ||
-        material.specular[2]!=0) ? Scene3D.SPECULAR_ENABLED : 0;
-     flags|=(!!material.specularMap) ? Scene3D.SPECULAR_MAP_ENABLED : 0;
-     flags|=(!!material.normalMap) ? Scene3D.NORMAL_ENABLED : 0;
-     flags|=(!!material.texture) ? Scene3D.TEXTURE_ENABLED : 0;
+        material.specular[2]!=0) ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
+     flags|=(!!material.specularMap) ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
+     flags|=(!!material.normalMap) ? H3DU.Scene3D.NORMAL_ENABLED : 0;
+     flags|=(!!material.texture) ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
      return flags;
 }
 /** @private */
-Scene3D.ProgramCache=function(){
+H3DU.Scene3D.ProgramCache=function(){
  this._programs=[];
  this._customPrograms=[]
 }
 /** @private */
-Scene3D.ProgramCache.prototype.getCustomProgram=function(info, context){
+H3DU.Scene3D.ProgramCache.prototype.getCustomProgram=function(info, context){
  if(!context)throw new Error();
- if(info instanceof ShaderProgram){
-  // NOTE: Using ShaderProgram objects in materials is deprecated
+ if(info instanceof H3DU.ShaderProgram){
+  // NOTE: Using H3DU.ShaderProgram objects in materials is deprecated
   return info;
  }
  for(var i=0;i<this._customPrograms.length;i++){
@@ -106,12 +106,12 @@ Scene3D.ProgramCache.prototype.getCustomProgram=function(info, context){
    return p[2];
   }
  }
- var prog=ShaderProgram._fromShaderInfo(context,info);
+ var prog=H3DU.ShaderProgram._fromShaderInfo(context,info);
  this._customPrograms.push([info,context,prog]);
  return prog;
 }
 /** @private */
-Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
+H3DU.Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
  if(!context)throw new Error();
  var pf=this._programs[flags];
  if(pf){
@@ -124,67 +124,67 @@ Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
   this._programs[flags]=[];
  }
  var defines=""
- if((flags&Scene3D.LIGHTING_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.LIGHTING_ENABLED)!=0)
    defines+="#define SHADING\n";
- if((flags&Scene3D.SPECULAR_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.SPECULAR_ENABLED)!=0)
    defines+="#define SPECULAR\n";
- if((flags&Scene3D.NORMAL_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.NORMAL_ENABLED)!=0)
    defines+="#define NORMAL_MAP\n";
- if((flags&Scene3D.TEXTURE_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.TEXTURE_ENABLED)!=0)
    defines+="#define TEXTURE\n";
- if((flags&Scene3D.SPECULAR_MAP_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.SPECULAR_MAP_ENABLED)!=0)
    defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
- var prog=new ShaderProgram(context,
-   defines+ShaderProgram.getDefaultVertex(),
-   defines+ShaderProgram.getDefaultFragment());
+ var prog=new H3DU.ShaderProgram(context,
+   defines+H3DU.ShaderProgram.getDefaultVertex(),
+   defines+H3DU.ShaderProgram.getDefaultFragment());
  this._programs[flags].push([context,prog]);
  return prog;
 }
 /** Returns the WebGL context associated with this scene. */
-Scene3D.prototype.getContext=function(){
+H3DU.Scene3D.prototype.getContext=function(){
  return this.context;
 };
 /** No face culling.
 @const  */
-Scene3D.NONE = 0;
+H3DU.Scene3D.NONE = 0;
 /** Back side of a triangle.  By default, triangles with clockwise winding are back-facing.
 @const */
-Scene3D.BACK = 1;
+H3DU.Scene3D.BACK = 1;
 /**
 Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing.
 @const
 */
-Scene3D.FRONT = 2;
+H3DU.Scene3D.FRONT = 2;
 /**
 Back and front sides of a triangle.
 @const
 */
-Scene3D.FRONT_AND_BACK = 3;
+H3DU.Scene3D.FRONT_AND_BACK = 3;
 /**
 * Counterclockwise winding. A triangle has counterclockwise winding if
 * its vertices are ordered such that the path from the first to second to third
 * to first vertex, in window coordinates (X and Y only), runs counterclockwise.
 * @const
 */
-Scene3D.CCW = 0;
+H3DU.Scene3D.CCW = 0;
 /**
 * Clockwise winding, the opposite of counterclockwise winding.
 * @const
 */
-Scene3D.CW = 1;
+H3DU.Scene3D.CW = 1;
 /**
 * Specifies which kinds of triangle faces are culled (not drawn)
 * when rendering this scene.
-* @param {Number} value If this is {@link Scene3D.BACK},
-* {@link Scene3D.FRONT}, or {@link Scene3D.FRONT_AND_BACK},
+* @param {Number} value If this is {@link H3DU.Scene3D.BACK},
+* {@link H3DU.Scene3D.FRONT}, or {@link H3DU.Scene3D.FRONT_AND_BACK},
 * enables face culling of the specified faces.  For any other value,
 * disables face culling.  By default, face culling is disabled.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.cullFace=function(value){
- if(value===Scene3D.BACK ||
-   value===Scene3D.FRONT ||
-   value===Scene3D.FRONT_AND_BACK){
+H3DU.Scene3D.prototype.cullFace=function(value){
+ if(value===H3DU.Scene3D.BACK ||
+   value===H3DU.Scene3D.FRONT ||
+   value===H3DU.Scene3D.FRONT_AND_BACK){
   this._cullFace=value;
  } else {
   this._cullFace=0;
@@ -192,21 +192,21 @@ Scene3D.prototype.cullFace=function(value){
  return this;
 };
 /** @private */
-Scene3D.prototype._setFace=function(){
+H3DU.Scene3D.prototype._setFace=function(){
  if(!this._is3d)return;
- if(this._cullFace===Scene3D.BACK){
+ if(this._cullFace===H3DU.Scene3D.BACK){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.BACK);
- } else if(this._cullFace===Scene3D.FRONT){
+ } else if(this._cullFace===H3DU.Scene3D.FRONT){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.FRONT);
- } else if(this._cullFace===Scene3D.FRONT_AND_BACK){
+ } else if(this._cullFace===H3DU.Scene3D.FRONT_AND_BACK){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.FRONT_AND_BACK);
  } else {
   this.context.disable(this.context.CULL_FACE);
  }
- if(this._frontFace===Scene3D.CW){
+ if(this._frontFace===H3DU.Scene3D.CW){
   this.context.frontFace(this.context.CW);
  } else {
   this.context.frontFace(this.context.CCW);
@@ -215,15 +215,15 @@ Scene3D.prototype._setFace=function(){
 };
 /**
 * Specifies the winding of front faces.
-* @param {Number} value If this is {@link Scene3D.CW},
+* @param {Number} value If this is {@link H3DU.Scene3D.CW},
 * clockwise triangles are front-facing.  For any other value,
 * counterclockwise triangles are front-facing, which is the
 * default behavior.  If using a left-handed coordinate system,
-* set this value to {@link Scene3D.CW}.
-* @returns {glutil.Scene3D} This object.
+* set this value to {@link H3DU.Scene3D.CW}.
+* @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.frontFace=function(value){
- if(value===Scene3D.CW){
+H3DU.Scene3D.prototype.frontFace=function(value){
+ if(value===H3DU.Scene3D.CW){
   this._frontFace=value;
  } else {
   this._frontFace=0;
@@ -235,9 +235,9 @@ Scene3D.prototype.frontFace=function(value){
 * when the render() method is called.
 * @param {Boolean} value If true, will check whether to resize the canvas
 * when the render() method is called. Default is true.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.setAutoResize=function(value){
+H3DU.Scene3D.prototype.setAutoResize=function(value){
  this.autoResize=!!value;
  return this;
 };
@@ -245,13 +245,13 @@ Scene3D.prototype.setAutoResize=function(value){
 * Sets whether to use the device's pixel ratio (if supported by
 * the browser) in addition to the canvas's size when setting
 * the viewport's dimensions.<p>
-* When this value changes, the Scene3D will automatically
+* When this value changes, the H3DU.Scene3D will automatically
 * adjust the viewport.
 * @param {Boolean} value If true, use the device's pixel ratio
 * when setting the viewport's dimensions.  Default is true.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
   */
-Scene3D.prototype.setUseDevicePixelRatio=function(value){
+H3DU.Scene3D.prototype.setUseDevicePixelRatio=function(value){
  var oldvalue=!!this.useDevicePixelRatio;
  this.useDevicePixelRatio=!!value;
  this._pixelRatio=(this.useDevicePixelRatio && window.devicePixelRatio) ?
@@ -266,7 +266,7 @@ Scene3D.prototype.setUseDevicePixelRatio=function(value){
    @returns {Array<Number>} An array of four numbers, from 0 through
    1, specifying the red, green, blue, and alpha components of the color.
    */
-Scene3D.prototype.getClearColor=function(){
+H3DU.Scene3D.prototype.getClearColor=function(){
  return this.clearColor.slice(0,4);
 };
 /**
@@ -275,10 +275,10 @@ Scene3D.prototype.getClearColor=function(){
 * and prepared this object for the new program.)
 * @deprecated Instead of this method, use the "setShader" program of individual shapes
 * to set the shader programs they use.
-* @param {glutil.ShaderProgram} program The shader program to use.
-* @returns {glutil.Scene3D} This object.
+* @param {H3DU.ShaderProgram} program The shader program to use.
+* @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.useProgram=function(program){
+H3DU.Scene3D.prototype.useProgram=function(program){
  console.warn("The 'useProgram' method is obsolete.  Instead of this method, "+
    "use the 'setShader' program of individual shapes to set the shader programs they use.");
 }
@@ -289,7 +289,7 @@ Scene3D.prototype.useProgram=function(program){
 * @param {Number} height Height of the scene, in pixels.
 *  Will be rounded up.
 * @returns {Number} Return value.*/
-Scene3D.prototype.setDimensions=function(width, height){
+H3DU.Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
@@ -310,7 +310,7 @@ Scene3D.prototype.setDimensions=function(width, height){
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
 * @returns {Number} Return value.*/
-Scene3D.prototype.getWidth=function(){
+H3DU.Scene3D.prototype.getWidth=function(){
  return this.width;
 };
 /**
@@ -318,7 +318,7 @@ Scene3D.prototype.getWidth=function(){
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
 * @returns {Number} Return value.*/
-Scene3D.prototype.getHeight=function(){
+H3DU.Scene3D.prototype.getHeight=function(){
  return this.height;
 };
 /**
@@ -327,41 +327,41 @@ Scene3D.prototype.getHeight=function(){
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
 * @returns {Number} Aspect ratio, or 1 if height is 0.*/
-Scene3D.prototype.getAspect=function(){
+H3DU.Scene3D.prototype.getAspect=function(){
  var ch=this.getHeight();
  if(ch<=0)return 1;
  return this.getWidth()/ch;
 };
 /** @private */
-Scene3D.prototype.getClientWidth=function(){
+H3DU.Scene3D.prototype.getClientWidth=function(){
  return this.context.canvas.clientWidth;
 }
 /** @private */
-Scene3D.prototype.getClientHeight=function(){
+H3DU.Scene3D.prototype.getClientHeight=function(){
  return this.context.canvas.clientHeight;
 }
 /**
 * Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
 * @returns {Number} Aspect ratio, or 1 if height is 0.*/
-Scene3D.prototype.getClientAspect=function(){
+H3DU.Scene3D.prototype.getClientAspect=function(){
  var ch=this.getClientHeight();
  if(ch<=0)return 1;
  return this.getClientWidth()/ch;
 };
 /**
  * Creates a frame buffer object associated with this scene.
- * @returns {FrameBuffer} A buffer with the same size as this scene.
+ * @returns {H3DU.FrameBuffer} A buffer with the same size as this scene.
  */
-Scene3D.prototype.createBuffer=function(){
- return new FrameBuffer(this.context,
+H3DU.Scene3D.prototype.createBuffer=function(){
+ return new H3DU.FrameBuffer(this.context,
    this.getWidth(),this.getHeight());
 };
 /**
  * Gets the current projection matrix for this scene.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value. */
-Scene3D.prototype.getProjectionMatrix=function(){
+H3DU.Scene3D.prototype.getProjectionMatrix=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -370,9 +370,9 @@ return this._subScene._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value. */
-Scene3D.prototype.getViewMatrix=function(){
+H3DU.Scene3D.prototype.getViewMatrix=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -383,8 +383,8 @@ if(this._renderedOutsideScene){
 *  Sets this scene's projection matrix to a perspective projection.
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
- * see {@link glmath.GLMath.mat4perspective}.
-* @deprecated Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4perspective}. This compatibility behavior may be dropped in the future.
+ * see {@link glmath.H3DU.Math.mat4perspective}.
+* @deprecated Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4perspective}. This compatibility behavior may be dropped in the future.
  * @param {Number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
@@ -397,14 +397,14 @@ if(this._renderedOutsideScene){
 * @param {Number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
 * @example
 * // Set the perspective projection.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
 * scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 */
-Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
- return this.setProjectionMatrix(GLMath.mat4perspective(fov,
+H3DU.Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
+ return this.setProjectionMatrix(H3DU.Math.mat4perspective(fov,
    aspect,near,far));
 };
 
@@ -416,7 +416,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4orthoAspect}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4orthoAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -431,12 +431,12 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * between near and far should be as small as the application can accept.
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
- * @returns {glutil.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
+H3DU.Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
  if((aspect===null || typeof aspect==="undefined"))aspect=this.getClientAspect();
  if(aspect===0)aspect=1;
- return this.setProjectionMatrix(GLMath.mat4orthoAspect(
+ return this.setProjectionMatrix(H3DU.Math.mat4orthoAspect(
    left,right,bottom,top,near,far,aspect));
 };
 /**
@@ -446,7 +446,7 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -455,9 +455,9 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * (Note that top can be greater than bottom or vice versa.)
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
- * @returns {glutil.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
+H3DU.Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
 };
 
@@ -466,8 +466,8 @@ Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  * the view frustum, or the limits in the camera's view.
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
- * see {@link glmath.GLMath.mat4perspective}.
-* @deprecated Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4frustum}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+ * see {@link glmath.H3DU.Math.mat4perspective}.
+* @deprecated Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4frustum}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {Number} right X-coordinate of the point where the right
@@ -482,17 +482,17 @@ Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
 * @param {Number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
- return this.setProjectionMatrix(GLMath.mat4frustum(
+H3DU.Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
+ return this.setProjectionMatrix(H3DU.Math.mat4frustum(
    left, right, top, bottom, near, far));
 };
 /**
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
-* @deprecated  Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 3D view.
  * @param {Number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
@@ -505,30 +505,30 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * plane.  A positive value means the plane is in front of the viewer.
  * (Note that near can be greater than far or vice versa.)  The absolute difference
  * between near and far should be as small as the application can accept.
- * @returns {glutil.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
- return this.setProjectionMatrix(GLMath.mat4ortho(
+H3DU.Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
+ return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, near, far));
 };
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
-* @deprecated  Instead of this method, use {@link glmath.Batch3D#setProjectionMatrix} in conjunction with {@link GLMath.mat4ortho2d}.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2d}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 2D view.
  * @param {Number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
  * @param {Number} bottom Bottommost coordinate of the 2D view.
  * @param {Number} top Topmost coordinate of the 2D view.
  * (Note that top can be greater than bottom or vice versa.)
- * @returns {glutil.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
- return this.setProjectionMatrix(GLMath.mat4ortho(
+H3DU.Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
+ return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, -1, 1));
 };
 /** @private */
-Scene3D.prototype._setClearColor=function(){
+H3DU.Scene3D.prototype._setClearColor=function(){
   if(this._is3d){
    this.context.clearColor(this.clearColor[0],this.clearColor[1],
      this.clearColor[2],this.clearColor[3]);
@@ -541,7 +541,7 @@ Scene3D.prototype._setClearColor=function(){
 * This color is black by default.
 * @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
-* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* specifying an [HTML or CSS color]{@link H3DU.toGLColor}.
 * @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {Number} b Blue color component (0-1).
@@ -549,41 +549,41 @@ Scene3D.prototype._setClearColor=function(){
 * @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.setClearColor=function(r,g,b,a){
- this.clearColor=GLUtil.toGLColor(r,g,b,a);
+H3DU.Scene3D.prototype.setClearColor=function(r,g,b,a){
+ this.clearColor=H3DU.toGLColor(r,g,b,a);
  return this._setClearColor();
 };
 /**
 * Loads a texture from an image URL.
-* @deprecated Use the TextureLoader method loadTexture or
+* @deprecated Use the H3DU.TextureLoader method loadTexture or
 * loadTexturesAll instead.
 * @param {String} name URL of the image to load.
 * @returns {Promise} A promise that is resolved when
-* the image is loaded successfully (the result will be a Texture
+* the image is loaded successfully (the result will be an H3DU.Texture
 * object), and is rejected when an error occurs.
 */
-Scene3D.prototype.loadTexture=function(name){
+H3DU.Scene3D.prototype.loadTexture=function(name){
  return this._textureLoader.loadTexture(name);
 };
 /**
 * Loads a texture from an image URL and uploads it
 * to a texture buffer object.
-* @deprecated Use the TextureLoader method loadAndMapTexturesAll
+* @deprecated Use the H3DU.TextureLoader method loadAndMapTexturesAll
 * instead.
-* @param {string|glutil.Texture} texture String giving the
+* @param {string|H3DU.Texture} texture String giving the
 * URL of the image to load, or
-* a Texture object whose data may or may not be loaded.
+* an H3DU.Texture object whose data may or may not be loaded.
 * @returns {Promise} A promise that is resolved when
 * the image is loaded successfully and uploaded
-* to a texture buffer (the result will be a Texture
+* to a texture buffer (the result will be an H3DU.Texture
 * object), and is rejected when an error occurs.
 */
-Scene3D.prototype.loadAndMapTexture=function(texture){
+H3DU.Scene3D.prototype.loadAndMapTexture=function(texture){
  var context=this.context;
  var tex=null;
- if(texture.constructor===Texture){
+ if(texture.constructor===H3DU.Texture){
   return this.loadAndMapTexture(texture.name);
  } else {
    tex=this.loadTexture(texture);
@@ -597,11 +597,11 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
 /**
 * Loads one or more textures from an image URL and uploads each of them
 * to a texture buffer object.
-* @deprecated Use the TextureLoader method loadAndMapTexturesAll
+* @deprecated Use the H3DU.TextureLoader method loadAndMapTexturesAll
 * instead.
 * @param {Array<String>} textureFiles A list of URLs of the image to load.
 * @param {Function} [resolve] Called for each URL that is loaded successfully
-* and uploaded to a texture buffer (the argument will be a Texture object.)
+* and uploaded to a texture buffer (the argument will be an H3DU.Texture object.)
 * @param {Function} [reject] Called for each URL for which an error
 * occurs (the argument will be the data passed upon
 * rejection).
@@ -609,21 +609,21 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
 * all the URLs in the textureFiles array are either resolved or rejected.
 * The result will be an object with three properties:
 * "successes", "failures", and "results".
-* See {@link glutil.GLUtil.getPromiseResults}.
+* See {@link H3DU.getPromiseResults}.
 */
-Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
+H3DU.Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  var promises=[];
  var context=this.context;
  for(var i=0;i<textureFiles.length;i++){
   var objf=textureFiles[i];
   promises.push(this.loadAndMapTexture(objf));
  }
- return GLUtil.getPromiseResults(promises, resolve, reject);
+ return H3DU.getPromiseResults(promises, resolve, reject);
 };
 /**
  * Not documented yet.
  */
-Scene3D.prototype.clear=function(){
+H3DU.Scene3D.prototype.clear=function(){
  if(this._is3d){
     this.context.clear(
      this.context.COLOR_BUFFER_BIT |
@@ -634,7 +634,7 @@ Scene3D.prototype.clear=function(){
 /**
  * Not documented yet.
  */
-Scene3D.prototype.clearDepth=function(){
+H3DU.Scene3D.prototype.clearDepth=function(){
  if(this._is3d){
     this.context.clear(this.context.DEPTH_BUFFER_BIT);
   }
@@ -642,9 +642,9 @@ Scene3D.prototype.clearDepth=function(){
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @deprecated Use the vertexCount method of Batch3D objects instead.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+ * @deprecated Use the vertexCount method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Number} Return value. */
-Scene3D.prototype.vertexCount=function(){
+H3DU.Scene3D.prototype.vertexCount=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -654,9 +654,9 @@ return this._subScene.vertexCount();
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
-* @deprecated  Use the primitiveCount method of Batch3D objects instead.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Use the primitiveCount method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @returns {Number} Return value. */
-Scene3D.prototype.primitiveCount=function(){
+H3DU.Scene3D.prototype.primitiveCount=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -665,13 +665,13 @@ return this._subScene.primitiveCount();
 };
 /**
  * Sets the projection matrix for this object.  The projection
- * matrix can also be set using the {@link glutil.Scene3D#setFrustum}, {@link glutil.Scene3D#setOrtho},
- * {@link glutil.Scene3D#setOrtho2D}, and {@link glutil.Scene3D#setPerspective} methods.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+ * matrix can also be set using the {@link H3DU.Scene3D#setFrustum}, {@link H3DU.Scene3D#setOrtho},
+ * {@link H3DU.Scene3D#setOrtho2D}, and {@link H3DU.Scene3D#setPerspective} methods.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
- * @returns {glutil.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setProjectionMatrix=function(matrix){
+H3DU.Scene3D.prototype.setProjectionMatrix=function(matrix){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -681,12 +681,12 @@ this._subScene.setProjectionMatrix(matrix);
 };
 /**
 *  Sets this scene's view matrix. The view matrix can also
-* be set using the {@link glutil.Scene3D#setLookAt} method.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* be set using the {@link H3DU.Scene3D#setLookAt} method.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
- * @returns {glutil.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.setViewMatrix=function(matrix){
+H3DU.Scene3D.prototype.setViewMatrix=function(matrix){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -698,7 +698,7 @@ this._subScene.setViewMatrix(matrix);
 *  Sets this scene's view matrix to represent a camera view.
 * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
 * (<code>center</code>).
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<Number>} eye A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<Number>} [center] A 3-element vector specifying
@@ -711,21 +711,21 @@ this._subScene.setViewMatrix(matrix);
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.setLookAt=function(eye, center, up){
- return this.setViewMatrix(GLMath.mat4lookat(eye, center, up));
+H3DU.Scene3D.prototype.setLookAt=function(eye, center, up){
+ return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
 };
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
-* @deprecated Use the addShape method of individual Batch3D instances
-* instead.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom
-* Batch3D.  This compatibility behavior may be dropped in the future.
-* @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
-* @returns {glutil.Scene3D} This object.*/
-Scene3D.prototype.addShape=function(shape){
+* @deprecated Use the addShape method of individual H3DU.Batch3D instances
+* instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom
+* H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
+* @returns {H3DU.Scene3D} This object.*/
+H3DU.Scene3D.prototype.addShape=function(shape){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -736,26 +736,26 @@ if(this._renderedOutsideScene){
 /**
  * Creates a buffer from a geometric mesh and
  * returns a shape object.
- * @deprecated Use the Shape constructor instead.
- * @param {glutil.Mesh} mesh A geometric mesh object.  The shape
+ * @deprecated Use the H3DU.Shape constructor instead.
+ * @param {H3DU.Mesh} mesh A geometric mesh object.  The shape
  * created will use the mesh in its current state and won't
  * track future changes.
- * @returns {glutil.Shape} The generated shape object.
+ * @returns {H3DU.Shape} The generated shape object.
  */
-Scene3D.prototype.makeShape=function(mesh){
+H3DU.Scene3D.prototype.makeShape=function(mesh){
 if(this._errors)throw new Error();
  if(this._renderedOutsideScene){
   throw new Error("A non-default scene has been rendered, so this method is disabled.");
  }
- return new Shape(mesh);
+ return new H3DU.Shape(mesh);
 };
 
 /**
 * Removes all instances of a 3D shape from this scene.
-* @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
-* @returns {glutil.Scene3D} This object.
+* @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
+* @returns {H3DU.Scene3D} This object.
 */
-Scene3D.prototype.removeShape=function(shape){
+H3DU.Scene3D.prototype.removeShape=function(shape){
 if(this._errors)throw new Error();
  if(this._renderedOutsideScene){
   throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -764,7 +764,7 @@ if(this._errors)throw new Error();
  return this;
 };
 /** @private */
-Scene3D.prototype.getLights=function(){
+H3DU.Scene3D.prototype.getLights=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -773,21 +773,21 @@ if(this._renderedOutsideScene){
 };
 /**
  * Sets a light source in this scene to a directional light.
-* @deprecated Use the Lights method setDirectionalLight instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setDirectionalLight instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
  * @param {Array<Number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.  May be null, in which case the default
  * is (0, 0, 1).
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffuse color of the light.
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor}  giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
+H3DU.Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -797,14 +797,14 @@ if(this._renderedOutsideScene){
 };
 /**
  * Sets parameters for a light in this scene.
-* @deprecated Use the Lights method setParams instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setParams instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
- * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
-* @returns {glutil.Scene3D} This object.
+ * @param {object} params An object as described in {@link H3DU.LightSource.setParams}.
+* @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setLightParams=function(index,params){
+H3DU.Scene3D.prototype.setLightParams=function(index,params){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -815,19 +815,19 @@ if(this._renderedOutsideScene){
 
 /**
  * Sets the color of the scene's ambient light.
-* @deprecated Use the Lights method setAmbient instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setAmbient instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
-* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* specifying an [HTML or CSS color]{@link H3DU.toGLColor}.
 * @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
 * @param {Number} [a] Alpha color component (0-1).
 * Currently not used.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setAmbient=function(r,g,b,a){
+H3DU.Scene3D.prototype.setAmbient=function(r,g,b,a){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -838,18 +838,18 @@ if(this._renderedOutsideScene){
 
 /**
  * Sets a light source in this scene to a point light.
- * @deprecated Use the LightSource method setPointLight instead and the Batch3D method getLights.  For compatibility, existing code that doesn't use Batch3D can still call this method until it renders a custom Batch3D.  This compatibility behavior may be dropped in the future.
+ * @deprecated Use the LightSource method setPointLight instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<Number>} position
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the diffuse color of the light.
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor}  giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor}  giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
-* @returns {glutil.Scene3D} This object.
+* @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
+H3DU.Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -858,7 +858,7 @@ if(this._renderedOutsideScene){
  return this;
 };
 /** @private */
-Scene3D.prototype._clearForPass=function(pass){
+H3DU.Scene3D.prototype._clearForPass=function(pass){
  var flags=0;
  if(pass.clearColor)flags|=this.context.COLOR_BUFFER_BIT;
  if(pass.clearDepth)flags|=this.context.DEPTH_BUFFER_BIT;
@@ -871,16 +871,16 @@ Scene3D.prototype._clearForPass=function(pass){
 /**
  *  Renders all shapes added to this scene.
  *  This is usually called in a render loop, such
- *  as {@link glutil.GLUtil.renderLoop}.<p>
+ *  as {@link H3DU.renderLoop}.<p>
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
- * @param {Array<glutil.RenderPass3D>|glutil.Batch3D} An array of scenes
+ * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} An array of scenes
  * to draw, or a single subscene to render. Can be null.
- * @returns {glutil.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.render=function(renderPasses){
-  if(renderPasses instanceof Batch3D){
-    return this.render([new RenderPass3D(renderPasses)])
+H3DU.Scene3D.prototype.render=function(renderPasses){
+  if(renderPasses instanceof H3DU.Batch3D){
+    return this.render([new H3DU.RenderPass3D(renderPasses)])
   }
   if(this.autoResize){
    var c=this.context.canvas;
@@ -891,16 +891,17 @@ Scene3D.prototype.render=function(renderPasses){
    }
   }
   this._setFace();
+  var width=this.getClientWidth();
+  var height=this.getClientHeight();
   if(renderPasses==null){
     if(this._is3d){
       this.context.clear(this.context.COLOR_BUFFER_BIT |
         this.context.DEPTH_BUFFER_BIT);
     }
-    this._subScene.render();
+    this._subScene.resize(width,height);
+    this._subScene.render(this);
   } else {
     this._renderedOutsideScene=true;
-    var width=this.getClientWidth();
-    var height=this.getClientHeight();
     for(var i=0;i<renderPasses.length;i++){
       var pass=renderPasses[i];
       if(pass.frameBuffer)pass.frameBuffer.bind();
@@ -917,19 +918,19 @@ Scene3D.prototype.render=function(renderPasses){
 /**
  * Has no effect. (Previously, used a shader program to apply a texture filter after the
  * scene is rendered.)
- * @deprecated Use the {@link Batch3D.forFilter} method to create a subscene
+ * @deprecated Use the {@link H3DU.Batch3D.forFilter} method to create a subscene
  * for rendering filter effects from a frame buffer.
- * @param {ShaderProgram|string|null} filterProgram Not used.
- * @returns {glutil.Scene3D} This object.
+ * @param {H3DU.ShaderProgram|string|null} filterProgram Not used.
+ * @returns {H3DU.Scene3D} This object.
  */
-Scene3D.prototype.useFilter=function(filterProgram){
-  console.warn("The useFilter method has no effect. Use the {@link Batch3D.forFilter} method to "+
+H3DU.Scene3D.prototype.useFilter=function(filterProgram){
+  console.warn("The useFilter method has no effect. Use the {@link H3DU.Batch3D.forFilter} method to "+
     "create a subscene for rendering filter effects from a frame buffer.");
   return this;
 };
 
 /** @private */
-Scene3D.supportsDerivatives=function(context){
+H3DU.Scene3D.supportsDerivatives=function(context){
  context= (context.getContext) ? context.getContext() : context;
  if(context.getExtension("OES_standard_derivatives")){
    return true;

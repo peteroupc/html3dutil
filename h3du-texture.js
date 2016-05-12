@@ -6,12 +6,12 @@
 * By default, texture coordinates go from (0,0) at the lower left corner
 * to (1,1) at the upper right corner.
 * @class
-* @alias glutil.Texture
+* @alias H3DU.Texture
 * @param {String} name URL of the texture data.  Based on the
 * URL, the texture may be loaded via the JavaScript DOM's Image
 * class.  However, this constructor will not load that image yet.
 */
-var Texture=function(name){
+H3DU.Texture=function(name){
  this.image=null;
  this.loadStatus=0;
  this.name=name;
@@ -32,9 +32,9 @@ var Texture=function(name){
 * the fractional parts of the texture coordinates'
 * be used as the coordinates (causing wraparound).
 * The default is false.
-* @returns {glutil.Texture} This object.
+* @returns {H3DU.Texture} This object.
 */
-Texture.prototype.setClamp=function(clamp){
+H3DU.Texture.prototype.setClamp=function(clamp){
  this.clamp=clamp;
  return this;
 };
@@ -50,14 +50,14 @@ Texture.prototype.setClamp=function(clamp){
 * the same texture more than once.  This parameter is optional
 * and may be omitted.
 * @returns {Promise} A promise that resolves when the texture
-* is fully loaded.  If it resolves, the result will be a Texture object.
+* is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
 */
-Texture.loadTexture=function(name, textureCache){
+H3DU.Texture.loadTexture=function(name, textureCache){
  // Get cached texture
  if(textureCache && textureCache[name]){
    return Promise.resolve(textureCache[name]);
  }
- var texImage=new Texture(name);
+ var texImage=new H3DU.Texture(name);
  if(textureCache){
   textureCache[name]=texImage;
  }
@@ -79,13 +79,13 @@ Texture.loadTexture=function(name, textureCache){
 * and alpha components, in that order.
 * @param {Uint8Array} width Width, in pixels, of the texture.
 * @param {Uint8Array} height Height, in pixels, of the texture.
-* @returns {glutil.Texture} The new Texture object.
+* @returns {H3DU.Texture} The new H3DU.Texture object.
 */
-Texture.fromUint8Array=function(array, width, height){
+H3DU.Texture.fromUint8Array=function(array, width, height){
  if(width<0)throw new Error("width less than 0");
  if(height<0)throw new Error("height less than 0");
  if(array.length<width*height*4)throw new Error("array too short for texture");
- var texImage=new Texture("");
+ var texImage=new H3DU.Texture("");
  texImage.image=array;
  texImage.width=Math.ceil(width);
  texImage.height=Math.ceil(height);
@@ -94,9 +94,9 @@ Texture.fromUint8Array=function(array, width, height){
 };
 
 /** @private */
-Texture.loadTga=function(name){
+H3DU.Texture.loadTga=function(name){
  var tex=this;
- return GLUtil.loadFileFromUrl(name,"arraybuffer")
+ return H3DU.loadFileFromUrl(name,"arraybuffer")
  .then(function(buf){
    var view=new DataView(buf.data);
    var id=view.getUint8(0);
@@ -161,7 +161,7 @@ Texture.loadTga=function(name){
 };
 
 /** @private */
-Texture.prototype.loadImage=function(){
+H3DU.Texture.prototype.loadImage=function(){
  if(this.image!==null){
   // already loaded
   return Promise.resolve(this);
@@ -172,7 +172,7 @@ Texture.prototype.loadImage=function(){
  // Use the TGA image loader if it has the TGA file
  // extension
  if((/\.tga$/i).test(thisName)){
-  return Texture.loadTga(thisName).then(function(e){
+  return H3DU.Texture.loadTga(thisName).then(function(e){
    thisImage.image=e.image;
    thisImage.width=e.width;
    thisImage.height=e.height;
@@ -210,7 +210,7 @@ Texture.prototype.loadImage=function(){
 /**
  * Disposes resources used by this texture.
  */
-Texture.prototype.dispose=function(){
+H3DU.Texture.prototype.dispose=function(){
  this.width=0;
  this.height=0;
  this.name="";
@@ -230,6 +230,6 @@ Texture.prototype.dispose=function(){
 /**
 * Gets the name of this texture.
 */
-Texture.prototype.getName=function(){
+H3DU.Texture.prototype.getName=function(){
  return name;
 }

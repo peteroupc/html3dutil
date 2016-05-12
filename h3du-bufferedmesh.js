@@ -6,13 +6,13 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLUtil, Mesh */
+/* global H3DU, H3DU.Mesh */
 
 /** @private */
-var BufferedSubMesh=function(mesh, context){
+H3DU.BufferedSubMesh=function(mesh, context){
  "use strict";
- var smb=(mesh instanceof SubMeshBuffer) ? mesh :
-   new SubMeshBuffer(mesh);
+ var smb=(mesh instanceof H3DU.SubMeshBuffer) ? mesh :
+   new H3DU.SubMeshBuffer(mesh);
  this.smb=smb;
  this.verts=context.createBuffer();
  if(!this.verts)throw new Error("can't create buffer")
@@ -42,7 +42,7 @@ var BufferedSubMesh=function(mesh, context){
   this._attribLocations=[];
 };
 /** @private */
-BufferedSubMesh.prototype._getVaoExtension=function(context){
+H3DU.BufferedSubMesh.prototype._getVaoExtension=function(context){
  if(this.arrayObjectExtContext==context){
   return this.arrayObjectExt;
  } else {
@@ -55,23 +55,23 @@ BufferedSubMesh.prototype._getVaoExtension=function(context){
 * to become a private class. Use the MeshBuffer class instead, which
 * is not coupled to WebGL contexts.
 * @class
-* @alias glutil.BufferedMesh
-* @param {glutil.Mesh} mesh A geometric mesh object.
+* @alias H3DU.BufferedMesh
+* @param {H3DU.Mesh} mesh A geometric mesh object.
 * @param {WebGLRenderingContext|object} context A WebGL context to
-*  create a buffer from, or an object, such as Scene3D, that
+*  create a buffer from, or an object, such as H3DU.Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context. (Note that this constructor uses
 *  a WebGL context rather than a shader program because
 *  buffer objects are not specific to shader programs.)
 */
-function BufferedMesh(mesh, context){
+H3DU.BufferedMesh = function(mesh, context){
  "use strict";
  this.subMeshes=[];
- this.context=GLUtil._toContext(context);
- if(mesh instanceof MeshBuffer){
+ this.context=H3DU._toContext(context);
+ if(mesh instanceof H3DU.MeshBuffer){
   this._bounds=mesh._bounds;
   for(var i=0;i<mesh.subMeshes.length;i++){
-   this.subMeshes.push(new BufferedSubMesh(
+   this.subMeshes.push(new H3DU.BufferedSubMesh(
     mesh.subMeshes[i],this.context));
   }
  } else {
@@ -80,13 +80,13 @@ function BufferedMesh(mesh, context){
    var sm=mesh.subMeshes[i];
    // skip empty submeshes
    if(sm.indices.length===0)continue;
-   this.subMeshes.push(new BufferedSubMesh(
+   this.subMeshes.push(new H3DU.BufferedSubMesh(
     sm,this.context));
   }
  }
 }
 /** @private */
-BufferedMesh.prototype._getBounds=function(){
+H3DU.BufferedMesh.prototype._getBounds=function(){
  "use strict";
 return this._bounds;
 };
@@ -94,12 +94,12 @@ return this._bounds;
  * Returns the WebGL context associated with this object.
  * @deprecated
  * @returns {WebGLRenderingContext} Return value. */
-BufferedMesh.prototype.getContext=function(){
+H3DU.BufferedMesh.prototype.getContext=function(){
  "use strict";
 return this.context;
 };
 /** @private */
-BufferedMesh.prototype.getFormat=function(){
+H3DU.BufferedMesh.prototype.getFormat=function(){
  "use strict";
  var format=0;
  for(var i=0;i<this.subMeshes.length;i++){
@@ -113,11 +113,11 @@ BufferedMesh.prototype.getFormat=function(){
 * Binds the buffers in this object to attributes according
 * to their data format, and draws the elements in this mesh
 * according to the data in its buffers.
-* @param {glutil.ShaderProgram} program A shader program object to get
+* @param {H3DU.ShaderProgram} program A shader program object to get
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
 */
-BufferedMesh.prototype.draw=function(program){
+H3DU.BufferedMesh.prototype.draw=function(program){
  "use strict";
 for(var i=0;i<this.subMeshes.length;i++){
   this.subMeshes[i].draw(program);
@@ -126,7 +126,7 @@ for(var i=0;i<this.subMeshes.length;i++){
 /**
 * Deletes the vertex and index buffers associated with this object.
 */
-BufferedMesh.prototype.dispose=function(){
+H3DU.BufferedMesh.prototype.dispose=function(){
  "use strict";
 for(var i=0;i<this.subMeshes.length;i++){
   this.subMeshes[i].dispose();
@@ -135,7 +135,7 @@ for(var i=0;i<this.subMeshes.length;i++){
 };
 /**
  * @private */
-BufferedSubMesh.prototype.dispose=function(){
+H3DU.BufferedSubMesh.prototype.dispose=function(){
  "use strict";
 if(this.verts!==null)
   this.context.deleteBuffer(this.verts);
@@ -152,7 +152,7 @@ if(this.verts!==null)
  this._attribLocations=[];
 };
 /** @private */
-BufferedSubMesh.prototype._getAttribLocations=function(program,context){
+H3DU.BufferedSubMesh.prototype._getAttribLocations=function(program,context){
  if(this._lastKnownProgram!=program){
   this._lastKnownProgram=program;
   this._attribLocations=[
@@ -174,7 +174,7 @@ BufferedSubMesh.prototype._getAttribLocations=function(program,context){
 
 /**
  * @private */
-BufferedSubMesh.prototype._prepareDraw=function(program, context){
+H3DU.BufferedSubMesh.prototype._prepareDraw=function(program, context){
   var rebind=this._getAttribLocations(program,context);
   var vaoExt=this._getVaoExtension(context);
   if(this.vao) {
@@ -203,7 +203,7 @@ BufferedSubMesh.prototype._prepareDraw=function(program, context){
 }
 /**
  * @private */
-BufferedSubMesh.prototype.draw=function(program){
+H3DU.BufferedSubMesh.prototype.draw=function(program){
   // Binding phase
   "use strict";
   var context=program.getContext();
@@ -216,8 +216,8 @@ BufferedSubMesh.prototype.draw=function(program){
   this._prepareDraw(program,context);
   // Drawing phase
   var primitive=context.TRIANGLES;
-  if((this.smb.format&Mesh.LINES_BIT)!==0)primitive=context.LINES;
-  if((this.smb.format&Mesh.POINTS_BIT)!==0)primitive=context.POINTS;
+  if((this.smb.format&H3DU.Mesh.LINES_BIT)!==0)primitive=context.LINES;
+  if((this.smb.format&H3DU.Mesh.POINTS_BIT)!==0)primitive=context.POINTS;
   context.drawElements(primitive,
     this.smb.facesLength,
     this.type, 0);
@@ -229,7 +229,7 @@ BufferedSubMesh.prototype.draw=function(program){
 /**
  * Gets the number of vertices composed by all shapes in this mesh.
 * @returns {Number} Return value.*/
-BufferedMesh.prototype.vertexCount=function(){
+H3DU.BufferedMesh.prototype.vertexCount=function(){
  "use strict";
 var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
@@ -241,7 +241,7 @@ var ret=0;
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
 * @returns {Number} Return value.*/
-BufferedMesh.prototype.primitiveCount=function(){
+H3DU.BufferedMesh.prototype.primitiveCount=function(){
  "use strict";
 var ret=0;
  for(var i=0;i<this.subMeshes.length;i++){
@@ -251,13 +251,13 @@ var ret=0;
 };
 
 /** @private */
-BufferedMesh._MeshLoader=function(){
+H3DU.BufferedMesh._MeshLoader=function(){
  this.meshes=[]
 }
 /** @private */
-BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
- if(meshBuffer instanceof BufferedMesh){
-  // NOTE: Using BufferedMesh objects directly in Shapes is deprecated
+H3DU.BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
+ if(meshBuffer instanceof H3DU.BufferedMesh){
+  // NOTE: Using H3DU.BufferedMesh objects directly in Shapes is deprecated
   meshBuffer.draw(prog);
  } else {
   var context=prog.getContext();
@@ -268,13 +268,13 @@ BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
     return;
    }
   }
-  var bm=new BufferedMesh(meshBuffer,prog);
+  var bm=new H3DU.BufferedMesh(meshBuffer,prog);
   this.meshes.push([meshBuffer,context,bm]);
   bm.draw(prog);
  }
 }
 /** @private */
-BufferedMesh._MeshLoader.prototype.dispose=function(){
+H3DU.BufferedMesh._MeshLoader.prototype.dispose=function(){
   for(var i=0;i<this.meshes.length;i++){
    this.meshes[i][2].dispose();
   }
