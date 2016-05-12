@@ -43,8 +43,12 @@ if(!window.performance.now){
 }
 
 /**
-* Contains miscellaneous utility methods.
-* @class
+* The Public Domain HTML 3D Library contains classes and utility
+* methods to ease the development of HTML 3D applications, such
+* as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
+* This page describes miscellaneous utility methods included in the
+* library..
+* @namespace
 * @alias H3DU
 */
 var H3DU={

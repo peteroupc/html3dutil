@@ -69,7 +69,7 @@ H3DU.BezierCurve.prototype.evaluate=function(u){
  * the remaining control points define the surface's shape, though they don't
  * necessarily cross the surface.
  * @class
- * @alias BezierSurface
+ * @alias H3DU.BezierSurface
  * @param {Array<Array<Number>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points.  Each
  * control point is an array with the same length as the other control points.
@@ -113,7 +113,7 @@ H3DU.BezierSurface=function(cp, u1, u2, v1, v2){
   this.voffset=v1;
   this.vmul=1.0/(v2-v1);
  }
- this.evaluator=BSplineSurface.clamped(cp,cp[0].length-1,cp.length-1);
+ this.evaluator=H3DU.BSplineSurface.clamped(cp,cp[0].length-1,cp.length-1);
 };
 /**
  * Evaluates the surface function based on a point
@@ -341,7 +341,7 @@ H3DU.BSplineCurve.prototype.evaluate=function(u){
 /**
 * A parametric evaluator for B-spline (basis spline) surfaces.
 * @class
-* @alias BSplineSurface
+* @alias H3DU.BSplineSurface
  * @param {Array<Array<Number>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points.  Each
  * control point is an array with the same length as the other control points.
@@ -361,7 +361,7 @@ H3DU.BSplineCurve.prototype.evaluate=function(u){
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
 * and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
 */
-var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
+var H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  var vcplen=controlPoints.length;
  if(vcplen<=0)throw new Error();
  var ucplen=controlPoints[0].length;
@@ -431,9 +431,9 @@ H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits){
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
-* @returns {BSplineSurface} Return value.*/
-BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
- return new BSplineSurface(controlPoints,
+* @returns {H3DU.BSplineSurface} Return value.*/
+H3DU.BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
+ return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
    H3DU.BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits);
 };
@@ -448,9 +448,9 @@ BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
-* @returns {BSplineSurface} Return value.*/
-BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
- return new BSplineSurface(controlPoints,
+* @returns {H3DU.BSplineSurface} Return value.*/
+H3DU.BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
+ return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
    H3DU.BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits);
 };
@@ -509,7 +509,7 @@ H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree){
  * the evaluation.  Its length will be equal to the
  * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
  */
-BSplineSurface.prototype.evaluate=function(u,v){
+H3DU.BSplineSurface.prototype.evaluate=function(u,v){
   u=this.knotsU[this.orderU-1]+u*(this.knotsU[this.ucplen]-
     this.knotsU[this.orderU-1]);
   v=this.knotsV[this.orderV-1]+v*(this.knotsV[this.vcplen]-
@@ -1107,7 +1107,7 @@ H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
 global.H3DU.SurfaceEval=H3DU.SurfaceEval;
 global.H3DU.CurveEval=H3DU.CurveEval;
 global.H3DU.BezierCurve=H3DU.BezierCurve;
-global.BezierSurface=BezierSurface;
+global.H3DU.BezierSurface=H3DU.BezierSurface;
 global.H3DU.BSplineCurve=H3DU.BSplineCurve;
-global.BSplineSurface=BSplineSurface;
+global.H3DU.BSplineSurface=H3DU.BSplineSurface;
 })(this);

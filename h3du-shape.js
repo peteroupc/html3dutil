@@ -91,7 +91,9 @@ H3DU.Shape.prototype.setTexture=function(name){
 };
 /**
  * Sets this shape's material to a shader with the given URL.
- * @param {H3DU.ShaderProgram} shader
+ * @param {H3DU.ShaderInfo} shader Source code for a WebGL
+ * shader program. <i>Using a {@link H3DU.ShaderProgram} here
+ * is deprecated.</i>
  * @returns {H3DU.Shape} This object.
  */
 H3DU.Shape.prototype.setShader=function(shader){

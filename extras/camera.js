@@ -7,6 +7,8 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global H3DU.Math */
+
+/** @private */
 function Perspective(scene, fov, nearZ, farZ){
  "use strict";
 if(nearZ<=0)throw new Error("invalid nearZ");
@@ -21,9 +23,7 @@ if(nearZ<=0)throw new Error("invalid nearZ");
    this.scene.perspectiveAspect(this.fov,this.near,this.far);
  }
 }
-/**
- * Not documented yet.
- */
+/** @private */
 Perspective.prototype.update=function(){
  "use strict";
  if(this.scene instanceof H3DU.Scene3D){

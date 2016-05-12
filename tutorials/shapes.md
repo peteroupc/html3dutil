@@ -42,27 +42,27 @@ examples of 3D models that can be created using the Mesh class and built-in shap
 
 ### Built-In Shapes <a id=Built_In_Shapes></a>
 
-The [`Meshes`]{@link glutil.Meshes} class includes several handy methods for creating built-in shapes.
+The [`Meshes`]{@link H3DU.Meshes} class includes several handy methods for creating built-in shapes.
 All methods described below return a `Mesh` object that describes the triangles they
 are composed of.  See "Custom Shapes" below for more on meshes.
 
 **3D Figures:**
 
-* [Meshes.createBox()]{@link glutil.Meshes.createBox} - Creates a cube or box.
-* [Meshes.createCylinder()]{@link glutil.Meshes.createCylinder} - Creates a cylinder or cone, not including the base
+* [Meshes.createBox()]{@link H3DU.Meshes.createBox} - Creates a cube or box.
+* [Meshes.createCylinder()]{@link H3DU.Meshes.createCylinder} - Creates a cylinder or cone, not including the base
   or top.
-* [Meshes.createClosedCylinder()]{@link glutil.Meshes.createClosedCylinder} - Creates a cylinder or cone, including the base or top.
-* [Meshes.createTorus()]{@link glutil.Meshes.createTorus} - Creates a torus (doughnut shape).
-* [Meshes.createSphere()]{@link glutil.Meshes.createSphere} - Creates a sphere.
-* [Meshes.createCapsule()]{@link glutil.Meshes.createCapsule} - Creates a capsule shape.
+* [Meshes.createClosedCylinder()]{@link H3DU.Meshes.createClosedCylinder} - Creates a cylinder or cone, including the base or top.
+* [Meshes.createTorus()]{@link H3DU.Meshes.createTorus} - Creates a torus (doughnut shape).
+* [Meshes.createSphere()]{@link H3DU.Meshes.createSphere} - Creates a sphere.
+* [Meshes.createCapsule()]{@link H3DU.Meshes.createCapsule} - Creates a capsule shape.
 
 **2D Figures:**
 
-* [Meshes.createDisk()]{@link glutil.Meshes.createDisk} - Creates a circular disk or a regular polygon, possibly
+* [Meshes.createDisk()]{@link H3DU.Meshes.createDisk} - Creates a circular disk or a regular polygon, possibly
   with a hole in the middle.
-* [Meshes.createPartialDisk()]{@link glutil.Meshes.createPartialDisk} - Creates a portion of a circular disk, possibly
+* [Meshes.createPartialDisk()]{@link H3DU.Meshes.createPartialDisk} - Creates a portion of a circular disk, possibly
   with a hole where the middle of the complete disk would be.
-* [Meshes.createPlane()]{@link glutil.Meshes.createPlane} - Creates a rectangle.
+* [Meshes.createPlane()]{@link H3DU.Meshes.createPlane} - Creates a rectangle.
 
 ### Custom Shapes <a id=Custom_Shapes></a>
 
@@ -231,12 +231,12 @@ You can use the `recalcNormals()` method to recalculate the mesh's normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside.  This method takes two parameters:
 
-* The first parameter is true if the normals will be calculated such that the shape
-will have a flat appearance; otherwise, false (giving the shape a smooth appearance).
+* The first parameter is `true` if the normals will be calculated such that the shape
+will have a flat appearance; otherwise, `false` (giving the shape a smooth appearance).
 This works by either giving each triangle the same normal (flat shading) or giving
 each unique vertex its own normal (smooth shading).
-* The second parameter is true if the normals will be calculated such that the shape
-is shaded from the inside; otherwise, false.
+* The second parameter is `true` if the normals will be calculated such that the shape
+is shaded from the inside; otherwise, `false`.
 
 Remember, for normal calculation to properly affect shading, each triangle in
 the mesh must have its vertices defined in counterclockwise order.
@@ -251,7 +251,7 @@ Example:
 ## Binding Shapes <a id=Binding_Shapes></a>
 
 Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the [`Shape`]{@link glutil.Shape} class comes into
+in order to have it drawn.  This is where the [`Shape`]{@link H3DU.Shape} class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:
 
@@ -302,12 +302,12 @@ then translating (shifting) the shape in 3D space.
 
     scene3d.addShape(shape);
 
-Now, the next time `scene3d.render()` is called, the [`Scene3D`]{@link glutil.Scene3D} will render the
+Now, the next time `scene3d.render()` is called, the [`Scene3D`]{@link H3DU.Scene3D} will render the
 given shape to the scene.
 
 ## Shape Groups <a id=Shape_Groups></a>
 
-The `ShapeGroup` class represents a shape that's a combination of multiple shapes.  Usually,
+The `H3DU.ShapeGroup` class represents a shape that's a combination of multiple shapes.  Usually,
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
 at once.  Here is an example of a clock made up of multiple shapes:
 
@@ -332,9 +332,9 @@ The demo for the clock is:
 * [clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 
-To create a shape group, call `new ShapeGroup()`. To add a `Shape` object to the group,
-call `shapeGroup.addShape(shape)`.  Note that you can only add shapes, not meshes,
-to a shape group, just as for a 3D scene.  A shape group, though, is perfectly allowed to contain
+To create a shape group, call `new H3DU.ShapeGroup()`. To add a `Shape` object to the group,
+call `new H3DU.Shape(shape)`.  Note that you can only add shapes, not meshes,
+to a shape group, just as for a 3D batch (`H3DU.Batch3D`).  A shape group, though, is perfectly allowed to contain
 other shape groups.
 
 ## Other Pages <a id=Other_Pages></a>

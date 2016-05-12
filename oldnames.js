@@ -24,6 +24,5 @@ var TextureLoader=H3DU.TextureLoader;
 // TODO: Temporary
 var Batch3D=H3DU.Batch3D;
 var TextureLoader=H3DU.TextureLoader;
-var Batch3D=H3DU.Batch3D;
 var ShaderInfo=H3DU.ShaderInfo;
 var RenderPass3D=H3DU.RenderPass3D;

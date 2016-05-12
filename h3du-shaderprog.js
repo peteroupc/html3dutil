@@ -9,21 +9,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /* global Lights, console */
 
 /**
-* Represents a WebGL shader program.  A shader program in
+* Holds source code for a WebGL shader program.  A shader program in
 * WebGL consists of a vertex shader (which processes vertices),
 * and a fragment shader (which processes pixels).  Shader programs
 * are specially designed for running on a graphics processing unit,
 * or GPU.<p>
-* When the H3DU.ShaderProgram constructor is called, it will compile
-* and link a shader program from the source text passed to it, but
-* it won't use that program until the use() method is called.  If the
-* program is compiled and linked successfully, the constructor
-* will also gather a list of the program's attributes (vertex-specific variables
-* in vertex buffer objects) and uniforms (variables not specific to a vertex).<p>
-* If compiling or linking the shader program fails, a diagnostic
-* log is output to the JavaScript console.
+* This class also stores uniform values associated with the shader
+* source code.
 * @class
-* @alias H3DU.ShaderProgram
+* @alias H3DU.ShaderInfo
 * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
 * ES Shading Language (GLSL).  If null, a default
 * vertex shader is used instead.
@@ -134,7 +128,21 @@ H3DU.ShaderInfo._setUniformsInternal=function(uniforms,outputUniforms,changedUni
   }
 };
 /**
- * Not documented yet.
+* Represents a WebGL shader program.  A shader program in
+* WebGL consists of a vertex shader (which processes vertices),
+* and a fragment shader (which processes pixels).  Shader programs
+* are specially designed for running on a graphics processing unit,
+* or GPU.<p>
+* When the H3DU.ShaderProgram constructor is called, it will compile
+* and link a shader program from the source text passed to it, but
+* it won't use that program until the use() method is called.  If the
+* program is compiled and linked successfully, the constructor
+* will also gather a list of the program's attributes (vertex-specific variables
+* in vertex buffer objects) and uniforms (variables not specific to a vertex).<p>
+* If compiling or linking the shader program fails, a diagnostic
+* log is output to the JavaScript console.
+ * @class
+ * @alias H3DU.ShaderProgram
  * @param {*} context
  * @param {*} vertexShader
  * @param {*} fragmentShader

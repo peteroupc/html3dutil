@@ -6,24 +6,10 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global define, exports */
-(function (g,f) {
- "use strict";
-if (typeof define==="function" && define.amd) {
-  define([ "exports" ], f);
- } else if (typeof exports==="object") {
-  f(exports);
- } else {
-  f(g);
- }
-}(this, function (exports) {
- "use strict";
 
-if(!exports.H3DU){
+if(!H3DU){
  exports.H3DU = {};
 }
-if (exports.H3DU.Math) { return; }
-var H3DU=exports.H3DU;
 /**
 * A collection of math functions for working
 * with vectors, matrices, quaternions, and other
@@ -2168,4 +2154,3 @@ H3DU.Math.RollYawPitch = 5;
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
 H3DU.Math.quatInverse=H3DU.Math.quatInvert;
-}));

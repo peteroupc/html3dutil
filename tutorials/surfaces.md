@@ -228,7 +228,7 @@ kept to the same value, such as 0, 1, or any other constant number.
 
 ### Generating Parametric Curves <a id=Generating_Parametric_Curves></a>
 
-The HTML 3D Library's `CurveEval` class generates vertices for
+The HTML 3D Library's `H3DU.CurveEval` class generates vertices for
 a parametric curve.
 
 Use code like the following to generate a mesh describing a parametric
@@ -239,7 +239,7 @@ the circle example above.
       // set the color
       mesh.color3("black");
       // Create a curve evaluator
-      var ev=new CurveEval()
+      var ev=new H3DU.CurveEval()
       .vertex(evaluator)
        // Evaluate the curve, using 100 lines
       .evalCurve(mesh,Mesh.LINES,100);

@@ -128,7 +128,7 @@ Examples
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  var sub=new H3DU.Subscene3D(scene)
+  var sub=new H3DU.Batch3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
    .perspectiveAspect(45,0.1,100)
@@ -203,39 +203,12 @@ Version 1.5:
  or rearranged
 - Other changes and fixes
 
-Version 1.4:
-
-- Fixed camera.js issues (thanks to the user "the-sz" on GitHub)
-- Added an _extras_ folder with the following new scripts:
-    - A CurveTube class for creating tubes from 3D curves
-    - A parametric evaluator for surfaces of revolution and
-      3 kinds of curves (_evaluators.js_)
-    - A frame counter (moved from the demos)
-    - A JSON converter and loader for 3D meshes (_meshjson.js_)
-- Made _objmtl.js_ compatible with more MTL files
-- Math.sin/Math.cos pairs were replaced with optimized
-  versions throughout the code
-- Add mat4transformVec3 method to GLMath
-- Add BSplineCurve class
-- Deprecate vertexBezier, normalBezier, colorBezier, and texCoordBezier
-  methods of CurveEval and SurfaceEval
-- Optimize SurfaceEval's evalSurface method when generating
-  triangles
-- Add primitiveCount and enumPrimitives methods to the Mesh
-  class
-- Add setMaterial and removeShape methods to the ShapeGroup class
-- Default shader program now uses `modelViewMatrix` instead of
-  separate `world` and `view` uniforms
-- Fix JSON issues in GLUtil.loadFileFromUrl method
-- Many new demos added
-- Add graphics filters tutorial and expanded several other tutorials
-
 See [older version history](https://peteroupc.github.io/html3dutil/tutorial-history.html).
 
 About
 -----------
 
-Written in 2015 by Peter O.
+Written in 2015-2016 by Peter O.
 
 Any copyright is dedicated to the Public Domain.
 [http://creativecommons.org/publicdomain/zero/1.0/](http://creativecommons.org/publicdomain/zero/1.0/)

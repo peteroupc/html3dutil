@@ -9,7 +9,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /**
 * @class
 * @alias H3DU.Batch3D
-* @param {H3DU.Scene3D} scene
 */
 H3DU.Batch3D = function(){
  this._projectionMatrix=H3DU.Math.mat4identity();
@@ -131,10 +130,13 @@ H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
  return this;
 };
 /**
- * Not documented yet.
- * @param {*} fov
- * @param {*} near
- * @param {*} far
+ * Uses a perspective projection for this batch.  It will be adjusted
+ * to the scene's aspect ratio each time this batch is rendered.<p>
+ * For considerations when choosing the "near" and "far" parameters,
+ * see glmath.H3DU.Math.mat4perspective.
+ * @param {Number} fov Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+ * @param {Number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
+ * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
  */
 H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
@@ -152,13 +154,14 @@ H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
  return this.setViewMatrix(H3DU.Math.mat4lookat(eye,center,up));
 };
 /**
- * Not documented yet.
+ * Uses an orthographic projection for this batch.  It will be adjusted
+ * to the scene's aspect ratio each time this batch is rendered.<p>
  * @param {*} a
  * @param {*} b
  * @param {*} c
  * @param {*} d
- * @param {*} e
- * @param {*} f
+ * @param {Number} e The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
+ * @param {Number} f The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
  */
 H3DU.Batch3D.prototype.orthoAspect=function(a,b,c,d,e,f){

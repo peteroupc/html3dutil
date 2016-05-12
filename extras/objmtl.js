@@ -103,14 +103,14 @@ var ret=path;
 ObjData.prototype._getMaterial=function(mesh){
  "use strict";
 if(!this.mtl || !mesh){
-  return new Material();
+  return new H3DU.Material();
  } else {
   if(mesh.usemtl){
    var mtl=this.mtl.getMaterial(mesh.usemtl);
-   if(!mtl)return new Material();
+   if(!mtl)return new H3DU.Material();
    return mtl;
   } else {
-   return new Material();
+   return new H3DU.Material();
   }
  }
 };

@@ -1,5 +1,6 @@
 /**
- * A holder object representing a 3D scene.
+ * An object that holds a rendering context for rendering
+ * 3D objects.
 *  @class
 * @alias H3DU.Scene3D
  * @param {WebGLRenderingContext|object} canvasOrContext
@@ -383,8 +384,8 @@ if(this._renderedOutsideScene){
 *  Sets this scene's projection matrix to a perspective projection.
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
- * see {@link glmath.H3DU.Math.mat4perspective}.
-* @deprecated Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4perspective}. This compatibility behavior may be dropped in the future.
+ * see {@link H3DU.Math.mat4perspective}.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4perspective}. This compatibility behavior may be dropped in the future.
  * @param {Number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
@@ -416,7 +417,7 @@ H3DU.Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4orthoAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4orthoAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -466,8 +467,8 @@ H3DU.Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspec
  * the view frustum, or the limits in the camera's view.
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
- * see {@link glmath.H3DU.Math.mat4perspective}.
-* @deprecated Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4frustum}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+ * see {@link H3DU.Math.mat4perspective}.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4frustum}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {Number} right X-coordinate of the point where the right
@@ -492,7 +493,7 @@ H3DU.Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
-* @deprecated  Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 3D view.
  * @param {Number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
@@ -514,7 +515,7 @@ H3DU.Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
-* @deprecated  Instead of this method, use {@link glmath.H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2d}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2d}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 2D view.
  * @param {Number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
@@ -874,7 +875,7 @@ H3DU.Scene3D.prototype._clearForPass=function(pass){
  *  as {@link H3DU.renderLoop}.<p>
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
- * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} An array of scenes
+ * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} renderPasses An array of scenes
  * to draw, or a single subscene to render. Can be null.
  * @returns {H3DU.Scene3D} This object.
  */

@@ -1,5 +1,32 @@
 ## Old Version History <a id=Old_Version_History></a>
 
+Version 1.4:
+
+- Fixed camera.js issues (thanks to the user "the-sz" on GitHub)
+- Added an _extras_ folder with the following new scripts:
+    - A CurveTube class for creating tubes from 3D curves
+    - A parametric evaluator for surfaces of revolution and
+      3 kinds of curves (_evaluators.js_)
+    - A frame counter (moved from the demos)
+    - A JSON converter and loader for 3D meshes (_meshjson.js_)
+- Made _objmtl.js_ compatible with more MTL files
+- Math.sin/Math.cos pairs were replaced with optimized
+  versions throughout the code
+- Add mat4transformVec3 method to GLMath
+- Add BSplineCurve class
+- Deprecate vertexBezier, normalBezier, colorBezier, and texCoordBezier
+  methods of CurveEval and SurfaceEval
+- Optimize SurfaceEval's evalSurface method when generating
+  triangles
+- Add primitiveCount and enumPrimitives methods to the Mesh
+  class
+- Add setMaterial and removeShape methods to the ShapeGroup class
+- Default shader program now uses `modelViewMatrix` instead of
+  separate `world` and `view` uniforms
+- Fix JSON issues in GLUtil.loadFileFromUrl method
+- Many new demos added
+- Add graphics filters tutorial and expanded several other tutorials
+
 Version 1.3.1:
 
 - Fixed touch events in some of the interactive demos

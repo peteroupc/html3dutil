@@ -206,7 +206,7 @@ var shininess=1.0;
  if(mtl.hasOwnProperty("colorSpecular")){
   specular=(mtl.colorSpecular);
  }
- var ret=new Material(ambient,diffuse,specular,shininess,
+ var ret=new H3DU.Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
   ret=ret.setParams({

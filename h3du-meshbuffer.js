@@ -49,7 +49,6 @@ if((this.format&H3DU.Mesh.LINES_BIT)!==0)
 /**
 * A geometric mesh in the form of buffer objects.
 * @class
-* @private
 * @alias H3DU.MeshBuffer
 * @param {*} mesh A geometric mesh object.
 */

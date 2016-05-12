@@ -211,7 +211,7 @@ H3DU.Material.prototype.copy=function(){
 * map texture (see {@link H3DU.Material#specularMap}).
 * <li><code>normalMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a normal
 * map (bump map) texture (see {@link H3DU.Material#normalMap}).
-* <li><code>shader</code> - {@link H3DU.ShaderProgram} object for a WebGL shader program
+* <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
 * to use when rendering objects with this material.
 * </ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.

@@ -17,6 +17,7 @@
 * Fractional values are rounded up.
 */
 H3DU.FrameBuffer = function(context, width, height){
+ // TODO: Create a decoupled version of this class
  "use strict";
  if(width<0 || height<0)throw new Error("width or height negative");
  context= (context.getContext) ? context.getContext() : context;
@@ -24,7 +25,6 @@ H3DU.FrameBuffer = function(context, width, height){
  // give the framebuffer its own texture unit, since the
  // shader program may bind samplers to other texture
  // units, such as texture unit 0
- // TODO: May fail in Chrome for being "out of range"
  this.textureUnit=3;
  this._init(context,width,height);
  }

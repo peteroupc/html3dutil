@@ -138,27 +138,27 @@ CanvasBackground.hls2rgb=function(hls) {
 };
 CanvasBackground.prototype.start=function(){
  var rgb=this.constructor.hls2rgb(this.hls);
- this.rend=new Scene3D(this.canvas)
+ this.rend=new H3DU.Scene3D(this.canvas)
     .setClearColor(rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0, 1.0);
- this.scene=new Batch3D();
+ this.scene=new H3DU.Batch3D();
  this.scene.getLights().setDirectionalLight(0, [0,0,-1])
- this.cubeMesh=new Shape(Meshes.createBox(2,2,2));
- this.sphereMesh=new Shape(Meshes.createSphere());
- this.torusMesh=new Shape(Meshes.createTorus(0.5,1));
- this.cylinderMesh=new Shape(Meshes.createClosedCylinder(1,1,2));
+ this.cubeMesh=new H3DU.Shape(Meshes.createBox(2,2,2));
+ this.sphereMesh=new H3DU.Shape(Meshes.createSphere());
+ this.torusMesh=new H3DU.Shape(Meshes.createTorus(0.5,1));
+ this.cylinderMesh=new H3DU.Shape(Meshes.createClosedCylinder(1,1,2));
  this.timeInfo={};
  this.count=0;
  GLUtil["renderLoop"](this.animate.bind(this));
 }
 CanvasBackground.prototype["setColor"]=function(color){
- var rgb=GLUtil["toGLColor"](color)
+ var rgb=H3DU.toGLColor(color)
  if(!rgb)throw new Error("invalid color parameter");
  this.color=[rgb[0]*255,rgb[1]*255,rgb[2]*255];
  this.hls=this.constructor.rgb2hls(this.color);
 }
 
 CanvasBackground.prototype.animate=function(time){
-  this.count+=GLUtil.newFrames(this.timeInfo,time);
+  this.count+=H3DU.newFrames(this.timeInfo,time);
   while(this.count>=4){
    // Draw a new shape every 4 frames
    this.drawOne();
@@ -183,7 +183,7 @@ CanvasBackground.prototype.drawOne=function(){
   rgb[1]/=255
   rgb[2]/=255
    var angle=this.constructor.rand(160);
-   var vector=GLMath.quatFromTaitBryan(
+   var vector=H3DU.Math.quatFromTaitBryan(
      (this.constructor.rand(360)),
      (this.constructor.rand(360)),
      (this.constructor.rand(360)));

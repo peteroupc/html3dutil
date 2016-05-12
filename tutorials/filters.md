@@ -26,10 +26,10 @@ the screen with the help of the graphics filter's shader program.
 
 ## Writing Graphics Filters <a id=Writing_Graphics_Filters></a>
 
-In the HTML 3D Library, use the `makeEffect` method of the ShaderProgram class to create
+In the HTML 3D Library, use the `makeEffect` method of the `H3DU.ShaderProgram` class to create
 graphics filters:
 
-* The `ShaderProgram` class holds data on shader programs.  Each shader program consists
+* The `H3DU.ShaderProgram` class holds data on shader programs.  Each shader program consists
 of a _vertex shader_ and a _fragment shader_.  Graphics filters are essentially part of a fragment shader
 and thus process pixels.  (Vertex shaders, which process vertices of triangles, lines, and points,
 are not discussed on this page.)
@@ -39,7 +39,7 @@ shader, the method also adds a very basic vertex shader for the graphics filter.
 
 The following is an example of a graphics filter.
 
-    return ShaderProgram.makeEffect(context,[
+    return H3DU.ShaderProgram.makeEffect(null,[
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     // Read the current color from the sampler texture
     " vec4 color=texture2D(sampler,uvCoord);",
@@ -126,7 +126,7 @@ like a film negative.
 
 This filter is implemented in the method `ShaderProgram.getInvertEffect()`:
 
-    ShaderProgram.getInvertEffect=function(context){
+    ShaderProgram.getInvertEffect=function(){
     return ShaderProgram.makeEffect(context,
     [
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
@@ -141,7 +141,7 @@ This filter is implemented in the method `ShaderProgram.getInvertEffect()`:
 
 The red tint filter adds a hint of red to the image.
 
-    function makeRedTint(context){
+    function makeRedTint(){
     return ShaderProgram.makeEffect(context,[
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     " vec4 color=texture2D(sampler,uvCoord);",
@@ -157,7 +157,7 @@ This filter does a horizontal flip of its pixels.  Note that the filter, given b
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
 the current X coordinate).
 
-    function makeMirror(context){
+    function makeMirror(){
     return ShaderProgram.makeEffect(context,[
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     " vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
@@ -175,7 +175,7 @@ With a simple change, this filter can be modified to do a vertical flip (`1.0-uv
 This filter enables a family of image processing filters, such as blurring, sharpening,
 edge detection, and embossing, that process each pixel and its neighbors.  This filter takes
 a 3x3 matrix called a _convolution kernel_, which gives the contribution of each pixel's color
-to the final color.  All the numbers in the matrix must add up to 1.
+to the final color.  All the numbers in the matrix usually add up to 1.
 
 Note that the `uniform` given below is a `mat3`, meaning a 3x3 matrix.
 
@@ -200,8 +200,8 @@ This filter pixelates the screen, in effect, by scaling it down and then scaling
 This filter takes a `uniform` named `coarseness`, which indicates how many normal pixels
 each "pixelated" pixel takes up.
 
-    function makePixelate(context){
-    return ShaderProgram.makeEffect(context,[
+    function makePixelate(){
+    return ShaderProgram.makeEffect(null,[
     "uniform float coarseness;", // coarseness in pixels; 1 means normal
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     " float g=max(coarseness,1.0);",
