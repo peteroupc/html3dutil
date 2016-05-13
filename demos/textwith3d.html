@@ -45,13 +45,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    new H3DU.RenderPass3D(textSub,{"clearColor":false})
   ]
   var timer={}
-  var textrnd=new H3DU.TextRenderer(new H3DU.TextureLoader());
+  var loader=new TextureLoader();
   H3DU.getPromiseResultsAll([
-   textrnd.loadFont("black-chancery.fnt"),
-   textrnd.loadFont("aileron-bold-red.fnt")
+   H3DU.TextFont.loadWithTextures("black-chancery.fnt",loader),
+   H3DU.TextFont.loadWithTextures("aileron-bold-red.fnt",loader)
   ]).then(function(results){
-   var shape=textrnd.textShape(results[0],"This is a signed\ndistance field test.",
-    {x:0,y:50,height:100,color:"blue"});
+   var shape=results[0].font.textShape("This is a signed\ndistance field test.",
+    {x:0,y:50,height:100,color:"blue",textures:results[0].textures});
    textSub.addShape(shape);
    var y=250;
    var size=20;
@@ -60,10 +60,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     if(i==0){
       text="Uses the public domain font Aileron from http://dotcolon.net/font/aileron/"
     }
-    shape=textrnd.textShape(results[1],text,
-      {x:0,y:y,height:size});
+    shape=results[1].font.textShape(text,
+      {x:0,y:y,height:size,textures:results[1].textures});
     textSub.addShape(shape);
-    y+=results[1].measure(text,size)[1];
+    y+=results[1].font.measure(text,size)[1];
     size+=10;
    }
    return true;

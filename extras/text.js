@@ -10,9 +10,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 (function(exports){
 "use strict";
 if(!H3DU){ H3DU={}; }
-
 /**
-* Renderer for drawing text using bitmap fonts.  This class supports
+* Represents a bitmap font.  This class supports
 * traditional bitmap fonts and signed distance field fonts.<p>
 * Bitmap fonts consist of a font definition file and one
 * or more textures containing the shape of each font glyph.  The glyphs
@@ -37,7 +36,10 @@ if(!H3DU){ H3DU={}; }
 * See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
 * for a list of bitmap font generation tools. (No one tool is recommended over any
 * other, and the mention of this link is not an endorsement or sponsorship
-* of any particular tool.)
+* of any particular tool.)<p>
+* NOTE: The constructor should not be called directly by applications.
+* Use the {@link H3DU.TextFont.load} method to get an H3DU.TextFont object.  This
+* constructor's parameters are undocumented and are subject to change.
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
@@ -45,111 +47,6 @@ if(!H3DU){ H3DU={}; }
  * class is not included in the "glutil_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
-* @class
-* @alias H3DU.TextRenderer
-* @param {H3DU.TextureLoader} object to load font textures with.
-*/
-H3DU.TextRenderer=function(loader){
- this.loader=loader;
- this.shader=new H3DU.ShaderInfo(null,H3DU.TextFont._textShader());
- this.fontTextures=[]
-}
-/** @private */
-H3DU.TextRenderer.prototype._getFontTextures=function(font){
- for(var i=0;i<this.fontTextures.length;i++){
-  if(this.fontTextures[i][0]==font){
-   return this.fontTextures[i][1]
-  }
- }
- return []
-}
-/** @private */
-H3DU.TextRenderer.prototype._setFontTextures=function(font,textureList){
- for(var i=0;i<this.fontTextures.length;i++){
-  if(this.fontTextures[i][0]==font){
-   this.fontTextures[i][1]=textureList;
-   return;
-  }
- }
- this.fontTextures.push([font,textureList]);
-}
-
-/**
-* Creates a shape containing the primitives needed to
-* draw text in the given position, size, and color.
-* For the text to show upright, the coordinate system should have the
-* X-axis pointing right and the Y-axis pointing down (for example, an
-* orthographic projection where the left and top coordinates are less
-* than the right and bottom coordinates, respectively).
-* @param {H3DU.TextFont} font The bitmap font to use when drawing the text.
-* @param {String} string The text to draw.  Line breaks ("\n") are recognized
-* by this method.
-* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
-* Can also contain the following keys:<ul>
-* <li><code>color</code> - A [color vector or string]{@link H3DU.toGLColor} giving
-* the color to draw the text with.
-* If this value is given, the bitmap font is assumed to be a signed distance field
-* font.
-* </ul>
-*/
-H3DU.TextRenderer.prototype.textShape=function(font, str, params){
-// TODO: Make a version of this method that takes
-// an array of textures.  Then there would be no need
-// for a TextRenderer class
- var group=new H3DU.ShapeGroup();
- var color=((typeof params.color !== "undefined" && params.color !== null)) ? params.color : null;
- var hasColor=(color!=null);
- color=(hasColor) ? color : [0,0,0,0];
- var fontTextures=this._getFontTextures(font);
- var meshesForPage=font.makeTextMeshes(str,params);
- for(var i=0;i<meshesForPage.length;i++){
-  var mfp=meshesForPage[i];
-  if(!mfp || !fontTextures[i])continue;
-  var sh=new H3DU.Shape(mfp);
-  var material=new Material(color,color).setParams({
-   "texture":fontTextures[i],
-   "basic":true,
-   "shader": hasColor ? this.shader : null
-  });
-  sh.setMaterial(material);
-  group.addShape(sh);
- }
- return group;
-}
-/**
-* Loads a bitmap font definition from a file,
-* as well as the bitmaps used by that font, and maps them
-* to WebGL textures.  See {@link H3DU.TextRenderer} for
-* more information.
-* @param {String} fontFileName The URL of the font data file
-* to load.  The following file extensions are read as the following formats:<ul>
-* <li>".xml": XML</li>
-* <li>".json": JSON</li>
-* <li>".bin": Binary</li>
-* <li>".fnt": Text or binary</li>
-* <li>All others: Text</li></ul>
-* @returns {Promise<H3DU.TextFont>} A promise that is resolved
-* when the font data and all the textures it uses are loaded successfully (the result will be
-* an H3DU.TextFont object), and is rejected when an error occurs.
-*/
-H3DU.TextRenderer.prototype.loadFont=function(fontFileName){
- var thisObject=this;
- var loader=this.loader;
- return H3DU.TextFont.loadWithTextures(fontFileName,loader)
-   .then(function(f){
-     var textures=[];
-     for(var i=0;i<f.pages.length;i++){
-      textures.push(loader.getTexture(f.pages[i]));
-     }
-     thisObject._setFontTextures(f,textures);
-     return Promise.resolve(f);
-   });
-}
-/**
-* Represents a bitmap font.
-* NOTE: The constructor should not be called directly by applications.
-* Use the {@link H3DU.TextFont.load} method to get an H3DU.TextFont object.  This
-* constructor's parameters are undocumented and are subject to change.
 * @class
 * @alias H3DU.TextFont
 */
@@ -242,7 +139,52 @@ H3DU.TextFont.prototype.measure=function(str,height){
  if(haveChar)ySize+=this.common.lineHeight*scale;
  return [xSize,ySize];
 }
-
+/**
+* Creates a shape containing the primitives needed to
+* draw text in the given position, size, and color.
+* For the text to show upright, the coordinate system should have the
+* X-axis pointing right and the Y-axis pointing down (for example, an
+* orthographic projection where the left and top coordinates are less
+* than the right and bottom coordinates, respectively).
+* @param {H3DU.TextFont} font The bitmap font to use when drawing the text.
+* @param {String} string The text to draw.  Line breaks ("\n") are recognized
+* by this method.
+* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
+* Can also contain the following keys:<ul>
+* <li><code>color</code> - A [color vector or string]{@link H3DU.toGLColor} giving
+* the color to draw the text with.
+* If this value is given, the bitmap font is assumed to be a signed distance field
+* font.
+* <li><code>texture</code> - An array of textures ({@link H3DU.Texture}) to use with this font, 
+* or a single {@link H3DU.Texture} if only one texture page is used.
+* If null or omitted, uses the default filenames for texture pages defined in this font.
+* </ul>
+*/
+H3DU.TextFont.prototype.textShape=function(str, params){
+ var group=new H3DU.ShapeGroup();
+ var color=((typeof params.color !== "undefined" && params.color !== null)) ? params.color : null;
+ var textures=((typeof params.textures !== "undefined" && params.textures !== null)) ? 
+   params.textures : null;
+ if(textures && textures instanceof H3DU.Texture){
+  textures=[textures]
+ }
+ var hasColor=(color!=null);
+ color=(hasColor) ? color : [0,0,0,0];
+ var meshesForPage=this.makeTextMeshes(str,params);
+ for(var i=0;i<meshesForPage.length;i++){
+  var mfp=meshesForPage[i];
+  if(!mfp)continue;
+  var sh=new H3DU.Shape(mfp);
+  var material=new Material(color,color).setParams({
+   "texture":textures ? textures[i] : this.pages[i],
+   "basic":true,
+   "shader": hasColor ? H3DU.TextFont._textShaderInfo : null
+  });
+  sh.setMaterial(material);
+  group.addShape(sh);
+ }
+ return group;
+}
 /**
  * Creates an array of meshes containing the primitives
  * needed to draw text with this font.
@@ -655,16 +597,23 @@ H3DU.TextFont._loadTextFontInner=function(data){
 * <li>All others: Text</li></ul>
  * @param {H3DU.TextureLoader} [textureLoader]
 * @returns {Promise} A promise that is resolved
-* when the font data and textures are loaded successfully (the result will be
-* an H3DU.TextFont object), and is rejected when an error occurs.
+* when the font data and textures are loaded successfully,
+* and is rejected when an error occurs.
+* If the promise is resolved, the result will be an object with the
+* following keys:<ul>
+<li><code>url</code> - The URL of the font data file.
+<li><code>font</code> - The font data in the form of an {@link H3DU.TextFont} object.
+<li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
+in the order in which they are declared in the font data file.
+</ul>
 */
 H3DU.TextFont.loadWithTextures=function(fontFileName,textureLoader){
  if(!textureLoader){
-  return H3DU.TextFont.load(fontFileName);
+  throw new Error();
  }
  return H3DU.TextFont.load(fontFileName).then(function(font){
   return font.loadTextures(textureLoader).then(function(r){
-     return Promise.resolve(font);
+     return Promise.resolve({"url":font.fileUrl,"font":font,"textures":r});
   },function(r){
      return Promise.reject({"url":font.fileUrl,"results":r});
   });
@@ -765,7 +714,7 @@ shader+=" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\
 "}";
 return shader;
 };
-
+H3DU.TextFont._textShaderInfo=new H3DU.ShaderInfo(null,H3DU.TextFont._textShader());
 exports.H3DU.TextFont=H3DU.TextFont;
 exports.H3DU.TextRenderer=H3DU.TextRenderer;
 
