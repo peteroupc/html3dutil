@@ -34,12 +34,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    .setLookAt([0,0,40]);
   sub.getLights().setDefaults();
   var fc=new FrameCounterDiv(sub)
-  var loader=new TextureLoader();
+  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexturesAll([
    "461223191.jpg",
    "specular.png"
    ],scene).then(function(tex){
-   var mesh=Meshes.createBox(10,20,20);
+   var mesh=H3DU.Meshes.createBox(10,20,20);
    var shape=new H3DU.Shape(mesh).setMaterialParams({
      "diffuse":"white",
      "specular":"white",

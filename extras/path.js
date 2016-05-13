@@ -905,7 +905,7 @@ if(this._isClosed){
 * value, given in units.  If null or omitted, default is 1.  This
 is only used to make the arc-length parameterization more
 accurate if the path contains curves or arcs.
-* @returns {object} An object that implements
+* @returns {Object} An object that implements
 * the following methods:<ul>
 <li><code>getCurves()</code> - Returns a list of curves described
 * by this path.  The list will contain one object for each disconnected

@@ -21,8 +21,8 @@ var Shape=H3DU.Shape;
 var ShapeGroup=H3DU.ShapeGroup;
 var Texture=H3DU.Texture;
 var TextureLoader=H3DU.TextureLoader;
+var Transform=H3DU.Transform;
 // TODO: Temporary
 var Batch3D=H3DU.Batch3D;
-var TextureLoader=H3DU.TextureLoader;
 var ShaderInfo=H3DU.ShaderInfo;
 var RenderPass3D=H3DU.RenderPass3D;

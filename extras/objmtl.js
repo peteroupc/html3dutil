@@ -236,9 +236,13 @@ return H3DU.loadFileFromUrl(url).then(
    });
 };
 /**
- * Not documented yet.
+ * Loads a WaveFront OBJ file (along with its associated MTL, or
+ * material file, if available), along with the textures it uses,
+ * asynchronously.
+ * @param {String} url The URL to load.
  * @param {*} url
- * @param {*} textureLoader
+ * @param {TextureLoader} textureLoader An object to load
+ * textures with.
  */
 ObjData.loadObjFromUrlWithTextures=function(url,textureLoader){
  return ObjData.loadObjFromUrl(url).then(function(obj){

@@ -8,35 +8,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global H3DU.Math */
 
-/** @private */
-function Perspective(scene, fov, nearZ, farZ){
- "use strict";
-if(nearZ<=0)throw new Error("invalid nearZ");
- this.fov=fov;
- this.scene=scene;
- this.near=nearZ;
- this.far=farZ;
- if(this.scene instanceof H3DU.Scene3D){
-   this.currentAspect=this.scene.getClientAspect();
-   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
- } else {
-   this.scene.perspectiveAspect(this.fov,this.near,this.far);
- }
-}
-/** @private */
-Perspective.prototype.update=function(){
- "use strict";
- if(this.scene instanceof H3DU.Scene3D){
-  var aspect=this.scene.getClientAspect();
-  if(aspect!==this.currentAspect){
-   this.currentAspect=aspect;
-   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
-  }
- } else {
-   this.scene.perspectiveAspect(this.fov,this.near,this.far);
- }
-};
-
 ////////////////////////////////////////////
 
 function InputTracker(element){
@@ -266,7 +237,7 @@ function Camera(sub, fov, nearZ, farZ, canvas){
  "use strict";
  if(nearZ<=0)throw new Error("invalid nearZ");
  this.near=nearZ;
- this.persp=new Perspective(sub,fov,nearZ,farZ);
+ this.persp=new Camera._Perspective(sub,fov,nearZ,farZ);
  this.rotation=H3DU.Math.quatIdentity();
  this.dolly=H3DU.Math.quatIdentity();
  this.position=[0,0,0];
@@ -278,6 +249,35 @@ function Camera(sub, fov, nearZ, farZ, canvas){
  this.input=new InputTracker(canvas);
  this.input.mousewheel(this._mousewheel.bind(this));
 }
+
+/** @private */
+Camera._Perspective=function(scene, fov, nearZ, farZ){
+ "use strict";
+if(nearZ<=0)throw new Error("invalid nearZ");
+ this.fov=fov;
+ this.scene=scene;
+ this.near=nearZ;
+ this.far=farZ;
+ if(this.scene instanceof H3DU.Scene3D){
+   this.currentAspect=this.scene.getClientAspect();
+   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ } else {
+   this.scene.perspectiveAspect(this.fov,this.near,this.far);
+ }
+}
+/** @private */
+Camera._Perspective.prototype.update=function(){
+ "use strict";
+ if(this.scene instanceof H3DU.Scene3D){
+  var aspect=this.scene.getClientAspect();
+  if(aspect!==this.currentAspect){
+   this.currentAspect=aspect;
+   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+  }
+ } else {
+   this.scene.perspectiveAspect(this.fov,this.near,this.far);
+ }
+};
 /** @private */
 Camera._normAsVec4=function(x,y,z){
  "use strict";

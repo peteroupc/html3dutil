@@ -361,7 +361,7 @@ H3DU.BSplineCurve.prototype.evaluate=function(u){
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
 * and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
 */
-var H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
+H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  var vcplen=controlPoints.length;
  if(vcplen<=0)throw new Error();
  var ucplen=controlPoints[0].length;
@@ -603,7 +603,7 @@ H3DU.CurveEval=function(){
 
 /**
 * Specifies a parametric curve function for generating vertex positions.
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate".  It takes the following parameter:<ul>
 * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
 * </ul>
@@ -622,7 +622,7 @@ H3DU.CurveEval.prototype.vertex=function(evaluator){
 };
 /**
 * Specifies a parametric curve function for generating normals.
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
@@ -633,7 +633,7 @@ H3DU.CurveEval.prototype.normal=function(evaluator){
 };
 /**
 * Specifies a parametric curve function for generating color values.
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
@@ -644,7 +644,7 @@ H3DU.CurveEval.prototype.color=function(evaluator){
 };
 /**
 * Specifies a parametric curve function for generating texture coordinates.
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 2 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
@@ -776,7 +776,7 @@ H3DU.SurfaceEval.prototype.setAutoNormal=function(value){
 };
 /**
 * Specifies a parametric surface function for generating vertex positions.
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate".  It takes the following parameters in this order:<ul>
 * <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
 * <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
@@ -807,7 +807,7 @@ H3DU.SurfaceEval.prototype.vertex=function(evaluator){
 * (Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>
 * or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is also
 * called the <i>tangent vector</i>.)
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
 * @returns {H3DU.SurfaceEval} This object.
@@ -840,7 +840,7 @@ H3DU.SurfaceEval.prototype.normal=function(evaluator){
 };
 /**
 * Specifies a parametric surface function for generating color values.
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
 * @returns {H3DU.SurfaceEval} This object.
@@ -851,7 +851,7 @@ H3DU.SurfaceEval.prototype.color=function(evaluator){
 };
 /**
 * Specifies a parametric surface function for generating texture coordinates.
-* @param {object} evaluator An object that must contain a function
+* @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 2 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
 * @returns {H3DU.SurfaceEval} This object.

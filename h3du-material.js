@@ -188,7 +188,7 @@ H3DU.Material.prototype.copy=function(){
 };
 /**
 * Sets parameters for this material object.
-* @param {object} params An object whose keys have
+* @param {Object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
 * <li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties

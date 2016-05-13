@@ -339,7 +339,7 @@ var H3DU={
 * This is useful for doing animation cycles lasting a certain number
 * of seconds, such as rotating a shape in a 5-second cycle.
 * This method may be called any number of times each frame.
-* @param {object} timer An object that will hold two
+* @param {Object} timer An object that will hold two
 * properties:<ul>
 * <li>"time" - initial time value, in milliseconds.
 * <li>"lastTime" - last known time value, in milliseconds.
@@ -380,7 +380,7 @@ H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
 * Returns the number of frame-length intervals that occurred since
 * the last known time, where a frame's length is 1/60 of a second.
 * This method should be called only once each frame.
-* @param {object} timer An object described
+* @param {Object} timer An object described
 * in {@link H3DU.getTimePosition}.
 * @param {Number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a

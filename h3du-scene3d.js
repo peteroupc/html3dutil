@@ -93,6 +93,18 @@ H3DU.Scene3D.ProgramCache=function(){
  this._programs=[];
  this._customPrograms=[]
 }
+H3DU.Scene3D.ProgramCache.prototype.dispose=function(){
+ for(var i=0;i<this._customPrograms.length;i++){
+  var p=this._customPrograms[i];
+  p[2].dispose();
+ }
+ for(var i=0;i<this._programs.length;i++){
+  var p=this._programs[i];
+  if(p)p.dispose();
+ }
+ this._customPrograms=[]
+ this._programs=[]
+}
 /** @private */
 H3DU.Scene3D.ProgramCache.prototype.getCustomProgram=function(info, context){
  if(!context)throw new Error();
@@ -536,7 +548,14 @@ H3DU.Scene3D.prototype._setClearColor=function(){
   }
   return this;
 };
-
+/**
+ * Not documented yet.
+ */
+H3DU.Scene3D.prototype.dispose=function(){
+ this._programs.dispose();
+ this._textureLoader.dispose();
+ this._meshLoader.dispose();
+}
 /**
 * Sets the color used when clearing the screen each frame.
 * This color is black by default.
@@ -802,7 +821,7 @@ if(this._renderedOutsideScene){
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
- * @param {object} params An object as described in {@link H3DU.LightSource.setParams}.
+ * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
 * @returns {H3DU.Scene3D} This object.
  */
 H3DU.Scene3D.prototype.setLightParams=function(index,params){

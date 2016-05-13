@@ -86,7 +86,7 @@ H3DU.Lights.prototype.getLight=function(index){
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @param {object} params An object as described in {@link H3DU.LightSource.setParams}.
+ * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
  * @returns {H3DU.Lights} This object.
  */
 H3DU.Lights.prototype.setParams=function(index,params){

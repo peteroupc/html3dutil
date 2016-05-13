@@ -45,7 +45,7 @@ H3DU.LightSource = function(position, ambient, diffuse, specular) {
 }
 /**
 * Sets parameters for this material object.
-* @param {object} params An object whose keys have
+* @param {Object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
 * <li><code>position</code> - Light position.  (See {@link H3DU.LightSource#position}.)

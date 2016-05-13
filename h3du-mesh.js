@@ -8,7 +8,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global H3DU.Math, H3DU */
 /** @private */
-var SubMesh=function(vertices,faces,format){
+H3DU.SubMesh=function(vertices,faces,format){
  "use strict";
 this._initialize(vertices,faces,format);
 };
@@ -55,7 +55,7 @@ H3DU.Mesh = function(vertices,indices,format){
  "use strict";
 if((vertices!==null && typeof vertices!=="undefined")){
   this.subMeshes=[
-   new SubMesh(vertices,indices,format)
+   new H3DU.SubMesh(vertices,indices,format)
   ];
  } else {
   this.subMeshes=[];
@@ -234,7 +234,7 @@ if(m<0)throw new Error("invalid mode");
     format|=H3DU.Mesh.LINES_BIT;
    else if(primtype===H3DU.Mesh.POINTS)
     format|=H3DU.Mesh.POINTS_BIT;
-   this.subMeshes.push(new SubMesh([],[],format));
+   this.subMeshes.push(new H3DU.SubMesh([],[],format));
    this.currentMode=m;
  } else {
    this.subMeshes[this.subMeshes.length-1].newPrimitive();
@@ -271,7 +271,7 @@ var lastMesh=this.subMeshes[this.subMeshes.length-1];
    // differs from the last submesh or the combined
    // submesh would be too long, or the attribute bits
    // don't match between this submesh and the last
-   lastMesh=new SubMesh(
+   lastMesh=new H3DU.SubMesh(
     sm.vertices.slice(0,sm.vertices.length),
     sm.indices.slice(0,sm.indices.length),
     sm.attributeBits);
@@ -488,7 +488,7 @@ if(typeof u==="number" && typeof v==="number"){
  H3DU.Mesh.prototype.vertex3=function(x,y,z){
   "use strict";
 if(this.subMeshes.length===0){
-   this.subMeshes.push(new SubMesh());
+   this.subMeshes.push(new H3DU.SubMesh());
   }
   var lastSubmesh=this.subMeshes[this.subMeshes.length-1];
   if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
@@ -822,7 +822,7 @@ var count=0;
 };
 
 /** @private */
-SubMesh.prototype._initialize=function(vertices,faces,format){
+H3DU.SubMesh.prototype._initialize=function(vertices,faces,format){
  "use strict";
 this.vertices=vertices||[];
  this.indices=faces||[];
@@ -1036,7 +1036,7 @@ this.vertices=vertices||[];
 };
 
 /** @private */
-SubMesh.prototype.makeRedundant=function(){
+H3DU.SubMesh.prototype.makeRedundant=function(){
   "use strict";
 var existingIndices=[];
   var stride=this.getStride();
@@ -1058,7 +1058,7 @@ var existingIndices=[];
 };
 /**
  * @private */
-SubMesh.prototype.primitiveCount=function(){
+H3DU.SubMesh.prototype.primitiveCount=function(){
   "use strict";
 if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)
    return Math.floor(this.indices.length/2);
@@ -1067,7 +1067,7 @@ if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)
   return Math.floor(this.indices.length/3);
 };
 /** @private */
-SubMesh.prototype.toWireFrame=function(){
+H3DU.SubMesh.prototype.toWireFrame=function(){
   "use strict";
 if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
    // Not a triangle mesh
@@ -1100,23 +1100,23 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
     addLine(lineIndices,existingLines,f2,f3);
     addLine(lineIndices,existingLines,f3,f1);
   }
-  return new SubMesh(this.vertices, lineIndices,
+  return new H3DU.SubMesh(this.vertices, lineIndices,
     this.attributeBits|H3DU.Mesh.LINES_BIT);
 };
 
 /** @private */
-SubMesh._isIdentityInUpperLeft=function(m){
+H3DU.SubMesh._isIdentityInUpperLeft=function(m){
  "use strict";
 return (m[0] === 1 && m[1] === 0 && m[2] === 0 &&
     m[4] === 0 && m[5] === 1 && m[6] === 0 &&
     m[8] === 0 && m[9] === 0 && m[10] === 1) ? true : false;
 };
 /** @private */
-SubMesh.prototype.transform=function(matrix){
+H3DU.SubMesh.prototype.transform=function(matrix){
   "use strict";
 var stride=this.getStride();
   var v=this.vertices;
-  var isNonTranslation=!SubMesh._isIdentityInUpperLeft(matrix);
+  var isNonTranslation=!H3DU.SubMesh._isIdentityInUpperLeft(matrix);
   var normalOffset=H3DU.Mesh._normalOffset(this.attributeBits);
   var matrixForNormals=null;
   if(normalOffset>=0 && isNonTranslation){
@@ -1343,7 +1343,7 @@ var vi=[0,0,0];
  }
 };
 /** @private */
-SubMesh.prototype.recalcTangents=function(){
+H3DU.SubMesh.prototype.recalcTangents=function(){
   "use strict";
 var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
   var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~tangentBits))!==0);
@@ -1400,7 +1400,7 @@ for(var i=0;i<this.subMeshes.length;i++){
 };
 
 /** @private */
-SubMesh.prototype.reverseWinding=function(){
+H3DU.SubMesh.prototype.reverseWinding=function(){
   "use strict";
 if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
    // Not a triangle mesh
@@ -1416,7 +1416,7 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
 };
 
 /** @private */
-SubMesh.prototype.recalcNormals=function(flat,inward){
+H3DU.SubMesh.prototype.recalcNormals=function(flat,inward){
   "use strict";
 var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~H3DU.Mesh.NORMALS_BIT))!==0);
   this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
@@ -1435,7 +1435,7 @@ var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~H3DU.Me
   return this;
 };
 /** @private */
-SubMesh.prototype.setColor3=function(r,g,b){
+H3DU.SubMesh.prototype.setColor3=function(r,g,b){
   "use strict";
 this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
   var stride=this.getStride();
