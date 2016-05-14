@@ -22,7 +22,8 @@ H3DU.SubMeshBuffer=function(mesh){
   this.indexBufferSize=2;
   this.indices=new Uint16Array(mesh.indices);
  }
-  this.numVertices=mesh.vertices.length/mesh.getStride();
+  this.stride=mesh.getStride;
+  this.numVertices=mesh.vertices.length/this.stride;
   this.facesLength=mesh.indices.length;
   this.format=mesh.attributeBits;
   this._stride=H3DU.Mesh._getStride(this.format);
@@ -50,7 +51,7 @@ if((this.format&H3DU.Mesh.LINES_BIT)!==0)
 * A geometric mesh in the form of buffer objects.
 * @class
 * @alias H3DU.MeshBuffer
-* @param {*} mesh A geometric mesh object.
+* @param {H3DU.Mesh} mesh A geometric mesh object.
 */
 H3DU.MeshBuffer = function(mesh){
  "use strict";
@@ -64,10 +65,37 @@ this.subMeshes=[];
     sm));
  }
 }
-/** @private */
-H3DU.MeshBuffer.prototype._getBounds=function(){
+
+H3DU.MeshBuffer.prototype.getBounds=function(){
  "use strict";
-return this._bounds;
+ if(!this._bounds){
+  var empty=true;
+  var inf=Number.POSITIVE_INFINITY;
+  var ret=[inf,inf,inf,-inf,-inf,-inf];
+  for(var i=0;i<this.subMeshes.length;i++){
+   var sm=this.subMeshes[i];
+   var stride=sm.stride;
+   var v=sm.vertices;
+   for(var j=0;j<sm.indices.length;j++){
+    var vi=sm.indices[j]*stride;
+    if(empty){
+     empty=false;
+     ret[0]=ret[3]=v[vi];
+     ret[1]=ret[4]=v[vi+1];
+     ret[2]=ret[5]=v[vi+2];
+    } else {
+     ret[0]=Math.min(ret[0],v[vi]);
+     ret[3]=Math.max(ret[3],v[vi]);
+     ret[1]=Math.min(ret[1],v[vi+1]);
+     ret[4]=Math.max(ret[4],v[vi+1]);
+     ret[2]=Math.min(ret[2],v[vi+2]);
+     ret[5]=Math.max(ret[5],v[vi+2]);
+    }
+   }
+  }
+  this._bounds=ret;
+ }
+ return this._bounds;
 };
 /** @private */
 H3DU.MeshBuffer.prototype.getFormat=function(){

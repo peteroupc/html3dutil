@@ -71,7 +71,7 @@ H3DU.ShapeGroup.prototype.getMatrix=function(){
 };
 /**
  * Sets the transform used by this shape group.  Child
- * shapes can set their own transforms, in which case, the
+ * shapes can set their own transforms, in which case the
  * rendering process will multiply this shape group's transform
  * with the child shape's transform as it renders the child shape.
  * @param {H3DU.Transform} transform

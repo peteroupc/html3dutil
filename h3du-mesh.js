@@ -1233,7 +1233,7 @@ for(var i=0;i<this.subMeshes.length;i++){
 */
 H3DU.Mesh.prototype.getBoundingBox=function(){
  "use strict";
-var empty=true;
+ var empty=true;
  var inf=Number.POSITIVE_INFINITY;
  var ret=[inf,inf,inf,-inf,-inf,-inf];
  for(var i=0;i<this.subMeshes.length;i++){

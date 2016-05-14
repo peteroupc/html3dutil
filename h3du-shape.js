@@ -173,7 +173,9 @@ H3DU.Shape.prototype.getBounds=function(){
  if(!this.bufferedMesh){
   return [0,0,0,-1,-1,-1];
  }
- var bounds=this.bufferedMesh._getBounds();
+ var bounds=(this.bufferedMesh.getBounds) ?
+   this.bufferedMesh.getBounds() :
+   this.bufferedMesh._getBounds();
  var matrix=this.getMatrix();
  if(!H3DU.Math.mat4isIdentity(matrix)){
   var mn=H3DU.Math.mat4transformVec3(matrix,bounds[0],bounds[1],bounds[2]);
