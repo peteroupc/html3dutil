@@ -10,6 +10,7 @@ var BSplineSurface=H3DU.BezierSurface;
 var GLUtil=H3DU;
 var GLMath=H3DU.Math;
 var CurveEval=H3DU.CurveEval;
+var SurfaceEval=H3DU.SurfaceEval;
 var Lights=H3DU.Lights;
 var LightSource=H3DU.LightSource;
 var Material=H3DU.Material;

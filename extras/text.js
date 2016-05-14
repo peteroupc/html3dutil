@@ -91,41 +91,52 @@ H3DU.TextFont._toArray=function(str,minLength){
 /**
  * Calculates the width and height of a text string when
  * drawn using this font.
- * @param {String} str A text string.
- * @param {Number} height The line height to use when
- * measuring the text.  Cannot be less than 0.
+* @param {String} string The text string to measure.  Line breaks
+* ("\n", "\r", "\r\n") are recognized by this method.
+* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
  * @returns {Array<Number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).
  */
-H3DU.TextFont.prototype.measure=function(str,height){
- if(height<0)throw new Error;
- var haveChar=false;
+H3DU.TextFont.prototype.measure=function(str,params){
+ var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight :
+   this.common.lineHeight;
+ if(height<0)throw new Error();
+ var width=((typeof params.width !== "undefined" && params.width !== null)) ? params.width : -1;
  var scale=height/this.common.lineHeight;
- var lastChar=-1;
- var xSize=0;
- var xPos=0;
+ var linebreaks=this._findLineBreaks(str,scale,width);
+ var size=0;
  var yPos=0;
- for(var i=0;i<str.length;i++){
+ for(var i=0;i<linebreaks.length;i+=3){
+  size=Math.max(size,linebreaks[i+2]);
+  yPos+=height;
+ }
+ return [size,yPos];
+}
+
+H3DU.TextFont.prototype._measureWord=function(
+  str, startIndex,endIndex, lastChar, scale, info){
+ var xPos=0;
+ var xSize=0;
+ for(var i=startIndex;i<endIndex;i++){
   var c=str.charCodeAt(i);
-  if(c>=0xd800 && c<0xdc00 && i+1<str.length){
+  if(c>=0xd800 && c<0xdc00 && i+1<endIndex){
    c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
           0xdc00);
    i++;
   } else if(c>=0xd800 && c<0xe000){
    c=0xfffd
   }
-  if(c === 0x0a){
-   yPos+=this.common.lineHeight*scale;
-   xPos=0;
+  if(c==0x0d || c==0x0a){
+   // don't measure line break characters; mandatory line
+   // breaks should have been classified as such already
    lastChar=c;
    continue;
   }
   var ch=this.chars[c]||this.chars[0]||null
   if(ch){
    xSize=Math.max(xSize,xPos+ch.width*scale);
-   haveChar=true;
    if(lastChar!=-1){
     if(this.kern[lastChar] && this.kern[lastChar][c]){
      xPos+=this.kern[lastChar][c].amount*scale;
@@ -135,10 +146,96 @@ H3DU.TextFont.prototype.measure=function(str,height){
   }
   lastChar=c;
  }
- var ySize=yPos;
- if(haveChar)ySize+=this.common.lineHeight*scale;
- return [xSize,ySize];
+ info[0]=xPos; // x-advance of the word
+ info[1]=xSize; // width of the word
+ info[2]=lastChar; // last character of the word
 }
+
+H3DU.TextFont.prototype._findLineBreaks=function(str, scale, maxWidth){
+ if(str.length==0){
+  return [];
+ }
+ var breaks=[];
+ var classes=[];
+ var linePositions=[];
+ var currentClass=-1;
+ // Find the runs of non-whitespace/whitespace in the text
+ for(var i=0;i<str.length;i++){
+  var c=str.charCodeAt(i);
+  if(c>=0xd800 && c<0xdc00 && i+1<str.length){
+   c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
+          0xdc00);
+   i++;
+  } else if(c>=0xd800 && c<0xe000){
+   c=0xfffd
+  }
+  if(c==0x0d || c==0x0a){
+   classes.push(2); // line break
+   breaks.push(i);
+   if(c==0x0d && i+1<str.length && str.charCodeAt(i+1)==0x0a){
+    i++;
+   }
+   currentClass=-1;
+   continue;
+  } else if(c==0x0c || c==0x09 || c==0x20){
+   // non-linebreak whitespace
+   if(currentClass!=1){
+    classes.push(1); // whitespace
+    breaks.push(i);
+   }
+   currentClass=1;
+   xPos=0;
+  } else {
+   // non-whitespace
+   if(currentClass!=0){
+    classes.push(0); // non-whitespace
+    breaks.push(i);
+   }
+   currentClass=0;
+  }
+ }
+ breaks.push(str.length);
+ var wordInfo=[]
+ var lastChar=-1;
+ var xPos=0;
+ var xSize=0;
+ var lineStart=0;
+ for(var i=0;i<classes.length;i++){
+   if(classes[i]==2){
+    // mandatory line break
+    linePositions.push(lineStart,breaks[i],xSize);
+    xPos=0;
+    xSize=0;
+    lineStart=breaks[i+1];
+   } else {
+    this._measureWord(str,breaks[i],
+     breaks[i+1],lastChar,scale,wordInfo);
+    var size=xPos+wordInfo[1];
+    if(maxWidth>=0 && size>maxWidth){
+     linePositions.push(lineStart,breaks[i],xSize);
+     if(classes[i]==1){
+      // Spaces that overshoot the max width;
+      // don't include the spaces
+      xPos=0;
+      xSize=0;
+      lineStart=breaks[i+1];
+     } else {
+      xPos=wordInfo[0];
+      xSize=Math.max(0,wordInfo[1]);
+      lineStart=breaks[i];
+     }
+    } else {
+     xSize=Math.max(0,xPos+wordInfo[1]);
+     xPos+=wordInfo[0];
+    }
+   }
+ }
+ if(lineStart!=str.length){
+  linePositions.push(lineStart,str.length,xSize);
+ }
+ return linePositions
+}
+
 /**
 * Creates a shape containing the primitives needed to
 * draw text in the given position, size, and color.
@@ -147,7 +244,7 @@ H3DU.TextFont.prototype.measure=function(str,height){
 * orthographic projection where the left and top coordinates are less
 * than the right and bottom coordinates, respectively).
 * @param {H3DU.TextFont} font The bitmap font to use when drawing the text.
-* @param {String} string The text to draw.  Line breaks ("\n") are recognized
+* @param {String} string The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
 * by this method.
 * @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
 * Can also contain the following keys:<ul>
@@ -155,7 +252,7 @@ H3DU.TextFont.prototype.measure=function(str,height){
 * the color to draw the text with.
 * If this value is given, the bitmap font is assumed to be a signed distance field
 * font.
-* <li><code>texture</code> - An array of textures ({@link H3DU.Texture}) to use with this font, 
+* <li><code>texture</code> - An array of textures ({@link H3DU.Texture}) to use with this font,
 * or a single {@link H3DU.Texture} if only one texture page is used.
 * If null or omitted, uses the default filenames for texture pages defined in this font.
 * </ul>
@@ -163,7 +260,7 @@ H3DU.TextFont.prototype.measure=function(str,height){
 H3DU.TextFont.prototype.textShape=function(str, params){
  var group=new H3DU.ShapeGroup();
  var color=((typeof params.color !== "undefined" && params.color !== null)) ? params.color : null;
- var textures=((typeof params.textures !== "undefined" && params.textures !== null)) ? 
+ var textures=((typeof params.textures !== "undefined" && params.textures !== null)) ?
    params.textures : null;
  if(textures && textures instanceof H3DU.Texture){
   textures=[textures]
@@ -185,24 +282,85 @@ H3DU.TextFont.prototype.textShape=function(str, params){
  }
  return group;
 }
+
+H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,yPos,params,
+   extra,meshesForPage){
+ var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
+ var startXPos=xPos;
+ var lastChar=-1;
+ for(var i=startPos;i<endPos;i++){
+  var c=str.charCodeAt(i);
+  if(c>=0xd800 && c<0xdc00 && i+1<endPos){
+   c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
+          0xdc00);
+   i++;
+  } else if(c>=0xd800 && c<0xe000){
+   c=0xfffd
+  }
+  if(c === 0x0a || c==0x0d){
+   // NOTE: Should not occur at this point
+   lastChar=c;
+   continue;
+  }
+  var ch=this.chars[c]||this.chars[0]||null
+  if(ch){
+   var sx=ch.x*extra.recipPageWidth;
+   var sy=ch.y*extra.recipPageHeight;
+   var sx2=(ch.x+ch.width)*extra.recipPageWidth;
+   var sy2=(ch.y+ch.height)*extra.recipPageHeight;
+   var xo=ch.xoffset*extra.scale;
+   var yo=ch.yoffset*extra.scale;
+   var vx=xPos+xo;
+   var vy=yPos+yo;
+   var vx2=vx+ch.width*extra.scale;
+   var vy2=vy+ch.height*extra.scale;
+   if(ch.width>0 && ch.height>0) {
+    var chMesh=meshesForPage[ch.page];
+    if(!chMesh){
+     chMesh=new H3DU.Mesh();
+     meshesForPage[ch.page]=chMesh;
+    }
+    chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
+     .texCoord2(sx,1-sy)
+     .vertex2(vx,vy)
+     .texCoord2(sx,1-sy2)
+     .vertex2(vx,vy2)
+     .texCoord2(sx2,1-sy)
+     .vertex2(vx2,vy)
+     .texCoord2(sx2,1-sy2)
+     .vertex2(vx2,vy2);
+   }
+   if(lastChar!=-1){
+    if(this.kern[lastChar] && this.kern[lastChar][c]){
+     xPos+=this.kern[lastChar][c].amount*extra.scale;
+    }
+   }
+   xPos+=ch.xadvance*extra.scale;
+  }
+  lastChar=c;
+ }
+}
+
 /**
  * Creates an array of meshes containing the primitives
  * needed to draw text with this font.
-* @param {String} string The text to draw.  Line breaks ("\n") are recognized
+* @param {String} string The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized
 * by this method.
 * @param {Object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
 * <li><code>x</code> - X-coordinate of the top left corner of the text.
 * If null or omitted, uses 0.
-*For the text to show upright, the coordinate system should have the
+* For the text to show upright, the coordinate system should have the
 * X-axis pointing right and the Y-axis pointing down (for example, an
 * orthographic projection where the left and top coordinates are less
 * than the right and bottom coordinates, respectively).
 * <li><code>y</code> - Y-coordinate of the top left corner of the text.
 * If null or omitted, uses 0.
-* <li><code>height</code> - Height of each line of the text in units.
+* <li><code>lineHeight</code> - Height of each line of the text in units.
 * If null or omitted, uses the line height given in the font.
+* <li><code>width</code> - Maximum width of each line.  Lines
+* that exceed this width will be wrapped.
 * </ul>
 * @returns {Array<Mesh>} An array of meshes representing the text.
 * There is one mesh for each texture page of the font.  If none of the
@@ -212,61 +370,22 @@ H3DU.TextFont.prototype.makeTextMeshes=function(str,params){
  var meshesForPage=[];
  var xPos=((typeof params.x !== "undefined" && params.x !== null)) ? params.x : 0;
  var yPos=((typeof params.y !== "undefined" && params.y !== null)) ? params.y : 0;
- var height=((typeof params.height !== "undefined" && params.height !== null)) ? params.height : this.common.lineHeight;
- var scale=height/this.common.lineHeight;
- var recipPageWidth=1.0/this.common.scaleW;
- var recipPageHeight=1.0/this.common.scaleH;
- var startXPos=xPos;
- var lastChar=-1;
- for(var i=0;i<str.length;i++){
-  var c=str.charCodeAt(i);
-  if(c>=0xd800 && c<0xdc00 && i+1<str.length){
-   c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
-          0xdc00);
-   i++;
-  } else if(c>=0xd800 && c<0xe000){
-   c=0xfffd
-  }
-  if(c === 0x0a){
-   yPos+=this.common.lineHeight*scale;
-   xPos=startXPos;
-   lastChar=c;
-   continue;
-  }
-  var ch=this.chars[c]||this.chars[0]||null
-  if(ch){
-   var sx=ch.x*recipPageWidth;
-   var sy=ch.y*recipPageHeight;
-   var sx2=(ch.x+ch.width)*recipPageWidth;
-   var sy2=(ch.y+ch.height)*recipPageHeight;
-   var xo=ch.xoffset*scale;
-   var yo=ch.yoffset*scale;
-   var vx=xPos+xo;
-   var vy=yPos+yo;
-   var vx2=vx+ch.width*scale;
-   var vy2=vy+ch.height*scale;
-   var chMesh=meshesForPage[ch.page];
-   if(!chMesh){
-    chMesh=new H3DU.Mesh();
-    meshesForPage[ch.page]=chMesh;
-   }
-   chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-     .texCoord2(sx,1-sy)
-     .vertex2(vx,vy)
-     .texCoord2(sx,1-sy2)
-     .vertex2(vx,vy2)
-     .texCoord2(sx2,1-sy)
-     .vertex2(vx2,vy)
-     .texCoord2(sx2,1-sy2)
-     .vertex2(vx2,vy2);
-   if(lastChar!=-1){
-    if(this.kern[lastChar] && this.kern[lastChar][c]){
-     xPos+=this.kern[lastChar][c].amount*scale;
-    }
-   }
-   xPos+=ch.xadvance*scale;
-  }
-  lastChar=c;
+ var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight :
+   this.common.lineHeight;
+ if(height<0)throw new Error();
+ var width=((typeof params.width !== "undefined" && params.width !== null)) ? params.width : -1;
+ // TODO: Support text alignment
+ var extra={
+  recipPageWidth:1.0/this.common.scaleW,
+  recipPageHeight:1.0/this.common.scaleH,
+  scale:height/this.common.lineHeight
+ };
+ var meshesForPage=[];
+ var linebreaks=this._findLineBreaks(str,extra.scale,width);
+ for(var i=0;i<linebreaks.length;i+=3){
+  this._makeTextMeshesInner(str,linebreaks[i],
+    linebreaks[i+1],xPos,yPos,params,extra,meshesForPage);
+  yPos+=height;
  }
  return meshesForPage;
 }

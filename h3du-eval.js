@@ -797,7 +797,7 @@ H3DU.SurfaceEval.prototype.vertex=function(evaluator){
 * the function used for vertex calculation (we'll call it <b>F</b>) with
 * respect to u, then find the partial derivative of <b>F</b> with respect to
 * v, then take their <a href="http://en.wikipedia.org/wiki/Cross_product">cross
-* product</a>, then normalize the result to unit length.
+* product</a> (e.g., {@link H3DU.Math.vec3cross}), then normalize the result to unit length.
 * In mathematical notation, this looks like:
 * <b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times;
 * &#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>

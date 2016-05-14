@@ -61,9 +61,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       text="Uses the public domain font Aileron from http://dotcolon.net/font/aileron/"
     }
     shape=results[1].font.textShape(text,
-      {x:0,y:y,height:size,textures:results[1].textures});
+      {x:0,y:y,lineHeight:size,width:640,textures:results[1].textures});
     textSub.addShape(shape);
-    y+=results[1].font.measure(text,size)[1];
+    y+=results[1].font.measure(text,{lineHeight:size,width:640})[1];
     size+=10;
    }
    return true;
