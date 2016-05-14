@@ -22,7 +22,7 @@ as well as closed figures made from several path segments.
 the HTML 3D Library download.  To use this class, you must include the script "extras/path.js",
 as in this example.
 
-    <script type="text/javascript" src="glutil_min.js"></script>
+    <script type="text/javascript" src="h3du_min.js"></script>
     <script type="text/javascript" src="extras/path.js"></script>
 
 ## Creating Paths <a id=Creating_Paths></a>

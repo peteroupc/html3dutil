@@ -7,7 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global define, exports */
-if(!H3DU){ var H3DU={}; }
+if((typeof H3DU === "undefined" || H3DU === null)){ var H3DU={}; }
 /**
 H3DU.MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>
@@ -17,7 +17,7 @@ only element is the identity matrix.
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/matrixstack.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
  @alias H3DU.H3DU.MatrixStack

@@ -7,7 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-if(!H3DU){
+if((typeof H3DU === "undefined" || H3DU === null)){
  exports.H3DU = {};
 }
 /**

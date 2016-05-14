@@ -7,7 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global H3DU, H3DU.Mesh, Promise */
-if(!H3DU){ H3DU={}; }
+if((typeof H3DU === "undefined" || H3DU === null)){ H3DU={}; }
 /**
 * Represents a bitmap font.  This class supports
 * traditional bitmap fonts and signed distance field fonts.<p>
@@ -42,7 +42,7 @@ if(!H3DU){ H3DU={}; }
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/text.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
@@ -72,7 +72,7 @@ H3DU.TextFont._toArray=function(str,minLength){
  if(typeof str==="string"){
   spl=str.split(",")
   for(var i=0;i<spl.length;i++){
-   spl[i]=parseInt(spl[i])
+   spl[i]=parseInt(spl[i],10)
   }
  } else if(str!=null &&
    str.constructor==Array && str.length>=minLength){
@@ -112,9 +112,9 @@ H3DU.TextFont.prototype.measure=function(str,params){
  }
  return [size,yPos];
 }
-
+/** @private */
 H3DU.TextFont.prototype._measureWord=function(
-  str, startIndex,endIndex, lastChar, scale, info){
+  str,startIndex,endIndex,lastChar,scale,info){
  var xPos=0;
  var xSize=0;
  for(var i=startIndex;i<endIndex;i++){
@@ -148,8 +148,8 @@ H3DU.TextFont.prototype._measureWord=function(
  info[1]=xSize; // width of the word
  info[2]=lastChar; // last character of the word
 }
-
-H3DU.TextFont.prototype._findLineBreaks=function(str, scale, maxWidth){
+/** @private */
+H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
  if(str.length==0){
   return [];
  }
@@ -288,9 +288,8 @@ H3DU.TextFont.prototype.textShape=function(str, params){
  }
  return group;
 }
-
-H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,yPos,params,
-   extra,meshesForPage){
+/** @private */
+H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,yPos,params,extra,meshesForPage){
  var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
  var startXPos=xPos;
  var lastChar=-1;
@@ -439,7 +438,7 @@ H3DU.TextFont._elementToObject=function(element){
      n=="spacing"){
     x[n]=element.getAttribute(n)
    } else {
-    x[n]=parseInt(element.getAttribute(n))
+    x[n]=parseInt(element.getAttribute(n),10)
     if(isNaN(x[n]))x[n]=0;
    }
  }
@@ -702,7 +701,7 @@ H3DU.TextFont._loadTextFontInner=function(data){
      if(value.charAt(0)=='"'){
       value=value.substring(1,value.length-1);
      } else if(value.match(/^-?\d+$/)){
-      value=parseInt(value)|0;
+      value=parseInt(value,10)|0;
      }
      hash[key]=value;
      rest=rest.substr(e[1].length);

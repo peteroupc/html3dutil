@@ -9,7 +9,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /* global H3DU, H3DU.Mesh, Promise */
 (function(H3DU){
 "use strict";
-if(!H3DU){ H3DU={}; }
+if((typeof H3DU === "undefined" || H3DU === null)){ H3DU={}; }
 var H3DU._StlData={};
 /**
 * Loads a .STL file asynchronously.
@@ -17,7 +17,7 @@ var H3DU._StlData={};
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this method, you must include the script "extras/stl.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
 @alias H3DU.loadStlFromUrl

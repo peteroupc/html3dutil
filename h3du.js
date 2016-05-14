@@ -4,20 +4,6 @@
 * @module glutil
 * @license CC0-1.0
 */
-/* global Binders, H3DU.BufferedMesh, H3DU.FrameBuffer, H3DU.Math, JSON, LightsBinder, LoadedTexture, H3DU.Mesh, Promise, H3DU.ShaderProgram, H3DU.Transform, define, exports */
-(function (root, factory) {
-  "use strict";
-if (typeof define === "function" && define.amd) {
-    define([ "exports" ], factory);
-  } else if (typeof exports === "object") {
-    factory(exports);
-  } else {
-    factory(root);
-  }
-}(this, function (exports) {
-  "use strict";
-if (exports.H3DU) { return; }
-
 /*
   Polyfills
 */
@@ -634,5 +620,3 @@ return (
     mat[15] === 1
  );
 };
-exports.H3DU=H3DU;
-}));

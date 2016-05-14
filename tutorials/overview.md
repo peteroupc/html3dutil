@@ -19,9 +19,9 @@ This page includes information on how to use the HTML 3D library, an overview of
 ## How to Use <a id=How_to_Use></a>
 
 1. [**Download the HTML 3D library**](https://github.com/peteroupc/html3dutil/releases).
-2. Extract the file <i>"glutil_min.js"</i>, and write the following code in every HTML page where you will use the library.
+2. Extract the file <i>"h3du_min.js"</i>, and write the following code in every HTML page where you will use the library.
 
-        <script type="text/javascript" src="glutil_min.js"></script>
+        <script type="text/javascript" src="h3du_min.js"></script>
 
 3. Include an HTML 3D canvas somewhere on the Web page, since drawing 3D objects requires a 3D canvas. You may set its `width` and `height`. You should also give it an ID so you can refer to it more easily in your JavaScript code, as shown in this example.
 
@@ -159,7 +159,7 @@ The following is a minimal skeleton you can use for writing HTML apps using this
     <head>
     <meta charset=utf-8>
     <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
-    <script type="text/javascript" src="glutil_min.js"></script>
+    <script type="text/javascript" src="h3du_min.js"></script>
     </head>
     <body style="margin:0px">
     <canvas id=canvas style="width:100%; height:100%; overflow: hidden;"></canvas>
@@ -270,7 +270,7 @@ illustrating a simple animation of 3D shapes.
 The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the `<canvas>` element it uses on the page.
 
     <head>
-    <script type="text/javascript" src="glutil_min.js"></script>
+    <script type="text/javascript" src="h3du_min.js"></script>
     </head>
     <body>
     <canvas width="600" height="450" id=canvas></canvas>
