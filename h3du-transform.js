@@ -126,12 +126,12 @@ if(this._matrixDirty){
 };
 /**
 * Resets this transform to the untransformed state.
-* (Same as "reset"; use that method instead.)
+* @deprecated Use the "reset" method instead.
 * @returns {H3DU.Transform} This object.
 */
 H3DU.Transform.prototype.resetTransform=function(){
  "use strict";
- return this.resetTransform();
+ return this.reset();
 };
 /**
  * Sets the scale of an object relative to its original

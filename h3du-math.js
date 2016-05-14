@@ -1298,7 +1298,7 @@ mat4translate:function(mat,v3,v3y,v3z){
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+* to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
@@ -1370,12 +1370,14 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {Number} l Leftmost coordinate of the 3D view.
- * @param {Number} r Rightmost coordinate of the 3D view.
- * (Note that r can be greater than l or vice versa.)
- * @param {Number} b Bottommost coordinate of the 3D view.
- * @param {Number} t Topmost coordinate of the 3D view.
- * (Note that t can be greater than b or vice versa.)
+ * @param {Number} l Leftmost coordinate of the orthographic view.
+ * @param {Number} r Rightmost coordinate of the orthographic view.
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
+ * @param {Number} b Bottommost coordinate of the orthographic view.
+ * @param {Number} t Topmost coordinate of the orthographic view.
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @param {Number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
@@ -1412,7 +1414,7 @@ mat4ortho:function(l,r,b,t,n,f){
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+* to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
@@ -1431,12 +1433,14 @@ mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
  * This method assumes a right-handed coordinate system; see mat4ortho().<p>
  * This is the same as mat4ortho() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.
- * @param {Number} l Leftmost coordinate of the 2D view.
- * @param {Number} r Rightmost coordinate of the 2D view.
- * (Note that r can be greater than l or vice versa.)
- * @param {Number} b Bottommost coordinate of the 2D view.
- * @param {Number} t Topmost coordinate of the 2D view.
- * (Note that t can be greater than b or vice versa.)
+ * @param {Number} l Leftmost coordinate of the orthographic view.
+ * @param {Number} r Rightmost coordinate of the orthographic view.
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
+ * @param {Number} b Bottommost coordinate of the orthographic view.
+ * @param {Number} t Topmost coordinate of the orthographic view.
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho2d:function(l,r,b,t){
@@ -1452,12 +1456,14 @@ mat4ortho2d:function(l,r,b,t){
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
  * This method assumes a right-handed coordinate system; see mat4ortho().<p>
- * @param {Number} l Leftmost coordinate of the view rectangle.
+* @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (Note that r can be greater than l or vice versa.)
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (Note that t can be greater than b or vice versa.)
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
 * @param {Number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @returns {Array<Number>} The resulting 4x4 matrix.
@@ -1472,15 +1478,15 @@ mat4ortho2dAspect:function(l,r,b,t,aspect){
  * ratio, the view rectangle will be centered on the viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.<p>
- * This is the same as mat4ortho() with the near clipping plane
- * set to -1 and the far clipping plane set to 1.<p>
  * This method assumes a right-handed coordinate system; see mat4ortho().
- * @param {Number} l Leftmost coordinate of the view rectangle.
+* @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (Note that r can be greater than l or vice versa.)
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (Note that t can be greater than b or vice versa.)
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @param {Number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
@@ -1539,7 +1545,7 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+* to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the

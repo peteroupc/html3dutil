@@ -7,8 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global H3DU, H3DU.Mesh, Promise */
-(function(exports){
-"use strict";
 if(!H3DU){ H3DU={}; }
 /**
 * Represents a bitmap font.  This class supports
@@ -200,6 +198,7 @@ H3DU.TextFont.prototype._findLineBreaks=function(str, scale, maxWidth){
  var xPos=0;
  var xSize=0;
  var lineStart=0;
+ var possibleLineEnd=0;
  for(var i=0;i<classes.length;i++){
    if(classes[i]==2){
     // mandatory line break
@@ -207,31 +206,38 @@ H3DU.TextFont.prototype._findLineBreaks=function(str, scale, maxWidth){
     xPos=0;
     xSize=0;
     lineStart=breaks[i+1];
+    possibleLineEnd=lineStart
    } else {
     this._measureWord(str,breaks[i],
      breaks[i+1],lastChar,scale,wordInfo);
     var size=xPos+wordInfo[1];
+    lastChar=wordInfo[2];
     if(maxWidth>=0 && size>maxWidth){
-     linePositions.push(lineStart,breaks[i],xSize);
+     linePositions.push(lineStart,possibleLineEnd,xSize);
      if(classes[i]==1){
       // Spaces that overshoot the max width;
       // don't include the spaces
       xPos=0;
       xSize=0;
       lineStart=breaks[i+1];
+      possibleLineEnd=lineStart
      } else {
       xPos=wordInfo[0];
       xSize=Math.max(0,wordInfo[1]);
       lineStart=breaks[i];
+      possibleLineEnd=breaks[i+1]
      }
     } else {
-     xSize=Math.max(0,xPos+wordInfo[1]);
+     if(classes[i]==0){
+      possibleLineEnd=breaks[i+1]
+      xSize=Math.max(0,xPos+wordInfo[1]);
+     }
      xPos+=wordInfo[0];
     }
    }
  }
  if(lineStart!=str.length){
-  linePositions.push(lineStart,str.length,xSize);
+  linePositions.push(lineStart,possibleLineEnd,xSize);
  }
  return linePositions
 }
@@ -361,6 +367,8 @@ H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,y
 * If null or omitted, uses the line height given in the font.
 * <li><code>width</code> - Maximum width of each line.  Lines
 * that exceed this width will be wrapped.
+* <li><code>align</code> - Horizontal text alignment.  Can be "left",
+* "center", or "right" (all strings).
 * </ul>
 * @returns {Array<Mesh>} An array of meshes representing the text.
 * There is one mesh for each texture page of the font.  If none of the
@@ -374,17 +382,35 @@ H3DU.TextFont.prototype.makeTextMeshes=function(str,params){
    this.common.lineHeight;
  if(height<0)throw new Error();
  var width=((typeof params.width !== "undefined" && params.width !== null)) ? params.width : -1;
- // TODO: Support text alignment
+ var align=((typeof params.align !== "undefined" && params.align !== null)) ? params.align : 0;
+ if(align=="right")align=2;
+ else if(align=="center")align=1;
+ else align=0;
  var extra={
   recipPageWidth:1.0/this.common.scaleW,
   recipPageHeight:1.0/this.common.scaleH,
   scale:height/this.common.lineHeight
  };
  var meshesForPage=[];
+ for(var i=0;i<this.pages.length;i++){
+  meshesForPage[i]=null;
+ }
  var linebreaks=this._findLineBreaks(str,extra.scale,width);
+ if(linebreaks.length==0){
+  return meshesForPage;
+ }
+ if(width<0){
+  // Calculate max width if no explicit width was given
+  for(var i=0;i<linebreaks.length;i+=3){
+   width=(i==0) ? linebreaks[i+2] : Math.max(width,linebreaks[i+2])
+  }
+ }
  for(var i=0;i<linebreaks.length;i+=3){
+  var x=xPos
+  if(align==1)x=x+(width-linebreaks[i+2])*0.5
+  else if(align==2)x=x+width-linebreaks[i+2]
   this._makeTextMeshesInner(str,linebreaks[i],
-    linebreaks[i+1],xPos,yPos,params,extra,meshesForPage);
+    linebreaks[i+1],x,yPos,params,extra,meshesForPage);
   yPos+=height;
  }
  return meshesForPage;
@@ -834,7 +860,3 @@ shader+=" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\
 return shader;
 };
 H3DU.TextFont._textShaderInfo=new H3DU.ShaderInfo(null,H3DU.TextFont._textShader());
-exports.H3DU.TextFont=H3DU.TextFont;
-exports.H3DU.TextRenderer=H3DU.TextRenderer;
-
-})(this);

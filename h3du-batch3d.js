@@ -156,29 +156,36 @@ H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
 /**
  * Uses an orthographic projection for this batch.  It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
- * @param {*} a
- * @param {*} b
- * @param {*} c
- * @param {*} d
+* @param {Number} l Leftmost coordinate of the view rectangle.
+ * @param {Number} r Rightmost coordinate of the view rectangle.
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
+ * @param {Number} b Bottommost coordinate of the view rectangle.
+ * @param {Number} t Topmost coordinate of the view rectangle.
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @param {Number} e The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
  * @param {Number} f The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
  */
-H3DU.Batch3D.prototype.orthoAspect=function(a,b,c,d,e,f){
- this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,a,b,c,d,e,f);
+H3DU.Batch3D.prototype.orthoAspect=function(l,r,b,t,e,f){
+ this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,l,r,b,t,e,f);
  return this;
 };
 /**
  * Not documented yet.
- * @param {*} a
- * @param {*} b
- * @param {*} c
- * @param {*} d
+* @param {Number} l Leftmost coordinate of the view rectangle.
+ * @param {Number} r Rightmost coordinate of the view rectangle.
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
+ * @param {Number} b Bottommost coordinate of the view rectangle.
+ * @param {Number} t Topmost coordinate of the view rectangle.
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @returns {H3DU.Batch3D} This object.
  */
-H3DU.Batch3D.prototype.ortho2DAspect=function(a,b,c,d){
- this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,a,b,c,d,-1,1);
- return this;
+H3DU.Batch3D.prototype.ortho2DAspect=function(l,r,b,t){
+ return this.orthoAspect(l,r,b,t,-1,1);
 };
 /**
  * Sets the current view matrix for this batch of shapes.
