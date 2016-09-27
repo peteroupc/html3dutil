@@ -451,7 +451,9 @@ var e=null;
  var b,c,r1,r2,r3,r4,rgb;
  if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),255];
- } else if((e=(/^rgb\(\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*\)$/.exec(x)))!==null){
+ } else if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
+  return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),parseInt(e[4],16)];
+ } elseif((e=(/^rgb\(\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*\)$/.exec(x)))!==null){
   return [parsePercent(e[1]),parsePercent(e[2]),parsePercent(e[3]),255];
  } else if((e=(/^rgb\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*\)$/.exec(x)))!==null){
   return [parseByte(e[1]),parseByte(e[2]),parseByte(e[3]),255];
@@ -462,6 +464,9 @@ var e=null;
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
   var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
   return [a+(a<<4),b+(b<<4),c+(c<<4),255];
+ } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
+  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
+  return [a+(a<<4),b+(b<<4),c+(c<<4),d+(d<<4)];
  } else if((e=(/^hsl\(\s*([\+\-]?\d+(?:\.\d+)?)\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*\)$/.exec(x)))!==null){
   rgb=hlsToRgb([parseHue(e[1]),parsePercent(e[3]),parsePercent(e[2])]);
   return [rgb[0],rgb[1],rgb[2],255];
@@ -493,14 +498,14 @@ var clampRgba=function(x){
 * This method also converts HTML and CSS colors to 4-element RGB
 * colors.  The following lists the kinds of colors accepted:
 * <ul>
-* <li>HTML colors with the syntax <code>#RRGGBB</code>, where
+* <li>HTML colors with the syntax <code>#RRGGBB</code> or <code>#RRGGBBAA</code>, where
 * RR is the hexadecimal form of the red component (00-FF), GG
-* is the hexadecimal green component, and BB is the hexadecimal
-* blue component.  Example: #88DFE0.
-* <li>HTML colors with the syntax <code>#RGB</code>, where
+* is the hexadecimal green component, BB is the hexadecimal
+* blue component, and AA is the hexadecimal alpha component.  Example: #88DFE0.
+* <li>HTML colors with the syntax <code>#RGB</code> or <code>#RGBA</code>, where
 * R is the hexadecimal form of the red component (0-F), G
-* is the hexadecimal green component, and B is the hexadecimal
-* blue component.  Example: #8DE.
+* is the hexadecimal green component, B is the hexadecimal
+* blue component, and A is the hexadecimal alpha component.  Example: #8DE.
 * <li>CSS colors with the syntax <code>rgb(red, green, blue)</code> or
 * <code>rgba(red, green, blue, alpha)</code> where
 * <code>red</code>, <code>green</code>, and <code>blue</code>
