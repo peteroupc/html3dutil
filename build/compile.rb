@@ -29,7 +29,7 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
   cmd="java -jar #{ffq($compilerJar)} #{formatting} "+
      "--generate_exports --language_in ECMASCRIPT6 --language_out ECMASCRIPT3 "+
      "--compilation_level #{opt} #{inputs} "+
-     (useSourceMap ? "--create_source_map #{sourceMap} " : "")+
+     (useSourceMap ? "--create_source_map #{ffq(sourceMap)} " : "")+
      "--js_output_file #{ffq(output)}"
   log=""
   tmppath("err.log"){|errlog|
@@ -51,5 +51,5 @@ end
 Dir.chdir(".."){
  files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
- normalizeAndCompile(files,"h3du_min.js",false,false)
+ normalizeAndCompile(files,"h3du_min.js",false,true)
 }

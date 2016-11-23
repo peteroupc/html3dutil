@@ -203,7 +203,7 @@ var lightsObject=this.lights;
     0,0,0];
  }
  // Set empty values for undefined lights up to MAX_LIGHTS
- for(i=lightsObject.lights.length;i<Lights.MAX_LIGHTS;i++){
+ for(i=lightsObject.lights.length;i<H3DU.Lights.MAX_LIGHTS;i++){
   var ltname="lights["+i+"]";
   uniforms[ltname+".diffuse"]=H3DU._LightsBinder.emptyW1;
   uniforms[ltname+".specular"]=H3DU._LightsBinder.emptyW1;

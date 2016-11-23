@@ -5,6 +5,7 @@
 *.exe
 *.jar
 *.log
+*.map
 *.nupkg
 *.sdsettings
 *.shf*
