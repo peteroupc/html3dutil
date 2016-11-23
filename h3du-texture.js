@@ -33,6 +33,7 @@ H3DU.Texture=function(name){
 * be used as the coordinates (causing wraparound).
 * The default is false.
 * @returns {H3DU.Texture} This object.
+* @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.setClamp=function(clamp){
  this.clamp=clamp;
@@ -209,7 +210,8 @@ H3DU.Texture.prototype.loadImage=function(){
 };
 /**
  * Disposes resources used by this texture.
- */
+ * @memberof! H3DU.Texture#
+*/
 H3DU.Texture.prototype.dispose=function(){
  this.width=0;
  this.height=0;
@@ -229,6 +231,7 @@ H3DU.Texture.prototype.dispose=function(){
 
 /**
 * Gets the name of this texture.
+* @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getName=function(){
  return name;

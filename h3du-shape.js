@@ -31,21 +31,26 @@ H3DU.Shape._bufferedMeshWarning=false;
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+* @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.vertexCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 };
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+* @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 };
 /**
  * Not documented yet.
  * @param {*} value
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setVisible=function(value){
  this.visible=!!value;
  return this;
@@ -53,7 +58,8 @@ H3DU.Shape.prototype.setVisible=function(value){
 /**
  * Gets whether this shape will be drawn on rendering.
  * @returns {Boolean} True if this shape will be visible; otherwise, false.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.getVisible=function(){
  return this.visible;
 };
@@ -73,6 +79,7 @@ H3DU.Shape.prototype.getVisible=function(){
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
  * @returns {H3DU.Shape} This object.
+* @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setColor=function(r,g,b,a){
   var c=H3DU.toGLColor(r,g,b,a);
@@ -85,7 +92,8 @@ H3DU.Shape.prototype.setColor=function(r,g,b,a){
 *  the JavaScript DOM's Image class.  However, this method
 *  will not load that image if it hasn't been loaded yet.
  * @returns {H3DU.Shape} This object.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setTexture=function(name){
  return this.setMaterialParams({"texture":name});
 };
@@ -95,7 +103,8 @@ H3DU.Shape.prototype.setTexture=function(name){
  * shader program. <i>Using a {@link H3DU.ShaderProgram} here
  * is deprecated.</i>
  * @returns {H3DU.Shape} This object.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setShader=function(shader){
  return this.setMaterialParams({"shader":shader});
 };
@@ -103,7 +112,8 @@ H3DU.Shape.prototype.setShader=function(shader){
  * Sets parameters of this shape's material.
  * @param {*} params An object described in {@link H3DU.Material#setParams}.
  * @param {*} This object.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setMaterialParams=function(params){
  if(this.material){
    this.material.setParams(params)
@@ -128,6 +138,7 @@ H3DU.Shape.prototype.setMaterialParams=function(params){
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
  * @returns {H3DU.Shape} This object.
+* @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
  var c=H3DU.toGLColor(r,g,b,a);
@@ -141,6 +152,7 @@ H3DU.Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
 * Sets this shape's material parameters.
 * @param {Material} material
  * @returns {H3DU.Shape} This object.
+* @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setMaterial=function(material){
  this.material=material;
@@ -153,6 +165,7 @@ H3DU.Shape.prototype.setMaterial=function(material){
 * image data and buffered meshes will not be duplicated,
 * but rather just references to them will be used.
 * @returns {H3DU.Shape} A copy of this object.
+* @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.copy=function(){
  var ret=new H3DU.Shape(this.bufferedMesh);
@@ -162,13 +175,15 @@ H3DU.Shape.prototype.copy=function(){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.getTransform=function(){
  return this.transform;
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.getBounds=function(){
  if(!this.bufferedMesh){
   return [0,0,0,-1,-1,-1];
@@ -200,7 +215,8 @@ H3DU.Shape.prototype.isCulled=function(frustum){
 /**
  * Not documented yet.
  * @param {*} transform
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
@@ -213,7 +229,8 @@ H3DU.Shape.prototype.setTransform=function(transform){
  * @param {Number} y Scaling factor for this object's height.
  * @param {Number} z Scaling factor for this object's depth.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setScale=function(x,y,z){
   this.getTransform().setScale(x,y,z);
   return this;
@@ -226,7 +243,8 @@ H3DU.Shape.prototype.setScale=function(x,y,z){
  * @param {Number} y Y-coordinate.
  * @param {Number} z Z-coordinate.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setPosition=function(x,y,z){
   this.getTransform().setPosition(x,y,z);
   return this;
@@ -236,7 +254,8 @@ H3DU.Shape.prototype.setPosition=function(x,y,z){
  * See {@link H3DU.Transform#setQuaternion}.
  * @param {Array<Number>} quat A four-element array describing the rotation.
  * @returns {H3DU.Shape} This object.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.setQuaternion=function(quat){
   this.getTransform().setQuaternion(quat);
   return this;
@@ -245,7 +264,8 @@ H3DU.Shape.prototype.setQuaternion=function(quat){
  * Gets the transformation matrix used by this shape.
    * See {@link H3DU.Transform#getMatrix}.
  * @returns {Array<Number>} The current transformation matrix.
- */
+ * @memberof! H3DU.Shape#
+*/
 H3DU.Shape.prototype.getMatrix=function(){
   var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();

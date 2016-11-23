@@ -58,6 +58,7 @@ H3DU.LightSource = function(position, ambient, diffuse, specular) {
 * </ul>
 * If a value is null or undefined, it is ignored.
 * @returns {H3DU.Material} This object.
+* @memberof! H3DU.LightSource#
 */
 H3DU.LightSource.prototype.setParams=function(params){
  if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){

@@ -47,7 +47,8 @@ H3DU.MeshBuffer=function(mesh){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @param {*} Return value.*/
+* @param {*} Return value.* @memberof! H3DU.MeshBuffer#
+*/
 H3DU.MeshBuffer.prototype.primitiveCount=function(){
   "use strict";
 if((this.format&H3DU.Mesh.LINES_BIT)!==0)
@@ -58,7 +59,8 @@ if((this.format&H3DU.Mesh.LINES_BIT)!==0)
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.MeshBuffer#
+*/
 H3DU.MeshBuffer.prototype.getBounds=function(){
  "use strict";
  if(!this._bounds){
@@ -93,7 +95,8 @@ H3DU.MeshBuffer.prototype.getFormat=function(){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.MeshBuffer#
+*/
 H3DU.MeshBuffer.prototype.vertexCount=function(){
  "use strict";
  return this.numVertices;

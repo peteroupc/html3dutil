@@ -38,7 +38,8 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader){
 }
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.ShaderInfo#
+*/
 H3DU.ShaderInfo.prototype.copy=function(){
  var sp=new H3DU.ShaderInfo(this.vertexShader,this.fragmentShader);
  sp.setUniforms(this.uniformValues);
@@ -47,7 +48,8 @@ H3DU.ShaderInfo.prototype.copy=function(){
 /**
  * Not documented yet.
  * @param {*} uniforms
- */
+ * @memberof! H3DU.ShaderInfo#
+*/
 H3DU.ShaderInfo.prototype.setUniforms=function(uniforms){
  H3DU.ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,null);
  return this;
@@ -203,6 +205,7 @@ H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
 }
 
 /** Disposes resources from this shader program.
+* @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.dispose=function(){
  "use strict";
@@ -217,7 +220,8 @@ if(this.program){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.ShaderProgram#
+*/
 H3DU.ShaderProgram.prototype.getContext=function(){
  return this.context;
 }
@@ -261,6 +265,7 @@ H3DU.ShaderProgram.prototype._setUniformInternal=function(uniforms,i){
 * "unif[0].member2".
 * @returns {number|WebGLUniformLocation|null} The location of the uniform or attribute
 * name, or null if it doesn't exist.
+* @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.get=function(name){
  "use strict";
@@ -275,6 +280,7 @@ var ret=this.actives[name];
 * vertex or fragment shader of this shader program.  See get().
 * @returns {*} The uniform's value, or null if it doesn't exist or if
 * an attribute is named, not a uniform.
+* @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.getUniform=function(name){
  "use strict";
@@ -312,7 +318,8 @@ H3DU.ShaderProgram.prototype._setSavedUniforms=function(){
 }
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.ShaderProgram#
+*/
 H3DU.ShaderProgram.prototype.use=function(){
   "use strict";
   this.context.useProgram(this.prog);
@@ -330,7 +337,8 @@ H3DU.ShaderProgram.prototype._update=function(){
 /**
  * Not documented yet.
  * @param {*} uniforms
- */
+ * @memberof! H3DU.ShaderProgram#
+*/
 H3DU.ShaderProgram.prototype.setUniforms=function(uniforms){
   "use strict";
   var i;

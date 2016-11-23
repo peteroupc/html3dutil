@@ -26,7 +26,8 @@ H3DU.Lights = function(){
 }
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Lights#
+*/
 H3DU.Lights.prototype.setDefaults=function(){
  var ls=new H3DU.LightSource().setParams({
   ambient:[0,0,0,1],
@@ -55,7 +56,9 @@ H3DU.Lights._createNewLight=function(index){
 };
 /**
  * Gets the number of lights defined in this object.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+* @memberof! H3DU.Lights#
+*/
 H3DU.Lights.prototype.getCount=function(){
  return this.lights.length;
 };
@@ -66,7 +69,8 @@ H3DU.Lights.prototype.getCount=function(){
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @returns {LightSource} The corresponding light source object.
- */
+ * @memberof! H3DU.Lights#
+*/
 H3DU.Lights.prototype.getLight=function(index){
  var oldLength=this.lights.length;
  if(!this.lights[index])this.lights[index]=H3DU.Lights._createNewLight(index);
@@ -88,7 +92,8 @@ H3DU.Lights.prototype.getLight=function(index){
  * If the light doesn't exist at that index, it will be created.
  * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
  * @returns {H3DU.Lights} This object.
- */
+ * @memberof! H3DU.Lights#
+*/
 H3DU.Lights.prototype.setParams=function(index,params){
  this.getLight(index).setParams(params);
  return this;
@@ -108,7 +113,8 @@ H3DU.Lights.prototype.setParams=function(index,params){
  * If null or omitted, the specular highlight color will
  * remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Lights} This object.
- */
+ * @memberof! H3DU.Lights#
+*/
 H3DU.Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
  if(diffuse!=null)
@@ -127,7 +133,8 @@ H3DU.Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specu
  * @param {Array<Number>} [diffuse] Diffuse color, as described in {@link H3DU.Lights.setDirectionalLight}.
  * @param {Array<Number>} [specular] Specular color, as described in {@link H3DU.Lights.setDirectionalLight}.
  * @returns {H3DU.Lights} This object.
- */
+ * @memberof! H3DU.Lights#
+*/
 H3DU.Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
  if(diffuse!=null)
@@ -149,7 +156,8 @@ H3DU.Lights.prototype.setPointLight=function(index,position,diffuse,specular){
 * @param {Number} [a] Alpha color component (0-1).
 * Currently not used.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Lights#
+*/
 H3DU.Lights.prototype.setAmbient=function(r,g,b,a){
  this.sceneAmbient=H3DU.toGLColor(r,g,b,a);
  return this;

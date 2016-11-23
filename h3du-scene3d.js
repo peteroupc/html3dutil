@@ -65,7 +65,8 @@ H3DU.Scene3D = function(canvasOrContext){
 }
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getCanvas=function(){
  return this.context.canvas;
 }
@@ -153,7 +154,9 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
  this._programs[flags].push([context,prog]);
  return prog;
 }
-/** Returns the WebGL context associated with this scene. */
+/** Returns the WebGL context associated with this scene.
+* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getContext=function(){
  return this.context;
 };
@@ -193,6 +196,7 @@ H3DU.Scene3D.CW = 1;
 * enables face culling of the specified faces.  For any other value,
 * disables face culling.  By default, face culling is disabled.
 * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.cullFace=function(value){
  if(value===H3DU.Scene3D.BACK ||
@@ -234,6 +238,7 @@ H3DU.Scene3D.prototype._setFace=function(){
 * default behavior.  If using a left-handed coordinate system,
 * set this value to {@link H3DU.Scene3D.CW}.
 * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.frontFace=function(value){
  if(value===H3DU.Scene3D.CW){
@@ -249,6 +254,7 @@ H3DU.Scene3D.prototype.frontFace=function(value){
 * @param {Boolean} value If true, will check whether to resize the canvas
 * when the render() method is called. Default is true.
 * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setAutoResize=function(value){
  this.autoResize=!!value;
@@ -263,7 +269,8 @@ H3DU.Scene3D.prototype.setAutoResize=function(value){
 * @param {Boolean} value If true, use the device's pixel ratio
 * when setting the viewport's dimensions.  Default is true.
 * @returns {H3DU.Scene3D} This object.
-  */
+  * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setUseDevicePixelRatio=function(value){
  var oldvalue=!!this.useDevicePixelRatio;
  this.useDevicePixelRatio=!!value;
@@ -278,7 +285,8 @@ H3DU.Scene3D.prototype.setUseDevicePixelRatio=function(value){
   Gets the color used when clearing the screen each frame.
    @returns {Array<Number>} An array of four numbers, from 0 through
    1, specifying the red, green, blue, and alpha components of the color.
-   */
+   * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getClearColor=function(){
  return this.clearColor.slice(0,4);
 };
@@ -290,6 +298,7 @@ H3DU.Scene3D.prototype.getClearColor=function(){
 * to set the shader programs they use.
 * @param {H3DU.ShaderProgram} program The shader program to use.
 * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.useProgram=function(program){
  console.warn("The 'useProgram' method is obsolete.  Instead of this method, "+
@@ -301,7 +310,8 @@ H3DU.Scene3D.prototype.useProgram=function(program){
 *  Will be rounded up.
 * @param {Number} height Height of the scene, in pixels.
 *  Will be rounded up.
-* @returns {Number} Return value.*/
+* @returns {Number} Return value.* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setDimensions=function(width, height){
  if(width<0 || height<0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
@@ -322,7 +332,8 @@ H3DU.Scene3D.prototype.setDimensions=function(width, height){
 * Gets the viewport width for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @returns {Number} Return value.*/
+* @returns {Number} Return value.* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getWidth=function(){
  return this.width;
 };
@@ -330,7 +341,8 @@ H3DU.Scene3D.prototype.getWidth=function(){
 * Gets the viewport height for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @returns {Number} Return value.*/
+* @returns {Number} Return value.* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getHeight=function(){
  return this.height;
 };
@@ -339,7 +351,8 @@ H3DU.Scene3D.prototype.getHeight=function(){
 * divided by getHeight()).
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @returns {Number} Aspect ratio, or 1 if height is 0.*/
+* @returns {Number} Aspect ratio, or 1 if height is 0.* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getAspect=function(){
  var ch=this.getHeight();
  if(ch<=0)return 1;
@@ -356,7 +369,8 @@ H3DU.Scene3D.prototype.getClientHeight=function(){
 /**
 * Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
-* @returns {Number} Aspect ratio, or 1 if height is 0.*/
+* @returns {Number} Aspect ratio, or 1 if height is 0.* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getClientAspect=function(){
  var ch=this.getClientHeight();
  if(ch<=0)return 1;
@@ -365,7 +379,8 @@ H3DU.Scene3D.prototype.getClientAspect=function(){
 /**
  * Creates a frame buffer object associated with this scene.
  * @returns {H3DU.FrameBuffer} A buffer with the same size as this scene.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.createBuffer=function(){
  return new H3DU.FrameBuffer(this.context,
    this.getWidth(),this.getHeight());
@@ -373,7 +388,9 @@ H3DU.Scene3D.prototype.createBuffer=function(){
 /**
  * Gets the current projection matrix for this scene.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<Number>} Return value.
+* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getProjectionMatrix=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -384,7 +401,9 @@ return this._subScene._projectionMatrix.slice(0,16);
 /**
  * Gets the current view matrix for this scene.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<Number>} Return value.
+* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.getViewMatrix=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -415,6 +434,7 @@ if(this._renderedOutsideScene){
 * // Set the perspective projection.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
 * scene.setPerspective(45,scene.getClientAspect(),0.1,100);
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  return this.setProjectionMatrix(H3DU.Math.mat4perspective(fov,
@@ -445,7 +465,8 @@ H3DU.Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
  if((aspect===null || typeof aspect==="undefined"))aspect=this.getClientAspect();
  if(aspect===0)aspect=1;
@@ -469,7 +490,8 @@ H3DU.Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, f
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
  return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
 };
@@ -496,7 +518,8 @@ H3DU.Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspec
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(H3DU.Math.mat4frustum(
    left, right, top, bottom, near, far));
@@ -519,7 +542,8 @@ H3DU.Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * (Note that near can be greater than far or vice versa.)  The absolute difference
  * between near and far should be as small as the application can accept.
  * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, near, far));
@@ -535,7 +559,8 @@ H3DU.Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  * @param {Number} top Topmost coordinate of the 2D view.
  * (Note that top can be greater than bottom or vice versa.)
  * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
  return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, -1, 1));
@@ -550,7 +575,8 @@ H3DU.Scene3D.prototype._setClearColor=function(){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.dispose=function(){
  this._programs.dispose();
  this._textureLoader.dispose();
@@ -570,6 +596,7 @@ H3DU.Scene3D.prototype.dispose=function(){
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
 * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setClearColor=function(r,g,b,a){
  this.clearColor=H3DU.toGLColor(r,g,b,a);
@@ -583,6 +610,7 @@ H3DU.Scene3D.prototype.setClearColor=function(r,g,b,a){
 * @returns {Promise} A promise that is resolved when
 * the image is loaded successfully (the result will be an H3DU.Texture
 * object), and is rejected when an error occurs.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.loadTexture=function(name){
  return this._textureLoader.loadTexture(name);
@@ -599,6 +627,7 @@ H3DU.Scene3D.prototype.loadTexture=function(name){
 * the image is loaded successfully and uploaded
 * to a texture buffer (the result will be an H3DU.Texture
 * object), and is rejected when an error occurs.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.loadAndMapTexture=function(texture){
  var context=this.context;
@@ -630,6 +659,7 @@ H3DU.Scene3D.prototype.loadAndMapTexture=function(texture){
 * The result will be an object with three properties:
 * "successes", "failures", and "results".
 * See {@link H3DU.getPromiseResults}.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
  var promises=[];
@@ -642,7 +672,8 @@ H3DU.Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.clear=function(){
  if(this._is3d){
     this.context.clear(
@@ -653,7 +684,8 @@ H3DU.Scene3D.prototype.clear=function(){
 }
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.clearDepth=function(){
  if(this._is3d){
     this.context.clear(this.context.DEPTH_BUFFER_BIT);
@@ -663,7 +695,9 @@ H3DU.Scene3D.prototype.clearDepth=function(){
  * Gets the number of vertices composed by
  * all shapes in this scene.
  * @deprecated Use the vertexCount method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.vertexCount=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -675,7 +709,9 @@ return this._subScene.vertexCount();
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
 * @deprecated  Use the primitiveCount method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
-* @returns {Number} Return value. */
+* @returns {Number} Return value.
+* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.primitiveCount=function(){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -690,7 +726,8 @@ return this._subScene.primitiveCount();
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setProjectionMatrix=function(matrix){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -705,6 +742,7 @@ this._subScene.setProjectionMatrix(matrix);
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setViewMatrix=function(matrix){
 if(this._errors)throw new Error();
@@ -732,6 +770,7 @@ this._subScene.setViewMatrix(matrix);
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
 * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setLookAt=function(eye, center, up){
  return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
@@ -744,7 +783,8 @@ H3DU.Scene3D.prototype.setLookAt=function(eye, center, up){
 * instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom
 * H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
-* @returns {H3DU.Scene3D} This object.*/
+* @returns {H3DU.Scene3D} This object.* @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.addShape=function(shape){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -761,7 +801,8 @@ if(this._renderedOutsideScene){
  * created will use the mesh in its current state and won't
  * track future changes.
  * @returns {H3DU.Shape} The generated shape object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.makeShape=function(mesh){
 if(this._errors)throw new Error();
  if(this._renderedOutsideScene){
@@ -774,6 +815,7 @@ if(this._errors)throw new Error();
 * Removes all instances of a 3D shape from this scene.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
 * @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.removeShape=function(shape){
 if(this._errors)throw new Error();
@@ -806,7 +848,8 @@ if(this._renderedOutsideScene){
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -823,7 +866,8 @@ if(this._renderedOutsideScene){
  * if the light doesn't exist.
  * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setLightParams=function(index,params){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -846,7 +890,8 @@ if(this._renderedOutsideScene){
 * @param {Number} [a] Alpha color component (0-1).
 * Currently not used.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setAmbient=function(r,g,b,a){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -868,7 +913,8 @@ if(this._renderedOutsideScene){
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
@@ -897,7 +943,8 @@ H3DU.Scene3D.prototype._clearForPass=function(pass){
  * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} renderPasses An array of scenes
  * to draw, or a single subscene to render. Can be null.
  * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.render=function(renderPasses){
   if(renderPasses instanceof H3DU.Batch3D){
     return this.render([new H3DU.RenderPass3D(renderPasses)])
@@ -942,7 +989,8 @@ H3DU.Scene3D.prototype.render=function(renderPasses){
  * for rendering filter effects from a frame buffer.
  * @param {H3DU.ShaderProgram|string|null} filterProgram Not used.
  * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.Scene3D#
+*/
 H3DU.Scene3D.prototype.useFilter=function(filterProgram){
   console.warn("The useFilter method has no effect. Use the {@link H3DU.Batch3D.forFilter} method to "+
     "create a subscene for rendering filter effects from a frame buffer.");

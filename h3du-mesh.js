@@ -216,7 +216,8 @@ var normDir=(inward) ? -1 : 1;
  * Throws an error if the primitive type is incompatible with the
  * current primitive type (for example, a triangle type with LINE_STRIP).
  * @returns {H3DU.Mesh} This object.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.mode=function(m){
  "use strict";
  // TODO: Include in release notes that Meshes must use
@@ -254,7 +255,8 @@ H3DU.Mesh.prototype.mode=function(m){
  * @example
  * // Use the following idiom to make a copy of a geometric mesh:
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.merge=function(other){
  "use strict";
   if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)){
@@ -290,7 +292,8 @@ H3DU.Mesh.prototype.merge=function(other){
   * @param {Number} z Z-coordinate of the normal.
  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.normal3=function(x,y,z){
   "use strict";
 if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
@@ -322,7 +325,8 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * @param {Number} z Z-coordinate of the tangent vector.
  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.tangent3=function(x,y,z){
   "use strict";
 if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
@@ -354,7 +358,8 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * @param {Number} z Z-coordinate of the bitangent vector.
  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.bitangent3=function(x,y,z){
   "use strict";
 if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
@@ -383,7 +388,8 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * @param {Number} b Blue color component (0-1).
   * May be null or omitted if a string or array is given as the "r" parameter.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
  H3DU.Mesh.prototype.color3=function(r,g,b){
   "use strict";
 if(typeof r==="string"){
@@ -421,7 +427,8 @@ if(typeof r==="string"){
   * @param {Number} v Y-coordinate of the texture, from 0-1.
   * If "u" is an array, this parameter can be omitted.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
  H3DU.Mesh.prototype.texCoord2=function(u,v){
  "use strict";
 if(typeof u==="number" && typeof v==="number"){
@@ -448,7 +455,8 @@ if(typeof u==="number" && typeof v==="number"){
  * @param {Number} z The Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
  H3DU.Mesh.prototype.vertex3=function(x,y,z){
   "use strict";
   if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
@@ -471,7 +479,8 @@ if(typeof u==="number" && typeof v==="number"){
  * @param {Number} y The Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
  H3DU.Mesh.prototype.vertex2=function(x,y){
   "use strict";
 if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined")){
@@ -496,7 +505,8 @@ if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined"))
   * @param {Number} b Blue component of the color (0-1).
   * May be null or omitted if a string is given as the "r" parameter.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.setColor3=function(r,g,b){
   "use strict";
 var rr=r;
@@ -523,7 +533,8 @@ var rr=r;
  * Modifies this mesh by normalizing the normals it defines
  * to unit length.
  * @returns {H3DU.Mesh} This object.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.normalizeNormals=function(){
   "use strict";
    var stride=this.getStride();
@@ -564,7 +575,8 @@ H3DU.Mesh.prototype.normalizeNormals=function(){
  * @param {Number} z Z coordinate of the vertex position.
  * May be null or omitted if "x" is an array.
  * @returns {H3DU.Mesh} This object.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.setVertex=function(index,x,y,z){
   "use strict";
 if(index<0)return this;
@@ -601,7 +613,8 @@ if(index<0)return this;
  * @param {Number} z Z coordinate of the vertex normal.
  * May be null or omitted if "x" is an array.
  * @returns {H3DU.Mesh} This object.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z){
   "use strict";
   if(index<0)return this;
@@ -636,7 +649,8 @@ H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z){
  * the X, Y, and Z coordinates, respectively, of the vertex
  * position, or null if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.getVertex=function(index){
   "use strict";
 if(index<0)return null;
@@ -662,7 +676,8 @@ if(index<0)return null;
  * equals the number of vertices in this mesh or greater.
  * Returns (0,0,0) if the given vertex exists but doesn't define
  * a normal.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.getVertexNormal=function(index){
   "use strict";
   var c=this.vertexCount();
@@ -917,7 +932,9 @@ var existingIndices=[];
 /**
  * Gets the number of primitives (triangles, lines,
 * or points) composed by all shapes in this mesh.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+* @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.primitiveCount=function(){
   "use strict";
 if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)
@@ -951,7 +968,8 @@ H3DU.Mesh._addLine=function(lineIndices,existingLines,f1,f2){
  * unchanged.
  * @returns {H3DU.Mesh} A new mesh with triangles converted
  * to lines.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.toWireFrame=function(){
   "use strict";
 if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
@@ -989,7 +1007,8 @@ return (m[0] === 1 && m[1] === 0 && m[2] === 0 &&
   * @param {Array<Number>} matrix A 4x4 matrix describing
   * the transformation.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.transform=function(matrix){
   "use strict";
 var stride=this.getStride();
@@ -1041,7 +1060,8 @@ var stride=this.getStride();
  * Each component generally ranges from 0 to 1. May be absent.
  * </ul>
  * @returns {H3DU.Mesh} This object.
- */
+ * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.enumPrimitives=function(func){
  "use strict";
   var prim=this.primitiveType();
@@ -1082,6 +1102,7 @@ H3DU.Mesh.prototype.enumPrimitives=function(func){
 * last three are the largest-valued X, Y, and Z coordinates.
 * If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
 * -Inf, -Inf].
+* @memberof! H3DU.Mesh#
 */
 H3DU.Mesh.prototype.getBoundingBox=function(){
  "use strict";
@@ -1198,7 +1219,8 @@ var vi=[0,0,0];
   * This method only affects those parts of the mesh
   * that define normals and texture coordinates.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.recalcTangents=function(){
   "use strict";
   if(this.primitiveType()!==H3DU.Mesh.TRIANGLES){
@@ -1237,6 +1259,7 @@ var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
 * var twoSidedMesh = originalMesh.merge(
 *  new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
 * );
+* @memberof! H3DU.Mesh#
 */
 H3DU.Mesh.prototype.reverseNormals=function(){
   "use strict";
@@ -1271,6 +1294,7 @@ H3DU.Mesh.prototype.reverseNormals=function(){
 * var frontBackMesh = originalMesh.merge(
 *  new H3DU.Mesh().merge(originalMesh).reverseWinding()
 * );
+* @memberof! H3DU.Mesh#
 */
 H3DU.Mesh.prototype.reverseWinding=function(){
   "use strict";
@@ -1301,7 +1325,8 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
   * @param {Boolean} inward If true, the generated normals
   * will point inward; otherwise, outward.
   * @returns {H3DU.Mesh} This object.
-  */
+  * @memberof! H3DU.Mesh#
+*/
 H3DU.Mesh.prototype.recalcNormals=function(flat,inward){
   "use strict";
   var primtype=this.primitiveType();

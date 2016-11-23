@@ -121,7 +121,8 @@ H3DU.Batch3D._isSameMatrix=function(a,b){
 /**
  * Not documented yet.
  * @param {*} mat
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
  if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix,mat)){
   this._projectionMatrix=mat.slice(0,16)
@@ -138,7 +139,8 @@ H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
  * @param {Number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
  * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
  this._projectionUpdater=new H3DU.Batch3D._PerspectiveView(this,fov,near,far);
  return this;
@@ -149,7 +151,8 @@ H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
  * @param {*} center
  * @param {*} up
  * @returns {H3DU.Batch3D} This object.
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
  return this.setViewMatrix(H3DU.Math.mat4lookat(eye,center,up));
 };
@@ -167,7 +170,8 @@ H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
  * @param {Number} e The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
  * @param {Number} f The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.orthoAspect=function(l,r,b,t,e,f){
  this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,l,r,b,t,e,f);
  return this;
@@ -183,7 +187,8 @@ H3DU.Batch3D.prototype.orthoAspect=function(l,r,b,t,e,f){
  * (If b is greater than t, X-coordinates increase downward; otherwise,
  * they increase upward.)
  * @returns {H3DU.Batch3D} This object.
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.ortho2DAspect=function(l,r,b,t){
  return this.orthoAspect(l,r,b,t,-1,1);
 };
@@ -191,7 +196,8 @@ H3DU.Batch3D.prototype.ortho2DAspect=function(l,r,b,t){
  * Sets the current view matrix for this batch of shapes.
  * @param {Array<Number>} mat
  * @returns {H3DU.Batch3D} This object.
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.setViewMatrix=function(mat){
  if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix,mat)){
   this._viewMatrix=mat.slice(0,16)
@@ -201,13 +207,17 @@ H3DU.Batch3D.prototype.setViewMatrix=function(mat){
 };
 /**
  * Gets the current projection matrix for this batch of shapes.
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<Number>} Return value.
+* @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this batch of shapes.
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<Number>} Return value.
+* @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
 };
@@ -222,7 +232,8 @@ H3DU.Batch3D.prototype._getFrustum=function(){
 /**
  * Not documented yet.
  * @returns {H3DU.Lights} Return value.
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.getLights=function(){
  return this.lights;
 };
@@ -233,6 +244,7 @@ H3DU.Batch3D.prototype.getLights=function(){
 * Its parent will be set to no parent.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
 * @returns {H3DU.Batch3D} This object.
+* @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.addShape=function(shape){
  shape.parent=null;
@@ -243,7 +255,9 @@ H3DU.Batch3D.prototype.addShape=function(shape){
 /**
  * Gets the number of vertices composed by
  * all shapes in this batch of shapes.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+* @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.vertexCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -254,7 +268,9 @@ H3DU.Batch3D.prototype.vertexCount=function(){
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this batch of shapes.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+* @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.primitiveCount=function(){
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
@@ -267,6 +283,7 @@ H3DU.Batch3D.prototype.primitiveCount=function(){
 * Removes all instances of a 3D shape from this batch of shapes.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
 * @returns {H3DU.Batch3D} This object.
+* @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.removeShape=function(shape){
  for(var i=0;i<this.shapes.length;i++){
@@ -329,7 +346,8 @@ H3DU.Batch3D.prototype.resize=function(width, height) {
 
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.Batch3D#
+*/
 H3DU.Batch3D.prototype.render=function(scene){
   var rc={};
   rc.scene=scene;

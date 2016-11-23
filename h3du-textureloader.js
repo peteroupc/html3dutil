@@ -12,7 +12,8 @@ H3DU.TextureLoader = function(){
 /**
  * Not documented yet.
  * @param {*} name
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.getTexture=function(name){
  return this.textureImages[name]||null;
 }
@@ -20,7 +21,8 @@ H3DU.TextureLoader.prototype.getTexture=function(name){
 /**
  * Not documented yet.
  * @param {*} name
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.loadTexture=function(name){
  return H3DU.Texture.loadTexture(name,this.textureImages);
 }
@@ -61,7 +63,8 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy=function(context){
  * {@link H3DU.getPromiseResultsAll}.  If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
  var promises=[]
  for(var i=0;i<textures.length;i++){
@@ -76,7 +79,8 @@ H3DU.TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
  * @returns {Promise<H3DU.Texture>} A promise that resolves when
  * the texture is loaded successfully (the result will be an H3DU.Texture object)
  * and is rejected when an error occurs.
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.loadAndMapTexture=function(texture,context){
   context= (context.getContext) ? context.getContext() : context;
   var thisObject=this;
@@ -95,7 +99,8 @@ H3DU.TextureLoader.prototype.loadAndMapTexture=function(texture,context){
  * {@link H3DU.getPromiseResultsAll}.  If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.loadAndMapTexturesAll=function(textures,context,resolve,reject){
  context= (context.getContext) ? context.getContext() : context;
  var promises=[]
@@ -109,7 +114,8 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll=function(textures,context,res
  * Not documented yet.
  * @param {*} textures
  * @param {*} context
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.mapTextures=function(textures,context){
  context= (context.getContext) ? context.getContext() : context;
  for(var i=0;i<textures.length;i++){
@@ -121,7 +127,8 @@ H3DU.TextureLoader.prototype.mapTextures=function(textures,context){
  * Not documented yet.
  * @param {*} texture
  * @param {*} context
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.mapTexture=function(texture,context){
  context= (context.getContext) ? context.getContext() : context;
  var lt=this.loadedTextures;
@@ -136,7 +143,8 @@ H3DU.TextureLoader.prototype.mapTexture=function(texture,context){
 }
 /**
  * Disposes all resources used by this texture loader.
- */
+ * @memberof! H3DU.TextureLoader#
+*/
 H3DU.TextureLoader.prototype.dispose=function(){
  for(var tex in this.textureImages){
   this.textureImages[tex].dispose();

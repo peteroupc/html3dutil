@@ -80,7 +80,8 @@ H3DU.FrameBuffer.prototype._init=function(context,width,height){
 * @param {Number} height New height, in pixels, of the frame buffer.
 * Fractional values are rounded up.
 * @returns {H3DU.FrameBuffer} This object.
- */
+ * @memberof! H3DU.FrameBuffer#
+*/
 H3DU.FrameBuffer.prototype.resize=function(width,height){
  width=Math.ceil(width);
  height=Math.ceil(height);
@@ -93,7 +94,9 @@ H3DU.FrameBuffer.prototype.resize=function(width,height){
 
 /**
  * Gets the WebGL context associated with this frame buffer.
- * @returns {WebGLRenderingContext} Return value. */
+ * @returns {WebGLRenderingContext} Return value.
+* @memberof! H3DU.FrameBuffer#
+*/
 H3DU.FrameBuffer.prototype.getContext=function(){
  "use strict";
 return this.context;
@@ -104,7 +107,8 @@ return this.context;
  * to this frame buffer until it's unbound with the {@link H3DU.FrameBuffer#unbind}
  * method.
  * @returns {H3DU.FrameBuffer} This object.
- */
+ * @memberof! H3DU.FrameBuffer#
+*/
 H3DU.FrameBuffer.prototype.bind=function(){
   "use strict";
  this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
@@ -120,7 +124,8 @@ H3DU.FrameBuffer.prototype.bind=function(){
 };
 /**
  * Unbinds this frame buffer from its associated WebGL context.
- */
+ * @memberof! H3DU.FrameBuffer#
+*/
 H3DU.FrameBuffer.prototype.unbind=function(){
  "use strict";
 this.context.framebufferTexture2D(
@@ -134,7 +139,8 @@ this.context.framebufferTexture2D(
 };
 /**
  * Disposes all resources from this frame buffer object.
- */
+ * @memberof! H3DU.FrameBuffer#
+*/
 H3DU.FrameBuffer.prototype.dispose=function(){
  "use strict";
 if(this.buffer!==null){

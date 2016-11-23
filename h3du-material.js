@@ -170,6 +170,7 @@ A strong tilt indicates strong relief detail at that point.<p>
 * maps and shader program, if any, won't be cloned, but rather, a reference
 * to the same object will be used.
 * @returns {H3DU.Material} A copy of this object.
+* @memberof! H3DU.Material#
 */
 H3DU.Material.prototype.copy=function(){
  return new H3DU.Material(
@@ -216,6 +217,7 @@ H3DU.Material.prototype.copy=function(){
 * </ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
 * @returns {H3DU.Material} This object.
+* @memberof! H3DU.Material#
 */
 H3DU.Material.prototype.setParams=function(params){
  var param;

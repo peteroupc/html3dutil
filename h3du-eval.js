@@ -58,7 +58,8 @@ H3DU.BezierCurve=function(cp, u1, u2){
 * for(var i=0;i<=10;i++){
 *  points.push(curve.evaluate(i/10.0));
 * }
- */
+ * @memberof! H3DU.BezierCurve#
+*/
 H3DU.BezierCurve.prototype.evaluate=function(u){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul);
 };
@@ -124,7 +125,8 @@ H3DU.BezierSurface=function(cp, u1, u2, v1, v2){
  * @returns {Array<Number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point, as specified in the constructor.
- */
+ * @memberof! H3DU.BezierSurface#
+*/
 H3DU.BezierSurface.prototype.evaluate=function(u,v, output){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul,
    (v-this.voffset)*this.vmul);
@@ -285,7 +287,8 @@ H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
 * for(var i=0;i<=10;i++){
 *  points.push(curve.evaluate(i/10.0));
 * }
- */
+ * @memberof! H3DU.BSplineCurve#
+*/
 H3DU.BSplineCurve.prototype.evaluate=function(u){
   var numPoints=this.controlPoints.length;
   var order=this.knots.length-numPoints;
@@ -508,7 +511,8 @@ H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree){
  * @returns {Array<Number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
- */
+ * @memberof! H3DU.BSplineSurface#
+*/
 H3DU.BSplineSurface.prototype.evaluate=function(u,v){
   u=this.knotsU[this.orderU-1]+u*(this.knotsU[this.ucplen]-
     this.knotsU[this.orderU-1]);
@@ -615,6 +619,7 @@ H3DU.CurveEval=function(){
 * curveEval.vertex({"evaluate":function(u){
 *  return [Math.cos(u),Math.sin(u),0]
 * }});
+* @memberof! H3DU.CurveEval#
 */
 H3DU.CurveEval.prototype.vertex=function(evaluator){
  this.vertexCurve=evaluator;
@@ -626,6 +631,7 @@ H3DU.CurveEval.prototype.vertex=function(evaluator){
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
+* @memberof! H3DU.CurveEval#
 */
 H3DU.CurveEval.prototype.normal=function(evaluator){
  this.normalCurve=evaluator;
@@ -637,6 +643,7 @@ H3DU.CurveEval.prototype.normal=function(evaluator){
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
+* @memberof! H3DU.CurveEval#
 */
 H3DU.CurveEval.prototype.color=function(evaluator){
  this.colorCurve=evaluator;
@@ -648,6 +655,7 @@ H3DU.CurveEval.prototype.color=function(evaluator){
 * named "evaluate", giving 2 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
+* @memberof! H3DU.CurveEval#
 */
 H3DU.CurveEval.prototype.texCoord=function(evaluator){
  this.texCoordCurve=evaluator;
@@ -662,7 +670,8 @@ H3DU.CurveEval.prototype.texCoord=function(evaluator){
  * started.
  * @param {Number} u Point of the curve to evaluate.
  * @returns {H3DU.CurveEval} This object.
- */
+ * @memberof! H3DU.CurveEval#
+*/
 H3DU.CurveEval.prototype.evalOne=function(mesh,u){
  var color=null;
  var normal=null;
@@ -716,7 +725,8 @@ H3DU.CurveEval.prototype.evalOne=function(mesh,u){
  * <code>color</code>, and <code>texCoord</code> methods).
  *May be omitted; default is 1.
  * @returns {H3DU.CurveEval} This object.
- */
+ * @memberof! H3DU.CurveEval#
+*/
 H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
  if(typeof n==="undefined")n=24;
  if(n<=0)throw new Error("invalid n");
@@ -769,7 +779,8 @@ H3DU.SurfaceEval=function(){
  * @param {Boolean} value Either true or false.  True means normals
  * will automatically be generated; false means they won't.
  * @returns {H3DU.SurfaceEval} This object.
- */
+ * @memberof! H3DU.SurfaceEval#
+*/
 H3DU.SurfaceEval.prototype.setAutoNormal=function(value){
  this.autoNormal=!!value;
  return this;
@@ -783,6 +794,7 @@ H3DU.SurfaceEval.prototype.setAutoNormal=function(value){
 * </ul>
 * The evaluator function returns an array of the result of the evaluation.
 * @returns {H3DU.SurfaceEval} This object.
+* @memberof! H3DU.SurfaceEval#
 */
 H3DU.SurfaceEval.prototype.vertex=function(evaluator){
  this.vertexSurface=evaluator;
@@ -833,6 +845,7 @@ H3DU.SurfaceEval.prototype.vertex=function(evaluator){
 *   Math.sin(u)*-Math.sin(v)*Math.sin(u),
 *   0]);
 * }})
+* @memberof! H3DU.SurfaceEval#
 */
 H3DU.SurfaceEval.prototype.normal=function(evaluator){
  this.normalSurface=evaluator;
@@ -844,6 +857,7 @@ H3DU.SurfaceEval.prototype.normal=function(evaluator){
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
 * @returns {H3DU.SurfaceEval} This object.
+* @memberof! H3DU.SurfaceEval#
 */
 H3DU.SurfaceEval.prototype.color=function(evaluator){
  this.colorSurface=evaluator;
@@ -860,6 +874,7 @@ H3DU.SurfaceEval.prototype.color=function(evaluator){
 * evalOne and evalSurface methods will be interpolated as direct
 * texture coordinates.</caption>
 * surface.texCoord({"evaluate":function(u,v){ return [u,v] }});
+* @memberof! H3DU.SurfaceEval#
 */
 H3DU.SurfaceEval.prototype.texCoord=function(evaluator){
  this.texCoordSurface=evaluator;
@@ -875,7 +890,8 @@ H3DU.SurfaceEval.prototype.texCoord=function(evaluator){
  * @param {Number} u U-coordinate of the curve to evaluate
  * @param {Number} v V-coordinate of the curve to evaluate.
  * @returns {H3DU.SurfaceEval} This object.
- */
+ * @memberof! H3DU.SurfaceEval#
+*/
 H3DU.SurfaceEval.prototype.evalOne=function(mesh,u,v){
  var values=[];
  this._saveValues(mesh,values,0);
@@ -1039,7 +1055,8 @@ H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  * @param {Number} [v2] Ending U-coordinate of the surface to evaluate.
  * Default is 1.
  * @returns {H3DU.SurfaceEval} This object.
- */
+ * @memberof! H3DU.SurfaceEval#
+*/
 H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  if(typeof un==="undefined")un=24;
  if(typeof vn==="undefined")vn=24;
