@@ -1,9 +1,14 @@
+"use strict";
+
+/* global H3DU, his, is */
+
 /**
 * Represents a grouping of shapes.
 * @class
 * @alias H3DU.ShapeGroup
 */
-H3DU.ShapeGroup = function(){
+H3DU.ShapeGroup = function() {
+
  /** List of shapes contained in this group.
  * This property should only be used to access properties
  * and call methods on each shape, and not to add, remove
@@ -11,10 +16,10 @@ H3DU.ShapeGroup = function(){
  * @readonly
  */
  this.shapes=[];
- this.parent=null;
+ his.parent=null;
  this.visible=true;
  this.transform=new H3DU.Transform();
-}
+};
 /**
 * Adds a 3D shape to this shape group.  Its reference, not a copy,
 * will be stored in the list of shapes.
@@ -22,7 +27,8 @@ H3DU.ShapeGroup = function(){
 * @returns {H3DU.ShapeGroup} This object.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.addShape=function(shape){
+H3DU.ShapeGroup.prototype.addShape=function(shape) {
+
  shape.parent=this;
  this.shapes.push(shape);
  return this;
@@ -32,7 +38,8 @@ H3DU.ShapeGroup.prototype.addShape=function(shape){
  * @param {*} value
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setVisible=function(value){
+H3DU.ShapeGroup.prototype.setVisible=function(value) {
+
  this.visible=!!value;
  return this;
 };
@@ -40,7 +47,8 @@ H3DU.ShapeGroup.prototype.setVisible=function(value){
  * Not documented yet.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getVisible=function(){
+H3DU.ShapeGroup.prototype.getVisible=function() {
+
  return this.visible;
 };
 /**
@@ -48,7 +56,8 @@ H3DU.ShapeGroup.prototype.getVisible=function(){
  * @returns {H3DU.Transform} Return value.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getTransform=function(){
+H3DU.ShapeGroup.prototype.getTransform=function() {
+
  return this.transform;
 };
 /**
@@ -57,11 +66,12 @@ H3DU.ShapeGroup.prototype.getTransform=function(){
  * @returns {H3DU.Transform} A 4x4 matrix.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getMatrix=function(){
+H3DU.ShapeGroup.prototype.getMatrix=function() {
+
   var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
   var mat;
-  if(this.parent!==null){
+  if(this.parent !== null){
    var pmat=this.parent.getMatrix();
    if(thisIdentity){
     mat=H3DU.Math.mat4multiply(pmat,xform.getMatrix());
@@ -83,7 +93,8 @@ H3DU.ShapeGroup.prototype.getMatrix=function(){
  * @param {H3DU.Transform} transform
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setTransform=function(transform){
+H3DU.ShapeGroup.prototype.setTransform=function(transform) {
+
  this.transform=transform.copy();
  return this;
 };
@@ -92,7 +103,8 @@ H3DU.ShapeGroup.prototype.setTransform=function(transform){
  * @param {H3DU.Material} material
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setMaterial=function(material){
+H3DU.ShapeGroup.prototype.setMaterial=function(material) {
+
  for(var i=0;i<this.shapes.length;i++){
   this.shapes[i].setMaterial(material);
  }
@@ -104,7 +116,8 @@ H3DU.ShapeGroup.prototype.setMaterial=function(material){
  * @param {H3DU.Material} material
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setTexture=function(material){
+H3DU.ShapeGroup.prototype.setTexture=function(material) {
+
  for(var i=0;i<this.shapes.length;i++){
   this.shapes[i].setTexture(material);
  }
@@ -115,7 +128,8 @@ H3DU.ShapeGroup.prototype.setTexture=function(material){
  * @param {H3DU.Material} material
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setShader=function(material){
+H3DU.ShapeGroup.prototype.setShader=function(material) {
+
  for(var i=0;i<this.shapes.length;i++){
   this.shapes[i].setShader(material);
  }
@@ -127,7 +141,8 @@ H3DU.ShapeGroup.prototype.setShader=function(material){
  * @ {H3DU.Shape} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setMaterialParams=function(params){
+H3DU.ShapeGroup.prototype.setMaterialParams=function(params) {
+
  for(var i=0;i<this.shapes.length;i++){
   this.shapes[i].setMaterialParams(params);
  }
@@ -139,7 +154,8 @@ H3DU.ShapeGroup.prototype.setMaterialParams=function(params){
 * @returns {H3DU.ShapeGroup} This object.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.removeShape=function(shape){
+H3DU.ShapeGroup.prototype.removeShape=function(shape) {
+
  for(var i=0;i<this.shapes.length;i++){
    if(this.shapes[i]===shape){
      this.shapes.splice(i,1);
@@ -152,7 +168,8 @@ H3DU.ShapeGroup.prototype.removeShape=function(shape){
  * Not documented yet.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getBounds=function(){
+H3DU.ShapeGroup.prototype.getBounds=function() {
+
  var ret=[0,0,0,0,0,0];
  var first=true;
  for(var i=0;i<this.shapes.length;i++){
@@ -188,7 +205,8 @@ H3DU.ShapeGroup.prototype.getBounds=function(){
  * @returns {Number} Return value.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.vertexCount=function(){
+H3DU.ShapeGroup.prototype.vertexCount=function() {
+
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
   c+=this.shapes[i].vertexCount();
@@ -201,7 +219,8 @@ H3DU.ShapeGroup.prototype.vertexCount=function(){
  * @returns {Number} Return value.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.primitiveCount=function(){
+H3DU.ShapeGroup.prototype.primitiveCount=function() {
+
  var c=0;
  for(var i=0;i<this.shapes.length;i++){
   c+=this.shapes[i].primitiveCount();
@@ -221,7 +240,8 @@ H3DU.ShapeGroup.prototype.primitiveCount=function(){
 * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setPosition=function(x,y,z){
+H3DU.ShapeGroup.prototype.setPosition=function(x,y,z) {
+
  this.transform.setPosition(x,y,z);
  return this;
 };
@@ -234,7 +254,8 @@ H3DU.ShapeGroup.prototype.setPosition=function(x,y,z){
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setQuaternion=function(quat){
+H3DU.ShapeGroup.prototype.setQuaternion=function(quat) {
+
  this.transform.setQuaternion(quat);
  return this;
 };
@@ -250,7 +271,8 @@ H3DU.ShapeGroup.prototype.setQuaternion=function(quat){
 * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setScale=function(x,y,z){
+H3DU.ShapeGroup.prototype.setScale=function(x,y,z) {
+
  this.transform.setScale(x,y,z);
  return this;
 };

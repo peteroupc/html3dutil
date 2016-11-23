@@ -143,7 +143,7 @@ this.context.framebufferTexture2D(
 */
 H3DU.FrameBuffer.prototype.dispose=function(){
  "use strict";
-if(this.buffer!==null){
+if(this.buffer !== null){
    var oldBuffer=this.context.getParameter(
     this.context.FRAMEBUFFER_BINDING);
    if(oldBuffer==this.buffer){
@@ -151,10 +151,10 @@ if(this.buffer!==null){
    }
    this.context.deleteFramebuffer(this.buffer);
  }
- if(this.depthbuffer!==null){
+ if(this.depthbuffer !== null){
   this.context.deleteRenderbuffer(this.depthbuffer);
  }
- if(this.colorTexture!==null){
+ if(this.colorTexture !== null){
   this.context.deleteTexture(this.colorTexture);
  }
  this.buffer=null;

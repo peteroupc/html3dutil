@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.BufferedMesh, H3DU.FrameBuffer, H3DU, Lights, Material, H3DU.Mesh */
+/* global H3DU, H3DU.BufferedMesh, H3DU.FrameBuffer, H3DU.Mesh, Lights, Material, console */
 /**
 * Contains classes that implement methods
 * binding certain HTML 3D Library objects
@@ -19,17 +19,17 @@ at: http://peteroupc.github.io/
 H3DU._MaterialBinder=function(mshade){
  "use strict";
 this.mshade=mshade;
-}
+};
 /** @private */
 H3DU._MaterialBinder._textureSizeZeroZero=[0,0];
 /** @private */
 H3DU._MaterialBinder.prototype.bind=function(program,context,loader){
  "use strict";
  if(!this.mshade)return this;
- if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array")}
- if(this.mshade.ambient.length!==3){console.warn("creating new ambient array")}
- if(this.mshade.specular.length!==3){console.warn("creating new specular array")}
- if(this.mshade.emission.length!==3){console.warn("creating new emission array")}
+ if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array");}
+ if(this.mshade.ambient.length!==3){console.warn("creating new ambient array");}
+ if(this.mshade.specular.length!==3){console.warn("creating new specular array");}
+ if(this.mshade.emission.length!==3){console.warn("creating new emission array");}
  var uniforms={
   "textureSize":H3DU._MaterialBinder._textureSizeZeroZero,
   "md":this.mshade.diffuse.length===4 ? this.mshade.diffuse :
@@ -87,7 +87,7 @@ H3DU._LoadedTexture=function(textureImage, context){
     context.texParameteri(context.TEXTURE_2D,
         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
-}
+};
 /** @private */
 H3DU._LoadedTexture.prototype.dispose=function(){
  "use strict";
@@ -101,14 +101,15 @@ if(this.loadedTexture){
 H3DU._MaterialBinder.bindTexture=function(texture,context,program,textureUnit,loader){
  "use strict";
  if(!texture)return;
- var isFrameBuffer=(texture instanceof H3DU.FrameBuffer)
+ var isFrameBuffer=(texture instanceof H3DU.FrameBuffer);
  var loadedTexture=null;
  if(!isFrameBuffer){
- if((typeof texture.image==="undefined" || texture.image===null)  &&
+ if((typeof texture.image==="undefined" || texture.image === null)  &&
     texture.loadStatus===0){
       var thisObj=this;
       var prog=program;
-      texture.loadImage().then(function(e){
+      texture.loadImage().then(function(e) {
+
         // try again loading the image
         thisObj.bind(prog);
       });
@@ -117,7 +118,7 @@ H3DU._MaterialBinder.bindTexture=function(texture,context,program,textureUnit,lo
   loadedTexture=loader.mapTexture(texture,context);
  }
  }
- if ((loadedTexture!=null) || isFrameBuffer) {
+ if (((loadedTexture!==null && typeof loadedTexture!=="undefined")) || isFrameBuffer) {
       var uniforms={};
       if(textureUnit===0){
        uniforms.sampler=textureUnit;
@@ -177,7 +178,7 @@ H3DU._MaterialBinder.bindTexture=function(texture,context,program,textureUnit,lo
 H3DU._LightsBinder=function(lights){
  "use strict";
 this.lights=lights;
-}
+};
 H3DU._LightsBinder.emptyW1 = [0,0,0,1];
 H3DU._LightsBinder.emptyW0 = [0,0,0,0];
 H3DU._LightsBinder.emptyAtten = [1,0,0,0];
@@ -197,14 +198,14 @@ var lightsObject=this.lights;
     lt.diffuse : [lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],1];
   uniforms[ltname+".specular"]=lt.specular.length===4 ?
     lt.specular : [lt.specular[0],lt.specular[1],lt.specular[2],1];
-  var pos=H3DU.Math.mat4transform(viewMatrix,lightsObject.lights[i].position)
+  var pos=H3DU.Math.mat4transform(viewMatrix,lightsObject.lights[i].position);
   uniforms[ltname+".position"]=pos;
   uniforms[ltname+".radius"]=[Math.max(0.0,lt.radius*lt.radius*lt.radius*lt.radius),
     0,0,0];
  }
  // Set empty values for undefined lights up to MAX_LIGHTS
  for(i=lightsObject.lights.length;i<H3DU.Lights.MAX_LIGHTS;i++){
-  var ltname="lights["+i+"]";
+  ltname="lights["+i+"]";
   uniforms[ltname+".diffuse"]=H3DU._LightsBinder.emptyW1;
   uniforms[ltname+".specular"]=H3DU._LightsBinder.emptyW1;
   uniforms[ltname+".position"]=H3DU._LightsBinder.emptyW0;

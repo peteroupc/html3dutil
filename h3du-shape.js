@@ -27,6 +27,12 @@ H3DU.Shape = function(mesh){
   this.parent=null;
   this.visible=true;
 }
+/** @private */
+H3DU.Shape.prototype._hasColorAttr=function(){
+  var bm=this.bufferedMesh;
+  return bm && bm instanceof H3DU.MeshBuffer && bm._getAttribute("colorAttr");
+}
+/** @private */
 H3DU.Shape._bufferedMeshWarning=false;
 /**
  * Gets the number of vertices composed by
@@ -270,7 +276,7 @@ H3DU.Shape.prototype.getMatrix=function(){
   var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
   var mat;
-  if(this.parent!==null){
+  if(this.parent !== null){
    var pmat=this.parent.getMatrix();
    if(thisIdentity){
     mat=pmat;

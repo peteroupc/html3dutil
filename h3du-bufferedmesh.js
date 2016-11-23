@@ -32,30 +32,30 @@ H3DU.BufferedMesh = function(mesh, context){
   this._bounds=mesh.getBoundingBox();
  }
  this._initialize(mesh,context);
-}
+};
 /** @private */
 H3DU.BufferedMesh.prototype._initialize=function(mesh, context){
  "use strict";
  var smb=(mesh instanceof H3DU.MeshBuffer) ? mesh :
    new H3DU.MeshBuffer(mesh);
- this.arrayObjectExt=context.getExtension("OES_vertex_array_object")
+ this.arrayObjectExt=context.getExtension("OES_vertex_array_object");
  this.arrayObjectExtContext=context;
  this.smb=smb;
  this.verts=context.createBuffer();
- if(!this.verts)throw new Error("can't create buffer")
+ if(!this.verts)throw new Error("can't create buffer");
  this.indices=context.createBuffer();
- if(!this.indices)throw new Error("can't create face buffer")
+ if(!this.indices)throw new Error("can't create face buffer");
  this.vao=null;
  if(this.arrayObjectExt){
    this.vao=this.arrayObjectExt.createVertexArrayOES();
  }
  var vertexBuffer=null;
- var attribs=smb._getAttributes()
+ var attribs=smb._getAttributes();
  for(var i=0;i<attribs.length;i++){
-  var vb=attribs[i][2]
-  if(vb && vertexBuffer && vertexBuffer!=vb){
+  var vb=attribs[i][2];
+  if(vb && vertexBuffer && vertexBuffer!==vb){
     // TODO: Support multiple vertex buffers in one mesh buffer
-    throw new Error("Not yet supported")
+    throw new Error("Not yet supported");
   } else if(vb){
     vertexBuffer=vb;
   }
@@ -82,12 +82,13 @@ H3DU.BufferedMesh.prototype._initialize=function(mesh, context){
 };
 /** @private */
 H3DU.BufferedMesh.prototype._getVaoExtension=function(context){
- if(this.arrayObjectExtContext==context){
+ "use strict";
+if(this.arrayObjectExtContext===context){
   return this.arrayObjectExt;
  } else {
-  return context.getExtension("OES_vertex_array_object")
+  return context.getExtension("OES_vertex_array_object");
  }
-}
+};
 /** @private */
 H3DU.BufferedMesh.prototype._getBounds=function(){
  "use strict";
@@ -115,11 +116,11 @@ H3DU.BufferedMesh.prototype.getFormat=function(){
 */
 H3DU.BufferedMesh.prototype.dispose=function(){
  "use strict";
-if(this.verts!==null)
+if(this.verts !== null)
   this.context.deleteBuffer(this.verts);
- if(this.indices!==null)
+ if(this.indices !== null)
   this.context.deleteBuffer(this.indices);
- if(this.vao!==null){
+ if(this.vao !== null){
   this.arrayObjectExt.deleteVertexArrayOES(this.vao);
  }
  this.verts=null;
@@ -131,26 +132,28 @@ if(this.verts!==null)
 };
 /** @private */
 H3DU.BufferedMesh.prototype._getAttribLocations=function(program,context){
- if(this._lastKnownProgram!=program){
+ "use strict";
+if(this._lastKnownProgram!==program){
   this._lastKnownProgram=program;
-  var attrs=this.smb._getAttributes()
-  this._attribLocations=[]
-  var ix=false
+  var attrs=this.smb._getAttributes();
+  this._attribLocations=[];
+  var ix=false;
   for(var i=0;i<attrs.length;i++){
     var loc=program.get(attrs[i][0]);
-    if(loc==null)loc=-1;
-    if(loc==-1)ix=true
+    if((loc===null || typeof loc==="undefined"))loc=-1;
+    if(loc===-1)ix=true;
     this._attribLocations[i]=loc;
   }
   return true;
  }
  return false;
-}
+};
 
 /**
  * @private */
 H3DU.BufferedMesh.prototype._prepareDraw=function(program, context){
-  var rebind=this._getAttribLocations(program,context);
+  "use strict";
+var rebind=this._getAttribLocations(program,context);
   var vaoExt=this._getVaoExtension(context);
   if(this.vao) {
    vaoExt.bindVertexArrayOES(this.vao);
@@ -160,7 +163,7 @@ H3DU.BufferedMesh.prototype._prepareDraw=function(program, context){
   if(rebind) {
    context.bindBuffer(context.ARRAY_BUFFER, this.verts);
    context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
-   var attrs=this.smb._getAttributes()
+   var attrs=this.smb._getAttributes();
    for(var i=0;i<this._attribLocations.length;i++){
     var attrib=this._attribLocations[i];
     if(attrib>=0){
@@ -171,10 +174,7 @@ H3DU.BufferedMesh.prototype._prepareDraw=function(program, context){
    }
    program._disableOthers(attrs);
   }
-  // TODO: Somehow get rid of this special case
-  var useColorAttr=(this.smb._getAttribute("colorAttr")) ? 1.0 : 0.0;
-  program.setUniforms({"useColorAttr":useColorAttr});
-}
+};
 /**
 * Binds the buffers in this object to attributes according
 * to their data format, and draws the elements in this mesh
@@ -184,11 +184,12 @@ H3DU.BufferedMesh.prototype._prepareDraw=function(program, context){
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
 * @memberof! H3DU.BufferedMesh#
 */
-H3DU.BufferedMesh.prototype.draw=function(program){
+H3DU.BufferedMesh.prototype.draw=function(program) {
+"use strict";
   // Binding phase
-  "use strict";
+
   var context=program.getContext();
-  if(this.verts===null || this.face===null){
+  if(this.verts === null || this.face === null){
    throw new Error("mesh buffer disposed");
   }
   if(context!==this.context){
@@ -229,18 +230,20 @@ H3DU.BufferedMesh.prototype.primitiveCount=function(){
 
 /** @private */
 H3DU.BufferedMesh._MeshLoader=function(){
- this.meshes=[]
-}
+ "use strict";
+this.meshes=[];
+};
 /** @private */
 H3DU.BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
- if(meshBuffer instanceof H3DU.BufferedMesh){
+ "use strict";
+if(meshBuffer instanceof H3DU.BufferedMesh){
   // NOTE: Using H3DU.BufferedMesh objects directly in Shapes is deprecated
   meshBuffer.draw(prog);
  } else {
   var context=prog.getContext();
   for(var i=0;i<this.meshes.length;i++){
    var m=this.meshes[i];
-   if(m[0]==meshBuffer && m[1]==context){
+   if(m[0]===meshBuffer && m[1]===context){
     m[2].draw(prog);
     return;
    }
@@ -249,11 +252,12 @@ H3DU.BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
   this.meshes.push([meshBuffer,context,bm]);
   bm.draw(prog);
  }
-}
+};
 /** @private */
 H3DU.BufferedMesh._MeshLoader.prototype.dispose=function(){
-  for(var i=0;i<this.meshes.length;i++){
+  "use strict";
+for(var i=0;i<this.meshes.length;i++){
    this.meshes[i][2].dispose();
   }
   this.meshes=[];
-}
+};

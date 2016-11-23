@@ -76,6 +76,7 @@ H3DU.Scene3D.SPECULAR_MAP_ENABLED = 2;
 H3DU.Scene3D.NORMAL_ENABLED = 4;
 H3DU.Scene3D.SPECULAR_ENABLED = 8;
 H3DU.Scene3D.TEXTURE_ENABLED = 16;
+H3DU.Scene3D.COLORATTR_ENABLED = 32;
 
 /** @private */
 H3DU.Scene3D._materialToFlags=function(material){
@@ -146,6 +147,8 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
    defines+="#define NORMAL_MAP\n";
  if((flags&H3DU.Scene3D.TEXTURE_ENABLED)!=0)
    defines+="#define TEXTURE\n";
+ if((flags&H3DU.Scene3D.COLORATTR_ENABLED)!=0)
+   defines+="#define COLORATTR\n";
  if((flags&H3DU.Scene3D.SPECULAR_MAP_ENABLED)!=0)
    defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
  var prog=new H3DU.ShaderProgram(context,

@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global Lights, console */
+/* global H3DU, Lights, console, isCurrentProgram */
 
 /**
 * Holds source code for a WebGL shader program.  A shader program in
@@ -35,25 +35,27 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader){
  this.vertexShader=vertexShader;
  this.fragmentShader=fragmentShader;
  this.uniformValues={};
-}
+};
 /**
  * Not documented yet.
  * @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.copy=function(){
- var sp=new H3DU.ShaderInfo(this.vertexShader,this.fragmentShader);
+ "use strict";
+var sp=new H3DU.ShaderInfo(this.vertexShader,this.fragmentShader);
  sp.setUniforms(this.uniformValues);
  return sp;
-}
+};
 /**
  * Not documented yet.
  * @param {*} uniforms
  * @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.setUniforms=function(uniforms){
- H3DU.ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,null);
+ "use strict";
+H3DU.ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,null);
  return this;
-}
+};
 /** @private */
 H3DU.ShaderInfo._setUniformInternal=function(uniforms,uniformValues,i,changedUniforms){
   "use strict";
@@ -150,17 +152,20 @@ H3DU.ShaderInfo._setUniformsInternal=function(uniforms,outputUniforms,changedUni
  * @param {*} fragmentShader
  */
 H3DU.ShaderProgram=function(context,vertexShader,fragmentShader) {
- this._init(context,new H3DU.ShaderInfo(vertexShader,fragmentShader));
-}
+ "use strict";
+this._init(context,new H3DU.ShaderInfo(vertexShader,fragmentShader));
+};
 /** @private */
 H3DU.ShaderProgram._fromShaderInfo=function(context,shader){
- var ret=new H3DU.ShaderProgram(null);
+ "use strict";
+var ret=new H3DU.ShaderProgram(null);
  ret._init(context,shader);
  return ret;
-}
+};
 /** @private */
 H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
- if(!context)return;
+ "use strict";
+if(!context)return;
  context=(context.getContext) ? context.getContext() : context;
  this.shaderInfo=shaderInfo;
  this.context=context;
@@ -168,7 +173,7 @@ H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
    shaderInfo.vertexShader,
    shaderInfo.fragmentShader);
  this.uniformValues={};
- this.actives={}
+ this.actives={};
  this.attributes=[];
  this.uniformTypes={};
  this.savedUniforms={};
@@ -177,7 +182,7 @@ H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
   this.uniformValues,this.savedUniforms);
  this.CURRENT_PROGRAM=35725;
  this.FLOAT=5126;
- if(((typeof this.prog!=="undefined" && this.prog!==null))){
+ if(((typeof this.prog!=="undefined" && this.prog !== null))){
   var name=null;
   var ret={};
   var count= context.getProgramParameter(this.prog, context.ACTIVE_ATTRIBUTES);
@@ -204,20 +209,21 @@ H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
   }
   this.actives=ret;
  }
-}
+};
 /** @private */
 H3DU.ShaderProgram.prototype._disableOthers=function(attrs){
- var a={};
+ "use strict";
+var a={};
  for(var i=0;i<attrs.length;i++){
-  a[attrs[i][0]]=true
+  a[attrs[i][0]]=true;
  }
- for(var i=0;i<this.attributeNames.length;i++){
+ for(i=0;i<this.attributeNames.length;i++){
   var name=this.attributeNames[i];
   if(!a[name[0]]){
     this.context.disableVertexAttribArray(name[1]);
   }
  }
-}
+};
 /** Disposes resources from this shader program.
 * @memberof! H3DU.ShaderProgram#
 */
@@ -237,8 +243,9 @@ if(this.program){
  * @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.getContext=function(){
- return this.context;
-}
+ "use strict";
+return this.context;
+};
 /** @private */
 H3DU.ShaderProgram.prototype._setUniformInternal=function(uniforms,i){
   "use strict";
@@ -313,7 +320,8 @@ var loc=(typeof name==="string") ? this.get(name) : name;
 };
 /** @private */
 H3DU.ShaderProgram.prototype._setSavedUniforms=function(){
-  var i;
+  "use strict";
+var i;
   var uniformsLength=0;
   if(typeof Object.keys!=="undefined"){
      var keys=Object.keys(this.savedUniforms);
@@ -329,7 +337,7 @@ H3DU.ShaderProgram.prototype._setSavedUniforms=function(){
     }
   }
   return uniformsLength;
-}
+};
 /**
  * Not documented yet.
  * @memberof! H3DU.ShaderProgram#
@@ -344,10 +352,11 @@ H3DU.ShaderProgram.prototype.use=function(){
 };
 /** @private */
 H3DU.ShaderProgram.prototype._update=function(){
-  H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
+  "use strict";
+H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
    this.uniformValues,this.savedUniforms);
   return this;
-}
+};
 /**
  * Not documented yet.
  * @param {*} uniforms
@@ -520,10 +529,11 @@ return H3DU.ShaderProgram.makeEffect(null,
 * @param {*} [context] No longer used; ignored.
 * @returns {H3DU.ShaderInfo} The resulting shader program.
 */
-H3DU.ShaderProgram.getEdgeDetectEffect=function(){
+H3DU.ShaderProgram.getEdgeDetectEffect=function() {
+"use strict";
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
-"use strict";
+
 return H3DU.ShaderProgram.makeEffect(null,
 ["float luma(vec3 color) {",
 " return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
@@ -558,16 +568,20 @@ H3DU.ShaderProgram.getBasicVertex=function(){
 var shader=""+
 "attribute vec3 position;\n" +
 "attribute vec3 uv;\n" +
-"attribute vec3 colorAttr;\n" +
 "varying vec2 uvVar;\n"+
+"#ifdef COLORATTR\n"+
+"attribute vec3 colorAttr;\n" +
 "varying vec3 colorAttrVar;\n" +
+"#endif\n"+
 "void main(){\n"+
 "vec4 positionVec4;\n"+
 "positionVec4.w=1.0;\n"+
 "positionVec4.xyz=position;\n" +
 "gl_PointSize=1.0;\n" +
 "uvVar=uv;\n" +
+"#ifdef COLORATTR\n"+
 "colorAttrVar=colorAttr;\n" +
+"#endif\n"+
 "gl_Position=positionVec4;\n" +
 "}\n";
 };
@@ -582,7 +596,10 @@ var shader=[
 "attribute vec3 position;",
 "attribute vec3 normal;",
 "attribute vec2 uv;",
+"#ifdef COLORATTR",
 "attribute vec3 colorAttr;",
+"varying vec3 colorAttrVar;",
+"#endif\n"+
 "attribute vec3 tangent;",
 "attribute vec3 bitangent;",
 "uniform mat4 projection;",
@@ -597,14 +614,15 @@ var shader=[
 "varying vec3 transformedNormalVar;",
 "#endif",
 "varying vec2 uvVar;",
-"varying vec3 colorAttrVar;",
 "void main(){",
 "vec4 positionVec4;",
 "positionVec4.w=1.0;",
 "positionVec4.xyz=position;",
 "gl_PointSize=1.0;",
 "gl_Position=(projection*modelViewMatrix)*positionVec4;",
-"colorAttrVar=colorAttr;",
+"#ifdef COLORATTR\n"+
+"colorAttrVar=colorAttr;\n" +
+"#endif\n"+
 "uvVar=uv;",
 "#ifdef SHADING",
 "transformedNormalVar=normalize(normalMatrix*normal);",
@@ -662,9 +680,10 @@ var shader=H3DU.ShaderProgram.fragmentShaderHeader() +
 "#ifdef TEXTURE\n" +
 "uniform sampler2D sampler;\n" +
 "#endif\n" +
-"uniform float useColorAttr;\n" + // use color attribute if 1
 "varying vec2 uvVar;\n"+
+"#ifdef COLORATTR\n" +
 "varying vec3 colorAttrVar;\n" +
+"#endif\n" +
 "#ifdef SHADING\n" +
 "varying vec4 viewPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
@@ -697,18 +716,17 @@ var shader=H3DU.ShaderProgram.fragmentShaderHeader() +
 "}\n" +
 "#endif\n" +
 "void main(){\n" +
-" vec4 tmp;\n"+
 " vec3 normal;\n"+
-" tmp.w=1.0;\n"+
-" tmp.xyz=colorAttrVar;\n"+
 "#ifdef TEXTURE\n" +
-" vec4 baseColor=mix(\n"+
-"   texture2D(sampler,uvVar),\n"+
-"   tmp, useColorAttr);\n"+
+"   vec4 baseColor=texture2D(sampler,uvVar);\n"+
 "#else\n" +
-" vec4 baseColor=mix(\n"+
-"   md,\n"+
-"   tmp, useColorAttr);\n"+
+"#ifdef COLORATTR\n" +
+"   vec4 baseColor;\n"+
+"   baseColor.w=1.0;\n"+
+"   baseColor.xyz=colorAttrVar;\n"+
+"#else\n" +
+"   vec4 baseColor=md;\n"+
+"#endif\n" +
 "#endif\n" +
 "#ifdef SHADING\n" +
 "#ifdef NORMAL_MAP\n" +

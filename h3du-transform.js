@@ -6,16 +6,17 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math */
+/* global H3DU, H3DU.Math */
 /**
 *  A class offering a convenient way to set a transformation
 * from one coordinate system to another.
 * @class
 * @alias H3DU.Transform
 */
-H3DU.Transform = function(){
+H3DU.Transform = function() {
+"use strict";
   /** @private */
-  "use strict";
+
 this.scale=[1,1,1];
   /** @private */
   this.position=[0,0,0];
@@ -29,7 +30,7 @@ this.scale=[1,1,1];
   this._isIdentity=true;
   /** @private */
   this.matrix=H3DU.Math.mat4identity();
-}
+};
   /**
   * Returns a copy of a three-element array giving the scaling for an object's width,
   * height, and depth, respectively.

@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math, H3DU */
+/* global H3DU, H3DU.Math, i, i1, i2, i3, newAttributes, stride, vertexStartIndex, x, y, z */
 /**
 * Specifies the triangles, lines, or points that make up a geometric shape.
 * Each vertex, that is, each point, each end of a line, and each corner
@@ -58,7 +58,7 @@ H3DU.Mesh = function(vertices,indices,format){
  this.tangent=[0,0,0];
  this.bitangent=[0,0,0];
  this.texCoord=[0,0];
-}
+};
 /** @private */
 H3DU.Mesh._primitiveType=function(mode){
  "use strict";
@@ -233,7 +233,7 @@ H3DU.Mesh.prototype.mode=function(m){
    this._initialize([],[],format);
    this.currentMode=m;
  } else if(   !H3DU.Mesh._isCompatibleMode(this.currentMode,m)) {
-   throw new Error("Storing a different primitive mode in this mesh is no longer supported")
+   throw new Error("Storing a different primitive mode in this mesh is no longer supported");
  } else {
    this.newPrimitive();
    this.currentMode=m;
@@ -260,7 +260,7 @@ H3DU.Mesh.prototype.mode=function(m){
 H3DU.Mesh.prototype.merge=function(other){
  "use strict";
   if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)){
-    throw new Error("Meshes have incompatible types")
+    throw new Error("Meshes have incompatible types");
   }
   // TODO: Won't work if meshes have different attributes;
   // this causes issues in the compositemesh and pathshapes demos
@@ -268,6 +268,7 @@ H3DU.Mesh.prototype.merge=function(other){
    var oldIndexLength=this.indices.length;
    this.vertices.push.apply(this.vertices,other.vertices);
    this.indices.push.apply(this.indices,other.indices);
+var i;
    for(i=oldIndexLength;i<this.indices.length;i++){
     this.indices[i]+=oldVertexLength;
    }
@@ -537,6 +538,7 @@ var rr=r;
 */
 H3DU.Mesh.prototype.normalizeNormals=function(){
   "use strict";
+var i;
    var stride=this.getStride();
    var vertices=this.vertices;
    var normalOffset=H3DU.Mesh._normalOffset(
@@ -711,7 +713,7 @@ this.vertices=vertices||[];
   return H3DU.Mesh._getStride(this.attributeBits);
  };
  /** @private */
- this.newPrimitive=function(m){
+ this.newPrimitive=function(){
   this.startIndex=this.vertices.length;
   return this;
  };
@@ -806,7 +808,7 @@ this.vertices=vertices||[];
   this.vertices=newVertices;
   this.attributeBits=newBits;
  };
- this._setTriangle=function(vertexStartIndex,stride,i1,i2,i3){
+ this._setTriangle=function(){
    var v1=i1*stride;
    var v2=i2*stride;
    var v3=i3*stride;
@@ -840,7 +842,7 @@ this.vertices=vertices||[];
     this.indices.push(i1,i2,i3);
    }
  };
- this._vertex3=function(x,y,z,state){
+ this._vertex3=function(){
   var currentMode=this.currentMode;
   if(currentMode===-1)throw new Error("mode() not called");
   this._rebuildVertices(this._elementsDefined);
@@ -944,9 +946,11 @@ if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)
   return Math.floor(this.indices.length/3);
 };
   // Adds a line only if it doesn't exist
-H3DU.Mesh._addLine=function(lineIndices,existingLines,f1,f2){
+H3DU.Mesh._addLine=function(lineIndices,existingLines,f1,f2) {
+"use strict";
    // Ensure ordering of the indices
-   if(f1<f2){
+
+if(f1<f2){
     var tmp=f1;f1=f2;f2=tmp;
    }
    var e=existingLines[f1];
@@ -1158,12 +1162,13 @@ var t1 = vertices[v2] - vertices[v1];
   return [t14,t15,t16,t17,t18,t19];
 };
 /** @private */
-H3DU.Mesh._recalcTangentsInternal=function(vertices,indices,stride,uvOffset,normalOffset,tangentOffset){
+H3DU.Mesh._recalcTangentsInternal=function(vertices,indices,stride,uvOffset,normalOffset,tangentOffset) {
+"use strict";
  // NOTE: no need to specify bitangent offset, since tangent
  // and bitangent will always be contiguous (this method will
  // always be called after the recalcTangents method ensures
  // that both fields are present)
- "use strict";
+
 var vi=[0,0,0];
  for(var i=0;i<indices.length;i+=3){
   vi[0]=indices[i]*stride;
@@ -1263,6 +1268,7 @@ var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
 */
 H3DU.Mesh.prototype.reverseNormals=function(){
   "use strict";
+   var i;
    var stride=this.getStride();
    var vertices=this.vertices;
    var normalOffset=H3DU.Mesh._normalOffset(

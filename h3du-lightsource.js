@@ -1,9 +1,12 @@
+/* global H3DU */
+
 /**
 * Specifies parameters for light sources.
 * @class
 * @alias H3DU.LightSource
 */
 H3DU.LightSource = function(position, ambient, diffuse, specular) {
+"use strict";
  /**
  * A 4-element vector giving an additional color to multiply with the ambient
  * color of each object, in the red, green,
@@ -38,11 +41,11 @@ H3DU.LightSource = function(position, ambient, diffuse, specular) {
  */
  this.specular=specular||[1,1,1];
  /**
- Radius of the light source.  If 0, the light's intensity doesn't change
- with distance.
- @default */
+* Radius of the light source.  If 0, the light's intensity doesn't change
+* with distance.
+* @default */
  this.radius=0.0;
-}
+};
 /**
 * Sets parameters for this material object.
 * @param {Object} params An object whose keys have
@@ -60,23 +63,24 @@ H3DU.LightSource = function(position, ambient, diffuse, specular) {
 * @returns {H3DU.Material} This object.
 * @memberof! H3DU.LightSource#
 */
-H3DU.LightSource.prototype.setParams=function(params){
- if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient!==null))))))){
+H3DU.LightSource.prototype.setParams=function(params) {
+"use strict";
+ if(((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && ((typeof params.ambient!=="undefined" && params.ambient !== null))))))){
   this.ambient=H3DU.toGLColor(params.ambient);
   this.ambient=this.ambient.slice(0,4);
  }
- if(((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && params.position!==null))))))){
+ if(((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && ((typeof params.position!=="undefined" && params.position !== null))))))){
   var position=params.position;
   this.position=[position[0],position[1],position[2],
     (position[3]===null) ? 0.0 : position[3]];
  }
- if(((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && params.specular!==null))))))){
+ if(((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && ((typeof params.specular!=="undefined" && params.specular !== null))))))){
   this.specular=H3DU.toGLColor(params.specular);
  }
- if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse!==null))))))){
+ if(((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && ((typeof params.diffuse!=="undefined" && params.diffuse !== null))))))){
   this.diffuse=H3DU.toGLColor(params.diffuse);
  }
- if(typeof params.radius!="undefined"){
+ if(typeof params.radius!=="undefined"){
   this.radius=params.radius;
  }
  return this;

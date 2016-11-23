@@ -1,4 +1,4 @@
-/* global BSplineCurve, BezierCurve, GLMath, GLUtil, GraphicsPath, Mesh, console */
+/* global BSplineCurve, BezierCurve, GLMath, GLUtil, GraphicsPath, H3DU, Mesh, console */
 // Portions adapted from public domain Mozilla unit tests
 
 var EPSILON = 0.00001;

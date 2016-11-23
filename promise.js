@@ -24,7 +24,7 @@ if (exports.Promise) { return; }
    * @alias Promise
    * @param {function} [resolver]
    */
-  var Promise = function(resolver) {
+  var Promise = function(resolver){
     this._state = 0; /* 0 = pending, 1 = fulfilled, 2 = rejected */
     this._value = null; /* fulfillment / rejection value */
     this._timeout = null;
@@ -39,14 +39,14 @@ if (exports.Promise) { return; }
     if (resolver) { this._invokeResolver(resolver); }
   };
 
-  Promise.resolve = function(value) {
-    return new this(function(resolve, reject) {
+  Promise.resolve = function(value){
+    return new this(function(resolve, reject){
       resolve(value);
     });
   };
 
-  Promise.reject = function(reason) {
-    return new this(function(resolve, reject) {
+  Promise.reject = function(reason){
+    return new this(function(resolve, reject){
       reject(reason);
     });
   };
@@ -54,18 +54,18 @@ if (exports.Promise) { return; }
   /**
    * Wait for all these promises to complete. One failed => this fails too.
    */
-  Promise.all = Promise.when = function(all) {
-    return new this(function(resolve, reject) {
+  Promise.all = Promise.when = function(all){
+    return new this(function(resolve, reject){
       var counter = 0;
       var results = [];
 
-      all.forEach(function(promise, index) {
+      all.forEach(function(promise, index){
         counter++;
-        promise.then(function(result) {
+        promise.then(function(result){
           results[index] = result;
           counter--;
           if (!counter) { resolve(results); }
-        }, function(reason) {
+        }, function(reason){
           counter = 1/0;
           reject(reason);
         });
@@ -73,9 +73,9 @@ if (exports.Promise) { return; }
     });
   };
 
-  Promise.race = function(all) {
-    return new this(function(resolve, reject) {
-      all.forEach(function(promise) {
+  Promise.race = function(all){
+    return new this(function(resolve, reject){
+      all.forEach(function(promise){
         promise.then(resolve, reject);
       });
     });
@@ -86,7 +86,7 @@ if (exports.Promise) { return; }
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise}
    */
-  Promise.prototype.then = function(onFulfilled, onRejected) {
+  Promise.prototype.then = function(onFulfilled, onRejected){
     this._cb.fulfilled.push(onFulfilled);
     this._cb.rejected.push(onRejected);
 
@@ -100,7 +100,7 @@ if (exports.Promise) { return; }
     return thenPromise;
   };
 
-  Promise.prototype.fulfill = function(value) {
+  Promise.prototype.fulfill = function(value){
     if (this._state !== 0) { return this; }
 
     this._state = 1;
@@ -111,7 +111,7 @@ if (exports.Promise) { return; }
     return this;
   };
 
-  Promise.prototype.reject = function(value) {
+  Promise.prototype.reject = function(value){
     if (this._state !== 0) { return this; }
 
     this._state = 2;
@@ -122,7 +122,7 @@ if (exports.Promise) { return; }
     return this;
   };
 
-  Promise.prototype.resolve = function(x) {
+  Promise.prototype.resolve = function(x){
     /* 2.3.1. If promise and x refer to the same object, reject promise with a TypeError as the reason. */
     if (x === this) {
       this.reject(new TypeError("Promise resolved by its own instance"));
@@ -148,13 +148,13 @@ if (exports.Promise) { return; }
       if (typeof(then) === "function") {
         /* 2.3.3.3. If then is a function, call it */
         var called = false;
-        var resolvePromise = function(y) {
+        var resolvePromise = function(y){
           /* 2.3.3.3.1. If/when resolvePromise is called with a value y, run [[Resolve]](promise, y). */
           if (called) { return; }
           called = true;
           this.resolve(y);
         };
-        var rejectPromise = function(r) {
+        var rejectPromise = function(r){
           /* 2.3.3.3.2. If/when rejectPromise is called with a reason r, reject promise with r. */
           if (called) { return; }
           called = true;
@@ -180,11 +180,11 @@ if (exports.Promise) { return; }
     this.fulfill(x);
   };
 
-  Promise.prototype.chain = function(promise) {
-    var resolve = function(value) {
+  Promise.prototype.chain = function(promise){
+    var resolve = function(value){
       promise.resolve(value);
     };
-    var reject = function(value) {
+    var reject = function(value){
       promise.reject(value);
     };
     return this.then(resolve, reject);
@@ -194,16 +194,16 @@ if (exports.Promise) { return; }
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise}
    */
-  Promise.prototype["catch"]  = function(onRejected) {
+  Promise.prototype["catch"]  = function(onRejected){
     return this.then(null, onRejected);
   };
 
-  Promise.prototype._schedule = function() {
+  Promise.prototype._schedule = function(){
     if (this._timeout) { return; } /* resolution already scheduled */
     this._timeout = setTimeout(this._processQueue.bind(this), 0);
   };
 
-  Promise.prototype._processQueue = function() {
+  Promise.prototype._processQueue = function(){
     this._timeout = null;
 
     while (this._thenPromises.length) {
@@ -213,7 +213,7 @@ if (exports.Promise) { return; }
     }
   };
 
-  Promise.prototype._executeCallback = function(cb) {
+  Promise.prototype._executeCallback = function(cb){
     var thenPromise = this._thenPromises.shift();
 
     if (typeof(cb) !== "function") {
@@ -237,7 +237,7 @@ if (exports.Promise) { return; }
     }
   };
 
-  Promise.prototype._invokeResolver = function(resolver) {
+  Promise.prototype._invokeResolver = function(resolver){
     try {
       resolver(this.resolve.bind(this), this.reject.bind(this));
     } catch (e) {

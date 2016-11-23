@@ -17,7 +17,7 @@ at: http://peteroupc.github.io/
 H3DU.MeshBuffer=function(mesh){
  "use strict";
  this._bounds=mesh.getBoundingBox();
- var vertices=new Float32Array(mesh.vertices)
+ var vertices=new Float32Array(mesh.vertices);
  if(mesh.vertices.length>=65536 || mesh.indices.length>=65536){
   this.indexBufferSize=4;
   this.indices=new Uint32Array(mesh.indices);
@@ -32,43 +32,44 @@ H3DU.MeshBuffer=function(mesh){
   var stride=H3DU.Mesh._getStride(this.format);
   this.numVertices=mesh.vertices.length/stride;
   this.facesLength=mesh.indices.length;
-  this.attributes=[]
-  this.attributes.push(["position",0,vertices,3,stride])
-  var o=H3DU.Mesh._normalOffset(this.format)
+  this.attributes=[];
+  this.attributes.push(["position",0,vertices,3,stride]);
+  var o=H3DU.Mesh._normalOffset(this.format);
   if(o>=0){
-   this.attributes.push(["normal",o,vertices,3,stride])
+   this.attributes.push(["normal",o,vertices,3,stride]);
   }
-  o=H3DU.Mesh._colorOffset(this.format)
+  o=H3DU.Mesh._colorOffset(this.format);
   if(o>=0){
-   this.attributes.push(["colorAttr",o,vertices,3,stride])
+   this.attributes.push(["colorAttr",o,vertices,3,stride]);
   }
-  o=H3DU.Mesh._texCoordOffset(this.format)
+  o=H3DU.Mesh._texCoordOffset(this.format);
   if(o>=0){
-   this.attributes.push(["uv",o,vertices,2,stride])
+   this.attributes.push(["uv",o,vertices,2,stride]);
   }
-  o=H3DU.Mesh._tangentOffset(this.format)
+  o=H3DU.Mesh._tangentOffset(this.format);
   if(o>=0){
-   this.attributes.push(["tangent",o,vertices,3,stride])
+   this.attributes.push(["tangent",o,vertices,3,stride]);
   }
-  o=H3DU.Mesh._bitangentOffset(this.format)
+  o=H3DU.Mesh._bitangentOffset(this.format);
   if(o>=0){
-   this.attributes.push(["bitangent",o,vertices,3,stride])
+   this.attributes.push(["bitangent",o,vertices,3,stride]);
   }
 };
 
 /** @private */
 H3DU.MeshBuffer.prototype._getAttributes=function(){
-  return this.attributes
-}
+  "use strict";
+return this.attributes;
+};
 
 /** @private */
 H3DU.MeshBuffer.prototype._getAttribute=function(name){
   "use strict";
   for(var i=0;i<this.attributes.length;i++){
-    if(this.attributes[i][0]==name)return this.attributes[i]
+    if(this.attributes[i][0]===name)return this.attributes[i];
   }
-  return null
-}
+  return null;
+};
 
 /**
  * Gets the number of primitives (triangles, lines,
@@ -103,11 +104,11 @@ H3DU.MeshBuffer.prototype.getBounds=function(){
   var empty=true;
   var inf=Number.POSITIVE_INFINITY;
   var ret=[inf,inf,inf,-inf,-inf,-inf];
-   var posattr=this.getAttribute("position")
+   var posattr=this.getAttribute("position");
    if(!posattr || posattr[3]<3)return ret;
    var stride=posattr[4];
    var v=posattr[2];
-   var vindex=posattr[1]
+   var vindex=posattr[1];
    for(var j=0;j<this.indices.length;j++){
     var vi=this.indices[j]*stride+vindex;
     if(empty){

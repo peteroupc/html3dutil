@@ -353,12 +353,12 @@ var H3DU={
 * var angle = 360 * H3DU.getTimePosition(timer, time, 5000);
 */
 H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
- if(((typeof timer.time==="undefined" || timer.time===null))) {
+ if(((typeof timer.time==="undefined" || timer.time === null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
  } else {
-  if(((typeof timer.lastTime==="undefined" || timer.lastTime===null)))timer.lastTime=timeInMs;
+  if(((typeof timer.lastTime==="undefined" || timer.lastTime === null)))timer.lastTime=timeInMs;
   return (((timeInMs-timer.time)*1.0)%intervalInMs)/intervalInMs;
  }
 };
@@ -378,11 +378,11 @@ H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
 * initial time or last known time wasn't set, returns 0.
 */
 H3DU.newFrames=function(timer,timeInMs){
- if(((typeof timer.time==="undefined" || timer.time===null))) {
+ if(((typeof timer.time==="undefined" || timer.time === null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
- } else if(((typeof timer.lastTime==="undefined" || timer.lastTime===null))){
+ } else if(((typeof timer.lastTime==="undefined" || timer.lastTime === null))){
   timer.lastTime=timeInMs;
   return 0;
  } else {
@@ -393,9 +393,7 @@ H3DU.newFrames=function(timer,timeInMs){
 };
 
 (function(exports){
-
-var hlsToRgb=function(hls) {
-
+var hlsToRgb=function(hls){
 var hueval=hls[0]*1.0;//[0-360)
  var lum=hls[1]*1.0;//[0-255]
  var sat=hls[2]*1.0;//[0-255]
@@ -441,7 +439,6 @@ var hueval=hls[0]*1.0;//[0-360)
 // green, blue, and alpha (each from 0-255)
 // Returns null if the color can't be converted
 var colorToRgba=function(x){
-
  function parsePercent(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>100 ? 100 : c))*255/100; }
  function parseAlpha(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>1 ? 1 : c))*255; }
  function parseByte(x){ var c; return ((c=parseInt(x,10))<0 ? 0 : (c>255 ? 255 : c)); }
@@ -578,7 +575,6 @@ exports.toGLColor=function(r,g,b,a){
 
 var namedColors=null;
 var setUpNamedColors=function(){
-
 if(!namedColors){
     var nc=("aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff,"+
 "blueviolet,8a2be2,brown,a52a2a,burlywood,deb887,cadetblue,5f9ea0,chartreuse,7fff00,chocolate,d2691e,coral,ff7f50,cornflowerblue,6495ed,cornsilk,fff8dc,"+

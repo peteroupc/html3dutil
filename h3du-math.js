@@ -7,7 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 
-if((typeof H3DU === "undefined" || H3DU === null)){
+if((typeof H3DU === "undefined" || (H3DU === null || typeof H3DU === "undefined"))){
  exports.H3DU = {};
 }
 /**

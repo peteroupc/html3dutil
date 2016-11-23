@@ -1,3 +1,4 @@
+/* global H3DU */
 /** @deprecated Use H3DU.BezierCurve instead. */
 var BezierCurve=H3DU.BezierCurve;
 /** @deprecated Use H3DU.BezierSurface instead. */
