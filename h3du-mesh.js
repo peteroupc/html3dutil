@@ -256,7 +256,7 @@ H3DU.Mesh.prototype.mode=function(m){
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  */
 H3DU.Mesh.prototype.merge=function(other){
- "use strict"; 
+ "use strict";
   if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)){
     throw new Error("Meshes have incompatible types")
   }
@@ -518,8 +518,6 @@ var rr=r;
   return this;
 };
 
-
-
 /**
  * Modifies this mesh by normalizing the normals it defines
  * to unit length.
@@ -531,7 +529,7 @@ H3DU.Mesh.prototype.normalizeNormals=function(){
    var vertices=this.vertices;
    var normalOffset=H3DU.Mesh._normalOffset(
      this.attributeBits);
-   if(normalOffset<0)continue;
+   if(normalOffset<0)return this;
    for(i=0;i<vertices.length;i+=stride){
     var x=vertices[i+normalOffset];
     var y=vertices[i+normalOffset+1];
@@ -643,13 +641,9 @@ H3DU.Mesh.prototype.getVertex=function(index){
 if(index<0)return null;
   var c=this.vertexCount();
   if(index<c){
-    var idx=index;
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
     index*=this.getStride();
-    return this.vertices.slice(idx,idx+3);
-    this.vertices[index]=x;
-    this.vertices[index+1]=y;
-    this.vertices[index+2]=z;
+    return this.vertices.slice(index,index+3);
   }
   return null;
 };
@@ -672,14 +666,10 @@ H3DU.Mesh.prototype.getVertexNormal=function(index){
   "use strict";
   var c=this.vertexCount();
   if(index<c){
-    var idx=index;
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
     index*=this.getStride();
     index+=H3DU.Mesh._normalOffset(this.attributeBits);
-    return this.vertices.slice(idx,idx+3);
-    this.vertices[index]=x;
-    this.vertices[index+1]=y;
-    this.vertices[index+2]=z;
+    return this.vertices.slice(index,index+3);
   }
   return null;
 };

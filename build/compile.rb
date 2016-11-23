@@ -49,7 +49,7 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
 end
 
 Dir.chdir(".."){
- files=%w( promise.js glmath.js glutil.js )
- files|=Dir.glob("glutil-*.js")
- normalizeAndCompile(files,"glutil_min.js",false,false)
+ files=%w( promise.js h3du.js )
+ files|=Dir.glob("h3du-*.js")
+ normalizeAndCompile(files,"h3du_min.js",false,false)
 }

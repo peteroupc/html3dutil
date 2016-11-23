@@ -453,7 +453,7 @@ var e=null;
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),255];
  } else if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),parseInt(e[4],16)];
- } elseif((e=(/^rgb\(\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*\)$/.exec(x)))!==null){
+ } else if((e=(/^rgb\(\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*\)$/.exec(x)))!==null){
   return [parsePercent(e[1]),parsePercent(e[2]),parsePercent(e[3]),255];
  } else if((e=(/^rgb\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*\)$/.exec(x)))!==null){
   return [parseByte(e[1]),parseByte(e[2]),parseByte(e[3]),255];
