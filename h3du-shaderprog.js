@@ -172,6 +172,7 @@ H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
  this.attributes=[];
  this.uniformTypes={};
  this.savedUniforms={};
+ this.attributeNames=[];
  H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
   this.uniformValues,this.savedUniforms);
  this.CURRENT_PROGRAM=35725;
@@ -188,6 +189,7 @@ H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
     if(attr>=0){
      this.attributes.push(attr);
      ret[name]=attr;
+     this.attributeNames.push([name,attr]);
     }
    }
   }
@@ -203,7 +205,19 @@ H3DU.ShaderProgram.prototype._init=function(context,shaderInfo) {
   this.actives=ret;
  }
 }
-
+/** @private */
+H3DU.ShaderProgram.prototype._disableOthers=function(attrs){
+ var a={};
+ for(var i=0;i<attrs.length;i++){
+  a[attrs[i][0]]=true
+ }
+ for(var i=0;i<this.attributeNames.length;i++){
+  var name=this.attributeNames[i];
+  if(!a[name[0]]){
+    this.context.disableVertexAttribArray(name[1]);
+  }
+ }
+}
 /** Disposes resources from this shader program.
 * @memberof! H3DU.ShaderProgram#
 */
