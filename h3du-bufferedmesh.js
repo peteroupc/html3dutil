@@ -199,7 +199,8 @@ H3DU.BufferedMesh.prototype.draw=function(program){
 };
 /**
  * Gets the number of vertices composed by all shapes in this mesh.
-* @returns {Number} Return value.* @memberof! H3DU.BufferedMesh#
+* @returns {Number} Return value.
+* @memberof! H3DU.BufferedMesh#
 */
 H3DU.BufferedMesh.prototype.vertexCount=function(){
  "use strict";
@@ -208,7 +209,8 @@ H3DU.BufferedMesh.prototype.vertexCount=function(){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @returns {Number} Return value.* @memberof! H3DU.BufferedMesh#
+* @returns {Number} Return value.
+* @memberof! H3DU.BufferedMesh#
 */
 H3DU.BufferedMesh.prototype.primitiveCount=function(){
  "use strict";

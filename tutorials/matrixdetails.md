@@ -101,9 +101,9 @@ The following sections describe different kinds of matrix transformations in mor
 
 Related functions:
 
-* [H3DU.Math.mat4transform()]{@link glmath.H3DU.Math.mat4transform} -
+* [H3DU.Math.mat4transform()]{@link H3DU.Math.mat4transform} -
  Transforms a 4-element vector with a 4x4 matrix
-* [H3DU.Math.mat3transform()]{@link glmath.H3DU.Math.mat3transform} -
+* [H3DU.Math.mat3transform()]{@link H3DU.Math.mat3transform} -
  Transforms a 3-element vector with a 3x3 matrix
 
 ### Translation <a id=Translation></a>
@@ -155,9 +155,9 @@ remains unchanged.  Likewise for y and z.
 
 Related functions:
 
-* [H3DU.Math.mat4translated()]{@link glmath.H3DU.Math.mat4translated} -
+* [H3DU.Math.mat4translated()]{@link H3DU.Math.mat4translated} -
  Returns a translation matrix
-* [H3DU.Math.mat4translate()]{@link glmath.H3DU.Math.mat4translate} -
+* [H3DU.Math.mat4translate()]{@link H3DU.Math.mat4translate} -
  Multiplies a matrix by a translation.
 
 ### Scaling <a id=Scaling></a>
@@ -215,15 +215,15 @@ is equal to the output vector.
 
 Related functions:
 
-* [H3DU.Math.mat4identity()]{@link glmath.H3DU.Math.mat4identity} -
+* [H3DU.Math.mat4identity()]{@link H3DU.Math.mat4identity} -
  Returns a 4x4 identity matrix
-* [H3DU.Math.mat3identity()]{@link glmath.H3DU.Math.mat3identity} -
+* [H3DU.Math.mat3identity()]{@link H3DU.Math.mat3identity} -
  Returns a 3x3 identity matrix
-* [H3DU.Math.mat4scaled()]{@link glmath.H3DU.Math.mat4scaled} -
+* [H3DU.Math.mat4scaled()]{@link H3DU.Math.mat4scaled} -
  Returns a scaling matrix
-* [H3DU.Math.mat4scale()]{@link glmath.H3DU.Math.mat4scale} -
+* [H3DU.Math.mat4scale()]{@link H3DU.Math.mat4scale} -
  Multiplies a matrix by a scaling.
-* [H3DU.Math.mat4scaleInPlace()]{@link glmath.H3DU.Math.mat4scaleInPlace} -
+* [H3DU.Math.mat4scaleInPlace()]{@link H3DU.Math.mat4scaleInPlace} -
  Multiplies a matrix in place by a scaling.
 
 ### Rotation <a id=Rotation></a>
@@ -375,9 +375,9 @@ So the rotated point would be at about (10, -15.98075, 32.3205).
 
 Related functions:
 
-* [H3DU.Math.mat4rotated()]{@link glmath.H3DU.Math.mat4rotated} -
+* [H3DU.Math.mat4rotated()]{@link H3DU.Math.mat4rotated} -
  Returns a rotation matrix
-* [H3DU.Math.mat4rotate()]{@link glmath.H3DU.Math.mat4rotate} -
+* [H3DU.Math.mat4rotate()]{@link H3DU.Math.mat4rotate} -
  Multiplies a matrix by a translation.
 
 ### Matrix Multiplication <a id=Matrix_Multiplication></a>
@@ -399,7 +399,7 @@ mat4rotate involve multiplying 4x4 matrices
 
 Related functions:
 
-* [H3DU.Math.mat4multiply()]{@link glmath.H3DU.Math.mat4multiply} -
+* [H3DU.Math.mat4multiply()]{@link H3DU.Math.mat4multiply} -
  Multiplies two matrices
 
 ### Other Transformations <a id=Other_Transformations></a>
@@ -421,9 +421,9 @@ X, Y, and Z by its W to get the vector's _normalized device coordinates_.</small
 
 Related functions:
 
-* [H3DU.Math.mat4frustum()]{@link glmath.H3DU.Math.mat4frustum} -
+* [H3DU.Math.mat4frustum()]{@link H3DU.Math.mat4frustum} -
  Returns a frustum matrix
-* [H3DU.Math.mat4perspective()]{@link glmath.H3DU.Math.mat4perspective} -
+* [H3DU.Math.mat4perspective()]{@link H3DU.Math.mat4perspective} -
  Returns a field-of-view perspective matrix
 
 ### Matrix Inversions <a id=Matrix_Inversions></a>
@@ -452,5 +452,5 @@ matrix is too complicated to discuss here.
 
 Related functions:
 
-* [H3DU.Math.mat4invert()]{@link glmath.H3DU.Math.mat4invert} -
+* [H3DU.Math.mat4invert()]{@link H3DU.Math.mat4invert} -
  Inverts a matrix

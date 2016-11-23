@@ -51,5 +51,6 @@ end
 Dir.chdir(".."){
  files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
+ files|=%w( oldnames.js )
  normalizeAndCompile(files,"h3du_min.js",false,true)
 }

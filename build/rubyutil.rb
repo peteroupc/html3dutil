@@ -9,6 +9,7 @@
 require 'digest'
 require 'fileutils'
 require 'json'
+require 'tmpdir'
 begin
  require 'fiddle'
 rescue LoadError
@@ -134,17 +135,28 @@ def utf8Length(cp)
  return 4
 end
 
-def utf8ToWideChar(text)
-  index=0
-  cp=0
-  codepoints=[]
-  while ((cp=nextUtf8(text,index))>=0)
-   codepoints.push((cp>=0xFFFE || cp<=0) ? 0x3F : cp)
-   index+=utf8Length(cp)
-  end
-  codepoints.push(0)
-  return codepoints.pack("v*")
-end
+def utf8ToWideChar(text,kind=:nullTerminated)
+   index=0
+   cp=0
+   codepoints=[]
+   while ((cp=nextUtf8(text,index))>=0)
+   if cp>=0x10000 && cp<=0x10ffff
+     c1 = ((cp - 0x10000) >> 10) + 0xd800
+     c2 = ((cp - 0x10000) & 0x3ff) + 0xdc00
+    codepoints.push(c1)
+    codepoints.push(c2)
+   else
+    codepoints.push((cp<0 || cp>0x10ffff) ? 0x3F : cp)
+   end
+    index+=utf8Length(cp)
+   end
+  if kind==:nullTerminated
+    codepoints.push(0)
+  else
+    codepoints.unshift(codepoints.length)
+   end
+   return codepoints.pack("v*")
+ end
 
 def appendUtf8(str,codepoint)
  return str if codepoint<0
@@ -403,7 +415,6 @@ class Array
    else
     blocks.push([i,1])
    end
-   #p "called block #{i}"
   end
   if random
    blocks.shuffle!
@@ -425,11 +436,6 @@ class Array
 end
 
 module Enumerable
-  def transform # Converts each item in the enumerable, taking the item as the argument
-    ret=[]
-    self.each{|item| ret.push(yield(item)) }
-    return ret # Returns a new array
-  end
   def transform_with_index # Converts each item in the enumerable, taking the item and index as arguments
     ret=[]
     i=0; self.each{|item| ret.push(yield(item,i)); i+=1 }
@@ -532,20 +538,11 @@ def forceCopy(s,d)
      return false
     end
   end
-  win32copy=false
-  if !win32copy || (FileTest.size(s) rescue 0)>1024*1024
    if s!=d
     tryDelete(d) if FileTest.file?(d)
     FileUtils.cp(s,d) rescue nil
    end
    return FileTest.exist?(d)
-  else
-   if s!=d
-    tryDelete(d) if FileTest.file?(d)
-    runcmd("copy /y #{ffq(s)} #{ffq(d)}")
-   end
-   return FileTest.exist?(d)
-  end
 end
 
 def tryDelete(f)
@@ -564,8 +561,8 @@ def tryDelete(f)
    ex=File.expand_path(f)
    if iswin32() && f.length>=260
      ex="\\\\?\\"+ex.gsub(/\//,"\\")
-     delfile=Win32.new("kernel32.dll","DeleteFileA","p","")
-     delfile.call(ex)
+     delfile=Win32.new("kernel32.dll","DeleteFileW","p","")
+     delfile.call(utf8ToWideChar(ex))
      return FileTest.exist?(f)
    else
      return false
@@ -576,10 +573,22 @@ def tryDelete(f)
  end
 end
 
+GetFileAttributes=Win32.new('kernel32.dll','GetFileAttributesW','p','i') rescue nil
+def isSymLink?(f)
+  if iswin32() && GetFileAttributes
+    # check reparse point attribute on Win32
+    # p [f,sprintf("%08X",GetFileAttributes.call(utf8ToWideChar(f)))]
+    return (GetFileAttributes.call(utf8ToWideChar(f)) & 0x400)!=0
+  else
+    return FileTest.symlink?(f)
+  end
+end
+
 # dirs - true: include directories matching the regular expression
 #   false: don't include directories
 #  :dirsonly : include directories only
 # recurse - recurse subdirectories
+# NOTE: Skips links to directories
 def globRecurse(dir,regex,dirs=false,recurse=true,&block)
  if regex.is_a?(String)
    # Convert glob pattern to a regex
@@ -598,7 +607,8 @@ def globRecurse(dir,regex,dirs=false,recurse=true,&block)
    runfunc=false
    begin
     if recurse && !(filename=="." || filename=="..") &&
-         FileTest.directory?(realname)
+         FileTest.directory?(realname) &&
+         !isSymLink?(realname) # NOTE: Symbolic links are skipped
      withinyield=true
      newret=globRecurse(realname,regex,dirs,recurse,&block)
      withinyield=false
@@ -641,11 +651,6 @@ def latestTime(f) # Gets the latest time of a filename string
   end
 end
 
-# More failsafe way to get the file size
-def fsize(f)
- return FileTest.exist?(f) ? (FileTest.size(f) rescue 0) : 0
-end
-
 def keepCreationDate(f)
   ctime=File.ctime(f) rescue nil
   begin
@@ -672,23 +677,30 @@ def keepDate(f)
   end
 end
 def isNonZeroSize?(f)
- return FileTest.exist?(f) && fsize(f)>0
+ begin
+  return FileTest.size(f)>0
+ rescue
+  return false
+ end
 end
 
 # Deletes a file only if its size is zero
 def deleteZeroSize(f)
- if FileTest.exist?(f) && fsize(f)==0
-  tryDelete(f)
+ begin
+  tryDelete(f) if FileTest.size(f)==0
+ rescue
+  return false
  end
 end
-def endsWith?(s,suffix)
- return s && s.length>=suffix.length ? (s[s.length-suffix.length,suffix.length]==suffix) : false
+class String
+def endsWith?(suffix)
+ return self.length>=suffix.length ? (self[self.length-suffix.length,suffix.length]==suffix) : false
 end
-def endsWithIgnoreCase?(s,suffix)
- return s && s.length>=suffix.length ? (
-      s[s.length-suffix.length,suffix.length].upcase==suffix.upcase) : false
+def endsWithIgnoreCase?(suffix)
+ return self && self.length>=suffix.length ? (
+      self[s.length-suffix.length,suffix.length].upcase==suffix.upcase) : false
 end
-
+end
 def getByExt(arr,*exts)
  return arr.find_all {|a| exts.any?{|ext|
    if ext && ext[0,1]!="."
@@ -702,29 +714,29 @@ end
 # Quotes a filename to appear in a command line argument, except
 # that slashes are changed to backslashes on Windows
 def ffq(f)
- f=f.gsub(/[\/\\]/,iswin32() ? "\\" : "/")
- return fq(f)
+ ret=fq(f)
+ if iswin32()
+  ret=ret.gsub(/[\/\\]/,"\\")
+ end
+ return ret
 end
 
-# Quotes a filename to appear in a command line argument, except
-# that single quotes are always used
+# Escapes a filename to appear in a command line argument
+# for Posix and Posix-like shells
 def ufq(f)
-  if f && f[ /^[\-]/ ]
-    # Filenames starting with hyphen may be misinterpreted
-    # as command line options in some programs, even if they're
-    # quoted, so add "./" to avoid this
-   return "'./"+(f.gsub(/([\x27])/){ Regexp.last_match(1)+"\\"+Regexp.last_match(1)+Regexp.last_match(1) })+"'"
-  elsif f && f[ /[\'\s\,\;\&]|^[\-\/]/ ]
-   return "'"+(f.gsub(/([\x27])/){ Regexp.last_match(1)+"\\"+Regexp.last_match(1)+Regexp.last_match(1) })+"'"
-  elsif !f || f.length==0
-   return "''"
+  return "''" if !f || f.length==0
+  if f.include?("'") || f[ /^[\-]/ ]
+   return f.gsub( /([\'\s\,\;\&\(\)\[\]\|\"\$\\\#\*\?<>\,\;\|]|^[\-\/])/ ){ "\\"+$1 }
+  end
+  if f[ /[\s\(\)\$\\\#\&\*\?<>\,\;\|]/ ]
+   return "'"+f+"'"
   else
    return f
   end
 end
 
-# Quotes a filename to appear in a command line argument.
-# Uses double quotes on Windows and single quotes elsewhere
+# Escapes a filename to appear in a command line argument.
+# Uses double quotes on Windows.
 def fq(f)
  if !iswin32()
    return ufq(f)
@@ -789,7 +801,7 @@ def utf8write(str,f)
   begin
    begin
     ff=File.open(f,"wb:utf-8")
-   rescue Errno::EACCES
+   rescue Errno::EACCES, Errno::EPERM
     return
    end
    ff.write(str) if ff
@@ -819,19 +831,14 @@ def makesafefn(x)
   return (x||"_").gsub(/[^A-Za-z0-9_\.\-&,\'\! ]/,"_")
 end
 
-def tmpfolder()
- return (ENV["TMP"]||ENV["TEMP"]||"/tmp").gsub(/\\/,"/")
+def cachefolder()
+ cache=Dir.home()+"/.cache"
+ return FileTest.directory?(cache) ? cache : Dir.tmpdir()
 end
 
 def normalizeLines(x)
   return x if !x || x.length==0 # do nothing if string is nil or empty
-  x=x.gsub(/[ \t]+(?=[\r\n]|\z)/,"") # trim spaces at end of line
-  x=x.gsub(/\r*\n(\r*\n)+/,"\n\n") # collapse three or more blank lines to two
-  x=x.gsub(/\r*\n/,"\n") # normalize line endings
-  x=x.gsub(/\A\s*/,"") # Ensure no leading spaces at start of file
-  x=x.gsub(/\s+\z/,"") # Ensure no other trailing spaces at end of file
-  x+="\n" # Ensure newline at end of file
-  return x
+  return normalizeLinesNoTrailing(x)+"\n"
 end
 
 def normalizeLinesNoTrailing(x)
@@ -848,22 +855,18 @@ def sha1hash(f)
   return Digest::SHA1.new.update(f).hexdigest
 end
 
+# Gets an unused filename in the temporary
+# folder, whose name is based on the given filename,
+# and starts a block returning that name.  When
+# the block returns, deletes the file with that name.
 def tmppath(file)
-  ret=getFreeFile(tmpfolder()+"/"+file)
+  ret=getFreeFile(Dir.tmpdir()+"/"+file)
   if block_given?
     begin
       yield(ret)
     ensure
       tryDelete(ret)
     end
-  end
-  return ret
-end
-
-def homepath()
-  ret=(ENV["HOME"]||ENV["HOMEPATH"]).gsub(/\\/,"/")
-  if !ret[/^[A-Z]\:/]
-    ret=(ENV["HOMEDRIVE"]||"")+ret
   end
   return ret
 end
@@ -1069,4 +1072,30 @@ def getDataFromCache(file,cache)
   retval=olddata[0]
  end
  return retval
+end
+
+######################
+#
+#   Deprecated methods
+#
+
+# Deprecated; use "map" instead
+module Enumerable
+  def transform # Converts each item in the enumerable, taking the item as the argument
+    ret=[]
+    self.each{|item| ret.push(yield(item)) }
+    return ret # Returns a new array
+  end
+end
+# Deprecated
+def endsWith?(s,suffix); return s && s.endsWith?(suffix); end
+# Deprecated
+def endsWithIgnoreCase?(s,suffix); return s && s.endsWithIgnoreCase?(suffix); end
+# Deprecated
+def homepath(); return Dir.home(); end
+# Deprecated
+def tmpfolder(); return Dir.tmpdir(); end
+# Deprecated; use idiom (File.size(f) rescue 0) instead
+def fsize(f)
+ return FileTest.exist?(f) ? (FileTest.size(f) rescue 0) : 0
 end
