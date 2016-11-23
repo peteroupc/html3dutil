@@ -141,7 +141,7 @@ Here are details on some of the `Shape` class&#39;s methods.
 
 ### The Render Loop <a id=The_Render_Loop></a>
 
-An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the `H3DU.Scene3D.render()` method, passing a batch of shapes to render. Render loops are created using the `H3DU.GLUtil.renderLoop()` method. Here is an example of a render loop.
+An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the `H3DU.Scene3D.render()` method, passing a batch of shapes to render. Render loops are created using the `H3DU.renderLoop()` method. Here is an example of a render loop.
 
    // Set up the render loop
    H3DU.renderLoop(function(time){
@@ -297,8 +297,8 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
      H3DU.renderLoop(function(time){
       // Update the shape's rotation
       var q=H3DU.Math.quatFromTaitBryan(
-        360*GLUtil.getTimePosition(timer,time,6000),
-        360*GLUtil.getTimePosition(timer,time,12000),
+        360*H3DU.getTimePosition(timer,time,6000),
+        360*H3DU.getTimePosition(timer,time,12000),
         0
       );
       shape.setQuaternion(q);

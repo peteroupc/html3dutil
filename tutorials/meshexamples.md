@@ -12,12 +12,12 @@ This method creates a thin line-like 3D object.
     // thickness - thickness of the line in units, default 1
     function create3DLine(point1,point2,thickness){
       if(thickness==null)thickness=1
-      var vector=GLMath.vec3sub(point1,point2);
-      var dist=GLMath.vec3length(vector);
-      var normVector=GLMath.vec3norm(vector);
-      var midPoint=GLMath.vec3lerp(point1,point2,0.5);
-      var line=Meshes.createCapsule(thickness/2,dist,6,4);
-      var matrix=GLMath.quatToMat4(GLMath.quatFromVectors([0,0,1],normVector));
+      var vector=H3DU.Math.vec3sub(point1,point2);
+      var dist=H3DU.Math.vec3length(vector);
+      var normVector=H3DU.Math.vec3norm(vector);
+      var midPoint=H3DU.Math.vec3lerp(point1,point2,0.5);
+      var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
+      var matrix=H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0,0,1],normVector));
       matrix[12]=midPoint[0]
       matrix[13]=midPoint[1]
       matrix[14]=midPoint[2]
@@ -31,7 +31,7 @@ This method creates a cone that's closed at its base.
 ![Image of a cone](mesh1.png)
 
     function createClosedCone(radius,height,slices){
-      return Meshes.createClosedCylinder(radius,0,height,slices,1);
+      return H3DU.Meshes.createClosedCylinder(radius,0,height,slices,1);
     }
 
 ## Floor <a id=Floor></a>
@@ -61,7 +61,7 @@ This method creates a flat tiled floor.
       for(var x=0;x<tilesX;x++){
        var endX=(x==tilesX-1) ? lastX : 1.0
        var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-       mesh.mode(Mesh.TRIANGLE_STRIP)
+       mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
          .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
          .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
          .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
@@ -89,7 +89,7 @@ This method creates a ring or disk striped in two colors.
      var sweep=360.0/sections;
      for(var i=0;i<sections;i++){
       var angle=360.0*(i*1.0/sections);
-      var mesh=Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
+      var mesh=H3DU.Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
          .setColor3(firstColor ? color1 : color2)
       firstColor=!firstColor
       ret.merge(mesh);
@@ -104,12 +104,12 @@ This method creates a washer-shaped 3D model.
 ![Image of a washer](mesh3.png)
 
     function createWasher(inner,outer,height,slices){
-      var innerCylinder=Meshes.createCylinder(inner,inner,height,slices,1,false,true);
-      var outerCylinder=Meshes.createCylinder(outer,outer,height,slices,1,false,false);
-      var base=Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
-      var top=Meshes.createDisk(inner,outer,slices,2,false);
+      var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
+      var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);
+      var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
+      var top=H3DU.Meshes.createDisk(inner,outer,slices,2,false);
       // move the top disk to the top of the cylinder
-      top.transform(GLMath.mat4translated(0,0,height));
+      top.transform(H3DU.Math.mat4translated(0,0,height));
       // merge the base and the top
       return innerCylinder.merge(outerCylinder).merge(base).merge(top);
     }
@@ -118,7 +118,7 @@ This method creates a washer-shaped 3D model.
 
     function extrudePath(path, zStart, zEnd, flatness){
      var lines=path.getLines(flatness)
-     var mesh=new Mesh().mode(Mesh.TRIANGLES)
+     var mesh=new Mesh().mode(H3DU.Mesh.TRIANGLES)
      var z1=Math.min(zStart,zEnd)
      var z2=Math.max(zStart,zEnd)
      for(var i=0;i<lines.length;i++){
@@ -137,7 +137,7 @@ This method creates a washer-shaped 3D model.
     function createPathDisk(path, z, flatness){
      if(z==null)z=0
      var tris=path.getTriangles(flatness);
-     var mesh=new Mesh().mode(Mesh.TRIANGLES)
+     var mesh=new Mesh().mode(H3DU.Mesh.TRIANGLES)
        .normal3(0,0,1);
      for(var i=0;i<tris.length;i++){
       var tri=tris[i]

@@ -145,7 +145,7 @@ you can specify the mesh's shape by calling methods that give each vertex's posi
 (1) Call the `mode()` method and choose a primitive mode, such as `Mesh.TRIANGLES`
 or `Mesh.QUAD_STRIP`:
 
-    mesh.mode(Mesh.TRIANGLES);
+    mesh.mode(H3DU.Mesh.TRIANGLES);
 
 The mesh will build up the shape from the vertices you give it depending on the mesh's
 primitive mode.  For example, `QUAD_STRIP` defines a strip of connecting quadrilaterals,
@@ -188,7 +188,7 @@ were given:
 You can also call the `mode()` method any time to change the primitive mode, even to
 the same mode.  What this does is reset the state of the primitive so that future vertices
 won't depend on previous vertices.  For example, if you define a `TRIANGLE_FAN`, and
-you call `mesh.mode(Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
+you call `mesh.mode(H3DU.Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
 "disconnected" from the previous one as far as the mesh object is concerned.
 
 ### Transforming the Mesh <a id=Transforming_the_Mesh></a>
@@ -199,7 +199,7 @@ all the vertices in the mesh with a [4x4 matrix]{@tutorial glmath}.  The
 this method to adjust some of the meshes to make them look better on the screen.
 Example:
 
-    var matrix = GLMath.mat4scaled(2,2,2);
+    var matrix = H3DU.Math.mat4scaled(2,2,2);
     // Use the transform to double the mesh's size
     mesh = mesh.transform(matrix);
 
@@ -269,10 +269,10 @@ Examples for setting appearance:
     // set material parameters: ambient, diffuse,
     // specular, shininess (NOTE: if the mesh defines its own colors they
     // will override ambient and diffuse reflection given below)
-    shape.setMaterial(new Material("blue","blue","white",30));
+    shape.setMaterial(new H3DU.Material("blue","blue","white",30));
     // set material parameters: ambient, diffuse,
     // specular, shininess, emission
-    shape.setMaterial(new Material("lime","lime","white",30,[0.2,0.2,0.2]));
+    shape.setMaterial(new H3DU.Material("lime","lime","white",30,[0.2,0.2,0.2]));
     // set a texture; this requires the mesh to have texture
     // coordinates assigned to each vertex
     shape.setMaterial(new TextureMaterial("texture.png"));
@@ -286,9 +286,9 @@ Examples for setting position:
     shape.setPosition([2,4,5]);
     // rotate the shape 40 units about X axis, 20 units about Y axis,
     // and 50 units about Z axis
-    shape.setQuaternion(GLMath.quatFromTaitBryan(40,20,50));
+    shape.setQuaternion(H3DU.Math.quatFromTaitBryan(40,20,50));
     // rotate the shape 20 units about Y axis
-    shape.setQuaternion(GLMath.quatFromAxisAngle(20,0,1,0));
+    shape.setQuaternion(H3DU.Math.quatFromAxisAngle(20,0,1,0));
     // scale the shape by 2x in all axes
     shape.setScale(2,2,2);
     // same, but passing an array

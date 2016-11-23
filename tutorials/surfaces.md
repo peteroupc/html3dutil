@@ -69,7 +69,7 @@ The comments explain how `makeMesh` works in detail.
        evaluate:function(u,v){ return [1-u,v,u]; }
       }
      // generate the parametric surface.
-     var ev=new SurfaceEval()
+     var ev=new H3DU.SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
@@ -83,7 +83,7 @@ The comments explain how `makeMesh` works in detail.
     // Instead of Mesh.TRIANGLES, we could use
     // Mesh.LINES to create a wireframe mesh,
     // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
+      .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,resolution);
     // Surface generated, return the mesh
     return mesh;
     }
@@ -242,7 +242,7 @@ the circle example above.
       var ev=new H3DU.CurveEval()
       .vertex(evaluator)
        // Evaluate the curve, using 100 lines
-      .evalCurve(mesh,Mesh.LINES,100);
+      .evalCurve(mesh,H3DU.Mesh.LINES,100);
 
 ## Curve Evaluators in the HTML 3D Library <a id=Curve_Evaluators_in_the_HTML_3D_Library></a>
 

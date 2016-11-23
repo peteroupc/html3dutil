@@ -36,36 +36,36 @@ Functions dealing with matrices begin with "mat".
 
 A translation is a shifting of an object's position.
 
-To create a translation matrix, use [GLMath.mat4translated()]{@link glmath.GLMath.mat4translated},
+To create a translation matrix, use [H3DU.Math.mat4translated()]{@link glmath.H3DU.Math.mat4translated},
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.
 
 To multiply an existing matrix by a translation, use
-[GLMath.mat4translate()]{@link glmath.GLMath.mat4translate}.  This will put the translation
+[H3DU.Math.mat4translate()]{@link glmath.H3DU.Math.mat4translate}.  This will put the translation
 before the other transformations.
 
 ### Scaling <a id=Scaling></a>
 
 Scaling changes an object's size.
 
-To create a scaling matrix, use [GLMath.mat4scaled()]{@link glmath.GLMath.mat4scaled},
+To create a scaling matrix, use [H3DU.Math.mat4scaled()]{@link glmath.H3DU.Math.mat4scaled},
 and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
 factors to change the object's size.  For example, a Y-factor of 2 doubles an object's height.
 
 To multiply an existing matrix by a scaling, use
-[GLMath.mat4scale()]{@link glmath.GLMath.mat4scale}.  This will put the scaling
+[H3DU.Math.mat4scale()]{@link glmath.H3DU.Math.mat4scale}.  This will put the scaling
 before the other transformations.
 
 ### Rotation <a id=Rotation></a>
 
 Rotation changes an object's orientation.
 
-To create a rotation matrix, use [GLMath.mat4rotated()]{@link glmath.GLMath.mat4rotated},
+To create a rotation matrix, use [H3DU.Math.mat4rotated()]{@link glmath.H3DU.Math.mat4rotated},
 and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
 origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
 
 To multiply an existing matrix by a rotation, use
-[GLMath.mat4rotate()]{@link glmath.GLMath.mat4rotate}.  This will put the rotation
+[H3DU.Math.mat4rotate()]{@link glmath.H3DU.Math.mat4rotate}.  This will put the rotation
 before the other transformations.
 
 ### Combining Transforms <a id=Combining_Transforms></a>
@@ -74,7 +74,7 @@ The order in which you do transforms is important.  In general, scaling then tra
 not the same as translating then scaling.  Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:
 
-* Call `GLMath.mat4identity()`, creating a matrix without a transformation.
+* Call `H3DU.Math.mat4identity()`, creating a matrix without a transformation.
 * Do your translations if needed, using `mat4translate()`.
 * Do your rotations if needed, using `mat4rotate()`.
 * Do your scalings if needed, using `mat4scale()`.
@@ -82,7 +82,7 @@ not the same as translating then scaling.  Assuming your geometry is centered at
 This way, the scalings and rotations will affect the object while it's still centered, and
 before the translations (shifts) take place.
 
-You can also multiply transforms using [GLMath.mat4multiply()]{@link glmath.GLMath.mat4multiply}.
+You can also multiply transforms using [H3DU.Math.mat4multiply()]{@link glmath.H3DU.Math.mat4multiply}.
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.
 
@@ -143,9 +143,9 @@ axis), so that a rotation along that axis will do nothing.
 
 Related functions:
 
-* [GLMath.quatFromTaitBryan()]{@link glmath.GLMath.quatFromTaitBryan} -
+* [H3DU.Math.quatFromTaitBryan()]{@link glmath.H3DU.Math.quatFromTaitBryan} -
 Converts from Tait-Bryan angles to a quaternion
-* [GLMath.quatToTaitBryan()]{@link glmath.GLMath.quatToTaitBryan} -
+* [H3DU.Math.quatToTaitBryan()]{@link glmath.H3DU.Math.quatToTaitBryan} -
 Converts from a quaternion to Tait-Bryan angles
 
 ## Planes <a id=Planes></a>
@@ -166,7 +166,7 @@ A 4-element array can describe a 3D plane in the following manner:
 
 There is one method that deals with planes:
 
-* [GLMath.planeNormInPlace()]{@link glmath.GLMath.planeNormInPlace} -
+* [H3DU.Math.planeNormInPlace()]{@link glmath.H3DU.Math.planeNormInPlace} -
 Converts the plane to a form in which its normal is unit length.
 
 ## Coordinate Systems <a id=Coordinate_Systems></a>

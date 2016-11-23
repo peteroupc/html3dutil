@@ -18,11 +18,11 @@ waiting for the texture to finish loading.
 In the sample code below, the variable `textureURL` is the URL of the texture to load.
 
 ```
-  var loader=new TextureLoader();
+  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexture(textureURL, scene).then(function(tex){
     // texture is loaded, the Texture object is in the "tex" parameter
     // Now create a sphere
-    var mesh=Meshes.createSphere(1);
+    var mesh=H3DU.Meshes.createSphere(1);
     // Make a shape using the texture
     var shape=new Shape(mesh).setTexture(texture);
   }, function(error){
@@ -35,7 +35,7 @@ In the sample code below, the variable `textureURL` is the URL of the texture to
 The variables `textureURL1` and `textureURL2` are URL textures.
 
 ```
-  var loader=new TextureLoader();
+  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexturesAll([
    textureURL1,
    textureURL2

@@ -56,7 +56,9 @@ if((this.format&H3DU.Mesh.LINES_BIT)!==0)
    return this.facesLength;
   return Math.floor(this.facesLength/3);
 };
-
+/**
+ * Not documented yet.
+ */
 H3DU.MeshBuffer.prototype.getBounds=function(){
  "use strict";
  if(!this._bounds){
