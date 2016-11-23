@@ -7,14 +7,8 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 /* global H3DU.Math, H3DU */
-/** @private */
-H3DU.SubMesh=function(vertices,faces,format){
- "use strict";
-this._initialize(vertices,faces,format);
-};
-
 /**
-* Specifies the triangles, lines, and points that make up a geometric shape.
+* Specifies the triangles, lines, or points that make up a geometric shape.
 * Each vertex, that is, each point, each end of a line, and each corner
 * of a triangle, can also specify the following attributes:
 * <ul>
@@ -31,6 +25,9 @@ this._initialize(vertices,faces,format);
 * For bump mapping to work properly, a mesh needs to define
 * normals, tangents, bitangents, and texture coordinates.<p>
 * See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
+* <p>NOTE: Previous versions of this class allowed meshes to contain more than one
+* primitive type (triangles, lines, and points are the primitive types).  This is
+* no longer the case, to simplify the implementation.
 * @class
 * @alias H3DU.Mesh
 * @param {Array<Number>} [vertices] An array that contains data on each
@@ -53,13 +50,7 @@ this._initialize(vertices,faces,format);
 */
 H3DU.Mesh = function(vertices,indices,format){
  "use strict";
-if((vertices!==null && typeof vertices!=="undefined")){
-  this.subMeshes=[
-   new H3DU.SubMesh(vertices,indices,format)
-  ];
- } else {
-  this.subMeshes=[];
- }
+ this._initialize(vertices,faces,format);
  this._elementsDefined=0;
  this.currentMode=-1;
  this.normal=[0,0,0];
@@ -213,31 +204,37 @@ var normDir=(inward) ? -1 : 1;
  * The primitive type can be set to the same mode, in which
  * case future vertices given will not build upon previous
  * vertices.<p>
- * Note that an H3DU.Mesh object can contain primitives of different
+ * An H3DU.Mesh object can contain primitives of different
  * types, such as triangles and lines.  For example, it's allowed
  * to have a mesh with triangles, then call this method, say,
  * with <code>H3DU.Mesh.LINE_STRIP</code> to add line segments
- * to that mesh.
+ * to that mesh.  However, this functionality may be deprecated
+ * in future versions.
  * @param {Number} m A primitive type.  One of the following:
  * H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP,
  * H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP.
+ * Throws an error if the primitive type is incompatible with the
+ * current primitive type (for example, a triangle type with LINE_STRIP).
  * @returns {H3DU.Mesh} This object.
  */
 H3DU.Mesh.prototype.mode=function(m){
  "use strict";
-if(m<0)throw new Error("invalid mode");
- if(this.currentMode===-1 ||
-   !H3DU.Mesh._isCompatibleMode(this.currentMode,m)){
+ // TODO: Include in release notes that Meshes must use
+ // the same primitive type
+ if(m<0)throw new Error("invalid mode");
+ if(this.currentMode===-1){
    var format=0;
    var primtype=H3DU.Mesh._primitiveType(m);
    if(primtype===H3DU.Mesh.LINES)
     format|=H3DU.Mesh.LINES_BIT;
    else if(primtype===H3DU.Mesh.POINTS)
     format|=H3DU.Mesh.POINTS_BIT;
-   this.subMeshes.push(new H3DU.SubMesh([],[],format));
+   this._initialize([],[],format);
    this.currentMode=m;
+ } else if(   !H3DU.Mesh._isCompatibleMode(this.currentMode,m)) {
+   throw new Error("Storing a different primitive mode in this mesh is no longer supported")
  } else {
-   this.subMeshes[this.subMeshes.length-1].newPrimitive();
+   this.newPrimitive();
    this.currentMode=m;
  }
  return this;
@@ -251,45 +248,28 @@ if(m<0)throw new Error("invalid mode");
  * will not build upon previous vertices.
  * @param {H3DU.Mesh} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
+ * Throws an error if this mesh's primitive type is incompatible with the
+ * the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
  * @returns {H3DU.Mesh} This object.
  * @example
  * // Use the following idiom to make a copy of a geometric mesh:
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  */
 H3DU.Mesh.prototype.merge=function(other){
- "use strict";
-var lastMesh=this.subMeshes[this.subMeshes.length-1];
- var prim=lastMesh ? (lastMesh.attributeBits&H3DU.Mesh.PRIMITIVES_BITS) : 0;
- for(var i=0;i<other.subMeshes.length;i++){
-  var sm=other.subMeshes[i];
-  if(sm.indices.length===0)continue;
-  if(!lastMesh ||
-     (sm.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==prim ||
-     (lastMesh.vertices.length+sm.vertices.length)>65535*3 ||
-     lastMesh.attributeBits!==sm.attributeBits){
-   // Add new submesh because its primitive type
-   // differs from the last submesh or the combined
-   // submesh would be too long, or the attribute bits
-   // don't match between this submesh and the last
-   lastMesh=new H3DU.SubMesh(
-    sm.vertices.slice(0,sm.vertices.length),
-    sm.indices.slice(0,sm.indices.length),
-    sm.attributeBits);
-   this.subMeshes.push(lastMesh);
-   prim=(lastMesh.attributeBits&H3DU.Mesh.PRIMITIVES_BITS);
-  } else {
-   // Add to existing submesh
-   var oldVertexLength=lastMesh.vertexCount();
-   var oldIndexLength=lastMesh.indices.length;
-   lastMesh.vertices.push.apply(lastMesh.vertices,sm.vertices);
-   lastMesh.indices.push.apply(lastMesh.indices,sm.indices);
-   for(i=oldIndexLength;i<lastMesh.indices.length;i++){
-    lastMesh.indices[i]+=oldVertexLength;
-   }
+ "use strict"; 
+  if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)){
+    throw new Error("Meshes have incompatible types")
   }
- }
- // Reset the primitive
- lastMesh.newPrimitive();
+  // TODO: Won't work if meshes have different attributes
+  var oldVertexLength=this.vertexCount();
+   var oldIndexLength=this.indices.length;
+   this.vertices.push.apply(this.vertices,sm.vertices);
+   this.indices.push.apply(this.indices,sm.indices);
+   for(i=oldIndexLength;i<this.indices.length;i++){
+    this.indices[i]+=oldVertexLength;
+   }
+  // Reset the primitive
+  this.newPrimitive();
  return this;
 };
 
@@ -388,24 +368,7 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   this._elementsDefined|=H3DU.Mesh.BITANGENTS_BIT;
   return this;
 };
- /**
-  * Transforms the positions and normals of all the vertices currently
-  * in this mesh, using a 4x4 matrix.  The matrix won't affect
-  * vertices added afterwards. Also, resets the primitive
-  * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
-  * will not build upon previous vertices. Future vertices should not be
-  * added after calling this method without calling mode() first.
-  * @param {Array<Number>} matrix A 4x4 matrix describing
-  * the transformation.
-  * @returns {H3DU.Mesh} This object.
-  */
- H3DU.Mesh.prototype.transform=function(matrix){
-  "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-   this.subMeshes[i].transform(matrix);
-  }
-  return this;
- };
+
  /**
   * Sets the current color for this mesh.  Future vertex positions
   * defined (with vertex3()) will have this color. The new current
@@ -487,17 +450,13 @@ if(typeof u==="number" && typeof v==="number"){
   */
  H3DU.Mesh.prototype.vertex3=function(x,y,z){
   "use strict";
-if(this.subMeshes.length===0){
-   this.subMeshes.push(new H3DU.SubMesh());
-  }
-  var lastSubmesh=this.subMeshes[this.subMeshes.length-1];
   if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
    if(typeof x!=="number")
-    lastSubmesh.vertex3(x[0],x[1],x[2],this);
+    this._vertex3(x[0],x[1],x[2],this);
    else
-    lastSubmesh.vertex3(x,x,x,this);
+    this._vertex3(x,x,x,this);
   } else {
-   lastSubmesh.vertex3(x,y,z,this);
+   this._vertex3(x,y,z,this);
   }
   return this;
  };
@@ -548,54 +507,19 @@ var rr=r;
    gg=c[1];
    bb=c[2];
   }
-  for(var i=0;i<this.subMeshes.length;i++){
-    this.subMeshes[i].setColor3(rr,gg,bb);
+  this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
+  var stride=this.getStride();
+  var colorOffset=H3DU.Mesh._colorOffset(this.attributeBits);
+  for(var i=colorOffset;i<this.vertices.length;i+=stride){
+    this.vertices[i]=r;
+    this.vertices[i+1]=g;
+    this.vertices[i+2]=b;
   }
   return this;
 };
- /**
-  * Recalculates the tangent vectors for triangles
-  * in this mesh.  Tangent vectors are required for
-  * normal mapping (bump mapping) to work.
-  * This method only affects those parts of the mesh
-  * that define normals and texture coordinates.
-  * @returns {H3DU.Mesh} This object.
-  */
- H3DU.Mesh.prototype.recalcTangents=function(){
-  "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-   if(this.subMeshes[i].primitiveType()===H3DU.Mesh.TRIANGLES){
-    this.subMeshes[i].recalcTangents();
-   }
-  }
-  return this;
- };
 
-/**
-  * Recalculates the normal vectors for triangles
-  * in this mesh.  For this to properly affect shading, each triangle in
-  * the mesh must have its vertices defined in
-  * counterclockwise order.  Each normal calculated will
-  * be normalized to unit length (unless the normal is (0,0,0)).
-  * @param {Boolean} flat If true, each triangle in the mesh
-  * will have the same normal, which usually leads to a flat
-  * appearance.  If false, each unique vertex in the mesh
-  * will have its own normal, which usually leads to a smooth
-  * appearance.
-  * @param {Boolean} inward If true, the generated normals
-  * will point inward; otherwise, outward.
-  * @returns {H3DU.Mesh} This object.
-  */
- H3DU.Mesh.prototype.recalcNormals=function(flat,inward){
-  "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-   var primtype=this.subMeshes[i].primitiveType();
-   if(primtype!==H3DU.Mesh.POINTS && primtype!==H3DU.Mesh.LINES){
-    this.subMeshes[i].recalcNormals(flat,inward);
-   }
-  }
-  return this;
- };
+
+
 /**
  * Modifies this mesh by normalizing the normals it defines
  * to unit length.
@@ -603,11 +527,10 @@ for(var i=0;i<this.subMeshes.length;i++){
  */
 H3DU.Mesh.prototype.normalizeNormals=function(){
   "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-   var stride=this.subMeshes[i].getStride();
-   var vertices=this.subMeshes[i].vertices;
+   var stride=this.getStride();
+   var vertices=this.vertices;
    var normalOffset=H3DU.Mesh._normalOffset(
-     this.subMeshes[i].attributeBits);
+     this.attributeBits);
    if(normalOffset<0)continue;
    for(i=0;i<vertices.length;i+=stride){
     var x=vertices[i+normalOffset];
@@ -621,26 +544,9 @@ for(var i=0;i<this.subMeshes.length;i++){
       vertices[i+normalOffset+2]*=len;
     }
    }
-  }
   return this;
  };
-/**
- * Converts this mesh to a new mesh with triangles converted
- * to line segments.  The new mesh will reuse the vertices
- * contained in this one without copying the vertices.  Parts
- * of the mesh consisting of points or line segments will remain
- * unchanged.
- * @returns {H3DU.Mesh} A new mesh with triangles converted
- * to lines.
- */
-H3DU.Mesh.prototype.toWireFrame=function(){
-  "use strict";
-var mesh=new H3DU.Mesh();
-  for(var i=0;i<this.subMeshes.length;i++){
-   mesh.subMeshes.push(this.subMeshes[i].toWireFrame());
-  }
-  return mesh;
-};
+
 /**
  * Sets the X, Y, and Z coordinates of the vertex with the
  * given index.  Has no effect if the index is less than 0 or
@@ -668,20 +574,13 @@ if(index<0)return this;
    z=x[2];
    x=x[0];
   }
-  var count=0;
-  for(var i=0;i<this.subMeshes.length;i++){
-   var subMesh=this.subMeshes[i];
-   var c=subMesh.vertexCount();
-   var newcount=count+c;
-   if(index<newcount){
-    var idx=index-count;
-    idx*=subMesh.getStride();
-    subMesh.vertices[idx]=x;
-    subMesh.vertices[idx+1]=y;
-    subMesh.vertices[idx+2]=z;
-    break;
-   }
-   count=newcount;
+  var c=this.vertexCount();
+  if(index<c){
+    var idx=index;
+    index*=this.getStride();
+    this.vertices[index]=x;
+    this.vertices[index+1]=y;
+    this.vertices[index+2]=z;
   }
   return this;
 };
@@ -706,31 +605,26 @@ if(index<0)return this;
  */
 H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z){
   "use strict";
-if(index<0)return this;
+  if(index<0)return this;
   var count=0;
   if(typeof y==="undefined" && typeof z==="undefined"){
    y=x[1];
    z=x[2];
    x=x[0];
   }
-  for(var i=0;i<this.subMeshes.length;i++){
-   var subMesh=this.subMeshes[i];
-   var c=subMesh.vertexCount();
-   var newcount=count+c;
-   if(index<newcount){
-    var idx=index-count;
-    subMesh._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
-    idx*=subMesh.getStride();
-    idx+=H3DU.Mesh._normalOffset(subMesh.attributeBits);
-    subMesh.vertices[idx]=x;
-    subMesh.vertices[idx+1]=y;
-    subMesh.vertices[idx+2]=z;
-    break;
-   }
-   count=newcount;
+  var c=this.vertexCount();
+  if(index<c){
+    var idx=index;
+    this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
+    index*=this.getStride();
+    index+=H3DU.Mesh._normalOffset(this.attributeBits);
+    this.vertices[index]=x;
+    this.vertices[index+1]=y;
+    this.vertices[index+2]=z;
   }
   return this;
 };
+
 /**
  * Gets the position of the vertex with the given
  * index in this mesh.
@@ -747,17 +641,15 @@ if(index<0)return this;
 H3DU.Mesh.prototype.getVertex=function(index){
   "use strict";
 if(index<0)return null;
-  var count=0;
-  for(var i=0;i<this.subMeshes.length;i++){
-   var subMesh=this.subMeshes[i];
-   var c=subMesh.vertexCount();
-   var newcount=count+c;
-   if(index<newcount){
-    var idx=index-count;
-    idx*=subMesh.getStride();
-    return subMesh.vertices.slice(idx,idx+3);
-   }
-   count=newcount;
+  var c=this.vertexCount();
+  if(index<c){
+    var idx=index;
+    this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
+    index*=this.getStride();
+    return this.vertices.slice(idx,idx+3);
+    this.vertices[index]=x;
+    this.vertices[index+1]=y;
+    this.vertices[index+2]=z;
   }
   return null;
 };
@@ -778,51 +670,22 @@ if(index<0)return null;
  */
 H3DU.Mesh.prototype.getVertexNormal=function(index){
   "use strict";
-var count=0;
-  for(var i=0;i<this.subMeshes.length;i++){
-   var subMesh=this.subMeshes[i];
-   var c=subMesh.vertexCount();
-   var newcount=count+c;
-   if(index<newcount){
-    if((subMesh.attributeBits&H3DU.Mesh.NORMALS_BIT)!==0){
-     var idx=index-count;
-     idx*=subMesh.getStride();
-     idx+=H3DU.Mesh._normalOffset(subMesh.attributeBits);
-     return subMesh.vertices.slice(idx,idx+3);
-    } else {
-     return [0,0,0];
-    }
-   }
-   count=newcount;
+  var c=this.vertexCount();
+  if(index<c){
+    var idx=index;
+    this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
+    index*=this.getStride();
+    index+=H3DU.Mesh._normalOffset(this.attributeBits);
+    return this.vertices.slice(idx,idx+3);
+    this.vertices[index]=x;
+    this.vertices[index+1]=y;
+    this.vertices[index+2]=z;
   }
   return null;
 };
-/**
- * Gets the number of vertices included in this mesh.
- * @returns {Number} Return value. */
-H3DU.Mesh.prototype.vertexCount=function(){
-  "use strict";
-var count=0;
-  for(var i=0;i<this.subMeshes.length;i++){
-   count+=this.subMeshes[i].vertexCount();
-  }
-  return count;
-};
-/**
- * Gets the number of primitives (triangles, lines,
-* and points) composed by all shapes in this mesh.
- * @returns {Number} Return value. */
-H3DU.Mesh.prototype.primitiveCount=function(){
-  "use strict";
-var count=0;
-  for(var i=0;i<this.subMeshes.length;i++){
-   count+=this.subMeshes[i].primitiveCount();
-  }
-  return count;
-};
 
 /** @private */
-H3DU.SubMesh.prototype._initialize=function(vertices,faces,format){
+H3DU.Mesh.prototype._initialize=function(vertices,faces,format){
  "use strict";
 this.vertices=vertices||[];
  this.indices=faces||[];
@@ -832,12 +695,16 @@ this.vertices=vertices||[];
   throw new Error("invalid format");
  }
  this.attributeBits=((format===null || typeof format==="undefined")) ? 0 : format;
- this.vertexCount=function(){
+ /**
+ * Gets the number of vertices included in this mesh.
+ * @returns {Number} Return value. */
+  this.vertexCount=function(){
   return this.vertices.length/this.getStride();
  };
  this.getStride=function(){
   return H3DU.Mesh._getStride(this.attributeBits);
  };
+ /** @private */
  this.newPrimitive=function(m){
   this.startIndex=this.vertices.length;
   return this;
@@ -967,26 +834,26 @@ this.vertices=vertices||[];
     this.indices.push(i1,i2,i3);
    }
  };
- this.vertex3=function(x,y,z,state){
-  var currentMode=state.currentMode;
+ this._vertex3=function(x,y,z,state){
+  var currentMode=this.currentMode;
   if(currentMode===-1)throw new Error("mode() not called");
-  this._rebuildVertices(state._elementsDefined);
+  this._rebuildVertices(this._elementsDefined);
    var vertexStartIndex=this.vertices.length;
   this.vertices.push(x,y,z);
   if((this.attributeBits&H3DU.Mesh.NORMALS_BIT)!==0){
-   this.vertices.push(state.normal[0],state.normal[1],state.normal[2]);
+   this.vertices.push(this.normal[0],this.normal[1],this.normal[2]);
   }
   if((this.attributeBits&H3DU.Mesh.COLORS_BIT)!==0){
-   this.vertices.push(state.color[0],state.color[1],state.color[2]);
+   this.vertices.push(this.color[0],this.color[1],this.color[2]);
   }
   if((this.attributeBits&H3DU.Mesh.TEXCOORDS_BIT)!==0){
-   this.vertices.push(state.texCoord[0],state.texCoord[1]);
+   this.vertices.push(this.texCoord[0],this.texCoord[1]);
   }
   if((this.attributeBits&H3DU.Mesh.TANGENTS_BIT)!==0){
-   this.vertices.push(state.tangent[0],state.tangent[1],state.tangent[2]);
+   this.vertices.push(this.tangent[0],this.tangent[1],this.tangent[2]);
   }
   if((this.attributeBits&H3DU.Mesh.BITANGENTS_BIT)!==0){
-   this.vertices.push(state.bitangent[0],state.bitangent[1],state.bitangent[2]);
+   this.vertices.push(this.bitangent[0],this.bitangent[1],this.bitangent[2]);
   }
   var stride=this.getStride();
   var index,firstIndex;
@@ -1036,7 +903,7 @@ this.vertices=vertices||[];
 };
 
 /** @private */
-H3DU.SubMesh.prototype.makeRedundant=function(){
+H3DU.Mesh.prototype._makeRedundant=function(){
   "use strict";
 var existingIndices=[];
   var stride=this.getStride();
@@ -1057,8 +924,10 @@ var existingIndices=[];
   return this;
 };
 /**
- * @private */
-H3DU.SubMesh.prototype.primitiveCount=function(){
+ * Gets the number of primitives (triangles, lines,
+* or points) composed by all shapes in this mesh.
+ * @returns {Number} Return value. */
+H3DU.Mesh.prototype.primitiveCount=function(){
   "use strict";
 if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)
    return Math.floor(this.indices.length/2);
@@ -1066,15 +935,8 @@ if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)
    return this.indices.length;
   return Math.floor(this.indices.length/3);
 };
-/** @private */
-H3DU.SubMesh.prototype.toWireFrame=function(){
-  "use strict";
-if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
-   // Not a triangle mesh
-   return this;
-  }
   // Adds a line only if it doesn't exist
-  function addLine(lineIndices,existingLines,f1,f2){
+H3DU.Mesh._addLine=function(lineIndices,existingLines,f1,f2){
    // Ensure ordering of the indices
    if(f1<f2){
     var tmp=f1;f1=f2;f2=tmp;
@@ -1089,6 +951,21 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
     existingLines[f1]=[f2];
     lineIndices.push(f1,f2);
    }
+  };
+/**
+ * Converts this mesh to a new mesh with triangles converted
+ * to line segments.  The new mesh will reuse the vertices
+ * contained in this one without copying the vertices.  Parts
+ * of the mesh consisting of points or line segments will remain
+ * unchanged.
+ * @returns {H3DU.Mesh} A new mesh with triangles converted
+ * to lines.
+ */
+H3DU.Mesh.prototype.toWireFrame=function(){
+  "use strict";
+if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
+   // Not a triangle mesh
+   return this;
   }
   var lineIndices=[];
   var existingLines={};
@@ -1096,27 +973,37 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
     var f1=this.indices[i];
     var f2=this.indices[i+1];
     var f3=this.indices[i+2];
-    addLine(lineIndices,existingLines,f1,f2);
-    addLine(lineIndices,existingLines,f2,f3);
-    addLine(lineIndices,existingLines,f3,f1);
+    H3DU.Mesh._addLine(lineIndices,existingLines,f1,f2);
+    H3DU.Mesh._addLine(lineIndices,existingLines,f2,f3);
+    H3DU.Mesh._addLine(lineIndices,existingLines,f3,f1);
   }
-  return new H3DU.SubMesh(this.vertices, lineIndices,
+  return new H3DU.Mesh(this.vertices, lineIndices,
     this.attributeBits|H3DU.Mesh.LINES_BIT);
 };
 
 /** @private */
-H3DU.SubMesh._isIdentityInUpperLeft=function(m){
+H3DU.Mesh._isIdentityInUpperLeft=function(m){
  "use strict";
 return (m[0] === 1 && m[1] === 0 && m[2] === 0 &&
     m[4] === 0 && m[5] === 1 && m[6] === 0 &&
     m[8] === 0 && m[9] === 0 && m[10] === 1) ? true : false;
 };
-/** @private */
-H3DU.SubMesh.prototype.transform=function(matrix){
+ /**
+  * Transforms the positions and normals of all the vertices currently
+  * in this mesh, using a 4x4 matrix.  The matrix won't affect
+  * vertices added afterwards. Also, resets the primitive
+  * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
+  * will not build upon previous vertices. Future vertices should not be
+  * added after calling this method without calling mode() first.
+  * @param {Array<Number>} matrix A 4x4 matrix describing
+  * the transformation.
+  * @returns {H3DU.Mesh} This object.
+  */
+H3DU.Mesh.prototype.transform=function(matrix){
   "use strict";
 var stride=this.getStride();
   var v=this.vertices;
-  var isNonTranslation=!H3DU.SubMesh._isIdentityInUpperLeft(matrix);
+  var isNonTranslation=!H3DU.Mesh._isIdentityInUpperLeft(matrix);
   var normalOffset=H3DU.Mesh._normalOffset(this.attributeBits);
   var matrixForNormals=null;
   if(normalOffset>=0 && isNonTranslation){
@@ -1129,7 +1016,7 @@ var stride=this.getStride();
     v[i+1]=xform[1];
     v[i+2]=xform[2];
     if(normalOffset>=0 && isNonTranslation){
-     // H3DU.Transform and normalize the normals
+     // Transform and normalize the normals
      // (using a modified matrix) to ensure
      // they point in the correct direction
      xform=H3DU.Math.mat3transform(matrixForNormals,
@@ -1144,29 +1031,6 @@ var stride=this.getStride();
   return this;
 };
 
-/**
-* Reverses the winding order of the triangles in this mesh
-* by swapping the second and third vertex indices of each one.
-* @returns {H3DU.Mesh} This object.
-* @example <caption>
-* The following code generates a mesh that survives face culling,
-* since the same triangles occur on each side of the mesh, but
-* with different winding orders.  This is useful when enabling
-* back-face culling and drawing open geometric shapes such as
-* those generated by H3DU.Meshes.createCylinder or H3DU.Meshes.createDisk.
-* Due to the z-fighting effect, drawing this kind of mesh is
-* recommended only if face culling is enabled.</caption>
-* var frontBackMesh = originalMesh.merge(
-*  new H3DU.Mesh().merge(originalMesh).reverseWinding()
-* );
-*/
-H3DU.Mesh.prototype.reverseWinding=function(){
-  "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-   this.subMeshes[i].reverseWinding();
-  }
-  return this;
-};
 /**
  * Enumerates the primitives (lines, triangles, and points) included
  * in this mesh.
@@ -1189,21 +1053,19 @@ for(var i=0;i<this.subMeshes.length;i++){
  */
 H3DU.Mesh.prototype.enumPrimitives=function(func){
  "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-  var sm=this.subMeshes[i];
-  var prim=sm.primitiveType();
-  var normals=H3DU.Mesh._normalOffset(sm.attributeBits);
-  var colors=H3DU.Mesh._colorOffset(sm.attributeBits);
-  var texcoords=H3DU.Mesh._texCoordOffset(sm.attributeBits);
-  var stride=sm.getStride();
-  var v=sm.vertices;
+  var prim=this.primitiveType();
+  var normals=H3DU.Mesh._normalOffset(this.attributeBits);
+  var colors=H3DU.Mesh._colorOffset(this.attributeBits);
+  var texcoords=H3DU.Mesh._texCoordOffset(this.attributeBits);
+  var stride=this.getStride();
+  var v=this.vertices;
   var primSize=3;
   if(prim===H3DU.Mesh.LINES)primSize=2;
   if(prim===H3DU.Mesh.POINTS)primSize=1;
-  for(var j=0;j<sm.indices.length;j+=primSize){
+  for(var j=0;j<this.indices.length;j+=primSize){
    var p=[];
    for(var k=0;k<primSize;k++){
-    var vi=sm.indices[j+k]*stride;
+    var vi=this.indices[j+k]*stride;
     var info={};
     info.position=[v[vi],v[vi+1],v[vi+2]];
     if(normals>=0)
@@ -1216,7 +1078,6 @@ for(var i=0;i<this.subMeshes.length;i++){
    }
    func(p);
   }
- }
  return this;
 };
 
@@ -1236,12 +1097,10 @@ H3DU.Mesh.prototype.getBoundingBox=function(){
  var empty=true;
  var inf=Number.POSITIVE_INFINITY;
  var ret=[inf,inf,inf,-inf,-inf,-inf];
- for(var i=0;i<this.subMeshes.length;i++){
-  var sm=this.subMeshes[i];
-  var stride=sm.getStride();
-  var v=sm.vertices;
-  for(var j=0;j<sm.indices.length;j++){
-    var vi=sm.indices[j]*stride;
+  var stride=this.getStride();
+  var v=this.vertices;
+  for(var j=0;j<this.indices.length;j++){
+    var vi=this.indices[j]*stride;
     if(empty){
      empty=false;
      ret[0]=ret[3]=v[vi];
@@ -1255,7 +1114,6 @@ H3DU.Mesh.prototype.getBoundingBox=function(){
      ret[2]=Math.min(ret[2],v[vi+2]);
      ret[5]=Math.max(ret[5],v[vi+2]);
     }
-  }
  }
  return ret;
 };
@@ -1342,9 +1200,19 @@ var vi=[0,0,0];
   }
  }
 };
-/** @private */
-H3DU.SubMesh.prototype.recalcTangents=function(){
+ /**
+  * Recalculates the tangent vectors for triangles
+  * in this mesh.  Tangent vectors are required for
+  * normal mapping (bump mapping) to work.
+  * This method only affects those parts of the mesh
+  * that define normals and texture coordinates.
+  * @returns {H3DU.Mesh} This object.
+  */
+H3DU.Mesh.prototype.recalcTangents=function(){
   "use strict";
+  if(this.primitiveType()!==H3DU.Mesh.TRIANGLES){
+    return this;
+  }
 var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
   var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~tangentBits))!==0);
   var uvOffset=H3DU.Mesh._texCoordOffset(this.attributeBits);
@@ -1356,7 +1224,7 @@ var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
   }
   this._rebuildVertices(tangentBits);
   if(haveOtherAttributes){
-    this.makeRedundant();
+    this._makeRedundant();
   }
   if(this.primitiveType()===H3DU.Mesh.TRIANGLES){
    var tangentOffset=H3DU.Mesh._tangentOffset(this.attributeBits);
@@ -1381,12 +1249,11 @@ var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
 */
 H3DU.Mesh.prototype.reverseNormals=function(){
   "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-   var stride=this.subMeshes[i].getStride();
-   var vertices=this.subMeshes[i].vertices;
+   var stride=this.getStride();
+   var vertices=this.vertices;
    var normalOffset=H3DU.Mesh._normalOffset(
-     this.subMeshes[i].attributeBits);
-   if(normalOffset<0)continue;
+     this.attributeBits);
+   if(normalOffset<0)  return this;
    for(i=0;i<vertices.length;i+=stride){
     var x=vertices[i+normalOffset];
     var y=vertices[i+normalOffset+1];
@@ -1395,12 +1262,26 @@ for(var i=0;i<this.subMeshes.length;i++){
     vertices[i+normalOffset+1]=-y;
     vertices[i+normalOffset+2]=-z;
    }
-  }
   return this;
 };
 
-/** @private */
-H3DU.SubMesh.prototype.reverseWinding=function(){
+/**
+* Reverses the winding order of the triangles in this mesh
+* by swapping the second and third vertex indices of each one.
+* @returns {H3DU.Mesh} This object.
+* @example <caption>
+* The following code generates a mesh that survives face culling,
+* since the same triangles occur on each side of the mesh, but
+* with different winding orders.  This is useful when enabling
+* back-face culling and drawing open geometric shapes such as
+* those generated by H3DU.Meshes.createCylinder or H3DU.Meshes.createDisk.
+* Due to the z-fighting effect, drawing this kind of mesh is
+* recommended only if face culling is enabled.</caption>
+* var frontBackMesh = originalMesh.merge(
+*  new H3DU.Mesh().merge(originalMesh).reverseWinding()
+* );
+*/
+H3DU.Mesh.prototype.reverseWinding=function(){
   "use strict";
 if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
    // Not a triangle mesh
@@ -1415,9 +1296,25 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
   return this;
 };
 
-/** @private */
-H3DU.SubMesh.prototype.recalcNormals=function(flat,inward){
+/**
+  * Recalculates the normal vectors for triangles
+  * in this mesh.  For this to properly affect shading, each triangle in
+  * the mesh must have its vertices defined in
+  * counterclockwise order.  Each normal calculated will
+  * be normalized to unit length (unless the normal is (0,0,0)).
+  * @param {Boolean} flat If true, each triangle in the mesh
+  * will have the same normal, which usually leads to a flat
+  * appearance.  If false, each unique vertex in the mesh
+  * will have its own normal, which usually leads to a smooth
+  * appearance.
+  * @param {Boolean} inward If true, the generated normals
+  * will point inward; otherwise, outward.
+  * @returns {H3DU.Mesh} This object.
+  */
+H3DU.Mesh.prototype.recalcNormals=function(flat,inward){
   "use strict";
+  var primtype=this.primitiveType();
+  if(primtype!==H3DU.Mesh.LINES && primtype!==H3DU.Mesh.POINTS){
 var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~H3DU.Mesh.NORMALS_BIT))!==0);
   this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
   // No need to duplicate vertices if there are no other attributes
@@ -1425,25 +1322,10 @@ var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~H3DU.Me
   // recalculation will reinitialize normals to 0 and
   // add the calculated normals to vertices as they are implicated
   if(haveOtherAttributes || flat){
-    this.makeRedundant();
+    this._makeRedundant();
   }
-  var primtype=this.primitiveType();
-  if(primtype!==H3DU.Mesh.LINES && primtype!==H3DU.Mesh.POINTS){
    H3DU.Mesh._recalcNormals(this.vertices,this.indices,
      this.getStride(),3,flat,inward);
-  }
-  return this;
-};
-/** @private */
-H3DU.SubMesh.prototype.setColor3=function(r,g,b){
-  "use strict";
-this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
-  var stride=this.getStride();
-  var colorOffset=H3DU.Mesh._colorOffset(this.attributeBits);
-  for(var i=colorOffset;i<this.vertices.length;i+=stride){
-    this.vertices[i]=r;
-    this.vertices[i+1]=g;
-    this.vertices[i+2]=b;
   }
   return this;
 };

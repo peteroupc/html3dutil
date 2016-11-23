@@ -8,9 +8,15 @@ at: http://peteroupc.github.io/
 */
 /* global H3DU, H3DU.Mesh */
 
-/** @private */
-H3DU.SubMeshBuffer=function(mesh){
+/**
+* A geometric mesh in the form of buffer objects.
+* @class
+* @alias H3DU.MeshBuffer
+* @param {H3DU.Mesh} mesh A geometric mesh object.
+*/
+H3DU.MeshBuffer=function(mesh){
  "use strict";
+ this._bounds=mesh.getBoundingBox();
  this.vertices=new Float32Array(mesh.vertices)
  if(mesh.vertices.length>=65536 || mesh.indices.length>=65536){
   this.indexBufferSize=4;
@@ -37,9 +43,12 @@ H3DU.SubMeshBuffer=function(mesh){
   ];
   this._sizes=[3,3,3,2,3,3];
 };
+
 /**
- * @private */
-H3DU.SubMeshBuffer.prototype.primitiveCount=function(){
+ * Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this mesh.
+* @param {*} Return value.*/
+H3DU.MeshBuffer.prototype.primitiveCount=function(){
   "use strict";
 if((this.format&H3DU.Mesh.LINES_BIT)!==0)
    return Math.floor(this.facesLength/2);
@@ -47,24 +56,6 @@ if((this.format&H3DU.Mesh.LINES_BIT)!==0)
    return this.facesLength;
   return Math.floor(this.facesLength/3);
 };
-/**
-* A geometric mesh in the form of buffer objects.
-* @class
-* @alias H3DU.MeshBuffer
-* @param {H3DU.Mesh} mesh A geometric mesh object.
-*/
-H3DU.MeshBuffer = function(mesh){
- "use strict";
-this.subMeshes=[];
- this._bounds=mesh.getBoundingBox();
- for(var i=0;i<mesh.subMeshes.length;i++){
-  var sm=mesh.subMeshes[i];
-  // skip empty submeshes
-  if(sm.indices.length===0)continue;
-  this.subMeshes.push(new H3DU.SubMeshBuffer(
-    sm));
- }
-}
 
 H3DU.MeshBuffer.prototype.getBounds=function(){
  "use strict";
@@ -72,12 +63,10 @@ H3DU.MeshBuffer.prototype.getBounds=function(){
   var empty=true;
   var inf=Number.POSITIVE_INFINITY;
   var ret=[inf,inf,inf,-inf,-inf,-inf];
-  for(var i=0;i<this.subMeshes.length;i++){
-   var sm=this.subMeshes[i];
-   var stride=sm.stride;
-   var v=sm.vertices;
-   for(var j=0;j<sm.indices.length;j++){
-    var vi=sm.indices[j]*stride;
+   var stride=this.stride;
+   var v=this.vertices;
+   for(var j=0;j<this.indices.length;j++){
+    var vi=this.indices[j]*stride;
     if(empty){
      empty=false;
      ret[0]=ret[3]=v[vi];
@@ -93,40 +82,17 @@ H3DU.MeshBuffer.prototype.getBounds=function(){
     }
    }
   }
-  this._bounds=ret;
- }
  return this._bounds;
 };
 /** @private */
 H3DU.MeshBuffer.prototype.getFormat=function(){
  "use strict";
-var format=0;
- for(var i=0;i<this.subMeshes.length;i++){
-  var sm=this.subMeshes[i];
-  format|=sm.format;
- }
- return format;
+ return this.format;
 };
 /**
  * Not documented yet.
  */
 H3DU.MeshBuffer.prototype.vertexCount=function(){
  "use strict";
-var ret=0;
- for(var i=0;i<this.subMeshes.length;i++){
-  ret+=this.subMeshes[i].numVertices;
- }
- return ret;
-};
-/**
- * Gets the number of primitives (triangles, lines,
-* and points) composed by all shapes in this mesh.
-* @param {*} Return value.*/
-H3DU.MeshBuffer.prototype.primitiveCount=function(){
- "use strict";
-var ret=0;
- for(var i=0;i<this.subMeshes.length;i++){
-  ret+=this.subMeshes[i].primitiveCount();
- }
- return ret;
+ return this.numVertices;
 };

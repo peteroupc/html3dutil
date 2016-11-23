@@ -9,10 +9,10 @@ at: http://peteroupc.github.io/
 /* global H3DU, H3DU.Mesh */
 
 /** @private */
-H3DU.BufferedSubMesh=function(mesh, context){
+H3DU.BufferedMesh.prototype._initialize=function(mesh, context){
  "use strict";
- var smb=(mesh instanceof H3DU.SubMeshBuffer) ? mesh :
-   new H3DU.SubMeshBuffer(mesh);
+ var smb=(mesh instanceof H3DU.MeshBuffer) ? mesh :
+   new H3DU.MeshBuffer(mesh);
  this.smb=smb;
  this.verts=context.createBuffer();
  if(!this.verts)throw new Error("can't create buffer")
@@ -42,7 +42,7 @@ H3DU.BufferedSubMesh=function(mesh, context){
   this._attribLocations=[];
 };
 /** @private */
-H3DU.BufferedSubMesh.prototype._getVaoExtension=function(context){
+H3DU.BufferedMesh.prototype._getVaoExtension=function(context){
  if(this.arrayObjectExtContext==context){
   return this.arrayObjectExt;
  } else {
@@ -66,24 +66,13 @@ H3DU.BufferedSubMesh.prototype._getVaoExtension=function(context){
 */
 H3DU.BufferedMesh = function(mesh, context){
  "use strict";
- this.subMeshes=[];
- this.context=H3DU._toContext(context);
+ context=H3DU._toContext(context);
  if(mesh instanceof H3DU.MeshBuffer){
   this._bounds=mesh._bounds;
-  for(var i=0;i<mesh.subMeshes.length;i++){
-   this.subMeshes.push(new H3DU.BufferedSubMesh(
-    mesh.subMeshes[i],this.context));
-  }
  } else {
   this._bounds=mesh.getBoundingBox();
-  for(var i=0;i<mesh.subMeshes.length;i++){
-   var sm=mesh.subMeshes[i];
-   // skip empty submeshes
-   if(sm.indices.length===0)continue;
-   this.subMeshes.push(new H3DU.BufferedSubMesh(
-    sm,this.context));
-  }
  }
+ this._initialize(mesh,context);
 }
 /** @private */
 H3DU.BufferedMesh.prototype._getBounds=function(){
@@ -101,41 +90,13 @@ return this.context;
 /** @private */
 H3DU.BufferedMesh.prototype.getFormat=function(){
  "use strict";
- var format=0;
- for(var i=0;i<this.subMeshes.length;i++){
-  var sm=this.subMeshes[i];
-  format|=sm.smb.format;
- }
- return format;
+ return this.smb.format;
 };
 
-/**
-* Binds the buffers in this object to attributes according
-* to their data format, and draws the elements in this mesh
-* according to the data in its buffers.
-* @param {H3DU.ShaderProgram} program A shader program object to get
-* the IDs from for attributes named "position", "normal",
-* "colorAttr", and "uv", and the "useColorAttr" uniform.
-*/
-H3DU.BufferedMesh.prototype.draw=function(program){
- "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-  this.subMeshes[i].draw(program);
- }
-};
 /**
 * Deletes the vertex and index buffers associated with this object.
 */
 H3DU.BufferedMesh.prototype.dispose=function(){
- "use strict";
-for(var i=0;i<this.subMeshes.length;i++){
-  this.subMeshes[i].dispose();
- }
- this.subMeshes=[];
-};
-/**
- * @private */
-H3DU.BufferedSubMesh.prototype.dispose=function(){
  "use strict";
 if(this.verts!==null)
   this.context.deleteBuffer(this.verts);
@@ -152,7 +113,7 @@ if(this.verts!==null)
  this._attribLocations=[];
 };
 /** @private */
-H3DU.BufferedSubMesh.prototype._getAttribLocations=function(program,context){
+H3DU.BufferedMesh.prototype._getAttribLocations=function(program,context){
  if(this._lastKnownProgram!=program){
   this._lastKnownProgram=program;
   this._attribLocations=[
@@ -174,7 +135,7 @@ H3DU.BufferedSubMesh.prototype._getAttribLocations=function(program,context){
 
 /**
  * @private */
-H3DU.BufferedSubMesh.prototype._prepareDraw=function(program, context){
+H3DU.BufferedMesh.prototype._prepareDraw=function(program, context){
   var rebind=this._getAttribLocations(program,context);
   var vaoExt=this._getVaoExtension(context);
   if(this.vao) {
@@ -202,8 +163,14 @@ H3DU.BufferedSubMesh.prototype._prepareDraw=function(program, context){
   program.setUniforms({"useColorAttr":useColorAttr});
 }
 /**
- * @private */
-H3DU.BufferedSubMesh.prototype.draw=function(program){
+* Binds the buffers in this object to attributes according
+* to their data format, and draws the elements in this mesh
+* according to the data in its buffers.
+* @param {H3DU.ShaderProgram} program A shader program object to get
+* the IDs from for attributes named "position", "normal",
+* "colorAttr", and "uv", and the "useColorAttr" uniform.
+*/
+H3DU.BufferedMesh.prototype.draw=function(program){
   // Binding phase
   "use strict";
   var context=program.getContext();
@@ -231,11 +198,7 @@ H3DU.BufferedSubMesh.prototype.draw=function(program){
 * @returns {Number} Return value.*/
 H3DU.BufferedMesh.prototype.vertexCount=function(){
  "use strict";
-var ret=0;
- for(var i=0;i<this.subMeshes.length;i++){
-  ret+=this.subMeshes[i].smb.numVertices;
- }
- return ret;
+ return this.smb.numVertices;
 };
 /**
  * Gets the number of primitives (triangles, lines,
@@ -243,11 +206,7 @@ var ret=0;
 * @returns {Number} Return value.*/
 H3DU.BufferedMesh.prototype.primitiveCount=function(){
  "use strict";
-var ret=0;
- for(var i=0;i<this.subMeshes.length;i++){
-  ret+=this.subMeshes[i].smb.primitiveCount();
- }
- return ret;
+ return this.smb.primitiveCount();
 };
 
 /** @private */
