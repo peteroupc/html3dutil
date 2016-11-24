@@ -1,3 +1,4 @@
+/* global H3DU, console */
 /**
  * An object that holds a rendering context for rendering
  * 3D objects.
@@ -10,7 +11,8 @@
 * that returns a WebGL context.
  */
 H3DU.Scene3D = function(canvasOrContext){
- var context=canvasOrContext;
+ "use strict";
+var context=canvasOrContext;
  if(typeof canvasOrContext.getContext==="function"){
   // This might be a canvas, so create a WebGL context.
   if(HTMLCanvasElement && context.constructor===HTMLCanvasElement){
@@ -62,14 +64,15 @@ H3DU.Scene3D = function(canvasOrContext){
   this._setClearColor();
   this._setFace();
  }
-}
+};
 /**
  * Not documented yet.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getCanvas=function(){
- return this.context.canvas;
-}
+ "use strict";
+return this.context.canvas;
+};
 
 H3DU.Scene3D.LIGHTING_ENABLED = 1;
 H3DU.Scene3D.SPECULAR_MAP_ENABLED = 2;
@@ -80,43 +83,48 @@ H3DU.Scene3D.COLORATTR_ENABLED = 32;
 
 /** @private */
 H3DU.Scene3D._materialToFlags=function(material){
- var flags=0;
+ "use strict";
+var flags=0;
      flags|=(!material.basic) ? H3DU.Scene3D.LIGHTING_ENABLED : 0;
-     flags|=(material.specular[0]!=0 ||
-        material.specular[1]!=0 ||
-        material.specular[2]!=0) ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
+     flags|=(material.specular[0]!==0 ||
+        material.specular[1]!==0 ||
+        material.specular[2]!==0) ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
      flags|=(!!material.specularMap) ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
      flags|=(!!material.normalMap) ? H3DU.Scene3D.NORMAL_ENABLED : 0;
      flags|=(!!material.texture) ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
      return flags;
-}
+};
 /** @private */
 H3DU.Scene3D.ProgramCache=function(){
- this._programs=[];
- this._customPrograms=[]
-}
+ "use strict";
+this._programs=[];
+ this._customPrograms=[];
+};
 H3DU.Scene3D.ProgramCache.prototype.dispose=function(){
- for(var i=0;i<this._customPrograms.length;i++){
-  var p=this._customPrograms[i];
+ "use strict";
+  var i,p;
+for(i=0;i<this._customPrograms.length;i++){
+  p=this._customPrograms[i];
   p[2].dispose();
  }
- for(var i=0;i<this._programs.length;i++){
-  var p=this._programs[i];
+ for(i=0;i<this._programs.length;i++){
+  p=this._programs[i];
   if(p)p.dispose();
  }
- this._customPrograms=[]
- this._programs=[]
-}
+ this._customPrograms=[];
+ this._programs=[];
+};
 /** @private */
 H3DU.Scene3D.ProgramCache.prototype.getCustomProgram=function(info, context){
- if(!context)throw new Error();
+ "use strict";
+if(!context)throw new Error();
  if(info instanceof H3DU.ShaderProgram){
   // NOTE: Using H3DU.ShaderProgram objects in materials is deprecated
   return info;
  }
  for(var i=0;i<this._customPrograms.length;i++){
   var p=this._customPrograms[i];
-  if(p[0]==info && p[1]==context){
+  if(p[0]===info && p[1]===context){
    p[2]._update();
    return p[2];
   }
@@ -124,44 +132,46 @@ H3DU.Scene3D.ProgramCache.prototype.getCustomProgram=function(info, context){
  var prog=H3DU.ShaderProgram._fromShaderInfo(context,info);
  this._customPrograms.push([info,context,prog]);
  return prog;
-}
+};
 /** @private */
 H3DU.Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
- if(!context)throw new Error();
+ "use strict";
+if(!context)throw new Error();
  var pf=this._programs[flags];
  if(pf){
   for(var i=0;i<pf.length;i++){
-   if(pf[i][0]==context) {
+   if(pf[i][0]===context) {
     return pf[i][1];
    }
   }
  } else {
   this._programs[flags]=[];
  }
- var defines=""
- if((flags&H3DU.Scene3D.LIGHTING_ENABLED)!=0)
+ var defines="";
+ if((flags&H3DU.Scene3D.LIGHTING_ENABLED)!==0)
    defines+="#define SHADING\n";
- if((flags&H3DU.Scene3D.SPECULAR_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.SPECULAR_ENABLED)!==0)
    defines+="#define SPECULAR\n";
- if((flags&H3DU.Scene3D.NORMAL_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.NORMAL_ENABLED)!==0)
    defines+="#define NORMAL_MAP\n";
- if((flags&H3DU.Scene3D.TEXTURE_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.TEXTURE_ENABLED)!==0)
    defines+="#define TEXTURE\n";
- if((flags&H3DU.Scene3D.COLORATTR_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.COLORATTR_ENABLED)!==0)
    defines+="#define COLORATTR\n";
- if((flags&H3DU.Scene3D.SPECULAR_MAP_ENABLED)!=0)
+ if((flags&H3DU.Scene3D.SPECULAR_MAP_ENABLED)!==0)
    defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
  var prog=new H3DU.ShaderProgram(context,
    defines+H3DU.ShaderProgram.getDefaultVertex(),
    defines+H3DU.ShaderProgram.getDefaultFragment());
  this._programs[flags].push([context,prog]);
  return prog;
-}
+};
 /** Returns the WebGL context associated with this scene.
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getContext=function(){
- return this.context;
+ "use strict";
+return this.context;
 };
 /** No face culling.
 @const  */
@@ -202,7 +212,8 @@ H3DU.Scene3D.CW = 1;
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.cullFace=function(value){
- if(value===H3DU.Scene3D.BACK ||
+ "use strict";
+if(value===H3DU.Scene3D.BACK ||
    value===H3DU.Scene3D.FRONT ||
    value===H3DU.Scene3D.FRONT_AND_BACK){
   this._cullFace=value;
@@ -213,7 +224,8 @@ H3DU.Scene3D.prototype.cullFace=function(value){
 };
 /** @private */
 H3DU.Scene3D.prototype._setFace=function(){
- if(!this._is3d)return;
+ "use strict";
+if(!this._is3d)return;
  if(this._cullFace===H3DU.Scene3D.BACK){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.BACK);
@@ -244,7 +256,8 @@ H3DU.Scene3D.prototype._setFace=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.frontFace=function(value){
- if(value===H3DU.Scene3D.CW){
+ "use strict";
+if(value===H3DU.Scene3D.CW){
   this._frontFace=value;
  } else {
   this._frontFace=0;
@@ -260,7 +273,8 @@ H3DU.Scene3D.prototype.frontFace=function(value){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setAutoResize=function(value){
- this.autoResize=!!value;
+ "use strict";
+this.autoResize=!!value;
  return this;
 };
 /**
@@ -275,7 +289,8 @@ H3DU.Scene3D.prototype.setAutoResize=function(value){
   * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setUseDevicePixelRatio=function(value){
- var oldvalue=!!this.useDevicePixelRatio;
+ "use strict";
+var oldvalue=!!this.useDevicePixelRatio;
  this.useDevicePixelRatio=!!value;
  this._pixelRatio=(this.useDevicePixelRatio && window.devicePixelRatio) ?
    window.devicePixelRatio : 1;
@@ -291,7 +306,8 @@ H3DU.Scene3D.prototype.setUseDevicePixelRatio=function(value){
    * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getClearColor=function(){
- return this.clearColor.slice(0,4);
+ "use strict";
+return this.clearColor.slice(0,4);
 };
 /**
 * Has no effect. (In previous versions, this method changed
@@ -304,9 +320,10 @@ H3DU.Scene3D.prototype.getClearColor=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.useProgram=function(program){
- console.warn("The 'useProgram' method is obsolete.  Instead of this method, "+
+ "use strict";
+console.warn("The 'useProgram' method is obsolete.  Instead of this method, "+
    "use the 'setShader' program of individual shapes to set the shader programs they use.");
-}
+};
 /**
 * Sets the viewport width and height for this scene.
 * @param {Number} width Width of the scene, in pixels.
@@ -317,7 +334,8 @@ H3DU.Scene3D.prototype.useProgram=function(program){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setDimensions=function(width, height){
- if(width<0 || height<0)throw new Error("width or height negative");
+ "use strict";
+if(width<0 || height<0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
  this.context.canvas.width=this.width*this._pixelRatio;
@@ -340,7 +358,8 @@ H3DU.Scene3D.prototype.setDimensions=function(width, height){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getWidth=function(){
- return this.width;
+ "use strict";
+return this.width;
 };
 /**
 * Gets the viewport height for this scene.
@@ -350,7 +369,8 @@ H3DU.Scene3D.prototype.getWidth=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getHeight=function(){
- return this.height;
+ "use strict";
+return this.height;
 };
 /**
 * Gets the ratio of width to height for this scene (getWidth()
@@ -361,18 +381,21 @@ H3DU.Scene3D.prototype.getHeight=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getAspect=function(){
- var ch=this.getHeight();
+ "use strict";
+var ch=this.getHeight();
  if(ch<=0)return 1;
  return this.getWidth()/ch;
 };
 /** @private */
 H3DU.Scene3D.prototype.getClientWidth=function(){
- return this.context.canvas.clientWidth;
-}
+ "use strict";
+return this.context.canvas.clientWidth;
+};
 /** @private */
 H3DU.Scene3D.prototype.getClientHeight=function(){
- return this.context.canvas.clientHeight;
-}
+ "use strict";
+return this.context.canvas.clientHeight;
+};
 /**
 * Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
@@ -380,7 +403,8 @@ H3DU.Scene3D.prototype.getClientHeight=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getClientAspect=function(){
- var ch=this.getClientHeight();
+ "use strict";
+var ch=this.getClientHeight();
  if(ch<=0)return 1;
  return this.getClientWidth()/ch;
 };
@@ -390,7 +414,8 @@ H3DU.Scene3D.prototype.getClientAspect=function(){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.createBuffer=function(){
- return new H3DU.FrameBuffer(this.context,
+ "use strict";
+return new H3DU.FrameBuffer(this.context,
    this.getWidth(),this.getHeight());
 };
 /**
@@ -400,6 +425,7 @@ H3DU.Scene3D.prototype.createBuffer=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getProjectionMatrix=function(){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -413,6 +439,7 @@ return this._subScene._projectionMatrix.slice(0,16);
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getViewMatrix=function(){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -445,7 +472,8 @@ if(this._renderedOutsideScene){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
- return this.setProjectionMatrix(H3DU.Math.mat4perspective(fov,
+ "use strict";
+return this.setProjectionMatrix(H3DU.Math.mat4perspective(fov,
    aspect,near,far));
 };
 
@@ -476,7 +504,8 @@ H3DU.Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
- if((aspect===null || typeof aspect==="undefined"))aspect=this.getClientAspect();
+ "use strict";
+if((aspect===null || typeof aspect==="undefined"))aspect=this.getClientAspect();
  if(aspect===0)aspect=1;
  return this.setProjectionMatrix(H3DU.Math.mat4orthoAspect(
    left,right,bottom,top,near,far,aspect));
@@ -501,7 +530,8 @@ H3DU.Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, f
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
- return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
+ "use strict";
+return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
 };
 
 /**
@@ -529,7 +559,8 @@ H3DU.Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspec
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
- return this.setProjectionMatrix(H3DU.Math.mat4frustum(
+ "use strict";
+return this.setProjectionMatrix(H3DU.Math.mat4frustum(
    left, right, top, bottom, near, far));
 };
 /**
@@ -553,7 +584,8 @@ H3DU.Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
- return this.setProjectionMatrix(H3DU.Math.mat4ortho(
+ "use strict";
+return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, near, far));
 };
 /**
@@ -570,12 +602,14 @@ H3DU.Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
- return this.setProjectionMatrix(H3DU.Math.mat4ortho(
+ "use strict";
+return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, -1, 1));
 };
 /** @private */
 H3DU.Scene3D.prototype._setClearColor=function(){
-  if(this._is3d){
+  "use strict";
+if(this._is3d){
    this.context.clearColor(this.clearColor[0],this.clearColor[1],
      this.clearColor[2],this.clearColor[3]);
   }
@@ -586,10 +620,11 @@ H3DU.Scene3D.prototype._setClearColor=function(){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.dispose=function(){
- this._programs.dispose();
+ "use strict";
+this._programs.dispose();
  this._textureLoader.dispose();
  this._meshLoader.dispose();
-}
+};
 /**
 * Sets the color used when clearing the screen each frame.
 * This color is black by default.
@@ -607,7 +642,8 @@ H3DU.Scene3D.prototype.dispose=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setClearColor=function(r,g,b,a){
- this.clearColor=H3DU.toGLColor(r,g,b,a);
+ "use strict";
+this.clearColor=H3DU.toGLColor(r,g,b,a);
  return this._setClearColor();
 };
 /**
@@ -621,7 +657,8 @@ H3DU.Scene3D.prototype.setClearColor=function(r,g,b,a){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.loadTexture=function(name){
- return this._textureLoader.loadTexture(name);
+ "use strict";
+return this._textureLoader.loadTexture(name);
 };
 /**
 * Loads a texture from an image URL and uploads it
@@ -638,7 +675,8 @@ H3DU.Scene3D.prototype.loadTexture=function(name){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.loadAndMapTexture=function(texture){
- var context=this.context;
+ "use strict";
+var context=this.context;
  var tex=null;
  if(texture.constructor===H3DU.Texture){
   return this.loadAndMapTexture(texture.name);
@@ -670,7 +708,8 @@ H3DU.Scene3D.prototype.loadAndMapTexture=function(texture){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
- var promises=[];
+ "use strict";
+var promises=[];
  var context=this.context;
  for(var i=0;i<textureFiles.length;i++){
   var objf=textureFiles[i];
@@ -683,22 +722,24 @@ H3DU.Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clear=function(){
- if(this._is3d){
+ "use strict";
+if(this._is3d){
     this.context.clear(
      this.context.COLOR_BUFFER_BIT |
      this.context.DEPTH_BUFFER_BIT |
      this.context.STENCIL_BUFFER_BIT);
   }
-}
+};
 /**
  * Not documented yet.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clearDepth=function(){
- if(this._is3d){
+ "use strict";
+if(this._is3d){
     this.context.clear(this.context.DEPTH_BUFFER_BIT);
   }
-}
+};
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
@@ -707,6 +748,7 @@ H3DU.Scene3D.prototype.clearDepth=function(){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.vertexCount=function(){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -721,6 +763,7 @@ return this._subScene.vertexCount();
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.primitiveCount=function(){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -737,6 +780,7 @@ return this._subScene.primitiveCount();
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setProjectionMatrix=function(matrix){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -753,6 +797,7 @@ this._subScene.setProjectionMatrix(matrix);
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setViewMatrix=function(matrix){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -781,7 +826,8 @@ this._subScene.setViewMatrix(matrix);
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setLookAt=function(eye, center, up){
- return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
+ "use strict";
+return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
 };
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
@@ -795,6 +841,7 @@ H3DU.Scene3D.prototype.setLookAt=function(eye, center, up){
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.addShape=function(shape){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -813,6 +860,7 @@ if(this._renderedOutsideScene){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.makeShape=function(mesh){
+"use strict";
 if(this._errors)throw new Error();
  if(this._renderedOutsideScene){
   throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -827,6 +875,7 @@ if(this._errors)throw new Error();
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.removeShape=function(shape){
+"use strict";
 if(this._errors)throw new Error();
  if(this._renderedOutsideScene){
   throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -836,6 +885,7 @@ if(this._errors)throw new Error();
 };
 /** @private */
 H3DU.Scene3D.prototype.getLights=function(){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -860,6 +910,7 @@ if(this._renderedOutsideScene){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -878,6 +929,7 @@ if(this._renderedOutsideScene){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setLightParams=function(index,params){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -902,6 +954,7 @@ if(this._renderedOutsideScene){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setAmbient=function(r,g,b,a){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -925,6 +978,7 @@ if(this._renderedOutsideScene){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
+"use strict";
 if(this._errors)throw new Error();
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -934,14 +988,15 @@ if(this._renderedOutsideScene){
 };
 /** @private */
 H3DU.Scene3D.prototype._clearForPass=function(pass){
- var flags=0;
+ "use strict";
+var flags=0;
  if(pass.clearColor)flags|=this.context.COLOR_BUFFER_BIT;
  if(pass.clearDepth)flags|=this.context.DEPTH_BUFFER_BIT;
  if(pass.clearStencil)flags|=this.context.STENCIL_BUFFER_BIT;
- if(this._is3d && flags!=0){
+ if(this._is3d && flags!==0){
   this.context.clear(flags);
  }
-}
+};
 
 /**
  *  Renders all shapes added to this scene.
@@ -955,8 +1010,9 @@ H3DU.Scene3D.prototype._clearForPass=function(pass){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.render=function(renderPasses){
-  if(renderPasses instanceof H3DU.Batch3D){
-    return this.render([new H3DU.RenderPass3D(renderPasses)])
+  "use strict";
+if(renderPasses instanceof H3DU.Batch3D){
+    return this.render([new H3DU.RenderPass3D(renderPasses)]);
   }
   if(this.autoResize){
    var c=this.context.canvas;
@@ -969,7 +1025,7 @@ H3DU.Scene3D.prototype.render=function(renderPasses){
   this._setFace();
   var width=this.getClientWidth();
   var height=this.getClientHeight();
-  if(renderPasses==null){
+  if((renderPasses === null || typeof renderPasses === "undefined")){
     if(this._is3d){
       this.context.clear(this.context.COLOR_BUFFER_BIT |
         this.context.DEPTH_BUFFER_BIT);
@@ -1001,17 +1057,19 @@ H3DU.Scene3D.prototype.render=function(renderPasses){
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.useFilter=function(filterProgram){
-  console.warn("The useFilter method has no effect. Use the {@link H3DU.Batch3D.forFilter} method to "+
+  "use strict";
+console.warn("The useFilter method has no effect. Use the {@link H3DU.Batch3D.forFilter} method to "+
     "create a subscene for rendering filter effects from a frame buffer.");
   return this;
 };
 
 /** @private */
 H3DU.Scene3D.supportsDerivatives=function(context){
- context= (context.getContext) ? context.getContext() : context;
+ "use strict";
+context= (context.getContext) ? context.getContext() : context;
  if(context.getExtension("OES_standard_derivatives")){
    return true;
  } else {
    return false;
  }
-}
+};

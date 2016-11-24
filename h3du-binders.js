@@ -108,8 +108,7 @@ H3DU._MaterialBinder.bindTexture=function(texture,context,program,textureUnit,lo
     texture.loadStatus===0){
       var thisObj=this;
       var prog=program;
-      texture.loadImage().then(function(e) {
-
+      texture.loadImage().then(function(e){
         // try again loading the image
         thisObj.bind(prog);
       });
@@ -185,6 +184,7 @@ H3DU._LightsBinder.emptyAtten = [1,0,0,0];
 /** @private */
 H3DU._LightsBinder.prototype.bind=function(program,viewMatrix){
  "use strict";
+  var ltname;
 var lightsObject=this.lights;
  if(!lightsObject)return this;
  if(!program)return this;
@@ -193,7 +193,7 @@ var lightsObject=this.lights;
     lightsObject.sceneAmbient : lightsObject.sceneAmbient.slice(0,3);
  for(var i=0;i<lightsObject.lights.length;i++){
   var lt=lightsObject.lights[i];
-  var ltname="lights["+i+"]";
+  ltname="lights["+i+"]";
   uniforms[ltname+".diffuse"]=lt.diffuse.length===4 ?
     lt.diffuse : [lt.diffuse[0],lt.diffuse[1],lt.diffuse[2],1];
   uniforms[ltname+".specular"]=lt.specular.length===4 ?

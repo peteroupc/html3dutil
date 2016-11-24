@@ -1,3 +1,4 @@
+/* global H3DU */
 /*
 Written by Peter O. in 2015.
 
@@ -11,16 +12,18 @@ at: http://peteroupc.github.io/
 * @alias H3DU.Batch3D
 */
 H3DU.Batch3D = function(){
- this._projectionMatrix=H3DU.Math.mat4identity();
+ "use strict";
+this._projectionMatrix=H3DU.Math.mat4identity();
  this._viewMatrix=H3DU.Math.mat4identity();
  this.lights=new H3DU.Lights();
  this._projectionUpdater=null;
  this._frustum=null;
  this.shapes=[];
-}
+};
 /** @private */
 H3DU.Batch3D._PerspectiveView=function(scene,fov,near,far){
- this.fov=fov;
+ "use strict";
+this.fov=fov;
  this.near=near;
  this.far=far;
  this.scene=scene;
@@ -30,17 +33,18 @@ H3DU.Batch3D._PerspectiveView=function(scene,fov,near,far){
  */
 this.update=function(width,height){
   var aspect=width*1.0/height;
-  if(aspect!=this.lastAspect){
+  if(aspect!==this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
      H3DU.Math.mat4perspective(this.fov,aspect,this.near,this.far));
   }
- }
+ };
  this.update();
-}
+};
 /** @private */
 H3DU.Batch3D._OrthoView=function(scene,a,b,c,d,e,f){
- this.a=a;
+ "use strict";
+this.a=a;
  this.b=b;
  this.c=c;
  this.d=d;
@@ -53,14 +57,14 @@ H3DU.Batch3D._OrthoView=function(scene,a,b,c,d,e,f){
  */
 this.update=function(width, height){
   var aspect=width*1.0/height;
-  if(aspect!=this.lastAspect){
+  if(aspect!==this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
      H3DU.Math.mat4orthoAspect(this.a,this.b,this.c,this.d,this.e,this.f,aspect));
   }
- }
+ };
  this.update();
-}
+};
 
 /** @private */
 H3DU.Batch3D._setupMatrices=function(
@@ -69,14 +73,15 @@ H3DU.Batch3D._setupMatrices=function(
   viewMatrix,
   worldMatrix,
   projAndView){
-  var uniforms={};
+  "use strict";
+var uniforms={};
   var viewWorld;
   if(projAndView){
    uniforms.view=viewMatrix;
    uniforms.projection=projMatrix;
    uniforms.viewMatrix=viewMatrix;
    uniforms.projectionMatrix=projMatrix;
-   viewInvW=program.get("projView");
+   var viewInvW=program.get("projView");
    if(viewInvW!==null && typeof viewInvW!=="undefined"){
     var projView=H3DU.Math.mat4multiply(projMatrix,viewMatrix);
     uniforms.projView=projView;
@@ -101,7 +106,7 @@ H3DU.Batch3D._setupMatrices=function(
    }
    uniforms.modelViewMatrix=viewWorld;
 
-  var invTrans=H3DU.Math.mat4inverseTranspose3(viewWorld);
+  invTrans=H3DU.Math.mat4inverseTranspose3(viewWorld);
   uniforms.world=viewWorld;
   uniforms.modelMatrix=viewWorld;
   uniforms.normalMatrix=invTrans;
@@ -111,22 +116,24 @@ H3DU.Batch3D._setupMatrices=function(
 };
 /** @private */
 H3DU.Batch3D._isSameMatrix=function(a,b){
- return (a[0]==b[0] && a[1]==b[1] && a[2]==b[2] &&
-   a[3]==b[3] && a[4]==b[4] && a[5]==b[5] &&
-   a[6]==b[6] && a[7]==b[7] && a[8]==b[8] &&
-   a[9]==b[9] && a[10]==b[10] && a[11]==b[11] &&
-   a[12]==b[12] && a[13]==b[13] && a[14]==b[14] &&
-   a[15]==b[15]);
-}
+ "use strict";
+return (a[0]===b[0] && a[1]===b[1] && a[2]===b[2] &&
+   a[3]===b[3] && a[4]===b[4] && a[5]===b[5] &&
+   a[6]===b[6] && a[7]===b[7] && a[8]===b[8] &&
+   a[9]===b[9] && a[10]===b[10] && a[11]===b[11] &&
+   a[12]===b[12] && a[13]===b[13] && a[14]===b[14] &&
+   a[15]===b[15]);
+};
 /**
  * Not documented yet.
  * @param {*} mat
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
- if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix,mat)){
-  this._projectionMatrix=mat.slice(0,16)
-  this._frustum=null
+ "use strict";
+if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix,mat)){
+  this._projectionMatrix=mat.slice(0,16);
+  this._frustum=null;
  }
  return this;
 };
@@ -142,7 +149,8 @@ H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
- this._projectionUpdater=new H3DU.Batch3D._PerspectiveView(this,fov,near,far);
+ "use strict";
+this._projectionUpdater=new H3DU.Batch3D._PerspectiveView(this,fov,near,far);
  return this;
 };
 /**
@@ -154,7 +162,8 @@ H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
- return this.setViewMatrix(H3DU.Math.mat4lookat(eye,center,up));
+ "use strict";
+return this.setViewMatrix(H3DU.Math.mat4lookat(eye,center,up));
 };
 /**
  * Uses an orthographic projection for this batch.  It will be adjusted
@@ -173,7 +182,8 @@ H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.orthoAspect=function(l,r,b,t,e,f){
- this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,l,r,b,t,e,f);
+ "use strict";
+this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,l,r,b,t,e,f);
  return this;
 };
 /**
@@ -190,7 +200,8 @@ H3DU.Batch3D.prototype.orthoAspect=function(l,r,b,t,e,f){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.ortho2DAspect=function(l,r,b,t){
- return this.orthoAspect(l,r,b,t,-1,1);
+ "use strict";
+return this.orthoAspect(l,r,b,t,-1,1);
 };
 /**
  * Sets the current view matrix for this batch of shapes.
@@ -199,9 +210,10 @@ H3DU.Batch3D.prototype.ortho2DAspect=function(l,r,b,t){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setViewMatrix=function(mat){
- if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix,mat)){
-  this._viewMatrix=mat.slice(0,16)
-  this._frustum=null
+ "use strict";
+if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix,mat)){
+  this._viewMatrix=mat.slice(0,16);
+  this._frustum=null;
  }
  return this;
 };
@@ -211,7 +223,8 @@ H3DU.Batch3D.prototype.setViewMatrix=function(mat){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getProjectionMatrix=function(){
- return this._projectionMatrix.slice(0,16);
+ "use strict";
+return this._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this batch of shapes.
@@ -219,23 +232,26 @@ H3DU.Batch3D.prototype.getProjectionMatrix=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getViewMatrix=function(){
- return this._viewMatrix.slice(0,16);
+ "use strict";
+return this._viewMatrix.slice(0,16);
 };
 /** @private */
 H3DU.Batch3D.prototype._getFrustum=function(){
- if(this._frustum==null){
+ "use strict";
+if(this._frustum === null){
   var projView=H3DU.Math.mat4multiply(this._projectionMatrix,this._viewMatrix);
   this._frustum=H3DU.Math.mat4toFrustumPlanes(projView);
  }
  return this._frustum;
-}
+};
 /**
  * Not documented yet.
  * @returns {H3DU.Lights} Return value.
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getLights=function(){
- return this.lights;
+ "use strict";
+return this.lights;
 };
 
 /**
@@ -247,7 +263,8 @@ H3DU.Batch3D.prototype.getLights=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.addShape=function(shape){
- shape.parent=null;
+ "use strict";
+shape.parent=null;
  this.shapes.push(shape);
  return this;
 };
@@ -259,7 +276,8 @@ H3DU.Batch3D.prototype.addShape=function(shape){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.vertexCount=function(){
- var c=0;
+ "use strict";
+var c=0;
  for(var i=0;i<this.shapes.length;i++){
   c+=this.shapes[i].vertexCount();
  }
@@ -272,7 +290,8 @@ H3DU.Batch3D.prototype.vertexCount=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.primitiveCount=function(){
- var c=0;
+ "use strict";
+var c=0;
  for(var i=0;i<this.shapes.length;i++){
   c+=this.shapes[i].primitiveCount();
  }
@@ -286,7 +305,8 @@ H3DU.Batch3D.prototype.primitiveCount=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.removeShape=function(shape){
- for(var i=0;i<this.shapes.length;i++){
+ "use strict";
+for(var i=0;i<this.shapes.length;i++){
    if(this.shapes[i]===shape){
      this.shapes.splice(i,1);
      i--;
@@ -297,7 +317,8 @@ H3DU.Batch3D.prototype.removeShape=function(shape){
 
 /** @private */
 H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
- if(shape.constructor===H3DU.ShapeGroup){
+ "use strict";
+if(shape.constructor===H3DU.ShapeGroup){
   if(!shape.visible)return;
   for(var i=0;i<shape.shapes.length;i++){
    this._renderShape(shape.shapes[i], renderContext);
@@ -317,12 +338,12 @@ H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
     if(shape._hasColorAttr()){
       flags|=H3DU.Scene3D.COLORATTR_ENABLED;
     }
-    if(prog==null) {
+    if((prog === null || typeof prog === "undefined")) {
       prog=renderContext.scene._programs.getProgram(
            flags,renderContext.context);
     }
     var projAndView=false;
-    if(renderContext.prog!=prog){
+    if(renderContext.prog!==prog){
      prog.use();
      projAndView=true;
      new H3DU._LightsBinder(this.lights).bind(prog,this._viewMatrix);
@@ -343,17 +364,19 @@ H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
 
 /** @private */
 H3DU.Batch3D.prototype.resize=function(width, height) {
- if(this._projectionUpdater){
+ "use strict";
+if(this._projectionUpdater){
    this._projectionUpdater.update(width, height);
  }
-}
+};
 
 /**
  * Not documented yet.
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.render=function(scene){
-  var rc={};
+  "use strict";
+var rc={};
   rc.scene=scene;
   rc.context=scene.getContext();
   for(var i=0;i<this.shapes.length;i++){
@@ -368,7 +391,8 @@ H3DU.Batch3D.prototype.render=function(scene){
  * @param {*} shader
  */
 H3DU.Batch3D.forFilter=function(scene,fbo,shader){
-  if(shader==null){
+  "use strict";
+if((shader === null || typeof shader === "undefined")){
     shader=H3DU.ShaderProgram.makeCopyEffect(scene);
   }
   var ret=new H3DU.Batch3D(scene);
@@ -379,12 +403,12 @@ H3DU.Batch3D.forFilter=function(scene,fbo,shader){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      H3DU.Mesh.TEXCOORDS_BIT);
-  var shape=new H3DU.Shape(mesh)
+  var shape=new H3DU.Shape(mesh);
   shape.setTexture(fbo);
   shape.setShader(shader);
   ret.addShape(shape);
    return ret;
-}
+};
 /** @private */
 H3DU.Batch3D._getMaterialBinder=function(material){
  "use strict";

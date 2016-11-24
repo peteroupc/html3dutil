@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math, H3DU.Mesh */
+/* global H3DU, H3DU.Math, H3DU.Mesh */
 /**
 * Contains methods that create meshes
 * of various geometric shapes.
@@ -146,7 +146,7 @@ var mesh=new H3DU.Mesh();
   var recipstacks=1.0/(stacks);
   for(i=0;i<stacks;i++){
    var zStart=lastZ;
-   var zEnd=(i+1==stacks) ? 1.0 : (i+1)*recipstacks;
+   var zEnd=(i+1===stacks) ? 1.0 : (i+1)*recipstacks;
    var zStartHeight=height*zStart;
    var zEndHeight=height*zEnd;
    var radiusStart=lastRad;
@@ -190,13 +190,13 @@ H3DU.Meshes.createLathe=function(points,slices,flat,inside){
  if(points.length<4)throw new Error("too few points");
  if((slices===null || typeof slices==="undefined"))slices=32;
  if(slices<=2)throw new Error("too few slices");
- if((points.length%1)!=0)throw new Error("points array length is not an even number");
-for(var i=0;i<points.length;i+=2){
- if(points[i<<1]<0)throw new Error("point's x is less than 0")
+ if((points.length%1)!==0)throw new Error("points array length is not an even number");
+  var i;
+for(i=0;i<points.length;i+=2){
+ if(points[i<<1]<0)throw new Error("point's x is less than 0");
 }
  var sc=[0,1]; // sin(0), cos(0)
  var tc=[0];
- var i;
  var twopi=H3DU.Math.PiTimes2;
  for(i=1;i<slices;i++){
   var t=i*1.0/slices;
@@ -210,12 +210,12 @@ for(var i=0;i<points.length;i+=2){
  tc.push(1);
  var slicesTimes2=slices*2;
   var lastZ=0;
-  var lastRad=baseRad;
+  var lastRad;
   var stacks=(points.length/2)-1;
   var recipstacks=1.0/stacks;
   for(i=0;i<stacks;i++){
    var zStart=lastZ;
-   var zEnd=(i+1==stacks) ? 1.0 : (i+1)*recipstacks;
+   var zEnd=(i+1===stacks) ? 1.0 : (i+1)*recipstacks;
    var index=i<<1;
    var zsh=points[index+1];
    var zeh=points[index+3];
@@ -355,7 +355,7 @@ var mesh=new H3DU.Mesh();
  if(sweepDir<0){
   arcLength=-arcLength;
  }
- for(var i=0;i<=slices;i++){
+ for(i=0;i<=slices;i++){
   var t=i*1.0/slices;
   var angle=(t===1 && arcLength===twopi) ? start : start+arcLength*t;
   angle=(angle<0) ? twopi-(-angle)%twopi : angle%twopi;
@@ -637,6 +637,8 @@ var mesh=new H3DU.Mesh();
   // radius is zero
   return mesh;
  }
+ var cangle;
+ var sangle;
  var halfLength=length*0.5;
  var halfStacks=stacks/2;
  var normDir=(inside) ? -1 : 1;
@@ -650,8 +652,8 @@ var mesh=new H3DU.Mesh();
  for(var i=1;i<slices;i++){
   var t=i*1.0/slices;
   angle=twopi*t;
-  var cangle = Math.cos(angle);
-  var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
+  cangle = Math.cos(angle);
+  sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
   sc.push(sangle,cangle);
   tc.push(t);
  }
@@ -663,8 +665,8 @@ var mesh=new H3DU.Mesh();
  for(i=1;i<stacks;i++){
    var origt=i*1.0/stacks;
    angle=Math.PI*origt;
-   var cangle = Math.cos(angle);
-   var sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
+   cangle = Math.cos(angle);
+   sangle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
    scStack.push(sangle);
    zEnd.push(-cangle);
    var tex=origt;
@@ -806,7 +808,8 @@ var mesh=new H3DU.Mesh();
     * @returns {H3DU.Mesh} The generated mesh.
     */
     H3DU.Meshes.createPointedStar=function(points, firstRadius, secondRadius,inward){
-     var mesh=new H3DU.Mesh();
+     "use strict";
+var mesh=new H3DU.Mesh();
      if(points<2 || firstRadius<0 || secondRadius<0)return mesh;
      if(firstRadius<=0 && secondRadius<=0)return mesh;
      mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
@@ -837,6 +840,6 @@ var mesh=new H3DU.Mesh();
         0.5*(1+startY*recipRadius))
        .vertex2(startX,startY);
      return mesh;
-    }
+    };
 
 this.H3DU.Meshes=H3DU.Meshes;

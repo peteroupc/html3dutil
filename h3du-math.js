@@ -6,10 +6,8 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
+/* global H3DU */
 
-if((typeof H3DU === "undefined" || (H3DU === null || typeof H3DU === "undefined"))){
- exports.H3DU = {};
-}
 /**
 * A collection of math functions for working
 * with vectors, matrices, quaternions, and other
@@ -62,6 +60,7 @@ true.)  The triangle's area is half of the cross product's length.
  var area=H3DU.Math.vec3length(normal)*0.5;
  */
 vec3cross:function(a,b){
+"use strict";
 return [a[1]*b[2]-a[2]*b[1],
  a[2]*b[0]-a[0]*b[2],
  a[0]*b[1]-a[1]*b[0]];
@@ -98,6 +97,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * }
  */
 vec3dot:function(a,b){
+"use strict";
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
 },
 /**
@@ -109,6 +109,7 @@ return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
  * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3add:function(a,b){
+"use strict";
 return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
 },
 /**
@@ -120,6 +121,7 @@ return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
  * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3sub:function(a,b){
+"use strict";
 return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
 },
 /**
@@ -130,6 +132,7 @@ return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
  * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3negate:function(a){
+"use strict";
 return [-a[0],-a[1],-a[2]];
 },
 /**
@@ -140,6 +143,7 @@ Negating a vector
  * @returns {Array<Number>} The parameter "a".
  */
 vec3negateInPlace:function(a){
+"use strict";
 a[0]=-a[0];
 a[1]=-a[1];
 a[2]=-a[2];
@@ -154,6 +158,7 @@ return a;
  * @returns {Array<Number>} The resulting 3-element vector.
  */
 vec3mul:function(a,b){
+"use strict";
 return [a[0]*b[0],a[1]*b[1],a[2]*b[2]];
 },
 /**
@@ -166,6 +171,7 @@ return [a[0]*b[0],a[1]*b[1],a[2]*b[2]];
  */
 vec3addInPlace:function(a,b){
 // Use variables in case a and b are the same
+"use strict";
 var b0=b[0];
 var b1=b[1];
 var b2=b[2];
@@ -184,6 +190,7 @@ return a;
  */
 vec3subInPlace:function(a,b){
 // Use variables in case a and b are the same
+"use strict";
 var b0=b[0];
 var b1=b[1];
 var b2=b[2];
@@ -202,6 +209,7 @@ return a;
  */
 vec3mulInPlace:function(a,b){
 // Use variables in case a and b are the same
+"use strict";
 var b0=b[0];
 var b1=b[1];
 var b2=b[2];
@@ -218,6 +226,7 @@ return a;
  * @returns {Array<Number>} The parameter "a".
  */
 vec3scaleInPlace:function(a,scalar){
+"use strict";
 a[0]*=scalar;
 a[1]*=scalar;
 a[2]*=scalar;
@@ -232,7 +241,8 @@ return a;
  * @returns {Array<Number>} The parameter "a".
  */
 vec3scale:function(a,scalar){
- return H3DU.Math.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
+ "use strict";
+return H3DU.Math.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
 },
 /**
  * Does a linear interpolation between two 3-element vectors;
@@ -244,7 +254,8 @@ vec3scale:function(a,scalar){
  * @returns {Array<Number>} The interpolated vector.
  */
 vec3lerp:function(v1,v2,factor){
- return [
+ "use strict";
+return [
   v1[0]+(v2[0]-v1[0])*factor,
   v1[1]+(v2[1]-v1[1])*factor,
   v1[2]+(v2[2]-v1[2])*factor
@@ -257,6 +268,7 @@ vec3lerp:function(v1,v2,factor){
  * @param {Array<Number>} b The second 4-element vector.
  */
 vec4dot:function(a,b){
+"use strict";
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
 },
 /**
@@ -267,6 +279,7 @@ return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
  * @returns {Array<Number>} The parameter "a".
  */
 vec4scaleInPlace:function(a,scalar){
+"use strict";
 a[0]*=scalar;
 a[1]*=scalar;
 a[2]*=scalar;
@@ -283,7 +296,8 @@ return a;
  * @returns {Array<Number>} The interpolated vector.
  */
 vec4lerp:function(v1,v2,factor){
- return [
+ "use strict";
+return [
   v1[0]+(v2[0]-v1[0])*factor,
   v1[1]+(v2[1]-v1[1])*factor,
   v1[2]+(v2[2]-v1[2])*factor,
@@ -300,7 +314,8 @@ vec4lerp:function(v1,v2,factor){
  * @returns {Array<Number>} The parameter "vec".
  */
 vec3normInPlace:function(vec){
- var x=vec[0];
+ "use strict";
+var x=vec[0];
  var y=vec[1];
  var z=vec[2];
  var len=Math.sqrt(x*x+y*y+z*z);
@@ -322,7 +337,8 @@ vec3normInPlace:function(vec){
  * @returns {Array<Number>} The parameter "vec".
  */
 vec4normInPlace:function(vec){
- var x=vec[0];
+ "use strict";
+var x=vec[0];
  var y=vec[1];
  var z=vec[2];
  var w=vec[3];
@@ -346,7 +362,8 @@ vec4normInPlace:function(vec){
  * @returns {Array<Number>} The resulting vector.
  */
 vec3norm:function(vec){
- return H3DU.Math.vec3normInPlace([vec[0],vec[1],vec[2]]);
+ "use strict";
+return H3DU.Math.vec3normInPlace([vec[0],vec[1],vec[2]]);
 },
 /**
  * Returns a normalized version of a 4-element vector.
@@ -358,7 +375,8 @@ vec3norm:function(vec){
  * @returns {Array<Number>} The resulting vector.
  */
 vec4norm:function(vec){
- return H3DU.Math.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
+ "use strict";
+return H3DU.Math.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
 },
 /**
  * Returns the distance of this 3-element vector from the origin.
@@ -367,7 +385,8 @@ vec4norm:function(vec){
  * @param {Array<Number>} a A 3-element vector.
  * @returns {Number} Return value. */
 vec3length:function(a){
- var dx=a[0];
+ "use strict";
+var dx=a[0];
  var dy=a[1];
  var dz=a[2];
  return Math.sqrt(dx*dx+dy*dy+dz*dz);
@@ -379,7 +398,8 @@ vec3length:function(a){
  * @param {Array<Number>} a A 4-element vector.
  * @returns {Number} Return value. */
 vec4length:function(a){
- var dx=a[0];
+ "use strict";
+var dx=a[0];
  var dy=a[1];
  var dz=a[2];
  var dw=a[3];
@@ -389,39 +409,45 @@ vec4length:function(a){
  * Returns the identity 3x3 matrix.
  * @returns {Array<Number>} Return value. */
 mat3identity:function(){
- return [1,0,0,0,1,0,0,0,1];
+ "use strict";
+return [1,0,0,0,1,0,0,0,1];
 },
 /**
  * Returns the identity 4x4 matrix.
  * @returns {Array<Number>} Return value. */
 mat4identity:function(){
- return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
+ "use strict";
+return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 },
 /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
  @returns {Array<Number>} */
 quatIdentity:function(){
- return [0,0,0,1];
+ "use strict";
+return [0,0,0,1];
 },
 /**
  * Returns a copy of a 4x4 matrix.
  * @param {Array<Number>} mat A 4x4 matrix.
  * @returns {Array<Number>} Return value. */
 mat4copy:function(mat){
- return mat.slice(0,16);
+ "use strict";
+return mat.slice(0,16);
 },
 /**
  * Returns a copy of a 3-element vector.
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} Return value. */
 vec3copy:function(vec){
- return vec.slice(0,3);
+ "use strict";
+return vec.slice(0,3);
 },
 /**
  * Returns a copy of a 4-element vector.
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} Return value. */
 vec4copy:function(vec){
- return vec.slice(0,4);
+ "use strict";
+return vec.slice(0,4);
 },
 /**
  * Assigns the values of a 3-element vector into another
@@ -433,7 +459,8 @@ vec4copy:function(vec){
  * @returns {Array<Number>} The parameter "dst"
  */
 vec3assign:function(dst,src){
- dst[0]=src[0];
+ "use strict";
+dst[0]=src[0];
  dst[1]=src[1];
  dst[2]=src[2];
  return dst;
@@ -446,7 +473,8 @@ vec3assign:function(dst,src){
  * @returns {Array<Number>} The parameter "dst"
  */
 vec4assign:function(dst,src){
- dst[0]=src[0];
+ "use strict";
+dst[0]=src[0];
  dst[1]=src[1];
  dst[2]=src[2];
  dst[3]=src[3];
@@ -457,6 +485,7 @@ vec4assign:function(dst,src){
  * @param {Array<Number>} mat A 4x4 matrix.
  * @returns {Boolean} Return value. */
 mat4isIdentity:function(mat){
+"use strict";
 return (
     mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
     mat[4]===0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
@@ -471,6 +500,7 @@ return (
  * Returns the identity matrix if this matrix is not invertible.
  */
 mat4invert:function(m){
+"use strict";
 var tvar0 = m[0]*m[10];
 var tvar1 = m[0]*m[11];
 var tvar2 = m[0]*m[5];
@@ -564,7 +594,8 @@ return r;
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
 quatConjugate:function(quat){
- return [-quat[0],-quat[1],-quat[2],quat[3]];
+ "use strict";
+return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
 /**
  * Inverts the rotation given in this quaternion;
@@ -572,7 +603,8 @@ quatConjugate:function(quat){
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
 quatInvert:function(quat){
- var lsq=1.0/H3DU.Math.quatDot(quat,quat);
+ "use strict";
+var lsq=1.0/H3DU.Math.quatDot(quat,quat);
  return H3DU.Math.vec4scaleInPlace(
   H3DU.Math.quatConjugate(quat),lsq);
 },
@@ -580,7 +612,8 @@ quatInvert:function(quat){
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * @returns {Boolean} Return value.*/
 quatIsIdentity:function(quat){
- return quat[0]===0 && quat[1] === 0 && quat[2] === 0 && quat[3] === 1;
+ "use strict";
+return quat[0]===0 && quat[1] === 0 && quat[2] === 0 && quat[3] === 1;
 },
 /**
  * Generates a 4x4 matrix describing the rotation
@@ -589,7 +622,8 @@ quatIsIdentity:function(quat){
  * @returns {Array<Number>} Return value.
  */
 quatToMat4:function(quat){
-  var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
+  "use strict";
+var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
   tx = 2.0 * quat[0];
   ty = 2.0 * quat[1];
   tz = 2.0 * quat[2];
@@ -622,7 +656,8 @@ quatToMat4:function(quat){
  * in a clockwise direction for left-handed systems.
 */
 quatToAxisAngle:function(a){
- var w=a[3];
+ "use strict";
+var w=a[3];
  var d=1.0-(w*w);
  if(d>0){
   d=1/Math.sqrt(d);
@@ -644,7 +679,8 @@ quatToAxisAngle:function(a){
  * will be normalized.
  */
 quatFromVectors:function(vec1,vec2){
-  var ret=H3DU.Math.vec3cross(vec1,vec2);
+  "use strict";
+var ret=H3DU.Math.vec3cross(vec1,vec2);
   var vecLengths=Math.sqrt(H3DU.Math.vec3dot(vec1,vec1))*
             Math.sqrt(H3DU.Math.vec3dot(vec2,vec2));
   if(vecLengths===0)vecLengths=1; // degenerate case
@@ -674,6 +710,7 @@ quatFromVectors:function(vec1,vec2){
  * @returns {Array<Number>} The generated quaternion.
  */
 quatFromAxisAngle:function(angle,v,vy,vz){
+"use strict";
 var v0,v1,v2,ang;
 if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
@@ -724,7 +761,8 @@ return ret;
  * @returns {Array<Number>} The generated quaternion.
  */
 quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
- var rollRad,pitchRad,yawRad;
+ "use strict";
+var rollRad,pitchRad,yawRad;
  if((mode===null || typeof mode==="undefined"))mode=H3DU.Math.RollPitchYaw;
  if(mode<0 || mode>=6)throw new Error("invalid mode");
  if(pitchDegrees.constructor===Array){
@@ -775,7 +813,8 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * in a clockwise direction for left-handed systems.
  */
 quatToTaitBryan:function(a,mode){
-  var c0=a[3];
+  "use strict";
+var c0=a[3];
   var c1,c2,c3;
   var e=1;
   if((mode===null || typeof mode==="undefined"))mode=H3DU.Math.RollPitchYaw;
@@ -843,7 +882,8 @@ quatToTaitBryan:function(a,mode){
  * which will be normalized.
 */
 quatNlerp:function(q1,q2,factor){
-  var t1 = 1.0 - factor;
+  "use strict";
+var t1 = 1.0 - factor;
   var t2 = q1[0] * t1;
   var t3 = q1[1] * t1;
   var t4 = q1[2] * t1;
@@ -871,7 +911,8 @@ quatNlerp:function(q1,q2,factor){
  * @returns {Array<Number>} The interpolated quaternion.
  */
 quatSlerp:function(q1,q2,factor){
- var cosval=H3DU.Math.quatDot(q1,q2);
+ "use strict";
+var cosval=H3DU.Math.quatDot(q1,q2);
  var qd=q2;
  if(cosval<0){
   qd=[-q2[0],-q2[1],-q2[2],-q2[3]];
@@ -925,7 +966,8 @@ quatSlerp:function(q1,q2,factor){
  * @returns {Array<Number>} The resulting quaternion.
  */
 quatRotate:function(quat,angle,v,vy,vz){
-  return H3DU.Math.quatMultiply(quat,
+  "use strict";
+return H3DU.Math.quatMultiply(quat,
     H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
 },
 /**
@@ -938,7 +980,8 @@ quatRotate:function(quat,angle,v,vy,vz){
 * the transformed vector.
  */
 quatTransform:function(q,v){
-  var t1 = (((q[1] * v[2]) - q[2] * v[1]) + v[0] * q[3]);
+  "use strict";
+var t1 = (((q[1] * v[2]) - q[2] * v[1]) + v[0] * q[3]);
   var t2 = (((q[2] * v[0]) - q[0] * v[2]) + v[1] * q[3]);
   var t3 = (((q[0] * v[1]) - q[1] * v[0]) + v[2] * q[3]);
   var t4 = (((q[0] * v[0]) + q[1] * v[1]) + q[2] * v[2]);
@@ -954,6 +997,7 @@ quatTransform:function(q,v){
  * @returns {Array<Number>} The resulting quaternion.
  */
 quatFromMat4:function(m){
+"use strict";
 var ret=[];
  var xy=m[1];
  var xz=m[2];
@@ -1011,7 +1055,8 @@ return ret;
  * @returns {Array<Number>} The resulting 3x3 matrix.
  */
 mat4toMat3:function(m4){
- return [
+ "use strict";
+return [
   m4[0],m4[1],m4[2],
   m4[4],m4[5],m4[6],
   m4[8],m4[9],m4[10]
@@ -1023,7 +1068,8 @@ mat4toMat3:function(m4){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4transpose:function(m4){
- return H3DU.Math.mat4transposeInPlace(m4.slice(0,16));
+ "use strict";
+return H3DU.Math.mat4transposeInPlace(m4.slice(0,16));
 },
 /**
  * Transposes a 4x4 matrix in place without creating
@@ -1032,7 +1078,8 @@ mat4transpose:function(m4){
  * @returns {Array<Number>} The parameter "mat".
  */
 mat4transposeInPlace:function(mat){
- var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
+ "use strict";
+var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
  tmp=mat[2];mat[2]=mat[8];mat[8]=tmp;
  tmp=mat[3];mat[3]=mat[12];mat[12]=tmp;
  tmp=mat[6];mat[6]=mat[9];mat[9]=tmp;
@@ -1055,6 +1102,7 @@ mat4transposeInPlace:function(mat){
 * can't be inverted, returns the identity 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
+"use strict";
 if(m4[1]===0 && m4[2] === 0 && m4[4] === 0 &&
    m4[6] === 0 && m4[8] === 0 && m4[9] === 0){
  if(m4[0] === 1 && m4[5] === 1 && m4[10] === 1){
@@ -1102,7 +1150,8 @@ return [
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4scale:function(mat,v3,v3y,v3z){
-  var scaleX,scaleY,scaleZ;
+  "use strict";
+var scaleX,scaleY,scaleZ;
   if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       scaleX=v3;
       scaleY=v3y;
@@ -1130,7 +1179,8 @@ mat4scale:function(mat,v3,v3y,v3z){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4scaled:function(v3,v3y,v3z){
-  if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
+  "use strict";
+if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
    return [v3,0,0,0,0,v3y,0,0,0,0,v3z,0,0,0,0,1];
   } else {
    return [v3[0],0,0,0,0,v3[1],0,0,0,0,v3[2],0,0,0,0,1];
@@ -1151,7 +1201,8 @@ mat4scaled:function(v3,v3y,v3z){
  * @returns {Array<Number>} The transformed vector.
  */
 mat4transform:function(mat,v,vy,vz,vw){
-  var x,y,z,w;
+  "use strict";
+var x,y,z,w;
   if(typeof vy!=="undefined" && typeof vz!=="undefined" &&
       typeof vw!=="undefined"){
       x=v;
@@ -1182,7 +1233,8 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
  * @returns {Array<Number>} The transformed vector.
  */
 mat4transformVec3:function(mat,v,vy,vz){
-  var x,y,z;
+  "use strict";
+var x,y,z;
   if(typeof vy!=="undefined" && typeof vz!=="undefined"){
       x=v;
       y=vy;
@@ -1210,7 +1262,8 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + mat[12],
  * @returns {Array<Number>} The transformed vector.
  */
 mat3transform:function(mat,v,vy,vz){
-  var x,y,z;
+  "use strict";
+var x,y,z;
   if(typeof vy!=="undefined" && typeof vz!=="undefined"){
       x=v;
       y=vy;
@@ -1235,7 +1288,8 @@ return [x * mat[0] + y * mat[3] + z * mat[6],
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4translated:function(v3,v3y,v3z){
-  var x,y,z;
+  "use strict";
+var x,y,z;
   if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       x=v3;
       y=v3y;
@@ -1259,7 +1313,8 @@ mat4translated:function(v3,v3y,v3z){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4translate:function(mat,v3,v3y,v3z){
-  var x,y,z;
+  "use strict";
+var x,y,z;
   if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       x=v3;
       y=v3y;
@@ -1308,7 +1363,8 @@ mat4translate:function(mat,v3,v3y,v3z){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4perspective:function(fovY,aspectRatio,near,far){
- var fov=((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
+ "use strict";
+var fov=((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
  var f = 1/Math.tan(fov);
  var nmf = near-far;
  nmf=1/nmf;
@@ -1337,7 +1393,8 @@ mat4perspective:function(fovY,aspectRatio,near,far){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4lookat:function(viewerPos,lookingAt,up){
- if(!up)up=[0,1,0];
+ "use strict";
+if(!up)up=[0,1,0];
  if(!lookingAt)lookingAt=[0,0,0];
  var f=[lookingAt[0]-viewerPos[0],lookingAt[1]-viewerPos[1],lookingAt[2]-viewerPos[2]];
  var len=H3DU.Math.vec3length(f);
@@ -1387,7 +1444,8 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho:function(l,r,b,t,n,f){
- var width=1/(r-l);
+ "use strict";
+var width=1/(r-l);
  var height=1/(t-b);
  var depth=1/(f-n);
  return [2*width,0,0,0,0,2*height,0,0,0,0,-2*depth,0,
@@ -1424,7 +1482,8 @@ mat4ortho:function(l,r,b,t,n,f){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
- var fov=((fovX>=0 && fovX<360) ? fovX : ((fovX%360)+(fovX<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
+ "use strict";
+var fov=((fovX>=0 && fovX<360) ? fovX : ((fovX%360)+(fovX<0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
  var fovY=H3DU.Math.Num360DividedByPi*Math.atan2(Math.tan(fov),aspectRatio);
  return H3DU.Math.mat4perspective(fovY,aspectRatio,near,far);
 },
@@ -1444,7 +1503,8 @@ mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho2d:function(l,r,b,t){
- return H3DU.Math.mat4ortho2d(l,r,b,t,-1,1);
+ "use strict";
+return H3DU.Math.mat4ortho2d(l,r,b,t,-1,1);
 },
 /**
  * Returns a 4x4 matrix representing a 2D orthographic projection,
@@ -1469,7 +1529,8 @@ mat4ortho2d:function(l,r,b,t){
 * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4ortho2dAspect:function(l,r,b,t,aspect){
- return H3DU.Math.mat4orthoAspect(l,r,b,t,-1,1,aspect);
+ "use strict";
+return H3DU.Math.mat4orthoAspect(l,r,b,t,-1,1,aspect);
 },
 /**
  * Returns a 4x4 matrix representing an orthographic projection,
@@ -1498,29 +1559,31 @@ mat4ortho2dAspect:function(l,r,b,t,aspect){
 * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4orthoAspect:function(l,r,b,t,n,f,aspect){
- var boxAspect=Math.abs((r-l)/(t-b));
+ "use strict";
+  var newDim;
+var boxAspect=Math.abs((r-l)/(t-b));
  aspect/=boxAspect;
- var w=Math.abs(r-l)
- var h=Math.abs(t-b)
+ var w=Math.abs(r-l);
+ var h=Math.abs(t-b);
   if (aspect < 1.0) {
-    var newDim=h/aspect
+    newDim=h/aspect;
     if(t>b){
-     b-=(newDim-h)*0.5
-     t+=(newDim-h)*0.5
+     b-=(newDim-h)*0.5;
+     t+=(newDim-h)*0.5;
     } else {
-     t-=(newDim-h)*0.5
-     b+=(newDim-h)*0.5
+     t-=(newDim-h)*0.5;
+     b+=(newDim-h)*0.5;
     }
   } else {
-    var newDim=w*aspect
+    newDim=w*aspect;
     if(r>l){
-     l-=(newDim-w)*0.5
-     r+=(newDim-w)*0.5
+     l-=(newDim-w)*0.5;
+     r+=(newDim-w)*0.5;
     } else {
-     r-=(newDim-w)*0.5
-     l+=(newDim-w)*0.5
+     r-=(newDim-w)*0.5;
+     l+=(newDim-w)*0.5;
     }
-  };
+  }
   return H3DU.Math.mat4ortho(l,r,b,t,n,f);
 },
 /**
@@ -1555,7 +1618,8 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4frustum:function(l,r,b,t,near,far){
- var dn=2*near;
+ "use strict";
+var dn=2*near;
  var onedx=1/(r-l);
  var onedy=1/(t-b);
  var onedz=1/(far-near);
@@ -1578,7 +1642,8 @@ return [
  * @returns {Array<Number>} The same parameter as "mat".
  */
 mat4scaleInPlace:function(mat,v3,v3y,v3z){
-  var x,y,z;
+  "use strict";
+var x,y,z;
   if(typeof v3y!=="undefined" && typeof v3z!=="undefined"){
       x=v3;
       y=v3y;
@@ -1614,7 +1679,8 @@ mat4scaleInPlace:function(mat,v3,v3y,v3z){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4multiply:function(a,b){
-  var dst=[];
+  "use strict";
+var dst=[];
  for(var i = 0; i < 16; i+= 4){
   for(var j = 0; j < 4; j++){
    dst[i+j] =
@@ -1640,7 +1706,8 @@ mat4multiply:function(a,b){
  * @returns {Array<Number>} The resulting quaternion.
 */
 quatMultiply:function(a,b){
- return [
+ "use strict";
+return [
  a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
  a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
  a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
@@ -1669,6 +1736,7 @@ quatMultiply:function(a,b){
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4rotate:function(mat,angle,v,vy,vz){
+"use strict";
 var v0,v1,v2,ang;
 if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
@@ -1766,6 +1834,7 @@ mat[12], mat[13], mat[14], mat[15]];
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4rotated:function(angle,v,vy,vz){
+"use strict";
 var v0,v1,v2,ang;
 if(typeof vy!=="undefined" && typeof vz!=="undefined"){
  v0=v;
@@ -1832,7 +1901,8 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 * @returns {Array<Number>} The parameter "plane".
 */
 H3DU.Math.planeNormInPlace=function(plane){
- var x=plane[0];
+ "use strict";
+var x=plane[0];
  var y=plane[1];
  var z=plane[2];
  var w=plane[3];
@@ -1861,7 +1931,8 @@ H3DU.Math.planeNormInPlace=function(plane){
 * the plane.
 */
 H3DU.Math.planeNorm=function(plane){
- return H3DU.Math.planeNormInPlace(plane.slice(0,4));
+ "use strict";
+return H3DU.Math.planeNormInPlace(plane.slice(0,4));
 };
 /**
 * Finds the six clipping planes of a view frustum defined
@@ -1882,7 +1953,8 @@ H3DU.Math.planeNorm=function(plane){
 * will be normalized.
 */
 H3DU.Math.mat4toFrustumPlanes=function(matrix){
- var frustum=[[],[],[],[],[],[]];
+ "use strict";
+var frustum=[[],[],[],[],[],[]];
  // Left clipping plane
  frustum[0]=H3DU.Math.planeNormInPlace([
   matrix[3]  + matrix[0],
@@ -1947,7 +2019,8 @@ H3DU.Math.mat4toFrustumPlanes=function(matrix){
 * inside the frustum; <code>false</code> otherwise.
 */
 H3DU.Math.frustumHasSphere=function(frustum, x, y, z, radius){
- if(radius<0)throw new Error("radius is negative");
+ "use strict";
+if(radius<0)throw new Error("radius is negative");
  for(var i=0;i<6;i++){
   var plane=frustum[i];
   var dot=plane[3]+plane[0]*x+
@@ -1970,7 +2043,8 @@ H3DU.Math.frustumHasSphere=function(frustum, x, y, z, radius){
 * corresponding maximum coordinate; otherwise, <code>false</code>.
 */
 H3DU.Math.boxIsEmpty=function(box){
- return !(box[0]<=box[3] && box[1]<=box[4] && box[2]<=box[5]);
+ "use strict";
+return !(box[0]<=box[3] && box[1]<=box[4] && box[2]<=box[5]);
 };
 /**
 * Determines whether an axis-aligned bounding box
@@ -1991,7 +2065,8 @@ H3DU.Math.boxIsEmpty=function(box){
 * (see "boxIsEmpty").
 */
 H3DU.Math.frustumHasBox=function(frustum, box){
- if(H3DU.Math.boxIsEmpty(box)){
+ "use strict";
+if(H3DU.Math.boxIsEmpty(box)){
   return false;
  }
  for(var i=0;i<6;i++){
@@ -2030,7 +2105,8 @@ H3DU.Math.frustumHasBox=function(frustum, box){
 * otherwise false;
 */
 H3DU.Math.frustumHasPoint=function(frustum, x, y, z){
- for(var i=0;i<6;i++){
+ "use strict";
+for(var i=0;i<6;i++){
   var d=frustum[i][0]*x+frustum[i][1]*y+
      frustum[i][2]*z+frustum[i][3];
   if(d<=0)return false;

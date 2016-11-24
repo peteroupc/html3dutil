@@ -1,3 +1,4 @@
+/* global JSON, Promise */
 /**
 * Contains classes and methods for easing development
 * of WebGL applications.
@@ -12,7 +13,8 @@ if(!window.requestAnimationFrame){
     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
  if(!window.requestAnimationFrame){
   window.requestAnimationFrame=function(func){
-   window.setTimeout(function(){
+   "use strict";
+window.setTimeout(function(){
     func(window.performance.now());
    },17);
   };
@@ -23,7 +25,8 @@ if(!window.performance){
 }
 if(!window.performance.now){
  window.performance.now=function(){
-   return (new Date().getTime()*1000)-window.performance._startTime;
+   "use strict";
+return (new Date().getTime()*1000)-window.performance._startTime;
  };
  window.performance._startTime=new Date().getTime()*1000;
 }
@@ -48,7 +51,8 @@ var H3DU={
 * milliseconds since the page was loaded.
 */
 "renderLoop":function(func){
-  func(window.performance.now());
+  "use strict";
+func(window.performance.now());
   var selfRefFunc=function(time){
    window.requestAnimationFrame(selfRefFunc);
    func(time);
@@ -74,7 +78,8 @@ var H3DU={
 * @returns {HTMLCanvasElement} The resulting canvas element.
 */
 "createCanvasElement":function(parent, width, height){
- var canvas=document.createElement("canvas");
+ "use strict";
+var canvas=document.createElement("canvas");
  if(parent){
   parent.appendChild(canvas);
  }
@@ -104,7 +109,8 @@ var H3DU={
 * is null or not an HTML canvas element.
 */
 "get3DOr2DContext":function(canvasElement){
-  if(!canvasElement)return null;
+  "use strict";
+if(!canvasElement)return null;
   if(!canvasElement.getContext)return null;
   var context=null;
   var options={"preserveDrawingBuffer":true,
@@ -150,7 +156,8 @@ var H3DU={
 * is null or not an HTML canvas element.
 */
 "get3DContext":function(canvasElement,err){
-  var c=H3DU.get3DOr2DContext(canvasElement);
+  "use strict";
+var c=H3DU.get3DOr2DContext(canvasElement);
   var errmsg=null;
   if(!c && window.WebGLShader){
     errmsg="Failed to initialize graphics support required by this page.";
@@ -169,7 +176,8 @@ var H3DU={
 * Returns whether the given object is a 3D rendering context.
 * @returns {Boolean} Return value.*/
 "is3DContext":function(context){
- return context && ("compileShader" in context);
+ "use strict";
+return context && ("compileShader" in context);
 },
 
 /**
@@ -190,7 +198,8 @@ var H3DU={
  */
 "getPromiseResultsAll":function(promises,
    progressResolve, progressReject){
-   return H3DU.getPromiseResults(promises,progressResolve,progressReject)
+   "use strict";
+return H3DU.getPromiseResults(promises,progressResolve,progressReject)
      .then(function(results){
       if(results.failures.length>0){
        return Promise.reject(results);
@@ -222,7 +231,8 @@ var H3DU={
  */
 "getPromiseResults":function(promises,
    progressResolve, progressReject){
- if(!promises || promises.length===0){
+ "use strict";
+if(!promises || promises.length===0){
   return Promise.resolve({
     successes:[], failures:[], results:[]});
  }
@@ -287,7 +297,8 @@ var H3DU={
 * <li>For any other type, a string of the file's text.</ul>
 */
 "loadFileFromUrl":function(url,responseType){
- var urlstr=url;
+ "use strict";
+var urlstr=url;
  var respType=responseType||"text";
  return new Promise(function(resolve, reject){
    var xhr=new XMLHttpRequest();
@@ -353,7 +364,8 @@ var H3DU={
 * var angle = 360 * H3DU.getTimePosition(timer, time, 5000);
 */
 H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
- if(((typeof timer.time==="undefined" || timer.time === null))) {
+ "use strict";
+if(((typeof timer.time==="undefined" || timer.time === null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
@@ -378,7 +390,8 @@ H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
 * initial time or last known time wasn't set, returns 0.
 */
 H3DU.newFrames=function(timer,timeInMs){
- if(((typeof timer.time==="undefined" || timer.time === null))) {
+ "use strict";
+if(((typeof timer.time==="undefined" || timer.time === null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
@@ -393,6 +406,9 @@ H3DU.newFrames=function(timer,timeInMs){
 };
 
 (function(exports){
+"use strict";
+var namedColors=null;
+var setUpNamedColors=null;
 var hlsToRgb=function(hls){
 var hueval=hls[0]*1.0;//[0-360)
  var lum=hls[1]*1.0;//[0-255]
@@ -442,10 +458,10 @@ var colorToRgba=function(x){
  function parsePercent(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>100 ? 100 : c))*255/100; }
  function parseAlpha(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>1 ? 1 : c))*255; }
  function parseByte(x){ var c; return ((c=parseInt(x,10))<0 ? 0 : (c>255 ? 255 : c)); }
- function parseHue(x){ var r1=parseFloat(e[1]);if(r1<0||r1>=360)r1=(((r1%360)+360)%360); return r1; }
+ function parseHue(x){ var r1=parseFloat(x);if(r1<0||r1>=360)r1=(((r1%360)+360)%360); return r1; }
 var e=null;
  if(!x)return null;
- var b,c,r1,r2,r3,r4,rgb;
+ var b,c,d,a,r1,r2,r3,r4,rgb;
  if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),255];
  } else if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
@@ -459,10 +475,10 @@ var e=null;
  } else if((e=(/^rgba\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+(?:\.\d+)?)\s*\)$/.exec(x)))!==null){
   return [parseByte(e[1]),parseByte(e[2]),parseByte(e[3]),parseAlpha(e[4])];
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
-  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
+  a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
   return [a+(a<<4),b+(b<<4),c+(c<<4),255];
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
-  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
+  a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
   return [a+(a<<4),b+(b<<4),c+(c<<4),d+(d<<4)];
  } else if((e=(/^hsl\(\s*([\+\-]?\d+(?:\.\d+)?)\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*\)$/.exec(x)))!==null){
   rgb=hlsToRgb([parseHue(e[1]),parsePercent(e[3]),parsePercent(e[2])]);
@@ -486,8 +502,8 @@ var clampRgba=function(x){
  x[1]=(x[1]<0 ? 0 : Math.min(x[1],1));
  x[2]=(x[2]<0 ? 0 : Math.min(x[2],1));
  x[3]=(x[3]<0 ? 0 : Math.min(x[3],1));
- return x
-}
+ return x;
+};
 /**
 * Creates a 4-element array representing a color.  Each element
 * can range from 0 to 1 and specifies the red, green, blue or alpha
@@ -573,8 +589,8 @@ exports.toGLColor=function(r,g,b,a){
  }
 };
 
-var namedColors=null;
-var setUpNamedColors=function(){
+namedColors=null;
+setUpNamedColors=function(){
 if(!namedColors){
     var nc=("aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff,"+
 "blueviolet,8a2be2,brown,a52a2a,burlywood,deb887,cadetblue,5f9ea0,chartreuse,7fff00,chocolate,d2691e,coral,ff7f50,cornflowerblue,6495ed,cornsilk,fff8dc,"+
@@ -602,11 +618,13 @@ if(!namedColors){
 
 /** @private */
 H3DU._toContext=function(context){
- return (context && context.getContext) ? context.getContext() : context;
+ "use strict";
+return (context && context.getContext) ? context.getContext() : context;
 };
 /** @private */
 H3DU._isPowerOfTwo=function(a){
-   if(Math.floor(a)!==a || a<=0)return false;
+   "use strict";
+if(Math.floor(a)!==a || a<=0)return false;
    while(a>1 && (a&1)===0){
     a>>=1;
    }
@@ -614,6 +632,7 @@ H3DU._isPowerOfTwo=function(a){
 };
 /** @private */
 H3DU._isIdentityExceptTranslate=function(mat){
+"use strict";
 return (
     mat[0]===1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
     mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&

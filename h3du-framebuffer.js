@@ -1,3 +1,4 @@
+/* global H3DU */
 /**
 * Represents an off-screen frame buffer.<p>
 * When H3DU.FrameBuffer's
@@ -27,10 +28,11 @@ H3DU.FrameBuffer = function(context, width, height){
  // units, such as texture unit 0
  this.textureUnit=3;
  this._init(context,width,height);
- }
+ };
 /** @private */
 H3DU.FrameBuffer.prototype._init=function(context,width,height){
- this.buffer=context.createFramebuffer();
+ "use strict";
+this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
  /** The frame buffer's width.
@@ -71,7 +73,7 @@ H3DU.FrameBuffer.prototype._init=function(context,width,height){
    this.width,this.height);
  this.context.bindFramebuffer(
    context.FRAMEBUFFER,oldBuffer);
-}
+};
 /**
  * Resizes the frame buffer to a new width and height,
  * if either differs from the current width or height.
@@ -83,14 +85,15 @@ H3DU.FrameBuffer.prototype._init=function(context,width,height){
  * @memberof! H3DU.FrameBuffer#
 */
 H3DU.FrameBuffer.prototype.resize=function(width,height){
- width=Math.ceil(width);
+ "use strict";
+width=Math.ceil(width);
  height=Math.ceil(height);
- if(width!=this.width || height!=this.height){
+ if(width!==this.width || height!==this.height){
   this.dispose();
   this._init(this.context,width,height);
  }
  return this;
-}
+};
 
 /**
  * Gets the WebGL context associated with this frame buffer.
@@ -146,7 +149,7 @@ H3DU.FrameBuffer.prototype.dispose=function(){
 if(this.buffer !== null){
    var oldBuffer=this.context.getParameter(
     this.context.FRAMEBUFFER_BINDING);
-   if(oldBuffer==this.buffer){
+   if(oldBuffer===this.buffer){
      this.unbind();
    }
    this.context.deleteFramebuffer(this.buffer);

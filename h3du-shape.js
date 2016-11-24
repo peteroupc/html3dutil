@@ -1,3 +1,4 @@
+/* global H3DU, console */
 /**
  * An object that associates a geometric mesh (the shape of the object) with
  *  material data (which defines what is seen on the object's surface)
@@ -6,19 +7,20 @@
  *  @class
  * @alias H3DU.Shape
 * @param {H3DU.BufferedMesh} mesh A mesh in the form of a buffer object.
-* For {@link H3DU.Mesh} objects, the shape
+* For {@link H3DU.Mesh} objects, the shapeparam {H3DU.Material}
  * created will use the mesh in its current state and won't
  * track future changes.  <i>Using H3DU.BufferedMesh objects as the parameter
  * is deprecated.</i>
   */
 H3DU.Shape = function(mesh){
-  if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
+  "use strict";
+if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
   if(mesh instanceof H3DU.Mesh){
    this.bufferedMesh=new H3DU.MeshBuffer(mesh);
   } else {
    if(!H3DU.Shape._bufferedMeshWarning && mesh instanceof H3DU.BufferedMesh){
-    console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.")
-    H3DU.Shape._bufferedMeshWarning=true
+    console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.");
+    H3DU.Shape._bufferedMeshWarning=true;
    }
    this.bufferedMesh=mesh;
   }
@@ -26,12 +28,13 @@ H3DU.Shape = function(mesh){
   this.material=new H3DU.Material();
   this.parent=null;
   this.visible=true;
-}
+};
 /** @private */
 H3DU.Shape.prototype._hasColorAttr=function(){
-  var bm=this.bufferedMesh;
+  "use strict";
+var bm=this.bufferedMesh;
   return bm && bm instanceof H3DU.MeshBuffer && bm._getAttribute("colorAttr");
-}
+};
 /** @private */
 H3DU.Shape._bufferedMeshWarning=false;
 /**
@@ -41,7 +44,8 @@ H3DU.Shape._bufferedMeshWarning=false;
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.vertexCount=function(){
- return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
+ "use strict";
+return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 };
 /**
 * Gets the number of primitives (triangles, lines,
@@ -50,7 +54,8 @@ H3DU.Shape.prototype.vertexCount=function(){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.primitiveCount=function(){
- return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
+ "use strict";
+return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 };
 /**
  * Not documented yet.
@@ -58,7 +63,8 @@ H3DU.Shape.prototype.primitiveCount=function(){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setVisible=function(value){
- this.visible=!!value;
+ "use strict";
+this.visible=!!value;
  return this;
 };
 /**
@@ -67,7 +73,8 @@ H3DU.Shape.prototype.setVisible=function(value){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getVisible=function(){
- return this.visible;
+ "use strict";
+return this.visible;
 };
 /**
 * Sets material parameters that give the shape a certain color.
@@ -88,8 +95,9 @@ H3DU.Shape.prototype.getVisible=function(){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setColor=function(r,g,b,a){
-  var c=H3DU.toGLColor(r,g,b,a);
-  return this.setMaterialParams({"ambient":c,"diffuse":c})
+  "use strict";
+var c=H3DU.toGLColor(r,g,b,a);
+  return this.setMaterialParams({"ambient":c,"diffuse":c});
 };
 /**
  * Sets material parameters that give the shape a texture with the given URL.
@@ -101,7 +109,8 @@ H3DU.Shape.prototype.setColor=function(r,g,b,a){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setTexture=function(name){
- return this.setMaterialParams({"texture":name});
+ "use strict";
+return this.setMaterialParams({"texture":name});
 };
 /**
  * Sets this shape's material to a shader with the given URL.
@@ -112,7 +121,8 @@ H3DU.Shape.prototype.setTexture=function(name){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setShader=function(shader){
- return this.setMaterialParams({"shader":shader});
+ "use strict";
+return this.setMaterialParams({"shader":shader});
 };
 /**
  * Sets parameters of this shape's material.
@@ -121,10 +131,11 @@ H3DU.Shape.prototype.setShader=function(shader){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setMaterialParams=function(params){
- if(this.material){
-   this.material.setParams(params)
+ "use strict";
+if(this.material){
+   this.material.setParams(params);
  } else {
-   this.material=new Material().setParams(params)
+   this.material=new H3DU.Material().setParams(params);
  }
  return this;
 };
@@ -147,7 +158,8 @@ H3DU.Shape.prototype.setMaterialParams=function(params){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
- var c=H3DU.toGLColor(r,g,b,a);
+ "use strict";
+var c=H3DU.toGLColor(r,g,b,a);
  return this.setMaterialParams({
   "texture":name,
   "ambient":c,
@@ -161,7 +173,8 @@ H3DU.Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setMaterial=function(material){
- this.material=material;
+ "use strict";
+this.material=material;
  return this;
 };
 /**
@@ -174,7 +187,8 @@ H3DU.Shape.prototype.setMaterial=function(material){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.copy=function(){
- var ret=new H3DU.Shape(this.bufferedMesh);
+ "use strict";
+var ret=new H3DU.Shape(this.bufferedMesh);
  ret.material=this.material.copy();
  ret.transform=this.getTransform().copy();
  return ret;
@@ -184,14 +198,16 @@ H3DU.Shape.prototype.copy=function(){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getTransform=function(){
- return this.transform;
+ "use strict";
+return this.transform;
 };
 /**
  * Not documented yet.
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getBounds=function(){
- if(!this.bufferedMesh){
+ "use strict";
+if(!this.bufferedMesh){
   return [0,0,0,-1,-1,-1];
  }
  var bounds=(this.bufferedMesh.getBounds) ?
@@ -212,10 +228,11 @@ H3DU.Shape.prototype.getBounds=function(){
  } else {
   return bounds.slice(0,6);
  }
-}
+};
 /** @private */
 H3DU.Shape.prototype.isCulled=function(frustum){
- if(!this.bufferedMesh||!this.visible)return true;
+ "use strict";
+if(!this.bufferedMesh||!this.visible)return true;
  return !H3DU.Math.frustumHasBox(frustum,this.getBounds());
 };
 /**
@@ -224,7 +241,8 @@ H3DU.Shape.prototype.isCulled=function(frustum){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setTransform=function(transform){
- this.transform=transform.copy();
+ "use strict";
+this.transform=transform.copy();
  return this;
 };
 /**
@@ -238,7 +256,8 @@ H3DU.Shape.prototype.setTransform=function(transform){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setScale=function(x,y,z){
-  this.getTransform().setScale(x,y,z);
+  "use strict";
+this.getTransform().setScale(x,y,z);
   return this;
 };
 /**
@@ -252,7 +271,8 @@ H3DU.Shape.prototype.setScale=function(x,y,z){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setPosition=function(x,y,z){
-  this.getTransform().setPosition(x,y,z);
+  "use strict";
+this.getTransform().setPosition(x,y,z);
   return this;
 };
 /**
@@ -263,7 +283,8 @@ H3DU.Shape.prototype.setPosition=function(x,y,z){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setQuaternion=function(quat){
-  this.getTransform().setQuaternion(quat);
+  "use strict";
+this.getTransform().setQuaternion(quat);
   return this;
 };
 /**
@@ -273,7 +294,8 @@ H3DU.Shape.prototype.setQuaternion=function(quat){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getMatrix=function(){
-  var xform=this.getTransform();
+  "use strict";
+var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
   var mat;
   if(this.parent !== null){

@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, Lights, console, isCurrentProgram */
+/* global H3DU, console */
 
 /**
 * Holds source code for a WebGL shader program.  A shader program in
@@ -59,7 +59,6 @@ H3DU.ShaderInfo._setUniformsInternal(uniforms,this.uniformValues,null);
 /** @private */
 H3DU.ShaderInfo._setUniformInternal=function(uniforms,uniformValues,i,changedUniforms){
   "use strict";
-isCurrentProgram=null;
       var v=uniforms[i];
       var uv=uniformValues[i];
       if(typeof v==="number"){

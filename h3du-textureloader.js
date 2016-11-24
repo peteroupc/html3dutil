@@ -1,3 +1,4 @@
+/* global H3DU, Promise */
 /**
 * An object that caches loaded textures and uploads them
 * to WebGL contexts.
@@ -5,18 +6,20 @@
 * @alias H3DU.TextureLoader
 */
 H3DU.TextureLoader = function(){
- this.loadedTextures=[];
+ "use strict";
+this.loadedTextures=[];
  this.textureImages={};
  this.maxAnisotropy=[];
-}
+};
 /**
  * Not documented yet.
  * @param {*} name
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.getTexture=function(name){
- return this.textureImages[name]||null;
-}
+ "use strict";
+return this.textureImages[name]||null;
+};
 
 /**
  * Not documented yet.
@@ -24,14 +27,16 @@ H3DU.TextureLoader.prototype.getTexture=function(name){
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.loadTexture=function(name){
- return H3DU.Texture.loadTexture(name,this.textureImages);
-}
+ "use strict";
+return H3DU.Texture.loadTexture(name,this.textureImages);
+};
 /** @private */
 H3DU.TextureLoader.prototype._setMaxAnisotropy=function(context){
- context= (context.getContext) ? context.getContext() : context;
+ "use strict";
+context= (context.getContext) ? context.getContext() : context;
  var ma=this.maxAnisotropy;
  for(var i=0;i<ma.length;i++){
-  if(ma[i][0]==context){
+  if(ma[i][0]===context){
    if(ma[i][2]>=0){
     context.texParameteri(context.TEXTURE_2D,ma[i][2],ma[i][1]);
    } else {
@@ -41,19 +46,19 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy=function(context){
  }
  var ext=context.getExtension("EXT_texture_filter_anisotropic") ||
          context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
-         context.getExtension("MOZ_EXT_texture_filter_anisotropic")
+         context.getExtension("MOZ_EXT_texture_filter_anisotropic");
  if(!ext){
-  ma.push([context,1,-1,null])
-  return 1
+  ma.push([context,1,-1,null]);
+  return 1;
  } else {
   var cnst=ext.TEXTURE_MAX_ANISOTROPY_EXT;
   var ret=context.getParameter(
     ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-  ma.push([context,ret,cnst])
+  ma.push([context,ret,cnst]);
   context.texParameteri(context.TEXTURE_2D,cnst,ret);
-  return ret
+  return ret;
  }
-}
+};
 /**
  * Not documented yet.
  * @param {*} textures
@@ -66,12 +71,13 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy=function(context){
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
- var promises=[]
+ "use strict";
+var promises=[];
  for(var i=0;i<textures.length;i++){
   promises.push(this.loadTexture(textures[i]));
  }
  return H3DU.getPromiseResultsAll(promises,resolve,reject);
-}
+};
 /**
  * Not documented yet.
  * @param {String} texture
@@ -82,13 +88,14 @@ H3DU.TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.loadAndMapTexture=function(texture,context){
-  context= (context.getContext) ? context.getContext() : context;
+  "use strict";
+context= (context.getContext) ? context.getContext() : context;
   var thisObject=this;
   return this.loadTexture(texture).then(function(tex){
       thisObject.mapTexture(tex,context);
       return Promise.resolve(tex);
   });
-}
+};
 /**
  * Not documented yet.
  * @param {Array<String>} textures
@@ -102,14 +109,15 @@ H3DU.TextureLoader.prototype.loadAndMapTexture=function(texture,context){
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.loadAndMapTexturesAll=function(textures,context,resolve,reject){
- context= (context.getContext) ? context.getContext() : context;
- var promises=[]
+ "use strict";
+context= (context.getContext) ? context.getContext() : context;
+ var promises=[];
  var thisObject=this;
  for(var i=0;i<textures.length;i++){
   promises.push(this.loadAndMapTexture(textures[i],context));
  }
  return H3DU.getPromiseResultsAll(promises,resolve,reject);
-}
+};
 /**
  * Not documented yet.
  * @param {*} textures
@@ -117,12 +125,13 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll=function(textures,context,res
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.mapTextures=function(textures,context){
- context= (context.getContext) ? context.getContext() : context;
+ "use strict";
+context= (context.getContext) ? context.getContext() : context;
  for(var i=0;i<textures.length;i++){
   this.mapTexture(textures[i],context);
  }
  return this;
-}
+};
 /**
  * Not documented yet.
  * @param {*} texture
@@ -130,29 +139,32 @@ H3DU.TextureLoader.prototype.mapTextures=function(textures,context){
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.mapTexture=function(texture,context){
- context= (context.getContext) ? context.getContext() : context;
+ "use strict";
+context= (context.getContext) ? context.getContext() : context;
  var lt=this.loadedTextures;
  for(var i=0;i<lt.length;i++){
-  if(lt[i][0]==texture && lt[i][1]==context){
+  if(lt[i][0]===texture && lt[i][1]===context){
    return lt[i][2];
   }
  }
  var loadedTex=new H3DU._LoadedTexture(texture,context);
- lt.push([texture,context,loadedTex])
+ lt.push([texture,context,loadedTex]);
  return loadedTex;
-}
+};
 /**
  * Disposes all resources used by this texture loader.
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.dispose=function(){
- for(var tex in this.textureImages){
+ "use strict";
+for(var tex in this.textureImages){
   this.textureImages[tex].dispose();
  }
+ var lt=this.loadedTextures;
  for(var i=0;i<lt.length;i++){
   this.loadedTextures[i][2].dispose();
  }
- this.textureImages={}
- this.loadedTextures=[]
- this.maxAnisotropy=[]
-}
+ this.textureImages={};
+ this.loadedTextures=[];
+ this.maxAnisotropy=[];
+};

@@ -6,6 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
+/* global H3DU */
 /**
 * Specifies parameters for geometry materials, which describe the appearance of a
 * 3D object. This includes how an object scatters, reflects, or absorbs light, as well
@@ -22,7 +23,8 @@ at: http://peteroupc.github.io/
 */
 H3DU.Material = function(ambient, diffuse, specular,shininess,emission) {
  //console.log([ambient,diffuse,specular,shininess,emission]+"")
- if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambient);
+ "use strict";
+if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambient);
  if((diffuse!==null && typeof diffuse!=="undefined"))diffuse=H3DU.toGLColor(diffuse);
  if((specular!==null && typeof specular!=="undefined"))specular=H3DU.toGLColor(specular);
  if((emission!==null && typeof emission!=="undefined"))emission=H3DU.toGLColor(emission);
@@ -163,7 +165,7 @@ A strong tilt indicates strong relief detail at that point.<p>
  * @default
  */
  this.shader=null;
-}
+};
 /**
 * Clones this object's parameters to a new H3DU.Material
 * object and returns that object. The material's texture
@@ -173,7 +175,8 @@ A strong tilt indicates strong relief detail at that point.<p>
 * @memberof! H3DU.Material#
 */
 H3DU.Material.prototype.copy=function(){
- return new H3DU.Material(
+ "use strict";
+return new H3DU.Material(
   this.ambient.slice(0,this.ambient.length),
   this.diffuse.slice(0,this.diffuse.length),
   this.specular.slice(0,this.specular.length),
@@ -220,22 +223,23 @@ H3DU.Material.prototype.copy=function(){
 * @memberof! H3DU.Material#
 */
 H3DU.Material.prototype.setParams=function(params){
- var param;
+ "use strict";
+var param;
  if((typeof params.ambient !== "undefined" && params.ambient !== null)){
   this.ambient=H3DU.toGLColor(params.ambient);
-  if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3)
+  if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3);
  }
  if((typeof params.diffuse !== "undefined" && params.diffuse !== null)){
   this.diffuse=H3DU.toGLColor(params.diffuse);
-  if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4)
+  if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4);
  }
  if((typeof params.specular !== "undefined" && params.specular !== null)){
   this.specular=H3DU.toGLColor(params.specular);
-  if(this.specular.length>3)this.specular=this.specular.slice(0,3)
+  if(this.specular.length>3)this.specular=this.specular.slice(0,3);
  }
  if((typeof params.emission !== "undefined" && params.emission !== null)){
   this.emission=H3DU.toGLColor(params.emission);
-  if(this.emission.length>3)this.emission=this.emission.slice(0,3)
+  if(this.emission.length>3)this.emission=this.emission.slice(0,3);
  }
  if((typeof params.shininess !== "undefined" && params.shininess !== null)){
   this.shininess=params.shininess;
@@ -264,10 +268,10 @@ H3DU.Material.prototype.setParams=function(params){
     this.normalMap=param;
    }
  }
- if(typeof params.basic!="undefined" && params.basic !== null){
+ if(typeof params.basic!=="undefined" && params.basic !== null){
   this.basic=params.basic;
  }
- if(typeof params.shader!="undefined" && params.shader !== null){
+ if(typeof params.shader!=="undefined" && params.shader !== null){
   this.shader=params.shader;
  }
  return this;
@@ -286,7 +290,8 @@ H3DU.Material.prototype.setParams=function(params){
 * @returns {H3DU.Material} The resulting material object.
  */
 H3DU.Material.fromColor=function(r,g,b,a){
- var color=H3DU.toGLColor(r,g,b,a);
+ "use strict";
+var color=H3DU.toGLColor(r,g,b,a);
  return new H3DU.Material(color,color);
 };
 
@@ -299,12 +304,14 @@ H3DU.Material.fromColor=function(r,g,b,a){
 * @returns {H3DU.Material} The resulting material object.
  */
 H3DU.Material.fromTexture=function(texture){
- return new H3DU.Material().setParams({"texture":texture});
+ "use strict";
+return new H3DU.Material().setParams({"texture":texture});
 };
 
 /**
 * Not documented yet.
 */
 H3DU.Material.forShader=function(shader){
- return new H3DU.Material().setParams({"shader":shader});
-}
+ "use strict";
+return new H3DU.Material().setParams({"shader":shader});
+};

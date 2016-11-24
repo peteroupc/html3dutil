@@ -31,8 +31,7 @@ at: http://peteroupc.github.io/
  * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
  * May be omitted; default is 1.
  */
-H3DU.BezierCurve=function(cp, u1, u2) {
-
+H3DU.BezierCurve=function(cp, u1, u2){
  if(typeof u1==="undefined" && typeof u2==="undefined"){
   this.uoffset=0;
   this.umul=1;
@@ -61,8 +60,7 @@ H3DU.BezierCurve=function(cp, u1, u2) {
 * }
  * @memberof! H3DU.BezierCurve#
 */
-H3DU.BezierCurve.prototype.evaluate=function(u) {
-
+H3DU.BezierCurve.prototype.evaluate=function(u){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul);
 };
 /**
@@ -99,8 +97,7 @@ H3DU.BezierCurve.prototype.evaluate=function(u) {
  * V-axis; it will correspond to 1.
  * May be omitted; default is 1.
  */
-H3DU.BezierSurface=function(cp, u1, u2, v1, v2) {
-
+H3DU.BezierSurface=function(cp, u1, u2, v1, v2){
  if(typeof u1==="undefined" && typeof u2==="undefined" &&
     typeof v1==="undefined" && typeof v2==="undefined"){
   this.uoffset=0;
@@ -130,8 +127,7 @@ H3DU.BezierSurface=function(cp, u1, u2, v1, v2) {
  * length of a control point, as specified in the constructor.
  * @memberof! H3DU.BezierSurface#
 */
-H3DU.BezierSurface.prototype.evaluate=function(u,v, output) {
-
+H3DU.BezierSurface.prototype.evaluate=function(u,v, output){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul,
    (v-this.voffset)*this.vmul);
 };
@@ -166,8 +162,7 @@ H3DU.BezierSurface.prototype.evaluate=function(u,v, output) {
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
 * and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
 */
-H3DU.BSplineCurve=function(controlPoints, knots, bits) {
-
+H3DU.BSplineCurve=function(controlPoints, knots, bits){
  if(controlPoints.length<=0)throw new Error();
  if(!knots)throw new Error();
  this.bits=bits||0;
@@ -225,8 +220,7 @@ H3DU.BSplineCurve.HOMOGENEOUS_BIT = 4;
 */
 H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
 /** @private */
-H3DU.BSplineCurve._checkKnots=function(knots) {
-
+H3DU.BSplineCurve._checkKnots=function(knots){
  for(var i=1;i<knots.length;i++){
   if(knots[i]<knots[i-1])
    throw new Error();
@@ -234,8 +228,7 @@ H3DU.BSplineCurve._checkKnots=function(knots) {
  if(knots[0]===knots[knots.length-1])throw new Error();
 };
 /** @private */
-H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer) {
-
+H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
  var c=1;
  for(var i=0;i<numPoints;i++){
    buffer[i]=0;
@@ -296,8 +289,7 @@ H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer) {
 * }
  * @memberof! H3DU.BSplineCurve#
 */
-H3DU.BSplineCurve.prototype.evaluate=function(u) {
-
+H3DU.BSplineCurve.prototype.evaluate=function(u){
   var numPoints=this.controlPoints.length;
   var order=this.knots.length-numPoints;
   var oldu=u;
@@ -372,8 +364,7 @@ H3DU.BSplineCurve.prototype.evaluate=function(u) {
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
 * and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
 */
-H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits) {
-
+H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  var vcplen=controlPoints.length;
  if(vcplen<=0)throw new Error();
  var ucplen=controlPoints[0].length;
@@ -414,8 +405,7 @@ H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits) {
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
 * @returns {H3DU.BSplineCurve} Return value.*/
-H3DU.BSplineCurve.clamped=function(controlPoints,degree,bits) {
-
+H3DU.BSplineCurve.clamped=function(controlPoints,degree,bits){
  return new H3DU.BSplineCurve(controlPoints,
    H3DU.BSplineCurve.clampedKnots(controlPoints.length,degree),bits);
 };
@@ -428,8 +418,7 @@ H3DU.BSplineCurve.clamped=function(controlPoints,degree,bits) {
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
 * @returns {H3DU.BSplineCurve} Return value.*/
-H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits) {
-
+H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits){
  return new H3DU.BSplineCurve(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints.length,degree),bits);
 };
@@ -446,8 +435,7 @@ H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits) {
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
 * @returns {H3DU.BSplineSurface} Return value.*/
-H3DU.BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits) {
-
+H3DU.BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
  return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
    H3DU.BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits);
@@ -464,8 +452,7 @@ H3DU.BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits) {
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
 * @returns {H3DU.BSplineSurface} Return value.*/
-H3DU.BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits) {
-
+H3DU.BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
  return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
    H3DU.BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits);
@@ -476,8 +463,7 @@ H3DU.BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits) {
 * @param {Number} degree
 * @returns {Array<Number>} A uniform knot vector.
 */
-H3DU.BSplineCurve.uniformKnots=function(controlPoints,degree) {
-
+H3DU.BSplineCurve.uniformKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
   if((degree===null || typeof degree==="undefined"))degree=3;
@@ -496,8 +482,7 @@ H3DU.BSplineCurve.uniformKnots=function(controlPoints,degree) {
 * @param {Number} degree
 * @returns {Array<Number>} A clamped knot vector.
 */
-H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree) {
-
+H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
   if((degree===null || typeof degree==="undefined"))degree=3;
@@ -528,8 +513,7 @@ H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree) {
  * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
  * @memberof! H3DU.BSplineSurface#
 */
-H3DU.BSplineSurface.prototype.evaluate=function(u,v) {
-
+H3DU.BSplineSurface.prototype.evaluate=function(u,v){
   u=this.knotsU[this.orderU-1]+u*(this.knotsU[this.ucplen]-
     this.knotsU[this.orderU-1]);
   v=this.knotsV[this.orderV-1]+v*(this.knotsV[this.vcplen]-
@@ -614,8 +598,7 @@ H3DU.BSplineSurface.prototype.evaluate=function(u,v) {
 * @class
 * @alias H3DU.CurveEval
 */
-H3DU.CurveEval=function() {
-
+H3DU.CurveEval=function(){
  this.colorCurve=null;
  this.normalCurve=null;
  this.texCoordCurve=null;
@@ -639,8 +622,7 @@ H3DU.CurveEval=function() {
 * }});
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.vertex=function(evaluator) {
-
+H3DU.CurveEval.prototype.vertex=function(evaluator){
  this.vertexCurve=evaluator;
  return this;
 };
@@ -652,8 +634,7 @@ H3DU.CurveEval.prototype.vertex=function(evaluator) {
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.normal=function(evaluator) {
-
+H3DU.CurveEval.prototype.normal=function(evaluator){
  this.normalCurve=evaluator;
  return this;
 };
@@ -665,8 +646,7 @@ H3DU.CurveEval.prototype.normal=function(evaluator) {
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.color=function(evaluator) {
-
+H3DU.CurveEval.prototype.color=function(evaluator){
  this.colorCurve=evaluator;
  return this;
 };
@@ -678,8 +658,7 @@ H3DU.CurveEval.prototype.color=function(evaluator) {
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.texCoord=function(evaluator) {
-
+H3DU.CurveEval.prototype.texCoord=function(evaluator){
  this.texCoordCurve=evaluator;
  return this;
 };
@@ -694,8 +673,7 @@ H3DU.CurveEval.prototype.texCoord=function(evaluator) {
  * @returns {H3DU.CurveEval} This object.
  * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.evalOne=function(mesh,u) {
-
+H3DU.CurveEval.prototype.evalOne=function(mesh,u){
  var color=null;
  var normal=null;
  var texcoord=null;
@@ -750,8 +728,7 @@ H3DU.CurveEval.prototype.evalOne=function(mesh,u) {
  * @returns {H3DU.CurveEval} This object.
  * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2) {
-
+H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
  if(typeof n==="undefined")n=24;
  if(n<=0)throw new Error("invalid n");
  if(typeof u1==="undefined" && typeof u2==="undefined"){
@@ -788,8 +765,7 @@ H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2) {
 * @class
 * @alias H3DU.SurfaceEval
 */
-H3DU.SurfaceEval=function() {
-
+H3DU.SurfaceEval=function(){
  this.colorSurface=null;
  this.normalSurface=null;
  this.texCoordSurface=null;
@@ -806,8 +782,7 @@ H3DU.SurfaceEval=function() {
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.setAutoNormal=function(value) {
-
+H3DU.SurfaceEval.prototype.setAutoNormal=function(value){
  this.autoNormal=!!value;
  return this;
 };
@@ -822,8 +797,7 @@ H3DU.SurfaceEval.prototype.setAutoNormal=function(value) {
 * @returns {H3DU.SurfaceEval} This object.
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.vertex=function(evaluator) {
-
+H3DU.SurfaceEval.prototype.vertex=function(evaluator){
  this.vertexSurface=evaluator;
  return this;
 };
@@ -877,8 +851,7 @@ H3DU.SurfaceEval.prototype.vertex=function(evaluator) {
 * }})
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.normal=function(evaluator) {
-
+H3DU.SurfaceEval.prototype.normal=function(evaluator){
  this.normalSurface=evaluator;
  return this;
 };
@@ -890,8 +863,7 @@ H3DU.SurfaceEval.prototype.normal=function(evaluator) {
 * @returns {H3DU.SurfaceEval} This object.
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.color=function(evaluator) {
-
+H3DU.SurfaceEval.prototype.color=function(evaluator){
  this.colorSurface=evaluator;
  return this;
 };
@@ -909,11 +881,18 @@ H3DU.SurfaceEval.prototype.color=function(evaluator) {
 "use strict"; return [u,v] }});
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.texCoord=function(evaluator) {
-
+H3DU.SurfaceEval.prototype.texCoord=function(evaluator){
  this.texCoordSurface=evaluator;
  return this;
 };
+/** @private
+ @const
+*/
+H3DU._OLD_VALUES_SIZE = 8;
+/** @private
+ @const
+*/
+H3DU._RECORDED_VALUES_SIZE = 11;
 /**
  * Generates vertex positions and attributes based on a point
  * in a parametric surface.
@@ -926,32 +905,21 @@ H3DU.SurfaceEval.prototype.texCoord=function(evaluator) {
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.evalOne=function(mesh,u,v) {
-
+H3DU.SurfaceEval.prototype.evalOne=function(mesh,u,v){
  var values=[];
  this._saveValues(mesh,values,0);
- this._record(u,v,values,_OLD_VALUES_SIZE);
- this._playBack(mesh,values,_OLD_VALUES_SIZE);
+ this._record(u,v,values,H3DU._OLD_VALUES_SIZE);
+ this._playBack(mesh,values,H3DU._OLD_VALUES_SIZE);
  this._restoreValues(mesh,values,0);
  return this;
 };
-/** @private
- @const
-*/
-var _OLD_VALUES_SIZE = 8;
-/** @private
- @const
-*/
-var _RECORDED_VALUES_SIZE = 11;
 /** @private */
-H3DU.SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index) {
-
+H3DU.SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index){
  this._record(u,v,buffer,index);
  this._playBack(mesh,buffer,index);
 };
 /** @private */
-H3DU.SurfaceEval.prototype._saveValues=function(mesh,buffer,index) {
-
+H3DU.SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
  if(this.colorSurface){
   buffer[index+3]=mesh.color[0];
   buffer[index+4]=mesh.color[1];
@@ -968,8 +936,7 @@ H3DU.SurfaceEval.prototype._saveValues=function(mesh,buffer,index) {
  }
 };
 /** @private */
-H3DU.SurfaceEval.prototype._restoreValues=function(mesh,buffer,index) {
-
+H3DU.SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
  if(this.colorSurface){
   mesh.color3(buffer[index+3],buffer[index+4],buffer[index+5]);
  }
@@ -981,8 +948,7 @@ H3DU.SurfaceEval.prototype._restoreValues=function(mesh,buffer,index) {
  }
 };
 /** @private */
-H3DU.SurfaceEval.prototype._record=function(u,v,buffer,index) {
-
+H3DU.SurfaceEval.prototype._record=function(u,v,buffer,index){
  var normal=null;
  if(this.colorSurface){
   var color=this.colorSurface.evaluate(u,v);
@@ -1053,8 +1019,7 @@ H3DU.SurfaceEval.prototype._record=function(u,v,buffer,index) {
  }
 };
 /** @private */
-H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index) {
-
+H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  if(this.vertexSurface){
   if(this.colorSurface){
    mesh.color3(buffer[index+6],buffer[index+7],buffer[index+8]);
@@ -1097,8 +1062,7 @@ H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index) {
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2) {
-
+H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  if(typeof un==="undefined")un=24;
  if(typeof vn==="undefined")vn=24;
  if(un<=0)throw new Error("invalid un");
@@ -1122,15 +1086,15 @@ H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2) {
   for(i=0;i<vn;i++){
    mesh.mode(H3DU.Mesh.TRIANGLE_STRIP);
    for(j=0,prevIndex=0;j<=un;
-      j++,prevIndex+=_RECORDED_VALUES_SIZE){
+      j++,prevIndex+=H3DU._RECORDED_VALUES_SIZE){
     jx=j*du+u1;
     if(i === 0){
-     this._recordAndPlayBack(mesh,jx,i*dv+v1,oldValues,_OLD_VALUES_SIZE);
+     this._recordAndPlayBack(mesh,jx,i*dv+v1,oldValues,H3DU._OLD_VALUES_SIZE);
     } else {
      this._playBack(mesh,previousValues,prevIndex);
     }
     if(i===vn-1){
-     this._recordAndPlayBack(mesh,jx,(i+1)*dv+v1,oldValues,_OLD_VALUES_SIZE);
+     this._recordAndPlayBack(mesh,jx,(i+1)*dv+v1,oldValues,H3DU._OLD_VALUES_SIZE);
     } else {
      this._recordAndPlayBack(mesh,jx,(i+1)*dv+v1,previousValues,prevIndex);
     }

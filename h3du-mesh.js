@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math, i, i1, i2, i3, newAttributes, stride, vertexStartIndex, x, y, z */
+/* global H3DU, H3DU.Math */
 /**
 * Specifies the triangles, lines, or points that make up a geometric shape.
 * Each vertex, that is, each point, each end of a line, and each corner
@@ -808,7 +808,7 @@ this.vertices=vertices||[];
   this.vertices=newVertices;
   this.attributeBits=newBits;
  };
- this._setTriangle=function(){
+ this._setTriangle=function(vertexStartIndex,stride,i1,i2,i3){
    var v1=i1*stride;
    var v2=i2*stride;
    var v3=i3*stride;
@@ -842,7 +842,7 @@ this.vertices=vertices||[];
     this.indices.push(i1,i2,i3);
    }
  };
- this._vertex3=function(){
+ this._vertex3=function(x,y,z){
   var currentMode=this.currentMode;
   if(currentMode===-1)throw new Error("mode() not called");
   this._rebuildVertices(this._elementsDefined);
