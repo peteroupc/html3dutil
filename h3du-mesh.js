@@ -264,11 +264,16 @@ H3DU.Mesh.prototype.merge=function(other){
   }
   // TODO: Won't work if meshes have different attributes;
   // this causes issues in the compositemesh and pathshapes demos
-  var oldVertexLength=this.vertexCount();
+  var thisAttributes=this.attributeBits&H3DU.Mesh.ATTRIBUTES_BITS;
+  var otherAttributes=other.attributeBits&H3DU.Mesh.ATTRIBUTES_BITS;
+  if(thisAttributes!=otherAttributes) {
+    throw new Error("Meshes have different attributes");
+  }
+   var i;
+   var oldVertexLength=this.vertexCount();
    var oldIndexLength=this.indices.length;
    this.vertices.push.apply(this.vertices,other.vertices);
    this.indices.push.apply(this.indices,other.indices);
-var i;
    for(i=oldIndexLength;i<this.indices.length;i++){
     this.indices[i]+=oldVertexLength;
    }

@@ -16,7 +16,7 @@ The file "glutil_min.js" is a minified single-file version of the library.  Incl
 as follows:
 
 ```html
-  <script type="text/javascript" src="glutil_min.js"></script>
+  <script type="text/javascript" src="h3du_min.js"></script>
 ```
 
 Overview
@@ -147,8 +147,8 @@ Examples
   H3DU.renderLoop(function(time){
    // Update the shape's rotation
    var q=H3DU.Math.quatFromTaitBryan(
-     360*GLUtil.getTimePosition(timer,time,6000),
-     360*GLUtil.getTimePosition(timer,time,12000),
+     360*H3DU.getTimePosition(timer,time,6000),
+     360*H3DU.getTimePosition(timer,time,12000),
      0
    );
    shape.setQuaternion(q);

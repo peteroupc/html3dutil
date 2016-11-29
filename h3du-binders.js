@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.BufferedMesh, H3DU.FrameBuffer, H3DU.Mesh, Lights, Material, console */
+/* global H3DU, H3DU.BufferedMesh, H3DU.FrameBuffer, H3DU.Mesh, console */
 /**
 * Contains classes that implement methods
 * binding certain HTML 3D Library objects

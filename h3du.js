@@ -1,8 +1,5 @@
 /* global JSON, Promise */
 /**
-* Contains classes and methods for easing development
-* of WebGL applications.
-* @module glutil
 * @license CC0-1.0
 */
 /*
@@ -34,9 +31,9 @@ return (new Date().getTime()*1000)-window.performance._startTime;
 /**
 * The Public Domain HTML 3D Library contains classes and utility
 * methods to ease the development of HTML 3D applications, such
-* as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
+* as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.<p>
 * This page describes miscellaneous utility methods included in the
-* library..
+* library.
 * @namespace
 * @alias H3DU
 */

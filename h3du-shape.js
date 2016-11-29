@@ -32,6 +32,7 @@ if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
 /** @private */
 H3DU.Shape.prototype._hasColorAttr=function(){
   "use strict";
+// TODO: Maybe use better approach
 var bm=this.bufferedMesh;
   return bm && bm instanceof H3DU.MeshBuffer && bm._getAttribute("colorAttr");
 };
