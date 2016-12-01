@@ -24,6 +24,7 @@ Help/
 ProfilingSessions/
 TestResults/
 bin/
+encoding/
 extras/util/
 obj/
 packages/
