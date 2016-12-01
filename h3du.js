@@ -538,8 +538,7 @@ var clampRgba=function(x){
 * and so on, including the newly added <code>rebeccapurple</code>.
 * <li>The value <code>transparent</code>, meaning transparent black.
 * </ul>
-* For more information:
-* [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
+* For more information, see the "{@tutorial colors}" tutorial.
 * @alias H3DU.toGLColor
 * @param {Array<Number>|number|string} r One of the following:<ul>
 * <li>A <b>color vector or string</b>, which can be one of these:<ul>

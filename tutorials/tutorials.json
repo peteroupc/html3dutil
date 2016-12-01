@@ -2,6 +2,7 @@
 "camera":{"title":"The \"Camera\" and the Projection and View Transforms"},
 "filters":{"title":"Graphics Filters"},
 "glmath":{"title":"GLMath Math Library"},
+"colors":{"title":"Color Strings"},
 "matrixdetails":{"title":"Matrix Details"},
 "overview":{"title":"Library Overview"},
 "shapes":{"title":"Creating Shapes"},
