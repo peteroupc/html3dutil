@@ -1,5 +1,6 @@
 Dir.chdir(File.dirname(__FILE__))
 require './rubyutil'
+require './generate-websafe-svg'
 require 'fileutils'
 
 if !FileTest.exist?("compiler.jar")
@@ -53,4 +54,5 @@ Dir.chdir(".."){
  files|=Dir.glob("h3du-*.js")
  files|=%w( oldnames.js )
  normalizeAndCompile(files,"h3du_min.js",false,false)
+ generateSvg("tutorials/websafe.svg")
 }

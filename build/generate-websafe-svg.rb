@@ -1,0 +1,63 @@
+class SwatchSvg
+ COLUMNS = 8
+ HEIGHT = 24
+ WIDTH = HEIGHT + 80
+ def initialize
+  @x=0
+  @y=0
+  @slack=0
+  @output=""
+ end
+ def separateRow
+  if @x>0
+   @y+=1
+   @x=0
+  end
+  @slack+=HEIGHT/2
+ end
+ def addSwatch(color)
+  svgx=@x*WIDTH
+  svgy=@y*HEIGHT+@slack
+  @output+="<rect x='#{svgx+2}' y='#{svgy+2}' width='#{HEIGHT-4}'"+
+   " height='#{HEIGHT-4}' style='stroke:black;stroke-width:1px;"+
+   " fill:#{color}'/><text x='#{svgx+HEIGHT}' y='#{svgy+HEIGHT-2}'"+
+   " width='#{WIDTH-HEIGHT-2}' height='#{HEIGHT-4}'"+
+   " style='font-size:#{(HEIGHT-4)*8/10}px'>"+
+   "<tspan>#{color}</tspan></text>\n"
+  @x+=1
+  if @x>=COLUMNS
+   @y+=1
+   @x=0
+  end
+ end
+ def to_s
+  yheight=(@x==0) ? @y : @y+1
+  svgx=COLUMNS*WIDTH
+  svgy=yheight*HEIGHT+@slack
+  head="<svg width='#{svgx}' height='#{svgy}' xmlns='http://www.w3.org/2000/svg'>\n"
+  return head+@output+"</svg>"
+ end
+end
+
+def generateSvg(output)
+
+webcolors=[
+%w( #FFFFFF #CCCCCC #999999 #666666 #333333 #000000 ),
+%w(#FF0000 #FF3333 #FF6666 #FF9999 #FFCCCC #CC0000 #CC3333 #CC6666 #CC9999 #990000 #993333 #996666 #660000 #663333 #330000 ),
+%w(#FF3300 #FF6633 #CC3300 #FF9966 #CC6633 #993300 #FF6600 #CC9966 #FF9933 #CC6600 #663300 #FFCC99 #996633 #FF9900 #CC9933 #FFCC66 #996600 #CC9900 #FFCC33 #FFCC00 ),
+%w(#FFFF00 #FFFF33 #FFFF66 #FFFF99 #FFFFCC #CCCC00 #CCCC33 #CCCC66 #CCCC99 #999900 #999933 #999966 #666600 #666633 #333300 ),
+%w(#CCFF00 #CCFF33 #99CC00 #CCFF66 #669900 #99CC33 #99FF00 #99FF33 #CCFF99 #66CC00 #99CC66 #669933 #336600 #66FF00 #339900 #99FF66 #66CC33 #66FF33 #33CC00 #33FF00 #00FF00 #33FF33 #66FF66 #99FF99 #CCFFCC #00CC00 #33CC33 #66CC66 #99CC99 #009900 #339933 #669966 #006600 #336633 #003300 #00FF33 #33FF66 #00CC33 #66FF99 #33CC66 #009933 #00FF66 #33FF99 #99FFCC #00CC66 #66CC99 #339966 #006633 ),
+%w(#00FF99 #33CC99 #66FFCC #009966 #33FFCC #00CC99 #00FFCC #00FFFF #33FFFF #66FFFF #99FFFF #CCFFFF #00CCCC #33CCCC #66CCCC #99CCCC #009999 #339999 #669999 #006666 #336666 #003333 #00CCFF #33CCFF #0099CC #66CCFF #006699 #3399CC #0099FF #3399FF #99CCFF #0066CC #6699CC #336699 #003366 #0066FF #3366CC #003399 #6699FF #3366FF #0033CC #0033FF #0000FF #3333FF #6666FF #9999FF #CCCCFF #0000CC #3333CC #6666CC #9999CC #000099 #333399 #666699 #000066 #333366 #000033 #3300FF #6633FF #3300CC ),
+%w(#9966FF #6633CC #330099 #6600FF #9933FF #CC99FF #6600CC #9966CC #663399 #330066 #9900FF #9933CC #CC66FF #660099 #CC33FF #9900CC #CC00FF ),
+%w(#FF00FF #FF33FF #FF66FF #FF99FF #FFCCFF #CC00CC #CC33CC #CC66CC #CC99CC #990099 #993399 #996699 #660066 #663366 #330033 #FF00CC #FF33CC #CC0099 #FF66CC #CC3399 #990066 #FF0099 #FF3399 #FF99CC #CC0066 #CC6699 #993366 #660033 #FF0066 #FF6699 #CC3366 #990033 #FF3366 #CC0033 #FF0033 )
+]
+
+ svg=SwatchSvg.new
+ for i in 0...webcolors.length
+  for c in webcolors[i]
+   svg.addSwatch(c)
+  end
+  svg.separateRow if i+1<webcolors.length
+ end
+ utf8write(svg.to_s,output)
+end
