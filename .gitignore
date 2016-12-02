@@ -10,7 +10,6 @@
 *.sdsettings
 *.shf*
 *.suo
-*.svg
 *.txt
 *.user
 *.userprefs

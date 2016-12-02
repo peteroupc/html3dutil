@@ -55,4 +55,5 @@ Dir.chdir(".."){
  files|=%w( oldnames.js )
  normalizeAndCompile(files,"h3du_min.js",false,false)
  generateSvg("tutorials/websafe.svg")
+ generateColorNameSvg("tutorials/colornames.svg")
 }
