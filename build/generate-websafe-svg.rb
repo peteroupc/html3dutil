@@ -7,7 +7,7 @@ class SwatchSvg
   @y=0
   @slack=0
   @output=""
-  @columns = 8
+  @columns = 7
   @width = HEIGHT + 80
  end
  def separateRow
