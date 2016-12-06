@@ -26,10 +26,10 @@ H3DU._MaterialBinder._textureSizeZeroZero=[0,0];
 H3DU._MaterialBinder.prototype.bind=function(program,context,loader){
  "use strict";
  if(!this.mshade)return this;
- if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array");}
- if(this.mshade.ambient.length!==3){console.warn("creating new ambient array");}
- if(this.mshade.specular.length!==3){console.warn("creating new specular array");}
- if(this.mshade.emission.length!==3){console.warn("creating new emission array");}
+// if(this.mshade.diffuse.length!==4){console.warn("creating new diffuse array");}
+// if(this.mshade.ambient.length!==3){console.warn("creating new ambient array");}
+// if(this.mshade.specular.length!==3){console.warn("creating new specular array");}
+// if(this.mshade.emission.length!==3){console.warn("creating new emission array");}
  var uniforms={
   "textureSize":H3DU._MaterialBinder._textureSizeZeroZero,
   "md":this.mshade.diffuse.length===4 ? this.mshade.diffuse :

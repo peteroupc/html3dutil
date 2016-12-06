@@ -10,18 +10,12 @@ if !FileTest.exist?("compiler.jar")
   exit
 end
 
-def normalizeFile(f)
-  return if getExt(f)==".jpg"
-  return if getExt(f)==".png"
-  utf8edit(f){|data| normalizeLines(data) }
-end
-
 $compilerJar=File.expand_path("compiler.jar")
 
 def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
   for input in inputArray
     return if !FileTest.exist?(input)
-    normalizeFile(input)
+    utf8edit(input){|data| next normalizeLines(data) }
   end
   inputs=inputArray.transform{|x| "--js #{ffq(x)}" }.join(" ")
   sourceMap=output+".map"
@@ -31,7 +25,7 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
      "--generate_exports --language_in ECMASCRIPT6 --language_out ECMASCRIPT3 "+
      "--compilation_level #{opt} #{inputs} "+
      (useSourceMap ? "--create_source_map #{ffq(sourceMap)} " : "")+
-     "--js_output_file #{ffq(output)}"
+     "--js_output_file #{ffq(output)} --rewrite_polyfills false"
   log=""
   tmppath("err.log"){|errlog|
     data=runcmd(cmd,errlog)
