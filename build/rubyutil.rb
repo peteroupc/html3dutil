@@ -529,8 +529,10 @@ def forceMove(s,d)
 end
 
 def forceCopy(s,d)
+  if !s || !FileTest.exist?(s)
+   return false
+ end
   dn=File.dirname(d)
-  return true if s==d
   if !FileTest.directory?(dn)
     begin
      FileUtils.mkdir_p(dn)
@@ -539,8 +541,7 @@ def forceCopy(s,d)
     end
   end
    if s!=d
-    tryDelete(d) if FileTest.file?(d)
-    FileUtils.cp(s,d) rescue nil
+    FileUtils.cp(s,d) # rescue nil
    end
    return FileTest.exist?(d)
 end
@@ -592,7 +593,7 @@ end
 def globRecurse(dir,regex,dirs=false,recurse=true,&block)
  if regex.is_a?(String)
    # Convert glob pattern to a regex
-  x=regex.gsub(/([\.\\\{\}\(\)\[\]\/\$\^])/){ "\\"+$1 }
+  x=regex.gsub(/([\|\.\\\{\}\(\)\[\]\/\$\^\+\-\&])/){ "\\"+$1 }
   x=x.gsub(/\*/,".*")
   x=x.gsub(/\?/,".")
   regex=Regexp.new("^"+x+"$","i")
