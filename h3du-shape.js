@@ -6,10 +6,10 @@
  * See the "{@tutorial shapes}" tutorial.
  *  @class
  * @alias H3DU.Shape
-* @param {H3DU.BufferedMesh} mesh A mesh in the form of a buffer object.
+* @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
 * For {@link H3DU.Mesh} objects, the shapeparam {H3DU.Material}
  * created will use the mesh in its current state and won't
- * track future changes.  <i>Using H3DU.BufferedMesh objects as the parameter
+ * track future changes.  <i>Using {@link H3DU.BufferedMesh} objects as the parameter
  * is deprecated.</i>
   */
 H3DU.Shape = function(mesh){
@@ -20,6 +20,7 @@ if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
   } else {
    if(!H3DU.Shape._bufferedMeshWarning && mesh instanceof H3DU.BufferedMesh){
     console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.");
+    // TODO: Convert to MeshBuffer
     H3DU.Shape._bufferedMeshWarning=true;
    }
    this.bufferedMesh=mesh;

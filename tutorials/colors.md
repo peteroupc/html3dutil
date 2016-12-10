@@ -9,7 +9,7 @@ This page describes common identifiers and names for colors, as used in the HTML
 You can use values like the following.
 
 * CSS color names: `red`, `blue`, `silver`, `fuchsia`, `darkslateblue`.
-* HTML &#8220;hex colors&#8221;: `#223344`,  `#234`, or `#223344FF`. (See &#8220;What Is the Syntax for HTML Colors?&#8221;)
+* HTML &#8220;hex colors&#8221;: `#223344`,  `#234`, `#234F`, or `#223344FF`. (See &#8220;What Is the Syntax for HTML Colors?&#8221;)
 * RGB colors: `rgb(20,30,40)` or `rgba(20,30,40,50%)`. (See &#8220;What Is an RGB Color?&#8221;, below.)
 * HSL colors: `hsl(200,100%,50%)` or `hsla(200,100%,50%,80%`. (See &#8220;What Is an HSL Color?&#8221;, below.)
 * The newly-added color name `rebeccapurple`.
@@ -44,13 +44,18 @@ The notation used to name the colors in the preceding section is used in HTML to
 Take `#ff80cc` as an example. The color defined is a carnation pink. There are four parts to this example:
 
 * The `#` identifies this word as a color.
-* The `ff` is two letters and/or digits that show the red component of the color. This is a so-called hexadecimal number, or base-16 number. Each digit of this number can range from 0-9 and from A-F, with 0 being the lowest digit, and F being the highest digit. The highest two-digit value is 00, and the lowest two-digit value is FF (256).
+* The `ff` is two letters and/or digits that show the red component of the color. This is a so-called hexadecimal number, or base-16 number. Each digit of this number can range from 0-9 and from A-F, with 0 being the lowest digit, and F being the highest digit. The highest two-digit value is 00, and the lowest two-digit value is FF (256). (The digits A-F may appear in upper or lower case.)
 * The `80` is a base-16 number showing the color&#8217;s green component.
 * The `cc` is a base-16 number showing the color&#8217;s blue component.
 
 The notation may also include an additional base-16 number, as in this example: `#ac80ccff`.  Here, the last `ff` shows the color's alpha component (see "What Is an Alpha Component?", below).
 
-It looks complicated at first, but I will now show a way to easily make your own colors in this notation.
+It looks complicated at first, but the section "How Do I Make HTML Colors?" will show a way to easily make your own colors in this notation.
+
+### Shortened Notation
+
+* Colors with only three base-16 digits are the same as their expanded six-digit form.  For example, `#f8c` is the same as `#ff88cc`.
+* Colors with only four base-16 digits are the same as their expanded eight-digit form.  For example, `#f8ce` is the same as `#ff88ccee`.
 
 ## How Do I Make HTML Colors? <a id=How_Do_I_Make_HTML_Colors></a>
 
@@ -104,9 +109,13 @@ For example, to make a washed-out red, start with FF, 00, and 00 for red, green,
 
 ## What Is an RGB Color? <a id=What_Is_an_RGB_Color></a>
 
-An RGB color contains the same information as an HTML color, except that each value is shown in the familiar base-10 format.  For example, the value `rgb(192,64,0)` is the same as the HTML color value `#C04000`.  The steps for darkening, lightening, and desaturating RGB colors are pretty much the same as with HTML colors.
+An RGB color contains the same information as an HTML color, except that each value is shown in the familiar base-10 format.  For example, the value `rgb(192,64,0)` is the same as the HTML color value `#C04000`.
 
-An alternate syntax for RGB colors supports the alpha component (see "What Is an Alpha Component?", below): in the example `rgba(192,64,0,50%)`, the `50%` is the alpha component.
+The components of the RGB color (red, green, and blue, in that order) can range from `0` to `255`, or from `0%` to `100%`, but mixing ranges is not allowed.  For example, `rgb(192,64,0)` and `rgb(80%,50%,0%)` are allowed, but not `rgb(192,50%,0%)`.
+
+The steps for darkening, lightening, and desaturating RGB colors are pretty much the same as with HTML colors.
+
+An alternate syntax for RGB colors supports the alpha component (see "What Is an Alpha Component?", below): in the example `rgba(192,64,0,0.5)`, the `0.5` is the alpha component.  This component can be used with either range for RGB colors, either 0-255 or percentages. (Note that the example starts with `rgba`, not just `rgb`.)
 
 ## What Is an HSL Color? <a id=What_Is_an_HSL_Color></a>
 
@@ -121,7 +130,7 @@ An HSL color is a color represented in the Hue-Saturation-Lightness color space.
     * Blues have hue 240 (8 o&#8217;clock); and
     * Magentas have hue 300 (10 o&#8217;clock).
 
-* **Saturation**, or vividness, ranges from 0% to 100%. 100% stands for the purest, most vivid color. The lower the number, the greater the amount of gray in the color.  0% means the color is completely gray.  Therefore, ***to desaturate a color***, simply lower the amount of saturation.
+* **Saturation**, or vividness, ranges from 0% to 100%. 100% stands for the purest, most vivid color. The lower the number, the greater the amount of gray in the color.  0% means the color is totally gray.  Therefore, ***to desaturate a color***, simply lower the amount of saturation.
 
 * **Lightness** is also a value ranging from 0% to 100%. It expresses the amount of black or white in the color. 0% means fully black, 100% means fully white, and 50% means the color contains neither black nor white.  ***To darken a color***, lower the lightness, and ***to lighten a color***, raise the lightness.
 
@@ -133,4 +142,4 @@ An alternate syntax for HSL colors supports the alpha component (see "What Is an
 
 ## What Is an Alpha Component? <a id=What_Is_an_Alpha_Component></a>
 
-An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from `00`/`0%`, or "fully transparent" (completely invisible), to `FF`/`100%`, or "fully opaque" (letting nothing through it).  If a color notation doesn't use an alpha component, the color is fully opaque.
+An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it).  If a color notation doesn't use an alpha component, the color is fully opaque.

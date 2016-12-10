@@ -266,7 +266,7 @@ H3DU.Mesh.prototype.merge=function(other){
   // this causes issues in the compositemesh and pathshapes demos
   var thisAttributes=this.attributeBits&H3DU.Mesh.ATTRIBUTES_BITS;
   var otherAttributes=other.attributeBits&H3DU.Mesh.ATTRIBUTES_BITS;
-  if(thisAttributes!=otherAttributes) {
+  if(thisAttributes!==otherAttributes) {
     throw new Error("Meshes have different attributes");
   }
   var i;
