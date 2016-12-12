@@ -121,7 +121,7 @@ An alternate syntax for RGB colors supports the alpha component (see "What Is an
 
 An HSL color is a color represented in the Hue-Saturation-Lightness color space.  Here&#8217;s what each component means in detail.
 
-* Hue ranges from 0 to 360 degrees.  Each angle on the color wheel stands for a different hue:
+* **Hue** ranges from 0 to 360 degrees.  Each angle on the color wheel stands for a different hue:
 
     * Reds have hue 0 (say, 12 o&#8217;clock);
     * Yellows have hue 60 (2 o&#8217;clock);

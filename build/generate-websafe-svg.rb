@@ -25,7 +25,7 @@ class SwatchSvg
    " height='#{HEIGHT-4}' style='stroke:black;stroke-width:1px;"+
    " fill:#{color}'/><text x='#{svgx+HEIGHT}' y='#{svgy+HEIGHT-2}'"+
    " width='#{@width-HEIGHT-2}' height='#{HEIGHT-4}'"+
-   " style='font-size:#{(HEIGHT-4)*8/10}px'>"+
+   " style='font-size:#{(HEIGHT-4)*8/10}px;color:currentColor'>"+
    "<tspan>#{cname}</tspan></text>\n"
   @x+=1
   if @x>=@columns

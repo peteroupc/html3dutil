@@ -410,7 +410,7 @@ var ColorValidator = function() {};
     constructor.SkipWhite = function(str, index, endIndex) {
          while (index < endIndex){
             var c = str.charCodeAt(index);
-            if (c === 32 || c === 13 || c === 9 || c === 10) {
+            if (c === 32 || c === 13 || c === 12 || c === 9 || c === 10) {
                 ++index;
             } else {
                 break;
@@ -702,12 +702,17 @@ var ColorValidator = function() {};
     constructor.ParseNumber = function(str, index, endIndex) {
         var indexStart = index;
         var tmp = index;
+                         var tmp2=0;
         if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, true)) !== indexStart) {
             index = tmp;
             if (index < endIndex && (str.charCodeAt(index) === 46)) {
                 ++index;
                 if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, false)) !== index) {
-                    return tmp;
+          if(index<endIndex && (str.charCodeAt(index)===0x45 || str.charCodeAt(index) === 0x65) &&
+            (tmp2=ColorValidator.ParseInteger(str,index+1,endIndex,true))!==index+1){
+              return tmp2;
+            }
+                     return tmp;
                 } else {
                     return index - 1;
                 }
@@ -720,6 +725,10 @@ var ColorValidator = function() {};
             if (index < endIndex && (str.charCodeAt(index) === 46)) {
                 ++index;
                 if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, false)) !== index) {
+          if(index<endIndex && (str.charCodeAt(index)===0x45 || str.charCodeAt(index) === 0x65) &&
+            (tmp2=ColorValidator.ParseInteger(str,index+1,endIndex,true))!==index+1){
+              return tmp2;
+            }
                     return tmp;
                 } else {
                     return indexStart;
@@ -770,7 +779,7 @@ var ColorValidator = function() {};
         return (c >= 65 && c <= 70) ? (c + 10 - 65) : ((c >= 97 && c <= 102) ? (c + 10 - 97) : (-1));
     };
     constructor.RgbHex = function(str, hexval, hash) {
-        if ((str) === null || (str).length === 0) {
+        if ((str === null || typeof str === "undefined") || (str).length === 0) {
             return false;
         }
         var slen = str.length;
@@ -813,15 +822,15 @@ var ColorValidator = function() {};
     };
 
     constructor.ColorToRgba = constructor.ColorToRgba = function(x) {
-        if ((x) === null || (x).length === 0) {
+        if ((x === null || typeof x === "undefined") || (x).length === 0) {
             return null;
         }
-        x = x.replace(/^\s+|\s+$/g,"");
+        x = x.replace(/^[\r\n\t \u000c]+|[\r\n\t \u000c]+$/g,"");
         x = x.toLowerCase();
         if (x===("transparent")) {
             return [0, 0, 0, 0];
         }
-        if ((x) === null || (x).length === 0) {
+        if ((x === null || typeof x === "undefined") || (x).length === 0) {
             return null;
         }
         var ret = [0, 0, 0, 0];
@@ -843,7 +852,7 @@ var ColorValidator = function() {};
             return (ColorValidator.Hsla(x, 5, x.length, ret) === x.length) ? ret : null;
         }
         var colors = ColorValidator.ColorToRgbaSetUpNamedColors();
-        if (colors[x] !== null) {
+        if (colors[x] !== null && typeof colors[x]!=="undefined") {
             var colorValue = colors[x];
             ColorValidator.RgbHex(colorValue, ret, false);
             return ret;
