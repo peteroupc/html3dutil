@@ -268,19 +268,19 @@ H3DU.Mesh.prototype.merge=function(other){
     var newAttributes=thisAttributes|otherAttributes;
     // Meshes have different attribute sets, so this will
     // be slower
-    if(newAttributes==otherAttributes){
-	    // If the other's attributes are a subset, just
-	    // rebuild the vertices of this mesh
-	    this._rebuildVertices(newAttributes);
+    if(newAttributes===otherAttributes){
+      // If the other's attributes are a subset, just
+      // rebuild the vertices of this mesh
+      this._rebuildVertices(newAttributes);
     } else {
-	    // Copy this mesh to get the correct set of attributes
-	    // (this will be quite slow, relatively speaking, if the mesh
-	    // is large)
-	    var m=new H3DU.Mesh();
-	    m.currentMode=other.currentMode;
-	    m._rebuildVertices(otherAttributes);
-	    m.merge(other);
-	    other=m;
+      // Copy this mesh to get the correct set of attributes
+      // (this will be quite slow, relatively speaking, if the mesh
+      // is large)
+      var m=new H3DU.Mesh();
+      m.currentMode=other.currentMode;
+      m._rebuildVertices(otherAttributes);
+      m.merge(other);
+      other=m;
     }
   }
   var i;

@@ -2,7 +2,7 @@ This page describes common identifiers and names for colors, as used in the HTML
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[What Colors Can I Use?](#What_Colors_Can_I_Use)<br>[What Do Some Colors Look Like?](#What_Do_Some_Colors_Look_Like)<br>[What Is the Syntax for HTML Colors?](#What_Is_the_Syntax_for_HTML_Colors)<br>[How Do I Make HTML Colors?](#How_Do_I_Make_HTML_Colors)<br>[What Are Some Common HTML Colors?](#What_Are_Some_Common_HTML_Colors)<br>[How Do I Darken an HTML Color?](#How_Do_I_Darken_an_HTML_Color)<br>[How Do I Lighten a HTML Color?](#How_Do_I_Lighten_a_HTML_Color)<br>[How Do I Desaturate an HTML Color?](#How_Do_I_Desaturate_an_HTML_Color)<br>[What Is an RGB Color?](#What_Is_an_RGB_Color)<br>[What Is an HSL Color?](#What_Is_an_HSL_Color)<br>&nbsp;&nbsp;[HSL Example](#HSL_Example)<br>[What Is an Alpha Component?](#What_Is_an_Alpha_Component)<br>
+[Contents](#Contents)<br>[What Colors Can I Use?](#What_Colors_Can_I_Use)<br>[What Do Some Colors Look Like?](#What_Do_Some_Colors_Look_Like)<br>[What Is the Syntax for HTML Colors?](#What_Is_the_Syntax_for_HTML_Colors)<br>&nbsp;&nbsp;[Shortened Notation](#Shortened_Notation)<br>[How Do I Make HTML Colors?](#How_Do_I_Make_HTML_Colors)<br>[What Are Some Common HTML Colors?](#What_Are_Some_Common_HTML_Colors)<br>[How Do I Darken an HTML Color?](#How_Do_I_Darken_an_HTML_Color)<br>[How Do I Lighten a HTML Color?](#How_Do_I_Lighten_a_HTML_Color)<br>[How Do I Desaturate an HTML Color?](#How_Do_I_Desaturate_an_HTML_Color)<br>[What Is an RGB Color?](#What_Is_an_RGB_Color)<br>[What Is an HSL Color?](#What_Is_an_HSL_Color)<br>&nbsp;&nbsp;[HSL Example](#HSL_Example)<br>[What Is an Alpha Component?](#What_Is_an_Alpha_Component)<br>
 
 ## What Colors Can I Use? <a id=What_Colors_Can_I_Use></a>
 
@@ -52,7 +52,7 @@ The notation may also include an additional base-16 number, as in this example: 
 
 It looks complicated at first, but the section "How Do I Make HTML Colors?" will show a way to easily make your own colors in this notation.
 
-### Shortened Notation
+### Shortened Notation <a id=Shortened_Notation></a>
 
 * Colors with only three base-16 digits are the same as their expanded six-digit form.  For example, `#f8c` is the same as `#ff88cc`.
 * Colors with only four base-16 digits are the same as their expanded eight-digit form.  For example, `#f8ce` is the same as `#ff88ccee`.

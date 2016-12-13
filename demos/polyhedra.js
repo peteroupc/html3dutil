@@ -1,6 +1,11 @@
 /* global H3DU */
 var Polyhedra={};
-Polyhedra.normDistances=function(vertices, radius){
+/**
+ * Not documented yet.
+ * @param {*} vertices
+ * @param {*} radius
+ */
+Polyhedra.normDistances=function(vertices,radius){
   // Normalize distances from the origin
   "use strict";
 for(var i=0;i<vertices.length;i+=3){
@@ -13,7 +18,12 @@ for(var i=0;i<vertices.length;i+=3){
     vertices[i+2]*=norm;
   }
 };
-Polyhedra.scaleVertices=function(vertices, radius){
+/**
+ * Not documented yet.
+ * @param {*} vertices
+ * @param {*} radius
+ */
+Polyhedra.scaleVertices=function(vertices,radius){
   "use strict";
 for(var i=0;i<vertices.length;i+=3){
     var vx=vertices[i];
@@ -24,7 +34,13 @@ for(var i=0;i<vertices.length;i+=3){
     vertices[i+2]*=radius;
   }
 };
-Polyhedra.makeSphere=function(vi, radius, level){
+/**
+ * Not documented yet.
+ * @param {*} vi
+ * @param {*} radius
+ * @param {*} level
+ */
+Polyhedra.makeSphere=function(vi,radius,level){
  "use strict";
 var vertices=vi[0];
  var indices=vi[1];
@@ -65,42 +81,74 @@ var vertices=vi[0];
   }
   return vi;
 };
+/**
+ * Not documented yet.
+ * @param {*} vi
+ */
 Polyhedra.makeMesh=function(vi){
  // Create the mesh and generate normals
  // for a flat-shaded appearance
  "use strict";
 return new H3DU.Mesh(vi[0],vi[1]).recalcNormals(true);
 };
+/**
+ * Not documented yet.
+ * @param {*} radius
+ * @param {*} level
+ */
 Polyhedra.octahedron=function(radius,level){
  "use strict";
 var vi=Polyhedra.octahedronFaces();
  Polyhedra.makeSphere(vi,radius,level);
  return Polyhedra.makeMesh(vi);
 };
+/**
+ * Not documented yet.
+ * @param {*} radius
+ * @param {*} level
+ */
 Polyhedra.hexahedron=function(radius,level){
  "use strict";
 var vi=Polyhedra.hexahedronFaces();
  Polyhedra.makeSphere(vi,radius,level);
  return Polyhedra.makeMesh(vi);
 };
+/**
+ * Not documented yet.
+ * @param {*} radius
+ * @param {*} level
+ */
 Polyhedra.icosahedron=function(radius,level){
  "use strict";
 var vi=Polyhedra.icosahedronFaces();
  Polyhedra.makeSphere(vi,radius,level);
  return Polyhedra.makeMesh(vi);
 };
+/**
+ * Not documented yet.
+ * @param {*} radius
+ * @param {*} level
+ */
 Polyhedra.dodecahedron=function(radius,level){
  "use strict";
 var vi=Polyhedra.dodecahedronFaces();
  Polyhedra.makeSphere(vi,radius,level);
  return Polyhedra.makeMesh(vi);
 };
+/**
+ * Not documented yet.
+ * @param {*} radius
+ * @param {*} level
+ */
 Polyhedra.tetrahedron=function(radius,level){
  "use strict";
 var vi=Polyhedra.tetrahedronFaces();
  Polyhedra.makeSphere(vi,radius,level);
  return Polyhedra.makeMesh(vi);
 };
+/**
+ * Not documented yet.
+ */
 Polyhedra.octahedronFaces=function(){
  "use strict";
 var r=0.7071067811865476;
@@ -121,13 +169,18 @@ var r=0.7071067811865476;
  ];
  return [vertices,faces];
 };
+/**
+ * Not documented yet.
+ */
 Polyhedra.tetrahedronFaces=function(){
 "use strict";
 var vertices=[-0.7745966693186049, -0.4472135954331687, 0.4472135954331687, 0.7745966693186049, -0.4472135954331687, 0.4472135954331687, 0.0, 1.0, 0.0, 0.0, -0.4472135954999579, -0.8944271909999159];
  var faces=[0,1,2,1,3,2,3,0,2,0,3,1];
  return [vertices,faces];
 };
-
+/**
+ * Not documented yet.
+ */
 Polyhedra.icosahedronFaces=function(){
 "use strict";
 var vertices=[0.0, 0.8506508083520401, 0.5257311121191336, 0.5257311121191336, 0.0, 0.8506508083520401, -0.5257311121191336, 0.0, 0.8506508083520401, 0.0, -0.8506508083520401, 0.5257311121191336, -0.8506508083520401, 0.5257311121191336, 0.0, -0.8506508083520401, -0.5257311121191336, 0.0, -0.5257311121191336, 0.0, -0.8506508083520401, 0.0, -0.8506508083520401, -0.5257311121191336, 0.0, 0.8506508083520401, -0.5257311121191336, 0.5257311121191336, 0.0, -0.8506508083520401, 0.8506508083520401, 0.5257311121191336, 0.0, 0.8506508083520401, -0.5257311121191336, 0.0];
@@ -143,12 +196,18 @@ var vertices=[0.0, 0.8506508083520401, 0.5257311121191336, 0.5257311121191336, 0
  ];
  return [vertices,faces];
 };
+/**
+ * Not documented yet.
+ */
 Polyhedra.hexahedronFaces=function(){
 "use strict";
 var faces=[8, 0, 1, 8, 1, 2, 8, 2, 3, 8, 3, 0, 9, 3, 2, 9, 2, 6, 9, 6, 7, 9, 7, 3, 10, 7, 6, 10, 6, 5, 10, 5, 4, 10, 4, 7, 11, 4, 5, 11, 5, 1, 11, 1, 0, 11, 0, 4, 12, 5, 6, 12, 6, 2, 12, 2, 1, 12, 1, 5, 13, 7, 4, 13, 4, 0, 13, 0, 3, 13, 3, 7];
 var vertices=[-0.5773502691896258, 0.5773502691896258, -0.5773502691896258, 0.5773502691896258, 0.5773502691896258, -0.5773502691896258, 0.5773502691896258, -0.5773502691896258, -0.5773502691896258, -0.5773502691896258, -0.5773502691896258, -0.5773502691896258, -0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258, -0.5773502691896258, 0.5773502691896258, -0.5773502691896258, -0.5773502691896258, 0.5773502691896258, 0.0, 0.0, -0.5773502691896258, 0.0, -0.5773502691896258, 0.0, 0.0, 0.0, 0.5773502691896258, 0.0, 0.5773502691896258, 0.0, 0.5773502691896258, 0.0, 0.0, -0.5773502691896258, 0.0, 0.0];
 return [vertices,faces];
 };
+/**
+ * Not documented yet.
+ */
 Polyhedra.hexahedronFaces2=function(){
 // Alternate indexing of a hexahedron's faces
 "use strict";
@@ -157,12 +216,18 @@ v[0]=v[0].slice(0,24);
 v[1]=[0, 1, 2, 0, 2, 3, 3, 2, 6, 3, 6, 7, 7, 6, 5, 7, 5, 4, 4, 5, 1, 4, 1, 0, 5, 6, 2, 5, 2, 1, 7, 4, 0, 7, 0, 3];
 return v;
 };
+/**
+ * Not documented yet.
+ */
 Polyhedra.dodecahedronFaces=function(){
 "use strict";
 var faces=[20, 16, 12, 20, 12, 8, 20, 8, 4, 20, 4, 0, 20, 0, 16, 21, 2, 1, 21, 1, 0, 21, 0, 4, 21, 4, 5, 21, 5, 2, 22, 6, 5, 22, 5, 4, 22, 4, 8, 22, 8, 9, 22, 9, 6, 23, 9, 10, 23, 10, 11, 23, 11, 7, 23, 7, 6, 23, 6, 9, 24, 13, 14, 24, 14, 15, 24, 15, 11, 24, 11, 10, 24, 10, 13, 25, 17, 18, 25, 18, 19, 25, 19, 15, 25, 15, 14, 25, 14, 17, 26, 3, 7, 26, 7, 11, 26, 11, 15, 26, 15, 19, 26, 19, 3, 27, 10, 9, 27, 9, 8, 27, 8, 12, 27, 12, 13, 27, 13, 10, 28, 14, 13, 28, 13, 12, 28, 12, 16, 28, 16, 17, 28, 17, 14, 29, 18, 17, 29, 17, 16, 29, 16, 0, 29, 0, 1, 29, 1, 18, 30, 1, 2, 30, 2, 3, 30, 3, 19, 30, 19, 18, 30, 18, 1, 31, 5, 6, 31, 6, 7, 31, 7, 3, 31, 3, 2, 31, 2, 5];
 var vertices=[0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.0, 0.35682208977309005, 0.9341723589627156, -0.5773502691896258, 0.5773502691896258, 0.5773502691896258, -0.9341723589627156, 0.0, 0.35682208977309005, 0.35682208977309005, 0.9341723589627156, 0.0, -0.35682208977309005, 0.9341723589627156, 0.0, -0.5773502691896258, 0.5773502691896258, -0.5773502691896258, -0.9341723589627156, 0.0, -0.35682208977309005, 0.5773502691896258, 0.5773502691896258, -0.5773502691896258, 0.0, 0.35682208977309005, -0.9341723589627156, 0.0, -0.35682208977309005, -0.9341723589627156, -0.5773502691896258, -0.5773502691896258, -0.5773502691896258, 0.9341723589627156, 0.0, -0.35682208977309005, 0.5773502691896258, -0.5773502691896258, -0.5773502691896258, 0.35682208977309005, -0.9341723589627156, 0.0, -0.35682208977309005, -0.9341723589627156, 0.0, 0.9341723589627156, 0.0, 0.35682208977309005, 0.5773502691896258, -0.5773502691896258, 0.5773502691896258, 0.0, -0.35682208977309005, 0.9341723589627156, -0.5773502691896258, -0.5773502691896258, 0.5773502691896258, 0.6759734692155546, 0.41777457946839347, 0.0, 0.0, 0.6759734692155546, 0.41777457946839347, 0.0, 0.6759734692155546, -0.41777457946839347, -0.41777457946839347, 0.0, -0.6759734692155546, 0.0, -0.6759734692155546, -0.41777457946839347, 0.0, -0.6759734692155546, 0.41777457946839347, -0.6759734692155546, -0.41777457946839347, 0.0, 0.41777457946839347, 0.0, -0.6759734692155546, 0.6759734692155546, -0.41777457946839347, 0.0, 0.41777457946839347, 0.0, 0.6759734692155546, -0.41777457946839347, 0.0, 0.6759734692155546, -0.6759734692155546, 0.41777457946839347, 0.0];
 return [vertices,faces];
 };
+/**
+ * Not documented yet.
+ */
 Polyhedra.dodecahedronFaces2=function(){
 // Alternate indexing of a dodecahedron's faces
 "use strict";
