@@ -391,11 +391,11 @@ describe the effect of scaling then translation.
 
 Matrix multiplication is not commutative; the order
 of multiplying matrices is important.  This multiplication
-behavior in GLMath follows that of OpenGL and is opposite to that in the
+behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
 D3DX and DirectXMath libraries.
 
-The methods mat4multiply, mat4scale, mat4scaleInPlace, mat4translate, and
-mat4rotate involve multiplying 4x4 matrices
+The methods `mat4multiply`, `mat4scale`, `mat4scaleInPlace`, `mat4translate`, and
+mat4rotate involve multiplying 4x4 matrices.
 
 Related functions:
 
@@ -405,7 +405,7 @@ Related functions:
 ### Other Transformations <a id=Other_Transformations></a>
 
 In all the transformations described above, the last row in the transformation matrix is
-(0, 0, 0, 1).  (For that reason, they are called _affine transformations_, those that
+(0, 0, 0, 1).  (Such transformations are called _affine transformations_, those that
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the GLMath library.
 
@@ -416,7 +416,8 @@ vector is transformed with this matrix, its W component is generated as follows:
 
 <small>The graphics system (outside of this JavaScript library) uses this W component
 to help achieve the perspective rendering effect.  Assuming the transformed vector
-is a device coordinate returned by a vertex shader, the system will divide the vector's
+is a set of device coordinates returned by a vertex shader
+(a so-called _clip space_ vector), the system will divide the vector's
 X, Y, and Z by its W to get the vector's _normalized device coordinates_.</small>
 
 Related functions:

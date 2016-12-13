@@ -306,7 +306,7 @@ return [
 },
 /**
  * Converts a 3-element vector to its normalized version.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec3length}.
@@ -329,7 +329,7 @@ var x=vec[0];
 },
 /**
  * Converts a 4-element vector to its normalized version.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec4length}.
@@ -354,7 +354,7 @@ var x=vec[0];
 },
 /**
  * Returns a normalized version of a 3-element vector.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec3length}.
@@ -367,7 +367,7 @@ return H3DU.Math.vec3normInPlace([vec[0],vec[1],vec[2]]);
 },
 /**
  * Returns a normalized version of a 4-element vector.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec4length}.
@@ -494,7 +494,7 @@ return (
  );
 },
 /**
- * Finds the inverse of a 4x4 matrix.
+ * Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
  * @param {Array<Number>} m A 4x4 matrix.
  * @returns {Array<Number>} The resulting 4x4 matrix.
  * Returns the identity matrix if this matrix is not invertible.
@@ -589,8 +589,9 @@ for(var i=0;i<16;i++){
 return r;
 },
 /**
- * Inverts the rotation given in this quaternion without normalizing it;
- * returns a new quaternion.
+ * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
+ * but without changing its length (the return value won't necessarily be a unit vector, a "normalized" vector with a length of 1).
+ * Returns a new quaternion.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
 quatConjugate:function(quat){
@@ -598,8 +599,9 @@ quatConjugate:function(quat){
 return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
 /**
- * Inverts the rotation given in this quaternion;
- * returns a new quaternion.
+ * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
+ * and converts this quaternion to a unit vector (a "normalized" vector with a length of 1).
+ * Returns a new quaternion.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
 quatInvert:function(quat){
@@ -647,7 +649,7 @@ var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
 * Calculates the angle and axis of rotation for this
 * quaternion. (The axis of rotation is a ray that starts at the
 * origin (0,0,0) and points toward a 3D point.)
-* @param {Array<Number>} a A quaternion.  Must be normalized.
+* @param {Array<Number>} a A quaternion.  Must be unit vectors ("normalized" vectors with a length of 1).
 * @returns {Array<Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
@@ -672,11 +674,11 @@ var w=a[3];
  * two 3-element vectors.  The quaternion
  * will describe the rotation required to rotate
  * the ray described in the first vector toward the ray described
- * in the second vector.  The vectors need not be normalized.
+ * in the second vector.  The vectors need not be unit vectors ("normalized" vectors with a length of 1).
  * @param {Array<Number>} vec1 The first 3-element vector.
 * @param {Array<Number>} vec2 The second 3-element vector.
  * @returns {Array<Number>} The generated quaternion, which
- * will be normalized.
+ * will be unit vectors ("normalized" vectors with a length of 1).
  */
 quatFromVectors:function(vec1,vec2){
   "use strict";
@@ -799,7 +801,7 @@ var rollRad,pitchRad,yawRad;
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
- * @param {Array<Number>} a A quaternion.  Should be normalized.
+ * @param {Array<Number>} a A quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
  * @param {number|null} mode Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
@@ -874,12 +876,12 @@ var c0=a[3];
 /**
  * Does a linear interpolation between two quaternions;
  * returns a new quaternion.
- * @param {Array<Number>} q1 The first quaternion.  Should be normalized.
- * @param {Array<Number>} q2 The second quaternion.  Should be normalized.
+ * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
+ * @param {Array<Number>} q2 The second quaternion.  Should be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion,
- * which will be normalized.
+ * which will be unit vectors ("normalized" vectors with a length of 1).
 */
 quatNlerp:function(q1,q2,factor){
   "use strict";
@@ -904,8 +906,8 @@ var t1 = 1.0 - factor;
  * returns a new quaternion.
  * This method is useful for smoothly animating between the two
  * rotations they describe.
- * @param {Array<Number>} q1 The first quaternion.  Should be normalized.
- * @param {Array<Number>} q2 The second quaternion.  Should be normalized.
+ * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
+ * @param {Array<Number>} q2 The second quaternion.  Should be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion.
@@ -1093,7 +1095,7 @@ var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
 * This is usually used to convert a model-view matrix to a matrix
 * for transforming surface normals in order to keep them perpendicular
 * to a surface transformed by the world matrix.  Normals are then
-* transformed by this matrix and then re-normalized.  But if the
+* transformed by this matrix and then converted to unit vectors  ("normalized" vectors with a length of 1).  But if the
 * input matrix uses only rotations, translations, and/or uniform scaling
 * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 * be used instead of the inverse-transpose matrix to transform the normals.
@@ -1346,12 +1348,12 @@ var x,y,z;
 * can be implemented by raising this value, and zooming in by lowering it.)
 * @param {Number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @param {Number} near The distance from the camera to
+* @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should not be 0 or less, and should be set to the highest distance
-* from the camera that the application can afford to clip out for being too
+* from the "camera" that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
-* @param {Number} far The distance from the camera to
+* @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
@@ -1379,23 +1381,23 @@ var fov=((fovY>=0 && fovY<360) ? fovY : ((fovY%360)+(fovY<0 ? 360 : 0)))*H3DU.Ma
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
  * 10, 12, and 14).
 * @param {Array<Number>} viewerPos A 3-element vector specifying
-* the camera position in world space.
+* the "camera" position in world space.
 * @param {Array<Number>} [lookingAt] A 3-element vector specifying
-* the point in world space that the camera is looking at.  May be null or omitted,
+* the point in world space that the "camera" is looking at.  May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
 * @param {Array<Number>} [up] A 3-element vector specifying
-* the direction from the center of the camera to its top. This parameter may
+* the direction from the center of the "camera" to its top. This parameter may
 * be null or omitted, in which case the default is the vector (0, 1, 0),
-* the vector that results when the camera is held upright.  This
+* the vector that results when the "camera" is held upright.  This
 * vector must not point in the same or opposite direction as
-* the camera's view direction. (For best results, rotate the vector (0, 1, 0)
-* so it points perpendicular to the camera's view direction.)
+* the "camera"'s view direction. (For best results, rotate the vector (0, 1, 0)
+* so it points perpendicular to the "camera"'s view direction.)
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
 mat4lookat:function(viewerPos,lookingAt,up){
  "use strict";
-if(!up)up=[0,1,0];
- if(!lookingAt)lookingAt=[0,0,0];
+if((up === null || typeof up === "undefined"))up=[0,1,0];
+ if((lookingAt === null || typeof lookingAt === "undefined"))lookingAt=[0,0,0];
  var f=[lookingAt[0]-viewerPos[0],lookingAt[1]-viewerPos[1],lookingAt[2]-viewerPos[2]];
  var len=H3DU.Math.vec3length(f);
  if(len<1e-6){
@@ -1435,9 +1437,9 @@ if(!up)up=[0,1,0];
  * @param {Number} t Topmost coordinate of the orthographic view.
  * (If b is greater than t, X-coordinates increase downward; otherwise,
  * they increase upward.)
- * @param {Number} n Distance from the camera to the near clipping
+ * @param {Number} n Distance from the "camera" to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @param {Number} f Distance from the camera to the far clipping
+ * @param {Number} f Distance from the "camera" to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * (Note that n can be greater than f or vice versa.)  The absolute difference
  * between n and f should be as small as the application can accept.
@@ -1465,12 +1467,12 @@ var width=1/(r-l);
 * can be implemented by raising this value, and zooming in by lowering it.)
 * @param {Number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @param {Number} near The distance from the camera to
+* @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should not be 0 or less, and should be set to the highest distance
-* from the camera that the application can afford to clip out for being too
+* from the "camera" that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
-* @param {Number} far The distance from the camera to
+* @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
@@ -1548,9 +1550,9 @@ return H3DU.Math.mat4orthoAspect(l,r,b,t,-1,1,aspect);
  * @param {Number} t Topmost coordinate of the view rectangle.
  * (If b is greater than t, X-coordinates increase downward; otherwise,
  * they increase upward.)
- * @param {Number} n Distance from the camera to the near clipping
+ * @param {Number} n Distance from the "camera" to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @param {Number} f Distance from the camera to the far clipping
+ * @param {Number} f Distance from the "camera" to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * (Note that n can be greater than f or vice versa.)  The absolute difference
  * between n and f should be as small as the application can accept.
@@ -1588,7 +1590,7 @@ var boxAspect=Math.abs((r-l)/(t-b));
 },
 /**
  * Returns a 4x4 matrix representing a perspective projection
- * in the form of a view frustum, or the limits in the camera's view.<p>
+ * in the form of a view frustum, or the limits in the "camera"'s view.<p>
  * This method assumes a right-handed coordinate system, such as
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
@@ -1601,12 +1603,12 @@ var boxAspect=Math.abs((r-l)/(t-b));
  * clipping plane meets the near clipping plane.
  * @param {Number} t Y-coordinate of the point where the top
  * clipping plane meets the near clipping plane.
-* @param {Number} near The distance from the camera to
+* @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should not be 0 or less, and should be set to the highest distance
-* from the camera that the application can afford to clip out for being too
+* from the "camera" that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
-* @param {Number} far The distance from the camera to
+* @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.<p>
@@ -1888,10 +1890,10 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 };
 
 /**
-* Normalizes this plane so that its normal is unit
-* length (unless all the normal's components are 0).
+* Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+* unless all the normal's components are 0.
 * The plane's distance will be divided by the
-* normal's length.
+* current normal's length.
 * @param {Array<Number>} plane A four-element array
 * defining the plane. The first three elements of the array
 * are the X, Y, and Z components of the plane's normal vector, and
@@ -1950,7 +1952,7 @@ return H3DU.Math.planeNormInPlace(plane.slice(0,4));
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.  All six planes
-* will be normalized.
+* will be unit vectors ("normalized" vectors with a length of 1).
 */
 H3DU.Math.mat4toFrustumPlanes=function(matrix){
  "use strict";
@@ -2124,7 +2126,7 @@ for(var i=0;i<6;i++){
 H3DU.Math.quatDot=H3DU.Math.vec4dot;
 /**
  * Converts a quaternion to its normalized version.
- * When a quaternion is normalized, the distance from the origin
+ * When a quaternion is normalized, it describes the same orientation but the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.quatLength}.
@@ -2231,8 +2233,8 @@ H3DU.Math.RollPitchYaw = 4;
 */
 H3DU.Math.RollYawPitch = 5;
 /**
- * Inverts the rotation given in this quaternion;
- * returns a new quaternion; same as the quatInverse method.
+ * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
+ * Returns a new quaternion; same as the quatInverse method.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
 H3DU.Math.quatInverse=H3DU.Math.quatInvert;

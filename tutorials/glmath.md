@@ -1,4 +1,4 @@
-The GLMath library, part of the HTML 3D library, is a collection
+The HTML 3D library includes a collection
 of math functions for working with vectors, matrices, and quaternions.
 
 Here is an overview of these three data types.
@@ -31,6 +31,7 @@ A matrix is a 16- or 9-element array that describes a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with "mat".
+For more details, see the {@tutorial matrixdetails} tutorial.
 
 ### Translation <a id=Translation></a>
 
