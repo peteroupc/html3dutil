@@ -1,19 +1,15 @@
 #!/usr/bin/ruby
 Dir.chdir(File.dirname(__FILE__))
 require './rubyutil'
-require './generate-websafe-svg'
 require 'fileutils'
-
-if !FileTest.exist?("compiler.jar")
-  STDERR.puts("The Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. "+
-    "Download the Closure Compiler JAR and put it in the same directory "+
-    "as this script. (Running the Closure Compiler requires a Java runtime environment.)")
-  exit
-end
-
 $compilerJar=File.expand_path("compiler.jar")
-
 def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
+  if !FileTest.exist?($compilerJar)
+    STDERR.puts("The Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. "+
+      "Download the Closure Compiler JAR and put it in the same directory "+
+      "as this script. (Running the Closure Compiler requires a Java runtime environment.)")
+    exit
+  end
   for input in inputArray
     return if !FileTest.exist?(input)
     utf8edit(input){|data| next normalizeLines(data) }
@@ -43,6 +39,8 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
    }
   end
 end
+
+require './generate-websafe-svg'
 
 Dir.chdir(".."){
  files=%w( promise.js h3du.js )

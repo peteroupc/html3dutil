@@ -1,4 +1,4 @@
-/* global H3DU, Promise */
+/* global DataView, H3DU, Promise, Uint8Array */
 
 /**
 *  Specifies a texture, which can serve as image data applied to
@@ -13,14 +13,30 @@
 * URL, the texture may be loaded via the JavaScript DOM's Image
 * class.  However, this constructor will not load that image yet.
 */
-H3DU.Texture=function(name){
- "use strict";
-this.image=null;
- this.loadStatus=0;
- this.name=name;
- this.width=0;
- this.clamp=false;
- this.height=0;
+H3DU.Texture = function(name) {
+  "use strict";
+  this.image = null;
+  this.loadStatus = 0;
+  this.name = name;
+  this.width = 0;
+  this.clamp = false;
+  this.height = 0;
+};
+/**
+ * Not documented yet.
+ * @memberof! H3DU.Texture#
+*/
+H3DU.Texture.prototype.getWidth = function() {
+  "use strict";
+  return this.width;
+};
+/**
+ * Not documented yet.
+ * @memberof! H3DU.Texture#
+*/
+H3DU.Texture.prototype.getHeight = function() {
+  "use strict";
+  return this.height;
 };
 
 /**
@@ -38,10 +54,10 @@ this.image=null;
 * @returns {H3DU.Texture} This object.
 * @memberof! H3DU.Texture#
 */
-H3DU.Texture.prototype.setClamp=function(clamp){
- "use strict";
-this.clamp=clamp;
- return this;
+H3DU.Texture.prototype.setClamp = function(clamp) {
+  "use strict";
+  this.clamp = clamp;
+  return this;
 };
 
 /**
@@ -57,22 +73,22 @@ this.clamp=clamp;
 * @returns {Promise} A promise that resolves when the texture
 * is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
 */
-H3DU.Texture.loadTexture=function(name, textureCache){
+H3DU.Texture.loadTexture = function(name, textureCache) {
  // Get cached texture
- "use strict";
-if(textureCache && textureCache[name]){
-   return Promise.resolve(textureCache[name]);
- }
- var texImage=new H3DU.Texture(name);
- if(textureCache){
-  textureCache[name]=texImage;
- }
+  "use strict";
+  if(textureCache && textureCache[name]) {
+    return Promise.resolve(textureCache[name]);
+  }
+  var texImage = new H3DU.Texture(name);
+  if(textureCache) {
+    textureCache[name] = texImage;
+  }
  // Load new texture and cache it
- return texImage.loadImage().then(
-  function(result){
-   return result;
+  return texImage.loadImage().then(
+  function(result) {
+    return result;
   },
-  function(name){
+  function(name) {
     return Promise.reject(name.name);
   });
 };
@@ -87,162 +103,172 @@ if(textureCache && textureCache[name]){
 * @param {Uint8Array} height Height, in pixels, of the texture.
 * @returns {H3DU.Texture} The new H3DU.Texture object.
 */
-H3DU.Texture.fromUint8Array=function(array, width, height){
- "use strict";
-if(width<0)throw new Error("width less than 0");
- if(height<0)throw new Error("height less than 0");
- if(array.length<width*height*4)throw new Error("array too short for texture");
- var texImage=new H3DU.Texture("");
- texImage.image=array;
- texImage.width=Math.ceil(width);
- texImage.height=Math.ceil(height);
- texImage.loadStatus=2;
- return texImage;
+H3DU.Texture.fromUint8Array = function(array, width, height) {
+  "use strict";
+  if(width < 0)throw new Error("width less than 0");
+  if(height < 0)throw new Error("height less than 0");
+  if(array.length < width * height * 4)throw new Error("array too short for texture");
+  var texImage = new H3DU.Texture("");
+  texImage.image = array;
+  texImage.width = Math.ceil(width);
+  texImage.height = Math.ceil(height);
+  texImage.loadStatus = 2;
+  return texImage;
 };
 
 /** @private */
-H3DU.Texture.loadTga=function(name){
- "use strict";
-var tex=this;
- return H3DU.loadFileFromUrl(name,"arraybuffer")
- .then(function(buf){
-   var view=new DataView(buf.data);
-   var id=view.getUint8(0);
-   var cmaptype=view.getUint8(1);
-   var imgtype=view.getUint8(2);
-   if(imgtype!==2 && imgtype!==3){
-    return Promise.reject(new Error("unsupported image type"));
+H3DU.Texture.loadTga = function(name) {
+  "use strict";
+
+  return H3DU.loadFileFromUrl(name, "arraybuffer")
+ .then(function(buf) {
+   var view = new DataView(buf.data);
+  // var id=view.getUint8(0);
+  // var cmaptype=view.getUint8(1);
+   var imgtype = view.getUint8(2);
+   if(imgtype !== 2 && imgtype !== 3) {
+     return Promise.reject(new Error("unsupported image type"));
    }
-   var xorg=view.getUint16(8,true);
-   var yorg=view.getUint16(10,true);
-   if(xorg!==0 || yorg!==0){
-    return Promise.reject(new Error("unsupported origins"));
+   var xorg = view.getUint16(8, true);
+   var yorg = view.getUint16(10, true);
+   if(xorg !== 0 || yorg !== 0) {
+     return Promise.reject(new Error("unsupported origins"));
    }
-   var width=view.getUint16(12,true);
-   var height=view.getUint16(14,true);
-   if(width===0 || height === 0){
-    return Promise.reject(new Error("invalid width or height"));
+   var width = view.getUint16(12, true);
+   var height = view.getUint16(14, true);
+   if(width === 0 || height === 0) {
+     return Promise.reject(new Error("invalid width or height"));
    }
-   var pixelsize=view.getUint8(16);
-   if(!(pixelsize===32 && imgtype === 2) &&
-      !(pixelsize===24 && imgtype === 2) &&
-      !(pixelsize===8 && imgtype === 3)){
-    return Promise.reject(new Error("unsupported pixelsize"));
+   var pixelsize = view.getUint8(16);
+   if(!(pixelsize === 32 && imgtype === 2) &&
+      !(pixelsize === 24 && imgtype === 2) &&
+      !(pixelsize === 8 && imgtype === 3)) {
+     return Promise.reject(new Error("unsupported pixelsize"));
    }
-   var size=width*height;
-   if(size>buf.data.length){
-    return Promise.reject(new Error("size too big"));
+   var size = width * height;
+   if(size > buf.data.length) {
+     return Promise.reject(new Error("size too big"));
    }
    var i;
-   var arr=new Uint8Array(size*4);
-   var offset=18;
-   var io=0;
-   if(pixelsize===32 && imgtype === 2){
-    for(i=0,io=0;i<size;i++,io+=4){
-     arr[io+2]=view.getUint8(offset);
-     arr[io+1]=view.getUint8(offset+1);
-     arr[io]=view.getUint8(offset+2);
-     arr[io+3]=view.getUint8(offset+3);
-     offset+=4;
-    }
-   } else if(pixelsize===24 && imgtype === 2){
-    for(i=0,io=0;i<size;i++,io+=4){
-     arr[io+2]=view.getUint8(offset);
-     arr[io+1]=view.getUint8(offset+1);
-     arr[io]=view.getUint8(offset+2);
-     arr[io+3]=0xFF;
-     offset+=3;
-    }
-   } else if(pixelsize===8 && imgtype === 3){
-    for(i=0,io=0;i<size;i++,io+=4){
-     var col=view.getUint8(offset);
-     arr[io]=col;
-     arr[io+1]=col;
-     arr[io+2]=col;
-     arr[io+3]=0xFF;
-     offset++;
-    }
+   var arr = new Uint8Array(size * 4);
+   var offset = 18;
+   var io = 0;
+   if(pixelsize === 32 && imgtype === 2) {
+     for(i = 0, io = 0;i < size;i++, io += 4) {
+       arr[io + 2] = view.getUint8(offset);
+       arr[io + 1] = view.getUint8(offset + 1);
+       arr[io] = view.getUint8(offset + 2);
+       arr[io + 3] = view.getUint8(offset + 3);
+       offset += 4;
+     }
+   } else if(pixelsize === 24 && imgtype === 2) {
+     for(i = 0, io = 0;i < size;i++, io += 4) {
+       arr[io + 2] = view.getUint8(offset);
+       arr[io + 1] = view.getUint8(offset + 1);
+       arr[io] = view.getUint8(offset + 2);
+       arr[io + 3] = 0xFF;
+       offset += 3;
+     }
+   } else if(pixelsize === 8 && imgtype === 3) {
+     for(i = 0, io = 0;i < size;i++, io += 4) {
+       var col = view.getUint8(offset);
+       arr[io] = col;
+       arr[io + 1] = col;
+       arr[io + 2] = col;
+       arr[io + 3] = 0xFF;
+       offset++;
+     }
    }
-   buf.data=null;
-   return {"width":width,"height":height,"image":arr};
-  });
+   buf.data = null;
+   return {
+     "width":width,
+     "height":height,
+     "image":arr
+   };
+ });
 };
 
 /** @private */
-H3DU.Texture.prototype.loadImage=function(){
- "use strict";
-if(this.image !== null){
+H3DU.Texture.prototype.loadImage = function() {
+  "use strict";
+  if(this.image !== null) {
   // already loaded
-  return Promise.resolve(this);
- }
- var thisImage=this;
- var thisName=this.name;
- thisImage.loadStatus=1;
+    return Promise.resolve(this);
+  }
+  var that = this;
+  var thisName = this.name;
+  that.loadStatus = 1;
  // Use the TGA image loader if it has the TGA file
  // extension
- if((/\.tga$/i).test(thisName)){
-  return H3DU.Texture.loadTga(thisName).then(function(e) {
-   thisImage.image=e.image;
-   thisImage.width=e.width;
-   thisImage.height=e.height;
-   thisImage.loadStatus=2;
-   return thisImage;
-  },function(e){
-   thisImage.loadStatus=-1;
-   return Promise.reject({"name":thisName,"error":e});
-  });
- }
- return new Promise(function(resolve,reject){
-  var image=new Image();
-  image.onload=function(e){
-   var target=e.target;
-   thisImage.image=target;
-   thisImage.width=target.width;
-   thisImage.height=target.height;
-   thisImage.loadStatus=2;
+  if((/\.tga$/i).test(thisName)) {
+    return H3DU.Texture.loadTga(thisName).then(function(e) {
+      that.image = e.image;
+      that.width = e.width;
+      that.height = e.height;
+      that.loadStatus = 2;
+      return that;
+    }, function(e) {
+      that.loadStatus = -1;
+      return Promise.reject({
+        "name":thisName,
+        "error":e
+      });
+    });
+  }
+  return new Promise(function(resolve, reject) {
+    var image = new Image();
+    image.onload = function(e) {
+      var target = e.target;
+      that.image = target;
+      that.width = target.width;
+      that.height = target.height;
+      that.loadStatus = 2;
    //console.log("loaded: "+thisName)
-   image.onload=null;
-   image.onerror=null;
-   resolve(thisImage);
-  };
-  image.onerror=function(e) {
-   thisImage.loadStatus=-1;
+      image.onload = null;
+      image.onerror = null;
+      resolve(that);
+    };
+    image.onerror = function(e) {
+      that.loadStatus = -1;
    //console.log("error: "+thisName)
    //console.log(e)
-   image.onload=null;
-   image.onerror=null;
-   reject({"name":thisName,"error":e});
-  };
-  image.src=thisName;
- });
+      image.onload = null;
+      image.onerror = null;
+      reject({
+        "name":thisName,
+        "error":e
+      });
+    };
+    image.src = thisName;
+  });
 };
 /**
  * Disposes resources used by this texture.
  * @memberof! H3DU.Texture#
 */
-H3DU.Texture.prototype.dispose=function() {
- "use strict";
-this.width=0;
- this.height=0;
- this.name="";
- if(this.image){
-  if((typeof this.image.onload !== "undefined" && this.image.onload !== null)){
-   this.image.onload=null;
+H3DU.Texture.prototype.dispose = function() {
+  "use strict";
+  this.width = 0;
+  this.height = 0;
+  this.name = "";
+  if(this.image) {
+    if(typeof this.image.onload !== "undefined" && this.image.onload !== null) {
+      this.image.onload = null;
+    }
+    if(typeof this.image.onerror !== "undefined" && this.image.onerror !== null) {
+      this.image.onerror = null;
+    }
   }
-  if((typeof this.image.onerror !== "undefined" && this.image.onerror !== null)){
-   this.image.onerror=null;
-  }
- }
- this.image=null;
- this.clamp=false;
- this.loadStatus=0;
+  this.image = null;
+  this.clamp = false;
+  this.loadStatus = 0;
 };
 
 /**
 * Gets the name of this texture.
 * @memberof! H3DU.Texture#
 */
-H3DU.Texture.prototype.getName=function() {
-"use strict";
- return name;
+H3DU.Texture.prototype.getName = function() {
+  "use strict";
+  return name;
 };

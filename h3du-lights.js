@@ -7,9 +7,9 @@
 * @class
 * @alias H3DU.Lights
 */
-H3DU.Lights = function(){
- "use strict";
-this.lights=[];
+H3DU.Lights = function() {
+  "use strict";
+  this.lights = [];
  /**
  *  Ambient color for the scene.  This is the color of the light
  *  that shines on every part of every object equally and in
@@ -24,23 +24,23 @@ this.lights=[];
  * Ambient lights simulate this phenomenon.</small>
  *  @default
  */
- this.sceneAmbient=[0.2,0.2,0.2];
+  this.sceneAmbient = [0.2, 0.2, 0.2];
 };
 /**
  * Not documented yet.
  * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.setDefaults=function(){
- "use strict";
-var ls=new H3DU.LightSource().setParams({
-  ambient:[0,0,0,1],
-  position:[0,0,1,0],
-  diffuse:[1,1,1,1],
-  specular:[1,1,1],
-  radius:0.0
- });
- this.lights=[ls];
- this.sceneAmbient=[0.2,0.2,0.2];
+H3DU.Lights.prototype.setDefaults = function() {
+  "use strict";
+  var ls = new H3DU.LightSource().setParams({
+    "ambient":[0, 0, 0, 1],
+    "position":[0, 0, 1, 0],
+    "diffuse":[1, 1, 1, 1],
+    "specular":[1, 1, 1],
+    "radius":0.0
+  });
+  this.lights = [ls];
+  this.sceneAmbient = [0.2, 0.2, 0.2];
 };
 
 /** Maximum number of lights supported
@@ -49,23 +49,23 @@ var ls=new H3DU.LightSource().setParams({
    */
 H3DU.Lights.MAX_LIGHTS = 3;
 /** @private */
-H3DU.Lights._createNewLight=function(index){
- "use strict";
-var ret=new H3DU.LightSource();
- if(index!==0){
-  ret.diffuse=[0,0,0,0];
-  ret.specular=[0,0,0];
- }
- return ret;
+H3DU.Lights._createNewLight = function(index) {
+  "use strict";
+  var ret = new H3DU.LightSource();
+  if(index !== 0) {
+    ret.diffuse = [0, 0, 0, 0];
+    ret.specular = [0, 0, 0];
+  }
+  return ret;
 };
 /**
  * Gets the number of lights defined in this object.
  * @returns {Number} Return value.
 * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.getCount=function(){
- "use strict";
-return this.lights.length;
+H3DU.Lights.prototype.getCount = function() {
+  "use strict";
+  return this.lights.length;
 };
 
 /**
@@ -76,20 +76,20 @@ return this.lights.length;
  * @returns {LightSource} The corresponding light source object.
  * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.getLight=function(index){
- "use strict";
-var oldLength=this.lights.length;
- if(!this.lights[index])this.lights[index]=H3DU.Lights._createNewLight(index);
- if(this.lights.length-oldLength>=2){
+H3DU.Lights.prototype.getLight = function(index) {
+  "use strict";
+  var oldLength = this.lights.length;
+  if(!this.lights[index])this.lights[index] = H3DU.Lights._createNewLight(index);
+  if(this.lights.length - oldLength >= 2) {
   // Ensure existence of lights that come between the new
   // light and the last light
-  for(var i=oldLength;i<this.lights.length;i++){
-   if(!this.lights[i]){
-    this.lights[i]=H3DU.Lights._createNewLight(i);
-   }
+    for(var i = oldLength;i < this.lights.length;i++) {
+      if(!this.lights[i]) {
+        this.lights[i] = H3DU.Lights._createNewLight(i);
+      }
+    }
   }
- }
- return this.lights[index];
+  return this.lights[index];
 };
 /**
  * Sets parameters for the light source at the given index.
@@ -100,10 +100,10 @@ var oldLength=this.lights.length;
  * @returns {H3DU.Lights} This object.
  * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.setParams=function(index,params){
- "use strict";
-this.getLight(index).setParams(params);
- return this;
+H3DU.Lights.prototype.setParams = function(index, params) {
+  "use strict";
+  this.getLight(index).setParams(params);
+  return this;
 };
 
 /**
@@ -122,14 +122,14 @@ this.getLight(index).setParams(params);
  * @returns {H3DU.Lights} This object.
  * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
- "use strict";
-var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
- if((diffuse !== null && typeof diffuse !== "undefined"))
-   ret=ret.setParams(index,{"diffuse":diffuse});
- if((specular !== null && typeof specular !== "undefined"))
-   ret=ret.setParams(index,{"specular":specular});
- return ret;
+H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, specular) {
+  "use strict";
+  var ret = this.setParams(index, {"position":[direction[0], direction[1], direction[2], 0]});
+  if(diffuse !== null && typeof diffuse !== "undefined")
+    ret = ret.setParams(index, {"diffuse":diffuse});
+  if(specular !== null && typeof specular !== "undefined")
+    ret = ret.setParams(index, {"specular":specular});
+  return ret;
 };
 /**
  * Sets a point light.
@@ -143,14 +143,14 @@ var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2]
  * @returns {H3DU.Lights} This object.
  * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.setPointLight=function(index,position,diffuse,specular){
- "use strict";
-var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
- if((diffuse !== null && typeof diffuse !== "undefined"))
-   ret=ret.setParams(index,{"diffuse":diffuse});
- if((specular !== null && typeof specular !== "undefined"))
-   ret=ret.setParams(index,{"specular":specular});
- return ret;
+H3DU.Lights.prototype.setPointLight = function(index, position, diffuse, specular) {
+  "use strict";
+  var ret = this.setParams(index, {"position":[position[0], position[1], position[2], 1]});
+  if(diffuse !== null && typeof diffuse !== "undefined")
+    ret = ret.setParams(index, {"diffuse":diffuse});
+  if(specular !== null && typeof specular !== "undefined")
+    ret = ret.setParams(index, {"specular":specular});
+  return ret;
 };
 
 /**
@@ -167,8 +167,8 @@ var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]
 * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.setAmbient=function(r,g,b,a){
- "use strict";
-this.sceneAmbient=H3DU.toGLColor(r,g,b,a);
- return this;
+H3DU.Lights.prototype.setAmbient = function(r, g, b, a) {
+  "use strict";
+  this.sceneAmbient = H3DU.toGLColor(r, g, b, a);
+  return this;
 };

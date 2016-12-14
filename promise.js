@@ -7,8 +7,8 @@
 // from https://github.com/ondras/promise/.
 (function (root, factory) {
   "use strict";
-if (typeof define === "function" && define.amd) {
-    define([ "exports" ], factory);
+  if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
   } else if (typeof exports === "object") {
     factory(exports);
   } else {
@@ -16,7 +16,9 @@ if (typeof define === "function" && define.amd) {
   }
 }(this, function (exports) {
   "use strict";
-if (exports.Promise) { return; }
+  if (exports.Promise) {
+    return;
+  }
 
   /**
    * @class A promise - value to be resolved in the future.
@@ -24,29 +26,31 @@ if (exports.Promise) { return; }
    * @alias Promise
    * @param {function} [resolver]
    */
-  var Promise = function(resolver){
+  var Promise = function(resolver) {
     this._state = 0; /* 0 = pending, 1 = fulfilled, 2 = rejected */
     this._value = null; /* fulfillment / rejection value */
     this._timeout = null;
 
     this._cb = {
-      fulfilled: [],
-      rejected: []
+      "fulfilled": [],
+      "rejected": []
     };
 
     this._thenPromises = []; /* promises returned by then() */
 
-    if (resolver) { this._invokeResolver(resolver); }
+    if (resolver) {
+      this._invokeResolver(resolver);
+    }
   };
 
-  Promise.resolve = function(value){
-    return new this(function(resolve, reject){
+  Promise.resolve = function(value) {
+    return new this(function(resolve) {
       resolve(value);
     });
   };
 
-  Promise.reject = function(reason){
-    return new this(function(resolve, reject){
+  Promise.reject = function(reason) {
+    return new this(function(resolve, reject) {
       reject(reason);
     });
   };
@@ -54,28 +58,30 @@ if (exports.Promise) { return; }
   /**
    * Wait for all these promises to complete. One failed => this fails too.
    */
-  Promise.all = Promise.when = function(all){
-    return new this(function(resolve, reject){
+  Promise.all = Promise.when = function(all) {
+    return new this(function(resolve, reject) {
       var counter = 0;
       var results = [];
 
-      all.forEach(function(promise, index){
+      all.forEach(function(promise, index) {
         counter++;
-        promise.then(function(result){
+        promise.then(function(result) {
           results[index] = result;
           counter--;
-          if (!counter) { resolve(results); }
-        }, function(reason){
-          counter = 1/0;
+          if (!counter) {
+            resolve(results);
+          }
+        }, function(reason) {
+          counter = 1 / 0;
           reject(reason);
         });
       });
     });
   };
 
-  Promise.race = function(all){
-    return new this(function(resolve, reject){
-      all.forEach(function(promise){
+  Promise.race = function(all) {
+    return new this(function(resolve, reject) {
+      all.forEach(function(promise) {
         promise.then(resolve, reject);
       });
     });
@@ -86,7 +92,7 @@ if (exports.Promise) { return; }
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise}
    */
-  Promise.prototype.then = function(onFulfilled, onRejected){
+  Promise.prototype.then = function(onFulfilled, onRejected) {
     this._cb.fulfilled.push(onFulfilled);
     this._cb.rejected.push(onRejected);
 
@@ -94,35 +100,45 @@ if (exports.Promise) { return; }
 
     this._thenPromises.push(thenPromise);
 
-    if (this._state > 0) { this._schedule(); }
+    if (this._state > 0) {
+      this._schedule();
+    }
 
     /* 2.2.7. then must return a promise. */
     return thenPromise;
   };
 
-  Promise.prototype.fulfill = function(value){
-    if (this._state !== 0) { return this; }
+  Promise.prototype.fulfill = function(value) {
+    if (this._state !== 0) {
+      return this;
+    }
 
     this._state = 1;
     this._value = value;
 
-    if (this._thenPromises.length) { this._schedule(); }
+    if (this._thenPromises.length) {
+      this._schedule();
+    }
 
     return this;
   };
 
-  Promise.prototype.reject = function(value){
-    if (this._state !== 0) { return this; }
+  Promise.prototype.reject = function(value) {
+    if (this._state !== 0) {
+      return this;
+    }
 
     this._state = 2;
     this._value = value;
 
-    if (this._thenPromises.length) { this._schedule(); }
+    if (this._thenPromises.length) {
+      this._schedule();
+    }
 
     return this;
   };
 
-  Promise.prototype.resolve = function(x){
+  Promise.prototype.resolve = function(x) {
     /* 2.3.1. If promise and x refer to the same object, reject promise with a TypeError as the reason. */
     if (x === this) {
       this.reject(new TypeError("Promise resolved by its own instance"));
@@ -136,7 +152,7 @@ if (exports.Promise) { return; }
     }
     var then;
     /* 2.3.3. Otherwise, if x is an object or function,  */
-    if ((x!==null && typeof x!=="undefined") && (typeof(x) === "object" || typeof(x) === "function")) {
+    if (x !== null && typeof x !== "undefined" && (typeof x === "object" || typeof x === "function")) {
       try {
         then = x.then;
       } catch (e) {
@@ -145,18 +161,22 @@ if (exports.Promise) { return; }
         return;
       }
 
-      if (typeof(then) === "function") {
+      if (typeof then === "function") {
         /* 2.3.3.3. If then is a function, call it */
         var called = false;
-        var resolvePromise = function(y){
+        var resolvePromise = function(y) {
           /* 2.3.3.3.1. If/when resolvePromise is called with a value y, run [[Resolve]](promise, y). */
-          if (called) { return; }
+          if (called) {
+            return;
+          }
           called = true;
           this.resolve(y);
         };
-        var rejectPromise = function(r){
+        var rejectPromise = function(r) {
           /* 2.3.3.3.2. If/when rejectPromise is called with a reason r, reject promise with r. */
-          if (called) { return; }
+          if (called) {
+            return;
+          }
           called = true;
           this.reject(r);
         };
@@ -165,7 +185,9 @@ if (exports.Promise) { return; }
           then.call(x, resolvePromise.bind(this), rejectPromise.bind(this));
         } catch (e) { /* 2.3.3.3.4. If calling then throws an exception e, */
           /* 2.3.3.3.4.1. If resolvePromise or rejectPromise have been called, ignore it. */
-          if (called) { return; }
+          if (called) {
+            return;
+          }
           /* 2.3.3.3.4.2. Otherwise, reject promise with e as the reason. */
           this.reject(e);
         }
@@ -180,11 +202,11 @@ if (exports.Promise) { return; }
     this.fulfill(x);
   };
 
-  Promise.prototype.chain = function(promise){
-    var resolve = function(value){
+  Promise.prototype.chain = function(promise) {
+    var resolve = function(value) {
       promise.resolve(value);
     };
-    var reject = function(value){
+    var reject = function(value) {
       promise.reject(value);
     };
     return this.then(resolve, reject);
@@ -194,16 +216,18 @@ if (exports.Promise) { return; }
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise}
    */
-  Promise.prototype["catch"]  = function(onRejected){
+  Promise.prototype.catch  = function(onRejected) {
     return this.then(null, onRejected);
   };
 
-  Promise.prototype._schedule = function(){
-    if (this._timeout) { return; } /* resolution already scheduled */
+  Promise.prototype._schedule = function() {
+    if (this._timeout) {
+      return;
+    } /* resolution already scheduled */
     this._timeout = setTimeout(this._processQueue.bind(this), 0);
   };
 
-  Promise.prototype._processQueue = function(){
+  Promise.prototype._processQueue = function() {
     this._timeout = null;
 
     while (this._thenPromises.length) {
@@ -213,10 +237,10 @@ if (exports.Promise) { return; }
     }
   };
 
-  Promise.prototype._executeCallback = function(cb){
+  Promise.prototype._executeCallback = function(cb) {
     var thenPromise = this._thenPromises.shift();
 
-    if (typeof(cb) !== "function") {
+    if (typeof cb !== "function") {
       if (this._state === 1) {
         /* 2.2.7.3. If onFulfilled is not a function and promise1 is fulfilled, promise2 must be fulfilled with the same value. */
         thenPromise.fulfill(this._value);
@@ -237,7 +261,7 @@ if (exports.Promise) { return; }
     }
   };
 
-  Promise.prototype._invokeResolver = function(resolver){
+  Promise.prototype._invokeResolver = function(resolver) {
     try {
       resolver(this.resolve.bind(this), this.reject.bind(this));
     } catch (e) {

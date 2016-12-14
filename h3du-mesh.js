@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math */
+/* global H3DU */
 /**
 * Specifies the triangles, lines, or points that make up a geometric shape.
 * Each vertex, that is, each point, each end of a line, and each corner
@@ -48,7 +48,7 @@ at: http://peteroupc.github.io/
 * individual point. Both bits can't be set.
 * May be null or omitted, in which case "format" is set to 0.
 */
-H3DU.Mesh = function(vertices,indices,format){
+H3DU.Mesh = function(vertices,indices,format) {
  "use strict";
  this._initialize(vertices,indices,format);
  this._elementsDefined=0;
@@ -60,7 +60,7 @@ H3DU.Mesh = function(vertices,indices,format){
  this.texCoord=[0,0];
 };
 /** @private */
-H3DU.Mesh._primitiveType=function(mode){
+H3DU.Mesh._primitiveType=function(mode) {
  "use strict";
 if(mode===H3DU.Mesh.LINES || mode===H3DU.Mesh.LINE_STRIP)
   return H3DU.Mesh.LINES;
@@ -70,7 +70,7 @@ if(mode===H3DU.Mesh.LINES || mode===H3DU.Mesh.LINE_STRIP)
   return H3DU.Mesh.TRIANGLES;
 };
 /** @private */
-H3DU.Mesh._isCompatibleMode=function(oldMode,newMode){
+H3DU.Mesh._isCompatibleMode=function(oldMode,newMode) {
  "use strict";
 if(oldMode===newMode)return true;
  if(H3DU.Mesh._primitiveType(oldMode)===H3DU.Mesh._primitiveType(newMode))
@@ -78,13 +78,13 @@ if(oldMode===newMode)return true;
  return false;
 };
 /** @private */
-H3DU.Mesh._recalcNormalsStart=function(vertices,uniqueVertices,faces,stride,offset,flat){
+H3DU.Mesh._recalcNormalsStart=function(vertices,uniqueVertices,faces,stride,offset,flat) {
   "use strict";
-for(var i=0;i<vertices.length;i+=stride){
+for(var i=0;i<vertices.length;i+=stride) {
     vertices[i+offset]=0.0;
     vertices[i+offset+1]=0.0;
     vertices[i+offset+2]=0.0;
-    if(!flat){
+    if(!flat) {
      // If smooth shading is requested, find all vertices with
      // duplicate vertex positions
      var uv=[vertices[i],vertices[i+1],vertices[i+2]];
@@ -94,19 +94,19 @@ for(var i=0;i<vertices.length;i+=stride){
   }
 };
 /** @private */
-H3DU.Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,flat){
+H3DU.Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,flat) {
  "use strict";
 var len;
  var dupverts=[];
  var dupvertcount=0;
  var i;
-   if(!flat){
+   if(!flat) {
    // If smooth shading is requested, make sure
    // that every vertex with the same position has the
    // same normal
-   for(var key in uniqueVertices){
+   for(var key in uniqueVertices) {
     var v=uniqueVertices[key];
-    if(v && v.constructor===Array && v.length>=2){
+    if(v && v.constructor===Array && v.length>=2) {
      var v0=v[0];
      var avgx=vertices[v0];
      var avgy=vertices[v0+1];
@@ -115,18 +115,18 @@ var len;
      dupverts[1]=avgy;
      dupverts[2]=avgz;
      dupvertcount=3;
-     for(i=1;i<v.length;i++){
+     for(i=1;i<v.length;i++) {
       var dupfound=false;
       var nx=vertices[v[i]];
       var ny=vertices[v[i]+1];
       var nz=vertices[v[i]+2];
-      for(var j=0;j<dupvertcount;j+=3){
-       if(nx===dupverts[j] && ny===dupverts[j+1] && nz===dupverts[j+2]){
+      for(var j=0;j<dupvertcount;j+=3) {
+       if(nx===dupverts[j] && ny===dupverts[j+1] && nz===dupverts[j+2]) {
         dupfound=true;
         break;
        }
       }
-      if(!dupfound){
+      if(!dupfound) {
        dupverts[dupvertcount++]=nx;
        dupverts[dupvertcount++]=ny;
        dupverts[dupvertcount++]=nz;
@@ -135,7 +135,7 @@ var len;
        avgz+=nz;
       }
     }
-    for(i=0;i<v.length;i++){
+    for(i=0;i<v.length;i++) {
       vertices[v[i]]=avgx;
       vertices[v[i]+1]=avgy;
       vertices[v[i]+2]=avgz;
@@ -144,12 +144,12 @@ var len;
    }
   }
   // Normalize each normal of the vertex
-  for(i=0;i<vertices.length;i+=stride){
+  for(i=0;i<vertices.length;i+=stride) {
     var x=vertices[i+offset];
     var y=vertices[i+offset+1];
     var z=vertices[i+offset+2];
     len=Math.sqrt(x*x+y*y+z*z);
-    if(len){
+    if(len) {
       len=1.0/len;
       vertices[i+offset]=x*len;
       vertices[i+offset+1]=y*len;
@@ -159,13 +159,13 @@ var len;
 };
 
 /** @private */
-H3DU.Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
+H3DU.Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward) {
   "use strict";
 var normDir=(inward) ? -1 : 1;
   var uniqueVertices={};
   var len;
   H3DU.Mesh._recalcNormalsStart(vertices,uniqueVertices,faces,stride,offset,flat);
-  for(var i=0;i<faces.length;i+=3){
+  for(var i=0;i<faces.length;i+=3) {
     var v1=faces[i]*stride;
     var v2=faces[i+1]*stride;
     var v3=faces[i+2]*stride;
@@ -177,7 +177,7 @@ var normDir=(inward) ? -1 : 1;
     var z=(n1[0]*n2[1]-n1[1]*n2[0]);
     // normalize xyz vector
     len=Math.sqrt(x*x+y*y+z*z);
-    if(len!==0){
+    if(len!==0) {
       len=1.0/len;
       len*=normDir;
       x*=len;
@@ -218,12 +218,12 @@ var normDir=(inward) ? -1 : 1;
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.mode=function(m){
+H3DU.Mesh.prototype.mode=function(m) {
  "use strict";
  // TODO: Include in release notes that Meshes must use
  // the same primitive type
  if(m<0)throw new Error("invalid mode");
- if(this.currentMode===-1){
+ if(this.currentMode===-1) {
    var format=0;
    var primtype=H3DU.Mesh._primitiveType(m);
    if(primtype===H3DU.Mesh.LINES)
@@ -257,9 +257,9 @@ H3DU.Mesh.prototype.mode=function(m){
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.merge=function(other){
+H3DU.Mesh.prototype.merge=function(other) {
  "use strict";
-  if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)){
+  if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)) {
     throw new Error("Meshes have incompatible types");
   }
   var thisAttributes=this.attributeBits&H3DU.Mesh.ATTRIBUTES_BITS;
@@ -268,7 +268,7 @@ H3DU.Mesh.prototype.merge=function(other){
     var newAttributes=thisAttributes|otherAttributes;
     // Meshes have different attribute sets, so this will
     // be slower
-    if(newAttributes===otherAttributes){
+    if(newAttributes===otherAttributes) {
       // If the other's attributes are a subset, just
       // rebuild the vertices of this mesh
       this._rebuildVertices(newAttributes);
@@ -286,9 +286,9 @@ H3DU.Mesh.prototype.merge=function(other){
   var i;
   var oldVertexLength=this.vertexCount();
   var oldIndexLength=this.indices.length;
-  this.vertices.push.apply(this.vertices,other.vertices);
-  this.indices.push.apply(this.indices,other.indices);
-  for(i=oldIndexLength;i<this.indices.length;i++){
+  this.vertices.push.apply(this.vertices, other.vertices);
+  this.indices.push.apply(this.indices, other.indices);
+  for(i=oldIndexLength;i<this.indices.length;i++) {
     this.indices[i]+=oldVertexLength;
   }
   // Reset the primitive
@@ -314,9 +314,9 @@ H3DU.Mesh.prototype.merge=function(other){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.normal3=function(x,y,z){
+H3DU.Mesh.prototype.normal3=function(x,y,z) {
   "use strict";
-if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
+if(typeof x==="number" && typeof y==="number" && typeof z==="number") {
    this.normal[0]=x;
    this.normal[1]=y;
    this.normal[2]=z;
@@ -347,9 +347,9 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.tangent3=function(x,y,z){
+H3DU.Mesh.prototype.tangent3=function(x,y,z) {
   "use strict";
-if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
+if(typeof x==="number" && typeof y==="number" && typeof z==="number") {
    this.tangent[0]=x;
    this.tangent[1]=y;
    this.tangent[2]=z;
@@ -380,9 +380,9 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.bitangent3=function(x,y,z){
+H3DU.Mesh.prototype.bitangent3=function(x,y,z) {
   "use strict";
-if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
+if(typeof x==="number" && typeof y==="number" && typeof z==="number") {
    this.bitangent[0]=x;
    this.bitangent[1]=y;
    this.bitangent[2]=z;
@@ -410,15 +410,15 @@ if(typeof x==="number" && typeof y==="number" && typeof z==="number"){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
- H3DU.Mesh.prototype.color3=function(r,g,b){
+ H3DU.Mesh.prototype.color3=function(r,g,b) {
   "use strict";
-if(typeof r==="string"){
+if(typeof r==="string") {
    var c=H3DU.toGLColor(r);
    this.color[0]=c[0];
    this.color[1]=c[1];
    this.color[2]=c[2];
   } else if(typeof r==="number" && typeof g==="number" &&
-   typeof b==="number"){
+   typeof b==="number") {
    this.color[0]=r;
    this.color[1]=g;
    this.color[2]=b;
@@ -449,9 +449,9 @@ if(typeof r==="string"){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
- H3DU.Mesh.prototype.texCoord2=function(u,v){
+ H3DU.Mesh.prototype.texCoord2=function(u,v) {
  "use strict";
-if(typeof u==="number" && typeof v==="number"){
+if(typeof u==="number" && typeof v==="number") {
   this.texCoord[0]=u;
   this.texCoord[1]=v;
  } else {
@@ -477,9 +477,9 @@ if(typeof u==="number" && typeof v==="number"){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
- H3DU.Mesh.prototype.vertex3=function(x,y,z){
+ H3DU.Mesh.prototype.vertex3=function(x,y,z) {
   "use strict";
-  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
+  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")) {
    if(typeof x!=="number")
     this._vertex3(x[0],x[1],x[2],this);
    else
@@ -501,9 +501,9 @@ if(typeof u==="number" && typeof v==="number"){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
- H3DU.Mesh.prototype.vertex2=function(x,y){
+ H3DU.Mesh.prototype.vertex2=function(x,y) {
   "use strict";
-if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined")){
+if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined")) {
    if(typeof x!=="number")
     return this.vertex3(x[0],x[1],0.0);
    else
@@ -527,12 +527,12 @@ if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined"))
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.setColor3=function(r,g,b){
+H3DU.Mesh.prototype.setColor3=function(r,g,b) {
   "use strict";
 var rr=r;
   var gg=g;
   var bb=b;
-  if(typeof r==="string"){
+  if(typeof r==="string") {
    var c=H3DU.toGLColor(r);
    rr=c[0];
    gg=c[1];
@@ -542,7 +542,7 @@ var rr=r;
   this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
   var stride=this.getStride();
   var colorOffset=H3DU.Mesh._colorOffset(this.attributeBits);
-  for(var i=colorOffset;i<this.vertices.length;i+=stride){
+  for(var i=colorOffset;i<this.vertices.length;i+=stride) {
     this.vertices[i]=rr;
     this.vertices[i+1]=gg;
     this.vertices[i+2]=bb;
@@ -556,7 +556,7 @@ var rr=r;
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.normalizeNormals=function(){
+H3DU.Mesh.prototype.normalizeNormals=function() {
   "use strict";
 var i;
    var stride=this.getStride();
@@ -564,12 +564,12 @@ var i;
    var normalOffset=H3DU.Mesh._normalOffset(
      this.attributeBits);
    if(normalOffset<0)return this;
-   for(i=0;i<vertices.length;i+=stride){
+   for(i=0;i<vertices.length;i+=stride) {
     var x=vertices[i+normalOffset];
     var y=vertices[i+normalOffset+1];
     var z=vertices[i+normalOffset+2];
     var len=Math.sqrt(x*x+y*y+z*z);
-    if(len!==0){
+    if(len!==0) {
       len=1.0/len;
       vertices[i+normalOffset]*=len;
       vertices[i+normalOffset+1]*=len;
@@ -599,17 +599,17 @@ var i;
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.setVertex=function(index,x,y,z){
+H3DU.Mesh.prototype.setVertex=function(index,x,y,z) {
   "use strict";
 if(index<0)return this;
-  if(typeof y==="undefined" && typeof z==="undefined"){
+  if(typeof y==="undefined" && typeof z==="undefined") {
    y=x[1];
    z=x[2];
    x=x[0];
   }
   var c=this.vertexCount();
-  if(index<c){
-    var idx=index;
+  if(index<c) {
+
     index*=this.getStride();
     this.vertices[index]=x;
     this.vertices[index+1]=y;
@@ -637,18 +637,18 @@ if(index<0)return this;
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z){
+H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z) {
   "use strict";
   if(index<0)return this;
-  var count=0;
-  if(typeof y==="undefined" && typeof z==="undefined"){
+
+  if(typeof y==="undefined" && typeof z==="undefined") {
    y=x[1];
    z=x[2];
    x=x[0];
   }
   var c=this.vertexCount();
-  if(index<c){
-    var idx=index;
+  if(index<c) {
+
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
     index*=this.getStride();
     index+=H3DU.Mesh._normalOffset(this.attributeBits);
@@ -673,11 +673,11 @@ H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z){
  * equals the number of vertices in this mesh or greater.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.getVertex=function(index){
+H3DU.Mesh.prototype.getVertex=function(index) {
   "use strict";
 if(index<0)return null;
   var c=this.vertexCount();
-  if(index<c){
+  if(index<c) {
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
     index*=this.getStride();
     return this.vertices.slice(index,index+3);
@@ -700,10 +700,10 @@ if(index<0)return null;
  * a normal.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.getVertexNormal=function(index){
+H3DU.Mesh.prototype.getVertexNormal=function(index) {
   "use strict";
   var c=this.vertexCount();
-  if(index<c){
+  if(index<c) {
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
     index*=this.getStride();
     index+=H3DU.Mesh._normalOffset(this.attributeBits);
@@ -713,38 +713,38 @@ H3DU.Mesh.prototype.getVertexNormal=function(index){
 };
 
 /** @private */
-H3DU.Mesh.prototype._initialize=function(vertices,faces,format){
+H3DU.Mesh.prototype._initialize=function(vertices,faces,format) {
  "use strict";
 this.vertices=vertices||[];
  this.indices=faces||[];
  this.startIndex=0;
  var prim=(format&H3DU.Mesh.PRIMITIVES_BITS);
- if(prim!==0 && prim!==H3DU.Mesh.LINES_BIT && prim!==H3DU.Mesh.POINTS_BIT){
+ if(prim!==0 && prim!==H3DU.Mesh.LINES_BIT && prim!==H3DU.Mesh.POINTS_BIT) {
   throw new Error("invalid format");
  }
  this.attributeBits=((format===null || typeof format==="undefined")) ? 0 : format;
  /**
  * Gets the number of vertices included in this mesh.
  * @returns {Number} Return value. */
-  this.vertexCount=function(){
+  this.vertexCount=function() {
   return this.vertices.length/this.getStride();
  };
- this.getStride=function(){
+ this.getStride=function() {
   return H3DU.Mesh._getStride(this.attributeBits);
  };
  /** @private */
- this.newPrimitive=function(){
+ this.newPrimitive=function() {
   this.startIndex=this.vertices.length;
   return this;
  };
- this.primitiveType=function(){
+ this.primitiveType=function() {
   var primitive=H3DU.Mesh.TRIANGLES;
   if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)primitive=H3DU.Mesh.LINES;
   if((this.attributeBits&H3DU.Mesh.POINTS_BIT)!==0)primitive=H3DU.Mesh.POINTS;
   return primitive;
  };
  /** @private */
- this._rebuildVertices=function(newAttributes){
+ this._rebuildVertices=function(newAttributes) {
   var oldBits=this.attributeBits;
   var newBits=oldBits|(newAttributes&H3DU.Mesh.ATTRIBUTES_BITS);
   if(newBits===oldBits)return;
@@ -753,25 +753,14 @@ this.vertices=vertices||[];
   // Rebuild the list of vertices if a new kind of
   // attribute is added to the mesh
   var newVertices=[];
-  var newStride=3;
-  if((newBits&H3DU.Mesh.COLORS_BIT)!==0)
-   newStride+=3;
-  if((newBits&H3DU.Mesh.NORMALS_BIT)!==0)
-   newStride+=3;
-  if((newBits&H3DU.Mesh.TEXCOORDS_BIT)!==0)
-   newStride+=2;
-  if((newBits&H3DU.Mesh.TANGENTS_BIT)!==0)
-   newStride+=3;
-  if((newBits&H3DU.Mesh.BITANGENTS_BIT)!==0)
-   newStride+=3;
-  for(var i=0;i<this.vertices.length;i+=currentStride){
+  for(var i=0;i<this.vertices.length;i+=currentStride) {
    var vx=this.vertices[i];
    var vy=this.vertices[i+1];
    var vz=this.vertices[i+2];
    var s=i+3;
    newVertices.push(vx,vy,vz);
-   if((newBits&H3DU.Mesh.NORMALS_BIT)!==0){
-    if((oldBits&H3DU.Mesh.NORMALS_BIT)!==0){
+   if((newBits&H3DU.Mesh.NORMALS_BIT)!==0) {
+    if((oldBits&H3DU.Mesh.NORMALS_BIT)!==0) {
      x=this.vertices[s];
      y=this.vertices[s+1];
      z=this.vertices[s+2];
@@ -781,54 +770,54 @@ this.vertices=vertices||[];
      newVertices.push(0,0,0);
     }
    }
-   if((newBits&H3DU.Mesh.COLORS_BIT)!==0){
-    if((oldBits&H3DU.Mesh.COLORS_BIT)!==0){
+   if((newBits&H3DU.Mesh.COLORS_BIT)!==0) {
+    if((oldBits&H3DU.Mesh.COLORS_BIT)===0) {
+     newVertices.push(0,0,0);
+    } else {
      var r=this.vertices[s];
      var g=this.vertices[s+1];
      var b=this.vertices[s+2];
      s+=3;
      newVertices.push(r,g,b);
-    } else {
-     newVertices.push(0,0,0);
     }
    }
-   if((newBits&H3DU.Mesh.TEXCOORDS_BIT)!==0){
-    if((oldBits&H3DU.Mesh.TEXCOORDS_BIT)!==0){
+   if((newBits&H3DU.Mesh.TEXCOORDS_BIT)!==0) {
+    if((oldBits&H3DU.Mesh.TEXCOORDS_BIT)===0) {
+     newVertices.push(0,0);
+    } else {
      var u=this.vertices[s];
      var v=this.vertices[s+1];
      s+=2;
      newVertices.push(u,v);
-    } else {
-     newVertices.push(0,0);
     }
    }
-   if((newBits&H3DU.Mesh.TANGENTS_BIT)!==0){
-    if((oldBits&H3DU.Mesh.TANGENTS_BIT)!==0){
+   if((newBits&H3DU.Mesh.TANGENTS_BIT)!==0) {
+    if((oldBits&H3DU.Mesh.TANGENTS_BIT)===0) {
+     newVertices.push(0,0,0);
+    } else {
      x=this.vertices[s];
      y=this.vertices[s+1];
      z=this.vertices[s+2];
      s+=3;
      newVertices.push(x,y,z);
-    } else {
-     newVertices.push(0,0,0);
     }
    }
-   if((newBits&H3DU.Mesh.BITANGENTS_BIT)!==0){
-    if((oldBits&H3DU.Mesh.BITANGENTS_BIT)!==0){
+   if((newBits&H3DU.Mesh.BITANGENTS_BIT)!==0) {
+    if((oldBits&H3DU.Mesh.BITANGENTS_BIT)===0) {
+     newVertices.push(0,0,0);
+    } else {
      x=this.vertices[s];
      y=this.vertices[s+1];
      z=this.vertices[s+2];
      s+=3;
      newVertices.push(x,y,z);
-    } else {
-     newVertices.push(0,0,0);
     }
    }
   }
   this.vertices=newVertices;
   this.attributeBits=newBits;
  };
- this._setTriangle=function(vertexStartIndex,stride,i1,i2,i3){
+ this._setTriangle=function(vertexStartIndex,stride,i1,i2,i3) {
    var v1=i1*stride;
    var v2=i2*stride;
    var v3=i3*stride;
@@ -837,90 +826,90 @@ this.vertices=vertices||[];
    var v=this.vertices;
    for(var i=vertexStartIndex-stride;
      i>=0 && triCount<16 && tribits!==7;
-     i-=stride,triCount++){
+     i-=stride,triCount++) {
      var found=7;
-     for(var j=0;j<stride && found!==0;j++){
-        if((found&1)!==0 && v[v1+j]!==v[i+j]){
+     for(var j=0;j<stride && found!==0;j++) {
+        if((found&1)!==0 && v[v1+j]!==v[i+j]) {
          found&=~1;
         }
-        if((found&2)!==0 && v[v2+j]!==v[i+j]){
+        if((found&2)!==0 && v[v2+j]!==v[i+j]) {
          found&=~2;
         }
-        if((found&4)!==0 && v[v3+j]!==v[i+j]){
+        if((found&4)!==0 && v[v3+j]!==v[i+j]) {
          found&=~4;
         }
      }
-     if((found&1)!==0){ i1=i/stride; v1=i1*stride; tribits|=1; break; }
-     if((found&2)!==0){ i2=i/stride; v2=i2*stride; tribits|=2; break; }
-     if((found&4)!==0){ i3=i/stride; v3=i3*stride; tribits|=4; break; }
+     if((found&1)!==0) { i1=i/stride; v1=i1*stride; tribits|=1; break; }
+     if((found&2)!==0) { i2=i/stride; v2=i2*stride; tribits|=2; break; }
+     if((found&4)!==0) { i3=i/stride; v3=i3*stride; tribits|=4; break; }
    }
    if(
     !(v[v1]===v[v2] && v[v1+1]===v[v2+1] && v[v1+2]===v[v2+2]) &&
     !(v[v1]===v[v3] && v[v1+1]===v[v3+1] && v[v1+2]===v[v3+2]) &&
-    !(v[v2]===v[v3] && v[v2+1]===v[v3+1] && v[v2+2]===v[v3+2])){
+    !(v[v2]===v[v3] && v[v2+1]===v[v3+1] && v[v2+2]===v[v3+2])) {
     // avoid identical vertex positions
     this.indices.push(i1,i2,i3);
    }
  };
- this._vertex3=function(x,y,z){
+ this._vertex3=function(x,y,z) {
   var currentMode=this.currentMode;
   if(currentMode===-1)throw new Error("mode() not called");
   this._rebuildVertices(this._elementsDefined);
    var vertexStartIndex=this.vertices.length;
   this.vertices.push(x,y,z);
-  if((this.attributeBits&H3DU.Mesh.NORMALS_BIT)!==0){
+  if((this.attributeBits&H3DU.Mesh.NORMALS_BIT)!==0) {
    this.vertices.push(this.normal[0],this.normal[1],this.normal[2]);
   }
-  if((this.attributeBits&H3DU.Mesh.COLORS_BIT)!==0){
+  if((this.attributeBits&H3DU.Mesh.COLORS_BIT)!==0) {
    this.vertices.push(this.color[0],this.color[1],this.color[2]);
   }
-  if((this.attributeBits&H3DU.Mesh.TEXCOORDS_BIT)!==0){
+  if((this.attributeBits&H3DU.Mesh.TEXCOORDS_BIT)!==0) {
    this.vertices.push(this.texCoord[0],this.texCoord[1]);
   }
-  if((this.attributeBits&H3DU.Mesh.TANGENTS_BIT)!==0){
+  if((this.attributeBits&H3DU.Mesh.TANGENTS_BIT)!==0) {
    this.vertices.push(this.tangent[0],this.tangent[1],this.tangent[2]);
   }
-  if((this.attributeBits&H3DU.Mesh.BITANGENTS_BIT)!==0){
+  if((this.attributeBits&H3DU.Mesh.BITANGENTS_BIT)!==0) {
    this.vertices.push(this.bitangent[0],this.bitangent[1],this.bitangent[2]);
   }
   var stride=this.getStride();
   var index,firstIndex;
   if(currentMode===H3DU.Mesh.QUAD_STRIP &&
      (this.vertices.length-this.startIndex)>=stride*4 &&
-     (this.vertices.length-this.startIndex)%(stride*2) === 0){
+     (this.vertices.length-this.startIndex)%(stride*2) === 0) {
    index=(this.vertices.length/stride)-4;
    this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
    this._setTriangle(vertexStartIndex,stride,index+2,index+1,index+3);
   } else if(currentMode===H3DU.Mesh.QUADS &&
-     (this.vertices.length-this.startIndex)%(stride*4) === 0){
+     (this.vertices.length-this.startIndex)%(stride*4) === 0) {
    index=(this.vertices.length/stride)-4;
    this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
    this._setTriangle(vertexStartIndex,stride,index,index+2,index+3);
   } else if(currentMode===H3DU.Mesh.TRIANGLES &&
-     (this.vertices.length-this.startIndex)%(stride*3) === 0){
+     (this.vertices.length-this.startIndex)%(stride*3) === 0) {
    index=(this.vertices.length/stride)-3;
    this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
   } else if(currentMode===H3DU.Mesh.LINES &&
-     (this.vertices.length-this.startIndex)%(stride*2) === 0){
+     (this.vertices.length-this.startIndex)%(stride*2) === 0) {
    index=(this.vertices.length/stride)-2;
    this.indices.push(index,index+1);
   } else if(currentMode===H3DU.Mesh.TRIANGLE_FAN &&
-     (this.vertices.length-this.startIndex)>=(stride*3)){
+     (this.vertices.length-this.startIndex)>=(stride*3)) {
    index=(this.vertices.length/stride)-2;
    firstIndex=(this.startIndex/stride);
    this._setTriangle(vertexStartIndex,stride,firstIndex,index,index+1);
   } else if(currentMode===H3DU.Mesh.LINE_STRIP &&
-     (this.vertices.length-this.startIndex)>=(stride*2)){
+     (this.vertices.length-this.startIndex)>=(stride*2)) {
    index=(this.vertices.length/stride)-2;
    this.indices.push(index,index+1);
-  } else if(currentMode===H3DU.Mesh.POINTS){
+  } else if(currentMode===H3DU.Mesh.POINTS) {
    index=(this.vertices.length/stride)-1;
    this.indices.push(index);
   } else if(currentMode===H3DU.Mesh.TRIANGLE_STRIP &&
-     (this.vertices.length-this.startIndex)>=(stride*3)){
+     (this.vertices.length-this.startIndex)>=(stride*3)) {
    index=(this.vertices.length/stride)-3;
    firstIndex=(this.startIndex/stride);
-   if(((index-firstIndex)&1) === 0){
+   if(((index-firstIndex)&1) === 0) {
      this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
    } else {
      this._setTriangle(vertexStartIndex,stride,index+1,index,index+2);
@@ -931,18 +920,18 @@ this.vertices=vertices||[];
 };
 
 /** @private */
-H3DU.Mesh.prototype._makeRedundant=function(){
+H3DU.Mesh.prototype._makeRedundant=function() {
   "use strict";
 var existingIndices=[];
   var stride=this.getStride();
   var originalIndicesLength=this.indices.length;
-  for(var i=0;i<originalIndicesLength;i++){
+  for(var i=0;i<originalIndicesLength;i++) {
     var index=this.indices[i];
-    if(existingIndices[index]){
+    if(existingIndices[index]) {
      // Index already exists, so duplicate
      var offset=index*stride;
      var newIndex=this.vertices.length/stride;
-     for(var j=0;j<stride;j++){
+     for(var j=0;j<stride;j++) {
       this.vertices.push(this.vertices[offset+j]);
      }
      this.indices[i]=newIndex;
@@ -957,7 +946,7 @@ var existingIndices=[];
  * @returns {Number} Return value.
 * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.primitiveCount=function(){
+H3DU.Mesh.prototype.primitiveCount=function() {
   "use strict";
 if((this.attributeBits&H3DU.Mesh.LINES_BIT)!==0)
    return Math.floor(this.indices.length/2);
@@ -970,12 +959,12 @@ H3DU.Mesh._addLine=function(lineIndices,existingLines,f1,f2) {
 "use strict";
    // Ensure ordering of the indices
 
-if(f1<f2){
+if(f1<f2) {
     var tmp=f1;f1=f2;f2=tmp;
    }
    var e=existingLines[f1];
-   if(e){
-    if(e.indexOf(f2)<0){
+   if(e) {
+    if(e.indexOf(f2)<0) {
      e.push(f2);
      lineIndices.push(f1,f2);
     }
@@ -994,15 +983,15 @@ if(f1<f2){
  * to lines.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.toWireFrame=function(){
+H3DU.Mesh.prototype.toWireFrame=function() {
   "use strict";
-if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
+if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0) {
    // Not a triangle mesh
    return this;
   }
   var lineIndices=[];
   var existingLines={};
-  for(var i=0;i<this.indices.length;i+=3){
+  for(var i=0;i<this.indices.length;i+=3) {
     var f1=this.indices[i];
     var f2=this.indices[i+1];
     var f3=this.indices[i+2];
@@ -1015,11 +1004,11 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
 };
 
 /** @private */
-H3DU.Mesh._isIdentityInUpperLeft=function(m){
+H3DU.Mesh._isIdentityInUpperLeft=function(m) {
  "use strict";
 return (m[0] === 1 && m[1] === 0 && m[2] === 0 &&
     m[4] === 0 && m[5] === 1 && m[6] === 0 &&
-    m[8] === 0 && m[9] === 0 && m[10] === 1) ? true : false;
+    m[8] === 0 && m[9] === 0 && m[10] === 1);
 };
  /**
   * Transforms the positions and normals of all the vertices currently
@@ -1033,23 +1022,23 @@ return (m[0] === 1 && m[1] === 0 && m[2] === 0 &&
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.transform=function(matrix){
+H3DU.Mesh.prototype.transform=function(matrix) {
   "use strict";
 var stride=this.getStride();
   var v=this.vertices;
   var isNonTranslation=!H3DU.Mesh._isIdentityInUpperLeft(matrix);
   var normalOffset=H3DU.Mesh._normalOffset(this.attributeBits);
   var matrixForNormals=null;
-  if(normalOffset>=0 && isNonTranslation){
+  if(normalOffset>=0 && isNonTranslation) {
    matrixForNormals=H3DU.Math.mat4inverseTranspose3(matrix);
   }
-  for(var i=0;i<v.length;i+=stride){
+  for(var i=0;i<v.length;i+=stride) {
     var xform=H3DU.Math.mat4transform(matrix,
       v[i],v[i+1],v[i+2],1.0);
     v[i]=xform[0];
     v[i+1]=xform[1];
     v[i+2]=xform[2];
-    if(normalOffset>=0 && isNonTranslation){
+    if(normalOffset>=0 && isNonTranslation) {
      // Transform and normalize the normals
      // (using a modified matrix) to ensure
      // they point in the correct direction
@@ -1086,7 +1075,7 @@ var stride=this.getStride();
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.enumPrimitives=function(func){
+H3DU.Mesh.prototype.enumPrimitives=function(func) {
  "use strict";
   var prim=this.primitiveType();
   var normals=H3DU.Mesh._normalOffset(this.attributeBits);
@@ -1097,9 +1086,9 @@ H3DU.Mesh.prototype.enumPrimitives=function(func){
   var primSize=3;
   if(prim===H3DU.Mesh.LINES)primSize=2;
   if(prim===H3DU.Mesh.POINTS)primSize=1;
-  for(var j=0;j<this.indices.length;j+=primSize){
+  for(var j=0;j<this.indices.length;j+=primSize) {
    var p=[];
-   for(var k=0;k<primSize;k++){
+   for(var k=0;k<primSize;k++) {
     var vi=this.indices[j+k]*stride;
     var info={};
     info.position=[v[vi],v[vi+1],v[vi+2]];
@@ -1128,16 +1117,16 @@ H3DU.Mesh.prototype.enumPrimitives=function(func){
 * -Inf, -Inf].
 * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.getBoundingBox=function(){
+H3DU.Mesh.prototype.getBoundingBox=function() {
  "use strict";
  var empty=true;
  var inf=Number.POSITIVE_INFINITY;
  var ret=[inf,inf,inf,-inf,-inf,-inf];
   var stride=this.getStride();
   var v=this.vertices;
-  for(var j=0;j<this.indices.length;j++){
+  for(var j=0;j<this.indices.length;j++) {
     var vi=this.indices[j]*stride;
-    if(empty){
+    if(empty) {
      empty=false;
      ret[0]=ret[3]=v[vi];
      ret[1]=ret[4]=v[vi+1];
@@ -1154,7 +1143,7 @@ H3DU.Mesh.prototype.getBoundingBox=function(){
  return ret;
 };
 /** @private */
-H3DU.Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
+H3DU.Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset) {
   "use strict";
 var t1 = vertices[v2] - vertices[v1];
   var t2 = vertices[v2+1] - vertices[v1+1];
@@ -1167,7 +1156,7 @@ var t1 = vertices[v2] - vertices[v1];
   var t9 = vertices[v3+uvOffset] - vertices[v1+uvOffset];
   var t10 = vertices[v3+uvOffset+1] - vertices[v1+uvOffset+1];
   var t11 = ((((t7 * t10) - t8 * t9)));
-  if(t11 === 0){
+  if(t11 === 0) {
    return [0,0,0,0,0,0];
   }
   t11=1.0/t11;
@@ -1190,7 +1179,7 @@ H3DU.Mesh._recalcTangentsInternal=function(vertices,indices,stride,uvOffset,norm
  // that both fields are present)
 
 var vi=[0,0,0];
- for(var i=0;i<indices.length;i+=3){
+ for(var i=0;i<indices.length;i+=3) {
   vi[0]=indices[i]*stride;
   vi[1]=indices[i+1]*stride;
   vi[2]=indices[i+2]*stride;
@@ -1211,7 +1200,7 @@ var vi=[0,0,0];
   // (where AA and BB are the orthonormalized versions of the tangent
   // and bitangent) as the tangent space transform, in order to avoid
   // the need to also specify a transformed normal due to matrix inversion.
-  for(var j=0;j<3;j++){
+  for(var j=0;j<3;j++) {
    var m=ret;
    var vicur=vi[j];
    var norm0=vertices[vicur+normalOffset];
@@ -1246,25 +1235,25 @@ var vi=[0,0,0];
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.recalcTangents=function(){
+H3DU.Mesh.prototype.recalcTangents=function() {
   "use strict";
-  if(this.primitiveType()!==H3DU.Mesh.TRIANGLES){
+  if(this.primitiveType()!==H3DU.Mesh.TRIANGLES) {
     return this;
   }
 var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
   var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~tangentBits))!==0);
   var uvOffset=H3DU.Mesh._texCoordOffset(this.attributeBits);
   var normalOffset=H3DU.Mesh._normalOffset(this.attributeBits);
-  if(uvOffset<0 || normalOffset<0){
+  if(uvOffset<0 || normalOffset<0) {
    // can't generate tangents and bitangents
    // without normals or texture coordinates.
    return this;
   }
   this._rebuildVertices(tangentBits);
-  if(haveOtherAttributes){
+  if(haveOtherAttributes) {
     this._makeRedundant();
   }
-  if(this.primitiveType()===H3DU.Mesh.TRIANGLES){
+  if(this.primitiveType()===H3DU.Mesh.TRIANGLES) {
    var tangentOffset=H3DU.Mesh._tangentOffset(this.attributeBits);
    H3DU.Mesh._recalcTangentsInternal(this.vertices,this.indices,
      this.getStride(),uvOffset,normalOffset,tangentOffset);
@@ -1286,7 +1275,7 @@ var tangentBits=H3DU.Mesh.TANGENTS_BIT|H3DU.Mesh.BITANGENTS_BIT;
 * );
 * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.reverseNormals=function(){
+H3DU.Mesh.prototype.reverseNormals=function() {
   "use strict";
    var i;
    var stride=this.getStride();
@@ -1294,7 +1283,7 @@ H3DU.Mesh.prototype.reverseNormals=function(){
    var normalOffset=H3DU.Mesh._normalOffset(
      this.attributeBits);
    if(normalOffset<0)  return this;
-   for(i=0;i<vertices.length;i+=stride){
+   for(i=0;i<vertices.length;i+=stride) {
     var x=vertices[i+normalOffset];
     var y=vertices[i+normalOffset+1];
     var z=vertices[i+normalOffset+2];
@@ -1322,13 +1311,13 @@ H3DU.Mesh.prototype.reverseNormals=function(){
 * );
 * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.reverseWinding=function(){
+H3DU.Mesh.prototype.reverseWinding=function() {
   "use strict";
-if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
+if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0) {
    // Not a triangle mesh
    return this;
   }
-  for(var i=0;i<this.indices.length;i+=3){
+  for(var i=0;i<this.indices.length;i+=3) {
     var f2=this.indices[i+1];
     var f3=this.indices[i+2];
     this.indices[i+2]=f2;
@@ -1353,17 +1342,17 @@ if((this.attributeBits&H3DU.Mesh.PRIMITIVES_BITS)!==0){
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */
-H3DU.Mesh.prototype.recalcNormals=function(flat,inward){
+H3DU.Mesh.prototype.recalcNormals=function(flat,inward) {
   "use strict";
   var primtype=this.primitiveType();
-  if(primtype!==H3DU.Mesh.LINES && primtype!==H3DU.Mesh.POINTS){
+  if(primtype!==H3DU.Mesh.LINES && primtype!==H3DU.Mesh.POINTS) {
 var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~H3DU.Mesh.NORMALS_BIT))!==0);
   this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
   // No need to duplicate vertices if there are no other attributes
   // besides normals and smooth shading is requested; the
   // recalculation will reinitialize normals to 0 and
   // add the calculated normals to vertices as they are implicated
-  if(haveOtherAttributes || flat){
+  if(haveOtherAttributes || flat) {
     this._makeRedundant();
   }
    H3DU.Mesh._recalcNormals(this.vertices,this.indices,
@@ -1372,7 +1361,7 @@ var haveOtherAttributes=((this.attributeBits&(H3DU.Mesh.ATTRIBUTES_BITS&~H3DU.Me
   return this;
 };
 /** @private */
-H3DU.Mesh._getStride=function(format){
+H3DU.Mesh._getStride=function(format) {
   "use strict";
 var s=[3,6,6,9,5,8,8,11][format&(H3DU.Mesh.NORMALS_BIT|H3DU.Mesh.COLORS_BIT|H3DU.Mesh.TEXCOORDS_BIT)];
   if((format&H3DU.Mesh.TANGENTS_BIT)!==0)s+=3;
@@ -1380,12 +1369,12 @@ var s=[3,6,6,9,5,8,8,11][format&(H3DU.Mesh.NORMALS_BIT|H3DU.Mesh.COLORS_BIT|H3DU
   return s;
  };
 /** @private */
-H3DU.Mesh._normalOffset=function(format){
+H3DU.Mesh._normalOffset=function(format) {
   "use strict";
 return [-1,3,-1,3,-1,3,-1,3][format&(H3DU.Mesh.NORMALS_BIT|H3DU.Mesh.COLORS_BIT|H3DU.Mesh.TEXCOORDS_BIT)];
  };
 /** @private */
-H3DU.Mesh._tangentOffset=function(format){
+H3DU.Mesh._tangentOffset=function(format) {
   "use strict";
 var x=3;
   if((format&H3DU.Mesh.TANGENTS_BIT) === 0)return -1;
@@ -1395,7 +1384,7 @@ var x=3;
   return x;
  };
 /** @private */
-H3DU.Mesh._bitangentOffset=function(format){
+H3DU.Mesh._bitangentOffset=function(format) {
   "use strict";
 var x=3;
   if((format&H3DU.Mesh.BITANGENTS_BIT) === 0)return -1;
@@ -1406,12 +1395,12 @@ var x=3;
   return x;
  };
 /** @private */
-H3DU.Mesh._colorOffset=function(format){
+H3DU.Mesh._colorOffset=function(format) {
   "use strict";
 return [-1,-1,3,6,-1,-1,3,6][format&(H3DU.Mesh.NORMALS_BIT|H3DU.Mesh.COLORS_BIT|H3DU.Mesh.TEXCOORDS_BIT)];
  };
 /** @private */
-H3DU.Mesh._texCoordOffset=function(format){
+H3DU.Mesh._texCoordOffset=function(format) {
   "use strict";
 return [-1,-1,-1,-1,3,6,6,9][format&(H3DU.Mesh.NORMALS_BIT|H3DU.Mesh.COLORS_BIT|H3DU.Mesh.TEXCOORDS_BIT)];
 };

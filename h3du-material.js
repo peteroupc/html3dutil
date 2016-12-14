@@ -21,20 +21,20 @@ at: http://peteroupc.github.io/
 * @param {Array<Number>} [shininess] Specular highlight exponent of this material.
 * @param {Array<Number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
 */
-H3DU.Material = function(ambient, diffuse, specular,shininess,emission) {
+H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  //console.log([ambient,diffuse,specular,shininess,emission]+"")
- "use strict";
-if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambient);
- if((diffuse!==null && typeof diffuse!=="undefined"))diffuse=H3DU.toGLColor(diffuse);
- if((specular!==null && typeof specular!=="undefined"))specular=H3DU.toGLColor(specular);
- if((emission!==null && typeof emission!=="undefined"))emission=H3DU.toGLColor(emission);
+  "use strict";
+  if(ambient !== null && typeof ambient !== "undefined")ambient = H3DU.toGLColor(ambient);
+  if(diffuse !== null && typeof diffuse !== "undefined")diffuse = H3DU.toGLColor(diffuse);
+  if(specular !== null && typeof specular !== "undefined")specular = H3DU.toGLColor(specular);
+  if(emission !== null && typeof emission !== "undefined")emission = H3DU.toGLColor(emission);
  /** Specular highlight exponent of this material.
 * The greater the number, the more concentrated the specular
 * highlights are (and the smoother the material behaves).
 * The lower the number, the more extended the highlights are (and the rougher the material behaves).
 * Ranges from 0 through 128.
 */
- this.shininess=((shininess===null || typeof shininess==="undefined")) ? 0 : Math.min(Math.max(0,shininess),128);
+  this.shininess = shininess === null || typeof shininess === "undefined" ? 0 : Math.min(Math.max(0, shininess), 128);
  /** Ambient color of this material.<p>
  * Ambient color indicates how much an object's color is affected by ambient
  * lights, those that color pixels the same way regardless
@@ -53,7 +53,7 @@ if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambie
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for ambient color rather than this property.
  */
- this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
+  this.ambient = ambient ? ambient.slice(0, 3) : [0.2, 0.2, 0.2];
  /**
  * Diffusion color of this material (also called "albedo"). This is the color seen when light passes through this material
  * and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
@@ -72,7 +72,7 @@ if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambie
  * This value can have an optional fourth element giving the alpha component
  * (0-1).  If this element is omitted, the default is 1.<p>
  */
- this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
+  this.diffuse = diffuse ? diffuse.slice(0, diffuse.length) : [0.8, 0.8, 0.8, 1.0];
  // TODO: Consider changing default value of specular to 1
  /**
  * Specular highlight reflection of this material.
@@ -88,7 +88,7 @@ if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambie
  * (all three components are the same), but can be colored if the material represents an
 * uncoated metal of some sort. If this element is omitted, the default is (0,0,0).<p>
 */
- this.specular=specular ? specular.slice(0,3) : [0,0,0];
+  this.specular = specular ? specular.slice(0, 3) : [0, 0, 0];
  /**
 * Additive color emitted by objects with this material.
 * Used for objects that glow on their own, among other things.
@@ -101,14 +101,14 @@ if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambie
 * For each of the three color components, positive values add to that component,
 * while negative values subtract from it. (0,0,0), the default, means no additive color.
  */
- this.emission=emission ? emission.slice(0,3) : [0,0,0];
+  this.emission = emission ? emission.slice(0, 3) : [0, 0, 0];
 /**
 * H3DU.Texture for this material.  Each color in the texture
 * sets the diffusion (also called "albedo")
 * of each part of the material.
 * @default
 */
- this.texture=null;
+  this.texture = null;
 /**
 * Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
 * each part of the object's surface (note that the material must have a specular color of other
@@ -121,7 +121,7 @@ if((ambient!==null && typeof ambient!=="undefined"))ambient=H3DU.toGLColor(ambie
 * specular factors in certain areas.
 * @default
 */
- this.specularMap=null;
+  this.specularMap = null;
  /**
  * Normal map (bump map) texture.  Normal maps are used either to add
  * a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
@@ -153,18 +153,18 @@ A strong tilt indicates strong relief detail at that point.<p>
 * method can calculate the tangents and bitangents appropriate for normal mapping.
 * @default
 */
- this.normalMap=null;
+  this.normalMap = null;
  /**
  * If true, only the "diffuse" and "texture" properties of this object are used
  * when processing objects that use this material.
 * @default
  */
- this.basic=false;
+  this.basic = false;
  /**
  * Shader program to use when rendering objects with this material.
  * @default
  */
- this.shader=null;
+  this.shader = null;
 };
 /**
 * Clones this object's parameters to a new H3DU.Material
@@ -174,14 +174,14 @@ A strong tilt indicates strong relief detail at that point.<p>
 * @returns {H3DU.Material} A copy of this object.
 * @memberof! H3DU.Material#
 */
-H3DU.Material.prototype.copy=function(){
- "use strict";
-return new H3DU.Material(
-  this.ambient.slice(0,this.ambient.length),
-  this.diffuse.slice(0,this.diffuse.length),
-  this.specular.slice(0,this.specular.length),
+H3DU.Material.prototype.copy = function() {
+  "use strict";
+  return new H3DU.Material(
+  this.ambient.slice(0, this.ambient.length),
+  this.diffuse.slice(0, this.diffuse.length),
+  this.specular.slice(0, this.specular.length),
   this.shininess,
-  this.emission.slice(0,this.emission.length)
+  this.emission.slice(0, this.emission.length)
  ).setParams({
    "texture":this.texture,
    "specularMap":this.specularMap,
@@ -222,59 +222,59 @@ return new H3DU.Material(
 * @returns {H3DU.Material} This object.
 * @memberof! H3DU.Material#
 */
-H3DU.Material.prototype.setParams=function(params){
- "use strict";
-var param;
- if((typeof params.ambient !== "undefined" && params.ambient !== null)){
-  this.ambient=H3DU.toGLColor(params.ambient);
-  if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3);
- }
- if((typeof params.diffuse !== "undefined" && params.diffuse !== null)){
-  this.diffuse=H3DU.toGLColor(params.diffuse);
-  if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4);
- }
- if((typeof params.specular !== "undefined" && params.specular !== null)){
-  this.specular=H3DU.toGLColor(params.specular);
-  if(this.specular.length>3)this.specular=this.specular.slice(0,3);
- }
- if((typeof params.emission !== "undefined" && params.emission !== null)){
-  this.emission=H3DU.toGLColor(params.emission);
-  if(this.emission.length>3)this.emission=this.emission.slice(0,3);
- }
- if((typeof params.shininess !== "undefined" && params.shininess !== null)){
-  this.shininess=params.shininess;
- }
- if((typeof params.texture !== "undefined" && params.texture !== null)){
-   param=params.texture;
-   if(typeof param==="string"){
-    this.texture=new H3DU.Texture(param);
-   } else {
-    this.texture=param;
-   }
- }
- if((typeof params.specularMap !== "undefined" && params.specularMap !== null)){
-   param=params.specularMap;
-   if(typeof param==="string"){
-    this.specularMap=new H3DU.Texture(param);
-   } else {
-    this.specularMap=param;
-   }
- }
- if((typeof params.normalMap !== "undefined" && params.normalMap !== null)){
-   param=params.normalMap;
-   if(typeof param==="string"){
-    this.normalMap=new H3DU.Texture(param);
-   } else {
-    this.normalMap=param;
-   }
- }
- if(typeof params.basic!=="undefined" && params.basic !== null){
-  this.basic=params.basic;
- }
- if(typeof params.shader!=="undefined" && params.shader !== null){
-  this.shader=params.shader;
- }
- return this;
+H3DU.Material.prototype.setParams = function(params) {
+  "use strict";
+  var param;
+  if(typeof params.ambient !== "undefined" && params.ambient !== null) {
+    this.ambient = H3DU.toGLColor(params.ambient);
+    if(this.ambient.length > 3)this.ambient = this.ambient.slice(0, 3);
+  }
+  if(typeof params.diffuse !== "undefined" && params.diffuse !== null) {
+    this.diffuse = H3DU.toGLColor(params.diffuse);
+    if(this.diffuse.length > 4)this.diffuse = this.diffuse.slice(0, 4);
+  }
+  if(typeof params.specular !== "undefined" && params.specular !== null) {
+    this.specular = H3DU.toGLColor(params.specular);
+    if(this.specular.length > 3)this.specular = this.specular.slice(0, 3);
+  }
+  if(typeof params.emission !== "undefined" && params.emission !== null) {
+    this.emission = H3DU.toGLColor(params.emission);
+    if(this.emission.length > 3)this.emission = this.emission.slice(0, 3);
+  }
+  if(typeof params.shininess !== "undefined" && params.shininess !== null) {
+    this.shininess = params.shininess;
+  }
+  if(typeof params.texture !== "undefined" && params.texture !== null) {
+    param = params.texture;
+    if(typeof param === "string") {
+      this.texture = new H3DU.Texture(param);
+    } else {
+      this.texture = param;
+    }
+  }
+  if(typeof params.specularMap !== "undefined" && params.specularMap !== null) {
+    param = params.specularMap;
+    if(typeof param === "string") {
+      this.specularMap = new H3DU.Texture(param);
+    } else {
+      this.specularMap = param;
+    }
+  }
+  if(typeof params.normalMap !== "undefined" && params.normalMap !== null) {
+    param = params.normalMap;
+    if(typeof param === "string") {
+      this.normalMap = new H3DU.Texture(param);
+    } else {
+      this.normalMap = param;
+    }
+  }
+  if(typeof params.basic !== "undefined" && params.basic !== null) {
+    this.basic = params.basic;
+  }
+  if(typeof params.shader !== "undefined" && params.shader !== null) {
+    this.shader = params.shader;
+  }
+  return this;
 };
 /** Convenience method that returns an H3DU.Material
  * object from an RGBA color.
@@ -289,10 +289,10 @@ var param;
 * this value is treated as 1.0.
 * @returns {H3DU.Material} The resulting material object.
  */
-H3DU.Material.fromColor=function(r,g,b,a){
- "use strict";
-var color=H3DU.toGLColor(r,g,b,a);
- return new H3DU.Material(color,color);
+H3DU.Material.fromColor = function(r, g, b, a) {
+  "use strict";
+  var color = H3DU.toGLColor(r, g, b, a);
+  return new H3DU.Material(color, color);
 };
 
 /** Convenience method that returns an H3DU.Material
@@ -303,15 +303,15 @@ var color=H3DU.toGLColor(r,g,b,a);
 *  will not load that image yet.
 * @returns {H3DU.Material} The resulting material object.
  */
-H3DU.Material.fromTexture=function(texture){
- "use strict";
-return new H3DU.Material().setParams({"texture":texture});
+H3DU.Material.fromTexture = function(texture) {
+  "use strict";
+  return new H3DU.Material().setParams({"texture":texture});
 };
 
 /**
 * Not documented yet.
 */
-H3DU.Material.forShader=function(shader){
- "use strict";
-return new H3DU.Material().setParams({"shader":shader});
+H3DU.Material.forShader = function(shader) {
+  "use strict";
+  return new H3DU.Material().setParams({"shader":shader});
 };

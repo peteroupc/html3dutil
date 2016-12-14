@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math */
+/* global H3DU */
 /**
 *  A class offering a convenient way to set a transformation
 * from one coordinate system to another.
@@ -14,22 +14,22 @@ at: http://peteroupc.github.io/
 * @alias H3DU.Transform
 */
 H3DU.Transform = function() {
-"use strict";
+  "use strict";
   /** @private */
 
-this.scale=[1,1,1];
+  this.scale = [1, 1, 1];
   /** @private */
-  this.position=[0,0,0];
+  this.position = [0, 0, 0];
   /** @private */
-  this.rotation=H3DU.Math.quatIdentity();
+  this.rotation = H3DU.Math.quatIdentity();
   /** @private */
-  this.complexMatrix=false;
+  this.complexMatrix = false;
   /** @private */
-  this._matrixDirty=false;
+  this._matrixDirty = false;
   /** @private */
-  this._isIdentity=true;
+  this._isIdentity = true;
   /** @private */
-  this.matrix=H3DU.Math.mat4identity();
+  this.matrix = H3DU.Math.mat4identity();
 };
   /**
   * Returns a copy of a three-element array giving the scaling for an object's width,
@@ -38,13 +38,13 @@ this.scale=[1,1,1];
   * @returns {Array<Number>} Return value.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.getScale=function(){
- "use strict";
-if(!this.complexMatrix){
-  return this.scale.slice(0,3);
- } else {
-  return [this.matrix[0],this.matrix[5],this.matrix[10]];
- }
+H3DU.Transform.prototype.getScale = function() {
+  "use strict";
+  if(this.complexMatrix) {
+    return [this.matrix[0], this.matrix[5], this.matrix[10]];
+  } else {
+    return this.scale.slice(0, 3);
+  }
 };
   /**
   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
@@ -52,43 +52,43 @@ if(!this.complexMatrix){
   * @returns {Array<Number>} Return value.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.getPosition=function(){
- "use strict";
-if(!this.complexMatrix){
-  return this.position.slice(0,3);
- } else {
-  return [this.matrix[12],this.matrix[13],this.matrix[14]];
- }
+H3DU.Transform.prototype.getPosition = function() {
+  "use strict";
+  if(this.complexMatrix) {
+    return [this.matrix[12], this.matrix[13], this.matrix[14]];
+  } else {
+    return this.position.slice(0, 3);
+  }
 };
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
    * @returns {Array<Number>} Return value.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.getQuaternion=function(){
- "use strict";
-if(!this.complexMatrix){
-  return this.rotation.slice(0,4);
- } else {
-  return H3DU.Math.quatNormInPlace(
+H3DU.Transform.prototype.getQuaternion = function() {
+  "use strict";
+  if(this.complexMatrix) {
+    return H3DU.Math.quatNormInPlace(
     H3DU.Math.quatFromMat4(this.matrix));
- }
+  } else {
+    return this.rotation.slice(0, 4);
+  }
 };
 /**
 * Resets this shape to the untransformed state.
 * @returns {H3DU.Shape} This object.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.reset=function(){
- "use strict";
-this.matrix=H3DU.Math.mat4identity();
- this.position=[0,0,0];
- this.scale=[1,1,1];
- this.rotation=H3DU.Math.quatIdentity();
- this.complexMatrix=false;
- this._matrixDirty=false;
- this._isIdentity=true;
- return this;
+H3DU.Transform.prototype.reset = function() {
+  "use strict";
+  this.matrix = H3DU.Math.mat4identity();
+  this.position = [0, 0, 0];
+  this.scale = [1, 1, 1];
+  this.rotation = H3DU.Math.quatIdentity();
+  this.complexMatrix = false;
+  this._matrixDirty = false;
+  this._isIdentity = true;
+  return this;
 };
 /**
  * Sets this shape's transformation matrix. This method
@@ -99,41 +99,41 @@ this.matrix=H3DU.Math.mat4identity();
  * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.setMatrix=function(value){
- "use strict";
-this._matrixDirty=false;
- this.complexMatrix=true;
- this.matrix=value.slice(0,16);
- this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
- this.rotation=H3DU.Math.quatFromMat4(this.matrix);
- this.rotation=H3DU.Math.quatNormInPlace(this.rotation);
- this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
- this._isIdentity=(
-    value[0]===1 && value[1] === 0 && value[2] === 0 && value[3] === 0 &&
-    value[4]===0 && value[5] === 1 && value[6] === 0 && value[7] === 0 &&
-    value[8]===0 && value[9] === 0 && value[10] === 1 && value[11] === 0 &&
-    value[12]===0 && value[13] === 0 && value[14] === 0 && value[15] === 1
- );
- return this;
+H3DU.Transform.prototype.setMatrix = function(value) {
+  "use strict";
+  this._matrixDirty = false;
+  this.complexMatrix = true;
+  this.matrix = value.slice(0, 16);
+  this.position = [this.matrix[12], this.matrix[13], this.matrix[14]];
+  this.rotation = H3DU.Math.quatFromMat4(this.matrix);
+  this.rotation = H3DU.Math.quatNormInPlace(this.rotation);
+  this.scale = [this.matrix[0], this.matrix[5], this.matrix[10]];
+  this._isIdentity =
+    value[0] === 1 && value[1] === 0 && value[2] === 0 && value[3] === 0 &&
+    value[4] === 0 && value[5] === 1 && value[6] === 0 && value[7] === 0 &&
+    value[8] === 0 && value[9] === 0 && value[10] === 1 && value[11] === 0 &&
+    value[12] === 0 && value[13] === 0 && value[14] === 0 && value[15] === 1
+ ;
+  return this;
 };
 /**
  * Returns whether this transform is the identity transform.
  * @returns {Boolean} Return value.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.isIdentity=function(){
- "use strict";
-if(this._matrixDirty){
-  if(this.complexMatrix){
-   this.getMatrix();
-  } else {
-   return this.position[0]===0 && this.position[1] === 0 &&
-    this.position[2]===0 && this.scale[0] === 1 &&
-    this.scale[1]===1 && this.scale[2] === 1 &&
+H3DU.Transform.prototype.isIdentity = function() {
+  "use strict";
+  if(this._matrixDirty) {
+    if(this.complexMatrix) {
+      this.getMatrix();
+    } else {
+      return this.position[0] === 0 && this.position[1] === 0 &&
+    this.position[2] === 0 && this.scale[0] === 1 &&
+    this.scale[1] === 1 && this.scale[2] === 1 &&
     H3DU.Math.quatIsIdentity(this.rotation);
+    }
   }
- }
- return this._isIdentity;
+  return this._isIdentity;
 };
 /**
 * Resets this transform to the untransformed state.
@@ -141,9 +141,9 @@ if(this._matrixDirty){
 * @returns {H3DU.Transform} This object.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.resetTransform=function(){
- "use strict";
- return this.reset();
+H3DU.Transform.prototype.resetTransform = function() {
+  "use strict";
+  return this.reset();
 };
 /**
  * Sets the scale of an object relative to its original
@@ -159,22 +159,22 @@ H3DU.Transform.prototype.resetTransform=function(){
 * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.setScale=function(x,y,z){
+H3DU.Transform.prototype.setScale = function(x, y, z) {
   "use strict";
-if(this.complexMatrix)return this;
-  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
-   if(typeof x!=="number")
-    this.scale=[x[0],x[1],x[2]];
-   else
-    this.scale=[x,x,x];
+  if(this.complexMatrix)return this;
+  if(x !== null && typeof x !== "undefined" && (y === null || typeof y === "undefined") && (z === null || typeof z === "undefined")) {
+    if(typeof x !== "number")
+      this.scale = [x[0], x[1], x[2]];
+    else
+    this.scale = [x, x, x];
   } else {
-   this.scale=[x,y,z];
+    this.scale = [x, y, z];
   }
-  this._isIdentity=(this._isIdentity &&
-   this.scale[0]===1 &&
-   this.scale[1]===1 &&
-   this.scale[2]===1);
-  this._matrixDirty=true;
+  this._isIdentity = this._isIdentity &&
+   this.scale[0] === 1 &&
+   this.scale[1] === 1 &&
+   this.scale[2] === 1;
+  this._matrixDirty = true;
   return this;
 };
 /**
@@ -192,22 +192,22 @@ if(this.complexMatrix)return this;
  * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.setPosition=function(x,y,z){
+H3DU.Transform.prototype.setPosition = function(x, y, z) {
   "use strict";
-if(this.complexMatrix)return this;
-  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
-   if(typeof x!=="number")
-    this.position=[x[0],x[1],x[2]];
-   else
-    this.position=[x,x,x];
+  if(this.complexMatrix)return this;
+  if(x !== null && typeof x !== "undefined" && (y === null || typeof y === "undefined") && (z === null || typeof z === "undefined")) {
+    if(typeof x !== "number")
+      this.position = [x[0], x[1], x[2]];
+    else
+    this.position = [x, x, x];
   } else {
-   this.position=[x,y,z];
+    this.position = [x, y, z];
   }
-  this._isIdentity=(this._isIdentity &&
-   this.position[0]===0 &&
-   this.position[1]===0 &&
-   this.position[2]===0);
-  this._matrixDirty=true;
+  this._isIdentity = this._isIdentity &&
+   this.position[0] === 0 &&
+   this.position[1] === 0 &&
+   this.position[2] === 0;
+  this._matrixDirty = true;
   return this;
 };
 
@@ -226,29 +226,29 @@ if(this.complexMatrix)return this;
  * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.movePosition=function(x,y,z){
+H3DU.Transform.prototype.movePosition = function(x, y, z) {
   "use strict";
-if(this.complexMatrix)return this;
-  if((x!==null && typeof x!=="undefined") && (y===null || typeof y==="undefined") && (z===null || typeof z==="undefined")){
-   if(typeof x!=="number"){
-    this.position[0]+=x[0];
-    this.position[1]+=x[1];
-    this.position[2]+=x[2];
-   } else {
-    this.position[0]+=x;
-    this.position[1]+=x;
-    this.position[2]+=x;
-   }
+  if(this.complexMatrix)return this;
+  if(x !== null && typeof x !== "undefined" && (y === null || typeof y === "undefined") && (z === null || typeof z === "undefined")) {
+    if(typeof x !== "number") {
+      this.position[0] += x[0];
+      this.position[1] += x[1];
+      this.position[2] += x[2];
+    } else {
+      this.position[0] += x;
+      this.position[1] += x;
+      this.position[2] += x;
+    }
   } else {
-    this.position[0]+=x;
-    this.position[1]+=y;
-    this.position[2]+=z;
+    this.position[0] += x;
+    this.position[1] += y;
+    this.position[2] += z;
   }
-  this._isIdentity=(this._isIdentity &&
-   this.position[0]===0 &&
-   this.position[1]===0 &&
-   this.position[2]===0);
-  this._matrixDirty=true;
+  this._isIdentity = this._isIdentity &&
+   this.position[0] === 0 &&
+   this.position[1] === 0 &&
+   this.position[2] === 0;
+  this._matrixDirty = true;
   return this;
 };
 /**
@@ -269,12 +269,12 @@ if(this.complexMatrix)return this;
  * transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.setQuaternion=function(quat){
+H3DU.Transform.prototype.setQuaternion = function(quat) {
   "use strict";
-if(this.complexMatrix)return this;
-  this.rotation=quat.slice(0,4);
+  if(this.complexMatrix)return this;
+  this.rotation = quat.slice(0, 4);
   H3DU.Math.quatNormInPlace(this.rotation);
-  this._matrixDirty=true;
+  this._matrixDirty = true;
   return this;
 };
 /**
@@ -300,9 +300,9 @@ if(this.complexMatrix)return this;
  * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.setOrientation=function(angle, v,vy,vz){
- "use strict";
-return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
+H3DU.Transform.prototype.setOrientation = function(angle, v, vy, vz) {
+  "use strict";
+  return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
 };
 /**
  * Combines an object's current rotation with another rotation
@@ -325,12 +325,12 @@ return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
  * transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.multQuaternion=function(quat){
+H3DU.Transform.prototype.multQuaternion = function(quat) {
   "use strict";
-if(this.complexMatrix)return this;
-  this.rotation=H3DU.Math.quatNormInPlace(
-   H3DU.Math.quatMultiply(this.rotation,quat));
-  this._matrixDirty=true;
+  if(this.complexMatrix)return this;
+  this.rotation = H3DU.Math.quatNormInPlace(
+   H3DU.Math.quatMultiply(this.rotation, quat));
+  this._matrixDirty = true;
   return this;
 };
 /**
@@ -353,9 +353,9 @@ if(this.complexMatrix)return this;
  * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.multOrientation=function(angle, v,vy,vz){
- "use strict";
-return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
+H3DU.Transform.prototype.multOrientation = function(angle, v, vy, vz) {
+  "use strict";
+  return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
 };
 /**
  * Gets the transformation matrix used by an object.  It is a combination
@@ -365,44 +365,44 @@ return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
  * @returns {Array<Number>} Return value.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.getMatrix=function(){
+H3DU.Transform.prototype.getMatrix = function() {
   "use strict";
-if(this._matrixDirty){
-   this._matrixDirty=false;
-   if(H3DU.Math.quatIsIdentity(this.rotation)){
-    this.matrix=[this.scale[0],0,0,0,0,
-     this.scale[1],0,0,0,0,
-     this.scale[2],0,
-     this.position[0],
-     this.position[1],
-     this.position[2],1];
-    this._isIdentity=(this.position[0]===0 && this.position[1] === 0 &&
-     this.position[2]===0 && this.scale[0] === 1 &&
-     this.scale[1]===1 && this.scale[2] === 1);
-   } else {
+  if(this._matrixDirty) {
+    this._matrixDirty = false;
+    if(H3DU.Math.quatIsIdentity(this.rotation)) {
+      this.matrix = [this.scale[0], 0, 0, 0, 0,
+        this.scale[1], 0, 0, 0, 0,
+        this.scale[2], 0,
+        this.position[0],
+        this.position[1],
+        this.position[2], 1];
+      this._isIdentity = this.position[0] === 0 && this.position[1] === 0 &&
+     this.position[2] === 0 && this.scale[0] === 1 &&
+     this.scale[1] === 1 && this.scale[2] === 1;
+    } else {
     // for best results, multiply in this order:
     // 1. translation
-   this.matrix=[1,0,0,0,0,1,0,0,0,0,1,0,
-    this.position[0],
-    this.position[1],
-    this.position[2],1];
+      this.matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
+        this.position[0],
+        this.position[1],
+        this.position[2], 1];
     // 2. rotation
-    this.matrix=H3DU.Math.mat4multiply(this.matrix,
+      this.matrix = H3DU.Math.mat4multiply(this.matrix,
       H3DU.Math.quatToMat4(this.rotation));
     // 3. scaling
-    H3DU.Math.mat4scaleInPlace(this.matrix,this.scale);
-    var m=this.matrix;
-    this._isIdentity=(
-     m[0]===1 && m[1] === 0 && m[2] === 0 && m[3] === 0 &&
-     m[4]===0 && m[5] === 1 && m[6] === 0 && m[7] === 0 &&
-     m[8]===0 && m[9] === 0 && m[10] === 1 && m[11] === 0 &&
-     m[12]===0 && m[13] === 0 && m[14] === 0 && m[15] === 1
-    );
-   }
-  } else if(this._isIdentity){
-   return H3DU.Math.mat4identity();
+      H3DU.Math.mat4scaleInPlace(this.matrix, this.scale);
+      var m = this.matrix;
+      this._isIdentity =
+     m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 0 &&
+     m[4] === 0 && m[5] === 1 && m[6] === 0 && m[7] === 0 &&
+     m[8] === 0 && m[9] === 0 && m[10] === 1 && m[11] === 0 &&
+     m[12] === 0 && m[13] === 0 && m[14] === 0 && m[15] === 1
+    ;
+    }
+  } else if(this._isIdentity) {
+    return H3DU.Math.mat4identity();
   }
-  return this.matrix.slice(0,16);
+  return this.matrix.slice(0, 16);
 };
 
 /**
@@ -412,13 +412,13 @@ if(this._matrixDirty){
 * @returns {H3DU.Transform} A copy of this object.
 * @memberof! H3DU.Transform#
 */
-H3DU.Transform.prototype.copy=function(){
- "use strict";
-var ret=new H3DU.Transform();
- ret.scale=this.scale.slice(0,this.scale.length);
- ret.position=this.position.slice(0,this.scale.length);
- ret.complexMatrix=this.complexMatrix;
- ret._matrixDirty=this._matrixDirty;
- ret.matrix=this.matrix.slice(0,this.matrix.length);
- return ret;
+H3DU.Transform.prototype.copy = function() {
+  "use strict";
+  var ret = new H3DU.Transform();
+  ret.scale = this.scale.slice(0, this.scale.length);
+  ret.position = this.position.slice(0, this.scale.length);
+  ret.complexMatrix = this.complexMatrix;
+  ret._matrixDirty = this._matrixDirty;
+  ret.matrix = this.matrix.slice(0, this.matrix.length);
+  return ret;
 };
