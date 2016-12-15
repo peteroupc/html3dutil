@@ -775,7 +775,7 @@ H3DU.newFrames = function(timer, timeInMs) {
         b = lum * (255.0 + sat) / 255.0;
       } else {
         b = lum * sat;
-        b = b / 255.0;
+        b /= 255.0;
         b = lum + sat - b;
       }
       var a = lum * 2 - b;
@@ -792,7 +792,7 @@ H3DU.newFrames = function(timer, timeInMs) {
       g = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
       hue = hueval - 120;
       if (hue < 0) {
-        hue = hue + 360;
+        hue += 360;
       }
       bl = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
       return [r < 0 ? 0 : r > 255 ? 255 : r, g < 0 ? 0 : g > 255 ? 255 : g, bl < 0 ? 0 : bl > 255 ? 255 : bl];

@@ -251,7 +251,8 @@ at: http://peteroupc.github.io/
       tmp[k] = 1;
       for(var kk = 2;kk <= order;kk++, c--) {
         for(i = c;i <= k;i++) {
-          var ret = 0, divisor = 0;
+          var ret = 0,
+            divisor = 0;
           var prv = i <= c ? 0 : tmp[i];
           var nxt = i >= k ? 0 : tmp[i + 1];
           if(prv !== 0) {
