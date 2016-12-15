@@ -32,8 +32,9 @@ H3DU.ShapeGroup.prototype.addShape = function(shape) {
   return this;
 };
 /**
- * Not documented yet.
- * @param {*} value
+ * Sets whether this shape group will be drawn on rendering.
+ * @param {Boolean} value True if this shape group will be visible; otherwise, false.
+ * @returns {H3DU.ShapeGroup} This object.
  * @memberof! H3DU.ShapeGroup#
 */
 H3DU.ShapeGroup.prototype.setVisible = function(value) {
@@ -42,7 +43,8 @@ H3DU.ShapeGroup.prototype.setVisible = function(value) {
   return this;
 };
 /**
- * Not documented yet.
+ * Gets whether this shape group will be drawn on rendering.
+ * @returns {Boolean} value True if this shape group will be visible; otherwise, false.
  * @memberof! H3DU.ShapeGroup#
 */
 H3DU.ShapeGroup.prototype.getVisible = function() {

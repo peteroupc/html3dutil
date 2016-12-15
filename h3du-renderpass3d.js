@@ -1,13 +1,18 @@
 /* global H3DU */
+// NOTE: RenderPass3D is independent of
+// any WebGL context or the WebGL API.
 /**
-* Not documented yet.
+* Describes a batch and options for
+* rendering that batch.
 * @class H3DU.RenderPass3D
-* @param {*} subScene
-* @param {*} parameters
+* @param {H3DU.Batch3D} subScene
+* @param {Object} [parameters]
 */
 H3DU.RenderPass3D = function(subScene, parameters) {
- /** The scene to render. */
   "use strict";
+ /** The batch to render.
+   * @type {H3DU.Batch3D}
+  */
   this.subScene = subScene;
  /** Whether to clear the color buffer before rendering the scene.
   @default */
@@ -19,13 +24,14 @@ H3DU.RenderPass3D = function(subScene, parameters) {
   @default */
   this.clearStencil = true;
  /** Framebuffer to render to.
-   TODO: Use something other than H3DU.FrameBuffer */
+  @type {H3DU.FrameBufferInfo}
+  @default */
   this.frameBuffer = null;
   this.setParams(parameters);
 };
 /**
  * Not documented yet.
- * @param {*} parameters
+ * @param {Object} parameters
  * @memberof! H3DU.RenderPass3D#
 */
 H3DU.RenderPass3D.prototype.setParams = function(parameters) {
@@ -41,6 +47,9 @@ H3DU.RenderPass3D.prototype.setParams = function(parameters) {
     this.clearStencil = parameters.clearStencil;
   }
   if(typeof parameters.frameBuffer !== "undefined") {
+    if(parameters.frameBuffer instanceof H3DU.FrameBuffer) {
+      throw new Error("FrameBuffer not supported");
+    }
     this.frameBuffer = parameters.frameBuffer;
   }
 };

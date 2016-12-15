@@ -356,7 +356,6 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
     H3DU.Batch3D._getMaterialBinder(shape.material).bind(prog,
       renderContext.context,
       renderContext.scene._textureLoader);
-    // TODO (Note that meshBuffer is no longer a BufferedMesh)
     renderContext.scene._meshLoader.draw(shape.meshBuffer, prog);
   }
 };

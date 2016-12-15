@@ -47,7 +47,7 @@ This method creates a flat tiled floor.
     //  default 0)
     function makeFloor(xStart,yStart,width,height,tileSize,z){
      if(z==null)z=0.0
-     var mesh=new Mesh()
+     var mesh=new H3DU.Mesh()
      var tilesX=Math.ceil(width/tileSize)
      var tilesY=Math.ceil(height/tileSize)
      var lastY=(height-(tilesY*tileSize))/tileSize
@@ -118,7 +118,7 @@ This method creates a washer-shaped 3D model.
 
     function extrudePath(path, zStart, zEnd, flatness){
      var lines=path.getLines(flatness)
-     var mesh=new Mesh().mode(H3DU.Mesh.TRIANGLES)
+     var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
      var z1=Math.min(zStart,zEnd)
      var z2=Math.max(zStart,zEnd)
      for(var i=0;i<lines.length;i++){
@@ -137,7 +137,7 @@ This method creates a washer-shaped 3D model.
     function createPathDisk(path, z, flatness){
      if(z==null)z=0
      var tris=path.getTriangles(flatness);
-     var mesh=new Mesh().mode(H3DU.Mesh.TRIANGLES)
+     var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
        .normal3(0,0,1);
      for(var i=0;i<tris.length;i++){
       var tri=tris[i]

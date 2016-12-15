@@ -5,12 +5,12 @@ supports 3D shapes and how to use the library to create shapes, both built-in an
 shapes.
 
 **Download the latest version of the HTML 3D Library at the [library's Releases page](https://github.com/peteroupc/html3dutil/releases).** As of version 1.2.1, it includes
-the shapes.html and platonic.html demos mentioned in this page.
+the _shapes.html_ and _platonic.html_ demos mentioned in this page.
 
 This page will discuss:
 
 * Using the Meshes methods to make built-in shapes
-* Making your own shapes with the Meshes constructor
+* Making your own shapes with the `H3DU.Mesh` constructor
 * Building up your own shapes using the vertex methods
 * Binding meshes to shapes
 * Shape groups, or combinations of several shapes
@@ -251,7 +251,7 @@ Example:
 ## Binding Shapes <a id=Binding_Shapes></a>
 
 Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the [`Shape`]{@link H3DU.Shape} class comes into
+in order to have it drawn.  This is where the [`H3DU.Shape`]{@link H3DU.Shape} class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:
 
@@ -275,7 +275,7 @@ Examples for setting appearance:
     shape.setMaterial(new H3DU.Material("lime","lime","white",30,[0.2,0.2,0.2]));
     // set a texture; this requires the mesh to have texture
     // coordinates assigned to each vertex
-    shape.setMaterial(new TextureMaterial("texture.png"));
+    shape.setMaterial(H3DU.Material.fromTexture("texture.png"));
 
 Examples for setting position:
 
@@ -302,7 +302,7 @@ then translating (shifting) the shape in 3D space.
 
     scene3d.addShape(shape);
 
-Now, the next time `scene3d.render()` is called, the [`Scene3D`]{@link H3DU.Scene3D} will render the
+Now, the next time `scene3d.render()` is called, the [`H3DU.Scene3D`]{@link H3DU.Scene3D} will render the
 given shape to the scene.
 
 ## Shape Groups <a id=Shape_Groups></a>

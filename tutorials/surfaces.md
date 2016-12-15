@@ -47,7 +47,7 @@ function "warps" this grid into a three-dimensional surface.
 
 ## Parametric Surfaces in the HTML 3D Library <a id=Parametric_Surfaces_in_the_HTML_3D_Library></a>
 
-The HTML 3D Library supports parametric surfaces using a class named [`SurfaceEval`](http://peteroupc.github.io/html3dutil/glutil.SurfaceEval.html).  It helps
+The HTML 3D Library supports parametric surfaces using a class named [`SurfaceEval`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html).  It helps
 generate vertex coordinates, texture coordinates, normals, and colors using a parametric surface
 function.  The following helper function, `makeMesh`, generates a parametric surface mesh
 that was used to produce the pictures on this page. `makeMesh` is only included in the demo, not
@@ -69,7 +69,7 @@ The comments explain how `makeMesh` works in detail.
        evaluate:function(u,v){ return [1-u,v,u]; }
       }
      // generate the parametric surface.
-     var ev=new H3DU.SurfaceEval()
+     new H3DU.SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
@@ -150,8 +150,8 @@ The generated 3D mesh from a parametric surface is just like any
 other mesh, and the same functions and methods you use for other meshes
 can be used on this mesh as well.  For more information, see the
 [overview page](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-and the API references for the [`Mesh`](http://peteroupc.github.io/html3dutil/glutil.Mesh.html) and
-[`Shape`](http://peteroupc.github.io/html3dutil/glutil.Shape.html) classes.
+and the API references for the [`H3DU.Mesh`](http://peteroupc.github.io/html3dutil/H3DU.Mesh.html) and
+[`Shape`](http://peteroupc.github.io/html3dutil/H3DU.Shape.html) classes.
 
 ## Chaining Surface Functions <a id=Chaining_Surface_Functions></a>
 
@@ -162,7 +162,7 @@ to transform the surface's points to new positions.
 As an example, we'll define a new evaluator that shifts the position
 of a parametric surface.  It takes an existing surface evaluator and the X, Y, and
 Z of how many units to shift the surface.  Note that this class includes its
-own `evaluate` method, allowing itself to be passed to the SurfaceEval class
+own `evaluate` method, allowing itself to be passed to the `H3DU.SurfaceEval` class
 or the makeMesh class above.
 
     function SurfaceShifter(evaluator, x, y, z) {

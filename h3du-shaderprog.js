@@ -114,6 +114,23 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
     }
   }
 };
+
+/** @private */
+H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
+  "use strict";
+  for(var i = 0;i < len;i++) {
+    if(src[i] !== dst[i]) {
+   // Arrays are different
+      dst[i] = src[i];
+      for(var j = i + 1;j < len;j++) {
+        dst[j] = src[j];
+      }
+      return true;
+    }
+  }
+  return false;
+};
+
 /** @private */
 H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUniforms) {
   "use strict";
@@ -376,22 +393,6 @@ H3DU.ShaderProgram.prototype.setUniforms = function(uniforms) {
     }
   }
   return this;
-};
-
-/** @private */
-H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
-  "use strict";
-  for(var i = 0;i < len;i++) {
-    if(src[i] !== dst[i]) {
-   // Arrays are different
-      dst[i] = src[i];
-      for(var j = i + 1;j < len;j++) {
-        dst[j] = src[j];
-      }
-      return true;
-    }
-  }
-  return false;
 };
 
 /** @private */

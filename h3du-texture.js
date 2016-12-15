@@ -266,6 +266,7 @@ H3DU.Texture.prototype.dispose = function() {
 
 /**
 * Gets the name of this texture.
+* @return {String}
 * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getName = function() {
