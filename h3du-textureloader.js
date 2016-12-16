@@ -123,6 +123,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
  * Not documented yet.
  * @param {*} textures
  * @param {*} context
+ * @return {H3DU.TextureLoader} This object.
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.mapTextures = function(textures, context) {
@@ -137,6 +138,7 @@ H3DU.TextureLoader.prototype.mapTextures = function(textures, context) {
  * Not documented yet.
  * @param {*} texture
  * @param {*} context
+ * @return {H3DU.TextureLoader} This object.
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
@@ -152,6 +154,13 @@ H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
   lt.push([texture, context, loadedTex]);
   return loadedTex;
 };
+
+/** @private */
+H3DU.TextureLoader.prototype.mapFrameBuffer = function(info, context) {
+  "use strict";
+  context = context.getContext ? context.getContext() : context;
+  return this.fbLoader.mapFrameBuffer(info, context);
+};
 /** @private */
 H3DU.TextureLoader.prototype.bindFrameBuffer = function(info, context) {
   "use strict";
@@ -159,7 +168,7 @@ H3DU.TextureLoader.prototype.bindFrameBuffer = function(info, context) {
   this.fbLoader.bind(info, context);
 };
 /** @private */
-H3DU.FrameBufferLoader.prototype.unbindFrameBuffer = function(info, context) {
+H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   this.fbLoader.unbind(info, context);
@@ -179,7 +188,7 @@ H3DU.TextureLoader.prototype.dispose = function() {
   for(var i = 0;i < lt.length;i++) {
     this.loadedTextures[i][2].dispose();
   }
-  if(this.fbLoader === null) {
+  if((typeof this.fbLoader === "undefined" || this.fbLoader === null)) {
     this.fbLoader.dispose();
   }
   this.fbLoader = null;

@@ -101,7 +101,7 @@ H3DU._LoadedTexture.prototype.dispose = function() {
 H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUnit, loader) {
   "use strict";
   if(texture === null || typeof texture === "undefined")return;
-  var isFrameBuffer = texture instanceof H3DU.FrameBuffer;
+  var isFrameBuffer = texture instanceof H3DU.FrameBufferInfo;
   if(!isFrameBuffer && !(texture instanceof H3DU.Texture)) {
     throw new Error("unsupported texture type");
   }
@@ -119,6 +119,8 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
     } else {
       loadedTexture = loader.mapTexture(texture, context);
     }
+  } else {
+    texture = loader.mapFrameBuffer(texture, context);
   }
   if (loadedTexture !== null && typeof loadedTexture !== "undefined" || isFrameBuffer) {
     var uniforms = {};

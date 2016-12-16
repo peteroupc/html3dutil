@@ -12,10 +12,12 @@ H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
   for(var i = 0;i < this._frameBuffers.length;i++) {
     fb = this._frameBuffers[i];
     if(fb[0] === info && fb[1] === context) {
+      // TODO: Remap if width/height changes
       return fb[2];
     }
   }
   fb = new H3DU.FrameBuffer(context, info.width, info.height);
+  this._frameBuffers.push([info, context, fb]);
   return fb;
 };
 /** @private */
@@ -197,7 +199,7 @@ H3DU.FrameBuffer.prototype.unbind = function() {
 */
 H3DU.FrameBuffer.prototype.dispose = function() {
   "use strict";
-  if(this.buffer !== null) {
+  if((typeof this.buffer !== "undefined" && this.buffer !== null)) {
     var oldBuffer = this.context.getParameter(
     this.context.FRAMEBUFFER_BINDING);
     if(oldBuffer === this.buffer) {
@@ -205,10 +207,10 @@ H3DU.FrameBuffer.prototype.dispose = function() {
     }
     this.context.deleteFramebuffer(this.buffer);
   }
-  if(this.depthbuffer !== null) {
+  if((typeof this.depthbuffer !== "undefined" && this.depthbuffer !== null)) {
     this.context.deleteRenderbuffer(this.depthbuffer);
   }
-  if(this.colorTexture !== null) {
+  if((typeof this.colorTexture !== "undefined" && this.colorTexture !== null)) {
     this.context.deleteTexture(this.colorTexture);
   }
   this.buffer = null;
