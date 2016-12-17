@@ -44,7 +44,7 @@ H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   this.smb = smb;
   this.vertsMap = new H3DU.BufferedMesh._Map();
   this.indices = context.createBuffer();
-  if((typeof this.indices === "undefined" || this.indices === null))throw new Error("can't create face buffer");
+  if(typeof this.indices === "undefined" || this.indices === null)throw new Error("can't create face buffer");
   this.vao = null;
   if(this.arrayObjectExt) {
     this.vao = this.arrayObjectExt.createVertexArrayOES();
@@ -123,15 +123,15 @@ H3DU.BufferedMesh.prototype.getFormat = function() {
 */
 H3DU.BufferedMesh.prototype.dispose = function() {
   "use strict";
-  if((typeof this.vertsMap !== "undefined" && this.vertsMap !== null)) {
+  if(typeof this.vertsMap !== "undefined" && this.vertsMap !== null) {
     var verts = this.vertsMap.values();
     for(var i = 0;i < verts.length;i++) {
       verts[i].dispose();
     }
   }
-  if((typeof this.indices !== "undefined" && this.indices !== null))
+  if(typeof this.indices !== "undefined" && this.indices !== null)
     this.context.deleteBuffer(this.indices);
-  if((typeof this.vao !== "undefined" && this.vao !== null)) {
+  if(typeof this.vao !== "undefined" && this.vao !== null) {
     this.arrayObjectExt.deleteVertexArrayOES(this.vao);
   }
   this.vertsMap = null;

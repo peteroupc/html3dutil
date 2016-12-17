@@ -199,7 +199,7 @@ H3DU.FrameBuffer.prototype.unbind = function() {
 */
 H3DU.FrameBuffer.prototype.dispose = function() {
   "use strict";
-  if((typeof this.buffer !== "undefined" && this.buffer !== null)) {
+  if(typeof this.buffer !== "undefined" && this.buffer !== null) {
     var oldBuffer = this.context.getParameter(
     this.context.FRAMEBUFFER_BINDING);
     if(oldBuffer === this.buffer) {
@@ -207,10 +207,10 @@ H3DU.FrameBuffer.prototype.dispose = function() {
     }
     this.context.deleteFramebuffer(this.buffer);
   }
-  if((typeof this.depthbuffer !== "undefined" && this.depthbuffer !== null)) {
+  if(typeof this.depthbuffer !== "undefined" && this.depthbuffer !== null) {
     this.context.deleteRenderbuffer(this.depthbuffer);
   }
-  if((typeof this.colorTexture !== "undefined" && this.colorTexture !== null)) {
+  if(typeof this.colorTexture !== "undefined" && this.colorTexture !== null) {
     this.context.deleteTexture(this.colorTexture);
   }
   this.buffer = null;

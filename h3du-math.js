@@ -30,8 +30,7 @@ If the cross product of A and B has a positive Z component, the triangle's point
 oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and the Y
 axis down, the reverse is
 true.)  The triangle's area is half of the cross product's length.
-<li>If A and B are unit length vectors,
- * (via {@link glmath.H3DU.Math.vec3norm}), the absolute value
+<li>If A and B are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
  * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
@@ -71,8 +70,7 @@ true.)  The triangle's area is half of the cross product's length.
  * <b>b</b>'s X).<p>
  * The dot product has the following properties:
  * <ul>
- * <li>If both vectors are unit length
- * (via {@link glmath.H3DU.Math.vec3norm}), the cosine
+ * <li>If both vectors are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the cosine
  * of the angle between them is equal to their dot product.
  * <small>(More formally, the dot
  * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
@@ -580,7 +578,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
- * but without changing its length (the return value won't necessarily be a unit vector, a "normalized" vector with a length of 1).
+ * but without changing its length (the return value won't necessarily be a unit vector, a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * Returns a new quaternion.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
@@ -590,7 +588,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
- * and converts this quaternion to a unit vector (a "normalized" vector with a length of 1).
+ * and converts this quaternion to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * Returns a new quaternion.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
@@ -639,7 +637,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 * Calculates the angle and axis of rotation for this
 * quaternion. (The axis of rotation is a ray that starts at the
 * origin (0,0,0) and points toward a 3D point.)
-* @param {Array<Number>} a A quaternion.  Must be unit vectors ("normalized" vectors with a length of 1).
+* @param {Array<Number>} a A quaternion.  Must be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
 * @returns {Array<Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
@@ -664,11 +662,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * two 3-element vectors.  The quaternion
  * will describe the rotation required to rotate
  * the ray described in the first vector toward the ray described
- * in the second vector.  The vectors need not be unit vectors ("normalized" vectors with a length of 1).
+ * in the second vector.  The vectors need not be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {Array<Number>} vec1 The first 3-element vector.
 * @param {Array<Number>} vec2 The second 3-element vector.
  * @returns {Array<Number>} The generated quaternion, which
- * will be unit vectors ("normalized" vectors with a length of 1).
+ * will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
  */
   "quatFromVectors":function(vec1, vec2) {
     "use strict";
@@ -681,14 +679,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Generates a quaternion from an angle and axis of rotation.
- (The axis of rotation is a ray that starts at the
-* origin (0,0,0) and points toward a 3D point.)
- * @param {Array<Number>|number} angle The desired angle
+ * (The axis of rotation is a ray that starts at the
+ * origin (0,0,0) and points toward a 3D point.)
+ * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.  If the axis of rotation
@@ -791,7 +789,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
- * @param {Array<Number>} a A quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
+ * @param {Array<Number>} a A quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {number|null} mode Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
@@ -866,12 +864,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Does a linear interpolation between two quaternions;
  * returns a new quaternion.
- * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
+ * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {Array<Number>} q2 The second quaternion.  Should be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion,
- * which will be unit vectors ("normalized" vectors with a length of 1).
+ * which will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
 */
   "quatNlerp":function(q1, q2, factor) {
     "use strict";
@@ -896,7 +894,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * returns a new quaternion.
  * This method is useful for smoothly animating between the two
  * rotations they describe.
- * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
+ * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {Array<Number>} q2 The second quaternion.  Should be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
@@ -938,7 +936,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * This method is equivalent to the following:<pre>
  * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
  * </pre>
- * @param {Array<Number>|number} angle The desired angle
+ * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -946,7 +944,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
@@ -1077,7 +1075,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 * This is usually used to convert a model-view matrix to a matrix
 * for transforming surface normals in order to keep them perpendicular
 * to a surface transformed by the world matrix.  Normals are then
-* transformed by this matrix and then converted to unit vectors  ("normalized" vectors with a length of 1).  But if the
+* transformed by this matrix and then converted to unit vectors  (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).  But if the
 * input matrix uses only rotations, translations, and/or uniform scaling
 * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 * be used instead of the inverse-transpose matrix to transform the normals.
@@ -1125,7 +1123,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Multiplies a 4x4 matrix by a scaling transformation.
- * @param {Array<Number>|number} v3 Scaling factor along the
+ * @param {Array<Number>|Number} v3 Scaling factor along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scaling factors along the X, Y, and
  * Z axes.
@@ -1154,7 +1152,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a scaling transformation.
- * @param {Array<Number>|number} v3 Scaling factor along the
+ * @param {Array<Number>|Number} v3 Scaling factor along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scaling factors along the X, Y, and
  * Z axes.
@@ -1174,7 +1172,7 @@ m[0] * m[7] * m[5];
  * Transforms a 4-element vector with a 4x4 matrix and returns
  * the transformed vector.
  * @param {Array<Number>} mat A 4x4 matrix.
- * @param {Array<Number>|number} v X coordinate.
+ * @param {Array<Number>|Number} v X coordinate.
  * If "vy", "vz", and "vw" are omitted, this value can instead
  * be a 4-element array giving the X, Y, Z, and W coordinates.
  * @param {Number} vy Y coordinate.
@@ -1206,15 +1204,24 @@ m[0] * m[7] * m[5];
   },
 /**
  * Transforms a 3-element vector with a 4x4 matrix and returns
- * the transformed vector.
+ * the transformed vector.  The effect is as though elements
+ * 3, 7, 11, and 15 (counting from 0) of the matrix
+ * were assumed to be (0, 0, 0, 1) instead of their actual values
+ * (those elements correspond to the last
+ * row of the matrix in column-major order) and as though the 3-element
+ * vector had a fourth element valued at 1.<p>
+ * For transforming 3-dimensional coordinates
+ * with a matrix that may be in a perspective
+ * projection (whose last row is not necessarily (0, 0, 0, 1)), use
+ * the {@link H3DU.Math.mat4projectVec3} method instead.
  * @param {Array<Number>} mat A 4x4 matrix.
- * @param {Array<Number>|number} v X coordinate.
+ * @param {Array<Number>|Number} v X coordinate.
  * If "vy", "vz", and "vw" are omitted, this value can instead
- * be a 4-element array giving the X, Y, Z, and W coordinates.
+ * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
- * @returns {Array<Number>} The transformed vector.
+ * @returns {Array<Number>} The transformed 3x3 vector.
  */
   "mat4transformVec3":function(mat, v, vy, vz) {
     "use strict";
@@ -1230,14 +1237,44 @@ m[0] * m[7] * m[5];
     }
     return [x * mat[0] + y * mat[4] + z * mat[8] + mat[12],
       x * mat[1] + y * mat[5] + z * mat[9] + mat[13],
-      x * mat[2] + y * mat[6] + z * mat[10] + mat[14],
-      x * mat[3] + y * mat[7] + z * mat[11] + mat[15]];
+      x * mat[2] + y * mat[6] + z * mat[10] + mat[14]];
+  },
+/**
+ * Transforms a 3-element vector with a 4x4 matrix and returns
+ * a perspective-correct transformation of the vector,
+ * using all the elements of the 4x4 matrix.
+ * @param {Array<Number>} mat A 4x4 matrix.
+ * @param {Array<Number>|Number} v X coordinate.
+ * If "vy", "vz", and "vw" are omitted, this value can instead
+ * be a 4-element array giving the X, Y, Z, and W coordinates.
+ * @param {Number} vy Y coordinate.
+ * @param {Number} vz Z coordinate. To transform a 2D
+ * point, set Z to 1.
+ * @returns {Array<Number>} The transformed 3x3 vector.
+ */
+  "mat4projectVec3":function(mat, v, vy, vz) {
+    "use strict";
+    var x, y, z;
+    if(typeof vy !== "undefined" && typeof vz !== "undefined") {
+      x = v;
+      y = vy;
+      z = vz;
+    } else {
+      x = v[0];
+      y = v[1];
+      z = v[2];
+    }
+    var x1 = x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
+    var y1 = x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
+    var z1 = x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
+    var w = 1.0 / (x * mat[3] + y * mat[7] + z * mat[11] + mat[15]);
+    return [x1 * w, y1 * w, z1 * w];
   },
 /**
  * Transforms a 3-element vector with a 3x3 matrix and returns
  * the transformed vector.
  * @param {Array<Number>} mat A 3x3 matrix.
- * @param {Array<Number>|number} v X coordinate.
+ * @param {Array<Number>|Number} v X coordinate.
  * If "vy", and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
@@ -1263,7 +1300,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a translation.
- * @param {Array<Number>|number} v3 Translation along the
+ * @param {Array<Number>|Number} v3 Translation along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the translations along the X, Y, and
  * Z axes.
@@ -1288,7 +1325,7 @@ m[0] * m[7] * m[5];
 /**
  * Multiplies a 4x4 matrix by a translation transformation.
  * @param {Array<Number>} mat The matrix to multiply.
- * @param {Array<Number>|number} v3 Translation along the
+ * @param {Array<Number>|Number} v3 Translation along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the translations along the X, Y, and
  * Z axes.
@@ -1617,7 +1654,7 @@ m[0] * m[7] * m[5];
  * Modifies a 4x4 matrix by multiplying it by a
  * scaling transformation.
  * @param {Array<Number>} mat A 4x4 matrix.
- * @param {Array<Number>|number} v3 Scale factor along the
+ * @param {Array<Number>|Number} v3 Scale factor along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scale factors along the X, Y, and
  * Z axes.
@@ -1701,7 +1738,7 @@ m[0] * m[7] * m[5];
  * Multiplies a 4x4 matrix by a rotation transformation,
  * and returns a new matrix.
  * @param {Array<Number>} mat A 4x4 matrix to multiply.
- * @param {Array<Number>|number} angle The desired angle
+ * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -1709,7 +1746,7 @@ m[0] * m[7] * m[5];
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
@@ -1799,7 +1836,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a rotation transformation.
- * @param {Array<Number>|number} angle The desired angle
+ * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -1807,7 +1844,7 @@ m[0] * m[7] * m[5];
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
@@ -1872,7 +1909,7 @@ m[0] * m[7] * m[5];
 };
 
 /**
-* Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+* Normalizes this plane so that its normal is a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1),
 * unless all the normal's components are 0.
 * The plane's distance will be divided by the
 * current normal's length.
@@ -1934,7 +1971,7 @@ H3DU.Math.planeNorm = function(plane) {
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.  All six planes
-* will be unit vectors ("normalized" vectors with a length of 1).
+* will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
 */
 H3DU.Math.mat4toFrustumPlanes = function(matrix) {
   "use strict";

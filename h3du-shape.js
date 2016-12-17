@@ -191,14 +191,17 @@ H3DU.Shape.prototype.setMaterial = function(material) {
 * Makes a copy of this object.  The copied object
 * will have its own version of the transform and
 * material data, but any texture
-* image data and buffered meshes will not be duplicated,
+* image data and mesh buffers will not be duplicated,
 * but rather just references to them will be used.
+* The copied shape won't have a parent.
 * @returns {H3DU.Shape} A copy of this object.
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.copy = function() {
   "use strict";
   var ret = new H3DU.Shape(this.meshBuffer);
+  ret.visible = this.visible;
+  ret.parent = null;
   ret.material = this.material.copy();
   ret.transform = this.getTransform().copy();
   return ret;
@@ -225,8 +228,8 @@ H3DU.Shape.prototype.getBounds = function() {
   if(H3DU.Math.mat4isIdentity(matrix)) {
     return bounds.slice(0, 6);
   } else {
-    var mn = H3DU.Math.mat4transformVec3(matrix, bounds[0], bounds[1], bounds[2]);
-    var mx = H3DU.Math.mat4transformVec3(matrix, bounds[3], bounds[4], bounds[5]);
+    var mn = H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]);
+    var mx = H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[5]);
     return [
       Math.min(mn[0], mx[0]),
       Math.min(mn[1], mx[1]),
@@ -308,7 +311,7 @@ H3DU.Shape.prototype.getMatrix = function() {
   var xform = this.getTransform();
   var thisIdentity = xform.isIdentity();
   var mat;
-  if((typeof this.parent === "undefined" || this.parent === null)) {
+  if(typeof this.parent === "undefined" || this.parent === null) {
     mat = xform.getMatrix();
   } else {
     var pmat = this.parent.getMatrix();

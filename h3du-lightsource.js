@@ -65,22 +65,22 @@ H3DU.LightSource = function(position, ambient, diffuse, specular) {
 */
 H3DU.LightSource.prototype.setParams = function(params) {
   "use strict";
-  if((typeof params.ambient !== "undefined" && params.ambient !== null)) {
+  if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);
     this.ambient = this.ambient.slice(0, 4);
   }
-  if((typeof params.position !== "undefined" && params.position !== null)) {
+  if(typeof params.position !== "undefined" && params.position !== null) {
     var position = params.position;
     this.position = [position[0], position[1], position[2],
       position[3] === null ? 0.0 : position[3]];
   }
-  if((typeof params.specular !== "undefined" && params.specular !== null)) {
+  if(typeof params.specular !== "undefined" && params.specular !== null) {
     this.specular = H3DU.toGLColor(params.specular);
   }
-  if((typeof params.diffuse !== "undefined" && params.diffuse !== null)) {
+  if(typeof params.diffuse !== "undefined" && params.diffuse !== null) {
     this.diffuse = H3DU.toGLColor(params.diffuse);
   }
-  if((typeof params.radius !== "undefined" && params.radius !== null)) {
+  if(typeof params.radius !== "undefined" && params.radius !== null) {
     this.radius = params.radius;
   }
   return this;

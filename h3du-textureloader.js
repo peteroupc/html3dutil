@@ -188,7 +188,7 @@ H3DU.TextureLoader.prototype.dispose = function() {
   for(var i = 0;i < lt.length;i++) {
     this.loadedTextures[i][2].dispose();
   }
-  if((typeof this.fbLoader === "undefined" || this.fbLoader === null)) {
+  if(typeof this.fbLoader === "undefined" || this.fbLoader === null) {
     this.fbLoader.dispose();
   }
   this.fbLoader = null;

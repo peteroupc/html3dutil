@@ -191,7 +191,7 @@ H3DU.Texture.loadTga = function(name) {
 /** @private */
 H3DU.Texture.prototype.loadImage = function() {
   "use strict";
-  if((typeof this.image !== "undefined" && this.image !== null)) {
+  if(typeof this.image !== "undefined" && this.image !== null) {
   // already loaded
     return Promise.resolve(this);
   }
