@@ -37,7 +37,9 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
   this.uniformValues = {};
 };
 /**
- * TODO: Not documented yet.
+ * Returns a new shader info object with the information in this object
+* copied to that object.
+* @return {H3DU.ShaderInfo} Return value.
  * @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.copy = function() {
@@ -47,9 +49,22 @@ H3DU.ShaderInfo.prototype.copy = function() {
   return sp;
 };
 /**
- * TODO: Not documented yet.
- * @param {Object} uniforms
- * @memberof! H3DU.ShaderInfo#
+* Sets the values of one or more uniforms used by this shader program.
+* Since this object doesn't store a WebGL context, or receive one as input,
+* the uniforms won't be associated with a WebGL context.
+* @param {Object} name An object whose keys are the names of uniforms
+* defined in either the
+* vertex or fragment shader of this shader program.  If the uniform
+* is an array, each element in the array is named as in these examples:
+* "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
+* "unif.member1", "unif.member2".  If it's an array of struct, each
+* member is named as in these examples: "unif[0].member1",
+* "unif[0].member2".  The value of each key depends on the data type
+* expected for the uniform named by that key.  The value can be a 3-, 4-,
+9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
+* respectively, or a Number if the uniform is a "float" or "int".
+* @returns {H3DU.ShaderInfo} This object.
+* @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.setUniforms = function(uniforms) {
   "use strict";
@@ -166,7 +181,7 @@ H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, change
  * @class
  * @alias H3DU.ShaderProgram
  * @param {WebGLRenderingContext|object} context
- * A WebGL context to associate with this scene, or an object, such as H3DU.Scene3D, that
+ * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
  * @param {String} vertexShader
@@ -380,9 +395,22 @@ H3DU.ShaderProgram.prototype._update = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {Object} uniforms
- * @memberof! H3DU.ShaderProgram#
+* Sets the values of one or more uniforms in this program.
+* If this program is not the active program in the WebGL context,
+* saves their values until the next time this object's "use" method is called.
+* @param {Object} name An object whose keys are the names of uniforms
+* defined in either the
+* vertex or fragment shader of this shader program.  If the uniform
+* is an array, each element in the array is named as in these examples:
+* "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
+* "unif.member1", "unif.member2".  If it's an array of struct, each
+* member is named as in these examples: "unif[0].member1",
+* "unif[0].member2".  The value of each key depends on the data type
+* expected for the uniform named by that key.  The value can be a 3-, 4-,
+9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
+* respectively, or a Number if the uniform is a "float" or "int".
+* @returns {H3DU.ShaderProgram} This object.
+* @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.setUniforms = function(uniforms) {
   "use strict";
@@ -457,6 +485,7 @@ H3DU.ShaderProgram.fragmentShaderHeader = function() {
 * a raster effect to a texture.
 * @param {String} functionCode See H3DU.ShaderProgram.makeEffect().
 * @returns {String} The source text of the resulting fragment shader.
+* @memberof! H3DU.ShaderProgram
 */
 H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
   "use strict";
@@ -475,7 +504,9 @@ H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
   return shader;
 };
 /**
- * TODO: Not documented yet.
+* Generates a shader program that copies the colors of a texture.
+* @returns {H3DU.ShaderInfo} The resulting shader program.
+* @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.makeCopyEffect = function() {
   "use strict";
@@ -508,6 +539,7 @@ H3DU.ShaderProgram.makeCopyEffect = function() {
 * this requirement, the shader code is also free to define additional uniforms,
 * constants, functions, and so on (but not another "main" function).
 * @returns {H3DU.ShaderInfo} The resulting shader program.
+* @memberof! H3DU.ShaderProgram
 */
 H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
  // TODO: Maybe make it a one-argument method, optionally
@@ -520,6 +552,7 @@ H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
 * Generates a shader program that inverts the colors of a texture.
 * @param {Object} [context] No longer used; ignored.
 * @returns {H3DU.ShaderInfo} The resulting shader program.
+* @memberof! H3DU.ShaderProgram
 */
 H3DU.ShaderProgram.getInvertEffect = function() {
   "use strict";
@@ -535,6 +568,7 @@ H3DU.ShaderProgram.getInvertEffect = function() {
 * the source texture's edges.
 * @param {Object} [context] No longer used; ignored.
 * @returns {H3DU.ShaderInfo} The resulting shader program.
+* @memberof! H3DU.ShaderProgram
 */
 H3DU.ShaderProgram.getEdgeDetectEffect = function() {
   "use strict";
@@ -597,6 +631,7 @@ H3DU.ShaderProgram.getBasicVertex = function() {
 * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
 * at the start of the return value enables the lighting model.
 * @returns {String} The resulting shader text.
+* @memberof! H3DU.ShaderProgram
 */
 H3DU.ShaderProgram.getDefaultVertex = function() {
   "use strict";
@@ -651,6 +686,7 @@ H3DU.ShaderProgram.getDefaultVertex = function() {
 * at the start of the return value enables specular highlights (as long
 * as SHADING is also enabled).
 * @returns {String} The resulting shader text.
+* @memberof! H3DU.ShaderProgram
 */
 H3DU.ShaderProgram.getDefaultFragment = function() {
   "use strict";

@@ -12,7 +12,7 @@ A public domain JavaScript library for easing the development of HTML 3D applica
 * Source code is available in the [project page](https://github.com/peteroupc/html3dutil).
 * API documentation is found at: [https://peteroupc.github.io/html3dutil](https://peteroupc.github.io/html3dutil)
 
-The file "glutil_min.js" is a minified single-file version of the library.  Include it in your HTML
+The file "h3du_min.js" is a minified single-file version of the library.  Include it in your HTML
 as follows:
 
 ```html

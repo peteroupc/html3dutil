@@ -94,9 +94,11 @@ H3DU.FrameBuffer.prototype._init = function(context, width, height) {
  // create color texture
   this.colorTexture = context.createTexture();
  /** The frame buffer's width.
+* @memberof! H3DU.FrameBuffer
   @readonly */
   this.width = Math.ceil(width);
  /** The frame buffer's height.
+* @memberof! H3DU.FrameBuffer
   @readonly */
   this.height = Math.ceil(height);
   this.context.activeTexture(this.context.TEXTURE0 + this.textureUnit);

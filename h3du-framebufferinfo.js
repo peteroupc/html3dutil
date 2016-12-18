@@ -10,6 +10,8 @@
  * @param {Number} height Height to use for the frame buffer.
  * Throws an error if this value is less than 0.  The height will be set
  * to this value rounded up.
+  * @class
+  * @alias H3DU.FrameBufferInfo
 */
 H3DU.FrameBufferInfo = function(width, height) {
   "use strict";

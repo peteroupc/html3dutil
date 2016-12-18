@@ -41,15 +41,14 @@ H3DU.Scene3D = function(canvasOrContext) {
   this._subScene.getLights().setDefaults();
   this._programs = new H3DU.Scene3D.ProgramCache();
   this.useDevicePixelRatio = false;
+  this._is3d = H3DU.is3DContext(this.context);
   this._pixelRatio = 1;
   this.autoResize = true;
   this.width = Math.ceil(this.context.canvas.clientWidth * 1.0);
   this.height = Math.ceil(this.context.canvas.clientHeight * 1.0);
   this.context.canvas.width = this.width;
   this.context.canvas.height = this.height;
-  this._is3d = H3DU.is3DContext(this.context);
   if(this._is3d) {
-
     var flags = H3DU.Scene3D.LIGHTING_ENABLED |
    H3DU.Scene3D.SPECULAR_ENABLED |
    H3DU.Scene3D.SPECULAR_MAP_ENABLED;
@@ -66,12 +65,12 @@ H3DU.Scene3D = function(canvasOrContext) {
   }
 };
 /**
- * TODO: Not documented yet.
+ * Gets the HTML canvas associated with this scene.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getCanvas = function() {
   "use strict";
-  return this.context.canvas;
+  return this.context ? this.context.canvas : null;
 };
 
 /** @private */
@@ -622,14 +621,21 @@ H3DU.Scene3D.prototype._setClearColor = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Disposes all resources used by this object.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.dispose = function() {
   "use strict";
-  this._programs.dispose();
-  this._textureLoader.dispose();
-  this._meshLoader.dispose();
+  this.context = null;
+  if(this._programs)
+    this._programs.dispose();
+  if(this._textureLoader)
+    this._textureLoader.dispose();
+  if(this._meshLoader)
+    this._meshLoader.dispose();
+  this._programs = null;
+  this._textureLoader = null;
+  this._meshLoader = null;
 };
 /**
 * Sets the color used when clearing the screen each frame.
@@ -724,7 +730,9 @@ H3DU.Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reje
   return H3DU.getPromiseResults(promises, resolve, reject);
 };
 /**
- * TODO: Not documented yet.
+ * Clears the color, depth, and stencil buffers used in this scene,
+* if any
+* @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clear = function() {
@@ -735,9 +743,11 @@ H3DU.Scene3D.prototype.clear = function() {
      this.context.DEPTH_BUFFER_BIT |
      this.context.STENCIL_BUFFER_BIT);
   }
+  return this;
 };
 /**
- * TODO: Not documented yet.
+ * Clears the depth buffer used in this scene, if any.
+* @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clearDepth = function() {
@@ -745,6 +755,7 @@ H3DU.Scene3D.prototype.clearDepth = function() {
   if(this._is3d) {
     this.context.clear(this.context.DEPTH_BUFFER_BIT);
   }
+  return this;
 };
 /**
  * Gets the number of vertices composed by

@@ -76,6 +76,7 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
 * and may be omitted.
 * @returns {Promise} A promise that resolves when the texture
 * is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
+* @memberof! H3DU.Texture
 */
 H3DU.Texture.loadTexture = function(name, textureCache) {
  // Get cached texture
@@ -106,6 +107,7 @@ H3DU.Texture.loadTexture = function(name, textureCache) {
 * @param {Uint8Array} width Width, in pixels, of the texture.
 * @param {Uint8Array} height Height, in pixels, of the texture.
 * @returns {H3DU.Texture} The new H3DU.Texture object.
+* @memberof! H3DU.Texture
 */
 H3DU.Texture.fromUint8Array = function(array, width, height) {
   "use strict";

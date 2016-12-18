@@ -2187,6 +2187,7 @@ H3DU.Math.quatLength = H3DU.Math.vec4length;
  * @param {Array<Number>} a A quaternion.
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The parameter "a".
+@memberof! H3DU.Math
  */
 H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
 /**

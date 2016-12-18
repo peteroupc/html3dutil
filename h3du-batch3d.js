@@ -412,6 +412,7 @@ H3DU.Batch3D.prototype.render = function(scene) {
  * @param {H3DU.FrameBufferInfo} fbo
  * @param {H3DU.ShaderInfo} shader
  * @return {H3DU.Batch3D}
+* @memberof! H3DU.Batch3D
  */
 H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   "use strict";

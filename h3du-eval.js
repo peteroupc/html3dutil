@@ -193,6 +193,7 @@ at: http://peteroupc.github.io/
 * method will be in homogeneous coordinates.
 * @const
 * @default
+* @memberof! H3DU.BSplineCurve
 */
   H3DU.BSplineCurve.WEIGHTED_BIT = 1;
 /**
@@ -203,6 +204,7 @@ at: http://peteroupc.github.io/
 * If this bit is set, the length of each control point must be at least 2.
 * @const
 * @default
+* @memberof! H3DU.BSplineCurve
 */
   H3DU.BSplineCurve.DIVIDE_BIT = 2;
 /**
@@ -212,11 +214,13 @@ at: http://peteroupc.github.io/
 * Only used with WEIGHTED_BIT.
 * @const
 * @default
+* @memberof! H3DU.BSplineCurve
 */
   H3DU.BSplineCurve.HOMOGENEOUS_BIT = 4;
 /**
 * Combination of WEIGHTED_BIT and DIVIDE_BIT.
 * @const
+* @memberof! H3DU.BSplineCurve
 */
   H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
 /** @private */
@@ -418,7 +422,9 @@ at: http://peteroupc.github.io/
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
-* @returns {H3DU.BSplineCurve} Return value.*/
+* @returns {H3DU.BSplineCurve} Return value.
+* @memberof! H3DU.BSplineCurve
+*/
   H3DU.BSplineCurve.uniform = function(controlPoints, degree, bits) {
     return new H3DU.BSplineCurve(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints.length, degree), bits);
@@ -435,7 +441,9 @@ at: http://peteroupc.github.io/
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
-* @returns {H3DU.BSplineSurface} Return value.*/
+* @returns {H3DU.BSplineSurface} Return value.
+* @memberof! H3DU.BSplineCurve
+*/
   H3DU.BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
     return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.clampedKnots(controlPoints[0].length, degreeU),
@@ -464,6 +472,7 @@ at: http://peteroupc.github.io/
 * @param {Number} controlPoints Number of control points the curve will have.
 * @param {Number} degree Degree of the curve.
 * @returns {Array<Number>} A uniform knot vector.
+* @memberof! H3DU.BSplineCurve
 */
   H3DU.BSplineCurve.uniformKnots = function(controlPoints, degree) {
     if(typeof controlPoints === "object")
@@ -486,6 +495,7 @@ at: http://peteroupc.github.io/
 * @param {Number} controlPoints Number of control points the curve will have.
 * @param {Number} degree Degree of the curve.
 * @returns {Array<Number>} A clamped uniform knot vector.
+* @memberof! H3DU.BSplineCurve
 */
   H3DU.BSplineCurve.clampedKnots = function(controlPoints, degree) {
     if(typeof controlPoints === "object")

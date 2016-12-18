@@ -27,7 +27,10 @@ H3DU.Lights = function() {
   this.sceneAmbient = [0.2, 0.2, 0.2];
 };
 /**
- * TODO: Not documented yet.
+ * Resets this object to the default configuration for
+ * light sources: one light source with its default
+  * values, and the default value for <code>sceneAmbient</code>.
+  * @returns {H3DU.Lights} This object.
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.setDefaults = function() {
@@ -41,11 +44,14 @@ H3DU.Lights.prototype.setDefaults = function() {
   });
   this.lights = [ls];
   this.sceneAmbient = [0.2, 0.2, 0.2];
+  return this;
 };
 
 /** Maximum number of lights supported
    by the default shader program.
    @const
+   @default
+* @memberof! H3DU.Lights
    */
 H3DU.Lights.MAX_LIGHTS = 3;
 /** @private */

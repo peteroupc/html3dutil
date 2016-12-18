@@ -1422,39 +1422,46 @@ H3DU.Mesh.PRIMITIVES_BITS = 768;
 /** The mesh contains normals for each vertex.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.NORMALS_BIT = 1;
 /** The mesh contains colors for each vertex.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.COLORS_BIT = 2;
 /** The mesh contains texture coordinates for each vertex.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.TEXCOORDS_BIT = 4;
 /**
  The mesh contains tangent vectors for each vertex.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.TANGENTS_BIT = 8;
 /**
  The mesh contains bitangent vectors for each vertex.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.BITANGENTS_BIT = 16;
 /** The mesh consists of lines (2 vertices per line) instead
 of triangles (3 vertices per line).
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.LINES_BIT = 256;
 /** The mesh consists of points (1 vertex per line).
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.POINTS_BIT = 512;
 /**
@@ -1462,6 +1469,7 @@ Primitive mode for rendering triangles, made up
 of 3 vertices each.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.TRIANGLES = 4;
 /**
@@ -1474,6 +1482,7 @@ and the second triangle consists of the third, second, and fourth
 vertices, in that order.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.QUAD_STRIP = 8;
 /**
@@ -1484,12 +1493,14 @@ and the second triangle consists of the first, third, and fourth
 vertices, in that order.
  @const
  @default
+* @memberof! H3DU.Mesh
  */
 H3DU.Mesh.QUADS = 7;
 /**
 Primitive mode for rendering line segments, made up
 of 2 vertices each.
  @const
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.LINES = 1;
 /**
@@ -1499,6 +1510,7 @@ triangle is made up of the first vertex of the first triangle,
 the previous vertex, and 1 new vertex.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.TRIANGLE_FAN = 6;
 /**
@@ -1510,6 +1522,7 @@ every other triangle after that, the first and second
 vertices are swapped when generating that triangle.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.TRIANGLE_STRIP = 5;
 /**
@@ -1518,6 +1531,7 @@ The first 2 vertices make up the first line, and each additional
 line is made up of the last vertex and 1 new vertex.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.LINE_STRIP = 3;
 /**
@@ -1525,6 +1539,7 @@ Primitive mode for rendering points, made up
 of 1 vertex each.
  @const
  @default
+* @memberof! H3DU.Mesh
 */
 H3DU.Mesh.POINTS = 0;
 
