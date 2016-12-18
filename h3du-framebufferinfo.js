@@ -8,6 +8,12 @@ H3DU.FrameBufferInfo = function(width, height) {
   this.width = width;
   this.height = height;
 };
+/**
+ * TODO: Not documented yet.
+ * @param {*} width
+ * @param {*} height
+ * @memberof! H3DU.FrameBufferInfo#
+*/
 H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
   "use strict";
   width = Math.ceil(width);
@@ -15,10 +21,18 @@ H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
   this.width = width;
   this.height = height;
 };
+/**
+ * TODO: Not documented yet.
+ * @memberof! H3DU.FrameBufferInfo#
+*/
 H3DU.FrameBufferInfo.prototype.getWidth = function() {
   "use strict";
   return this.width;
 };
+/**
+ * TODO: Not documented yet.
+ * @memberof! H3DU.FrameBufferInfo#
+*/
 H3DU.FrameBufferInfo.prototype.getHeight = function() {
   "use strict";
   return this.height;

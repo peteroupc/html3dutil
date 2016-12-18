@@ -309,7 +309,7 @@ H3DU.Material.fromTexture = function(texture) {
 };
 
 /**
-* Not documented yet.
+* TODO: Not documented yet.
 */
 H3DU.Material.forShader = function(shader) {
   "use strict";

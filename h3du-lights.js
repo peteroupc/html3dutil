@@ -27,7 +27,7 @@ H3DU.Lights = function() {
   this.sceneAmbient = [0.2, 0.2, 0.2];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.setDefaults = function() {

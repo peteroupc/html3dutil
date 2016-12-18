@@ -14,7 +14,7 @@ This page includes information on how to use the HTML 3D library, an overview of
 
 ## Contents <a id=Contents></a>
 
-[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[Scene3D](#Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Alternative Rendering](#Alternative_Rendering)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>
+[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Alternative Rendering](#Alternative_Rendering)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>
 
 ## How to Use <a id=How_to_Use></a>
 
@@ -59,12 +59,16 @@ For much more information on all of these classes, see my <a href="https://peter
 
 The following sections detail how a 3D application using this library works.
 
-### Scene3D <a id=Scene3D></a>
+### `H3DU.Scene3D` <a id=H3DU_Scene3D></a>
 
-The `H3DU.Scene3D` class is a renderer for a canvas 3D context.  It renders batches of 3D shapes in the form of `H3DU.Batch3D` object.  Each `Batch3D` represents a so-called "scene graph". It holds 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s position, and light sources to illuminate the 3D scene.
+The `H3DU.Scene3D` class is a renderer for a canvas 3D context.  It renders batches of 3D shapes
+in the form of `H3DU.Batch3D` objects.  Each `Batch3D` represents a so-called "scene graph". It holds
+3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
+position, and light sources to illuminate the 3D scene.
 
-To create a `H3DU.Scene3D`, you first need to find the HTML canvas in your JavaScript, then you need to pass it to `new Scene3D()`. Once you do so, `H3DU.Scene3D` will use that canvas to draw 3D objects. Here is an example.
-You will also need to create a `H3DU.Batch3D` to hold 3D objects.
+To create a `H3DU.Scene3D`, you first need to find the HTML canvas in your JavaScript, then you
+need to pass it to `new Scene3D()`. Once you do so, `H3DU.Scene3D` will use that canvas to draw
+3D objects. Here is an example. You will also need to create a `H3DU.Batch3D` to hold 3D objects.
 
     // Find the HTML canvas with the ID "canvas".
     var canvas=document.getElementById("canvas")
@@ -74,7 +78,8 @@ You will also need to create a `H3DU.Batch3D` to hold 3D objects.
 
 ### The "Camera" <a id=The_Camera></a>
 
-The `H3DU.Batch3D` class has a concept of a "projection transform" and a "view transform". If we use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `H3DU.Batch3D` has methods for setting all these attributes of this abstract "camera". Two of them are `perspectiveAspect()` and `setLookAt()`, which are shown in the example below.
+The `H3DU.Batch3D` class has a concept of a "projection transform" and a "view transform". If we
+use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `H3DU.Batch3D` has methods for setting all these attributes of this abstract "camera". Two of them are `perspectiveAspect()` and `setLookAt()`, which are shown in the example below.
 
     // Set the perspective view.  Camera has a 45-degree field of view
     // and will see objects from 0.1 to 100 units away.
@@ -94,16 +99,20 @@ Every 3D scene is made up of "meshes", or the triangles, lines, and points that 
     // in height, and 25 units in depth
     var mesh=H3DU.Meshes.createBox(10,20,25);
 
-Here are some other built-in mesh methods. This tip doesn&#39;t explain all the features or parameters in the `Meshes` class; for that, see the <a href="http://peteroupc.github.io/html3dutil/H3DU.Meshes.html">Meshes API documentation</a>.
+Here are some other built-in mesh methods. This page doesn&#39;t explain all the
+features or parameters in the `Meshes` class; for that, see the
+<a href="http://peteroupc.github.io/html3dutil/H3DU.Meshes.html">Meshes API documentation</a>.
 
   * <dfn>`H3DU.Meshes.createSphere(radius)`</dfn>
   <br>Creates a sphere with the given `radius`.
   * <dfn>`H3DU.Meshes.createCylinder(base, top, height)`</dfn>
-  <br>Creates a cylinder with the given `base` radius, `top` radius, and `height`. Can be used to create a cone if `base` or `top` is `0`.
+  <br>Creates a cylinder with the given `base` radius, `top` radius, and `height`. Can be used
+  to create a cone if `base` or `top` is `0`.
   * <dfn>`H3DU.Meshes.createClosedCylinder(base, top, height)`</dfn>
   <br>Like `createCylinder`, except it also covers the base and top.
   * <dfn>`H3DU.Meshes.createPartialDisk(inner, outer, start, sweep)`</dfn>
-  <br>Creates a circular ring, of radius `outer` with a hole of radius `inner`, starting at `start` degrees and sweeping `sweep` degrees.
+  <br>Creates a circular ring, of radius `outer` with a hole of radius `inner`, starting at `start`
+  degrees and sweeping `sweep` degrees.
   * <dfn>`H3DU.Meshes.createDisk(inner, outer)`</dfn>
   <br>Same as calling `createPartialDisk` with `start` 0 and `sweep` 360.
 

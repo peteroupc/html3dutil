@@ -207,7 +207,7 @@ H3DU.Shape.prototype.copy = function() {
   return ret;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getTransform = function() {
@@ -215,7 +215,7 @@ H3DU.Shape.prototype.getTransform = function() {
   return this.transform;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getBounds = function() {

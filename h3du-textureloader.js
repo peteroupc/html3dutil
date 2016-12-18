@@ -13,7 +13,7 @@ H3DU.TextureLoader = function() {
   this.fbLoader = new H3DU.FrameBufferLoader();
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} name
  * @memberof! H3DU.TextureLoader#
 */
@@ -23,7 +23,7 @@ H3DU.TextureLoader.prototype.getTexture = function(name) {
 };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} name
  * @memberof! H3DU.TextureLoader#
 */
@@ -61,7 +61,7 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} textures
  * @param {*} resolve
  * @param {*} reject
@@ -80,7 +80,7 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
   return H3DU.getPromiseResultsAll(promises, resolve, reject);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {String} texture
  * @param {*} context
  * @returns {Promise<H3DU.Texture>} A promise that resolves when
@@ -98,7 +98,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
   });
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {Array<String>} textures
  * @param {*} context
  * @param {*} resolve
@@ -120,10 +120,10 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
   return H3DU.getPromiseResultsAll(promises, resolve, reject);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} textures
  * @param {*} context
- * @return {H3DU.TextureLoader} This object.
+ * @returns {H3DU.TextureLoader} This object.
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.mapTextures = function(textures, context) {
@@ -135,10 +135,10 @@ H3DU.TextureLoader.prototype.mapTextures = function(textures, context) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} texture
  * @param {*} context
- * @return {H3DU.TextureLoader} This object.
+ * @returns {H3DU.TextureLoader} This object.
  * @memberof! H3DU.TextureLoader#
 */
 H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {

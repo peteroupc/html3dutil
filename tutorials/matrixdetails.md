@@ -54,7 +54,7 @@ element of the matrix is placed in columns, rather than in rows, as in the follo
 </math>
 
 The numbers in brackets in the matrix above are the zero-based indices
-into the matrix arrays passed to GLMath's matrix methods.
+into the matrix arrays passed to `H3DU.Math`'s matrix methods.
 
 For 3x3 matrices, the elements are arranged in the following order:
 
@@ -407,7 +407,7 @@ Related functions:
 In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1).  (Such transformations are called _affine transformations_, those that
 keep parallel lines parallel.) However, this is not the case for
-some transformations in the GLMath library.
+some transformations in the `H3DU.Math` library.
 
 One example of such a transformation is the frustum matrix.  When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:

@@ -47,7 +47,8 @@ function "warps" this grid into a three-dimensional surface.
 
 ## Parametric Surfaces in the HTML 3D Library <a id=Parametric_Surfaces_in_the_HTML_3D_Library></a>
 
-The HTML 3D Library supports parametric surfaces using a class named [`SurfaceEval`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html).  It helps
+The HTML 3D Library supports parametric surfaces using a class named
+[`SurfaceEval`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html).  It helps
 generate vertex coordinates, texture coordinates, normals, and colors using a parametric surface
 function.  The following helper function, `makeMesh`, generates a parametric surface mesh
 that was used to produce the pictures on this page. `makeMesh` is only included in the demo, not

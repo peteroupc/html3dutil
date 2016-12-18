@@ -56,7 +56,7 @@ H3DU.MeshBuffer = function(mesh) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} name
  * @param {*} buffer
  * @param {*} startIndex
@@ -154,7 +154,10 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
   }
   return this._bounds;
 };
-
+/**
+ * TODO: Not documented yet.
+ * @memberof! H3DU.MeshBuffer#
+*/
 H3DU.MeshBuffer.prototype.getType = function() {
   "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)

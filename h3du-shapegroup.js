@@ -165,7 +165,7 @@ H3DU.ShapeGroup.prototype.removeShape = function(shape) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.ShapeGroup#
 */
 H3DU.ShapeGroup.prototype.getBounds = function() {

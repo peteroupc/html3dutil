@@ -37,7 +37,7 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
   this.uniformValues = {};
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.copy = function() {
@@ -47,7 +47,7 @@ H3DU.ShaderInfo.prototype.copy = function() {
   return sp;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} uniforms
  * @memberof! H3DU.ShaderInfo#
 */
@@ -257,7 +257,7 @@ H3DU.ShaderProgram.prototype.dispose = function() {
   this.uniformTypes = {};
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.getContext = function() {
@@ -358,7 +358,7 @@ H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
   return uniformsLength;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.use = function() {
@@ -377,7 +377,7 @@ H3DU.ShaderProgram.prototype._update = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} uniforms
  * @memberof! H3DU.ShaderProgram#
 */
@@ -472,7 +472,7 @@ H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
   return shader;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 H3DU.ShaderProgram.makeCopyEffect = function() {
   "use strict";

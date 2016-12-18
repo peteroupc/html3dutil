@@ -66,7 +66,7 @@ H3DU.Scene3D = function(canvasOrContext) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getCanvas = function() {
@@ -622,7 +622,7 @@ H3DU.Scene3D.prototype._setClearColor = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.dispose = function() {
@@ -724,7 +724,7 @@ H3DU.Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reje
   return H3DU.getPromiseResults(promises, resolve, reject);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clear = function() {
@@ -737,7 +737,7 @@ H3DU.Scene3D.prototype.clear = function() {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clearDepth = function() {
@@ -815,7 +815,7 @@ H3DU.Scene3D.prototype.setViewMatrix = function(matrix) {
 *  Sets this scene's view matrix to represent a camera view.
 * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
 * (<code>center</code>).
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setLookAt} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setLookAt}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {Array<Number>} eye A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<Number>} [center] A 3-element vector specifying

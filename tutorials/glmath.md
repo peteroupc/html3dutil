@@ -179,7 +179,7 @@ the viewer_ whenever the x-axis points to the right and the y-axis points up.
 * In a _right-handed_ coordinate system, like in OpenGL, the z-axis points _toward
 the viewer_ whenever the x-axis points to the right and the y-axis points up.
 
-If a GLMath method works differently in left- and right-handed coordinate systems,
+If an `H3DU.Math` method works differently in left- and right-handed coordinate systems,
 its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)  The differences are also noted below.
 

@@ -23,7 +23,7 @@ H3DU.Texture = function(name) {
   this.height = 0;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getWidth = function() {
@@ -31,7 +31,7 @@ H3DU.Texture.prototype.getWidth = function() {
   return this.width;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getHeight = function() {
@@ -266,7 +266,7 @@ H3DU.Texture.prototype.dispose = function() {
 
 /**
 * Gets the name of this texture.
-* @return {String}
+* @returns {String} Return value.
 * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getName = function() {

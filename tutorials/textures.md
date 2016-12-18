@@ -24,7 +24,7 @@ In the sample code below, the variable `textureURL` is the URL of the texture to
     // Now create a sphere
     var mesh=H3DU.Meshes.createSphere(1);
     // Make a shape using the texture
-    var shape=new Shape(mesh).setTexture(texture);
+    var shape=new H3DU.Shape(mesh).setTexture(texture);
   }, function(error){
     // an error occurred
   });
@@ -32,7 +32,10 @@ In the sample code below, the variable `textureURL` is the URL of the texture to
 
 ### Loading multiple textures <a id=Loading_multiple_textures></a>
 
-The variables `textureURL1` and `textureURL2` are URL textures.
+If you need to load multiple textures, the `loadAndMapTexturesAll` method
+is much more convenient than `loadAndMapTexture` and also loads textures asynchronously.
+
+In the sample code below, The variables `textureURL1` and `textureURL2` are URL textures.
 
 ```
   var loader=new H3DU.TextureLoader();
@@ -40,6 +43,10 @@ The variables `textureURL1` and `textureURL2` are URL textures.
    textureURL1,
    textureURL2
   ], scene).then(function(res){
+      // All the textures have loaded successfully,
+      // read the textures from the array (they will
+      // appear in the same order given in the
+      // loadAndMapTexturesAll method).
       for(var i=0;i<res.length;i++){
         var texture=res[i];
         // deal with the texture (a Texture object)

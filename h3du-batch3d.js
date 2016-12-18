@@ -8,6 +8,9 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 /**
+A `Batch3D` represents a so-called "scene graph". It holds
+3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
+position, and light sources to illuminate the 3D scene.
 * @class
 * @alias H3DU.Batch3D
 */
@@ -29,7 +32,7 @@ H3DU.Batch3D._PerspectiveView = function(scene, fov, near, far) {
   this.scene = scene;
   this.lastAspect = null;
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
@@ -53,7 +56,7 @@ H3DU.Batch3D._OrthoView = function(scene, a, b, c, d, e, f) {
   this.scene = scene;
   this.lastAspect = null;
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
@@ -125,9 +128,10 @@ H3DU.Batch3D._isSameMatrix = function(a, b) {
    a[15] === b[15];
 };
 /**
- * Not documented yet.
- * @param {*} mat
- * @memberof! H3DU.Batch3D#
+ * Sets the projection matrix for this batch.
+ * @param {Array<Number>} matrix A 16-element matrix (4x4).
+ * @returns {H3DU.Scene3D} This object.
+ * @memberof! H3DU.Scene3D#
 */
 H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
   "use strict";
@@ -141,7 +145,7 @@ H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
  * Uses a perspective projection for this batch.  It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
  * For considerations when choosing the "near" and "far" parameters,
- * see glmath.H3DU.Math.mat4perspective.
+ * see @{link H3DU.Math.mat4perspective}.
  * @param {Number} fov Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
  * @param {Number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
  * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
@@ -154,12 +158,23 @@ H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
   return this;
 };
 /**
- * Not documented yet.
- * @param {*} eye
- * @param {*} center
- * @param {*} up
- * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+* Sets this batch's view matrix to represent a camera view.
+* This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
+* (<code>center</code>).
+* @param {Array<Number>} eye A 3-element vector specifying
+* the camera position in world space.
+* @param {Array<Number>} [center] A 3-element vector specifying
+* the point in world space that the camera is looking at. May be null or omitted,
+* in which case the default is the coordinates (0,0,0).
+* @param {Array<Number>} [up] A 3-element vector specifying
+* the direction from the center of the camera to its top. This parameter may
+* be null or omitted, in which case the default is the vector (0, 1, 0),
+* the vector that results when the camera is held upright.  This
+* vector must not point in the same or opposite direction as
+* the camera's view direction. (For best results, rotate the vector (0, 1, 0)
+* so it points perpendicular to the camera's view direction.)
+* @returns {H3DU.Batch3D} This object.
+* @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
   "use strict";
@@ -168,16 +183,25 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
 /**
  * Uses an orthographic projection for this batch.  It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
-* @param {Number} l Leftmost coordinate of the view rectangle.
+* In this projection, the left clipping plane is parallel to the right clipping
+ * plane and the top to the bottom.<p>
+ * If the view rectangle's aspect ratio doesn't match the desired aspect
+ * ratio, the view rectangle will be centered on the 3D scene's viewport
+ * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+ * or squishing it.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4orthoAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+ * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (If l is greater than r, X-coordinates increase rightward; otherwise,
- * they increase leftward.)
+ * (Note that right can be greater than left or vice versa.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (If b is greater than t, X-coordinates increase downward; otherwise,
- * they increase upward.)
- * @param {Number} e The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
- * @param {Number} f The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
+ * (Note that top can be greater than bottom or vice versa.)
+ * @param {Number} e Distance from the camera to the near clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @param {Number} f Distance from the camera to the far clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * between near and far should be as small as the application can accept.
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
 */
@@ -187,15 +211,20 @@ H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
   return this;
 };
 /**
- * Not documented yet.
-* @param {Number} l Leftmost coordinate of the view rectangle.
+ * Uses a 2D orthographic projection for this batch.  It will be adjusted
+ * to the scene's aspect ratio each time this batch is rendered.<p>
+ * The near and far clipping planes will be set to -1 and 1, respectively.<p>
+ * If the view rectangle's aspect ratio doesn't match the desired aspect
+ * ratio, the view rectangle will be centered on the 3D scene's viewport
+ * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+ * or squishing it.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+ * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (If l is greater than r, X-coordinates increase rightward; otherwise,
- * they increase leftward.)
+ * (Note that right can be greater than left or vice versa.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (If b is greater than t, X-coordinates increase downward; otherwise,
- * they increase upward.)
+ * (Note that top can be greater than bottom or vice versa.)
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
 */
@@ -245,7 +274,7 @@ H3DU.Batch3D.prototype._getFrustum = function() {
   return this._frustum;
 };
 /**
- * Not documented yet.
+ * Gets the light sources used by this batch.
  * @returns {H3DU.Lights} Return value.
  * @memberof! H3DU.Batch3D#
 */
@@ -369,7 +398,7 @@ H3DU.Batch3D.prototype.resize = function(width, height) {
 };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.render = function(scene) {
@@ -383,7 +412,7 @@ H3DU.Batch3D.prototype.render = function(scene) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} scene
  * @param {*} fbo
  * @param {*} shader

@@ -1,7 +1,7 @@
 /* global H3DU */
 var Polyhedra = {};
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} vertices
  * @param {*} radius
  */
@@ -19,7 +19,7 @@ Polyhedra.normDistances = function(vertices, radius) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} vertices
  * @param {*} radius
  */
@@ -33,7 +33,7 @@ Polyhedra.scaleVertices = function(vertices, radius) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} vi
  * @param {*} radius
  * @param {*} level
@@ -80,7 +80,7 @@ Polyhedra.makeSphere = function(vi, radius, level) {
   return vi;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} vi
  */
 Polyhedra.makeMesh = function(vi) {
@@ -90,7 +90,7 @@ Polyhedra.makeMesh = function(vi) {
   return new H3DU.Mesh(vi[0], vi[1]).recalcNormals(true);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} radius
  * @param {*} level
  */
@@ -101,7 +101,7 @@ Polyhedra.octahedron = function(radius, level) {
   return Polyhedra.makeMesh(vi);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} radius
  * @param {*} level
  */
@@ -112,7 +112,7 @@ Polyhedra.hexahedron = function(radius, level) {
   return Polyhedra.makeMesh(vi);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} radius
  * @param {*} level
  */
@@ -123,7 +123,7 @@ Polyhedra.icosahedron = function(radius, level) {
   return Polyhedra.makeMesh(vi);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} radius
  * @param {*} level
  */
@@ -134,7 +134,7 @@ Polyhedra.dodecahedron = function(radius, level) {
   return Polyhedra.makeMesh(vi);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} radius
  * @param {*} level
  */
@@ -145,7 +145,7 @@ Polyhedra.tetrahedron = function(radius, level) {
   return Polyhedra.makeMesh(vi);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 Polyhedra.octahedronFaces = function() {
   "use strict";
@@ -168,7 +168,7 @@ Polyhedra.octahedronFaces = function() {
   return [vertices, faces];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 Polyhedra.tetrahedronFaces = function() {
   "use strict";
@@ -177,7 +177,7 @@ Polyhedra.tetrahedronFaces = function() {
   return [vertices, faces];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 Polyhedra.icosahedronFaces = function() {
   "use strict";
@@ -195,7 +195,7 @@ Polyhedra.icosahedronFaces = function() {
   return [vertices, faces];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 Polyhedra.hexahedronFaces = function() {
   "use strict";
@@ -204,7 +204,7 @@ Polyhedra.hexahedronFaces = function() {
   return [vertices, faces];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 Polyhedra.hexahedronFaces2 = function() {
 // Alternate indexing of a hexahedron's faces
@@ -215,7 +215,7 @@ Polyhedra.hexahedronFaces2 = function() {
   return v;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 Polyhedra.dodecahedronFaces = function() {
   "use strict";
@@ -224,7 +224,7 @@ Polyhedra.dodecahedronFaces = function() {
   return [vertices, faces];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  */
 Polyhedra.dodecahedronFaces2 = function() {
 // Alternate indexing of a dodecahedron's faces

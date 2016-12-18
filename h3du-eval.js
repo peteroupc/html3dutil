@@ -459,7 +459,7 @@ at: http://peteroupc.github.io/
    H3DU.BSplineCurve.uniformKnots(controlPoints.length, degreeV), bits);
   };
 /**
-* Not documented yet.
+* TODO: Not documented yet.
 * @param {Number} controlPoints
 * @param {Number} degree
 * @returns {Array<Number>} A uniform knot vector.
@@ -478,7 +478,7 @@ at: http://peteroupc.github.io/
     return ret;
   };
 /**
-* Not documented yet.
+* TODO: Not documented yet.
 * @param {Number} controlPoints
 * @param {Number} degree
 * @returns {Array<Number>} A clamped knot vector.

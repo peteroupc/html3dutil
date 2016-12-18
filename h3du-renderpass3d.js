@@ -30,7 +30,7 @@ H3DU.RenderPass3D = function(subScene, parameters) {
   this.setParams(parameters);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {Object} parameters
  * @memberof! H3DU.RenderPass3D#
 */
