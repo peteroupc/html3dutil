@@ -1,7 +1,7 @@
 {
 "camera":{"title":"The \"Camera\" and the Projection and View Transforms"},
 "filters":{"title":"Graphics Filters"},
-"glmath":{"title":"GLMath Math Library"},
+"glmath":{"title":"H3DU's Math Functions"},
 "colors":{"title":"Color Strings"},
 "matrixdetails":{"title":"Matrix Details"},
 "overview":{"title":"Library Overview"},

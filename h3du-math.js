@@ -1905,9 +1905,7 @@ m[0] * m[7] * m[5];
       return [cost + mcos * x2, v0 + zs, v1 - ys, 0, v0 - zs, cost + mcos * y2, v2 + xs, 0, v1 + ys,
         v2 - xs, cost + mcos * z2, 0, 0, 0, 0, 1];
     }
-  }
-};
-
+  },
 /**
 * Normalizes this plane so that its normal is a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1),
 * unless all the normal's components are 0.
@@ -1921,22 +1919,22 @@ m[0] * m[7] * m[5];
 * divided by the normal's length.
 * @returns {Array<Number>} The parameter "plane".
 */
-H3DU.Math.planeNormInPlace = function(plane) {
-  "use strict";
-  var x = plane[0];
-  var y = plane[1];
-  var z = plane[2];
+  "planeNormInPlace":function(plane) {
+    "use strict";
+    var x = plane[0];
+    var y = plane[1];
+    var z = plane[2];
 
-  var len = Math.sqrt(x * x + y * y + z * z);
-  if(len !== 0) {
-    len = 1.0 / len;
-    plane[0] *= len;
-    plane[1] *= len;
-    plane[2] *= len;
-    plane[3] *= len;
-  }
-  return plane;
-};
+    var len = Math.sqrt(x * x + y * y + z * z);
+    if(len !== 0) {
+      len = 1.0 / len;
+      plane[0] *= len;
+      plane[1] *= len;
+      plane[2] *= len;
+      plane[3] *= len;
+    }
+    return plane;
+  },
 /**
 * Normalizes this plane so that its normal is unit
 * length (unless all the normal's components are 0).
@@ -1951,10 +1949,10 @@ H3DU.Math.planeNormInPlace = function(plane) {
 * @returns {Array<Number>} A normalized version of
 * the plane.
 */
-H3DU.Math.planeNorm = function(plane) {
-  "use strict";
-  return H3DU.Math.planeNormInPlace(plane.slice(0, 4));
-};
+  "planeNorm":function(plane) {
+    "use strict";
+    return H3DU.Math.planeNormInPlace(plane.slice(0, 4));
+  },
 /**
 * Finds the six clipping planes of a view frustum defined
 * by a 4x4 matrix. These six planes together form the
@@ -1973,53 +1971,53 @@ H3DU.Math.planeNorm = function(plane) {
 * bottom, near, and far clipping planes.  All six planes
 * will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
 */
-H3DU.Math.mat4toFrustumPlanes = function(matrix) {
-  "use strict";
-  var frustum = [[], [], [], [], [], []];
+  "mat4toFrustumPlanes":function(matrix) {
+    "use strict";
+    var frustum = [[], [], [], [], [], []];
  // Left clipping plane
-  frustum[0] = H3DU.Math.planeNormInPlace([
-    matrix[3]  + matrix[0],
-    matrix[7]  + matrix[4],
-    matrix[11] + matrix[8],
-    matrix[15] + matrix[12]
-  ]);
+    frustum[0] = H3DU.Math.planeNormInPlace([
+      matrix[3]  + matrix[0],
+      matrix[7]  + matrix[4],
+      matrix[11] + matrix[8],
+      matrix[15] + matrix[12]
+    ]);
  // Right clipping plane
-  frustum[1] = H3DU.Math.planeNormInPlace([
-    matrix[3]  - matrix[0],
-    matrix[7]  - matrix[4],
-    matrix[11] - matrix[8],
-    matrix[15] - matrix[12]
-  ]);
+    frustum[1] = H3DU.Math.planeNormInPlace([
+      matrix[3]  - matrix[0],
+      matrix[7]  - matrix[4],
+      matrix[11] - matrix[8],
+      matrix[15] - matrix[12]
+    ]);
  // Top clipping plane
-  frustum[2] = H3DU.Math.planeNormInPlace([
-    matrix[3]  - matrix[1],
-    matrix[7]  - matrix[5],
-    matrix[11] - matrix[9],
-    matrix[15] - matrix[13]
-  ]);
+    frustum[2] = H3DU.Math.planeNormInPlace([
+      matrix[3]  - matrix[1],
+      matrix[7]  - matrix[5],
+      matrix[11] - matrix[9],
+      matrix[15] - matrix[13]
+    ]);
  // Bottom clipping plane
-  frustum[3] = H3DU.Math.planeNormInPlace([
-    matrix[3]  + matrix[1],
-    matrix[7]  + matrix[5],
-    matrix[11] + matrix[9],
-    matrix[15] + matrix[13]
-  ]);
+    frustum[3] = H3DU.Math.planeNormInPlace([
+      matrix[3]  + matrix[1],
+      matrix[7]  + matrix[5],
+      matrix[11] + matrix[9],
+      matrix[15] + matrix[13]
+    ]);
  // Near clipping plane
-  frustum[4] = H3DU.Math.planeNormInPlace([
-    matrix[3]  + matrix[2],
-    matrix[7]  + matrix[6],
-    matrix[11] + matrix[10],
-    matrix[15] + matrix[14]
-  ]);
+    frustum[4] = H3DU.Math.planeNormInPlace([
+      matrix[3]  + matrix[2],
+      matrix[7]  + matrix[6],
+      matrix[11] + matrix[10],
+      matrix[15] + matrix[14]
+    ]);
  // Far clipping plane
-  frustum[5] = H3DU.Math.planeNormInPlace([
-    matrix[3]  - matrix[2],
-    matrix[7]  - matrix[6],
-    matrix[11] - matrix[10],
-    matrix[15] - matrix[14]
-  ]);
-  return frustum;
-};
+    frustum[5] = H3DU.Math.planeNormInPlace([
+      matrix[3]  - matrix[2],
+      matrix[7]  - matrix[6],
+      matrix[11] - matrix[10],
+      matrix[15] - matrix[14]
+    ]);
+    return frustum;
+  },
 /**
 * Determines whether a sphere is at least
 * partially inside a view frustum.
@@ -2039,17 +2037,17 @@ H3DU.Math.mat4toFrustumPlanes = function(matrix) {
 * is partially or totally
 * inside the frustum; <code>false</code> otherwise.
 */
-H3DU.Math.frustumHasSphere = function(frustum, x, y, z, radius) {
-  "use strict";
-  if(radius < 0)throw new Error("radius is negative");
-  for(var i = 0;i < 6;i++) {
-    var plane = frustum[i];
-    var dot = plane[3] + plane[0] * x +
+  "frustumHasSphere":function(frustum, x, y, z, radius) {
+    "use strict";
+    if(radius < 0)throw new Error("radius is negative");
+    for(var i = 0;i < 6;i++) {
+      var plane = frustum[i];
+      var dot = plane[3] + plane[0] * x +
      plane[1] * y + plane[2] * z;
-    if(dot < -radius)return false;
-  }
-  return true;
-};
+      if(dot < -radius)return false;
+    }
+    return true;
+  },
 /**
 * Determines whether a bounding box is empty.
 * This is determined if the minimum coordinate
@@ -2063,10 +2061,10 @@ H3DU.Math.frustumHasSphere = function(frustum, x, y, z, radius) {
 * of the minimum coordinates is greater than its
 * corresponding maximum coordinate; otherwise, <code>false</code>.
 */
-H3DU.Math.boxIsEmpty = function(box) {
-  "use strict";
-  return !(box[0] <= box[3] && box[1] <= box[4] && box[2] <= box[5]);
-};
+  "boxIsEmpty":function(box) {
+    "use strict";
+    return !(box[0] <= box[3] && box[1] <= box[4] && box[2] <= box[5]);
+  },
 /**
 * Determines whether an axis-aligned bounding box
 * is at least partially inside a view frustum.
@@ -2085,18 +2083,18 @@ H3DU.Math.boxIsEmpty = function(box) {
 * definitely outside the frustum, or if the box is empty
 * (see "boxIsEmpty").
 */
-H3DU.Math.frustumHasBox = function(frustum, box) {
-  "use strict";
-  if(H3DU.Math.boxIsEmpty(box)) {
-    return false;
-  }
-  for(var i = 0;i < 6;i++) {
-    var plane = frustum[i];
-    var p3 = plane[3];
-    var p0b0 = plane[0] * box[0];
-    var p2b2 = plane[2] * box[2];
-    var p1b1 = plane[1] * box[1];
-    if( p0b0 + p1b1 + p2b2 + p3 <= 0.0 &&
+  "frustumHasBox":function(frustum, box) {
+    "use strict";
+    if(H3DU.Math.boxIsEmpty(box)) {
+      return false;
+    }
+    for(var i = 0;i < 6;i++) {
+      var plane = frustum[i];
+      var p3 = plane[3];
+      var p0b0 = plane[0] * box[0];
+      var p2b2 = plane[2] * box[2];
+      var p1b1 = plane[1] * box[1];
+      if( p0b0 + p1b1 + p2b2 + p3 <= 0.0 &&
       plane[0] * box[3] + plane[1] * box[4] + plane[2] * box[5] + p3 <= 0.0 &&
       p0b0 + plane[1] * box[4] + p2b2 + p3 <= 0.0 &&
       p0b0 + plane[1] * box[4] + plane[2] * box[5] + p3 <= 0.0 &&
@@ -2104,11 +2102,11 @@ H3DU.Math.frustumHasBox = function(frustum, box) {
       plane[0] * box[3] + plane[1] * box[4] + p2b2 + p3 <= 0.0 &&
       plane[0] * box[3] + p1b1 + p2b2 + p3 <= 0.0 &&
       plane[0] * box[3] + p1b1 + plane[2] * box[5] + p3 <= 0.0) {
-      return false;
+        return false;
+      }
     }
-  }
-  return true;
-};
+    return true;
+  },
 /**
 * Determines whether a point is
 * outside or inside a view frustum.
@@ -2125,15 +2123,18 @@ H3DU.Math.frustumHasBox = function(frustum, box) {
 * @returns {Boolean} true if the point is inside;
 * otherwise false;
 */
-H3DU.Math.frustumHasPoint = function(frustum, x, y, z) {
-  "use strict";
-  for(var i = 0;i < 6;i++) {
-    var d = frustum[i][0] * x + frustum[i][1] * y +
+  "frustumHasPoint":function(frustum, x, y, z) {
+    "use strict";
+    for(var i = 0;i < 6;i++) {
+      var d = frustum[i][0] * x + frustum[i][1] * y +
      frustum[i][2] * z + frustum[i][3];
-    if(d <= 0)return false;
+      if(d <= 0)return false;
+    }
+    return true;
   }
-  return true;
+
 };
+
 /**
 * Finds the dot product of two quaternions.
 * It's equal to the sum of the products of
@@ -2141,7 +2142,9 @@ H3DU.Math.frustumHasPoint = function(frustum, x, y, z) {
  @function
  @param {Array<Number>} a The first quaternion.
  @param {Array<Number>} b The second quaternion.
- @returns {Number} */
+ @returns {Number} Return value.
+@memberof! H3DU.Math
+*/
 H3DU.Math.quatDot = H3DU.Math.vec4dot;
 /**
  * Converts a quaternion to its normalized version.
@@ -2152,6 +2155,7 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * @function
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The parameter "quat".
+@memberof! H3DU.Math
  */
 H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
 /**
@@ -2163,6 +2167,7 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * @function
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The normalized quaternion.
+@memberof! H3DU.Math
  */
 H3DU.Math.quatNorm = H3DU.Math.vec4norm;
 /**
@@ -2171,7 +2176,9 @@ H3DU.Math.quatNorm = H3DU.Math.vec4norm;
 * of its components.
 * @function
  @param {Array<Number>} quat The quaternion.
-  @returns {Number} */
+  @returns {Number} Return value.
+@memberof! H3DU.Math
+*/
 H3DU.Math.quatLength = H3DU.Math.vec4length;
 /**
  * Multiplies each element of a quaternion by a factor
@@ -2185,16 +2192,20 @@ H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
 /**
  * Returns a copy of a quaternion.
 * @function
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<Number>} Return value.
+@memberof! H3DU.Math
+*/
 H3DU.Math.quatCopy = H3DU.Math.vec4copy;
 /**
  Closest approximation to pi times 2, or a 360-degree turn in radians.
+@memberof! H3DU.Math
  @const
  @default
 */
 H3DU.Math.PiTimes2 = 6.283185307179586476925286766559;
 /**
  Closest approximation to pi divided by 2, or a 90-degree turn in radians.
+@memberof! H3DU.Math
  @const
  @default
 */
@@ -2202,6 +2213,7 @@ H3DU.Math.HalfPi = 1.5707963267948966192313216916398;
 /**
  Closest approximation to pi divided by 180, or the number
  of radians in a degree. Multiply by this number to convert degrees to radians.
+@memberof! H3DU.Math
  @const
  @default
 */
@@ -2217,37 +2229,44 @@ H3DU.Math.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
  Closest approximation to 180 divided by pi, or the number of
  degrees in a radian. Multiply by this number to convert radians to degrees.
+@memberof! H3DU.Math
  @const
  @default
 */
 H3DU.Math.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
 * Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
+@memberof! H3DU.Math
 * @const
 */
 H3DU.Math.PitchYawRoll = 0;
 /**
 * Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+@memberof! H3DU.Math
 * @const
 */
 H3DU.Math.PitchRollYaw = 1;
 /**
 * Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+@memberof! H3DU.Math
 * @const
 */
 H3DU.Math.YawPitchRoll = 2;
 /**
 * Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+@memberof! H3DU.Math
 * @const
 */
 H3DU.Math.YawRollPitch = 3;
 /**
 * Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+@memberof! H3DU.Math
 * @const
 */
 H3DU.Math.RollPitchYaw = 4;
 /**
 * Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+@memberof! H3DU.Math
 * @const
 */
 H3DU.Math.RollYawPitch = 5;
@@ -2255,5 +2274,7 @@ H3DU.Math.RollYawPitch = 5;
  * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
  * Returns a new quaternion; same as the quatInverse method.
  * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<Number>} Return value.
+@memberof! H3DU.Math
+*/
 H3DU.Math.quatInverse = H3DU.Math.quatInvert;

@@ -725,10 +725,13 @@ H3DU.Mesh.prototype._initialize = function(vertices, faces, format) {
   this.attributeBits = format === null || typeof format === "undefined" ? 0 : format;
  /**
  * Gets the number of vertices included in this mesh.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value.
+  * @memberof! H3DU.Mesh#
+ */
   this.vertexCount = function() {
     return this.vertices.length / this.getStride();
   };
+/** @private */
   this.getStride = function() {
     return H3DU.Mesh._getStride(this.attributeBits);
   };

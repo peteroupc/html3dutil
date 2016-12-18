@@ -31,9 +31,7 @@ H3DU.Batch3D._PerspectiveView = function(scene, fov, near, far) {
   this.far = far;
   this.scene = scene;
   this.lastAspect = null;
-/**
- * TODO: Not documented yet.
- */
+/** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect) {
@@ -55,9 +53,7 @@ H3DU.Batch3D._OrthoView = function(scene, a, b, c, d, e, f) {
   this.f = f;
   this.scene = scene;
   this.lastAspect = null;
-/**
- * TODO: Not documented yet.
- */
+/** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect) {
@@ -130,8 +126,8 @@ H3DU.Batch3D._isSameMatrix = function(a, b) {
 /**
  * Sets the projection matrix for this batch.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
- * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @returns {H3DU.Batch3D} This object.
+ * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
   "use strict";
@@ -189,7 +185,6 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4orthoAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -218,7 +213,6 @@ H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -398,7 +392,8 @@ H3DU.Batch3D.prototype.resize = function(width, height) {
 };
 
 /**
- * TODO: Not documented yet.
+ * Renders this batch using the given scene object.
+ * @return {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.render = function(scene) {
@@ -413,9 +408,10 @@ H3DU.Batch3D.prototype.render = function(scene) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} scene
- * @param {*} fbo
- * @param {*} shader
+ * @param {H3DU.Scene3D} scene
+ * @param {H3DU.FrameBufferInfo} fbo
+ * @param {H3DU.ShaderInfo} shader
+ * @return {H3DU.Batch3D}
  */
 H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   "use strict";

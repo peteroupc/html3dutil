@@ -5,7 +5,7 @@
 *  @class
 * @alias H3DU.Scene3D
  * @param {WebGLRenderingContext|object} canvasOrContext
- * A WebGL 3D context to associate with this scene, or an HTML
+ * A WebGL context to associate with this scene, or an HTML
  * canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
@@ -426,7 +426,7 @@ H3DU.Scene3D.prototype.createBuffer = function() {
 };
 /**
  * Gets the current projection matrix for this scene.
-* @deprecated Use H3DU.Batch3D instead. To get the view matrix of a Batch3D, call its getProjectionMatrix method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use H3DU.Batch3D instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value.
 * @memberof! H3DU.Scene3D#
 */
@@ -1011,7 +1011,7 @@ H3DU.Scene3D.prototype._clearForPass = function(pass) {
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
  * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} renderPasses An array of scenes
- * to draw, or a single subscene to render. Can be null.
+ * to draw, or a single batch to render. Can be null.
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
 */
@@ -1058,7 +1058,7 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
 /**
  * Has no effect. (Previously, used a shader program to apply a texture filter after the
  * scene is rendered.)
- * @deprecated Use the {@link H3DU.Batch3D.forFilter} method to create a subscene
+ * @deprecated Use the {@link H3DU.Batch3D.forFilter} method to create a batch
  * for rendering filter effects from a frame buffer.
  * @param {H3DU.ShaderProgram|string|null} filterProgram Not used.
  * @returns {H3DU.Scene3D} This object.
@@ -1067,7 +1067,7 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
 H3DU.Scene3D.prototype.useFilter = function() {
   "use strict";
   console.warn("The useFilter method has no effect. Use the {@link H3DU.Batch3D.forFilter} method to " +
-    "create a subscene for rendering filter effects from a frame buffer.");
+    "create a batch for rendering filter effects from a frame buffer.");
   return this;
 };
 

@@ -39,7 +39,7 @@ is not discussed in this page.
 * A _view matrix_ transforms coordinates in world space to _camera space_ or _eye space_.
 * A _projection matrix_ transforms coordinates in camera space to _clip space_.
 * Additionally, the graphics pipeline (outside the HTML 3D library) converts the
-clip space coordinates to _normalized device coordinates_, then _screen space_
+clip space coordinates to _normalized device coordinates_, then _window space_
 coordinates when drawing objects on the screen.
 
 ## Projection Transform <a id=Projection_Transform></a>
@@ -210,16 +210,9 @@ This method allows you to set the view matrix to an arbitrary [4x4 matrix]{@tuto
 
 ## Projection and View Matrices in the Graphics System <a id=Projection_and_View_Matrices_in_the_Graphics_System></a>
 
-The concepts of _eye space_ and _world space_, as well as the concepts of _projection_, _view_, _model-view_,
-and _world_ matrices, are merely conventions, which exist for convenience in the HTML 3D Library and
-many other 3D graphics libraries.
+The concepts of _eye space_, _camera space_, and _world space_, as well as the concepts of _projection_, _view_, _model-view_, and _world_ matrices, are merely conventions, which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.
 
-When the 3D canvas graphics system draws a triangle, line or point, all it really expects is the location of the figure's
-vertices in _clip space_, which is a normalized space with a fixed range.  A so-called _vertex shader_  communicates
-those locations to the graphics system using the input it's given.  Although the vertex shader can use projection,
-view, and world matrices to help it find a vertex's clip space coordinates, it doesn't have to, and can use a different
-paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already
-in clip space and just output those coordinates without transforming them.
+When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point, all it really expects is the location of that primitive's vertices in _clip space_, which is a normalized space with a fixed range.  A so-called _vertex shader_  communicates those locations to the graphics pipeline using the input it's given.  Although the vertex shader can use projection, view, and world matrices to help it find a vertex's clip space coordinates, it doesn't have to, and can use a different paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already in clip space and just output those coordinates without transforming them.
 
 ## Other Pages <a id=Other_Pages></a>
 
