@@ -1,7 +1,9 @@
 /* global H3DU */
 
 /**
-* Represents a grouping of shapes.
+* Represents a grouping of shapes.  This object
+* can hold both @{link H3DU.Shape} objects and
+* other @{link H3DU.ShapeGroup} objects.
 * @class
 * @alias H3DU.ShapeGroup
 */
@@ -165,15 +167,27 @@ H3DU.ShapeGroup.prototype.removeShape = function(shape) {
   return this;
 };
 /**
- * TODO: Not documented yet.
+* Finds a bounding box that holds all vertices in this shape group.
+ The bounding box is not guaranteed to be the
+* tightest, and the box will be transformed to world space
+* using the transforms of the shapes this group contains.
+* @returns An array of six numbers describing an
+* axis-aligned bounding box
+* that fits all vertices in the shape group. The first three numbers
+* are the smallest-valued X, Y, and Z coordinates, and the
+* last three are the largest-valued X, Y, and Z coordinates.
+* If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
+* -Inf, -Inf].
  * @memberof! H3DU.ShapeGroup#
 */
 H3DU.ShapeGroup.prototype.getBounds = function() {
   "use strict";
-  var ret = [0, 0, 0, 0, 0, 0];
+  var inf = Number.POSITIVE_INFINITY;
+  var ret = [inf, inf, inf, -inf, -inf, -inf];
   var first = true;
   for(var i = 0;i < this.shapes.length;i++) {
     var b = this.shapes[i].getBounds();
+    // NOTE: The returned bounding
     if(!H3DU.Math.boxIsEmpty(b)) {
       if(first) {
         ret[0] = b[0];

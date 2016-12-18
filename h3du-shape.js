@@ -207,7 +207,9 @@ H3DU.Shape.prototype.copy = function() {
   return ret;
 };
 /**
- * TODO: Not documented yet.
+ * Returns the transform used by this shape object.
+* The transform won't be copied.
+* @return {H3DU.Transform} Return value.
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getTransform = function() {
@@ -215,15 +217,27 @@ H3DU.Shape.prototype.getTransform = function() {
   return this.transform;
 };
 /**
- * TODO: Not documented yet.
+* Finds a bounding box that holds all vertices in this shape.
+ The bounding box is not guaranteed to be the
+* tightest, and the box will be transformed to world space
+* using this object's transform.
+* @returns An array of six numbers describing an
+* axis-aligned bounding box
+* that fits all vertices in the shape. The first three numbers
+* are the smallest-valued X, Y, and Z coordinates, and the
+* last three are the largest-valued X, Y, and Z coordinates.
+* If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
+* -Inf, -Inf].
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getBounds = function() {
   "use strict";
   if(!this.meshBuffer) {
-    return [0, 0, 0, -1, -1, -1];
+    var inf = Number.POSITIVE_INFINITY;
+    return [inf, inf, inf, -inf, -inf, -inf];
   }
   var bounds = this.meshBuffer.getBounds();
+  if(H3DU.Math.boxIsEmpty(bounds))return bounds;
   var matrix = this.getMatrix();
   if(H3DU.Math.mat4isIdentity(matrix)) {
     return bounds.slice(0, 6);

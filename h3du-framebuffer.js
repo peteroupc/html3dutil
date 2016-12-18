@@ -77,7 +77,6 @@ H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
 * Fractional values are rounded up.
 */
 H3DU.FrameBuffer = function(context, width, height) {
- // TODO: Create a decoupled version of this class
   "use strict";
   if(width < 0 || height < 0)throw new Error("width or height negative");
   context = context.getContext ? context.getContext() : context;

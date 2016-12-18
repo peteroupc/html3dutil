@@ -459,9 +459,10 @@ at: http://peteroupc.github.io/
    H3DU.BSplineCurve.uniformKnots(controlPoints.length, degreeV), bits);
   };
 /**
-* TODO: Not documented yet.
-* @param {Number} controlPoints
-* @param {Number} degree
+* Generates a knot vector with uniform knots, to be
+* passed to the @{link H3DU.BSplineCurve} or @{link H3DU.BSplineCurve} constructor.
+* @param {Number} controlPoints Number of control points the curve will have.
+* @param {Number} degree Degree of the curve.
 * @returns {Array<Number>} A uniform knot vector.
 */
   H3DU.BSplineCurve.uniformKnots = function(controlPoints, degree) {
@@ -478,10 +479,13 @@ at: http://peteroupc.github.io/
     return ret;
   };
 /**
-* TODO: Not documented yet.
-* @param {Number} controlPoints
-* @param {Number} degree
-* @returns {Array<Number>} A clamped knot vector.
+* Generates a knot vector with uniform knots, to be
+* passed to the @{link H3DU.BSplineCurve} or @{link H3DU.BSplineCurve} constructor,
+* except that with the knot vector, the curve will start and end at the
+* first and last control points.
+* @param {Number} controlPoints Number of control points the curve will have.
+* @param {Number} degree Degree of the curve.
+* @returns {Array<Number>} A clamped uniform knot vector.
 */
   H3DU.BSplineCurve.clampedKnots = function(controlPoints, degree) {
     if(typeof controlPoints === "object")

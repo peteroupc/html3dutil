@@ -23,7 +23,9 @@ H3DU.Texture = function(name) {
   this.height = 0;
 };
 /**
- * TODO: Not documented yet.
+ * Gets this texture's known width.
+* @return {Number} This texture's width in pixels.
+* Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getWidth = function() {
@@ -31,7 +33,9 @@ H3DU.Texture.prototype.getWidth = function() {
   return this.width;
 };
 /**
- * TODO: Not documented yet.
+ * Gets this texture's known height.
+* @return {Number} This texture's height in pixels.
+* Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getHeight = function() {
