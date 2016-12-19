@@ -409,7 +409,9 @@ at: http://peteroupc.github.io/
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
-* @returns {H3DU.BSplineCurve} Return value.*/
+* @returns {H3DU.BSplineCurve} Return value.
+* @memberof! H3DU.BSplineCurve
+*/
   H3DU.BSplineCurve.clamped = function(controlPoints, degree, bits) {
     return new H3DU.BSplineCurve(controlPoints,
    H3DU.BSplineCurve.clampedKnots(controlPoints.length, degree), bits);
@@ -442,7 +444,7 @@ at: http://peteroupc.github.io/
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
 * @returns {H3DU.BSplineSurface} Return value.
-* @memberof! H3DU.BSplineCurve
+* @memberof! H3DU.BSplineSurface
 */
   H3DU.BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
     return new H3DU.BSplineSurface(controlPoints,
@@ -460,7 +462,9 @@ at: http://peteroupc.github.io/
 * surface along the V-axis
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
-* @returns {H3DU.BSplineSurface} Return value.*/
+* @returns {H3DU.BSplineSurface} Return value.
+* @memberof! H3DU.BSplineSurface
+*/
   H3DU.BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
     return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints[0].length, degreeU),

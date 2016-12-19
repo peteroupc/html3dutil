@@ -775,7 +775,7 @@ H3DU.Scene3D.prototype.vertexCount = function() {
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
-* @deprecated  Use the primitiveCount method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated  Use the <code>primitiveCount</code> method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @returns {Number} Return value.
 * @memberof! H3DU.Scene3D#
 */

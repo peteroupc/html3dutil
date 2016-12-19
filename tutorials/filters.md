@@ -13,9 +13,12 @@ It also describes several examples of graphics filters.
 
 In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame.  They are implemented in a language called GLSL, or GL
-Shading Language.  GLSL programs are called "shaders", and they are compiled into code that runs on a GPU, or graphics processing unit.
+Shading Language.  GLSL programs are called "shaders", and they are compiled into code that runs on a
+GPU, or graphics processing unit.
 
-Graphics filters are considered "fragment shaders", or shaders that process one pixel at a time.  GPUs can run shaders very fast because fragment shaders can process multiple pixels in parallel, without affecting the other pixels, and GPUs are often much better designed for parallel processing than CPUs.
+Graphics filters are considered "fragment shaders", or shaders that process one pixel at a time.  GPUs
+can run shaders very fast because fragment shaders can process multiple pixels in parallel, without
+affecting the other pixels, and GPUs are often much better designed for parallel processing than CPUs.
 
 For graphics filters to work, the 3D scene must be rendered to an off-screen buffer called
 a _frame buffer_.  The frame buffer acts like a texture which will be rendered back to
@@ -23,17 +26,18 @@ the screen with the help of the graphics filter's shader program.
 
 ## Writing Graphics Filters <a id=Writing_Graphics_Filters></a>
 
-In the HTML 3D Library, use the `makeEffect` method of the `H3DU.ShaderProgram` class to create
+In the HTML 3D Library, use the `makeEffect` method of the `H3DU.ShaderInfo` class to create
 graphics filters:
 
-* The `H3DU.ShaderProgram` class holds data on shader programs.  Each shader program consists
-of a _vertex shader_ and a _fragment shader_.  Graphics filters are essentially part of a fragment shader and thus process pixels.  (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)
-* The `makeEffect` method creates a shader program and compiles it, using the graphics
-filter as part of the program's fragment shader.  Since shader programs must also have a vertex shader, the method also adds a very basic vertex shader for the graphics filter.
+* The `H3DU.ShaderInfo` class holds data on shader programs.  Each shader program consists
+of a _vertex shader_ and a _fragment shader_.  Graphics filters are essentially part of a fragment shader
+and thus process pixels.  (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)
+* The `makeEffect` method generates the source code for a shader program, using the graphics
+filter as part of the program's fragment shader.  Since shader programs must also have a vertex shader, the method also adds a basic vertex shader for the graphics filter.
 
 The following is an example of a graphics filter.
 
-    return H3DU.ShaderProgram.makeEffect(null,[
+    return H3DU.ShaderInfo.makeEffect([
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     // Read the current color from the sampler texture
     " vec4 color=texture2D(sampler,uvCoord);",
@@ -70,30 +74,59 @@ in HTML applications is relatively basic nowadays.  Also see below for more exam
 
 ## Using Graphics Filters <a id=Using_Graphics_Filters></a>
 
-After a filter is created, follow these steps to apply it.
+To use a graphics filter, the application needs to prepare for its use by following these steps.
 
-TODO: Update this section to reflect major overhaul in use of graphics filters.
+First, create an object to hold information about a _frame buffer_.  A frame buffer is an array of
+pixels designed to be drawn off the screen.  This means that the scene's geometry is drawn
+not to the screen (or to the buffer the screen uses), but to a separate buffer, to be manipulated
+later by the application or re-drawn to the screen (or the screen buffer).  In the HTML 3D Library,
+each frame buffer consists of a texture of a given size and a _renderbuffer_ of the same
+size to use as the depth buffer.
 
-It's simply set with the `useFilter` method of Scene3D.  After
-a filter is set, here's how it works:
+    var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
 
-* When the `useFilter` method is called to set a new graphics filter, the HTML 3D Library creates a _frame buffer_.  A frame buffer consists of a texture with the same size as the 3D canvas and a _renderbuffer_
-  to use as the depth buffer.
-* When the `render()` method is called each frame:
-    * The library ensures that the frame buffer is the same size as the 3D canvas.
-    * The 3D library switches drawing to use the frame buffer rather than the 3D canvas, then
-      switches the shader to the usual shaders for drawing the 3D scene.
-    * The current frame is rendered onto the frame buffer.  The frame buffer's texture will now contain a
-      "snapshot" of the frame that can now be modified by graphics filters.
-    * The 3D library switches drawing back to the 3D canvas, then switches the shader
-      to the graphics filter's shaders.
-    * A rectangle taking up the entire 3D canvas is drawn.  This is to allow each pixel of the texture to
-      be passed to the graphics filter, and the filter's `textureEffect` method to be called for each pixel.
-      Any custom parameters, or "uniforms", given to the graphics filter will be set before drawing.
-      The graphics filter can either use the current pixel's color or change it for each pixel.
-      As a result, a "filtered" version of the current frame will be drawn.
+Note that we set the frame buffer's size to the current width and height of the scene.
 
-## Sample code <a id=Sample_code></a>
+Then create an array of _rendering passes_.  The sample code below creates two
+passes: the first renders to a frame buffer, and the second renders the frame buffer's contents
+back to the screen.
+
+    var renders = [
+      // The first batch renders the main batch's geometry to
+      // the frame buffer info we just created.
+      new H3DU.RenderPass3D(batch,{"frameBuffer":fbo}),
+      // The next batch renders the frame buffer's contents
+      // back to the screen.
+      new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo))
+    ];
+
+And finally, pass the array of rendering passes to the `render` method each time
+the scene needs to be rendered.
+
+    // Then, each time the scene needs to be rendered, call
+    // this method
+    scene.render(renders);
+
+When the `render()` method is called each frame using the rendering
+passes mentioned above, the following happens.
+
+    * The 3D library renders the first pass.
+        * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
+           switches the shader to the usual shaders for drawing the 3D scene.
+        * The current frame is rendered onto the frame buffer.  The frame buffer's texture will now contain a
+          "snapshot" of the frame that can now be modified by graphics filters.
+     * Then, the library renders the second pass.
+        * The 3D library switches drawing back to the GL Canvas, then switches the shader
+           to the graphics filter's shaders.
+        * A rectangle taking up the entire GL Canvas is drawn.  This is to allow each pixel of the texture to
+           be passed to the graphics filter, and the filter's `textureEffect` method to be called for each pixel.
+          Any custom parameters, or "uniforms", given to the graphics filter will be set before drawing.
+          The graphics filter can either use the current pixel's color or change it for each pixel.
+          As a result, a "filtered" version of the current frame will be drawn.
+
+## Sample Code <a id=Sample_code></a>
+
+Here is sample code for using a graphics filter.
 
     var currentFilter = /* create a graphics filter here */;
     // create a frame buffer info object
@@ -134,10 +167,10 @@ The grayscale filter, which converts the screen to black and white, was already 
 The invert filter is built-in to the HTML 3D Library.  It inverts the colors of the screen so the effect looks
 like a film negative.
 
-This filter is implemented in the method `ShaderProgram.getInvertEffect()`:
+This filter is implemented in the method `H3DU.ShaderInfo.getInvertEffect()`:
 
-    ShaderProgram.getInvertEffect=function(){
-    return ShaderProgram.makeEffect(context,
+    H3DU.ShaderInfo.getInvertEffect=function(){
+    return H3DU.ShaderInfo.makeEffect(context,
     [
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     " vec4 color=texture2D(sampler,uvCoord);",
@@ -152,7 +185,7 @@ This filter is implemented in the method `ShaderProgram.getInvertEffect()`:
 The red tint filter adds a hint of red to the image.
 
     function makeRedTint(){
-    return ShaderProgram.makeEffect(context,[
+    return H3DU.ShaderInfo.makeEffect(context,[
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     " vec4 color=texture2D(sampler,uvCoord);",
     " return vec4(color.r+0.3,color.g,color.b,color.a);",
@@ -168,7 +201,7 @@ the current pixel, but rather the pixel from the opposite side to the current pi
 the current X coordinate).
 
     function makeMirror(){
-    return ShaderProgram.makeEffect(context,[
+    return H3DU.ShaderInfo.makeEffect(context,[
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     " vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
     " return color;",
@@ -210,7 +243,7 @@ This filter takes a uniform variable named `coarseness`, which indicates how man
 each "pixelated" pixel takes up.
 
     function makePixelate(){
-    return ShaderProgram.makeEffect(null,[
+    return H3DU.ShaderInfo.makeEffect([
     "uniform float coarseness;", // coarseness in pixels; 1 means normal
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
     " float g=max(coarseness,1.0);",
