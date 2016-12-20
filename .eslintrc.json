@@ -226,7 +226,7 @@
         "space-in-parens": "off",
         "space-infix-ops": "error",
         "space-unary-ops": ["error",{"words":true,"nonwords":false}],
-        "spaced-comment": "off",
+        "spaced-comment": "error",
         "strict": "error",
         "symbol-description": "error",
         "template-curly-spacing": "error",

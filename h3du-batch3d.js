@@ -393,7 +393,7 @@ H3DU.Batch3D.prototype.resize = function(width, height) {
 
 /**
  * Renders this batch using the given scene object.
- * @return {H3DU.Batch3D} This object.
+ * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.render = function(scene) {
@@ -407,11 +407,16 @@ H3DU.Batch3D.prototype.render = function(scene) {
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Creates a batch whose purpose is to render the contents
+of a frame buffer using a particular shader.  This is often used
+to apply a graphics filter to that frame buffer's contents.
+See the {@tutorial filters} tutorial.
  * @param {H3DU.Scene3D} scene
- * @param {H3DU.FrameBufferInfo} fbo
- * @param {H3DU.ShaderInfo} shader
- * @return {H3DU.Batch3D}
+ * @param {H3DU.FrameBufferInfo} fbo Identifies a frame buffer
+whose contents will be rendered to the batch.
+ * @param {H3DU.ShaderInfo} shader Contains information about
+the shader to use when rendering the contents of the frame buffer
+ * @returns {H3DU.Batch3D} Return value.
 * @memberof! H3DU.Batch3D
  */
 H3DU.Batch3D.forFilter = function(scene, fbo, shader) {

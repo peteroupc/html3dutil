@@ -3,13 +3,14 @@
   http://creativecommons.org/publicdomain/zero/1.0/
 */
 /* global define, exports */
+/* eslint no-extend-native: "off", callback-return: "off" */
+// Notes by Peter O.:
 // 2016-12-14: This is a polyfill for Promises, and it's only used
 // when the environment doesn't support promises
 // already, so the no-extend-native rule is disabled for this file.
 // The callback-return rule is also disabled here in order
 // to communicate the callback's return value properly.
-/* eslint no-extend-native: "off", callback-return: "off" */
-// Note by Peter O., 2015-03-09: This file was taken
+// 2015-03-09: This file was taken
 // from https://github.com/ondras/promise/.
 (function (root, factory) {
   "use strict";
@@ -276,7 +277,5 @@
     }
   };
 
-  // 2013-03-09 (Peter O.): modified to retain name
-  // after minification
   exports.Promise = Promise;
 }));

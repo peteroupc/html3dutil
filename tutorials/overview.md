@@ -14,7 +14,7 @@ This page includes information on how to use the HTML 3D library, an overview of
 
 ## Contents <a id=Contents></a>
 
-[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Alternative Rendering](#Alternative_Rendering)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>
+[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>
 
 ## How to Use <a id=How_to_Use></a>
 
@@ -40,20 +40,31 @@ This page includes information on how to use the HTML 3D library, an overview of
 This is an overview of most of the JavaScript classes available in this library:
 ### List of Classes <a id=List_of_Classes></a>
 
-* `H3DU` - Contains various utility methods in the HTML 3D Library
-* `H3DU.Math` - Contains math methods useful in 3D applications, such as matrices and vectors
-* `H3DU.Mesh` - Helper class for building a 3D model
-* `H3DU.MeshBuffer` - Represents a 3D model
-* `H3DU.Meshes` - Generates built-in 3D models
-* `H3DU.Material`, `Texture` - Represents textures and colors for a 3D object&#39;s appearance
-* `H3DU.Lights`, `LightSource` - Represents light sources
-* `H3DU.Scene3D` - Represents a 3D scene
-* `H3DU.Batch3D` - Represents a collection of shapes to draw and a projection and view
-* `H3DU.FrameBuffer` - Represents a frame buffer object
-* `H3DU.ShaderProgram` - Represents a GLSL shader program
-* `H3DU.Shape` - Represents an instance of a 3D shape with its own transform and appearance
-* `H3DU.ShapeGroup` - Represents a group of 3D shapes
-* `H3DU.BezierCurve`, `H3DU.BezierSurface`, `H3DU.CurveEval`, `H3DU.SurfaceEval `- Supports generating parametric curves and surfaces
+* [`H3DU`](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the HTML 3D Library
+* [`H3DU.Math`](https://peteroupc.github.io/html3dutil/H3DU.Math.html) - Contains math methods useful in 3D applications, such as matrices and vectors
+* [`H3DU.Mesh`](https://peteroupc.github.io/html3dutil/H3DU.Mesh.html) - Helper class for building a 3D model
+* [`H3DU.MeshBuffer`](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model
+* [`H3DU.Meshes`](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
+* [`H3DU.Material`](https://peteroupc.github.io/html3dutil/H3DU.Material.html),
+ [`H3DU.Texture`](https://peteroupc.github.io/html3dutil/H3DU.Texture.html) - Represents textures and colors for a 3D object&#39;s appearance.
+* [`H3DU.Lights`](https://peteroupc.github.io/html3dutil/H3DU.Lights.html),
+ [`H3DU.LightSource`](https://peteroupc.github.io/html3dutil/H3DU.LightSource.html) - Represents light sources
+* [`H3DU.Batch3D`](https://peteroupc.github.io/html3dutil/H3DU.Batch3D.html) - Represents a collection of shapes to draw and a projection and view.
+* [`H3DU.FrameBufferInfo`](https://peteroupc.github.io/html3dutil/H3DU.FrameBufferInfo.html) - Describes a frame buffer, or an offscreen buffer for rendering graphics content.
+* [`H3DU.ShaderInfo`](https://peteroupc.github.io/html3dutil/H3DU.ShaderInfo.html) - Represents a GLSL shader program
+* [`H3DU.Shape`](https://peteroupc.github.io/html3dutil/H3DU.Shape.html) - Represents an instance of a 3D shape with its own transform and appearance
+* [`H3DU.ShapeGroup`](https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html) - Represents a group of 3D shapes
+* [`H3DU.BezierCurve`](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html),
+ [`H3DU.BezierSurface`](https://peteroupc.github.io/html3dutil/H3DU.BezierSurface.html),
+ [`H3DU.BSplineCurve`](https://peteroupc.github.io/html3dutil/H3DU.BSplineCurve.html),
+ [`H3DU.BSplineSurface`](https://peteroupc.github.io/html3dutil/H3DU.BSplineSurface.html),
+ [`H3DU.CurveEval`](https://peteroupc.github.io/html3dutil/H3DU.CurveEval.html),
+ [`H3DU.SurfaceEval`](https://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html) - Supports generating parametric curves and surfaces
+
+The following classes concern themselves with the HTML 3D canvas context:
+
+* [`H3DU.Scene3D`](https://peteroupc.github.io/html3dutil/H3DU.Scene3D.html) - Holds an HTML 3D canvas context (GL context).
+* [`H3DU.TextureLoader`](https://peteroupc.github.io/html3dutil/H3DU.TextureLoader.html) - Caches textures loaded by the application and maps them to GL contexts.
 
 For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the HTML 3D library</a>.
 
@@ -61,7 +72,7 @@ The following sections detail how a 3D application using this library works.
 
 ### `H3DU.Scene3D` <a id=H3DU_Scene3D></a>
 
-The `H3DU.Scene3D` class is a renderer for a canvas 3D context.  It renders batches of 3D shapes
+The `H3DU.Scene3D` class is a renderer for a canvas GL context.  It renders batches of 3D shapes
 in the form of `H3DU.Batch3D` objects.  Each `Batch3D` represents a so-called "scene graph". It holds
 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
 position, and light sources to illuminate the 3D scene.
@@ -91,6 +102,7 @@ use the concept of a "camera", the projection is like setting the camera&#39;s f
     batch.setLookAt([0,0,30], [0,2,0]);
 
 For more information, see _<a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The "Camera" and Perspective and View Transforms</a>_.
+
 ### 3D Models <a id=3D_Models></a>
 
 Every 3D scene is made up of "meshes", or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `H3DU.Mesh` class, or create a built-in geometric shape using a method in the `H3DU.Meshes` class. The example below shows how you can create a box mesh:
@@ -144,6 +156,7 @@ Here are details on some of the `Shape` class&#39;s methods.
   <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).
   * <dfn>`<i>shape</i>.setColor(color)`</dfn>
   <br>Gives the shape a particular color. `color` can be an HTML color ("#ff0000"), CSS color ("red"), RGB color("rgb(20, 30, 40)") or HSL color("hsl(20, 50%, 50%)"), or a set of values from 0 to 1 (example: `[1.0,0.5,0.0]`).
+   See my [colors tutorial](https://peteroupc.github.io/html3dutil/tutorial-colors.html).
   * <dfn>`<i>shape</i>.setTexture(name)`</dfn>
   <br>Gives the shape a particular texture, with the URL `name`. The texture should be in the same origin as the Web page (which usually means the same directory).
   * <dfn>`<i>shape</i>.copy()`</dfn>
@@ -153,12 +166,12 @@ Here are details on some of the `Shape` class&#39;s methods.
 
 An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the `H3DU.Scene3D.render()` method, passing a batch of shapes to render. Render loops are created using the `H3DU.renderLoop()` method. Here is an example of a render loop.
 
-   // Set up the render loop
-   H3DU.renderLoop(function(time){
-    // This will be called once each frame.
-    // Here, we render the scene
-    scene.render(batch);
-   });
+    // Set up the render loop
+    H3DU.renderLoop(function(time){
+     // This will be called once each frame.
+     // Here, we render the scene
+     scene.render(batch);
+    });
 
 The render loop method takes a parameter (here "time"), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.
 
@@ -260,12 +273,6 @@ of different sizes.
 
 * [demos/textwith3D.html](https://peteroupc.github.io/html3dutil/demos/textwith3d.html) - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.
 
-### Alternative Rendering <a id=Alternative_Rendering></a>
-
-* [demos/surfaces2d.html](https://peteroupc.github.io/html3dutil/demos/surfaces2d.html) - Same as the surfaces.html
-demo, but uses an experimental renderer using the HTML 2D Canvas instead of an HTML 3D context.  Only a limited
-set of features are currently supported.
-
 ### Miscellaneous <a id=Miscellaneous></a>
 
 * [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
@@ -288,7 +295,7 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
      // Create the 3D scene; find the HTML canvas and pass it
      // to Scene3D.
      var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-     var sub=new H3DU.Batch3D()
+     var sub=new H3DU.Batch3D();
       // Set the perspective view.  Camera has a 45-degree field of view
       // and will see objects from 0.1 to 100 units away.
       .perspectiveAspect(45,0.1,100)

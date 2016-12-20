@@ -179,18 +179,22 @@ H3DU.Scene3D.prototype.getContext = function() {
   return this.context;
 };
 /** No face culling.
+* @memberof! H3DU.Scene3D
 @const  */
 H3DU.Scene3D.NONE = 0;
 /** Back side of a triangle.  By default, triangles with clockwise winding are back-facing.
+* @memberof! H3DU.Scene3D
 @const */
 H3DU.Scene3D.BACK = 1;
 /**
 Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing.
+* @memberof! H3DU.Scene3D
 @const
 */
 H3DU.Scene3D.FRONT = 2;
 /**
 Back and front sides of a triangle.
+* @memberof! H3DU.Scene3D
 @const
 */
 H3DU.Scene3D.FRONT_AND_BACK = 3;
@@ -198,11 +202,13 @@ H3DU.Scene3D.FRONT_AND_BACK = 3;
 * Counterclockwise winding. A triangle has counterclockwise winding if
 * its vertices are ordered such that the path from the first to second to third
 * to first vertex, in window coordinates (X and Y only), runs counterclockwise.
+* @memberof! H3DU.Scene3D
 * @const
 */
 H3DU.Scene3D.CCW = 0;
 /**
 * Clockwise winding, the opposite of counterclockwise winding.
+* @memberof! H3DU.Scene3D
 * @const
 */
 H3DU.Scene3D.CW = 1;

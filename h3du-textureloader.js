@@ -15,7 +15,7 @@ H3DU.TextureLoader = function() {
 /**
  * Gets an already loaded texture by name from this texture loader.
  * @param {String} name The name of the texture, usually its file name.
-* @return {Texture} The texture with the given name, or null
+* @returns {Texture} The texture with the given name, or null
 * if it doesn't exist.
  * @memberof! H3DU.TextureLoader#
 */

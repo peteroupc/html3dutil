@@ -123,7 +123,7 @@ H3DU.ShaderProgram.prototype.dispose = function() {
 };
 /**
  * Gets the WebGL context associated with this shader program object.
-* @return {WebGLRenderingContext} Return value.
+* @returns {WebGLRenderingContext} Return value.
  * @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.getContext = function() {

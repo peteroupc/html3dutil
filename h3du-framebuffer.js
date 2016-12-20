@@ -65,6 +65,9 @@ H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
 * width and height and a depth buffer with the same dimensions,
 * and will bind both to the frame buffer.  The frame buffer currently
 * bound to the WebGL context will remain unchanged.
+* @deprecated This class is likely to become a private class.
+* Use the FrameBufferInfo class instead, which is not coupled to WebGL
+* contexts.
 * @class
 * @alias H3DU.FrameBuffer
 * @param {WebGLRenderingContext|object} context

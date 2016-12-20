@@ -209,7 +209,7 @@ H3DU.Shape.prototype.copy = function() {
 /**
  * Returns the transform used by this shape object.
 * The transform won't be copied.
-* @return {H3DU.Transform} Return value.
+* @returns {H3DU.Transform} Return value.
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getTransform = function() {

@@ -74,7 +74,7 @@ H3DU.MeshBuffer = function(mesh) {
  * vector, this value is 3.
  * @param {Number} stride The number of elements from the start of
  * one per-vertex item to the start of the next.
- * @return {H3DU.MeshBuffer} This object.
+ * @returns {H3DU.MeshBuffer} This object.
  * @memberof! H3DU.MeshBuffer#
 */
 H3DU.MeshBuffer.prototype.setAttribute = function(
@@ -114,7 +114,7 @@ H3DU.MeshBuffer.prototype._getAttribute = function(name) {
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @param {Number} Return value.
+* @returns {Number} Return value.
 * @memberof! H3DU.MeshBuffer#
 */
 H3DU.MeshBuffer.prototype.primitiveCount = function() {
@@ -170,7 +170,7 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
 };
 /**
  * Gets the type of primitive stored in this mesh buffer.
-* @return {Number} Either {@link H3DU.Mesh.TRIANGLES},
+* @returns {Number} Either {@link H3DU.Mesh.TRIANGLES},
  {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  * @memberof! H3DU.MeshBuffer#
 */
@@ -190,6 +190,7 @@ H3DU.MeshBuffer.prototype.getFormat = function() {
 };
 /**
  * Gets the number of vertices in this mesh buffer
+* @returns {Number} Return value.
  * @memberof! H3DU.MeshBuffer#
 */
 H3DU.MeshBuffer.prototype.vertexCount = function() {

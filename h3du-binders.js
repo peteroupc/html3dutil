@@ -13,7 +13,7 @@ at: http://peteroupc.github.io/
 * to WebGL contexts and programs.
 */
 
-///////////////////////
+// /////////////////////
 
 /** @private */
 H3DU._MaterialBinder = function(mshade) {
@@ -52,7 +52,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   return this;
 };
 
-//////////////////////////
+// ////////////////////////
 
 /** @private */
 H3DU._LoadedTexture = function(textureImage, context) {
@@ -95,7 +95,7 @@ H3DU._LoadedTexture.prototype.dispose = function() {
     this.context.deleteTexture(this.loadedTexture);
   }
 };
-/////////////////////////////////
+// ///////////////////////////////
 
 /** @private */
 H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUnit, loader) {
@@ -176,7 +176,7 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
   }
 };
 
-//////////////////////////
+// ////////////////////////
 
 /** @private */
 H3DU._LightsBinder = function(lights) {
@@ -220,4 +220,4 @@ H3DU._LightsBinder.prototype.bind = function(program, viewMatrix) {
   return this;
 };
 
-///////////////////////
+// /////////////////////

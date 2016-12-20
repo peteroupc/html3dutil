@@ -48,7 +48,7 @@ vertex in the first array).
  * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @return {Array<Array<Number>>} The "vi" parameter, which will likely be modified.
+ * @returns {Array<Array<Number>>} The "vi" parameter, which will likely be modified.
  */
 Polyhedra.makeSphere = function(vi, radius, level) {
   "use strict";
@@ -100,7 +100,7 @@ vertex's X, Y, and Z coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index first coordinate of the corresponding
 vertex in the first array).
- * @return {H3DU.Mesh} The generated mesh.
+ * @returns {H3DU.Mesh} The generated mesh.
  */
 Polyhedra.makeMesh = function(vi) {
  // Create the mesh and generate normals
@@ -114,7 +114,7 @@ Polyhedra.makeMesh = function(vi) {
  * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @return {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.Mesh} The generated solid.
  */
 Polyhedra.octahedron = function(radius, level) {
   "use strict";
@@ -128,7 +128,7 @@ Polyhedra.octahedron = function(radius, level) {
  * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @return {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.Mesh} The generated solid.
  */
 Polyhedra.hexahedron = function(radius, level) {
   "use strict";
@@ -142,7 +142,7 @@ Polyhedra.hexahedron = function(radius, level) {
  * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @return {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.Mesh} The generated solid.
  */
 Polyhedra.icosahedron = function(radius, level) {
   "use strict";
@@ -156,7 +156,7 @@ Polyhedra.icosahedron = function(radius, level) {
  * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @return {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.Mesh} The generated solid.
  */
 Polyhedra.dodecahedron = function(radius, level) {
   "use strict";
@@ -170,7 +170,7 @@ Polyhedra.dodecahedron = function(radius, level) {
  * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @return {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.Mesh} The generated solid.
  */
 Polyhedra.tetrahedron = function(radius, level) {
   "use strict";

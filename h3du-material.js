@@ -22,7 +22,7 @@ at: http://peteroupc.github.io/
 * @param {Array<Number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
 */
 H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
- //console.log([ambient,diffuse,specular,shininess,emission]+"")
+ // console.log([ambient,diffuse,specular,shininess,emission]+"")
   "use strict";
   if(ambient !== null && typeof ambient !== "undefined")ambient = H3DU.toGLColor(ambient);
   if(diffuse !== null && typeof diffuse !== "undefined")diffuse = H3DU.toGLColor(diffuse);

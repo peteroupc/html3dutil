@@ -31,7 +31,8 @@ if(!window.performance.now) {
 /**
 * The Public Domain HTML 3D Library contains classes and utility
 * methods to ease the development of HTML 3D applications, such
-* as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.<p>
+* as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
+* See the {@tutorial overview} tutorial.<p>
 * This page describes miscellaneous utility methods included in the
 * library.
 * @namespace
@@ -325,7 +326,7 @@ var H3DU = {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function(e) {
         var t = e.target;
-    //console.log([t.readyState,t.status,urlstr])
+    // console.log([t.readyState,t.status,urlstr])
         if(t.readyState === 4) {
           if(t.status >= 200 && t.status < 300) {
             var resp = "";
@@ -345,7 +346,7 @@ var H3DU = {
         }
       };
       xhr.onerror = function(e) {
-    //console.log([urlstr,e])
+    // console.log([urlstr,e])
         reject({
           "url": urlstr,
           "error": e

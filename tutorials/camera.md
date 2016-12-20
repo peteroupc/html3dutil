@@ -6,7 +6,7 @@ especially when using my [HTML 3D Library](http://peteroupc.github.io/html3dutil
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
 ## Contents <a id=Contents></a>
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and the Projection and View Transforms](#The_Camera_and_the_Projection_and_View_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Projection and View Matrices in the Graphics System](#Projection_and_View_Matrices_in_the_Graphics_System)<br>[Other Pages](#Other_Pages)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and the Projection and View Transforms](#The_Camera_and_the_Projection_and_View_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Vertex Coordinates in the Graphics System](#Vertex_Coordinates_in_the_Graphics_System)<br>[Other Pages](#Other_Pages)<br>
 
 ## The "Camera" and the Projection and View Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a>
 
@@ -30,15 +30,15 @@ which are shown in the example below.
 
 ### Overview of Transformations <a id=Overview_of_Transformations></a>
 
-Here is an overview of transformations used in the graphics system and
-the HTML 3D library.
+The HTML 3D library uses the following transformations:
 
 * A _world matrix_ transforms an object's own coordinates to _world space_,
 the coordinate system shared by every object in the scene.  The world matrix
 is not discussed in this page.
 * A _view matrix_ transforms coordinates in world space to _camera space_ or _eye space_.
 * A _projection matrix_ transforms coordinates in camera space to _clip space_.
-* Additionally, the graphics pipeline (outside the HTML 3D library) converts the
+
+Additionally, the graphics pipeline (outside the HTML 3D library) converts the
 clip space coordinates to _normalized device coordinates_, then _window space_
 coordinates when drawing objects on the screen.
 
@@ -81,9 +81,7 @@ the vertical visibility range.
 near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.
 
 The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also
-known as _clip coordinates_.  Since the graphics system (outside the HTML 3D library) only deals with
-3D points, it divides the X, Y, and Z components by the W component to get the 3D point's _normalized
-device coordinates_ and achieve the perspective effect.
+known as _clip coordinates_.  However, this is not the whole story, since in general, nearly all lines that are parallel in world space will generally not appear parallel in a perspective transformation, so additional math is needed to achieve the perspective effect. The graphics pipeline (outside the HTML 3D library) does this by dividing the X, Y, and Z components by the W component to get the 3D point's _normalized device coordinates_.
 
 The following methods define a perspective projection.
 
@@ -208,11 +206,11 @@ This method allows you to set the view matrix to an arbitrary [4x4 matrix]{@tuto
 
 * `matrix` - The 4x4 matrix to use.
 
-## Projection and View Matrices in the Graphics System <a id=Projection_and_View_Matrices_in_the_Graphics_System></a>
+## Vertex Coordinates in the Graphics System <a id=Vertex_Coordinates_in_the_Graphics_System></a>
 
 The concepts of _eye space_, _camera space_, and _world space_, as well as the concepts of _projection_, _view_, _model-view_, and _world_ matrices, are merely conventions, which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.
 
-When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point, all it really expects is the location of that primitive's vertices in _clip space_, which is a normalized space with a fixed range.  A so-called _vertex shader_  communicates those locations to the graphics pipeline using the input it's given.  Although the vertex shader can use projection, view, and world matrices to help it find a vertex's clip space coordinates, it doesn't have to, and can use a different paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already in clip space and just output those coordinates without transforming them.
+When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point, all it really expects is the location of that primitive's vertices in _clip space_, which is a normalized space with a fixed range.  A so-called _vertex shader_  communicates those locations to the graphics pipeline using the input it's given.  Although the vertex shader can use projection, view, and world matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to, and can use a different paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already in clip space and just output those coordinates without transforming them.
 
 ## Other Pages <a id=Other_Pages></a>
 

@@ -18,7 +18,7 @@ at: http://peteroupc.github.io/
 * Normal values are required for lighting to work properly.
 * <li>A tangent vector, which is a set of 3 values.
 * <li>A bitangent vector, which is a set of 3 values.
-* <li>H3DU.Texture coordinates, which are a set of 2 values each ranging from 0 to
+* <li>Texture coordinates, which are a set of 2 values each ranging from 0 to
 * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
 * right corner (by default).
 * </ul>
@@ -85,7 +85,7 @@ H3DU.Mesh._recalcNormalsStart = function(vertices, uniqueVertices, faces, stride
     vertices[i + offset + 1] = 0.0;
     vertices[i + offset + 2] = 0.0;
     if(!flat) {
-     // If smooth shading is requested, find all vertices with
+     // If non-flat shading is requested, find all vertices with
      // duplicate vertex positions
       var uv = [vertices[i], vertices[i + 1], vertices[i + 2]];
       if(uniqueVertices[uv])uniqueVertices[uv].push(i + offset);
@@ -101,7 +101,7 @@ H3DU.Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, strid
   var dupvertcount = 0;
   var i;
   if(!flat) {
-   // If smooth shading is requested, make sure
+   // If non-flat shading is requested, make sure
    // that every vertex with the same position has the
    // same normal
     for(var key in uniqueVertices) {
@@ -222,8 +222,7 @@ H3DU.Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inwar
 */
 H3DU.Mesh.prototype.mode = function(m) {
   "use strict";
- // TODO: Include in release notes that Meshes must use
- // the same primitive type
+ // TODO: Include in release notes that Meshes must use the same primitive type
   if(m < 0)throw new Error("invalid mode");
   if(this.currentMode === -1) {
     var format = 0;
@@ -538,7 +537,7 @@ H3DU.Mesh.prototype.setColor3 = function(r, g, b) {
     gg = c[1];
     bb = c[2];
   }
-  //console.log([r,g,b,rr,gg,bb])
+  // console.log([r,g,b,rr,gg,bb])
   this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
   var stride = this.getStride();
   var colorOffset = H3DU.Mesh._colorOffset(this.attributeBits);
@@ -985,8 +984,8 @@ H3DU.Mesh._addLine = function(lineIndices, existingLines, f1, f2) {
 /**
  * Converts this mesh to a new mesh with triangles converted
  * to line segments.  The new mesh will reuse the vertices
- * contained in this one without copying the vertices.  Parts
- * of the mesh consisting of points or line segments will remain
+ * contained in this one without copying the vertices.  If the mesh consists
+ * of points or line segments, it will remain
  * unchanged.
  * @returns {H3DU.Mesh} A new mesh with triangles converted
  * to lines.
@@ -1340,7 +1339,7 @@ H3DU.Mesh.prototype.reverseWinding = function() {
   * in this mesh.  For this to properly affect shading, each triangle in
   * the mesh must have its vertices defined in
   * counterclockwise order.  Each normal calculated will
-  * be normalized to unit length (unless the normal is (0,0,0)).
+  * be normalized to have a length of 1 (unless the normal is (0,0,0)).
   * @param {Boolean} flat If true, each triangle in the mesh
   * will have the same normal, which usually leads to a flat
   * appearance.  If false, each unique vertex in the mesh
@@ -1358,7 +1357,7 @@ H3DU.Mesh.prototype.recalcNormals = function(flat, inward) {
     var haveOtherAttributes = (this.attributeBits & (H3DU.Mesh.ATTRIBUTES_BITS & ~H3DU.Mesh.NORMALS_BIT)) !== 0;
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
   // No need to duplicate vertices if there are no other attributes
-  // besides normals and smooth shading is requested; the
+  // besides normals and non-flat shading is requested; the
   // recalculation will reinitialize normals to 0 and
   // add the calculated normals to vertices as they are implicated
     if(haveOtherAttributes || flat) {

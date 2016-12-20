@@ -46,7 +46,7 @@ H3DU.RenderPass3D = function(subScene, parameters) {
 * </ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
  * @param {Object} parameters
- * @return {H3DU.RenderPass3D} This object.
+ * @returns {H3DU.RenderPass3D} This object.
  * @memberof! H3DU.RenderPass3D#
 */
 H3DU.RenderPass3D.prototype.setParams = function(parameters) {

@@ -603,8 +603,7 @@ at: http://peteroupc.github.io/
 
 /**
 * An evaluator of parametric curve functions for generating
-* vertex positions, normals, colors, and texture coordinates
-* of a curve.<p>
+* vertex positions and colors of a curve.<p>
 * A parametric curve is a curve whose points are based on a
 * parametric curve function.  A curve function takes a number
 * (U) and returns a point (in 1, 2, 3 or more dimensions, but
@@ -647,6 +646,8 @@ at: http://peteroupc.github.io/
   };
 /**
 * Specifies a parametric curve function for generating normals.
+* @deprecated May be removed in the future; it makes little sense
+* to generate normals for a curve.
 * @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
@@ -696,6 +697,9 @@ at: http://peteroupc.github.io/
     var color = null;
     var normal = null;
     var texcoord = null;
+    if(!this.texCoordCurve && !this.normalCurve) {
+      return this._evalOneSimplified(mesh, u);
+    }
     if(this.colorCurve) {
       color = this.colorCurve.evaluate(u);
     }
@@ -724,6 +728,23 @@ at: http://peteroupc.github.io/
     }
     return this;
   };
+/** @private */
+  H3DU.CurveEval.prototype._evalOneSimplified = function(mesh, u) {
+    var color = null;
+    if(this.colorCurve) {
+      color = this.colorCurve.evaluate(u);
+    }
+    if(this.vertexCurve) {
+      var oldColor = color ? mesh.color.slice(0, 3) : null;
+      if(color)mesh.color3(color[0], color[1], color[2]);
+      var vertex = this.vertexCurve.evaluate(u);
+      var vertex2 = vertex.length === 2 ? 0.0 : vertex[2];
+      mesh.vertex3(vertex[0], vertex[1], vertex2);
+      if(oldColor)mesh.color3(oldColor[0], oldColor[1], oldColor[2]);
+    }
+    return this;
+  };
+
 /**
  * Generates vertices and attribute values that follow a parametric curve
  * function.
@@ -1017,7 +1038,7 @@ at: http://peteroupc.github.io/
         H3DU.Math.vec3normInPlace(vv);
         if(H3DU.Math.vec3length(vu) === 0) {
     // partial derivative of u is degenerate
-    //console.log([vu,vv,u,v]+" u degen")
+    // console.log([vu,vv,u,v]+" u degen")
           vu = vv;
         } else if(H3DU.Math.vec3length(vv) === 0 && vu[2] === vertex[2]) {
      // partial derivative of v is degenerate and

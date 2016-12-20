@@ -38,7 +38,7 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
 };
 /**
 * Gets the text of the vertex shader stored in this object.
-* @return {String} return value.
+* @returns {String} return value.
  * @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.getVertexShader = function() {
@@ -47,7 +47,7 @@ H3DU.ShaderInfo.prototype.getVertexShader = function() {
 };
 /**
  * Gets the text of the fragment shader stored in this object.
- * @return {String} return value.
+ * @returns {String} return value.
  * @memberof! H3DU.ShaderInfo#
  */
 H3DU.ShaderInfo.prototype.getFragmentShader = function() {
@@ -57,7 +57,7 @@ H3DU.ShaderInfo.prototype.getFragmentShader = function() {
 /**
  * Returns a new shader info object with the information in this object
 * copied to that object.
-* @return {H3DU.ShaderInfo} Return value.
+* @returns {H3DU.ShaderInfo} Return value.
  * @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.copy = function() {

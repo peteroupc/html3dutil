@@ -1,9 +1,8 @@
 /* global H3DU */
-// NOTE: FrameBufferInfo is independent of
-// any WebGL context or the WebGL API.
-
 /**
- * TODO: Not documented yet.
+ * Describes a frame buffer.  In the HTML 3D Library,
+each frame buffer consists of a texture of a given size and a <i>renderbuffer</i> of the same
+size to use as the depth buffer.
  * @param {Number} width Width to use for the frame buffer.
  * Throws an error if this value is less than 0.  The width will be set
  * to this value rounded up.
@@ -20,7 +19,7 @@ H3DU.FrameBufferInfo = function(width, height) {
   this.height = Math.ceil(height);
 };
 /**
- * TODO: Not documented yet.
+ * Changes the width and height of this frame buffer information object.
  * @param {Number} width New width to use for the frame buffer.
  * Throws an error if this value is less than 0.  The width will be set
  * to this value rounded up.
@@ -39,7 +38,7 @@ H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
 };
 /**
  * Gets the width to use for the frame buffer.
-* @return {Number} Return value.
+* @returns {Number} Return value.
  * @memberof! H3DU.FrameBufferInfo#
 */
 H3DU.FrameBufferInfo.prototype.getWidth = function() {
@@ -48,7 +47,7 @@ H3DU.FrameBufferInfo.prototype.getWidth = function() {
 };
 /**
  * Gets the height to use for the frame buffer.
-* @return {Number} Return value.
+* @returns {Number} Return value.
  * @memberof! H3DU.FrameBufferInfo#
 */
 H3DU.FrameBufferInfo.prototype.getHeight = function() {

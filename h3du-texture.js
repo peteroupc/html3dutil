@@ -24,7 +24,7 @@ H3DU.Texture = function(name) {
 };
 /**
  * Gets this texture's known width.
-* @return {Number} This texture's width in pixels.
+* @returns {Number} This texture's width in pixels.
 * Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.Texture#
 */
@@ -34,7 +34,7 @@ H3DU.Texture.prototype.getWidth = function() {
 };
 /**
  * Gets this texture's known height.
-* @return {Number} This texture's height in pixels.
+* @returns {Number} This texture's height in pixels.
 * Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.Texture#
 */
@@ -229,15 +229,15 @@ H3DU.Texture.prototype.loadImage = function() {
       that.width = target.width;
       that.height = target.height;
       that.loadStatus = 2;
-   //console.log("loaded: "+thisName)
+   // console.log("loaded: "+thisName)
       image.onload = null;
       image.onerror = null;
       resolve(that);
     };
     image.onerror = function(e) {
       that.loadStatus = -1;
-   //console.log("error: "+thisName)
-   //console.log(e)
+   // console.log("error: "+thisName)
+   // console.log(e)
       image.onload = null;
       image.onerror = null;
       reject({
