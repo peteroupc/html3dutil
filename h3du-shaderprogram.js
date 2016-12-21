@@ -33,7 +33,7 @@ at: http://peteroupc.github.io/
 * vertex shader is used instead.
 * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
- */
+*/
 H3DU.ShaderProgram = function(context, vertexShader, fragmentShader) {
   "use strict";
   this._init(context, new H3DU.ShaderInfo(vertexShader, fragmentShader));
@@ -108,6 +108,7 @@ H3DU.ShaderProgram.prototype._disableOthers = function(attrs) {
   }
 };
 /** Disposes resources from this shader program.
+* @returns {void} Return value.
 * @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.dispose = function() {
@@ -251,7 +252,7 @@ H3DU.ShaderProgram.prototype._update = function() {
 * Sets the values of one or more uniforms in this program.
 * If this program is not the active program in the WebGL context,
 * saves their values until the next time this object's "use" method is called.
-* @param {Object} name An object whose keys are the names of uniforms
+* @param {Object} uniforms An object whose keys are the names of uniforms
 * defined in either the
 * vertex or fragment shader of this shader program.  If the uniform
 * is an array, each element in the array is named as in these examples:
@@ -339,7 +340,7 @@ H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
 * @deprecated Use {@link H3DU.ShaderInfo.makeCopyEffect} instead.
 * @returns {H3DU.ShaderInfo} The resulting shader program.
 * @memberof! H3DU.ShaderProgram
- */
+*/
 H3DU.ShaderProgram.makeCopyEffect = function() {
   "use strict";
   return H3DU.ShaderInfo.makeCopyEffect();

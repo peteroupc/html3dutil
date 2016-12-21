@@ -14,7 +14,7 @@ H3DU.ShapeGroup = function() {
  * and call methods on each shape, and not to add, remove
  * or replace shapes directly.
  * @readonly
- */
+*/
   this.shapes = [];
   this.parent = null;
   this.visible = true;
@@ -88,12 +88,15 @@ H3DU.ShapeGroup.prototype.getMatrix = function() {
   return mat;
 };
 /**
- * Sets the transform used by this shape group.  Child
+ * Sets the transform used by this shape group to a copy
+* of the given transform.  Child
  * shapes can set their own transforms, in which case the
  * rendering process will multiply this shape group's transform
  * with the child shape's transform as it renders the child shape.
- * @param {H3DU.Transform} transform
+ * @param {H3DU.Transform} transform The transform to
+* copy for the use of this shape group.
  * @memberof! H3DU.ShapeGroup#
+ * @returns {Object} Return value.
 */
 H3DU.ShapeGroup.prototype.setTransform = function(transform) {
   "use strict";
@@ -102,8 +105,9 @@ H3DU.ShapeGroup.prototype.setTransform = function(transform) {
 };
 /**
  * Sets the material used by all shapes in this shape group.
- * @param {H3DU.Material} material
+ * @param {H3DU.Material} material The material to use.
  * @memberof! H3DU.ShapeGroup#
+ * @returns {Object} Return value.
 */
 H3DU.ShapeGroup.prototype.setMaterial = function(material) {
   "use strict";
@@ -115,8 +119,12 @@ H3DU.ShapeGroup.prototype.setMaterial = function(material) {
 
 /**
  * Sets the texture used by all shapes in this shape group.
- * @param {H3DU.Material} material
+ * @param {H3DU.Texture|String} material {@link H3DU.Texture} object, or a string with the
+* URL of the texture data.  In the case of a string the texture will be loaded via
+*  the JavaScript DOM's Image class.  However, this method
+*  will not load that image if it hasn't been loaded yet.
  * @memberof! H3DU.ShapeGroup#
+ * @returns {Object} Return value.
 */
 H3DU.ShapeGroup.prototype.setTexture = function(material) {
   "use strict";
@@ -127,8 +135,11 @@ H3DU.ShapeGroup.prototype.setTexture = function(material) {
 };
 /**
  * Sets the shader program used by all shapes in this shape group.
- * @param {H3DU.Material} material
+ * @param {H3DU.ShaderInfo} material Source code for a WebGL
+ * shader program. <i>Using a {@link H3DU.ShaderProgram} here
+ * is deprecated.</i>
  * @memberof! H3DU.ShapeGroup#
+ * @returns {Object} Return value.
 */
 H3DU.ShapeGroup.prototype.setShader = function(material) {
   "use strict";
@@ -139,8 +150,8 @@ H3DU.ShapeGroup.prototype.setShader = function(material) {
 };
 /**
  * Sets material parameters for all shapes in this shape group.
- * @ {Object} params An object described in {@link H3DU.Material#setParams}.
- * @ {H3DU.Shape} This object.
+ * @param {Object} params An object described in {@link H3DU.Material#setParams}.
+ * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.ShapeGroup#
 */
 H3DU.ShapeGroup.prototype.setMaterialParams = function(params) {
@@ -171,7 +182,7 @@ H3DU.ShapeGroup.prototype.removeShape = function(shape) {
  The bounding box is not guaranteed to be the
 * tightest, and the box will be transformed to world space
 * using the transforms of the shapes this group contains.
-* @returns An array of six numbers describing an
+* @returns {Array<Number>} An array of six numbers describing an
 * axis-aligned bounding box
 * that fits all vertices in the shape group. The first three numbers
 * are the smallest-valued X, Y, and Z coordinates, and the

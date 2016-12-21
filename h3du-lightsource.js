@@ -4,6 +4,10 @@
 * Specifies parameters for light sources.
 * @class
 * @alias H3DU.LightSource
+ * @param {Array<Number>} [position] See "position" property.
+ * @param {Array<Number>} [ambient] See "ambient" property.
+ * @param {Array<Number>} [diffuse] See "diffuse" property.
+ * @param {Array<Number>} [specular] See "specular" property.
 */
 H3DU.LightSource = function(position, ambient, diffuse, specular) {
   "use strict";

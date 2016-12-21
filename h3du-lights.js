@@ -23,7 +23,7 @@ H3DU.Lights = function() {
  * and so illuminates most of the room pretty much uniformly.
  * Ambient lights simulate this phenomenon.</small>
  *  @default
- */
+*/
   this.sceneAmbient = [0.2, 0.2, 0.2];
 };
 /**
@@ -52,7 +52,7 @@ H3DU.Lights.prototype.setDefaults = function() {
    @const
    @default
 * @memberof! H3DU.Lights
-   */
+*/
 H3DU.Lights.MAX_LIGHTS = 3;
 /** @private */
 H3DU.Lights._createNewLight = function(index) {

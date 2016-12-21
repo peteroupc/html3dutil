@@ -265,7 +265,8 @@ Negating a vector
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * @param {Array<Number>} a The first 4-element vector.
  * @param {Array<Number>} b The second 4-element vector.
- */
+ * @returns {Object} Return value.
+*/
   "vec4dot":function(a, b) {
     "use strict";
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
@@ -419,7 +420,8 @@ Negating a vector
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   },
 /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
- @returns {Array<Number>} */
+ @returns {Array<Number>} Return value.
+  */
   "quatIdentity":function() {
     "use strict";
     return [0, 0, 0, 1];
@@ -467,9 +469,11 @@ Negating a vector
 /**
  * Assigns the values of a 4-element vector into another
  * 4-element vector.
- * @param {Array<Number>} src The 3-element vector whose
+ * @param {Array<Number>} dst The 4-element vector to copy
+ * the source values to.
+ * @param {Array<Number>} src The 4-element vector whose
  * values will be copied.
- * @returns {Array<Number>} The parameter "dst"
+ * @returns {Array<Number>} The parameter "dst".
  */
   "vec4assign":function(dst, src) {
     "use strict";
@@ -600,8 +604,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
   H3DU.Math.quatConjugate(quat), lsq);
   },
 /**
+ * @param {Object} quat Description of quat.
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
-* @returns {Boolean} Return value.*/
+* @returns {Boolean} Return value.
+*/
   "quatIsIdentity":function(quat) {
     "use strict";
     return quat[0] === 0 && quat[1] === 0 && quat[2] === 0 && quat[3] === 1;
@@ -937,6 +943,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * This method is equivalent to the following:<pre>
  * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
  * </pre>
+ * @param {Array<Number>} quat Quaternion to rotate.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
@@ -984,7 +991,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return [t1 * q[3] - (t2 * q[2] - t3 * q[1]) + q[0] * t4,
       t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4,
-      t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4, ];
+      t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4];
   },
 /**
  * Generates a quaternion from the rotation described in a 4x4 matrix.
@@ -1131,6 +1138,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Multiplies a 4x4 matrix by a scaling transformation.
+ * @param {Array<Number>} mat 4x4 matrix to multiply.
  * @param {Array<Number>|Number} v3 Scaling factor along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scaling factors along the X, Y, and
@@ -2060,7 +2068,7 @@ m[0] * m[7] * m[5];
 * Determines whether a bounding box is empty.
 * This is determined if the minimum coordinate
 * is larger than the corresponding maximum coordinate.
-* @param {Array<Number>} An axis-aligned bounding
+* @param {Array<Number>} box An axis-aligned bounding
 * box in world space, which is an array of six values.
 * The first three values are the smallest X, Y, and Z coordinates,
 * and the last three values are the largest X, Y, and Z

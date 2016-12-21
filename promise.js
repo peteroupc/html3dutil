@@ -28,10 +28,14 @@
   }
 
   /**
-   * @class A promise - value to be resolved in the future.
+   * A promise - value to be resolved in the future.
    * Implements the "Promises/A+ 1.1" specification.
+   * @class
    * @alias Promise
-   * @param {function} [resolver]
+   * @param {Function} [resolver] Function that takes
+  * two arguments: the first is a function to call when
+  * resolving the promise, and the second is a function
+  * to call when rejecting the promise.
    */
   var Promise = function(resolver) {
     this._state = 0; /* 0 = pending, 1 = fulfilled, 2 = rejected */
@@ -64,6 +68,8 @@
 
   /**
    * Wait for all these promises to complete. One failed => this fails too.
+   * @param {Array<Promise>} all An array of promises.
+  * @returns {Promise} A promise that is resolved when all promises have resolved.
    */
   Promise.all = Promise.when = function(all) {
     return new this(function(resolve, reject) {
@@ -97,7 +103,7 @@
   /**
    * @param {function} onFulfilled To be called once this promise gets fulfilled
    * @param {function} onRejected To be called once this promise gets rejected
-   * @returns {Promise}
+   * @returns {Promise} A promise.
    */
   Promise.prototype.then = function(onFulfilled, onRejected) {
     this._cb.fulfilled.push(onFulfilled);
@@ -221,7 +227,7 @@
 
   /**
    * @param {function} onRejected To be called once this promise gets rejected
-   * @returns {Promise}
+   * @returns {Promise} A promise.
    */
   Promise.prototype.catch  = function(onRejected) {
     return this.then(null, onRejected);

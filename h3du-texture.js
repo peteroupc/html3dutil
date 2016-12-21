@@ -122,7 +122,10 @@ H3DU.Texture.fromUint8Array = function(array, width, height) {
   return texImage;
 };
 
-/** @private */
+/** @private
+ * @param {Object} name Description of name.
+ * @returns {Object} Return value.
+*/
 H3DU.Texture.loadTga = function(name) {
   "use strict";
 
@@ -194,7 +197,9 @@ H3DU.Texture.loadTga = function(name) {
  });
 };
 
-/** @private */
+/** @private
+ * @returns {Object} Return value.
+*/
 H3DU.Texture.prototype.loadImage = function() {
   "use strict";
   if(typeof this.image !== "undefined" && this.image !== null) {
@@ -251,6 +256,7 @@ H3DU.Texture.prototype.loadImage = function() {
 /**
  * Disposes resources used by this texture.
  * @memberof! H3DU.Texture#
+ * @returns {Object} Return value.
 */
 H3DU.Texture.prototype.dispose = function() {
   "use strict";

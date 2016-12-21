@@ -26,6 +26,7 @@ H3DU.FrameBufferInfo = function(width, height) {
  * @param {Number} height New height to use for the frame buffer.
  * Throws an error if this value is less than 0.  The height will be set
  * to this value rounded up.
+ * @returns {H3DU.FrameBufferInfo} This object.
  * @memberof! H3DU.FrameBufferInfo#
 */
 H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
@@ -35,6 +36,7 @@ H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
   height = Math.ceil(height);
   this.width = width;
   this.height = height;
+  return this;
 };
 /**
  * Gets the width to use for the frame buffer.

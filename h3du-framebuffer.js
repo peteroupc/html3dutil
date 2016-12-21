@@ -192,7 +192,7 @@ H3DU.FrameBuffer.prototype.bind = function() {
 /**
  * Has no effect. (Previously, unbound this frame buffer from its associated WebGL context.)
  * @memberof! H3DU.FrameBuffer#
-*/
+ * @returns {void} Return value.*/
 H3DU.FrameBuffer.prototype.unbind = function() {
   "use strict";
   console.log("FrameBuffer unbind method has no effect.");
@@ -200,7 +200,7 @@ H3DU.FrameBuffer.prototype.unbind = function() {
 /**
  * Disposes all resources from this frame buffer object.
  * @memberof! H3DU.FrameBuffer#
-*/
+ * @returns {void} Return value.*/
 H3DU.FrameBuffer.prototype.dispose = function() {
   "use strict";
   if(typeof this.buffer !== "undefined" && this.buffer !== null) {

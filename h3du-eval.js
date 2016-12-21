@@ -17,7 +17,7 @@ at: http://peteroupc.github.io/
  * necessarily cross the curve.
  * @class
  * @alias H3DU.BezierCurve
- * @param {Array<Array<Number>>} controlPoints An array of control points.  Each
+ * @param {Array<Array<Number>>} cp An array of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
@@ -30,7 +30,7 @@ at: http://peteroupc.github.io/
  * May be omitted; default is 0.
  * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
  * May be omitted; default is 1.
- */
+*/
   H3DU.BezierCurve = function(cp, u1, u2) {
     if(typeof u1 === "undefined" && typeof u2 === "undefined") {
       this.uoffset = 0;
@@ -71,7 +71,7 @@ at: http://peteroupc.github.io/
  * necessarily cross the surface.
  * @class
  * @alias H3DU.BezierSurface
- * @param {Array<Array<Number>>} controlPoints An array of control point
+ * @param {Array<Array<Number>>} cp An array of control point
  * arrays, which in turn contain a number of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
@@ -96,7 +96,7 @@ at: http://peteroupc.github.io/
  * @param {Number} [v2] Ending point for the purpose of interpolation along the
  * V-axis; it will correspond to 1.
  * May be omitted; default is 1.
- */
+*/
   H3DU.BezierSurface = function(cp, u1, u2, v1, v2) {
     if(typeof u1 === "undefined" && typeof u2 === "undefined" &&
     typeof v1 === "undefined" && typeof v2 === "undefined") {
@@ -799,8 +799,6 @@ at: http://peteroupc.github.io/
 * <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
 * where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
 * and z(u, v) returns a Z coordinate.<p>
-* For more information, see the {@tutorial surfaces} tutorial.
-* @class
 * See the {@tutorial surfaces} tutorial for more information.
 * @class
 * @alias H3DU.SurfaceEval
@@ -879,7 +877,6 @@ at: http://peteroupc.github.io/
 *</caption>
 * surfaceEval.vertex({"evaluate":function(u,v) {
 "use strict";
-
 *  return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
 * }})
 * .normal({"evaluate":function(u,v) {
@@ -925,13 +922,9 @@ at: http://peteroupc.github.io/
     this.texCoordSurface = evaluator;
     return this;
   };
-/** @private
- @const
-*/
+/** @private */
   H3DU._OLD_VALUES_SIZE = 8;
-/** @private
- @const
-*/
+/** @private */
   H3DU._RECORDED_VALUES_SIZE = 11;
 /**
  * Generates vertex positions and attributes based on a point

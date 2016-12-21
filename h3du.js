@@ -47,6 +47,7 @@ var H3DU = {
 * @param {Function} func The function to call.  The function
 * takes one parameter, "time", which is the number of
 * milliseconds since the page was loaded.
+ * @returns {Object} Return value.
 */
   "renderLoop":function(func) {
     "use strict";
@@ -188,8 +189,10 @@ var H3DU = {
     return c;
   },
 /**
+ * @param {Object} context Description of context.
 * Returns whether the given object is a 3D rendering context.
-* @returns {Boolean} Return value.*/
+* @returns {Boolean} Return value.
+*/
   "is3DContext":function(context) {
     "use strict";
     return context && "compileShader" in context;
@@ -210,7 +213,7 @@ var H3DU = {
 * in the order in which those promises were listed.
  * Will be rejected if any of the promises is rejected; the result
  * will be an object as specified in {@link H3DU.getPromiseResults}.</ul>
- */
+*/
   "getPromiseResultsAll":function(promises,
    progressResolve, progressReject) {
     "use strict";
@@ -243,7 +246,7 @@ var H3DU = {
  *  <li>"results" - contains a list of boolean values for each
  * promise, in the order in which the promises were listed.
  * True means success, and false means failure.</ul>
- */
+*/
   "getPromiseResults":function(promises,
    progressResolve, progressReject) {
     "use strict";
@@ -974,7 +977,7 @@ The three components are red, green, blue, and alpha in that order.</li>
 * @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @returns the color as a 4-element array; if the color is
+* @returns {Array<Number>} The color as a 4-element array; if the color is
 * invalid, returns [0,0,0,0] (transparent black). Numbers less
 * than 0 are clamped to 0, and numbers greater than 1 are
 * clamped to 1.
@@ -1002,20 +1005,6 @@ The three components are red, green, blue, and alpha in that order.</li>
   };
 }(H3DU));
 
-/** @private */
-H3DU._toContext = function(context) {
-  "use strict";
-  return context && context.getContext ? context.getContext() : context;
-};
-/** @private */
-H3DU._isPowerOfTwo = function(a) {
-  "use strict";
-  if(Math.floor(a) !== a || a <= 0)return false;
-  while(a > 1 && (a & 1) === 0) {
-    a >>= 1;
-  }
-  return a === 1;
-};
 /** @private */
 H3DU._isIdentityExceptTranslate = function(mat) {
   "use strict";

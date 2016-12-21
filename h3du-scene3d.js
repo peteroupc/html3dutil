@@ -9,7 +9,7 @@
  * canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
- */
+*/
 H3DU.Scene3D = function(canvasOrContext) {
   "use strict";
   var context = canvasOrContext;
@@ -29,7 +29,7 @@ H3DU.Scene3D = function(canvasOrContext) {
  /** An array of shapes that are part of the scene.
    @deprecated Shapes should now be managed in H3DU.Batch3D objects,
    rather than through this class.
-   */
+*/
   this.shapes = [];
   this._errors = false;
   this._frontFace = H3DU.Scene3D.CCW;
@@ -67,6 +67,7 @@ H3DU.Scene3D = function(canvasOrContext) {
 /**
  * Gets the HTML canvas associated with this scene.
  * @memberof! H3DU.Scene3D#
+ * @returns {Object} Return value.
 */
 H3DU.Scene3D.prototype.getCanvas = function() {
   "use strict";
@@ -99,7 +100,9 @@ H3DU.Scene3D._materialToFlags = function(material) {
   flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
   return flags;
 };
-/** @private */
+/** @private
+ * @returns {Object} Return value.
+*/
 H3DU.Scene3D.ProgramCache = function() {
   "use strict";
   this._programs = [];
@@ -119,7 +122,11 @@ H3DU.Scene3D.ProgramCache.prototype.dispose = function() {
   this._customPrograms = [];
   this._programs = [];
 };
-/** @private */
+/** @private
+ * @param {Object} info Description of info.
+ * @param {Object} context Description of context.
+ * @returns {Object} Return value.
+*/
 H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
   "use strict";
   if(!context)throw new Error();
@@ -138,7 +145,11 @@ H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
   this._customPrograms.push([info, context, prog]);
   return prog;
 };
-/** @private */
+/** @private
+ * @param {Object} flags Description of flags.
+ * @param {Object} context Description of context.
+ * @returns {Object} Return value.
+*/
 H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
   "use strict";
   if(!context)throw new Error();
@@ -172,6 +183,7 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
   return prog;
 };
 /** Returns the WebGL context associated with this scene.
+* @returns {WebGLRenderingContext} Return value.
 * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getContext = function() {
@@ -180,11 +192,13 @@ H3DU.Scene3D.prototype.getContext = function() {
 };
 /** No face culling.
 * @memberof! H3DU.Scene3D
-@const  */
+@const
+*/
 H3DU.Scene3D.NONE = 0;
 /** Back side of a triangle.  By default, triangles with clockwise winding are back-facing.
 * @memberof! H3DU.Scene3D
-@const */
+@const
+*/
 H3DU.Scene3D.BACK = 1;
 /**
 Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing.
@@ -397,12 +411,16 @@ H3DU.Scene3D.prototype.getAspect = function() {
   if(ch <= 0)return 1;
   return this.getWidth() / ch;
 };
-/** @private */
+/** @private
+ * @returns {Object} Return value.
+*/
 H3DU.Scene3D.prototype.getClientWidth = function() {
   "use strict";
   return this.context.canvas.clientWidth;
 };
-/** @private */
+/** @private
+ * @returns {Object} Return value.
+*/
 H3DU.Scene3D.prototype.getClientHeight = function() {
   "use strict";
   return this.context.canvas.clientHeight;
@@ -629,6 +647,7 @@ H3DU.Scene3D.prototype._setClearColor = function() {
 /**
  * Disposes all resources used by this object.
  * @memberof! H3DU.Scene3D#
+ * @returns {Object} Return value.
 */
 H3DU.Scene3D.prototype.dispose = function() {
   "use strict";
@@ -906,7 +925,9 @@ H3DU.Scene3D.prototype.removeShape = function(shape) {
   this._subScene.removeShape(shape);
   return this;
 };
-/** @private */
+/** @private
+ * @returns {Object} Return value.
+*/
 H3DU.Scene3D.prototype.getLights = function() {
   "use strict";
   if(this._errors)throw new Error();
@@ -991,7 +1012,7 @@ H3DU.Scene3D.prototype.setAmbient = function(r, g, b, a) {
  * @deprecated Use the LightSource method setPointLight instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
- * @param {Array<Number>} position
+ * @param {Array<Number>} position Light position.  (See {@link H3DU.LightSource#position}.)
  * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor}  giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
  * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor}  giving the color of specular highlights caused by
@@ -1088,7 +1109,14 @@ H3DU.Scene3D.prototype.useFilter = function() {
   return this;
 };
 
-/** @private */
+/**
+* Returns whether the WebGL context supports
+* derivative functions in GLSL shaders.
+* @param {WebGLRenderingContext|Object} context
+ * A WebGL context, or an object, such as H3DU.Scene3D, that
+* implements a no-argument <code>getContext</code> method
+ * @returns {Boolean} True if the context supports derivatives; false otherwise.
+*/
 H3DU.Scene3D.supportsDerivatives = function(context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
