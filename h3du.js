@@ -1015,3 +1015,19 @@ H3DU._isIdentityExceptTranslate = function(mat) {
     mat[15] === 1
   );
 };
+
+/** @private */
+H3DU._toContext = function(context) {
+  "use strict";
+  return context && context.getContext ? context.getContext() : context;
+};
+
+/** @private */
+H3DU._isPowerOfTwo = function(a) {
+  "use strict";
+  if(Math.floor(a) !== a || a <= 0)return false;
+  while(a > 1 && (a & 1) === 0) {
+    a >>= 1;
+  }
+  return a === 1;
+};
