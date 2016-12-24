@@ -13,7 +13,7 @@ A vector is simply an array of elements that are related
 to each other.  As such, a vector can symbolize a position, a direction,
 a ray, a color, or anything else.  The methods in this class treat arrays
 as vectors.  Functions dealing with vectors begin with "vec".
-Many of GLMath's functions use 3- or 4-element vectors.
+Many of H3DU.Math's functions use 3- or 4-element vectors.
 
 If a 4-element vector describes a position, direction,
 or normal, the elements are given as X, Y, Z, and W, in that order.
@@ -96,9 +96,10 @@ an axis of rotation, and the fourth element is
 the W component. Functions dealing with quaternions begin with
 "quat".  A quaternion is generated as follows:
 
-* Set X, Y, and Z to the (normalized) axis of rotation multiplied by the sine of
-half the angle.  This results in the same axis of rotation as before,
-but in a different form.
+* Set (X, Y, Z) to the axis of rotation (as a vector with a length of 1),
+multiplied by the sine of half the angle.
+This results in the same axis of rotation as before,
+but with a length equal to the sine of half the angle.
 * Set W to the cosine of half the angle.
 
 ### Multiplying quaternions <a id=Multiplying_quaternions></a>
@@ -155,7 +156,9 @@ A 4-element array can describe a 3D plane in the following manner:
 
 * The 4 elements, labeled A, B, C, and D in that order, describe a plane
  whose points satisfy the equation:
- <blockquote>Ax + By + Cz + D = 0</blockquote>
+
+        Ax + By + Cz + D = 0
+
  where x, y, and z are the
  coordinates of any point lying on the plane.
 * A, B, and C are
@@ -168,7 +171,7 @@ A 4-element array can describe a 3D plane in the following manner:
 There is one method that deals with planes:
 
 * [H3DU.Math.planeNormInPlace()]{@link H3DU.Math.planeNormInPlace} -
-Converts the plane to a form in which its normal is unit length.
+Converts the plane to a form in which its normal has a length of 1.
 
 ## Coordinate Systems <a id=Coordinate_Systems></a>
 

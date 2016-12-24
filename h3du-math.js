@@ -220,6 +220,7 @@ Negating a vector
   },
 /**
  * Multiplies each element of a 3-element vector by a factor
+ * (thus multiplying that vector's length by that factor)
  * and stores the result in that vector.
  * @param {Array<Number>} a A 3-element vector.
  * @param {Number} scalar A factor to multiply.
@@ -235,6 +236,7 @@ Negating a vector
 
 /**
  * Multiplies a 3-element vector by a factor
+ * (thus multiplying that vector's length by that factor)
  * and returns a new vector with the result.
  * @param {Array<Number>} a A 3-element vector.
  * @param {Number} scalar A factor to multiply.
@@ -274,6 +276,7 @@ Negating a vector
   },
 /**
  * Multiplies each element of a 4-element vector by a factor
+ * (thus multiplying that vector's length by that factor)
  * and stores the result in that vector.
  * @param {Array<Number>} a A 4-element vector.
  * @param {Number} scalar A factor to multiply.
@@ -286,6 +289,18 @@ Negating a vector
     a[2] *= scalar;
     a[3] *= scalar;
     return a;
+  },
+/**
+ * Multiplies each element of a 4-element vector by a factor
+ * (thus multiplying that vector's length by that factor)
+ * and returns a new vector with the result.
+ * @param {Array<Number>} a A 4-element vector.
+ * @param {Number} scalar A factor to multiply.
+ * @returns {Array<Number>} The resulting 4-element vector.
+ */
+  "vec4scale":function(a, scalar) {
+    "use strict";
+    return [a[0] * scalar, a[1] * scalar, a[2] * scalar, a[3] * scalar];
   },
 /**
  * Does a linear interpolation between two 4-element vectors;
@@ -597,7 +612,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * and converts this quaternion to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * Returns a new quaternion.
  * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<Number>} Return value.
+ * @see {@link H3DU.Math.quatConjugate}
+*/
   "quatInvert":function(quat) {
     "use strict";
     var lsq = 1.0 / H3DU.Math.quatDot(quat, quat);
@@ -1985,7 +2002,7 @@ m[0] * m[7] * m[5];
 * @returns {Array<Array<Number>>} An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
-* bottom, near, and far clipping planes.  All six planes
+* bottom, near, and far clipping planes.  The normals of all six planes
 * will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
 */
   "mat4toFrustumPlanes":function(matrix) {
@@ -2161,6 +2178,7 @@ m[0] * m[7] * m[5];
  @param {Array<Number>} b The second quaternion.
  @returns {Number} Return value.
 @memberof! H3DU.Math
+* @see {@link H3DU.Math.vec4dot}
 */
 H3DU.Math.quatDot = H3DU.Math.vec4dot;
 /**
@@ -2173,6 +2191,7 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The parameter "quat".
 @memberof! H3DU.Math
+* @see {@link H3DU.Math.vec4normInPlace}
  */
 H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
 /**
@@ -2185,6 +2204,7 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The normalized quaternion.
 @memberof! H3DU.Math
+* @see {@link H3DU.Math.vec4norm}
  */
 H3DU.Math.quatNorm = H3DU.Math.vec4norm;
 /**
@@ -2195,6 +2215,7 @@ H3DU.Math.quatNorm = H3DU.Math.vec4norm;
  @param {Array<Number>} quat The quaternion.
   @returns {Number} Return value.
 @memberof! H3DU.Math
+* @see {@link H3DU.Math.vec4length}
 */
 H3DU.Math.quatLength = H3DU.Math.vec4length;
 /**
@@ -2205,13 +2226,26 @@ H3DU.Math.quatLength = H3DU.Math.vec4length;
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The parameter "a".
 @memberof! H3DU.Math
+* @see {@link H3DU.Math.vec4scaleInPlace}
  */
 H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
+/**
+ * Multiplies each element of a quaternion by a factor
+ * and returns the result as a new quaternion.
+ * @function
+ * @param {Array<Number>} a A quaternion.
+ * @param {Number} scalar A factor to multiply.
+ * @returns {Array<Number>} The resulting quaternion.
+@memberof! H3DU.Math
+* @see {@link H3DU.Math.vec4scaleInPlace}
+ */
+H3DU.Math.quatScale = H3DU.Math.vec4scale;
 /**
  * Returns a copy of a quaternion.
 * @function
  * @returns {Array<Number>} Return value.
 @memberof! H3DU.Math
+* @see {@link H3DU.Math.vec4copy}
 */
 H3DU.Math.quatCopy = H3DU.Math.vec4copy;
 /**
@@ -2291,6 +2325,7 @@ H3DU.Math.RollYawPitch = 5;
 /**
  * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
  * Returns a new quaternion; same as the quatInverse method.
+ * @deprecated Use {@link H3DU.Math.quatInvert} instead.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value.
 @memberof! H3DU.Math
