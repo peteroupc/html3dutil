@@ -90,17 +90,14 @@ of doing the second matrix's transform, then the first matrix's transform.
 ## Quaternions <a id=Quaternions></a>
 
 A quaternion is a 4-element array that describes a
-3D rotation.  It works like a vector in many cases.
-The first three elements (X, Y, and Z), represent
-an axis of rotation, and the fourth element is
-the W component. Functions dealing with quaternions begin with
-"quat".  A quaternion is generated as follows:
+3D rotation.  Functions dealing with quaternions begin with
+"quat".  A quaternion's:
 
-* Set (X, Y, Z) to the axis of rotation (as a vector with a length of 1),
-multiplied by the sine of half the angle.
-This results in the same axis of rotation as before,
-but with a length equal to the sine of half the angle.
-* Set W to the cosine of half the angle.
+* first three elements (X, Y, Z) describe a 3D point, where the
+direction from the origin (0, 0, 0) to that point is the _axis of rotation_,
+and the distance from the origin to that point is the sine
+of half the rotation angle.
+* fourth element (W) is the cosine of half the rotation angle.
 
 ### Multiplying quaternions <a id=Multiplying_quaternions></a>
 

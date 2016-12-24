@@ -15,7 +15,9 @@ at: http://peteroupc.github.io/
 * are specially designed for running on a graphics processing unit,
 * or GPU.<p>
 * This class also stores uniform values associated with the shader
-* source code.
+* source code.<p>
+* Note that this class is not associated with any WebGL context, so the
+* uniform values this object stores is not set for any WebGL context.
 * @class
 * @alias H3DU.ShaderInfo
 * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
