@@ -848,15 +848,16 @@ at: http://peteroupc.github.io/
 * the function used for vertex calculation (we'll call it <b>F</b>) with
 * respect to u, then find the partial derivative of <b>F</b> with respect to
 * v, then take their <a href="http://en.wikipedia.org/wiki/Cross_product">cross
-* product</a> (e.g., {@link H3DU.Math.vec3cross}), then normalize the result to unit length.
+* product</a> (e.g., {@link H3DU.Math.vec3cross}), then convert the result to a unit vector
+* (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
 * In mathematical notation, this looks like:
-* <b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times;
-* &#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
+* <b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
+* &#x2202;<b>F</b>/&#x2202;<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
 * If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
 * as the H3DU.SurfaceEval class doesn't know the implementation of the method used
 * for vertex calculation.<p>
-* (Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>
-* or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is also
+* (Note: &#x2202;<b>F</b>/&#x2202;<i>u</i> is also called the <i>bitangent</i>
+* or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
 * called the <i>tangent vector</i>.)
 * @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.

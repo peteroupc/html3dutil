@@ -119,9 +119,9 @@ H3DU.Lights.prototype.setParams = function(index, params) {
  * If the light doesn't exist at that index, it will be created.
  * @param {Array<Number>} direction A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor}  giving the diffuse color of the light.
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the specular highlight color will
  * remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.

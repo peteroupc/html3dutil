@@ -137,9 +137,8 @@ H3DU.Shape.prototype.setShader = function(shader) {
 /**
  * Sets parameters of this shape's material.
  * @param {Object} params An object described in {@link H3DU.Material#setParams}.
- * @param {H3DU.Shape} This object.
+ * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
- * @returns {Object} Return value.
 */
 H3DU.Shape.prototype.setMaterialParams = function(params) {
   "use strict";

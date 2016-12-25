@@ -477,16 +477,16 @@ H3DU.Scene3D.prototype.getViewMatrix = function() {
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link H3DU.Math.mat4perspective}.
 * @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4perspective}. This compatibility behavior may be dropped in the future.
- * @param {Number}  fov Y-axis field of view, in degrees. Should be less
+ * @param {Number} fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
-* @param {Number}  aspect The ratio of width to height of the viewport, usually
+* @param {Number} aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio (getAspect() or getClientAspect()).
 * @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.
-* @param {Number}  far The distance from the camera to
+* @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 * @returns {H3DU.Scene3D} This object.
@@ -577,7 +577,7 @@ H3DU.Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, asp
 * @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.
-* @param {Number}  far The distance from the camera to
+* @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 * @returns {H3DU.Scene3D} This object.
@@ -943,7 +943,7 @@ H3DU.Scene3D.prototype.getLights = function() {
  * is (0, 0, 1).
  * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * @returns {H3DU.Scene3D} This object.
@@ -1009,9 +1009,9 @@ H3DU.Scene3D.prototype.setAmbient = function(r, g, b, a) {
  * @param {Number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array<Number>} position Light position.  (See {@link H3DU.LightSource#position}.)
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor}  giving the diffuse color of the light.
+ * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor}  giving the color of specular highlights caused by
+ * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 * @returns {H3DU.Scene3D} This object.
@@ -1112,6 +1112,7 @@ H3DU.Scene3D.prototype.useFilter = function() {
  * A WebGL context, or an object, such as H3DU.Scene3D, that
 * implements a no-argument <code>getContext</code> method
  * @returns {Boolean} True if the context supports derivatives; false otherwise.
+* @memberof! H3DU.Scene3D
 */
 H3DU.Scene3D.supportsDerivatives = function(context) {
   "use strict";

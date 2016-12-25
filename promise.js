@@ -70,6 +70,7 @@
    * Wait for all these promises to complete. One failed => this fails too.
    * @param {Array<Promise>} all An array of promises.
   * @returns {Promise} A promise that is resolved when all promises have resolved.
+  * @method
    */
   Promise.all = Promise.when = function(all) {
     return new this(function(resolve, reject) {

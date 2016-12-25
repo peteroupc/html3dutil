@@ -378,7 +378,6 @@ var H3DU = {
 * @param {Number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * <code>requestAnimationFrame()</code> callback method.
-* </code>.
 * @param {Number} intervalInMs The length of the interval
 * (animation cycle), in milliseconds.
 * @returns {Number} A value in the range [0, 1), where closer
@@ -978,7 +977,7 @@ The three components are red, green, blue, and alpha in that order.</li>
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
 * @returns {Array<Number>} The color as a 4-element array; if the color is
-* invalid, returns [0,0,0,0] (transparent black). Numbers less
+* invalid, returns [0,0,0,0], or transparent black. Numbers less
 * than 0 are clamped to 0, and numbers greater than 1 are
 * clamped to 1.
 */

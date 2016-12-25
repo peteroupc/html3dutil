@@ -370,7 +370,7 @@
                 p.red = false;
                 s.red = true;
                 q.red = true;
-              }              else {
+              } else {
                 var dir2 = g.right === p;
 
                 if( RedBlackTree._red( s.link(last) ) )
@@ -415,7 +415,7 @@
     */
       this.root = new RedBlackTreeNode(data);
       retval = this.root;
-    }    else {
+    } else {
       var head = new RedBlackTreeNode(null); /* False tree root */
       var g, t;     /* Grandparent & parent */
       var p, q;     /* Iterator & parent */
@@ -433,7 +433,7 @@
         if ( q === null || typeof q === "undefined" ) {
         /* Insert a new node at the first null link */
           p.setLink(dir, q = new RedBlackTreeNode(data));
-        }        else if ( RedBlackTree._red( q.left ) && RedBlackTree._red( q.right ) ) {
+        } else if ( RedBlackTree._red( q.left ) && RedBlackTree._red( q.right ) ) {
         /* Simple red violation: color flip */
           q.red = true;
           q.left.red = false;
@@ -1254,8 +1254,8 @@
  * order (clockwise or counterclockwise) from the subpath
  * that contains them.
  * <li>To use this method, you must include the script "extras/pathclip.js";
- * this is in addition to "extras/pathclip.js".  Example:<pre>
- * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
+ * this is in addition to "extras/path.js".  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
  * @param {GraphicsPath} path A path to combine with this one.

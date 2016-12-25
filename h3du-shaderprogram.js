@@ -146,7 +146,7 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
     } else {
       this.context.uniform1i(uniform, uv);
     }
-  }  else if(uv.length === 3) {
+  } else if(uv.length === 3) {
     this.context.uniform3fv(uniform, uv);
   } else if(uv.length === 2) {
     this.context.uniform2fv(uniform, uv);

@@ -938,7 +938,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       if(cosval < 1) {
         angle = Math.acos(cosval);
         if(angle === 0)return qd.slice(0, 4);
-      }      else return qd.slice(0, 4);
+      } else return qd.slice(0, 4);
     } else {
       angle = Math.PI;
     }
@@ -1036,7 +1036,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ret[1] = (zx - xz) * t;
       ret[2] = (xy - yx) * t;
       ret[3] = s;
-    }    else if(m[0] > m[5] && m[0] > m[10]) {
+    } else if(m[0] > m[5] && m[0] > m[10]) {
 // s=4*x
       s = Math.sqrt(1.0 + m[0] - m[5] - m[10]) * 0.5;
       t = 0.25 / s;
@@ -1044,7 +1044,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ret[1] = (yx + xy) * t;
       ret[2] = (xz + zx) * t;
       ret[3] = (yz - zy) * t;
-    }    else if(m[5] > m[10]) {
+    } else if(m[5] > m[10]) {
 // s=4*y
       s = Math.sqrt(1.0 + m[5] - m[0] - m[10]) * 0.5;
       t = 0.25 / s;
@@ -1052,7 +1052,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ret[1] = s;
       ret[2] = (zy + yz) * t;
       ret[3] = (zx - xz) * t;
-    }    else{
+    } else{
 // s=4*z
       s = Math.sqrt(1.0 + m[10] - m[0] - m[5]) * 0.5;
       t = 0.25 / s;
@@ -1395,11 +1395,11 @@ m[0] * m[7] * m[5];
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {Number}  fovY Y-axis field of view, in degrees. Should be less
+* @param {Number} fovY Y-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
-* @param {Number}  aspectRatio The ratio of width to height of the viewport, usually
+* @param {Number} aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
@@ -1514,11 +1514,11 @@ m[0] * m[7] * m[5];
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {Number}  fovX X-axis field of view, in degrees. Should be less
+* @param {Number} fovX X-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
-* @param {Number}  aspectRatio The ratio of width to height of the viewport, usually
+* @param {Number} aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
@@ -1579,7 +1579,7 @@ m[0] * m[7] * m[5];
  * @param {Number} t Topmost coordinate of the view rectangle.
  * (If b is greater than t, X-coordinates increase downward; otherwise,
  * they increase upward.)
-* @param {Number}  aspect The ratio of width to height of the viewport, usually
+* @param {Number} aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @returns {Array<Number>} The resulting 4x4 matrix.
  */
@@ -2177,6 +2177,7 @@ m[0] * m[7] * m[5];
  @param {Array<Number>} a The first quaternion.
  @param {Array<Number>} b The second quaternion.
  @returns {Number} Return value.
+ @method
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4dot}
 */
@@ -2190,6 +2191,7 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * @function
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The parameter "quat".
+ @method
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4normInPlace}
  */
@@ -2203,6 +2205,7 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * @function
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The normalized quaternion.
+ @method
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4norm}
  */
@@ -2214,6 +2217,7 @@ H3DU.Math.quatNorm = H3DU.Math.vec4norm;
 * @function
  @param {Array<Number>} quat The quaternion.
   @returns {Number} Return value.
+ @method
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4length}
 */
@@ -2225,6 +2229,7 @@ H3DU.Math.quatLength = H3DU.Math.vec4length;
  * @param {Array<Number>} a A quaternion.
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The parameter "a".
+ @method
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4scaleInPlace}
  */
@@ -2236,6 +2241,7 @@ H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
  * @param {Array<Number>} a A quaternion.
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The resulting quaternion.
+ @method
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4scaleInPlace}
  */
@@ -2244,6 +2250,7 @@ H3DU.Math.quatScale = H3DU.Math.vec4scale;
  * Returns a copy of a quaternion.
 * @function
  * @returns {Array<Number>} Return value.
+ @method
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4copy}
 */
@@ -2328,6 +2335,7 @@ H3DU.Math.RollYawPitch = 5;
  * @deprecated Use {@link H3DU.Math.quatInvert} instead.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value.
+ @method
 @memberof! H3DU.Math
 */
 H3DU.Math.quatInverse = H3DU.Math.quatInvert;

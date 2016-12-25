@@ -148,18 +148,18 @@ The appearance of a 3D shape is known in the 3D graphics world as a "material". 
 
 Here are details on some of the `Shape` class&#39;s methods.
 
-  * <dfn>`<i>shape</i>.setPosition(x, y, z)`</dfn>
+  * <dfn>`shape.setPosition(x, y, z)`</dfn>
   <br>Sets the shape&#39;s position to the given coordinates.
-  * <dfn>`<i>shape</i>.setScale(x, y, z)`</dfn>
+  * <dfn>`shape.setScale(x, y, z)`</dfn>
   <br>Sets the shape&#39;s scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.
-  * <dfn>`<i>shape</i>.getTransform().setOrientation(angle, x, y, z)`</dfn>
+  * <dfn>`shape.getTransform().setOrientation(angle, x, y, z)`</dfn>
   <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).
-  * <dfn>`<i>shape</i>.setColor(color)`</dfn>
+  * <dfn>`shape.setColor(color)`</dfn>
   <br>Gives the shape a particular color. `color` can be an HTML color ("#ff0000"), CSS color ("red"), RGB color("rgb(20, 30, 40)") or HSL color("hsl(20, 50%, 50%)"), or a set of values from 0 to 1 (example: `[1.0,0.5,0.0]`).
    See my [colors tutorial](https://peteroupc.github.io/html3dutil/tutorial-colors.html).
-  * <dfn>`<i>shape</i>.setTexture(name)`</dfn>
+  * <dfn>`shape.setTexture(name)`</dfn>
   <br>Gives the shape a particular texture, with the URL `name`. The texture should be in the same origin as the Web page (which usually means the same directory).
-  * <dfn>`<i>shape</i>.copy()`</dfn>
+  * <dfn>`shape.copy()`</dfn>
   <br>Creates a copy of this shape. Can be more efficient than calling `new H3DU.Shape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.
 
 ### The Render Loop <a id=The_Render_Loop></a>
