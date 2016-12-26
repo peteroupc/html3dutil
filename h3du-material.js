@@ -83,10 +83,12 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
  * The specular color is usually grayscale
  * (all three components are the same), but can be colored if the material represents an
-* uncoated metal of some sort. If this element is omitted, the default is (1,1,1).<p>
+* uncoated metal of some sort. If this element is omitted, the default is (0.1,0.1,0.1).<p>
 * NOTE: Before version 2.0, the default was (0,0,0).
 */
-  this.specular = specular ? specular.slice(0, 3) : [1.0, 1.0, 1.0];
+  this.specular = specular ? specular.slice(0, 3) : [0.1, 0.1, 0.1];
+// NOTE: Setting to (1,1,1) apparently made everything that faced the light white;
+// it was much too strong
  /**
 * Additive color emitted by objects with this material.
 * Used for objects that glow on their own, among other things.

@@ -19,11 +19,11 @@ To use this class, you must include the script "extras/camera.js"; the
 class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
-    &lt;script type="text/javascript" src="extras/camera.js">&lt;/script>
+    <script type="text/javascript" src="extras/camera.js"></script>
 
 #### Parameters
 
-* `batch` (Type: <a href="H3DU_Batch3D.md">H3DU.Batch3D</a>)<br>
+* `batch` (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)<br>
     A 3D scene to associate with this camera object.
 * `fov` (Type: Number)<br>
     Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.)
@@ -79,7 +79,7 @@ point to the camera's position.
 #### Return Value
 
 The return value as a unit
-vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 Returns (0,0,0) if the reference point is the same as the camera's position. (Type: Array.&lt;Number>)
 
 ### Camera#moveAngleHorizontal(angleDegrees) <a id='Camera_Camera_moveAngleHorizontal'></a>

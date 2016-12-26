@@ -141,7 +141,7 @@ H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
  * Uses a perspective projection for this batch.  It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
  * For considerations when choosing the "near" and "far" parameters,
- * see @{link H3DU.Math.mat4perspective}.
+ * see {@link H3DU.Math.mat4perspective}.
  * @param {Number} fov Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
  * @param {Number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
  * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.

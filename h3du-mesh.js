@@ -725,6 +725,7 @@ H3DU.Mesh.prototype._initialize = function(vertices, faces, format) {
  /**
  * Gets the number of vertices included in this mesh.
  * @returns {Number} Return value.
+  * @alias vertexCount
   * @memberof! H3DU.Mesh#
  */
   this.vertexCount = function() {

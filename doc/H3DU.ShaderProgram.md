@@ -2,10 +2,10 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.ShaderProgram(context, [vertexShader], [fragmentShader]) <a id='H3DU_ShaderProgram'></a>
+### H3DU.ShaderProgram(context, [vertexShader], [fragmentShader]) <a id='H3DU.ShaderProgram'></a>
 
 <b>Deprecated: This class is likely to become a private class.
-Use the <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a> class instead, which is not coupled to WebGL
+Use the <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> class instead, which is not coupled to WebGL
 contexts.</b>
 
 Represents a WebGL shader program. A shader program in
@@ -27,7 +27,7 @@ log is output to the JavaScript console.
 #### Parameters
 
 * `context` (Type: WebGLRenderingContext | object)<br>
-    A WebGL context to associate with this scene, or an object, such as <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
+    A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
 * `vertexShader` (Type: String) (optional)<br>
     Source text of a vertex shader, in OpenGL ES Shading Language (GLSL). If null, a default vertex shader is used instead.
 * `fragmentShader` (Type: String) (optional)<br>
@@ -35,23 +35,23 @@ log is output to the JavaScript console.
 
 ### Methods
 
-* [.getDefaultFragment](#H3DU_ShaderProgram_getDefaultFragment)
-* [.getDefaultVertex](#H3DU_ShaderProgram_getDefaultVertex)
-* [.getEdgeDetectEffect](#H3DU_ShaderProgram_getEdgeDetectEffect)
-* [.getInvertEffect](#H3DU_ShaderProgram_getInvertEffect)
-* [.makeCopyEffect](#H3DU_ShaderProgram_makeCopyEffect)
-* [.makeEffect](#H3DU_ShaderProgram_makeEffect)
-* [.makeEffectFragment](#H3DU_ShaderProgram_makeEffectFragment)
-* [dispose](#H3DU_ShaderProgram_H3DU_ShaderProgram_dispose)
-* [get](#H3DU_ShaderProgram_H3DU_ShaderProgram_get)
-* [getContext](#H3DU_ShaderProgram_H3DU_ShaderProgram_getContext)
-* [getUniform](#H3DU_ShaderProgram_H3DU_ShaderProgram_getUniform)
-* [setUniforms](#H3DU_ShaderProgram_H3DU_ShaderProgram_setUniforms)
-* [use](#H3DU_ShaderProgram_H3DU_ShaderProgram_use)
+* [.getDefaultFragment](#H3DU.ShaderProgram.getDefaultFragment)
+* [.getDefaultVertex](#H3DU.ShaderProgram.getDefaultVertex)
+* [.getEdgeDetectEffect](#H3DU.ShaderProgram.getEdgeDetectEffect)
+* [.getInvertEffect](#H3DU.ShaderProgram.getInvertEffect)
+* [.makeCopyEffect](#H3DU.ShaderProgram.makeCopyEffect)
+* [.makeEffect](#H3DU.ShaderProgram.makeEffect)
+* [.makeEffectFragment](#H3DU.ShaderProgram.makeEffectFragment)
+* [dispose](#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose)
+* [get](#H3DU.ShaderProgram_H3DU.ShaderProgram_get)
+* [getContext](#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext)
+* [getUniform](#H3DU.ShaderProgram_H3DU.ShaderProgram_getUniform)
+* [setUniforms](#H3DU.ShaderProgram_H3DU.ShaderProgram_setUniforms)
+* [use](#H3DU.ShaderProgram_H3DU.ShaderProgram_use)
 
-### H3DU.ShaderProgram.getDefaultFragment() <a id='H3DU_ShaderProgram_getDefaultFragment'></a>
+### H3DU.ShaderProgram.getDefaultFragment() <a id='H3DU.ShaderProgram.getDefaultFragment'></a>
 
-<b>Deprecated: Use <a href="H3DU_ShaderInfo.md#H3DU_ShaderInfo_getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b>
 
 Gets the text of the default fragment shader. Putting "#define SHADING\n"
 at the start of the return value enables the lighting model.
@@ -63,9 +63,9 @@ as SHADING is also enabled).
 
 The resulting shader text. (Type: String)
 
-### H3DU.ShaderProgram.getDefaultVertex() <a id='H3DU_ShaderProgram_getDefaultVertex'></a>
+### H3DU.ShaderProgram.getDefaultVertex() <a id='H3DU.ShaderProgram.getDefaultVertex'></a>
 
-<b>Deprecated: Use <a href="H3DU_ShaderInfo.md#H3DU_ShaderInfo_getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b>
 
 Gets the text of the default vertex shader. Putting "#define SHADING\n"
 at the start of the return value enables the lighting model.
@@ -74,9 +74,9 @@ at the start of the return value enables the lighting model.
 
 The resulting shader text. (Type: String)
 
-### H3DU.ShaderProgram.getEdgeDetectEffect([context]) <a id='H3DU_ShaderProgram_getEdgeDetectEffect'></a>
+### H3DU.ShaderProgram.getEdgeDetectEffect([context]) <a id='H3DU.ShaderProgram.getEdgeDetectEffect'></a>
 
-<b>Deprecated: Use <a href="H3DU_ShaderInfo.md#H3DU_ShaderInfo_makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b>
 
 Generates a shader program that generates a two-color texture showing
 the source texture's edges.
@@ -88,11 +88,11 @@ the source texture's edges.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderProgram.getInvertEffect([context]) <a id='H3DU_ShaderProgram_getInvertEffect'></a>
+### H3DU.ShaderProgram.getInvertEffect([context]) <a id='H3DU.ShaderProgram.getInvertEffect'></a>
 
-<b>Deprecated: Use <a href="H3DU_ShaderInfo.md#H3DU_ShaderInfo_makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b>
 
 Generates a shader program that inverts the colors of a texture.
 
@@ -103,21 +103,21 @@ Generates a shader program that inverts the colors of a texture.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderProgram.makeCopyEffect() <a id='H3DU_ShaderProgram_makeCopyEffect'></a>
+### H3DU.ShaderProgram.makeCopyEffect() <a id='H3DU.ShaderProgram.makeCopyEffect'></a>
 
-<b>Deprecated: Use <a href="H3DU_ShaderInfo.md#H3DU_ShaderInfo_makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b>
 
 Generates a shader program that copies the colors of a texture.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderProgram.makeEffect(context, functionCode) <a id='H3DU_ShaderProgram_makeEffect'></a>
+### H3DU.ShaderProgram.makeEffect(context, functionCode) <a id='H3DU.ShaderProgram.makeEffect'></a>
 
-<b>Deprecated: Use <a href="H3DU_ShaderInfo.md#H3DU_ShaderInfo_makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b>
 
 Generates a shader program for applying
 a raster effect (postprocessing effect) to a texture.
@@ -135,11 +135,11 @@ a raster effect (postprocessing effect) to a texture.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderProgram.makeEffectFragment(functionCode) <a id='H3DU_ShaderProgram_makeEffectFragment'></a>
+### H3DU.ShaderProgram.makeEffectFragment(functionCode) <a id='H3DU.ShaderProgram.makeEffectFragment'></a>
 
-<b>Deprecated: Use <a href="H3DU_ShaderInfo.md#H3DU_ShaderInfo_makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b>
 
 Generates source code for a fragment shader for applying
 a raster effect to a texture.
@@ -153,7 +153,7 @@ a raster effect to a texture.
 
 The source text of the resulting fragment shader. (Type: String)
 
-### H3DU.ShaderProgram#dispose() <a id='H3DU_ShaderProgram_H3DU_ShaderProgram_dispose'></a>
+### H3DU.ShaderProgram#dispose() <a id='H3DU.ShaderProgram_H3DU.ShaderProgram_dispose'></a>
 
 Disposes resources from this shader program.
 
@@ -161,7 +161,7 @@ Disposes resources from this shader program.
 
 Return value. (Type: void)
 
-### H3DU.ShaderProgram#get(name) <a id='H3DU_ShaderProgram_H3DU_ShaderProgram_get'></a>
+### H3DU.ShaderProgram#get(name) <a id='H3DU.ShaderProgram_H3DU.ShaderProgram_get'></a>
 
 Gets the location of the given uniform or attribute's name in this program.
 (Although the location may change each time the shader program
@@ -178,7 +178,7 @@ in the case of H3DU.ShaderInfo.)
 The location of the uniform or attribute
 name, or null if it doesn't exist. (Type: number | WebGLUniformLocation | null)
 
-### H3DU.ShaderProgram#getContext() <a id='H3DU_ShaderProgram_H3DU_ShaderProgram_getContext'></a>
+### H3DU.ShaderProgram#getContext() <a id='H3DU.ShaderProgram_H3DU.ShaderProgram_getContext'></a>
 
 Gets the WebGL context associated with this shader program object.
 
@@ -186,7 +186,7 @@ Gets the WebGL context associated with this shader program object.
 
 Return value. (Type: WebGLRenderingContext)
 
-### H3DU.ShaderProgram#getUniform(name) <a id='H3DU_ShaderProgram_H3DU_ShaderProgram_getUniform'></a>
+### H3DU.ShaderProgram#getUniform(name) <a id='H3DU.ShaderProgram_H3DU.ShaderProgram_getUniform'></a>
 
 Gets the value of the given uniform in this program. This method
 may be called at any time, even if this program is not currently the
@@ -202,7 +202,7 @@ active program in the WebGL context.
 The uniform's value, or null if it doesn't exist or if
 an attribute is named, not a uniform. (Type: Number | Array.&lt;Number>)
 
-### H3DU.ShaderProgram#setUniforms(uniforms) <a id='H3DU_ShaderProgram_H3DU_ShaderProgram_setUniforms'></a>
+### H3DU.ShaderProgram#setUniforms(uniforms) <a id='H3DU.ShaderProgram_H3DU.ShaderProgram_setUniforms'></a>
 
 Sets the values of one or more uniforms in this program.
 If this program is not the active program in the WebGL context,
@@ -215,9 +215,9 @@ saves their values until the next time this object's "use" method is called.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a>)
+This object. (Type: <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a>)
 
-### H3DU.ShaderProgram#use() <a id='H3DU_ShaderProgram_H3DU_ShaderProgram_use'></a>
+### H3DU.ShaderProgram#use() <a id='H3DU.ShaderProgram_H3DU.ShaderProgram_use'></a>
 
 Makes this program the active program in the WebGL
 context associated with it. If any uniforms were saved to
@@ -227,4 +227,4 @@ was called), sets their values now.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a>)
+This object. (Type: <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a>)

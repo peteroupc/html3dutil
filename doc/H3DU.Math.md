@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Math() <a id='H3DU_Math'></a>
+### H3DU.Math() <a id='H3DU.Math'></a>
 
 A collection of math functions for working
 with vectors, matrices, quaternions, and other
@@ -12,158 +12,158 @@ See the tutorial "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for mo
 
 ### Members
 
-* [.HalfPi](#H3DU_Math_HalfPi)
-* [.Num180DividedByPi](#H3DU_Math_Num180DividedByPi)
-* [.PiDividedBy180](#H3DU_Math_PiDividedBy180)
-* [.PiTimes2](#H3DU_Math_PiTimes2)
-* [.PitchRollYaw](#H3DU_Math_PitchRollYaw)
-* [.PitchYawRoll](#H3DU_Math_PitchYawRoll)
-* [.RollPitchYaw](#H3DU_Math_RollPitchYaw)
-* [.RollYawPitch](#H3DU_Math_RollYawPitch)
-* [.YawPitchRoll](#H3DU_Math_YawPitchRoll)
-* [.YawRollPitch](#H3DU_Math_YawRollPitch)
+* [.HalfPi](#H3DU.Math.HalfPi)
+* [.Num180DividedByPi](#H3DU.Math.Num180DividedByPi)
+* [.PiDividedBy180](#H3DU.Math.PiDividedBy180)
+* [.PiTimes2](#H3DU.Math.PiTimes2)
+* [.PitchRollYaw](#H3DU.Math.PitchRollYaw)
+* [.PitchYawRoll](#H3DU.Math.PitchYawRoll)
+* [.RollPitchYaw](#H3DU.Math.RollPitchYaw)
+* [.RollYawPitch](#H3DU.Math.RollYawPitch)
+* [.YawPitchRoll](#H3DU.Math.YawPitchRoll)
+* [.YawRollPitch](#H3DU.Math.YawRollPitch)
 
 ### Methods
 
-* [.quatCopy](#H3DU_Math_quatCopy)
-* [.quatDot](#H3DU_Math_quatDot)
-* [.quatInverse](#H3DU_Math_quatInverse)
-* [.quatLength](#H3DU_Math_quatLength)
-* [.quatNorm](#H3DU_Math_quatNorm)
-* [.quatNormInPlace](#H3DU_Math_quatNormInPlace)
-* [.quatScale](#H3DU_Math_quatScale)
-* [.quatScaleInPlace](#H3DU_Math_quatScaleInPlace)
-* [boxIsEmpty](#H3DU_Math_boxIsEmpty)
-* [frustumHasBox](#H3DU_Math_frustumHasBox)
-* [frustumHasPoint](#H3DU_Math_frustumHasPoint)
-* [frustumHasSphere](#H3DU_Math_frustumHasSphere)
-* [mat3identity](#H3DU_Math_mat3identity)
-* [mat3transform](#H3DU_Math_mat3transform)
-* [mat4copy](#H3DU_Math_mat4copy)
-* [mat4frustum](#H3DU_Math_mat4frustum)
-* [mat4identity](#H3DU_Math_mat4identity)
-* [mat4inverseTranspose3](#H3DU_Math_mat4inverseTranspose3)
-* [mat4invert](#H3DU_Math_mat4invert)
-* [mat4isIdentity](#H3DU_Math_mat4isIdentity)
-* [mat4lookat](#H3DU_Math_mat4lookat)
-* [mat4multiply](#H3DU_Math_mat4multiply)
-* [mat4ortho](#H3DU_Math_mat4ortho)
-* [mat4ortho2d](#H3DU_Math_mat4ortho2d)
-* [mat4ortho2dAspect](#H3DU_Math_mat4ortho2dAspect)
-* [mat4orthoAspect](#H3DU_Math_mat4orthoAspect)
-* [mat4perspective](#H3DU_Math_mat4perspective)
-* [mat4perspectiveHorizontal](#H3DU_Math_mat4perspectiveHorizontal)
-* [mat4projectVec3](#H3DU_Math_mat4projectVec3)
-* [mat4rotate](#H3DU_Math_mat4rotate)
-* [mat4rotated](#H3DU_Math_mat4rotated)
-* [mat4scale](#H3DU_Math_mat4scale)
-* [mat4scaleInPlace](#H3DU_Math_mat4scaleInPlace)
-* [mat4scaled](#H3DU_Math_mat4scaled)
-* [mat4toFrustumPlanes](#H3DU_Math_mat4toFrustumPlanes)
-* [mat4toMat3](#H3DU_Math_mat4toMat3)
-* [mat4transform](#H3DU_Math_mat4transform)
-* [mat4transformVec3](#H3DU_Math_mat4transformVec3)
-* [mat4translate](#H3DU_Math_mat4translate)
-* [mat4translated](#H3DU_Math_mat4translated)
-* [mat4transpose](#H3DU_Math_mat4transpose)
-* [mat4transposeInPlace](#H3DU_Math_mat4transposeInPlace)
-* [planeNorm](#H3DU_Math_planeNorm)
-* [planeNormInPlace](#H3DU_Math_planeNormInPlace)
-* [quatConjugate](#H3DU_Math_quatConjugate)
-* [quatFromAxisAngle](#H3DU_Math_quatFromAxisAngle)
-* [quatFromMat4](#H3DU_Math_quatFromMat4)
-* [quatFromTaitBryan](#H3DU_Math_quatFromTaitBryan)
-* [quatFromVectors](#H3DU_Math_quatFromVectors)
-* [quatIdentity](#H3DU_Math_quatIdentity)
-* [quatInvert](#H3DU_Math_quatInvert)
-* [quatIsIdentity](#H3DU_Math_quatIsIdentity)
-* [quatMultiply](#H3DU_Math_quatMultiply)
-* [quatNlerp](#H3DU_Math_quatNlerp)
-* [quatRotate](#H3DU_Math_quatRotate)
-* [quatSlerp](#H3DU_Math_quatSlerp)
-* [quatToAxisAngle](#H3DU_Math_quatToAxisAngle)
-* [quatToMat4](#H3DU_Math_quatToMat4)
-* [quatToTaitBryan](#H3DU_Math_quatToTaitBryan)
-* [quatTransform](#H3DU_Math_quatTransform)
-* [vec3add](#H3DU_Math_vec3add)
-* [vec3addInPlace](#H3DU_Math_vec3addInPlace)
-* [vec3assign](#H3DU_Math_vec3assign)
-* [vec3copy](#H3DU_Math_vec3copy)
-* [vec3cross](#H3DU_Math_vec3cross)
-* [vec3dot](#H3DU_Math_vec3dot)
-* [vec3length](#H3DU_Math_vec3length)
-* [vec3lerp](#H3DU_Math_vec3lerp)
-* [vec3mul](#H3DU_Math_vec3mul)
-* [vec3mulInPlace](#H3DU_Math_vec3mulInPlace)
-* [vec3negate](#H3DU_Math_vec3negate)
-* [vec3negateInPlace](#H3DU_Math_vec3negateInPlace)
-* [vec3norm](#H3DU_Math_vec3norm)
-* [vec3normInPlace](#H3DU_Math_vec3normInPlace)
-* [vec3scale](#H3DU_Math_vec3scale)
-* [vec3scaleInPlace](#H3DU_Math_vec3scaleInPlace)
-* [vec3sub](#H3DU_Math_vec3sub)
-* [vec3subInPlace](#H3DU_Math_vec3subInPlace)
-* [vec4assign](#H3DU_Math_vec4assign)
-* [vec4copy](#H3DU_Math_vec4copy)
-* [vec4dot](#H3DU_Math_vec4dot)
-* [vec4length](#H3DU_Math_vec4length)
-* [vec4lerp](#H3DU_Math_vec4lerp)
-* [vec4norm](#H3DU_Math_vec4norm)
-* [vec4normInPlace](#H3DU_Math_vec4normInPlace)
-* [vec4scale](#H3DU_Math_vec4scale)
-* [vec4scaleInPlace](#H3DU_Math_vec4scaleInPlace)
+* [.quatCopy](#H3DU.Math.quatCopy)
+* [.quatDot](#H3DU.Math.quatDot)
+* [.quatInverse](#H3DU.Math.quatInverse)
+* [.quatLength](#H3DU.Math.quatLength)
+* [.quatNorm](#H3DU.Math.quatNorm)
+* [.quatNormInPlace](#H3DU.Math.quatNormInPlace)
+* [.quatScale](#H3DU.Math.quatScale)
+* [.quatScaleInPlace](#H3DU.Math.quatScaleInPlace)
+* [boxIsEmpty](#H3DU.Math.boxIsEmpty)
+* [frustumHasBox](#H3DU.Math.frustumHasBox)
+* [frustumHasPoint](#H3DU.Math.frustumHasPoint)
+* [frustumHasSphere](#H3DU.Math.frustumHasSphere)
+* [mat3identity](#H3DU.Math.mat3identity)
+* [mat3transform](#H3DU.Math.mat3transform)
+* [mat4copy](#H3DU.Math.mat4copy)
+* [mat4frustum](#H3DU.Math.mat4frustum)
+* [mat4identity](#H3DU.Math.mat4identity)
+* [mat4inverseTranspose3](#H3DU.Math.mat4inverseTranspose3)
+* [mat4invert](#H3DU.Math.mat4invert)
+* [mat4isIdentity](#H3DU.Math.mat4isIdentity)
+* [mat4lookat](#H3DU.Math.mat4lookat)
+* [mat4multiply](#H3DU.Math.mat4multiply)
+* [mat4ortho](#H3DU.Math.mat4ortho)
+* [mat4ortho2d](#H3DU.Math.mat4ortho2d)
+* [mat4ortho2dAspect](#H3DU.Math.mat4ortho2dAspect)
+* [mat4orthoAspect](#H3DU.Math.mat4orthoAspect)
+* [mat4perspective](#H3DU.Math.mat4perspective)
+* [mat4perspectiveHorizontal](#H3DU.Math.mat4perspectiveHorizontal)
+* [mat4projectVec3](#H3DU.Math.mat4projectVec3)
+* [mat4rotate](#H3DU.Math.mat4rotate)
+* [mat4rotated](#H3DU.Math.mat4rotated)
+* [mat4scale](#H3DU.Math.mat4scale)
+* [mat4scaleInPlace](#H3DU.Math.mat4scaleInPlace)
+* [mat4scaled](#H3DU.Math.mat4scaled)
+* [mat4toFrustumPlanes](#H3DU.Math.mat4toFrustumPlanes)
+* [mat4toMat3](#H3DU.Math.mat4toMat3)
+* [mat4transform](#H3DU.Math.mat4transform)
+* [mat4transformVec3](#H3DU.Math.mat4transformVec3)
+* [mat4translate](#H3DU.Math.mat4translate)
+* [mat4translated](#H3DU.Math.mat4translated)
+* [mat4transpose](#H3DU.Math.mat4transpose)
+* [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)
+* [planeNorm](#H3DU.Math.planeNorm)
+* [planeNormInPlace](#H3DU.Math.planeNormInPlace)
+* [quatConjugate](#H3DU.Math.quatConjugate)
+* [quatFromAxisAngle](#H3DU.Math.quatFromAxisAngle)
+* [quatFromMat4](#H3DU.Math.quatFromMat4)
+* [quatFromTaitBryan](#H3DU.Math.quatFromTaitBryan)
+* [quatFromVectors](#H3DU.Math.quatFromVectors)
+* [quatIdentity](#H3DU.Math.quatIdentity)
+* [quatInvert](#H3DU.Math.quatInvert)
+* [quatIsIdentity](#H3DU.Math.quatIsIdentity)
+* [quatMultiply](#H3DU.Math.quatMultiply)
+* [quatNlerp](#H3DU.Math.quatNlerp)
+* [quatRotate](#H3DU.Math.quatRotate)
+* [quatSlerp](#H3DU.Math.quatSlerp)
+* [quatToAxisAngle](#H3DU.Math.quatToAxisAngle)
+* [quatToMat4](#H3DU.Math.quatToMat4)
+* [quatToTaitBryan](#H3DU.Math.quatToTaitBryan)
+* [quatTransform](#H3DU.Math.quatTransform)
+* [vec3add](#H3DU.Math.vec3add)
+* [vec3addInPlace](#H3DU.Math.vec3addInPlace)
+* [vec3assign](#H3DU.Math.vec3assign)
+* [vec3copy](#H3DU.Math.vec3copy)
+* [vec3cross](#H3DU.Math.vec3cross)
+* [vec3dot](#H3DU.Math.vec3dot)
+* [vec3length](#H3DU.Math.vec3length)
+* [vec3lerp](#H3DU.Math.vec3lerp)
+* [vec3mul](#H3DU.Math.vec3mul)
+* [vec3mulInPlace](#H3DU.Math.vec3mulInPlace)
+* [vec3negate](#H3DU.Math.vec3negate)
+* [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)
+* [vec3norm](#H3DU.Math.vec3norm)
+* [vec3normInPlace](#H3DU.Math.vec3normInPlace)
+* [vec3scale](#H3DU.Math.vec3scale)
+* [vec3scaleInPlace](#H3DU.Math.vec3scaleInPlace)
+* [vec3sub](#H3DU.Math.vec3sub)
+* [vec3subInPlace](#H3DU.Math.vec3subInPlace)
+* [vec4assign](#H3DU.Math.vec4assign)
+* [vec4copy](#H3DU.Math.vec4copy)
+* [vec4dot](#H3DU.Math.vec4dot)
+* [vec4length](#H3DU.Math.vec4length)
+* [vec4lerp](#H3DU.Math.vec4lerp)
+* [vec4norm](#H3DU.Math.vec4norm)
+* [vec4normInPlace](#H3DU.Math.vec4normInPlace)
+* [vec4scale](#H3DU.Math.vec4scale)
+* [vec4scaleInPlace](#H3DU.Math.vec4scaleInPlace)
 
-### H3DU.Math.HalfPi <a id='H3DU_Math_HalfPi'></a> (constant)
+### H3DU.Math.HalfPi <a id='H3DU.Math.HalfPi'></a> (constant)
 
 Closest approximation to pi divided by 2, or a 90-degree turn in radians.
 
 Default Value: `1.5707963267948966`
 
-### H3DU.Math.Num180DividedByPi <a id='H3DU_Math_Num180DividedByPi'></a> (constant)
+### H3DU.Math.Num180DividedByPi <a id='H3DU.Math.Num180DividedByPi'></a> (constant)
 
 Closest approximation to 180 divided by pi, or the number of
  degrees in a radian. Multiply by this number to convert radians to degrees.
 
 Default Value: `57.29577951308232`
 
-### H3DU.Math.PiDividedBy180 <a id='H3DU_Math_PiDividedBy180'></a> (constant)
+### H3DU.Math.PiDividedBy180 <a id='H3DU.Math.PiDividedBy180'></a> (constant)
 
 Closest approximation to pi divided by 180, or the number
  of radians in a degree. Multiply by this number to convert degrees to radians.
 
 Default Value: `0.017453292519943295`
 
-### H3DU.Math.PiTimes2 <a id='H3DU_Math_PiTimes2'></a> (constant)
+### H3DU.Math.PiTimes2 <a id='H3DU.Math.PiTimes2'></a> (constant)
 
 Closest approximation to pi times 2, or a 360-degree turn in radians.
 
 Default Value: `6.283185307179586`
 
-### H3DU.Math.PitchRollYaw <a id='H3DU_Math_PitchRollYaw'></a> (constant)
+### H3DU.Math.PitchRollYaw <a id='H3DU.Math.PitchRollYaw'></a> (constant)
 
 Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
 
-### H3DU.Math.PitchYawRoll <a id='H3DU_Math_PitchYawRoll'></a> (constant)
+### H3DU.Math.PitchYawRoll <a id='H3DU.Math.PitchYawRoll'></a> (constant)
 
 Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
 
-### H3DU.Math.RollPitchYaw <a id='H3DU_Math_RollPitchYaw'></a> (constant)
+### H3DU.Math.RollPitchYaw <a id='H3DU.Math.RollPitchYaw'></a> (constant)
 
 Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
 
-### H3DU.Math.RollYawPitch <a id='H3DU_Math_RollYawPitch'></a> (constant)
+### H3DU.Math.RollYawPitch <a id='H3DU.Math.RollYawPitch'></a> (constant)
 
 Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 
-### H3DU.Math.YawPitchRoll <a id='H3DU_Math_YawPitchRoll'></a> (constant)
+### H3DU.Math.YawPitchRoll <a id='H3DU.Math.YawPitchRoll'></a> (constant)
 
 Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 
-### H3DU.Math.YawRollPitch <a id='H3DU_Math_YawRollPitch'></a> (constant)
+### H3DU.Math.YawRollPitch <a id='H3DU.Math.YawRollPitch'></a> (constant)
 
 Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
-### H3DU.Math.quatCopy() <a id='H3DU_Math_quatCopy'></a>
+### H3DU.Math.quatCopy() <a id='H3DU.Math.quatCopy'></a>
 
 Returns a copy of a quaternion.
 
@@ -173,9 +173,9 @@ Return value. (Type: Array.&lt;Number>)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_vec4copy">H3DU.Math.vec4copy</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4copy">H3DU.Math.vec4copy</a>
 
-### H3DU.Math.quatDot(a, b) <a id='H3DU_Math_quatDot'></a>
+### H3DU.Math.quatDot(a, b) <a id='H3DU.Math.quatDot'></a>
 
 Finds the dot product of two quaternions.
 It's equal to the sum of the products of
@@ -194,11 +194,11 @@ Return value. (Type: Number)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_vec4dot">H3DU.Math.vec4dot</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4dot">H3DU.Math.vec4dot</a>
 
-### H3DU.Math.quatInverse(quat) <a id='H3DU_Math_quatInverse'></a>
+### H3DU.Math.quatInverse(quat) <a id='H3DU.Math.quatInverse'></a>
 
-<b>Deprecated: Use <a href="H3DU_Math.md#H3DU_Math_quatInvert">H3DU.Math.quatInvert</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatInvert">H3DU.Math.quatInvert</a> instead.</b>
 
 Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
 Returns a new quaternion; same as the quatInverse method.
@@ -212,7 +212,7 @@ Returns a new quaternion; same as the quatInverse method.
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Math.quatLength(quat) <a id='H3DU_Math_quatLength'></a>
+### H3DU.Math.quatLength(quat) <a id='H3DU.Math.quatLength'></a>
 
 Returns the distance of this quaternion from the origin.
 It's the same as the square root of the sum of the squares
@@ -229,9 +229,9 @@ Return value. (Type: Number)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_vec4length">H3DU.Math.vec4length</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4length">H3DU.Math.vec4length</a>
 
-### H3DU.Math.quatNorm(quat) <a id='H3DU_Math_quatNorm'></a>
+### H3DU.Math.quatNorm(quat) <a id='H3DU.Math.quatNorm'></a>
 
 Converts a quaternion to its normalized version; returns a new quaternion.
 When a quaternion is normalized, the distance from the origin
@@ -250,9 +250,9 @@ The normalized quaternion. (Type: Array.&lt;Number>)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_vec4norm">H3DU.Math.vec4norm</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a>
 
-### H3DU.Math.quatNormInPlace(quat) <a id='H3DU_Math_quatNormInPlace'></a>
+### H3DU.Math.quatNormInPlace(quat) <a id='H3DU.Math.quatNormInPlace'></a>
 
 Converts a quaternion to its normalized version.
 When a quaternion is normalized, it describes the same orientation but the distance from the origin
@@ -271,9 +271,9 @@ The parameter "quat". (Type: Array.&lt;Number>)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_vec4normInPlace">H3DU.Math.vec4normInPlace</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4normInPlace">H3DU.Math.vec4normInPlace</a>
 
-### H3DU.Math.quatScale(a, scalar) <a id='H3DU_Math_quatScale'></a>
+### H3DU.Math.quatScale(a, scalar) <a id='H3DU.Math.quatScale'></a>
 
 Multiplies each element of a quaternion by a factor
 and returns the result as a new quaternion.
@@ -291,9 +291,9 @@ The resulting quaternion. (Type: Array.&lt;Number>)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
 
-### H3DU.Math.quatScaleInPlace(a, scalar) <a id='H3DU_Math_quatScaleInPlace'></a>
+### H3DU.Math.quatScaleInPlace(a, scalar) <a id='H3DU.Math.quatScaleInPlace'></a>
 
 Multiplies each element of a quaternion by a factor
 and stores the result in that quaternion.
@@ -311,9 +311,9 @@ The parameter "a". (Type: Array.&lt;Number>)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
 
-### (static) H3DU.Math.boxIsEmpty(box) <a id='H3DU_Math_boxIsEmpty'></a>
+### (static) H3DU.Math.boxIsEmpty(box) <a id='H3DU.Math.boxIsEmpty'></a>
 
 Determines whether a bounding box is empty.
 This is determined if the minimum coordinate
@@ -330,7 +330,7 @@ is larger than the corresponding maximum coordinate.
 of the minimum coordinates is greater than its
 corresponding maximum coordinate; otherwise, <code>false</code>. (Type: Boolean)
 
-### (static) H3DU.Math.frustumHasBox(frustum, box) <a id='H3DU_Math_frustumHasBox'></a>
+### (static) H3DU.Math.frustumHasBox(frustum, box) <a id='H3DU.Math.frustumHasBox'></a>
 
 Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.
@@ -350,7 +350,7 @@ inside the frustum; <code>false</code> if the box is
 definitely outside the frustum, or if the box is empty
 (see "boxIsEmpty"). (Type: Boolean)
 
-### (static) H3DU.Math.frustumHasPoint(frustum, x, y, z) <a id='H3DU_Math_frustumHasPoint'></a>
+### (static) H3DU.Math.frustumHasPoint(frustum, x, y, z) <a id='H3DU.Math.frustumHasPoint'></a>
 
 Determines whether a point is
 outside or inside a view frustum.
@@ -371,7 +371,7 @@ outside or inside a view frustum.
 true if the point is inside;
 otherwise false; (Type: Boolean)
 
-### (static) H3DU.Math.frustumHasSphere(frustum, x, y, z, radius) <a id='H3DU_Math_frustumHasSphere'></a>
+### (static) H3DU.Math.frustumHasSphere(frustum, x, y, z, radius) <a id='H3DU.Math.frustumHasSphere'></a>
 
 Determines whether a sphere is at least
 partially inside a view frustum.
@@ -395,7 +395,7 @@ partially inside a view frustum.
 is partially or totally
 inside the frustum; <code>false</code> otherwise. (Type: Boolean)
 
-### (static) H3DU.Math.mat3identity() <a id='H3DU_Math_mat3identity'></a>
+### (static) H3DU.Math.mat3identity() <a id='H3DU.Math.mat3identity'></a>
 
 Returns the identity 3x3 matrix.
 
@@ -403,7 +403,7 @@ Returns the identity 3x3 matrix.
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat3transform(mat, v, vy, vz) <a id='H3DU_Math_mat3transform'></a>
+### (static) H3DU.Math.mat3transform(mat, v, vy, vz) <a id='H3DU.Math.mat3transform'></a>
 
 Transforms a 3-element vector with a 3x3 matrix and returns
 the transformed vector.
@@ -423,7 +423,7 @@ the transformed vector.
 
 The transformed vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4copy(mat) <a id='H3DU_Math_mat4copy'></a>
+### (static) H3DU.Math.mat4copy(mat) <a id='H3DU.Math.mat4copy'></a>
 
 Returns a copy of a 4x4 matrix.
 
@@ -436,7 +436,7 @@ Returns a copy of a 4x4 matrix.
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4frustum(l, r, b, t, near, far) <a id='H3DU_Math_mat4frustum'></a>
+### (static) H3DU.Math.mat4frustum(l, r, b, t, near, far) <a id='H3DU.Math.mat4frustum'></a>
 
 Returns a 4x4 matrix representing a perspective projection
 in the form of a view frustum, or the limits in the "camera"'s view.
@@ -471,7 +471,7 @@ This value should be greater than "near" and be set so that the ratio of "far" t
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4identity() <a id='H3DU_Math_mat4identity'></a>
+### (static) H3DU.Math.mat4identity() <a id='H3DU.Math.mat4identity'></a>
 
 Returns the identity 4x4 matrix.
 
@@ -479,7 +479,7 @@ Returns the identity 4x4 matrix.
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4inverseTranspose3(m4) <a id='H3DU_Math_mat4inverseTranspose3'></a>
+### (static) H3DU.Math.mat4inverseTranspose3(m4) <a id='H3DU.Math.mat4inverseTranspose3'></a>
 
 Returns the transposed result of the inverted 3x3 upper left corner of
 the given 4x4 matrix.
@@ -487,7 +487,7 @@ the given 4x4 matrix.
 This is usually used to convert a model-view matrix to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the world matrix. Normals are then
-transformed by this matrix and then converted to unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1). But if the
+transformed by this matrix and then converted to unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). But if the
 input matrix uses only rotations, translations, and/or uniform scaling
 (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 be used instead of the inverse-transpose matrix to transform the normals.
@@ -502,7 +502,7 @@ be used instead of the inverse-transpose matrix to transform the normals.
 The resulting 3x3 matrix. If the matrix
 can't be inverted, returns the identity 3x3 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4invert(m) <a id='H3DU_Math_mat4invert'></a>
+### (static) H3DU.Math.mat4invert(m) <a id='H3DU.Math.mat4invert'></a>
 
 Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
 
@@ -516,7 +516,7 @@ Finds the inverse of a 4x4 matrix, describing a transformation that undoes the g
 The resulting 4x4 matrix.
 Returns the identity matrix if this matrix is not invertible. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4isIdentity(mat) <a id='H3DU_Math_mat4isIdentity'></a>
+### (static) H3DU.Math.mat4isIdentity(mat) <a id='H3DU.Math.mat4isIdentity'></a>
 
 Returns whether a 4x4 matrix is the identity matrix.
 
@@ -529,7 +529,7 @@ Returns whether a 4x4 matrix is the identity matrix.
 
 Return value. (Type: Boolean)
 
-### (static) H3DU.Math.mat4lookat(viewerPos, [lookingAt], [up]) <a id='H3DU_Math_mat4lookat'></a>
+### (static) H3DU.Math.mat4lookat(viewerPos, [lookingAt], [up]) <a id='H3DU.Math.mat4lookat'></a>
 
 Returns a 4x4 matrix representing a camera view.
 
@@ -552,7 +552,7 @@ such as in legacy Direct3D, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11t
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4multiply(a, b) <a id='H3DU_Math_mat4multiply'></a>
+### (static) H3DU.Math.mat4multiply(a, b) <a id='H3DU.Math.mat4multiply'></a>
 
 Multiplies two 4x4 matrices. A new matrix is returned.
 The matrices are multiplied such that the transformations
@@ -572,7 +572,7 @@ the effect of scaling then translation.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4ortho(l, r, b, t, n, f) <a id='H3DU_Math_mat4ortho'></a>
+### (static) H3DU.Math.mat4ortho(l, r, b, t, n, f) <a id='H3DU.Math.mat4ortho'></a>
 
 Returns a 4x4 matrix representing an orthographic projection.
 In this projection, the left clipping plane is parallel to the right clipping
@@ -602,7 +602,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4ortho2d(l, r, b, t) <a id='H3DU_Math_mat4ortho2d'></a>
+### (static) H3DU.Math.mat4ortho2d(l, r, b, t) <a id='H3DU.Math.mat4ortho2d'></a>
 
 Returns a 4x4 matrix representing a 2D orthographic projection.
 
@@ -626,7 +626,7 @@ set to -1 and the far clipping plane set to 1.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4ortho2dAspect(l, r, b, t, aspect) <a id='H3DU_Math_mat4ortho2dAspect'></a>
+### (static) H3DU.Math.mat4ortho2dAspect(l, r, b, t, aspect) <a id='H3DU.Math.mat4ortho2dAspect'></a>
 
 Returns a 4x4 matrix representing a 2D orthographic projection,
 retaining the view rectangle's aspect ratio.
@@ -658,7 +658,7 @@ This method assumes a right-handed coordinate system; see mat4ortho().
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4orthoAspect(l, r, b, t, n, f, aspect) <a id='H3DU_Math_mat4orthoAspect'></a>
+### (static) H3DU.Math.mat4orthoAspect(l, r, b, t, n, f, aspect) <a id='H3DU.Math.mat4orthoAspect'></a>
 
 Returns a 4x4 matrix representing an orthographic projection,
 retaining the view rectangle's aspect ratio.
@@ -691,7 +691,7 @@ This method assumes a right-handed coordinate system; see mat4ortho().
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4perspective(fovY, aspectRatio, near, far) <a id='H3DU_Math_mat4perspective'></a>
+### (static) H3DU.Math.mat4perspective(fovY, aspectRatio, near, far) <a id='H3DU.Math.mat4perspective'></a>
 
 Returns a 4x4 matrix representing a perspective projection.
 
@@ -721,7 +721,7 @@ This value should be greater than "near" and be set so that the ratio of "far" t
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4perspectiveHorizontal(fovX, aspectRatio, near, far) <a id='H3DU_Math_mat4perspectiveHorizontal'></a>
+### (static) H3DU.Math.mat4perspectiveHorizontal(fovX, aspectRatio, near, far) <a id='H3DU.Math.mat4perspectiveHorizontal'></a>
 
 Returns a 4x4 matrix representing a perspective projection,
 given an X-axis field of view.
@@ -751,7 +751,7 @@ This value should be greater than "near" and be set so that the ratio of "far" t
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4projectVec3(mat, v, vy, vz) <a id='H3DU_Math_mat4projectVec3'></a>
+### (static) H3DU.Math.mat4projectVec3(mat, v, vy, vz) <a id='H3DU.Math.mat4projectVec3'></a>
 
 Transforms a 3-element vector with a 4x4 matrix and returns
 a perspective-correct transformation of the vector,
@@ -772,7 +772,7 @@ using all the elements of the 4x4 matrix.
 
 The transformed 3x3 vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4rotate(mat, angle, v, vy, vz) <a id='H3DU_Math_mat4rotate'></a>
+### (static) H3DU.Math.mat4rotate(mat, angle, v, vy, vz) <a id='H3DU.Math.mat4rotate'></a>
 
 Multiplies a 4x4 matrix by a rotation transformation,
 and returns a new matrix.
@@ -794,7 +794,7 @@ and returns a new matrix.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4rotated(angle, v, vy, vz) <a id='H3DU_Math_mat4rotated'></a>
+### (static) H3DU.Math.mat4rotated(angle, v, vy, vz) <a id='H3DU.Math.mat4rotated'></a>
 
 Returns a 4x4 matrix representing a rotation transformation.
 
@@ -813,7 +813,7 @@ Returns a 4x4 matrix representing a rotation transformation.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4scale(mat, v3, v3y, v3z) <a id='H3DU_Math_mat4scale'></a>
+### (static) H3DU.Math.mat4scale(mat, v3, v3y, v3z) <a id='H3DU.Math.mat4scale'></a>
 
 Multiplies a 4x4 matrix by a scaling transformation.
 
@@ -832,7 +832,7 @@ Multiplies a 4x4 matrix by a scaling transformation.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4scaleInPlace(mat, v3, v3y, v3z) <a id='H3DU_Math_mat4scaleInPlace'></a>
+### (static) H3DU.Math.mat4scaleInPlace(mat, v3, v3y, v3z) <a id='H3DU.Math.mat4scaleInPlace'></a>
 
 Modifies a 4x4 matrix by multiplying it by a
 scaling transformation.
@@ -852,7 +852,7 @@ scaling transformation.
 
 The same parameter as "mat". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4scaled(v3, v3y, v3z) <a id='H3DU_Math_mat4scaled'></a>
+### (static) H3DU.Math.mat4scaled(v3, v3y, v3z) <a id='H3DU.Math.mat4scaled'></a>
 
 Returns a 4x4 matrix representing a scaling transformation.
 
@@ -869,7 +869,7 @@ Returns a 4x4 matrix representing a scaling transformation.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4toFrustumPlanes(matrix) <a id='H3DU_Math_mat4toFrustumPlanes'></a>
+### (static) H3DU.Math.mat4toFrustumPlanes(matrix) <a id='H3DU.Math.mat4toFrustumPlanes'></a>
 
 Finds the six clipping planes of a view frustum defined
 by a 4x4 matrix. These six planes together form the
@@ -892,9 +892,9 @@ An array of six
 4-element arrays representing the six clipping planes of the
 view frustum. In order, they are the left, right, top,
 bottom, near, and far clipping planes. The normals of all six planes
-will be unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Array.&lt;Number>>)
+will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Array.&lt;Number>>)
 
-### (static) H3DU.Math.mat4toMat3(m4) <a id='H3DU_Math_mat4toMat3'></a>
+### (static) H3DU.Math.mat4toMat3(m4) <a id='H3DU.Math.mat4toMat3'></a>
 
 Returns the upper-left part of a 4x4 matrix as a new
 3x3 matrix.
@@ -908,7 +908,7 @@ Returns the upper-left part of a 4x4 matrix as a new
 
 The resulting 3x3 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4transform(mat, v, vy, vz, vw) <a id='H3DU_Math_mat4transform'></a>
+### (static) H3DU.Math.mat4transform(mat, v, vy, vz, vw) <a id='H3DU.Math.mat4transform'></a>
 
 Transforms a 4-element vector with a 4x4 matrix and returns
 the transformed vector.
@@ -930,7 +930,7 @@ the transformed vector.
 
 The transformed vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4transformVec3(mat, v, vy, vz) <a id='H3DU_Math_mat4transformVec3'></a>
+### (static) H3DU.Math.mat4transformVec3(mat, v, vy, vz) <a id='H3DU.Math.mat4transformVec3'></a>
 
 Transforms a 3-element vector with a 4x4 matrix and returns
 the transformed vector. The effect is as though elements
@@ -943,7 +943,7 @@ vector had a fourth element valued at 1.
 For transforming 3-dimensional coordinates
 with a matrix that may be in a perspective
 projection (whose last row is not necessarily (0, 0, 0, 1)), use
-the <a href="H3DU_Math.md#H3DU_Math_mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead.
+the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead.
 
 #### Parameters
 
@@ -960,7 +960,7 @@ the <a href="H3DU_Math.md#H3DU_Math_mat4projectVec3">H3DU.Math.mat4projectVec3</
 
 The transformed 3x3 vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4translate(mat, v3, v3y, v3z) <a id='H3DU_Math_mat4translate'></a>
+### (static) H3DU.Math.mat4translate(mat, v3, v3y, v3z) <a id='H3DU.Math.mat4translate'></a>
 
 Multiplies a 4x4 matrix by a translation transformation.
 
@@ -979,7 +979,7 @@ Multiplies a 4x4 matrix by a translation transformation.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4translated(v3, v3y, v3z) <a id='H3DU_Math_mat4translated'></a>
+### (static) H3DU.Math.mat4translated(v3, v3y, v3z) <a id='H3DU.Math.mat4translated'></a>
 
 Returns a 4x4 matrix representing a translation.
 
@@ -996,7 +996,7 @@ Returns a 4x4 matrix representing a translation.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4transpose(m4) <a id='H3DU_Math_mat4transpose'></a>
+### (static) H3DU.Math.mat4transpose(m4) <a id='H3DU.Math.mat4transpose'></a>
 
 Returns the transpose of a 4x4 matrix.
 
@@ -1009,7 +1009,7 @@ Returns the transpose of a 4x4 matrix.
 
 The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.mat4transposeInPlace(mat) <a id='H3DU_Math_mat4transposeInPlace'></a>
+### (static) H3DU.Math.mat4transposeInPlace(mat) <a id='H3DU.Math.mat4transposeInPlace'></a>
 
 Transposes a 4x4 matrix in place without creating
 a new matrix.
@@ -1023,7 +1023,7 @@ a new matrix.
 
 The parameter "mat". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.planeNorm(plane) <a id='H3DU_Math_planeNorm'></a>
+### (static) H3DU.Math.planeNorm(plane) <a id='H3DU.Math.planeNorm'></a>
 
 Normalizes this plane so that its normal is unit
 length (unless all the normal's components are 0).
@@ -1040,9 +1040,9 @@ normal's length. Returns a new plane.
 A normalized version of
 the plane. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.planeNormInPlace(plane) <a id='H3DU_Math_planeNormInPlace'></a>
+### (static) H3DU.Math.planeNormInPlace(plane) <a id='H3DU.Math.planeNormInPlace'></a>
 
-Normalizes this plane so that its normal is a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1),
+Normalizes this plane so that its normal is a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1),
 unless all the normal's components are 0.
 The plane's distance will be divided by the
 current normal's length.
@@ -1056,10 +1056,10 @@ current normal's length.
 
 The parameter "plane". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatConjugate(quat) <a id='H3DU_Math_quatConjugate'></a>
+### (static) H3DU.Math.quatConjugate(quat) <a id='H3DU.Math.quatConjugate'></a>
 
 Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-but without changing its length (the return value won't necessarily be a unit vector, a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+but without changing its length (the return value won't necessarily be a unit vector, a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 Returns a new quaternion.
 
 #### Parameters
@@ -1071,7 +1071,7 @@ Returns a new quaternion.
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatFromAxisAngle(angle, v, vy, vz) <a id='H3DU_Math_quatFromAxisAngle'></a>
+### (static) H3DU.Math.quatFromAxisAngle(angle, v, vy, vz) <a id='H3DU.Math.quatFromAxisAngle'></a>
 
 Generates a quaternion from an angle and axis of rotation.
 (The axis of rotation is a ray that starts at the
@@ -1092,7 +1092,7 @@ origin (0,0,0) and points toward a 3D point.)
 
 The generated quaternion. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatFromMat4(m) <a id='H3DU_Math_quatFromMat4'></a>
+### (static) H3DU.Math.quatFromMat4(m) <a id='H3DU.Math.quatFromMat4'></a>
 
 Generates a quaternion from the rotation described in a 4x4 matrix.
 The upper 3x3 portion of the matrix is used for this calculation.
@@ -1107,7 +1107,7 @@ The results are undefined if the matrix includes shearing.
 
 The resulting quaternion. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatFromTaitBryan(pitchDegrees, yawDegrees, rollDegrees, [mode]) <a id='H3DU_Math_quatFromTaitBryan'></a>
+### (static) H3DU.Math.quatFromTaitBryan(pitchDegrees, yawDegrees, rollDegrees, [mode]) <a id='H3DU.Math.quatFromTaitBryan'></a>
 
 Generates a quaternion from pitch, yaw and roll angles.
 In the parameters given below, when the axis of rotation
@@ -1132,13 +1132,13 @@ origin (0,0,0) and points toward a 3D point.)
 
 The generated quaternion. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatFromVectors(vec1, vec2) <a id='H3DU_Math_quatFromVectors'></a>
+### (static) H3DU.Math.quatFromVectors(vec1, vec2) <a id='H3DU.Math.quatFromVectors'></a>
 
 Generates a quaternion describing a rotation between
 two 3-element vectors. The quaternion
 will describe the rotation required to rotate
 the ray described in the first vector toward the ray described
-in the second vector. The vectors need not be unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1).
+in the second vector. The vectors need not be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1).
 
 #### Parameters
 
@@ -1150,9 +1150,9 @@ in the second vector. The vectors need not be unit vectors (<a href="H3DU_Math.m
 #### Return Value
 
 The generated quaternion, which
-will be unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Number>)
+will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatIdentity() <a id='H3DU_Math_quatIdentity'></a>
+### (static) H3DU.Math.quatIdentity() <a id='H3DU.Math.quatIdentity'></a>
 
 Returns the identity quaternion of multiplication, (0, 0, 0, 1).
 
@@ -1160,10 +1160,10 @@ Returns the identity quaternion of multiplication, (0, 0, 0, 1).
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatInvert(quat) <a id='H3DU_Math_quatInvert'></a>
+### (static) H3DU.Math.quatInvert(quat) <a id='H3DU.Math.quatInvert'></a>
 
 Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-and converts this quaternion to a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+and converts this quaternion to a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 Returns a new quaternion.
 
 #### Parameters
@@ -1177,9 +1177,9 @@ Return value. (Type: Array.&lt;Number>)
 
 #### See Also
 
-<a href="H3DU_Math.md#H3DU_Math_quatConjugate">H3DU.Math.quatConjugate</a>
+<a href="H3DU.Math.md#H3DU.Math.quatConjugate">H3DU.Math.quatConjugate</a>
 
-### (static) H3DU.Math.quatIsIdentity(quat) <a id='H3DU_Math_quatIsIdentity'></a>
+### (static) H3DU.Math.quatIsIdentity(quat) <a id='H3DU.Math.quatIsIdentity'></a>
 
 #### Parameters
 
@@ -1190,7 +1190,7 @@ Return value. (Type: Array.&lt;Number>)
 
 Return value. (Type: Boolean)
 
-### (static) H3DU.Math.quatMultiply(a, b) <a id='H3DU_Math_quatMultiply'></a>
+### (static) H3DU.Math.quatMultiply(a, b) <a id='H3DU.Math.quatMultiply'></a>
 
 Multiplies two quaternions, creating a composite rotation.
 The quaternions are multiplied such that the second quaternion's
@@ -1213,7 +1213,7 @@ multiplications can cause rounding errors.
 
 The resulting quaternion. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatNlerp(q1, q2, factor) <a id='H3DU_Math_quatNlerp'></a>
+### (static) H3DU.Math.quatNlerp(q1, q2, factor) <a id='H3DU.Math.quatNlerp'></a>
 
 Does a linear interpolation between two quaternions;
 returns a new quaternion.
@@ -1221,7 +1221,7 @@ returns a new quaternion.
 #### Parameters
 
 * `q1` (Type: Array.&lt;Number>)<br>
-    The first quaternion. Should be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+    The first quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 * `q2` (Type: Array.&lt;Number>)<br>
     The second quaternion. Should be a unit vector.
 * `factor` (Type: Number)<br>
@@ -1230,9 +1230,9 @@ returns a new quaternion.
 #### Return Value
 
 The interpolated quaternion,
-which will be unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Number>)
+which will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatRotate(quat, angle, v, vy, vz) <a id='H3DU_Math_quatRotate'></a>
+### (static) H3DU.Math.quatRotate(quat, angle, v, vy, vz) <a id='H3DU.Math.quatRotate'></a>
 
 Multiplies a quaternion by a rotation transformation
 described as an angle and axis of rotation.
@@ -1260,7 +1260,7 @@ This method is equivalent to the following:
 
 The resulting quaternion. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatSlerp(q1, q2, factor) <a id='H3DU_Math_quatSlerp'></a>
+### (static) H3DU.Math.quatSlerp(q1, q2, factor) <a id='H3DU.Math.quatSlerp'></a>
 
 Does a spherical linear interpolation between two quaternions;
 returns a new quaternion.
@@ -1270,7 +1270,7 @@ rotations they describe.
 #### Parameters
 
 * `q1` (Type: Array.&lt;Number>)<br>
-    The first quaternion. Should be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+    The first quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 * `q2` (Type: Array.&lt;Number>)<br>
     The second quaternion. Should be a unit vector.
 * `factor` (Type: Number)<br>
@@ -1280,7 +1280,7 @@ rotations they describe.
 
 The interpolated quaternion. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatToAxisAngle(a) <a id='H3DU_Math_quatToAxisAngle'></a>
+### (static) H3DU.Math.quatToAxisAngle(a) <a id='H3DU.Math.quatToAxisAngle'></a>
 
 Calculates the angle and axis of rotation for this
 quaternion. (The axis of rotation is a ray that starts at the
@@ -1289,7 +1289,7 @@ origin (0,0,0) and points toward a 3D point.)
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
-    A quaternion. Must be unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1).
+    A quaternion. Must be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1).
 
 #### Return Value
 
@@ -1300,7 +1300,7 @@ points toward the viewer, a positive value means the angle runs in
 a counterclockwise direction for right-handed coordinate systems and
 in a clockwise direction for left-handed systems. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatToMat4(quat) <a id='H3DU_Math_quatToMat4'></a>
+### (static) H3DU.Math.quatToMat4(quat) <a id='H3DU.Math.quatToMat4'></a>
 
 Generates a 4x4 matrix describing the rotation
 described by this quaternion.
@@ -1314,7 +1314,7 @@ described by this quaternion.
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatToTaitBryan(a, [mode]) <a id='H3DU_Math_quatToTaitBryan'></a>
+### (static) H3DU.Math.quatToTaitBryan(a, [mode]) <a id='H3DU.Math.quatToTaitBryan'></a>
 
 Converts this quaternion to the same version of the rotation
 in the form of pitch, yaw, and roll angles.
@@ -1322,7 +1322,7 @@ in the form of pitch, yaw, and roll angles.
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
-    A quaternion. Should be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+    A quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 * `mode` (Type: Number) (optional)<br>
     Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
 
@@ -1335,7 +1335,7 @@ points toward the viewer, a positive value means the angle runs in
 a counterclockwise direction for right-handed coordinate systems and
 in a clockwise direction for left-handed systems. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.quatTransform(q, v) <a id='H3DU_Math_quatTransform'></a>
+### (static) H3DU.Math.quatTransform(q, v) <a id='H3DU.Math.quatTransform'></a>
 
 Transforms a 3- or 4-element vector using a quaternion's rotation.
 
@@ -1353,7 +1353,7 @@ the transformed vector. The fourth element will be 1.0.
 If the input vector has 3 elements, a 3-element vector will
 be returned instead. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3add(a, b) <a id='H3DU_Math_vec3add'></a>
+### (static) H3DU.Math.vec3add(a, b) <a id='H3DU.Math.vec3add'></a>
 
 Adds two 3-element vectors and returns a new
 vector with the result. Adding two vectors
@@ -1370,7 +1370,7 @@ is the same as adding each of their components.
 
 The resulting 3-element vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3addInPlace(a, b) <a id='H3DU_Math_vec3addInPlace'></a>
+### (static) H3DU.Math.vec3addInPlace(a, b) <a id='H3DU.Math.vec3addInPlace'></a>
 
 Adds two 3-element vectors and stores
 the result in the first vector. Adding two vectors
@@ -1387,7 +1387,7 @@ is the same as adding each of their components.
 
 The parameter "a" (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3assign(dst, src) <a id='H3DU_Math_vec3assign'></a>
+### (static) H3DU.Math.vec3assign(dst, src) <a id='H3DU.Math.vec3assign'></a>
 
 Assigns the values of a 3-element vector into another
 3-element vector.
@@ -1403,7 +1403,7 @@ Assigns the values of a 3-element vector into another
 
 The parameter "dst" (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3copy(vec) <a id='H3DU_Math_vec3copy'></a>
+### (static) H3DU.Math.vec3copy(vec) <a id='H3DU.Math.vec3copy'></a>
 
 Returns a copy of a 3-element vector.
 
@@ -1416,7 +1416,7 @@ Returns a copy of a 3-element vector.
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3cross(a, b) <a id='H3DU_Math_vec3cross'></a>
+### (static) H3DU.Math.vec3cross(a, b) <a id='H3DU.Math.vec3cross'></a>
 
 Finds the cross product of two 3-element vectors (called A and B).
 The following are properties of
@@ -1431,7 +1431,7 @@ If the cross product of A and B has a positive Z component, the triangle's point
 oriented counterclockwise; otherwise, clockwise. (If the X axis points right and the Y
 axis down, the reverse is
 true.) The triangle's area is half of the cross product's length.
-<li>If A and B are unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1), the absolute value
+<li>If A and B are unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the absolute value
 of the sine of the shortest angle between them is equal to the length of their
 cross product. <small>(More formally, the length of the cross
 product equals |<b>a</b>| \* |<b>b</b>| \* |sin &theta;|;
@@ -1471,7 +1471,7 @@ calculate a triangle's normal vector and its area.
      // Find the triangle's area
      var area=H3DU.Math.vec3length(normal)\*0.5;
 
-### (static) H3DU.Math.vec3dot(a, b) <a id='H3DU_Math_vec3dot'></a>
+### (static) H3DU.Math.vec3dot(a, b) <a id='H3DU.Math.vec3dot'></a>
 
 Finds the dot product of two 3-element vectors. It's the
 sum of the products of their components (for example, <b>a</b>'s X times
@@ -1479,7 +1479,7 @@ sum of the products of their components (for example, <b>a</b>'s X times
 
 The dot product has the following properties:
 <ul>
-<li>If both vectors are unit vectors (<a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vectors</a> with a length of 1), the cosine
+<li>If both vectors are unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the cosine
 of the angle between them is equal to their dot product.
 <small>(More formally, the dot
 product equals |<b>a</b>| \* |<b>b</b>| \* cos &theta;
@@ -1515,7 +1515,7 @@ a vector's length using the dot product.
      // The vector's length is shorter than 20 units
     }
 
-### (static) H3DU.Math.vec3length(a) <a id='H3DU_Math_vec3length'></a>
+### (static) H3DU.Math.vec3length(a) <a id='H3DU.Math.vec3length'></a>
 
 Returns the distance of this 3-element vector from the origin.
 It's the same as the square root of the sum of the squares
@@ -1530,7 +1530,7 @@ of its components.
 
 Return value. (Type: Number)
 
-### (static) H3DU.Math.vec3lerp(v1, v2, factor) <a id='H3DU_Math_vec3lerp'></a>
+### (static) H3DU.Math.vec3lerp(v1, v2, factor) <a id='H3DU.Math.vec3lerp'></a>
 
 Does a linear interpolation between two 3-element vectors;
 returns a new vector.
@@ -1548,7 +1548,7 @@ returns a new vector.
 
 The interpolated vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3mul(a, b) <a id='H3DU_Math_vec3mul'></a>
+### (static) H3DU.Math.vec3mul(a, b) <a id='H3DU.Math.vec3mul'></a>
 
 Multiplies two vectors and returns a new
 vector with the result. Multiplying two vectors
@@ -1565,7 +1565,7 @@ is the same as multiplying each of their components.
 
 The resulting 3-element vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3mulInPlace(a, b) <a id='H3DU_Math_vec3mulInPlace'></a>
+### (static) H3DU.Math.vec3mulInPlace(a, b) <a id='H3DU.Math.vec3mulInPlace'></a>
 
 Multiplies two 3-element vectors and stores
 the result in the first vector. Multiplying two vectors
@@ -1582,7 +1582,7 @@ is the same as multiplying each of their components.
 
 The parameter "a" (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3negate(a) <a id='H3DU_Math_vec3negate'></a>
+### (static) H3DU.Math.vec3negate(a) <a id='H3DU.Math.vec3negate'></a>
 
 Negates a 3-element vector and returns a new
 vector with the result. Negating a vector
@@ -1597,7 +1597,7 @@ is the same as reversing the sign of each of its components.
 
 The resulting 3-element vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3negateInPlace(a) <a id='H3DU_Math_vec3negateInPlace'></a>
+### (static) H3DU.Math.vec3negateInPlace(a) <a id='H3DU.Math.vec3negateInPlace'></a>
 
 Negates a 3-element vector in place.
 Negating a vector
@@ -1612,7 +1612,7 @@ is the same as reversing the sign of each of its components.
 
 The parameter "a". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3norm(vec) <a id='H3DU_Math_vec3norm'></a>
+### (static) H3DU.Math.vec3norm(vec) <a id='H3DU.Math.vec3norm'></a>
 
 Returns a normalized version of a 3-element vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
@@ -1629,7 +1629,7 @@ by its length.
 
 The resulting vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3normInPlace(vec) <a id='H3DU_Math_vec3normInPlace'></a>
+### (static) H3DU.Math.vec3normInPlace(vec) <a id='H3DU.Math.vec3normInPlace'></a>
 
 Converts a 3-element vector to its normalized version.
 When a vector is normalized, its direction remains the same but the distance from the origin
@@ -1646,7 +1646,7 @@ by its length.
 
 The parameter "vec". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU_Math_vec3scale'></a>
+### (static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a>
 
 Multiplies a 3-element vector by a factor
 (thus multiplying that vector's length by that factor)
@@ -1663,7 +1663,7 @@ and returns a new vector with the result.
 
 The parameter "a". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3scaleInPlace(a, scalar) <a id='H3DU_Math_vec3scaleInPlace'></a>
+### (static) H3DU.Math.vec3scaleInPlace(a, scalar) <a id='H3DU.Math.vec3scaleInPlace'></a>
 
 Multiplies each element of a 3-element vector by a factor
 (thus multiplying that vector's length by that factor)
@@ -1680,7 +1680,7 @@ and stores the result in that vector.
 
 The parameter "a". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3sub(a, b) <a id='H3DU_Math_vec3sub'></a>
+### (static) H3DU.Math.vec3sub(a, b) <a id='H3DU.Math.vec3sub'></a>
 
 Subtracts the second vector from the first vector and returns a new
 vector with the result. Subtracting two vectors
@@ -1698,7 +1698,7 @@ is the same as subtracting each of their components.
 The resulting 3-element vector.
 This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec3subInPlace(a, b) <a id='H3DU_Math_vec3subInPlace'></a>
+### (static) H3DU.Math.vec3subInPlace(a, b) <a id='H3DU.Math.vec3subInPlace'></a>
 
 Subtracts the second vector from the first vector and stores
 the result in the first vector. Subtracting two vectors
@@ -1715,7 +1715,7 @@ is the same as subtracting each of their components.
 
 The parameter "a" (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec4assign(dst, src) <a id='H3DU_Math_vec4assign'></a>
+### (static) H3DU.Math.vec4assign(dst, src) <a id='H3DU.Math.vec4assign'></a>
 
 Assigns the values of a 4-element vector into another
 4-element vector.
@@ -1731,7 +1731,7 @@ Assigns the values of a 4-element vector into another
 
 The parameter "dst". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec4copy(vec) <a id='H3DU_Math_vec4copy'></a>
+### (static) H3DU.Math.vec4copy(vec) <a id='H3DU.Math.vec4copy'></a>
 
 Returns a copy of a 4-element vector.
 
@@ -1744,7 +1744,7 @@ Returns a copy of a 4-element vector.
 
 Return value. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec4dot(a, b) <a id='H3DU_Math_vec4dot'></a>
+### (static) H3DU.Math.vec4dot(a, b) <a id='H3DU.Math.vec4dot'></a>
 
 Finds the dot product of two 4-element vectors. It's the
 sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
@@ -1760,7 +1760,7 @@ sum of the products of their components (for example, <b>a</b>'s X times <b>b</b
 
 Return value. (Type: Object)
 
-### (static) H3DU.Math.vec4length(a) <a id='H3DU_Math_vec4length'></a>
+### (static) H3DU.Math.vec4length(a) <a id='H3DU.Math.vec4length'></a>
 
 Returns the distance of this 4-element vector from the origin.
 It's the same as the square root of the sum of the squares
@@ -1775,7 +1775,7 @@ of its components.
 
 Return value. (Type: Number)
 
-### (static) H3DU.Math.vec4lerp(v1, v2, factor) <a id='H3DU_Math_vec4lerp'></a>
+### (static) H3DU.Math.vec4lerp(v1, v2, factor) <a id='H3DU.Math.vec4lerp'></a>
 
 Does a linear interpolation between two 4-element vectors;
 returns a new vector.
@@ -1793,7 +1793,7 @@ returns a new vector.
 
 The interpolated vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec4norm(vec) <a id='H3DU_Math_vec4norm'></a>
+### (static) H3DU.Math.vec4norm(vec) <a id='H3DU.Math.vec4norm'></a>
 
 Returns a normalized version of a 4-element vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
@@ -1810,7 +1810,7 @@ by its length.
 
 The resulting vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec4normInPlace(vec) <a id='H3DU_Math_vec4normInPlace'></a>
+### (static) H3DU.Math.vec4normInPlace(vec) <a id='H3DU.Math.vec4normInPlace'></a>
 
 Converts a 4-element vector to its normalized version.
 When a vector is normalized, its direction remains the same but the distance from the origin
@@ -1827,7 +1827,7 @@ by its length.
 
 The parameter "vec". (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec4scale(a, scalar) <a id='H3DU_Math_vec4scale'></a>
+### (static) H3DU.Math.vec4scale(a, scalar) <a id='H3DU.Math.vec4scale'></a>
 
 Multiplies each element of a 4-element vector by a factor
 (thus multiplying that vector's length by that factor)
@@ -1844,7 +1844,7 @@ and returns a new vector with the result.
 
 The resulting 4-element vector. (Type: Array.&lt;Number>)
 
-### (static) H3DU.Math.vec4scaleInPlace(a, scalar) <a id='H3DU_Math_vec4scaleInPlace'></a>
+### (static) H3DU.Math.vec4scaleInPlace(a, scalar) <a id='H3DU.Math.vec4scaleInPlace'></a>
 
 Multiplies each element of a 4-element vector by a factor
 (thus multiplying that vector's length by that factor)

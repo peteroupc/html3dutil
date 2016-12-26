@@ -2,31 +2,31 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Transform() <a id='H3DU_Transform'></a>
+### H3DU.Transform() <a id='H3DU.Transform'></a>
 
 A class offering a convenient way to set a transformation
 from one coordinate system to another.
 
 ### Methods
 
-* [copy](#H3DU_Transform_H3DU_Transform_copy)
-* [getMatrix](#H3DU_Transform_H3DU_Transform_getMatrix)
-* [getPosition](#H3DU_Transform_H3DU_Transform_getPosition)
-* [getQuaternion](#H3DU_Transform_H3DU_Transform_getQuaternion)
-* [getScale](#H3DU_Transform_H3DU_Transform_getScale)
-* [isIdentity](#H3DU_Transform_H3DU_Transform_isIdentity)
-* [movePosition](#H3DU_Transform_H3DU_Transform_movePosition)
-* [multOrientation](#H3DU_Transform_H3DU_Transform_multOrientation)
-* [multQuaternion](#H3DU_Transform_H3DU_Transform_multQuaternion)
-* [reset](#H3DU_Transform_H3DU_Transform_reset)
-* [resetTransform](#H3DU_Transform_H3DU_Transform_resetTransform)
-* [setMatrix](#H3DU_Transform_H3DU_Transform_setMatrix)
-* [setOrientation](#H3DU_Transform_H3DU_Transform_setOrientation)
-* [setPosition](#H3DU_Transform_H3DU_Transform_setPosition)
-* [setQuaternion](#H3DU_Transform_H3DU_Transform_setQuaternion)
-* [setScale](#H3DU_Transform_H3DU_Transform_setScale)
+* [copy](#H3DU.Transform_H3DU.Transform_copy)
+* [getMatrix](#H3DU.Transform_H3DU.Transform_getMatrix)
+* [getPosition](#H3DU.Transform_H3DU.Transform_getPosition)
+* [getQuaternion](#H3DU.Transform_H3DU.Transform_getQuaternion)
+* [getScale](#H3DU.Transform_H3DU.Transform_getScale)
+* [isIdentity](#H3DU.Transform_H3DU.Transform_isIdentity)
+* [movePosition](#H3DU.Transform_H3DU.Transform_movePosition)
+* [multOrientation](#H3DU.Transform_H3DU.Transform_multOrientation)
+* [multQuaternion](#H3DU.Transform_H3DU.Transform_multQuaternion)
+* [reset](#H3DU.Transform_H3DU.Transform_reset)
+* [resetTransform](#H3DU.Transform_H3DU.Transform_resetTransform)
+* [setMatrix](#H3DU.Transform_H3DU.Transform_setMatrix)
+* [setOrientation](#H3DU.Transform_H3DU.Transform_setOrientation)
+* [setPosition](#H3DU.Transform_H3DU.Transform_setPosition)
+* [setQuaternion](#H3DU.Transform_H3DU.Transform_setQuaternion)
+* [setScale](#H3DU.Transform_H3DU.Transform_setScale)
 
-### H3DU.Transform#copy() <a id='H3DU_Transform_H3DU_Transform_copy'></a>
+### H3DU.Transform#copy() <a id='H3DU.Transform_H3DU.Transform_copy'></a>
 
 Makes a copy of this object. The copied object
 will have its own version of the rotation, scale,
@@ -34,9 +34,9 @@ position, and matrix data.
 
 #### Return Value
 
-A copy of this object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+A copy of this object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Transform#getMatrix() <a id='H3DU_Transform_H3DU_Transform_getMatrix'></a>
+### H3DU.Transform#getMatrix() <a id='H3DU.Transform_H3DU.Transform_getMatrix'></a>
 
 Gets the transformation matrix used by an object. Depending
 on the state of this object, will return either:<ul>
@@ -51,7 +51,7 @@ multiplied in that order, otherwise.
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Transform#getPosition() <a id='H3DU_Transform_H3DU_Transform_getPosition'></a>
+### H3DU.Transform#getPosition() <a id='H3DU.Transform_H3DU.Transform_getPosition'></a>
 
 Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
 of an object relative to its original position.
@@ -60,7 +60,7 @@ of an object relative to its original position.
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Transform#getQuaternion() <a id='H3DU_Transform_H3DU_Transform_getQuaternion'></a>
+### H3DU.Transform#getQuaternion() <a id='H3DU.Transform_H3DU.Transform_getQuaternion'></a>
 
 Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 
@@ -68,7 +68,7 @@ Returns a copy of the rotation of an object in the form of a <a href="tutorial-g
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Transform#getScale() <a id='H3DU_Transform_H3DU_Transform_getScale'></a>
+### H3DU.Transform#getScale() <a id='H3DU.Transform_H3DU.Transform_getScale'></a>
 
 Returns a copy of a three-element array giving the scaling for an object's width,
 height, and depth, respectively.
@@ -78,7 +78,7 @@ For each component, 1 means no scaling.
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Transform#isIdentity() <a id='H3DU_Transform_H3DU_Transform_isIdentity'></a>
+### H3DU.Transform#isIdentity() <a id='H3DU.Transform_H3DU.Transform_isIdentity'></a>
 
 Returns whether this transform is the identity transform.
 
@@ -86,7 +86,7 @@ Returns whether this transform is the identity transform.
 
 Return value. (Type: Boolean)
 
-### H3DU.Transform#movePosition(x, y, z) <a id='H3DU_Transform_H3DU_Transform_movePosition'></a>
+### H3DU.Transform#movePosition(x, y, z) <a id='H3DU.Transform_H3DU.Transform_movePosition'></a>
 
 Moves the relative position of an object from its original
 position. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
@@ -103,9 +103,9 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Transform#multOrientation(angle, v, vy, vz) <a id='H3DU_Transform_H3DU_Transform_multOrientation'></a>
+### H3DU.Transform#multOrientation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_multOrientation'></a>
 
 Combines an object's current rotation with another rotation
 in the form of an angle and an axis of
@@ -127,9 +127,9 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Transform#multQuaternion(quat) <a id='H3DU_Transform_H3DU_Transform_multQuaternion'></a>
+### H3DU.Transform#multQuaternion(quat) <a id='H3DU.Transform_H3DU.Transform_multQuaternion'></a>
 
 Combines an object's current rotation with another rotation
 described by a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
@@ -145,7 +145,7 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 #### Example
 
@@ -157,15 +157,15 @@ This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
     // by 40 degree roll
     transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 
-### H3DU.Transform#reset() <a id='H3DU_Transform_H3DU_Transform_reset'></a>
+### H3DU.Transform#reset() <a id='H3DU.Transform_H3DU.Transform_reset'></a>
 
 Resets this shape to the untransformed state.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Transform#resetTransform() <a id='H3DU_Transform_H3DU_Transform_resetTransform'></a>
+### H3DU.Transform#resetTransform() <a id='H3DU.Transform_H3DU.Transform_resetTransform'></a>
 
 <b>Deprecated: Use the "reset" method instead.</b>
 
@@ -173,9 +173,9 @@ Resets this transform to the untransformed state.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Transform#setMatrix(value) <a id='H3DU_Transform_H3DU_Transform_setMatrix'></a>
+### H3DU.Transform#setMatrix(value) <a id='H3DU.Transform_H3DU.Transform_setMatrix'></a>
 
 Sets this shape's transformation matrix. This method
 will set the position, rotation, and scale properties
@@ -188,9 +188,9 @@ accordingly to the matrix given.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Transform#setOrientation(angle, v, vy, vz) <a id='H3DU_Transform_H3DU_Transform_setOrientation'></a>
+### H3DU.Transform#setOrientation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_setOrientation'></a>
 
 Sets this object's orientation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
@@ -209,9 +209,9 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Transform#setPosition(x, y, z) <a id='H3DU_Transform_H3DU_Transform_setPosition'></a>
+### H3DU.Transform#setPosition(x, y, z) <a id='H3DU.Transform_H3DU.Transform_setPosition'></a>
 
 Sets the relative position of an object from its original
 position. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
@@ -228,9 +228,9 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Transform#setQuaternion(quat) <a id='H3DU_Transform_H3DU_Transform_setQuaternion'></a>
+### H3DU.Transform#setQuaternion(quat) <a id='H3DU.Transform_H3DU.Transform_setQuaternion'></a>
 
 Sets this object's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with H3DU.Transform#setMatrix
@@ -243,7 +243,7 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 #### Example
 
@@ -255,7 +255,7 @@ This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
     // by 40 degree roll
     transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 
-### H3DU.Transform#setScale(x, y, z) <a id='H3DU_Transform_H3DU_Transform_setScale'></a>
+### H3DU.Transform#setScale(x, y, z) <a id='H3DU.Transform_H3DU.Transform_setScale'></a>
 
 Sets the scale of an object relative to its original
 size. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
@@ -272,4 +272,4 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)

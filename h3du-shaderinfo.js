@@ -200,7 +200,7 @@ H3DU.ShaderInfo.fragmentShaderHeader = function() {
 /**
 * Generates source code for a fragment shader for applying
 * a raster effect to a texture.
-* @param {String} functionCode See @{link H3DU.ShaderInfo.makeEffect}.
+* @param {String} functionCode See {@link H3DU.ShaderInfo.makeEffect}.
 * @returns {String} The source text of the resulting fragment shader.
 * @memberof! H3DU.ShaderInfo
 */

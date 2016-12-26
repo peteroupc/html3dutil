@@ -106,8 +106,7 @@ multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, the
-order in which you multiply quaternions is important. This multiplication behavior
-is opposite to that in the D3DX and DirectXMath libraries.
+order in which you multiply quaternions is important.
 
 ### Using Quaternions <a id=Using_Quaternions></a>
 
@@ -225,7 +224,9 @@ The orientation of a triangle formed by points A, B, and C can be found by apply
 for the cross product of the two vectors (A minus C) and (B minus C),
 in that order.
 
-The resulting cross product is that triangle's _normal_.  For each normal
+The resulting cross product is that triangle's _normal_ (a vector that points away from
+the triangle's surface).  For each normal
 to point outward, as it usually is, each triangle should be oriented
 counterclockwise for right-handed coordinate systems and clockwise for left-handed
-systems.
+systems. A triangle with an outward-pointing normal is called a _front face_,
+and any other triangle is a _back face_.

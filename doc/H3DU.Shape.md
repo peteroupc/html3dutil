@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Shape(mesh) <a id='H3DU_Shape'></a>
+### H3DU.Shape(mesh) <a id='H3DU.Shape'></a>
 
 An object that associates a geometric mesh (the shape of the object) with
  material data (which defines what is seen on the object's surface)
@@ -11,31 +11,31 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU_MeshBuffer.md">H3DU.MeshBuffer</a>)<br>
-    A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU_Mesh.md">H3DU.Mesh</a> objects, the <a href="H3DU_Material.md">H3DU.Material</a> created will use the mesh in its current state and won't track future changes. <i>Using <a href="H3DU_BufferedMesh.md">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i>
+* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>
+    A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.md">H3DU.Mesh</a> objects, the <a href="H3DU.Material.md">H3DU.Material</a> created will use the mesh in its current state and won't track future changes. <i>Using <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i>
 
 ### Methods
 
-* [copy](#H3DU_Shape_H3DU_Shape_copy)
-* [getBounds](#H3DU_Shape_H3DU_Shape_getBounds)
-* [getMatrix](#H3DU_Shape_H3DU_Shape_getMatrix)
-* [getTransform](#H3DU_Shape_H3DU_Shape_getTransform)
-* [getVisible](#H3DU_Shape_H3DU_Shape_getVisible)
-* [primitiveCount](#H3DU_Shape_H3DU_Shape_primitiveCount)
-* [setColor](#H3DU_Shape_H3DU_Shape_setColor)
-* [setMaterial](#H3DU_Shape_H3DU_Shape_setMaterial)
-* [setMaterialParams](#H3DU_Shape_H3DU_Shape_setMaterialParams)
-* [setPosition](#H3DU_Shape_H3DU_Shape_setPosition)
-* [setQuaternion](#H3DU_Shape_H3DU_Shape_setQuaternion)
-* [setScale](#H3DU_Shape_H3DU_Shape_setScale)
-* [setShader](#H3DU_Shape_H3DU_Shape_setShader)
-* [setTexture](#H3DU_Shape_H3DU_Shape_setTexture)
-* [setTextureAndColor](#H3DU_Shape_H3DU_Shape_setTextureAndColor)
-* [setTransform](#H3DU_Shape_H3DU_Shape_setTransform)
-* [setVisible](#H3DU_Shape_H3DU_Shape_setVisible)
-* [vertexCount](#H3DU_Shape_H3DU_Shape_vertexCount)
+* [copy](#H3DU.Shape_H3DU.Shape_copy)
+* [getBounds](#H3DU.Shape_H3DU.Shape_getBounds)
+* [getMatrix](#H3DU.Shape_H3DU.Shape_getMatrix)
+* [getTransform](#H3DU.Shape_H3DU.Shape_getTransform)
+* [getVisible](#H3DU.Shape_H3DU.Shape_getVisible)
+* [primitiveCount](#H3DU.Shape_H3DU.Shape_primitiveCount)
+* [setColor](#H3DU.Shape_H3DU.Shape_setColor)
+* [setMaterial](#H3DU.Shape_H3DU.Shape_setMaterial)
+* [setMaterialParams](#H3DU.Shape_H3DU.Shape_setMaterialParams)
+* [setPosition](#H3DU.Shape_H3DU.Shape_setPosition)
+* [setQuaternion](#H3DU.Shape_H3DU.Shape_setQuaternion)
+* [setScale](#H3DU.Shape_H3DU.Shape_setScale)
+* [setShader](#H3DU.Shape_H3DU.Shape_setShader)
+* [setTexture](#H3DU.Shape_H3DU.Shape_setTexture)
+* [setTextureAndColor](#H3DU.Shape_H3DU.Shape_setTextureAndColor)
+* [setTransform](#H3DU.Shape_H3DU.Shape_setTransform)
+* [setVisible](#H3DU.Shape_H3DU.Shape_setVisible)
+* [vertexCount](#H3DU.Shape_H3DU.Shape_vertexCount)
 
-### H3DU.Shape#copy() <a id='H3DU_Shape_H3DU_Shape_copy'></a>
+### H3DU.Shape#copy() <a id='H3DU.Shape_H3DU.Shape_copy'></a>
 
 Makes a copy of this object. The copied object
 will have its own version of the transform and
@@ -46,9 +46,9 @@ The copied shape won't have a parent.
 
 #### Return Value
 
-A copy of this object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+A copy of this object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#getBounds() <a id='H3DU_Shape_H3DU_Shape_getBounds'></a>
+### H3DU.Shape#getBounds() <a id='H3DU.Shape_H3DU.Shape_getBounds'></a>
 
 Finds a bounding box that holds all vertices in this shape.
  The bounding box is not guaranteed to be the
@@ -65,7 +65,7 @@ last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;Number>)
 
-### H3DU.Shape#getMatrix() <a id='H3DU_Shape_H3DU_Shape_getMatrix'></a>
+### H3DU.Shape#getMatrix() <a id='H3DU.Shape_H3DU.Shape_getMatrix'></a>
 
 Gets the transformation matrix used by this shape.
 See H3DU.Transform#getMatrix.
@@ -74,16 +74,16 @@ See H3DU.Transform#getMatrix.
 
 The current transformation matrix. (Type: Array.&lt;Number>)
 
-### H3DU.Shape#getTransform() <a id='H3DU_Shape_H3DU_Shape_getTransform'></a>
+### H3DU.Shape#getTransform() <a id='H3DU.Shape_H3DU.Shape_getTransform'></a>
 
 Returns the transform used by this shape object.
 The transform won't be copied.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)
+Return value. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.Shape#getVisible() <a id='H3DU_Shape_H3DU_Shape_getVisible'></a>
+### H3DU.Shape#getVisible() <a id='H3DU.Shape_H3DU.Shape_getVisible'></a>
 
 Gets whether this shape will be drawn on rendering.
 
@@ -91,7 +91,7 @@ Gets whether this shape will be drawn on rendering.
 
 True if this shape will be visible; otherwise, false. (Type: Boolean)
 
-### H3DU.Shape#primitiveCount() <a id='H3DU_Shape_H3DU_Shape_primitiveCount'></a>
+### H3DU.Shape#primitiveCount() <a id='H3DU.Shape_H3DU.Shape_primitiveCount'></a>
 
 Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this scene.
@@ -100,7 +100,7 @@ and points) composed by all shapes in this scene.
 
 Return value. (Type: Number)
 
-### H3DU.Shape#setColor(r, g, b, [a]) <a id='H3DU_Shape_H3DU_Shape_setColor'></a>
+### H3DU.Shape#setColor(r, g, b, [a]) <a id='H3DU.Shape_H3DU.Shape_setColor'></a>
 
 Sets material parameters that give the shape a certain color.
 (If a material is already defined, sets its ambient and diffusion
@@ -111,7 +111,7 @@ precedence over the color given in this method.
 #### Parameters
 
 * `r` (Type: Array.&lt;Number> | number | string)<br>
-    A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a>, or the red color component (0-1).
+    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: Number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
@@ -121,9 +121,9 @@ precedence over the color given in this method.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setMaterial(material) <a id='H3DU_Shape_H3DU_Shape_setMaterial'></a>
+### H3DU.Shape#setMaterial(material) <a id='H3DU.Shape_H3DU.Shape_setMaterial'></a>
 
 Sets this shape's material parameters.
 
@@ -134,9 +134,9 @@ Sets this shape's material parameters.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setMaterialParams(params) <a id='H3DU_Shape_H3DU_Shape_setMaterialParams'></a>
+### H3DU.Shape#setMaterialParams(params) <a id='H3DU.Shape_H3DU.Shape_setMaterialParams'></a>
 
 Sets parameters of this shape's material.
 
@@ -147,9 +147,9 @@ Sets parameters of this shape's material.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setPosition(x, y, z) <a id='H3DU_Shape_H3DU_Shape_setPosition'></a>
+### H3DU.Shape#setPosition(x, y, z) <a id='H3DU.Shape_H3DU.Shape_setPosition'></a>
 
 Sets the relative position of this shape from its original
 position. See H3DU.Transform#setPosition
@@ -165,9 +165,9 @@ position. See H3DU.Transform#setPosition
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)
+This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Shape#setQuaternion(quat) <a id='H3DU_Shape_H3DU_Shape_setQuaternion'></a>
+### H3DU.Shape#setQuaternion(quat) <a id='H3DU.Shape_H3DU.Shape_setQuaternion'></a>
 
 Sets this object's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 See H3DU.Transform#setQuaternion.
@@ -179,9 +179,9 @@ See H3DU.Transform#setQuaternion.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setScale(x, y, z) <a id='H3DU_Shape_H3DU_Shape_setScale'></a>
+### H3DU.Shape#setScale(x, y, z) <a id='H3DU.Shape_H3DU.Shape_setScale'></a>
 
 Sets the scale of this shape relative to its original
 size. See H3DU.Transform#setScale
@@ -197,44 +197,44 @@ size. See H3DU.Transform#setScale
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)
+This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Shape#setShader(shader) <a id='H3DU_Shape_H3DU_Shape_setShader'></a>
+### H3DU.Shape#setShader(shader) <a id='H3DU.Shape_H3DU.Shape_setShader'></a>
 
 Sets this shape's material to a shader with the given URL.
 
 #### Parameters
 
-* `shader` (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)<br>
-    Source code for a WebGL shader program. <i>Using a <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a> here is deprecated.</i>
+* `shader` (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)<br>
+    Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a> here is deprecated.</i>
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setTexture(name) <a id='H3DU_Shape_H3DU_Shape_setTexture'></a>
+### H3DU.Shape#setTexture(name) <a id='H3DU.Shape_H3DU.Shape_setTexture'></a>
 
 Sets material parameters that give the shape a texture with the given URL.
 
 #### Parameters
 
-* `name` (Type: <a href="H3DU_Texture.md">H3DU.Texture</a> | String)<br>
-    <a href="H3DU_Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
+* `name` (Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | String)<br>
+    <a href="H3DU.Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setTextureAndColor(name, r, g, b, [a]) <a id='H3DU_Shape_H3DU_Shape_setTextureAndColor'></a>
+### H3DU.Shape#setTextureAndColor(name, r, g, b, [a]) <a id='H3DU.Shape_H3DU.Shape_setTextureAndColor'></a>
 
 Sets this shape's material to the given texture and color.
 
 #### Parameters
 
 * `name` (Type: String)<br>
-    <a href="H3DU_Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
+    <a href="H3DU.Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
 * `r` (Type: Array.&lt;Number> | number | string)<br>
-    A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a>, or the red color component (0-1).
+    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: Number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
@@ -244,23 +244,23 @@ Sets this shape's material to the given texture and color.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setTransform(transform) <a id='H3DU_Shape_H3DU_Shape_setTransform'></a>
+### H3DU.Shape#setTransform(transform) <a id='H3DU.Shape_H3DU.Shape_setTransform'></a>
 
 Sets this shape's transformation
 to a copy of the given transformation.
 
 #### Parameters
 
-* `transform` (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)<br>
+* `transform` (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)<br>
     The transformation to set to a copy of.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#setVisible(value) <a id='H3DU_Shape_H3DU_Shape_setVisible'></a>
+### H3DU.Shape#setVisible(value) <a id='H3DU.Shape_H3DU.Shape_setVisible'></a>
 
 Sets whether this shape will be drawn on rendering.
 
@@ -271,9 +271,9 @@ Sets whether this shape will be drawn on rendering.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Shape#vertexCount() <a id='H3DU_Shape_H3DU_Shape_vertexCount'></a>
+### H3DU.Shape#vertexCount() <a id='H3DU.Shape_H3DU.Shape_vertexCount'></a>
 
 Gets the number of vertices composed by
 all shapes in this scene.

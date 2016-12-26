@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.MatrixStack() <a id='H3DU_MatrixStack'></a>
+### H3DU.MatrixStack() <a id='H3DU.MatrixStack'></a>
 
 H3DU.MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.
@@ -18,29 +18,29 @@ To use this class, you must include the script "extras/matrixstack.js"; the
 class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
-    &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script>
+    <script type="text/javascript" src="extras/matrixstack.js"></script>
 
 ### Methods
 
-* [frustum](#H3DU_MatrixStack_H3DU_MatrixStack_frustum)
-* [get](#H3DU_MatrixStack_H3DU_MatrixStack_get)
-* [loadIdentity](#H3DU_MatrixStack_H3DU_MatrixStack_loadIdentity)
-* [loadMatrix](#H3DU_MatrixStack_H3DU_MatrixStack_loadMatrix)
-* [loadTransposeMatrix](#H3DU_MatrixStack_H3DU_MatrixStack_loadTransposeMatrix)
-* [lookAt](#H3DU_MatrixStack_H3DU_MatrixStack_lookAt)
-* [multMatrix](#H3DU_MatrixStack_H3DU_MatrixStack_multMatrix)
-* [multTransposeMatrix](#H3DU_MatrixStack_H3DU_MatrixStack_multTransposeMatrix)
-* [ortho](#H3DU_MatrixStack_H3DU_MatrixStack_ortho)
-* [ortho2d](#H3DU_MatrixStack_H3DU_MatrixStack_ortho2d)
-* [perspective](#H3DU_MatrixStack_H3DU_MatrixStack_perspective)
-* [pickMatrix](#H3DU_MatrixStack_H3DU_MatrixStack_pickMatrix)
-* [popMatrix](#H3DU_MatrixStack_H3DU_MatrixStack_popMatrix)
-* [pushMatrix](#H3DU_MatrixStack_H3DU_MatrixStack_pushMatrix)
-* [rotate](#H3DU_MatrixStack_H3DU_MatrixStack_rotate)
-* [scale](#H3DU_MatrixStack_H3DU_MatrixStack_scale)
-* [translate](#H3DU_MatrixStack_H3DU_MatrixStack_translate)
+* [frustum](#H3DU.MatrixStack_H3DU.MatrixStack_frustum)
+* [get](#H3DU.MatrixStack_H3DU.MatrixStack_get)
+* [loadIdentity](#H3DU.MatrixStack_H3DU.MatrixStack_loadIdentity)
+* [loadMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_loadMatrix)
+* [loadTransposeMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_loadTransposeMatrix)
+* [lookAt](#H3DU.MatrixStack_H3DU.MatrixStack_lookAt)
+* [multMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_multMatrix)
+* [multTransposeMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_multTransposeMatrix)
+* [ortho](#H3DU.MatrixStack_H3DU.MatrixStack_ortho)
+* [ortho2d](#H3DU.MatrixStack_H3DU.MatrixStack_ortho2d)
+* [perspective](#H3DU.MatrixStack_H3DU.MatrixStack_perspective)
+* [pickMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_pickMatrix)
+* [popMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_popMatrix)
+* [pushMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_pushMatrix)
+* [rotate](#H3DU.MatrixStack_H3DU.MatrixStack_rotate)
+* [scale](#H3DU.MatrixStack_H3DU.MatrixStack_scale)
+* [translate](#H3DU.MatrixStack_H3DU.MatrixStack_translate)
 
-### H3DU.MatrixStack#frustum(l, r, b, t, n, f) <a id='H3DU_MatrixStack_H3DU_MatrixStack_frustum'></a>
+### H3DU.MatrixStack#frustum(l, r, b, t, n, f) <a id='H3DU.MatrixStack_H3DU.MatrixStack_frustum'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.
@@ -64,9 +64,9 @@ OpenGL's.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#get() <a id='H3DU_MatrixStack_H3DU_MatrixStack_get'></a>
+### H3DU.MatrixStack#get() <a id='H3DU.MatrixStack_H3DU.MatrixStack_get'></a>
 
 Gets a copy of the matrix at the top of this stack.
 
@@ -74,15 +74,15 @@ Gets a copy of the matrix at the top of this stack.
 
 . (Type: Array.&lt;Number>)
 
-### H3DU.MatrixStack#loadIdentity() <a id='H3DU_MatrixStack_H3DU_MatrixStack_loadIdentity'></a>
+### H3DU.MatrixStack#loadIdentity() <a id='H3DU.MatrixStack_H3DU.MatrixStack_loadIdentity'></a>
 
 Modifies the matrix at the top of this stack by replacing it with the identity matrix.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#loadMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_loadMatrix'></a>
+### H3DU.MatrixStack#loadMatrix(mat) <a id='H3DU.MatrixStack_H3DU.MatrixStack_loadMatrix'></a>
 
 Modifies the matrix at the top of this stack by replacing it with the given matrix.
 
@@ -93,9 +93,9 @@ Modifies the matrix at the top of this stack by replacing it with the given matr
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#loadTransposeMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_loadTransposeMatrix'></a>
+### H3DU.MatrixStack#loadTransposeMatrix(mat) <a id='H3DU.MatrixStack_H3DU.MatrixStack_loadTransposeMatrix'></a>
 
 Modifies the matrix at the top of this stack by replacing it with the
 transpose of the given matrix.
@@ -107,9 +107,9 @@ transpose of the given matrix.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz) <a id='H3DU_MatrixStack_H3DU_MatrixStack_lookAt'></a>
+### H3DU.MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz) <a id='H3DU.MatrixStack_H3DU.MatrixStack_lookAt'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a camera view.
@@ -139,9 +139,9 @@ OpenGL's.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#multMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_multMatrix'></a>
+### H3DU.MatrixStack#multMatrix(mat) <a id='H3DU.MatrixStack_H3DU.MatrixStack_multMatrix'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by another matrix.
 The matrices are multiplied such that the transformations
@@ -157,9 +157,9 @@ the effect of scaling then translation.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#multTransposeMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_multTransposeMatrix'></a>
+### H3DU.MatrixStack#multTransposeMatrix(mat) <a id='H3DU.MatrixStack_H3DU.MatrixStack_multTransposeMatrix'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by the transpose of
 another matrix.
@@ -176,9 +176,9 @@ the effect of translation then scaling.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#ortho(l, r, b, t, n, f) <a id='H3DU_MatrixStack_H3DU_MatrixStack_ortho'></a>
+### H3DU.MatrixStack#ortho(l, r, b, t, n, f) <a id='H3DU.MatrixStack_H3DU.MatrixStack_ortho'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.
@@ -205,9 +205,9 @@ OpenGL's.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#ortho2d(l, r, b, t) <a id='H3DU_MatrixStack_H3DU_MatrixStack_ortho2d'></a>
+### H3DU.MatrixStack#ortho2d(l, r, b, t) <a id='H3DU.MatrixStack_H3DU.MatrixStack_ortho2d'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by
 a 2D orthographic projection.
@@ -227,9 +227,9 @@ OpenGL's.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#perspective(fov, aspect, n, f) <a id='H3DU_MatrixStack_H3DU_MatrixStack_perspective'></a>
+### H3DU.MatrixStack#perspective(fov, aspect, n, f) <a id='H3DU.MatrixStack_H3DU.MatrixStack_perspective'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.
@@ -250,9 +250,9 @@ OpenGL's.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#pickMatrix(wx, wy, ww, wh, vp) <a id='H3DU_MatrixStack_H3DU_MatrixStack_pickMatrix'></a>
+### H3DU.MatrixStack#pickMatrix(wx, wy, ww, wh, vp) <a id='H3DU.MatrixStack_H3DU.MatrixStack_pickMatrix'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.
@@ -272,9 +272,9 @@ a matrix that transforms the view to a portion of the viewport.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#popMatrix() <a id='H3DU_MatrixStack_H3DU_MatrixStack_popMatrix'></a>
+### H3DU.MatrixStack#popMatrix() <a id='H3DU.MatrixStack_H3DU.MatrixStack_popMatrix'></a>
 
 Removes the matrix at the top of this stack, making
 the matrix beneath it the new top matrix. Has no
@@ -282,18 +282,18 @@ effect if the stack has only one matrix.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#pushMatrix() <a id='H3DU_MatrixStack_H3DU_MatrixStack_pushMatrix'></a>
+### H3DU.MatrixStack#pushMatrix() <a id='H3DU.MatrixStack_H3DU.MatrixStack_pushMatrix'></a>
 
 Makes a copy of the matrix at the top of this stack
 and puts the copy on top of the stack.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#rotate(angle, x, y, z) <a id='H3DU_MatrixStack_H3DU_MatrixStack_rotate'></a>
+### H3DU.MatrixStack#rotate(angle, x, y, z) <a id='H3DU.MatrixStack_H3DU.MatrixStack_rotate'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
 
@@ -310,9 +310,9 @@ Modifies the matrix at the top of this stack by multiplying it by a rotation tra
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#scale(x, y, z) <a id='H3DU_MatrixStack_H3DU_MatrixStack_scale'></a>
+### H3DU.MatrixStack#scale(x, y, z) <a id='H3DU.MatrixStack_H3DU.MatrixStack_scale'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by a
 scaling transformation.
@@ -328,9 +328,9 @@ scaling transformation.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
-### H3DU.MatrixStack#translate(x, y, z) <a id='H3DU_MatrixStack_H3DU_MatrixStack_translate'></a>
+### H3DU.MatrixStack#translate(x, y, z) <a id='H3DU.MatrixStack_H3DU.MatrixStack_translate'></a>
 
 Modifies the matrix at the top of this stack by multiplying it by a
 translation transformation.
@@ -346,4 +346,4 @@ translation transformation.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)
+This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)

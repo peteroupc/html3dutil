@@ -4,6 +4,17 @@ var path = require("jsdoc/path");
 var fs = require("jsdoc/fs");
 var helper = require("jsdoc/util/templateHelper");
 
+function normalizeLines(x) {
+  "use strict";
+  if(!x)return x;
+  x = x.replace(/[ \t]+(?=[\r\n]|$)/g, "");
+  x = x.replace(/\r*\n(\r*\n)+/g, "\n\n");
+  x = x.replace(/\r*\n/g, "\n");
+  x = x.replace(/^\s*/g, "");
+  x = x.replace(/\s+$/g, "");
+  return x + "\n";
+}
+
 function normtags(x) {
   "use strict";
    // Replace P tags with two line breaks
@@ -12,9 +23,9 @@ function normtags(x) {
   x = x.replace(/<\/p>/g, "");
   x = x.replace(/\*/g, "\\*");
   x = x.replace(/<pre>\s*([\s\S]+?)<\/pre>/g, function(a, b) {
-    var unescaped=b.replace(/\&lt;/g,"<");
-    unescaped=unescaped.replace(/\&gt;/g,">");
-    unescaped=unescaped.replace(/\&amp;/g,"&");
+    var unescaped = b.replace(/\&lt;/g, "<");
+    unescaped = unescaped.replace(/\&gt;/g, ">");
+    unescaped = unescaped.replace(/\&amp;/g, "&");
     return "\n\n    " + unescaped.replace(/\n/g, "\n    ") + "\n\n";
   });
   return x;
@@ -100,11 +111,11 @@ function Doc(name) {
 }
 Doc.typeToName = function(type) {
   "use strict";
-  return type.replace(/[^a-zA-Z0-9_$\u0080-\uffff]/g, "_") + ".md";
+  return Doc.toHash(type) + ".md";
 };
 Doc.toHash = function(type) {
   "use strict";
-  return type.replace(/[^a-zA-Z0-9_$\u0080-\uffff]/g, "_");
+  return type.replace(/[^a-zA-Z0-9_\.$\u0080-\uffff]/g, "_");
 };
 Doc.outputDir = path.normalize(env.opts.destination);
 function DocCollection() {
@@ -140,7 +151,7 @@ function DocCollection() {
      // Write individual type files
     Object.keys(this.docs).forEach(function(doc) {
       fs.writeFileSync(that.docs[doc].getFileName(),
-         that.docs[doc].getText(), "utf8");
+         normalizeLines(that.docs[doc].getText()), "utf8");
     });
     // Write index
     var indexStr = "# Documentation Index\n\n";
@@ -167,15 +178,15 @@ function DocCollection() {
     }
     fs.writeFileSync(
          path.join(Doc.outputDir, "index.md"),
-         indexStr, "utf8");
+         normalizeLines(indexStr), "utf8");
     this.tutorials.children.forEach(function(tut) {
       var content = "# " + helper.htmlsafe(tut.title) + "\n\n";
       content += "[Back to documentation index.](index.md)\n\n";
-      content += tut.content
+      content += tut.content;
       content += "[Back to documentation index.](index.md)\n\n";
       fs.writeFileSync(
        path.join(Doc.outputDir, helper.tutorialToUrl(tut.name)),
-           helper.resolveLinks(content), "utf8");
+           normalizeLines(helper.resolveLinks(content)), "utf8");
     });
   };
 }

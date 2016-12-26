@@ -13,7 +13,7 @@ This section contains detailed information on matrices.
 
 ## Contents <a id=Contents></a>
 
-[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>&nbsp;&nbsp;[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
+[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
 
 ## Arrangement <a id=Arrangement></a>
 
@@ -84,7 +84,7 @@ For 3x3 matrices, the elements are arranged in the following order:
 </mfenced>
 </math>
 
-### Transforming Points <a id=Transforming_Points></a>
+## Transforming Points <a id=Transforming_Points></a>
 
 The transformation formula multiplies a matrix by a 3D point to change that point's
 position:
@@ -105,9 +105,9 @@ The following sections describe different kinds of matrix transformations in mor
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_mat4transform">H3DU.Math.mat4transform()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4transform">H3DU.Math.mat4transform()</a> -
  Transforms a 4-element vector with a 4x4 matrix
-* <a href="H3DU_Math.md#H3DU_Math_mat3transform">H3DU.Math.mat3transform()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat3transform">H3DU.Math.mat3transform()</a> -
  Transforms a 3-element vector with a 3x3 matrix
 
 ### Translation <a id=Translation></a>
@@ -159,9 +159,9 @@ remains unchanged.  Likewise for y and z.
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_mat4translated">H3DU.Math.mat4translated()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a> -
  Returns a translation matrix
-* <a href="H3DU_Math.md#H3DU_Math_mat4translate">H3DU.Math.mat4translate()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a> -
  Multiplies a matrix by a translation.
 
 ### Scaling <a id=Scaling></a>
@@ -219,15 +219,15 @@ is equal to the output vector.
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_mat4identity">H3DU.Math.mat4identity()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4identity">H3DU.Math.mat4identity()</a> -
  Returns a 4x4 identity matrix
-* <a href="H3DU_Math.md#H3DU_Math_mat3identity">H3DU.Math.mat3identity()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat3identity">H3DU.Math.mat3identity()</a> -
  Returns a 3x3 identity matrix
-* <a href="H3DU_Math.md#H3DU_Math_mat4scaled">H3DU.Math.mat4scaled()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4scaled">H3DU.Math.mat4scaled()</a> -
  Returns a scaling matrix
-* <a href="H3DU_Math.md#H3DU_Math_mat4scale">H3DU.Math.mat4scale()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a> -
  Multiplies a matrix by a scaling.
-* <a href="H3DU_Math.md#H3DU_Math_mat4scaleInPlace">H3DU.Math.mat4scaleInPlace()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4scaleInPlace">H3DU.Math.mat4scaleInPlace()</a> -
  Multiplies a matrix in place by a scaling.
 
 ### Rotation <a id=Rotation></a>
@@ -379,9 +379,9 @@ So the rotated point would be at about (10, -15.98075, 32.3205).
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_mat4rotated">H3DU.Math.mat4rotated()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a> -
  Returns a rotation matrix
-* <a href="H3DU_Math.md#H3DU_Math_mat4rotate">H3DU.Math.mat4rotate()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a> -
  Multiplies a matrix by a translation.
 
 ### Matrix Multiplication <a id=Matrix_Multiplication></a>
@@ -403,7 +403,7 @@ mat4rotate involve multiplying 4x4 matrices.
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_mat4multiply">H3DU.Math.mat4multiply()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a> -
  Multiplies two matrices
 
 ### Other Transformations <a id=Other_Transformations></a>
@@ -426,9 +426,9 @@ X, Y, and Z by its W to get the vector's _normalized device coordinates_.</small
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_mat4frustum">H3DU.Math.mat4frustum()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum()</a> -
  Returns a frustum matrix
-* <a href="H3DU_Math.md#H3DU_Math_mat4perspective">H3DU.Math.mat4perspective()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective()</a> -
  Returns a field-of-view perspective matrix
 
 ### Matrix Inversions <a id=Matrix_Inversions></a>
@@ -457,6 +457,6 @@ matrix is too complicated to discuss here.
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_mat4invert">H3DU.Math.mat4invert()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.mat4invert">H3DU.Math.mat4invert()</a> -
  Inverts a matrix
 [Back to documentation index.](index.md)

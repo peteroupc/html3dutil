@@ -14,7 +14,7 @@ To use this class, you must include the script "extras/objmtl.js"; the
 class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
-    &lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script>
+    <script type="text/javascript" src="extras/objmtl.js"></script>
 
 #### Parameters
 
@@ -26,9 +26,9 @@ the HTML 3D Library. Example:
 
 * [toShape](#ObjData_ObjData_toShape)
 * [toShapeFromName](#ObjData_ObjData_toShapeFromName)
-* [loadMtlFromUrl](#ObjData_loadMtlFromUrl)
-* [loadObjFromUrl](#ObjData_loadObjFromUrl)
-* [loadObjFromUrlWithTextures](#ObjData_loadObjFromUrlWithTextures)
+* [loadMtlFromUrl](#ObjData.loadMtlFromUrl)
+* [loadObjFromUrl](#ObjData.loadObjFromUrl)
+* [loadObjFromUrlWithTextures](#ObjData.loadObjFromUrlWithTextures)
 
 ### ObjData#mtllib <a id='ObjData_mtllib'></a>
 
@@ -43,11 +43,11 @@ in this OBJ file.
 
 #### Return Value
 
-Group of shapes. (Type: <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)
+Group of shapes. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
 ### ObjData#toShapeFromName(name) <a id='ObjData_ObjData_toShapeFromName'></a>
 
-Creates one or more <a href="H3DU_Shape.md">H3DU.Shape</a> objects from the named portion
+Creates one or more <a href="H3DU.Shape.md">H3DU.Shape</a> objects from the named portion
 of the data in this OBJ file. If a MTL file was also loaded, the
 shape will have the corresponding material, if it uses one.
 
@@ -59,9 +59,9 @@ shape will have the corresponding material, if it uses one.
 #### Return Value
 
 Group of shapes. The group
-will be empty if no shapes with the given name exist. (Type: <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)
+will be empty if no shapes with the given name exist. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
-### (static) ObjData.loadMtlFromUrl(url) <a id='ObjData_loadMtlFromUrl'></a>
+### (static) ObjData.loadMtlFromUrl(url) <a id='ObjData.loadMtlFromUrl'></a>
 
 Loads a material (MTL) file asynchronously.
 
@@ -76,7 +76,7 @@ A promise that resolves when
 the MTL file is loaded successfully (the result is an MtlData object),
 and is rejected when an error occurs when loading the MTL file. (Type: <a href="Promise.md">Promise</a>)
 
-### (static) ObjData.loadObjFromUrl(url) <a id='ObjData_loadObjFromUrl'></a>
+### (static) ObjData.loadObjFromUrl(url) <a id='ObjData.loadObjFromUrl'></a>
 
 Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available) asynchronously.
@@ -93,7 +93,7 @@ the OBJ file is loaded successfully, whether or not its associated
 MTL is also loaded successfully (the result is an ObjData object),
 and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.md">Promise</a>)
 
-### (static) ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='ObjData_loadObjFromUrlWithTextures'></a>
+### (static) ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='ObjData.loadObjFromUrlWithTextures'></a>
 
 Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available), along with the textures it uses,

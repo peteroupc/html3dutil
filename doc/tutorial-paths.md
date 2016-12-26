@@ -51,7 +51,7 @@ lines, the "Q", "C", "S", and "T" commands create B&eacute;zier curves, the "A" 
 creates elliptical arcs, and the "Z" command closes the path. If the letters are
 lower-cased, X and Y coordinates are relative to the current position.
 
-For more information, see the <a href="GraphicsPath.md#GraphicsPath_fromString">GraphicsPath.fromString</a> method documentation.
+For more information, see the <a href="GraphicsPath.md#GraphicsPath.fromString">GraphicsPath.fromString</a> method documentation.
 That method is also how you create a 2D path from an SVG path string, as in this
 example:
 

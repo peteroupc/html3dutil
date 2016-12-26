@@ -15,7 +15,7 @@ To use this class, you must include the script "extras/evaluators.js"; the
 class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
-    &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script>
+    <script type="text/javascript" src="extras/evaluators.js"></script>
 
 #### Parameters
 
@@ -28,14 +28,14 @@ the HTML 3D Library. Example:
 * `maxval` (Type: Number)<br>
     Largest V-coordinate. If _minval_ is greater than _maxval_, both values will be swapped.
 * `axis` (Type: Array.&lt;Number>) (optional)<br>
-    Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+    Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 
 ### Methods
 
-* [fromFunction](#SurfaceOfRevolution_fromFunction)
-* [torus](#SurfaceOfRevolution_torus)
+* [fromFunction](#SurfaceOfRevolution.fromFunction)
+* [torus](#SurfaceOfRevolution.torus)
 
-### (static) SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis]) <a id='SurfaceOfRevolution_fromFunction'></a>
+### (static) SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis]) <a id='SurfaceOfRevolution.fromFunction'></a>
 
 Creates a parametric evaluator for a surface of revolution
 whose curve is the graph of a single-variable function.
@@ -54,7 +54,7 @@ bases of these surfaces won't be generated).
 * `maxval` (Type: Number)<br>
     Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If _minval_ is greater than _maxval_, both values will be swapped.
 * `axis` (Type: Array.&lt;Number>) (optional)<br>
-    Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+    Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 
 #### Return Value
 
@@ -86,7 +86,7 @@ which runs from 5 to 10 units, and with a radius of 2 units.
     "use strict"; return 2; }, // use a constant radius
     5, 10);
 
-### (static) SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis]) <a id='SurfaceOfRevolution_torus'></a>
+### (static) SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis]) <a id='SurfaceOfRevolution.torus'></a>
 
 Parametric evaluator for a torus, a special case of a surface of revolution.
 
@@ -99,7 +99,7 @@ Parametric evaluator for a torus, a special case of a surface of revolution.
 * `curve` (Type: function) (optional)<br>
     Object describing a curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. The curve function must contain a function named "evaluate", which takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of at least 2 elements: the first element is the X coordinate of the curve's position, and the second element is the Y coordinate. If null or omitted, uses a circular cross section.
 * `axis` (Type: Array.&lt;Number>) (optional)<br>
-    Axis of rotation, which the torus will pass through. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">"normalized" vector</a> with a length of 1).
+    Axis of rotation, which the torus will pass through. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 
 #### Return Value
 

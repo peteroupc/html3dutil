@@ -41,36 +41,36 @@ For more details, see the <a href="tutorial-matrixdetails.md">Matrix Details</a>
 
 A translation is a shifting of an object's position.
 
-To create a translation matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4translated">H3DU.Math.mat4translated()</a>,
+To create a translation matrix, use <a href="H3DU.Math.md#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.
 
 To multiply an existing matrix by a translation, use
-<a href="H3DU_Math.md#H3DU_Math_mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
+<a href="H3DU.Math.md#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
 before the other transformations.
 
 ### Scaling <a id=Scaling></a>
 
 Scaling changes an object's size.
 
-To create a scaling matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4scaled">H3DU.Math.mat4scaled()</a>,
+To create a scaling matrix, use <a href="H3DU.Math.md#H3DU.Math.mat4scaled">H3DU.Math.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
 factors to change the object's size.  For example, a Y-factor of 2 doubles an object's height.
 
 To multiply an existing matrix by a scaling, use
-<a href="H3DU_Math.md#H3DU_Math_mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
+<a href="H3DU.Math.md#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
 before the other transformations.
 
 ### Rotation <a id=Rotation></a>
 
 Rotation changes an object's orientation.
 
-To create a rotation matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4rotated">H3DU.Math.mat4rotated()</a>,
+To create a rotation matrix, use <a href="H3DU.Math.md#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
 origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
 
 To multiply an existing matrix by a rotation, use
-<a href="H3DU_Math.md#H3DU_Math_mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
+<a href="H3DU.Math.md#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
 before the other transformations.
 
 ### Combining Transforms <a id=Combining_Transforms></a>
@@ -87,7 +87,7 @@ not the same as translating then scaling.  Assuming your geometry is centered at
 This way, the scalings and rotations will affect the object while it's still centered, and
 before the translations (shifts) take place.
 
-You can also multiply transforms using <a href="H3DU_Math.md#H3DU_Math_mat4multiply">H3DU.Math.mat4multiply()</a>.
+You can also multiply transforms using <a href="H3DU.Math.md#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.
 
@@ -110,8 +110,7 @@ multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, the
-order in which you multiply quaternions is important. This multiplication behavior
-is opposite to that in the D3DX and DirectXMath libraries.
+order in which you multiply quaternions is important.
 
 ### Using Quaternions <a id=Using_Quaternions></a>
 
@@ -146,9 +145,9 @@ axis), so that a rotation along that axis will do nothing.
 
 Related functions:
 
-* <a href="H3DU_Math.md#H3DU_Math_quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion
-* <a href="H3DU_Math.md#H3DU_Math_quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles
 
 ## Planes <a id=Planes></a>
@@ -171,7 +170,7 @@ A 4-element array can describe a 3D plane in the following manner:
 
 There is one method that deals with planes:
 
-* <a href="H3DU_Math.md#H3DU_Math_planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
 Converts the plane to a form in which its normal has a length of 1.
 
 ## Coordinate Systems <a id=Coordinate_Systems></a>
@@ -229,8 +228,10 @@ The orientation of a triangle formed by points A, B, and C can be found by apply
 for the cross product of the two vectors (A minus C) and (B minus C),
 in that order.
 
-The resulting cross product is that triangle's _normal_.  For each normal
+The resulting cross product is that triangle's _normal_ (a vector that points away from
+the triangle's surface).  For each normal
 to point outward, as it usually is, each triangle should be oriented
 counterclockwise for right-handed coordinate systems and clockwise for left-handed
-systems.
+systems. A triangle with an outward-pointing normal is called a _front face_,
+and any other triangle is a _back face_.
 [Back to documentation index.](index.md)

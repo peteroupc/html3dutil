@@ -2,26 +2,26 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Meshes() <a id='H3DU_Meshes'></a>
+### H3DU.Meshes() <a id='H3DU.Meshes'></a>
 
 Contains methods that create meshes
 of various geometric shapes.
 
 ### Methods
 
-* [.createBox](#H3DU_Meshes_createBox)
-* [.createCapsule](#H3DU_Meshes_createCapsule)
-* [.createClosedCylinder](#H3DU_Meshes_createClosedCylinder)
-* [.createCylinder](#H3DU_Meshes_createCylinder)
-* [.createDisk](#H3DU_Meshes_createDisk)
-* [.createLathe](#H3DU_Meshes_createLathe)
-* [.createPartialDisk](#H3DU_Meshes_createPartialDisk)
-* [.createPlane](#H3DU_Meshes_createPlane)
-* [.createPointedStar](#H3DU_Meshes_createPointedStar)
-* [.createSphere](#H3DU_Meshes_createSphere)
-* [.createTorus](#H3DU_Meshes_createTorus)
+* [.createBox](#H3DU.Meshes.createBox)
+* [.createCapsule](#H3DU.Meshes.createCapsule)
+* [.createClosedCylinder](#H3DU.Meshes.createClosedCylinder)
+* [.createCylinder](#H3DU.Meshes.createCylinder)
+* [.createDisk](#H3DU.Meshes.createDisk)
+* [.createLathe](#H3DU.Meshes.createLathe)
+* [.createPartialDisk](#H3DU.Meshes.createPartialDisk)
+* [.createPlane](#H3DU.Meshes.createPlane)
+* [.createPointedStar](#H3DU.Meshes.createPointedStar)
+* [.createSphere](#H3DU.Meshes.createSphere)
+* [.createTorus](#H3DU.Meshes.createTorus)
 
-### H3DU.Meshes.createBox(xSize, ySize, zSize, inward) <a id='H3DU_Meshes_createBox'></a>
+### H3DU.Meshes.createBox(xSize, ySize, zSize, inward) <a id='H3DU.Meshes.createBox'></a>
 
 Creates a mesh of a box (rectangular prism), which
 will be centered at the origin.
@@ -42,9 +42,9 @@ is used on each face of the box.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createCapsule(radius, length, slices, stacks, middleStacks, flat, inside) <a id='H3DU_Meshes_createCapsule'></a>
+### H3DU.Meshes.createCapsule(radius, length, slices, stacks, middleStacks, flat, inside) <a id='H3DU.Meshes.createCapsule'></a>
 
 Creates a mesh of a capsule, centered at the origin.
 The length of the capsule will run along the z-axis. (If the capsule
@@ -72,9 +72,9 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createClosedCylinder(baseRad, topRad, height, slices, stacks, [flat], [inside]) <a id='H3DU_Meshes_createClosedCylinder'></a>
+### H3DU.Meshes.createClosedCylinder(baseRad, topRad, height, slices, stacks, [flat], [inside]) <a id='H3DU.Meshes.createClosedCylinder'></a>
 
 Creates a mesh of a closed cylinder. The cylinder's base will
 be centered at the origin and its height will run along the
@@ -88,13 +88,13 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 #### Parameters
 
 * `baseRad` (Type: Number)<br>
-    Radius of the base of the cylinder. See <a href="H3DU_Meshes.md#H3DU_Meshes_createCylinder">H3DU.Meshes.createCylinder</a>.
+    Radius of the base of the cylinder. See <a href="H3DU.Meshes.md#H3DU.Meshes.createCylinder">H3DU.Meshes.createCylinder</a>.
 * `topRad` (Type: Number)<br>
-    Radius of the top of the cylinder. See <a href="H3DU_Meshes.md#H3DU_Meshes_createCylinder">H3DU.Meshes.createCylinder</a>.
+    Radius of the top of the cylinder. See <a href="H3DU.Meshes.md#H3DU.Meshes.createCylinder">H3DU.Meshes.createCylinder</a>.
 * `height` (Type: Number)<br>
     Height of the cylinder.
 * `slices` (Type: Number)<br>
-    Number of lengthwise "slices" the cylinder consists of. See <a href="H3DU_Meshes.md#H3DU_Meshes_createCylinder">H3DU.Meshes.createCylinder</a>.
+    Number of lengthwise "slices" the cylinder consists of. See <a href="H3DU.Meshes.md#H3DU.Meshes.createCylinder">H3DU.Meshes.createCylinder</a>.
 * `stacks` (Type: Number)<br>
     Number of vertical stacks the cylinder consists of. May be null or omitted, in which case the default is 1.
 * `flat` (Type: Boolean) (optional)<br>
@@ -104,9 +104,9 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createCylinder(baseRad, topRad, height, [slices], [stacks], [flat], [inside]) <a id='H3DU_Meshes_createCylinder'></a>
+### H3DU.Meshes.createCylinder(baseRad, topRad, height, [slices], [stacks], [flat], [inside]) <a id='H3DU.Meshes.createCylinder'></a>
 
 Creates a mesh of a cylinder. The cylinder's base will
 be centered at the origin and its height will run along the
@@ -134,9 +134,9 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createDisk(inner, outer, [slices], [loops], [inward]) <a id='H3DU_Meshes_createDisk'></a>
+### H3DU.Meshes.createDisk(inner, outer, [slices], [loops], [inward]) <a id='H3DU.Meshes.createDisk'></a>
 
 Creates a mesh of a 2D disk.
 Assuming the Y axis points up, the X axis right,
@@ -160,9 +160,9 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createLathe(points, slices, flat, inside) <a id='H3DU_Meshes_createLathe'></a>
+### H3DU.Meshes.createLathe(points, slices, flat, inside) <a id='H3DU.Meshes.createLathe'></a>
 
 Creates a mesh of a figure generated by revolving a path of 2-dimensional
 points about the Z-axis.
@@ -180,9 +180,9 @@ points about the Z-axis.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createPartialDisk(inner, outer, [slices], [loops], [start], [sweep], [inward]) <a id='H3DU_Meshes_createPartialDisk'></a>
+### H3DU.Meshes.createPartialDisk(inner, outer, [slices], [loops], [start], [sweep], [inward]) <a id='H3DU.Meshes.createPartialDisk'></a>
 
 Creates a mesh of a 2D disk or an arc of a 2D disk.
 Will also generate texture coordinates.
@@ -207,9 +207,9 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createPlane(width, height, widthDiv, heightDiv, inward) <a id='H3DU_Meshes_createPlane'></a>
+### H3DU.Meshes.createPlane(width, height, widthDiv, heightDiv, inward) <a id='H3DU.Meshes.createPlane'></a>
 
 Creates a mesh of a 2D rectangle, centered at the origin.
 The plane's Z-coordinate will be 0.
@@ -231,9 +231,9 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createPointedStar(points, firstRadius, secondRadius, inward) <a id='H3DU_Meshes_createPointedStar'></a>
+### H3DU.Meshes.createPointedStar(points, firstRadius, secondRadius, inward) <a id='H3DU.Meshes.createPointedStar'></a>
 
 Creates a mesh in the form of a two-dimensional n-pointed star.
 Will also generate texture coordinates.
@@ -251,9 +251,9 @@ Will also generate texture coordinates.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createSphere(radius, slices, stacks, flat, inside) <a id='H3DU_Meshes_createSphere'></a>
+### H3DU.Meshes.createSphere(radius, slices, stacks, flat, inside) <a id='H3DU.Meshes.createSphere'></a>
 
 Creates a mesh of a sphere, centered at the origin.
 Will also generate texture coordinates.
@@ -274,9 +274,9 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Meshes.createTorus(inner, outer, [lengthwise], [crosswise], [flat], [inward]) <a id='H3DU_Meshes_createTorus'></a>
+### H3DU.Meshes.createTorus(inner, outer, [lengthwise], [crosswise], [flat], [inward]) <a id='H3DU.Meshes.createTorus'></a>
 
 Creates a mesh of a torus (donut), centered at the origin.
 Will also generate texture coordinates.
@@ -299,4 +299,4 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)

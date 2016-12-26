@@ -45,8 +45,11 @@ require './generate-websafe-svg'
 Dir.chdir(".."){
  files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
- files|=%w( oldnames.js )
- normalizeAndCompile(files,"h3du_min.js",false,false)
+ filesToCompile=files|(%w( oldnames.js ))
+ normalizeAndCompile(filesToCompile,"h3du_min.js",false,false)
  generateSvg("tutorials/websafe.svg")
  generateColorNameSvg("tutorials/colornames.svg")
+ filesForDoc=files|Dir.glob("extras/*.js")
+ filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
+ `jsdoc -u tutorials -t build -R README.md -d doc #{filesForDoc}`
 }

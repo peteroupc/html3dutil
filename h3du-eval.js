@@ -472,7 +472,7 @@ at: http://peteroupc.github.io/
   };
 /**
 * Generates a knot vector with uniform knots, to be
-* passed to the @{link H3DU.BSplineCurve} or @{link H3DU.BSplineCurve} constructor.
+* passed to the {@link H3DU.BSplineCurve} or {@link H3DU.BSplineCurve} constructor.
 * @param {Number} controlPoints Number of control points the curve will have.
 * @param {Number} degree Degree of the curve.
 * @returns {Array<Number>} A uniform knot vector.
@@ -493,7 +493,7 @@ at: http://peteroupc.github.io/
   };
 /**
 * Generates a knot vector with uniform knots, to be
-* passed to the @{link H3DU.BSplineCurve} or @{link H3DU.BSplineCurve} constructor,
+* passed to the {@link H3DU.BSplineCurve} or {@link H3DU.BSplineCurve} constructor,
 * except that with the knot vector, the curve will start and end at the
 * first and last control points.
 * @param {Number} controlPoints Number of control points the curve will have.
@@ -673,7 +673,7 @@ at: http://peteroupc.github.io/
 /**
 * Specifies a parametric curve function for generating texture coordinates.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate", giving 2 values as a result.  See {@link H3DU.CurveEval#vertex}.
+* named "evaluate", giving one or two values as a result.  See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#

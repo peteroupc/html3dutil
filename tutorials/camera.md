@@ -175,9 +175,8 @@ This method allows you to set the projection matrix to an arbitrary [4x4 matrix]
 
 ## View Transform <a id=View_Transform></a>
 
-The view matrix transforms _world space_ coordinates, shared by every object in a scene, to _camera space_
-(or _eye space_)
-coordinates, in which the "camera" is located at the center of the coordinate system: (0, 0, 0).  A view matrix essentially rotates the camera and moves it to a given position in world space.  Specifically:
+The view matrix transforms _world space_ coordinates, shared by every object in a scene, to coordinates in _camera space_
+(also called _eye space_ or _view space_), in which the "camera" is located at the center of the coordinate system: (0, 0, 0).  A view matrix essentially rotates the camera and moves it to a given position in world space.  Specifically:
 
 * The camera is rotated to point at a certain object or location on the scene.  This is represented by
 the `lookingAt` parameter in the `setLookAt()` method, below.

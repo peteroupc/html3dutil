@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.FrameBufferInfo(width, height) <a id='H3DU_FrameBufferInfo'></a>
+### H3DU.FrameBufferInfo(width, height) <a id='H3DU.FrameBufferInfo'></a>
 
 Describes a frame buffer. In the HTML 3D Library,
 each frame buffer consists of a texture of a given size and a <i>renderbuffer</i> of the same
@@ -17,11 +17,11 @@ size to use as the depth buffer.
 
 ### Methods
 
-* [getHeight](#H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getHeight)
-* [getWidth](#H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getWidth)
-* [resize](#H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_resize)
+* [getHeight](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight)
+* [getWidth](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth)
+* [resize](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize)
 
-### H3DU.FrameBufferInfo#getHeight() <a id='H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getHeight'></a>
+### H3DU.FrameBufferInfo#getHeight() <a id='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight'></a>
 
 Gets the height to use for the frame buffer.
 
@@ -29,7 +29,7 @@ Gets the height to use for the frame buffer.
 
 Return value. (Type: Number)
 
-### H3DU.FrameBufferInfo#getWidth() <a id='H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getWidth'></a>
+### H3DU.FrameBufferInfo#getWidth() <a id='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth'></a>
 
 Gets the width to use for the frame buffer.
 
@@ -37,7 +37,7 @@ Gets the width to use for the frame buffer.
 
 Return value. (Type: Number)
 
-### H3DU.FrameBufferInfo#resize(width, height) <a id='H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_resize'></a>
+### H3DU.FrameBufferInfo#resize(width, height) <a id='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize'></a>
 
 Changes the width and height of this frame buffer information object.
 
@@ -50,4 +50,4 @@ Changes the width and height of this frame buffer information object.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_FrameBufferInfo.md">H3DU.FrameBufferInfo</a>)
+This object. (Type: <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a>)

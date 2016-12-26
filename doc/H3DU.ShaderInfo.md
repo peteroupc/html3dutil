@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.ShaderInfo([vertexShader], [fragmentShader]) <a id='H3DU_ShaderInfo'></a>
+### H3DU.ShaderInfo([vertexShader], [fragmentShader]) <a id='H3DU.ShaderInfo'></a>
 
 Holds source code for a WebGL shader program. A shader program in
 WebGL consists of a vertex shader (which processes vertices),
@@ -25,20 +25,20 @@ uniform values this object stores is not set for any WebGL context.
 
 ### Methods
 
-* [.getBasicVertex](#H3DU_ShaderInfo_getBasicVertex)
-* [.getDefaultFragment](#H3DU_ShaderInfo_getDefaultFragment)
-* [.getDefaultVertex](#H3DU_ShaderInfo_getDefaultVertex)
-* [.makeCopyEffect](#H3DU_ShaderInfo_makeCopyEffect)
-* [.makeEdgeDetectEffect](#H3DU_ShaderInfo_makeEdgeDetectEffect)
-* [.makeEffect](#H3DU_ShaderInfo_makeEffect)
-* [.makeEffectFragment](#H3DU_ShaderInfo_makeEffectFragment)
-* [.makeInvertEffect](#H3DU_ShaderInfo_makeInvertEffect)
-* [copy](#H3DU_ShaderInfo_H3DU_ShaderInfo_copy)
-* [getFragmentShader](#H3DU_ShaderInfo_H3DU_ShaderInfo_getFragmentShader)
-* [getVertexShader](#H3DU_ShaderInfo_H3DU_ShaderInfo_getVertexShader)
-* [setUniforms](#H3DU_ShaderInfo_H3DU_ShaderInfo_setUniforms)
+* [.getBasicVertex](#H3DU.ShaderInfo.getBasicVertex)
+* [.getDefaultFragment](#H3DU.ShaderInfo.getDefaultFragment)
+* [.getDefaultVertex](#H3DU.ShaderInfo.getDefaultVertex)
+* [.makeCopyEffect](#H3DU.ShaderInfo.makeCopyEffect)
+* [.makeEdgeDetectEffect](#H3DU.ShaderInfo.makeEdgeDetectEffect)
+* [.makeEffect](#H3DU.ShaderInfo.makeEffect)
+* [.makeEffectFragment](#H3DU.ShaderInfo.makeEffectFragment)
+* [.makeInvertEffect](#H3DU.ShaderInfo.makeInvertEffect)
+* [copy](#H3DU.ShaderInfo_H3DU.ShaderInfo_copy)
+* [getFragmentShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader)
+* [getVertexShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader)
+* [setUniforms](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms)
 
-### H3DU.ShaderInfo.getBasicVertex() <a id='H3DU_ShaderInfo_getBasicVertex'></a>
+### H3DU.ShaderInfo.getBasicVertex() <a id='H3DU.ShaderInfo.getBasicVertex'></a>
 
 Gets the text of a basic vertex shader.
 
@@ -46,7 +46,7 @@ Gets the text of a basic vertex shader.
 
 The resulting shader text. (Type: String)
 
-### H3DU.ShaderInfo.getDefaultFragment() <a id='H3DU_ShaderInfo_getDefaultFragment'></a>
+### H3DU.ShaderInfo.getDefaultFragment() <a id='H3DU.ShaderInfo.getDefaultFragment'></a>
 
 Gets the text of the default fragment shader. Putting "#define SHADING\n"
 at the start of the return value enables the lighting model.
@@ -58,7 +58,7 @@ as SHADING is also enabled).
 
 The resulting shader text. (Type: String)
 
-### H3DU.ShaderInfo.getDefaultVertex() <a id='H3DU_ShaderInfo_getDefaultVertex'></a>
+### H3DU.ShaderInfo.getDefaultVertex() <a id='H3DU.ShaderInfo.getDefaultVertex'></a>
 
 Gets the text of the default vertex shader. Putting "#define SHADING\n"
 at the start of the return value enables the lighting model.
@@ -67,24 +67,24 @@ at the start of the return value enables the lighting model.
 
 The resulting shader text. (Type: String)
 
-### H3DU.ShaderInfo.makeCopyEffect() <a id='H3DU_ShaderInfo_makeCopyEffect'></a>
+### H3DU.ShaderInfo.makeCopyEffect() <a id='H3DU.ShaderInfo.makeCopyEffect'></a>
 
 Generates source code for a shader program that copies the colors of a texture.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderInfo.makeEdgeDetectEffect() <a id='H3DU_ShaderInfo_makeEdgeDetectEffect'></a>
+### H3DU.ShaderInfo.makeEdgeDetectEffect() <a id='H3DU.ShaderInfo.makeEdgeDetectEffect'></a>
 
 Generates source code for a shader program that generates a two-color texture showing
 the source texture's edges.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderInfo.makeEffect(functionCode) <a id='H3DU_ShaderInfo_makeEffect'></a>
+### H3DU.ShaderInfo.makeEffect(functionCode) <a id='H3DU.ShaderInfo.makeEffect'></a>
 
 Generates source code for a shader program for applying
 a raster effect (postprocessing effect) to a texture.
@@ -100,9 +100,9 @@ a raster effect (postprocessing effect) to a texture.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderInfo.makeEffectFragment(functionCode) <a id='H3DU_ShaderInfo_makeEffectFragment'></a>
+### H3DU.ShaderInfo.makeEffectFragment(functionCode) <a id='H3DU.ShaderInfo.makeEffectFragment'></a>
 
 Generates source code for a fragment shader for applying
 a raster effect to a texture.
@@ -110,30 +110,30 @@ a raster effect to a texture.
 #### Parameters
 
 * `functionCode` (Type: String)<br>
-    See @{link H3DU.ShaderInfo.makeEffect}.
+    See <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a>.
 
 #### Return Value
 
 The source text of the resulting fragment shader. (Type: String)
 
-### H3DU.ShaderInfo.makeInvertEffect() <a id='H3DU_ShaderInfo_makeInvertEffect'></a>
+### H3DU.ShaderInfo.makeInvertEffect() <a id='H3DU.ShaderInfo.makeInvertEffect'></a>
 
 Generates source code for a shader program that inverts the colors of a texture.
 
 #### Return Value
 
-The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderInfo#copy() <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_copy'></a>
+### H3DU.ShaderInfo#copy() <a id='H3DU.ShaderInfo_H3DU.ShaderInfo_copy'></a>
 
 Returns a new shader info object with the information in this object
 copied to that object.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+Return value. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
-### H3DU.ShaderInfo#getFragmentShader() <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_getFragmentShader'></a>
+### H3DU.ShaderInfo#getFragmentShader() <a id='H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader'></a>
 
 Gets the text of the fragment shader stored in this object.
 
@@ -141,7 +141,7 @@ Gets the text of the fragment shader stored in this object.
 
 return value. (Type: String)
 
-### H3DU.ShaderInfo#getVertexShader() <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_getVertexShader'></a>
+### H3DU.ShaderInfo#getVertexShader() <a id='H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader'></a>
 
 Gets the text of the vertex shader stored in this object.
 
@@ -149,7 +149,7 @@ Gets the text of the vertex shader stored in this object.
 
 return value. (Type: String)
 
-### H3DU.ShaderInfo#setUniforms(uniforms) <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_setUniforms'></a>
+### H3DU.ShaderInfo#setUniforms(uniforms) <a id='H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms'></a>
 
 Sets the values of one or more uniforms used by this shader program.
 Since this object doesn't store a WebGL context, or receive one as input,
@@ -162,4 +162,4 @@ the uniforms won't be associated with a WebGL context.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)
+This object. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)

@@ -46,27 +46,27 @@ examples of 3D models that can be created using the Mesh class and built-in shap
 
 ### Built-In Shapes <a id=Built_In_Shapes></a>
 
-The <a href="H3DU_Meshes.md">`Meshes`</a> class includes several handy methods for creating built-in shapes.
+The <a href="H3DU.Meshes.md">`Meshes`</a> class includes several handy methods for creating built-in shapes.
 All methods described below return a `Mesh` object that describes the triangles they
 are composed of.  See "Custom Shapes" below for more on meshes.
 
 **3D Figures:**
 
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createBox">Meshes.createBox()</a> - Creates a cube or box.
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createBox">Meshes.createBox()</a> - Creates a cube or box.
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
   or top.
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createSphere">Meshes.createSphere()</a> - Creates a sphere.
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createSphere">Meshes.createSphere()</a> - Creates a sphere.
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.
 
 **2D Figures:**
 
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createDisk">Meshes.createDisk()</a> - Creates a circular disk or a regular polygon, possibly
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createDisk">Meshes.createDisk()</a> - Creates a circular disk or a regular polygon, possibly
   with a hole in the middle.
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createPartialDisk">Meshes.createPartialDisk()</a> - Creates a portion of a circular disk, possibly
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createPartialDisk">Meshes.createPartialDisk()</a> - Creates a portion of a circular disk, possibly
   with a hole where the middle of the complete disk would be.
-* <a href="H3DU_Meshes.md#H3DU_Meshes_createPlane">Meshes.createPlane()</a> - Creates a rectangle.
+* <a href="H3DU.Meshes.md#H3DU.Meshes.createPlane">Meshes.createPlane()</a> - Creates a rectangle.
 
 ### Custom Shapes <a id=Custom_Shapes></a>
 
@@ -255,7 +255,7 @@ Example:
 ## Binding Shapes <a id=Binding_Shapes></a>
 
 Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the <a href="H3DU_Shape.md">`H3DU.Shape`</a> class comes into
+in order to have it drawn.  This is where the <a href="H3DU.Shape.md">`H3DU.Shape`</a> class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:
 
@@ -306,7 +306,7 @@ then translating (shifting) the shape in 3D space.
 
     scene3d.addShape(shape);
 
-Now, the next time `scene3d.render()` is called, the <a href="H3DU_Scene3D.md">`H3DU.Scene3D`</a> will render the
+Now, the next time `scene3d.render()` is called, the <a href="H3DU.Scene3D.md">`H3DU.Scene3D`</a> will render the
 given shape to the scene.
 
 ## Shape Groups <a id=Shape_Groups></a>

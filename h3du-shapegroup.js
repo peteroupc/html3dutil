@@ -2,8 +2,8 @@
 
 /**
 * Represents a grouping of shapes.  This object
-* can hold both @{link H3DU.Shape} objects and
-* other @{link H3DU.ShapeGroup} objects.
+* can hold both {@link H3DU.Shape} objects and
+* other {@link H3DU.ShapeGroup} objects.
 * @class
 * @alias H3DU.ShapeGroup
 */

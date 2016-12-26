@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.BezierSurface(cp, [u1], [u2], [v1], [v2]) <a id='H3DU_BezierSurface'></a>
+### H3DU.BezierSurface(cp, [u1], [u2], [v1], [v2]) <a id='H3DU.BezierSurface'></a>
 
 A parametric evaluator for B&eacute;zier surfaces.
 
@@ -26,9 +26,9 @@ necessarily cross the surface.
 
 ### Methods
 
-* [evaluate](#H3DU_BezierSurface_H3DU_BezierSurface_evaluate)
+* [evaluate](#H3DU.BezierSurface_H3DU.BezierSurface_evaluate)
 
-### H3DU.BezierSurface#evaluate(u, v) <a id='H3DU_BezierSurface_H3DU_BezierSurface_evaluate'></a>
+### H3DU.BezierSurface#evaluate(u, v) <a id='H3DU.BezierSurface_H3DU.BezierSurface_evaluate'></a>
 
 Evaluates the surface function based on a point
 in a B&eacute;zier surface.

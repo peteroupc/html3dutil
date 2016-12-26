@@ -14,7 +14,7 @@ To use this class, you must include the script "extras/path.js"; the
 class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
-    &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+    <script type="text/javascript" src="extras/path.js"></script>
 
 #### Parameters
 
@@ -44,7 +44,7 @@ the HTML 3D Library. Example:
 * [transform](#GraphicsPath_GraphicsPath_transform)
 * [union](#GraphicsPath_GraphicsPath_union)
 * [xor](#GraphicsPath_GraphicsPath_xor)
-* [fromString](#GraphicsPath_fromString)
+* [fromString](#GraphicsPath.fromString)
 
 ### GraphicsPath#arc(x, y, radius, startAngle, endAngle, ccw) <a id='GraphicsPath_GraphicsPath_arc'></a>
 
@@ -189,7 +189,7 @@ returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;N
 Gets an object for the curves described by this path.
 The resulting object can be used to retrieve the points
 that lie on the path or as a parameter for one of
-the <a href="H3DU_CurveEval.md">H3DU.CurveEval</a> methods, in the
+the <a href="H3DU.CurveEval.md">H3DU.CurveEval</a> methods, in the
 <a href="CurveTube.md">CurveTube</a> class, or any other class that
 accepts parametric curves.
 
@@ -434,7 +434,7 @@ segments and close commands. (Type: <a href="GraphicsPath.md">GraphicsPath</a>)
 ### GraphicsPath#toString() <a id='GraphicsPath_GraphicsPath_toString'></a>
 
 Returns this path in the form of a string in SVG path format.
-See <a href="GraphicsPath.md#GraphicsPath_fromString">GraphicsPath.fromString</a>.
+See <a href="GraphicsPath.md#GraphicsPath.fromString">GraphicsPath.fromString</a>.
 
 #### Return Value
 
@@ -469,10 +469,10 @@ or holes. Subpaths that are holes have the opposite winding
 order (clockwise or counterclockwise) from the subpath
 that contains them.
 <li>To use this method, you must include the script "extras/pathclip.js";
-this is in addition to "extras/path.js". Example:
+this is in addition to "extras/pathclip.js". Example:
 
-    &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
-    &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
+    <script type="text/javascript" src="extras/pathclip.js"></script>
+    <script type="text/javascript" src="extras/pathclip.js"></script>
 
 </ul>
 
@@ -505,7 +505,7 @@ apply to this method.
 A path whose shape is contained in
 only one of the two paths. (Type: <a href="GraphicsPath.md">GraphicsPath</a>)
 
-### (static) GraphicsPath.fromString(str) <a id='GraphicsPath_fromString'></a>
+### (static) GraphicsPath.fromString(str) <a id='GraphicsPath.fromString'></a>
 
 Creates a graphics path from a string whose format follows
 the SVG specification.

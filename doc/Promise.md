@@ -14,11 +14,11 @@ Implements the "Promises/A+ 1.1" specification.
 
 ### Methods
 
-* [all](#Promise_all)
+* [all](#Promise.all)
 * [catch](#Promise_catch)
 * [then](#Promise_then)
 
-### (static) Promise.all(all) <a id='Promise_all'></a>
+### (static) Promise.all(all) <a id='Promise.all'></a>
 
 Wait for all these promises to complete. One failed => this fails too.
 

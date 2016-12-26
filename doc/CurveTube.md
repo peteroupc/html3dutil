@@ -15,7 +15,7 @@ To use this class, you must include the script "extras/curvetube.js"; the
 class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
-    &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script>
+    <script type="text/javascript" src="extras/curvetube.js"></script>
 
 #### Parameters
 

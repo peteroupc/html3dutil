@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Mesh([vertices], [indices], [format]) <a id='H3DU_Mesh'></a>
+### H3DU.Mesh([vertices], [indices], [format]) <a id='H3DU.Mesh'></a>
 
 Specifies the triangles, lines, or points that make up a geometric shape.
 Each vertex, that is, each point, each end of a line, and each corner
@@ -38,75 +38,75 @@ no longer the case, to simplify the implementation.
 
 ### Members
 
-* [.BITANGENTS_BIT](#H3DU_Mesh_BITANGENTS_BIT)
-* [.COLORS_BIT](#H3DU_Mesh_COLORS_BIT)
-* [.LINES](#H3DU_Mesh_LINES)
-* [.LINES_BIT](#H3DU_Mesh_LINES_BIT)
-* [.LINE_STRIP](#H3DU_Mesh_LINE_STRIP)
-* [.NORMALS_BIT](#H3DU_Mesh_NORMALS_BIT)
-* [.POINTS](#H3DU_Mesh_POINTS)
-* [.POINTS_BIT](#H3DU_Mesh_POINTS_BIT)
-* [.QUADS](#H3DU_Mesh_QUADS)
-* [.QUAD_STRIP](#H3DU_Mesh_QUAD_STRIP)
-* [.TANGENTS_BIT](#H3DU_Mesh_TANGENTS_BIT)
-* [.TEXCOORDS_BIT](#H3DU_Mesh_TEXCOORDS_BIT)
-* [.TRIANGLES](#H3DU_Mesh_TRIANGLES)
-* [.TRIANGLE_FAN](#H3DU_Mesh_TRIANGLE_FAN)
-* [.TRIANGLE_STRIP](#H3DU_Mesh_TRIANGLE_STRIP)
+* [.BITANGENTS_BIT](#H3DU.Mesh.BITANGENTS_BIT)
+* [.COLORS_BIT](#H3DU.Mesh.COLORS_BIT)
+* [.LINES](#H3DU.Mesh.LINES)
+* [.LINES_BIT](#H3DU.Mesh.LINES_BIT)
+* [.LINE_STRIP](#H3DU.Mesh.LINE_STRIP)
+* [.NORMALS_BIT](#H3DU.Mesh.NORMALS_BIT)
+* [.POINTS](#H3DU.Mesh.POINTS)
+* [.POINTS_BIT](#H3DU.Mesh.POINTS_BIT)
+* [.QUADS](#H3DU.Mesh.QUADS)
+* [.QUAD_STRIP](#H3DU.Mesh.QUAD_STRIP)
+* [.TANGENTS_BIT](#H3DU.Mesh.TANGENTS_BIT)
+* [.TEXCOORDS_BIT](#H3DU.Mesh.TEXCOORDS_BIT)
+* [.TRIANGLES](#H3DU.Mesh.TRIANGLES)
+* [.TRIANGLE_FAN](#H3DU.Mesh.TRIANGLE_FAN)
+* [.TRIANGLE_STRIP](#H3DU.Mesh.TRIANGLE_STRIP)
 
 ### Methods
 
-* [bitangent3](#H3DU_Mesh_H3DU_Mesh_bitangent3)
-* [color3](#H3DU_Mesh_H3DU_Mesh_color3)
-* [enumPrimitives](#H3DU_Mesh_H3DU_Mesh_enumPrimitives)
-* [getBoundingBox](#H3DU_Mesh_H3DU_Mesh_getBoundingBox)
-* [getVertex](#H3DU_Mesh_H3DU_Mesh_getVertex)
-* [getVertexNormal](#H3DU_Mesh_H3DU_Mesh_getVertexNormal)
-* [merge](#H3DU_Mesh_H3DU_Mesh_merge)
-* [mode](#H3DU_Mesh_H3DU_Mesh_mode)
-* [normal3](#H3DU_Mesh_H3DU_Mesh_normal3)
-* [normalizeNormals](#H3DU_Mesh_H3DU_Mesh_normalizeNormals)
-* [primitiveCount](#H3DU_Mesh_H3DU_Mesh_primitiveCount)
-* [recalcNormals](#H3DU_Mesh_H3DU_Mesh_recalcNormals)
-* [recalcTangents](#H3DU_Mesh_H3DU_Mesh_recalcTangents)
-* [reverseNormals](#H3DU_Mesh_H3DU_Mesh_reverseNormals)
-* [reverseWinding](#H3DU_Mesh_H3DU_Mesh_reverseWinding)
-* [setColor3](#H3DU_Mesh_H3DU_Mesh_setColor3)
-* [setVertex](#H3DU_Mesh_H3DU_Mesh_setVertex)
-* [setVertexNormal](#H3DU_Mesh_H3DU_Mesh_setVertexNormal)
-* [tangent3](#H3DU_Mesh_H3DU_Mesh_tangent3)
-* [texCoord2](#H3DU_Mesh_H3DU_Mesh_texCoord2)
-* [toWireFrame](#H3DU_Mesh_H3DU_Mesh_toWireFrame)
-* [transform](#H3DU_Mesh_H3DU_Mesh_transform)
-* [vertex2](#H3DU_Mesh_H3DU_Mesh_vertex2)
-* [vertex3](#H3DU_Mesh_H3DU_Mesh_vertex3)
-* [this.vertexCount](#H3DU_Mesh_this_vertexCount)
+* [bitangent3](#H3DU.Mesh_H3DU.Mesh_bitangent3)
+* [color3](#H3DU.Mesh_H3DU.Mesh_color3)
+* [enumPrimitives](#H3DU.Mesh_H3DU.Mesh_enumPrimitives)
+* [getBoundingBox](#H3DU.Mesh_H3DU.Mesh_getBoundingBox)
+* [getVertex](#H3DU.Mesh_H3DU.Mesh_getVertex)
+* [getVertexNormal](#H3DU.Mesh_H3DU.Mesh_getVertexNormal)
+* [merge](#H3DU.Mesh_H3DU.Mesh_merge)
+* [mode](#H3DU.Mesh_H3DU.Mesh_mode)
+* [normal3](#H3DU.Mesh_H3DU.Mesh_normal3)
+* [normalizeNormals](#H3DU.Mesh_H3DU.Mesh_normalizeNormals)
+* [primitiveCount](#H3DU.Mesh_H3DU.Mesh_primitiveCount)
+* [recalcNormals](#H3DU.Mesh_H3DU.Mesh_recalcNormals)
+* [recalcTangents](#H3DU.Mesh_H3DU.Mesh_recalcTangents)
+* [reverseNormals](#H3DU.Mesh_H3DU.Mesh_reverseNormals)
+* [reverseWinding](#H3DU.Mesh_H3DU.Mesh_reverseWinding)
+* [setColor3](#H3DU.Mesh_H3DU.Mesh_setColor3)
+* [setVertex](#H3DU.Mesh_H3DU.Mesh_setVertex)
+* [setVertexNormal](#H3DU.Mesh_H3DU.Mesh_setVertexNormal)
+* [tangent3](#H3DU.Mesh_H3DU.Mesh_tangent3)
+* [texCoord2](#H3DU.Mesh_H3DU.Mesh_texCoord2)
+* [toWireFrame](#H3DU.Mesh_H3DU.Mesh_toWireFrame)
+* [transform](#H3DU.Mesh_H3DU.Mesh_transform)
+* [vertex2](#H3DU.Mesh_H3DU.Mesh_vertex2)
+* [vertex3](#H3DU.Mesh_H3DU.Mesh_vertex3)
+* [vertexCount](#H3DU.Mesh_vertexCount)
 
-### H3DU.Mesh.BITANGENTS_BIT <a id='H3DU_Mesh_BITANGENTS_BIT'></a> (constant)
+### H3DU.Mesh.BITANGENTS_BIT <a id='H3DU.Mesh.BITANGENTS_BIT'></a> (constant)
 
 The mesh contains bitangent vectors for each vertex.
 
 Default Value: `16`
 
-### H3DU.Mesh.COLORS_BIT <a id='H3DU_Mesh_COLORS_BIT'></a> (constant)
+### H3DU.Mesh.COLORS_BIT <a id='H3DU.Mesh.COLORS_BIT'></a> (constant)
 
 The mesh contains colors for each vertex.
 
 Default Value: `2`
 
-### H3DU.Mesh.LINES <a id='H3DU_Mesh_LINES'></a> (constant)
+### H3DU.Mesh.LINES <a id='H3DU.Mesh.LINES'></a> (constant)
 
 Primitive mode for rendering line segments, made up
 of 2 vertices each.
 
-### H3DU.Mesh.LINES_BIT <a id='H3DU_Mesh_LINES_BIT'></a> (constant)
+### H3DU.Mesh.LINES_BIT <a id='H3DU.Mesh.LINES_BIT'></a> (constant)
 
 The mesh consists of lines (2 vertices per line) instead
 of triangles (3 vertices per line).
 
 Default Value: `256`
 
-### H3DU.Mesh.LINE_STRIP <a id='H3DU_Mesh_LINE_STRIP'></a> (constant)
+### H3DU.Mesh.LINE_STRIP <a id='H3DU.Mesh.LINE_STRIP'></a> (constant)
 
 Primitive mode for rendering connected line segments.
 The first 2 vertices make up the first line, and each additional
@@ -114,26 +114,26 @@ line is made up of the last vertex and 1 new vertex.
 
 Default Value: `3`
 
-### H3DU.Mesh.NORMALS_BIT <a id='H3DU_Mesh_NORMALS_BIT'></a> (constant)
+### H3DU.Mesh.NORMALS_BIT <a id='H3DU.Mesh.NORMALS_BIT'></a> (constant)
 
 The mesh contains normals for each vertex.
 
 Default Value: `1`
 
-### H3DU.Mesh.POINTS <a id='H3DU_Mesh_POINTS'></a> (constant)
+### H3DU.Mesh.POINTS <a id='H3DU.Mesh.POINTS'></a> (constant)
 
 Primitive mode for rendering points, made up
 of 1 vertex each.
 
 Default Value: `0`
 
-### H3DU.Mesh.POINTS_BIT <a id='H3DU_Mesh_POINTS_BIT'></a> (constant)
+### H3DU.Mesh.POINTS_BIT <a id='H3DU.Mesh.POINTS_BIT'></a> (constant)
 
 The mesh consists of points (1 vertex per line).
 
 Default Value: `512`
 
-### H3DU.Mesh.QUADS <a id='H3DU_Mesh_QUADS'></a> (constant)
+### H3DU.Mesh.QUADS <a id='H3DU.Mesh.QUADS'></a> (constant)
 
 Primitive mode for rendering quadrilaterals, made up
 of 4 vertices each. Each quadrilateral is broken into two triangles: the first
@@ -143,7 +143,7 @@ vertices, in that order.
 
 Default Value: `7`
 
-### H3DU.Mesh.QUAD_STRIP <a id='H3DU_Mesh_QUAD_STRIP'></a> (constant)
+### H3DU.Mesh.QUAD_STRIP <a id='H3DU.Mesh.QUAD_STRIP'></a> (constant)
 
 Primitive mode for rendering a strip of quadrilaterals (quads).
 The first 4 vertices make up the first quad, and each additional
@@ -155,26 +155,26 @@ vertices, in that order.
 
 Default Value: `8`
 
-### H3DU.Mesh.TANGENTS_BIT <a id='H3DU_Mesh_TANGENTS_BIT'></a> (constant)
+### H3DU.Mesh.TANGENTS_BIT <a id='H3DU.Mesh.TANGENTS_BIT'></a> (constant)
 
 The mesh contains tangent vectors for each vertex.
 
 Default Value: `8`
 
-### H3DU.Mesh.TEXCOORDS_BIT <a id='H3DU_Mesh_TEXCOORDS_BIT'></a> (constant)
+### H3DU.Mesh.TEXCOORDS_BIT <a id='H3DU.Mesh.TEXCOORDS_BIT'></a> (constant)
 
 The mesh contains texture coordinates for each vertex.
 
 Default Value: `4`
 
-### H3DU.Mesh.TRIANGLES <a id='H3DU_Mesh_TRIANGLES'></a> (constant)
+### H3DU.Mesh.TRIANGLES <a id='H3DU.Mesh.TRIANGLES'></a> (constant)
 
 Primitive mode for rendering triangles, made up
 of 3 vertices each.
 
 Default Value: `4`
 
-### H3DU.Mesh.TRIANGLE_FAN <a id='H3DU_Mesh_TRIANGLE_FAN'></a> (constant)
+### H3DU.Mesh.TRIANGLE_FAN <a id='H3DU.Mesh.TRIANGLE_FAN'></a> (constant)
 
 Primitive mode for rendering a triangle fan. The first 3
 vertices make up the first triangle, and each additional
@@ -183,7 +183,7 @@ the previous vertex, and 1 new vertex.
 
 Default Value: `6`
 
-### H3DU.Mesh.TRIANGLE_STRIP <a id='H3DU_Mesh_TRIANGLE_STRIP'></a> (constant)
+### H3DU.Mesh.TRIANGLE_STRIP <a id='H3DU.Mesh.TRIANGLE_STRIP'></a> (constant)
 
 Primitive mode for rendering a triangle strip. The first 3
 vertices make up the first triangle, and each additional
@@ -194,7 +194,7 @@ vertices are swapped when generating that triangle.
 
 Default Value: `5`
 
-### H3DU.Mesh#bitangent3(x, y, z) <a id='H3DU_Mesh_H3DU_Mesh_bitangent3'></a>
+### H3DU.Mesh#bitangent3(x, y, z) <a id='H3DU.Mesh_H3DU.Mesh_bitangent3'></a>
 
 Sets the current bitangent vector for this mesh. Future vertex positions
 defined (with vertex3()) will have this bitangent. The new current
@@ -214,9 +214,9 @@ not automatically be normalized to unit length.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#color3(r, g, b) <a id='H3DU_Mesh_H3DU_Mesh_color3'></a>
+### H3DU.Mesh#color3(r, g, b) <a id='H3DU.Mesh_H3DU.Mesh_color3'></a>
 
 Sets the current color for this mesh. Future vertex positions
 defined (with vertex3()) will have this color. The new current
@@ -227,7 +227,7 @@ that mode. Only the red, green, and blue components will be used.
 #### Parameters
 
 * `r` (Type: Array.&lt;Number> | number | string)<br>
-    A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a>, or the red color component (0-1).
+    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: Number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
@@ -235,9 +235,9 @@ that mode. Only the red, green, and blue components will be used.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#enumPrimitives(func) <a id='H3DU_Mesh_H3DU_Mesh_enumPrimitives'></a>
+### H3DU.Mesh#enumPrimitives(func) <a id='H3DU.Mesh_H3DU.Mesh_enumPrimitives'></a>
 
 Enumerates the primitives (lines, triangles, and points) included
 in this mesh.
@@ -249,9 +249,9 @@ in this mesh.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#getBoundingBox() <a id='H3DU_Mesh_H3DU_Mesh_getBoundingBox'></a>
+### H3DU.Mesh#getBoundingBox() <a id='H3DU.Mesh_H3DU.Mesh_getBoundingBox'></a>
 
 Finds the tightest axis-aligned
 bounding box that holds all vertices in the mesh.
@@ -266,7 +266,7 @@ last three are the largest-valued X, Y, and Z coordinates.
 If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;Number>)
 
-### H3DU.Mesh#getVertex(index) <a id='H3DU_Mesh_H3DU_Mesh_getVertex'></a>
+### H3DU.Mesh#getVertex(index) <a id='H3DU.Mesh_H3DU.Mesh_getVertex'></a>
 
 Gets the position of the vertex with the given
 index in this mesh.
@@ -283,7 +283,7 @@ the X, Y, and Z coordinates, respectively, of the vertex
 position, or null if the index is less than 0 or
 equals the number of vertices in this mesh or greater. (Type: Array.&lt;Number>)
 
-### H3DU.Mesh#getVertexNormal(index) <a id='H3DU_Mesh_H3DU_Mesh_getVertexNormal'></a>
+### H3DU.Mesh#getVertexNormal(index) <a id='H3DU.Mesh_H3DU.Mesh_getVertexNormal'></a>
 
 Gets the normal of the vertex with the given
 index in this mesh.
@@ -302,7 +302,7 @@ equals the number of vertices in this mesh or greater.
 Returns (0,0,0) if the given vertex exists but doesn't define
 a normal. (Type: Array.&lt;Number>)
 
-### H3DU.Mesh#merge(other) <a id='H3DU_Mesh_H3DU_Mesh_merge'></a>
+### H3DU.Mesh#merge(other) <a id='H3DU.Mesh_H3DU.Mesh_merge'></a>
 
 Merges the vertices from another mesh into this one.
 The vertices from the other mesh will be copied into this one,
@@ -313,19 +313,19 @@ will not build upon previous vertices.
 
 #### Parameters
 
-* `other` (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)<br>
+* `other` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
     A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is incompatible with the the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 #### Example
 
     // Use the following idiom to make a copy of a geometric mesh:
     var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
 
-### H3DU.Mesh#mode(m) <a id='H3DU_Mesh_H3DU_Mesh_mode'></a>
+### H3DU.Mesh#mode(m) <a id='H3DU.Mesh_H3DU.Mesh_mode'></a>
 
 Changes the primitive mode for this mesh.
 Future vertices will be drawn as primitives of the new type.
@@ -347,9 +347,9 @@ in future versions.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#normal3(x, y, z) <a id='H3DU_Mesh_H3DU_Mesh_normal3'></a>
+### H3DU.Mesh#normal3(x, y, z) <a id='H3DU.Mesh_H3DU.Mesh_normal3'></a>
 
 Sets the current normal for this mesh. Future vertex positions
 defined (with vertex3()) will have this normal. The new current
@@ -369,18 +369,18 @@ not automatically be normalized to unit length.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#normalizeNormals() <a id='H3DU_Mesh_H3DU_Mesh_normalizeNormals'></a>
+### H3DU.Mesh#normalizeNormals() <a id='H3DU.Mesh_H3DU.Mesh_normalizeNormals'></a>
 
 Modifies this mesh by normalizing the normals it defines
 to unit length.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#primitiveCount() <a id='H3DU_Mesh_H3DU_Mesh_primitiveCount'></a>
+### H3DU.Mesh#primitiveCount() <a id='H3DU.Mesh_H3DU.Mesh_primitiveCount'></a>
 
 Gets the number of primitives (triangles, lines,
 or points) composed by all shapes in this mesh.
@@ -389,7 +389,7 @@ or points) composed by all shapes in this mesh.
 
 Return value. (Type: Number)
 
-### H3DU.Mesh#recalcNormals(flat, inward) <a id='H3DU_Mesh_H3DU_Mesh_recalcNormals'></a>
+### H3DU.Mesh#recalcNormals(flat, inward) <a id='H3DU.Mesh_H3DU.Mesh_recalcNormals'></a>
 
 Recalculates the normal vectors for triangles
 in this mesh. For this to properly affect shading, each triangle in
@@ -406,9 +406,9 @@ be normalized to have a length of 1 (unless the normal is (0,0,0)).
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#recalcTangents() <a id='H3DU_Mesh_H3DU_Mesh_recalcTangents'></a>
+### H3DU.Mesh#recalcTangents() <a id='H3DU.Mesh_H3DU.Mesh_recalcTangents'></a>
 
 Recalculates the tangent vectors for triangles
 in this mesh. Tangent vectors are required for
@@ -418,15 +418,15 @@ that define normals and texture coordinates.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#reverseNormals() <a id='H3DU_Mesh_H3DU_Mesh_reverseNormals'></a>
+### H3DU.Mesh#reverseNormals() <a id='H3DU.Mesh_H3DU.Mesh_reverseNormals'></a>
 
 Modifies this mesh by reversing the sign of normals it defines.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 #### Example
 
@@ -441,14 +441,14 @@ recommended only if face culling is enabled.
      new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
     );
 
-### H3DU.Mesh#reverseWinding() <a id='H3DU_Mesh_H3DU_Mesh_reverseWinding'></a>
+### H3DU.Mesh#reverseWinding() <a id='H3DU.Mesh_H3DU.Mesh_reverseWinding'></a>
 
 Reverses the winding order of the triangles in this mesh
 by swapping the second and third vertex indices of each one.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 #### Example
 
@@ -464,7 +464,7 @@ recommended only if face culling is enabled.
      new H3DU.Mesh().merge(originalMesh).reverseWinding()
     );
 
-### H3DU.Mesh#setColor3(r, g, b) <a id='H3DU_Mesh_H3DU_Mesh_setColor3'></a>
+### H3DU.Mesh#setColor3(r, g, b) <a id='H3DU.Mesh_H3DU.Mesh_setColor3'></a>
 
 Sets all the vertices in this mesh to the given color.
 This method doesn't change this mesh's current color.
@@ -473,7 +473,7 @@ Only the color's red, green, and blue components will be used.
 #### Parameters
 
 * `r` (Type: Array.&lt;Number> | number | string)<br>
-    A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a>, or the red color component (0-1).
+    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: Number)<br>
     Green component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
 * `b` (Type: Number)<br>
@@ -481,9 +481,9 @@ Only the color's red, green, and blue components will be used.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#setVertex(index, x, y, z) <a id='H3DU_Mesh_H3DU_Mesh_setVertex'></a>
+### H3DU.Mesh#setVertex(index, x, y, z) <a id='H3DU.Mesh_H3DU.Mesh_setVertex'></a>
 
 Sets the X, Y, and Z coordinates of the vertex with the
 given index. Has no effect if the index is less than 0 or
@@ -502,9 +502,9 @@ equals the number of vertices in this mesh or greater.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#setVertexNormal(index, x, y, z) <a id='H3DU_Mesh_H3DU_Mesh_setVertexNormal'></a>
+### H3DU.Mesh#setVertexNormal(index, x, y, z) <a id='H3DU.Mesh_H3DU.Mesh_setVertexNormal'></a>
 
 Sets the normal associated with the vertex with the
 given index. Has no effect if the index is less than 0 or
@@ -523,9 +523,9 @@ equals the number of vertices in this mesh or greater.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#tangent3(x, y, z) <a id='H3DU_Mesh_H3DU_Mesh_tangent3'></a>
+### H3DU.Mesh#tangent3(x, y, z) <a id='H3DU.Mesh_H3DU.Mesh_tangent3'></a>
 
 Sets the current tangent vector for this mesh. Future vertex positions
 defined (with vertex3()) will have this normal. The new current
@@ -545,9 +545,9 @@ not automatically be normalized to unit length.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#texCoord2(u, v) <a id='H3DU_Mesh_H3DU_Mesh_texCoord2'></a>
+### H3DU.Mesh#texCoord2(u, v) <a id='H3DU.Mesh_H3DU.Mesh_texCoord2'></a>
 
 Sets the current texture coordinates for this mesh. Future vertex positions
 defined (with vertex3()) will have these texture coordinates.
@@ -569,9 +569,9 @@ right corner (by default).
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#toWireFrame() <a id='H3DU_Mesh_H3DU_Mesh_toWireFrame'></a>
+### H3DU.Mesh#toWireFrame() <a id='H3DU.Mesh_H3DU.Mesh_toWireFrame'></a>
 
 Converts this mesh to a new mesh with triangles converted
 to line segments. The new mesh will reuse the vertices
@@ -582,9 +582,9 @@ unchanged.
 #### Return Value
 
 A new mesh with triangles converted
-to lines. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+to lines. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#transform(matrix) <a id='H3DU_Mesh_H3DU_Mesh_transform'></a>
+### H3DU.Mesh#transform(matrix) <a id='H3DU.Mesh_H3DU.Mesh_transform'></a>
 
 Transforms the positions and normals of all the vertices currently
 in this mesh, using a 4x4 matrix. The matrix won't affect
@@ -600,9 +600,9 @@ added after calling this method without calling mode() first.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#vertex2(x, y) <a id='H3DU_Mesh_H3DU_Mesh_vertex2'></a>
+### H3DU.Mesh#vertex2(x, y) <a id='H3DU.Mesh_H3DU.Mesh_vertex2'></a>
 
 Adds a new vertex to this mesh. The Z-coordinate will
 be treated as 0.
@@ -616,9 +616,9 @@ be treated as 0.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#vertex3(x, y, z) <a id='H3DU_Mesh_H3DU_Mesh_vertex3'></a>
+### H3DU.Mesh#vertex3(x, y, z) <a id='H3DU.Mesh_H3DU.Mesh_vertex3'></a>
 
 Adds a new vertex to this mesh. If appropriate, adds an
 additional face index according to this mesh's current mode.
@@ -636,9 +636,9 @@ and texture coordinates if they have been defined.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
-### H3DU.Mesh#this.vertexCount() <a id='H3DU_Mesh_this_vertexCount'></a>
+### H3DU.Mesh#vertexCount() <a id='H3DU.Mesh_vertexCount'></a>
 
 Gets the number of vertices included in this mesh.
 

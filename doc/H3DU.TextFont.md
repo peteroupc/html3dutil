@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.TextFont() <a id='H3DU_TextFont'></a>
+### H3DU.TextFont() <a id='H3DU.TextFont'></a>
 
 Represents a bitmap font, which supports drawing two-dimensional
 text. This class supports
@@ -35,7 +35,7 @@ other, and the mention of this link is not an endorsement or sponsorship
 of any particular tool.)
 
 NOTE: The constructor should not be called directly by applications.
-Use the <a href="H3DU_TextFont.md#H3DU_TextFont_load">H3DU.TextFont.load</a> method to get an H3DU.TextFont object. This
+Use the <a href="H3DU.TextFont.md#H3DU.TextFont.load">H3DU.TextFont.load</a> method to get an H3DU.TextFont object. This
 constructor's parameters are undocumented and are subject to change.
 
 This class is considered a supplementary class to the
@@ -46,18 +46,18 @@ To use this class, you must include the script "extras/text.js"; the
 class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
-    &lt;script type="text/javascript" src="extras/text.js">&lt;/script>
+    <script type="text/javascript" src="extras/text.js"></script>
 
 ### Methods
 
-* [.load](#H3DU_TextFont_load)
-* [.loadWithTextures](#H3DU_TextFont_loadWithTextures)
-* [loadTextures](#H3DU_TextFont_H3DU_TextFont_loadTextures)
-* [makeTextMeshes](#H3DU_TextFont_H3DU_TextFont_makeTextMeshes)
-* [measure](#H3DU_TextFont_H3DU_TextFont_measure)
-* [textShape](#H3DU_TextFont_H3DU_TextFont_textShape)
+* [.load](#H3DU.TextFont.load)
+* [.loadWithTextures](#H3DU.TextFont.loadWithTextures)
+* [loadTextures](#H3DU.TextFont_H3DU.TextFont_loadTextures)
+* [makeTextMeshes](#H3DU.TextFont_H3DU.TextFont_makeTextMeshes)
+* [measure](#H3DU.TextFont_H3DU.TextFont_measure)
+* [textShape](#H3DU.TextFont_H3DU.TextFont_textShape)
 
-### H3DU.TextFont.load(fontFileName) <a id='H3DU_TextFont_load'></a>
+### H3DU.TextFont.load(fontFileName) <a id='H3DU.TextFont.load'></a>
 
 Loads a bitmap font definition from a file.
 Note that this method only loads the font data and not the bitmaps
@@ -72,9 +72,9 @@ used to represent the font.
 
 A promise that is resolved
 when the font data is loaded successfully (the result will be
-an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU_TextFont.md">H3DU.TextFont</a>>)
+an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.TextFont.md">H3DU.TextFont</a>>)
 
-### H3DU.TextFont.loadWithTextures(fontFileName, textureLoader) <a id='H3DU_TextFont_loadWithTextures'></a>
+### H3DU.TextFont.loadWithTextures(fontFileName, textureLoader) <a id='H3DU.TextFont.loadWithTextures'></a>
 
 Loads a bitmap font definition from a file along with the textures
 used by that font.
@@ -83,7 +83,7 @@ used by that font.
 
 * `fontFileName` (Type: String)<br>
     The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
-* `textureLoader` (Type: <a href="H3DU_TextureLoader.md">H3DU.TextureLoader</a>)<br>
+* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
     Texture loader object to use when loading the textures.
 
 #### Return Value
@@ -94,28 +94,28 @@ and is rejected when an error occurs.
 If the promise is resolved, the result will be an object with the
 following keys:<ul>
 <li><code>url</code> - The URL of the font data file.
-<li><code>font</code> - The font data in the form of an <a href="H3DU_TextFont.md">H3DU.TextFont</a> object.
-<li><code>textures</code> - An array of <a href="H3DU_Texture.md">H3DU.Texture</a> objects used by the font,
+<li><code>font</code> - The font data in the form of an <a href="H3DU.TextFont.md">H3DU.TextFont</a> object.
+<li><code>textures</code> - An array of <a href="H3DU.Texture.md">H3DU.Texture</a> objects used by the font,
 in the order in which they are declared in the font data file.
 </ul> (Type: <a href="Promise.md">Promise</a>)
 
-### H3DU.TextFont#loadTextures(textureLoader) <a id='H3DU_TextFont_H3DU_TextFont_loadTextures'></a>
+### H3DU.TextFont#loadTextures(textureLoader) <a id='H3DU.TextFont_H3DU.TextFont_loadTextures'></a>
 
 Loads the texture files used by this font object.
 
 #### Parameters
 
-* `textureLoader` (Type: <a href="H3DU_TextureLoader.md">H3DU.TextureLoader</a>)<br>
+* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
     Texture loader object to use when loading the textures.
 
 #### Return Value
 
 A promise as described in
-<a href="H3DU.md#H3DU_getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
+<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
-<a href="H3DU_Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU_Texture.md">H3DU.Texture</a>>)
+<a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
-### H3DU.TextFont#makeTextMeshes(str, params) <a id='H3DU_TextFont_H3DU_TextFont_makeTextMeshes'></a>
+### H3DU.TextFont#makeTextMeshes(str, params) <a id='H3DU.TextFont_H3DU.TextFont_makeTextMeshes'></a>
 
 Creates an array of meshes containing the primitives
 needed to draw text with this font.
@@ -133,7 +133,7 @@ An array of meshes representing the text.
 There is one mesh for each texture page of the font. If none of the
 text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;Mesh>)
 
-### H3DU.TextFont#measure(str, params) <a id='H3DU_TextFont_H3DU_TextFont_measure'></a>
+### H3DU.TextFont#measure(str, params) <a id='H3DU.TextFont_H3DU.TextFont_measure'></a>
 
 Calculates the width and height of a text string when
 drawn using this font.
@@ -152,7 +152,7 @@ the first is the width of the string, and the second is the
 height of the string (taking into account line feed characters,
 U+000A, that break lines). (Type: Array.&lt;Number>)
 
-### H3DU.TextFont#textShape(str, params) <a id='H3DU_TextFont_H3DU_TextFont_textShape'></a>
+### H3DU.TextFont#textShape(str, params) <a id='H3DU.TextFont_H3DU.TextFont_textShape'></a>
 
 Creates a group of shapes containing the primitives needed to
 draw text in the given position, size, and color.
@@ -166,8 +166,8 @@ than the right and bottom coordinates, respectively).
 * `str` (Type: String)<br>
     The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
 * `params` (Type: Object)<br>
-    An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU_Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU_Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul>
+    An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul>
 
 #### Return Value
 
-The generated group of shapes. (Type: <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)
+The generated group of shapes. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
