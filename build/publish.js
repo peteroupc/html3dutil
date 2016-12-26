@@ -12,7 +12,10 @@ function normtags(x) {
   x = x.replace(/<\/p>/g, "");
   x = x.replace(/\*/g, "\\*");
   x = x.replace(/<pre>\s*([\s\S]+?)<\/pre>/g, function(a, b) {
-    return "\n\n    " + b.replace(/\n/g, "\n    ") + "\n\n";
+    var unescaped=b.replace(/\&lt;/g,"<");
+    unescaped=unescaped.replace(/\&gt;/g,">");
+    unescaped=unescaped.replace(/\&amp;/g,"&");
+    return "\n\n    " + unescaped.replace(/\n/g, "\n    ") + "\n\n";
   });
   return x;
 }
@@ -166,8 +169,10 @@ function DocCollection() {
          path.join(Doc.outputDir, "index.md"),
          indexStr, "utf8");
     this.tutorials.children.forEach(function(tut) {
-      var content = tut.content;
-      content = "# " + helper.htmlsafe(tut.title) + "\n\n" + content;
+      var content = "# " + helper.htmlsafe(tut.title) + "\n\n";
+      content += "[Back to documentation index.](index.md)\n\n";
+      content += tut.content
+      content += "[Back to documentation index.](index.md)\n\n";
       fs.writeFileSync(
        path.join(Doc.outputDir, helper.tutorialToUrl(tut.name)),
            helper.resolveLinks(content), "utf8");
