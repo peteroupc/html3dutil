@@ -97,4 +97,5 @@ of the `GraphicsPath` class.
 * The _.getBounds()_ method finds the axis-aligned bounding box of a path.
 
 To be completed.
+
 [Back to documentation index.](index.md)

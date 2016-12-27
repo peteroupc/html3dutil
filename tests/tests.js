@@ -1,7 +1,7 @@
 /* global GraphicsPath, H3DU, Mesh, console */
 // Portions adapted from public domain Mozilla unit tests
 
-var EPSILON = 0.00001;
+var EPSILON = 0.001;
 var FailedTests = 0;
 function clog(x) {
   "use strict";
@@ -347,45 +347,45 @@ function test() {
   ok(isApproxVec(m1, [
     275, 302, 329, 356, 304, 336, 368, 400,
     332, 368, 404, 440, 2239, 2478, 2717, 2956
-  ]), "The mat4.translate() function didn't set the values correctly.");
+  ]), "The mat4translate() function didn't set the values correctly.");
 
   m1 = H3DU.Math.mat4scale(m1, [1, 2, 3]);
   ok(isApproxVec(m1, [
     275, 302, 329, 356, 608, 672, 736, 800,
     996, 1104, 1212, 1320, 2239, 2478, 2717, 2956
-  ]), "The mat4.scale() function didn't set the values correctly.");
+  ]), "The mat4scale() function didn't set the values correctly.");
 
-  m1 = H3DU.Math.mat4rotate(0.5, [1, 1, 1]);
+  m1 = H3DU.Math.mat4rotate(m1, 0.5 * (180 / Math.PI), [1, 1, 1]);
   ok(isApproxVec(m1, [
     210.6123046875, 230.2483367919922, 249.88438415527344, 269.5204162597656,
     809.8145751953125, 896.520751953125, 983.2268676757812,
     1069.9329833984375, 858.5731201171875, 951.23095703125,
     1043.8887939453125, 1136.5465087890625, 2239, 2478, 2717, 2956
-  ]), "The mat4.rotate() function didn't set the values correctly.");
+  ]), "The mat4rotated() function didn't set the values correctly.");
 
-  m1 = H3DU.Math.mat4rotate(0.5, 1, 0, 0);
+  m1 = H3DU.Math.mat4rotate(m1, 0.5 * (180 / Math.PI), 1, 0, 0);
   ok(isApproxVec(m1, [
     210.6123046875, 230.2483367919922, 249.88438415527344, 269.5204162597656,
     1122.301025390625, 1242.8154296875, 1363.3297119140625,
     1483.843994140625, 365.2230224609375, 404.96875, 444.71453857421875,
     484.460205078125, 2239, 2478, 2717, 2956
-  ]), "The mat4.rotateX() function didn't set the values correctly.");
+  ]), "The mat4rotated() function didn't set the values correctly.");
 
-  m1 = H3DU.Math.mat4rotate( 0.5, 0, 1, 0);
+  m1 = H3DU.Math.mat4rotate(m1, 0.5 * (180 / Math.PI), 0, 1, 0);
   ok(isApproxVec(m1, [
     9.732441902160645, 7.909564018249512, 6.086670875549316,
     4.263822555541992, 1122.301025390625, 1242.8154296875, 1363.3297119140625,
     1483.843994140625, 421.48626708984375, 465.78045654296875,
     510.0746765136719, 554.3687744140625, 2239, 2478, 2717, 2956
-  ]), "The mat4.rotateY() function didn't set the values correctly.");
+  ]), "The mat4rotated() function didn't set the values correctly.");
 
-  m1 = H3DU.Math.mat4rotate(0.5, 0, 0, 1);
+  m1 = H3DU.Math.mat4rotate(m1, 0.5 * (180 / Math.PI), 0, 0, 1);
   ok(isApproxVec(m1, [
     546.6007690429688, 602.7787475585938, 658.9566650390625, 715.1345825195312,
     980.245849609375, 1086.881103515625, 1193.5162353515625,
     1300.1514892578125, 421.48626708984375, 465.78045654296875,
     510.0746765136719, 554.3687744140625, 2239, 2478, 2717, 2956
-  ]), "The mat4.rotateZ() function didn't set the values correctly.");
+  ]), "The mat4rotated() function didn't set the values correctly.");
 
   var m3 = H3DU.Math.mat4frustum(0, 100, 200, 0, 0.1, 100);
   ok(isApproxVec(m3, [
@@ -396,13 +396,13 @@ function test() {
   var m4 = H3DU.Math.mat4perspective(45, 1.6, 0.1, 100);
   ok(isApproxVec(m4, [1.5088834762573242, 0, 0, 0, 0, 2.4142136573791504, 0,
     0, 0, 0, -1.0020020008087158, -1, 0, 0, -0.20020020008087158, 0
-  ]), "The mat4.frustum() function didn't compute the values correctly.");
+  ]), "The mat4perspective() function didn't compute the values correctly.");
 
   var m5 = H3DU.Math.mat4ortho(0, 100, 200, 0, -1, 1);
   ok(isApproxVec(m5, [
     0.019999999552965164, 0, 0, 0, 0, -0.009999999776482582, 0, 0,
     0, 0, -1, 0, -1, 1, 0, 1
-  ]), "The mat4.ortho() function didn't compute the values correctly.");
+  ]), "The mat4ortho() function didn't compute the values correctly.");
 
   var m6 = H3DU.Math.mat4lookat([1, 2, 3], [4, 5, 6], [0, 1, 0]);
   ok(isApproxVec(m6, [
@@ -410,7 +410,7 @@ function test() {
     0.8164966106414795, -0.5773502588272095, 0, 0.7071067690849304,
     -0.40824830532073975, -0.5773502588272095, 0, -1.4142135381698608, 0,
     3.464101552963257, 1
-  ]), "The mat4.lookAt() function didn't compute the values correctly.");
+  ]), "The mat4lookat() function didn't compute the values correctly.");
   var curve = new H3DU.BSplineCurve([[73, 5, 63], [53, 62, 79], [51, 20, 4], [22, 0, 73], [85, 31, 29], [15, 55, 8], [85, 63, 80], [83, 14, 57], [8, 94, 38], [81, 1, 29]], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
   ok(isApproxVec([56, 45.5, 63.83333333333334], curve.evaluate(0)), "Point at 0 is not correct.");
   ok(isApproxVec([50.1375, 33.41216666666666, 34.32249999999999], curve.evaluate(0.1)), "Point at 0.1 is not correct.");

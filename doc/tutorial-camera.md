@@ -81,7 +81,7 @@ Note further that:
 * The angle separating the top and bottom clipping planes is the projection's _field of view_.  This is an angle
 similar to the aperture of a camera.  The greater the vertical field of view, the greater
 the vertical visibility range.
-* In a perspective projection, the view volume will resemble a "pyramid" with the top chopped off.  The
+* In a perspective projection, the view volume will resemble a "pyramid" with the top chopped off (a _frustum_).  The
 near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.
 
 The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also
@@ -213,7 +213,7 @@ This method allows you to set the view matrix to an arbitrary <a href="tutorial-
 
 The concepts of _eye space_, _camera space_, and _world space_, as well as the concepts of _projection_, _view_, _model-view_, and _world_ matrices, are merely conventions, which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.
 
-When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point, all it really expects is the location of that primitive's vertices in _clip space_, which is a normalized space with a fixed range.  A so-called _vertex shader_  communicates those locations to the graphics pipeline using the input it's given.  Although the vertex shader can use projection, view, and world matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to, and can use a different paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already in clip space and just output those coordinates without transforming them.
+When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point, all it really expects is the location of that primitive's vertices in _clip space_.  A so-called _vertex shader_  communicates those locations to the graphics pipeline using the input it's given.  Although the vertex shader can use projection, view, and world matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to, and can use a different paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already in clip space and just output those coordinates without transforming them.
 
 ## Other Pages <a id=Other_Pages></a>
 
@@ -221,4 +221,5 @@ The following pages of mine on CodeProject also discuss this library:
 
 * [_Public-Domain HTML 3D Library_](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
 * [_Creating shapes using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
+
 [Back to documentation index.](index.md)

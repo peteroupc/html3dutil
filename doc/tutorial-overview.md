@@ -361,4 +361,5 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
 * Other changes and fixes
 
 See [older version history](https://peteroupc.github.io/html3dutil/tutorial-history.html).
+
 [Back to documentation index.](index.md)

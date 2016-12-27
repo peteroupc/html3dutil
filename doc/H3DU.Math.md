@@ -163,7 +163,7 @@ Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation 
 
 Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
-### H3DU.Math.quatCopy() <a id='H3DU.Math.quatCopy'></a>
+### (static) H3DU.Math.quatCopy() <a id='H3DU.Math.quatCopy'></a>
 
 Returns a copy of a quaternion.
 
@@ -175,7 +175,7 @@ Return value. (Type: Array.&lt;Number>)
 
 <a href="H3DU.Math.md#H3DU.Math.vec4copy">H3DU.Math.vec4copy</a>
 
-### H3DU.Math.quatDot(a, b) <a id='H3DU.Math.quatDot'></a>
+### (static) H3DU.Math.quatDot(a, b) <a id='H3DU.Math.quatDot'></a>
 
 Finds the dot product of two quaternions.
 It's equal to the sum of the products of
@@ -196,7 +196,7 @@ Return value. (Type: Number)
 
 <a href="H3DU.Math.md#H3DU.Math.vec4dot">H3DU.Math.vec4dot</a>
 
-### H3DU.Math.quatInverse(quat) <a id='H3DU.Math.quatInverse'></a>
+### (static) H3DU.Math.quatInverse(quat) <a id='H3DU.Math.quatInverse'></a>
 
 <b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatInvert">H3DU.Math.quatInvert</a> instead.</b>
 
@@ -212,7 +212,7 @@ Returns a new quaternion; same as the quatInverse method.
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Math.quatLength(quat) <a id='H3DU.Math.quatLength'></a>
+### (static) H3DU.Math.quatLength(quat) <a id='H3DU.Math.quatLength'></a>
 
 Returns the distance of this quaternion from the origin.
 It's the same as the square root of the sum of the squares
@@ -231,7 +231,7 @@ Return value. (Type: Number)
 
 <a href="H3DU.Math.md#H3DU.Math.vec4length">H3DU.Math.vec4length</a>
 
-### H3DU.Math.quatNorm(quat) <a id='H3DU.Math.quatNorm'></a>
+### (static) H3DU.Math.quatNorm(quat) <a id='H3DU.Math.quatNorm'></a>
 
 Converts a quaternion to its normalized version; returns a new quaternion.
 When a quaternion is normalized, the distance from the origin
@@ -252,7 +252,7 @@ The normalized quaternion. (Type: Array.&lt;Number>)
 
 <a href="H3DU.Math.md#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a>
 
-### H3DU.Math.quatNormInPlace(quat) <a id='H3DU.Math.quatNormInPlace'></a>
+### (static) H3DU.Math.quatNormInPlace(quat) <a id='H3DU.Math.quatNormInPlace'></a>
 
 Converts a quaternion to its normalized version.
 When a quaternion is normalized, it describes the same orientation but the distance from the origin
@@ -273,7 +273,7 @@ The parameter "quat". (Type: Array.&lt;Number>)
 
 <a href="H3DU.Math.md#H3DU.Math.vec4normInPlace">H3DU.Math.vec4normInPlace</a>
 
-### H3DU.Math.quatScale(a, scalar) <a id='H3DU.Math.quatScale'></a>
+### (static) H3DU.Math.quatScale(a, scalar) <a id='H3DU.Math.quatScale'></a>
 
 Multiplies each element of a quaternion by a factor
 and returns the result as a new quaternion.
@@ -293,7 +293,7 @@ The resulting quaternion. (Type: Array.&lt;Number>)
 
 <a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
 
-### H3DU.Math.quatScaleInPlace(a, scalar) <a id='H3DU.Math.quatScaleInPlace'></a>
+### (static) H3DU.Math.quatScaleInPlace(a, scalar) <a id='H3DU.Math.quatScaleInPlace'></a>
 
 Multiplies each element of a quaternion by a factor
 and stores the result in that quaternion.
@@ -487,7 +487,8 @@ the given 4x4 matrix.
 This is usually used to convert a model-view matrix to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the world matrix. Normals are then
-transformed by this matrix and then converted to unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). But if the
+transformed by this matrix and then converted to unit vectors
+(<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). But if the
 input matrix uses only rotations, translations, and/or uniform scaling
 (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 be used instead of the inverse-transpose matrix to transform the normals.
@@ -559,7 +560,9 @@ The matrices are multiplied such that the transformations
 they describe happen in reverse order. For example, if the first
 matrix (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will describe
-the effect of scaling then translation.
+the effect of scaling then translation. (Multiplying the first matrix
+by the second is the same as multiplying the second matrix
+by the first matrix's transpose.)
 
 #### Parameters
 
@@ -757,12 +760,19 @@ Transforms a 3-element vector with a 4x4 matrix and returns
 a perspective-correct transformation of the vector,
 using all the elements of the 4x4 matrix.
 
+The transformation involves
+multiplying the matrix by a 4-element vector with the same X,
+Y, and Z coordinates, but with a W coordinate equal to 1, and
+then dividing X, Y, and Z of the resulting 4-element
+vector by that vector's W (a <i>perspective division</i>),
+then returning that vector's new X, Y, and Z.
+
 #### Parameters
 
 * `mat` (Type: Array.&lt;Number>)<br>
     A 4x4 matrix.
 * `v` (Type: Array.&lt;Number> | Number)<br>
-    X coordinate. If "vy", "vz", and "vw" are omitted, this value can instead be a 4-element array giving the X, Y, Z, and W coordinates.
+    X coordinate. If "vy" and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: Number)<br>
     Y coordinate.
 * `vz` (Type: Number)<br>
@@ -891,8 +901,8 @@ off top.
 An array of six
 4-element arrays representing the six clipping planes of the
 view frustum. In order, they are the left, right, top,
-bottom, near, and far clipping planes. The normals of all six planes
-will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Array.&lt;Number>>)
+bottom, near, and far clipping planes. All six planes
+will be normalized (see <a href="H3DU.Math.md#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace</a>). (Type: Array.&lt;Array.&lt;Number>>)
 
 ### (static) H3DU.Math.mat4toMat3(m4) <a id='H3DU.Math.mat4toMat3'></a>
 
@@ -932,8 +942,12 @@ The transformed vector. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4transformVec3(mat, v, vy, vz) <a id='H3DU.Math.mat4transformVec3'></a>
 
-Transforms a 3-element vector with a 4x4 matrix and returns
-the transformed vector. The effect is as though elements
+Transforms a 3-element vector with the first three rows
+of a 4x4 matrix and returns the transformed vector.
+This method assumes the matrix describes an affine
+transformation, without perspective.
+
+The effect is as though elements
 3, 7, 11, and 15 (counting from 0) of the matrix
 were assumed to be (0, 0, 0, 1) instead of their actual values
 (those elements correspond to the last
@@ -950,7 +964,7 @@ the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</
 * `mat` (Type: Array.&lt;Number>)<br>
     A 4x4 matrix.
 * `v` (Type: Array.&lt;Number> | Number)<br>
-    X coordinate. If "vy", "vz", and "vw" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
+    X coordinate. If "vy" and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: Number)<br>
     Y coordinate.
 * `vz` (Type: Number)<br>
@@ -1215,22 +1229,30 @@ The resulting quaternion. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.quatNlerp(q1, q2, factor) <a id='H3DU.Math.quatNlerp'></a>
 
-Does a linear interpolation between two quaternions;
-returns a new quaternion.
+Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a linear interpolation function, and converts
+it to a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec4norm">"normalized" vector</a> with a length of 1).
+This is called a normalized linear interpolation, or "nlerp".
+
+Because the shortest path is curved, not straight, this method
+will generally not interpolate at constant velocity;
+however, the difference in this velocity when interpolating is
+rarely noticeable and this method is generally faster than
+the <a href="H3DU.Math.md#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a> method.
 
 #### Parameters
 
 * `q1` (Type: Array.&lt;Number>)<br>
-    The first quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
+    The first quaternion. Must be a unit vector.
 * `q2` (Type: Array.&lt;Number>)<br>
-    The second quaternion. Should be a unit vector.
+    The second quaternion. Must be a unit vector.
 * `factor` (Type: Number)<br>
     A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
 
 #### Return Value
 
 The interpolated quaternion,
-which will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1). (Type: Array.&lt;Number>)
+which will be a unit vector. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.quatRotate(quat, angle, v, vy, vz) <a id='H3DU.Math.quatRotate'></a>
 
@@ -1262,23 +1284,38 @@ The resulting quaternion. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.quatSlerp(q1, q2, factor) <a id='H3DU.Math.quatSlerp'></a>
 
-Does a spherical linear interpolation between two quaternions;
-returns a new quaternion.
-This method is useful for smoothly animating between the two
-rotations they describe.
+Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a spherical interpolation function.
+This is called spherical linear interpolation, or "slerp". (A spherical
+interpolation finds the angle between the two quaternions -- which
+are treated as 4D vectors -- and then finds a vector with a smaller angle
+between it and the first quaternion. The "factor" parameter specifies
+how small the new angle will be relative to the original angle.)
+
+This method will generally interpolate at constant velocity; however,
+this method is commutative (the order in which the quaternions are given
+matters), unlike <a href="H3DU.Math.md#H3DU.Math.quatNlerp">quatNlerp</a>, making it
+unsuitable for blending multiple quaternion rotations,
+and this method is generally more computationally expensive
+than the <a href="H3DU.Math.md#H3DU.Math.quatNlerp">quatNlerp</a> method.
 
 #### Parameters
 
 * `q1` (Type: Array.&lt;Number>)<br>
-    The first quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
+    The first quaternion. Must be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec4norm">"normalized" vector</a> with a length of 1).
 * `q2` (Type: Array.&lt;Number>)<br>
-    The second quaternion. Should be a unit vector.
+    The second quaternion. Must be a unit vector.
 * `factor` (Type: Number)<br>
     A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
 
 #### Return Value
 
 The interpolated quaternion. (Type: Array.&lt;Number>)
+
+#### See Also
+
+["Understanding Slerp, Then Not Using It", Jonathan Blow](http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/),
+for additional background
 
 ### (static) H3DU.Math.quatToAxisAngle(a) <a id='H3DU.Math.quatToAxisAngle'></a>
 
@@ -1289,7 +1326,7 @@ origin (0,0,0) and points toward a 3D point.)
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
-    A quaternion. Must be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1).
+    A quaternion. Must be a unit vector (<a href="H3DU.Math.md#H3DU.Math.vec3norm">a "normalized" vector</a> with a length of 1).
 
 #### Return Value
 
@@ -1439,9 +1476,9 @@ where |<b>x</b>| is the length of vector <b>x</b>.)</small></ul>
 The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
 follows:
 
-    <b>c</b>.x = <b>a</b>.y \* <b>b</b>.z - <b>a</b>.z \* <b>b</b>.y
-    <b>c</b>.y = <b>a</b>.z \* <b>b</b>.x - <b>a</b>.x \* <b>b</b>.z
-    <b>c</b>.z = <b>a</b>.x \* <b>b</b>.y - <b>a</b>.y \* <b>b</b>.x
+    <b>c</b>.x = <b>a</b>.y * <b>b</b>.z - <b>a</b>.z * <b>b</b>.y
+    <b>c</b>.y = <b>a</b>.z * <b>b</b>.x - <b>a</b>.x * <b>b</b>.z
+    <b>c</b>.z = <b>a</b>.x * <b>b</b>.y - <b>a</b>.y * <b>b</b>.x
 
 #### Parameters
 
@@ -1469,7 +1506,7 @@ calculate a triangle's normal vector and its area.
      // The triangle's normal is the cross product of da and db
      var normal=H3DU.Math.vec3cross(da,db);
      // Find the triangle's area
-     var area=H3DU.Math.vec3length(normal)\*0.5;
+     var area=H3DU.Math.vec3length(normal)*0.5;
 
 ### (static) H3DU.Math.vec3dot(a, b) <a id='H3DU.Math.vec3dot'></a>
 
@@ -1511,7 +1548,7 @@ The following shows a fast way to compare
 a vector's length using the dot product.
 
     // Check if the vector's length squared is less than 20 units squared
-    if(H3DU.Math.vec3dot(vector, vector)<20\*20) {
+    if(H3DU.Math.vec3dot(vector, vector)<20*20) {
      // The vector's length is shorter than 20 units
     }
 

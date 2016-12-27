@@ -96,8 +96,9 @@ A quaternion is a 4-element array that describes a
 * first three elements (X, Y, Z) describe a 3D point, where the
 direction from the origin (0, 0, 0) to that point is the _axis of rotation_,
 and the distance from the origin to that point is the sine
-of half the rotation angle.
+of half the rotation angle. <small> (The distance is 0 at 0 and 360 degrees, and 1 at 180 degrees.)</small>
 * fourth element (W) is the cosine of half the rotation angle.
+<small>(W is 1 at 0 degrees, 0 at 180 and -1 at 360 degrees.)</small>
 
 ### Multiplying quaternions <a id=Multiplying_quaternions></a>
 

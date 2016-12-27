@@ -459,4 +459,5 @@ Related functions:
 
 * <a href="H3DU.Math.md#H3DU.Math.mat4invert">H3DU.Math.mat4invert()</a> -
  Inverts a matrix
+
 [Back to documentation index.](index.md)

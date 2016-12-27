@@ -28,18 +28,18 @@ from one coordinate system to another.
 
 ### H3DU.Transform#copy() <a id='H3DU.Transform_H3DU.Transform_copy'></a>
 
-Makes a copy of this object. The copied object
+Makes a copy of this transform. The copied object
 will have its own version of the rotation, scale,
 position, and matrix data.
 
 #### Return Value
 
-A copy of this object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
+A copy of this transform. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#getMatrix() <a id='H3DU.Transform_H3DU.Transform_getMatrix'></a>
 
 Gets the transformation matrix used by an object. Depending
-on the state of this object, will return either:<ul>
+on the state of this transform, will return either:<ul>
 <li>The 4x4 matrix passed to H3DU.Transform#setMatrix, if the
 matrix was defined with that method
 and the transform wasn't reset yet with H3DU.Transform#resetTransform.
@@ -159,7 +159,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#reset() <a id='H3DU.Transform_H3DU.Transform_reset'></a>
 
-Resets this shape to the untransformed state.
+Resets this transform to the untransformed state.
 
 #### Return Value
 
@@ -177,7 +177,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#setMatrix(value) <a id='H3DU.Transform_H3DU.Transform_setMatrix'></a>
 
-Sets this shape's transformation matrix. This method
+Sets this transform's transformation matrix. This method
 will set the position, rotation, and scale properties
 accordingly to the matrix given.
 
@@ -192,7 +192,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#setOrientation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_setOrientation'></a>
 
-Sets this object's orientation in the form of an angle and an axis of
+Sets this transform's orientation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
@@ -232,7 +232,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#setQuaternion(quat) <a id='H3DU.Transform_H3DU.Transform_setQuaternion'></a>
 
-Sets this object's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+Sets this transform's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
@@ -264,11 +264,11 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 #### Parameters
 
 * `x` (Type: number | Array.&lt;Number>)<br>
-    Scaling factor for this object's width. If "y" and "z" are null or omitted, this is instead a 3-element array giving the scaling factors for width, height, and depth, respectively, or a single number giving the scaling factor for all three dimensions.
+    Scaling factor for this transform's width. If "y" and "z" are null or omitted, this is instead a 3-element array giving the scaling factors for width, height, and depth, respectively, or a single number giving the scaling factor for all three dimensions.
 * `y` (Type: Number)<br>
-    Scaling factor for this object's height.
+    Scaling factor for this transform's height.
 * `z` (Type: Number)<br>
-    Scaling factor for this object's depth.
+    Scaling factor for this transform's depth.
 
 #### Return Value
 

@@ -26,6 +26,7 @@ function normtags(x) {
     var unescaped = b.replace(/\&lt;/g, "<");
     unescaped = unescaped.replace(/\&gt;/g, ">");
     unescaped = unescaped.replace(/\&amp;/g, "&");
+    unescaped = unescaped.replace(/\\\*/g, "*");
     return "\n\n    " + unescaped.replace(/\n/g, "\n    ") + "\n\n";
   });
   return x;
@@ -183,7 +184,7 @@ function DocCollection() {
       var content = "# " + helper.htmlsafe(tut.title) + "\n\n";
       content += "[Back to documentation index.](index.md)\n\n";
       content += tut.content;
-      content += "[Back to documentation index.](index.md)\n\n";
+      content += "\n\n[Back to documentation index.](index.md)\n\n";
       fs.writeFileSync(
        path.join(Doc.outputDir, helper.tutorialToUrl(tut.name)),
            normalizeLines(helper.resolveLinks(content)), "utf8");

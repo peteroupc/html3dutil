@@ -333,4 +333,5 @@ The following pages of mine on CodeProject also discuss this library:
 * [_Creating shapes using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
 * [_The "Camera" and the Projection and View Transforms_](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
 * [_Graphics Filters for the HTML 3D Canvas_](http://www.codeproject.com/Articles/993433/Graphics-Filters-for-the-HTML-D-Canvas)
+
 [Back to documentation index.](index.md)

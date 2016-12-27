@@ -147,4 +147,5 @@ An alternate syntax for HSL colors supports the alpha component (see "What Is an
 ## What Is an Alpha Component? <a id=What_Is_an_Alpha_Component></a>
 
 An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it).  If a color notation doesn't use an alpha component, the color is fully opaque.
+
 [Back to documentation index.](index.md)

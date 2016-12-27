@@ -662,7 +662,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 * Calculates the angle and axis of rotation for this
 * quaternion. (The axis of rotation is a ray that starts at the
 * origin (0,0,0) and points toward a 3D point.)
-* @param {Array<Number>} a A quaternion.  Must be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
+* @param {Array<Number>} a A quaternion.  Must be a unit vector ([a "normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
 * @returns {Array<Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
@@ -887,14 +887,21 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return angles;
   },
 /**
- * Does a linear interpolation between two quaternions;
- * returns a new quaternion.
- * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
- * @param {Array<Number>} q2 The second quaternion.  Should be a unit vector.
+ * Returns a quaternion that lies along the shortest path between the
+ * given two quaternion rotations, using a linear interpolation function, and converts
+ * it to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
+ * This is called a normalized linear interpolation, or "nlerp".<p>
+ * Because the shortest path is curved, not straight, this method
+ * will generally not interpolate at constant velocity;
+ * however, the difference in this velocity when interpolating is
+ * rarely noticeable and this method is generally faster than
+ * the {@link H3DU.Math.quatSlerp} method.
+ * @param {Array<Number>} q1 The first quaternion.  Must be a unit vector.
+ * @param {Array<Number>} q2 The second quaternion.  Must be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion,
- * which will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
+ * which will be a unit vector.
 */
   "quatNlerp":function(q1, q2, factor) {
     "use strict";
@@ -915,15 +922,26 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
   },
 /**
- * Does a spherical linear interpolation between two quaternions;
- * returns a new quaternion.
- * This method is useful for smoothly animating between the two
- * rotations they describe.
- * @param {Array<Number>} q1 The first quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
- * @param {Array<Number>} q2 The second quaternion.  Should be a unit vector.
+ * Returns a quaternion that lies along the shortest path between the
+ * given two quaternion rotations, using a spherical interpolation function.
+ * This is called spherical linear interpolation, or "slerp". (A spherical
+ * interpolation finds the angle between the two quaternions -- which
+ * are treated as 4D vectors -- and then finds a vector with a smaller angle
+ * between it and the first quaternion.  The "factor" parameter specifies
+ * how small the new angle will be relative to the original angle.)<p>
+ * This method will generally interpolate at constant velocity; however,
+ * this method is commutative (the order in which the quaternions are given
+ * matters), unlike [quatNlerp]{@link H3DU.Math.quatNlerp}, making it
+ * unsuitable for blending multiple quaternion rotations,
+ * and this method is generally more computationally expensive
+ * than the [quatNlerp]{@link H3DU.Math.quatNlerp} method.
+ * @param {Array<Number>} q1 The first quaternion.  Must be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
+ * @param {Array<Number>} q2 The second quaternion.  Must be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion.
+ * @see ["Understanding Slerp, Then Not Using It", Jonathan Blow](http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/),
+ * for additional background
  */
   "quatSlerp":function(q1, q2, factor) {
     "use strict";
@@ -937,8 +955,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
     if(cosval > -1) {
       if(cosval < 1) {
         angle = Math.acos(cosval);
-        if(angle === 0)return qd.slice(0, 4);
-      } else return qd.slice(0, 4);
+        if(angle === 0)
+          return H3DU.Math.quatNlerp(q1, q2, factor);
+      } else {
+        return H3DU.Math.quatNlerp(q1, q2, factor);
+      }
     } else {
       angle = Math.PI;
     }
@@ -1108,7 +1129,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 * This is usually used to convert a model-view matrix to a matrix
 * for transforming surface normals in order to keep them perpendicular
 * to a surface transformed by the world matrix.  Normals are then
-* transformed by this matrix and then converted to unit vectors  (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).  But if the
+* transformed by this matrix and then converted to unit vectors
+* (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).  But if the
 * input matrix uses only rotations, translations, and/or uniform scaling
 * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 * be used instead of the inverse-transpose matrix to transform the normals.
@@ -1237,8 +1259,11 @@ m[0] * m[7] * m[5];
       x * mat[3] + y * mat[7] + z * mat[11] + w * mat[15]];
   },
 /**
- * Transforms a 3-element vector with a 4x4 matrix and returns
- * the transformed vector.  The effect is as though elements
+ * Transforms a 3-element vector with the first three rows
+ * of a 4x4 matrix and returns the transformed vector.
+ * This method assumes the matrix describes an affine
+ * transformation, without perspective.<p>
+ * The effect is as though elements
  * 3, 7, 11, and 15 (counting from 0) of the matrix
  * were assumed to be (0, 0, 0, 1) instead of their actual values
  * (those elements correspond to the last
@@ -1250,7 +1275,7 @@ m[0] * m[7] * m[5];
  * the {@link H3DU.Math.mat4projectVec3} method instead.
  * @param {Array<Number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v X coordinate.
- * If "vy", "vz", and "vw" are omitted, this value can instead
+ * If "vy" and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
@@ -1276,11 +1301,17 @@ m[0] * m[7] * m[5];
 /**
  * Transforms a 3-element vector with a 4x4 matrix and returns
  * a perspective-correct transformation of the vector,
- * using all the elements of the 4x4 matrix.
+ * using all the elements of the 4x4 matrix.<p>
+ * The transformation involves
+ * multiplying the matrix by a 4-element vector with the same X,
+ * Y, and Z coordinates, but with a W coordinate equal to 1, and
+ * then dividing X, Y, and Z of the resulting 4-element
+ * vector by that vector's W (a <i>perspective division</i>),
+ * then returning that vector's new X, Y, and Z.
  * @param {Array<Number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v X coordinate.
- * If "vy", "vz", and "vw" are omitted, this value can instead
- * be a 4-element array giving the X, Y, Z, and W coordinates.
+ * If "vy" and "vz" are omitted, this value can instead
+ * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
@@ -1728,7 +1759,9 @@ m[0] * m[7] * m[5];
  * they describe happen in reverse order. For example, if the first
  * matrix (input matrix) describes a translation and the second
  * matrix describes a scaling, the multiplied matrix will describe
- * the effect of scaling then translation.
+ * the effect of scaling then translation. (Multiplying the first matrix
+ * by the second is the same as multiplying the second matrix
+ * by the first matrix's transpose.)
  * @param {Array<Number>} a The first matrix.
  * @param {Array<Number>} b The second matrix.
  * @returns {Array<Number>} The resulting 4x4 matrix.
@@ -2002,8 +2035,8 @@ m[0] * m[7] * m[5];
 * @returns {Array<Array<Number>>} An array of six
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
-* bottom, near, and far clipping planes.  The normals of all six planes
-* will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
+* bottom, near, and far clipping planes.  All six planes
+* will be normalized (see {@link H3DU.Math.planeNormInPlace}).
 */
   "mat4toFrustumPlanes":function(matrix) {
     "use strict";
@@ -2178,6 +2211,7 @@ m[0] * m[7] * m[5];
  @param {Array<Number>} b The second quaternion.
  @returns {Number} Return value.
  @method
+@static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4dot}
 */
@@ -2192,6 +2226,7 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The parameter "quat".
  @method
+@static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4normInPlace}
  */
@@ -2206,6 +2241,7 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * @param {Array<Number>} quat A quaternion.
  * @returns {Array<Number>} The normalized quaternion.
  @method
+@static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4norm}
  */
@@ -2218,6 +2254,7 @@ H3DU.Math.quatNorm = H3DU.Math.vec4norm;
  @param {Array<Number>} quat The quaternion.
   @returns {Number} Return value.
  @method
+@static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4length}
 */
@@ -2230,6 +2267,7 @@ H3DU.Math.quatLength = H3DU.Math.vec4length;
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The parameter "a".
  @method
+@static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4scaleInPlace}
  */
@@ -2242,6 +2280,7 @@ H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The resulting quaternion.
  @method
+@static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4scaleInPlace}
  */
@@ -2251,6 +2290,7 @@ H3DU.Math.quatScale = H3DU.Math.vec4scale;
 * @function
  * @returns {Array<Number>} Return value.
  @method
+@static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4copy}
 */
@@ -2336,6 +2376,7 @@ H3DU.Math.RollYawPitch = 5;
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value.
  @method
+@static
 @memberof! H3DU.Math
 */
 H3DU.Math.quatInverse = H3DU.Math.quatInvert;

@@ -75,7 +75,7 @@ H3DU.Transform.prototype.getQuaternion = function() {
   }
 };
 /**
-* Resets this shape to the untransformed state.
+* Resets this transform to the untransformed state.
 * @returns {H3DU.Shape} This object.
 * @memberof! H3DU.Transform#
 */
@@ -91,7 +91,7 @@ H3DU.Transform.prototype.reset = function() {
   return this;
 };
 /**
- * Sets this shape's transformation matrix. This method
+ * Sets this transform's transformation matrix. This method
  * will set the position, rotation, and scale properties
  * accordingly to the matrix given.
  * @param {Array<Number>} value A 4x4 matrix.
@@ -149,13 +149,13 @@ H3DU.Transform.prototype.resetTransform = function() {
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @param {number|Array<Number>} x Scaling factor for this object's width.
+ * @param {number|Array<Number>} x Scaling factor for this transform's width.
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the scaling factors
  * for width, height, and depth, respectively, or a single number
  * giving the scaling factor for all three dimensions.
- * @param {Number} y Scaling factor for this object's height.
- * @param {Number} z Scaling factor for this object's depth.
+ * @param {Number} y Scaling factor for this transform's height.
+ * @param {Number} z Scaling factor for this transform's depth.
 * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
 */
@@ -252,7 +252,7 @@ H3DU.Transform.prototype.movePosition = function(x, y, z) {
   return this;
 };
 /**
- * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
+ * Sets this transform's orientation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
  * for describing 3D rotations). Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
  * @param {Array<Number>} quat A four-element array describing the rotation.
@@ -278,7 +278,7 @@ H3DU.Transform.prototype.setQuaternion = function(quat) {
   return this;
 };
 /**
- * Sets this object's orientation in the form of an angle and an axis of
+ * Sets this transform's orientation in the form of an angle and an axis of
  * rotation. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
  * @param {Array<Number>|number} angle The desired angle
@@ -359,7 +359,7 @@ H3DU.Transform.prototype.multOrientation = function(angle, v, vy, vz) {
 };
 /**
  * Gets the transformation matrix used by an object.  Depending
- * on the state of this object, will return either:<ul>
+ * on the state of this transform, will return either:<ul>
 * <li>The 4x4 matrix passed to {@link H3DU.Transform#setMatrix}, if the
 * matrix was defined with that method
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
@@ -410,10 +410,10 @@ H3DU.Transform.prototype.getMatrix = function() {
 };
 
 /**
-* Makes a copy of this object.  The copied object
+* Makes a copy of this transform.  The copied object
 * will have its own version of the rotation, scale,
 * position, and matrix data.
-* @returns {H3DU.Transform} A copy of this object.
+* @returns {H3DU.Transform} A copy of this transform.
 * @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.copy = function() {

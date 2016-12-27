@@ -72,4 +72,5 @@ In the sample code below, The variables `textureURL1` and `textureURL2` are URL 
 and applying them to 3D shapes.
 * [gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
+
 [Back to documentation index.](index.md)
