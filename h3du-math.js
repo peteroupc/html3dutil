@@ -264,6 +264,54 @@ Negating a vector
     ];
   },
 /**
+* Transforms the 3D point specified in this 3-element vector to its X
+* and Y coordinates in <i>screen space</i>, and its normalized device Z coordinate,
+* using the given transformation matrix and viewport
+* width and height.  The X coordinates in this screen space increase
+* rightward, the Y coordinates in this space increase upward
+* or downward depending on the "yUp" parameter, and the Z
+* coordinates increase away from the viewer.
+* @param {Array<Number>} vector A 3-element vector giving
+* the X, Y, and Z coordinates of the 3D point to transform.
+* @param {Array<Number>} matrix A 4x4 matrix to use to transform
+ * the vector to normalized device coordinates.  This will generally be
+ * a projection-view matrix, that is, the projection matrix multiplied
+ * by the view matrix, in that order, if the vector to transform is in <i>world space</i>,
+ * or a model-view-projection matrix, that is, a projection-view matrix multiplied
+ * by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.
+* The rest of the method will transform the normalized device
+* coordinates to screen space.
+* @param {Array<Number>} viewport A 4-element array specifying
+* the starting position and size of the viewport in screen space units
+* (such as pixels).  In order, the four elements are the starting position's
+* X coordinate, its Y coordinate, the viewport's width, and the viewport's
+* height. Throws an error if the width or height is less than 0.
+* @param {Boolean} [yUp] If true, the viewport's starting position is
+* at the lower left corner and Y coordinates in screen space
+* increase upward.  If false, null, or omitted, the viewport's starting
+* position is at the upper left corner and Y coordinates in screen
+* space increase downward.
+* @returns {Array<Number>} A 3-element array giving the X and Y
+* coordinates, both in screen space, and the normalized device
+* Z coordinate, in that order.
+* @see {@link H3DU.Math.mat4projectVec3}, for more information
+* on normalized device coordinates.
+*/
+  "vec3toScreenPoint":function(vector, matrix, viewport, yUp) {
+    "use strict";
+    if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
+   // Transform the vector and do a perspective divide
+    var vec = H3DU.Math.mat4projectVec3(matrix, vector);
+   // Now we have normalized device coordinates; convert
+   // them to screen space
+    var halfWidth = viewport[2] * 0.5;
+    var halfHeight = viewport[3] * 0.5;
+    var vecY = yUp ? vec[1] : -vec[1];
+    var x = vec[0] * halfWidth + halfWidth + viewport[0];
+    var y = vecY * halfHeight + halfHeight + viewport[1];
+    return [x, y, vec[2]];
+  },
+/**
  * Finds the dot product of two 4-element vectors. It's the
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * @param {Array<Number>} a The first 4-element vector.
@@ -814,7 +862,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
- * @param {Array<Number>} a A quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
+ * @param {Array<Number>} a A quaternion.  Should be a unit vector
+ * (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {Number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
@@ -1260,7 +1309,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Transforms a 3-element vector with the first three rows
- * of a 4x4 matrix and returns the transformed vector.
+ * of a 4x4 matrix (in column-major order) and returns the transformed vector.
  * This method assumes the matrix describes an affine
  * transformation, without perspective.<p>
  * The effect is as though elements
@@ -1280,7 +1329,7 @@ m[0] * m[7] * m[5];
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
- * @returns {Array<Number>} The transformed 3x3 vector.
+ * @returns {Array<Number>} The transformed 3-element vector.
  */
   "mat4transformVec3":function(mat, v, vy, vz) {
     "use strict";
@@ -1300,22 +1349,36 @@ m[0] * m[7] * m[5];
   },
 /**
  * Transforms a 3-element vector with a 4x4 matrix and returns
- * a perspective-correct transformation of the vector,
- * using all the elements of the 4x4 matrix.<p>
+ * a transformation of the vector in <i>normalized device coordinates</i>.<p>
  * The transformation involves
- * multiplying the matrix by a 4-element vector with the same X,
+ * multiplying the matrix by a 4-element column vector with the same X,
  * Y, and Z coordinates, but with a W coordinate equal to 1, and
  * then dividing X, Y, and Z of the resulting 4-element
- * vector by that vector's W (a <i>perspective division</i>),
- * then returning that vector's new X, Y, and Z.
- * @param {Array<Number>} mat A 4x4 matrix.
- * @param {Array<Number>|Number} v X coordinate.
+ * vector by that vector's W (a <i>perspective divide</i>),
+ * then returning that vector's new X, Y, and Z.<p>
+ * <b>About normalized device coordinates</b><p>
+ * In normalized device coordinates, a 3D point located on or within
+ * the viewport (visible area) ranges from -1 to 1 in the X and Y coordinates.
+ * and the coordinates increase from left to right and from front to back.<p>
+ * In OpenGL by default, the Z coordinates located on or within the
+ * viewport range from -1 to 1, and the Y coordinates increase
+ * from bottom to top.  For Y coordinates that increase from top to bottom,
+ * reverse the sign of the Y coordinate of this method's return value.
+ * @param {Array<Number>} mat A 4x4 matrix to use to transform
+ * the vector to normalized device coordinates.  This will generally be
+ * a projection-view matrix, that is, the projection matrix multiplied
+ * by the view matrix, in that order, if the vector to transform is in <i>world space</i>,
+ * or a model-view-projection matrix, that is, a projection-view matrix multiplied
+ * by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.
+ * @param {Array<Number>|Number} v X coordinate of a 3D point to transform.
  * If "vy" and "vz" are omitted, this value can instead
- * be a 4-element array giving the X, Y, and Z coordinates.
+ * be a 3-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
- * @returns {Array<Number>} The transformed 3x3 vector.
+ * @returns {Array<Number>} The transformed 3-element vector
+ * in normalized device coordinates. The elements, in order, are
+ * the transformed vector's X, Y, and Z coordinates.
  */
   "mat4projectVec3":function(mat, v, vy, vz) {
     "use strict";

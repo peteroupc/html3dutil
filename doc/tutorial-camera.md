@@ -39,7 +39,7 @@ The HTML 3D library uses the following transformations:
 * A _world matrix_ transforms an object's own coordinates to _world space_,
 the coordinate system shared by every object in the scene.  The world matrix
 is not discussed in this page.
-* A _view matrix_ transforms coordinates in world space to _camera space_ or _eye space_.
+* A _view matrix_ transforms coordinates in world space to _camera space_.
 * A _projection matrix_ transforms coordinates in camera space to _clip space_.
 
 Additionally, the graphics pipeline (outside the HTML 3D library) converts the

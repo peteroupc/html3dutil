@@ -150,7 +150,8 @@ H3DU.Shape.prototype.setMaterialParams = function(params) {
   return this;
 };
 /**
-* Sets this shape's material to the given texture and color.
+* Sets this shape's material to the given texture, and its ambient and
+* diffuse parameters to the given color.
  * @param {String} name {@link H3DU.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this method

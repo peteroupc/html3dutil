@@ -1021,13 +1021,14 @@ H3DU.Mesh._isIdentityInUpperLeft = function(m) {
 };
  /**
   * Transforms the positions and normals of all the vertices currently
-  * in this mesh, using a 4x4 matrix.  The matrix won't affect
-  * vertices added afterwards. Also, resets the primitive
+  * in this mesh.  The matrix won't affect vertices added afterwards.
+  * Also, resets the primitive
   * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
   * will not build upon previous vertices. Future vertices should not be
   * added after calling this method without calling mode() first.
   * @param {Array<Number>} matrix A 4x4 matrix describing
-  * the transformation.
+  * the transformation.  The normals will be transformed using the
+  * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
 */

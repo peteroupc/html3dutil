@@ -46,7 +46,7 @@ Dir.chdir(".."){
  files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
  filesToCompile=files|(%w( oldnames.js ))
- normalizeAndCompile(filesToCompile,"h3du_min.js",false,true)
+ normalizeAndCompile(filesToCompile,"h3du_min.js",false,false)
  generateSvg("demos/websafe.svg")
  generateColorNameSvg("demos/colornames.svg")
  filesForDoc=files|Dir.glob("extras/*.js")

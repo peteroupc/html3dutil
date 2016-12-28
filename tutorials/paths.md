@@ -66,10 +66,6 @@ of connected lines and curves.
 * _.lineTo(x, y)_ - Adds a line segment from the current position to a new ending position.
 * _.closePath()_ - Closes the path by drawing a line to the starting point, if needed.
 
-To be completed.
-
-### Using Paths <a id=Using_Paths></a>
-
 ## Path Segments <a id=Path_Segments></a>
 
 Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
@@ -91,5 +87,3 @@ of the `GraphicsPath` class.
 
 * The _.getLength()_ method finds the approximate length of a path.
 * The _.getBounds()_ method finds the axis-aligned bounding box of a path.
-
-To be completed.

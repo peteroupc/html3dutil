@@ -216,7 +216,9 @@ demo of some of the built-in shapes.
 * [demos/builtinshapes.html](https://peteroupc.github.io/html3dutil/demos/builtinshapes.html) - Interactive demo of
 the built-in shapes.
 * [demos/platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
-platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
+platonic solids.  Demonstrates:
+    * How vertex and index arrays are built up to create geometric meshes, and
+    * How to position HTML elements on top of 3D models based on their 3D positions.
 * [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 
@@ -280,6 +282,9 @@ featuring a background with continuously drawn 3D shapes.
 * [demos/animation.html](https://peteroupc.github.io/html3dutil/demos/animation.html) - A demo
 illustrating a simple animation of 3D shapes.
 * [demos/starfield.html](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demo of a star field.
+* [demos/quatlerp.html](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demonstrates
+the difference between {@link H3DU.Math.quatNlerp} and {@link H3DU.Math.quatSlerp},
+both functions for interpolating quaternion rotations.
 * [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
 ## Example <a id=Example></a>

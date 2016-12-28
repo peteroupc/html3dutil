@@ -227,7 +227,8 @@ This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
 ### H3DU.Shape#setTextureAndColor(name, r, g, b, [a]) <a id='H3DU.Shape_H3DU.Shape_setTextureAndColor'></a>
 
-Sets this shape's material to the given texture and color.
+Sets this shape's material to the given texture, and its ambient and
+diffuse parameters to the given color.
 
 #### Parameters
 

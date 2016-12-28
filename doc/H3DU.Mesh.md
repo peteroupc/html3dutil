@@ -587,8 +587,8 @@ to lines. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 ### H3DU.Mesh#transform(matrix) <a id='H3DU.Mesh_H3DU.Mesh_transform'></a>
 
 Transforms the positions and normals of all the vertices currently
-in this mesh, using a 4x4 matrix. The matrix won't affect
-vertices added afterwards. Also, resets the primitive
+in this mesh. The matrix won't affect vertices added afterwards.
+Also, resets the primitive
 mode (see H3DU.Mesh#mode) so that future vertices given
 will not build upon previous vertices. Future vertices should not be
 added after calling this method without calling mode() first.
@@ -596,7 +596,7 @@ added after calling this method without calling mode() first.
 #### Parameters
 
 * `matrix` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix describing the transformation.
+    A 4x4 matrix describing the transformation. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
 
 #### Return Value
 
