@@ -1112,22 +1112,3 @@ H3DU.Scene3D.prototype.useFilter = function() {
     "create a batch for rendering filter effects from a frame buffer.");
   return this;
 };
-
-/**
-* Returns whether the WebGL context supports
-* derivative functions in GLSL shaders.
-* @param {WebGLRenderingContext|Object} context
- * A WebGL context, or an object, such as H3DU.Scene3D, that
-* implements a no-argument <code>getContext</code> method
- * @returns {Boolean} True if the context supports derivatives; false otherwise.
-* @memberof! H3DU.Scene3D
-*/
-H3DU.Scene3D.supportsDerivatives = function(context) {
-  "use strict";
-  context = context.getContext ? context.getContext() : context;
-  if(context.getExtension("OES_standard_derivatives")) {
-    return true;
-  } else {
-    return false;
-  }
-};

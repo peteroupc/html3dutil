@@ -11,7 +11,7 @@ Library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/ht
 
 ## Contents <a id=Contents></a>
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Paths](#Paths)<br>[How to Use](#How_to_Use)<br>[Creating Paths](#Creating_Paths)<br>&nbsp;&nbsp;[SVG Path String](#SVG_Path_String)<br>&nbsp;&nbsp;[Building Paths](#Building_Paths)<br>&nbsp;&nbsp;[Using Paths](#Using_Paths)<br>[Path Segments](#Path_Segments)<br>[Methods](#Methods)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Paths](#Paths)<br>[How to Use](#How_to_Use)<br>[Creating Paths](#Creating_Paths)<br>&nbsp;&nbsp;[SVG Path String](#SVG_Path_String)<br>&nbsp;&nbsp;[Building Paths](#Building_Paths)<br>[Path Segments](#Path_Segments)<br>[Methods](#Methods)<br>
 
 ## Paths <a id=Paths></a>
 

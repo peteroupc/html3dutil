@@ -24,7 +24,6 @@ An object that holds a rendering context for rendering
 
 ### Methods
 
-* [.supportsDerivatives](#H3DU.Scene3D.supportsDerivatives)
 * [addShape](#H3DU.Scene3D_H3DU.Scene3D_addShape)
 * [clear](#H3DU.Scene3D_H3DU.Scene3D_clear)
 * [clearDepth](#H3DU.Scene3D_H3DU.Scene3D_clearDepth)
@@ -102,20 +101,6 @@ No face culling.
  rather than through this class.</b>
 
 An array of shapes that are part of the scene.
-
-### H3DU.Scene3D.supportsDerivatives(context) <a id='H3DU.Scene3D.supportsDerivatives'></a>
-
-Returns whether the WebGL context supports
-derivative functions in GLSL shaders.
-
-#### Parameters
-
-* `context` (Type: WebGLRenderingContext | Object)<br>
-    A WebGL context, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method
-
-#### Return Value
-
-True if the context supports derivatives; false otherwise. (Type: Boolean)
 
 ### H3DU.Scene3D#addShape(shape) <a id='H3DU.Scene3D_H3DU.Scene3D_addShape'></a>
 

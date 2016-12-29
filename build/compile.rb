@@ -47,8 +47,8 @@ Dir.chdir(".."){
  files|=Dir.glob("h3du-*.js")
  filesToCompile=files|(%w( oldnames.js ))
  normalizeAndCompile(filesToCompile,"h3du_min.js",false,false)
- generateSvg("demos/websafe.svg")
- generateColorNameSvg("demos/colornames.svg")
+ generateSvg("doc/websafe.svg")
+ generateColorNameSvg("doc/colornames.svg")
  filesForDoc=files|Dir.glob("extras/*.js")
  filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
  `jsdoc -u tutorials -t build -R README.md -d doc #{filesForDoc}`

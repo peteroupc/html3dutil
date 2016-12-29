@@ -25,9 +25,12 @@ or normal, the elements are given as X, Y, Z, and W, in that order.
 If a 4-element vector describes a color, the elements are given as red, green,
 blue, and alpha, in that order (where each element ranges from 0-1).
 
-If a 3D _position_ (point) is used in a 4-element vector function (one beginning
-with "vec4"), use 1 as the fourth element of the vector.  If a 3D _direction_
-is used in a 4-element vector function, use 0 as the fourth element.
+If a 3D _direction_ is used in a 4-element vector function (one beginning with "vec4"),
+use 0 as the fourth element.  If a 3D _position_ (point) is used in a 4-element vector
+function, the fourth element is generally 1.   (If the
+fourth element is anything other than 0, the vector is in _homogeneous
+coordinates_, where the 3D position equals the first three elements divided
+by the fourth.)
 
 ## Matrices <a id=Matrices></a>
 
