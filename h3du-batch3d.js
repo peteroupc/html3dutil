@@ -349,7 +349,6 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
     }
   } else if(shape.visible && !shape.isCulled(this._getFrustum())) {
     var prog = null;
-
     var flags = 0;
     if(shape.material instanceof H3DU.Material) {
       if(shape.material.shader) {

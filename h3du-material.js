@@ -216,7 +216,8 @@ H3DU.Material.prototype.copy = function() {
 * <li><code>normalMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a normal
 * map (bump map) texture (see {@link H3DU.Material#normalMap}).
 * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
-* to use when rendering objects with this material.
+* to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
+* this parameter is deprecated.</i>
 * </ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
 * @returns {H3DU.Material} This object.

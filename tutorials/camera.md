@@ -147,6 +147,14 @@ to the `setProjectionMatrix` method of the `H3DU.Batch3D` class.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.  Either value
 can be negative.
 
+**`H3DU.Math.mat4ortho2d(left, right, bottom, top)`**
+
+This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection.  This is a convenience method that is useful for showing a two-dimensional view.
+  The resulting matrix can be passed
+to the `setProjectionMatrix` method of the `H3DU.Batch3D` class. The `mat4ortho2d` method calls `mat4ortho` and sets `near` and `far` to -1 and 1, respectively.  This choice of values makes a Z-coordinate of 0 especially appropriate for this projection.
+
+* `left`, `right`, `bottom`, `top` - Same as in `mat4ortho`.
+
 **`H3DU.Math.mat4orthoAspect(left, right, bottom, top, near, far, aspect)`**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection,

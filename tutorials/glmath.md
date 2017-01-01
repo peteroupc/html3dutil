@@ -99,7 +99,7 @@ A quaternion is a 4-element array that can describe a
 * ...first three elements (X, Y, Z) describe a 3D point, where the
 direction from the origin (0, 0, 0) to that point is the _axis of rotation_,
 and the distance from the origin to that point is the sine
-of half the rotation angle. <small> (The distance is 0 at 0 and 360 
+of half the rotation angle. <small> (The distance is 0 at 0 and 360
 degrees, and 1 at 180 degrees.)</small>
 * ...fourth element (W) is the cosine of half the rotation angle.
 <small>(W is 1 at 0 degrees, 0 at 180 and -1 at 360 degrees.)</small>
@@ -131,7 +131,7 @@ For best results when using quaternions:
 
 ### Tait-Bryan angles and their disadvantages
 
-Pitch-yaw-roll angles (also called Tait-Bryan angles) can also be used to describe 3D rotations, but 
+Pitch-yaw-roll angles (also called Tait-Bryan angles) can also be used to describe 3D rotations, but
 they have disadvantages:
 
 * In general, the order of pitch, yaw, and roll rotations is important. For example, a 30-degree
@@ -191,43 +191,43 @@ its description will note this. The differences are also noted below.
 
 ### Differences in Behavior <a id=Differences_in_Behavior></a>
 
-**3D Vectors**
+#### 3D Vectors
 
 If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
 system. The reverse is true if the Z component is negative.
 
-**Projection matrix (such as `mat4perspective`, `mat4ortho`):**
+#### Projection matrix (such as `mat4perspective`, `mat4ortho`)
 
 Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
 indices 8, 9, 10, and 11).
 
-**Look-at matrix (`mat4lookat`):**
+#### Look-at matrix (`mat4lookat`)
 
 Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14).
 
-**Rotation angles (such as used in `mat4rotate` and `quatRotate`):**
+#### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
 
 Whenever the axis of rotation points toward the viewer, if the coordinate system is...
 
 * ...right handed, and the angle's value is positive (resp. negative), then the angle runs counterclockwise (resp. clockwise).
 * ...left handed, and the angle's value is positive (resp. negative), then the angle runs clockwise (resp. counterclockwise).
 
-**Cross product (`vec3cross(A, B)`) and normals**
+#### Cross product (`vec3cross(A, B)`) and normals
 
-Given a triangle formed by points A, B, and C, the [cross product]({@link H3DU.Math.vec3cross}) 
+Given a triangle formed by points A, B, and C, the [cross product]({@link H3DU.Math.vec3cross})
 of the two vectors (A minus C) and (B minus C), in that order, is a _normal_ of that triangle (a vector that points away from
 the triangle's surface).  The cross product normal will be such that, whenever it points toward the viewer,
 the triangle's vertices are oriented counterclockwise for right-handed coordinate systems, or
 clockwise for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)
 
-It follows from this that the cross product of A and B will behave like the cross product normal of the 
-triangle formed by point A, point B, and the point (0,0,0) in that order (since A minus (0,0,0) is A, 
+It follows from this that the cross product of A and B will behave like the cross product normal of the
+triangle formed by point A, point B, and the point (0,0,0) in that order (since A minus (0,0,0) is A,
 and B minus (0,0,0) is B).
 
 ### Orientation and face classification
@@ -240,12 +240,12 @@ To find the orientation of a triangle, apply the following formula:
 
 If the window space X axis points right and the Y axis points...
 
-* ...up (which is the case in WebGL), and the result is positive (resp. negative), then the triangle's vertices 
+* ...up (which is the case in WebGL), and the result is positive (resp. negative), then the triangle's vertices
  are oriented counterclockwise (resp. clockwise).
 * ...down, and the result is positive (resp. negative), then the vertices are oriented clockwise (resp. counterclockwise).
 
 Note that finding the orientation is done on the triangle's two-dimensional projection in
-_window coordinates_ (which roughly correspond to the triangle's 
+_window coordinates_ (which roughly correspond to the triangle's
 location on the screen or frame buffer).
 
 By default, counterclockwise oriented triangles are _front faces_, and

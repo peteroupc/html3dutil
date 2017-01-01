@@ -26,7 +26,7 @@ vector with the same length but opposite direction.
  * <li>If the cross product's length is 0, then A and B are parallel vectors.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 The cross product vector will be such that, whenever the vector points toward the viewer,
-the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
+the triangle's vertices are oriented counterclockwise for right-handed coordinate systems, 
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>If A and B are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
@@ -180,7 +180,8 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
   },
 /**
  * Negates a 3-element vector and returns a new
- * vector with the result. Negating a vector
+ * vector with the result, which is generally a vector with
+ * the same length but opposite direction.  Negating a vector
  * is the same as reversing the sign of each of its components.
  * @param {Array<Number>} a A 3-element vector.
  * @returns {Array<Number>} The resulting 3-element vector.
@@ -191,7 +192,8 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
   },
 /**
  * Negates a 4-element vector and returns a new
- * vector with the result. Negating a vector
+ * vector with the result, which is generally a vector with
+ * the same length but opposite direction. Negating a vector
  * is the same as reversing the sign of each of its components.
  * @param {Array<Number>} a A 4-element vector.
  * @returns {Array<Number>} The resulting 4-element vector.
@@ -338,7 +340,7 @@ Negating a vector
 * @param {Array<Number>} vector A 3-element vector giving
 * the X, Y, and Z coordinates of the 3D point to transform.
 * @param {Array<Number>} matrix A 4x4 matrix to use to transform
- * the vector according to the {@link H3DU.Math.mat4projectVec3} method.
+ * the vector according to the {@link H3DU.Math.mat4projectVec3} method.  
  * This will generally be
  * a projection-view matrix, that is, the projection matrix multiplied
  * by the view matrix, in that order, if the vector to transform is in <i>world space</i>,
@@ -347,7 +349,7 @@ Negating a vector
 * The rest of the method will convert the transformed X and Y coordinates
 * to window coordinates.  If the matrix includes a projection transform returned
 * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
-* similar {@link H3DU.Math} methods, the coordinates transformed this way will be
+* similar {@link H3DU.Math} methods, the coordinates transformed this way will be 
 * as described in {@link H3DU.Math.mat4projectVec3} under the "matrix" parameter,
 * before they are converted to window coordinates.
 * @param {Array<Number>} viewport A 4-element array specifying
@@ -722,8 +724,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return r;
   },
 /**
- * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
- * but without changing its length (the return value won't necessarily be a unit vector, a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
+ * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation; this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's axis of rotation). The return value won't necessarily be a unit vector, a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * Returns a new quaternion.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
@@ -822,7 +823,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var ret = H3DU.Math.vec3cross(vec1, vec2);
     var vecLengths = Math.sqrt(H3DU.Math.vec3dot(vec1, vec1)) *
             Math.sqrt(H3DU.Math.vec3dot(vec2, vec2));
-    if(vecLengths === 0)vecLengths = 1; // degenerate case
+    //if(vecLengths === 0)vecLengths = 1; // degenerate case
     ret[3] = vecLengths + H3DU.Math.vec3dot(vec1, vec2);
     return H3DU.Math.quatNormInPlace(ret);
   },
@@ -841,7 +842,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * of rotation in x, y, and z, respectively.  Whenever the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
+ * in a clockwise direction for left-handed systems. 
   * The axis of rotation need not be a unit vector (["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
@@ -900,7 +901,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * The constants starting with <code>Global</code>
  * describe a rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
  * angles). The constants starting with <code>Local</code> describe a rotation in the order given,
- * where the second and third rotations occur around the rotated object's new axes
+ * where the second and third rotations occur around the rotated object's new axes 
  * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
  * angles). The order of <code>Local</code> rotations has the same result as the reversed
  * order of <code>Global</code> rotations and vice versa.
@@ -954,7 +955,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * The constants starting with <code>Global</code>
  * describe a rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
  * angles). The constants starting with <code>Local</code> describe a rotation in the order given,
- * where the second and third rotations occur around the rotated object's new axes
+ * where the second and third rotations occur around the rotated object's new axes 
  * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
  * angles).  The order of <code>Local</code> rotations has the same result as the reversed
  * order of <code>Global</code> rotations and vice versa.
@@ -1173,7 +1174,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Generates a quaternion from the rotation described in a 4x4 matrix.
  * The upper 3x3 portion of the matrix is used for this calculation.
- * The results are undefined if the matrix includes shearing.
+ * The results are undefined if the matrix includes any transformation
+ * other than rotation.
  * @param {Array<Number>} m A 4x4 matrix.
  * @returns {Array<Number>} The resulting quaternion.
  */
@@ -1237,7 +1239,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
     ];
   },
 /**
- * Returns the transpose of a 4x4 matrix.
+ * Returns the transpose of a 4x4 matrix. (A transpose is a
+  matrix whose rows are converted to columns and vice versa.)
  * @param {Array<Number>} m4 A 4x4 matrix.
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
@@ -1247,7 +1250,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Transposes a 4x4 matrix in place without creating
- * a new matrix.
+ * a new matrix. (A transpose is a matrix whose rows
+ * are converted to columns and vice versa.)
  * @param {Array<Number>} mat A 4x4 matrix.
  * @returns {Array<Number>} The parameter "mat".
  */
@@ -1317,12 +1321,13 @@ m[0] * m[7] * m[5];
 /**
  * Multiplies a 4x4 matrix by a scaling transformation.
  * @param {Array<Number>} mat 4x4 matrix to multiply.
- * @param {Array<Number>|Number} v3 Scaling factor along the
- * X axis.  If "v3y" and "v3z" are omitted, this value can instead
- * be a 3-element array giving the scaling factors along the X, Y, and
+ * @param {Array<Number>|Number} v3 Scale factor along the
+ * X axis. A scale factor can be negative, in which case the transformation 
+ * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * be a 3-element array giving the scale factors along the X, Y, and
  * Z axes.
- * @param {Number} v3y Scaling factor along the Y axis.
- * @param {Number} v3z Scaling factor along the Z axis.
+ * @param {Number} v3y Scale factor along the Y axis.
+ * @param {Number} v3z Scale factor along the Z axis.
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
   "mat4scale":function(mat, v3, v3y, v3z) {
@@ -1346,12 +1351,13 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a scaling transformation.
- * @param {Array<Number>|Number} v3 Scaling factor along the
- * X axis.  If "v3y" and "v3z" are omitted, this value can instead
- * be a 3-element array giving the scaling factors along the X, Y, and
+ * @param {Array<Number>|Number} v3 Scale factor along the
+ * X axis.  A scale factor can be negative, in which case the transformation 
+ * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * be a 3-element array giving the scale factors along the X, Y, and
  * Z axes.
- * @param {Number} v3y Scaling factor along the Y axis.
- * @param {Number} v3z Scaling factor along the Z axis.
+ * @param {Number} v3y Scale factor along the Y axis.
+ * @param {Number} v3z Scale factor along the Z axis.
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
   "mat4scaled":function(v3, v3y, v3z) {
@@ -1453,10 +1459,10 @@ m[0] * m[7] * m[5];
  * by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.
  * If the matrix includes a projection transform returned
  * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
- * similar {@link H3DU.Math} methods, the viewport (visible area) will range from -1 to 1
- * in the X, Y, and Z coordinates (as is the case in WebGL) and the X, Y, and Z coordinates
- * increase from left to right, front to back, and bottom to top (as is the case in WebGL).
- * (For Y coordinates that increase from
+ * similar {@link H3DU.Math} methods, the view volume will range from -1 to 1 
+ * in the X, Y, and Z coordinates (as is the case in WebGL) and the X, Y, and Z coordinates 
+ * increase from left to right, front to back, and bottom to top (as is the case in WebGL). 
+ * (For Y coordinates that increase from 
  * top to bottom, reverse the sign of the Y coordinate of this method's return value.)
  * @param {Array<Number>|Number} v X coordinate of a 3D point to transform.
  * If "vy" and "vz" are omitted, this value can instead
@@ -1573,11 +1579,12 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a perspective projection.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}. 
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {Number} fovY Y-axis field of view, in degrees. Should be less
+* @param {Number} fovY Y-axis field of view, in degrees, that is, the shortest angle
+* between the top and bottom clipping planes. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
@@ -1585,15 +1592,15 @@ m[0] * m[7] * m[5];
 *  the scene's aspect ratio.
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
-* seen.<p>This value should not be 0 or less, and should be set to the highest distance
+* seen.<p>This value should be greater than 0, and should be set to the highest distance
 * from the "camera" that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
-* is as small as the application can accept.<p>
+* to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
+* is as small as the application can accept.<br><br>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
- * which are more spread out toward the far clipping plane than toward the
+ * which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
  * to the far plane will have identical depth values.)
@@ -1610,7 +1617,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a camera view.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}. 
  * To adjust the result of this method for a left-handed system,
  *  reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
@@ -1660,18 +1667,19 @@ m[0] * m[7] * m[5];
  * Returns a 4x4 matrix representing an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
-   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}. 
  * To adjust the result of this method for a left-handed system,
  * , reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
+  *<p>The projection returned by this method only scales and/or shifts the view, so that
+  * objects with the same size won't appear smaller as they get more distant from the  "camera".
  * @param {Number} l Leftmost coordinate of the orthographic view.
  * @param {Number} r Rightmost coordinate of the orthographic view.
- * (If l is greater than r, X-coordinates increase rightward; otherwise,
- * they increase leftward.)
+ * (If l is greater than r, X-coordinates increase leftward; otherwise,
+ * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
- * (If b is greater than t, X-coordinates increase downward; otherwise,
- * they increase upward.)
+ * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
  * @param {Number} n Distance from the "camera" to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the "camera" to the far clipping
@@ -1692,11 +1700,12 @@ m[0] * m[7] * m[5];
 /**
  * Returns a 4x4 matrix representing a perspective projection,
  * given an X-axis field of view.</p>
-   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}. 
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {Number} fovX X-axis field of view, in degrees. Should be less
+* @param {Number} fovX X-axis field of view, in degrees, that is, the shortest angle
+* between the left and right clipping planes. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
@@ -1704,15 +1713,15 @@ m[0] * m[7] * m[5];
 *  the scene's aspect ratio.
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
-* seen.<p>This value should not be 0 or less, and should be set to the highest distance
+* seen.<p>This value should be greater than 0, and should be set to the highest distance
 * from the "camera" that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
-* is as small as the application can accept.<p>
+* to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
+* is as small as the application can accept.<br><br>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
- * which are more spread out toward the far clipping plane than toward the
+ * which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
  * to the far plane will have identical depth values.)
@@ -1731,12 +1740,11 @@ m[0] * m[7] * m[5];
  * set to -1 and the far clipping plane set to 1.
  * @param {Number} l Leftmost coordinate of the orthographic view.
  * @param {Number} r Rightmost coordinate of the orthographic view.
- * (If l is greater than r, X-coordinates increase rightward; otherwise,
- * they increase leftward.)
+* (If l is greater than r, X-coordinates increase leftward; otherwise,
+ * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
- * (If b is greater than t, X-coordinates increase downward; otherwise,
- * they increase upward.)
+ * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
   "mat4ortho2d":function(l, r, b, t) {
@@ -1752,15 +1760,14 @@ m[0] * m[7] * m[5];
  * or squishing it.<p>
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().<p>
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().
 * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (If l is greater than r, X-coordinates increase rightward; otherwise,
- * they increase leftward.)
+* (If l is greater than r, X-coordinates increase leftward; otherwise,
+ * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (If b is greater than t, X-coordinates increase downward; otherwise,
- * they increase upward.)
+ * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * @param {Number} aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @returns {Array<Number>} The resulting 4x4 matrix.
@@ -1777,14 +1784,15 @@ m[0] * m[7] * m[5];
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.<p>
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().
+  *<p>The projection returned by this method only scales and/or shifts the view, so that
+  * objects with the same size won't appear smaller as they get more distant from the  "camera".
 * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (If l is greater than r, X-coordinates increase rightward; otherwise,
- * they increase leftward.)
+* (If l is greater than r, X-coordinates increase leftward; otherwise,
+ * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (If b is greater than t, X-coordinates increase downward; otherwise,
- * they increase upward.)
+ * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
  * @param {Number} n Distance from the "camera" to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the "camera" to the far clipping
@@ -1825,8 +1833,8 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a perspective projection
- * in the form of a view frustum, or the limits in the "camera"'s view.<p>
-  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * in the form of a view frustum, or the limits in the "camera"'s view.<p> 
+  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}. 
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
@@ -1834,21 +1842,24 @@ m[0] * m[7] * m[5];
  * clipping plane meets the near clipping plane.
  * @param {Number} r X-coordinate of the point where the right
  * clipping plane meets the near clipping plane.
+ * (If l is greater than r, X-coordinates increase leftward; otherwise,
+ * they increase rightward.)
  * @param {Number} b Y-coordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
  * @param {Number} t Y-coordinate of the point where the top
  * clipping plane meets the near clipping plane.
+ * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
-* seen.<p>This value should not be 0 or less, and should be set to the highest distance
+* seen.<p>This value should be greater than 0, and should be set to the highest distance
 * from the "camera" that the application can afford to clip out for being too
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
-* is as small as the application can accept.<p>
+* to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
+* is as small as the application can accept.<br><br>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
- * which are more spread out toward the far clipping plane than toward the
+ * which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
  * "near", the more the values spread out, and the more likely two objects close
  * to the far plane will have identical depth values.)
@@ -1871,7 +1882,8 @@ m[0] * m[7] * m[5];
  * scaling transformation.
  * @param {Array<Number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v3 Scale factor along the
- * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+ * X axis.  A scale factor can be negative, in which case the transformation 
+ * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scale factors along the X, Y, and
  * Z axes.
  * @param {Number} v3y Scale factor along the Y axis.
@@ -1912,7 +1924,8 @@ m[0] * m[7] * m[5];
  * matrix describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation. (Multiplying the first matrix
  * by the second is the same as multiplying the second matrix
- * by the first matrix's transpose.)
+ * by the first matrix's transpose; a transpose is a matrix whose rows
+ * are converted to columns and vice versa.)
  * @param {Array<Number>} a The first matrix.
  * @param {Array<Number>} b The second matrix.
  * @returns {Array<Number>} The resulting 4x4 matrix.
@@ -2271,7 +2284,7 @@ m[0] * m[7] * m[5];
 * This is determined if the minimum coordinate
 * is larger than the corresponding maximum coordinate.
 * @param {Array<Number>} box An axis-aligned bounding
-* box in world space, which is an array of six values.
+* box, which is an array of six values.
 * The first three values are the smallest X, Y, and Z coordinates,
 * and the last three values are the largest X, Y, and Z
 * coordinates.
@@ -2502,7 +2515,7 @@ H3DU.Math.Num180DividedByPi = 57.295779513082320876798154814105;
 H3DU.Math.ToDegrees = H3DU.Math.Num180DividedByPi;
 /**
 * Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
-or in the reverse order around
+or in the reverse order around 
 @memberof! H3DU.Math
 * @const
 */

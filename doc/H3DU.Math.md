@@ -423,7 +423,7 @@ is larger than the corresponding maximum coordinate.
 #### Parameters
 
 * `box` (Type: Array.&lt;Number>)<br>
-    An axis-aligned bounding box in world space, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
+    An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
 
@@ -553,21 +553,17 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 * `l` (Type: Number)<br>
     X-coordinate of the point where the left clipping plane meets the near clipping plane.
 * `r` (Type: Number)<br>
-    X-coordinate of the point where the right clipping plane meets the near clipping plane.
+    X-coordinate of the point where the right clipping plane meets the near clipping plane. (If l is greater than r, X-coordinates increase leftward; otherwise, they increase rightward.)
 * `b` (Type: Number)<br>
     Y-coordinate of the point where the bottom clipping plane meets the near clipping plane.
 * `t` (Type: Number)<br>
-    Y-coordinate of the point where the top clipping plane meets the near clipping plane.
+    Y-coordinate of the point where the top clipping plane meets the near clipping plane. (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * `near` (Type: Number)<br>
     The distance from the "camera" to the near clipping plane. Objects closer than this distance won't be seen.
 
-This value should not be 0 or less, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
+This value should be greater than 0, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: Number)<br>
-    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.
-
-This value should be greater than "near" and be set so that the ratio of "far" to "near" is as small as the application can accept.
-
- (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
+    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br><br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
 
 #### Return Value
 
@@ -665,7 +661,8 @@ matrix (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will describe
 the effect of scaling then translation. (Multiplying the first matrix
 by the second is the same as multiplying the second matrix
-by the first matrix's transpose.)
+by the first matrix's transpose; a transpose is a matrix whose rows
+are converted to columns and vice versa.)
 
 #### Parameters
 
@@ -689,16 +686,19 @@ To adjust the result of this method for a left-handed system,
 , reverse the sign of the 9th, 10th, 11th, and 12th
 elements of the result (zero-based indices 8, 9, 10, and 11).
 
+The projection returned by this method only scales and/or shifts the view, so that
+objects with the same size won't appear smaller as they get more distant from the "camera".
+
 #### Parameters
 
 * `l` (Type: Number)<br>
     Leftmost coordinate of the orthographic view.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the orthographic view. (If l is greater than r, X-coordinates increase rightward; otherwise, they increase leftward.)
+    Rightmost coordinate of the orthographic view. (If l is greater than r, X-coordinates increase leftward; otherwise, they increase rightward.)
 * `b` (Type: Number)<br>
     Bottommost coordinate of the orthographic view.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the orthographic view. (If b is greater than t, X-coordinates increase downward; otherwise, they increase upward.)
+    Topmost coordinate of the orthographic view. (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * `n` (Type: Number)<br>
     Distance from the "camera" to the near clipping plane. A positive value means the plane is in front of the viewer.
 * `f` (Type: Number)<br>
@@ -722,11 +722,11 @@ set to -1 and the far clipping plane set to 1.
 * `l` (Type: Number)<br>
     Leftmost coordinate of the orthographic view.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the orthographic view. (If l is greater than r, X-coordinates increase rightward; otherwise, they increase leftward.)
+    Rightmost coordinate of the orthographic view. (If l is greater than r, X-coordinates increase leftward; otherwise, they increase rightward.)
 * `b` (Type: Number)<br>
     Bottommost coordinate of the orthographic view.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the orthographic view. (If b is greater than t, X-coordinates increase downward; otherwise, they increase upward.)
+    Topmost coordinate of the orthographic view. (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 
 #### Return Value
 
@@ -752,11 +752,11 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 * `l` (Type: Number)<br>
     Leftmost coordinate of the view rectangle.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the view rectangle. (If l is greater than r, X-coordinates increase rightward; otherwise, they increase leftward.)
+    Rightmost coordinate of the view rectangle. (If l is greater than r, X-coordinates increase leftward; otherwise, they increase rightward.)
 * `b` (Type: Number)<br>
     Bottommost coordinate of the view rectangle.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the view rectangle. (If b is greater than t, X-coordinates increase downward; otherwise, they increase upward.)
+    Topmost coordinate of the view rectangle. (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * `aspect` (Type: Number)<br>
     The ratio of width to height of the viewport, usually the scene's aspect ratio.
 
@@ -776,16 +776,19 @@ or squishing it.
 
 This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>; see mat4ortho().
 
+The projection returned by this method only scales and/or shifts the view, so that
+objects with the same size won't appear smaller as they get more distant from the "camera".
+
 #### Parameters
 
 * `l` (Type: Number)<br>
     Leftmost coordinate of the view rectangle.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the view rectangle. (If l is greater than r, X-coordinates increase rightward; otherwise, they increase leftward.)
+    Rightmost coordinate of the view rectangle. (If l is greater than r, X-coordinates increase leftward; otherwise, they increase rightward.)
 * `b` (Type: Number)<br>
     Bottommost coordinate of the view rectangle.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the view rectangle. (If b is greater than t, X-coordinates increase downward; otherwise, they increase upward.)
+    Topmost coordinate of the view rectangle. (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * `n` (Type: Number)<br>
     Distance from the "camera" to the near clipping plane. A positive value means the plane is in front of the viewer.
 * `f` (Type: Number)<br>
@@ -809,19 +812,15 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 #### Parameters
 
 * `fovY` (Type: Number)<br>
-    Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+    Y-axis field of view, in degrees, that is, the shortest angle between the top and bottom clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
 * `aspectRatio` (Type: Number)<br>
     The ratio of width to height of the viewport, usually the scene's aspect ratio.
 * `near` (Type: Number)<br>
     The distance from the "camera" to the near clipping plane. Objects closer than this distance won't be seen.
 
-This value should not be 0 or less, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
+This value should be greater than 0, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: Number)<br>
-    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.
-
-This value should be greater than "near" and be set so that the ratio of "far" to "near" is as small as the application can accept.
-
- (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
+    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br><br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
 
 #### Return Value
 
@@ -839,19 +838,15 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 #### Parameters
 
 * `fovX` (Type: Number)<br>
-    X-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+    X-axis field of view, in degrees, that is, the shortest angle between the left and right clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
 * `aspectRatio` (Type: Number)<br>
     The ratio of width to height of the viewport, usually the scene's aspect ratio.
 * `near` (Type: Number)<br>
     The distance from the "camera" to the near clipping plane. Objects closer than this distance won't be seen.
 
-This value should not be 0 or less, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
+This value should be greater than 0, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: Number)<br>
-    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.
-
-This value should be greater than "near" and be set so that the ratio of "far" to "near" is as small as the application can accept.
-
- (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
+    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br><br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
 
 #### Return Value
 
@@ -872,7 +867,7 @@ then returning that vector's new X, Y, and Z.
 #### Parameters
 
 * `mat` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix, that is, the projection matrix multiplied by the view matrix, in that order, if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, a projection-view matrix multiplied by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>. If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the viewport (visible area) will range from -1 to 1 in the X, Y, and Z coordinates (as is the case in WebGL) and the X, Y, and Z coordinates increase from left to right, front to back, and bottom to top (as is the case in WebGL). (For Y coordinates that increase from top to bottom, reverse the sign of the Y coordinate of this method's return value.)
+    A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix, that is, the projection matrix multiplied by the view matrix, in that order, if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, a projection-view matrix multiplied by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>. If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the view volume will range from -1 to 1 in the X, Y, and Z coordinates (as is the case in WebGL) and the X, Y, and Z coordinates increase from left to right, front to back, and bottom to top (as is the case in WebGL). (For Y coordinates that increase from top to bottom, reverse the sign of the Y coordinate of this method's return value.)
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X coordinate of a 3D point to transform. If "vy" and "vz" are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: Number)<br>
@@ -936,11 +931,11 @@ Multiplies a 4x4 matrix by a scaling transformation.
 * `mat` (Type: Array.&lt;Number>)<br>
     4x4 matrix to multiply.
 * `v3` (Type: Array.&lt;Number> | Number)<br>
-    Scaling factor along the X axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scaling factors along the X, Y, and Z axes.
+    Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
 * `v3y` (Type: Number)<br>
-    Scaling factor along the Y axis.
+    Scale factor along the Y axis.
 * `v3z` (Type: Number)<br>
-    Scaling factor along the Z axis.
+    Scale factor along the Z axis.
 
 #### Return Value
 
@@ -956,7 +951,7 @@ scaling transformation.
 * `mat` (Type: Array.&lt;Number>)<br>
     A 4x4 matrix.
 * `v3` (Type: Array.&lt;Number> | Number)<br>
-    Scale factor along the X axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
+    Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
 * `v3y` (Type: Number)<br>
     Scale factor along the Y axis.
 * `v3z` (Type: Number)<br>
@@ -973,11 +968,11 @@ Returns a 4x4 matrix representing a scaling transformation.
 #### Parameters
 
 * `v3` (Type: Array.&lt;Number> | Number)<br>
-    Scaling factor along the X axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scaling factors along the X, Y, and Z axes.
+    Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
 * `v3y` (Type: Number)<br>
-    Scaling factor along the Y axis.
+    Scale factor along the Y axis.
 * `v3z` (Type: Number)<br>
-    Scaling factor along the Z axis.
+    Scale factor along the Z axis.
 
 #### Return Value
 
@@ -1116,7 +1111,8 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4transpose(m4) <a id='H3DU.Math.mat4transpose'></a>
 
-Returns the transpose of a 4x4 matrix.
+Returns the transpose of a 4x4 matrix. (A transpose is a
+ matrix whose rows are converted to columns and vice versa.)
 
 #### Parameters
 
@@ -1130,7 +1126,8 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 ### (static) H3DU.Math.mat4transposeInPlace(mat) <a id='H3DU.Math.mat4transposeInPlace'></a>
 
 Transposes a 4x4 matrix in place without creating
-a new matrix.
+a new matrix. (A transpose is a matrix whose rows
+are converted to columns and vice versa.)
 
 #### Parameters
 
@@ -1176,8 +1173,7 @@ The parameter "plane". (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.quatConjugate(quat) <a id='H3DU.Math.quatConjugate'></a>
 
-Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-but without changing its length (the return value won't necessarily be a unit vector, a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
+Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation; this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's axis of rotation). The return value won't necessarily be a unit vector, a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 Returns a new quaternion.
 
 #### Parameters
@@ -1214,7 +1210,8 @@ The generated quaternion. (Type: Array.&lt;Number>)
 
 Generates a quaternion from the rotation described in a 4x4 matrix.
 The upper 3x3 portion of the matrix is used for this calculation.
-The results are undefined if the matrix includes shearing.
+The results are undefined if the matrix includes any transformation
+other than rotation.
 
 #### Parameters
 
@@ -1740,7 +1737,8 @@ The parameter "a" (Type: Array.&lt;Number>)
 ### (static) H3DU.Math.vec3negate(a) <a id='H3DU.Math.vec3negate'></a>
 
 Negates a 3-element vector and returns a new
-vector with the result. Negating a vector
+vector with the result, which is generally a vector with
+the same length but opposite direction. Negating a vector
 is the same as reversing the sign of each of its components.
 
 #### Parameters
@@ -2038,7 +2036,8 @@ The interpolated vector. (Type: Array.&lt;Number>)
 ### (static) H3DU.Math.vec4negate(a) <a id='H3DU.Math.vec4negate'></a>
 
 Negates a 4-element vector and returns a new
-vector with the result. Negating a vector
+vector with the result, which is generally a vector with
+the same length but opposite direction. Negating a vector
 is the same as reversing the sign of each of its components.
 
 #### Parameters

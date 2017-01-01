@@ -195,33 +195,33 @@ its description will note this. The differences are also noted below.
 
 ### Differences in Behavior <a id=Differences_in_Behavior></a>
 
-**3D Vectors**
+#### 3D Vectors
 
 If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
 system. The reverse is true if the Z component is negative.
 
-**Projection matrix (such as `mat4perspective`, `mat4ortho`):**
+#### Projection matrix (such as `mat4perspective`, `mat4ortho`)
 
 Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
 indices 8, 9, 10, and 11).
 
-**Look-at matrix (`mat4lookat`):**
+#### Look-at matrix (`mat4lookat`)
 
 Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14).
 
-**Rotation angles (such as used in `mat4rotate` and `quatRotate`):**
+#### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
 
 Whenever the axis of rotation points toward the viewer, if the coordinate system is...
 
 * ...right handed, and the angle's value is positive (resp. negative), then the angle runs counterclockwise (resp. clockwise).
 * ...left handed, and the angle's value is positive (resp. negative), then the angle runs clockwise (resp. counterclockwise).
 
-**Cross product (`vec3cross(A, B)`) and normals**
+#### Cross product (`vec3cross(A, B)`) and normals
 
 Given a triangle formed by points A, B, and C, the [cross product](<a href="H3DU.Math.md#H3DU.Math.vec3cross">H3DU.Math.vec3cross</a>)
 of the two vectors (A minus C) and (B minus C), in that order, is a _normal_ of that triangle (a vector that points away from
