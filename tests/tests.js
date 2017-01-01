@@ -32,7 +32,7 @@ function ok(a, b) {
   "use strict";
   if(!a) {
     FailedTests++;
-    clog(b);
+    clog(b || "");
   }
 }
 function is(a, b, msg) {
@@ -42,7 +42,9 @@ function is(a, b, msg) {
     if(msg !== null && typeof msg !== "undefined")infomsg += "<br>msg=" + msg;
     info(infomsg);
     FailedTests++;
+    return false;
   }
+  return true;
 }
 
 function isApprox(num1, num2, delta) {
@@ -89,6 +91,7 @@ vec1 = Array.prototype.slice.call(vec1);
   return true;
 }
 */
+var testfunctions = [];
 function testPathBounds() {
   "use strict";
   ok(isApproxVec(GraphicsPath.fromString("M93.23,2.94A26.875997179195146,41.03845446654058,0,0061.67,69.38").getBounds(), [50.59389174539909, -4.848084961702973, 93.23, 69.38], 1.0));
@@ -321,16 +324,16 @@ function test() {
   mesh.vertex3(-0.5, 4, 0);
   ok(isApproxVec(mesh.getBoundingBox(), [-1, -2, -3, 4, 5, 6]), "");
   ok(isApproxVec(H3DU.toGLColor("#f00"), [1, 0, 0, 1]),
-    "The hex2rgba() function didn't calculate the 1st rgba values correctly.");
+    "The H3DU.toGLColor function didn't calculate the 1st rgba values correctly.");
 
   ok(isApproxVec(H3DU.toGLColor("#ff0000"), [1, 0, 0, 1]),
-    "The hex2rgba() function didn't calculate the 3rd rgba values correctly.");
+    "The H3DU.toGLColor function didn't calculate the 3rd rgba values correctly.");
 
   ok(isApproxVec(H3DU.toGLColor("rgba(255, 0, 0, 0.5)"), [1, 0, 0, 0.5]),
-    "The hex2rgba() function didn't calculate the 5th rgba values correctly.");
+    "The H3DU.toGLColor function didn't calculate the 5th rgba values correctly.");
 
   ok(isApproxVec(H3DU.toGLColor("rgb(255, 0, 0)"), [1, 0, 0, 1]),
-    "The hex2rgba() function didn't calculate the 6th rgba values correctly.");
+    "The H3DU.toGLColor function didn't calculate the 6th rgba values correctly.");
 
   var m1 = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
@@ -435,20 +438,6 @@ function test() {
   ok(isApproxVec([79.054, 39.07599999999999, 64.98866666666667], curve.evaluate(0.8)), "Point at 0.8 is not correct.");
   ok(isApproxVec([45.91658333333332, 56.070166666666665, 48.14908333333333], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([81, 1, 29], curve.evaluate(1)), "Point at 1 is not correct.");
-/*
-curve=new H3DU.BSplineCurve([[95,22,18,0.62],[52,19,31,0.98],[30,10,47,0.77],[3,90,43,0.08],[63,11,53,0.85],[86,93,94,0.96],[65,99,57,0.46],[25,73,97,0.86],[74,60,36,0.79],[76,79,19,0.74]],[0,1,2,3,4,5,6,7,8,9,10,11,12,13],BSplineCurve.WEIGHTED_BIT);
-ok(isApproxVec([53.83050847457627,18.045197740112997,31.802259887005643,0.9075141242937852],curve.evaluate(0)),"Point at 0 is not correct.");
-ok(isApproxVec([39.420162433556044,14.321542060245289,40.07784398823571,0.8547808516864986],curve.evaluate(0.1)),"Point at 0.1 is not correct.");
-ok(isApproxVec([30.364985645414666,16.05422241482044,45.69432858458372,0.7400270841232869],curve.evaluate(0.2)),"Point at 0.2 is not correct.");
-ok(isApproxVec([44.3388925451717,23.183972518048744,49.76766981771769,0.7065625623230026],curve.evaluate(0.3)),"Point at 0.3 is not correct.");
-ok(isApproxVec([63.76910768463488,24.252046880844535,57.8726569967998,0.8367786043805328],curve.evaluate(0.4)),"Point at 0.4 is not correct.");
-ok(isApproxVec([74.95067583590232,55.044581456011386,74.49205596395542,0.9018804837562248],curve.evaluate(0.5)),"Point at 0.5 is not correct.");
-ok(isApproxVec([80.47717760274197,86.58520910918499,84.38318557822234,0.8696496720825231],curve.evaluate(0.6)),"Point at 0.6 is not correct.");
-ok(isApproxVec([65.45028246610812,92.5355067568477,76.43464791992443,0.6990175992937675],curve.evaluate(0.7)),"Point at 0.7 is not correct.");
-ok(isApproxVec([38.92860580162072,79.92165694596828,83.43612250004813,0.7484543127177533],curve.evaluate(0.8)),"Point at 0.8 is not correct.");
-ok(isApproxVec([43.09755752226919,69.4640461450384,74.72805248156801,0.8228526490100199],curve.evaluate(0.9)),"Point at 0.9 is not correct.");
-ok(isApproxVec([65.45798319327731,65.30252100840337,44.378151260504204,0.794873949579832],curve.evaluate(1)),"Point at 1 is not correct.");
-*/
   curve = new H3DU.BezierCurve([[32, 4, 71], [40, 29, 57], [87, 34, 9], [26, 25, 64]]);
   ok(isApproxVec([32, 4, 71], curve.evaluate(0)), "Point at 0 is not correct.");
   ok(isApproxVec([35.423, 10.906, 65.917], curve.evaluate(0.1)), "Point at 0.1 is not correct.");
@@ -474,4 +463,66 @@ ok(isApproxVec([65.45798319327731,65.30252100840337,44.378151260504204,0.7948739
   ok(isApproxVec([20.085999999999995, 19.582999999999995, 32.593999999999994], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([0, 13, 23], curve.evaluate(1)), "Point at 1 is not correct.");
   testPathBounds();
+  for(var i = 0;i < testfunctions.length;i++) {
+    testfunctions[i]();
+  }
 }
+
+testfunctions.push(function() {
+  "use strict";
+  // adapted from public domain World_Seed quat.tests.cpp;
+  // "normAxis" is used in the isApproxVec test because, as
+  // documented, the axis of rotation need not be a unit vector
+  var axis = [1.1, 1.2, 1.3];
+  var normAxis = H3DU.Math.vec3norm(axis);
+  var angle = 2.1;
+  var res = H3DU.Math.quatFromAxisAngle(angle * H3DU.Math.ToDegrees, axis);
+  ok(isApproxVec(
+    H3DU.Math.vec3scale(normAxis, Math.sin(angle / 2.0)), res.slice(0, 3)));
+  ok(isApprox(res[3], Math.cos(angle / 2.0)));
+});
+
+testfunctions.push(function() {
+  "use strict";
+  // adapted from public domain World_Seed quat.tests.cpp
+  for(var i = 0;i < 1000;i++) {
+    var vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2,
+      Math.random() * 4 - 2];
+    ok(isApprox(Math.sqrt(H3DU.Math.vec4dot(vec, vec)), H3DU.Math.vec4length(vec)));
+    vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2];
+    ok(isApprox(Math.sqrt(H3DU.Math.vec3dot(vec, vec)), H3DU.Math.vec3length(vec)));
+  }
+});
+testfunctions.push(function() {
+  "use strict";
+  for(var i = 0;i < 1000;i++) {
+    var vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2];
+    var scalar = Math.random() * 4 - 2;
+    var vec2;
+    vec2 = H3DU.Math.vec3scale(vec, scalar);
+    is(vec[0] * scalar, vec2[0]);
+    is(vec[1] * scalar, vec2[1]);
+    is(vec[2] * scalar, vec2[2]);
+    vec2 = vec.slice(0, vec.length);
+    vec2 = H3DU.Math.vec3scaleInPlace(vec2, scalar);
+    is(vec[0] * scalar, vec2[0]);
+    is(vec[1] * scalar, vec2[1]);
+    is(vec[2] * scalar, vec2[2]);
+  }
+});
+testfunctions.push(function() {
+  "use strict";
+  var curve = new H3DU.BSplineCurve([[95, 22, 18, 0.62], [52, 19, 31, 0.98], [30, 10, 47, 0.77], [3, 90, 43, 0.08], [63, 11, 53, 0.85], [86, 93, 94, 0.96], [65, 99, 57, 0.46], [25, 73, 97, 0.86], [74, 60, 36, 0.79], [76, 79, 19, 0.74]], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    H3DU.BSplineCurve.WEIGHTED_BIT);
+  ok(isApproxVec([53.83050847457627, 18.045197740112997, 31.802259887005643, 0.9075141242937852], curve.evaluate(0)), "Point at 0 is not correct.");
+  ok(isApproxVec([39.420162433556044, 14.321542060245289, 40.07784398823571, 0.8547808516864986], curve.evaluate(0.1)), "Point at 0.1 is not correct.");
+  ok(isApproxVec([30.364985645414666, 16.05422241482044, 45.69432858458372, 0.7400270841232869], curve.evaluate(0.2)), "Point at 0.2 is not correct.");
+  ok(isApproxVec([44.3388925451717, 23.183972518048744, 49.76766981771769, 0.7065625623230026], curve.evaluate(0.3)), "Point at 0.3 is not correct.");
+  ok(isApproxVec([63.76910768463488, 24.252046880844535, 57.8726569967998, 0.8367786043805328], curve.evaluate(0.4)), "Point at 0.4 is not correct.");
+  ok(isApproxVec([74.95067583590232, 55.044581456011386, 74.49205596395542, 0.9018804837562248], curve.evaluate(0.5)), "Point at 0.5 is not correct.");
+  ok(isApproxVec([80.47717760274197, 86.58520910918499, 84.38318557822234, 0.8696496720825231], curve.evaluate(0.6)), "Point at 0.6 is not correct.");
+  ok(isApproxVec([65.45028246610812, 92.5355067568477, 76.43464791992443, 0.6990175992937675], curve.evaluate(0.7)), "Point at 0.7 is not correct.");
+  ok(isApproxVec([38.92860580162072, 79.92165694596828, 83.43612250004813, 0.7484543127177533], curve.evaluate(0.8)), "Point at 0.8 is not correct.");
+  ok(isApproxVec([43.09755752226919, 69.4640461450384, 74.72805248156801, 0.8228526490100199], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
+  ok(isApproxVec([65.45798319327731, 65.30252100840337, 44.378151260504204, 0.794873949579832], curve.evaluate(1)), "Point at 1 is not correct.");
+});

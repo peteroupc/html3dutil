@@ -413,16 +413,13 @@ In all the transformations described above, the last row in the transformation m
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the `H3DU.Math` library.
 
-One example of such a transformation is the frustum matrix.  When a 4-element
+One example of such a transformation is the perspective projection matrix.  When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
 
 <small>The graphics system (outside of this JavaScript library) uses this W component
-to help achieve the perspective rendering effect.  Assuming the transformed vector
-is a set of device coordinates returned by a vertex shader
-(a so-called _clip space_ vector in _homogeneous coordinates_), the system will divide the vector's
-X, Y, and Z by its W to get the vector's _normalized device coordinates_.</small>
+to help achieve the perspective rendering effect (see <a href="tutorial-camera.md">_The "Camera" and Geometric Transforms_</a>).</small>
 
 Related functions:
 

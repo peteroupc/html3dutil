@@ -25,11 +25,9 @@ H3DU.Math = {
 vector with the same length but opposite direction.
  * <li>If the cross product's length is 0, then A and B are parallel vectors.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-Assume the X axis points to the right and the Y axis points up.
-If the cross product of A and B has a positive Z component, the triangle's points are
-oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and the Y
-axis down, the reverse is
-true.)  The triangle's area is half of the cross product's length.
+The cross product vector will be such that, whenever the vector points toward the viewer,
+the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
+or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>If A and B are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
@@ -44,8 +42,6 @@ true.)  The triangle's area is half of the cross product's length.
  * <b>c</b>.y = <b>a</b>.z * <b>b</b>.x - <b>a</b>.x * <b>b</b>.z
  * <b>c</b>.z = <b>a</b>.x * <b>b</b>.y - <b>a</b>.y * <b>b</b>.x
  * </pre>
- * <p>Another useful function, the <i>triple product</i>, can be expressed as the dot
- * product of two vectors, one of which is a cross product.
  * @param {Array<Number>} a The first 3-element vector.
  * @param {Array<Number>} b The second 3-element vector.
  * @returns {Array<Number>} A 3-element vector containing the cross product.
@@ -121,9 +117,9 @@ true.)  The triangle's area is half of the cross product's length.
   * <li>Assume A is a unit vector and perpendicular to vectors B and C.  If the triple product
   is negative (resp. positive), then A points directly away from (resp. points at) the cross product of
   B and C -- which will be perpendicular -- and the angle from B to C, when rotated
-  about vector A, is negative (resp. positive). (See the example below.)</ul>
-  (A unit vector is a ["normalized" vector]{@link H3DU.Math.vec3norm}
-  with a length of 1.)
+  about vector A, is negative (resp. positive). (See the example below. A unit vector is
+  a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1.)
+  *</ul>
   * @param {Array<Number>} a The first 3-element vector.
   * @param {Array<Number>} b The second 3-element vector, or the
   * first parameter to the cross product.
@@ -147,7 +143,7 @@ true.)  The triangle's area is half of the cross product's length.
   * var angle=Math.acos(dot);
   * var triple=H3DU.Math.vec3triple(normalVector,vectorB,vectorC);
   * // The angle is negative if triple product is negative.
-  * // NOTE: If the "normalVector" points toward the viewer,
+  * // NOTE: Whenever the "normalVector" points toward the viewer,
   * // a positive value for the angle means the angle runs in
   * // a counterclockwise direction for right-handed coordinate systems
   * // and in a clockwise direction for left-handed systems.
@@ -192,6 +188,17 @@ true.)  The triangle's area is half of the cross product's length.
   "vec3negate":function(a) {
     "use strict";
     return [-a[0], -a[1], -a[2]];
+  },
+/**
+ * Negates a 4-element vector and returns a new
+ * vector with the result. Negating a vector
+ * is the same as reversing the sign of each of its components.
+ * @param {Array<Number>} a A 4-element vector.
+ * @returns {Array<Number>} The resulting 4-element vector.
+ */
+  "vec4negate":function(a) {
+    "use strict";
+    return [-a[0], -a[1], -a[2],-a[3]];
   },
 /**
  * Negates a 3-element vector in place.
@@ -323,45 +330,44 @@ Negating a vector
   },
 /**
 * Transforms the 3D point specified in this 3-element vector to its X
-* and Y coordinates in <i>screen space</i>, and its normalized device Z coordinate,
+* and Y <i>window coordinates</i>, and its projected Z coordinate,
 * using the given transformation matrix and viewport
-* width and height.  The X coordinates in this screen space increase
-* rightward, the Y coordinates in this space increase upward
-* or downward depending on the "yUp" parameter, and the Z
-* coordinates increase away from the viewer.
+* width and height.  The X coordinates in this space increase
+* rightward and the Y coordinates in this space increase upward
+* or downward depending on the "yUp" parameter.
 * @param {Array<Number>} vector A 3-element vector giving
 * the X, Y, and Z coordinates of the 3D point to transform.
 * @param {Array<Number>} matrix A 4x4 matrix to use to transform
- * the vector to normalized device coordinates.  This will generally be
+ * the vector according to the {@link H3DU.Math.mat4projectVec3} method.
+ * This will generally be
  * a projection-view matrix, that is, the projection matrix multiplied
  * by the view matrix, in that order, if the vector to transform is in <i>world space</i>,
  * or a model-view-projection matrix, that is, a projection-view matrix multiplied
  * by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.
-* The rest of the method will transform the normalized device
-* coordinates to screen space.
+* The rest of the method will convert the transformed X and Y coordinates
+* to window coordinates.  If the matrix includes a projection transform returned
+* by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
+* similar {@link H3DU.Math} methods, the coordinates transformed this way will be
+* as described in {@link H3DU.Math.mat4projectVec3} under the "matrix" parameter,
+* before they are converted to window coordinates.
 * @param {Array<Number>} viewport A 4-element array specifying
-* the starting position and size of the viewport in screen space units
+* the starting position and size of the viewport in window units
 * (such as pixels).  In order, the four elements are the starting position's
 * X coordinate, its Y coordinate, the viewport's width, and the viewport's
 * height. Throws an error if the width or height is less than 0.
 * @param {Boolean} [yUp] If true, the viewport's starting position is
-* at the lower left corner and Y coordinates in screen space
+* at the lower left corner and Y coordinates in window coordinate space
 * increase upward.  If false, null, or omitted, the viewport's starting
-* position is at the upper left corner and Y coordinates in screen
-* space increase downward.
+* position is at the upper left corner and Y coordinates increase downward.
 * @returns {Array<Number>} A 3-element array giving the X and Y
-* coordinates, both in screen space, and the normalized device
-* Z coordinate, in that order.
-* @see {@link H3DU.Math.mat4projectVec3}, for more information
-* on normalized device coordinates.
+* window coordinates, and the projected Z coordinate, in that order.
 */
-  "vec3toScreenPoint":function(vector, matrix, viewport, yUp) {
+  "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
     "use strict";
     if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
    // Transform the vector and do a perspective divide
     var vec = H3DU.Math.mat4projectVec3(matrix, vector);
-   // Now we have normalized device coordinates; convert
-   // them to screen space
+   // Now convert the projected vector them to window coordinates
     var halfWidth = viewport[2] * 0.5;
     var halfHeight = viewport[3] * 0.5;
     var vecY = yUp ? vec[1] : -vec[1];
@@ -449,6 +455,16 @@ Negating a vector
     }
     return vec;
   },
+  /**
+  * Finds the cartesian distance from one three-element vector
+  * to another, treating both as 3D points.
+  * @param {Array<Number>} vecFrom The first 3-element vector.
+  * @param {Array<Number>} vecTo The second 3-element vector.
+  * @param {Number} The distance between the two vectors.
+  */
+  "vec3dist":function(vecFrom,vecTo){
+	  return H3DU.Math.vec3length(H3DU.Math.vec3sub(vecFrom,vecTo));
+  },
 /**
  * Converts a 4-element vector to its normalized version.
  * When a vector is normalized, its direction remains the same but the distance from the origin
@@ -528,14 +544,16 @@ Negating a vector
     return Math.sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
   },
 /**
- * Returns the identity 3x3 matrix.
+ * Returns the identity 3x3 matrix (a matrix that keeps
+ * vectors unchanged when they are transformed with this matrix).
  * @returns {Array<Number>} Return value. */
   "mat3identity":function() {
     "use strict";
     return [1, 0, 0, 0, 1, 0, 0, 0, 1];
   },
 /**
- * Returns the identity 4x4 matrix.
+ * Returns the identity 4x4 matrix (a matrix that keeps
+ * vectors unchanged when they are transformed with this matrix).
  * @returns {Array<Number>} Return value. */
   "mat4identity":function() {
     "use strict";
@@ -771,7 +789,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 * @param {Array<Number>} a A quaternion.  Must be a unit vector ([a "normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
 * @returns {Array<Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. If the axis of rotation
+ * in degrees as the fourth element. Whenever the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
@@ -820,10 +838,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.  If the axis of rotation
+ * of rotation in x, y, and z, respectively.  Whenever the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
+  * The axis of rotation need not be a unit vector (["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
@@ -860,7 +879,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return ret;
   },
 /**
- * Generates a quaternion from pitch, yaw and roll angles.
+ * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
  * In the parameters given below, when the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
@@ -876,15 +895,21 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {Number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
- * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
- * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
- * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
+ * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
+ * and {@link H3DU.Math.GlobalYawRollPitch}. If null or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
+ * The constants starting with <code>Global</code>
+ * describe a rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
+ * angles). The constants starting with <code>Local</code> describe a rotation in the order given,
+ * where the second and third rotations occur around the rotated object's new axes
+ * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
+ * angles). The order of <code>Local</code> rotations has the same result as the reversed
+ * order of <code>Global</code> rotations and vice versa.
  * @returns {Array<Number>} The generated quaternion.
  */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
     "use strict";
     var rollRad, pitchRad, yawRad;
-    if(mode === null || typeof mode === "undefined")mode = H3DU.Math.RollPitchYaw;
+    if(mode === null || typeof mode === "undefined")mode = H3DU.Math.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(pitchDegrees.constructor === Array) {
       rollRad = (pitchDegrees[2] >= 0 && pitchDegrees[2] < 360 ? pitchDegrees[2] : pitchDegrees[2] % 360 + (pitchDegrees[2] < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy360;
@@ -902,31 +927,37 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var ry = Math.cos(rollRad);
     var rx = rollRad >= 0 && rollRad < 6.283185307179586 ? rollRad <= 3.141592653589793 ? Math.sqrt(1.0 - ry * ry) : -Math.sqrt(1.0 - ry * ry) : Math.sin(rollRad);
     var t8, t7;
-    if(mode === H3DU.Math.PitchYawRoll || mode === H3DU.Math.PitchRollYaw) {
+    if(mode === H3DU.Math.GlobalPitchYawRoll || mode === H3DU.Math.GlobalPitchRollYaw) {
       t7 = [rx * yx, ry * yx, rx * yy, ry * yy];
-      if(mode === H3DU.Math.PitchYawRoll)t7[0] = -t7[0];
+      if(mode === H3DU.Math.GlobalPitchYawRoll)t7[0] = -t7[0];
       t8 = [t7[3] * px + t7[0] * py, t7[1] * py + t7[2] * px, t7[2] * py - t7[1] * px, t7[3] * py - t7[0] * px];
-    } else if(mode === H3DU.Math.YawPitchRoll || mode === H3DU.Math.YawRollPitch) {
+    } else if(mode === H3DU.Math.GlobalYawPitchRoll || mode === H3DU.Math.GlobalYawRollPitch) {
       t7 = [ry * px, rx * px, rx * py, ry * py];
-      if(mode === H3DU.Math.YawRollPitch)t7[1] = -t7[1];
+      if(mode === H3DU.Math.GlobalYawRollPitch)t7[1] = -t7[1];
       t8 = [t7[0] * yy - t7[2] * yx, t7[3] * yx + t7[1] * yy, t7[2] * yy + t7[0] * yx, t7[3] * yy - t7[1] * yx];
     } else {
       t7 = [yy * px, yx * py, yx * px, yy * py];
-      if(mode === H3DU.Math.RollPitchYaw)t7[2] = -t7[2];
+      if(mode === H3DU.Math.GlobalRollPitchYaw)t7[2] = -t7[2];
       t8 = [t7[0] * ry + t7[1] * rx, t7[1] * ry - t7[0] * rx, t7[3] * rx + t7[2] * ry, t7[3] * ry - t7[2] * rx];
     }
     return t8;
   },
 /**
  * Converts this quaternion to the same version of the rotation
- * in the form of pitch, yaw, and roll angles.
+ * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
  * @param {Array<Number>} a A quaternion.  Should be a unit vector
  * (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * @param {Number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
- * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
- * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
- * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
+ * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
+ * and {@link H3DU.Math.GlobalYawRollPitch}. If null or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
+ * The constants starting with <code>Global</code>
+ * describe a rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
+ * angles). The constants starting with <code>Local</code> describe a rotation in the order given,
+ * where the second and third rotations occur around the rotated object's new axes
+ * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
+ * angles).  The order of <code>Local</code> rotations has the same result as the reversed
+ * order of <code>Global</code> rotations and vice versa.
  * @returns {Array<Number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
  * angle, if the corresponding axis
@@ -939,19 +970,19 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var c0 = a[3];
     var c1, c2, c3;
     var e = 1;
-    if(mode === null || typeof mode === "undefined")mode = H3DU.Math.RollPitchYaw;
+    if(mode === null || typeof mode === "undefined")mode = H3DU.Math.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
-    if(mode === H3DU.Math.RollPitchYaw) {
+    if(mode === H3DU.Math.GlobalRollPitchYaw) {
       c1 = a[1]; c2 = a[0]; c3 = a[2];
       e = -1;
-    } else if(mode === H3DU.Math.PitchYawRoll) {
+    } else if(mode === H3DU.Math.GlobalPitchYawRoll) {
       c1 = a[2]; c2 = a[1]; c3 = a[0];
       e = -1;
-    } else if(mode === H3DU.Math.PitchRollYaw) {
+    } else if(mode === H3DU.Math.GlobalPitchRollYaw) {
       c1 = a[1]; c2 = a[2]; c3 = a[0];
-    } else if(mode === H3DU.Math.YawPitchRoll) {
+    } else if(mode === H3DU.Math.GlobalYawPitchRoll) {
       c1 = a[2]; c2 = a[0]; c3 = a[1];
-    } else if(mode === H3DU.Math.YawRollPitch) {
+    } else if(mode === H3DU.Math.GlobalYawRollPitch) {
       c1 = a[0]; c2 = a[2]; c3 = a[1];
       e = -1;
     } else {
@@ -978,15 +1009,15 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
   // Return the pitch/yaw/roll angles in the standard order
     var angles = [];
-    if(mode === H3DU.Math.RollPitchYaw) {
+    if(mode === H3DU.Math.GlobalRollPitchYaw) {
       angles[0] = e2; angles[1] = e1; angles[2] = e3;
-    } else if(mode === H3DU.Math.PitchYawRoll) {
+    } else if(mode === H3DU.Math.GlobalPitchYawRoll) {
       angles[0] = e3; angles[1] = e2; angles[2] = e1;
-    } else if(mode === H3DU.Math.PitchRollYaw) {
+    } else if(mode === H3DU.Math.GlobalPitchRollYaw) {
       angles[0] = e3; angles[1] = e1; angles[2] = e2;
-    } else if(mode === H3DU.Math.YawPitchRoll) {
+    } else if(mode === H3DU.Math.GlobalYawPitchRoll) {
       angles[0] = e2; angles[1] = e3; angles[2] = e1;
-    } else if(mode === H3DU.Math.YawRollPitch) {
+    } else if(mode === H3DU.Math.GlobalYawRollPitch) {
       angles[0] = e1; angles[1] = e3; angles[2] = e2;
     } else {
       angles[0] = e1; angles[1] = e2; angles[2] = e3;
@@ -1094,7 +1125,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. If the axis of rotation
+ * in degrees as the fourth element. Whenever the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
@@ -1407,35 +1438,34 @@ m[0] * m[7] * m[5];
   },
 /**
  * Transforms a 3-element vector with a 4x4 matrix and returns
- * a transformation of the vector in <i>normalized device coordinates</i>.<p>
+ * a perspective-correct version of the vector as a 3D point. <p>
  * The transformation involves
  * multiplying the matrix by a 4-element column vector with the same X,
  * Y, and Z coordinates, but with a W coordinate equal to 1, and
  * then dividing X, Y, and Z of the resulting 4-element
  * vector by that vector's W (a <i>perspective divide</i>),
  * then returning that vector's new X, Y, and Z.<p>
- * <b>About normalized device coordinates</b><p>
- * In normalized device coordinates, a 3D point located on or within
- * the viewport (visible area) ranges from -1 to 1 in the X and Y coordinates,
- * and the coordinates increase from left to right and from front to back.<p>
- * In OpenGL by default, the Z coordinates located on or within the
- * viewport also range from -1 to 1, and the Y coordinates increase
- * from bottom to top.  For Y coordinates that increase from top to bottom,
- * reverse the sign of the Y coordinate of this method's return value.
  * @param {Array<Number>} mat A 4x4 matrix to use to transform
- * the vector to normalized device coordinates.  This will generally be
+ * the vector.  This will generally be
  * a projection-view matrix, that is, the projection matrix multiplied
  * by the view matrix, in that order, if the vector to transform is in <i>world space</i>,
  * or a model-view-projection matrix, that is, a projection-view matrix multiplied
  * by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.
+ * If the matrix includes a projection transform returned
+ * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
+ * similar {@link H3DU.Math} methods, the viewport (visible area) will range from -1 to 1
+ * in the X, Y, and Z coordinates (as is the case in WebGL) and the X, Y, and Z coordinates
+ * increase from left to right, front to back, and bottom to top (as is the case in WebGL).
+ * (For Y coordinates that increase from
+ * top to bottom, reverse the sign of the Y coordinate of this method's return value.)
  * @param {Array<Number>|Number} v X coordinate of a 3D point to transform.
  * If "vy" and "vz" are omitted, this value can instead
  * be a 3-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
- * @returns {Array<Number>} The transformed 3-element vector
- * in normalized device coordinates. The elements, in order, are
+ * @returns {Array<Number>} The transformed 3-element vector.
+ * The elements, in order, are
  * the transformed vector's X, Y, and Z coordinates.
  */
   "mat4projectVec3":function(mat, v, vy, vz) {
@@ -1543,9 +1573,9 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a perspective projection.<p>
- * This method assumes a right-handed coordinate system, such as
- * in OpenGL. To adjust the result of this method to a left-handed system,
- * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * To adjust the result of this method for a left-handed system,
+ * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {Number} fovY Y-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
@@ -1580,9 +1610,9 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a camera view.<p>
- * This method assumes a right-handed coordinate system, such as
- * in OpenGL. To adjust the result of this method to a left-handed system,
- * such as in legacy Direct3D, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * To adjust the result of this method for a left-handed system,
+ *  reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
  * 10, 12, and 14).
 * @param {Array<Number>} viewerPos A 3-element vector specifying
@@ -1630,9 +1660,9 @@ m[0] * m[7] * m[5];
  * Returns a 4x4 matrix representing an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
- * This method assumes a right-handed coordinate system, such as
- * in OpenGL. To adjust the result of this method to a left-handed system,
- * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * To adjust the result of this method for a left-handed system,
+ * , reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {Number} l Leftmost coordinate of the orthographic view.
  * @param {Number} r Rightmost coordinate of the orthographic view.
@@ -1662,9 +1692,9 @@ m[0] * m[7] * m[5];
 /**
  * Returns a 4x4 matrix representing a perspective projection,
  * given an X-axis field of view.</p>
- * This method assumes a right-handed coordinate system, such as
- * in OpenGL. To adjust the result of this method to a left-handed system,
- * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * To adjust the result of this method for a left-handed system,
+ * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {Number} fovX X-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
@@ -1696,7 +1726,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a 2D orthographic projection.<p>
- * This method assumes a right-handed coordinate system; see mat4ortho().<p>
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().<p>
  * This is the same as mat4ortho() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.
  * @param {Number} l Leftmost coordinate of the orthographic view.
@@ -1722,7 +1752,7 @@ m[0] * m[7] * m[5];
  * or squishing it.<p>
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
- * This method assumes a right-handed coordinate system; see mat4ortho().<p>
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().<p>
 * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
  * (If l is greater than r, X-coordinates increase rightward; otherwise,
@@ -1746,7 +1776,7 @@ m[0] * m[7] * m[5];
  * ratio, the view rectangle will be centered on the viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.<p>
- * This method assumes a right-handed coordinate system; see mat4ortho().
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().
 * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
  * (If l is greater than r, X-coordinates increase rightward; otherwise,
@@ -1796,9 +1826,9 @@ m[0] * m[7] * m[5];
 /**
  * Returns a 4x4 matrix representing a perspective projection
  * in the form of a view frustum, or the limits in the "camera"'s view.<p>
- * This method assumes a right-handed coordinate system, such as
- * in OpenGL. To adjust the result of this method to a left-handed system,
- * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
+  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * To adjust the result of this method for a left-handed system,
+ * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * @param {Number} l X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
@@ -1930,7 +1960,7 @@ m[0] * m[7] * m[5];
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. If the axis of rotation
+ * in degrees as the fourth element. Whenever the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
@@ -2028,7 +2058,7 @@ m[0] * m[7] * m[5];
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.  If the axis of rotation
+ * in degrees as the fourth element.  Whenever the axis of rotation
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
@@ -2439,6 +2469,14 @@ H3DU.Math.HalfPi = 1.5707963267948966192313216916398;
 */
 H3DU.Math.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
+ Closest approximation to pi divided by 180, or the number
+ of radians in a degree. Multiply by this number to convert degrees to radians.
+@memberof! H3DU.Math
+ @const
+ @default
+*/
+H3DU.Math.ToRadians = H3DU.Math.PiDividedBy180;
+/**
  @private
 @const */
 H3DU.Math.PiDividedBy360 = 0.00872664625997164788461845384244;
@@ -2455,37 +2493,136 @@ H3DU.Math.Num360DividedByPi = 114.59155902616464175359630962821;
 */
 H3DU.Math.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
+ Closest approximation to 180 divided by pi, or the number of
+ degrees in a radian. Multiply by this number to convert radians to degrees.
+@memberof! H3DU.Math
+ @const
+ @default
+*/
+H3DU.Math.ToDegrees = H3DU.Math.Num180DividedByPi;
+/**
+* Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
+or in the reverse order around
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.GlobalPitchYawRoll = 0;
+/**
+* Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.GlobalPitchRollYaw = 1;
+/**
+* Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.GlobalYawPitchRoll = 2;
+/**
+* Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.GlobalYawRollPitch = 3;
+/**
+* Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.GlobalRollPitchYaw = 4;
+/**
+* Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.GlobalRollYawPitch = 5;
+/**
+* Indicates that a rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
+occur around the rotated object's new axes and not necessarily the original axes.
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.LocalPitchYawRoll = H3DU.Math.GlobalRollYawPitch;
+/**
+* Indicates that a rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
+occur around the rotated object's new axes and not necessarily the original axes.
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.LocalPitchRollYaw = H3DU.Math.GlobalYawRollPitch;
+/**
+* Indicates that a rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
+occur around the rotated object's new axes and not necessarily the original axes.
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.LocalYawPitchRoll = H3DU.Math.GlobalRollPitchYaw;
+/**
+* Indicates that a rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
+occur around the rotated object's new axes and not necessarily the original axes.
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.LocalYawRollPitch = H3DU.Math.GlobalPitchRollYaw;
+/**
+* Indicates that a rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
+occur around the rotated object's new axes and not necessarily the original axes.
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.LocalRollPitchYaw = H3DU.Math.GlobalYawPitchRoll;
+/**
+* Indicates that a rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
+occur around the rotated object's new axes and not necessarily the original axes.
+@memberof! H3DU.Math
+* @const
+*/
+H3DU.Math.LocalRollYawPitch = H3DU.Math.GlobalPitchYawRoll;
+/**
 * Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
+@deprecated This constant's name is ambiguous between local and global rotations.
+Use {@link H3DU.Math.GlobalPitchYawRoll} instead.
 @memberof! H3DU.Math
 * @const
 */
 H3DU.Math.PitchYawRoll = 0;
 /**
 * Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+* @deprecated This constant's name is ambiguous between local and global rotations.
+Use {@link H3DU.Math.GlobalPitchRollYaw} instead.
 @memberof! H3DU.Math
 * @const
 */
 H3DU.Math.PitchRollYaw = 1;
 /**
 * Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+@deprecated This constant's name is ambiguous between local and global rotations.
+Use {@link H3DU.Math.GlobalYawPitchRoll} instead.
 @memberof! H3DU.Math
 * @const
 */
 H3DU.Math.YawPitchRoll = 2;
 /**
 * Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+@deprecated This constant's name is ambiguous between local and global rotations.
+Use {@link H3DU.Math.GlobalYawRollPitch} instead.
 @memberof! H3DU.Math
 * @const
 */
 H3DU.Math.YawRollPitch = 3;
 /**
 * Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+@deprecated This constant's name is ambiguous between local and global rotations.
+Use {@link H3DU.Math.GlobalRollPitchYaw} instead.
 @memberof! H3DU.Math
 * @const
 */
 H3DU.Math.RollPitchYaw = 4;
 /**
 * Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+@deprecated This constant's name is ambiguous between local and global rotations.
+Use {@link H3DU.Math.GlobalRollYawPitch} instead.
 @memberof! H3DU.Math
 * @const
 */

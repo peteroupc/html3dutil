@@ -2,14 +2,16 @@
 
 This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
-[HTML 3D Library](http://peteroupc.github.io/html3dutil).
+[HTML 3D Library](http://peteroupc.github.io/html3dutil),
+and explains how the GL pipeline transforms vertices to help
+it draw triangles, lines, and other graphics primitives.
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
 ## Contents <a id=Contents></a>
 
 [Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and the Projection and View Transforms](#The_Camera_and_the_Projection_and_View_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Vertex Coordinates in the Graphics System](#Vertex_Coordinates_in_the_Graphics_System)<br>[Other Pages](#Other_Pages)<br>
 
-## The "Camera" and the Projection and View Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a>
+## The "Camera" and Geometric Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a>
 
 The [`Batch3D`](http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html) class
 of the HTML 3D Library has a concept of a "projection transform" and a "view transform".
@@ -42,9 +44,8 @@ is not discussed in this page.
 As [explained later](#Vertex Coordinates in the Graphics System) on this page,
 however, these transformations and matrices are
 merely for the convenience of the library; all the graphics pipeline expects is the clip
-space coordinates of the things it draws.  Once it gets those coordinates, the pipeline
-converts them to _normalized device coordinates_, then _window space_
-coordinates when drawing objects on the screen.
+space coordinates of the things it draws.  The pipeline uses those coordinates
+and their transformed _window coordinates_ when rendering things on the screen.
 
 ## Projection Transform <a id=Projection_Transform></a>
 
@@ -84,12 +85,14 @@ the vertical visibility range.
 * In a perspective projection, the view volume will resemble a "pyramid" with the top chopped off (a _frustum_).  The
 near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.
 
-The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also
-known as _homogeneous coordinates_ in _clip space_.  However, this is not the whole story, since in general, nearly all lines that are parallel in world space will generally not appear parallel in a perspective transformation, so additional math is needed to achieve the perspective effect. The graphics pipeline (outside the HTML 3D library) does this by dividing the X, Y, and Z components by the W component to get the 3D point's _normalized device coordinates_.
+The perspective projection converts 3D coordinates to 4-element vectors in _clip space_.
+However, this is not the whole story, since in general, nearly all lines that are parallel in world space
+will generally not appear parallel in a perspective projection, so additional math is needed to
+achieve the perspective effect. This will be [explained later](#Vertex Coordinates in the Graphics System).
 
 The following methods define a perspective projection.
 
-**[`H3DU.Math.mat4perspective(fov, aspect, near, far)`](http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4perspective)**
+**[`H3DU.Math.mat4perspective(fov, aspect, near, far)`]{@link H3DU.Math.mat4perspective}**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -100,7 +103,7 @@ to the `setProjectionMatrix` method of the `H3DU.Batch3D` class.
 * `aspect` - Aspect ratio of the scene.  You should usually use `scene3d.getClientAspect()`.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.
 
-**`batch3d.perspectiveAspect(fov near, far)`**
+**[`batch3d.perspectiveAspect(fov near, far)`]{{@link H3DU.Batch3D#perspectiveAspect}**
 
 This method of the `H3DU.Batch3D` class sets the projection matrix to a perspective
 projection.  The `fov`, `near`, and `far` parameters are the same as for `mat4perspective`,
@@ -212,7 +215,7 @@ This method allows you to set the view matrix to an arbitrary [4x4 matrix]{@tuto
 ## Vertex Coordinates in the Graphics System <a id=Vertex_Coordinates_in_the_Graphics_System></a>
 
 The concepts of _eye space_, _camera space_, and _world space_, as well as
-the use of transformations and matrices, such as _projection_, _view_, _model-view_,
+the use of matrices related to them, such as _projection_, _view_, _model-view_,
 and _world_ matrices, are merely conventions,
 which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.
 
@@ -224,6 +227,20 @@ matrices to help the pipeline find a vertex's clip space coordinates, it doesn't
 and can use a different paradigm for this purpose.  For example, the vertex shader can
 be passed vertex coordinates that are already in clip space and just output those coordinates
 without transforming them.
+
+As the name suggests, clip space coordinates are used for clipping primitives to the
+screen. Each clip space vertex is in _homogeneous coordinates_, consisting of an
+X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W.  The
+perspective matrix returned by {@link H3DU.Math.mat4perspective}, for example,
+transforms W to the negative Z coordinate in eye space.
+
+To take perspective into account, the clip space X, Y, and Z coordinates are
+divided by the clip space W, and then converted to _window coordinates_,
+which correspond roughly to the location of the triangle or other primitive
+on the screen or frame buffer (off-screen buffer).  The window coordinates
+will have the same range as the current _viewport_. A viewport is a rectangle
+whose size and position are generally expressed in pixels; to set the viewport's
+size, call the [`setDimensions` method of `Scene3D`]{@link H3DU.Scene3D#setDimensions}.
 
 ## Other Pages <a id=Other_Pages></a>
 

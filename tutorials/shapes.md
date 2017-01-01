@@ -10,7 +10,7 @@ the _shapes.html_ and _platonic.html_ demos mentioned in this page.
 This page will discuss:
 
 * Using the Meshes methods to make built-in shapes
-* Making your own shapes with the `H3DU.Mesh` constructor
+* Making your own shapes with the [`H3DU.Mesh`]{@link H3DU.Mesh} constructor
 * Building up your own shapes using the vertex methods
 * Binding meshes to shapes
 * Shape groups, or combinations of several shapes
@@ -151,23 +151,23 @@ The mesh will build up the shape from the vertices you give it depending on the 
 primitive mode.  For example, `QUAD_STRIP` defines a strip of connecting quadrilaterals,
 and `TRIANGLES` defines a set of triangles that are not necessarily connected:
 
-* `Mesh.TRIANGLES` - Set of triangles, 3 vertices each.
-* `Mesh.LINES` - Set of line segments, 2 vertices each.
-* `Mesh.QUADS` - Set of quadrilaterals, 4 vertices each.
-* `Mesh.TRIANGLE_STRIP` - A triangle strip.  The first 3
+* `H3DU.Mesh.TRIANGLES` - Set of triangles, 3 vertices each.
+* `H3DU.Mesh.LINES` - Set of line segments, 2 vertices each.
+* `H3DU.Mesh.QUADS` - Set of quadrilaterals, 4 vertices each.
+* `H3DU.Mesh.TRIANGLE_STRIP` - A triangle strip.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.
-* `Mesh.TRIANGLE_FAN` - A triangle fan. The first 3
+* `H3DU.Mesh.TRIANGLE_FAN` - A triangle fan. The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last vertex, the first vertex of
 the first trangle, and 1 new vertex.
-* `Mesh.QUAD_STRIP` - A strip of quadrilaterals (quads).
+* `H3DU.Mesh.QUAD_STRIP` - A strip of quadrilaterals (quads).
 The first 4 vertices make up the first quad, and each additional
 quad is made up of the last 2 vertices of the previous quad and
 2 new vertices.
-* `Mesh.LINE_STRIP` - A series of points making up a connected line segment path.
-* `Mesh.POINTS` - A series of points.
+* `H3DU.Mesh.LINE_STRIP` - A series of points making up a connected line segment path.
+* `H3DU.Mesh.POINTS` - A series of points.
 
 (2) Call the `normal3()`, `color3()`, and `texCoord2()` methods, as needed, to set the
 next vertex's parameters.  You don't need to do this for each vertex if multiple
@@ -228,7 +228,8 @@ specify the proper normals.
 
 #### recalcNormals() <a id=recalcNormals></a>
 
-You can use the `recalcNormals()` method to recalculate the mesh's normals,
+You can use the [`recalcNormals()`]{@link H3DU.Mesh#recalcNormals} method to 
+recalculate the mesh's normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside.  This method takes two parameters:
 
@@ -239,8 +240,16 @@ each unique vertex its own normal (smooth shading).
 * The second parameter is `true` if the normals will be calculated such that the shape
 is shaded from the inside; otherwise, `false`.
 
-Remember, for normal calculation to properly affect shading, each triangle in
-the mesh must have its vertices defined in counterclockwise order.
+For normal calculation to properly affect shading, each triangle in
+the mesh must have its vertices ordered in the same orientation throughout.  If the
+vertices are oriented in the wrong order, use the [`reverseWinding()`]{@link H3DU.Mesh#reverseWinding}
+method to change their order.
+
+> Note: For right-handed coordinate systems, as will be the case when using, 
+> for example, the [`Batch3D.perspectiveAspect()`]{@link H3DU.Batch3D#perspectiveAspect} method, 
+> if the mesh describes a closed convex surface (such as a sphere or cube), 
+> each triangle's vertices (as they appear when the triangle's front side is seen) 
+> must be oriented counterclockwise for the shape to be shaded from the outside.
 
 Example:
 
@@ -270,7 +279,7 @@ Examples for setting appearance:
     shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
     // set material parameters: ambient, diffuse,
     // specular, shininess (NOTE: if the mesh defines its own colors they
-    // will override ambient and diffuse reflection given below)
+    // will override diffuse reflection given below)
     shape.setMaterial(new H3DU.Material("blue","blue","white",30));
     // set material parameters: ambient, diffuse,
     // specular, shininess, emission
@@ -296,7 +305,12 @@ Examples for setting position:
     // same, but passing an array
     shape.setScale([2,2,2]);
 
-If setMatrix wasn't called, then when the shape is rendered, it will generate
+Note that `setPosition`, `setQuaternion`, and `setScale` don't change
+the vertices of the underlying mesh the shape uses, but rather set up
+a [_transformation matrix_]{@tutorial glmath} that adjusts each vertex
+in the shape "on the fly" when it comes time to draw it each frame.
+
+If `setMatrix` wasn't called, then when the shape is rendered, it will generate
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.
 

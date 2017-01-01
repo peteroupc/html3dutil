@@ -47,7 +47,7 @@
 
 ## Tutorials
 
-* <a href="tutorial-camera.md">The "Camera" and the Projection and View Transforms</a>
+* <a href="tutorial-camera.md">The "Camera" and Geometric Transforms</a>
 * <a href="tutorial-colors.md">Color Strings</a>
 * <a href="tutorial-filters.md">Graphics Filters</a>
 * <a href="tutorial-glmath.md">H3DU's Math Functions</a>

@@ -44,8 +44,7 @@ the HTML 3D Library. Example:
 
 Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.
-This method assumes a right-handed coordinate system, such as
-OpenGL's.
+This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 
 #### Parameters
 
@@ -113,8 +112,7 @@ This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a camera view.
-This method assumes a right-handed coordinate system, such as
-OpenGL's.
+This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 
 #### Parameters
 
@@ -185,8 +183,7 @@ an orthographic projection.
 In this projection, the left clipping plane is parallel to the right clipping
 plane and the top to the bottom.
 
-This method assumes a right-handed coordinate system, such as
-OpenGL's.
+This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 
 #### Parameters
 
@@ -211,8 +208,7 @@ This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
 Modifies the matrix at the top of this stack by multiplying it by
 a 2D orthographic projection.
-This method assumes a right-handed coordinate system, such as
-OpenGL's.
+This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 
 #### Parameters
 
@@ -234,8 +230,7 @@ This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.
 
-This method assumes a right-handed coordinate system, such as
-OpenGL's.
+This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 
 #### Parameters
 

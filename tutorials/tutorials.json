@@ -1,5 +1,5 @@
 {
-"camera":{"title":"The \"Camera\" and the Projection and View Transforms"},
+"camera":{"title":"The \"Camera\" and Geometric Transforms"},
 "filters":{"title":"Graphics Filters"},
 "glmath":{"title":"H3DU's Math Functions"},
 "colors":{"title":"Color Strings"},
