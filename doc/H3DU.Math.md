@@ -1829,7 +1829,7 @@ will not be converted to a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3no
 #### Return Value
 
 A perpendicular 3-element
-vector. Returns a nonzero vector if "vec" is (0,0,0). (Type: Array.&lt;Number>)
+vector. Returns (0,0,0) if "vec" is (0,0,0). (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a>
 

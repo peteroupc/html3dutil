@@ -354,25 +354,26 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
 */
   "vec3perp":function(vec) {
     "use strict";
-      var absx = Math.abs(vec[0]);
-  var absy = Math.abs(vec[1]);
-  var absz = Math.abs(vec[2]);
-  var mx = Math.max(absx, absy, absz);
-  var normal = [0, 0, 0];
-  if(mx === absx) {
-    normal[0] = vec[1];
-    normal[1] = -vec[0];
-    normal[2] = 0;
-  } else if(mx === absy) {
-    normal[0] = 0;
-    normal[1] = vec[2];
-    normal[2] = -vec[1];
-  } else {
-    normal[0] = -vec[2];
-    normal[1] = 0;
-    normal[2] = vec[0];
-  }
-  return normal;
+    var absx = Math.abs(vec[0]);
+    var absy = Math.abs(vec[1]);
+    var absz = Math.abs(vec[2]);
+    var mx = Math.max(absx, absy, absz);
+    var normal = [0, 0, 0];
+    if(mx === absx) {
+      normal[0] = vec[1];
+      normal[1] = -vec[0];
+      normal[2] = 0;
+    } else if(mx === absy) {
+      normal[0] = 0;
+      normal[1] = vec[2];
+      normal[2] = -vec[1];
+    } else {
+      normal[0] = -vec[2];
+      normal[1] = 0;
+      normal[2] = vec[0];
+    }
+    return normal;
+  },
 /**
 * Transforms the 3D point specified in this 3-element vector to its X
 * and Y <i>window coordinates</i>, and its projected Z coordinate,
