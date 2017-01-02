@@ -350,13 +350,10 @@ will not be converted to a unit vector (a ["normalized" vector]{@link H3DU.Math.
   with a length of 1).
 @param {Array<Number>} vec A 3-element vector.
 @returns {Array<Number>} A perpendicular 3-element
-vector.  Returns a nonzero vector if "vec" is (0,0,0).
+vector.  Returns (0,0,0) if "vec" is (0,0,0).
 */
   "vec3perp":function(vec) {
     "use strict";
-    if(vec[0] === 0 && vec[1] === 0 && vec[2] === 0) {
-      return [0, 1, 0];
-    }
     var vx = Math.abs(vec[0]);
     var vy = Math.abs(vec[1]);
     var vz = Math.abs(vec[2]);
