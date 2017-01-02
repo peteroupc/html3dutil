@@ -1564,7 +1564,11 @@ The following are properties of the cross product:<ul>
 vector with the same length but opposite direction.
 <li>If the cross product's length is 0, then A and B are parallel vectors.
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+<<<<<<< HEAD
 The cross product vector will be such that, while the vector points toward the viewer,
+=======
+The cross product vector will be such that, whenever the vector points toward the viewer,
+>>>>>>> 46648dcbdc510ab994e4eb259cdce8eae656c30c
 the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>If A and B are unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the absolute value

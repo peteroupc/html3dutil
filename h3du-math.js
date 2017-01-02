@@ -25,7 +25,11 @@ H3DU.Math = {
 vector with the same length but opposite direction.
  * <li>If the cross product's length is 0, then A and B are parallel vectors.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+<<<<<<< HEAD
 The cross product vector will be such that, while the vector points toward the viewer,
+=======
+The cross product vector will be such that, whenever the vector points toward the viewer,
+>>>>>>> 46648dcbdc510ab994e4eb259cdce8eae656c30c
 the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>If A and B are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the absolute value
@@ -869,16 +873,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var vecLengths = H3DU.Math.vec3length(vec1) * H3DU.Math.vec3length(vec2);
     if(H3DU.Math.vec3dot(ret, ret) < 1e-9) {
       // The vectors are parallel or close to parallel; there are two possible cases
-      var vn1=H3DU.Math.vec3norm(vec1)
-      var vn2=H3DU.Math.vec3norm(vec2)
-      var dot=H3DU.Math.vec3dot(vn1,vn2)
-      if(Math.abs(dot) >= 1-1e-9){
+      var vn1 = H3DU.Math.vec3norm(vec1);
+      var vn2 = H3DU.Math.vec3norm(vec2);
+      var dot = H3DU.Math.vec3dot(vn1, vn2);
+      if(Math.abs(dot) >= 1 - 1e-9) {
        // The vectors point in the same direction or almost so
-       return [0,0,0,1]
+        return [0, 0, 0, 1];
       } else {
        // The vectors point in opposite directions
-       ret = H3DU.Math.vec3perp(vec1);
-       ret[3] = 0;
+        ret = H3DU.Math.vec3perp(vec1);
+        ret[3] = 0;
       }
     } else {
       if(vecLengths === 0)vecLengths = 1; // degenerate case

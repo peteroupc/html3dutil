@@ -41,9 +41,9 @@ H3DU._FrenetFrames = function(func) {
     var tangent = H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3sub(e01, e0));
     if(t === 1) {
-	    // This is the endpoint.
-	    // Since we evaluated backward in this case, the tangent
-	    // will be backward; negate it here
+      // This is the endpoint.
+      // Since we evaluated backward in this case, the tangent
+      // will be backward; negate it here
       H3DU.Math.vec3scaleInPlace(tangent, -1);
     }
     var normal;
