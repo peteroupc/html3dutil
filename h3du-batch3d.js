@@ -350,16 +350,12 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
   } else if(shape.visible && !shape.isCulled(this._getFrustum())) {
     var prog = null;
     var flags = 0;
-    if(shape.material instanceof H3DU.Material) {
-      if(shape.material.shader) {
-        prog = renderContext.scene._programs.getCustomProgram(
+    if(shape.material instanceof H3DU.Material &&
+     shape.material.shader) {
+      prog = renderContext.scene._programs.getCustomProgram(
          shape.material.shader, renderContext.context);
-      }
-      flags = H3DU.Scene3D._materialToFlags(shape.material);
     }
-    if(shape._hasColorAttr()) {
-      flags |= H3DU.Scene3D.COLORATTR_ENABLED;
-    }
+    flags = H3DU.Scene3D._flagsForShape(shape);
     if(prog === null || typeof prog === "undefined") {
       prog = renderContext.scene._programs.getProgram(
            flags, renderContext.context);

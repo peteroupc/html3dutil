@@ -114,6 +114,7 @@ See the tutorial "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for mo
 * [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)
 * [vec3norm](#H3DU.Math.vec3norm)
 * [vec3normInPlace](#H3DU.Math.vec3normInPlace)
+* [vec3perp](#H3DU.Math.vec3perp)
 * [vec3scale](#H3DU.Math.vec3scale)
 * [vec3scaleInPlace](#H3DU.Math.vec3scaleInPlace)
 * [vec3sub](#H3DU.Math.vec3sub)
@@ -891,7 +892,7 @@ and returns a new matrix.
 * `mat` (Type: Array.&lt;Number>)<br>
     A 4x4 matrix to multiply.
 * `angle` (Type: Array.&lt;Number> | Number)<br>
-    The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
+    The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
 * `vy` (Type: Number)<br>
@@ -910,7 +911,7 @@ Returns a 4x4 matrix representing a rotation transformation.
 #### Parameters
 
 * `angle` (Type: Array.&lt;Number> | Number)<br>
-    The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
+    The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
 * `vy` (Type: Number)<br>
@@ -1140,8 +1141,8 @@ The parameter "mat". (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.planeNorm(plane) <a id='H3DU.Math.planeNorm'></a>
 
-Normalizes this plane so that its normal is unit
-length (unless all the normal's components are 0).
+Normalizes this plane so that its normal is a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1),
+unless all the normal's components are 0.
 The plane's distance will be divided by the
 normal's length. Returns a new plane.
 
@@ -1196,7 +1197,7 @@ origin (0,0,0) and points toward a 3D point.)
 * `angle` (Type: Array.&lt;Number> | Number)<br>
     The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element.
 * `v` (Type: Array.&lt;Number> | Number)<br>
-    X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems. The axis of rotation need not be a unit vector (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
+    X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems. The axis of rotation need not be a unit vector (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 * `vy` (Type: Number)<br>
     Y-component of the point lying on the axis of rotation.
 * `vz` (Type: Number)<br>
@@ -1371,7 +1372,7 @@ This method is equivalent to the following:
 * `quat` (Type: Array.&lt;Number>)<br>
     Quaternion to rotate.
 * `angle` (Type: Array.&lt;Number> | Number)<br>
-    The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
+    The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
 * `vy` (Type: Number)<br>
@@ -1433,7 +1434,7 @@ origin (0,0,0) and points toward a 3D point.)
 
 A 4-element array giving the axis
 of rotation as the first three elements, followed by the angle
-in degrees as the fourth element. Whenever the axis of rotation
+in degrees as the fourth element. While the axis of rotation
 points toward the viewer, a positive value means the angle runs in
 a counterclockwise direction for right-handed coordinate systems and
 in a clockwise direction for left-handed systems. (Type: Array.&lt;Number>)
@@ -1563,7 +1564,7 @@ The following are properties of the cross product:<ul>
 vector with the same length but opposite direction.
 <li>If the cross product's length is 0, then A and B are parallel vectors.
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-The cross product vector will be such that, whenever the vector points toward the viewer,
+The cross product vector will be such that, while the vector points toward the viewer,
 the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>If A and B are unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the absolute value
@@ -1694,11 +1695,21 @@ returns a new vector.
 * `v2` (Type: Array.&lt;Number>)<br>
     The second vector.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.
+    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from [0,1] and returns a value from [0,1], and pass the result of that function to this method. See the example.
 
 #### Return Value
 
 The interpolated vector. (Type: Array.&lt;Number>)
+
+#### Example
+
+The following code does a nonlinear
+interpolation of two vectors that uses the cube of "factor" rather than
+"factor". Rather than at a constant speed, the vectors are interpolated
+slowly then very fast.
+
+    factor = factor*factor*factor; // cube the interpolation factor
+     var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
 
 ### (static) H3DU.Math.vec3mul(a, b) <a id='H3DU.Math.vec3mul'></a>
 
@@ -1798,6 +1809,23 @@ by its length.
 #### Return Value
 
 The parameter "vec". (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec3perp(vec) <a id='H3DU.Math.vec3perp'></a>
+
+Returns an arbitrary 3-element vector that is perpendicular
+(orthogonal) to the given 3-element vector. The return value
+will not be converted to a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a>
+ with a length of 1).
+
+#### Parameters
+
+* `vec` (Type: Array.&lt;Number>)<br>
+    A 3-element vector.
+
+#### Return Value
+
+A perpendicular 3-element
+vector. Returns a nonzero vector if "vec" is (0,0,0). (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a>
 
@@ -1949,7 +1977,7 @@ two vectors that lie on a plane with the given normal.
     var angle=Math.acos(dot);
     var triple=H3DU.Math.vec3triple(normalVector,vectorB,vectorC);
     // The angle is negative if triple product is negative.
-    // NOTE: Whenever the "normalVector" points toward the viewer,
+    // NOTE: While the "normalVector" points toward the viewer,
     // a positive value for the angle means the angle runs in
     // a counterclockwise direction for right-handed coordinate systems
     // and in a clockwise direction for left-handed systems.
@@ -2027,11 +2055,21 @@ returns a new vector.
 * `v2` (Type: Array.&lt;Number>)<br>
     The second vector.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.
+    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from [0,1] and returns a value from [0,1], and pass the result of that function to this method. See the example.
 
 #### Return Value
 
 The interpolated vector. (Type: Array.&lt;Number>)
+
+#### Example
+
+The following code does a nonlinear
+interpolation of two vectors that uses the cube of "factor" rather than
+"factor". Rather than at a constant speed, the vectors are interpolated
+slowly then very fast.
+
+    factor = factor*factor*factor; // cube the interpolation factor
+     var newVector = H3DU.Math.vec4lerp(vector1, vector2, factor);
 
 ### (static) H3DU.Math.vec4negate(a) <a id='H3DU.Math.vec4negate'></a>
 

@@ -9,9 +9,9 @@ it draw triangles, lines, and other graphics primitives.
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
 ## Contents <a id=Contents></a>
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and the Projection and View Transforms](#The_Camera_and_the_Projection_and_View_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Vertex Coordinates in the Graphics System](#Vertex_Coordinates_in_the_Graphics_System)<br>[Other Pages](#Other_Pages)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and Geometric Transforms](#The_Camera_and_Geometric_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Vertex Coordinates in the Graphics System](#Vertex_Coordinates_in_the_Graphics_System)<br>[Other Pages](#Other_Pages)<br>
 
-## The "Camera" and Geometric Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a>
+## The "Camera" and Geometric Transforms <a id=The_Camera_and_Geometric_Transforms></a>
 
 The [`Batch3D`](http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html) class
 of the HTML 3D Library has a concept of a "projection transform" and a "view transform".

@@ -50,8 +50,8 @@ H3DU.Scene3D = function(canvasOrContext) {
   this.context.canvas.height = this.height;
   if(this._is3d) {
     var flags = H3DU.Scene3D.LIGHTING_ENABLED |
-   H3DU.Scene3D.SPECULAR_ENABLED |
-   H3DU.Scene3D.SPECULAR_MAP_ENABLED;
+     H3DU.Scene3D.SPECULAR_ENABLED |
+     H3DU.Scene3D.SPECULAR_MAP_ENABLED;
     this._programs.getProgram(flags, this.context);
     this.context.viewport(0, 0, this.width, this.height);
     this.context.enable(this.context.BLEND);
@@ -88,16 +88,23 @@ H3DU.Scene3D.TEXTURE_ENABLED = 16;
 H3DU.Scene3D.COLORATTR_ENABLED = 32;
 
 /** @private */
-H3DU.Scene3D._materialToFlags = function(material) {
+H3DU.Scene3D._flagsForShape = function(shape) {
   "use strict";
   var flags = 0;
-  flags |= !material.basic ? H3DU.Scene3D.LIGHTING_ENABLED : 0;
-  flags |= material.specular[0] !== 0 ||
+  var material = shape.material;
+  if(material !== null && typeof material !== "undefined" && material instanceof H3DU.Material) {
+    flags |= !material.basic ? H3DU.Scene3D.LIGHTING_ENABLED : 0;
+    flags |= material.specular[0] !== 0 ||
         material.specular[1] !== 0 ||
         material.specular[2] !== 0 ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
-  flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
-  flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
-  flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
+    flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
+    flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
+    flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
+  }
+  var buffer = shape.getMeshBuffer();
+  if(buffer && !!buffer._getAttribute("colorAttr")) {
+    flags |= H3DU.Scene3D.COLORATTR_ENABLED;
+  }
   return flags;
 };
 /** @private

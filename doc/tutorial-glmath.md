@@ -9,7 +9,7 @@ Here is an overview of these three data types.
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[Vectors](#Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Quaternions](#Quaternions)<br>&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles and their disadvantages](#Tait_Bryan_angles_and_their_disadvantages)<br>[Planes](#Planes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>
+[Contents](#Contents)<br>[Vectors](#Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Quaternions](#Quaternions)<br>&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles and their disadvantages](#Tait_Bryan_angles_and_their_disadvantages)<br>[Planes](#Planes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>&nbsp;&nbsp;&nbsp;&nbsp;[3D Vectors](#3D_Vectors)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Projection matrix (such as `mat4perspective`, `mat4ortho`)](#Projection_matrix_such_as_mat4perspective_mat4ortho)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Look-at matrix (`mat4lookat`)](#Look_at_matrix_mat4lookat)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Cross product (`vec3cross(A, B)`) and normals](#Cross_product_vec3cross_A_B_and_normals)<br>&nbsp;&nbsp;[Orientation and face classification](#Orientation_and_face_classification)<br>
 
 ## Vectors <a id=Vectors></a>
 
@@ -133,7 +133,7 @@ For best results when using quaternions:
 * Normalize the orientation quaternion (using `quatNorm()` or `quatNormInPlace()`)
   every few frames.
 
-### Tait-Bryan angles and their disadvantages
+### Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a>
 
 Pitch-yaw-roll angles (also called Tait-Bryan angles) can also be used to describe 3D rotations, but
 they have disadvantages:
@@ -195,33 +195,33 @@ its description will note this. The differences are also noted below.
 
 ### Differences in Behavior <a id=Differences_in_Behavior></a>
 
-#### 3D Vectors
+#### 3D Vectors <a id=3D_Vectors></a>
 
 If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
 system. The reverse is true if the Z component is negative.
 
-#### Projection matrix (such as `mat4perspective`, `mat4ortho`)
+#### Projection matrix (such as `mat4perspective`, `mat4ortho`) <a id=Projection_matrix_such_as_mat4perspective_mat4ortho></a>
 
 Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
 indices 8, 9, 10, and 11).
 
-#### Look-at matrix (`mat4lookat`)
+#### Look-at matrix (`mat4lookat`) <a id=Look_at_matrix_mat4lookat></a>
 
 Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14).
 
-#### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
+#### Rotation angles (such as used in `mat4rotate` and `quatRotate`) <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a>
 
 Whenever the axis of rotation points toward the viewer, if the coordinate system is...
 
 * ...right handed, and the angle's value is positive (resp. negative), then the angle runs counterclockwise (resp. clockwise).
 * ...left handed, and the angle's value is positive (resp. negative), then the angle runs clockwise (resp. counterclockwise).
 
-#### Cross product (`vec3cross(A, B)`) and normals
+#### Cross product (`vec3cross(A, B)`) and normals <a id=Cross_product_vec3cross_A_B_and_normals></a>
 
 Given a triangle formed by points A, B, and C, the [cross product](<a href="H3DU.Math.md#H3DU.Math.vec3cross">H3DU.Math.vec3cross</a>)
 of the two vectors (A minus C) and (B minus C), in that order, is a _normal_ of that triangle (a vector that points away from
@@ -234,7 +234,7 @@ It follows from this that the cross product of A and B will behave like the cros
 triangle formed by point A, point B, and the point (0,0,0) in that order (since A minus (0,0,0) is A,
 and B minus (0,0,0) is B).
 
-### Orientation and face classification
+### Orientation and face classification <a id=Orientation_and_face_classification></a>
 
 To find the orientation of a triangle, apply the following formula:
 

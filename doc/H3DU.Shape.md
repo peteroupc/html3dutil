@@ -16,6 +16,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 ### Methods
 
+* [getMeshBuffer](#H3DU.Shape_getMeshBuffer)
 * [copy](#H3DU.Shape_H3DU.Shape_copy)
 * [getBounds](#H3DU.Shape_H3DU.Shape_getBounds)
 * [getMatrix](#H3DU.Shape_H3DU.Shape_getMatrix)
@@ -34,6 +35,14 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 * [setTransform](#H3DU.Shape_H3DU.Shape_setTransform)
 * [setVisible](#H3DU.Shape_H3DU.Shape_setVisible)
 * [vertexCount](#H3DU.Shape_H3DU.Shape_vertexCount)
+
+### #getMeshBuffer() <a id='H3DU.Shape_getMeshBuffer'></a>
+
+Returns a reference to the mesh buffer used by this shape.
+
+#### Return Value
+
+Return value. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 ### H3DU.Shape#copy() <a id='H3DU.Shape_H3DU.Shape_copy'></a>
 

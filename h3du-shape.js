@@ -28,18 +28,21 @@ H3DU.Shape = function(mesh) {
     this.meshBuffer = mesh;
   }
   if(!(this.meshBuffer instanceof H3DU.MeshBuffer)) {
-    throw new Error("Unsupported data type for mesh parameter (must be MeshBuffer)");
+    throw new Error("Unsupported data type for mesh parameter (must be Mesh or MeshBuffer)");
   }
   this.transform = new H3DU.Transform();
   this.material = new H3DU.Material();
   this.parent = null;
   this.visible = true;
 };
-/** @private */
-H3DU.Shape.prototype._hasColorAttr = function() {
+/**
+* Returns a reference to the mesh buffer used by this shape.
+* @returns {H3DU.MeshBuffer} Return value.
+* @memberof! H3DU.Shape
+*/
+H3DU.Shape.prototype.getMeshBuffer = function() {
   "use strict";
-// TODO: Maybe use better approach
-  return !!this.meshBuffer._getAttribute("colorAttr");
+  return this.meshBuffer;
 };
 /** @private */
 H3DU.Shape._meshBufferWarning = false;
