@@ -859,8 +859,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
   H3DU.Math.quatConjugate(quat), lsq);
   },
 /**
- * @param {Object} quat Description of quat.
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
+ * @param {Object} quat A quaternion.
 * @returns {Boolean} Return value.
 */
   "quatIsIdentity":function(quat) {
@@ -871,7 +871,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * Generates a 4x4 matrix describing the rotation
  * described by this quaternion.
  * @param {Array<Number>} quat A quaternion.
- * @returns {Array<Number>} Return value.
+ * @returns {Array<Number>} The generated 4x4 matrix.
  */
   "quatToMat4":function(quat) {
     "use strict";

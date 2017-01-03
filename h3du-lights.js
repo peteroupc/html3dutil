@@ -2,8 +2,7 @@
 /**
 * A collection of light sources.  It stores the scene's
 * ambient color as well as data on one or more light sources.
-* When constructed, the default lighting will have a default
-* ambient color and one directional light source.
+* When constructed, the list of light sources will be empty.
 * @class
 * @alias H3DU.Lights
 */
@@ -27,13 +26,13 @@ H3DU.Lights = function() {
   this.sceneAmbient = [0.2, 0.2, 0.2];
 };
 /**
- * Resets this object to the default configuration for
+ * Resets this object to a basic configuration for
  * light sources: one light source with its default
   * values, and the default value for <code>sceneAmbient</code>.
   * @returns {H3DU.Lights} This object.
  * @memberof! H3DU.Lights#
 */
-H3DU.Lights.prototype.setDefaults = function() {
+H3DU.Lights.prototype.setBasic = function() {
   "use strict";
   var ls = new H3DU.LightSource().setParams({
     "ambient":[0, 0, 0, 1],

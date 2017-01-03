@@ -75,7 +75,7 @@ when the render() method is called.
 * [setOrtho2D](#H3DU.Scene3D_H3DU.Scene3D_setOrtho2D)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4ortho2d. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [setOrtho2DAspect](#H3DU.Scene3D_H3DU.Scene3D_setOrtho2DAspect)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4ortho2dAspect. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [setOrthoAspect](#H3DU.Scene3D_H3DU.Scene3D_setOrthoAspect)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4orthoAspect. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
-* [setPerspective](#H3DU.Scene3D_H3DU.Scene3D_setPerspective)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4perspective. This compatibility behavior may be dropped in the future.</b>
+* [setPerspective](#H3DU.Scene3D_H3DU.Scene3D_setPerspective)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4perspective. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [setPointLight](#H3DU.Scene3D_H3DU.Scene3D_setPointLight)<br><b>Deprecated: Use the LightSource method setPointLight instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [setProjectionMatrix](#H3DU.Scene3D_H3DU.Scene3D_setProjectionMatrix)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [setUseDevicePixelRatio](#H3DU.Scene3D_H3DU.Scene3D_setUseDevicePixelRatio)<br>Sets whether to use the device's pixel ratio (if supported by
@@ -694,7 +694,7 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
 ### H3DU.Scene3D#setPerspective(fov, aspect, near, far) <a id='H3DU.Scene3D_H3DU.Scene3D_setPerspective'></a>
 
-<b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. This compatibility behavior may be dropped in the future.</b>
+<b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
 Sets this scene's projection matrix to a perspective projection.
 

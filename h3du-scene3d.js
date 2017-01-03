@@ -38,7 +38,7 @@ H3DU.Scene3D = function(canvasOrContext) {
   this.fboFilter = null;
  // NOTE: Exists for compatibility only
   this._subScene = new H3DU.Batch3D();
-  this._subScene.getLights().setDefaults();
+  this._subScene.getLights().setBasic();
   this._programs = new H3DU.Scene3D.ProgramCache();
   this.useDevicePixelRatio = false;
   this._is3d = H3DU.is3DContext(this.context);
@@ -483,7 +483,7 @@ H3DU.Scene3D.prototype.getViewMatrix = function() {
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link H3DU.Math.mat4perspective}.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4perspective}. This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4perspective}. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Number} fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out

@@ -24,7 +24,7 @@ the HTML 3D Library. Example:
 #### Parameters
 
 * `batch` (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)<br>
-    A 3D scene to associate with this camera object.
+    A 3D batch to associate with this camera object. <i>Using a <a href="H3DU.Scene3D.md">H3DU.Scene3D</a> here is deprecated.</i>
 * `fov` (Type: Number)<br>
     Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.
 * `nearZ` (Type: Number)<br>
@@ -55,10 +55,12 @@ to the reference point.
 * [setDistance](#H3DU.Camera_H3DU.Camera_setDistance)<br>Moves the camera a given distance from the reference
 point without changing its orientation.
 * [setPosition](#H3DU.Camera_H3DU.Camera_setPosition)<br>Sets the position of the camera.
-* [turnHorizontal](#H3DU.Camera_H3DU.Camera_turnHorizontal)<br>Turns the camera to the left or right so that it faces
+* [turnAngleHorizontal](#H3DU.Camera_H3DU.Camera_turnAngleHorizontal)<br>Turns the camera to the left or right so that it faces
  the same distance from a reference point.
-* [turnVertical](#H3DU.Camera_H3DU.Camera_turnVertical)<br>Turns the camera upward or downward so that it faces
+* [turnAngleVertical](#H3DU.Camera_H3DU.Camera_turnAngleVertical)<br>Turns the camera upward or downward so that it faces
  the same distance from a reference point.
+* [turnHorizontal](#H3DU.Camera_H3DU.Camera_turnHorizontal)<br><b>Deprecated: Renamed to "moveAngleHorizontal".</b>
+* [turnVertical](#H3DU.Camera_H3DU.Camera_turnVertical)<br><b>Deprecated: Renamed to "moveAngleVertical".</b>
 * [update](#H3DU.Camera_H3DU.Camera_update)<br>Updates information about this camera based
 on the state of an input tracker.
 
@@ -251,7 +253,7 @@ Sets the position of the camera.
 
 This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 
-### H3DU.Camera#turnHorizontal(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnHorizontal'></a>
+### H3DU.Camera#turnAngleHorizontal(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnAngleHorizontal'></a>
 
 Turns the camera to the left or right so that it faces
  the same distance from a reference point.
@@ -265,10 +267,42 @@ Turns the camera to the left or right so that it faces
 
 This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 
-### H3DU.Camera#turnVertical(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnVertical'></a>
+### H3DU.Camera#turnAngleVertical(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnAngleVertical'></a>
 
 Turns the camera upward or downward so that it faces
  the same distance from a reference point.
+
+#### Parameters
+
+* `angleDegrees` (Type: Number)<br>
+    The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
+
+### H3DU.Camera#turnHorizontal(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnHorizontal'></a>
+
+<b>Deprecated: Renamed to "moveAngleHorizontal".</b>
+
+Moves the camera to the left or right so that it faces
+the same reference point at the same distance.
+
+#### Parameters
+
+* `angleDegrees` (Type: Number)<br>
+    The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
+
+### H3DU.Camera#turnVertical(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnVertical'></a>
+
+<b>Deprecated: Renamed to "moveAngleVertical".</b>
+
+Moves the camera upward or downward so that it faces
+the same reference point at the same distance.
 
 #### Parameters
 

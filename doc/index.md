@@ -2,8 +2,6 @@
 
 * <a href="CurveTube.md">CurveTube</a><br><b>Deprecated: Use H3DU.CurveTube instead.</b>
 * <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use H3DU.Epitrochoid instead.</b>
-* <a href="FrameCounter.md">FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.
-* <a href="FrameCounterDiv.md">FrameCounterDiv</a><br>A class that displays a frame counter HTML element.
 * <a href="GraphicsPath.md">GraphicsPath</a><br><b>Deprecated: Use H3DU.GraphicsPath instead.</b>
 * <a href="H3DU.md">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
@@ -29,6 +27,8 @@ of another circle, whose position is fixed, with a center of (0,0).
 Use the FrameBufferInfo class instead, which is not coupled to WebGL
 contexts.</b>
 * <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.
+* <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.
+* <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.
 * <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
 * <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a><br>Parametric evaluator for a
 curve drawn by a circle that rolls along the inside
@@ -151,8 +151,8 @@ the library's source code into a single file called <code>h3du_min.js</code>.</l
   H3DU.renderLoop(function(time){
    // Update the shape's rotation
    var q=H3DU.Math.quatFromTaitBryan(
-     360*H3DU.getTimePosition(timer,time,6000),
-     360*H3DU.getTimePosition(timer,time,12000),
+     360 * H3DU.getTimePosition(timer,time,6000),
+     360 * H3DU.getTimePosition(timer,time,12000),
      0
    );
    shape.setQuaternion(q);

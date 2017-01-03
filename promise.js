@@ -28,7 +28,11 @@
   }
 
   /**
-   * A promise holds a value to be resolved in the future.
+   * A promise holds a value to be resolved in the future.<p>
+   * This class is a "polyfill" for the standard <code>Promise</code>
+   * class; it is only used when the running JavaScript environment
+   * doesn't support or include a <code>Promise</code> class
+   * on its own.
    * @class
    * @alias Promise
    * @param {Function} [resolver] Function that takes
@@ -53,12 +57,26 @@
     }
   };
 
+  /**
+  * Returns a promise that resolves.
+  * @param {Object} value The value associated with the promise.
+  * @return {Promise} A promise that resolves and takes the given value
+  * as its argument.
+  * @method
+  */
   Promise.resolve = function(value) {
     return new this(function(resolve) {
       resolve(value);
     });
   };
 
+  /**
+  * Returns a promise that is rejected.
+  * @param {Object} value The value associated with the promise.
+  * @return {Promise} A promise that is rejected and takes the given value
+  * as its argument.
+  * @method
+  */
   Promise.reject = function(reason) {
     return new this(function(resolve, reject) {
       reject(reason);

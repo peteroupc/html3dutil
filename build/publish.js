@@ -259,6 +259,7 @@ function descriptions(nodes) {
     }
     desc = desc.replace(/^\s+/, "");
     desc = desc.replace(/\s+$/, "");
+    desc = desc.replace(/\s+/, " ");
     if(desc.length > 0) {
       descriptions[node.longname] = desc;
     }

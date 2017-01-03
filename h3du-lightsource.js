@@ -62,6 +62,8 @@ H3DU.LightSource = function(position, ambient, diffuse, specular) {
  * The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
 * <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by the light.
  * The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+* <li><code>radius</code> - Radius of the light source.  If 0, the light's intensity doesn't change
+* with distance.
 * </ul>
 * If a value is null or undefined, it is ignored.
 * @returns {H3DU.Material} This object.

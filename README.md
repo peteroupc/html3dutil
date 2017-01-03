@@ -70,8 +70,8 @@ Example
   H3DU.renderLoop(function(time){
    // Update the shape's rotation
    var q=H3DU.Math.quatFromTaitBryan(
-     360*H3DU.getTimePosition(timer,time,6000),
-     360*H3DU.getTimePosition(timer,time,12000),
+     360 * H3DU.getTimePosition(timer,time,6000),
+     360 * H3DU.getTimePosition(timer,time,12000),
      0
    );
    shape.setQuaternion(q);

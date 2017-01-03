@@ -134,7 +134,7 @@ two 3-element vectors.
 * [quatIdentity](#H3DU.Math.quatIdentity)<br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).
 * [quatInvert](#H3DU.Math.quatInvert)<br>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
 and converts this quaternion to a unit vector (a "normalized" vector with a length of 1).
-* [quatIsIdentity](#H3DU.Math.quatIsIdentity)
+* [quatIsIdentity](#H3DU.Math.quatIsIdentity)<br>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * [quatMultiply](#H3DU.Math.quatMultiply)<br>Multiplies two quaternions, creating a composite rotation.
 * [quatNlerp](#H3DU.Math.quatNlerp)<br>Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a linear interpolation function, and converts
@@ -1417,10 +1417,12 @@ Return value. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.quatIsIdentity(quat) <a id='H3DU.Math.quatIsIdentity'></a>
 
+Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
+
 #### Parameters
 
 * `quat` (Type: Object)<br>
-    Description of quat. Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
+    A quaternion.
 
 #### Return Value
 
@@ -1571,7 +1573,7 @@ described by this quaternion.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+The generated 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.quatToTaitBryan(a, [mode]) <a id='H3DU.Math.quatToTaitBryan'></a>
 

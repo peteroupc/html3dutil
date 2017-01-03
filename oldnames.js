@@ -5,9 +5,9 @@ var BezierCurve = H3DU.BezierCurve;
 /** @deprecated Use H3DU.BezierSurface instead. */
 var BezierSurface = H3DU.BezierSurface;
 /** @deprecated Use H3DU.BSplineCurve instead. */
-var BSplineCurve = H3DU.BezierCurve;
+var BSplineCurve = H3DU.BSplineCurve;
 /** @deprecated Use H3DU.BSplineSurface instead. */
-var BSplineSurface = H3DU.BezierSurface;
+var BSplineSurface = H3DU.BSplineSurface;
 /** @deprecated Use H3DU instead. */
 var GLUtil = H3DU;
 var GLMath = H3DU.Math;
@@ -25,5 +25,3 @@ var ShapeGroup = H3DU.ShapeGroup;
 var Texture = H3DU.Texture;
 var TextureLoader = H3DU.TextureLoader;
 var Transform = H3DU.Transform;
-var ShaderInfo = H3DU.ShaderInfo;
-var RenderPass3D = H3DU.RenderPass3D;

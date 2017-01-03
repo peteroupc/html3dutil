@@ -4,6 +4,41 @@
 
 ## Version History <a id=Version_History></a>
 
+Version 2.0.0-beta1:
+
+There are many, many changes to version 2.0.0-beta1 from version 1.5.1.  Here are some of them, including the most important ones.
+
+- All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now <a href="H3DU.Shape.md">H3DU.Shape</a> and `Mesh` is now <a href="H3DU.Mesh.md">H3DU.Mesh</a>.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
+- `Scene3D`, now <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw.  That job now belongs to the new <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> class.  Scene3D's `render` method now takes an array of `Batch3D`s to render.  For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
+- Alpha is disabled in WebGL contexts created with the <a href="H3DU.md#H3DU.get3DOr2DContext">H3DU.get3DOr2DContext</a> method.
+- The `Scene3D` H3DU.Scene3D#useProgram method was deprecated and now does nothing.
+- New <a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a> class holds information about how a batch of 3D models is to be rendered.   It replaces the `Scene3D` H3DU.Scene3D#useFilter method, which now does nothing.
+- New <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a> class holds information about a frame buffer; it replaces <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a>.
+- The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context.  Instead, use <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>, <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a>, and <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>, respectively, which are not coupled to WebGL contexts.
+- Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.
+- The <a href="H3DU.Shape.md">H3DU.Shape</a> object is no longer coupled to vertex buffers.
+- The <a href="H3DU.LightSource.md">H3DU.LightSource</a> class now supports a radius of the light.
+- The <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a> class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
+- `GLMath`, now <a href="H3DU.Math.md">H3DU.Math</a>, was expanded with many new methods.  The documentation for it is now very detailed.  New methods include <a href="H3DU.Math.md#H3DU.Math.vec3perp">H3DU.Math.vec3perp</a>,  <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a>, and  <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>.
+- Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, <a href="H3DU.TextFont.md">H3DU.TextFont</a> and <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>.
+- The "doc" folder contains the documentation to the library in the form of Markdown text files.
+- The Camera class, now <a href="H3DU.Camera.md">H3DU.Camera</a>, was rewritten.
+- A build script was included in the repository.  This build includes a style checker which is run on the library's JavaScript files.
+- Many methods were added to many classes.  Some methods that didn't return a value now return the value of the object called on, for example, the `clear` method of `H3DU.Scene3D`.
+- New demos, including _spinbox.html_ and _quatlerp.html_.  For example, the _gears.html_ demo was moved from the separate "html-gears" repository to here.  Other demos were expanded or rewritten.  Viewport `meta` tags were added to the demos.
+- The underlying code used in `H3DU.toGLColor` was rewritten.  In particular, the "#RRGGBBAA" format is now supported.
+- The JavaScript source code better conforms to a uniform code style.
+- The experimental 2D canvas renderer in _surfaces2d.html_, was abandoned.
+- Added `dispose` method to `H3DU.Scene3D`.
+- Added `createPointedStar` and `createLathe` methods to `H3DU.Meshes`.
+- Added `getBounds` and `toLinePath` methods to <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>, an extra, as well
+ as an extra that adds methods that compute the intersection, difference, union, and XOR of two
+ polygons.  Path triangulation now supports polygons with holes.
+- The default light configuration is no lights when creating a <a href="H3DU.LightSource.md">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.md">H3DU.Scene3D</a> without rendering a custom `Batch3D`, in which case the default is one light source with its default values.
+- The Mesh class no longer supports multiple primitive types (lines, triangles, points).  Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
+- Many of the tutorials were edited heavily to accommodate the new version.  The `GraphicsPath` tutorial was added.
+- There were also numerous bug fixes.
+
 Version 1.5.1:
 
 - Fixed bug in normal calculation

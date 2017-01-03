@@ -6,8 +6,7 @@
 
 A collection of light sources. It stores the scene's
 ambient color as well as data on one or more light sources.
-When constructed, the default lighting will have a default
-ambient color and one directional light source.
+When constructed, the list of light sources will be empty.
 
 ### Members
 
@@ -20,7 +19,7 @@ ambient color and one directional light source.
 * [getCount](#H3DU.Lights_H3DU.Lights_getCount)<br>Gets the number of lights defined in this object.
 * [getLight](#H3DU.Lights_H3DU.Lights_getLight)<br>Gets information about the light source at the given index.
 * [setAmbient](#H3DU.Lights_H3DU.Lights_setAmbient)<br>Sets the color of the scene's ambient light.
-* [setDefaults](#H3DU.Lights_H3DU.Lights_setDefaults)<br>Resets this object to the default configuration for
+* [setBasic](#H3DU.Lights_H3DU.Lights_setBasic)<br>Resets this object to a basic configuration for
 light sources: one light source with its default
 values, and the default value for <code>sceneAmbient</code>.
 * [setDirectionalLight](#H3DU.Lights_H3DU.Lights_setDirectionalLight)<br>Sets a directional light.
@@ -91,9 +90,9 @@ Sets the color of the scene's ambient light.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Lights#setDefaults() <a id='H3DU.Lights_H3DU.Lights_setDefaults'></a>
+### H3DU.Lights#setBasic() <a id='H3DU.Lights_H3DU.Lights_setBasic'></a>
 
-Resets this object to the default configuration for
+Resets this object to a basic configuration for
 light sources: one light source with its default
 values, and the default value for <code>sceneAmbient</code>.
 

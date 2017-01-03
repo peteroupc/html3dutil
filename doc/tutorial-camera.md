@@ -107,7 +107,7 @@ to the `setProjectionMatrix` method of the `H3DU.Batch3D` class.
 * `aspect` - Aspect ratio of the scene.  You should usually use `scene3d.getClientAspect()`.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.
 
-**[`batch3d.perspectiveAspect(fov near, far)`]{H3DU.Batch3D#perspectiveAspect**
+**`batch3d.perspectiveAspect(fov near, far)`**
 
 This method of the `H3DU.Batch3D` class sets the projection matrix to a perspective
 projection.  The `fov`, `near`, and `far` parameters are the same as for `mat4perspective`,
