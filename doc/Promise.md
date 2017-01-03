@@ -4,8 +4,7 @@
 
 ### Promise([resolver]) <a id='Promise'></a>
 
-A promise - value to be resolved in the future.
-Implements the "Promises/A+ 1.1" specification.
+A promise holds a value to be resolved in the future.
 
 #### Parameters
 
@@ -14,7 +13,7 @@ Implements the "Promises/A+ 1.1" specification.
 
 ### Methods
 
-* [all](#Promise.all)
+* [all](#Promise.all)<br>Wait for all these promises to complete.
 * [catch](#Promise_catch)
 * [then](#Promise_then)
 

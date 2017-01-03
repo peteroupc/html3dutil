@@ -16,25 +16,31 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 ### Methods
 
-* [getMeshBuffer](#H3DU.Shape_getMeshBuffer)
-* [copy](#H3DU.Shape_H3DU.Shape_copy)
-* [getBounds](#H3DU.Shape_H3DU.Shape_getBounds)
-* [getMatrix](#H3DU.Shape_H3DU.Shape_getMatrix)
-* [getTransform](#H3DU.Shape_H3DU.Shape_getTransform)
-* [getVisible](#H3DU.Shape_H3DU.Shape_getVisible)
-* [primitiveCount](#H3DU.Shape_H3DU.Shape_primitiveCount)
-* [setColor](#H3DU.Shape_H3DU.Shape_setColor)
-* [setMaterial](#H3DU.Shape_H3DU.Shape_setMaterial)
-* [setMaterialParams](#H3DU.Shape_H3DU.Shape_setMaterialParams)
-* [setPosition](#H3DU.Shape_H3DU.Shape_setPosition)
-* [setQuaternion](#H3DU.Shape_H3DU.Shape_setQuaternion)
-* [setScale](#H3DU.Shape_H3DU.Shape_setScale)
-* [setShader](#H3DU.Shape_H3DU.Shape_setShader)
-* [setTexture](#H3DU.Shape_H3DU.Shape_setTexture)
-* [setTextureAndColor](#H3DU.Shape_H3DU.Shape_setTextureAndColor)
-* [setTransform](#H3DU.Shape_H3DU.Shape_setTransform)
-* [setVisible](#H3DU.Shape_H3DU.Shape_setVisible)
-* [vertexCount](#H3DU.Shape_H3DU.Shape_vertexCount)
+* [getMeshBuffer](#H3DU.Shape_getMeshBuffer)<br>Returns a reference to the mesh buffer used by this shape.
+* [copy](#H3DU.Shape_H3DU.Shape_copy)<br>Makes a copy of this object.
+* [getBounds](#H3DU.Shape_H3DU.Shape_getBounds)<br>Finds a bounding box that holds all vertices in this shape.
+* [getMatrix](#H3DU.Shape_H3DU.Shape_getMatrix)<br>Gets the transformation matrix used by this shape.
+* [getTransform](#H3DU.Shape_H3DU.Shape_getTransform)<br>Returns the transform used by this shape object.
+* [getVisible](#H3DU.Shape_H3DU.Shape_getVisible)<br>Gets whether this shape will be drawn on rendering.
+* [primitiveCount](#H3DU.Shape_H3DU.Shape_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this scene.
+* [setColor](#H3DU.Shape_H3DU.Shape_setColor)<br>Sets material parameters that give the shape a certain color.
+* [setMaterial](#H3DU.Shape_H3DU.Shape_setMaterial)<br>Sets this shape's material parameters.
+* [setMaterialParams](#H3DU.Shape_H3DU.Shape_setMaterialParams)<br>Sets parameters of this shape's material.
+* [setPosition](#H3DU.Shape_H3DU.Shape_setPosition)<br>Sets the relative position of this shape from its original
+position.
+* [setQuaternion](#H3DU.Shape_H3DU.Shape_setQuaternion)<br>Sets this object's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+* [setScale](#H3DU.Shape_H3DU.Shape_setScale)<br>Sets the scale of this shape relative to its original
+size.
+* [setShader](#H3DU.Shape_H3DU.Shape_setShader)<br>Sets this shape's material to a shader with the given URL.
+* [setTexture](#H3DU.Shape_H3DU.Shape_setTexture)<br>Sets material parameters that give the shape a texture with the given URL.
+* [setTextureAndColor](#H3DU.Shape_H3DU.Shape_setTextureAndColor)<br>Sets this shape's material to the given texture, and its ambient and
+diffuse parameters to the given color.
+* [setTransform](#H3DU.Shape_H3DU.Shape_setTransform)<br>Sets this shape's transformation
+to a copy of the given transformation.
+* [setVisible](#H3DU.Shape_H3DU.Shape_setVisible)<br>Sets whether this shape will be drawn on rendering.
+* [vertexCount](#H3DU.Shape_H3DU.Shape_vertexCount)<br>Gets the number of vertices composed by
+all shapes in this scene.
 
 ### #getMeshBuffer() <a id='H3DU.Shape_getMeshBuffer'></a>
 
@@ -138,8 +144,8 @@ Sets this shape's material parameters.
 
 #### Parameters
 
-* `material` (Type: Material)<br>
-    The material object to use.
+* `material` (Type: <a href="H3DU.Material.md">H3DU.Material</a>)<br>
+    The material object to use. This parameter can't be a <a href="H3DU.Texture.md">H3DU.Texture</a> object.
 
 #### Return Value
 

@@ -9,22 +9,33 @@ from one coordinate system to another.
 
 ### Methods
 
-* [copy](#H3DU.Transform_H3DU.Transform_copy)
-* [getMatrix](#H3DU.Transform_H3DU.Transform_getMatrix)
-* [getPosition](#H3DU.Transform_H3DU.Transform_getPosition)
-* [getQuaternion](#H3DU.Transform_H3DU.Transform_getQuaternion)
-* [getScale](#H3DU.Transform_H3DU.Transform_getScale)
-* [isIdentity](#H3DU.Transform_H3DU.Transform_isIdentity)
-* [movePosition](#H3DU.Transform_H3DU.Transform_movePosition)
-* [multOrientation](#H3DU.Transform_H3DU.Transform_multOrientation)
-* [multQuaternion](#H3DU.Transform_H3DU.Transform_multQuaternion)
-* [reset](#H3DU.Transform_H3DU.Transform_reset)
-* [resetTransform](#H3DU.Transform_H3DU.Transform_resetTransform)
-* [setMatrix](#H3DU.Transform_H3DU.Transform_setMatrix)
-* [setOrientation](#H3DU.Transform_H3DU.Transform_setOrientation)
-* [setPosition](#H3DU.Transform_H3DU.Transform_setPosition)
-* [setQuaternion](#H3DU.Transform_H3DU.Transform_setQuaternion)
-* [setScale](#H3DU.Transform_H3DU.Transform_setScale)
+* [copy](#H3DU.Transform_H3DU.Transform_copy)<br>Makes a copy of this transform.
+* [getMatrix](#H3DU.Transform_H3DU.Transform_getMatrix)<br>Gets the transformation matrix used by an object.
+* [getPosition](#H3DU.Transform_H3DU.Transform_getPosition)<br>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+of an object relative to its original position.
+* [getQuaternion](#H3DU.Transform_H3DU.Transform_getQuaternion)<br>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+* [getScale](#H3DU.Transform_H3DU.Transform_getScale)<br>Returns a copy of a three-element array giving the scaling for an object's width,
+height, and depth, respectively.
+* [isIdentity](#H3DU.Transform_H3DU.Transform_isIdentity)<br>Returns whether this transform is the identity transform.
+* [movePosition](#H3DU.Transform_H3DU.Transform_movePosition)<br>Moves the relative position of an object from its original
+position.
+* [multOrientation](#H3DU.Transform_H3DU.Transform_multOrientation)<br>Combines an object's current rotation with another rotation
+in the form of an angle and an axis of
+rotation.
+* [multQuaternion](#H3DU.Transform_H3DU.Transform_multQuaternion)<br>Combines an object's current rotation with another rotation
+described by a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+for describing 3D rotations).
+* [reset](#H3DU.Transform_H3DU.Transform_reset)<br>Resets this transform to the untransformed state.
+* [resetTransform](#H3DU.Transform_H3DU.Transform_resetTransform)<br><b>Deprecated: Use the "reset" method instead.</b>
+* [setMatrix](#H3DU.Transform_H3DU.Transform_setMatrix)<br>Sets this transform's transformation matrix.
+* [setOrientation](#H3DU.Transform_H3DU.Transform_setOrientation)<br>Sets this transform's orientation in the form of an angle and an axis of
+rotation.
+* [setPosition](#H3DU.Transform_H3DU.Transform_setPosition)<br>Sets the relative position of an object from its original
+position.
+* [setQuaternion](#H3DU.Transform_H3DU.Transform_setQuaternion)<br>Sets this transform's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+for describing 3D rotations).
+* [setScale](#H3DU.Transform_H3DU.Transform_setScale)<br>Sets the scale of an object relative to its original
+size.
 
 ### H3DU.Transform#copy() <a id='H3DU.Transform_H3DU.Transform_copy'></a>
 

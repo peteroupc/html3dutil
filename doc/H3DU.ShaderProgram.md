@@ -35,19 +35,20 @@ log is output to the JavaScript console.
 
 ### Methods
 
-* [.getDefaultFragment](#H3DU.ShaderProgram.getDefaultFragment)
-* [.getDefaultVertex](#H3DU.ShaderProgram.getDefaultVertex)
-* [.getEdgeDetectEffect](#H3DU.ShaderProgram.getEdgeDetectEffect)
-* [.getInvertEffect](#H3DU.ShaderProgram.getInvertEffect)
-* [.makeCopyEffect](#H3DU.ShaderProgram.makeCopyEffect)
-* [.makeEffect](#H3DU.ShaderProgram.makeEffect)
-* [.makeEffectFragment](#H3DU.ShaderProgram.makeEffectFragment)
-* [dispose](#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose)
-* [get](#H3DU.ShaderProgram_H3DU.ShaderProgram_get)
-* [getContext](#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext)
-* [getUniform](#H3DU.ShaderProgram_H3DU.ShaderProgram_getUniform)
-* [setUniforms](#H3DU.ShaderProgram_H3DU.ShaderProgram_setUniforms)
-* [use](#H3DU.ShaderProgram_H3DU.ShaderProgram_use)
+* [.getDefaultFragment](#H3DU.ShaderProgram.getDefaultFragment)<br><b>Deprecated: Use H3DU.ShaderInfo.getDefaultFragment instead.</b>
+* [.getDefaultVertex](#H3DU.ShaderProgram.getDefaultVertex)<br><b>Deprecated: Use H3DU.ShaderInfo.getDefaultVertex instead.</b>
+* [.getEdgeDetectEffect](#H3DU.ShaderProgram.getEdgeDetectEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeEdgeDetectEffect instead.</b>
+* [.getInvertEffect](#H3DU.ShaderProgram.getInvertEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeInvertEffect instead.</b>
+* [.makeCopyEffect](#H3DU.ShaderProgram.makeCopyEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeCopyEffect instead.</b>
+* [.makeEffect](#H3DU.ShaderProgram.makeEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeEffect instead.</b>
+* [.makeEffectFragment](#H3DU.ShaderProgram.makeEffectFragment)<br><b>Deprecated: Use H3DU.ShaderInfo.makeEffectFragment instead.</b>
+* [dispose](#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose)<br>Disposes resources from this shader program.
+* [get](#H3DU.ShaderProgram_H3DU.ShaderProgram_get)<br>Gets the location of the given uniform or attribute's name in this program.
+* [getContext](#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext)<br>Gets the WebGL context associated with this shader program object.
+* [getUniform](#H3DU.ShaderProgram_H3DU.ShaderProgram_getUniform)<br>Gets the value of the given uniform in this program.
+* [setUniforms](#H3DU.ShaderProgram_H3DU.ShaderProgram_setUniforms)<br>Sets the values of one or more uniforms in this program.
+* [use](#H3DU.ShaderProgram_H3DU.ShaderProgram_use)<br>Makes this program the active program in the WebGL
+context associated with it.
 
 ### H3DU.ShaderProgram.getDefaultFragment() <a id='H3DU.ShaderProgram.getDefaultFragment'></a>
 

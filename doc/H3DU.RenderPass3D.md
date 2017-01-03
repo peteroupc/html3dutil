@@ -16,15 +16,15 @@ rendering that batch.
 
 ### Members
 
-* [clearColor](#H3DU.RenderPass3D_clearColor)
-* [clearDepth](#H3DU.RenderPass3D_clearDepth)
-* [clearStencil](#H3DU.RenderPass3D_clearStencil)
-* [frameBuffer](#H3DU.RenderPass3D_frameBuffer)
-* [subScene](#H3DU.RenderPass3D_subScene)
+* [clearColor](#H3DU.RenderPass3D_clearColor)<br>Whether to clear the color buffer before rendering the batch.
+* [clearDepth](#H3DU.RenderPass3D_clearDepth)<br>Whether to clear the depth buffer before rendering the batch.
+* [clearStencil](#H3DU.RenderPass3D_clearStencil)<br>Whether to clear the stencil buffer before rendering the batch.
+* [frameBuffer](#H3DU.RenderPass3D_frameBuffer)<br>Framebuffer to render to.
+* [subScene](#H3DU.RenderPass3D_subScene)<br>The batch to render.
 
 ### Methods
 
-* [setParams](#H3DU.RenderPass3D_H3DU.RenderPass3D_setParams)
+* [setParams](#H3DU.RenderPass3D_H3DU.RenderPass3D_setParams)<br>Sets parameters for this render pass object.
 
 ### H3DU.RenderPass3D#clearColor <a id='H3DU.RenderPass3D_clearColor'></a>
 

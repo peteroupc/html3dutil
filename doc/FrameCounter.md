@@ -18,8 +18,9 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [getFPS](#FrameCounter_FrameCounter_getFPS)
-* [update](#FrameCounter_FrameCounter_update)
+* [getFPS](#FrameCounter_FrameCounter_getFPS)<br>Gets the calculated frames per second, based
+on how often the update method was called.
+* [update](#FrameCounter_FrameCounter_update)<br>Updates the state for determining the frame count.
 
 ### FrameCounter#getFPS() <a id='FrameCounter_FrameCounter_getFPS'></a>
 

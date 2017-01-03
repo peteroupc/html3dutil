@@ -18,8 +18,8 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [loadJSON](#MeshJSON.loadJSON)
-* [toJSON](#MeshJSON.toJSON)
+* [loadJSON](#MeshJSON.loadJSON)<br>Loads a mesh from JSON format.
+* [toJSON](#MeshJSON.toJSON)<br>Converts a mesh to JSON format.
 
 ### (static) MeshJSON.loadJSON(url) <a id='MeshJSON.loadJSON'></a>
 

@@ -13,12 +13,16 @@ A geometric mesh in the form of buffer objects.
 
 ### Methods
 
-* [getBounds](#H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds)
+* [getBounds](#H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds)<br>Finds the tightest
+bounding box that holds all vertices in the mesh buffer.
 * [getFormat](#H3DU.MeshBuffer_H3DU.MeshBuffer_getFormat)
-* [primitiveCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount)
-* [primitiveType](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType)
-* [setAttribute](#H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute)
-* [vertexCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount)
+* [primitiveCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this mesh.
+* [primitiveType](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType)<br>Gets the type of primitive stored in this mesh buffer.
+* [setAttribute](#H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute's information).
+* [vertexCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
 
 ### H3DU.MeshBuffer#getBounds() <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds'></a>
 

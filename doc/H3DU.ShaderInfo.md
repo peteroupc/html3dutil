@@ -25,18 +25,22 @@ uniform values this object stores is not set for any WebGL context.
 
 ### Methods
 
-* [.getBasicVertex](#H3DU.ShaderInfo.getBasicVertex)
-* [.getDefaultFragment](#H3DU.ShaderInfo.getDefaultFragment)
-* [.getDefaultVertex](#H3DU.ShaderInfo.getDefaultVertex)
-* [.makeCopyEffect](#H3DU.ShaderInfo.makeCopyEffect)
-* [.makeEdgeDetectEffect](#H3DU.ShaderInfo.makeEdgeDetectEffect)
-* [.makeEffect](#H3DU.ShaderInfo.makeEffect)
-* [.makeEffectFragment](#H3DU.ShaderInfo.makeEffectFragment)
-* [.makeInvertEffect](#H3DU.ShaderInfo.makeInvertEffect)
-* [copy](#H3DU.ShaderInfo_H3DU.ShaderInfo_copy)
-* [getFragmentShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader)
-* [getVertexShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader)
-* [setUniforms](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms)
+* [.getBasicVertex](#H3DU.ShaderInfo.getBasicVertex)<br>Gets the text of a basic vertex shader.
+* [.getDefaultFragment](#H3DU.ShaderInfo.getDefaultFragment)<br>Gets the text of the default fragment shader.
+* [.getDefaultVertex](#H3DU.ShaderInfo.getDefaultVertex)<br>Gets the text of the default vertex shader.
+* [.makeCopyEffect](#H3DU.ShaderInfo.makeCopyEffect)<br>Generates source code for a shader program that copies the colors of a texture.
+* [.makeEdgeDetectEffect](#H3DU.ShaderInfo.makeEdgeDetectEffect)<br>Generates source code for a shader program that generates a two-color texture showing
+the source texture's edges.
+* [.makeEffect](#H3DU.ShaderInfo.makeEffect)<br>Generates source code for a shader program for applying
+a raster effect (postprocessing effect) to a texture.
+* [.makeEffectFragment](#H3DU.ShaderInfo.makeEffectFragment)<br>Generates source code for a fragment shader for applying
+a raster effect to a texture.
+* [.makeInvertEffect](#H3DU.ShaderInfo.makeInvertEffect)<br>Generates source code for a shader program that inverts the colors of a texture.
+* [copy](#H3DU.ShaderInfo_H3DU.ShaderInfo_copy)<br>Returns a new shader info object with the information in this object
+copied to that object.
+* [getFragmentShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader)<br>Gets the text of the fragment shader stored in this object.
+* [getVertexShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader)<br>Gets the text of the vertex shader stored in this object.
+* [setUniforms](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms)<br>Sets the values of one or more uniforms used by this shader program.
 
 ### H3DU.ShaderInfo.getBasicVertex() <a id='H3DU.ShaderInfo.getBasicVertex'></a>
 

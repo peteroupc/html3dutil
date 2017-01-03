@@ -10,27 +10,32 @@ other <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> objects.
 
 ### Members
 
-* [shapes](#H3DU.ShapeGroup_shapes)
+* [shapes](#H3DU.ShapeGroup_shapes)<br>List of shapes contained in this group.
 
 ### Methods
 
-* [addShape](#H3DU.ShapeGroup_H3DU.ShapeGroup_addShape)
-* [getBounds](#H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds)
-* [getMatrix](#H3DU.ShapeGroup_H3DU.ShapeGroup_getMatrix)
-* [getTransform](#H3DU.ShapeGroup_H3DU.ShapeGroup_getTransform)
-* [getVisible](#H3DU.ShapeGroup_H3DU.ShapeGroup_getVisible)
-* [primitiveCount](#H3DU.ShapeGroup_H3DU.ShapeGroup_primitiveCount)
-* [removeShape](#H3DU.ShapeGroup_H3DU.ShapeGroup_removeShape)
-* [setMaterial](#H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterial)
-* [setMaterialParams](#H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterialParams)
-* [setPosition](#H3DU.ShapeGroup_H3DU.ShapeGroup_setPosition)
-* [setQuaternion](#H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion)
-* [setScale](#H3DU.ShapeGroup_H3DU.ShapeGroup_setScale)
-* [setShader](#H3DU.ShapeGroup_H3DU.ShapeGroup_setShader)
-* [setTexture](#H3DU.ShapeGroup_H3DU.ShapeGroup_setTexture)
-* [setTransform](#H3DU.ShapeGroup_H3DU.ShapeGroup_setTransform)
-* [setVisible](#H3DU.ShapeGroup_H3DU.ShapeGroup_setVisible)
-* [vertexCount](#H3DU.ShapeGroup_H3DU.ShapeGroup_vertexCount)
+* [addShape](#H3DU.ShapeGroup_H3DU.ShapeGroup_addShape)<br>Adds a 3D shape to this shape group.
+* [getBounds](#H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds)<br>Finds a bounding box that holds all vertices in this shape group.
+* [getMatrix](#H3DU.ShapeGroup_H3DU.ShapeGroup_getMatrix)<br>Gets a copy of the transformation needed to transform
+this shape group's coordinates to world coordinates.
+* [getTransform](#H3DU.ShapeGroup_H3DU.ShapeGroup_getTransform)<br>Gets a reference to the transform used by this shape group object.
+* [getVisible](#H3DU.ShapeGroup_H3DU.ShapeGroup_getVisible)<br>Gets whether this shape group will be drawn on rendering.
+* [primitiveCount](#H3DU.ShapeGroup_H3DU.ShapeGroup_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this shape group.
+* [removeShape](#H3DU.ShapeGroup_H3DU.ShapeGroup_removeShape)<br>Removes all instances of a 3D shape from this shape group
+* [setMaterial](#H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterial)<br>Sets the material used by all shapes in this shape group.
+* [setMaterialParams](#H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterialParams)<br>Sets material parameters for all shapes in this shape group.
+* [setPosition](#H3DU.ShapeGroup_H3DU.ShapeGroup_setPosition)<br>Sets the relative position of the shapes in this group
+from their original position.
+* [setQuaternion](#H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion)<br>Sets this shape group's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+* [setScale](#H3DU.ShapeGroup_H3DU.ShapeGroup_setScale)<br>Sets the scale of this shape group relative to its original
+size.
+* [setShader](#H3DU.ShapeGroup_H3DU.ShapeGroup_setShader)<br>Sets the shader program used by all shapes in this shape group.
+* [setTexture](#H3DU.ShapeGroup_H3DU.ShapeGroup_setTexture)<br>Sets the texture used by all shapes in this shape group.
+* [setTransform](#H3DU.ShapeGroup_H3DU.ShapeGroup_setTransform)<br>Sets the transform used by this shape group to a copy
+of the given transform.
+* [setVisible](#H3DU.ShapeGroup_H3DU.ShapeGroup_setVisible)<br>Sets whether this shape group will be drawn on rendering.
+* [vertexCount](#H3DU.ShapeGroup_H3DU.ShapeGroup_vertexCount)<br>Gets the number of vertices composed by all shapes in this shape group.
 
 ### H3DU.ShapeGroup#shapes <a id='H3DU.ShapeGroup_shapes'></a>
 

@@ -26,7 +26,8 @@ necessarily cross the surface.
 
 ### Methods
 
-* [evaluate](#H3DU.BezierSurface_H3DU.BezierSurface_evaluate)
+* [evaluate](#H3DU.BezierSurface_H3DU.BezierSurface_evaluate)<br>Evaluates the surface function based on a point
+in a B&eacute;zier surface.
 
 ### H3DU.BezierSurface#evaluate(u, v) <a id='H3DU.BezierSurface_H3DU.BezierSurface_evaluate'></a>
 

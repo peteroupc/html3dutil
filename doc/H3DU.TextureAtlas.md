@@ -28,10 +28,11 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [.load](#H3DU.TextureAtlas.load)
-* [.loadWithTextures](#H3DU.TextureAtlas.loadWithTextures)
-* [loadTextures](#H3DU.TextureAtlas_H3DU.TextureAtlas_loadTextures)
-* [makeSprites](#H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites)
+* [.load](#H3DU.TextureAtlas.load)<br>Loads a texture atlas definition from a file.
+* [.loadWithTextures](#H3DU.TextureAtlas.loadWithTextures)<br>Loads a texture atlas definition from a file along with the textures
+it uses.
+* [loadTextures](#H3DU.TextureAtlas_H3DU.TextureAtlas_loadTextures)<br>Loads the texture files used by this texture atlas.
+* [makeSprites](#H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites)<br>Makes a shape group used to display one or more sprites.
 
 ### H3DU.TextureAtlas.load(atlasFileName) <a id='H3DU.TextureAtlas.load'></a>
 

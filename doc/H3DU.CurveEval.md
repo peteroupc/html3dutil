@@ -22,12 +22,15 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 
 ### Methods
 
-* [color](#H3DU.CurveEval_H3DU.CurveEval_color)
-* [evalCurve](#H3DU.CurveEval_H3DU.CurveEval_evalCurve)
-* [evalOne](#H3DU.CurveEval_H3DU.CurveEval_evalOne)
-* [normal](#H3DU.CurveEval_H3DU.CurveEval_normal)
-* [texCoord](#H3DU.CurveEval_H3DU.CurveEval_texCoord)
-* [vertex](#H3DU.CurveEval_H3DU.CurveEval_vertex)
+* [color](#H3DU.CurveEval_H3DU.CurveEval_color)<br>Specifies a parametric curve function for generating color values.
+* [evalCurve](#H3DU.CurveEval_H3DU.CurveEval_evalCurve)<br>Generates vertices and attribute values that follow a parametric curve
+function.
+* [evalOne](#H3DU.CurveEval_H3DU.CurveEval_evalOne)<br>Generates vertex positions and attributes based on a point
+in a parametric curve.
+* [normal](#H3DU.CurveEval_H3DU.CurveEval_normal)<br><b>Deprecated: May be removed in the future; it makes little sense
+to generate normals for a curve.</b>
+* [texCoord](#H3DU.CurveEval_H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
+* [vertex](#H3DU.CurveEval_H3DU.CurveEval_vertex)<br>Specifies a parametric curve function for generating vertex positions.
 
 ### H3DU.CurveEval#color(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_color'></a>
 

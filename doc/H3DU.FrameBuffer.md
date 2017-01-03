@@ -27,16 +27,17 @@ bound to the WebGL context will remain unchanged.
 
 ### Members
 
-* [height](#H3DU.FrameBuffer.height)
-* [width](#H3DU.FrameBuffer.width)
+* [height](#H3DU.FrameBuffer.height)<br>The frame buffer's height.
+* [width](#H3DU.FrameBuffer.width)<br>The frame buffer's width.
 
 ### Methods
 
-* [bind](#H3DU.FrameBuffer_H3DU.FrameBuffer_bind)
-* [dispose](#H3DU.FrameBuffer_H3DU.FrameBuffer_dispose)
-* [getContext](#H3DU.FrameBuffer_H3DU.FrameBuffer_getContext)
-* [resize](#H3DU.FrameBuffer_H3DU.FrameBuffer_resize)
-* [unbind](#H3DU.FrameBuffer_H3DU.FrameBuffer_unbind)
+* [bind](#H3DU.FrameBuffer_H3DU.FrameBuffer_bind)<br>Has no effect.
+* [dispose](#H3DU.FrameBuffer_H3DU.FrameBuffer_dispose)<br>Disposes all resources from this frame buffer object.
+* [getContext](#H3DU.FrameBuffer_H3DU.FrameBuffer_getContext)<br>Gets the WebGL context associated with this frame buffer.
+* [resize](#H3DU.FrameBuffer_H3DU.FrameBuffer_resize)<br>Resizes the frame buffer to a new width and height,
+if either differs from the current width or height.
+* [unbind](#H3DU.FrameBuffer_H3DU.FrameBuffer_unbind)<br>Has no effect.
 
 ### H3DU.FrameBuffer.height <a id='H3DU.FrameBuffer.height'></a>
 

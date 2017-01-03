@@ -19,11 +19,12 @@ A geometric mesh in the form of buffer objects.
 
 ### Methods
 
-* [dispose](#H3DU.BufferedMesh_H3DU.BufferedMesh_dispose)
-* [draw](#H3DU.BufferedMesh_H3DU.BufferedMesh_draw)
-* [getContext](#H3DU.BufferedMesh_H3DU.BufferedMesh_getContext)
-* [primitiveCount](#H3DU.BufferedMesh_H3DU.BufferedMesh_primitiveCount)
-* [vertexCount](#H3DU.BufferedMesh_H3DU.BufferedMesh_vertexCount)
+* [dispose](#H3DU.BufferedMesh_H3DU.BufferedMesh_dispose)<br>Deletes the vertex and index buffers associated with this object.
+* [draw](#H3DU.BufferedMesh_H3DU.BufferedMesh_draw)<br><b>Deprecated: Yes</b>
+* [getContext](#H3DU.BufferedMesh_H3DU.BufferedMesh_getContext)<br><b>Deprecated: Yes</b>
+* [primitiveCount](#H3DU.BufferedMesh_H3DU.BufferedMesh_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this mesh.
+* [vertexCount](#H3DU.BufferedMesh_H3DU.BufferedMesh_vertexCount)<br>Gets the number of vertices composed by all shapes in this mesh.
 
 ### H3DU.BufferedMesh#dispose() <a id='H3DU.BufferedMesh_H3DU.BufferedMesh_dispose'></a>
 

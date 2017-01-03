@@ -1704,7 +1704,7 @@ m[0] * m[7] * m[5];
     ];
   },
 /**
- * Returns a 4x4 matrix representing a perspective projection.<p>
+ * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera}.<p>
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
@@ -1790,7 +1790,7 @@ m[0] * m[7] * m[5];
       -H3DU.Math.vec3dot(viewerPos, f), 1];
   },
 /**
- * Returns a 4x4 matrix representing an orthographic projection.
+ * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera}.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
    * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
@@ -1824,7 +1824,7 @@ m[0] * m[7] * m[5];
   },
 
 /**
- * Returns a 4x4 matrix representing a perspective projection,
+ * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera},
  * given an X-axis field of view.</p>
    * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * To adjust the result of this method for a left-handed system,
@@ -1903,7 +1903,7 @@ m[0] * m[7] * m[5];
     return H3DU.Math.mat4orthoAspect(l, r, b, t, -1, 1, aspect);
   },
 /**
- * Returns a 4x4 matrix representing an orthographic projection,
+ * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera},
  * retaining the view rectangle's aspect ratio.<p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the viewport
@@ -1958,7 +1958,7 @@ m[0] * m[7] * m[5];
     return H3DU.Math.mat4ortho(l, r, b, t, n, f);
   },
 /**
- * Returns a 4x4 matrix representing a perspective projection
+ * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera}
  * in the form of a view frustum, or the limits in the "camera"'s view.<p>
   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * To adjust the result of this method for a left-handed system,

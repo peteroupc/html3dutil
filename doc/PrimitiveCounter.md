@@ -11,7 +11,7 @@ that displayed the number of primitives drawn.
 
 ### Methods
 
-* [update](#PrimitiveCounter.update)
+* [update](#PrimitiveCounter.update)<br><b>Deprecated: Will be removed in the future.</b>
 
 ### (static) PrimitiveCounter.update() <a id='PrimitiveCounter.update'></a>
 

@@ -14,60 +14,79 @@ An object that holds a rendering context for rendering
 
 ### Members
 
-* [.BACK](#H3DU.Scene3D.BACK)
-* [.CCW](#H3DU.Scene3D.CCW)
-* [.CW](#H3DU.Scene3D.CW)
-* [.FRONT](#H3DU.Scene3D.FRONT)
-* [.FRONT_AND_BACK](#H3DU.Scene3D.FRONT_AND_BACK)
-* [.NONE](#H3DU.Scene3D.NONE)
-* [shapes](#H3DU.Scene3D_shapes)
+* [.BACK](#H3DU.Scene3D.BACK)<br>Back side of a triangle.
+* [.CCW](#H3DU.Scene3D.CCW)<br>Counterclockwise winding.
+* [.CW](#H3DU.Scene3D.CW)<br>Clockwise winding, the opposite of counterclockwise winding.
+* [.FRONT](#H3DU.Scene3D.FRONT)<br>Front side of a triangle.
+* [.FRONT_AND_BACK](#H3DU.Scene3D.FRONT_AND_BACK)<br>Back and front sides of a triangle.
+* [.NONE](#H3DU.Scene3D.NONE)<br>No face culling.
+* [shapes](#H3DU.Scene3D_shapes)<br><b>Deprecated: Shapes should now be managed in H3DU.Batch3D objects,
+ rather than through this class.</b>
 
 ### Methods
 
-* [addShape](#H3DU.Scene3D_H3DU.Scene3D_addShape)
-* [clear](#H3DU.Scene3D_H3DU.Scene3D_clear)
-* [clearDepth](#H3DU.Scene3D_H3DU.Scene3D_clearDepth)
-* [createBuffer](#H3DU.Scene3D_H3DU.Scene3D_createBuffer)
-* [cullFace](#H3DU.Scene3D_H3DU.Scene3D_cullFace)
-* [dispose](#H3DU.Scene3D_H3DU.Scene3D_dispose)
-* [frontFace](#H3DU.Scene3D_H3DU.Scene3D_frontFace)
-* [getAspect](#H3DU.Scene3D_H3DU.Scene3D_getAspect)
-* [getCanvas](#H3DU.Scene3D_H3DU.Scene3D_getCanvas)
-* [getClearColor](#H3DU.Scene3D_H3DU.Scene3D_getClearColor)
-* [getClientAspect](#H3DU.Scene3D_H3DU.Scene3D_getClientAspect)
-* [getContext](#H3DU.Scene3D_H3DU.Scene3D_getContext)
-* [getHeight](#H3DU.Scene3D_H3DU.Scene3D_getHeight)
-* [getLights](#H3DU.Scene3D_H3DU.Scene3D_getLights)
-* [getProjectionMatrix](#H3DU.Scene3D_H3DU.Scene3D_getProjectionMatrix)
-* [getViewMatrix](#H3DU.Scene3D_H3DU.Scene3D_getViewMatrix)
-* [getWidth](#H3DU.Scene3D_H3DU.Scene3D_getWidth)
-* [loadAndMapTexture](#H3DU.Scene3D_H3DU.Scene3D_loadAndMapTexture)
-* [loadAndMapTextures](#H3DU.Scene3D_H3DU.Scene3D_loadAndMapTextures)
-* [loadTexture](#H3DU.Scene3D_H3DU.Scene3D_loadTexture)
-* [makeShape](#H3DU.Scene3D_H3DU.Scene3D_makeShape)
-* [primitiveCount](#H3DU.Scene3D_H3DU.Scene3D_primitiveCount)
-* [removeShape](#H3DU.Scene3D_H3DU.Scene3D_removeShape)
-* [render](#H3DU.Scene3D_H3DU.Scene3D_render)
-* [setAmbient](#H3DU.Scene3D_H3DU.Scene3D_setAmbient)
-* [setAutoResize](#H3DU.Scene3D_H3DU.Scene3D_setAutoResize)
-* [setClearColor](#H3DU.Scene3D_H3DU.Scene3D_setClearColor)
-* [setDimensions](#H3DU.Scene3D_H3DU.Scene3D_setDimensions)
-* [setDirectionalLight](#H3DU.Scene3D_H3DU.Scene3D_setDirectionalLight)
-* [setFrustum](#H3DU.Scene3D_H3DU.Scene3D_setFrustum)
-* [setLightParams](#H3DU.Scene3D_H3DU.Scene3D_setLightParams)
-* [setLookAt](#H3DU.Scene3D_H3DU.Scene3D_setLookAt)
-* [setOrtho](#H3DU.Scene3D_H3DU.Scene3D_setOrtho)
-* [setOrtho2D](#H3DU.Scene3D_H3DU.Scene3D_setOrtho2D)
-* [setOrtho2DAspect](#H3DU.Scene3D_H3DU.Scene3D_setOrtho2DAspect)
-* [setOrthoAspect](#H3DU.Scene3D_H3DU.Scene3D_setOrthoAspect)
-* [setPerspective](#H3DU.Scene3D_H3DU.Scene3D_setPerspective)
-* [setPointLight](#H3DU.Scene3D_H3DU.Scene3D_setPointLight)
-* [setProjectionMatrix](#H3DU.Scene3D_H3DU.Scene3D_setProjectionMatrix)
-* [setUseDevicePixelRatio](#H3DU.Scene3D_H3DU.Scene3D_setUseDevicePixelRatio)
-* [setViewMatrix](#H3DU.Scene3D_H3DU.Scene3D_setViewMatrix)
-* [useFilter](#H3DU.Scene3D_H3DU.Scene3D_useFilter)
-* [useProgram](#H3DU.Scene3D_H3DU.Scene3D_useProgram)
-* [vertexCount](#H3DU.Scene3D_H3DU.Scene3D_vertexCount)
+* [addShape](#H3DU.Scene3D_H3DU.Scene3D_addShape)<br><b>Deprecated: Use the addShape method of individual H3DU.Batch3D instances
+instead. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom
+H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [clear](#H3DU.Scene3D_H3DU.Scene3D_clear)<br>Clears the color, depth, and stencil buffers used in this scene,
+if any
+* [clearDepth](#H3DU.Scene3D_H3DU.Scene3D_clearDepth)<br>Clears the depth buffer used in this scene, if any.
+* [createBuffer](#H3DU.Scene3D_H3DU.Scene3D_createBuffer)<br>Creates a frame buffer object associated with this scene.
+* [cullFace](#H3DU.Scene3D_H3DU.Scene3D_cullFace)<br>Specifies which kinds of triangle faces are culled (not drawn)
+when rendering this scene.
+* [dispose](#H3DU.Scene3D_H3DU.Scene3D_dispose)<br>Disposes all resources used by this object.
+* [frontFace](#H3DU.Scene3D_H3DU.Scene3D_frontFace)<br>Specifies the winding of front faces.
+* [getAspect](#H3DU.Scene3D_H3DU.Scene3D_getAspect)<br>Gets the ratio of width to height for this scene (getWidth()
+divided by getHeight()).
+* [getCanvas](#H3DU.Scene3D_H3DU.Scene3D_getCanvas)<br>Gets the HTML canvas associated with this scene.
+* [getClearColor](#H3DU.Scene3D_H3DU.Scene3D_getClearColor)<br>Gets the color used when clearing the screen each frame.
+* [getClientAspect](#H3DU.Scene3D_H3DU.Scene3D_getClientAspect)<br>Gets the ratio of width to height for this scene,
+as actually displayed on the screen.
+* [getContext](#H3DU.Scene3D_H3DU.Scene3D_getContext)<br>Returns the WebGL context associated with this scene.
+* [getHeight](#H3DU.Scene3D_H3DU.Scene3D_getHeight)<br>Gets the viewport height for this scene.
+* [getLights](#H3DU.Scene3D_H3DU.Scene3D_getLights)<br><b>Deprecated: Use the removeShape method of individual H3DU.Batch3D instances
+instead. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom
+H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [getProjectionMatrix](#H3DU.Scene3D_H3DU.Scene3D_getProjectionMatrix)<br><b>Deprecated: Use H3DU.Batch3D instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [getViewMatrix](#H3DU.Scene3D_H3DU.Scene3D_getViewMatrix)<br><b>Deprecated: Use H3DU.Batch3D instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [getWidth](#H3DU.Scene3D_H3DU.Scene3D_getWidth)<br>Gets the viewport width for this scene.
+* [loadAndMapTexture](#H3DU.Scene3D_H3DU.Scene3D_loadAndMapTexture)<br><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</b>
+* [loadAndMapTextures](#H3DU.Scene3D_H3DU.Scene3D_loadAndMapTextures)<br><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</b>
+* [loadTexture](#H3DU.Scene3D_H3DU.Scene3D_loadTexture)<br><b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
+loadTexturesAll instead.</b>
+* [makeShape](#H3DU.Scene3D_H3DU.Scene3D_makeShape)<br><b>Deprecated: Use the H3DU.Shape constructor instead.</b>
+* [primitiveCount](#H3DU.Scene3D_H3DU.Scene3D_primitiveCount)<br><b>Deprecated: Use the <code>primitiveCount</code> method of H3DU.Batch3D objects instead. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [removeShape](#H3DU.Scene3D_H3DU.Scene3D_removeShape)<br><b>Deprecated: Use the removeShape method of individual H3DU.Batch3D instances
+instead. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom
+H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [render](#H3DU.Scene3D_H3DU.Scene3D_render)<br>Renders all shapes added to this scene.
+* [setAmbient](#H3DU.Scene3D_H3DU.Scene3D_setAmbient)<br><b>Deprecated: Use the Lights method setAmbient instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setAutoResize](#H3DU.Scene3D_H3DU.Scene3D_setAutoResize)<br>Sets whether to check whether to resize the canvas
+when the render() method is called.
+* [setClearColor](#H3DU.Scene3D_H3DU.Scene3D_setClearColor)<br>Sets the color used when clearing the screen each frame.
+* [setDimensions](#H3DU.Scene3D_H3DU.Scene3D_setDimensions)<br>Sets the viewport width and height for this scene.
+* [setDirectionalLight](#H3DU.Scene3D_H3DU.Scene3D_setDirectionalLight)<br><b>Deprecated: Use the Lights method setDirectionalLight instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setFrustum](#H3DU.Scene3D_H3DU.Scene3D_setFrustum)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4frustum. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setLightParams](#H3DU.Scene3D_H3DU.Scene3D_setLightParams)<br><b>Deprecated: Use the Lights method setParams instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setLookAt](#H3DU.Scene3D_H3DU.Scene3D_setLookAt)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setLookAt. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setOrtho](#H3DU.Scene3D_H3DU.Scene3D_setOrtho)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4ortho. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setOrtho2D](#H3DU.Scene3D_H3DU.Scene3D_setOrtho2D)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4ortho2d. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setOrtho2DAspect](#H3DU.Scene3D_H3DU.Scene3D_setOrtho2DAspect)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4ortho2dAspect. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setOrthoAspect](#H3DU.Scene3D_H3DU.Scene3D_setOrthoAspect)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4orthoAspect. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setPerspective](#H3DU.Scene3D_H3DU.Scene3D_setPerspective)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with H3DU.Math.mat4perspective. This compatibility behavior may be dropped in the future.</b>
+* [setPointLight](#H3DU.Scene3D_H3DU.Scene3D_setPointLight)<br><b>Deprecated: Use the LightSource method setPointLight instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setProjectionMatrix](#H3DU.Scene3D_H3DU.Scene3D_setProjectionMatrix)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [setUseDevicePixelRatio](#H3DU.Scene3D_H3DU.Scene3D_setUseDevicePixelRatio)<br>Sets whether to use the device's pixel ratio (if supported by
+the browser) in addition to the canvas's size when setting
+the viewport's dimensions.
+* [setViewMatrix](#H3DU.Scene3D_H3DU.Scene3D_setViewMatrix)<br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setViewMatrix in conjunction with H3DU.Math.mat4ortho2dAspect. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
+* [useFilter](#H3DU.Scene3D_H3DU.Scene3D_useFilter)<br><b>Deprecated: Use the H3DU.Batch3D.forFilter method to create a batch
+for rendering filter effects from a frame buffer.</b>
+* [useProgram](#H3DU.Scene3D_H3DU.Scene3D_useProgram)<br><b>Deprecated: Instead of this method, use the "setShader" program of individual shapes
+to set the shader programs they use.</b>
+* [vertexCount](#H3DU.Scene3D_H3DU.Scene3D_vertexCount)<br><b>Deprecated: Use the vertexCount method of H3DU.Batch3D objects instead. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
 ### H3DU.Scene3D.BACK <a id='H3DU.Scene3D.BACK'></a> (constant)
 

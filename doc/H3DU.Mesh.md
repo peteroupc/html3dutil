@@ -38,49 +38,67 @@ no longer the case, to simplify the implementation.
 
 ### Members
 
-* [.BITANGENTS_BIT](#H3DU.Mesh.BITANGENTS_BIT)
-* [.COLORS_BIT](#H3DU.Mesh.COLORS_BIT)
-* [.LINES](#H3DU.Mesh.LINES)
-* [.LINES_BIT](#H3DU.Mesh.LINES_BIT)
-* [.LINE_STRIP](#H3DU.Mesh.LINE_STRIP)
-* [.NORMALS_BIT](#H3DU.Mesh.NORMALS_BIT)
-* [.POINTS](#H3DU.Mesh.POINTS)
-* [.POINTS_BIT](#H3DU.Mesh.POINTS_BIT)
-* [.QUADS](#H3DU.Mesh.QUADS)
-* [.QUAD_STRIP](#H3DU.Mesh.QUAD_STRIP)
-* [.TANGENTS_BIT](#H3DU.Mesh.TANGENTS_BIT)
-* [.TEXCOORDS_BIT](#H3DU.Mesh.TEXCOORDS_BIT)
-* [.TRIANGLES](#H3DU.Mesh.TRIANGLES)
-* [.TRIANGLE_FAN](#H3DU.Mesh.TRIANGLE_FAN)
-* [.TRIANGLE_STRIP](#H3DU.Mesh.TRIANGLE_STRIP)
+* [.BITANGENTS_BIT](#H3DU.Mesh.BITANGENTS_BIT)<br>The mesh contains bitangent vectors for each vertex.
+* [.COLORS_BIT](#H3DU.Mesh.COLORS_BIT)<br>The mesh contains colors for each vertex.
+* [.LINES](#H3DU.Mesh.LINES)<br>Primitive mode for rendering line segments, made up
+of 2 vertices each.
+* [.LINES_BIT](#H3DU.Mesh.LINES_BIT)<br>The mesh consists of lines (2 vertices per line) instead
+of triangles (3 vertices per line).
+* [.LINE_STRIP](#H3DU.Mesh.LINE_STRIP)<br>Primitive mode for rendering connected line segments.
+* [.NORMALS_BIT](#H3DU.Mesh.NORMALS_BIT)<br>The mesh contains normals for each vertex.
+* [.POINTS](#H3DU.Mesh.POINTS)<br>Primitive mode for rendering points, made up
+of 1 vertex each.
+* [.POINTS_BIT](#H3DU.Mesh.POINTS_BIT)<br>The mesh consists of points (1 vertex per line).
+* [.QUADS](#H3DU.Mesh.QUADS)<br>Primitive mode for rendering quadrilaterals, made up
+of 4 vertices each.
+* [.QUAD_STRIP](#H3DU.Mesh.QUAD_STRIP)<br>Primitive mode for rendering a strip of quadrilaterals (quads).
+* [.TANGENTS_BIT](#H3DU.Mesh.TANGENTS_BIT)<br>The mesh contains tangent vectors for each vertex.
+* [.TEXCOORDS_BIT](#H3DU.Mesh.TEXCOORDS_BIT)<br>The mesh contains texture coordinates for each vertex.
+* [.TRIANGLES](#H3DU.Mesh.TRIANGLES)<br>Primitive mode for rendering triangles, made up
+of 3 vertices each.
+* [.TRIANGLE_FAN](#H3DU.Mesh.TRIANGLE_FAN)<br>Primitive mode for rendering a triangle fan.
+* [.TRIANGLE_STRIP](#H3DU.Mesh.TRIANGLE_STRIP)<br>Primitive mode for rendering a triangle strip.
 
 ### Methods
 
-* [bitangent3](#H3DU.Mesh_H3DU.Mesh_bitangent3)
-* [color3](#H3DU.Mesh_H3DU.Mesh_color3)
-* [enumPrimitives](#H3DU.Mesh_H3DU.Mesh_enumPrimitives)
-* [getBoundingBox](#H3DU.Mesh_H3DU.Mesh_getBoundingBox)
-* [getVertex](#H3DU.Mesh_H3DU.Mesh_getVertex)
-* [getVertexNormal](#H3DU.Mesh_H3DU.Mesh_getVertexNormal)
-* [merge](#H3DU.Mesh_H3DU.Mesh_merge)
-* [mode](#H3DU.Mesh_H3DU.Mesh_mode)
-* [normal3](#H3DU.Mesh_H3DU.Mesh_normal3)
-* [normalizeNormals](#H3DU.Mesh_H3DU.Mesh_normalizeNormals)
-* [primitiveCount](#H3DU.Mesh_H3DU.Mesh_primitiveCount)
-* [recalcNormals](#H3DU.Mesh_H3DU.Mesh_recalcNormals)
-* [recalcTangents](#H3DU.Mesh_H3DU.Mesh_recalcTangents)
-* [reverseNormals](#H3DU.Mesh_H3DU.Mesh_reverseNormals)
-* [reverseWinding](#H3DU.Mesh_H3DU.Mesh_reverseWinding)
-* [setColor3](#H3DU.Mesh_H3DU.Mesh_setColor3)
-* [setVertex](#H3DU.Mesh_H3DU.Mesh_setVertex)
-* [setVertexNormal](#H3DU.Mesh_H3DU.Mesh_setVertexNormal)
-* [tangent3](#H3DU.Mesh_H3DU.Mesh_tangent3)
-* [texCoord2](#H3DU.Mesh_H3DU.Mesh_texCoord2)
-* [toWireFrame](#H3DU.Mesh_H3DU.Mesh_toWireFrame)
-* [transform](#H3DU.Mesh_H3DU.Mesh_transform)
-* [vertex2](#H3DU.Mesh_H3DU.Mesh_vertex2)
-* [vertex3](#H3DU.Mesh_H3DU.Mesh_vertex3)
-* [vertexCount](#H3DU.Mesh_vertexCount)
+* [bitangent3](#H3DU.Mesh_H3DU.Mesh_bitangent3)<br>Sets the current bitangent vector for this mesh.
+* [color3](#H3DU.Mesh_H3DU.Mesh_color3)<br>Sets the current color for this mesh.
+* [enumPrimitives](#H3DU.Mesh_H3DU.Mesh_enumPrimitives)<br>Enumerates the primitives (lines, triangles, and points) included
+in this mesh.
+* [getBoundingBox](#H3DU.Mesh_H3DU.Mesh_getBoundingBox)<br>Finds the tightest axis-aligned
+bounding box that holds all vertices in the mesh.
+* [getVertex](#H3DU.Mesh_H3DU.Mesh_getVertex)<br>Gets the position of the vertex with the given
+index in this mesh.
+* [getVertexNormal](#H3DU.Mesh_H3DU.Mesh_getVertexNormal)<br>Gets the normal of the vertex with the given
+index in this mesh.
+* [merge](#H3DU.Mesh_H3DU.Mesh_merge)<br>Merges the vertices from another mesh into this one.
+* [mode](#H3DU.Mesh_H3DU.Mesh_mode)<br>Changes the primitive mode for this mesh.
+* [normal3](#H3DU.Mesh_H3DU.Mesh_normal3)<br>Sets the current normal for this mesh.
+* [normalizeNormals](#H3DU.Mesh_H3DU.Mesh_normalizeNormals)<br>Modifies this mesh by normalizing the normals it defines
+to unit length.
+* [primitiveCount](#H3DU.Mesh_H3DU.Mesh_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+or points) composed by all shapes in this mesh.
+* [recalcNormals](#H3DU.Mesh_H3DU.Mesh_recalcNormals)<br>Recalculates the normal vectors for triangles
+in this mesh.
+* [recalcTangents](#H3DU.Mesh_H3DU.Mesh_recalcTangents)<br>Recalculates the tangent vectors for triangles
+in this mesh.
+* [reverseNormals](#H3DU.Mesh_H3DU.Mesh_reverseNormals)<br>Modifies this mesh by reversing the sign of normals it defines.
+* [reverseWinding](#H3DU.Mesh_H3DU.Mesh_reverseWinding)<br>Reverses the winding order of the triangles in this mesh
+by swapping the second and third vertex indices of each one.
+* [setColor3](#H3DU.Mesh_H3DU.Mesh_setColor3)<br>Sets all the vertices in this mesh to the given color.
+* [setVertex](#H3DU.Mesh_H3DU.Mesh_setVertex)<br>Sets the X, Y, and Z coordinates of the vertex with the
+given index.
+* [setVertexNormal](#H3DU.Mesh_H3DU.Mesh_setVertexNormal)<br>Sets the normal associated with the vertex with the
+given index.
+* [tangent3](#H3DU.Mesh_H3DU.Mesh_tangent3)<br>Sets the current tangent vector for this mesh.
+* [texCoord2](#H3DU.Mesh_H3DU.Mesh_texCoord2)<br>Sets the current texture coordinates for this mesh.
+* [toWireFrame](#H3DU.Mesh_H3DU.Mesh_toWireFrame)<br>Converts this mesh to a new mesh with triangles converted
+to line segments.
+* [transform](#H3DU.Mesh_H3DU.Mesh_transform)<br>Transforms the positions and normals of all the vertices currently
+in this mesh.
+* [vertex2](#H3DU.Mesh_H3DU.Mesh_vertex2)<br>Adds a new vertex to this mesh.
+* [vertex3](#H3DU.Mesh_H3DU.Mesh_vertex3)<br>Adds a new vertex to this mesh.
+* [vertexCount](#H3DU.Mesh_vertexCount)<br>Gets the number of vertices included in this mesh.
 
 ### H3DU.Mesh.BITANGENTS_BIT <a id='H3DU.Mesh.BITANGENTS_BIT'></a> (constant)
 

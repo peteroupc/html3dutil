@@ -20,15 +20,20 @@ the HTML 3D Library. Example:
 
 ### Members
 
-* [mtllib](#ObjData_mtllib)
+* [mtllib](#ObjData_mtllib)<br>An array of meshes.
 
 ### Methods
 
-* [toShape](#ObjData_ObjData_toShape)
-* [toShapeFromName](#ObjData_ObjData_toShapeFromName)
-* [loadMtlFromUrl](#ObjData.loadMtlFromUrl)
-* [loadObjFromUrl](#ObjData.loadObjFromUrl)
-* [loadObjFromUrlWithTextures](#ObjData.loadObjFromUrlWithTextures)
+* [toShape](#ObjData_ObjData_toShape)<br>Creates one or more 3D shapes from the data
+in this OBJ file.
+* [toShapeFromName](#ObjData_ObjData_toShapeFromName)<br>Creates one or more H3DU.Shape objects from the named portion
+of the data in this OBJ file.
+* [loadMtlFromUrl](#ObjData.loadMtlFromUrl)<br>Loads a material (MTL) file asynchronously.
+* [loadObjFromUrl](#ObjData.loadObjFromUrl)<br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.
+* [loadObjFromUrlWithTextures](#ObjData.loadObjFromUrlWithTextures)<br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available), along with the textures it uses,
+asynchronously.
 
 ### ObjData#mtllib <a id='ObjData_mtllib'></a>
 

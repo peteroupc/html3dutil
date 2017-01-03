@@ -22,7 +22,8 @@ necessarily cross the curve.
 
 ### Methods
 
-* [evaluate](#H3DU.BezierCurve_H3DU.BezierCurve_evaluate)
+* [evaluate](#H3DU.BezierCurve_H3DU.BezierCurve_evaluate)<br>Evaluates the curve function based on a point
+in a B&eacute;zier curve.
 
 ### H3DU.BezierCurve#evaluate(u) <a id='H3DU.BezierCurve_H3DU.BezierCurve_evaluate'></a>
 

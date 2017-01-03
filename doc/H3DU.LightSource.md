@@ -19,15 +19,21 @@ Specifies parameters for light sources.
 
 ### Members
 
-* [ambient](#H3DU.LightSource_ambient)
-* [diffuse](#H3DU.LightSource_diffuse)
-* [position](#H3DU.LightSource_position)
-* [radius](#H3DU.LightSource_radius)
-* [specular](#H3DU.LightSource_specular)
+* [ambient](#H3DU.LightSource_ambient)<br>A 4-element vector giving an additional color to multiply with the ambient
+color of each object, in the red, green,
+and blue components respectively.
+* [diffuse](#H3DU.LightSource_diffuse)<br>A 4-element vector giving an additional color to multiply with the diffusion
+color of each object (which is also called "albedo"), in the red, green,
+and blue components respectively.
+* [position](#H3DU.LightSource_position)<br>Light position.
+* [radius](#H3DU.LightSource_radius)<br>Radius of the light source.
+* [specular](#H3DU.LightSource_specular)<br>A 3-element vector giving the color of the light when it causes a specular
+reflection, in the red, green,
+and blue components respectively.
 
 ### Methods
 
-* [setParams](#H3DU.LightSource_H3DU.LightSource_setParams)
+* [setParams](#H3DU.LightSource_H3DU.LightSource_setParams)<br>Sets parameters for this material object.
 
 ### H3DU.LightSource#ambient <a id='H3DU.LightSource_ambient'></a>
 

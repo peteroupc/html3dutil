@@ -23,13 +23,17 @@ See the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces
 
 ### Methods
 
-* [color](#H3DU.SurfaceEval_H3DU.SurfaceEval_color)
-* [evalOne](#H3DU.SurfaceEval_H3DU.SurfaceEval_evalOne)
-* [evalSurface](#H3DU.SurfaceEval_H3DU.SurfaceEval_evalSurface)
-* [normal](#H3DU.SurfaceEval_H3DU.SurfaceEval_normal)
-* [setAutoNormal](#H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal)
-* [texCoord](#H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord)
-* [vertex](#H3DU.SurfaceEval_H3DU.SurfaceEval_vertex)
+* [color](#H3DU.SurfaceEval_H3DU.SurfaceEval_color)<br>Specifies a parametric surface function for generating color values.
+* [evalOne](#H3DU.SurfaceEval_H3DU.SurfaceEval_evalOne)<br>Generates vertex positions and attributes based on a point
+in a parametric surface.
+* [evalSurface](#H3DU.SurfaceEval_H3DU.SurfaceEval_evalSurface)<br>Generates the vertex positions and attributes of a parametric
+surface.
+* [normal](#H3DU.SurfaceEval_H3DU.SurfaceEval_normal)<br>Specifies a parametric surface function for generating normals.
+* [setAutoNormal](#H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal)<br>Sets whether this object will automatically generate
+normals rather than use the parametric evaluator
+specified for normal generation, if any.
+* [texCoord](#H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord)<br>Specifies a parametric surface function for generating texture coordinates.
+* [vertex](#H3DU.SurfaceEval_H3DU.SurfaceEval_vertex)<br>Specifies a parametric surface function for generating vertex positions.
 
 ### H3DU.SurfaceEval#color(evaluator) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_color'></a>
 

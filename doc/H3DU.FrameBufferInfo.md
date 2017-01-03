@@ -17,9 +17,9 @@ size to use as the depth buffer.
 
 ### Methods
 
-* [getHeight](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight)
-* [getWidth](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth)
-* [resize](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize)
+* [getHeight](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight)<br>Gets the height to use for the frame buffer.
+* [getWidth](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth)<br>Gets the width to use for the frame buffer.
+* [resize](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize)<br>Changes the width and height of this frame buffer information object.
 
 ### H3DU.FrameBufferInfo#getHeight() <a id='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight'></a>
 

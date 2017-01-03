@@ -18,7 +18,7 @@ as well as closed figures made from several path segments.
 
 ## How to Use <a id=How_to_Use></a>
 
-2D paths are implemented in a class called `GraphicsPath`, found in the file _extras/path.js_ in
+2D paths are implemented in a class called [`H3DU.GraphicsPath`]{@link H3DU.GraphicsPath}, found in the file _extras/path.js_ in
 the HTML 3D Library download.  To use this class, you must include the script "extras/path.js",
 as in this example.
 
@@ -47,18 +47,18 @@ lines, the "Q", "C", "S", and "T" commands create B&eacute;zier curves, the "A" 
 creates elliptical arcs, and the "Z" command closes the path. If the letters are
 lower-cased, X and Y coordinates are relative to the current position.
 
-For more information, see the {@link GraphicsPath.fromString} method documentation.
+For more information, see the {@link H3DU.GraphicsPath.fromString} method documentation.
 That method is also how you create a 2D path from an SVG path string, as in this
 example:
 
-    var path = GraphicsPath.fromString("M50,20C230,245,233,44,22,44")
+    var path = H3DU.GraphicsPath.fromString("M50,20C230,245,233,44,22,44")
 
 ### Building Paths <a id=Building_Paths></a>
 
-The other way to make paths is to call the `GraphicsPath` constructor and call methods
+The other way to make paths is to call the `H3DU.GraphicsPath` constructor and call methods
 to add path segments to the path.
 
-The `GraphicsPath` object stores a current position and a starting position, and many methods
+The `H3DU.GraphicsPath` object stores a current position and a starting position, and many methods
 don't have you specify a starting position, to cover the common case of drawing a series
 of connected lines and curves.
 
@@ -81,7 +81,7 @@ curve uses 4 points, two of which are control points.
 
 An _elliptic arc_ is a curve which forms part of an ellipse.  There are several ways to
 parameterize an elliptic arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
-of the `GraphicsPath` class.
+of the `H3DU.GraphicsPath` class.
 
 ## Methods <a id=Methods></a>
 

@@ -20,7 +20,7 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [update](#FrameCounterDiv_FrameCounterDiv_update)
+* [update](#FrameCounterDiv_FrameCounterDiv_update)<br>Updates the frame counter HTML element.
 
 ### FrameCounterDiv#update() <a id='FrameCounterDiv_FrameCounterDiv_update'></a>
 

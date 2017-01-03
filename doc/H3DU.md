@@ -14,17 +14,27 @@ library.
 
 ### Methods
 
-* [createCanvasElement](#H3DU.createCanvasElement)
-* [get3DContext](#H3DU.get3DContext)
-* [get3DOr2DContext](#H3DU.get3DOr2DContext)
-* [getPromiseResults](#H3DU.getPromiseResults)
-* [getPromiseResultsAll](#H3DU.getPromiseResultsAll)
-* [getTimePosition](#H3DU.getTimePosition)
+* [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
+it to an existing HTML element.
+* [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
+* [get3DOr2DContext](#H3DU.get3DOr2DContext)<br>Creates a 3D rendering context from an HTML canvas element,
+falling back to a 2D context if that fails.
+* [getPromiseResults](#H3DU.getPromiseResults)<br>Utility function that returns a promise that
+resolves after the given list of promises finishes
+its work.
+* [getPromiseResultsAll](#H3DU.getPromiseResultsAll)<br>Utility function that returns a promise that
+resolves or is rejected after the given list of promises finishes
+its work.
+* [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
 * [is3DContext](#H3DU.is3DContext)
-* [loadFileFromUrl](#H3DU.loadFileFromUrl)
-* [newFrames](#H3DU.newFrames)
-* [renderLoop](#H3DU.renderLoop)
-* [toGLColor](#H3DU.toGLColor)
+* [loadFileFromUrl](#H3DU.loadFileFromUrl)<br>Loads a file from a URL asynchronously, using XMLHttpRequest.
+* [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
+the last known time, where a frame's length is 1/60 of a second.
+* [renderLoop](#H3DU.renderLoop)<br>This method will call a function once before returning,
+and queue requests to call that function once per frame,
+using <code>window.requestAnimationFrame</code>
+or a "polyfill" method.
+* [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
 
 ### (static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU.createCanvasElement'></a>
 

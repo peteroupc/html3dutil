@@ -19,9 +19,11 @@ A parametric evaluator for B-spline (basis spline) surfaces.
 
 ### Methods
 
-* [.clamped](#H3DU.BSplineSurface.clamped)
-* [.uniform](#H3DU.BSplineSurface.uniform)
-* [evaluate](#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate)
+* [.clamped](#H3DU.BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
+the surface's edges lie on the edges of the control point array.
+* [.uniform](#H3DU.BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
+* [evaluate](#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
+in a B-spline surface.
 
 ### H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits]) <a id='H3DU.BSplineSurface.clamped'></a>
 

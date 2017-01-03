@@ -19,13 +19,14 @@ to (1,1) at the upper right corner.
 
 ### Methods
 
-* [.fromUint8Array](#H3DU.Texture.fromUint8Array)
-* [.loadTexture](#H3DU.Texture.loadTexture)
-* [dispose](#H3DU.Texture_H3DU.Texture_dispose)
-* [getHeight](#H3DU.Texture_H3DU.Texture_getHeight)
-* [getName](#H3DU.Texture_H3DU.Texture_getName)
-* [getWidth](#H3DU.Texture_H3DU.Texture_getWidth)
-* [setClamp](#H3DU.Texture_H3DU.Texture_setClamp)
+* [.fromUint8Array](#H3DU.Texture.fromUint8Array)<br>Creates a texture from a byte array specifying the texture data.
+* [.loadTexture](#H3DU.Texture.loadTexture)<br>Loads a texture by its URL.
+* [dispose](#H3DU.Texture_H3DU.Texture_dispose)<br>Disposes resources used by this texture.
+* [getHeight](#H3DU.Texture_H3DU.Texture_getHeight)<br>Gets this texture's known height.
+* [getName](#H3DU.Texture_H3DU.Texture_getName)<br>Gets the name of this texture.
+* [getWidth](#H3DU.Texture_H3DU.Texture_getWidth)<br>Gets this texture's known width.
+* [setClamp](#H3DU.Texture_H3DU.Texture_setClamp)<br>Sets the wrapping behavior of texture coordinates that
+fall out of range when using this texture.
 
 ### H3DU.Texture.fromUint8Array(array, width, height) <a id='H3DU.Texture.fromUint8Array'></a>
 

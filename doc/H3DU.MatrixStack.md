@@ -22,23 +22,35 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [frustum](#H3DU.MatrixStack_H3DU.MatrixStack_frustum)
-* [get](#H3DU.MatrixStack_H3DU.MatrixStack_get)
-* [loadIdentity](#H3DU.MatrixStack_H3DU.MatrixStack_loadIdentity)
-* [loadMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_loadMatrix)
-* [loadTransposeMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_loadTransposeMatrix)
-* [lookAt](#H3DU.MatrixStack_H3DU.MatrixStack_lookAt)
-* [multMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_multMatrix)
-* [multTransposeMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_multTransposeMatrix)
-* [ortho](#H3DU.MatrixStack_H3DU.MatrixStack_ortho)
-* [ortho2d](#H3DU.MatrixStack_H3DU.MatrixStack_ortho2d)
-* [perspective](#H3DU.MatrixStack_H3DU.MatrixStack_perspective)
-* [pickMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_pickMatrix)
-* [popMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_popMatrix)
-* [pushMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_pushMatrix)
-* [rotate](#H3DU.MatrixStack_H3DU.MatrixStack_rotate)
-* [scale](#H3DU.MatrixStack_H3DU.MatrixStack_scale)
-* [translate](#H3DU.MatrixStack_H3DU.MatrixStack_translate)
+* [frustum](#H3DU.MatrixStack_H3DU.MatrixStack_frustum)<br>Modifies the matrix at the top of this stack by multiplying it by
+a frustum matrix.
+* [get](#H3DU.MatrixStack_H3DU.MatrixStack_get)<br>Gets a copy of the matrix at the top of this stack.
+* [loadIdentity](#H3DU.MatrixStack_H3DU.MatrixStack_loadIdentity)<br>Modifies the matrix at the top of this stack by replacing it with the identity matrix.
+* [loadMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_loadMatrix)<br>Modifies the matrix at the top of this stack by replacing it with the given matrix.
+* [loadTransposeMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_loadTransposeMatrix)<br>Modifies the matrix at the top of this stack by replacing it with the
+transpose of the given matrix.
+* [lookAt](#H3DU.MatrixStack_H3DU.MatrixStack_lookAt)<br>Modifies the matrix at the top of this stack by multiplying it by
+a matrix representing a camera view.
+* [multMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_multMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by another matrix.
+* [multTransposeMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_multTransposeMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by the transpose of
+another matrix.
+* [ortho](#H3DU.MatrixStack_H3DU.MatrixStack_ortho)<br>Modifies the matrix at the top of this stack by multiplying it by
+an orthographic projection.
+* [ortho2d](#H3DU.MatrixStack_H3DU.MatrixStack_ortho2d)<br>Modifies the matrix at the top of this stack by multiplying it by
+a 2D orthographic projection.
+* [perspective](#H3DU.MatrixStack_H3DU.MatrixStack_perspective)<br>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that defines a perspective projection.
+* [pickMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_pickMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that transforms the view to a portion of the viewport.
+* [popMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_popMatrix)<br>Removes the matrix at the top of this stack, making
+the matrix beneath it the new top matrix.
+* [pushMatrix](#H3DU.MatrixStack_H3DU.MatrixStack_pushMatrix)<br>Makes a copy of the matrix at the top of this stack
+and puts the copy on top of the stack.
+* [rotate](#H3DU.MatrixStack_H3DU.MatrixStack_rotate)<br>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
+* [scale](#H3DU.MatrixStack_H3DU.MatrixStack_scale)<br>Modifies the matrix at the top of this stack by multiplying it by a
+scaling transformation.
+* [translate](#H3DU.MatrixStack_H3DU.MatrixStack_translate)<br>Modifies the matrix at the top of this stack by multiplying it by a
+translation transformation.
 
 ### H3DU.MatrixStack#frustum(l, r, b, t, n, f) <a id='H3DU.MatrixStack_H3DU.MatrixStack_frustum'></a>
 

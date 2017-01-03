@@ -11,18 +11,21 @@ ambient color and one directional light source.
 
 ### Members
 
-* [.MAX_LIGHTS](#H3DU.Lights.MAX_LIGHTS)
-* [sceneAmbient](#H3DU.Lights_sceneAmbient)
+* [.MAX_LIGHTS](#H3DU.Lights.MAX_LIGHTS)<br>Maximum number of lights supported
+ by the default shader program.
+* [sceneAmbient](#H3DU.Lights_sceneAmbient)<br>Ambient color for the scene.
 
 ### Methods
 
-* [getCount](#H3DU.Lights_H3DU.Lights_getCount)
-* [getLight](#H3DU.Lights_H3DU.Lights_getLight)
-* [setAmbient](#H3DU.Lights_H3DU.Lights_setAmbient)
-* [setDefaults](#H3DU.Lights_H3DU.Lights_setDefaults)
-* [setDirectionalLight](#H3DU.Lights_H3DU.Lights_setDirectionalLight)
-* [setParams](#H3DU.Lights_H3DU.Lights_setParams)
-* [setPointLight](#H3DU.Lights_H3DU.Lights_setPointLight)
+* [getCount](#H3DU.Lights_H3DU.Lights_getCount)<br>Gets the number of lights defined in this object.
+* [getLight](#H3DU.Lights_H3DU.Lights_getLight)<br>Gets information about the light source at the given index.
+* [setAmbient](#H3DU.Lights_H3DU.Lights_setAmbient)<br>Sets the color of the scene's ambient light.
+* [setDefaults](#H3DU.Lights_H3DU.Lights_setDefaults)<br>Resets this object to the default configuration for
+light sources: one light source with its default
+values, and the default value for <code>sceneAmbient</code>.
+* [setDirectionalLight](#H3DU.Lights_H3DU.Lights_setDirectionalLight)<br>Sets a directional light.
+* [setParams](#H3DU.Lights_H3DU.Lights_setParams)<br>Sets parameters for the light source at the given index.
+* [setPointLight](#H3DU.Lights_H3DU.Lights_setPointLight)<br>Sets a point light.
 
 ### H3DU.Lights.MAX_LIGHTS <a id='H3DU.Lights.MAX_LIGHTS'></a> (constant)
 

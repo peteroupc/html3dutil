@@ -50,12 +50,16 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [.load](#H3DU.TextFont.load)
-* [.loadWithTextures](#H3DU.TextFont.loadWithTextures)
-* [loadTextures](#H3DU.TextFont_H3DU.TextFont_loadTextures)
-* [makeTextMeshes](#H3DU.TextFont_H3DU.TextFont_makeTextMeshes)
-* [measure](#H3DU.TextFont_H3DU.TextFont_measure)
-* [textShape](#H3DU.TextFont_H3DU.TextFont_textShape)
+* [.load](#H3DU.TextFont.load)<br>Loads a bitmap font definition from a file.
+* [.loadWithTextures](#H3DU.TextFont.loadWithTextures)<br>Loads a bitmap font definition from a file along with the textures
+used by that font.
+* [loadTextures](#H3DU.TextFont_H3DU.TextFont_loadTextures)<br>Loads the texture files used by this font object.
+* [makeTextMeshes](#H3DU.TextFont_H3DU.TextFont_makeTextMeshes)<br>Creates an array of meshes containing the primitives
+needed to draw text with this font.
+* [measure](#H3DU.TextFont_H3DU.TextFont_measure)<br>Calculates the width and height of a text string when
+drawn using this font.
+* [textShape](#H3DU.TextFont_H3DU.TextFont_textShape)<br>Creates a group of shapes containing the primitives needed to
+draw text in the given position, size, and color.
 
 ### H3DU.TextFont.load(fontFileName) <a id='H3DU.TextFont.load'></a>
 

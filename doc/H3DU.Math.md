@@ -12,132 +12,212 @@ See the tutorial "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for mo
 
 ### Members
 
-* [.GlobalPitchRollYaw](#H3DU.Math.GlobalPitchRollYaw)
-* [.GlobalPitchYawRoll](#H3DU.Math.GlobalPitchYawRoll)
-* [.GlobalRollPitchYaw](#H3DU.Math.GlobalRollPitchYaw)
-* [.GlobalRollYawPitch](#H3DU.Math.GlobalRollYawPitch)
-* [.GlobalYawPitchRoll](#H3DU.Math.GlobalYawPitchRoll)
-* [.GlobalYawRollPitch](#H3DU.Math.GlobalYawRollPitch)
-* [.HalfPi](#H3DU.Math.HalfPi)
-* [.LocalPitchRollYaw](#H3DU.Math.LocalPitchRollYaw)
-* [.LocalPitchYawRoll](#H3DU.Math.LocalPitchYawRoll)
-* [.LocalRollPitchYaw](#H3DU.Math.LocalRollPitchYaw)
-* [.LocalRollYawPitch](#H3DU.Math.LocalRollYawPitch)
-* [.LocalYawPitchRoll](#H3DU.Math.LocalYawPitchRoll)
-* [.LocalYawRollPitch](#H3DU.Math.LocalYawRollPitch)
-* [.Num180DividedByPi](#H3DU.Math.Num180DividedByPi)
-* [.PiDividedBy180](#H3DU.Math.PiDividedBy180)
-* [.PiTimes2](#H3DU.Math.PiTimes2)
-* [.PitchRollYaw](#H3DU.Math.PitchRollYaw)
-* [.PitchYawRoll](#H3DU.Math.PitchYawRoll)
-* [.RollPitchYaw](#H3DU.Math.RollPitchYaw)
-* [.RollYawPitch](#H3DU.Math.RollYawPitch)
-* [.ToDegrees](#H3DU.Math.ToDegrees)
-* [.ToRadians](#H3DU.Math.ToRadians)
-* [.YawPitchRoll](#H3DU.Math.YawPitchRoll)
-* [.YawRollPitch](#H3DU.Math.YawRollPitch)
+* [.GlobalPitchRollYaw](#H3DU.Math.GlobalPitchRollYaw)<br>Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+* [.GlobalPitchYawRoll](#H3DU.Math.GlobalPitchYawRoll)<br>Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
+or in the reverse order around
+* [.GlobalRollPitchYaw](#H3DU.Math.GlobalRollPitchYaw)<br>Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+* [.GlobalRollYawPitch](#H3DU.Math.GlobalRollYawPitch)<br>Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+* [.GlobalYawPitchRoll](#H3DU.Math.GlobalYawPitchRoll)<br>Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+* [.GlobalYawRollPitch](#H3DU.Math.GlobalYawRollPitch)<br>Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+* [.HalfPi](#H3DU.Math.HalfPi)<br>Closest approximation to pi divided by 2, or a 90-degree turn in radians.
+* [.LocalPitchRollYaw](#H3DU.Math.LocalPitchRollYaw)<br>Indicates that a rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
+occur around the rotated object's new axes and not necessarily the original axes.
+* [.LocalPitchYawRoll](#H3DU.Math.LocalPitchYawRoll)<br>Indicates that a rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
+occur around the rotated object's new axes and not necessarily the original axes.
+* [.LocalRollPitchYaw](#H3DU.Math.LocalRollPitchYaw)<br>Indicates that a rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
+occur around the rotated object's new axes and not necessarily the original axes.
+* [.LocalRollYawPitch](#H3DU.Math.LocalRollYawPitch)<br>Indicates that a rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
+occur around the rotated object's new axes and not necessarily the original axes.
+* [.LocalYawPitchRoll](#H3DU.Math.LocalYawPitchRoll)<br>Indicates that a rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
+occur around the rotated object's new axes and not necessarily the original axes.
+* [.LocalYawRollPitch](#H3DU.Math.LocalYawRollPitch)<br>Indicates that a rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
+occur around the rotated object's new axes and not necessarily the original axes.
+* [.Num180DividedByPi](#H3DU.Math.Num180DividedByPi)<br>Closest approximation to 180 divided by pi, or the number of
+ degrees in a radian.
+* [.PiDividedBy180](#H3DU.Math.PiDividedBy180)<br>Closest approximation to pi divided by 180, or the number
+ of radians in a degree.
+* [.PiTimes2](#H3DU.Math.PiTimes2)<br>Closest approximation to pi times 2, or a 360-degree turn in radians.
+* [.PitchRollYaw](#H3DU.Math.PitchRollYaw)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalPitchRollYaw instead.</b>
+* [.PitchYawRoll](#H3DU.Math.PitchYawRoll)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalPitchYawRoll instead.</b>
+* [.RollPitchYaw](#H3DU.Math.RollPitchYaw)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalRollPitchYaw instead.</b>
+* [.RollYawPitch](#H3DU.Math.RollYawPitch)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalRollYawPitch instead.</b>
+* [.ToDegrees](#H3DU.Math.ToDegrees)<br>Closest approximation to 180 divided by pi, or the number of
+ degrees in a radian.
+* [.ToRadians](#H3DU.Math.ToRadians)<br>Closest approximation to pi divided by 180, or the number
+ of radians in a degree.
+* [.YawPitchRoll](#H3DU.Math.YawPitchRoll)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalYawPitchRoll instead.</b>
+* [.YawRollPitch](#H3DU.Math.YawRollPitch)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalYawRollPitch instead.</b>
 
 ### Methods
 
-* [.quatCopy](#H3DU.Math.quatCopy)
-* [.quatDot](#H3DU.Math.quatDot)
-* [.quatInverse](#H3DU.Math.quatInverse)
-* [.quatLength](#H3DU.Math.quatLength)
-* [.quatNorm](#H3DU.Math.quatNorm)
-* [.quatNormInPlace](#H3DU.Math.quatNormInPlace)
-* [.quatScale](#H3DU.Math.quatScale)
-* [.quatScaleInPlace](#H3DU.Math.quatScaleInPlace)
-* [boxCenter](#H3DU.Math.boxCenter)
-* [boxDimensions](#H3DU.Math.boxDimensions)
-* [boxIsEmpty](#H3DU.Math.boxIsEmpty)
-* [frustumHasBox](#H3DU.Math.frustumHasBox)
-* [frustumHasPoint](#H3DU.Math.frustumHasPoint)
-* [frustumHasSphere](#H3DU.Math.frustumHasSphere)
-* [mat3identity](#H3DU.Math.mat3identity)
-* [mat3transform](#H3DU.Math.mat3transform)
-* [mat4copy](#H3DU.Math.mat4copy)
-* [mat4frustum](#H3DU.Math.mat4frustum)
-* [mat4identity](#H3DU.Math.mat4identity)
-* [mat4inverseTranspose3](#H3DU.Math.mat4inverseTranspose3)
-* [mat4invert](#H3DU.Math.mat4invert)
-* [mat4isIdentity](#H3DU.Math.mat4isIdentity)
-* [mat4lookat](#H3DU.Math.mat4lookat)
-* [mat4multiply](#H3DU.Math.mat4multiply)
-* [mat4ortho](#H3DU.Math.mat4ortho)
-* [mat4ortho2d](#H3DU.Math.mat4ortho2d)
-* [mat4ortho2dAspect](#H3DU.Math.mat4ortho2dAspect)
-* [mat4orthoAspect](#H3DU.Math.mat4orthoAspect)
-* [mat4perspective](#H3DU.Math.mat4perspective)
-* [mat4perspectiveHorizontal](#H3DU.Math.mat4perspectiveHorizontal)
-* [mat4projectVec3](#H3DU.Math.mat4projectVec3)
-* [mat4rotate](#H3DU.Math.mat4rotate)
-* [mat4rotated](#H3DU.Math.mat4rotated)
-* [mat4scale](#H3DU.Math.mat4scale)
-* [mat4scaleInPlace](#H3DU.Math.mat4scaleInPlace)
-* [mat4scaled](#H3DU.Math.mat4scaled)
-* [mat4toFrustumPlanes](#H3DU.Math.mat4toFrustumPlanes)
-* [mat4toMat3](#H3DU.Math.mat4toMat3)
-* [mat4transform](#H3DU.Math.mat4transform)
-* [mat4transformVec3](#H3DU.Math.mat4transformVec3)
-* [mat4translate](#H3DU.Math.mat4translate)
-* [mat4translated](#H3DU.Math.mat4translated)
-* [mat4transpose](#H3DU.Math.mat4transpose)
-* [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)
-* [planeNorm](#H3DU.Math.planeNorm)
-* [planeNormInPlace](#H3DU.Math.planeNormInPlace)
-* [quatConjugate](#H3DU.Math.quatConjugate)
-* [quatFromAxisAngle](#H3DU.Math.quatFromAxisAngle)
-* [quatFromMat4](#H3DU.Math.quatFromMat4)
-* [quatFromTaitBryan](#H3DU.Math.quatFromTaitBryan)
-* [quatFromVectors](#H3DU.Math.quatFromVectors)
-* [quatIdentity](#H3DU.Math.quatIdentity)
-* [quatInvert](#H3DU.Math.quatInvert)
+* [.quatCopy](#H3DU.Math.quatCopy)<br>Returns a copy of a quaternion.
+* [.quatDot](#H3DU.Math.quatDot)<br>Finds the dot product of two quaternions.
+* [.quatInverse](#H3DU.Math.quatInverse)<br><b>Deprecated: Use H3DU.Math.quatInvert instead.</b>
+* [.quatLength](#H3DU.Math.quatLength)<br>Returns the distance of this quaternion from the origin.
+* [.quatNorm](#H3DU.Math.quatNorm)<br>Converts a quaternion to its normalized version; returns a new quaternion.
+* [.quatNormInPlace](#H3DU.Math.quatNormInPlace)<br>Converts a quaternion to its normalized version.
+* [.quatScale](#H3DU.Math.quatScale)<br>Multiplies each element of a quaternion by a factor
+and returns the result as a new quaternion.
+* [.quatScaleInPlace](#H3DU.Math.quatScaleInPlace)<br>Multiplies each element of a quaternion by a factor
+and stores the result in that quaternion.
+* [boxCenter](#H3DU.Math.boxCenter)<br>Finds the center of a 3D bounding box.
+* [boxDimensions](#H3DU.Math.boxDimensions)<br>Finds the dimensions of a 3D bounding box.
+* [boxIsEmpty](#H3DU.Math.boxIsEmpty)<br>Determines whether a 3D bounding box is empty.
+* [frustumHasBox](#H3DU.Math.frustumHasBox)<br>Determines whether an axis-aligned bounding box
+is at least partially inside a view frustum.
+* [frustumHasPoint](#H3DU.Math.frustumHasPoint)<br>Determines whether a point is
+outside or inside a view frustum.
+* [frustumHasSphere](#H3DU.Math.frustumHasSphere)<br>Determines whether a sphere is at least
+partially inside a view frustum.
+* [mat3identity](#H3DU.Math.mat3identity)<br>Returns the identity 3x3 matrix (a matrix that keeps
+vectors unchanged when they are transformed with this matrix).
+* [mat3transform](#H3DU.Math.mat3transform)<br>Transforms a 3-element vector with a 3x3 matrix and returns
+the transformed vector.
+* [mat4copy](#H3DU.Math.mat4copy)<br>Returns a copy of a 4x4 matrix.
+* [mat4frustum](#H3DU.Math.mat4frustum)<br>Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>
+in the form of a view frustum, or the limits in the "camera"'s view.
+* [mat4identity](#H3DU.Math.mat4identity)<br>Returns the identity 4x4 matrix (a matrix that keeps
+vectors unchanged when they are transformed with this matrix).
+* [mat4inverseTranspose3](#H3DU.Math.mat4inverseTranspose3)<br>Returns the transposed result of the inverted 3x3 upper left corner of
+the given 4x4 matrix.
+* [mat4invert](#H3DU.Math.mat4invert)<br>Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
+* [mat4isIdentity](#H3DU.Math.mat4isIdentity)<br>Returns whether a 4x4 matrix is the identity matrix.
+* [mat4lookat](#H3DU.Math.mat4lookat)<br>Returns a 4x4 matrix representing a camera view.
+* [mat4multiply](#H3DU.Math.mat4multiply)<br>Multiplies two 4x4 matrices.
+* [mat4ortho](#H3DU.Math.mat4ortho)<br>Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
+* [mat4ortho2d](#H3DU.Math.mat4ortho2d)<br>Returns a 4x4 matrix representing a 2D orthographic projection.
+* [mat4ortho2dAspect](#H3DU.Math.mat4ortho2dAspect)<br>Returns a 4x4 matrix representing a 2D orthographic projection,
+retaining the view rectangle's aspect ratio.
+* [mat4orthoAspect](#H3DU.Math.mat4orthoAspect)<br>Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
+retaining the view rectangle's aspect ratio.
+* [mat4perspective](#H3DU.Math.mat4perspective)<br>Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>.
+* [mat4perspectiveHorizontal](#H3DU.Math.mat4perspectiveHorizontal)<br>Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
+given an X-axis field of view.
+* [mat4projectVec3](#H3DU.Math.mat4projectVec3)<br>Transforms a 3-element vector with a 4x4 matrix and returns
+a perspective-correct version of the vector as a 3D point.
+* [mat4rotate](#H3DU.Math.mat4rotate)<br>Multiplies a 4x4 matrix by a rotation transformation,
+and returns a new matrix.
+* [mat4rotated](#H3DU.Math.mat4rotated)<br>Returns a 4x4 matrix representing a rotation transformation.
+* [mat4scale](#H3DU.Math.mat4scale)<br>Multiplies a 4x4 matrix by a scaling transformation.
+* [mat4scaleInPlace](#H3DU.Math.mat4scaleInPlace)<br>Modifies a 4x4 matrix by multiplying it by a
+scaling transformation.
+* [mat4scaled](#H3DU.Math.mat4scaled)<br>Returns a 4x4 matrix representing a scaling transformation.
+* [mat4toFrustumPlanes](#H3DU.Math.mat4toFrustumPlanes)<br>Finds the six clipping planes of a view frustum defined
+by a 4x4 matrix.
+* [mat4toMat3](#H3DU.Math.mat4toMat3)<br>Returns the upper-left part of a 4x4 matrix as a new
+3x3 matrix.
+* [mat4transform](#H3DU.Math.mat4transform)<br>Transforms a 4-element vector with a 4x4 matrix and returns
+the transformed vector.
+* [mat4transformVec3](#H3DU.Math.mat4transformVec3)<br>Transforms a 3-element vector with the first three rows
+of a 4x4 matrix (in column-major order) and returns the transformed vector.
+* [mat4translate](#H3DU.Math.mat4translate)<br>Multiplies a 4x4 matrix by a translation transformation.
+* [mat4translated](#H3DU.Math.mat4translated)<br>Returns a 4x4 matrix representing a translation.
+* [mat4transpose](#H3DU.Math.mat4transpose)<br>Returns the transpose of a 4x4 matrix.
+* [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)<br>Transposes a 4x4 matrix in place without creating
+a new matrix.
+* [planeNorm](#H3DU.Math.planeNorm)<br>Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+unless all the normal's components are 0.
+* [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br>Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+unless all the normal's components are 0.
+* [quatConjugate](#H3DU.Math.quatConjugate)<br>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation; this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's axis of rotation).
+* [quatFromAxisAngle](#H3DU.Math.quatFromAxisAngle)<br>Generates a quaternion from an angle and axis of rotation.
+* [quatFromMat4](#H3DU.Math.quatFromMat4)<br>Generates a quaternion from the rotation described in a 4x4 matrix.
+* [quatFromTaitBryan](#H3DU.Math.quatFromTaitBryan)<br>Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
+* [quatFromVectors](#H3DU.Math.quatFromVectors)<br>Generates a quaternion describing a rotation between
+two 3-element vectors.
+* [quatIdentity](#H3DU.Math.quatIdentity)<br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).
+* [quatInvert](#H3DU.Math.quatInvert)<br>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
+and converts this quaternion to a unit vector (a "normalized" vector with a length of 1).
 * [quatIsIdentity](#H3DU.Math.quatIsIdentity)
-* [quatMultiply](#H3DU.Math.quatMultiply)
-* [quatNlerp](#H3DU.Math.quatNlerp)
-* [quatRotate](#H3DU.Math.quatRotate)
-* [quatSlerp](#H3DU.Math.quatSlerp)
-* [quatToAxisAngle](#H3DU.Math.quatToAxisAngle)
-* [quatToMat4](#H3DU.Math.quatToMat4)
-* [quatToTaitBryan](#H3DU.Math.quatToTaitBryan)
-* [quatTransform](#H3DU.Math.quatTransform)
-* [vec3abs](#H3DU.Math.vec3abs)
-* [vec3absInPlace](#H3DU.Math.vec3absInPlace)
-* [vec3add](#H3DU.Math.vec3add)
-* [vec3addInPlace](#H3DU.Math.vec3addInPlace)
-* [vec3assign](#H3DU.Math.vec3assign)
-* [vec3copy](#H3DU.Math.vec3copy)
-* [vec3cross](#H3DU.Math.vec3cross)
-* [vec3dist](#H3DU.Math.vec3dist)
-* [vec3dot](#H3DU.Math.vec3dot)
-* [vec3length](#H3DU.Math.vec3length)
-* [vec3lerp](#H3DU.Math.vec3lerp)
-* [vec3mul](#H3DU.Math.vec3mul)
-* [vec3mulInPlace](#H3DU.Math.vec3mulInPlace)
-* [vec3negate](#H3DU.Math.vec3negate)
-* [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)
-* [vec3norm](#H3DU.Math.vec3norm)
-* [vec3normInPlace](#H3DU.Math.vec3normInPlace)
-* [vec3perp](#H3DU.Math.vec3perp)
-* [vec3scale](#H3DU.Math.vec3scale)
-* [vec3scaleInPlace](#H3DU.Math.vec3scaleInPlace)
-* [vec3sub](#H3DU.Math.vec3sub)
-* [vec3subInPlace](#H3DU.Math.vec3subInPlace)
-* [vec3toWindowPoint](#H3DU.Math.vec3toWindowPoint)
-* [vec3triple](#H3DU.Math.vec3triple)
-* [vec4abs](#H3DU.Math.vec4abs)
-* [vec4absInPlace](#H3DU.Math.vec4absInPlace)
-* [vec4assign](#H3DU.Math.vec4assign)
-* [vec4copy](#H3DU.Math.vec4copy)
-* [vec4dot](#H3DU.Math.vec4dot)
-* [vec4length](#H3DU.Math.vec4length)
-* [vec4lerp](#H3DU.Math.vec4lerp)
-* [vec4negate](#H3DU.Math.vec4negate)
-* [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)
-* [vec4norm](#H3DU.Math.vec4norm)
-* [vec4normInPlace](#H3DU.Math.vec4normInPlace)
-* [vec4scale](#H3DU.Math.vec4scale)
-* [vec4scaleInPlace](#H3DU.Math.vec4scaleInPlace)
+* [quatMultiply](#H3DU.Math.quatMultiply)<br>Multiplies two quaternions, creating a composite rotation.
+* [quatNlerp](#H3DU.Math.quatNlerp)<br>Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a linear interpolation function, and converts
+it to a unit vector (a "normalized" vector with a length of 1).
+* [quatRotate](#H3DU.Math.quatRotate)<br>Multiplies a quaternion by a rotation transformation
+described as an angle and axis of rotation.
+* [quatSlerp](#H3DU.Math.quatSlerp)<br>Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a spherical interpolation function.
+* [quatToAxisAngle](#H3DU.Math.quatToAxisAngle)<br>Calculates the angle and axis of rotation for this
+quaternion.
+* [quatToMat4](#H3DU.Math.quatToMat4)<br>Generates a 4x4 matrix describing the rotation
+described by this quaternion.
+* [quatToTaitBryan](#H3DU.Math.quatToTaitBryan)<br>Converts this quaternion to the same version of the rotation
+in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
+* [quatTransform](#H3DU.Math.quatTransform)<br>Transforms a 3- or 4-element vector using a quaternion's rotation.
+* [vec3abs](#H3DU.Math.vec3abs)<br>Returns a new 3-element
+vector with the absolute value of each of its components.
+* [vec3absInPlace](#H3DU.Math.vec3absInPlace)<br>Sets each component of the given 3-element
+vector to its absolute value.
+* [vec3add](#H3DU.Math.vec3add)<br>Adds two 3-element vectors and returns a new
+vector with the result.
+* [vec3addInPlace](#H3DU.Math.vec3addInPlace)<br>Adds two 3-element vectors and stores
+the result in the first vector.
+* [vec3assign](#H3DU.Math.vec3assign)<br>Assigns the values of a 3-element vector into another
+3-element vector.
+* [vec3copy](#H3DU.Math.vec3copy)<br>Returns a copy of a 3-element vector.
+* [vec3cross](#H3DU.Math.vec3cross)<br>Finds the cross product of two 3-element vectors (called A and B).
+* [vec3dist](#H3DU.Math.vec3dist)<br>Finds the cartesian distance from one three-element vector
+to another, treating both as 3D points.
+* [vec3dot](#H3DU.Math.vec3dot)<br>Finds the dot product of two 3-element vectors.
+* [vec3length](#H3DU.Math.vec3length)<br>Returns the distance of this 3-element vector from the origin.
+* [vec3lerp](#H3DU.Math.vec3lerp)<br>Does a linear interpolation between two 3-element vectors;
+returns a new vector.
+* [vec3mul](#H3DU.Math.vec3mul)<br>Multiplies two vectors and returns a new
+vector with the result.
+* [vec3mulInPlace](#H3DU.Math.vec3mulInPlace)<br>Multiplies two 3-element vectors and stores
+the result in the first vector.
+* [vec3negate](#H3DU.Math.vec3negate)<br>Negates a 3-element vector and returns a new
+vector with the result, which is generally a vector with
+the same length but opposite direction.
+* [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)<br>Negates a 3-element vector in place.
+* [vec3norm](#H3DU.Math.vec3norm)<br>Returns a normalized version of a 3-element vector.
+* [vec3normInPlace](#H3DU.Math.vec3normInPlace)<br>Converts a 3-element vector to its normalized version.
+* [vec3perp](#H3DU.Math.vec3perp)<br>Returns an arbitrary 3-element vector that is perpendicular
+(orthogonal) to the given 3-element vector.
+* [vec3scale](#H3DU.Math.vec3scale)<br>Multiplies a 3-element vector by a factor
+(thus multiplying that vector's length by that factor)
+and returns a new vector with the result.
+* [vec3scaleInPlace](#H3DU.Math.vec3scaleInPlace)<br>Multiplies each element of a 3-element vector by a factor
+(thus multiplying that vector's length by that factor)
+and stores the result in that vector.
+* [vec3sub](#H3DU.Math.vec3sub)<br>Subtracts the second vector from the first vector and returns a new
+vector with the result.
+* [vec3subInPlace](#H3DU.Math.vec3subInPlace)<br>Subtracts the second vector from the first vector and stores
+the result in the first vector.
+* [vec3toWindowPoint](#H3DU.Math.vec3toWindowPoint)<br>Transforms the 3D point specified in this 3-element vector to its X
+and Y <i>window coordinates</i>, and its projected Z coordinate,
+using the given transformation matrix and viewport
+width and height.
+* [vec3triple](#H3DU.Math.vec3triple)<br>Finds the scalar triple product of three vectors (A, B, and C).
+* [vec4abs](#H3DU.Math.vec4abs)<br>Returns a new 4-element
+vector with the absolute value of each of its components.
+* [vec4absInPlace](#H3DU.Math.vec4absInPlace)<br>Sets each component of the given 4-element
+vector to its absolute value.
+* [vec4assign](#H3DU.Math.vec4assign)<br>Assigns the values of a 4-element vector into another
+4-element vector.
+* [vec4copy](#H3DU.Math.vec4copy)<br>Returns a copy of a 4-element vector.
+* [vec4dot](#H3DU.Math.vec4dot)<br>Finds the dot product of two 4-element vectors.
+* [vec4length](#H3DU.Math.vec4length)<br>Returns the distance of this 4-element vector from the origin.
+* [vec4lerp](#H3DU.Math.vec4lerp)<br>Does a linear interpolation between two 4-element vectors;
+returns a new vector.
+* [vec4negate](#H3DU.Math.vec4negate)<br>Negates a 4-element vector and returns a new
+vector with the result, which is generally a vector with
+the same length but opposite direction.
+* [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)<br>Negates a 4-element vector in place.
+* [vec4norm](#H3DU.Math.vec4norm)<br>Returns a normalized version of a 4-element vector.
+* [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br>Converts a 4-element vector to its normalized version.
+* [vec4scale](#H3DU.Math.vec4scale)<br>Multiplies each element of a 4-element vector by a factor
+(thus multiplying that vector's length by that factor)
+and returns a new vector with the result.
+* [vec4scaleInPlace](#H3DU.Math.vec4scaleInPlace)<br>Multiplies each element of a 4-element vector by a factor
+(thus multiplying that vector's length by that factor)
+and stores the result in that vector.
 
 ### H3DU.Math.GlobalPitchRollYaw <a id='H3DU.Math.GlobalPitchRollYaw'></a> (constant)
 
@@ -581,7 +661,7 @@ Return value. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4frustum(l, r, b, t, near, far) <a id='H3DU.Math.mat4frustum'></a>
 
-Returns a 4x4 matrix representing a perspective projection
+Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>
 in the form of a view frustum, or the limits in the "camera"'s view.
 
 This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
@@ -718,7 +798,7 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4ortho(l, r, b, t, n, f) <a id='H3DU.Math.mat4ortho'></a>
 
-Returns a 4x4 matrix representing an orthographic projection.
+Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
 In this projection, the left clipping plane is parallel to the right clipping
 plane and the top to the bottom.
 
@@ -807,7 +887,7 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4orthoAspect(l, r, b, t, n, f, aspect) <a id='H3DU.Math.mat4orthoAspect'></a>
 
-Returns a 4x4 matrix representing an orthographic projection,
+Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
 
 If the view rectangle's aspect ratio doesn't match the desired aspect
@@ -843,7 +923,7 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4perspective(fovY, aspectRatio, near, far) <a id='H3DU.Math.mat4perspective'></a>
 
-Returns a 4x4 matrix representing a perspective projection.
+Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>.
 
 This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -869,7 +949,7 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4perspectiveHorizontal(fovX, aspectRatio, near, far) <a id='H3DU.Math.mat4perspectiveHorizontal'></a>
 
-Returns a 4x4 matrix representing a perspective projection,
+Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
 given an X-axis field of view.
 This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,

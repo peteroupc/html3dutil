@@ -26,24 +26,31 @@ see the H3DU.Material#setParams method.</i>
 
 ### Members
 
-* [ambient](#H3DU.Material_ambient)
-* [basic](#H3DU.Material_basic)
-* [diffuse](#H3DU.Material_diffuse)
-* [emission](#H3DU.Material_emission)
-* [normalMap](#H3DU.Material_normalMap)
-* [shader](#H3DU.Material_shader)
-* [shininess](#H3DU.Material_shininess)
-* [specular](#H3DU.Material_specular)
-* [specularMap](#H3DU.Material_specularMap)
-* [texture](#H3DU.Material_texture)
+* [ambient](#H3DU.Material_ambient)<br>Ambient color of this material.
+* [basic](#H3DU.Material_basic)<br>If true, only the "diffuse" and "texture" properties of this object are used
+when processing objects that use this material.
+* [diffuse](#H3DU.Material_diffuse)<br>Diffusion color of this material (also called "albedo").
+* [emission](#H3DU.Material_emission)<br>Additive color emitted by objects with this material.
+* [normalMap](#H3DU.Material_normalMap)<br>Normal map (bump map) texture.
+* [shader](#H3DU.Material_shader)<br>Shader program to use when rendering objects with this material.
+* [shininess](#H3DU.Material_shininess)<br>Specular highlight exponent of this material.
+* [specular](#H3DU.Material_specular)<br>Specular highlight reflection of this material.
+* [specularMap](#H3DU.Material_specularMap)<br>Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
+each part of the object's surface (note that the material must have a specular color of other
+than the default black for this to have an effect).
+* [texture](#H3DU.Material_texture)<br>H3DU.Texture for this material.
 
 ### Methods
 
-* [.forShader](#H3DU.Material.forShader)
-* [.fromColor](#H3DU.Material.fromColor)
-* [.fromTexture](#H3DU.Material.fromTexture)
-* [copy](#H3DU.Material_H3DU.Material_copy)
-* [setParams](#H3DU.Material_H3DU.Material_setParams)
+* [.forShader](#H3DU.Material.forShader)<br>Convenience method that returns an H3DU.Material
+object from a shader information object to use when drawing a 3D object.
+* [.fromColor](#H3DU.Material.fromColor)<br>Convenience method that returns an H3DU.Material
+object from an RGBA color.
+* [.fromTexture](#H3DU.Material.fromTexture)<br>Convenience method that returns an H3DU.Material
+object from a texture to apply to a 3D object's surface.
+* [copy](#H3DU.Material_H3DU.Material_copy)<br>Clones this object's parameters to a new H3DU.Material
+object and returns that object.
+* [setParams](#H3DU.Material_H3DU.Material_setParams)<br>Sets parameters for this material object.
 
 ### H3DU.Material#ambient <a id='H3DU.Material_ambient'></a>
 

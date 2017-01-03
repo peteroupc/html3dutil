@@ -182,15 +182,15 @@ H3DU.Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
 };
 /**
 * Sets this shape's material parameters.
-* @param {@link Material} material The material object to use.
+* @param {H3DU.Material} material The material object to use.
 * This parameter can't be a {@link H3DU.Texture} object.
  * @returns {H3DU.Shape} This object.
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setMaterial = function(material) {
   "use strict";
-  if(material && material.instanceof H3DU.Texture)
-  throw new Error("Material parameter can't directly be a Texture");
+  if(material && material instanceof H3DU.Texture)
+    throw new Error("Material parameter can't directly be a Texture");
   this.material = material;
   return this;
 };

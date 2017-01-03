@@ -26,18 +26,29 @@ A parametric evaluator for B-spline (basis spline) curves.
 
 ### Members
 
-* [.DIVIDE_BIT](#H3DU.BSplineCurve.DIVIDE_BIT)
-* [.HOMOGENEOUS_BIT](#H3DU.BSplineCurve.HOMOGENEOUS_BIT)
-* [.WEIGHTED_BIT](#H3DU.BSplineCurve.WEIGHTED_BIT)
-* [.WEIGHTED_DIVIDE_BITS](#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS)
+* [.DIVIDE_BIT](#H3DU.BSplineCurve.DIVIDE_BIT)<br>Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate.
+* [.HOMOGENEOUS_BIT](#H3DU.BSplineCurve.HOMOGENEOUS_BIT)<br>Indicates that each other coordinate of each control point
+was premultiplied by the last coordinate of the point, that is,
+each control point is in homogeneous coordinates.
+* [.WEIGHTED_BIT](#H3DU.BSplineCurve.WEIGHTED_BIT)<br>Indicates whether the last coordinate of each control point is a
+weight.
+* [.WEIGHTED_DIVIDE_BITS](#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS)<br>Combination of WEIGHTED_BIT and DIVIDE_BIT.
 
 ### Methods
 
-* [.clamped](#H3DU.BSplineCurve.clamped)
-* [.clampedKnots](#H3DU.BSplineCurve.clampedKnots)
-* [.uniform](#H3DU.BSplineCurve.uniform)
-* [.uniformKnots](#H3DU.BSplineCurve.uniformKnots)
-* [evaluate](#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate)
+* [.clamped](#H3DU.BSplineCurve.clamped)<br>Creates a B-spline curve with uniform knots, except that
+the curve will start and end at the first and last control points.
+* [.clampedKnots](#H3DU.BSplineCurve.clampedKnots)<br>Generates a knot vector with uniform knots, to be
+passed to the H3DU.BSplineCurve or H3DU.BSplineCurve constructor,
+except that with the knot vector, the curve will start and end at the
+first and last control points.
+* [.uniform](#H3DU.BSplineCurve.uniform)<br>Creates a B-spline curve with uniform knots.
+* [.uniformKnots](#H3DU.BSplineCurve.uniformKnots)<br>Generates a knot vector with uniform knots, to be
+passed to the H3DU.BSplineCurve or H3DU.BSplineCurve constructor.
+* [evaluate](#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate)<br>Evaluates the curve function based on a point
+in a B-spline curve.
 
 ### H3DU.BSplineCurve.DIVIDE_BIT <a id='H3DU.BSplineCurve.DIVIDE_BIT'></a> (constant)
 

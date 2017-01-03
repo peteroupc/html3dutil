@@ -66,15 +66,16 @@ function Doc(name) {
   this.methods = {};
   this.events = {};
   this.members = {};
+  this.descriptions = {};
   this.name = name;
   this.getFileName = function() {
     return path.join(Doc.outputDir,
          Doc.typeToName(this.name));
   };
-  this.getText = function() {
+  this.getText = function(docs) {
     var entry = this.entry + this.constructorEntry;
     var keys;
-    function memToIndex(mem, title) {
+    function memToIndex(mem, title, docs) {
       if(Object.keys(mem).length > 0) {
         var indexStr = "### " + helper.htmlsafe(title) + "\n\n";
         Object.keys(mem).sort().forEach(function(name) {
@@ -83,6 +84,10 @@ function Doc(name) {
           if(hname.lastIndexOf("#") >= 0)
             hname = hname.substr(hname.lastIndexOf("#") + 1);
           var tname = "[" + helper.htmlsafe(hname) + "](#" + val[1] + ")";
+          var tdesc = docs.descriptions[val[2]];
+          if(tdesc) {
+            tname += "<br>" + tdesc;
+          }
           indexStr += "* " + tname + "\n";
         });
         return indexStr + "\n";
@@ -90,9 +95,9 @@ function Doc(name) {
         return "";
       }
     }
-    entry += memToIndex(this.members, "Members");
-    entry += memToIndex(this.events, "Events");
-    entry += memToIndex(this.methods, "Methods");
+    entry += memToIndex(this.members, "Members", docs);
+    entry += memToIndex(this.events, "Events", docs);
+    entry += memToIndex(this.methods, "Methods", docs);
     keys = Object.keys(this.members).sort();
     for(var i = 0;i < keys.length;i++) {
       entry += this.members[keys[i]][0];
@@ -133,13 +138,13 @@ function DocCollection() {
     return this.docs[parent];
   };
   this.addMethod = function(parent, name, entry, longname) {
-    this.get(parent).methods[name] = [entry, Doc.toHash(longname)];
+    this.get(parent).methods[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addEvent = function(parent, name, entry, longname) {
-    this.get(parent).events[name] = [entry, Doc.toHash(longname)];
+    this.get(parent).events[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addMember = function(parent, name, entry, longname) {
-    this.get(parent).members[name] = [entry, Doc.toHash(longname)];
+    this.get(parent).members[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addConstructor = function(parent, entry) {
     this.get(parent).constructorEntry = entry;
@@ -152,13 +157,17 @@ function DocCollection() {
      // Write individual type files
     Object.keys(this.docs).forEach(function(doc) {
       fs.writeFileSync(that.docs[doc].getFileName(),
-         normalizeLines(that.docs[doc].getText()), "utf8");
+         normalizeLines(that.docs[doc].getText(that)), "utf8");
     });
     // Write index
     var indexStr = "# Documentation Index\n\n";
     Object.keys(this.typeNames).sort().forEach(function(name) {
       var tname = name;
       tname = helper.linkto(tname, helper.htmlsafe(tname));
+      var tdesc = that.descriptions[name];
+      if(tdesc) {
+        tname += "<br>" + tdesc;
+      }
       indexStr += "* " + tname + "\n";
     });
     indexStr += "\n";
@@ -224,6 +233,37 @@ function typeNames(nodes) {
     names[node.longname] = true;
   });
   return names;
+}
+
+function descriptions(nodes) {
+  "use strict";
+  var descriptions = {};
+  nodes.forEach(function (node) {
+    if(node.undocumented === true)return;
+    if(node.access === "private") {
+      return;
+    }
+    var desc = "";
+    if(typeof node.deprecated !== "undefined" && node.deprecated !== null) {
+      var dep = node.deprecated === true ? "Yes" : node.deprecated;
+      desc = "<b>Deprecated: " + normspace(dep) + "</b>";
+    } else if(node.kind === "class") {
+      desc = normspace(node.classdesc || "") + " ";
+      desc += normspace(node.description || "");
+   // We only need the first "sentence" of the description
+      desc = desc.replace(/\.\s+[\s\S]*$/, ".");
+    } else {
+      desc = normspace(node.description || "");
+        // We only need the first "sentence" of the description
+      desc = desc.replace(/\.\s+[\s\S]*$/, ".");
+    }
+    desc = desc.replace(/^\s+/, "");
+    desc = desc.replace(/\s+$/, "");
+    if(desc.length > 0) {
+      descriptions[node.longname] = desc;
+    }
+  });
+  return descriptions;
 }
 
 function registerLinks(docCollection, nodes) {
@@ -402,14 +442,13 @@ function fillCollection(docCollection, nodes, parentlong) {
 exports.publish = function(input, o, t) {
   "use strict";
   helper.fileExtension = ".md";
-  console.log(Object.keys(t));
   helper.setTutorials(t);
   var inputget = input().get();
   var docCollection = new DocCollection();
   docCollection.tutorials = t;
   docCollection.readme = o.readme;
+  docCollection.descriptions = descriptions(inputget);
   docCollection.typeNames = typeNames(inputget);
-  console.log(o.readme);
   registerLinks(docCollection, inputget);
   fillCollection(docCollection, inputget);
   docCollection.write();

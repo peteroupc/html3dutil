@@ -28,8 +28,7 @@
   }
 
   /**
-   * A promise - value to be resolved in the future.
-   * Implements the "Promises/A+ 1.1" specification.
+   * A promise holds a value to be resolved in the future.
    * @class
    * @alias Promise
    * @param {Function} [resolver] Function that takes

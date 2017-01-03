@@ -10,21 +10,24 @@ position, and light sources to illuminate the 3D scene.
 
 ### Methods
 
-* [.forFilter](#H3DU.Batch3D.forFilter)
-* [addShape](#H3DU.Batch3D_H3DU.Batch3D_addShape)
-* [getLights](#H3DU.Batch3D_H3DU.Batch3D_getLights)
-* [getProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_getProjectionMatrix)
-* [getViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_getViewMatrix)
-* [ortho2DAspect](#H3DU.Batch3D_H3DU.Batch3D_ortho2DAspect)
-* [orthoAspect](#H3DU.Batch3D_H3DU.Batch3D_orthoAspect)
-* [perspectiveAspect](#H3DU.Batch3D_H3DU.Batch3D_perspectiveAspect)
-* [primitiveCount](#H3DU.Batch3D_H3DU.Batch3D_primitiveCount)
-* [removeShape](#H3DU.Batch3D_H3DU.Batch3D_removeShape)
-* [render](#H3DU.Batch3D_H3DU.Batch3D_render)
-* [setLookAt](#H3DU.Batch3D_H3DU.Batch3D_setLookAt)
-* [setProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_setProjectionMatrix)
-* [setViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_setViewMatrix)
-* [vertexCount](#H3DU.Batch3D_H3DU.Batch3D_vertexCount)
+* [.forFilter](#H3DU.Batch3D.forFilter)<br>Creates a batch whose purpose is to render the contents
+of a frame buffer using a particular shader.
+* [addShape](#H3DU.Batch3D_H3DU.Batch3D_addShape)<br>Adds a 3D shape to this batch of shapes.
+* [getLights](#H3DU.Batch3D_H3DU.Batch3D_getLights)<br>Gets the light sources used by this batch.
+* [getProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_getProjectionMatrix)<br>Gets the current projection matrix for this batch of shapes.
+* [getViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_getViewMatrix)<br>Gets the current view matrix for this batch of shapes.
+* [ortho2DAspect](#H3DU.Batch3D_H3DU.Batch3D_ortho2DAspect)<br>Uses a 2D orthographic projection for this batch.
+* [orthoAspect](#H3DU.Batch3D_H3DU.Batch3D_orthoAspect)<br>Uses an orthographic projection for this batch.
+* [perspectiveAspect](#H3DU.Batch3D_H3DU.Batch3D_perspectiveAspect)<br>Uses a perspective projection for this batch.
+* [primitiveCount](#H3DU.Batch3D_H3DU.Batch3D_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this batch of shapes.
+* [removeShape](#H3DU.Batch3D_H3DU.Batch3D_removeShape)<br>Removes all instances of a 3D shape from this batch of shapes.
+* [render](#H3DU.Batch3D_H3DU.Batch3D_render)<br>Renders this batch using the given scene object.
+* [setLookAt](#H3DU.Batch3D_H3DU.Batch3D_setLookAt)<br>Sets this batch's view matrix to represent a camera view.
+* [setProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_setProjectionMatrix)<br>Sets the projection matrix for this batch.
+* [setViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_setViewMatrix)<br>Sets the current view matrix for this batch of shapes.
+* [vertexCount](#H3DU.Batch3D_H3DU.Batch3D_vertexCount)<br>Gets the number of vertices composed by
+all shapes in this batch of shapes.
 
 ### H3DU.Batch3D.forFilter(scene, fbo, shader) <a id='H3DU.Batch3D.forFilter'></a>
 
