@@ -25,11 +25,7 @@ H3DU.Math = {
 vector with the same length but opposite direction.
  * <li>If the cross product's length is 0, then A and B are parallel vectors.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-<<<<<<< HEAD
 The cross product vector will be such that, while the vector points toward the viewer,
-=======
-The cross product vector will be such that, whenever the vector points toward the viewer,
->>>>>>> 46648dcbdc510ab994e4eb259cdce8eae656c30c
 the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>If A and B are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the absolute value
@@ -183,6 +179,53 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
     return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
   },
 /**
+ * Returns a new 3-element
+ * vector with the absolute value of each of its components.
+ * @param {Array<Number>} a A 3-element vector.
+ * @returns {Array<Number>} The resulting 3-element vector.
+ */
+  "vec3abs":function(a) {
+    "use strict";
+    return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2])];
+  },
+/**
+ * Returns a new 4-element
+ * vector with the absolute value of each of its components.
+ * @param {Array<Number>} a A 4-element vector.
+ * @returns {Array<Number>} The resulting 4-element vector.
+ */
+  "vec4abs":function(a) {
+    "use strict";
+    return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2]), Math.abs(a[3])];
+  },
+/**
+ * Sets each component of the given 3-element
+ * vector to its absolute value.
+ * @param {Array<Number>} a A 3-element vector.
+ * @returns {Array<Number>} The vector "a".
+ */
+  "vec3absInPlace":function(a) {
+    "use strict";
+    a[0] = Math.abs(a[0]);
+    a[1] = Math.abs(a[1]);
+    a[2] = Math.abs(a[2]);
+    return a;
+  },
+/**
+ * Sets each component of the given 4-element
+ * vector to its absolute value.
+ * @param {Array<Number>} a A 4-element vector.
+ * @returns {Array<Number>} The vector "a".
+ */
+  "vec4absInPlace":function(a) {
+    "use strict";
+    a[0] = Math.abs(a[0]);
+    a[1] = Math.abs(a[1]);
+    a[2] = Math.abs(a[2]);
+    a[3] = Math.abs(a[3]);
+    return a;
+  },
+/**
  * Negates a 3-element vector and returns a new
  * vector with the result, which is generally a vector with
  * the same length but opposite direction.  Negating a vector
@@ -218,6 +261,21 @@ Negating a vector
     a[0] = -a[0];
     a[1] = -a[1];
     a[2] = -a[2];
+    return a;
+  },
+/**
+ * Negates a 4-element vector in place.
+Negating a vector
+ * is the same as reversing the sign of each of its components.
+ * @param {Array<Number>} a A 4-element vector.
+ * @returns {Array<Number>} The parameter "a".
+ */
+  "vec4negateInPlace":function(a) {
+    "use strict";
+    a[0] = -a[0];
+    a[1] = -a[1];
+    a[2] = -a[2];
+    a[3] = -a[3];
     return a;
   },
 /**
@@ -2348,7 +2406,7 @@ m[0] * m[7] * m[5];
     return true;
   },
 /**
-* Determines whether a bounding box is empty.
+* Determines whether a 3D bounding box is empty.
 * This is determined if the minimum coordinate
 * is larger than the corresponding maximum coordinate.
 * @param {Array<Number>} box An axis-aligned bounding
@@ -2362,7 +2420,42 @@ m[0] * m[7] * m[5];
 */
   "boxIsEmpty":function(box) {
     "use strict";
-    return !(box[0] <= box[3] && box[1] <= box[4] && box[2] <= box[5]);
+    return box[0] > box[3] || box[1] > box[4] || box[2] > box[5];
+  },
+/**
+* Finds the dimensions of a 3D bounding box.  This is done by subtracting
+* the first three values of the given array with its last three values.
+* @param {Array<Number>} box An axis-aligned bounding
+* box, which is an array of six values.
+* The first three values are the smallest X, Y, and Z coordinates,
+* and the last three values are the largest X, Y, and Z
+* coordinates.
+* @returns {Array<Number>} A 3-element array containing the
+* width, height, and depth of the bounding box, respectively. If
+* at least one of the minimum coordinates is greater than its
+* corresponding maximum coordinate, the array can contain
+* negative values.
+*/
+  "boxDimensions":function(box) {
+    "use strict";
+    return [box[3] - box[0], box[4] - box[1], box[5] - box[2]];
+  },
+/**
+* Finds the center of a 3D bounding box.
+* @param {Array<Number>} box An axis-aligned bounding
+* box, which is an array of six values.
+* The first three values are the smallest X, Y, and Z coordinates,
+* and the last three values are the largest X, Y, and Z
+* coordinates.
+* @returns {Array<Number>} A 3-element array containing the
+* X, Y, and Z coordinates, respectively, of the bounding box's
+* center.
+*/
+  "boxCenter":function(box) {
+    "use strict";
+    return [box[0] + (box[3] - box[0]) * 0.5,
+      box[1] + (box[4] - box[1]) * 0.5,
+      box[2] + (box[5] - box[2]) * 0.5];
   },
 /**
 * Determines whether an axis-aligned bounding box

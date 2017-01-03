@@ -47,6 +47,8 @@ See the tutorial "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for mo
 * [.quatNormInPlace](#H3DU.Math.quatNormInPlace)
 * [.quatScale](#H3DU.Math.quatScale)
 * [.quatScaleInPlace](#H3DU.Math.quatScaleInPlace)
+* [boxCenter](#H3DU.Math.boxCenter)
+* [boxDimensions](#H3DU.Math.boxDimensions)
 * [boxIsEmpty](#H3DU.Math.boxIsEmpty)
 * [frustumHasBox](#H3DU.Math.frustumHasBox)
 * [frustumHasPoint](#H3DU.Math.frustumHasPoint)
@@ -99,6 +101,8 @@ See the tutorial "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for mo
 * [quatToMat4](#H3DU.Math.quatToMat4)
 * [quatToTaitBryan](#H3DU.Math.quatToTaitBryan)
 * [quatTransform](#H3DU.Math.quatTransform)
+* [vec3abs](#H3DU.Math.vec3abs)
+* [vec3absInPlace](#H3DU.Math.vec3absInPlace)
 * [vec3add](#H3DU.Math.vec3add)
 * [vec3addInPlace](#H3DU.Math.vec3addInPlace)
 * [vec3assign](#H3DU.Math.vec3assign)
@@ -121,12 +125,15 @@ See the tutorial "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for mo
 * [vec3subInPlace](#H3DU.Math.vec3subInPlace)
 * [vec3toWindowPoint](#H3DU.Math.vec3toWindowPoint)
 * [vec3triple](#H3DU.Math.vec3triple)
+* [vec4abs](#H3DU.Math.vec4abs)
+* [vec4absInPlace](#H3DU.Math.vec4absInPlace)
 * [vec4assign](#H3DU.Math.vec4assign)
 * [vec4copy](#H3DU.Math.vec4copy)
 * [vec4dot](#H3DU.Math.vec4dot)
 * [vec4length](#H3DU.Math.vec4length)
 * [vec4lerp](#H3DU.Math.vec4lerp)
 * [vec4negate](#H3DU.Math.vec4negate)
+* [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)
 * [vec4norm](#H3DU.Math.vec4norm)
 * [vec4normInPlace](#H3DU.Math.vec4normInPlace)
 * [vec4scale](#H3DU.Math.vec4scale)
@@ -415,9 +422,42 @@ The parameter "a". (Type: Array.&lt;Number>)
 
 <a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
 
+### (static) H3DU.Math.boxCenter(box) <a id='H3DU.Math.boxCenter'></a>
+
+Finds the center of a 3D bounding box.
+
+#### Parameters
+
+* `box` (Type: Array.&lt;Number>)<br>
+    An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
+
+#### Return Value
+
+A 3-element array containing the
+X, Y, and Z coordinates, respectively, of the bounding box's
+center. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.boxDimensions(box) <a id='H3DU.Math.boxDimensions'></a>
+
+Finds the dimensions of a 3D bounding box. This is done by subtracting
+the first three values of the given array with its last three values.
+
+#### Parameters
+
+* `box` (Type: Array.&lt;Number>)<br>
+    An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
+
+#### Return Value
+
+A 3-element array containing the
+width, height, and depth of the bounding box, respectively. If
+at least one of the minimum coordinates is greater than its
+corresponding maximum coordinate, the array can contain
+negative values. (Type: Array.&lt;Number>)
+
 ### (static) H3DU.Math.boxIsEmpty(box) <a id='H3DU.Math.boxIsEmpty'></a>
 
-Determines whether a bounding box is empty.
+Determines whether a 3D bounding box is empty.
 This is determined if the minimum coordinate
 is larger than the corresponding maximum coordinate.
 
@@ -1492,6 +1532,34 @@ the transformed vector. The fourth element will be 1.0.
 If the input vector has 3 elements, a 3-element vector will
 be returned instead. (Type: Array.&lt;Number>)
 
+### (static) H3DU.Math.vec3abs(a) <a id='H3DU.Math.vec3abs'></a>
+
+Returns a new 3-element
+vector with the absolute value of each of its components.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    A 3-element vector.
+
+#### Return Value
+
+The resulting 3-element vector. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec3absInPlace(a) <a id='H3DU.Math.vec3absInPlace'></a>
+
+Sets each component of the given 3-element
+vector to its absolute value.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    A 3-element vector.
+
+#### Return Value
+
+The vector "a". (Type: Array.&lt;Number>)
+
 ### (static) H3DU.Math.vec3add(a, b) <a id='H3DU.Math.vec3add'></a>
 
 Adds two 3-element vectors and returns a new
@@ -1564,11 +1632,7 @@ The following are properties of the cross product:<ul>
 vector with the same length but opposite direction.
 <li>If the cross product's length is 0, then A and B are parallel vectors.
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-<<<<<<< HEAD
 The cross product vector will be such that, while the vector points toward the viewer,
-=======
-The cross product vector will be such that, whenever the vector points toward the viewer,
->>>>>>> 46648dcbdc510ab994e4eb259cdce8eae656c30c
 the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>If A and B are unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the absolute value
@@ -1987,6 +2051,34 @@ two vectors that lie on a plane with the given normal.
     // and in a clockwise direction for left-handed systems.
     angle*=(triple<0 ? -1.0 : 1.0);
 
+### (static) H3DU.Math.vec4abs(a) <a id='H3DU.Math.vec4abs'></a>
+
+Returns a new 4-element
+vector with the absolute value of each of its components.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    A 4-element vector.
+
+#### Return Value
+
+The resulting 4-element vector. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec4absInPlace(a) <a id='H3DU.Math.vec4absInPlace'></a>
+
+Sets each component of the given 4-element
+vector to its absolute value.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    A 4-element vector.
+
+#### Return Value
+
+The vector "a". (Type: Array.&lt;Number>)
+
 ### (static) H3DU.Math.vec4assign(dst, src) <a id='H3DU.Math.vec4assign'></a>
 
 Assigns the values of a 4-element vector into another
@@ -2090,6 +2182,21 @@ is the same as reversing the sign of each of its components.
 #### Return Value
 
 The resulting 4-element vector. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec4negateInPlace(a) <a id='H3DU.Math.vec4negateInPlace'></a>
+
+Negates a 4-element vector in place.
+Negating a vector
+is the same as reversing the sign of each of its components.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    A 4-element vector.
+
+#### Return Value
+
+The parameter "a". (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec4norm(vec) <a id='H3DU.Math.vec4norm'></a>
 

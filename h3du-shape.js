@@ -182,12 +182,15 @@ H3DU.Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
 };
 /**
 * Sets this shape's material parameters.
-* @param {Material} material The material object to use.
+* @param {@link Material} material The material object to use.
+* This parameter can't be a {@link H3DU.Texture} object.
  * @returns {H3DU.Shape} This object.
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setMaterial = function(material) {
   "use strict";
+  if(material && material.instanceof H3DU.Texture)
+  throw new Error("Material parameter can't directly be a Texture");
   this.material = material;
   return this;
 };
@@ -245,17 +248,53 @@ H3DU.Shape.prototype.getBounds = function() {
   var matrix = this.getMatrix();
   if(H3DU.Math.mat4isIdentity(matrix)) {
     return bounds.slice(0, 6);
-  } else {
-    var mn = H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]);
-    var mx = H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[5]);
+  } else if(matrix[1] === 0 && matrix[2] === 0 && matrix[3] === 0 &&
+    matrix[4] === 0 && matrix[6] === 0 && matrix[7] === 0 && matrix[8] === 0 &&
+    matrix[9] === 0 && matrix[11] === 0 && matrix[15] === 1) {
+      // just a scale and/or translate
+    var ret = [];
+    var t2 = matrix[0];
+    var t3 = matrix[12];
+    ret[0] = t2 * bounds[0] + t3;
+    var t4 = matrix[5];
+    var t5 = matrix[13];
+    ret[1] = t4 * bounds[1] + t5;
+    var t6 = matrix[10];
+    var t7 = matrix[14];
+    ret[2] = t6 * bounds[2] + t7;
+    var ret2 = [t2 * bounds[3] + t3, t4 * bounds[4] + t5, t6 * bounds[5] + t7];
     return [
-      Math.min(mn[0], mx[0]),
-      Math.min(mn[1], mx[1]),
-      Math.min(mn[2], mx[2]),
-      Math.max(mn[0], mx[0]),
-      Math.max(mn[1], mx[1]),
-      Math.max(mn[2], mx[2])
+      Math.min(ret[0], ret2[0]),
+      Math.min(ret[1], ret2[1]),
+      Math.min(ret[2], ret2[2]),
+      Math.max(ret[0], ret2[0]),
+      Math.max(ret[1], ret2[1]),
+      Math.max(ret[2], ret2[2])
     ];
+  } else {
+   // rotation, shear, and/or non-affine transformation
+    var boxVertices = [
+      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]),
+      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[5]),
+      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[2]),
+      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[5]),
+      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[1], bounds[2]),
+      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[1], bounds[5]),
+      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[2]),
+      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[5])
+    ];
+    var bv = boxVertices[0];
+    var retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
+    for(var i = 1;i < 8;i++) {
+      bv = boxVertices[i];
+      retval[0] = Math.min(retval[0], bv[0]);
+      retval[1] = Math.min(retval[1], bv[1]);
+      retval[2] = Math.min(retval[2], bv[2]);
+      retval[3] = Math.max(retval[3], bv[0]);
+      retval[4] = Math.max(retval[4], bv[1]);
+      retval[5] = Math.max(retval[5], bv[2]);
+    }
+    return retval;
   }
 };
 /** @private */

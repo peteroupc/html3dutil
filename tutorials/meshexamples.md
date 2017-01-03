@@ -85,7 +85,7 @@ This method creates a ring or disk striped in two colors.
     function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
      if(sectionCount==null)sectionCount=4
      var firstColor=true
-     var ret=new Mesh()
+     var ret=new H3DU.Mesh()
      var sweep=360.0/sections;
      for(var i=0;i<sections;i++){
       var angle=360.0*(i*1.0/sections);
@@ -146,4 +146,17 @@ This method creates a washer-shaped 3D model.
        .vertex3(tri[4],tri[5],z)
      }
      return mesh
+    }
+
+    function setBoxSizeAndBounds(shape,box){
+     shape.setPosition(H3DU.Math.boxCenter(box))
+     shape.setScale(H3DU.Math.boxDimensions(box))
+     return shape
+    }
+    function wireBox(box, color){
+      if(!color)color="gray";
+     var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
+     var shape=new H3DU.Shape(boxMesh).setColor(color)
+        .setMaterialParams({"basic":true})
+     return setBoxSizeAndBounds(shape,box)
     }
