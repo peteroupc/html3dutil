@@ -57,7 +57,7 @@ Example
    .perspectiveAspect(45,0.1,100)
    // Move the camera back 40 units.
    .setLookAt([0,0,40]);
-  sub.getLights().setDefaults();
+  sub.getLights().setBasic();
   // Create a box mesh 10 units in size
   var mesh=H3DU.Meshes.createBox(10,20,20);
   // Create a shape based on the mesh and give it a red color
@@ -89,10 +89,9 @@ information about what has changed in this library.
 About
 -----------
 
-Written in 2015-2016 by Peter O.
-
 Any copyright is dedicated to the Public Domain.
 [http://creativecommons.org/publicdomain/zero/1.0/](http://creativecommons.org/publicdomain/zero/1.0/)
 
-If you like this, you should donate to Peter O.
-at: [http://peteroupc.github.io/](http://peteroupc.github.io/)
+If you like this, you should donate to Peter O. (original author of
+the Public Domain HTML 3D Library) at:
+[http://peteroupc.github.io/](http://peteroupc.github.io/)

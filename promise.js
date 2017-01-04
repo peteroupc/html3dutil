@@ -1,6 +1,10 @@
 /*
-  Any copyright is dedicated to the Public Domain.
-  http://creativecommons.org/publicdomain/zero/1.0/
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
 */
 /* global define, exports */
 /* eslint no-extend-native: "off", callback-return: "off" */
@@ -60,7 +64,7 @@
   /**
   * Returns a promise that resolves.
   * @param {Object} value The value associated with the promise.
-  * @return {Promise} A promise that resolves and takes the given value
+  * @returns {Promise} A promise that resolves and takes the given value
   * as its argument.
   * @method
   */
@@ -73,7 +77,7 @@
   /**
   * Returns a promise that is rejected.
   * @param {Object} value The value associated with the promise.
-  * @return {Promise} A promise that is rejected and takes the given value
+  * @returns {Promise} A promise that is rejected and takes the given value
   * as its argument.
   * @method
   */
@@ -109,7 +113,16 @@
       });
     });
   };
-
+/**
+ * Creates a promise that resolves or is rejected when one of those promises
+  * resolves or is rejected.
+   * @param {Array<Promise>} all An array of promises.
+  * @returns {Promise} A promise that is resolved when all promises have resolved.
+   * @returns {Promise} A promise that resolves or is rejected according to
+  * the first promise that resolves or is rejected.  It will receive the
+  * value associated with that promise.
+   * @memberof! Promise#
+ */
   Promise.race = function(all) {
     return new this(function(resolve, reject) {
       all.forEach(function(promise) {
@@ -119,10 +132,13 @@
   };
 
   /**
+   * Creates a promise that calls a function depending on whether
+   * this promise resolves or is rejected.
    * @param {function} onFulfilled To be called once this promise gets fulfilled
-   * @param {function} onRejected To be called once this promise gets rejected
+   * @param {function} [onRejected] To be called once this promise gets rejected
    * @returns {Promise} A promise.
-   */
+   * @memberof! Promise#
+*/
   Promise.prototype.then = function(onFulfilled, onRejected) {
     this._cb.fulfilled.push(onFulfilled);
     this._cb.rejected.push(onRejected);
@@ -138,7 +154,7 @@
     /* 2.2.7. then must return a promise. */
     return thenPromise;
   };
-
+  /** @private */
   Promise.prototype.fulfill = function(value) {
     if (this._state !== 0) {
       return this;
@@ -153,7 +169,7 @@
 
     return this;
   };
-
+  /** @private */
   Promise.prototype.reject = function(value) {
     if (this._state !== 0) {
       return this;
@@ -168,7 +184,7 @@
 
     return this;
   };
-
+  /** @private */
   Promise.prototype.resolve = function(x) {
     /* 2.3.1. If promise and x refer to the same object, reject promise with a TypeError as the reason. */
     if (x === this) {
@@ -232,7 +248,7 @@
     /* 2.3.4. If x is not an object or function, fulfill promise with x. */
     this.fulfill(x);
   };
-
+  /** @private */
   Promise.prototype.chain = function(promise) {
     var resolve = function(value) {
       promise.resolve(value);
@@ -244,20 +260,23 @@
   };
 
   /**
+   * Creates a promise that calls a function if
+   * this promise is rejected.
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise} A promise.
-   */
+   * @memberof! Promise#
+*/
   Promise.prototype.catch  = function(onRejected) {
     return this.then(null, onRejected);
   };
-
+/** @private */
   Promise.prototype._schedule = function() {
     if (this._timeout) {
       return;
     } /* resolution already scheduled */
     this._timeout = setTimeout(this._processQueue.bind(this), 0);
   };
-
+/** @private */
   Promise.prototype._processQueue = function() {
     this._timeout = null;
 
@@ -267,7 +286,7 @@
       this._executeCallback(this._state === 1 ? onFulfilled : onRejected);
     }
   };
-
+/** @private */
   Promise.prototype._executeCallback = function(cb) {
     var thenPromise = this._thenPromises.shift();
 
@@ -292,7 +311,7 @@
       thenPromise.reject(e);
     }
   };
-
+/** @private */
   Promise.prototype._invokeResolver = function(resolver) {
     try {
       resolver(this.resolve.bind(this), this.reject.bind(this));
