@@ -35,13 +35,13 @@ log is output to the JavaScript console.
 
 ### Methods
 
-* [.getDefaultFragment](#H3DU.ShaderProgram.getDefaultFragment)<br><b>Deprecated: Use H3DU.ShaderInfo.getDefaultFragment instead.</b>
-* [.getDefaultVertex](#H3DU.ShaderProgram.getDefaultVertex)<br><b>Deprecated: Use H3DU.ShaderInfo.getDefaultVertex instead.</b>
-* [.getEdgeDetectEffect](#H3DU.ShaderProgram.getEdgeDetectEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeEdgeDetectEffect instead.</b>
-* [.getInvertEffect](#H3DU.ShaderProgram.getInvertEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeInvertEffect instead.</b>
-* [.makeCopyEffect](#H3DU.ShaderProgram.makeCopyEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeCopyEffect instead.</b>
-* [.makeEffect](#H3DU.ShaderProgram.makeEffect)<br><b>Deprecated: Use H3DU.ShaderInfo.makeEffect instead.</b>
-* [.makeEffectFragment](#H3DU.ShaderProgram.makeEffectFragment)<br><b>Deprecated: Use H3DU.ShaderInfo.makeEffectFragment instead.</b>
+* [.getDefaultFragment](#H3DU.ShaderProgram.getDefaultFragment)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b>
+* [.getDefaultVertex](#H3DU.ShaderProgram.getDefaultVertex)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b>
+* [.getEdgeDetectEffect](#H3DU.ShaderProgram.getEdgeDetectEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b>
+* [.getInvertEffect](#H3DU.ShaderProgram.getInvertEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b>
+* [.makeCopyEffect](#H3DU.ShaderProgram.makeCopyEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b>
+* [.makeEffect](#H3DU.ShaderProgram.makeEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b>
+* [.makeEffectFragment](#H3DU.ShaderProgram.makeEffectFragment)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b>
 * [dispose](#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose)<br>Disposes resources from this shader program.
 * [get](#H3DU.ShaderProgram_H3DU.ShaderProgram_get)<br>Gets the location of the given uniform or attribute's name in this program.
 * [getContext](#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext)<br>Gets the WebGL context associated with this shader program object.

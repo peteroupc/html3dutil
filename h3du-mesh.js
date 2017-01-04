@@ -222,7 +222,6 @@ H3DU.Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inwar
 */
 H3DU.Mesh.prototype.mode = function(m) {
   "use strict";
- // TODO: Include in release notes that Meshes must use the same primitive type
   if(m < 0)throw new Error("invalid mode");
   if(this.currentMode === -1) {
     var format = 0;

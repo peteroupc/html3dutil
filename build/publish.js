@@ -448,9 +448,11 @@ exports.publish = function(input, o, t) {
   var docCollection = new DocCollection();
   docCollection.tutorials = t;
   docCollection.readme = o.readme;
-  docCollection.descriptions = descriptions(inputget);
   docCollection.typeNames = typeNames(inputget);
+  // registerLinks depends on typeNames being filled
   registerLinks(docCollection, inputget);
+  // for best results, descriptions depends on registerLinks
+  docCollection.descriptions = descriptions(inputget);
   fillCollection(docCollection, inputget);
   docCollection.write();
 };

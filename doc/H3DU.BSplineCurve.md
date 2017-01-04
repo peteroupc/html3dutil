@@ -41,12 +41,12 @@ weight.
 * [.clamped](#H3DU.BSplineCurve.clamped)<br>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points.
 * [.clampedKnots](#H3DU.BSplineCurve.clampedKnots)<br>Generates a knot vector with uniform knots, to be
-passed to the H3DU.BSplineCurve or H3DU.BSplineCurve constructor,
+passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor,
 except that with the knot vector, the curve will start and end at the
 first and last control points.
 * [.uniform](#H3DU.BSplineCurve.uniform)<br>Creates a B-spline curve with uniform knots.
 * [.uniformKnots](#H3DU.BSplineCurve.uniformKnots)<br>Generates a knot vector with uniform knots, to be
-passed to the H3DU.BSplineCurve or H3DU.BSplineCurve constructor.
+passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 * [evaluate](#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B-spline curve.
 

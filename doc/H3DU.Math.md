@@ -38,27 +38,27 @@ occur around the rotated object's new axes and not necessarily the original axes
  of radians in a degree.
 * [.PiTimes2](#H3DU.Math.PiTimes2)<br>Closest approximation to pi times 2, or a 360-degree turn in radians.
 * [.PitchRollYaw](#H3DU.Math.PitchRollYaw)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use H3DU.Math.GlobalPitchRollYaw instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchRollYaw">H3DU.Math.GlobalPitchRollYaw</a> instead.</b>
 * [.PitchYawRoll](#H3DU.Math.PitchYawRoll)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use H3DU.Math.GlobalPitchYawRoll instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchYawRoll">H3DU.Math.GlobalPitchYawRoll</a> instead.</b>
 * [.RollPitchYaw](#H3DU.Math.RollPitchYaw)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use H3DU.Math.GlobalRollPitchYaw instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a> instead.</b>
 * [.RollYawPitch](#H3DU.Math.RollYawPitch)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use H3DU.Math.GlobalRollYawPitch instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollYawPitch">H3DU.Math.GlobalRollYawPitch</a> instead.</b>
 * [.ToDegrees](#H3DU.Math.ToDegrees)<br>Closest approximation to 180 divided by pi, or the number of
  degrees in a radian.
 * [.ToRadians](#H3DU.Math.ToRadians)<br>Closest approximation to pi divided by 180, or the number
  of radians in a degree.
 * [.YawPitchRoll](#H3DU.Math.YawPitchRoll)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use H3DU.Math.GlobalYawPitchRoll instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawPitchRoll">H3DU.Math.GlobalYawPitchRoll</a> instead.</b>
 * [.YawRollPitch](#H3DU.Math.YawRollPitch)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use H3DU.Math.GlobalYawRollPitch instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a> instead.</b>
 
 ### Methods
 
 * [.quatCopy](#H3DU.Math.quatCopy)<br>Returns a copy of a quaternion.
 * [.quatDot](#H3DU.Math.quatDot)<br>Finds the dot product of two quaternions.
-* [.quatInverse](#H3DU.Math.quatInverse)<br><b>Deprecated: Use H3DU.Math.quatInvert instead.</b>
+* [.quatInverse](#H3DU.Math.quatInverse)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatInvert">H3DU.Math.quatInvert</a> instead.</b>
 * [.quatLength](#H3DU.Math.quatLength)<br>Returns the distance of this quaternion from the origin.
 * [.quatNorm](#H3DU.Math.quatNorm)<br>Converts a quaternion to its normalized version; returns a new quaternion.
 * [.quatNormInPlace](#H3DU.Math.quatNormInPlace)<br>Converts a quaternion to its normalized version.
@@ -121,9 +121,9 @@ of a 4x4 matrix (in column-major order) and returns the transformed vector.
 * [mat4transpose](#H3DU.Math.mat4transpose)<br>Returns the transpose of a 4x4 matrix.
 * [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)<br>Transposes a 4x4 matrix in place without creating
 a new matrix.
-* [planeNorm](#H3DU.Math.planeNorm)<br>Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+* [planeNorm](#H3DU.Math.planeNorm)<br>Normalizes this plane so that its normal is a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1),
 unless all the normal's components are 0.
-* [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br>Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+* [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br>Normalizes this plane so that its normal is a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1),
 unless all the normal's components are 0.
 * [quatConjugate](#H3DU.Math.quatConjugate)<br>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation; this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's axis of rotation).
 * [quatFromAxisAngle](#H3DU.Math.quatFromAxisAngle)<br>Generates a quaternion from an angle and axis of rotation.
@@ -133,12 +133,12 @@ unless all the normal's components are 0.
 two 3-element vectors.
 * [quatIdentity](#H3DU.Math.quatIdentity)<br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).
 * [quatInvert](#H3DU.Math.quatInvert)<br>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-and converts this quaternion to a unit vector (a "normalized" vector with a length of 1).
+and converts this quaternion to a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
 * [quatIsIdentity](#H3DU.Math.quatIsIdentity)<br>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * [quatMultiply](#H3DU.Math.quatMultiply)<br>Multiplies two quaternions, creating a composite rotation.
 * [quatNlerp](#H3DU.Math.quatNlerp)<br>Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a linear interpolation function, and converts
-it to a unit vector (a "normalized" vector with a length of 1).
+it to a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec4norm">"normalized" vector</a> with a length of 1).
 * [quatRotate](#H3DU.Math.quatRotate)<br>Multiplies a quaternion by a rotation transformation
 described as an angle and axis of rotation.
 * [quatSlerp](#H3DU.Math.quatSlerp)<br>Returns a quaternion that lies along the shortest path between the

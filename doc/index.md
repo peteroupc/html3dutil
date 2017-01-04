@@ -1,8 +1,11 @@
 # Documentation Index
 
-* <a href="CurveTube.md">CurveTube</a><br><b>Deprecated: Use H3DU.CurveTube instead.</b>
-* <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use H3DU.Epitrochoid instead.</b>
-* <a href="GraphicsPath.md">GraphicsPath</a><br><b>Deprecated: Use H3DU.GraphicsPath instead.</b>
+* <a href="Camera.md">Camera</a><br><b>Deprecated: Use <a href="H3DU.Camera.md">H3DU.Camera</a> instead.</b>
+* <a href="CurveTube.md">CurveTube</a><br><b>Deprecated: Use <a href="H3DU.CurveTube.md">H3DU.CurveTube</a> instead.</b>
+* <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a> instead.</b>
+* <a href="FrameCounter.md">FrameCounter</a><br><b>Deprecated: Use <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a> instead.</b>
+* <a href="FrameCounterDiv.md">FrameCounterDiv</a><br><b>Deprecated: Use <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a> instead.</b>
+* <a href="GraphicsPath.md">GraphicsPath</a><br><b>Deprecated: Use <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a> instead.</b>
 * <a href="H3DU.md">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
@@ -12,7 +15,7 @@ as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 * <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br>A parametric evaluator for B&eacute;zier curves.
 * <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br>A parametric evaluator for B&eacute;zier surfaces.
 * <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
-Use the H3DU.MeshBuffer class instead, which is not coupled to WebGL
+Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
 contexts.</b>
 * <a href="H3DU.Camera.md">H3DU.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
@@ -46,15 +49,17 @@ mathematical objects.
 of 4x4 transformation matrices.
 * <a href="H3DU.Mesh.md">H3DU.Mesh</a><br>Specifies the triangles, lines, or points that make up a geometric shape.
 * <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
+* <a href="H3DU.MeshJSON.md">H3DU.MeshJSON</a><br>JSON exporter of graphics meshes.
 * <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
 of various geometric shapes.
+* <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
 * <a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for
 rendering that batch.
 * <a href="H3DU.Scene3D.md">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering
 3D objects.
 * <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.
 * <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.
-Use the H3DU.ShaderInfo class instead, which is not coupled to WebGL
+Use the <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> class instead, which is not coupled to WebGL
 contexts.</b>
 * <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
  material data (which defines what is seen on the object's surface)
@@ -79,14 +84,15 @@ to WebGL contexts.
 from one coordinate system to another.
 * <a href="H3DU.Trochoid.md">H3DU.Trochoid</a><br>Parametric evaluator for a
 curve drawn by a circle that rolls along the X-axis.
-* <a href="Hypotrochoid.md">Hypotrochoid</a><br><b>Deprecated: Use H3DU.Hypotrochoid instead.</b>
-* <a href="InputTracker.md">InputTracker</a><br><b>Deprecated: Use H3DU.Camera instead.</b>
-* <a href="MeshJSON.md">MeshJSON</a><br>JSON exporter of graphics meshes.
-* <a href="ObjData.md">ObjData</a><br>WaveFront OBJ format.
+* <a href="Hypotrochoid.md">Hypotrochoid</a><br><b>Deprecated: Use <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a> instead.</b>
+* <a href="InputTracker.md">InputTracker</a><br><b>Deprecated: Use <a href="H3DU.InputTracker.md">H3DU.InputTracker</a> instead.</b>
+* <a href="MatrixStack.md">MatrixStack</a><br><b>Deprecated: Use <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a> instead.</b>
+* <a href="MeshJSON.md">MeshJSON</a><br><b>Deprecated: Use <a href="H3DU.MeshJSON.md">H3DU.MeshJSON</a> instead.</b>
+* <a href="ObjData.md">ObjData</a><br><b>Deprecated: Use <a href="H3DU.ObjData.md">H3DU.ObjData</a> instead.</b>
 * <a href="PrimitiveCounter.md">PrimitiveCounter</a><br><b>Deprecated: Will be removed in the future.</b>
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
-* <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br><b>Deprecated: Use H3DU.SurfaceOfRevolution instead.</b>
-* <a href="Trochoid.md">Trochoid</a><br><b>Deprecated: Use H3DU.Trochoid instead.</b>
+* <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br><b>Deprecated: Use <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a> instead.</b>
+* <a href="Trochoid.md">Trochoid</a><br><b>Deprecated: Use <a href="H3DU.Trochoid.md">H3DU.Trochoid</a> instead.</b>
 
 ## Tutorials
 
