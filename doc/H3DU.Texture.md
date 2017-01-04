@@ -12,6 +12,10 @@ Specifies a texture, which can serve as image data applied to
 By default, texture coordinates go from (0,0) at the lower left corner
 to (1,1) at the upper right corner.
 
+For best results, any textures to be used in WebGL should have
+width and height each equal to a power of 2, such as 2, 4, 8, 16,
+and 32.
+
 #### Parameters
 
 * `name` (Type: String)<br>

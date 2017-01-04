@@ -521,9 +521,9 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
 "vec3 viewDirection=normalize((-viewPositionVar).xyz);\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += "" +
-"  // not exactly greater than 0 in order to avoid speckling or" +
-"  // flickering specular highlights if the normal is perpendicular to" +
-"  // the light's direction vector" +
+"  // not exactly greater than 0 in order to avoid speckling or\n" +
+"  // flickering specular highlights if the normal is perpendicular to\n" +
+"  // the light's direction vector\n" +
 "  spectmp = lightCosines[" + i + "] > 0.0001;\n" +
 "  if (spectmp) {\n" +
 "    /* Blinn-Phong specular term */\n" +

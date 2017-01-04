@@ -35,6 +35,7 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1.  Here ar
 - The Mesh class no longer supports multiple primitive types (lines, triangles, points).  Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
 - Many of the tutorials were edited heavily to accommodate the new version.  The `GraphicsPath` tutorial was added.
 - There were also numerous bug fixes.
+- A known issue: When using the {@link H3DU.Camera} in conjunction with the compatibility behavior of {@link H3DU.Scene3D}, only one side of the scene will appear lighted by default.
 
 Version 1.5.1:
 

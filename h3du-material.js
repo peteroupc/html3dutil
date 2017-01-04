@@ -32,9 +32,9 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
 * The greater the number, the more concentrated the specular
 * highlights are (and the smoother the material behaves).
 * The lower the number, the more extended the highlights are (and the rougher the material behaves).
-* Ranges from 0 through 128.
+* Ranges from 0 through 128.  Default is 32.
 */
-  this.shininess = shininess === null || typeof shininess === "undefined" ? 0 : Math.min(Math.max(0, shininess), 128);
+  this.shininess = shininess === null || typeof shininess === "undefined" ? 32 : Math.min(Math.max(0, shininess), 128);
  /** Ambient color of this material.<p>
  * Ambient color indicates how much an object's color is affected by ambient
  * lights, those that color pixels the same way regardless

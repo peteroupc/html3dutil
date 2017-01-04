@@ -164,7 +164,7 @@ Specular highlight exponent of this material.
 The greater the number, the more concentrated the specular
 highlights are (and the smoother the material behaves).
 The lower the number, the more extended the highlights are (and the rougher the material behaves).
-Ranges from 0 through 128.
+Ranges from 0 through 128. Default is 32.
 
 ### H3DU.Material#specular <a id='H3DU.Material_specular'></a>
 
