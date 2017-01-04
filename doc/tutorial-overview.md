@@ -339,8 +339,6 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
 
 Version 2.0.0-beta1:
 
-There are many, many changes to version 2.0.0-beta1 from version 1.5.1.  Here are some of them, including the most important ones.
-
 - All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now <a href="H3DU.Shape.md">H3DU.Shape</a> and `Mesh` is now <a href="H3DU.Mesh.md">H3DU.Mesh</a>.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
 - `Scene3D`, now <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw.  That job now belongs to the new <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> class.  Scene3D's `render` method now takes an array of `Batch3D`s to render.  For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
 - Alpha is disabled in WebGL contexts created with the <a href="H3DU.md#H3DU.get3DOr2DContext">H3DU.get3DOr2DContext</a> method.
@@ -368,7 +366,7 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1.  Here ar
  as an extra that adds methods that compute the intersection, difference, union, and XOR of two
  polygons.  Path triangulation now supports polygons with holes.
 - The default light configuration is no lights when creating a <a href="H3DU.LightSource.md">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.md">H3DU.Scene3D</a> without rendering a custom `Batch3D`, in which case the default is one light source with its default values.
-- The default value for specular materials (<a href="H3DU.Material.md">H3DU.Material</a>) is now (0.1, 0.1, 0.1).
+- The default value for specular materials (<a href="H3DU.Material.md">H3DU.Material</a>) is now (0.1, 0.1, 0.1).  The default value for shininess is now 32.
 - The Mesh class no longer supports multiple primitive types (lines, triangles, points).  Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
 - Many of the tutorials were edited heavily to accommodate the new version.  The `GraphicsPath` tutorial was added.
 - There were also numerous bug fixes.
