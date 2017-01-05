@@ -188,8 +188,7 @@ H3DU.ShapeGroup.prototype.removeShape = function(shape) {
 /**
 * Finds a bounding box that holds all vertices in this shape group.
  The bounding box is not guaranteed to be the
-* tightest, and the box will be transformed to world space
-* using the transforms of the shapes this group contains.
+* tightest, and the box will be in world space coordinates.
 * @returns {Array<Number>} An array of six numbers describing an
 * axis-aligned bounding box
 * that fits all vertices in the shape group. The first three numbers
@@ -226,11 +225,7 @@ H3DU.ShapeGroup.prototype.getBounds = function() {
       }
     }
   }
-  if(first) {
-    return [0, 0, 0, -1, -1, -1];
-  } else {
-    return ret;
-  }
+  return ret;
 };
 
 /**

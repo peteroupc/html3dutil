@@ -9,7 +9,7 @@
 /* global H3DU */
 /**
 * Specifies parameters for geometry materials, which describe the appearance of a
-* 3D object. This includes how an object scatters, reflects, or absorbs light, as well
+* 3D object. This includes how an object scatters, reflects, or absorbs light,
 * as well as a texture image to apply on that object's surface.<p>
 * <i>For more information on this constructor's parameters,
 * see the {@link H3DU.Material#setParams} method.</i>

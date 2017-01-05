@@ -1841,11 +1841,11 @@ returns a new vector.
 #### Parameters
 
 * `v1` (Type: Array.&lt;Number>)<br>
-    The first vector.
+    The first vector to interpolate. The interpolation will occur on each component of this vector and v2.
 * `v2` (Type: Array.&lt;Number>)<br>
-    The second vector.
+    The second vector to interpolate.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from [0,1] and returns a value from [0,1], and pass the result of that function to this method. See the example.
+    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from 0 through 1 and returns a value from 0 through 1, and pass the result of that function to this method. For an inverted version of an interpolation function, set the factor to 1 minus that factor, then to 1 minus the result of the interpolation function with that factor, then pass that factor to this method. See the examples below.
 
 #### Return Value
 
@@ -1859,6 +1859,21 @@ interpolation of two vectors that uses the cube of "factor" rather than
 slowly then very fast.
 
     factor = factor*factor*factor; // cube the interpolation factor
+     var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+
+The following code does an inverted cubic
+interpolation. This time, vectors are interpolated fast then very slowly.
+
+    factor = 1 - factor; // Invert the factor
+     factor = factor*factor*factor; // cube the interpolation factor
+     factor = 1 - factor; // Invert the result
+     var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+
+The following code does the nonlinear
+ interpolation called "smoothstep". It slows down at the beginning
+ and end, and speeds up in the middle.
+
+    factor = factor*factor*(3.0-2.0*factor); // smoothstep interpolation
      var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
 
 ### (static) H3DU.Math.vec3mul(a, b) <a id='H3DU.Math.vec3mul'></a>
@@ -2229,25 +2244,15 @@ returns a new vector.
 #### Parameters
 
 * `v1` (Type: Array.&lt;Number>)<br>
-    The first vector.
+    The first vector to interpolate. The interpolation will occur on each component of this vector and v2.
 * `v2` (Type: Array.&lt;Number>)<br>
-    The second vector.
+    The second vector to interpolate.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from [0,1] and returns a value from [0,1], and pass the result of that function to this method. See the example.
+    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from 0 through 1 and returns a value from 0 through 1, and pass the result of that function to this method. For an inverted version of an interpolation function, set the factor to 1 minus that factor, then to 1 minus the result of the interpolation function with that factor, then pass that factor to this method. See the examples in the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a>.
 
 #### Return Value
 
 The interpolated vector. (Type: Array.&lt;Number>)
-
-#### Example
-
-The following code does a nonlinear
-interpolation of two vectors that uses the cube of "factor" rather than
-"factor". Rather than at a constant speed, the vectors are interpolated
-slowly then very fast.
-
-    factor = factor*factor*factor; // cube the interpolation factor
-     var newVector = H3DU.Math.vec4lerp(vector1, vector2, factor);
 
 ### (static) H3DU.Math.vec4negate(a) <a id='H3DU.Math.vec4negate'></a>
 

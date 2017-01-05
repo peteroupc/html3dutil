@@ -41,8 +41,8 @@ This page includes information on how to use the HTML 3D library, an overview of
         })
         </script>
 
-This is an overview of most of the JavaScript classes available in this library:
 ### List of Classes <a id=List_of_Classes></a>
+This is an overview of most of the JavaScript classes available in this library:
 
 * [`H3DU`](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the HTML 3D Library
 * [`H3DU.Math`](https://peteroupc.github.io/html3dutil/H3DU.Math.html) - Contains math methods useful in 3D applications, such as matrices and vectors
@@ -105,7 +105,7 @@ use the concept of a "camera", the projection is like setting the camera&#39;s f
     // points at (0, 2, 0), that is, up 2 units.
     batch.setLookAt([0,0,30], [0,2,0]);
 
-For more information, see _<a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The "Camera" and Perspective and View Transforms</a>_.
+For more information, see _<a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The "Camera" and Geometric Transforms</a>_.
 
 ### 3D Models <a id=3D_Models></a>
 
@@ -286,10 +286,11 @@ featuring a background with continuously drawn 3D shapes.
 * [demos/animation.html](https://peteroupc.github.io/html3dutil/demos/animation.html) - A demo
 illustrating a simple animation of 3D shapes.
 * [demos/starfield.html](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demo of a star field.
-* [demos/quatlerp.html](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demonstrates
+* [demos/quatlerp.html](https://peteroupc.github.io/html3dutil/demos/quatlerp.html) - Demonstrates
 the difference between <a href="H3DU.Math.md#H3DU.Math.quatNlerp">H3DU.Math.quatNlerp</a> and <a href="H3DU.Math.md#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a>,
 both functions for interpolating quaternion rotations.
 * [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
+* [demos/gears.html](https://peteroupc.github.io/html3dutil/demos/gears.html) - A demonstration of rotating gears.
 
 ## Example <a id=Example></a>
 

@@ -62,8 +62,7 @@ This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
 Finds a bounding box that holds all vertices in this shape group.
  The bounding box is not guaranteed to be the
-tightest, and the box will be transformed to world space
-using the transforms of the shapes this group contains.
+tightest, and the box will be in world space coordinates.
 
 #### Return Value
 

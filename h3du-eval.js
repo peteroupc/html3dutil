@@ -847,8 +847,7 @@
 * cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
 * the function used for vertex calculation (we'll call it <b>F</b>) with
 * respect to u, then find the partial derivative of <b>F</b> with respect to
-* v, then take their <a href="http://en.wikipedia.org/wiki/Cross_product">cross
-* product</a> (e.g., {@link H3DU.Math.vec3cross}), then convert the result to a unit vector
+* v, then take their [cross product]{@link H3DU.Math.vec3cross}, then convert the result to a unit vector
 * (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
 * In mathematical notation, this looks like:
 * <b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;

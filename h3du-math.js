@@ -378,19 +378,34 @@ Negating a vector
 /**
  * Does a linear interpolation between two 3-element vectors;
  * returns a new vector.
- * @param {Array<Number>} v1 The first vector.
- * @param {Array<Number>} v2 The second vector.
+ * @param {Array<Number>} v1 The first vector to interpolate.
+ * The interpolation will occur on each component of this vector and v2.
+ * @param {Array<Number>} v2 The second vector to interpolate.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2.  For a nonlinear
- * interpolation, define a function that takes a value from [0,1] and returns
- * a value from [0,1], and pass the result of that function to this method.
- * See the example.
+ * interpolation, define a function that takes a value from 0 through 1 and returns
+ * a value from 0 through 1, and pass the result of that function to this method.
+ * For an inverted version of an interpolation function, set
+ * the factor to 1 minus that factor, then to 1 minus the result of the interpolation
+ * function with that factor, then pass that factor to this method.  See the
+ * examples below.
  * @returns {Array<Number>} The interpolated vector.
  * @example <caption>The following code does a nonlinear
  * interpolation of two vectors that uses the cube of "factor" rather than
  * "factor".  Rather than at a constant speed, the vectors are interpolated
  * slowly then very fast.</caption>
  *   factor = factor*factor*factor; // cube the interpolation factor
+ *   var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+ * @example <caption>The following code does an inverted cubic
+ * interpolation.  This time, vectors are interpolated fast then very slowly.</caption>
+ *   factor = 1 - factor; // Invert the factor
+ *   factor = factor*factor*factor; // cube the interpolation factor
+ *   factor = 1 - factor; // Invert the result
+ *   var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+ *  @example <caption>The following code does the nonlinear
+ *  interpolation called "smoothstep".  It slows down at the beginning
+ *  and end, and speeds up in the middle.</caption>
+ *   factor = factor*factor*(3.0-2.0*factor); // smoothstep interpolation
  *   var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
  */
   "vec3lerp":function(v1, v2, factor) {
@@ -521,20 +536,18 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
 /**
  * Does a linear interpolation between two 4-element vectors;
  * returns a new vector.
- * @param {Array<Number>} v1 The first vector.
- * @param {Array<Number>} v2 The second vector.
+ * @param {Array<Number>} v1 The first vector to interpolate.
+ * The interpolation will occur on each component of this vector and v2.
+ * @param {Array<Number>} v2 The second vector to interpolate.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2.  For a nonlinear
- * interpolation, define a function that takes a value from [0,1] and returns
- * a value from [0,1], and pass the result of that function to this method.
- * See the example.
+ * interpolation, define a function that takes a value from 0 through 1 and returns
+ * a value from 0 through 1, and pass the result of that function to this method.
+ * For an inverted version of an interpolation function, set
+ * the factor to 1 minus that factor, then to 1 minus the result of the interpolation
+ * function with that factor, then pass that factor to this method.  See the
+ * examples in the documentation for {@link H3DU.Math.vec3lerp}.
  * @returns {Array<Number>} The interpolated vector.
- * @example <caption>The following code does a nonlinear
- * interpolation of two vectors that uses the cube of "factor" rather than
- * "factor".  Rather than at a constant speed, the vectors are interpolated
- * slowly then very fast.</caption>
- *   factor = factor*factor*factor; // cube the interpolation factor
- *   var newVector = H3DU.Math.vec4lerp(vector1, vector2, factor);
  */
   "vec4lerp":function(v1, v2, factor) {
     "use strict";

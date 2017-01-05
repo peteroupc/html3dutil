@@ -5,7 +5,7 @@
 ### H3DU.Material([ambient], [diffuse], [specular], [shininess], [emission]) <a id='H3DU.Material'></a>
 
 Specifies parameters for geometry materials, which describe the appearance of a
-3D object. This includes how an object scatters, reflects, or absorbs light, as well
+3D object. This includes how an object scatters, reflects, or absorbs light,
 as well as a texture image to apply on that object's surface.
 
 <i>For more information on this constructor's parameters,
