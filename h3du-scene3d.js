@@ -224,9 +224,7 @@ Back and front sides of a triangle.
 */
 H3DU.Scene3D.FRONT_AND_BACK = 3;
 /**
-* Counterclockwise winding. A triangle has counterclockwise winding if
-* its vertices are ordered such that the path from the first to second to third
-* to first vertex, in window coordinates (X and Y only), runs counterclockwise.
+* Counterclockwise winding. A triangle has counterclockwise winding (or orientation) if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle's two-dimensional projection in _window coordinates_ (which roughly correspond to its location on the screen or frame buffer).
 * @memberof! H3DU.Scene3D
 * @const
 */

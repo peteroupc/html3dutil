@@ -94,9 +94,7 @@ Back side of a triangle. By default, triangles with clockwise winding are back-f
 
 ### H3DU.Scene3D.CCW <a id='H3DU.Scene3D.CCW'></a> (constant)
 
-Counterclockwise winding. A triangle has counterclockwise winding if
-its vertices are ordered such that the path from the first to second to third
-to first vertex, in window coordinates (X and Y only), runs counterclockwise.
+Counterclockwise winding. A triangle has counterclockwise winding (or orientation) if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle's two-dimensional projection in _window coordinates_ (which roughly correspond to its location on the screen or frame buffer).
 
 ### H3DU.Scene3D.CW <a id='H3DU.Scene3D.CW'></a> (constant)
 

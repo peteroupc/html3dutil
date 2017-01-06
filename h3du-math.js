@@ -23,7 +23,7 @@ H3DU.Math = {
  * <li>The cross product will be a vector that is perpendicular to both A and B.
 <li>Switching the order of A and B results in a cross product
 vector with the same length but opposite direction.
- * <li>If the cross product's length is 0, then A and B are parallel vectors.
+ * <li>If the cross product's [length]{@link H3DU.Math.vec3length} is 0, then A and B are parallel vectors.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 The cross product vector will be such that, while the vector points toward the viewer,
 the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
@@ -382,13 +382,33 @@ Negating a vector
  * The interpolation will occur on each component of this vector and v2.
  * @param {Array<Number>} v2 The second vector to interpolate.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
- * closer to v1, and closer to 1 means closer to v2.  For a nonlinear
+ * closer to v1, and closer to 1 means closer to v2.<br><br>For a nonlinear
  * interpolation, define a function that takes a value from 0 through 1 and returns
- * a value from 0 through 1, and pass the result of that function to this method.
- * For an inverted version of an interpolation function, set
- * the factor to 1 minus that factor, then to 1 minus the result of the interpolation
- * function with that factor, then pass that factor to this method.  See the
- * examples below.
+ * a value generally ranging from 0 through 1, and pass the result of that
+ * function to this method.<br><br>
+ * The following are examples of interpolation functions.  See also
+ * the code examples following this list.<ul>
+ * <li>Linear: <code>factor</code>. Constant speed.
+ * <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0.
+ * For example, N=2 means a square, N=3 means cube, N=1/2 means square root,
+ * and N=1/3 means cube root. If N &gt; 1, this
+ * function eases in, that is, it starts slow and ends fast. If N &lt; 1,
+ * this function eases out, that is, it starts fast and ends slow.
+ * <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function eases in.
+ * <li>Smoothstep: <code>(3.0-2.0*factor)*factor*factor</code>. This function
+ * starts and ends slow, and speeds up in the middle.
+<li>Discrete-step timing, where N is a number of steps greater than 0:<ul>
+<li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor*N))/N)</code>.</li>
+<li>Position end: <code>Math.floor(factor*N)/N</code>.</li></ul>
+ * <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>,
+ * where <code>INTF(x)</code>
+ * is another interpolation function.  This function reverses the speed behavior;
+ * for example, a function that eased in now eases out.
+ * <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>,
+ * where <code>INTF(x)</code> is another interpolation function.
+ * Depending on the underlying function, this function eases in,
+ * then eases out, or vice versa.
+ * </ul>
  * @returns {Array<Number>} The interpolated vector.
  * @example <caption>The following code does a nonlinear
  * interpolation of two vectors that uses the cube of "factor" rather than
@@ -405,7 +425,7 @@ Negating a vector
  *  @example <caption>The following code does the nonlinear
  *  interpolation called "smoothstep".  It slows down at the beginning
  *  and end, and speeds up in the middle.</caption>
- *   factor = factor*factor*(3.0-2.0*factor); // smoothstep interpolation
+ *   factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
  *   var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
  */
   "vec3lerp":function(v1, v2, factor) {
@@ -541,12 +561,11 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
  * @param {Array<Number>} v2 The second vector to interpolate.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2.  For a nonlinear
- * interpolation, define a function that takes a value from 0 through 1 and returns
+ * interpolation, define a function that takes a value from 0 through 1
+ * and generally returns
  * a value from 0 through 1, and pass the result of that function to this method.
- * For an inverted version of an interpolation function, set
- * the factor to 1 minus that factor, then to 1 minus the result of the interpolation
- * function with that factor, then pass that factor to this method.  See the
- * examples in the documentation for {@link H3DU.Math.vec3lerp}.
+ * See the examples in the documentation for {@link H3DU.Math.vec3lerp}
+ * for examples of interpolation functions.
  * @returns {Array<Number>} The interpolated vector.
  */
   "vec4lerp":function(v1, v2, factor) {
@@ -582,7 +601,7 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
     return vec;
   },
   /**
-  * Finds the cartesian distance from one three-element vector
+  * Finds the Euclidean distance from one three-element vector
   * to another, treating both as 3D points.
   * @param {Array<Number>} vecFrom The first 3-element vector.
   * @param {Array<Number>} vecTo The second 3-element vector.
@@ -849,8 +868,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return r;
   },
 /**
- * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation; this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's axis of rotation). The return value won't necessarily be a unit vector, a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
- * Returns a new quaternion.
+ * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
   "quatConjugate":function(quat) {
@@ -858,9 +876,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [-quat[0], -quat[1], -quat[2], quat[3]];
   },
 /**
- * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
- * and converts this quaternion to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
- * Returns a new quaternion.
+ * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value.
  * @see {@link H3DU.Math.quatConjugate}
@@ -873,7 +889,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
- * @param {Object} quat A quaternion.
+ * @param {Array<Number>} quat A quaternion, containing four elements.
 * @returns {Boolean} Return value.
 */
   "quatIsIdentity":function(quat) {
@@ -883,7 +899,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Generates a 4x4 matrix describing the rotation
  * described by this quaternion.
- * @param {Array<Number>} quat A quaternion.
+ * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The generated 4x4 matrix.
  */
   "quatToMat4":function(quat) {
@@ -909,16 +925,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
     ];
   },
 /**
-* Calculates the angle and axis of rotation for this
-* quaternion. (The axis of rotation is a ray that starts at the
-* origin (0,0,0) and points toward a 3D point.)
+* Calculates the angle and [axis of rotation]{@tutorial glmath} for this
+* quaternion.
 * @param {Array<Number>} a A quaternion.  Must be a unit vector ([a "normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
 * @returns {Array<Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. While the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
+ * in degrees as the fourth element. If "a" is a unit vector, the axis
+ * of rotation will be a unit vector.
 */
   "quatToAxisAngle":function(a) {
     "use strict";
@@ -941,7 +954,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<Number>} vec1 The first 3-element vector.
 * @param {Array<Number>} vec2 The second 3-element vector.
  * @returns {Array<Number>} The generated quaternion, which
- * will be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
+ * will be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  */
   "quatFromVectors":function(vec1, vec2) {
     "use strict";
@@ -967,9 +980,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return H3DU.Math.quatNormInPlace(ret);
   },
 /**
- * Generates a quaternion from an angle and axis of rotation.
- * (The axis of rotation is a ray that starts at the
- * origin (0,0,0) and points toward a 3D point.)
+ * Generates a quaternion from an angle and  [axis of rotation]{@tutorial glmath}.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
@@ -978,11 +989,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.  While the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
-  * The axis of rotation need not be a unit vector (["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
+ * of rotation in x, y, and z, respectively.
  * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
@@ -1020,12 +1027,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
- * In the parameters given below, when the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
-  (The axis of rotation is a ray that starts at the
-* origin (0,0,0) and points toward a 3D point.)
+ * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
  * @param {Number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.
 *  This can instead be a 3-element
  * array giving the rotation about the x-axis, y-axis, and z-axis,
@@ -1086,7 +1088,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
  * @param {Array<Number>} a A quaternion.  Should be a unit vector
- * (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
+ * (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
  * @param {Number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
@@ -1099,11 +1101,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * angles).  The order of <code>Local</code> rotations has the same result as the reversed
  * order of <code>Global</code> rotations and vice versa.
  * @returns {Array<Number>} A 3-element array containing the
- * pitch, yaw, and roll angles, in that order, in degrees.  For each
- * angle, if the corresponding axis
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
+ * pitch, yaw, and roll angles, in that order, in degrees.
+ * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
  */
   "quatToTaitBryan":function(a, mode) {
     "use strict";
@@ -1254,9 +1253,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Multiplies a quaternion by a rotation transformation
- * described as an angle and axis of rotation.
+ * described as an angle and [axis of rotation]{@tutorial glmath}.
  * The result is such that the angle-axis
- * rotation happens before the quaternion's rotation.<p>
+ * rotation happens before the quaternion's rotation when applied
+ * in the global coordinate frame.<p>
  * This method is equivalent to the following:<pre>
  * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
  * </pre>
@@ -1265,10 +1265,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. While the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
+ * in degrees as the fourth element.
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
@@ -2086,7 +2083,8 @@ m[0] * m[7] * m[5];
 /**
 * Multiplies two quaternions, creating a composite rotation.
 * The quaternions are multiplied such that the second quaternion's
-* rotation happens before the first quaternion's rotation.<p>
+* rotation happens before the first quaternion's rotation when applied
+ * in the global coordinate frame.<p>
 * Multiplying two unit quaternions (each with a length of 1) will result
 * in a unit quaternion.  However, for best results, you should
 * normalize the quaternions every few multiplications (using
@@ -2107,15 +2105,15 @@ m[0] * m[7] * m[5];
 /**
  * Multiplies a 4x4 matrix by a rotation transformation,
  * and returns a new matrix.
+ * The effect will be that the rotation transformation will
+ * happen before the transformation described in the given matrix,
+ * when applied in the global coordinate frame.
  * @param {Array<Number>} mat A 4x4 matrix to multiply.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. While the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
+ * instead be a 4-element array giving the [axis of rotation]{@tutorial glmath}
+ * as the first three elements, followed by the angle
+ * in degrees as the fourth element.
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
@@ -2205,15 +2203,12 @@ m[0] * m[7] * m[5];
     }
   },
 /**
- * Returns a 4x4 matrix representing a rotation transformation.
+ * Returns a 4x4 matrix representing a rotation transformation
+ * given in the form of an rotation angle and an [axis of rotation]{@tutorial glmath}.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.  While the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
+ * instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
@@ -2561,7 +2556,7 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.quatLength}.
  * @function
- * @param {Array<Number>} quat A quaternion.
+ * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The parameter "quat".
  @method
 @static
@@ -2576,7 +2571,7 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.quatLength}.
  * @function
- * @param {Array<Number>} quat A quaternion.
+ * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The normalized quaternion.
  @method
 @static

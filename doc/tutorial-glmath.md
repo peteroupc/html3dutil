@@ -32,6 +32,27 @@ fourth element is anything other than 0, the vector is in _homogeneous
 coordinates_, where the 3D position equals the first three elements divided
 by the fourth.)
 
+### Axis of Rotation
+
+A rotation can be described using an _angle_ and an _axis of rotation_.
+
+An axis of rotation is a 3-element vector or three numbers that describe a ray
+that starts at the origin (0,0,0) and points toward a 3D point. Here are examples.
+
+* The X-axis of rotation (upward or downward turn) is (1, 0, 0).
+* The Y-axis of rotation (leftward or rightward turn) is (0, 1, 0).
+* The Z-axis of rotation (side-by-side sway) is (0, 0, 1).
+
+While the axis of rotation points toward the viewer, if the angle's value
+is positive (resp. negative) and the [coordinate system](#Coordinate_Systems) is...
+
+* ...right handed, then the angle runs counterclockwise (resp. clockwise).
+* ...left handed, then the angle runs clockwise (resp. counterclockwise).
+
+Unless stated otherwise, an axis of rotation passed to an `H3DU.Math`
+method need not be a unit vector (a ["normalized"
+vector]<a href="H3DU.Math.md#H3DU.Math.vec3norm">H3DU.Math.vec3norm</a> with a length of 1).
+
 ## Matrices <a id=Matrices></a>
 
 A matrix is a 16- or 9-element array that can describe a
@@ -69,8 +90,7 @@ before the other transformations.
 Rotation changes an object's orientation.
 
 To create a rotation matrix, use <a href="H3DU.Math.md#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
-and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
-origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
+and specify the angle (in degrees) to rotate, and the [axis of rotation](#Axis_of_Rotation).  For example, specifying `(45, [1, 0, 0])` means a 45-degree rotation around the X-axis, and `(80, [0, 2, 3])` means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
 
 To multiply an existing matrix by a rotation, use
 <a href="H3DU.Math.md#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
@@ -101,7 +121,7 @@ A quaternion is a 4-element array that can describe a
 "quat".  A quaternion's:
 
 * ...first three elements (X, Y, Z) describe a 3D point, where the
-direction from the origin (0, 0, 0) to that point is the _axis of rotation_,
+direction from the origin (0, 0, 0) to that point is the [axis of rotation](#Axis_of_Rotation),
 and the distance from the origin to that point is the sine
 of half the rotation angle. <small> (The distance is 0 at 0 and 360
 degrees, and 1 at 180 degrees.)</small>
@@ -117,8 +137,8 @@ The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
-before the first rotation.  Like matrix multiplication, the
-order in which you multiply quaternions is important.
+before the first rotation (when applied in the global coordinate frame).
+Like matrix multiplication, the order in which you multiply quaternions is important.
 
 ### Using Quaternions <a id=Using_Quaternions></a>
 
@@ -216,10 +236,11 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 #### Rotation angles (such as used in `mat4rotate` and `quatRotate`) <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a>
 
-Whenever the axis of rotation points toward the viewer, if the coordinate system is...
+While the [axis of rotation](#Axis_of_Rotation) points toward the viewer, if the angle's value
+is positive (resp. negative) and the coordinate system is...
 
-* ...right handed, and the angle's value is positive (resp. negative), then the angle runs counterclockwise (resp. clockwise).
-* ...left handed, and the angle's value is positive (resp. negative), then the angle runs clockwise (resp. counterclockwise).
+* ...right handed, then the angle runs counterclockwise (resp. clockwise).
+* ...left handed, then the angle runs clockwise (resp. counterclockwise).
 
 #### Cross product (`vec3cross(A, B)`) and normals <a id=Cross_product_vec3cross_A_B_and_normals></a>
 
@@ -236,24 +257,23 @@ and B minus (0,0,0) is B).
 
 ### Orientation and face classification <a id=Orientation_and_face_classification></a>
 
-To find the orientation of a triangle, apply the following formula:
-
-    (X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
-
-(Half of the result will be the triangle's signed area.)
-
-If the window space X axis points right and the Y axis points...
-
-* ...up (which is the case in WebGL), and the result is positive (resp. negative), then the triangle's vertices
- are oriented counterclockwise (resp. clockwise).
-* ...down, and the result is positive (resp. negative), then the vertices are oriented clockwise (resp. counterclockwise).
-
-Note that finding the orientation is done on the triangle's two-dimensional projection in
-_window coordinates_ (which roughly correspond to the triangle's
-location on the screen or frame buffer).
+A triangle has counterclockwise _orientation_ if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle's two-dimensional projection in _window coordinates_ (which roughly correspond to its location on the screen or frame buffer). Otherwise, the triangle has clockwise orientation.
 
 By default, counterclockwise oriented triangles are _front faces_, and
 other triangles are _back faces_.  To change which kinds of triangles are
 front faces, call the `frontFace` method of Scene3D.
+
+#### Finding Orientation
+
+To find a triangle's orientation, do the following calculation (X1-3 and Y1-3 are the window coordinates of its vertices). Note that half of the result will be the triangle's signed area.
+
+    (X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
+
+If the result is positive (resp. negative), and the window space X
+axis points right and the Y axis points...
+
+* ...up (which is the case in WebGL), then the triangle's vertices
+ are oriented counterclockwise (resp. clockwise).
+* ...down, then the vertices are oriented clockwise (resp. counterclockwise).
 
 [Back to documentation index.](index.md)
