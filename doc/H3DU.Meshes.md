@@ -52,11 +52,15 @@ Creates a mesh of a capsule, centered at the origin.
 The length of the capsule will run along the Z axis. (If the capsule
 has a high length and a very low radius, it will resemble a 3D line
 with rounded corners.)
+
 Will also generate texture coordinates such that the V (vertical)
-coordinates start at the bottom of the texture and increase from the negative
+coordinates start from the bottom of the texture and increase from the negative
 to positive Z axis, and the U (horizontal) coordinates start from the left of the
 texture and increase from the positive X to positive Y to negative X to negative
 Y to positive X axis.
+
+If the "length" parameter is 0, the X, Y, and Z coordinates of a point on the solid
+are as described in <a href="H3DU.Meshes.md#H3DU.Meshes.createSphere">H3DU.Meshes.createSphere</a>.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters
@@ -262,11 +266,23 @@ The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 ### H3DU.Meshes.createSphere([radius], [slices], [stacks], [flat], [inside]) <a id='H3DU.Meshes.createSphere'></a>
 
 Creates a mesh of a sphere, centered at the origin.
+
 Will also generate texture coordinates such that the V (vertical)
-coordinates start at the bottom of the texture and increase from the negative
+coordinates start from the bottom of the texture and increase from the negative
 to positive Z axis, and the U (horizontal) coordinates start from the left of the
 texture and increase from the positive X to positive Y to negative X to negative
 Y to positive X axis.
+
+The X, Y, and Z coordinates of a point on the sphere are
+<code>(R\*sin(&phi;)\*cos(&lambda;+&pi;), R\*sin(&phi;)\*sin(&lambda;+&pi;), R\*cos(&phi;))</code>,
+where &phi; = <code>&pi;/2 - L</code>, L is the latitude in radians,
+&lambda; is the longitude in radians, R is the sphere's radius,
+and west and south latitudes and
+longitudes are negative. (The formula for converting latitude
+and longitude is mentioned here because their meaning depends on
+exactly how the texture coordinates are generated on the sphere.
+It assumes that in the texture, longitudes range from -180&deg; to 0&deg; to 180&deg; from
+left to right, and latitudes range from 90&deg; to 0&deg; to -90&deg; from top to bottom.)
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters
