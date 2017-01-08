@@ -224,11 +224,11 @@ not automatically be normalized to unit length.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the bitangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+    X coordinate of the bitangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
 * `y` (Type: Number)<br>
-    Y-coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
+    Y coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
 * `z` (Type: Number)<br>
-    Z-coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
+    Z coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
@@ -379,11 +379,11 @@ not automatically be normalized to unit length.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the normal. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+    X coordinate of the normal. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
 * `y` (Type: Number)<br>
-    Y-coordinate of the normal. If "x" is an array, this parameter may be omitted.
+    Y coordinate of the normal. If "x" is an array, this parameter may be omitted.
 * `z` (Type: Number)<br>
-    Z-coordinate of the normal. If "x" is an array, this parameter may be omitted.
+    Z coordinate of the normal. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
@@ -456,7 +456,7 @@ Due to the z-fighting effect, drawing a two-sided mesh is
 recommended only if face culling is enabled.
 
     var twoSidedMesh = originalMesh.merge(
-     new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
+    new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
     );
 
 ### H3DU.Mesh#reverseWinding() <a id='H3DU.Mesh_H3DU.Mesh_reverseWinding'></a>
@@ -479,7 +479,7 @@ Due to the z-fighting effect, drawing this kind of mesh is
 recommended only if face culling is enabled.
 
     var frontBackMesh = originalMesh.merge(
-     new H3DU.Mesh().merge(originalMesh).reverseWinding()
+    new H3DU.Mesh().merge(originalMesh).reverseWinding()
     );
 
 ### H3DU.Mesh#setColor3(r, g, b) <a id='H3DU.Mesh_H3DU.Mesh_setColor3'></a>
@@ -555,11 +555,11 @@ not automatically be normalized to unit length.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the tangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+    X coordinate of the tangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
 * `y` (Type: Number)<br>
-    Y-coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
+    Y coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
 * `z` (Type: Number)<br>
-    Z-coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
+    Z coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
@@ -574,16 +574,16 @@ even if the current mode
 is TRIANGLE_FAN and some vertices were already given for
 that mode.
 
- H3DU.Texture coordinates are a set of 2 values each ranging from 0 to
+H3DU.Texture coordinates are a set of 2 values each ranging from 0 to
 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
 right corner (by default).
 
 #### Parameters
 
 * `u` (Type: Number)<br>
-    X-coordinate of the texture, from 0-1. If "v" are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.
+    X coordinate of the texture, from 0-1. If "v" are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.
 * `v` (Type: Number)<br>
-    Y-coordinate of the texture, from 0-1. If "u" is an array, this parameter can be omitted.
+    Y coordinate of the texture, from 0-1. If "u" is an array, this parameter can be omitted.
 
 #### Return Value
 
@@ -622,15 +622,15 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 ### H3DU.Mesh#vertex2(x, y) <a id='H3DU.Mesh_H3DU.Mesh_vertex2'></a>
 
-Adds a new vertex to this mesh. The Z-coordinate will
+Adds a new vertex to this mesh. The Z coordinate will
 be treated as 0.
 
 #### Parameters
 
 * `x` (Type: Array.&lt;Number> | number)<br>
-    The X-coordinate. If "y" is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+    The X coordinate. If "y" is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
 * `y` (Type: Number)<br>
-    The Y-coordinate. If "x" is an array, this parameter may be omitted.
+    The Y coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
@@ -646,11 +646,11 @@ and texture coordinates if they have been defined.
 #### Parameters
 
 * `x` (Type: Array.&lt;Number> | number)<br>
-    The X-coordinate. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+    The X coordinate. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
 * `y` (Type: Number)<br>
-    The Y-coordinate. If "x" is an array, this parameter may be omitted.
+    The Y coordinate. If "x" is an array, this parameter may be omitted.
 * `z` (Type: Number)<br>
-    The Z-coordinate. If "x" is an array, this parameter may be omitted.
+    The Z coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 

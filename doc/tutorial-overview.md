@@ -36,7 +36,7 @@ This page includes information on how to use the HTML 3D library, an overview of
         <script>
         window.addEventListener("load",function(){
           var scene=new Scene3D(document.getElementById("canvas"));
-          // We have the 3D scene, use it.  (See the example code
+          // We have the 3D scene, use it. (See the example code
           // at the bottom of this article for a more complete example.)
         })
         </script>
@@ -76,7 +76,7 @@ The following sections detail how a 3D application using this library works.
 
 ### `H3DU.Scene3D` <a id=H3DU_Scene3D></a>
 
-The `H3DU.Scene3D` class is a renderer for a canvas GL context.  It renders batches of 3D shapes
+The `H3DU.Scene3D` class is a renderer for a canvas GL context. It renders batches of 3D shapes
 in the form of `H3DU.Batch3D` objects.  Each `Batch3D` represents a so-called "scene graph". It holds
 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
 position, and light sources to illuminate the 3D scene.
@@ -96,7 +96,7 @@ need to pass it to `new Scene3D()`. Once you do so, `H3DU.Scene3D` will use that
 The `H3DU.Batch3D` class has a concept of a "projection transform" and a "view transform". If we
 use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `H3DU.Batch3D` has methods for setting all these attributes of this abstract "camera". Two of them are `perspectiveAspect()` and `setLookAt()`, which are shown in the example below.
 
-    // Set the perspective view.  Camera has a 45-degree field of view
+    // Set the perspective view. Camera has a 45-degree field of view
     // and will see objects from 0.1 to 100 units away.
     batch.perspectiveAspect(45,0.1,100);
     // Move the camera back 40 units.
@@ -220,7 +220,7 @@ demo of some of the built-in shapes.
 * [demos/builtinshapes.html](https://peteroupc.github.io/html3dutil/demos/builtinshapes.html) - Interactive demo of
 the built-in shapes.
 * [demos/platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
-platonic solids.  Demonstrates:
+platonic solids. Demonstrates:
     * How vertex and index arrays are built up to create geometric meshes, and
     * How to position HTML elements on top of 3D models based on their 3D positions.
 * [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
@@ -306,7 +306,7 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
      // to Scene3D.
      var scene=new H3DU.Scene3D(document.getElementById("canvas"));
      var sub=new H3DU.Batch3D();
-      // Set the perspective view.  Camera has a 45-degree field of view
+      // Set the perspective view. Camera has a 45-degree field of view
       // and will see objects from 0.1 to 100 units away.
       .perspectiveAspect(45,0.1,100)
       // Move the camera back 40 units.
@@ -341,23 +341,23 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
 Version 2.0.0-beta1:
 
 - All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now <a href="H3DU.Shape.md">H3DU.Shape</a> and `Mesh` is now <a href="H3DU.Mesh.md">H3DU.Mesh</a>.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
-- `Scene3D`, now <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw.  That job now belongs to the new <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> class.  Scene3D's `render` method now takes an array of `Batch3D`s to render.  For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
+- `Scene3D`, now <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> class. Scene3D's `render` method now takes an array of `Batch3D`s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
 - Alpha is disabled in WebGL contexts created with the <a href="H3DU.md#H3DU.get3DOr2DContext">H3DU.get3DOr2DContext</a> method.
 - The `Scene3D` H3DU.Scene3D#useProgram method was deprecated and now does nothing.
-- New <a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a> class holds information about how a batch of 3D models is to be rendered.   It replaces the `Scene3D` H3DU.Scene3D#useFilter method, which now does nothing.
+- New <a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a> class holds information about how a batch of 3D models is to be rendered. It replaces the `Scene3D` H3DU.Scene3D#useFilter method, which now does nothing.
 - New <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a> class holds information about a frame buffer; it replaces <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a>.
-- The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context.  Instead, use <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>, <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a>, and <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>, respectively, which are not coupled to WebGL contexts.
+- The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>, <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a>, and <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>, respectively, which are not coupled to WebGL contexts.
 - Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.
 - The <a href="H3DU.Shape.md">H3DU.Shape</a> object is no longer coupled to vertex buffers.
 - The <a href="H3DU.LightSource.md">H3DU.LightSource</a> class now supports a radius of the light.
 - The <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a> class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
-- `GLMath`, now <a href="H3DU.Math.md">H3DU.Math</a>, was expanded with many new methods.  The documentation for it is now very detailed.  New methods include <a href="H3DU.Math.md#H3DU.Math.vec3perp">H3DU.Math.vec3perp</a>,  <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a>, and  <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>.
+- `GLMath`, now <a href="H3DU.Math.md">H3DU.Math</a>, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="H3DU.Math.md#H3DU.Math.vec3perp">H3DU.Math.vec3perp</a>, <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a>, and <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>.
 - Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, <a href="H3DU.TextFont.md">H3DU.TextFont</a> and <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
 - The Camera class, now <a href="H3DU.Camera.md">H3DU.Camera</a>, was rewritten.
-- A build script was included in the repository.  This build includes a style checker which is run on the library's JavaScript files.
-- Many methods were added to many classes.  Some methods that didn't return a value now return the value of the object called on, for example, the `clear` method of `H3DU.Scene3D`.
-- New demos, including _spinbox.html_ and _quatlerp.html_.  For example, the _gears.html_ demo was moved from the separate "html-gears" repository to here.  Other demos were expanded or rewritten.  Viewport `meta` tags were added to the demos.
+- A build script was included in the repository. This build includes a style checker which is run on the library's JavaScript files.
+- Many methods were added to many classes. Some methods that didn't return a value now return the value of the object called on, for example, the `clear` method of `H3DU.Scene3D`.
+- New demos, including _spinbox.html_ and _quatlerp.html_.  For example, the _gears.html_ demo was moved from the separate "html-gears" repository to here. Other demos were expanded or rewritten. Viewport `meta` tags were added to the demos.
 - The underlying code used in `H3DU.toGLColor` was rewritten.  In particular, the "#RRGGBBAA" format is now supported.
 - The JavaScript source code better conforms to a uniform code style.
 - The experimental 2D canvas renderer in _surfaces2d.html_, was abandoned.
@@ -365,11 +365,11 @@ Version 2.0.0-beta1:
 - Added `createPointedStar` and `createLathe` methods to `H3DU.Meshes`.
 - Added `getBounds` and `toLinePath` methods to <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>, an extra, as well
  as an extra that adds methods that compute the intersection, difference, union, and XOR of two
- polygons.  Path triangulation now supports polygons with holes.
+ polygons. Path triangulation now supports polygons with holes.
 - The default light configuration is no lights when creating a <a href="H3DU.LightSource.md">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.md">H3DU.Scene3D</a> without rendering a custom `Batch3D`, in which case the default is one light source with its default values.
-- The default value for specular materials (<a href="H3DU.Material.md">H3DU.Material</a>) is now (0.1, 0.1, 0.1).  The default value for shininess is now 32.
-- The Mesh class no longer supports multiple primitive types (lines, triangles, points).  Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
-- Many of the tutorials were edited heavily to accommodate the new version.  The `GraphicsPath` tutorial was added.
+- The default value for specular materials (<a href="H3DU.Material.md">H3DU.Material</a>) is now (0.1, 0.1, 0.1). The default value for shininess is now 32.
+- The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
+- Many of the tutorials were edited heavily to accommodate the new version. The `GraphicsPath` tutorial was added.
 - There were also numerous bug fixes.
 - A known issue: When using the <a href="H3DU.Camera.md">H3DU.Camera</a> in conjunction with the compatibility behavior of <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, only one side of the scene will appear lighted by default.
 

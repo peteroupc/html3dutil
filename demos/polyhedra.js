@@ -8,9 +8,9 @@
 */
 /* global H3DU */
 /**
-  Contains helper methods for generating the five platonic solids
-  and other polyhedra.
-  @class
+  * Contains helper methods for generating the five platonic solids
+  * and other polyhedra.
+  * @class
 */
 var Polyhedra = {};
 /**
@@ -54,7 +54,7 @@ and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index first coordinate of the corresponding
 vertex in the first array).
  * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
+ * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {Array<Array<Number>>} The "vi" parameter, which will likely be modified.
@@ -120,7 +120,7 @@ Polyhedra.makeMesh = function(vi) {
 /**
  * Generates a mesh of a regular octahedron or a sphere based on that solid.
  * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
+ * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -134,7 +134,7 @@ Polyhedra.octahedron = function(radius, level) {
 /**
  * Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.
  * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
+ * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -148,7 +148,7 @@ Polyhedra.hexahedron = function(radius, level) {
 /**
  * Generates a mesh of a regular icosahedron or a sphere based on that solid.
  * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
+ * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -162,7 +162,7 @@ Polyhedra.icosahedron = function(radius, level) {
 /**
  * Generates a mesh of a regular dodecahedron or a sphere based on that solid.
  * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
+ * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -176,7 +176,7 @@ Polyhedra.dodecahedron = function(radius, level) {
 /**
  * Generates a mesh of a regular tetrahedron or a sphere based on that solid.
  * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is.  If 1 or greater, subdivides each
+ * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.

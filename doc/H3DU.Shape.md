@@ -5,7 +5,7 @@
 ### H3DU.Shape(mesh) <a id='H3DU.Shape'></a>
 
 An object that associates a geometric mesh (the shape of the object) with
- material data (which defines what is seen on the object's surface)
+material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
@@ -66,7 +66,7 @@ A copy of this object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 ### H3DU.Shape#getBounds() <a id='H3DU.Shape_H3DU.Shape_getBounds'></a>
 
 Finds a bounding box that holds all vertices in this shape.
- The bounding box is not guaranteed to be the
+The bounding box is not guaranteed to be the
 tightest, and the box will be transformed to world space
 using this object's transform.
 
@@ -174,9 +174,9 @@ position. See H3DU.Transform#setPosition
 * `x` (Type: number | Array.&lt;Number>)<br>
     X coordinate or a 3-element position array, as specified in H3DU.Transform#setScale.
 * `y` (Type: Number)<br>
-    Y-coordinate.
+    Y coordinate.
 * `z` (Type: Number)<br>
-    Z-coordinate.
+    Z coordinate.
 
 #### Return Value
 

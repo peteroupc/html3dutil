@@ -52,7 +52,7 @@ var H3DU = {
 * and queue requests to call that function once per frame,
 * using <code>window.requestAnimationFrame</code>
 * or a "polyfill" method.
-* @param {Function} func The function to call.  The function
+* @param {Function} func The function to call. The function
 * takes one parameter, "time", which is the number of
 * milliseconds since the page was loaded.
  * @returns {Object} Return value.
@@ -173,7 +173,7 @@ var H3DU = {
 * @param {HTMLCanvasElement} canvasElement An HTML
 * canvas element.
 * @param {function} err A function to call if an error occurs in creating
-* the context.  The function takes one parameter consisting of a human-
+* the context. The function takes one parameter consisting of a human-
 * readable error message.  If "err" is null, window.alert() will be used instead.
 * @returns {WebGLRenderingContext} A 3D rendering context, or null
 * if an error occurred in creating the context.  Returns null if "canvasElement"
@@ -211,10 +211,10 @@ var H3DU = {
  * resolves or is rejected after the given list of promises finishes
  * its work.
  * @param {Array<Promise>} promises - an array containing promise objects
- *  @param {Function} [progressResolve] - a function called as each
- *   individual promise is resolved; optional
- *  @param {Function} [progressReject] - a function called as each
- *   individual promise is rejected; optional
+ * @param {Function} [progressResolve] - a function called as each
+ * individual promise is resolved; optional
+ * @param {Function} [progressReject] - a function called as each
+ * individual promise is rejected; optional
  * @returns {Promise} A promise that is resolved when
 * all of the promises are each resolved; the result will
 * be an array of results from those promises,
@@ -239,18 +239,18 @@ var H3DU = {
  * resolves after the given list of promises finishes
  * its work.
  * @param {Array<Promise>} promises - an array containing promise objects
- *  @param {Function} [progressResolve] A function called as each
- *   individual promise is resolved.
- *  @param {Function} [progressReject] A function called as each
- *   individual promise is rejected.
+ * @param {Function} [progressResolve] A function called as each
+ * individual promise is resolved.
+ * @param {Function} [progressReject] A function called as each
+ * individual promise is rejected.
  * @returns {Promise} A promise that is never rejected and resolves when
 * all of the promises are each resolved or rejected. The result
  * of the promise will be an object with
  * three keys:<ul>
  *  <li>"successes" - contains a list of results from the
- *  promises that succeeded, in the order in which those promises were listed.
+ * promises that succeeded, in the order in which those promises were listed.
  *  <li>"failures" - contains a list of results from the
- *  promises that failed, in the order in which those promises were listed.
+ * promises that failed, in the order in which those promises were listed.
  *  <li>"results" - contains a list of boolean values for each
  * promise, in the order in which the promises were listed.
  * True means success, and false means failure.</ul>
@@ -321,7 +321,7 @@ var H3DU = {
 * two properties: "url", the URL of the file, and "data", the
 * file's text or data), as given below, and is rejected when an error occurs (the
 * result may be an object with
-* one property: "url", the URL of the file).  If the promise resolves,
+* one property: "url", the URL of the file). If the promise resolves,
 * the parameter's "data" property will be:<ul>
 * <li>For response type "xml", an XML document object.
 * <li>For response type "arraybuffer", an ArrayBuffer object.
@@ -391,7 +391,7 @@ var H3DU = {
 * @returns {Number} A value in the range [0, 1), where closer
 * to 0 means "timeInMs" lies
 * closer to the start, and closer to 1 means closer
-* to the end of the interval.  If an initial time wasn't set, returns 0.
+* to the end of the interval. If an initial time wasn't set, returns 0.
 * @example <caption>The following code sets an angle of
 * rotation, in degrees, such that an object rotated with the
 * angle does a 360-degree turn in 5 seconds (5000 milliseconds).
@@ -424,7 +424,7 @@ H3DU.getTimePosition = function(timer, timeInMs, intervalInMs) {
 * </code>.
 * @returns {Number} The number of frame-length intervals relative to
 * the last known time held in the parameter "timer".
-* The number can include fractional frames.  If an
+* The number can include fractional frames. If an
 * initial time or last known time wasn't set, returns 0.
 */
 H3DU.newFrames = function(timer, timeInMs) {
@@ -928,20 +928,20 @@ H3DU.newFrames = function(timer, timeInMs) {
     return x;
   };
 /**
-* Creates a 4-element array representing a color.  Each element
+* Creates a 4-element array representing a color. Each element
 * can range from 0 to 1 and specifies the red, green, blue or alpha
 * component, respectively.
 * This method also converts HTML and CSS colors to 4-element RGB
-* colors.  The following lists the kinds of colors accepted:
+* colors. The following lists the kinds of colors accepted:
 * <ul>
 * <li>HTML colors with the syntax <code>#RRGGBB</code> or <code>#RRGGBBAA</code>, where
 * RR is the hexadecimal form of the red component (00-FF), GG
 * is the hexadecimal green component, BB is the hexadecimal
-* blue component, and AA is the hexadecimal alpha component.  Example: #88DFE0.
+* blue component, and AA is the hexadecimal alpha component. Example: #88DFE0.
 * <li>HTML colors with the syntax <code>#RGB</code> or <code>#RGBA</code>, where
 * R is the hexadecimal form of the red component (0-F), G
 * is the hexadecimal green component, B is the hexadecimal
-* blue component, and A is the hexadecimal alpha component.  Example: #8DE.
+* blue component, and A is the hexadecimal alpha component. Example: #8DE.
 * <li>CSS colors with the syntax <code>rgb(red, green, blue)</code> or
 * <code>rgba(red, green, blue, alpha)</code> where
 * <code>red</code>, <code>green</code>, and <code>blue</code>
@@ -974,7 +974,7 @@ The three components are red, green, and blue in that order.</li>
 The three components are red, green, blue, and alpha in that order.</li>
 * <li>A string specifying an HTML or CSS color, in one of the formats mentioned
 * above in the method description.</li></ul></li>
-* <li>A number specifying the red component.  Must range from 0 to 1.</li>
+* <li>A number specifying the red component. Must range from 0 to 1.</li>
 * </ul>
 * Returns (0,0,0,0) if this value is null.
 * @param {Number} g Green color component (0-1).

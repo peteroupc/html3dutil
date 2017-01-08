@@ -129,7 +129,7 @@ needed to draw text with this font.
 * `str` (Type: String)<br>
     The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
 * `params` (Type: Object)<br>
-    An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>x</code> - X-coordinate of the top left corner of the text. If null or omitted, uses 0. For the text to show upright, the coordinate system should have the X-axis pointing right and the Y-axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - Y-coordinate of the top left corner of the text. If null or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be "left", "center", or "right" (all strings). </ul>
+    An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>x</code> - X coordinate of the top left corner of the text. If null or omitted, uses 0. For the text to show upright, the coordinate system should have the X axis pointing right and the Y axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - Y coordinate of the top left corner of the text. If null or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be "left", "center", or "right" (all strings). </ul>
 
 #### Return Value
 
@@ -161,7 +161,7 @@ U+000A, that break lines). (Type: Array.&lt;Number>)
 Creates a group of shapes containing the primitives needed to
 draw text in the given position, size, and color.
 For the text to show upright, the coordinate system should have the
-X-axis pointing right and the Y-axis pointing down (for example, an
+X axis pointing right and the Y axis pointing down (for example, an
 orthographic projection where the left and top coordinates are less
 than the right and bottom coordinates, respectively).
 

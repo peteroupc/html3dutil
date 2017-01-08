@@ -9,7 +9,7 @@
 /* global H3DU */
 
 /**
-* Represents a grouping of shapes.  This object
+* Represents a grouping of shapes. This object
 * can hold both {@link H3DU.Shape} objects and
 * other {@link H3DU.ShapeGroup} objects.
 * @class
@@ -29,7 +29,7 @@ H3DU.ShapeGroup = function() {
   this.transform = new H3DU.Transform();
 };
 /**
-* Adds a 3D shape to this shape group.  Its reference, not a copy,
+* Adds a 3D shape to this shape group. Its reference, not a copy,
 * will be stored in the list of shapes.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
 * @returns {H3DU.ShapeGroup} This object.
@@ -97,7 +97,7 @@ H3DU.ShapeGroup.prototype.getMatrix = function() {
 };
 /**
  * Sets the transform used by this shape group to a copy
-* of the given transform.  Child
+* of the given transform. Child
  * shapes can set their own transforms, in which case the
  * rendering process will multiply this shape group's transform
  * with the child shape's transform as it renders the child shape.
@@ -128,9 +128,9 @@ H3DU.ShapeGroup.prototype.setMaterial = function(material) {
 /**
  * Sets the texture used by all shapes in this shape group.
  * @param {H3DU.Texture|String} material {@link H3DU.Texture} object, or a string with the
-* URL of the texture data.  In the case of a string the texture will be loaded via
-*  the JavaScript DOM's Image class.  However, this method
-*  will not load that image if it hasn't been loaded yet.
+* URL of the texture data. In the case of a string the texture will be loaded via
+* the JavaScript DOM's Image class. However, this method
+* will not load that image if it hasn't been loaded yet.
  * @memberof! H3DU.ShapeGroup#
  * @returns {Object} Return value.
 */
@@ -187,7 +187,7 @@ H3DU.ShapeGroup.prototype.removeShape = function(shape) {
 };
 /**
 * Finds a bounding box that holds all vertices in this shape group.
- The bounding box is not guaranteed to be the
+ * The bounding box is not guaranteed to be the
 * tightest, and the box will be in world space coordinates.
 * @returns {Array<Number>} An array of six numbers describing an
 * axis-aligned bounding box
@@ -263,8 +263,8 @@ H3DU.ShapeGroup.prototype.primitiveCount = function() {
  * rather than the transform for each shape in the group.
  * @param {number|Array<Number>} x X coordinate
  * or a 3-element position array, as specified in {@link H3DU.Transform#setScale}.
- * @param {Number} y Y-coordinate.
- * @param {Number} z Z-coordinate.
+ * @param {Number} y Y coordinate.
+ * @param {Number} z Z coordinate.
 * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.ShapeGroup#
 */

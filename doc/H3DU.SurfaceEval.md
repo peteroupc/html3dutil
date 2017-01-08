@@ -150,14 +150,14 @@ And finally, normalize the result:
 
     surfaceEval.vertex({"evaluate":function(u,v) {
     "use strict";
-     return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+    return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
     }})
     .normal({"evaluate":function(u,v) {
     "use strict";
-     return H3DU.Math.vec3normInPlace([
-     Math.cos(u)*-Math.sin(v)*Math.sin(u),
-     Math.sin(u)*-Math.sin(v)*Math.sin(u),
-     0]);
+    return H3DU.Math.vec3normInPlace([
+    Math.cos(u)*-Math.sin(v)*Math.sin(u),
+    Math.sin(u)*-Math.sin(v)*Math.sin(u),
+    0]);
     }})
 
 ### H3DU.SurfaceEval#setAutoNormal(value) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal'></a>

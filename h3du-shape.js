@@ -9,15 +9,15 @@
 /* global H3DU, console */
 /**
  * An object that associates a geometric mesh (the shape of the object) with
- *  material data (which defines what is seen on the object's surface)
+ * material data (which defines what is seen on the object's surface)
  * and a transformation matrix (which defines the object's position and size).
  * See the "{@tutorial shapes}" tutorial.
- *  @class
+ * @class
  * @alias H3DU.Shape
  * @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
  * Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.Material}
  * created will use the mesh in its current state and won't
- * track future changes.  <i>Using {@link H3DU.BufferedMesh} objects as the
+ * track future changes. <i>Using {@link H3DU.BufferedMesh} objects as the
  * parameter
  * is deprecated.</i>
  */
@@ -123,9 +123,9 @@ H3DU.Shape.prototype.setColor = function(r, g, b, a) {
 /**
  * Sets material parameters that give the shape a texture with the given URL.
  * @param {H3DU.Texture|String} name {@link H3DU.Texture} object, or a string with the
-* URL of the texture data.  In the case of a string the texture will be loaded via
-*  the JavaScript DOM's Image class.  However, this method
-*  will not load that image if it hasn't been loaded yet.
+* URL of the texture data. In the case of a string the texture will be loaded via
+* the JavaScript DOM's Image class. However, this method
+* will not load that image if it hasn't been loaded yet.
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
 */
@@ -164,9 +164,9 @@ H3DU.Shape.prototype.setMaterialParams = function(params) {
 * Sets this shape's material to the given texture, and its ambient and
 * diffuse parameters to the given color.
  * @param {String} name {@link H3DU.Texture} object, or a string with the
-* URL of the texture data.  In the case of a string the texture will be loaded via
-*  the JavaScript DOM's Image class.  However, this method
-*  will not load that image if it hasn't been loaded yet.
+* URL of the texture data. In the case of a string the texture will be loaded via
+* the JavaScript DOM's Image class. However, this method
+* will not load that image if it hasn't been loaded yet.
 * @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
 * or the red color component (0-1).
 * @param {Number} g Green color component (0-1).
@@ -203,7 +203,7 @@ H3DU.Shape.prototype.setMaterial = function(material) {
   return this;
 };
 /**
-* Makes a copy of this object.  The copied object
+* Makes a copy of this object. The copied object
 * will have its own version of the transform and
 * material data, but any texture
 * image data and mesh buffers will not be duplicated,
@@ -233,7 +233,7 @@ H3DU.Shape.prototype.getTransform = function() {
 };
 /**
 * Finds a bounding box that holds all vertices in this shape.
- The bounding box is not guaranteed to be the
+ * The bounding box is not guaranteed to be the
 * tightest, and the box will be transformed to world space
 * using this object's transform.
 * @returns {Array<Number>} An array of six numbers describing an
@@ -341,11 +341,11 @@ H3DU.Shape.prototype.setScale = function(x, y, z) {
 };
 /**
  * Sets the relative position of this shape from its original
- * position.  See {@link H3DU.Transform#setPosition}
+ * position. See {@link H3DU.Transform#setPosition}
  * @param {number|Array<Number>} x X coordinate
  * or a 3-element position array, as specified in {@link H3DU.Transform#setScale}.
- * @param {Number} y Y-coordinate.
- * @param {Number} z Z-coordinate.
+ * @param {Number} y Y coordinate.
+ * @param {Number} z Z coordinate.
 * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Shape#
 */

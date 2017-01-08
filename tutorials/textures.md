@@ -11,7 +11,7 @@ A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL co
 ### Loading a single texture <a id=Loading_a_single_texture></a>
 
 The `loadAndMapTexture` method of `TextureLoader` returns a promise, which will receive either
-the texture loaded or an error.  Loading a texture often happens asynchronously, so code that
+the texture loaded or an error. Loading a texture often happens asynchronously, so code that
 follows the `loadAndMapTexture` call (and its corresponding `then` calls) will generally run without
 waiting for the texture to finish loading.
 

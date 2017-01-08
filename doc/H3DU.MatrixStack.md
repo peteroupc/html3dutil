@@ -61,13 +61,13 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 #### Parameters
 
 * `l` (Type: Number)<br>
-    X-coordinate of the point where the left clipping plane meets the near clipping plane.
+    X coordinate of the point where the left clipping plane meets the near clipping plane.
 * `r` (Type: Number)<br>
-    X-coordinate of the point where the right clipping plane meets the near clipping plane.
+    X coordinate of the point where the right clipping plane meets the near clipping plane.
 * `b` (Type: Number)<br>
-    Y-coordinate of the point where the bottom clipping plane meets the near clipping plane.
+    Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
 * `t` (Type: Number)<br>
-    Y-coordinate of the point where the top clipping plane meets the near clipping plane.
+    Y coordinate of the point where the top clipping plane meets the near clipping plane.
 * `n` (Type: Number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
 * `f` (Type: Number)<br>
@@ -267,9 +267,9 @@ a matrix that transforms the view to a portion of the viewport.
 #### Parameters
 
 * `wx` (Type: Number)<br>
-    X-coordinate of the center of the desired viewport portion.
+    X coordinate of the center of the desired viewport portion.
 * `wy` (Type: Number)<br>
-    Y-coordinate of the center of the desired viewport portion.
+    Y coordinate of the center of the desired viewport portion.
 * `ww` (Type: Number)<br>
     Width of the desired viewport portion.
 * `wh` (Type: Number)<br>

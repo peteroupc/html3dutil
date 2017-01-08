@@ -47,5 +47,5 @@ length of a control point, as specified in the constructor. (Type: Array.&lt;Num
     // Assumes the curve was created with u1=0 and u2=1 (the default).
     var points=[];
     for(var i=0;i<=10;i++) {
-     points.push(curve.evaluate(i/10.0));
+    points.push(curve.evaluate(i/10.0));
     }

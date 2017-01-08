@@ -5,7 +5,7 @@
 ### H3DU.Trochoid(radius, distFromCenter) <a id='H3DU.Trochoid'></a>
 
 Parametric evaluator for a
-curve drawn by a circle that rolls along the X-axis.
+curve drawn by a circle that rolls along the X axis.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that

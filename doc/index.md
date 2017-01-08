@@ -62,7 +62,7 @@ rendering that batch.
 Use the <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> class instead, which is not coupled to WebGL
 contexts.</b>
 * <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
- material data (which defines what is seen on the object's surface)
+material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.
 * <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating
@@ -73,9 +73,9 @@ an X/Y curve around an axis.
 * <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
 text.
 * <a href="H3DU.Texture.md">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to
- the surface of a shape, or even a 2-dimensional array of pixels
- used for some other purpose, such as a depth map, a height map,
- a bump map, a specular map, and so on.
+the surface of a shape, or even a 2-dimensional array of pixels
+used for some other purpose, such as a depth map, a height map,
+a bump map, a specular map, and so on.
 * <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
 texture.
 * <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them
@@ -83,7 +83,7 @@ to WebGL contexts.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
 * <a href="H3DU.Trochoid.md">H3DU.Trochoid</a><br>Parametric evaluator for a
-curve drawn by a circle that rolls along the X-axis.
+curve drawn by a circle that rolls along the X axis.
 * <a href="Hypotrochoid.md">Hypotrochoid</a><br><b>Deprecated: Use <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a> instead.</b>
 * <a href="InputTracker.md">InputTracker</a><br><b>Deprecated: Use <a href="H3DU.InputTracker.md">H3DU.InputTracker</a> instead.</b>
 * <a href="MatrixStack.md">MatrixStack</a><br><b>Deprecated: Use <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a> instead.</b>

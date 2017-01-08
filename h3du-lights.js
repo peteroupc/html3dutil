@@ -8,7 +8,7 @@
 */
 /* global H3DU */
 /**
-* A collection of light sources.  It stores the scene's
+* A collection of light sources. It stores the scene's
 * ambient color as well as data on one or more light sources.
 * When constructed, the list of light sources will be empty.
 * @class
@@ -18,18 +18,18 @@ H3DU.Lights = function() {
   "use strict";
   this.lights = [];
  /**
- *  Ambient color for the scene.  This is the color of the light
- *  that shines on every part of every object equally and in
- *  every direction. In the absence of
- *  other lighting effects, all objects will be given this color.<p>
- *  <small>Ambient light is a simplified simulation of the
+ * Ambient color for the scene. This is the color of the light
+ * that shines on every part of every object equally and in
+ * every direction. In the absence of
+ * other lighting effects, all objects will be given this color.<p>
+ * <small>Ambient light is a simplified simulation of the
  * real-world effect of light bouncing back and forth between
- * many different objects in an area.  One example of this
+ * many different objects in an area. One example of this
  * phenomenon is sunlight reaching an indoor room without
  * directly hitting it, such that the sunlight bounces off the walls
  * and so illuminates most of the room pretty much uniformly.
  * Ambient lights simulate this phenomenon.</small>
- *  @default
+ * @default
 */
   this.sceneAmbient = [0.2, 0.2, 0.2];
 };
@@ -55,9 +55,9 @@ H3DU.Lights.prototype.setBasic = function() {
 };
 
 /** Maximum number of lights supported
-   by the default shader program.
-   @const
-   @default
+   * by the default shader program.
+   * @const
+   * @default
 * @memberof! H3DU.Lights
 */
 H3DU.Lights.MAX_LIGHTS = 3;
@@ -83,7 +83,7 @@ H3DU.Lights.prototype.getCount = function() {
 
 /**
  * Gets information about the light source at the given index.
- * @param {Number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @returns {LightSource} The corresponding light source object.
@@ -106,7 +106,7 @@ H3DU.Lights.prototype.getLight = function(index) {
 };
 /**
  * Sets parameters for the light source at the given index.
- * @param {Number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
@@ -121,7 +121,7 @@ H3DU.Lights.prototype.setParams = function(index, params) {
 
 /**
  * Sets a directional light.
- * @param {Number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @param {Array<Number>} direction A 3-element vector giving the direction of the light, along the X, Y, and Z
@@ -131,7 +131,7 @@ H3DU.Lights.prototype.setParams = function(index, params) {
  * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the specular highlight color will
- * remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+ * remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Lights} This object.
  * @memberof! H3DU.Lights#
 */
@@ -146,7 +146,7 @@ H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, 
 };
 /**
  * Sets a point light.
- * @param {Number} index Zero-based index of the light to set.  The first
+ * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @param {Array<Number>} position A 3-element vector giving the X, Y, and Z

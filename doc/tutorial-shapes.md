@@ -37,7 +37,7 @@ Demos:
 * [shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
 the built-in shapes.
 * [platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
-platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.
+platonic solids. Demonstrates how vertex and index arrays are built up to create geometric meshes.
 
 Examples:
 
@@ -73,7 +73,7 @@ are composed of.  See "Custom Shapes" below for more on meshes.
 Also included is a `H3DU.Mesh` class for defining shapes not given among the built-in ones.
 Shapes can consist of triangles, lines, or points.
 
-There are two ways for specifying shapes:  through the Mesh constructor, or through
+There are two ways for specifying shapes: through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.
 
 ### The Mesh Constructor <a id=The_Mesh_Constructor></a>
@@ -87,8 +87,8 @@ Here's how.
 
 If you also specify normals, colors, or texture coordinates for each vertex, you must add
 them after each vertex position in this order: normals first, colors second, and texture
-coordinates last.  If you don't specify normals, colors, and/or texture coordinates per
-vertex, you can omit them.  The following are examples of this:
+coordinates last. If you don't specify normals, colors, and/or texture coordinates per
+vertex, you can omit them. The following are examples of this:
 
     // An array of vertices each with a set of normals
     var vertices = [
@@ -152,13 +152,13 @@ or `H3DU.Mesh.QUAD_STRIP`:
     mesh.mode(H3DU.Mesh.TRIANGLES);
 
 The mesh will build up the shape from the vertices you give it depending on the mesh's
-primitive mode.  For example, `QUAD_STRIP` defines a strip of connecting quadrilaterals,
+primitive mode. For example, `QUAD_STRIP` defines a strip of connecting quadrilaterals,
 and `TRIANGLES` defines a set of triangles that are not necessarily connected:
 
 * `H3DU.Mesh.TRIANGLES` - Set of triangles, 3 vertices each.
 * `H3DU.Mesh.LINES` - Set of line segments, 2 vertices each.
 * `H3DU.Mesh.QUADS` - Set of quadrilaterals, 4 vertices each.
-* `H3DU.Mesh.TRIANGLE_STRIP` - A triangle strip.  The first 3
+* `H3DU.Mesh.TRIANGLE_STRIP` - A triangle strip. The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.
@@ -174,7 +174,7 @@ quad is made up of the last 2 vertices of the previous quad and
 * `H3DU.Mesh.POINTS` - A series of points.
 
 (2) Call the `normal3()`, `color3()`, and `texCoord2()` methods, as needed, to set the
-next vertex's parameters.  You don't need to do this for each vertex if multiple
+next vertex's parameters. You don't need to do this for each vertex if multiple
 consecutive vertices will share the same normal, color, or texture coordinates.
 
     mesh.normal3(2, 3, 4); // Set the x, y, and z of the normal.
@@ -183,23 +183,23 @@ consecutive vertices will share the same normal, color, or texture coordinates.
     mesh.color3("#123FE8"); // Set an HTML color.
     mesh.texCoord3(0.5,0.5); // Set the texture coordinates.
 
-(3) Call the `vertex3()` method to add a new vertex and set its position.  The vertex will
+(3) Call the `vertex3()` method to add a new vertex and set its position. The vertex will
 have the last normal, color, and texture coordinates defined on the mesh, if any
 were given:
 
     mesh.vertex3(x, y, z);
 
 You can also call the `mode()` method any time to change the primitive mode, even to
-the same mode.  What this does is reset the state of the primitive so that future vertices
-won't depend on previous vertices.  For example, if you define a `TRIANGLE_FAN`, and
+the same mode. What this does is reset the state of the primitive so that future vertices
+won't depend on previous vertices. For example, if you define a `TRIANGLE_FAN`, and
 you call `mesh.mode(H3DU.Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
-"disconnected" from the previous one as far as the mesh object is concerned.  However,
+"disconnected" from the previous one as far as the mesh object is concerned. However,
 a single `Mesh` can contain only one kind of primitive (triangles, lines, or points) at a time.
 
 ### Transforming the Mesh <a id=Transforming_the_Mesh></a>
 
 Once you've created the mesh, you can use the `transform()` method to transform
-all the vertices in the mesh with a <a href="tutorial-glmath.md">4x4 matrix</a>.  The
+all the vertices in the mesh with a <a href="tutorial-glmath.md">4x4 matrix</a>. The
 [shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) demo uses
 this method to adjust some of the meshes to make them look better on the screen.
 Example:
@@ -215,13 +215,13 @@ vertices in the mesh.
 
 #### What Are Normals? <a id=What_Are_Normals></a>
 
-A normal is a set of 3 numbers describing a particular direction.  Generally,
+A normal is a set of 3 numbers describing a particular direction. Generally,
 a normal's direction is perpendicular to a surface's edges, and points
 away from the surface.
 
-Normals are important in the lighting and shading model.  When light
+Normals are important in the lighting and shading model. When light
 hits an object's surface, the surface will shine depending on how directly the
-light points to the surface.  It will shine the most if the light
+light points to the surface. It will shine the most if the light
 is directly opposite to its normal, and not at all if the light is perpendicular to the
 normal or in the same direction as the normal.
 
@@ -235,7 +235,7 @@ specify the proper normals.
 You can use the `recalcNormals()` method to
 recalculate the mesh's normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
-the inside or the outside.  This method takes two parameters:
+the inside or the outside. This method takes two parameters:
 
 * The first parameter is `true` if the normals will be calculated such that the shape
 will have a flat appearance; otherwise, `false` (giving the shape a smooth appearance).
@@ -245,7 +245,7 @@ each unique vertex its own normal (smooth shading).
 is shaded from the inside; otherwise, `false`.
 
 For normal calculation to properly affect shading, each triangle in
-the mesh must have its vertices ordered in the same orientation throughout.  If the
+the mesh must have its vertices ordered in the same orientation throughout. If the
 vertices are oriented in the wrong order, use the `reverseWinding()`
 method to change their order.
 
@@ -265,10 +265,10 @@ Example:
 ## Binding Shapes <a id=Binding_Shapes></a>
 
 Once you have a mesh of a 3D shape, you still need to attach it to a shape
-and a batch of shapes in order for the renderer to draw it.  This is where
+and a batch of shapes in order for the renderer to draw it. This is where
 the <a href="H3DU.Shape.md">`H3DU.Shape`</a> class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
-as well as its color and appearance.  To attach a mesh to a 3D scene:
+as well as its color and appearance. To attach a mesh to a 3D scene:
 
 (1) Create a `Shape` object by passing the mesh to the `H3DU.Shape` constructor:
 
@@ -327,14 +327,14 @@ given shape to the scene through the 3D batch.
 
 ## Shape Groups <a id=Shape_Groups></a>
 
-The `H3DU.ShapeGroup` class represents a shape that's a combination of multiple shapes.  Usually,
+The `H3DU.ShapeGroup` class represents a shape that's a combination of multiple shapes. Usually,
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
-at once.  Here is an example of a clock made up of multiple shapes:
+at once. Here is an example of a clock made up of multiple shapes:
 
 ![Clock](clock.png)
 
 This clock is made up of a **torus** for the edge, **disks** for the front and back,
-**capsules** for the hands, and crude **spheres** for the center and top.  These shapes
+**capsules** for the hands, and crude **spheres** for the center and top. These shapes
 are added to a single ShapeGroup which represents the whole clock:
 
 * Clock: `ShapeGroup`
@@ -353,8 +353,8 @@ The demo for the clock is:
 featuring a wall clock.
 
 To create a shape group, call `new H3DU.ShapeGroup()`. To add a `Shape` object to the group,
-call `new H3DU.Shape(shape)`.  Note that you can only add shapes, not meshes,
-to a shape group, just as for a 3D batch (`H3DU.Batch3D`).  A shape group, though, is perfectly allowed to contain
+call `new H3DU.Shape(shape)`. Note that you can only add shapes, not meshes,
+to a shape group, just as for a 3D batch (`H3DU.Batch3D`). A shape group, though, is perfectly allowed to contain
 other shape groups.
 
 ## Other Pages <a id=Other_Pages></a>

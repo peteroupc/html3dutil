@@ -9,10 +9,10 @@
 /* global DataView, H3DU, Promise, Uint8Array */
 
 /**
-*  Specifies a texture, which can serve as image data applied to
-*  the surface of a shape, or even a 2-dimensional array of pixels
-*  used for some other purpose, such as a depth map, a height map,
-*  a bump map, a specular map, and so on.<p>
+* Specifies a texture, which can serve as image data applied to
+* the surface of a shape, or even a 2-dimensional array of pixels
+* used for some other purpose, such as a depth map, a height map,
+* a bump map, a specular map, and so on.<p>
 * By default, texture coordinates go from (0,0) at the lower left corner
 * to (1,1) at the upper right corner.<p>
 * For best results, any textures to be used in WebGL should have
@@ -20,9 +20,9 @@
 * and 32.
 * @class
 * @alias H3DU.Texture
-* @param {String} name URL of the texture data.  Based on the
+* @param {String} name URL of the texture data. Based on the
 * URL, the texture may be loaded via the JavaScript DOM's Image
-* class.  However, this constructor will not load that image yet.
+* class. However, this constructor will not load that image yet.
 */
 H3DU.Texture = function(name) {
   "use strict";
@@ -56,13 +56,13 @@ H3DU.Texture.prototype.getHeight = function() {
 
 /**
 * Sets the wrapping behavior of texture coordinates that
-* fall out of range when using this texture.  This setting
+* fall out of range when using this texture. This setting
 * will only have an effect on textures whose width and height
-* are both powers of two.  For other textures, this setting
+* are both powers of two. For other textures, this setting
 * is ignored and out-of-range texture coordinates are
 * always clamped.
 * @param {Boolean} clamp If true, the texture's texture
-* coordinates will be clamped to the range [0, 1].  If false,
+* coordinates will be clamped to the range [0, 1]. If false,
 * the fractional parts of the texture coordinates'
 * be used as the coordinates (causing wraparound).
 * The default is false.
@@ -76,17 +76,17 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
 };
 
 /**
-*  Loads a texture by its URL.
-* @param {String} name URL of the texture data.  Images with a TGA
+* Loads a texture by its URL.
+* @param {String} name URL of the texture data. Images with a TGA
 * extension that use the RGBA or grayscale format are supported.
 * Images supported by the browser will be loaded via
 * the JavaScript DOM's Image class.
 * @param {Object} [textureCache] An object whose keys
-* are the names of textures already loaded.  This will help avoid loading
-* the same texture more than once.  This parameter is optional
+* are the names of textures already loaded. This will help avoid loading
+* the same texture more than once. This parameter is optional
 * and may be omitted.
 * @returns {Promise} A promise that resolves when the texture
-* is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
+* is fully loaded. If it resolves, the result will be an H3DU.Texture object.
 * @memberof! H3DU.Texture
 */
 H3DU.Texture.loadTexture = function(name, textureCache) {
@@ -110,7 +110,7 @@ H3DU.Texture.loadTexture = function(name, textureCache) {
 };
 
 /**
-*  Creates a texture from a byte array specifying the texture data.
+* Creates a texture from a byte array specifying the texture data.
 * @param {Uint8Array} array A byte array containing the texture data,
 * with the pixels arranged in left-to-right rows from top to bottom.
 * Each pixel takes 4 bytes, where the bytes are the red, green, blue,

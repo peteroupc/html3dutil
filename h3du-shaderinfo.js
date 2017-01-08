@@ -9,9 +9,9 @@
 /* global H3DU, console */
 
 /**
-* Holds source code for a WebGL shader program.  A shader program in
+* Holds source code for a WebGL shader program. A shader program in
 * WebGL consists of a vertex shader (which processes vertices),
-* and a fragment shader (which processes pixels).  Shader programs
+* and a fragment shader (which processes pixels). Shader programs
 * are specially designed for running on a graphics processing unit,
 * or GPU.<p>
 * This class also stores uniform values associated with the shader
@@ -21,7 +21,7 @@
 * @class
 * @alias H3DU.ShaderInfo
 * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
-* ES Shading Language (GLSL).  If null, a default
+* ES Shading Language (GLSL). If null, a default
 * vertex shader is used instead.
 * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
@@ -74,13 +74,13 @@ H3DU.ShaderInfo.prototype.copy = function() {
 * the uniforms won't be associated with a WebGL context.
 * @param {Object} uniforms An object whose keys are the names of uniforms
 * defined in either the
-* vertex or fragment shader of this shader program.  If the uniform
+* vertex or fragment shader of this shader program. If the uniform
 * is an array, each element in the array is named as in these examples:
-* "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
-* "unif.member1", "unif.member2".  If it's an array of struct, each
+* "unif[0]", "unif[1]". If it's a struct, each member in the struct is named as in these examples:
+* "unif.member1", "unif.member2". If it's an array of struct, each
 * member is named as in these examples: "unif[0].member1",
-* "unif[0].member2".  The value of each key depends on the data type
-* expected for the uniform named by that key.  The value can be a 3-, 4-,
+* "unif[0].member2". The value of each key depends on the data type
+* expected for the uniform named by that key. The value can be a 3-, 4-,
 9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
 * respectively, or a Number if the uniform is a "float" or "int".
 * @returns {H3DU.ShaderInfo} This object.
@@ -251,7 +251,7 @@ H3DU.ShaderInfo.makeCopyEffect = function() {
 * where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
 * is the texture coordinates ranging from 0 to 1 in each component,
 * <code>textureSize</code> is the dimensions of the texture in pixels,
-* and the return value is the new color at the given texture coordinates.  Besides
+* and the return value is the new color at the given texture coordinates. Besides
 * this requirement, the shader code is also free to define additional uniforms,
 * constants, functions, and so on (but not another "main" function).
 * @returns {H3DU.ShaderInfo} The resulting shader program.

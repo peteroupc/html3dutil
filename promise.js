@@ -119,7 +119,7 @@
    * @param {Array<Promise>} all An array of promises.
   * @returns {Promise} A promise that is resolved when all promises have resolved.
    * @returns {Promise} A promise that resolves or is rejected according to
-  * the first promise that resolves or is rejected.  It will receive the
+  * the first promise that resolves or is rejected. It will receive the
   * value associated with that promise.
    * @memberof! Promise#
  */
@@ -198,7 +198,7 @@
       return;
     }
     var then;
-    /* 2.3.3. Otherwise, if x is an object or function,  */
+    /* 2.3.3. Otherwise, if x is an object or function, */
     if (x !== null && typeof x !== "undefined" && (typeof x === "object" || typeof x === "function")) {
       try {
         then = x.then;
@@ -266,7 +266,7 @@
    * @returns {Promise} A promise.
    * @memberof! Promise#
 */
-  Promise.prototype.catch  = function(onRejected) {
+  Promise.prototype.catch = function(onRejected) {
     return this.then(null, onRejected);
   };
 /** @private */

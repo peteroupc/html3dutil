@@ -43,8 +43,8 @@ This method creates a flat tiled floor.
     // xStart, yStart - X and Y coordinates of the start of the floor
     // width, height - Width and height of the floor
     // tileSize - Size of each floor tile
-    // z - Z-coordinate where the floor will be placed (optional,
-    //  default 0)
+    // z - Z coordinate where the floor will be placed (optional,
+    // default 0)
     function makeFloor(xStart,yStart,width,height,tileSize,z){
      if(z==null)z=0.0
      var mesh=new H3DU.Mesh()

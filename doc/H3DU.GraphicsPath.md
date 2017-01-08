@@ -75,13 +75,13 @@ HTML Canvas 2D Context.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the center of the circle that the arc forms a part of.
+    X coordinate of the center of the circle that the arc forms a part of.
 * `y` (Type: Number)<br>
-    Y-coordinate of the circle's center.
+    Y coordinate of the circle's center.
 * `radius` (Type: Number)<br>
     Radius of the circle.
 * `startAngle` (Type: Number)<br>
-    Starting angle of the arc, in radians. 0 means the positive X-axis, &pi;/2 means the positive Y-axis, &pi; means the negative X-axis, and &pi;\*1.5 means the negative Y-axis.
+    Starting angle of the arc, in radians. 0 means the positive X axis, &pi;/2 means the positive Y axis, &pi; means the negative X axis, and &pi;\*1.5 means the negative Y axis.
 * `endAngle` (Type: Number)<br>
     Ending angle of the arc, in radians.
 * `ccw` (Type: Boolean)<br>
@@ -99,9 +99,9 @@ using the parameterization used by the SVG specification.
 #### Parameters
 
 * `rx` (Type: Number)<br>
-    X-axis radius of the ellipse that the arc will be formed from.
+    X axis radius of the ellipse that the arc will be formed from.
 * `ry` (Type: Number)<br>
-    Y-axis radius of the ellipse that the arc will be formed from.
+    Y axis radius of the ellipse that the arc will be formed from.
 * `rot` (Type: Number)<br>
     Rotation of the ellipse in degrees (clockwise assuming the X axis points right and the Y axis points down under the coordinate system).
 * `largeArc` (Type: Boolean)<br>
@@ -109,9 +109,9 @@ using the parameterization used by the SVG specification.
 * `sweep` (Type: Boolean)<br>
     If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.
 * `x2` (Type: Number)<br>
-    X-coordinate of the arc's end point.
+    X coordinate of the arc's end point.
 * `y2` (Type: Number)<br>
-    Y-coordinate of the arc's end point.
+    Y coordinate of the arc's end point.
 
 #### Return Value
 
@@ -126,13 +126,13 @@ HTML Canvas 2D Context.
 #### Parameters
 
 * `x1` (Type: Number)<br>
-    X-coordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn't the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)
+    X coordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn't the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)
 * `y1` (Type: Number)<br>
-    Y-coordinate of the point described under "x1".
+    Y coordinate of the point described under "x1".
 * `x2` (Type: Number)<br>
-    X-coordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.
+    X coordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.
 * `y2` (Type: Number)<br>
-    Y-coordinate of the point described under "x2".
+    Y coordinate of the point described under "x2".
 * `radius` (Type: Number)<br>
     Radius of the circle the arc forms a part of.
 
@@ -148,17 +148,17 @@ at this path's current position.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the curve's first control point.
+    X coordinate of the curve's first control point.
 * `y` (Type: Number)<br>
-    X-coordinate of the curve's first control point.
+    X coordinate of the curve's first control point.
 * `x2` (Type: Number)<br>
-    Y-coordinate of the curve's second control point.
+    Y coordinate of the curve's second control point.
 * `y2` (Type: Number)<br>
-    Y-coordinate of the curve's second control point.
+    Y coordinate of the curve's second control point.
 * `x3` (Type: Number)<br>
-    X-coordinate of the curve's end point.
+    X coordinate of the curve's end point.
 * `y3` (Type: Number)<br>
-    Y-coordinate of the curve's end point.
+    Y coordinate of the curve's end point.
 
 #### Return Value
 
@@ -351,9 +351,9 @@ sets the end position to the end of the segment.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the end of the line segment.
+    X coordinate of the end of the line segment.
 * `y` (Type: Number)<br>
-    Y-coordinate of the end of the line segment.
+    Y coordinate of the end of the line segment.
 
 #### Return Value
 
@@ -366,9 +366,9 @@ Moves the current start position and end position to the given position.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the position.
+    X coordinate of the position.
 * `y` (Type: Number)<br>
-    Y-coordinate of the position.
+    Y coordinate of the position.
 
 #### Return Value
 
@@ -396,13 +396,13 @@ at this path's current position.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of the curve's control point.
+    X coordinate of the curve's control point.
 * `y` (Type: Number)<br>
-    Y-coordinate of the curve's control point.
+    Y coordinate of the curve's control point.
 * `x2` (Type: Number)<br>
-    X-coordinate of the curve's end point.
+    X coordinate of the curve's end point.
 * `y2` (Type: Number)<br>
-    Y-coordinate of the curve's end point.
+    Y coordinate of the curve's end point.
 
 #### Return Value
 
@@ -415,9 +415,9 @@ Adds four lines in an axis-aligned rectangle shape to the path.
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X-coordinate of a corner of the rectangle.
+    X coordinate of a corner of the rectangle.
 * `y` (Type: Number)<br>
-    Y-coordinate of a corner of the rectangle.
+    Y coordinate of a corner of the rectangle.
 * `width` (Type: Number)<br>
     X-offset (width) to another corner of the rectangle.
 * `height` (Type: Number)<br>
@@ -459,7 +459,7 @@ See <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath.fromString">H3DU.GraphicsPat
 #### Return Value
 
 A string describing the path in the SVG path
- format. (Type: String)
+format. (Type: String)
 
 ### GraphicsPath#transform(trans) <a id='H3DU.GraphicsPath_GraphicsPath_transform'></a>
 

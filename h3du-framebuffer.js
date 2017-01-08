@@ -77,7 +77,7 @@ H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
 * When H3DU.FrameBuffer's
 * constructor is called, it will create a texture buffer with the given
 * width and height and a depth buffer with the same dimensions,
-* and will bind both to the frame buffer.  The frame buffer currently
+* and will bind both to the frame buffer. The frame buffer currently
 * bound to the WebGL context will remain unchanged.
 * @deprecated This class is likely to become a private class.
 * Use the FrameBufferInfo class instead, which is not coupled to WebGL
@@ -113,12 +113,12 @@ H3DU.FrameBuffer.prototype._init = function(context, width, height) {
  /** The frame buffer's width.
 * @memberof! H3DU.FrameBuffer
 @alias width
-  @readonly */
+  * @readonly */
   this.width = Math.ceil(width);
  /** The frame buffer's height.
 * @memberof! H3DU.FrameBuffer
-  @alias height
-  @readonly */
+  * @alias height
+  * @readonly */
   this.height = Math.ceil(height);
   this.context.activeTexture(this.context.TEXTURE0 + this.textureUnit);
   this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);

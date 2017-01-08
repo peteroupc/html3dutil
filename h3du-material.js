@@ -32,7 +32,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
 * The greater the number, the more concentrated the specular
 * highlights are (and the smoother the material behaves).
 * The lower the number, the more extended the highlights are (and the rougher the material behaves).
-* Ranges from 0 through 128.  Default is 32.
+* Ranges from 0 through 128. Default is 32.
 */
   this.shininess = shininess === null || typeof shininess === "undefined" ? 32 : Math.min(Math.max(0, shininess), 128);
  /** Ambient color of this material.<p>
@@ -68,13 +68,13 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for diffusion rather than this property.<p>
  * This value can have an optional fourth element giving the alpha component
- * (0-1).  If this element is omitted, the default is 1.<p>
+ * (0-1). If this element is omitted, the default is 1.<p>
 */
   this.diffuse = diffuse ? diffuse.slice(0, diffuse.length) : [0.8, 0.8, 0.8, 1.0];
  /**
  * Specular highlight reflection of this material.
  * Specular reflection is a reflection in the opposite direction from the direction
- * the light reaches the material in, similar to a mirror.  As a result, depending
+ * the light reaches the material in, similar to a mirror. As a result, depending
  * on the viewing angle, specular reflection can give off
  * shiny highlights on the material.<p>
  * This value is a 3-element array giving the red, green, and blue
@@ -103,7 +103,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
 */
   this.emission = emission ? emission.slice(0, 3) : [0, 0, 0];
 /**
-* H3DU.Texture for this material.  Each color in the texture
+* H3DU.Texture for this material. Each color in the texture
 * sets the diffusion (also called "albedo")
 * of each part of the material.
 * @default
@@ -123,12 +123,12 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
 */
   this.specularMap = null;
  /**
- * Normal map (bump map) texture.  Normal maps are used either to add
+ * Normal map (bump map) texture. Normal maps are used either to add
  * a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
  * appearance with fewer polygons.<p>
  * In a normal map texture, each pixel is a vector in which
- each component (which usually ranges from 0-255 in most image formats) is scaled to
- the range [-1, 1], where:
+ * each component (which usually ranges from 0-255 in most image formats) is scaled to
+ * the range [-1, 1], where:
 <ul>
 <li>The pixel's red component is the vector's X component.
 <li>The pixel's green component is the vector's Y component.
@@ -140,7 +140,7 @@ the value (127, 127, 255) in most image formats.
 and away from the surface's edges.
 </ul>
 Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
-to the vector given in that pixel.  This tilt adjusts the normals used for the
+to the vector given in that pixel. This tilt adjusts the normals used for the
 purpose of calculating lighting effects at that part of the surface.
 A strong tilt indicates strong relief detail at that point.<p>
 * Any texture used for normal maps should not be in JPEG format or any other
@@ -203,11 +203,11 @@ H3DU.Material.prototype.copy = function() {
 * <li><code>diffuse</code> - A [color vector or string]{@link H3DU.toGLColor} giving
 * the diffusion color (also called "albedo"). (See {@link H3DU.Material#diffuse}.) The default is (0.8, 0.8, 0.8).
 * <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving
-* the specular reflection.  (See {@link H3DU.Material#specular}.) The default is (0,0,0), meaning no specular highlights.
-* <li><code>shininess</code> - Specular reflection exponent.  (See {@link H3DU.Material#shininess}).
+* the specular reflection. (See {@link H3DU.Material#specular}.) The default is (0,0,0), meaning no specular highlights.
+* <li><code>shininess</code> - Specular reflection exponent. (See {@link H3DU.Material#shininess}).
 * Ranges from 0 through 128. The default is 0.
 * <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
-* the additive color.  (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
+* the additive color. (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
 * range from -1 to 1. The default is (0,0,0).
 * <li><code>texture</code> - {@link H3DU.Texture} object, or a string with the URL of the texture
 * to use.
@@ -219,7 +219,7 @@ H3DU.Material.prototype.copy = function() {
 * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
 * this parameter is deprecated.</i>
 * </ul>
-* Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
+* Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
 * @returns {H3DU.Material} This object.
 * @memberof! H3DU.Material#
 */
@@ -300,9 +300,9 @@ H3DU.Material.fromColor = function(r, g, b, a) {
 /** Convenience method that returns an H3DU.Material
  * object from a texture to apply to a 3D object's surface.
 * @param {H3DU.Texture|string} texture {@link H3DU.Texture} object, or a string with the
-* URL of the texture data.  In the case of a string the texture will be loaded via
-*  the JavaScript DOM's Image class.  However, this method
-*  will not load that image yet.
+* URL of the texture data. In the case of a string the texture will be loaded via
+* the JavaScript DOM's Image class. However, this method
+* will not load that image yet.
 * @returns {H3DU.Material} The resulting material object.
  * @memberof! H3DU.Material
 */

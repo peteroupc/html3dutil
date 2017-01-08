@@ -67,7 +67,7 @@ Gets the type of primitive stored in this mesh buffer.
 #### Return Value
 
 Either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
- <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: Number)
+<a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: Number)
 
 ### H3DU.MeshBuffer#setAttribute(name, buffer, startIndex, countPerVertex, stride) <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute'></a>
 

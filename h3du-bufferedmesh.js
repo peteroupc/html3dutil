@@ -15,13 +15,13 @@
 * @class
 * @alias H3DU.BufferedMesh
 * @param {H3DU.Mesh|H3DU.MeshBuffer} mesh
-* A geometric mesh object.  Cannot be null.
+* A geometric mesh object. Cannot be null.
 * @param {WebGLRenderingContext|object} context A WebGL context to
-*  create a buffer from, or an object, such as H3DU.Scene3D, that
+* create a buffer from, or an object, such as H3DU.Scene3D, that
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context. (Note that this constructor uses
-*  a WebGL context rather than a shader program because
-*  buffer objects are not specific to shader programs.)
+* a WebGL context rather than a shader program because
+* buffer objects are not specific to shader programs.)
 */
 H3DU.BufferedMesh = function(mesh, context) {
   "use strict";

@@ -60,7 +60,7 @@ H3DU.MeshBuffer = function(mesh) {
 /**
  * Adds information about a buffer attribute to this
  * mesh buffer (or sets an
- * existing attribute's information).  An attribute
+ * existing attribute's information). An attribute
  * gives information about the per-vertex data used and
  * stored in a vertex buffer.
  * @param {String} name The name of the attribute.
@@ -70,7 +70,7 @@ H3DU.MeshBuffer = function(mesh) {
  * (starting from 0) where the first per-vertex
  * item starts.
  * @param {Number} countPerVertex The number of elements in each
- * per-vertex item.  For example, if each vertex is a 3-element
+ * per-vertex item. For example, if each vertex is a 3-element
  * vector, this value is 3.
  * @param {Number} stride The number of elements from the start of
  * one per-vertex item to the start of the next.
@@ -171,7 +171,7 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
 /**
  * Gets the type of primitive stored in this mesh buffer.
 * @returns {Number} Either {@link H3DU.Mesh.TRIANGLES},
- {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
+ * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  * @memberof! H3DU.MeshBuffer#
 */
 H3DU.MeshBuffer.prototype.primitiveType = function() {

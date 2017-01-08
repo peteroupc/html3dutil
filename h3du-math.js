@@ -25,16 +25,16 @@ H3DU.Math = {
 vector with the same length but opposite direction.
  * <li>If the cross product's [length]{@link H3DU.Math.vec3length} is 0, then A and B are parallel vectors.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-The cross product vector will be such that, while the vector points toward the viewer,
-the triangle's vertices are oriented counterclockwise for right-handed coordinate systems,
+While the cross product of A and B points toward the viewer,
+the triangle's vertices are oriented counterclockwise for [right-handed coordinate systems]{@tutorial glmath},
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
-<li>If A and B are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the absolute value
+<li>If A and B are [unit vectors]{@tutorial glmath}, the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
  * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
 * <li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
-  to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
+  * to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
 * </ul>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
  * follows:<pre>
@@ -47,17 +47,17 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
  * @returns {Array<Number>} A 3-element vector containing the cross product.
  * @example <caption>The following example uses the cross product to
  * calculate a triangle's normal vector and its area.</caption>
- var a=triangle[0];
- var b=triangle[1];
- var c=triangle[2];
- // Find vector from C to A
- var da=H3DU.Math.vec3sub(a,c);
- // Find vector from C to B
- var db=H3DU.Math.vec3sub(b,c);
- // The triangle's normal is the cross product of da and db
- var normal=H3DU.Math.vec3cross(da,db);
- // Find the triangle's area
- var area=H3DU.Math.vec3length(normal)*0.5;
+ * var a=triangle[0];
+ * var b=triangle[1];
+ * var c=triangle[2];
+ * // Find vector from C to A
+ * var da=H3DU.Math.vec3sub(a,c);
+ * // Find vector from C to B
+ * var db=H3DU.Math.vec3sub(b,c);
+ * // The triangle's normal is the cross product of da and db
+ * var normal=H3DU.Math.vec3cross(da,db);
+ * // Find the triangle's area
+ * var area=H3DU.Math.vec3length(normal)*0.5;
  */
   "vec3cross":function(a, b) {
     "use strict";
@@ -71,7 +71,7 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
  * <b>b</b>'s X).<p>
  * The following are properties of the dot product:
  * <ul>
- * <li>If both vectors are unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1), the cosine
+ * <li>If both vectors are [unit vectors]{@tutorial glmath}, the cosine
  * of the angle between them is equal to their dot product.
  * <small>(More formally, the dot
  * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
@@ -83,7 +83,7 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
  * <li>A dot product of 0 indicates that the two vectors
  * are <i>orthogonal</i> (perpendicular to each other).
  * <li>If the two vectors are the same, the return value indicates
- * the vector's length squared.  This is illustrated in the example.
+ * the vector's length squared. This is illustrated in the example.
  * </ul>
  * @param {Array<Number>} a The first 3-element vector.
  * @param {Array<Number>} b The second 3-element vector.
@@ -92,7 +92,7 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
  * a vector's length using the dot product.</caption>
  * // Check if the vector's length squared is less than 20 units squared
  * if(H3DU.Math.vec3dot(vector, vector)<20*20) {
- *  // The vector's length is shorter than 20 units
+ * // The vector's length is shorter than 20 units
  * }
  */
   "vec3dot":function(a, b) {
@@ -100,13 +100,13 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
   },
 /**
-  * Finds the scalar triple product of three vectors (A, B, and C).  The triple
+  * Finds the scalar triple product of three vectors (A, B, and C). The triple
   * product is the [dot product]{@link H3DU.Math.vec3dot} of both A and the
   * [cross product]{@link H3DU.Math.vec3cross}
   * of B and C. The following are properties of the scalar triple product
   * (called triple product in what follows):<ul>
   * <li>Switching the order of B and C, A and C, or A and B results in a triple product
-  * with its sign reversed.  Moving all three parameters to different positions, though,
+  * with its sign reversed. Moving all three parameters to different positions, though,
   * results in the same triple product.
   * <li>The triple product's absolute value is the volume of a parallelepiped (skewed
   * box) where three of its sides having a vertex in common are
@@ -114,11 +114,10 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
   * <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
   * <li>The triple product is the same as the <i>determinant</i> of a 3x3 matrix whose
   * rows or columns are the vectors A, B, and C, in that order.
-  * <li>Assume A is a unit vector and perpendicular to vectors B and C.  If the triple product
-  is negative (resp. positive), then A points directly away from (resp. points at) the cross product of
-  B and C -- which will be perpendicular -- and the angle from B to C, when rotated
-  about vector A, is negative (resp. positive). (See the example below. A unit vector is
-  a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1.)
+  * <li>Assume A is a [unit vector]{@tutorial glmath} and perpendicular to vectors B and C. If the triple product
+  * is negative (resp. positive), then A points directly away from (resp. points at) the cross product of
+  * B and C -- which will be perpendicular -- and the angle from B to C, when rotated
+  * about vector A, is negative (resp. positive). (See the example below.)
   *</ul>
   * @param {Array<Number>} a The first 3-element vector.
   * @param {Array<Number>} b The second 3-element vector, or the
@@ -128,7 +127,7 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
   * @returns {Number} A number giving the triple product.
   * @example <caption>The following example finds the signed angle of
   * two vectors that lie on a plane with the given normal.</caption>
-  * // The following example uses the positive Z-axis as the normal
+  * // The following example uses the positive Z axis as the normal
   * // vector, since it's known to be perpendicular to vectorB and vectorC
   * var normalVector = [0, 0, 1];
   * var vectorB = [4, 2, 0];
@@ -228,7 +227,7 @@ or clockwise for left-handed systems. The triangle's area is half of the cross p
 /**
  * Negates a 3-element vector and returns a new
  * vector with the result, which is generally a vector with
- * the same length but opposite direction.  Negating a vector
+ * the same length but opposite direction. Negating a vector
  * is the same as reversing the sign of each of its components.
  * @param {Array<Number>} a A 3-element vector.
  * @returns {Array<Number>} The resulting 3-element vector.
@@ -381,12 +380,12 @@ Negating a vector
  * @param {Array<Number>} v1 The first vector to interpolate.
  * The interpolation will occur on each component of this vector and v2.
  * @param {Array<Number>} v2 The second vector to interpolate.
- * @param {Number} factor A value from 0 through 1.  Closer to 0 means
- * closer to v1, and closer to 1 means closer to v2.<br><br>For a nonlinear
+ * @param {Number} factor A value from 0 through 1. Closer to 0 means
+ * closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear
  * interpolation, define a function that takes a value from 0 through 1 and returns
  * a value generally ranging from 0 through 1, and pass the result of that
- * function to this method.<br><br>
- * The following are examples of interpolation functions.  See also
+ * function to this method.<br>
+ * The following are examples of interpolation functions. See also
  * the code examples following this list.<ul>
  * <li>Linear: <code>factor</code>. Constant speed.
  * <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0.
@@ -402,7 +401,7 @@ Negating a vector
 <li>Position end: <code>Math.floor(factor*N)/N</code>.</li></ul>
  * <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>,
  * where <code>INTF(x)</code>
- * is another interpolation function.  This function reverses the speed behavior;
+ * is another interpolation function. This function reverses the speed behavior;
  * for example, a function that eased in now eases out.
  * <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>,
  * where <code>INTF(x)</code> is another interpolation function.
@@ -412,21 +411,21 @@ Negating a vector
  * @returns {Array<Number>} The interpolated vector.
  * @example <caption>The following code does a nonlinear
  * interpolation of two vectors that uses the cube of "factor" rather than
- * "factor".  Rather than at a constant speed, the vectors are interpolated
+ * "factor". Rather than at a constant speed, the vectors are interpolated
  * slowly then very fast.</caption>
- *   factor = factor*factor*factor; // cube the interpolation factor
- *   var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+ * factor = factor*factor*factor; // cube the interpolation factor
+ * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
  * @example <caption>The following code does an inverted cubic
- * interpolation.  This time, vectors are interpolated fast then very slowly.</caption>
- *   factor = 1 - factor; // Invert the factor
- *   factor = factor*factor*factor; // cube the interpolation factor
- *   factor = 1 - factor; // Invert the result
- *   var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
- *  @example <caption>The following code does the nonlinear
- *  interpolation called "smoothstep".  It slows down at the beginning
- *  and end, and speeds up in the middle.</caption>
- *   factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
- *   var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+ * interpolation. This time, vectors are interpolated fast then very slowly.</caption>
+ * factor = 1 - factor; // Invert the factor
+ * factor = factor*factor*factor; // cube the interpolation factor
+ * factor = 1 - factor; // Invert the result
+ * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+ * @example <caption>The following code does the nonlinear
+ *  interpolation called "smoothstep". It slows down at the beginning
+ * and end, and speeds up in the middle.</caption>
+ * factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
+ * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
  */
   "vec3lerp":function(v1, v2, factor) {
     "use strict";
@@ -439,8 +438,7 @@ Negating a vector
 /**
 Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector. The return value
-will not be converted to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
-  with a length of 1).
+will not be converted to a [unit vector]{@tutorial glmath}.
 @param {Array<Number>} vec A 3-element vector.
 @returns {Array<Number>} A perpendicular 3-element
 vector.  Returns (0,0,0) if "vec" is (0,0,0).
@@ -471,7 +469,7 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
 * Transforms the 3D point specified in this 3-element vector to its X
 * and Y <i>window coordinates</i>, and its projected Z coordinate,
 * using the given transformation matrix and viewport
-* width and height.  The X coordinates in this space increase
+* width and height. The X coordinates in this space increase
 * rightward and the Y coordinates in this space increase upward
 * or downward depending on the "yUp" parameter.
 * @param {Array<Number>} vector A 3-element vector giving
@@ -484,19 +482,19 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
  * or a model-view-projection matrix, that is, a projection-view matrix multiplied
  * by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.
 * The rest of the method will convert the transformed X and Y coordinates
-* to window coordinates.  If the matrix includes a projection transform returned
+* to window coordinates. If the matrix includes a projection transform returned
 * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
 * similar {@link H3DU.Math} methods, the coordinates transformed this way will be
 * as described in {@link H3DU.Math.mat4projectVec3} under the "matrix" parameter,
 * before they are converted to window coordinates.
 * @param {Array<Number>} viewport A 4-element array specifying
 * the starting position and size of the viewport in window units
-* (such as pixels).  In order, the four elements are the starting position's
+* (such as pixels). In order, the four elements are the starting position's
 * X coordinate, its Y coordinate, the viewport's width, and the viewport's
 * height. Throws an error if the width or height is less than 0.
 * @param {Boolean} [yUp] If true, the viewport's starting position is
 * at the lower left corner and Y coordinates in window coordinate space
-* increase upward.  If false, null, or omitted, the viewport's starting
+* increase upward. If false, null, or omitted, the viewport's starting
 * position is at the upper left corner and Y coordinates increase downward.
 * @returns {Array<Number>} A 3-element array giving the X and Y
 * window coordinates, and the projected Z coordinate, in that order.
@@ -559,8 +557,8 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
  * @param {Array<Number>} v1 The first vector to interpolate.
  * The interpolation will occur on each component of this vector and v2.
  * @param {Array<Number>} v2 The second vector to interpolate.
- * @param {Number} factor A value from 0 through 1.  Closer to 0 means
- * closer to v1, and closer to 1 means closer to v2.  For a nonlinear
+ * @param {Number} factor A value from 0 through 1. Closer to 0 means
+ * closer to v1, and closer to 1 means closer to v2. For a nonlinear
  * interpolation, define a function that takes a value from 0 through 1
  * and generally returns
  * a value from 0 through 1, and pass the result of that function to this method.
@@ -578,11 +576,11 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
     ];
   },
 /**
- * Converts a 3-element vector to its normalized version.
+ * Converts a 3-element vector to a [unit vector]{@tutorial glmath}.
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.H3DU.Math.vec3length}.
+ * by its [length]{@link H3DU.Math.vec3length}.
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The parameter "vec".
  */
@@ -605,18 +603,18 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
   * to another, treating both as 3D points.
   * @param {Array<Number>} vecFrom The first 3-element vector.
   * @param {Array<Number>} vecTo The second 3-element vector.
-  * @param {Number} The distance between the two vectors.
+  * @returns {Number} The distance between the two vectors.
   */
   "vec3dist":function(vecFrom, vecTo) {
     "use strict";
     return H3DU.Math.vec3length(H3DU.Math.vec3sub(vecFrom, vecTo));
   },
 /**
- * Converts a 4-element vector to its normalized version.
+ * Converts a 4-element vector to a [unit vector]{@tutorial glmath}.
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.H3DU.Math.vec4length}.
+ * by its [length]{@link H3DU.Math.vec4length}.
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The parameter "vec".
  */
@@ -637,11 +635,11 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
     return vec;
   },
 /**
- * Returns a normalized version of a 3-element vector.
+ * Converts 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.H3DU.Math.vec3length}.
+ * by its [length]{@link H3DU.Math.vec3length}.
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The resulting vector.
  */
@@ -650,11 +648,11 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
     return H3DU.Math.vec3normInPlace([vec[0], vec[1], vec[2]]);
   },
 /**
- * Returns a normalized version of a 4-element vector.
+ * Converts 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link glmath.H3DU.Math.vec4length}.
+ * by its [length]{@link H3DU.Math.vec4length}.
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The resulting vector.
  */
@@ -663,7 +661,8 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
     return H3DU.Math.vec4normInPlace([vec[0], vec[1], vec[2], vec[3]]);
   },
 /**
- * Returns the distance of this 3-element vector from the origin.
+ * Returns the distance of this 3-element vector from the origin,
+  * also known as its <i>length</i> or <i>magnitude</i>.
  * It's the same as the square root of the sum of the squares
  * of its components.
  * @param {Array<Number>} a A 3-element vector.
@@ -676,7 +675,8 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   },
 /**
- * Returns the distance of this 4-element vector from the origin.
+ * Returns the distance of this 4-element vector from the origin,
+    * also known as its <i>length</i> or <i>magnitude</i>.
  * It's the same as the square root of the sum of the squares
  * of its components.
  * @param {Array<Number>} a A 4-element vector.
@@ -706,7 +706,7 @@ vector.  Returns (0,0,0) if "vec" is (0,0,0).
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   },
 /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
- @returns {Array<Number>} Return value.
+ * @returns {Array<Number>} Return value.
   */
   "quatIdentity":function() {
     "use strict";
@@ -868,7 +868,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return r;
   },
 /**
- * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
+ * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a [unit vector]{@tutorial glmath}.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value. */
   "quatConjugate":function(quat) {
@@ -876,7 +876,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [-quat[0], -quat[1], -quat[2], quat[3]];
   },
 /**
- * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
+ * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a [unit vector]{@tutorial glmath}.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value.
  * @see {@link H3DU.Math.quatConjugate}
@@ -927,7 +927,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
 * Calculates the angle and [axis of rotation]{@tutorial glmath} for this
 * quaternion.
-* @param {Array<Number>} a A quaternion.  Must be a unit vector ([a "normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
+* @param {Array<Number>} a A quaternion. Must be a [unit vector]{@tutorial glmath}.
 * @returns {Array<Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If "a" is a unit vector, the axis
@@ -947,14 +947,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Generates a quaternion describing a rotation between
- * two 3-element vectors.  The quaternion
+ * two 3-element vectors. The quaternion
  * will describe the rotation required to rotate
  * the ray described in the first vector toward the ray described
- * in the second vector.  The vectors need not be unit vectors (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).
+ * in the second vector. The vectors need not be [unit vectors]{@tutorial glmath}.
  * @param {Array<Number>} vec1 The first 3-element vector.
 * @param {Array<Number>} vec2 The second 3-element vector.
  * @returns {Array<Number>} The generated quaternion, which
- * will be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
+ * will be a unit vector.
  */
   "quatFromVectors":function(vec1, vec2) {
     "use strict";
@@ -980,7 +980,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return H3DU.Math.quatNormInPlace(ret);
   },
 /**
- * Generates a quaternion from an angle and  [axis of rotation]{@tutorial glmath}.
+ * Generates a quaternion from an angle and [axis of rotation]{@tutorial glmath}.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
@@ -989,7 +989,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
+ * of rotation.
  * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
@@ -1028,13 +1028,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
  * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
- * @param {Number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.
-*  This can instead be a 3-element
- * array giving the rotation about the x-axis, y-axis, and z-axis,
+ * @param {Number} pitchDegrees Rotation about the X axis (upward or downward turn), in degrees.
+* This can instead be a 3-element
+ * array giving the rotation about the X axis, Y axis, and Z axis,
  * respectively.
- * @param {Number} yawDegrees Rotation about the y-axis (left or right turn), in degrees.
+ * @param {Number} yawDegrees Rotation about the Y axis (left or right turn), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {Number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
+ * @param {Number} rollDegrees Rotation about the Z axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {Number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
  * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
@@ -1087,8 +1087,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
- * @param {Array<Number>} a A quaternion.  Should be a unit vector
- * (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
+ * @param {Array<Number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
  * @param {Number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
@@ -1098,10 +1097,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * angles). The constants starting with <code>Local</code> describe a rotation in the order given,
  * where the second and third rotations occur around the rotated object's new axes
  * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
- * angles).  The order of <code>Local</code> rotations has the same result as the reversed
+ * angles). The order of <code>Local</code> rotations has the same result as the reversed
  * order of <code>Global</code> rotations and vice versa.
  * @returns {Array<Number>} A 3-element array containing the
- * pitch, yaw, and roll angles, in that order, in degrees.
+ * pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order, in degrees.
  * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
  */
   "quatToTaitBryan":function(a, mode) {
@@ -1166,16 +1165,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns a quaternion that lies along the shortest path between the
  * given two quaternion rotations, using a linear interpolation function, and converts
- * it to a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
+ * it to a [unit vector]{@tutorial glmath}.
  * This is called a normalized linear interpolation, or "nlerp".<p>
  * Because the shortest path is curved, not straight, this method
  * will generally not interpolate at constant velocity;
  * however, the difference in this velocity when interpolating is
  * rarely noticeable and this method is generally faster than
  * the {@link H3DU.Math.quatSlerp} method.
- * @param {Array<Number>} q1 The first quaternion.  Must be a unit vector.
- * @param {Array<Number>} q2 The second quaternion.  Must be a unit vector.
- * @param {Number} factor A value from 0 through 1.  Closer to 0 means
+ * @param {Array<Number>} q1 The first quaternion. Must be a unit vector.
+ * @param {Array<Number>} q2 The second quaternion. Must be a unit vector.
+ * @param {Number} factor A value from 0 through 1. Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion,
  * which will be a unit vector.
@@ -1212,9 +1211,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * unsuitable for blending multiple quaternion rotations,
  * and this method is generally more computationally expensive
  * than the [quatNlerp]{@link H3DU.Math.quatNlerp} method.
- * @param {Array<Number>} q1 The first quaternion.  Must be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec4norm} with a length of 1).
- * @param {Array<Number>} q2 The second quaternion.  Must be a unit vector.
- * @param {Number} factor A value from 0 through 1.  Closer to 0 means
+ * @param {Array<Number>} q1 The first quaternion. Must be a [unit vector]{@tutorial glmath}.
+ * @param {Array<Number>} q2 The second quaternion. Must be a unit vector.
+ * @param {Number} factor A value from 0 through 1. Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion.
  * @see ["Understanding Slerp, Then Not Using It", Jonathan Blow](http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/),
@@ -1269,7 +1268,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
+ * of rotation.
  * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
@@ -1288,7 +1287,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<Number>} v A 3- or 4-element vector to
  * transform. The fourth element, if any, is ignored.
  * @returns {Array<Number>} A 4-element vector representing
-* the transformed vector.  The fourth element will be 1.0.
+* the transformed vector. The fourth element will be 1.0.
 * If the input vector has 3 elements, a 3-element vector will
   * be returned instead.
  */
@@ -1376,7 +1375,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Returns the transpose of a 4x4 matrix. (A transpose is a
-  matrix whose rows are converted to columns and vice versa.)
+  * matrix whose rows are converted to columns and vice versa.)
  * @param {Array<Number>} m4 A 4x4 matrix.
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
@@ -1406,9 +1405,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 * the given 4x4 matrix.<p>
 * This is usually used to convert a model-view matrix to a matrix
 * for transforming surface normals in order to keep them perpendicular
-* to a surface transformed by the world matrix.  Normals are then
-* transformed by this matrix and then converted to unit vectors
-* (["normalized" vectors]{@link H3DU.Math.vec3norm} with a length of 1).  But if the
+* to a surface transformed by the world matrix. Normals are then
+* transformed by this matrix and then converted to [unit vectors]{@tutorial glmath}. But if the
 * input matrix uses only rotations, translations, and/or uniform scaling
 * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 * be used instead of the inverse-transpose matrix to transform the normals.
@@ -1488,7 +1486,7 @@ m[0] * m[7] * m[5];
 /**
  * Returns a 4x4 matrix representing a scaling transformation.
  * @param {Array<Number>|Number} v3 Scale factor along the
- * X axis.  A scale factor can be negative, in which case the transformation
+ * X axis. A scale factor can be negative, in which case the transformation
  * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scale factors along the X, Y, and
  * Z axes.
@@ -1513,7 +1511,7 @@ m[0] * m[7] * m[5];
  * be a 4-element array giving the X, Y, Z, and W coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate.
- * @param {Number} vw W coordinate.  To transform a 3D
+ * @param {Number} vw W coordinate. To transform a 3D
  * point, set W to 1; to transform a 2D
  * point, set Z and W to 1.
  * @returns {Array<Number>} The transformed vector.
@@ -1588,7 +1586,7 @@ m[0] * m[7] * m[5];
  * vector by that vector's W (a <i>perspective divide</i>),
  * then returning that vector's new X, Y, and Z.<p>
  * @param {Array<Number>} mat A 4x4 matrix to use to transform
- * the vector.  This will generally be
+ * the vector. This will generally be
  * a projection-view matrix, that is, the projection matrix multiplied
  * by the view matrix, in that order, if the vector to transform is in <i>world space</i>,
  * or a model-view-projection matrix, that is, a projection-view matrix multiplied
@@ -1636,7 +1634,7 @@ m[0] * m[7] * m[5];
  * If "vy", and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
- * @param {Number} vz Z coordinate.  To transform a 2D
+ * @param {Number} vz Z coordinate. To transform a 2D
  * point, set Z to 1.
  * @returns {Array<Number>} The transformed vector.
  */
@@ -1719,13 +1717,13 @@ m[0] * m[7] * m[5];
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {Number} fovY Y-axis field of view, in degrees, that is, the shortest angle
+* @param {Number} fovY Y axis field of view, in degrees, that is, the shortest angle
 * between the top and bottom clipping planes. Should be less
-* than 180 degrees.  (The smaller
-* this number, the bigger close objects appear to be.  As a result, zooming out
+* than 180 degrees. (The smaller
+* this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
 * @param {Number} aspectRatio The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio.
+* the scene's aspect ratio.
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should be greater than 0, and should be set to the highest distance
@@ -1733,8 +1731,8 @@ m[0] * m[7] * m[5];
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
-* is as small as the application can accept.<br><br>
+* to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
+* is as small as the application can accept.<br>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
@@ -1752,48 +1750,67 @@ m[0] * m[7] * m[5];
       nmf * (near + far), -1, 0, 0, nmf * near * far * 2, 0];
   },
 /**
- * Returns a 4x4 matrix representing a camera view.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * Returns a 4x4 matrix that represents a camera view and
+  * transforms world space coordinates to <i>eye space</i>
+  * (or <i>camera space</i>). In eye space:<ul>
+  * <li>The "camera" is found at the origin (0,0,0), or
+       * at <code>viewerPos</code> in world space,
+       * and faces the <code>lookingAt</code> position in world space. This generally
+       * puts <code>lookingAt</code> at the center of the view.
+  * <li>The X axis points rightward from the "camera"'s viewpoint.
+  * <li>The <code>up</code> vector guides which direction the Y axis points in.
+  * <li>The "camera" points along the Z axis away from the viewer.</ul><p>
+ * This method is designed for use in a [right-handed coordinate system]{@tutorial glmath}
+ * (the "camera" will point away from the Z axis).
  * To adjust the result of this method for a left-handed system,
- *  reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
+ * reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
- * 10, 12, and 14).
+ * 10, 12, and 14); doing so will point the "camera" toward the Z axis.
 * @param {Array<Number>} viewerPos A 3-element vector specifying
 * the "camera" position in world space.
 * @param {Array<Number>} [lookingAt] A 3-element vector specifying
-* the point in world space that the "camera" is looking at.  May be null or omitted,
+* the point in world space that the "camera" is looking at. May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
 * @param {Array<Number>} [up] A 3-element vector specifying
 * the direction from the center of the "camera" to its top. This parameter may
 * be null or omitted, in which case the default is the vector (0, 1, 0),
-* the vector that results when the "camera" is held upright.  This
-* vector must not point in the same or opposite direction as
-* the "camera"'s view direction. (For best results, rotate the vector (0, 1, 0)
-* so it points perpendicular to the "camera"'s view direction.)
+* the vector that results when the "camera" is held upright.<br>
+* This vector must not point in the same or opposite direction as
+* the view direction (the direction from "viewerPos" to "lookingAt").
+* (See the example for one way to ensure this.)<br>
  * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @example <caption>The following example calls this method with an
+ * up vector of (0, 1, 0) except if the view direction is parallel to that
+ * vector or nearly so.</caption>
+ * var upVector=[0,1,0]; // Y axis
+ * var viewdir=H3DU.Math.vec3sub(lookingAt, viewerPos);
+ * var par=H3DU.Math.vec3length(H3DU.Math.vec3cross(viewdir,upVector));
+ * if(par<0.00001)upVector=[0,0,1]; // view is almost parallel, so use Z axis
+ * var matrix=H3DU.Math.mat4lookat(viewerPos,lookingAt,upVector);
  */
   "mat4lookat":function(viewerPos, lookingAt, up) {
     "use strict";
     if(up === null || typeof up === "undefined")up = [0, 1, 0];
     if(lookingAt === null || typeof lookingAt === "undefined")lookingAt = [0, 0, 0];
-    var f = [lookingAt[0] - viewerPos[0], lookingAt[1] - viewerPos[1], lookingAt[2] - viewerPos[2]];
+    var f = H3DU.Math.vec3sub(lookingAt, viewerPos);
     var len = H3DU.Math.vec3length(f);
     if(len < 1e-6) {
       return H3DU.Math.mat4identity();
     }
- // normalize "f"
-    len = 1.0 / len;
-    f[0] *= len;
-    f[1] *= len;
-    f[2] *= len;
+   // "f" is the normalized vector from "viewerPos" to "lookingAt"
+    H3DU.Math.vec3scaleInPlace(f, 1.0 / len);
+    // normalize the "up" vector
     up = H3DU.Math.vec3norm(up);
+    // make "s" a vector perpendicular to "f" and "up" vector;
+    // "s" will point rightward from the camera's viewpoint.
     var s = H3DU.Math.vec3cross(f, up);
     H3DU.Math.vec3normInPlace(s);
+    // orthonormalize the "up" vector
     var u = H3DU.Math.vec3cross(s, f);
     H3DU.Math.vec3normInPlace(u);
-    f[0] = -f[0];
-    f[1] = -f[1];
-    f[2] = -f[2];
+    // negate the "f" vector so that it points forward from
+    // the camera's viewpoint
+    H3DU.Math.vec3negateInPlace(f);
     return [s[0], u[0], f[0], 0, s[1], u[1], f[1], 0, s[2], u[2], f[2], 0,
       -H3DU.Math.vec3dot(viewerPos, s),
       -H3DU.Math.vec3dot(viewerPos, u),
@@ -1805,22 +1822,22 @@ m[0] * m[7] * m[5];
  * plane and the top to the bottom.<p>
    * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * To adjust the result of this method for a left-handed system,
- * , reverse the sign of the 9th, 10th, 11th, and 12th
+ * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
   *<p>The projection returned by this method only scales and/or shifts the view, so that
   * objects with the same size won't appear smaller as they get more distant from the  "camera".
  * @param {Number} l Leftmost coordinate of the orthographic view.
  * @param {Number} r Rightmost coordinate of the orthographic view.
- * (If l is greater than r, X-coordinates increase leftward; otherwise,
+ * (If l is greater than r, X coordinates increase leftward; otherwise,
  * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
- * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+ * (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
  * @param {Number} n Distance from the "camera" to the near clipping
- * plane.  A positive value means the plane is in front of the viewer.
+ * plane. A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the "camera" to the far clipping
- * plane.  A positive value means the plane is in front of the viewer.
- * (Note that n can be greater than f or vice versa.)  The absolute difference
+ * plane. A positive value means the plane is in front of the viewer.
+ * (Note that n can be greater than f or vice versa.) The absolute difference
  * between n and f should be as small as the application can accept.
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
@@ -1835,18 +1852,18 @@ m[0] * m[7] * m[5];
 
 /**
  * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera},
- * given an X-axis field of view.</p>
+ * given an X axis field of view.</p>
    * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
-* @param {Number} fovX X-axis field of view, in degrees, that is, the shortest angle
+* @param {Number} fovX X axis field of view, in degrees, that is, the shortest angle
 * between the left and right clipping planes. Should be less
-* than 180 degrees.  (The smaller
+* than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
 * @param {Number} aspectRatio The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio.
+* the scene's aspect ratio.
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should be greater than 0, and should be set to the highest distance
@@ -1854,8 +1871,8 @@ m[0] * m[7] * m[5];
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
-* is as small as the application can accept.<br><br>
+* to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
+* is as small as the application can accept.<br>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
@@ -1871,16 +1888,16 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a 2D orthographic projection.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().<p>
  * This is the same as mat4ortho() with the near clipping plane
- * set to -1 and the far clipping plane set to 1.
+ * set to -1 and the far clipping plane set to 1.<p>
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see [mat4ortho()]{@link H3DU.Math.mat4ortho}.
  * @param {Number} l Leftmost coordinate of the orthographic view.
  * @param {Number} r Rightmost coordinate of the orthographic view.
-* (If l is greater than r, X-coordinates increase leftward; otherwise,
+* (If l is greater than r, X coordinates increase leftward; otherwise,
  * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
- * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+ * (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
  * @returns {Array<Number>} The resulting 4x4 matrix.
  */
   "mat4ortho2d":function(l, r, b, t) {
@@ -1896,16 +1913,16 @@ m[0] * m[7] * m[5];
  * or squishing it.<p>
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see [mat4ortho()]{@link H3DU.Math.mat4ortho}.
 * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
-* (If l is greater than r, X-coordinates increase leftward; otherwise,
+* (If l is greater than r, X coordinates increase leftward; otherwise,
  * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+ * (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * @param {Number} aspect The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio.
+* the scene's aspect ratio.
 * @returns {Array<Number>} The resulting 4x4 matrix.
  */
   "mat4ortho2dAspect":function(l, r, b, t, aspect) {
@@ -1919,24 +1936,24 @@ m[0] * m[7] * m[5];
  * ratio, the view rectangle will be centered on the viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see mat4ortho().
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see [mat4ortho()]{@link H3DU.Math.mat4ortho}.
   *<p>The projection returned by this method only scales and/or shifts the view, so that
   * objects with the same size won't appear smaller as they get more distant from the  "camera".
 * @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
-* (If l is greater than r, X-coordinates increase leftward; otherwise,
+* (If l is greater than r, X coordinates increase leftward; otherwise,
  * they increase rightward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+ * (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
  * @param {Number} n Distance from the "camera" to the near clipping
- * plane.  A positive value means the plane is in front of the viewer.
+ * plane. A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the "camera" to the far clipping
- * plane.  A positive value means the plane is in front of the viewer.
- * (Note that n can be greater than f or vice versa.)  The absolute difference
+ * plane. A positive value means the plane is in front of the viewer.
+ * (Note that n can be greater than f or vice versa.) The absolute difference
  * between n and f should be as small as the application can accept.
 * @param {Number} aspect The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio.
+* the scene's aspect ratio.
 * @returns {Array<Number>} The resulting 4x4 matrix.
  */
   "mat4orthoAspect":function(l, r, b, t, n, f, aspect) {
@@ -1974,17 +1991,17 @@ m[0] * m[7] * m[5];
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {Number} l X-coordinate of the point where the left
+ * @param {Number} l X coordinate of the point where the left
  * clipping plane meets the near clipping plane.
- * @param {Number} r X-coordinate of the point where the right
+ * @param {Number} r X coordinate of the point where the right
  * clipping plane meets the near clipping plane.
- * (If l is greater than r, X-coordinates increase leftward; otherwise,
+ * (If l is greater than r, X coordinates increase leftward; otherwise,
  * they increase rightward.)
- * @param {Number} b Y-coordinate of the point where the bottom
+ * @param {Number} b Y coordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
- * @param {Number} t Y-coordinate of the point where the top
+ * @param {Number} t Y coordinate of the point where the top
  * clipping plane meets the near clipping plane.
- * (If t is greater than b, Y-coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+ * (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
 * @param {Number} near The distance from the "camera" to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.<p>This value should be greater than 0, and should be set to the highest distance
@@ -1992,8 +2009,8 @@ m[0] * m[7] * m[5];
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the "camera" to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.<br><br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
-* is as small as the application can accept.<br><br>
+* to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near"
+* is as small as the application can accept.<br>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the
  * near plane due to the perspective projection.  The greater the ratio of "far" to
@@ -2018,7 +2035,7 @@ m[0] * m[7] * m[5];
  * scaling transformation.
  * @param {Array<Number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v3 Scale factor along the
- * X axis.  A scale factor can be negative, in which case the transformation
+ * X axis. A scale factor can be negative, in which case the transformation
  * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the scale factors along the X, Y, and
  * Z axes.
@@ -2053,7 +2070,7 @@ m[0] * m[7] * m[5];
     return mat;
   },
 /**
- * Multiplies two 4x4 matrices.  A new matrix is returned.
+ * Multiplies two 4x4 matrices. A new matrix is returned.
  * The matrices are multiplied such that the transformations
  * they describe happen in reverse order. For example, if the first
  * matrix (input matrix) describes a translation and the second
@@ -2086,7 +2103,7 @@ m[0] * m[7] * m[5];
 * rotation happens before the first quaternion's rotation when applied
  * in the global coordinate frame.<p>
 * Multiplying two unit quaternions (each with a length of 1) will result
-* in a unit quaternion.  However, for best results, you should
+* in a unit quaternion. However, for best results, you should
 * normalize the quaternions every few multiplications (using
 * quatNorm or quatNormInPlace), since successive
 * multiplications can cause rounding errors.
@@ -2117,7 +2134,7 @@ m[0] * m[7] * m[5];
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
+ * of rotation.
  * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
@@ -2204,7 +2221,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Returns a 4x4 matrix representing a rotation transformation
- * given in the form of an rotation angle and an [axis of rotation]{@tutorial glmath}.
+ * given in the form of a rotation angle and an [axis of rotation]{@tutorial glmath}.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle
@@ -2212,7 +2229,7 @@ m[0] * m[7] * m[5];
  * @param {Array<Number>|Number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
+ * of rotation.
  * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
@@ -2272,7 +2289,7 @@ m[0] * m[7] * m[5];
     }
   },
 /**
-* Normalizes this plane so that its normal is a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1),
+* Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
 * unless all the normal's components are 0.
 * The plane's distance will be divided by the
 * current normal's length.
@@ -2301,10 +2318,10 @@ m[0] * m[7] * m[5];
     return plane;
   },
 /**
-* Normalizes this plane so that its normal is a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1),
+* Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
 * unless all the normal's components are 0.
 * The plane's distance will be divided by the
-* normal's length.  Returns a new plane.
+* normal's length. Returns a new plane.
 * @param {Array<Number>} plane A four-element array
 * defining the plane. The first three elements of the array
 * are the X, Y, and Z components of the plane's normal vector, and
@@ -2327,13 +2344,13 @@ m[0] * m[7] * m[5];
 * sides, one plane (the far plane) forms its base, and a
 * final plane (the near plane) is the pyramid's chopped
 * off top.
-* @param {Array<Number>} matrix A 4x4 matrix.  This will
+* @param {Array<Number>} matrix A 4x4 matrix. This will
 * usually be a projection-view matrix (projection matrix
 * multiplied by view matrix).
 * @returns {Array<Array<Number>>} An array of six
 * 4-element arrays representing the six clipping planes of the
-* view frustum.  In order, they are the left, right, top,
-* bottom, near, and far clipping planes.  All six planes
+* view frustum. In order, they are the left, right, top,
+* bottom, near, and far clipping planes. All six planes
 * will be normalized (see {@link H3DU.Math.planeNormInPlace}).
 */
   "mat4toFrustumPlanes":function(matrix) {
@@ -2341,43 +2358,43 @@ m[0] * m[7] * m[5];
     var frustum = [[], [], [], [], [], []];
  // Left clipping plane
     frustum[0] = H3DU.Math.planeNormInPlace([
-      matrix[3]  + matrix[0],
-      matrix[7]  + matrix[4],
+      matrix[3] + matrix[0],
+      matrix[7] + matrix[4],
       matrix[11] + matrix[8],
       matrix[15] + matrix[12]
     ]);
  // Right clipping plane
     frustum[1] = H3DU.Math.planeNormInPlace([
-      matrix[3]  - matrix[0],
-      matrix[7]  - matrix[4],
+      matrix[3] - matrix[0],
+      matrix[7] - matrix[4],
       matrix[11] - matrix[8],
       matrix[15] - matrix[12]
     ]);
  // Top clipping plane
     frustum[2] = H3DU.Math.planeNormInPlace([
-      matrix[3]  - matrix[1],
-      matrix[7]  - matrix[5],
+      matrix[3] - matrix[1],
+      matrix[7] - matrix[5],
       matrix[11] - matrix[9],
       matrix[15] - matrix[13]
     ]);
  // Bottom clipping plane
     frustum[3] = H3DU.Math.planeNormInPlace([
-      matrix[3]  + matrix[1],
-      matrix[7]  + matrix[5],
+      matrix[3] + matrix[1],
+      matrix[7] + matrix[5],
       matrix[11] + matrix[9],
       matrix[15] + matrix[13]
     ]);
  // Near clipping plane
     frustum[4] = H3DU.Math.planeNormInPlace([
-      matrix[3]  + matrix[2],
-      matrix[7]  + matrix[6],
+      matrix[3] + matrix[2],
+      matrix[7] + matrix[6],
       matrix[11] + matrix[10],
       matrix[15] + matrix[14]
     ]);
  // Far clipping plane
     frustum[5] = H3DU.Math.planeNormInPlace([
-      matrix[3]  - matrix[2],
-      matrix[7]  - matrix[6],
+      matrix[3] - matrix[2],
+      matrix[7] - matrix[6],
       matrix[11] - matrix[10],
       matrix[15] - matrix[14]
     ]);
@@ -2388,7 +2405,7 @@ m[0] * m[7] * m[5];
 * partially inside a view frustum.
 * @param {Array<Array<Number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
-* view frustum.  In order, they are the left, right, top,
+* view frustum. In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
 * @param {Number} x X coordinate of the sphere's center
 * in world space.
@@ -2431,7 +2448,7 @@ m[0] * m[7] * m[5];
     return box[0] > box[3] || box[1] > box[4] || box[2] > box[5];
   },
 /**
-* Finds the dimensions of a 3D bounding box.  This is done by subtracting
+* Finds the dimensions of a 3D bounding box. This is done by subtracting
 * the first three values of the given array with its last three values.
 * @param {Array<Number>} box An axis-aligned bounding
 * box, which is an array of six values.
@@ -2470,7 +2487,7 @@ m[0] * m[7] * m[5];
 * is at least partially inside a view frustum.
 * @param {Array<Array<Number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
-* view frustum.  In order, they are the left, right, top,
+* view frustum. In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
 * @param {Array<Number>} box An axis-aligned bounding
 * box in world space, which is an array of six values.
@@ -2512,7 +2529,7 @@ m[0] * m[7] * m[5];
 * outside or inside a view frustum.
 * @param {Array<Array<Number>>} frustum An array of six
 * 4-element arrays representing the six clipping planes of the
-* view frustum.  In order, they are the left, right, top,
+* view frustum. In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
 * @param {Number} x X coordinate of a point
 * in world space.
@@ -2539,41 +2556,41 @@ m[0] * m[7] * m[5];
 * Finds the dot product of two quaternions.
 * It's equal to the sum of the products of
 * their components (for example, <b>a</b>'s X times <b>b</b>'s X).
- @function
- @param {Array<Number>} a The first quaternion.
- @param {Array<Number>} b The second quaternion.
- @returns {Number} Return value.
- @method
+ * @function
+ * @param {Array<Number>} a The first quaternion.
+ * @param {Array<Number>} b The second quaternion.
+ * @returns {Number} Return value.
+ * @method
 @static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4dot}
 */
 H3DU.Math.quatDot = H3DU.Math.vec4dot;
 /**
- * Converts a quaternion to its normalized version.
+ * Converts a quaternion to a [unit vector]{@tutorial glmath}.
  * When a quaternion is normalized, it describes the same orientation but the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
- * by its [length]{@link glmath.H3DU.Math.quatLength}.
+ * by its [length]{@link H3DU.Math.quatLength}.
  * @function
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The parameter "quat".
- @method
+ * @method
 @static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4normInPlace}
  */
 H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
 /**
- * Converts a quaternion to its normalized version; returns a new quaternion.
+ * Converts a quaternion to a [unit vector]{@tutorial glmath}; returns a new quaternion.
  * When a quaternion is normalized, the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
- * by its [length]{@link glmath.H3DU.Math.quatLength}.
+ * by its [length]{@link H3DU.Math.quatLength}.
  * @function
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The normalized quaternion.
- @method
+ * @method
 @static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4norm}
@@ -2584,9 +2601,9 @@ H3DU.Math.quatNorm = H3DU.Math.vec4norm;
 * It's the same as the square root of the sum of the squares
 * of its components.
 * @function
- @param {Array<Number>} quat The quaternion.
-  @returns {Number} Return value.
- @method
+ * @param {Array<Number>} quat The quaternion.
+  * @returns {Number} Return value.
+ * @method
 @static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4length}
@@ -2599,7 +2616,7 @@ H3DU.Math.quatLength = H3DU.Math.vec4length;
  * @param {Array<Number>} a A quaternion.
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The parameter "a".
- @method
+ * @method
 @static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4scaleInPlace}
@@ -2612,7 +2629,7 @@ H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
  * @param {Array<Number>} a A quaternion.
  * @param {Number} scalar A factor to multiply.
  * @returns {Array<Number>} The resulting quaternion.
- @method
+ * @method
 @static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4scaleInPlace}
@@ -2622,64 +2639,64 @@ H3DU.Math.quatScale = H3DU.Math.vec4scale;
  * Returns a copy of a quaternion.
 * @function
  * @returns {Array<Number>} Return value.
- @method
+ * @method
 @static
 @memberof! H3DU.Math
 * @see {@link H3DU.Math.vec4copy}
 */
 H3DU.Math.quatCopy = H3DU.Math.vec4copy;
 /**
- Closest approximation to pi times 2, or a 360-degree turn in radians.
+ * Closest approximation to pi times 2, or a 360-degree turn in radians.
 @memberof! H3DU.Math
- @const
- @default
+ * @const
+ * @default
 */
 H3DU.Math.PiTimes2 = 6.283185307179586476925286766559;
 /**
- Closest approximation to pi divided by 2, or a 90-degree turn in radians.
+ * Closest approximation to pi divided by 2, or a 90-degree turn in radians.
 @memberof! H3DU.Math
- @const
- @default
+ * @const
+ * @default
 */
 H3DU.Math.HalfPi = 1.5707963267948966192313216916398;
 /**
- Closest approximation to pi divided by 180, or the number
- of radians in a degree. Multiply by this number to convert degrees to radians.
+ * Closest approximation to pi divided by 180, or the number
+ * of radians in a degree. Multiply by this number to convert degrees to radians.
 @memberof! H3DU.Math
- @const
- @default
+ * @const
+ * @default
 */
 H3DU.Math.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
- Closest approximation to pi divided by 180, or the number
- of radians in a degree. Multiply by this number to convert degrees to radians.
+ * Closest approximation to pi divided by 180, or the number
+ * of radians in a degree. Multiply by this number to convert degrees to radians.
 @memberof! H3DU.Math
- @const
- @default
+ * @const
+ * @default
 */
 H3DU.Math.ToRadians = H3DU.Math.PiDividedBy180;
 /**
- @private
+ * @private
 @const */
 H3DU.Math.PiDividedBy360 = 0.00872664625997164788461845384244;
 /**
- @private
+ * @private
 @const */
 H3DU.Math.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
- Closest approximation to 180 divided by pi, or the number of
- degrees in a radian. Multiply by this number to convert radians to degrees.
+ * Closest approximation to 180 divided by pi, or the number of
+ * degrees in a radian. Multiply by this number to convert radians to degrees.
 @memberof! H3DU.Math
- @const
- @default
+ * @const
+ * @default
 */
 H3DU.Math.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
- Closest approximation to 180 divided by pi, or the number of
- degrees in a radian. Multiply by this number to convert radians to degrees.
+ * Closest approximation to 180 divided by pi, or the number of
+ * degrees in a radian. Multiply by this number to convert radians to degrees.
 @memberof! H3DU.Math
- @const
- @default
+ * @const
+ * @default
 */
 H3DU.Math.ToDegrees = H3DU.Math.Num180DividedByPi;
 /**
@@ -2815,7 +2832,7 @@ H3DU.Math.RollYawPitch = 5;
  * @deprecated Use {@link H3DU.Math.quatInvert} instead.
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} Return value.
- @method
+ * @method
 @static
 @memberof! H3DU.Math
 */

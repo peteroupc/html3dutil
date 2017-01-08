@@ -133,5 +133,5 @@ to use for generating vertex positions.
     // "u" can range from 0 to 2*Math.PI
     curveEval.vertex({"evaluate":function(u) {
     "use strict";
-     return [Math.cos(u),Math.sin(u),0]
+    return [Math.cos(u),Math.sin(u),0]
     }});

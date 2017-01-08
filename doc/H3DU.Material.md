@@ -124,8 +124,8 @@ a sense of roughness to an otherwise flat surface or to give an object a highly-
 appearance with fewer polygons.
 
 In a normal map texture, each pixel is a vector in which
- each component (which usually ranges from 0-255 in most image formats) is scaled to
- the range [-1, 1], where:
+each component (which usually ranges from 0-255 in most image formats) is scaled to
+the range [-1, 1], where:
 <ul>
 <li>The pixel's red component is the vector's X component.
 <li>The pixel's green component is the vector's Y component.

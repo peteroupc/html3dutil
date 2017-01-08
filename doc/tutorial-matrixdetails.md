@@ -112,7 +112,7 @@ Related functions:
 
 ### Translation <a id=Translation></a>
 
-A translation is a shifting of an object's position.  In a transformation matrix,
+A translation is a shifting of an object's position. In a transformation matrix,
 this shifting effectively happens after all other transformations such as scaling and rotation.
 It uses the 13th, 14th, and 15th elements of the matrix as seen here:
 
@@ -147,15 +147,15 @@ It uses the 13th, 14th, and 15th elements of the matrix as seen here:
 </mfenced>
 </math>
 
-where `tx` is added to the x-coordinate, `ty` is added to the y-coordinate, and
-`tz` is added to the z-coordinate.  The transformation formulas would look like:
+where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
+`tz` is added to the Z coordinate. The transformation formulas would look like:
 
 * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + tx
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + tz
 
-For example, we add the input x and `tx` to get the output x.  If `tx` is 0, x
-remains unchanged.  Likewise for y and z.
+For example, we add the input x and `tx` to get the output x. If `tx` is 0, x
+remains unchanged. Likewise for y and z.
 
 Related functions:
 
@@ -166,7 +166,7 @@ Related functions:
 
 ### Scaling <a id=Scaling></a>
 
-Scaling changes an object's size.  Scaling uses the 1st,
+Scaling changes an object's size. Scaling uses the 1st,
 6th, and 11th elements of the matrix as seen here:
 
 <math>
@@ -200,8 +200,8 @@ Scaling changes an object's size.  Scaling uses the 1st,
 </mfenced>
 </math>
 
-where the x-coordinate is multiplied by `sx`, the y-coordinate is multiplied by `sy`, and
-the z-coordinate is multiplied by `sz`.
+where the X coordinate is multiplied by `sx`, the Y coordinate is multiplied by `sy`, and
+the Z coordinate is multiplied by `sz`.
 
 The scaling formula would look like:
 
@@ -209,8 +209,8 @@ The scaling formula would look like:
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + sy &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + sz &#x22c5; **a**<sub>_z_</sub> + 0
 
-For example, we multiply the input x by `sx` to get the output x.  If `sx` is 1, x
-remains unchanged.  Likewise for y and z.
+For example, we multiply the input x by `sx` to get the output x. If `sx` is 1, x
+remains unchanged. Likewise for y and z.
 
 If `sx`, `sy`, or `sz` is -1, that coordinate is _reflected_ along the corresponding axis.
 
@@ -232,8 +232,8 @@ Related functions:
 
 ### Rotation <a id=Rotation></a>
 
-Rotation changes an object's orientation.  Rotation uses the upper-left
-corner of a matrix.  Given an angle of rotation, &theta; (in radians; multiply
+Rotation changes an object's orientation. Rotation uses the upper-left
+corner of a matrix. Given an angle of rotation, &theta; (in radians; multiply
 degrees by &pi; and divide by 180), the transformation matrix is as follows.
 
 <figure>
@@ -343,10 +343,10 @@ which would look like:
 Note that:
 
 * When we rotate a point about the X axis, the X coordinate is unchanged
-and the Y and Z coordinates are adjusted in the rotation.  For rotations about the
+and the Y and Z coordinates are adjusted in the rotation. For rotations about the
 Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.
 * If the axis of rotation points toward the viewer, positive rotations mean
-counterclockwise rotation in right-handed coordinate systems.  For example,
+counterclockwise rotation in right-handed coordinate systems. For example,
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.
@@ -388,13 +388,13 @@ Related functions:
 
 Two matrices can be combined into a single transformation. To do so,
 the matrices are multiplied such that the transformations
-they describe happen in reverse order.  For example, if the first matrix
+they describe happen in reverse order. For example, if the first matrix
 (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will
 describe the effect of scaling then translation.
 
 Matrix multiplication is not commutative; the order
-of multiplying matrices is important.  This multiplication
+of multiplying matrices is important. This multiplication
 behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
 D3DX and DirectXMath libraries.
 
@@ -409,11 +409,11 @@ Related functions:
 ### Other Transformations <a id=Other_Transformations></a>
 
 In all the transformations described above, the last row in the transformation matrix is
-(0, 0, 0, 1).  (Such transformations are called _affine transformations_, those that
+(0, 0, 0, 1). (Such transformations are called _affine transformations_, those that
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the `H3DU.Math` library.
 
-One example of such a transformation is the perspective projection matrix.  When a 4-element
+One example of such a transformation is the perspective projection matrix. When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
@@ -430,12 +430,12 @@ Related functions:
 
 ### Matrix Inversions <a id=Matrix_Inversions></a>
 
-An inverted matrix describes a transformation that undoes another transformation.  For
+An inverted matrix describes a transformation that undoes another transformation. For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.
 
 To invert a **translation**, reverse the sign of the translation elements `tx`, `ty`, and `tz`
-and generate a new translation matrix with the new translation elements.  For example,
+and generate a new translation matrix with the new translation elements. For example,
 to invert the translation (5, 2, -3), use the translation (-5, -2, 3).
 
 To invert a **scaling**, use the reciprocal of `sx`, `sy`, and `sz`
@@ -444,12 +444,12 @@ For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
 
 To invert a **rotation**, swap the 2nd and 5th elements of the matrix, the 3rd and 9th
 elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4, 2, 8,
-6, and 9 respectively).  The effect is like reversing the angle of the rotation to reset an object
+6, and 9 respectively). The effect is like reversing the angle of the rotation to reset an object
 to its original orientation.
 
 Matrices that use some combination of translation, scaling, and rotation
 as well as other kinds of matrices are more complicated
-to invert.  In fact, some matrices can't be inverted at all.  The formula for inverting a general
+to invert. In fact, some matrices can't be inverted at all. The formula for inverting a general
 matrix is too complicated to discuss here.
 
 Related functions:

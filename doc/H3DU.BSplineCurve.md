@@ -174,5 +174,5 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
     // Generate 11 points forming the B-spline curve.
     var points=[];
     for(var i=0;i<=10;i++) {
-     points.push(curve.evaluate(i/10.0));
+    points.push(curve.evaluate(i/10.0));
     }

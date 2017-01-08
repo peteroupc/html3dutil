@@ -61,7 +61,7 @@ This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 ### H3DU.ShapeGroup#getBounds() <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds'></a>
 
 Finds a bounding box that holds all vertices in this shape group.
- The bounding box is not guaranteed to be the
+The bounding box is not guaranteed to be the
 tightest, and the box will be in world space coordinates.
 
 #### Return Value
@@ -160,9 +160,9 @@ rather than the transform for each shape in the group.
 * `x` (Type: number | Array.&lt;Number>)<br>
     X coordinate or a 3-element position array, as specified in H3DU.Transform#setScale.
 * `y` (Type: Number)<br>
-    Y-coordinate.
+    Y coordinate.
 * `z` (Type: Number)<br>
-    Z-coordinate.
+    Z coordinate.
 
 #### Return Value
 

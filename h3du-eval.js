@@ -17,12 +17,12 @@
  * necessarily cross the curve.
  * @class
  * @alias H3DU.BezierCurve
- * @param {Array<Array<Number>>} cp An array of control points.  Each
+ * @param {Array<Array<Number>>} cp An array of control points. Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
- * curve.  For example, a degree-3 (cubic) curve
- * contains 4 control points.  A degree of 1 results in a straight line segment.
+ * curve. For example, a degree-3 (cubic) curve
+ * contains 4 control points. A degree of 1 results in a straight line segment.
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
@@ -49,14 +49,14 @@
  * @param {Number} u Point on the curve to evaluate (generally within the range
  * given in the constructor).
  * @returns {Array<Number>} An array of the result of
- * the evaluation.  Its length will be equal to the
+ * the evaluation. Its length will be equal to the
  * length of a control point, as specified in the constructor.
 * @example
 * // Generate 11 points forming the B&eacute;zier curve.
 * // Assumes the curve was created with u1=0 and u2=1 (the default).
 * var points=[];
 * for(var i=0;i<=10;i++) {
-*  points.push(curve.evaluate(i/10.0));
+* points.push(curve.evaluate(i/10.0));
 * }
  * @memberof! H3DU.BezierCurve#
 */
@@ -72,12 +72,12 @@
  * @class
  * @alias H3DU.BezierSurface
  * @param {Array<Array<Number>>} cp An array of control point
- * arrays, which in turn contain a number of control points.  Each
+ * arrays, which in turn contain a number of control points. Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
- * surface along the V axis.  For example, a degree-3 (cubic) surface along the V axis
- * contains 4 control points, one in each control point array.  A degree of 1 on
+ * surface along the V axis. For example, a degree-3 (cubic) surface along the V axis
+ * contains 4 control points, one in each control point array. A degree of 1 on
  * both the U and V axes results in a flat surface.
  * <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
  * surface along the U axis.
@@ -123,7 +123,7 @@
  * given in the constructor).
  * @param {Number} v V-coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array of the result of
- * the evaluation.  Its length will be equal to the
+ * the evaluation. Its length will be equal to the
  * length of a control point, as specified in the constructor.
  * @memberof! H3DU.BezierSurface#
 */
@@ -136,7 +136,7 @@
 * A parametric evaluator for B-spline (basis spline) curves.
 * @class
 * @alias H3DU.BSplineCurve
- * @param {Array<Array<Number>>} controlPoints An array of control points.  Each
+ * @param {Array<Array<Number>>} controlPoints An array of control points. Each
  * control point is an array with the same length as the other control points.
  * It is assumed that the first control point's length represents the size of all the control
  * points.
@@ -145,8 +145,8 @@
 * points and not more than twice the number of control points.<p>
 * The length of this parameter minus 1, minus the number
 * of control points, represents the degree of the B-spline
-* curve.  For example, a degree-3 (cubic) B-spline curve contains 4 more
-* knots than the number of control points.  A degree of 1
+* curve. For example, a degree-3 (cubic) B-spline curve contains 4 more
+* knots than the number of control points. A degree of 1
 * results in straight line segments.<p>
 * The knot vector must be a monotonically nondecreasing sequence and
 * the first knot must not equal the last.<p>
@@ -158,7 +158,7 @@
 * the control points describe a <i>B&eacute;zier</i> curve, in which the
 * first and last control points match the curve's end points.<p>
 * @param {Boolean} [bits] Bits for defining input
-* and controlling output.  Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
+* and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
 * and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
 */
@@ -186,7 +186,7 @@
 
 /**
 * Indicates whether the last coordinate of each control point is a
-* weight.  If some of the weights differ, the curve is
+* weight. If some of the weights differ, the curve is
 * considered a <i>rational</i> B-spline curve.
 * If this bit is set, the length of each control point must be at least 2,
 * and points returned by the curve's <code>evaluate</code>
@@ -199,7 +199,7 @@
 /**
 * Indicates to divide each other coordinate of the returned point
 * by the last coordinate of the point and omit the last
-* coordinate.  This is used with WEIGHTED_BIT to convert
+* coordinate. This is used with WEIGHTED_BIT to convert
 * homogeneous coordinates to conventional coordinates.
 * If this bit is set, the length of each control point must be at least 2.
 * @const
@@ -284,13 +284,13 @@
  * in a B-spline curve.
  * @param {Number} u Point on the curve to evaluate (from 0 through 1).
  * @returns {Array<Number>} An array of the result of
- * the evaluation.  Its length will be equal to the
+ * the evaluation. Its length will be equal to the
  * length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor.
 * @example
 * // Generate 11 points forming the B-spline curve.
 * var points=[];
 * for(var i=0;i<=10;i++) {
-*  points.push(curve.evaluate(i/10.0));
+* points.push(curve.evaluate(i/10.0));
 * }
  * @memberof! H3DU.BSplineCurve#
 */
@@ -351,7 +351,7 @@
 * @class
 * @alias H3DU.BSplineSurface
  * @param {Array<Array<Number>>} controlPoints An array of control point
- * arrays, which in turn contain a number of control points.  Each
+ * arrays, which in turn contain a number of control points. Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter is the number of control points in each row of
@@ -365,9 +365,9 @@
 * For more information, see {@link H3DU.BSplineCurve}.
 * @param {Array<Number>} knotsV Knot vector of the curve, along the V-axis.
 * @param {Boolean} [bits] Bits for defining input
-* and controlling output.  Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
+* and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
-* and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
+* and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
 */
   H3DU.BSplineSurface = function(controlPoints, knotsU, knotsV, bits) {
     var vcplen = controlPoints.length;
@@ -406,7 +406,7 @@
 * @param {Array<Array<Number>>} controlPoints Array of
 * control points as specified in the {@link H3DU.BSplineCurve} constructor.
 * @param {Number} [degree] Degree of the B-Spline
-* curve.  For example, 3 means a degree-3 (cubic) curve.
+* curve. For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
 * @returns {H3DU.BSplineCurve} Return value.
@@ -421,7 +421,7 @@
 * @param {Array<Array<Number>>} controlPoints Array of
 * control points as specified in the {@link H3DU.BSplineCurve} constructor.
 * @param {Number} [degree] Degree of the B-Spline
-* curve.  For example, 3 means a degree-3 (cubic) curve.
+* curve. For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
 * @returns {H3DU.BSplineCurve} Return value.
@@ -437,7 +437,7 @@
 * @param {Array<Array<Array<Number>>>} controlPoints Array of
 * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
 * @param {Number} [degreeU] Degree of the B-Spline
-* surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
+* surface along the U-axis. For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
@@ -456,7 +456,7 @@
 * @param {Array<Array<Array<Number>>>} controlPoints Array of
 * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
 * @param {Number} [degreeU] Degree of the B-Spline
-* surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
+* surface along the U-axis. For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
 * @param {Number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
@@ -528,7 +528,7 @@
  * @param {Number} u U-coordinate of the surface to evaluate (from 0 through 1).
  * @param {Number} v V-coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array of the result of
- * the evaluation.  Its length will be equal to the
+ * the evaluation. Its length will be equal to the
  * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
  * @memberof! H3DU.BSplineSurface#
 */
@@ -605,9 +605,9 @@
 * An evaluator of parametric curve functions for generating
 * vertex positions and colors of a curve.<p>
 * A parametric curve is a curve whose points are based on a
-* parametric curve function.  A curve function takes a number
+* parametric curve function. A curve function takes a number
 * (U) and returns a point (in 1, 2, 3 or more dimensions, but
-* usually 2 or 3) that lies on the curve.  For example, in 3
+* usually 2 or 3) that lies on the curve. For example, in 3
 * dimensions, a curve function has the following form:<p>
 * <b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
 * where x(u) returns an X coordinate, y(u) a Y coordinate,
@@ -626,7 +626,7 @@
 /**
 * Specifies a parametric curve function for generating vertex positions.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate".  It takes the following parameter:<ul>
+* named "evaluate". It takes the following parameter:<ul>
 * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
 * </ul>
 * The evaluator function returns an array of the result of the evaluation.
@@ -636,7 +636,7 @@
 * // "u" can range from 0 to 2*Math.PI
 * curveEval.vertex({"evaluate":function(u) {
 "use strict";
-*  return [Math.cos(u),Math.sin(u),0]
+* return [Math.cos(u),Math.sin(u),0]
 * }});
 * @memberof! H3DU.CurveEval#
 */
@@ -649,7 +649,7 @@
 * @deprecated May be removed in the future; it makes little sense
 * to generate normals for a curve.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
+* named "evaluate", giving 3 values as a result. See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
@@ -661,7 +661,7 @@
 /**
 * Specifies a parametric curve function for generating color values.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link H3DU.CurveEval#vertex}.
+* named "evaluate", giving 3 values as a result. See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
@@ -673,7 +673,7 @@
 /**
 * Specifies a parametric curve function for generating texture coordinates.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate", giving one or two values as a result.  See {@link H3DU.CurveEval#vertex}.
+* named "evaluate", giving one or two values as a result. See {@link H3DU.CurveEval#vertex}.
 * </ul>
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
@@ -686,7 +686,7 @@
  * Generates vertex positions and attributes based on a point
  * in a parametric curve.
  * @param {H3DU.Mesh} mesh H3DU.Mesh where vertex positions and attributes
- * will be generated.  When this method returns, the current color, normal,
+ * will be generated. When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
  * @param {Number} u Point of the curve to evaluate.
@@ -753,7 +753,7 @@
  * @param {Number} [mode] If this value is H3DU.Mesh.LINES, or is null
 * or omitted, generates
  * a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
- * generates a series of points along the curve.  For any other value,
+ * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {Number} [n] Number of subdivisions of the curve to be drawn.
  * May be omitted; default is 24.
@@ -792,9 +792,9 @@
 * vertex positions, normals, colors, and texture coordinates
 * of a surface.<p>
 * A parametric surface is a surface whose points are based on a
-* parametric surface function.  A surface function takes two numbers
+* parametric surface function. A surface function takes two numbers
 * (U and V) and returns a point (in 1, 2, 3 or more dimensions, but
-* usually 2 or 3) that lies on the surface.  For example, in 3
+* usually 2 or 3) that lies on the surface. For example, in 3
 * dimensions, a surface function has the following form:<p>
 * <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
 * where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
@@ -815,7 +815,7 @@
  * normals rather than use the parametric evaluator
  * specified for normal generation, if any.
  * By default, normals won't be generated automatically.
- * @param {Boolean} value Either true or false.  True means normals
+ * @param {Boolean} value Either true or false. True means normals
  * will automatically be generated; false means they won't.
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
@@ -827,7 +827,7 @@
 /**
 * Specifies a parametric surface function for generating vertex positions.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate".  It takes the following parameters in this order:<ul>
+* named "evaluate". It takes the following parameters in this order:<ul>
 * <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
 * <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
 * </ul>
@@ -859,12 +859,12 @@
 * or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
 * called the <i>tangent vector</i>.)
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
+* named "evaluate", giving 3 values as a result. See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
 * @returns {H3DU.SurfaceEval} This object.
 * @example <caption>The following example sets the normal generation
-* function for a parametric surface.  To illustrate how the method is derived
-* from the vector calculation method, that method is also given below.  To
+* function for a parametric surface. To illustrate how the method is derived
+* from the vector calculation method, that method is also given below. To
 * derive the normal calculation, first look at the vector function:<p>
 * <b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
 * Then, find the partial derivatives with respect to u and v:<p>
@@ -877,14 +877,14 @@
 *</caption>
 * surfaceEval.vertex({"evaluate":function(u,v) {
 "use strict";
-*  return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+* return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
 * }})
 * .normal({"evaluate":function(u,v) {
 "use strict";
-*  return H3DU.Math.vec3normInPlace([
-*   Math.cos(u)*-Math.sin(v)*Math.sin(u),
-*   Math.sin(u)*-Math.sin(v)*Math.sin(u),
-*   0]);
+* return H3DU.Math.vec3normInPlace([
+* Math.cos(u)*-Math.sin(v)*Math.sin(u),
+* Math.sin(u)*-Math.sin(v)*Math.sin(u),
+* 0]);
 * }})
 * @memberof! H3DU.SurfaceEval#
 */
@@ -895,7 +895,7 @@
 /**
 * Specifies a parametric surface function for generating color values.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
+* named "evaluate", giving 3 values as a result. See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
 * @returns {H3DU.SurfaceEval} This object.
 * @memberof! H3DU.SurfaceEval#
@@ -907,7 +907,7 @@
 /**
 * Specifies a parametric surface function for generating texture coordinates.
 * @param {Object} evaluator An object that must contain a function
-* named "evaluate", giving 2 values as a result.  See {@link H3DU.SurfaceEval#vertex}.
+* named "evaluate", giving 2 values as a result. See {@link H3DU.SurfaceEval#vertex}.
 * </ul>
 * @returns {H3DU.SurfaceEval} This object.
 * @example <caption>The following example sets the surface
@@ -930,7 +930,7 @@
  * Generates vertex positions and attributes based on a point
  * in a parametric surface.
  * @param {H3DU.Mesh} mesh H3DU.Mesh where vertex positions and attributes
- * will be generated.  When this method returns, the current color, normal,
+ * will be generated. When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
  * @param {Number} u U-coordinate of the curve to evaluate
@@ -1068,14 +1068,14 @@
  * Generates the vertex positions and attributes of a parametric
  * surface.
  * @param {H3DU.Mesh} mesh H3DU.Mesh where vertex positions and attributes
- * will be generated.  When this method returns, the current color, normal,
+ * will be generated. When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
  * @param {Number} [mode] If this value is H3DU.Mesh.TRIANGLES, or is null
- * or omitted, generates a series of triangles defining the surface.  If
+ * or omitted, generates a series of triangles defining the surface. If
  * this value is H3DU.Mesh.LINES, generates
  * a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
- * generates a series of points along the curve.  For any other value,
+ * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {Number} [un] Number of subdivisions along the U-axis.
  * Default is 24.

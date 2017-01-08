@@ -138,11 +138,11 @@ H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
   return this;
 };
 /**
- * Uses a perspective projection for this batch.  It will be adjusted
+ * Uses a perspective projection for this batch. It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link H3DU.Math.mat4perspective}.
- * @param {Number} fov Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+ * @param {Number} fov Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
  * @param {Number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
  * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
@@ -165,7 +165,7 @@ H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
 * @param {Array<Number>} [up] A 3-element vector specifying
 * the direction from the center of the camera to its top. This parameter may
 * be null or omitted, in which case the default is the vector (0, 1, 0),
-* the vector that results when the camera is held upright.  This
+* the vector that results when the camera is held upright. This
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
@@ -177,7 +177,7 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
   return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
 };
 /**
- * Uses an orthographic projection for this batch.  It will be adjusted
+ * Uses an orthographic projection for this batch. It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
 * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
@@ -192,10 +192,10 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
  * @param {Number} t Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
  * @param {Number} e Distance from the camera to the near clipping
- * plane.  A positive value means the plane is in front of the viewer.
+ * plane. A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
- * plane.  A positive value means the plane is in front of the viewer.
- * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * plane. A positive value means the plane is in front of the viewer.
+ * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
@@ -206,7 +206,7 @@ H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
   return this;
 };
 /**
- * Uses a 2D orthographic projection for this batch.  It will be adjusted
+ * Uses a 2D orthographic projection for this batch. It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
  * The near and far clipping planes will be set to -1 and 1, respectively.<p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
@@ -279,7 +279,7 @@ H3DU.Batch3D.prototype.getLights = function() {
 };
 
 /**
-* Adds a 3D shape to this batch of shapes.  Its reference, not a copy,
+* Adds a 3D shape to this batch of shapes. Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
@@ -405,7 +405,7 @@ H3DU.Batch3D.prototype.render = function(scene) {
 };
 /**
  * Creates a batch whose purpose is to render the contents
-of a frame buffer using a particular shader.  This is often used
+of a frame buffer using a particular shader. This is often used
 to apply a graphics filter to that frame buffer's contents.
 See the {@tutorial filters} tutorial.
  * @param {H3DU.Scene3D} scene Scene to associate

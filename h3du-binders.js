@@ -107,7 +107,7 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
   }
   var loadedTexture = null;
   if(!isFrameBuffer) {
-    if((typeof texture.image === "undefined" || texture.image === null)  &&
+    if((typeof texture.image === "undefined" || texture.image === null) &&
     texture.loadStatus === 0) {
       var that = this;
       var prog = program;

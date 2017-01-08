@@ -5,9 +5,9 @@
 ### H3DU.Texture(name) <a id='H3DU.Texture'></a>
 
 Specifies a texture, which can serve as image data applied to
- the surface of a shape, or even a 2-dimensional array of pixels
- used for some other purpose, such as a depth map, a height map,
- a bump map, a specular map, and so on.
+the surface of a shape, or even a 2-dimensional array of pixels
+used for some other purpose, such as a depth map, a height map,
+a bump map, a specular map, and so on.
 
 By default, texture coordinates go from (0,0) at the lower left corner
 to (1,1) at the upper right corner.

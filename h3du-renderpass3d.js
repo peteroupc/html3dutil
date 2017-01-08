@@ -26,20 +26,20 @@ H3DU.RenderPass3D = function(subScene, parameters) {
 */
   this.subScene = subScene;
  /** Whether to clear the color buffer before rendering the batch.
-  @default
+  * @default
 */
   this.clearColor = true;
  /** Whether to clear the depth buffer before rendering the batch.
-  @default
+  * @default
 */
   this.clearDepth = true;
  /** Whether to clear the stencil buffer before rendering the batch.
-  @default
+  * @default
 */
   this.clearStencil = true;
  /** Framebuffer to render to.
-  @type {H3DU.FrameBufferInfo}
-  @default
+  * @type {H3DU.FrameBufferInfo}
+  * @default
 */
   this.frameBuffer = null;
   this.setParams(parameters);
@@ -55,7 +55,7 @@ H3DU.RenderPass3D = function(subScene, parameters) {
 * <li><code>clearStencil</code> - Whether to clear the stencil buffer before rendering the batch. Either true or false.
 * <li><code>frameBuffer</code> - Framebuffer to render to. An {@link H3DU.FrameBufferInfo} object.
 * </ul>
-* Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
+* Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
  * @returns {H3DU.RenderPass3D} This object.
  * @memberof! H3DU.RenderPass3D#
 */

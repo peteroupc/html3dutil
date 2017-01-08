@@ -21,7 +21,7 @@ An object that holds a rendering context for rendering
 * [.FRONT_AND_BACK](#H3DU.Scene3D.FRONT_AND_BACK)<br>Back and front sides of a triangle.
 * [.NONE](#H3DU.Scene3D.NONE)<br>No face culling.
 * [shapes](#H3DU.Scene3D_shapes)<br><b>Deprecated: Shapes should now be managed in <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects,
- rather than through this class.</b>
+rather than through this class.</b>
 
 ### Methods
 
@@ -115,7 +115,7 @@ No face culling.
 ### H3DU.Scene3D#shapes <a id='H3DU.Scene3D_shapes'></a>
 
 <b>Deprecated: Shapes should now be managed in <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects,
- rather than through this class.</b>
+rather than through this class.</b>
 
 An array of shapes that are part of the scene.
 
@@ -224,7 +224,7 @@ Gets the color used when clearing the screen each frame.
 #### Return Value
 
 An array of four numbers, from 0 through
- 1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;Number>)
+1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;Number>)
 
 ### H3DU.Scene3D#getClientAspect() <a id='H3DU.Scene3D_H3DU.Scene3D_getClientAspect'></a>
 
@@ -405,8 +405,8 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 ### H3DU.Scene3D#render(renderPasses) <a id='H3DU.Scene3D_H3DU.Scene3D_render'></a>
 
 Renders all shapes added to this scene.
- This is usually called in a render loop, such
- as <a href="H3DU.md#H3DU.renderLoop">H3DU.renderLoop</a>.
+This is usually called in a render loop, such
+as <a href="H3DU.md#H3DU.renderLoop">H3DU.renderLoop</a>.
 
 NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
 buffer and depth buffer. This compatibility option may be dropped in the future.
@@ -524,13 +524,13 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 #### Parameters
 
 * `left` (Type: Number)<br>
-    X-coordinate of the point where the left clipping plane meets the near clipping plane.
+    X coordinate of the point where the left clipping plane meets the near clipping plane.
 * `right` (Type: Number)<br>
-    X-coordinate of the point where the right clipping plane meets the near clipping plane.
+    X coordinate of the point where the right clipping plane meets the near clipping plane.
 * `bottom` (Type: Number)<br>
-    Y-coordinate of the point where the bottom clipping plane meets the near clipping plane.
+    Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
 * `top` (Type: Number)<br>
-    Y-coordinate of the point where the top clipping plane meets the near clipping plane.
+    Y coordinate of the point where the top clipping plane meets the near clipping plane.
 * `near` (Type: Number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
 * `far` (Type: Number)<br>
@@ -702,7 +702,7 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 #### Parameters
 
 * `fov` (Type: Number)<br>
-    Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+    Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
 * `aspect` (Type: Number)<br>
     The ratio of width to height of the viewport, usually the scene's aspect ratio (getAspect() or getClientAspect()).
 * `near` (Type: Number)<br>

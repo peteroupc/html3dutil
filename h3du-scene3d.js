@@ -10,7 +10,7 @@
 /**
  * An object that holds a rendering context for rendering
  * 3D objects.
-*  @class
+* @class
 * @alias H3DU.Scene3D
  * @param {WebGLRenderingContext|object} canvasOrContext
  * A WebGL context to associate with this scene, or an HTML
@@ -35,8 +35,8 @@ H3DU.Scene3D = function(canvasOrContext) {
   this._meshLoader = new H3DU.BufferedMesh._MeshLoader();
   this._renderedOutsideScene = false;
  /** An array of shapes that are part of the scene.
-   @deprecated Shapes should now be managed in {@link H3DU.Batch3D} objects,
-   rather than through this class.
+   * @deprecated Shapes should now be managed in {@link H3DU.Batch3D} objects,
+   * rather than through this class.
 */
   this.shapes = [];
   this._errors = false;
@@ -206,13 +206,13 @@ H3DU.Scene3D.prototype.getContext = function() {
 @const
 */
 H3DU.Scene3D.NONE = 0;
-/** Back side of a triangle.  By default, triangles with clockwise winding are back-facing.
+/** Back side of a triangle. By default, triangles with clockwise winding are back-facing.
 * @memberof! H3DU.Scene3D
 @const
 */
 H3DU.Scene3D.BACK = 1;
 /**
-Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing.
+Front side of a triangle. By default, triangles with counterclockwise winding are front-facing.
 * @memberof! H3DU.Scene3D
 @const
 */
@@ -240,8 +240,8 @@ H3DU.Scene3D.CW = 1;
 * when rendering this scene.
 * @param {Number} value If this is {@link H3DU.Scene3D.BACK},
 * {@link H3DU.Scene3D.FRONT}, or {@link H3DU.Scene3D.FRONT_AND_BACK},
-* enables face culling of the specified faces.  For any other value,
-* disables face culling.  By default, face culling is disabled.
+* enables face culling of the specified faces. For any other value,
+* disables face culling. By default, face culling is disabled.
 * @returns {H3DU.Scene3D} This object.
 * @memberof! H3DU.Scene3D#
 */
@@ -282,9 +282,9 @@ H3DU.Scene3D.prototype._setFace = function() {
 /**
 * Specifies the winding of front faces.
 * @param {Number} value If this is {@link H3DU.Scene3D.CW},
-* clockwise triangles are front-facing.  For any other value,
+* clockwise triangles are front-facing. For any other value,
 * counterclockwise triangles are front-facing, which is the
-* default behavior.  If using a left-handed coordinate system,
+* default behavior. If using a left-handed coordinate system,
 * set this value to {@link H3DU.Scene3D.CW}.
 * @returns {H3DU.Scene3D} This object.
 * @memberof! H3DU.Scene3D#
@@ -318,7 +318,7 @@ H3DU.Scene3D.prototype.setAutoResize = function(value) {
 * When this value changes, the H3DU.Scene3D will automatically
 * adjust the viewport.
 * @param {Boolean} value If true, use the device's pixel ratio
-* when setting the viewport's dimensions.  Default is true.
+* when setting the viewport's dimensions. Default is true.
 * @returns {H3DU.Scene3D} This object.
   * @memberof! H3DU.Scene3D#
 */
@@ -334,9 +334,9 @@ H3DU.Scene3D.prototype.setUseDevicePixelRatio = function(value) {
   return this;
 };
  /**
-  Gets the color used when clearing the screen each frame.
-   @returns {Array<Number>} An array of four numbers, from 0 through
-   1, specifying the red, green, blue, and alpha components of the color.
+  * Gets the color used when clearing the screen each frame.
+   * @returns {Array<Number>} An array of four numbers, from 0 through
+   * 1, specifying the red, green, blue, and alpha components of the color.
    * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getClearColor = function() {
@@ -361,9 +361,9 @@ H3DU.Scene3D.prototype.useProgram = function() {
 /**
 * Sets the viewport width and height for this scene.
 * @param {Number} width Width of the scene, in pixels.
-*  Will be rounded up.
+* Will be rounded up.
 * @param {Number} height Height of the scene, in pixels.
-*  Will be rounded up.
+* Will be rounded up.
 * @returns {Number} Return value.
 * @memberof! H3DU.Scene3D#
 */
@@ -458,7 +458,7 @@ H3DU.Scene3D.prototype.createBuffer = function() {
 };
 /**
  * Gets the current projection matrix for this scene.
-* @deprecated Use {@link H3DU.Batch3D} instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use {@link H3DU.Batch3D} instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value.
 * @memberof! H3DU.Scene3D#
 */
@@ -472,7 +472,7 @@ H3DU.Scene3D.prototype.getProjectionMatrix = function() {
 };
 /**
  * Gets the current view matrix for this scene.
-* @deprecated Use {@link H3DU.Batch3D} instead. To get the view matrix of a Batch3D, call its getViewMatrix method.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use {@link H3DU.Batch3D} instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value.
 * @memberof! H3DU.Scene3D#
 */
@@ -485,17 +485,17 @@ H3DU.Scene3D.prototype.getViewMatrix = function() {
   return this._viewMatrix.slice(0, 16);
 };
 /**
-*  Sets this scene's projection matrix to a perspective projection.
+* Sets this scene's projection matrix to a perspective projection.
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link H3DU.Math.mat4perspective}.
 * @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4perspective}. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @param {Number} fov Y-axis field of view, in degrees. Should be less
+ * @param {Number} fov Y axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be. As a result, zooming out
 * can be implemented by raising this value, and zooming in by lowering it.)
 * @param {Number} aspect The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio (getAspect() or getClientAspect()).
+* the scene's aspect ratio (getAspect() or getClientAspect()).
 * @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.
@@ -504,7 +504,7 @@ H3DU.Scene3D.prototype.getViewMatrix = function() {
 * to be seen.
 * @returns {H3DU.Scene3D} This object.
 * @example
-* // Set the perspective projection.  Camera has a 45-degree field of view
+* // Set the perspective projection. Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
 * scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 * @memberof! H3DU.Scene3D#
@@ -523,7 +523,7 @@ H3DU.Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4orthoAspect}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4orthoAspect}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -531,13 +531,13 @@ H3DU.Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
  * @param {Number} top Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
  * @param {Number} near Distance from the camera to the near clipping
- * plane.  A positive value means the plane is in front of the viewer.
+ * plane. A positive value means the plane is in front of the viewer.
  * @param {Number} far Distance from the camera to the far clipping
- * plane.  A positive value means the plane is in front of the viewer.
- * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * plane. A positive value means the plane is in front of the viewer.
+ * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
- * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
+ * of width to height). If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
 */
@@ -555,7 +555,7 @@ H3DU.Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near,
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -563,7 +563,7 @@ H3DU.Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near,
  * @param {Number} top Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
- * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
+ * of width to height). If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
 */
@@ -578,14 +578,14 @@ H3DU.Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, asp
  * <p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link H3DU.Math.mat4perspective}.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4frustum}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @param {Number} left X-coordinate of the point where the left
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4frustum}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
+ * @param {Number} left X coordinate of the point where the left
  * clipping plane meets the near clipping plane.
- * @param {Number} right X-coordinate of the point where the right
+ * @param {Number} right X coordinate of the point where the right
  * clipping plane meets the near clipping plane.
- * @param {Number} bottom Y-coordinate of the point where the bottom
+ * @param {Number} bottom Y coordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
- * @param {Number} top Y-coordinate of the point where the top
+ * @param {Number} top Y coordinate of the point where the top
  * clipping plane meets the near clipping plane.
 * @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
@@ -605,7 +605,7 @@ H3DU.Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far
  * Sets this scene's projection matrix to an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.
-* @deprecated  Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 3D view.
  * @param {Number} right Rightmost coordinate of the 3D view.
  * (Note that right can be greater than left or vice versa.)
@@ -613,10 +613,10 @@ H3DU.Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far
  * @param {Number} top Topmost coordinate of the 3D view.
  * (Note that top can be greater than bottom or vice versa.)
  * @param {Number} near Distance from the camera to the near clipping
- * plane.  A positive value means the plane is in front of the viewer.
+ * plane. A positive value means the plane is in front of the viewer.
  * @param {Number} far Distance from the camera to the far clipping
- * plane.  A positive value means the plane is in front of the viewer.
- * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * plane. A positive value means the plane is in front of the viewer.
+ * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
@@ -629,7 +629,7 @@ H3DU.Scene3D.prototype.setOrtho = function(left, right, bottom, top, near, far) 
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
  * The near and far clipping planes will be set to -1 and 1, respectively.
-* @deprecated  Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2d}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2d}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the 2D view.
  * @param {Number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
@@ -794,7 +794,7 @@ H3DU.Scene3D.prototype.clearDepth = function() {
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @deprecated Use the vertexCount method of {@link H3DU.Batch3D} objects instead.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+ * @deprecated Use the vertexCount method of {@link H3DU.Batch3D} objects instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {Number} Return value.
 * @memberof! H3DU.Scene3D#
 */
@@ -809,7 +809,7 @@ H3DU.Scene3D.prototype.vertexCount = function() {
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
-* @deprecated  Use the <code>primitiveCount</code> method of {@link H3DU.Batch3D} objects instead.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the <code>primitiveCount</code> method of {@link H3DU.Batch3D} objects instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
 * @returns {Number} Return value.
 * @memberof! H3DU.Scene3D#
 */
@@ -822,10 +822,10 @@ H3DU.Scene3D.prototype.primitiveCount = function() {
   return this._subScene.primitiveCount();
 };
 /**
- * Sets the projection matrix for this object.  The projection
+ * Sets the projection matrix for this object. The projection
  * matrix can also be set using the {@link H3DU.Scene3D#setFrustum}, {@link H3DU.Scene3D#setOrtho},
  * {@link H3DU.Scene3D#setOrtho2D}, and {@link H3DU.Scene3D#setPerspective} methods.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
@@ -840,9 +840,9 @@ H3DU.Scene3D.prototype.setProjectionMatrix = function(matrix) {
   return this;
 };
 /**
-*  Sets this scene's view matrix. The view matrix can also
+* Sets this scene's view matrix. The view matrix can also
 * be set using the {@link H3DU.Scene3D#setLookAt} method.
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setViewMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setViewMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
 * @memberof! H3DU.Scene3D#
@@ -857,10 +857,10 @@ H3DU.Scene3D.prototype.setViewMatrix = function(matrix) {
   return this;
 };
 /**
-*  Sets this scene's view matrix to represent a camera view.
+* Sets this scene's view matrix to represent a camera view.
 * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
 * (<code>center</code>).
-* @deprecated Instead of this method, use {@link H3DU.Batch3D#setLookAt}.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setLookAt}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
 * @param {Array<Number>} eye A 3-element vector specifying
 * the camera position in world space.
 * @param {Array<Number>} [center] A 3-element vector specifying
@@ -869,7 +869,7 @@ H3DU.Scene3D.prototype.setViewMatrix = function(matrix) {
 * @param {Array<Number>} [up] A 3-element vector specifying
 * the direction from the center of the camera to its top. This parameter may
 * be null or omitted, in which case the default is the vector (0, 1, 0),
-* the vector that results when the camera is held upright.  This
+* the vector that results when the camera is held upright. This
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
@@ -881,12 +881,12 @@ H3DU.Scene3D.prototype.setLookAt = function(eye, center, up) {
   return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
 };
 /**
-* Adds a 3D shape to this scene.  Its reference, not a copy,
+* Adds a 3D shape to this scene. Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
 * @deprecated Use the addShape method of individual {@link H3DU.Batch3D} instances
-* instead.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom
-* H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom
+* H3DU.Batch3D. This compatibility behavior may be dropped in the future.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
 * @returns {H3DU.Scene3D} This object.
 * @memberof! H3DU.Scene3D#
@@ -904,7 +904,7 @@ H3DU.Scene3D.prototype.addShape = function(shape) {
  * Creates a buffer from a geometric mesh and
  * returns a shape object.
  * @deprecated Use the H3DU.Shape constructor instead.
- * @param {H3DU.Mesh} mesh A geometric mesh object.  The shape
+ * @param {H3DU.Mesh} mesh A geometric mesh object. The shape
  * created will use the mesh in its current state and won't
  * track future changes.
  * @returns {H3DU.Shape} The generated shape object.
@@ -922,8 +922,8 @@ H3DU.Scene3D.prototype.makeShape = function(mesh) {
 /**
 * Removes all instances of a 3D shape from this scene.
 * @deprecated Use the removeShape method of individual {@link H3DU.Batch3D} instances
-* instead.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom
-* H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom
+* H3DU.Batch3D. This compatibility behavior may be dropped in the future.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
 * @returns {H3DU.Scene3D} This object.
 * @memberof! H3DU.Scene3D#
@@ -940,8 +940,8 @@ H3DU.Scene3D.prototype.removeShape = function(shape) {
 /**
 * Gets the light sources used in this scene.
 * @deprecated Use the removeShape method of individual {@link H3DU.Batch3D} instances
-* instead.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom
-* H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom
+* H3DU.Batch3D. This compatibility behavior may be dropped in the future.
 * @returns {H3DU.Lights} The light sources used in this scene.
 * @memberof! H3DU.Scene3D#
 */
@@ -955,12 +955,12 @@ H3DU.Scene3D.prototype.getLights = function() {
 };
 /**
  * Sets a light source in this scene to a directional light.
-* @deprecated Use the Lights method setDirectionalLight instead and the {@link H3DU.Batch3D} method getLights.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @param {Number} index Zero-based index of the light to set.  The first
- * light has index 0, the second has index 1, and so on.  Will be created
+* @deprecated Use the Lights method setDirectionalLight instead and the {@link H3DU.Batch3D} method getLights. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
+ * @param {Number} index Zero-based index of the light to set. The first
+ * light has index 0, the second has index 1, and so on. Will be created
  * if the light doesn't exist.
  * @param {Array<Number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
- * axes, respectively.  May be null, in which case the default
+ * axes, respectively. May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
@@ -981,9 +981,9 @@ H3DU.Scene3D.prototype.setDirectionalLight = function(index, position, diffuse, 
 };
 /**
  * Sets parameters for a light in this scene.
-* @deprecated Use the Lights method setParams instead and the {@link H3DU.Batch3D} method getLights.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @param {Number} index Zero-based index of the light to set.  The first
- * light has index 0, the second has index 1, and so on.  Will be created
+* @deprecated Use the Lights method setParams instead and the {@link H3DU.Batch3D} method getLights. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
+ * @param {Number} index Zero-based index of the light to set. The first
+ * light has index 0, the second has index 1, and so on. Will be created
  * if the light doesn't exist.
  * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
 * @returns {H3DU.Scene3D} This object.
@@ -1001,7 +1001,7 @@ H3DU.Scene3D.prototype.setLightParams = function(index, params) {
 
 /**
  * Sets the color of the scene's ambient light.
-* @deprecated Use the Lights method setAmbient instead and the {@link H3DU.Batch3D} method getLights.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the Lights method setAmbient instead and the {@link H3DU.Batch3D} method getLights. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
 * @param {Array<Number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link H3DU.toGLColor}.
@@ -1026,10 +1026,10 @@ H3DU.Scene3D.prototype.setAmbient = function(r, g, b, a) {
 
 /**
  * Sets a light source in this scene to a point light.
- * @deprecated Use the LightSource method setPointLight instead and the {@link H3DU.Batch3D} method getLights.  For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @param {Number} index Zero-based index of the light to set.  The first
+ * @deprecated Use the LightSource method setPointLight instead and the {@link H3DU.Batch3D} method getLights. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
+ * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
- * @param {Array<Number>} position Light position.  (See {@link H3DU.LightSource#position}.)
+ * @param {Array<Number>} position Light position. (See {@link H3DU.LightSource#position}.)
  * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
  * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
@@ -1060,9 +1060,9 @@ H3DU.Scene3D.prototype._clearForPass = function(pass) {
 };
 
 /**
- *  Renders all shapes added to this scene.
- *  This is usually called in a render loop, such
- *  as {@link H3DU.renderLoop}.<p>
+ * Renders all shapes added to this scene.
+ * This is usually called in a render loop, such
+ * as {@link H3DU.renderLoop}.<p>
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
  * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} renderPasses An array of scenes

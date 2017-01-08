@@ -9,14 +9,14 @@
 /* global H3DU, console */
 
 /**
-* Represents a WebGL shader program.  A shader program in
+* Represents a WebGL shader program. A shader program in
 * WebGL consists of a vertex shader (which processes vertices),
-* and a fragment shader (which processes pixels).  Shader programs
+* and a fragment shader (which processes pixels). Shader programs
 * are specially designed for running on a graphics processing unit,
 * or GPU.<p>
 * When the H3DU.ShaderProgram constructor is called, it will compile
 * and link a shader program from the source text passed to it, but
-* it won't use that program until the use() method is called.  If the
+* it won't use that program until the use() method is called. If the
 * program is compiled and linked successfully, the constructor
 * will also gather a list of the program's attributes (vertex-specific variables
 * in vertex buffer objects) and uniforms (variables not specific to a vertex).<p>
@@ -32,7 +32,7 @@
 * implements a no-argument <code>getContext</code> method
 * that returns a WebGL context.
 * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
-* ES Shading Language (GLSL).  If null, a default
+* ES Shading Language (GLSL). If null, a default
 * vertex shader is used instead.
 * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
@@ -165,10 +165,10 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
 * is linked, that normally only happens upon construction
 * in the case of H3DU.ShaderInfo.)
 * @param {String} name The name of an attribute or uniform defined in either the
-* vertex or fragment shader of this shader program.  If the uniform or attribute
+* vertex or fragment shader of this shader program. If the uniform or attribute
 * is an array, each element in the array is named as in these examples:
-* "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
-* "unif.member1", "unif.member2".  If it's an array of struct, each
+* "unif[0]", "unif[1]". If it's a struct, each member in the struct is named as in these examples:
+* "unif.member1", "unif.member2". If it's an array of struct, each
 * member is named as in these examples: "unif[0].member1",
 * "unif[0].member2".
 * @returns {number|WebGLUniformLocation|null} The location of the uniform or attribute
@@ -185,7 +185,7 @@ H3DU.ShaderProgram.prototype.get = function(name) {
 * may be called at any time, even if this program is not currently the
 * active program in the WebGL context.
 * @param {String} name The name of a uniform defined in either the
-* vertex or fragment shader of this shader program.  See get().
+* vertex or fragment shader of this shader program. See get().
 * @returns {Number|Array<Number>} The uniform's value, or null if it doesn't exist or if
 * an attribute is named, not a uniform.
 * @memberof! H3DU.ShaderProgram#
@@ -229,7 +229,7 @@ H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
 };
 /**
  * Makes this program the active program in the WebGL
-* context associated with it.  If any uniforms were saved to
+* context associated with it. If any uniforms were saved to
 * be written later (because this program wasn't active in
 * the WebGL context when the "setUniforms" method
 * was called), sets their values now.
@@ -257,13 +257,13 @@ H3DU.ShaderProgram.prototype._update = function() {
 * saves their values until the next time this object's "use" method is called.
 * @param {Object} uniforms An object whose keys are the names of uniforms
 * defined in either the
-* vertex or fragment shader of this shader program.  If the uniform
+* vertex or fragment shader of this shader program. If the uniform
 * is an array, each element in the array is named as in these examples:
-* "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
-* "unif.member1", "unif.member2".  If it's an array of struct, each
+* "unif[0]", "unif[1]". If it's a struct, each member in the struct is named as in these examples:
+* "unif.member1", "unif.member2". If it's an array of struct, each
 * member is named as in these examples: "unif[0].member1",
-* "unif[0].member2".  The value of each key depends on the data type
-* expected for the uniform named by that key.  The value can be a 3-, 4-,
+* "unif[0].member2". The value of each key depends on the data type
+* expected for the uniform named by that key. The value can be a 3-, 4-,
 9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
 * respectively, or a Number if the uniform is a "float" or "int".
 * @returns {H3DU.ShaderProgram} This object.
@@ -363,7 +363,7 @@ H3DU.ShaderProgram.makeCopyEffect = function() {
 * where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
 * is the texture coordinates ranging from 0 to 1 in each component,
 * <code>textureSize</code> is the dimensions of the texture in pixels,
-* and the return value is the new color at the given texture coordinates.  Besides
+* and the return value is the new color at the given texture coordinates. Besides
 * this requirement, the shader code is also free to define additional uniforms,
 * constants, functions, and so on (but not another "main" function).
 * @returns {H3DU.ShaderInfo} The resulting shader program.

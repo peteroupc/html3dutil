@@ -1,12 +1,20 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
 /* global H3DU */
 /* exported BezierCurve, BezierSurface, BSplineCurve, BSplineSurface, GLUtil, GLMath, CurveEval, SurfaceEval, Lights, LightSource, Material, Mesh, Meshes, Scene3D, ShaderProgram, Shape, ShapeGroup, Texture, TextureLoader, Transform, ShaderInfo, RenderPass3D */
-/** @deprecated Use H3DU.BezierCurve instead. */
+/** @deprecated Use {@link H3DU.BezierCurve} instead. */
 var BezierCurve = H3DU.BezierCurve;
-/** @deprecated Use H3DU.BezierSurface instead. */
+/** @deprecated Use {@link H3DU.BezierSurface} instead. */
 var BezierSurface = H3DU.BezierSurface;
-/** @deprecated Use H3DU.BSplineCurve instead. */
+/** @deprecated Use {@link H3DU.BSplineCurve} instead. */
 var BSplineCurve = H3DU.BSplineCurve;
-/** @deprecated Use H3DU.BSplineSurface instead. */
+/** @deprecated Use {@link H3DU.BSplineSurface} instead. */
 var BSplineSurface = H3DU.BSplineSurface;
 /** @deprecated Use H3DU instead. */
 var GLUtil = H3DU;

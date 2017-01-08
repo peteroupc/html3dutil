@@ -11,7 +11,7 @@ When constructed, the list of light sources will be empty.
 ### Members
 
 * [.MAX_LIGHTS](#H3DU.Lights.MAX_LIGHTS)<br>Maximum number of lights supported
- by the default shader program.
+by the default shader program.
 * [sceneAmbient](#H3DU.Lights_sceneAmbient)<br>Ambient color for the scene.
 
 ### Methods
@@ -29,18 +29,18 @@ values, and the default value for <code>sceneAmbient</code>.
 ### H3DU.Lights.MAX_LIGHTS <a id='H3DU.Lights.MAX_LIGHTS'></a> (constant)
 
 Maximum number of lights supported
- by the default shader program.
+by the default shader program.
 
 Default Value: `3`
 
 ### H3DU.Lights#sceneAmbient <a id='H3DU.Lights_sceneAmbient'></a>
 
 Ambient color for the scene. This is the color of the light
- that shines on every part of every object equally and in
- every direction. In the absence of
- other lighting effects, all objects will be given this color.
+that shines on every part of every object equally and in
+every direction. In the absence of
+other lighting effects, all objects will be given this color.
 
- <small>Ambient light is a simplified simulation of the
+<small>Ambient light is a simplified simulation of the
 real-world effect of light bouncing back and forth between
 many different objects in an area. One example of this
 phenomenon is sunlight reaching an indoor room without

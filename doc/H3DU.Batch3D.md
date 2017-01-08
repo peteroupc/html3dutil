@@ -159,7 +159,7 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 #### Parameters
 
 * `fov` (Type: Number)<br>
-    Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+    Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
 * `near` (Type: Number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
 * `far` (Type: Number)<br>

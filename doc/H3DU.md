@@ -182,9 +182,9 @@ all of the promises are each resolved or rejected. The result
 of the promise will be an object with
 three keys:<ul>
  <li>"successes" - contains a list of results from the
- promises that succeeded, in the order in which those promises were listed.
+promises that succeeded, in the order in which those promises were listed.
  <li>"failures" - contains a list of results from the
- promises that failed, in the order in which those promises were listed.
+promises that failed, in the order in which those promises were listed.
  <li>"results" - contains a list of boolean values for each
 promise, in the order in which the promises were listed.
 True means success, and false means failure.</ul> (Type: <a href="Promise.md">Promise</a>)

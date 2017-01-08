@@ -55,7 +55,7 @@ The default is (1,1,1,1), or white.
 
 Light position. An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
 <li> If W is 0, then X, Y, and Z specify a 3-element vector giving the direction from the origin toward the light; the light will shine everywhere in the given direction.
- <li> If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul>
+<li> If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul>
 
 ### H3DU.LightSource#radius <a id='H3DU.LightSource_radius'></a>
 

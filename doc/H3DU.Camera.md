@@ -56,9 +56,9 @@ to the reference point.
 point without changing its orientation.
 * [setPosition](#H3DU.Camera_H3DU.Camera_setPosition)<br>Sets the position of the camera.
 * [turnAngleHorizontal](#H3DU.Camera_H3DU.Camera_turnAngleHorizontal)<br>Turns the camera to the left or right so that it faces
- the same distance from a reference point.
+the same distance from a reference point.
 * [turnAngleVertical](#H3DU.Camera_H3DU.Camera_turnAngleVertical)<br>Turns the camera upward or downward so that it faces
- the same distance from a reference point.
+the same distance from a reference point.
 * [turnHorizontal](#H3DU.Camera_H3DU.Camera_turnHorizontal)<br><b>Deprecated: Renamed to "moveAngleHorizontal".</b>
 * [turnVertical](#H3DU.Camera_H3DU.Camera_turnVertical)<br><b>Deprecated: Renamed to "moveAngleVertical".</b>
 * [update](#H3DU.Camera_H3DU.Camera_update)<br>Updates information about this camera based
@@ -199,11 +199,11 @@ Sets the position of the camera.
 #### Parameters
 
 * `cx` (Type: Number)<br>
-    The camera's new X-coordinate.
+    The camera's new X coordinate.
 * `cy` (Type: Number)<br>
-    The camera's new Y-coordinate.
+    The camera's new Y coordinate.
 * `cz` (Type: Number)<br>
-    The camera's new Z-coordinate.
+    The camera's new Z coordinate.
 
 #### Return Value
 
@@ -243,11 +243,11 @@ Sets the position of the camera.
 #### Parameters
 
 * `cx` (Type: Number)<br>
-    The camera's new X-coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, "cy" and "cz" can be omitted.
+    The camera's new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, "cy" and "cz" can be omitted.
 * `cy` (Type: Number) (optional)<br>
-    The camera's new Y-coordinate.
+    The camera's new Y coordinate.
 * `cz` (Type: Number) (optional)<br>
-    The camera's new Z-coordinate.
+    The camera's new Z coordinate.
 
 #### Return Value
 
@@ -256,7 +256,7 @@ This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 ### H3DU.Camera#turnAngleHorizontal(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnAngleHorizontal'></a>
 
 Turns the camera to the left or right so that it faces
- the same distance from a reference point.
+the same distance from a reference point.
 
 #### Parameters
 
@@ -270,7 +270,7 @@ This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 ### H3DU.Camera#turnAngleVertical(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnAngleVertical'></a>
 
 Turns the camera upward or downward so that it faces
- the same distance from a reference point.
+the same distance from a reference point.
 
 #### Parameters
 
