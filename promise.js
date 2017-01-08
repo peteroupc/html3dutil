@@ -40,9 +40,9 @@
    * @class
    * @alias Promise
    * @param {Function} [resolver] Function that takes
-  * two arguments: the first is a function to call when
-  * resolving the promise, and the second is a function
-  * to call when rejecting the promise.
+   * two arguments: the first is a function to call when
+   * resolving the promise, and the second is a function
+   * to call when rejecting the promise.
    */
   var Promise = function(resolver) {
     this._state = 0; /* 0 = pending, 1 = fulfilled, 2 = rejected */
@@ -62,12 +62,12 @@
   };
 
   /**
-  * Returns a promise that resolves.
-  * @param {Object} value The value associated with the promise.
-  * @returns {Promise} A promise that resolves and takes the given value
-  * as its argument.
-  * @method
-  */
+   * Returns a promise that resolves.
+   * @param {Object} value The value associated with the promise.
+   * @returns {Promise} A promise that resolves and takes the given value
+   * as its argument.
+   * @method
+   */
   Promise.resolve = function(value) {
     return new this(function(resolve) {
       resolve(value);
@@ -75,12 +75,12 @@
   };
 
   /**
-  * Returns a promise that is rejected.
-  * @param {Object} value The value associated with the promise.
-  * @returns {Promise} A promise that is rejected and takes the given value
-  * as its argument.
-  * @method
-  */
+   * Returns a promise that is rejected.
+   * @param {Object} value The value associated with the promise.
+   * @returns {Promise} A promise that is rejected and takes the given value
+   * as its argument.
+   * @method
+   */
   Promise.reject = function(reason) {
     return new this(function(resolve, reject) {
       reject(reason);
@@ -90,8 +90,8 @@
   /**
    * Wait for all these promises to complete. One failed => this fails too.
    * @param {Array<Promise>} all An array of promises.
-  * @returns {Promise} A promise that is resolved when all promises have resolved.
-  * @method
+   * @returns {Promise} A promise that is resolved when all promises have resolved.
+   * @method
    */
   Promise.all = Promise.when = function(all) {
     return new this(function(resolve, reject) {
@@ -115,13 +115,13 @@
   };
 /**
  * Creates a promise that resolves or is rejected when one of those promises
-  * resolves or is rejected.
-   * @param {Array<Promise>} all An array of promises.
-  * @returns {Promise} A promise that is resolved when all promises have resolved.
-   * @returns {Promise} A promise that resolves or is rejected according to
-  * the first promise that resolves or is rejected. It will receive the
-  * value associated with that promise.
-   * @memberof! Promise#
+ * resolves or is rejected.
+ * @param {Array<Promise>} all An array of promises.
+ * @returns {Promise} A promise that is resolved when all promises have resolved.
+ * @returns {Promise} A promise that resolves or is rejected according to
+ * the first promise that resolves or is rejected. It will receive the
+ * value associated with that promise.
+ * @memberof! Promise#
  */
   Promise.race = function(all) {
     return new this(function(resolve, reject) {
@@ -138,7 +138,7 @@
    * @param {function} [onRejected] To be called once this promise gets rejected
    * @returns {Promise} A promise.
    * @memberof! Promise#
-*/
+   */
   Promise.prototype.then = function(onFulfilled, onRejected) {
     this._cb.fulfilled.push(onFulfilled);
     this._cb.rejected.push(onRejected);
@@ -265,7 +265,7 @@
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise} A promise.
    * @memberof! Promise#
-*/
+   */
   Promise.prototype.catch = function(onRejected) {
     return this.then(null, onRejected);
   };

@@ -8,12 +8,12 @@
  http://peteroupc.github.io/
 */
 /**
-A `Batch3D` represents a so-called "scene graph". It holds
-3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
-position, and light sources to illuminate the 3D scene.
-* @class
-* @alias H3DU.Batch3D
-*/
+ * A `Batch3D` represents a so-called "scene graph". It holds
+ * 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
+ * position, and light sources to illuminate the 3D scene.
+ * @class
+ * @alias H3DU.Batch3D
+ */
 H3DU.Batch3D = function() {
   "use strict";
   this._projectionMatrix = H3DU.Math.mat4identity();
@@ -128,7 +128,7 @@ H3DU.Batch3D._isSameMatrix = function(a, b) {
  * @param {Array<Number>} mat A 16-element matrix (4x4).
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
-*/
+ */
 H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
   "use strict";
   if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix, mat)) {
@@ -147,31 +147,31 @@ H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
  * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
-*/
+ */
 H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
   "use strict";
   this._projectionUpdater = new H3DU.Batch3D._PerspectiveView(this, fov, near, far);
   return this;
 };
 /**
-* Sets this batch's view matrix to represent a camera view.
-* This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
-* (<code>center</code>).
-* @param {Array<Number>} eye A 3-element vector specifying
-* the camera position in world space.
-* @param {Array<Number>} [center] A 3-element vector specifying
-* the point in world space that the camera is looking at. May be null or omitted,
-* in which case the default is the coordinates (0,0,0).
-* @param {Array<Number>} [up] A 3-element vector specifying
-* the direction from the center of the camera to its top. This parameter may
-* be null or omitted, in which case the default is the vector (0, 1, 0),
-* the vector that results when the camera is held upright. This
-* vector must not point in the same or opposite direction as
-* the camera's view direction. (For best results, rotate the vector (0, 1, 0)
-* so it points perpendicular to the camera's view direction.)
-* @returns {H3DU.Batch3D} This object.
-* @memberof! H3DU.Batch3D#
-*/
+ * Sets this batch's view matrix to represent a camera view.
+ * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
+ * (<code>center</code>).
+ * @param {Array<Number>} eye A 3-element vector specifying
+ * the camera position in world space.
+ * @param {Array<Number>} [center] A 3-element vector specifying
+ * the point in world space that the camera is looking at. May be null or omitted,
+ * in which case the default is the coordinates (0,0,0).
+ * @param {Array<Number>} [up] A 3-element vector specifying
+ * the direction from the center of the camera to its top. This parameter may
+ * be null or omitted, in which case the default is the vector (0, 1, 0),
+ * the vector that results when the camera is held upright. This
+ * vector must not point in the same or opposite direction as
+ * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
+ * so it points perpendicular to the camera's view direction.)
+ * @returns {H3DU.Batch3D} This object.
+ * @memberof! H3DU.Batch3D#
+ */
 H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
   "use strict";
   return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
@@ -179,7 +179,7 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
 /**
  * Uses an orthographic projection for this batch. It will be adjusted
  * to the scene's aspect ratio each time this batch is rendered.<p>
-* In this projection, the left clipping plane is parallel to the right clipping
+ * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the 3D scene's viewport
@@ -199,7 +199,7 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
  * between near and far should be as small as the application can accept.
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
-*/
+ */
 H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
   "use strict";
   this._projectionUpdater = new H3DU.Batch3D._OrthoView(this, l, r, b, t, e, f);
@@ -221,7 +221,7 @@ H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
  * (Note that top can be greater than bottom or vice versa.)
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
-*/
+ */
 H3DU.Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
   "use strict";
   return this.orthoAspect(l, r, b, t, -1, 1);
@@ -231,7 +231,7 @@ H3DU.Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
  * @param {Array<Number>} mat A 4x4 matrix to use as the view matrix.
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
-*/
+ */
 H3DU.Batch3D.prototype.setViewMatrix = function(mat) {
   "use strict";
   if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix, mat)) {
@@ -243,9 +243,9 @@ H3DU.Batch3D.prototype.setViewMatrix = function(mat) {
 /**
  * Gets the current projection matrix for this batch of shapes.
  * @returns {Array<Number>} A 4x4 matrix used as the current
-* projection matrix.
-* @memberof! H3DU.Batch3D#
-*/
+ * projection matrix.
+ * @memberof! H3DU.Batch3D#
+ */
 H3DU.Batch3D.prototype.getProjectionMatrix = function() {
   "use strict";
   return this._projectionMatrix.slice(0, 16);
@@ -253,8 +253,8 @@ H3DU.Batch3D.prototype.getProjectionMatrix = function() {
 /**
  * Gets the current view matrix for this batch of shapes.
  * @returns {Array<Number>} Return value.
-* @memberof! H3DU.Batch3D#
-*/
+ * @memberof! H3DU.Batch3D#
+ */
 H3DU.Batch3D.prototype.getViewMatrix = function() {
   "use strict";
   return this._viewMatrix.slice(0, 16);
@@ -272,20 +272,20 @@ H3DU.Batch3D.prototype._getFrustum = function() {
  * Gets the light sources used by this batch.
  * @returns {H3DU.Lights} Return value.
  * @memberof! H3DU.Batch3D#
-*/
+ */
 H3DU.Batch3D.prototype.getLights = function() {
   "use strict";
   return this.lights;
 };
 
 /**
-* Adds a 3D shape to this batch of shapes. Its reference, not a copy,
-* will be stored in the 3D scene's list of shapes.
-* Its parent will be set to no parent.
-* @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
-* @returns {H3DU.Batch3D} This object.
-* @memberof! H3DU.Batch3D#
-*/
+ * Adds a 3D shape to this batch of shapes. Its reference, not a copy,
+ * will be stored in the 3D scene's list of shapes.
+ * Its parent will be set to no parent.
+ * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
+ * @returns {H3DU.Batch3D} This object.
+ * @memberof! H3DU.Batch3D#
+ */
 H3DU.Batch3D.prototype.addShape = function(shape) {
   "use strict";
   shape.parent = null;
@@ -297,8 +297,8 @@ H3DU.Batch3D.prototype.addShape = function(shape) {
  * Gets the number of vertices composed by
  * all shapes in this batch of shapes.
  * @returns {Number} Return value.
-* @memberof! H3DU.Batch3D#
-*/
+ * @memberof! H3DU.Batch3D#
+ */
 H3DU.Batch3D.prototype.vertexCount = function() {
   "use strict";
   var c = 0;
@@ -308,11 +308,11 @@ H3DU.Batch3D.prototype.vertexCount = function() {
   return c;
 };
 /**
-* Gets the number of primitives (triangles, lines,
-* and points) composed by all shapes in this batch of shapes.
+ * Gets the number of primitives (triangles, lines,
+ * and points) composed by all shapes in this batch of shapes.
  * @returns {Number} Return value.
-* @memberof! H3DU.Batch3D#
-*/
+ * @memberof! H3DU.Batch3D#
+ */
 H3DU.Batch3D.prototype.primitiveCount = function() {
   "use strict";
   var c = 0;
@@ -323,11 +323,11 @@ H3DU.Batch3D.prototype.primitiveCount = function() {
 };
 
 /**
-* Removes all instances of a 3D shape from this batch of shapes.
-* @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
-* @returns {H3DU.Batch3D} This object.
-* @memberof! H3DU.Batch3D#
-*/
+ * Removes all instances of a 3D shape from this batch of shapes.
+ * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
+ * @returns {H3DU.Batch3D} This object.
+ * @memberof! H3DU.Batch3D#
+ */
 H3DU.Batch3D.prototype.removeShape = function(shape) {
   "use strict";
   for(var i = 0;i < this.shapes.length;i++) {
@@ -392,7 +392,7 @@ H3DU.Batch3D.prototype.resize = function(width, height) {
  * @param {Object} scene Description of scene.
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
-*/
+ */
 H3DU.Batch3D.prototype.render = function(scene) {
   "use strict";
   var rc = {};
@@ -405,18 +405,18 @@ H3DU.Batch3D.prototype.render = function(scene) {
 };
 /**
  * Creates a batch whose purpose is to render the contents
-of a frame buffer using a particular shader. This is often used
-to apply a graphics filter to that frame buffer's contents.
-See the {@tutorial filters} tutorial.
+ * of a frame buffer using a particular shader. This is often used
+ * to apply a graphics filter to that frame buffer's contents.
+ * See the {@tutorial filters} tutorial.
  * @param {H3DU.Scene3D} scene Scene to associate
-* with the returned batch.
+ * with the returned batch.
  * @param {H3DU.FrameBufferInfo} fbo Identifies a frame buffer
-whose contents will be rendered to the batch.
+ * whose contents will be rendered to the batch.
  * @param {H3DU.ShaderInfo} shader Contains information about
-the shader to use when rendering the contents of the frame buffer
+ * the shader to use when rendering the contents of the frame buffer
  * @returns {H3DU.Batch3D} The created batch.
-* @memberof! H3DU.Batch3D
-*/
+ * @memberof! H3DU.Batch3D
+ */
 H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   "use strict";
   if(shader === null || typeof shader === "undefined") {

@@ -9,13 +9,13 @@
 /* global Float32Array, H3DU, Uint16Array, Uint32Array, Uint8Array */
 
 /**
-* A geometric mesh in the form of buffer objects.
-* @class
-* @alias H3DU.MeshBuffer
-* @param {H3DU.Mesh} mesh A geometric mesh object.
-* A series of default attributes will be set based on that mesh's
-* data.
-*/
+ * A geometric mesh in the form of buffer objects.
+ * @class
+ * @alias H3DU.MeshBuffer
+ * @param {H3DU.Mesh} mesh A geometric mesh object.
+ * A series of default attributes will be set based on that mesh's
+ * data.
+ */
 H3DU.MeshBuffer = function(mesh) {
   "use strict";
   this._bounds = mesh.getBoundingBox();
@@ -76,7 +76,7 @@ H3DU.MeshBuffer = function(mesh) {
  * one per-vertex item to the start of the next.
  * @returns {H3DU.MeshBuffer} This object.
  * @memberof! H3DU.MeshBuffer#
-*/
+ */
 H3DU.MeshBuffer.prototype.setAttribute = function(
   name, buffer, startIndex, countPerVertex, stride
 ) {
@@ -113,10 +113,10 @@ H3DU.MeshBuffer.prototype._getAttribute = function(name) {
 
 /**
  * Gets the number of primitives (triangles, lines,
-* and points) composed by all shapes in this mesh.
-* @returns {Number} Return value.
-* @memberof! H3DU.MeshBuffer#
-*/
+ * and points) composed by all shapes in this mesh.
+ * @returns {Number} Return value.
+ * @memberof! H3DU.MeshBuffer#
+ */
 H3DU.MeshBuffer.prototype.primitiveCount = function() {
   "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
@@ -126,18 +126,18 @@ H3DU.MeshBuffer.prototype.primitiveCount = function() {
   return Math.floor(this.facesLength / 3);
 };
 /**
-* Finds the tightest
-* bounding box that holds all vertices in the mesh buffer.
-* @returns {Array<Number>} An array of six numbers describing the tightest
-* axis-aligned bounding box
-* that fits all vertices in the mesh. The first three numbers
-* are the smallest-valued X, Y, and Z coordinates, and the
-* last three are the largest-valued X, Y, and Z coordinates.
-* If the mesh buffer is empty or has no attribute named
-* "position", returns the array [Inf, Inf, Inf, -Inf,
-* -Inf, -Inf].
+ * Finds the tightest
+ * bounding box that holds all vertices in the mesh buffer.
+ * @returns {Array<Number>} An array of six numbers describing the tightest
+ * axis-aligned bounding box
+ * that fits all vertices in the mesh. The first three numbers
+ * are the smallest-valued X, Y, and Z coordinates, and the
+ * last three are the largest-valued X, Y, and Z coordinates.
+ * If the mesh buffer is empty or has no attribute named
+ * "position", returns the array [Inf, Inf, Inf, -Inf,
+ * -Inf, -Inf].
  * @memberof! H3DU.MeshBuffer#
-*/
+ */
 H3DU.MeshBuffer.prototype.getBounds = function() {
   "use strict";
   if(!this._bounds) {
@@ -170,10 +170,10 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
 };
 /**
  * Gets the type of primitive stored in this mesh buffer.
-* @returns {Number} Either {@link H3DU.Mesh.TRIANGLES},
+ * @returns {Number} Either {@link H3DU.Mesh.TRIANGLES},
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  * @memberof! H3DU.MeshBuffer#
-*/
+ */
 H3DU.MeshBuffer.prototype.primitiveType = function() {
   "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
@@ -186,17 +186,18 @@ H3DU.MeshBuffer.prototype.primitiveType = function() {
 /**
  * @param {Object} name Description of name.
  * @memberof! H3DU.MeshBuffer#
+
  * @returns {Object} Return value.
-*/
+ */
 H3DU.MeshBuffer.prototype.getFormat = function() {
   "use strict";
   return this.format;
 };
 /**
  * Gets the number of vertices in this mesh buffer
-* @returns {Number} Return value.
+ * @returns {Number} Return value.
  * @memberof! H3DU.MeshBuffer#
-*/
+ */
 H3DU.MeshBuffer.prototype.vertexCount = function() {
   "use strict";
   return this.numVertices;

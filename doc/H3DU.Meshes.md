@@ -52,7 +52,11 @@ Creates a mesh of a capsule, centered at the origin.
 The length of the capsule will run along the Z axis. (If the capsule
 has a high length and a very low radius, it will resemble a 3D line
 with rounded corners.)
-Will also generate texture coordinates.
+Will also generate texture coordinates such that the V (vertical)
+coordinates start at the bottom of the texture and increase from the negative
+to positive Z axis, and the U (horizontal) coordinates start from the left of the
+texture and increase from the positive X to positive Y to negative X to negative
+Y to positive X axis.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters
@@ -258,7 +262,11 @@ The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 ### H3DU.Meshes.createSphere([radius], [slices], [stacks], [flat], [inside]) <a id='H3DU.Meshes.createSphere'></a>
 
 Creates a mesh of a sphere, centered at the origin.
-Will also generate texture coordinates.
+Will also generate texture coordinates such that the V (vertical)
+coordinates start at the bottom of the texture and increase from the negative
+to positive Z axis, and the U (horizontal) coordinates start from the left of the
+texture and increase from the positive X to positive Y to negative X to negative
+Y to positive X axis.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters

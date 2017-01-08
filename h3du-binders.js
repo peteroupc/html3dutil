@@ -8,10 +8,10 @@
 */
 /* global H3DU */
 /**
-* Contains classes that implement methods
-* binding certain HTML 3D Library objects
-* to WebGL contexts and programs.
-*/
+ * Contains classes that implement methods
+ * binding certain HTML 3D Library objects
+ * to WebGL contexts and programs.
+ */
 
 // /////////////////////
 
@@ -57,6 +57,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
 /** @private */
 H3DU._LoadedTexture = function(textureImage, context) {
   "use strict";
+  if(!textureImage.image)throw new Error();
   context = H3DU._toContext(context);
   this.context = context;
   this.loadedTexture = context.createTexture();
@@ -107,8 +108,7 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
   }
   var loadedTexture = null;
   if(!isFrameBuffer) {
-    if((typeof texture.image === "undefined" || texture.image === null) &&
-    texture.loadStatus === 0) {
+    if((typeof texture.image === "undefined" || texture.image === null) && texture.loadStatus === 0) {
       var that = this;
       var prog = program;
       texture.loadImage().then(function() {
@@ -116,7 +116,7 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
         that.bind(prog);
       });
       return;
-    } else {
+    } else if(texture.loadStatus >= 2) {
       loadedTexture = loader.mapTexture(texture, context);
     }
   } else {

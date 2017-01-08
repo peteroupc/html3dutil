@@ -8,46 +8,46 @@
 */
 /* global H3DU */
 /**
-* Specifies the triangles, lines, or points that make up a geometric shape.
-* Each vertex, that is, each point, each end of a line, and each corner
-* of a triangle, can also specify the following attributes:
-* <ul>
-* <li>A color, which is a set of 3 values each ranging from 0 to 1 (the red, green,
-* and blue components, respectively.)
-* <li>A normal vector, which is a set of 3 values.
-* Normal values are required for lighting to work properly.
-* <li>A tangent vector, which is a set of 3 values.
-* <li>A bitangent vector, which is a set of 3 values.
-* <li>Texture coordinates, which are a set of 2 values each ranging from 0 to
-* 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
-* right corner (by default).
-* </ul>
-* For bump mapping to work properly, a mesh needs to define
-* normals, tangents, bitangents, and texture coordinates.<p>
-* See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
-* <p>NOTE: Previous versions of this class allowed meshes to contain more than one
-* primitive type (triangles, lines, and points are the primitive types). This is
-* no longer the case, to simplify the implementation.
-* @class
-* @alias H3DU.Mesh
-* @param {Array<Number>} [vertices] An array that contains data on each
-* vertex of the mesh.
-* Each vertex is made up of the same number of elements, as defined in
-* format. May be null or omitted, in which case an empty vertex array is used.
-* @param {Array<Number>} [indices] An array of vertex indices. Each trio of
-* indices specifies a separate triangle, or each pair of indices specifies
-* a line segment.
-* If null or omitted, creates an initially empty mesh.
-* @param {Number} [format] A set of bit flags depending on the kind of data
-* each vertex contains. Each vertex contains 3 elements plus:<ul>
-* <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus
-* <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus
-* <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul>
-* If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line
-* segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an
-* individual point. Both bits can't be set.
-* May be null or omitted, in which case "format" is set to 0.
-*/
+ * Specifies the triangles, lines, or points that make up a geometric shape.
+ * Each vertex, that is, each point, each end of a line, and each corner
+ * of a triangle, can also specify the following attributes:
+ * <ul>
+ * <li>A color, which is a set of 3 values each ranging from 0 to 1 (the red, green,
+ * and blue components, respectively.)
+ * <li>A normal vector, which is a set of 3 values.
+ * Normal values are required for lighting to work properly.
+ * <li>A tangent vector, which is a set of 3 values.
+ * <li>A bitangent vector, which is a set of 3 values.
+ * <li>Texture coordinates, which are a set of 2 values each ranging from 0 to
+ * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
+ * right corner (by default).
+ * </ul>
+ * For bump mapping to work properly, a mesh needs to define
+ * normals, tangents, bitangents, and texture coordinates.<p>
+ * See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
+ * <p>NOTE: Previous versions of this class allowed meshes to contain more than one
+ * primitive type (triangles, lines, and points are the primitive types). This is
+ * no longer the case, to simplify the implementation.
+ * @class
+ * @alias H3DU.Mesh
+ * @param {Array<Number>} [vertices] An array that contains data on each
+ * vertex of the mesh.
+ * Each vertex is made up of the same number of elements, as defined in
+ * format. May be null or omitted, in which case an empty vertex array is used.
+ * @param {Array<Number>} [indices] An array of vertex indices. Each trio of
+ * indices specifies a separate triangle, or each pair of indices specifies
+ * a line segment.
+ * If null or omitted, creates an initially empty mesh.
+ * @param {Number} [format] A set of bit flags depending on the kind of data
+ * each vertex contains. Each vertex contains 3 elements plus:<ul>
+ * <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus
+ * <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus
+ * <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul>
+ * If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line
+ * segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an
+ * individual point. Both bits can't be set.
+ * May be null or omitted, in which case "format" is set to 0.
+ */
 H3DU.Mesh = function(vertices, indices, format) {
   "use strict";
   this._initialize(vertices, indices, format);
@@ -219,7 +219,7 @@ H3DU.Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inwar
  * current primitive type (for example, a triangle type with LINE_STRIP).
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.mode = function(m) {
   "use strict";
   if(m < 0)throw new Error("invalid mode");
@@ -256,7 +256,7 @@ H3DU.Mesh.prototype.mode = function(m) {
  * // Use the following idiom to make a copy of a geometric mesh:
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.merge = function(other) {
   "use strict";
   if(!H3DU.Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
@@ -304,16 +304,16 @@ H3DU.Mesh.prototype.merge = function(other) {
   * that mode. The normal passed to this method will
   * not automatically be normalized to unit length.
   * @param {Number} x X coordinate of the normal.
-   *   If "y" and "z" are null or omitted, this is instead
- * a 3-element array giving the X, Y, and Z coordinates, or a single number
- * giving the coordinate for all three dimensions.
+  *   If "y" and "z" are null or omitted, this is instead
+  * a 3-element array giving the X, Y, and Z coordinates, or a single number
+  * giving the coordinate for all three dimensions.
   * @param {Number} y Y coordinate of the normal.
- * If "x" is an array, this parameter may be omitted.
+  * If "x" is an array, this parameter may be omitted.
   * @param {Number} z Z coordinate of the normal.
- * If "x" is an array, this parameter may be omitted.
+  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.normal3 = function(x, y, z) {
   "use strict";
   if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
@@ -330,23 +330,23 @@ H3DU.Mesh.prototype.normal3 = function(x, y, z) {
 };
 
 /**
-  * Sets the current tangent vector for this mesh. Future vertex positions
-  * defined (with vertex3()) will have this normal. The new current
-  * tangent will apply to future vertices even if the current mode
-  * is TRIANGLE_FAN and some vertices were already given for
-  * that mode. The tangent passed to this method will
-  * not automatically be normalized to unit length.
-  * @param {Number} x X coordinate of the tangent vector.
-   *   If "y" and "z" are null or omitted, this is instead
+ * Sets the current tangent vector for this mesh. Future vertex positions
+ * defined (with vertex3()) will have this normal. The new current
+ * tangent will apply to future vertices even if the current mode
+ * is TRIANGLE_FAN and some vertices were already given for
+ * that mode. The tangent passed to this method will
+ * not automatically be normalized to unit length.
+ * @param {Number} x X coordinate of the tangent vector.
+ *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
-  * @param {Number} y Y coordinate of the tangent vector.
+ * @param {Number} y Y coordinate of the tangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @param {Number} z Z coordinate of the tangent vector.
+ * @param {Number} z Z coordinate of the tangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @returns {H3DU.Mesh} This object.
-  * @memberof! H3DU.Mesh#
-*/
+ * @returns {H3DU.Mesh} This object.
+ * @memberof! H3DU.Mesh#
+ */
 H3DU.Mesh.prototype.tangent3 = function(x, y, z) {
   "use strict";
   if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
@@ -363,23 +363,23 @@ H3DU.Mesh.prototype.tangent3 = function(x, y, z) {
 };
 
 /**
-  * Sets the current bitangent vector for this mesh. Future vertex positions
-  * defined (with vertex3()) will have this bitangent. The new current
-  * bitangent will apply to future vertices even if the current mode
-  * is TRIANGLE_FAN and some vertices were already given for
-  * that mode. The bitangent passed to this method will
-  * not automatically be normalized to unit length.
-  * @param {Number} x X coordinate of the bitangent vector.
-   *   If "y" and "z" are null or omitted, this is instead
+ * Sets the current bitangent vector for this mesh. Future vertex positions
+ * defined (with vertex3()) will have this bitangent. The new current
+ * bitangent will apply to future vertices even if the current mode
+ * is TRIANGLE_FAN and some vertices were already given for
+ * that mode. The bitangent passed to this method will
+ * not automatically be normalized to unit length.
+ * @param {Number} x X coordinate of the bitangent vector.
+ *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
-  * @param {Number} y Y coordinate of the bitangent vector.
+ * @param {Number} y Y coordinate of the bitangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @param {Number} z Z coordinate of the bitangent vector.
+ * @param {Number} z Z coordinate of the bitangent vector.
  * If "x" is an array, this parameter may be omitted.
-  * @returns {H3DU.Mesh} This object.
-  * @memberof! H3DU.Mesh#
-*/
+ * @returns {H3DU.Mesh} This object.
+ * @memberof! H3DU.Mesh#
+ */
 H3DU.Mesh.prototype.bitangent3 = function(x, y, z) {
   "use strict";
   if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
@@ -409,7 +409,7 @@ H3DU.Mesh.prototype.bitangent3 = function(x, y, z) {
   * May be null or omitted if a string or array is given as the "r" parameter.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.color3 = function(r, g, b) {
   "use strict";
   if(typeof r === "string") {
@@ -438,17 +438,17 @@ H3DU.Mesh.prototype.color3 = function(r, g, b) {
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode.<p>
   * H3DU.Texture coordinates are a set of 2 values each ranging from 0 to
-* 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
-* right corner (by default).
+  * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
+  * right corner (by default).
   * @param {Number} u X coordinate of the texture, from 0-1.
-   *   If "v" are null or omitted, this is instead
- * a 3-element array giving the X and Y coordinates, or a single number
- * giving the coordinate for all three dimensions.
+  *   If "v" are null or omitted, this is instead
+  * a 3-element array giving the X and Y coordinates, or a single number
+  * giving the coordinate for all three dimensions.
   * @param {Number} v Y coordinate of the texture, from 0-1.
   * If "u" is an array, this parameter can be omitted.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.texCoord2 = function(u, v) {
   "use strict";
   if(typeof u === "number" && typeof v === "number") {
@@ -466,17 +466,17 @@ H3DU.Mesh.prototype.texCoord2 = function(u, v) {
   * additional face index according to this mesh's current mode.
   * The vertex will adopt this mesh's current normal, color,
   * and texture coordinates if they have been defined.
- * @param {Array<Number>|number} x The X coordinate.
- *   If "y" and "z" are null or omitted, this is instead
- * a 3-element array giving the X, Y, and Z coordinates, or a single number
- * giving the coordinate for all three dimensions.
- * @param {Number} y The Y coordinate.
- * If "x" is an array, this parameter may be omitted.
- * @param {Number} z The Z coordinate.
- * If "x" is an array, this parameter may be omitted.
+  * @param {Array<Number>|number} x The X coordinate.
+  *   If "y" and "z" are null or omitted, this is instead
+  * a 3-element array giving the X, Y, and Z coordinates, or a single number
+  * giving the coordinate for all three dimensions.
+  * @param {Number} y The Y coordinate.
+  * If "x" is an array, this parameter may be omitted.
+  * @param {Number} z The Z coordinate.
+  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.vertex3 = function(x, y, z) {
   "use strict";
   if(x !== null && typeof x !== "undefined" && (y === null || typeof y === "undefined") && (z === null || typeof z === "undefined")) {
@@ -492,15 +492,15 @@ H3DU.Mesh.prototype.vertex3 = function(x, y, z) {
  /**
   * Adds a new vertex to this mesh. The Z coordinate will
   * be treated as 0.
- * @param {Array<Number>|number} x The X coordinate.
- * If "y" is null or omitted, this is instead
- * a 3-element array giving the X, Y, and Z coordinates, or a single number
- * giving the coordinate for all three dimensions.
- * @param {Number} y The Y coordinate.
- * If "x" is an array, this parameter may be omitted.
+  * @param {Array<Number>|number} x The X coordinate.
+  * If "y" is null or omitted, this is instead
+  * a 3-element array giving the X, Y, and Z coordinates, or a single number
+  * giving the coordinate for all three dimensions.
+  * @param {Number} y The Y coordinate.
+  * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.vertex2 = function(x, y) {
   "use strict";
   if(x !== null && typeof x !== "undefined" && (y === null || typeof y === "undefined")) {
@@ -524,7 +524,7 @@ H3DU.Mesh.prototype.vertex2 = function(x, y) {
   * May be null or omitted if a string is given as the "r" parameter.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.setColor3 = function(r, g, b) {
   "use strict";
   var rr = r;
@@ -553,7 +553,7 @@ H3DU.Mesh.prototype.setColor3 = function(r, g, b) {
  * to unit length.
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.normalizeNormals = function() {
   "use strict";
   var i;
@@ -583,10 +583,10 @@ H3DU.Mesh.prototype.normalizeNormals = function() {
  * equals the number of vertices in this mesh or greater.
  * @param {Number} index Zero-based index of
  * the vertex to set.
-  * The index ranges from 0 to less than
+ * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
-* @param {number|Array<Number>} x X coordinate of the vertex position.
+ * @param {number|Array<Number>} x X coordinate of the vertex position.
  * Can also be a 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * position.
@@ -596,7 +596,7 @@ H3DU.Mesh.prototype.normalizeNormals = function() {
  * May be null or omitted if "x" is an array.
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.setVertex = function(index, x, y, z) {
   "use strict";
   if(index < 0)return this;
@@ -634,7 +634,7 @@ H3DU.Mesh.prototype.setVertex = function(index, x, y, z) {
  * May be null or omitted if "x" is an array.
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.setVertexNormal = function(index, x, y, z) {
   "use strict";
   if(index < 0)return this;
@@ -670,7 +670,7 @@ H3DU.Mesh.prototype.setVertexNormal = function(index, x, y, z) {
  * position, or null if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.getVertex = function(index) {
   "use strict";
   if(index < 0)return null;
@@ -697,7 +697,7 @@ H3DU.Mesh.prototype.getVertex = function(index) {
  * Returns (0,0,0) if the given vertex exists but doesn't define
  * a normal.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.getVertexNormal = function(index) {
   "use strict";
   var c = this.vertexCount();
@@ -722,11 +722,11 @@ H3DU.Mesh.prototype._initialize = function(vertices, faces, format) {
   }
   this.attributeBits = format === null || typeof format === "undefined" ? 0 : format;
  /**
- * Gets the number of vertices included in this mesh.
- * @returns {Number} Return value.
+  * Gets the number of vertices included in this mesh.
+  * @returns {Number} Return value.
   * @alias vertexCount
   * @memberof! H3DU.Mesh#
- */
+  */
   this.vertexCount = function() {
     return this.vertices.length / this.getStride();
   };
@@ -950,10 +950,10 @@ H3DU.Mesh.prototype._makeRedundant = function() {
 };
 /**
  * Gets the number of primitives (triangles, lines,
-* or points) composed by all shapes in this mesh.
+ * or points) composed by all shapes in this mesh.
  * @returns {Number} Return value.
-* @memberof! H3DU.Mesh#
-*/
+ * @memberof! H3DU.Mesh#
+ */
 H3DU.Mesh.prototype.primitiveCount = function() {
   "use strict";
   if((this.attributeBits & H3DU.Mesh.LINES_BIT) !== 0)
@@ -990,7 +990,7 @@ H3DU.Mesh._addLine = function(lineIndices, existingLines, f1, f2) {
  * @returns {H3DU.Mesh} A new mesh with triangles converted
  * to lines.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.toWireFrame = function() {
   "use strict";
   if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
@@ -1030,7 +1030,7 @@ H3DU.Mesh._isIdentityInUpperLeft = function(m) {
   * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.transform = function(matrix) {
   "use strict";
   var stride = this.getStride();
@@ -1083,7 +1083,7 @@ H3DU.Mesh.prototype.transform = function(matrix) {
  * </ul>
  * @returns {H3DU.Mesh} This object.
  * @memberof! H3DU.Mesh#
-*/
+ */
 H3DU.Mesh.prototype.enumPrimitives = function(func) {
   "use strict";
   var prim = this.primitiveType();
@@ -1115,17 +1115,17 @@ H3DU.Mesh.prototype.enumPrimitives = function(func) {
 };
 
 /**
-* Finds the tightest axis-aligned
-* bounding box that holds all vertices in the mesh.
-* @returns {Array<Number>} An array of six numbers describing the tightest
-* axis-aligned bounding box
-* that fits all vertices in the mesh. The first three numbers
-* are the smallest-valued X, Y, and Z coordinates, and the
-* last three are the largest-valued X, Y, and Z coordinates.
-* If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
-* -Inf, -Inf].
-* @memberof! H3DU.Mesh#
-*/
+ * Finds the tightest axis-aligned
+ * bounding box that holds all vertices in the mesh.
+ * @returns {Array<Number>} An array of six numbers describing the tightest
+ * axis-aligned bounding box
+ * that fits all vertices in the mesh. The first three numbers
+ * are the smallest-valued X, Y, and Z coordinates, and the
+ * last three are the largest-valued X, Y, and Z coordinates.
+ * If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
+ * -Inf, -Inf].
+ * @memberof! H3DU.Mesh#
+ */
 H3DU.Mesh.prototype.getBoundingBox = function() {
   "use strict";
   var empty = true;
@@ -1243,7 +1243,7 @@ H3DU.Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset
   * that define normals and texture coordinates.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
-*/
+  */
 H3DU.Mesh.prototype.recalcTangents = function() {
   "use strict";
   if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
@@ -1270,20 +1270,20 @@ H3DU.Mesh.prototype.recalcTangents = function() {
   return this;
 };
 /**
-* Modifies this mesh by reversing the sign of normals it defines.
-* @returns {H3DU.Mesh} This object.
-* @example <caption>
-* The following code generates a two-sided mesh, where
-* the normals on each side face in the opposite direction.
-* This is only useful when drawing open geometric shapes such as
-* those generated by H3DU.Meshes.createCylinder or H3DU.Meshes.createDisk.
-* Due to the z-fighting effect, drawing a two-sided mesh is
-* recommended only if face culling is enabled.</caption>
-* var twoSidedMesh = originalMesh.merge(
-* new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
-* );
-* @memberof! H3DU.Mesh#
-*/
+ * Modifies this mesh by reversing the sign of normals it defines.
+ * @returns {H3DU.Mesh} This object.
+ * @example <caption>
+ * The following code generates a two-sided mesh, where
+ * the normals on each side face in the opposite direction.
+ * This is only useful when drawing open geometric shapes such as
+ * those generated by H3DU.Meshes.createCylinder or H3DU.Meshes.createDisk.
+ * Due to the z-fighting effect, drawing a two-sided mesh is
+ * recommended only if face culling is enabled.</caption>
+ * var twoSidedMesh = originalMesh.merge(
+ * new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
+ * );
+ * @memberof! H3DU.Mesh#
+ */
 H3DU.Mesh.prototype.reverseNormals = function() {
   "use strict";
   var i;
@@ -1304,22 +1304,22 @@ H3DU.Mesh.prototype.reverseNormals = function() {
 };
 
 /**
-* Reverses the winding order of the triangles in this mesh
-* by swapping the second and third vertex indices of each one.
-* @returns {H3DU.Mesh} This object.
-* @example <caption>
-* The following code generates a mesh that survives face culling,
-* since the same triangles occur on each side of the mesh, but
-* with different winding orders. This is useful when enabling
-* back-face culling and drawing open geometric shapes such as
-* those generated by H3DU.Meshes.createCylinder or H3DU.Meshes.createDisk.
-* Due to the z-fighting effect, drawing this kind of mesh is
-* recommended only if face culling is enabled.</caption>
-* var frontBackMesh = originalMesh.merge(
-* new H3DU.Mesh().merge(originalMesh).reverseWinding()
-* );
-* @memberof! H3DU.Mesh#
-*/
+ * Reverses the winding order of the triangles in this mesh
+ * by swapping the second and third vertex indices of each one.
+ * @returns {H3DU.Mesh} This object.
+ * @example <caption>
+ * The following code generates a mesh that survives face culling,
+ * since the same triangles occur on each side of the mesh, but
+ * with different winding orders. This is useful when enabling
+ * back-face culling and drawing open geometric shapes such as
+ * those generated by H3DU.Meshes.createCylinder or H3DU.Meshes.createDisk.
+ * Due to the z-fighting effect, drawing this kind of mesh is
+ * recommended only if face culling is enabled.</caption>
+ * var frontBackMesh = originalMesh.merge(
+ * new H3DU.Mesh().merge(originalMesh).reverseWinding()
+ * );
+ * @memberof! H3DU.Mesh#
+ */
 H3DU.Mesh.prototype.reverseWinding = function() {
   "use strict";
   if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
@@ -1336,21 +1336,21 @@ H3DU.Mesh.prototype.reverseWinding = function() {
 };
 
 /**
-  * Recalculates the normal vectors for triangles
-  * in this mesh. For this to properly affect shading, each triangle in
-  * the mesh must have its vertices defined in
-  * counterclockwise order. Each normal calculated will
-  * be normalized to have a length of 1 (unless the normal is (0,0,0)).
-  * @param {Boolean} flat If true, each triangle in the mesh
-  * will have the same normal, which usually leads to a flat
-  * appearance. If false, each unique vertex in the mesh
-  * will have its own normal, which usually leads to a smooth
-  * appearance.
-  * @param {Boolean} inward If true, the generated normals
-  * will point inward; otherwise, outward.
-  * @returns {H3DU.Mesh} This object.
-  * @memberof! H3DU.Mesh#
-*/
+ * Recalculates the normal vectors for triangles
+ * in this mesh. For this to properly affect shading, each triangle in
+ * the mesh must have its vertices defined in
+ * counterclockwise order. Each normal calculated will
+ * be normalized to have a length of 1 (unless the normal is (0,0,0)).
+ * @param {Boolean} flat If true, each triangle in the mesh
+ * will have the same normal, which usually leads to a flat
+ * appearance. If false, each unique vertex in the mesh
+ * will have its own normal, which usually leads to a smooth
+ * appearance.
+ * @param {Boolean} inward If true, the generated normals
+ * will point inward; otherwise, outward.
+ * @returns {H3DU.Mesh} This object.
+ * @memberof! H3DU.Mesh#
+ */
 H3DU.Mesh.prototype.recalcNormals = function(flat, inward) {
   "use strict";
   var primtype = this.primitiveType();
@@ -1420,125 +1420,125 @@ H3DU.Mesh.PRIMITIVES_BITS = 768;
 /** The mesh contains normals for each vertex.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.NORMALS_BIT = 1;
 /** The mesh contains colors for each vertex.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.COLORS_BIT = 2;
 /** The mesh contains texture coordinates for each vertex.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.TEXCOORDS_BIT = 4;
 /**
  * The mesh contains tangent vectors for each vertex.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.TANGENTS_BIT = 8;
 /**
  * The mesh contains bitangent vectors for each vertex.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.BITANGENTS_BIT = 16;
 /** The mesh consists of lines (2 vertices per line) instead
-of triangles (3 vertices per line).
+ * of triangles (3 vertices per line).
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.LINES_BIT = 256;
 /** The mesh consists of points (1 vertex per line).
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.POINTS_BIT = 512;
 /**
-Primitive mode for rendering triangles, made up
-of 3 vertices each.
+ * Primitive mode for rendering triangles, made up
+ * of 3 vertices each.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.TRIANGLES = 4;
 /**
-Primitive mode for rendering a strip of quadrilaterals (quads).
-The first 4 vertices make up the first quad, and each additional
-quad is made up of the last 2 vertices of the previous quad and
-2 new vertices. Each quad is broken into two triangles: the first
-triangle consists of the first, second, and third vertices, in that order,
-and the second triangle consists of the third, second, and fourth
-vertices, in that order.
+ * Primitive mode for rendering a strip of quadrilaterals (quads).
+ * The first 4 vertices make up the first quad, and each additional
+ * quad is made up of the last 2 vertices of the previous quad and
+ * 2 new vertices. Each quad is broken into two triangles: the first
+ * triangle consists of the first, second, and third vertices, in that order,
+ * and the second triangle consists of the third, second, and fourth
+ * vertices, in that order.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.QUAD_STRIP = 8;
 /**
-Primitive mode for rendering quadrilaterals, made up
-of 4 vertices each. Each quadrilateral is broken into two triangles: the first
-triangle consists of the first, second, and third vertices, in that order,
-and the second triangle consists of the first, third, and fourth
-vertices, in that order.
+ * Primitive mode for rendering quadrilaterals, made up
+ * of 4 vertices each. Each quadrilateral is broken into two triangles: the first
+ * triangle consists of the first, second, and third vertices, in that order,
+ * and the second triangle consists of the first, third, and fourth
+ * vertices, in that order.
  * @const
  * @default
-* @memberof! H3DU.Mesh
+ * @memberof! H3DU.Mesh
  */
 H3DU.Mesh.QUADS = 7;
 /**
-Primitive mode for rendering line segments, made up
-of 2 vertices each.
+ * Primitive mode for rendering line segments, made up
+ * of 2 vertices each.
  * @const
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.LINES = 1;
 /**
-Primitive mode for rendering a triangle fan. The first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the first vertex of the first triangle,
-the previous vertex, and 1 new vertex.
+ * Primitive mode for rendering a triangle fan. The first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the first vertex of the first triangle,
+ * the previous vertex, and 1 new vertex.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.TRIANGLE_FAN = 6;
 /**
-Primitive mode for rendering a triangle strip. The first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the last 2 vertices and 1
-new vertex. For the second triangle in the strip, and
-every other triangle after that, the first and second
-vertices are swapped when generating that triangle.
+ * Primitive mode for rendering a triangle strip. The first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the last 2 vertices and 1
+ * new vertex. For the second triangle in the strip, and
+ * every other triangle after that, the first and second
+ * vertices are swapped when generating that triangle.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.TRIANGLE_STRIP = 5;
 /**
-Primitive mode for rendering connected line segments.
-The first 2 vertices make up the first line, and each additional
-line is made up of the last vertex and 1 new vertex.
+ * Primitive mode for rendering connected line segments.
+ * The first 2 vertices make up the first line, and each additional
+ * line is made up of the last vertex and 1 new vertex.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.LINE_STRIP = 3;
 /**
-Primitive mode for rendering points, made up
-of 1 vertex each.
+ * Primitive mode for rendering points, made up
+ * of 1 vertex each.
  * @const
  * @default
-* @memberof! H3DU.Mesh
-*/
+ * @memberof! H3DU.Mesh
+ */
 H3DU.Mesh.POINTS = 0;
 
 this.H3DU.Mesh = H3DU.Mesh;

@@ -44,10 +44,10 @@ H3DU.Shape = function(mesh) {
   this.visible = true;
 };
 /**
-* Returns a reference to the mesh buffer used by this shape.
-* @returns {H3DU.MeshBuffer} Return value.
-* @memberof! H3DU.Shape
-*/
+ * Returns a reference to the mesh buffer used by this shape.
+ * @returns {H3DU.MeshBuffer} Return value.
+ * @memberof! H3DU.Shape
+ */
 H3DU.Shape.prototype.getMeshBuffer = function() {
   "use strict";
   return this.meshBuffer;
@@ -58,18 +58,18 @@ H3DU.Shape._meshBufferWarning = false;
  * Gets the number of vertices composed by
  * all shapes in this scene.
  * @returns {Number} Return value.
-* @memberof! H3DU.Shape#
-*/
+ * @memberof! H3DU.Shape#
+ */
 H3DU.Shape.prototype.vertexCount = function() {
   "use strict";
   return this.meshBuffer ? this.meshBuffer.vertexCount() : 0;
 };
 /**
-* Gets the number of primitives (triangles, lines,
-* and points) composed by all shapes in this scene.
+ * Gets the number of primitives (triangles, lines,
+ * and points) composed by all shapes in this scene.
  * @returns {Number} Return value.
-* @memberof! H3DU.Shape#
-*/
+ * @memberof! H3DU.Shape#
+ */
 H3DU.Shape.prototype.primitiveCount = function() {
   "use strict";
   return this.meshBuffer ? this.meshBuffer.primitiveCount() : 0;
@@ -79,7 +79,7 @@ H3DU.Shape.prototype.primitiveCount = function() {
  * @param {Boolean} value True if this shape will be visible; otherwise, false.
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.setVisible = function(value) {
   "use strict";
   this.visible = !!value;
@@ -89,29 +89,29 @@ H3DU.Shape.prototype.setVisible = function(value) {
  * Gets whether this shape will be drawn on rendering.
  * @returns {Boolean} True if this shape will be visible; otherwise, false.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.getVisible = function() {
   "use strict";
   return this.visible;
 };
 /**
-* Sets material parameters that give the shape a certain color.
-* (If a material is already defined, sets its ambient and diffusion
-* colors.)
-* However, if the mesh defines its own colors, those colors will take
-* precedence over the color given in this method.
-* @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
-* or the red color component (0-1).
-* @param {Number} g Green color component (0-1).
-* May be null or omitted if a string or array is given as the "r" parameter.
-* @param {Number} b Blue color component (0-1).
-* May be null or omitted if a string or array is given as the "r" parameter.
-* @param {Number} [a] Alpha color component (0-1).
-* If the "r" parameter is given and this parameter is null or omitted,
-* this value is treated as 1.0.
+ * Sets material parameters that give the shape a certain color.
+ * (If a material is already defined, sets its ambient and diffusion
+ * colors.)
+ * However, if the mesh defines its own colors, those colors will take
+ * precedence over the color given in this method.
+ * @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
+ * or the red color component (0-1).
+ * @param {Number} g Green color component (0-1).
+ * May be null or omitted if a string or array is given as the "r" parameter.
+ * @param {Number} b Blue color component (0-1).
+ * May be null or omitted if a string or array is given as the "r" parameter.
+ * @param {Number} [a] Alpha color component (0-1).
+ * If the "r" parameter is given and this parameter is null or omitted,
+ * this value is treated as 1.0.
  * @returns {H3DU.Shape} This object.
-* @memberof! H3DU.Shape#
-*/
+ * @memberof! H3DU.Shape#
+ */
 H3DU.Shape.prototype.setColor = function(r, g, b, a) {
   "use strict";
   var c = H3DU.toGLColor(r, g, b, a);
@@ -123,12 +123,12 @@ H3DU.Shape.prototype.setColor = function(r, g, b, a) {
 /**
  * Sets material parameters that give the shape a texture with the given URL.
  * @param {H3DU.Texture|String} name {@link H3DU.Texture} object, or a string with the
-* URL of the texture data. In the case of a string the texture will be loaded via
-* the JavaScript DOM's Image class. However, this method
-* will not load that image if it hasn't been loaded yet.
+ * URL of the texture data. In the case of a string the texture will be loaded via
+ * the JavaScript DOM's Image class. However, this method
+ * will not load that image if it hasn't been loaded yet.
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.setTexture = function(name) {
   "use strict";
   return this.setMaterialParams({"texture":name});
@@ -140,7 +140,7 @@ H3DU.Shape.prototype.setTexture = function(name) {
  * is deprecated.</i>
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.setShader = function(shader) {
   "use strict";
   return this.setMaterialParams({"shader":shader});
@@ -150,7 +150,7 @@ H3DU.Shape.prototype.setShader = function(shader) {
  * @param {Object} params An object described in {@link H3DU.Material#setParams}.
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.setMaterialParams = function(params) {
   "use strict";
   if(this.material) {
@@ -161,24 +161,24 @@ H3DU.Shape.prototype.setMaterialParams = function(params) {
   return this;
 };
 /**
-* Sets this shape's material to the given texture, and its ambient and
-* diffuse parameters to the given color.
+ * Sets this shape's material to the given texture, and its ambient and
+ * diffuse parameters to the given color.
  * @param {String} name {@link H3DU.Texture} object, or a string with the
-* URL of the texture data. In the case of a string the texture will be loaded via
-* the JavaScript DOM's Image class. However, this method
-* will not load that image if it hasn't been loaded yet.
-* @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
-* or the red color component (0-1).
-* @param {Number} g Green color component (0-1).
-* May be null or omitted if a string or array is given as the "r" parameter.
-* @param {Number} b Blue color component (0-1).
-* May be null or omitted if a string or array is given as the "r" parameter.
-* @param {Number} [a] Alpha color component (0-1).
-* If the "r" parameter is given and this parameter is null or omitted,
-* this value is treated as 1.0.
+ * URL of the texture data. In the case of a string the texture will be loaded via
+ * the JavaScript DOM's Image class. However, this method
+ * will not load that image if it hasn't been loaded yet.
+ * @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
+ * or the red color component (0-1).
+ * @param {Number} g Green color component (0-1).
+ * May be null or omitted if a string or array is given as the "r" parameter.
+ * @param {Number} b Blue color component (0-1).
+ * May be null or omitted if a string or array is given as the "r" parameter.
+ * @param {Number} [a] Alpha color component (0-1).
+ * If the "r" parameter is given and this parameter is null or omitted,
+ * this value is treated as 1.0.
  * @returns {H3DU.Shape} This object.
-* @memberof! H3DU.Shape#
-*/
+ * @memberof! H3DU.Shape#
+ */
 H3DU.Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
   "use strict";
   var c = H3DU.toGLColor(r, g, b, a);
@@ -189,12 +189,12 @@ H3DU.Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
   });
 };
 /**
-* Sets this shape's material parameters.
-* @param {H3DU.Material} material The material object to use.
-* This parameter can't be a {@link H3DU.Texture} object.
+ * Sets this shape's material parameters.
+ * @param {H3DU.Material} material The material object to use.
+ * This parameter can't be a {@link H3DU.Texture} object.
  * @returns {H3DU.Shape} This object.
-* @memberof! H3DU.Shape#
-*/
+ * @memberof! H3DU.Shape#
+ */
 H3DU.Shape.prototype.setMaterial = function(material) {
   "use strict";
   if(material && material instanceof H3DU.Texture)
@@ -203,15 +203,15 @@ H3DU.Shape.prototype.setMaterial = function(material) {
   return this;
 };
 /**
-* Makes a copy of this object. The copied object
-* will have its own version of the transform and
-* material data, but any texture
-* image data and mesh buffers will not be duplicated,
-* but rather just references to them will be used.
-* The copied shape won't have a parent.
-* @returns {H3DU.Shape} A copy of this object.
-* @memberof! H3DU.Shape#
-*/
+ * Makes a copy of this object. The copied object
+ * will have its own version of the transform and
+ * material data, but any texture
+ * image data and mesh buffers will not be duplicated,
+ * but rather just references to them will be used.
+ * The copied shape won't have a parent.
+ * @returns {H3DU.Shape} A copy of this object.
+ * @memberof! H3DU.Shape#
+ */
 H3DU.Shape.prototype.copy = function() {
   "use strict";
   var ret = new H3DU.Shape(this.meshBuffer);
@@ -223,28 +223,28 @@ H3DU.Shape.prototype.copy = function() {
 };
 /**
  * Returns the transform used by this shape object.
-* The transform won't be copied.
-* @returns {H3DU.Transform} Return value.
+ * The transform won't be copied.
+ * @returns {H3DU.Transform} Return value.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.getTransform = function() {
   "use strict";
   return this.transform;
 };
 /**
-* Finds a bounding box that holds all vertices in this shape.
+ * Finds a bounding box that holds all vertices in this shape.
  * The bounding box is not guaranteed to be the
-* tightest, and the box will be transformed to world space
-* using this object's transform.
-* @returns {Array<Number>} An array of six numbers describing an
-* axis-aligned bounding box
-* that fits all vertices in the shape. The first three numbers
-* are the smallest-valued X, Y, and Z coordinates, and the
-* last three are the largest-valued X, Y, and Z coordinates.
-* If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
-* -Inf, -Inf].
+ * tightest, and the box will be transformed to world space
+ * using this object's transform.
+ * @returns {Array<Number>} An array of six numbers describing an
+ * axis-aligned bounding box
+ * that fits all vertices in the shape. The first three numbers
+ * are the smallest-valued X, Y, and Z coordinates, and the
+ * last three are the largest-valued X, Y, and Z coordinates.
+ * If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
+ * -Inf, -Inf].
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.getBounds = function() {
   "use strict";
   if(!this.meshBuffer) {
@@ -318,7 +318,7 @@ H3DU.Shape.prototype.isCulled = function(frustum) {
  * set to a copy of.
  * @memberof! H3DU.Shape#
  * @returns {H3DU.Shape} This object.
-*/
+ */
 H3DU.Shape.prototype.setTransform = function(transform) {
   "use strict";
   this.transform = transform.copy();
@@ -331,9 +331,9 @@ H3DU.Shape.prototype.setTransform = function(transform) {
  * or a 3-element scaling array, as specified in {@link H3DU.Transform#setScale}.
  * @param {Number} y Scaling factor for this object's height.
  * @param {Number} z Scaling factor for this object's depth.
-* @returns {H3DU.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.setScale = function(x, y, z) {
   "use strict";
   this.getTransform().setScale(x, y, z);
@@ -346,9 +346,9 @@ H3DU.Shape.prototype.setScale = function(x, y, z) {
  * or a 3-element position array, as specified in {@link H3DU.Transform#setScale}.
  * @param {Number} y Y coordinate.
  * @param {Number} z Z coordinate.
-* @returns {H3DU.Scene3D} This object.
+ * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.setPosition = function(x, y, z) {
   "use strict";
   this.getTransform().setPosition(x, y, z);
@@ -360,7 +360,7 @@ H3DU.Shape.prototype.setPosition = function(x, y, z) {
  * @param {Array<Number>} quat A four-element array describing the rotation.
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.setQuaternion = function(quat) {
   "use strict";
   this.getTransform().setQuaternion(quat);
@@ -368,10 +368,10 @@ H3DU.Shape.prototype.setQuaternion = function(quat) {
 };
 /**
  * Gets the transformation matrix used by this shape.
-   * See {@link H3DU.Transform#getMatrix}.
+ * See {@link H3DU.Transform#getMatrix}.
  * @returns {Array<Number>} The current transformation matrix.
  * @memberof! H3DU.Shape#
-*/
+ */
 H3DU.Shape.prototype.getMatrix = function() {
   "use strict";
   var xform = this.getTransform();

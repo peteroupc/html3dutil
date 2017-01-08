@@ -9,24 +9,25 @@
 /* global DataView, H3DU, Promise, Uint8Array */
 
 /**
-* Specifies a texture, which can serve as image data applied to
-* the surface of a shape, or even a 2-dimensional array of pixels
-* used for some other purpose, such as a depth map, a height map,
-* a bump map, a specular map, and so on.<p>
-* By default, texture coordinates go from (0,0) at the lower left corner
-* to (1,1) at the upper right corner.<p>
-* For best results, any textures to be used in WebGL should have
-* width and height each equal to a power of 2, such as 2, 4, 8, 16,
-* and 32.
-* @class
-* @alias H3DU.Texture
-* @param {String} name URL of the texture data. Based on the
-* URL, the texture may be loaded via the JavaScript DOM's Image
-* class. However, this constructor will not load that image yet.
-*/
+ * Specifies a texture, which can serve as image data applied to
+ * the surface of a shape, or even a 2-dimensional array of pixels
+ * used for some other purpose, such as a depth map, a height map,
+ * a bump map, a specular map, and so on.<p>
+ * By default, texture coordinates go from (0,0) at the lower left corner
+ * to (1,1) at the upper right corner.<p>
+ * For best results, any textures to be used in WebGL should have
+ * width and height each equal to a power of 2, such as 2, 4, 8, 16,
+ * and 32.
+ * @class
+ * @alias H3DU.Texture
+ * @param {String} name URL of the texture data. Based on the
+ * URL, the texture may be loaded via the JavaScript DOM's Image
+ * class. However, this constructor will not load that image yet.
+ */
 H3DU.Texture = function(name) {
   "use strict";
   this.image = null;
+  // 0 = not loaded; 1 = loading; 2 = loaded; -1 = error
   this.loadStatus = 0;
   this.name = name;
   this.width = 0;
@@ -35,40 +36,40 @@ H3DU.Texture = function(name) {
 };
 /**
  * Gets this texture's known width.
-* @returns {Number} This texture's width in pixels.
-* Will be 0 if the texture's image data wasn't loaded yet.
+ * @returns {Number} This texture's width in pixels.
+ * Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.Texture#
-*/
+ */
 H3DU.Texture.prototype.getWidth = function() {
   "use strict";
   return this.width;
 };
 /**
  * Gets this texture's known height.
-* @returns {Number} This texture's height in pixels.
-* Will be 0 if the texture's image data wasn't loaded yet.
+ * @returns {Number} This texture's height in pixels.
+ * Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.Texture#
-*/
+ */
 H3DU.Texture.prototype.getHeight = function() {
   "use strict";
   return this.height;
 };
 
 /**
-* Sets the wrapping behavior of texture coordinates that
-* fall out of range when using this texture. This setting
-* will only have an effect on textures whose width and height
-* are both powers of two. For other textures, this setting
-* is ignored and out-of-range texture coordinates are
-* always clamped.
-* @param {Boolean} clamp If true, the texture's texture
-* coordinates will be clamped to the range [0, 1]. If false,
-* the fractional parts of the texture coordinates'
-* be used as the coordinates (causing wraparound).
-* The default is false.
-* @returns {H3DU.Texture} This object.
-* @memberof! H3DU.Texture#
-*/
+ * Sets the wrapping behavior of texture coordinates that
+ * fall out of range when using this texture. This setting
+ * will only have an effect on textures whose width and height
+ * are both powers of two. For other textures, this setting
+ * is ignored and out-of-range texture coordinates are
+ * always clamped.
+ * @param {Boolean} clamp If true, the texture's texture
+ * coordinates will be clamped to the range [0, 1]. If false,
+ * the fractional parts of the texture coordinates'
+ * be used as the coordinates (causing wraparound).
+ * The default is false.
+ * @returns {H3DU.Texture} This object.
+ * @memberof! H3DU.Texture#
+ */
 H3DU.Texture.prototype.setClamp = function(clamp) {
   "use strict";
   this.clamp = clamp;
@@ -76,19 +77,19 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
 };
 
 /**
-* Loads a texture by its URL.
-* @param {String} name URL of the texture data. Images with a TGA
-* extension that use the RGBA or grayscale format are supported.
-* Images supported by the browser will be loaded via
-* the JavaScript DOM's Image class.
-* @param {Object} [textureCache] An object whose keys
-* are the names of textures already loaded. This will help avoid loading
-* the same texture more than once. This parameter is optional
-* and may be omitted.
-* @returns {Promise} A promise that resolves when the texture
-* is fully loaded. If it resolves, the result will be an H3DU.Texture object.
-* @memberof! H3DU.Texture
-*/
+ * Loads a texture by its URL.
+ * @param {String} name URL of the texture data. Images with a TGA
+ * extension that use the RGBA or grayscale format are supported.
+ * Images supported by the browser will be loaded via
+ * the JavaScript DOM's Image class.
+ * @param {Object} [textureCache] An object whose keys
+ * are the names of textures already loaded. This will help avoid loading
+ * the same texture more than once. This parameter is optional
+ * and may be omitted.
+ * @returns {Promise} A promise that resolves when the texture
+ * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
+ * @memberof! H3DU.Texture
+ */
 H3DU.Texture.loadTexture = function(name, textureCache) {
  // Get cached texture
   "use strict";
@@ -110,16 +111,16 @@ H3DU.Texture.loadTexture = function(name, textureCache) {
 };
 
 /**
-* Creates a texture from a byte array specifying the texture data.
-* @param {Uint8Array} array A byte array containing the texture data,
-* with the pixels arranged in left-to-right rows from top to bottom.
-* Each pixel takes 4 bytes, where the bytes are the red, green, blue,
-* and alpha components, in that order.
-* @param {Uint8Array} width Width, in pixels, of the texture.
-* @param {Uint8Array} height Height, in pixels, of the texture.
-* @returns {H3DU.Texture} The new H3DU.Texture object.
-* @memberof! H3DU.Texture
-*/
+ * Creates a texture from a byte array specifying the texture data.
+ * @param {Uint8Array} array A byte array containing the texture data,
+ * with the pixels arranged in left-to-right rows from top to bottom.
+ * Each pixel takes 4 bytes, where the bytes are the red, green, blue,
+ * and alpha components, in that order.
+ * @param {Uint8Array} width Width, in pixels, of the texture.
+ * @param {Uint8Array} height Height, in pixels, of the texture.
+ * @returns {H3DU.Texture} The new H3DU.Texture object.
+ * @memberof! H3DU.Texture
+ */
 H3DU.Texture.fromUint8Array = function(array, width, height) {
   "use strict";
   if(width < 0)throw new Error("width less than 0");
@@ -135,8 +136,9 @@ H3DU.Texture.fromUint8Array = function(array, width, height) {
 
 /** @private
  * @param {Object} name Description of name.
+
  * @returns {Object} Return value.
-*/
+ */
 H3DU.Texture.loadTga = function(name) {
   "use strict";
 
@@ -209,8 +211,9 @@ H3DU.Texture.loadTga = function(name) {
 };
 
 /** @private
+
  * @returns {Object} Return value.
-*/
+ */
 H3DU.Texture.prototype.loadImage = function() {
   "use strict";
   if(typeof this.image !== "undefined" && this.image !== null) {
@@ -267,8 +270,9 @@ H3DU.Texture.prototype.loadImage = function() {
 /**
  * Disposes resources used by this texture.
  * @memberof! H3DU.Texture#
+
  * @returns {Object} Return value.
-*/
+ */
 H3DU.Texture.prototype.dispose = function() {
   "use strict";
   this.width = 0;
@@ -288,10 +292,10 @@ H3DU.Texture.prototype.dispose = function() {
 };
 
 /**
-* Gets the name of this texture.
-* @returns {String} Return value.
-* @memberof! H3DU.Texture#
-*/
+ * Gets the name of this texture.
+ * @returns {String} Return value.
+ * @memberof! H3DU.Texture#
+ */
 H3DU.Texture.prototype.getName = function() {
   "use strict";
   return name;

@@ -8,21 +8,21 @@
 */
 /* global H3DU */
 /**
-* A geometric mesh in the form of buffer objects.
-* @deprecated This class is likely to become a private class.
-* Use the {@link H3DU.MeshBuffer} class instead, which is not coupled to WebGL
-* contexts.
-* @class
-* @alias H3DU.BufferedMesh
-* @param {H3DU.Mesh|H3DU.MeshBuffer} mesh
-* A geometric mesh object. Cannot be null.
-* @param {WebGLRenderingContext|object} context A WebGL context to
-* create a buffer from, or an object, such as H3DU.Scene3D, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context. (Note that this constructor uses
-* a WebGL context rather than a shader program because
-* buffer objects are not specific to shader programs.)
-*/
+ * A geometric mesh in the form of buffer objects.
+ * @deprecated This class is likely to become a private class.
+ * Use the {@link H3DU.MeshBuffer} class instead, which is not coupled to WebGL
+ * contexts.
+ * @class
+ * @alias H3DU.BufferedMesh
+ * @param {H3DU.Mesh|H3DU.MeshBuffer} mesh
+ * A geometric mesh object. Cannot be null.
+ * @param {WebGLRenderingContext|object} context A WebGL context to
+ * create a buffer from, or an object, such as H3DU.Scene3D, that
+ * implements a no-argument <code>getContext</code> method
+ * that returns a WebGL context. (Note that this constructor uses
+ * a WebGL context rather than a shader program because
+ * buffer objects are not specific to shader programs.)
+ */
 H3DU.BufferedMesh = function(mesh, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -105,25 +105,27 @@ H3DU.BufferedMesh.prototype._getBounds = function() {
  * Returns the WebGL context associated with this object.
  * @deprecated
  * @returns {WebGLRenderingContext} Return value.
-* @memberof! H3DU.BufferedMesh#
-*/
+ * @memberof! H3DU.BufferedMesh#
+ */
 H3DU.BufferedMesh.prototype.getContext = function() {
   "use strict";
   return this.context;
 };
 /** @private
+
  * @returns {Object} Return value.
-*/
+ */
 H3DU.BufferedMesh.prototype.getFormat = function() {
   "use strict";
   return this.smb.format;
 };
 
 /**
-* Deletes the vertex and index buffers associated with this object.
-* @memberof! H3DU.BufferedMesh#
+ * Deletes the vertex and index buffers associated with this object.
+ * @memberof! H3DU.BufferedMesh#
+
  * @returns {Object} Return value.
-*/
+ */
 H3DU.BufferedMesh.prototype.dispose = function() {
   "use strict";
   if(typeof this.vertsMap !== "undefined" && this.vertsMap !== null) {
@@ -191,16 +193,17 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
   }
 };
 /**
-* Binds the buffers in this object to attributes according
-* to their data format, and draws the elements in this mesh
-* according to the data in its buffers.
-* @deprecated
-* @param {H3DU.ShaderProgram} program A shader program object to get
-* the IDs from for attributes named "position", "normal",
-* "colorAttr", and "uv", and the "useColorAttr" uniform.
-* @memberof! H3DU.BufferedMesh#
+ * Binds the buffers in this object to attributes according
+ * to their data format, and draws the elements in this mesh
+ * according to the data in its buffers.
+ * @deprecated
+ * @param {H3DU.ShaderProgram} program A shader program object to get
+ * the IDs from for attributes named "position", "normal",
+ * "colorAttr", and "uv", and the "useColorAttr" uniform.
+ * @memberof! H3DU.BufferedMesh#
+
  * @returns {Object} Return value.
-*/
+ */
 H3DU.BufferedMesh.prototype.draw = function(program) {
   "use strict";
   // Binding phase
@@ -227,19 +230,19 @@ H3DU.BufferedMesh.prototype.draw = function(program) {
 };
 /**
  * Gets the number of vertices composed by all shapes in this mesh.
-* @returns {Number} Return value.
-* @memberof! H3DU.BufferedMesh#
-*/
+ * @returns {Number} Return value.
+ * @memberof! H3DU.BufferedMesh#
+ */
 H3DU.BufferedMesh.prototype.vertexCount = function() {
   "use strict";
   return this.smb.numVertices;
 };
 /**
  * Gets the number of primitives (triangles, lines,
-* and points) composed by all shapes in this mesh.
-* @returns {Number} Return value.
-* @memberof! H3DU.BufferedMesh#
-*/
+ * and points) composed by all shapes in this mesh.
+ * @returns {Number} Return value.
+ * @memberof! H3DU.BufferedMesh#
+ */
 H3DU.BufferedMesh.prototype.primitiveCount = function() {
   "use strict";
   return this.smb.primitiveCount();

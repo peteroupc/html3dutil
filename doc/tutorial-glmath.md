@@ -9,7 +9,7 @@ Here is an overview of these data types.
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[Vectors](#Vectors)<br>&nbsp;&nbsp;[Unit Vectors](#Unit_Vectors)<br>&nbsp;&nbsp;[Axis of Rotation](#Axis_of_Rotation)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Quaternions](#Quaternions)<br>&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;[Makeup of Quaternions](#Makeup_of_Quaternions)<br>&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles and their disadvantages](#Tait_Bryan_angles_and_their_disadvantages)<br>[Planes](#Planes)<br>[Boxes](#Boxes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Projection and view matrices](#Projection_and_view_matrices)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Cross product (`vec3cross(A, B)`) and normals](#Cross_product_vec3cross_A_B_and_normals)<br>&nbsp;&nbsp;[Orientation and face classification](#Orientation_and_face_classification)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Finding Orientation](#Finding_Orientation)<br>
+[Contents](#Contents)<br>[Vectors](#Vectors)<br>&nbsp;&nbsp;[Unit Vectors](#Unit_Vectors)<br>&nbsp;&nbsp;[Axis of Rotation](#Axis_of_Rotation)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Quaternions](#Quaternions)<br>&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;[Makeup of Quaternions](#Makeup_of_Quaternions)<br>&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles and their disadvantages](#Tait_Bryan_angles_and_their_disadvantages)<br>[Planes](#Planes)<br>[Boxes](#Boxes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Projection and view matrices](#Projection_and_view_matrices)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Cross product (`vec3cross`) and normals](#Cross_product_vec3cross_and_normals)<br>&nbsp;&nbsp;[Orientation and face classification](#Orientation_and_face_classification)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Finding Orientation](#Finding_Orientation)<br>
 
 ## Vectors <a id=Vectors></a>
 
@@ -34,7 +34,7 @@ by the fourth.)
 
 ### Unit Vectors <a id=Unit_Vectors></a>
 
-A unit vector is a vector with a length of 1. (A vector's _length_ is the square root
+A _unit vector_ is a vector with a length of 1. (A vector's _length_ is the square root
 of the sum of the squares of its components.) A vector can be "normalized" to
 a unit vector by dividing each of its components by its length.
 
@@ -152,7 +152,7 @@ For best results when using quaternions:
 
 ### Makeup of Quaternions <a id=Makeup_of_Quaternions></a>
 
-A quaternion's:
+A quaternion's...
 
 * ...first three elements (X, Y, Z) describe a 3D point, where the
 direction from the origin (0, 0, 0) to that point is the [axis of rotation](#Axis_of_Rotation),
@@ -280,18 +280,18 @@ is positive (resp. negative) and the coordinate system is...
 * ...right handed, then the angle runs counterclockwise (resp. clockwise).
 * ...left handed, then the angle runs clockwise (resp. counterclockwise).
 
-#### Cross product (`vec3cross(A, B)`) and normals <a id=Cross_product_vec3cross_A_B_and_normals></a>
+#### Cross product (`vec3cross`) and normals <a id=Cross_product_vec3cross_and_normals></a>
 
-Given a triangle formed by points A, B, and C, the [cross product](<a href="H3DU.Math.md#H3DU.Math.vec3cross">H3DU.Math.vec3cross</a>)
-of the two vectors (A minus C) and (B minus C), in that order, is a _normal_ of that triangle (a vector that points away from
-the triangle's surface). The cross product normal will be such that, whenever it points toward the viewer,
-the triangle's vertices are oriented counterclockwise for right-handed coordinate systems, or
+* Given a triangle formed by points A, B, and C, in that order, the [cross product](<a href="H3DU.Math.md#H3DU.Math.vec3cross">H3DU.Math.vec3cross</a>)
+of the vector (A minus C) with (B minus C), in that order, is a _normal_ of that triangle (a vector that points away
+from the triangle's surface).
+* By extension, given a triangle formed by point A, point B, and point (0,0,0), in that order, the cross product of A
+with B, in that order, is a normal of that triangle.
+
+In either case, whenever this particular normal points toward the viewer, the triangle's vertices
+are oriented counterclockwise for right-handed coordinate systems, or
 clockwise for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)
-
-It follows from this that the cross product of A and B will behave like the cross product normal of the
-triangle formed by point A, point B, and the point (0,0,0) in that order (since A minus (0,0,0) is A,
-and B minus (0,0,0) is B).
 
 ### Orientation and face classification <a id=Orientation_and_face_classification></a>
 

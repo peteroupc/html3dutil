@@ -109,7 +109,7 @@ Sets a directional light.
 * `index` (Type: Number)<br>
     Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn't exist at that index, it will be created.
 * `direction` (Type: Array.&lt;Number>)<br>
-    A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively.
+    A 3-element array giving the X, Y, and Z world space components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector's direction from the origin (0, 0, 0).
 * `diffuse` (Type: Array.&lt;Number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
 * `specular` (Type: Array.&lt;Number>) (optional)<br>
@@ -143,7 +143,7 @@ Sets a point light.
 * `index` (Type: Number)<br>
     Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn't exist at that index, it will be created.
 * `position` (Type: Array.&lt;Number>)<br>
-    A 3-element vector giving the X, Y, and Z coordinates, respectively, of the light, in world coordinates.
+    A 3-element array giving the X, Y, and Z world space coordinates, respectively, of the light's position.
 * `diffuse` (Type: Array.&lt;Number>) (optional)<br>
     Diffuse color, as described in H3DU.Lights.setDirectionalLight.
 * `specular` (Type: Array.&lt;Number>) (optional)<br>

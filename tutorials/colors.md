@@ -75,8 +75,8 @@ After you choose the three values, combine them by writing the `#`, then the red
 
 Now, what follows is a list of common colors that are possible by choosing a value in each row. See also the list of colors sorted by hue.
 
-| Name | Red | Green | Blue | Color
- ----------------
+| Name | Red | Green | Blue | Color |
+ ------|-----|-------|------|-------|
 | Red | FF | 00 | 00 | #FF0000 |
 | Orange | FF | A0 | 00 | #FFA000 |
 | Yellow | FF | 80 | 00 | #FF8000 |

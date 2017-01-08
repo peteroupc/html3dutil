@@ -9,23 +9,23 @@
 /* global H3DU, console */
 
 /**
-* Holds source code for a WebGL shader program. A shader program in
-* WebGL consists of a vertex shader (which processes vertices),
-* and a fragment shader (which processes pixels). Shader programs
-* are specially designed for running on a graphics processing unit,
-* or GPU.<p>
-* This class also stores uniform values associated with the shader
-* source code.<p>
-* Note that this class is not associated with any WebGL context, so the
-* uniform values this object stores is not set for any WebGL context.
-* @class
-* @alias H3DU.ShaderInfo
-* @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
-* ES Shading Language (GLSL). If null, a default
-* vertex shader is used instead.
-* @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
-* If null, a default fragment shader is used instead.
-*/
+ * Holds source code for a WebGL shader program. A shader program in
+ * WebGL consists of a vertex shader (which processes vertices),
+ * and a fragment shader (which processes pixels). Shader programs
+ * are specially designed for running on a graphics processing unit,
+ * or GPU.<p>
+ * This class also stores uniform values associated with the shader
+ * source code.<p>
+ * Note that this class is not associated with any WebGL context, so the
+ * uniform values this object stores is not set for any WebGL context.
+ * @class
+ * @alias H3DU.ShaderInfo
+ * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
+ * ES Shading Language (GLSL). If null, a default
+ * vertex shader is used instead.
+ * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
+ * If null, a default fragment shader is used instead.
+ */
 H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
   "use strict";
   if(vertexShader === null || typeof vertexShader === "undefined") {
@@ -39,10 +39,10 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
   this.uniformValues = {};
 };
 /**
-* Gets the text of the vertex shader stored in this object.
-* @returns {String} return value.
+ * Gets the text of the vertex shader stored in this object.
+ * @returns {String} return value.
  * @memberof! H3DU.ShaderInfo#
-*/
+ */
 H3DU.ShaderInfo.prototype.getVertexShader = function() {
   "use strict";
   return this.vertexShader;
@@ -58,10 +58,10 @@ H3DU.ShaderInfo.prototype.getFragmentShader = function() {
 };
 /**
  * Returns a new shader info object with the information in this object
-* copied to that object.
-* @returns {H3DU.ShaderInfo} Return value.
+ * copied to that object.
+ * @returns {H3DU.ShaderInfo} Return value.
  * @memberof! H3DU.ShaderInfo#
-*/
+ */
 H3DU.ShaderInfo.prototype.copy = function() {
   "use strict";
   var sp = new H3DU.ShaderInfo(this.vertexShader, this.fragmentShader);
@@ -69,23 +69,23 @@ H3DU.ShaderInfo.prototype.copy = function() {
   return sp;
 };
 /**
-* Sets the values of one or more uniforms used by this shader program.
-* Since this object doesn't store a WebGL context, or receive one as input,
-* the uniforms won't be associated with a WebGL context.
-* @param {Object} uniforms An object whose keys are the names of uniforms
-* defined in either the
-* vertex or fragment shader of this shader program. If the uniform
-* is an array, each element in the array is named as in these examples:
-* "unif[0]", "unif[1]". If it's a struct, each member in the struct is named as in these examples:
-* "unif.member1", "unif.member2". If it's an array of struct, each
-* member is named as in these examples: "unif[0].member1",
-* "unif[0].member2". The value of each key depends on the data type
-* expected for the uniform named by that key. The value can be a 3-, 4-,
-9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
-* respectively, or a Number if the uniform is a "float" or "int".
-* @returns {H3DU.ShaderInfo} This object.
-* @memberof! H3DU.ShaderInfo#
-*/
+ * Sets the values of one or more uniforms used by this shader program.
+ * Since this object doesn't store a WebGL context, or receive one as input,
+ * the uniforms won't be associated with a WebGL context.
+ * @param {Object} uniforms An object whose keys are the names of uniforms
+ * defined in either the
+ * vertex or fragment shader of this shader program. If the uniform
+ * is an array, each element in the array is named as in these examples:
+ * "unif[0]", "unif[1]". If it's a struct, each member in the struct is named as in these examples:
+ * "unif.member1", "unif.member2". If it's an array of struct, each
+ * member is named as in these examples: "unif[0].member1",
+ * "unif[0].member2". The value of each key depends on the data type
+ * expected for the uniform named by that key. The value can be a 3-, 4-,
+ * 9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
+ * respectively, or a Number if the uniform is a "float" or "int".
+ * @returns {H3DU.ShaderInfo} This object.
+ * @memberof! H3DU.ShaderInfo#
+ */
 H3DU.ShaderInfo.prototype.setUniforms = function(uniforms) {
   "use strict";
   H3DU.ShaderInfo._setUniformsInternal(uniforms, this.uniformValues, null);
@@ -198,12 +198,12 @@ H3DU.ShaderInfo.fragmentShaderHeader = function() {
 };
 
 /**
-* Generates source code for a fragment shader for applying
-* a raster effect to a texture.
-* @param {String} functionCode See {@link H3DU.ShaderInfo.makeEffect}.
-* @returns {String} The source text of the resulting fragment shader.
-* @memberof! H3DU.ShaderInfo
-*/
+ * Generates source code for a fragment shader for applying
+ * a raster effect to a texture.
+ * @param {String} functionCode See {@link H3DU.ShaderInfo.makeEffect}.
+ * @returns {String} The source text of the resulting fragment shader.
+ * @memberof! H3DU.ShaderInfo
+ */
 H3DU.ShaderInfo.makeEffectFragment = function(functionCode) {
   "use strict";
   var shader = H3DU.ShaderInfo.fragmentShaderHeader();
@@ -221,9 +221,9 @@ H3DU.ShaderInfo.makeEffectFragment = function(functionCode) {
   return shader;
 };
 /**
-* Generates source code for a shader program that copies the colors of a texture.
-* @returns {H3DU.ShaderInfo} The resulting shader program.
-* @memberof! H3DU.ShaderInfo
+ * Generates source code for a shader program that copies the colors of a texture.
+ * @returns {H3DU.ShaderInfo} The resulting shader program.
+ * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.makeCopyEffect = function() {
   "use strict";
@@ -240,23 +240,23 @@ H3DU.ShaderInfo.makeCopyEffect = function() {
 };
 
 /**
-* Generates source code for a shader program for applying
-* a raster effect (postprocessing effect) to a texture.
-* @param {String} functionCode A string giving shader code
-* in OpenGL ES Shading Language (GLSL) that must contain
-* a function with the following signature:
-* <pre>
-* vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
-* </pre>
-* where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
-* is the texture coordinates ranging from 0 to 1 in each component,
-* <code>textureSize</code> is the dimensions of the texture in pixels,
-* and the return value is the new color at the given texture coordinates. Besides
-* this requirement, the shader code is also free to define additional uniforms,
-* constants, functions, and so on (but not another "main" function).
-* @returns {H3DU.ShaderInfo} The resulting shader program.
-* @memberof! H3DU.ShaderInfo
-*/
+ * Generates source code for a shader program for applying
+ * a raster effect (postprocessing effect) to a texture.
+ * @param {String} functionCode A string giving shader code
+ * in OpenGL ES Shading Language (GLSL) that must contain
+ * a function with the following signature:
+ * <pre>
+ * vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
+ * </pre>
+ * where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
+ * is the texture coordinates ranging from 0 to 1 in each component,
+ * <code>textureSize</code> is the dimensions of the texture in pixels,
+ * and the return value is the new color at the given texture coordinates. Besides
+ * this requirement, the shader code is also free to define additional uniforms,
+ * constants, functions, and so on (but not another "main" function).
+ * @returns {H3DU.ShaderInfo} The resulting shader program.
+ * @memberof! H3DU.ShaderInfo
+ */
 H3DU.ShaderInfo.makeEffect = function(functionCode) {
   "use strict";
   return new H3DU.ShaderInfo(
@@ -264,10 +264,10 @@ H3DU.ShaderInfo.makeEffect = function(functionCode) {
    H3DU.ShaderInfo.makeEffectFragment(functionCode));
 };
 /**
-* Generates source code for a shader program that inverts the colors of a texture.
-* @returns {H3DU.ShaderInfo} The resulting shader program.
-* @memberof! H3DU.ShaderInfo
-*/
+ * Generates source code for a shader program that inverts the colors of a texture.
+ * @returns {H3DU.ShaderInfo} The resulting shader program.
+ * @memberof! H3DU.ShaderInfo
+ */
 H3DU.ShaderInfo.makeInvertEffect = function() {
   "use strict";
   return H3DU.ShaderInfo.makeEffect(
@@ -278,11 +278,11 @@ H3DU.ShaderInfo.makeInvertEffect = function() {
   "}"].join("\n"));
 };
 /**
-* Generates source code for a shader program that generates a two-color texture showing
-* the source texture's edges.
-* @returns {H3DU.ShaderInfo} The resulting shader program.
-* @memberof! H3DU.ShaderInfo
-*/
+ * Generates source code for a shader program that generates a two-color texture showing
+ * the source texture's edges.
+ * @returns {H3DU.ShaderInfo} The resulting shader program.
+ * @memberof! H3DU.ShaderInfo
+ */
 H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
   "use strict";
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
@@ -317,9 +317,9 @@ H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
 };
 
 /**
-* Gets the text of a basic vertex shader.
-* @returns {String} The resulting shader text.
-* @memberof! H3DU.ShaderInfo
+ * Gets the text of a basic vertex shader.
+ * @returns {String} The resulting shader text.
+ * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.getBasicVertex = function() {
   "use strict";
@@ -345,11 +345,11 @@ H3DU.ShaderInfo.getBasicVertex = function() {
   return shader;
 };
 /**
-* Gets the text of the default vertex shader.  Putting "#define SHADING\n"
-* at the start of the return value enables the lighting model.
-* @returns {String} The resulting shader text.
-* @memberof! H3DU.ShaderInfo
-*/
+ * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
+ * at the start of the return value enables the lighting model.
+ * @returns {String} The resulting shader text.
+ * @memberof! H3DU.ShaderInfo
+ */
 H3DU.ShaderInfo.getDefaultVertex = function() {
   "use strict";
   var shader = [
@@ -397,14 +397,14 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
 };
 
 /**
-* Gets the text of the default fragment shader.  Putting "#define SHADING\n"
-* at the start of the return value enables the lighting model.
-* Putting "#define SPECULAR\n"
-* at the start of the return value enables specular highlights (as long
-* as SHADING is also enabled).
-* @returns {String} The resulting shader text.
-* @memberof! H3DU.ShaderInfo
-*/
+ * Gets the text of the default fragment shader.  Putting "#define SHADING\n"
+ * at the start of the return value enables the lighting model.
+ * Putting "#define SPECULAR\n"
+ * at the start of the return value enables specular highlights (as long
+ * as SHADING is also enabled).
+ * @returns {String} The resulting shader text.
+ * @memberof! H3DU.ShaderInfo
+ */
 H3DU.ShaderInfo.getDefaultFragment = function() {
   "use strict";
   var i;

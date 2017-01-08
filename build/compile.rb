@@ -14,7 +14,7 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
     return if !FileTest.exist?(input)
     utf8edit(input){|data| next normalizeLines(data) }
   end
-  inputs=inputArray.transform{|x| "--js #{ffq(x)}" }.join(" ")
+  inputs=inputArray.map{|x| "--js #{ffq(x)}" }.join(" ")
   sourceMap=output+".map"
   formatting=(false) ? "--formatting PRETTY_PRINT" : ""
   opt=(advanced) ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS"

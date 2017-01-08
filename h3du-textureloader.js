@@ -8,11 +8,11 @@
 */
 /* global H3DU, Promise */
 /**
-* An object that caches loaded textures and uploads them
-* to WebGL contexts.
-* @class
-* @alias H3DU.TextureLoader
-*/
+ * An object that caches loaded textures and uploads them
+ * to WebGL contexts.
+ * @class
+ * @alias H3DU.TextureLoader
+ */
 H3DU.TextureLoader = function() {
   "use strict";
   this.loadedTextures = [];
@@ -23,10 +23,10 @@ H3DU.TextureLoader = function() {
 /**
  * Gets an already loaded texture by name from this texture loader.
  * @param {String} name The name of the texture, usually its file name.
-* @returns {Texture} The texture with the given name, or null
-* if it doesn't exist.
+ * @returns {Texture} The texture with the given name, or null
+ * if it doesn't exist.
  * @memberof! H3DU.TextureLoader#
-*/
+ */
 H3DU.TextureLoader.prototype.getTexture = function(name) {
   "use strict";
   return this.textureImages[name] || null;
@@ -34,14 +34,14 @@ H3DU.TextureLoader.prototype.getTexture = function(name) {
 
 /**
  * Loads a texture by its URL and stores its data.
-* @param {String} name URL of the texture data. Images with a TGA
-* extension that use the RGBA or grayscale format are supported.
-* Images supported by the browser will be loaded via
-* the JavaScript DOM's Image class.
-* @returns {Promise<H3DU.Texture>} A promise that resolves when the texture
-* is fully loaded. If it resolves, the result will be an H3DU.Texture object.
+ * @param {String} name URL of the texture data. Images with a TGA
+ * extension that use the RGBA or grayscale format are supported.
+ * Images supported by the browser will be loaded via
+ * the JavaScript DOM's Image class.
+ * @returns {Promise<H3DU.Texture>} A promise that resolves when the texture
+ * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
  * @memberof! H3DU.TextureLoader#
-*/
+ */
 H3DU.TextureLoader.prototype.loadTexture = function(name) {
   "use strict";
   return H3DU.Texture.loadTexture(name, this.textureImages);
@@ -92,7 +92,7 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context) {
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
  * @memberof! H3DU.TextureLoader#
-*/
+ */
 H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, reject) {
   "use strict";
   var promises = [];
@@ -104,19 +104,19 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
 /**
  * Loads the textures referred to in an array of URLs and
  * uploads their texture data to a WebGL context.
-* @param {String} texture URL of the texture data. Images with a TGA
-* extension that use the RGBA or grayscale format are supported.
-* Images supported by the browser will be loaded via
-* the JavaScript DOM's Image class.
+ * @param {String} texture URL of the texture data. Images with a TGA
+ * extension that use the RGBA or grayscale format are supported.
+ * Images supported by the browser will be loaded via
+ * the JavaScript DOM's Image class.
  * @param {WebGLRenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context.
+ * implements a no-argument <code>getContext</code> method
+ * that returns a WebGL context.
  * @returns {Promise<H3DU.Texture>} A promise that resolves when
  * the texture is loaded successfully (the result will be an H3DU.Texture object)
  * and is rejected when an error occurs.
  * @memberof! H3DU.TextureLoader#
-*/
+ */
 H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -129,13 +129,13 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
 /**
  * Loads one or more textures by their URL and uploads their data to a WebGL context.
  * @param {Array<String>} textures Arrays of URLs of the texture data. Images with a TGA
-* extension that use the RGBA or grayscale format are supported.
-* Images supported by the browser will be loaded via
-* the JavaScript DOM's Image class.
+ * extension that use the RGBA or grayscale format are supported.
+ * Images supported by the browser will be loaded via
+ * the JavaScript DOM's Image class.
  * @param {WebGLRenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context.
+ * implements a no-argument <code>getContext</code> method
+ * that returns a WebGL context.
  * @param {Function} [resolve] A function called as each
  * individual texture is loaded.
  * @param {Function} [reject] A function called as each
@@ -145,7 +145,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
  * @memberof! H3DU.TextureLoader#
-*/
+ */
 H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context, resolve, reject) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -160,14 +160,14 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
  * Uploads an array of textures to a WebGL context.
  * @param {Array<H3DU.Texture>} textures An array of texture objects to upload.
  * Each texture's data must already have been loaded. Textures with the
-* same name as textures already uploaded to the given context will be skipped.
+ * same name as textures already uploaded to the given context will be skipped.
  * @param {WebGLRenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context.
+ * implements a no-argument <code>getContext</code> method
+ * that returns a WebGL context.
  * @returns {H3DU.TextureLoader} This object.
  * @memberof! H3DU.TextureLoader#
-*/
+ */
 H3DU.TextureLoader.prototype.mapTextures = function(textures, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -180,14 +180,14 @@ H3DU.TextureLoader.prototype.mapTextures = function(textures, context) {
  * Uploads a texture object to a WebGL context.
  * @param {H3DU.Texture} texture The texture object to map.
  * Each texture's data must already have been loaded. If the texture has the
-* same name as a texture already uploaded to the given context, it will be skipped.
+ * same name as a texture already uploaded to the given context, it will be skipped.
  * @param {WebGLRenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
-* implements a no-argument <code>getContext</code> method
-* that returns a WebGL context.
+ * implements a no-argument <code>getContext</code> method
+ * that returns a WebGL context.
  * @returns {H3DU.TextureLoader} This object.
  * @memberof! H3DU.TextureLoader#
-*/
+ */
 H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -223,8 +223,8 @@ H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
 /**
  * Disposes all resources used by this texture loader.
  * @memberof! H3DU.TextureLoader#
-* @returns {void} Return value.
-*/
+ * @returns {void} Return value.
+ */
 H3DU.TextureLoader.prototype.dispose = function() {
   "use strict";
   for(var tex in this.textureImages) {

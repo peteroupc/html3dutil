@@ -88,13 +88,13 @@ vectors unchanged when they are transformed with this matrix).
 the given 4x4 matrix.
 * [mat4invert](#H3DU.Math.mat4invert)<br>Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
 * [mat4isIdentity](#H3DU.Math.mat4isIdentity)<br>Returns whether a 4x4 matrix is the identity matrix.
-* [mat4lookat](#H3DU.Math.mat4lookat)<br>Returns a 4x4 matrix that represents a camera view and
-transforms world space coordinates to <i>eye space</i>
+* [mat4lookat](#H3DU.Math.mat4lookat)<br>Returns a 4x4 matrix that represents a camera view,
+transforming world space coordinates to <i>eye space</i>
 (or <i>camera space</i>).
 * [mat4multiply](#H3DU.Math.mat4multiply)<br>Multiplies two 4x4 matrices.
 * [mat4ortho](#H3DU.Math.mat4ortho)<br>Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
-* [mat4ortho2d](#H3DU.Math.mat4ortho2d)<br>Returns a 4x4 matrix representing a 2D orthographic projection.
-* [mat4ortho2dAspect](#H3DU.Math.mat4ortho2dAspect)<br>Returns a 4x4 matrix representing a 2D orthographic projection,
+* [mat4ortho2d](#H3DU.Math.mat4ortho2d)<br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
+* [mat4ortho2dAspect](#H3DU.Math.mat4ortho2dAspect)<br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
 * [mat4orthoAspect](#H3DU.Math.mat4orthoAspect)<br>Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
@@ -755,16 +755,20 @@ Return value. (Type: Boolean)
 
 ### (static) H3DU.Math.mat4lookat(viewerPos, [lookingAt], [up]) <a id='H3DU.Math.mat4lookat'></a>
 
-Returns a 4x4 matrix that represents a camera view and
-transforms world space coordinates to <i>eye space</i>
-(or <i>camera space</i>). In eye space:<ul>
-<li>The "camera" is found at the origin (0,0,0), or
+Returns a 4x4 matrix that represents a camera view,
+transforming world space coordinates to <i>eye space</i>
+(or <i>camera space</i>). This essentially rotates a "camera"
+and moves it to somewhere in the scene. In eye space:<ul>
+<li>The "camera" is located at the origin (0,0,0), or
 at <code>viewerPos</code> in world space,
-and faces the <code>lookingAt</code> position in world space. This generally
+and points away from the viewer toward the <code>lookingAt</code>
+position in world space. This generally
 puts <code>lookingAt</code> at the center of the view.
 <li>The X axis points rightward from the "camera"'s viewpoint.
-<li>The <code>up</code> vector guides which direction the Y axis points in.
-<li>The "camera" points along the Z axis away from the viewer.</ul>
+<li>The Y axis points upward from the center of the "camera" to its top. The
+<code>up</code> vector guides this direction.
+<li>The Z axis is parallel to the direction from the "camera"
+to the <code>lookingAt</code> point.</ul>
 
 This method is designed for use in a <a href="tutorial-glmath.md">right-handed coordinate system</a>
 (the "camera" will point away from the Z axis).
@@ -856,7 +860,7 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4ortho2d(l, r, b, t) <a id='H3DU.Math.mat4ortho2d'></a>
 
-Returns a 4x4 matrix representing a 2D orthographic projection.
+Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
 
 This is the same as mat4ortho() with the near clipping plane
 set to -1 and the far clipping plane set to 1.
@@ -880,7 +884,7 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.mat4ortho2dAspect(l, r, b, t, aspect) <a id='H3DU.Math.mat4ortho2dAspect'></a>
 
-Returns a 4x4 matrix representing a 2D orthographic projection,
+Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
 
 If the view rectangle's aspect ratio doesn't match the desired aspect
