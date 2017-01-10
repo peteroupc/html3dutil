@@ -58,7 +58,8 @@ at this path's current position.
 to line segments.
 * [toString](#H3DU.GraphicsPath_GraphicsPath_toString)<br>Returns this path in the form of a string in SVG path format.
 * [transform](#H3DU.GraphicsPath_GraphicsPath_transform)<br>Returns a modified version of this path that is transformed
-according to the given affine transform.
+according to the given affine transformation (a transformation
+that keeps straight lines straight and parallel lines parallel).
 * [union](#H3DU.GraphicsPath.GraphicsPath_union)<br>Computes the combination of this path's shape with another
 path's shape.
 * [xor](#H3DU.GraphicsPath.GraphicsPath_xor)<br>Computes the shape contained in either this path or another path,
@@ -464,7 +465,8 @@ format. (Type: String)
 ### GraphicsPath#transform(trans) <a id='H3DU.GraphicsPath_GraphicsPath_transform'></a>
 
 Returns a modified version of this path that is transformed
-according to the given affine transform.
+according to the given affine transformation (a transformation
+that keeps straight lines straight and parallel lines parallel).
 
 #### Parameters
 

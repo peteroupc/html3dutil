@@ -252,7 +252,7 @@ H3DU.Transform.prototype.movePosition = function(x, y, z) {
   return this;
 };
 /**
- * Sets this transform's orientation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
+ * Sets this transform's rotation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
  * for describing 3D rotations). Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
  * @param {Array<Number>} quat A four-element array describing the rotation.
@@ -260,11 +260,11 @@ H3DU.Transform.prototype.movePosition = function(x, y, z) {
  * and {@link H3DU.Math.quatFromTaitBryan}, among others.
  * @returns {H3DU.Transform} This object.
  * @example
- * // Set an object's orientation to 30 degrees about the X axis
+ * // Set an object's rotation to 30 degrees about the X axis
  * transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
- * // Set an object's orientation to identity (no rotation)
+ * // Set an object's rotation to identity (the object isn't transformed)
  * transform.setQuaternion(H3DU.Math.quatIdentity());
- * // Set an object's orientation to 30 degree pitch multiplied
+ * // Set an object's rotation to 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
  * @memberof! H3DU.Transform#
@@ -278,7 +278,7 @@ H3DU.Transform.prototype.setQuaternion = function(quat) {
   return this;
 };
 /**
- * Sets this transform's orientation in the form of an angle and an axis of
+ * Sets this transform's rotation in the form of an angle and an axis of
  * rotation. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
  * @param {Array<Number>|number} angle The desired angle
@@ -316,11 +316,11 @@ H3DU.Transform.prototype.setOrientation = function(angle, v, vy, vz) {
  * or {@link H3DU.Math.quatFromTaitBryan}.
  * @returns {H3DU.Transform} This object.
  * @example
- * // Combine an object's orientation with a rotation 20 degrees about the X axis
+ * // Combine an object's rotation with a rotation 20 degrees about the X axis
  * transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
- * // Combine an object's orientation with identity (no rotation)
+ * // Combine an object's rotation with identity
  * transform.multQuaternion(H3DU.Math.quatIdentity());
- * // Combine an object's orientation with 30 degree pitch multiplied
+ * // Combine an object's rotation with 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
  * @memberof! H3DU.Transform#

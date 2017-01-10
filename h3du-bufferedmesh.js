@@ -112,7 +112,6 @@ H3DU.BufferedMesh.prototype.getContext = function() {
   return this.context;
 };
 /** @private
-
  * @returns {Object} Return value.
  */
 H3DU.BufferedMesh.prototype.getFormat = function() {
@@ -123,7 +122,6 @@ H3DU.BufferedMesh.prototype.getFormat = function() {
 /**
  * Deletes the vertex and index buffers associated with this object.
  * @memberof! H3DU.BufferedMesh#
-
  * @returns {Object} Return value.
  */
 H3DU.BufferedMesh.prototype.dispose = function() {
@@ -201,7 +199,6 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
  * the IDs from for attributes named "position", "normal",
  * "colorAttr", and "uv", and the "useColorAttr" uniform.
  * @memberof! H3DU.BufferedMesh#
-
  * @returns {Object} Return value.
  */
 H3DU.BufferedMesh.prototype.draw = function(program) {

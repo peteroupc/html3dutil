@@ -355,7 +355,7 @@ H3DU.Shape.prototype.setPosition = function(x, y, z) {
   return this;
 };
 /**
- * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath}.
+ * Sets this object's rotation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link H3DU.Transform#setQuaternion}.
  * @param {Array<Number>} quat A four-element array describing the rotation.
  * @returns {H3DU.Shape} This object.

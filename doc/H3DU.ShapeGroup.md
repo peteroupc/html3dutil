@@ -27,7 +27,7 @@ and points) composed by all shapes in this shape group.
 * [setMaterialParams](#H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterialParams)<br>Sets material parameters for all shapes in this shape group.
 * [setPosition](#H3DU.ShapeGroup_H3DU.ShapeGroup_setPosition)<br>Sets the relative position of the shapes in this group
 from their original position.
-* [setQuaternion](#H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion)<br>Sets this shape group's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+* [setQuaternion](#H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion)<br>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 * [setScale](#H3DU.ShapeGroup_H3DU.ShapeGroup_setScale)<br>Sets the scale of this shape group relative to its original
 size.
 * [setShader](#H3DU.ShapeGroup_H3DU.ShapeGroup_setShader)<br>Sets the shader program used by all shapes in this shape group.
@@ -170,7 +170,7 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
 ### H3DU.ShapeGroup#setQuaternion(quat) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion'></a>
 
-Sets this shape group's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 See H3DU.Transform#setQuaternion.
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.

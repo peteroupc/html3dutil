@@ -164,7 +164,7 @@ the result in the first vector.
 3-element vector.
 * [vec3copy](#H3DU.Math.vec3copy)<br>Returns a copy of a 3-element vector.
 * [vec3cross](#H3DU.Math.vec3cross)<br>Finds the cross product of two 3-element vectors (called A and B).
-* [vec3dist](#H3DU.Math.vec3dist)<br>Finds the Euclidean distance from one three-element vector
+* [vec3dist](#H3DU.Math.vec3dist)<br>Finds the straight-line distance from one three-element vector
 to another, treating both as 3D points.
 * [vec3dot](#H3DU.Math.vec3dot)<br>Finds the dot product of two 3-element vectors.
 * [vec3length](#H3DU.Math.vec3length)<br>Returns the distance of this 3-element vector from the origin,
@@ -214,7 +214,7 @@ returns a new vector.
 vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)<br>Negates a 4-element vector in place.
-* [vec4norm](#H3DU.Math.vec4norm)<br>Converts 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
+* [vec4norm](#H3DU.Math.vec4norm)<br>Converts 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 * [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
 * [vec4scale](#H3DU.Math.vec4scale)<br>Multiplies each element of a 4-element vector by a factor
 (thus multiplying that vector's length by that factor)
@@ -439,7 +439,8 @@ by its <a href="H3DU.Math.md#H3DU.Math.quatLength">length</a>.
 
 #### Return Value
 
-The normalized quaternion. (Type: Array.&lt;Number>)
+The normalized quaternion.
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
 #### See Also
 
@@ -448,7 +449,7 @@ The normalized quaternion. (Type: Array.&lt;Number>)
 ### (static) H3DU.Math.quatNormInPlace(quat) <a id='H3DU.Math.quatNormInPlace'></a>
 
 Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>.
-When a quaternion is normalized, it describes the same orientation but the distance from the origin
+When a quaternion is normalized, it describes the same rotation but the distance from the origin
 to that quaternion becomes 1 (unless all its components are 0).
 A quaternion is normalized by dividing each of its components
 by its <a href="H3DU.Math.md#H3DU.Math.quatLength">length</a>.
@@ -460,7 +461,8 @@ by its <a href="H3DU.Math.md#H3DU.Math.quatLength">length</a>.
 
 #### Return Value
 
-The parameter "quat". (Type: Array.&lt;Number>)
+The parameter "quat".
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
 #### See Also
 
@@ -1307,7 +1309,8 @@ normal's length. Returns a new plane.
 #### Return Value
 
 A normalized version of
-the plane. (Type: Array.&lt;Number>)
+the plane.
+Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.planeNormInPlace(plane) <a id='H3DU.Math.planeNormInPlace'></a>
 
@@ -1458,10 +1461,10 @@ The quaternions are multiplied such that the second quaternion's
 rotation happens before the first quaternion's rotation when applied
 in the global coordinate frame.
 
-Multiplying two unit quaternions (each with a length of 1) will result
-in a unit quaternion. However, for best results, you should
+If both quaternions are <a href="tutorial-glmath.md">unit vectors</a>, the resulting
+quaternion will also be a unit vector. However, for best results, you should
 normalize the quaternions every few multiplications (using
-quatNorm or quatNormInPlace), since successive
+<a href="H3DU.Math.md#H3DU.Math.quatNorm">H3DU.Math.quatNorm</a> or <a href="H3DU.Math.md#H3DU.Math.quatNormInPlace">H3DU.Math.quatNormInPlace</a>), since successive
 multiplications can cause rounding errors.
 
 #### Parameters
@@ -1781,7 +1784,7 @@ calculate a triangle's normal vector and its area.
 
 ### (static) H3DU.Math.vec3dist(vecFrom, vecTo) <a id='H3DU.Math.vec3dist'></a>
 
-Finds the Euclidean distance from one three-element vector
+Finds the straight-line distance from one three-element vector
 to another, treating both as 3D points.
 
 #### Parameters
@@ -1978,7 +1981,24 @@ by its <a href="H3DU.Math.md#H3DU.Math.vec3length">length</a>.
 
 #### Return Value
 
-The resulting vector. (Type: Array.&lt;Number>)
+The resulting vector.
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+
+#### Example
+
+The following example changes the
+length of a line segment.
+
+    var startPt=[x1,y1,z1]; // Line segment's start
+    var endPt=[x2,y2,z2]; // Line segment's end
+    // Find difference between endPt and startPt
+    var delta=H3DU.Math.vec3sub(endPt,startPt);
+    // Normalize delta to a unit vector
+    var deltaNorm=H3DU.Math.vec3norm(delta);
+    // Rescale to the desired length, here, 10
+    H3DU.Math.vec3scaleInPlace(deltaNorm,10);
+    // Find the new endpoint
+    endPt=H3DU.Math.vec3add(startPt,deltaNorm);
 
 ### (static) H3DU.Math.vec3normInPlace(vec) <a id='H3DU.Math.vec3normInPlace'></a>
 
@@ -1995,7 +2015,8 @@ by its <a href="H3DU.Math.md#H3DU.Math.vec3length">length</a>.
 
 #### Return Value
 
-The parameter "vec". (Type: Array.&lt;Number>)
+The parameter "vec".
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec3perp(vec) <a id='H3DU.Math.vec3perp'></a>
 
@@ -2308,7 +2329,7 @@ The parameter "a". (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec4norm(vec) <a id='H3DU.Math.vec4norm'></a>
 
-Converts 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
+Converts 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -2321,7 +2342,8 @@ by its <a href="H3DU.Math.md#H3DU.Math.vec4length">length</a>.
 
 #### Return Value
 
-The resulting vector. (Type: Array.&lt;Number>)
+The resulting vector.
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec4normInPlace(vec) <a id='H3DU.Math.vec4normInPlace'></a>
 
@@ -2338,7 +2360,8 @@ by its <a href="H3DU.Math.md#H3DU.Math.vec4length">length</a>.
 
 #### Return Value
 
-The parameter "vec". (Type: Array.&lt;Number>)
+The parameter "vec".
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec4scale(a, scalar) <a id='H3DU.Math.vec4scale'></a>
 

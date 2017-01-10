@@ -55,7 +55,6 @@ var H3DU = {
  * @param {Function} func The function to call. The function
  * takes one parameter, "time", which is the number of
  * milliseconds since the page was loaded.
-
  * @returns {Object} Return value.
  */
   "renderLoop":function(func) {

@@ -517,7 +517,6 @@ H3DU.Math = {
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * @param {Array<Number>} a The first 4-element vector.
  * @param {Array<Number>} b The second 4-element vector.
-
  * @returns {Object} Return value.
  */
   "vec4dot":function(a, b) {
@@ -584,6 +583,7 @@ H3DU.Math = {
  * by its [length]{@link H3DU.Math.vec3length}.
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The parameter "vec".
+ * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec3normInPlace":function(vec) {
     "use strict";
@@ -600,7 +600,7 @@ H3DU.Math = {
     return vec;
   },
 /**
- * Finds the Euclidean distance from one three-element vector
+ * Finds the straight-line distance from one three-element vector
  * to another, treating both as 3D points.
  * @param {Array<Number>} vecFrom The first 3-element vector.
  * @param {Array<Number>} vecTo The second 3-element vector.
@@ -618,6 +618,7 @@ H3DU.Math = {
  * by its [length]{@link H3DU.Math.vec4length}.
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The parameter "vec".
+ * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec4normInPlace":function(vec) {
     "use strict";
@@ -643,19 +644,33 @@ H3DU.Math = {
  * by its [length]{@link H3DU.Math.vec3length}.
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The resulting vector.
+ * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+ * @example <caption>The following example changes the
+ * length of a line segment. </caption>
+ * var startPt=[x1,y1,z1]; // Line segment's start
+ * var endPt=[x2,y2,z2]; // Line segment's end
+ * // Find difference between endPt and startPt
+ * var delta=H3DU.Math.vec3sub(endPt,startPt);
+ * // Normalize delta to a unit vector
+ * var deltaNorm=H3DU.Math.vec3norm(delta);
+ * // Rescale to the desired length, here, 10
+ * H3DU.Math.vec3scaleInPlace(deltaNorm,10);
+ * // Find the new endpoint
+ * endPt=H3DU.Math.vec3add(startPt,deltaNorm);
  */
   "vec3norm":function(vec) {
     "use strict";
     return H3DU.Math.vec3normInPlace([vec[0], vec[1], vec[2]]);
   },
 /**
- * Converts 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+ * Converts 4-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link H3DU.Math.vec4length}.
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The resulting vector.
+ * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec4norm":function(vec) {
     "use strict";
@@ -2107,10 +2122,10 @@ m[0] * m[7] * m[5];
  * The quaternions are multiplied such that the second quaternion's
  * rotation happens before the first quaternion's rotation when applied
  * in the global coordinate frame.<p>
- * Multiplying two unit quaternions (each with a length of 1) will result
- * in a unit quaternion. However, for best results, you should
+ * If both quaternions are [unit vectors]{@tutorial glmath}, the resulting
+ * quaternion will also be a unit vector. However, for best results, you should
  * normalize the quaternions every few multiplications (using
- * quatNorm or quatNormInPlace), since successive
+ * {@link H3DU.Math.quatNorm} or {@link H3DU.Math.quatNormInPlace}), since successive
  * multiplications can cause rounding errors.
  * @param {Array<Number>} a The first quaternion.
  * @param {Array<Number>} b The second quaternion.
@@ -2335,6 +2350,7 @@ m[0] * m[7] * m[5];
  * divided by the normal's length.
  * @returns {Array<Number>} A normalized version of
  * the plane.
+ * Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "planeNorm":function(plane) {
     "use strict";
@@ -2573,13 +2589,14 @@ m[0] * m[7] * m[5];
 H3DU.Math.quatDot = H3DU.Math.vec4dot;
 /**
  * Converts a quaternion to a [unit vector]{@tutorial glmath}.
- * When a quaternion is normalized, it describes the same orientation but the distance from the origin
+ * When a quaternion is normalized, it describes the same rotation but the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link H3DU.Math.quatLength}.
  * @function
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The parameter "quat".
+ * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
  * @memberof! H3DU.Math
@@ -2595,6 +2612,7 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * @function
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The normalized quaternion.
+ * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
  * @memberof! H3DU.Math

@@ -79,7 +79,7 @@ plane is not necessary, but practically speaking it is, in order to make the mat
 
 Note further that:
 
-* The angle separating the top and bottom clipping planes is the projection's _field of view_. This is an angle
+* The angle separating the top and bottom clipping planes is the projection's _field of view_. This angle is
 similar to the aperture of a camera. The greater the vertical field of view, the greater
 the vertical visibility range.
 * In a perspective projection, the view volume will resemble a "pyramid" with the top chopped off (a _frustum_). The
@@ -245,8 +245,7 @@ transforms W to the negative Z coordinate in eye space.
 
 To take perspective into account, the clip space X, Y, and Z coordinates are
 divided by the clip space W, and then converted to _window coordinates_,
-which correspond roughly to the location of the triangle or other primitive
-on the screen or frame buffer (off-screen buffer). The window coordinates
+which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels; to set the viewport's
 size, call the [`setDimensions` method of `Scene3D`]{@link H3DU.Scene3D#setDimensions}.

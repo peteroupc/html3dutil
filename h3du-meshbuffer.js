@@ -186,7 +186,6 @@ H3DU.MeshBuffer.prototype.primitiveType = function() {
 /**
  * @param {Object} name Description of name.
  * @memberof! H3DU.MeshBuffer#
-
  * @returns {Object} Return value.
  */
 H3DU.MeshBuffer.prototype.getFormat = function() {

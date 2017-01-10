@@ -75,7 +75,6 @@ H3DU.Scene3D = function(canvasOrContext) {
 /**
  * Gets the HTML canvas associated with this scene.
  * @memberof! H3DU.Scene3D#
-
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.prototype.getCanvas = function() {
@@ -117,7 +116,6 @@ H3DU.Scene3D._flagsForShape = function(shape) {
   return flags;
 };
 /** @private
-
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.ProgramCache = function() {
@@ -161,7 +159,6 @@ H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
 /** @private
  * @param {Object} flags Description of flags.
  * @param {Object} context Description of context.
-
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
@@ -424,7 +421,6 @@ H3DU.Scene3D.prototype.getAspect = function() {
   return this.getWidth() / ch;
 };
 /** @private
-
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.prototype.getClientWidth = function() {
@@ -432,7 +428,6 @@ H3DU.Scene3D.prototype.getClientWidth = function() {
   return this.context.canvas.clientWidth;
 };
 /** @private
-
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.prototype.getClientHeight = function() {
@@ -661,7 +656,6 @@ H3DU.Scene3D.prototype._setClearColor = function() {
 /**
  * Disposes all resources used by this object.
  * @memberof! H3DU.Scene3D#
-
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.prototype.dispose = function() {

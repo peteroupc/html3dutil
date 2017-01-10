@@ -104,7 +104,6 @@ H3DU.ShapeGroup.prototype.getMatrix = function() {
  * @param {H3DU.Transform} transform The transform to
  * copy for the use of this shape group.
  * @memberof! H3DU.ShapeGroup#
-
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setTransform = function(transform) {
@@ -116,7 +115,6 @@ H3DU.ShapeGroup.prototype.setTransform = function(transform) {
  * Sets the material used by all shapes in this shape group.
  * @param {H3DU.Material} material The material to use.
  * @memberof! H3DU.ShapeGroup#
-
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setMaterial = function(material) {
@@ -134,7 +132,6 @@ H3DU.ShapeGroup.prototype.setMaterial = function(material) {
  * the JavaScript DOM's Image class. However, this method
  * will not load that image if it hasn't been loaded yet.
  * @memberof! H3DU.ShapeGroup#
-
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setTexture = function(material) {
@@ -150,7 +147,6 @@ H3DU.ShapeGroup.prototype.setTexture = function(material) {
  * shader program. <i>Using a {@link H3DU.ShaderProgram} here
  * is deprecated.</i>
  * @memberof! H3DU.ShapeGroup#
-
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setShader = function(material) {
@@ -278,7 +274,7 @@ H3DU.ShapeGroup.prototype.setPosition = function(x, y, z) {
   return this;
 };
 /**
- * Sets this shape group's orientation in the form of a [quaternion]{@tutorial glmath}.
+ * Sets this shape group's rotation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link H3DU.Transform#setQuaternion}.
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.

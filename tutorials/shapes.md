@@ -241,15 +241,16 @@ each unique vertex its own normal (smooth shading).
 is shaded from the inside; otherwise, `false`.
 
 For normal calculation to properly affect shading, each triangle in
-the mesh must have its vertices ordered in the same orientation throughout. If the
-vertices are oriented in the wrong order, use the [`reverseWinding()`]{@link H3DU.Mesh#reverseWinding}
+the mesh must have its vertices ordered in the same winding (counterclockwise or
+clockwise) throughout. If the
+vertices have the wrong order, use the [`reverseWinding()`]{@link H3DU.Mesh#reverseWinding}
 method to change their order.
 
 > Note: For right-handed coordinate systems, as will be the case when using,
 > for example, the [`Batch3D.perspectiveAspect()`]{@link H3DU.Batch3D#perspectiveAspect} method,
 > if the mesh describes a closed convex surface (such as a sphere or cube),
 > each triangle's vertices (as they appear when the triangle's front side is seen)
-> must be oriented counterclockwise for the shape to be shaded from the outside.
+> must be ordered counterclockwise for the shape to be shaded from the outside.
 
 Example:
 
@@ -263,8 +264,9 @@ Example:
 Once you have a mesh of a 3D shape, you still need to attach it to a shape
 and a batch of shapes in order for the renderer to draw it. This is where
 the [`H3DU.Shape`]{@link H3DU.Shape} class comes into
-play; this class associates a 3D mesh with its location and orientation in the scene,
-as well as its color and appearance. To attach a mesh to a 3D scene:
+play; this class associates a 3D mesh with its location in the scene,
+as well as its color, its appearance, and how its vertices will be transformed.
+To attach a mesh to a 3D scene:
 
 (1) Create a `Shape` object by passing the mesh to the `H3DU.Shape` constructor:
 

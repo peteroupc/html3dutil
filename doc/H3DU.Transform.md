@@ -28,11 +28,11 @@ for describing 3D rotations).
 * [reset](#H3DU.Transform_H3DU.Transform_reset)<br>Resets this transform to the untransformed state.
 * [resetTransform](#H3DU.Transform_H3DU.Transform_resetTransform)<br><b>Deprecated: Use the "reset" method instead.</b>
 * [setMatrix](#H3DU.Transform_H3DU.Transform_setMatrix)<br>Sets this transform's transformation matrix.
-* [setOrientation](#H3DU.Transform_H3DU.Transform_setOrientation)<br>Sets this transform's orientation in the form of an angle and an axis of
+* [setOrientation](#H3DU.Transform_H3DU.Transform_setOrientation)<br>Sets this transform's rotation in the form of an angle and an axis of
 rotation.
 * [setPosition](#H3DU.Transform_H3DU.Transform_setPosition)<br>Sets the relative position of an object from its original
 position.
-* [setQuaternion](#H3DU.Transform_H3DU.Transform_setQuaternion)<br>Sets this transform's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+* [setQuaternion](#H3DU.Transform_H3DU.Transform_setQuaternion)<br>Sets this transform's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations).
 * [setScale](#H3DU.Transform_H3DU.Transform_setScale)<br>Sets the scale of an object relative to its original
 size.
@@ -160,11 +160,11 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 #### Example
 
-    // Combine an object's orientation with a rotation 20 degrees about the X axis
+    // Combine an object's rotation with a rotation 20 degrees about the X axis
     transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
-    // Combine an object's orientation with identity (no rotation)
+    // Combine an object's rotation with identity
     transform.multQuaternion(H3DU.Math.quatIdentity());
-    // Combine an object's orientation with 30 degree pitch multiplied
+    // Combine an object's rotation with 30 degree pitch multiplied
     // by 40 degree roll
     transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 
@@ -203,7 +203,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#setOrientation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_setOrientation'></a>
 
-Sets this transform's orientation in the form of an angle and an axis of
+Sets this transform's rotation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
@@ -243,7 +243,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#setQuaternion(quat) <a id='H3DU.Transform_H3DU.Transform_setQuaternion'></a>
 
-Sets this transform's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+Sets this transform's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
@@ -258,11 +258,11 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 #### Example
 
-    // Set an object's orientation to 30 degrees about the X axis
+    // Set an object's rotation to 30 degrees about the X axis
     transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
-    // Set an object's orientation to identity (no rotation)
+    // Set an object's rotation to identity (the object isn't transformed)
     transform.setQuaternion(H3DU.Math.quatIdentity());
-    // Set an object's orientation to 30 degree pitch multiplied
+    // Set an object's rotation to 30 degree pitch multiplied
     // by 40 degree roll
     transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 

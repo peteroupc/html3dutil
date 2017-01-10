@@ -20,7 +20,6 @@ var Polyhedra = {};
  * vertex's X, Y, and Z coordinates are stored as three elements of that array.
  * @param {Number} radius Distance from the origin where each vertex
  * will be normalized to.
-
  * @returns {Object} Return value.
  */
 Polyhedra.normDistances = function(vertices, radius) {

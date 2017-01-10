@@ -445,7 +445,7 @@ For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
 To invert a **rotation**, swap the 2nd and 5th elements of the matrix, the 3rd and 9th
 elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4, 2, 8,
 6, and 9 respectively). The effect is like reversing the angle of the rotation to reset an object
-to its original orientation.
+to its previous orientation.
 
 Matrices that use some combination of translation, scaling, and rotation
 as well as other kinds of matrices are more complicated

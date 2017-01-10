@@ -29,7 +29,7 @@ and points) composed by all shapes in this scene.
 * [setMaterialParams](#H3DU.Shape_H3DU.Shape_setMaterialParams)<br>Sets parameters of this shape's material.
 * [setPosition](#H3DU.Shape_H3DU.Shape_setPosition)<br>Sets the relative position of this shape from its original
 position.
-* [setQuaternion](#H3DU.Shape_H3DU.Shape_setQuaternion)<br>Sets this object's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+* [setQuaternion](#H3DU.Shape_H3DU.Shape_setQuaternion)<br>Sets this object's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 * [setScale](#H3DU.Shape_H3DU.Shape_setScale)<br>Sets the scale of this shape relative to its original
 size.
 * [setShader](#H3DU.Shape_H3DU.Shape_setShader)<br>Sets this shape's material to a shader with the given URL.
@@ -184,7 +184,7 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
 ### H3DU.Shape#setQuaternion(quat) <a id='H3DU.Shape_H3DU.Shape_setQuaternion'></a>
 
-Sets this object's orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+Sets this object's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 See H3DU.Transform#setQuaternion.
 
 #### Parameters

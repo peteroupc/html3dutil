@@ -136,7 +136,6 @@ H3DU.Texture.fromUint8Array = function(array, width, height) {
 
 /** @private
  * @param {Object} name Description of name.
-
  * @returns {Object} Return value.
  */
 H3DU.Texture.loadTga = function(name) {
@@ -211,7 +210,6 @@ H3DU.Texture.loadTga = function(name) {
 };
 
 /** @private
-
  * @returns {Object} Return value.
  */
 H3DU.Texture.prototype.loadImage = function() {
@@ -270,7 +268,6 @@ H3DU.Texture.prototype.loadImage = function() {
 /**
  * Disposes resources used by this texture.
  * @memberof! H3DU.Texture#
-
  * @returns {Object} Return value.
  */
 H3DU.Texture.prototype.dispose = function() {
