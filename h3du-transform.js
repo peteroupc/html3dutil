@@ -300,6 +300,35 @@ H3DU.Transform.prototype.setQuaternion = function(quat) {
  * @returns {H3DU.Transform} This object.
  * @memberof! H3DU.Transform#
  */
+H3DU.Transform.prototype.setRotation = function(angle, v, vy, vz) {
+  "use strict";
+  return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
+};
+/**
+ * Sets this transform's rotation in the form of an angle and an axis of
+ * rotation. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @deprecated Use {@link H3DU.Transform#setRotation} instead.
+ * This method's name is inaccurate because orientations are not rotations.
+ * @param {Array<Number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element. If the axis of rotation
+ * points toward the viewer, a positive value means the angle runs in
+ * a counterclockwise direction for right-handed coordinate systems and
+ * in a clockwise direction for left-handed systems.
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {Number} vy Y-component of the point lying on the axis
+ * of rotation.
+ * @param {Number} vz Z-component of the point lying on the axis
+ * of rotation.
+ * @returns {H3DU.Transform} This object.
+ * @memberof! H3DU.Transform#
+ */
 H3DU.Transform.prototype.setOrientation = function(angle, v, vy, vz) {
   "use strict";
   return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
@@ -341,7 +370,33 @@ H3DU.Transform.prototype.multQuaternion = function(quat) {
  * Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
  * @param {Array<Number>|number} angle The desired angle
- * to rotate in degrees. See {@link H3DU.Transform#setOrientation}.
+ * to rotate in degrees. See {@link H3DU.Transform#setRotation}.
+ * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {Number} vy Y-component of the point lying on the axis
+ * of rotation.
+ * @param {Number} vz Z-component of the point lying on the axis
+ * of rotation.
+ * @returns {H3DU.Transform} This object.
+ * @memberof! H3DU.Transform#
+ */
+H3DU.Transform.prototype.multRotation = function(angle, v, vy, vz) {
+  "use strict";
+  return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
+};
+/**
+ * Combines an object's current rotation with another rotation
+ * in the form of an angle and an axis of
+ * rotation. The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ * Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @deprecated Use {@link H3DU.Transform#multRotation} instead.
+ * This method's name is inaccurate because orientations are not rotations.
+ * @param {Array<Number>|number} angle The desired angle
+ * to rotate in degrees. See {@link H3DU.Transform#setRotation}.
  * @param {Array<Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis

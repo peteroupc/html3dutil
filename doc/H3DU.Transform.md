@@ -19,21 +19,25 @@ height, and depth, respectively.
 * [isIdentity](#H3DU.Transform_H3DU.Transform_isIdentity)<br>Returns whether this transform is the identity transform.
 * [movePosition](#H3DU.Transform_H3DU.Transform_movePosition)<br>Moves the relative position of an object from its original
 position.
-* [multOrientation](#H3DU.Transform_H3DU.Transform_multOrientation)<br>Combines an object's current rotation with another rotation
-in the form of an angle and an axis of
-rotation.
+* [multOrientation](#H3DU.Transform_H3DU.Transform_multOrientation)<br><b>Deprecated: Use H3DU.Transform#multRotation instead.
+This method's name is inaccurate because orientations are not rotations.</b>
 * [multQuaternion](#H3DU.Transform_H3DU.Transform_multQuaternion)<br>Combines an object's current rotation with another rotation
 described by a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations).
+* [multRotation](#H3DU.Transform_H3DU.Transform_multRotation)<br>Combines an object's current rotation with another rotation
+in the form of an angle and an axis of
+rotation.
 * [reset](#H3DU.Transform_H3DU.Transform_reset)<br>Resets this transform to the untransformed state.
 * [resetTransform](#H3DU.Transform_H3DU.Transform_resetTransform)<br><b>Deprecated: Use the "reset" method instead.</b>
 * [setMatrix](#H3DU.Transform_H3DU.Transform_setMatrix)<br>Sets this transform's transformation matrix.
-* [setOrientation](#H3DU.Transform_H3DU.Transform_setOrientation)<br>Sets this transform's rotation in the form of an angle and an axis of
-rotation.
+* [setOrientation](#H3DU.Transform_H3DU.Transform_setOrientation)<br><b>Deprecated: Use H3DU.Transform#setRotation instead.
+This method's name is inaccurate because orientations are not rotations.</b>
 * [setPosition](#H3DU.Transform_H3DU.Transform_setPosition)<br>Sets the relative position of an object from its original
 position.
 * [setQuaternion](#H3DU.Transform_H3DU.Transform_setQuaternion)<br>Sets this transform's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations).
+* [setRotation](#H3DU.Transform_H3DU.Transform_setRotation)<br>Sets this transform's rotation in the form of an angle and an axis of
+rotation.
 * [setScale](#H3DU.Transform_H3DU.Transform_setScale)<br>Sets the scale of an object relative to its original
 size.
 
@@ -118,6 +122,9 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#multOrientation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_multOrientation'></a>
 
+<b>Deprecated: Use H3DU.Transform#multRotation instead.
+This method's name is inaccurate because orientations are not rotations.</b>
+
 Combines an object's current rotation with another rotation
 in the form of an angle and an axis of
 rotation. The combined rotation will have the
@@ -128,7 +135,7 @@ and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 #### Parameters
 
 * `angle` (Type: Array.&lt;Number> | number)<br>
-    The desired angle to rotate in degrees. See H3DU.Transform#setOrientation.
+    The desired angle to rotate in degrees. See H3DU.Transform#setRotation.
 * `v` (Type: Array.&lt;Number> | number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
 * `vy` (Type: Number)<br>
@@ -168,6 +175,30 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
     // by 40 degree roll
     transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 
+### H3DU.Transform#multRotation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_multRotation'></a>
+
+Combines an object's current rotation with another rotation
+in the form of an angle and an axis of
+rotation. The combined rotation will have the
+same effect as the new rotation followed by the existing rotation.
+Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
+
+#### Parameters
+
+* `angle` (Type: Array.&lt;Number> | number)<br>
+    The desired angle to rotate in degrees. See H3DU.Transform#setRotation.
+* `v` (Type: Array.&lt;Number> | number)<br>
+    X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
+* `vy` (Type: Number)<br>
+    Y-component of the point lying on the axis of rotation.
+* `vz` (Type: Number)<br>
+    Z-component of the point lying on the axis of rotation.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
+
 ### H3DU.Transform#reset() <a id='H3DU.Transform_H3DU.Transform_reset'></a>
 
 Resets this transform to the untransformed state.
@@ -202,6 +233,9 @@ accordingly to the matrix given.
 This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#setOrientation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_setOrientation'></a>
+
+<b>Deprecated: Use H3DU.Transform#setRotation instead.
+This method's name is inaccurate because orientations are not rotations.</b>
 
 Sets this transform's rotation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
@@ -265,6 +299,27 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
     // Set an object's rotation to 30 degree pitch multiplied
     // by 40 degree roll
     transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
+
+### H3DU.Transform#setRotation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_setRotation'></a>
+
+Sets this transform's rotation in the form of an angle and an axis of
+rotation. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
+
+#### Parameters
+
+* `angle` (Type: Array.&lt;Number> | number)<br>
+    The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
+* `v` (Type: Array.&lt;Number> | number)<br>
+    X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
+* `vy` (Type: Number)<br>
+    Y-component of the point lying on the axis of rotation.
+* `vz` (Type: Number)<br>
+    Z-component of the point lying on the axis of rotation.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 ### H3DU.Transform#setScale(x, y, z) <a id='H3DU.Transform_H3DU.Transform_setScale'></a>
 

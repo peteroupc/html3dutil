@@ -156,7 +156,7 @@ Here are details on some of the `Shape` class&#39;s methods.
   <br>Sets the shape&#39;s position to the given coordinates.
   * <dfn>`shape.setScale(x, y, z)`</dfn>
   <br>Sets the shape&#39;s scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.
-  * <dfn>`shape.getTransform().setOrientation(angle, x, y, z)`</dfn>
+  * <dfn>`shape.getTransform().setRotation(angle, x, y, z)`</dfn>
   <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).
   * <dfn>`shape.setColor(color)`</dfn>
   <br>Gives the shape a particular color. `color` can be an HTML color ("#ff0000"), CSS color ("red"), RGB color("rgb(20, 30, 40)") or HSL color("hsl(20, 50%, 50%)"), or a set of values from 0 to 1 (example: `[1.0,0.5,0.0]`).
