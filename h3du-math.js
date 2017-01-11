@@ -71,17 +71,26 @@ H3DU.Math = {
  * <b>b</b>'s X).<p>
  * The following are properties of the dot product:
  * <ul>
+ * <li>The dot
+ * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
+ * where |<b>x</b>| is the length of vector <b>x</b>, and
+ * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
+ * It follows that:<ul>
+ * <li>A dot product of 0 indicates that the vectors are 90
+ * degrees apart, making them <i>orthogonal</i>
+ * (perpendicular to each other).
+ * <li>A dot product greater than 0 means less than 90 degrees apart.
+ * <li>A dot product less than 0 means greater than 90 degrees apart.
  * <li>If both vectors are [unit vectors]{@tutorial glmath}, the cosine
  * of the angle between them is equal to their dot product.
- * <small>(More formally, the dot
- * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
- * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
- * However, the resulting angle (found using the <code>Math.acos</code>
- * function) will never be negative, so it can't
+ * However, <code>Math.acos</code> won't return a negative angle
+ * from that cosine, so the dot product can't
  * be used to determine if one vector is "ahead of" or "behind" another
  * vector.
- * <li>A dot product of 0 indicates that the two vectors
- * are <i>orthogonal</i> (perpendicular to each other).
+ * <li>If both vectors are unit vectors, a dot product of 1 or -1 indicates
+ * that the two vectors are parallel (and the vectors are 0 or
+ * 180 degrees apart, respectively.)
+ * </ul></li>
  * <li>If the two vectors are the same, the return value indicates
  * the vector's length squared. This is illustrated in the example.
  * </ul>
@@ -347,11 +356,12 @@ H3DU.Math = {
     return a;
   },
 /**
- * Multiplies each element of a 3-element vector by a factor
- * (thus multiplying that vector's length by that factor)
- * and stores the result in that vector.
+ * Multiplies each element of a 3-element vector by a factor, so
+ * that the vector points in the same direction
+ * but its length is multiplied by the given factor.
  * @param {Array<Number>} a A 3-element vector.
- * @param {Number} scalar A factor to multiply.
+ * @param {Number} scalar A factor to multiply. To divide
+ * a vector by a number, the factor will be 1 divided by that number.
  * @returns {Array<Number>} The parameter "a".
  */
   "vec3scaleInPlace":function(a, scalar) {
@@ -363,11 +373,12 @@ H3DU.Math = {
   },
 
 /**
- * Multiplies a 3-element vector by a factor
- * (thus multiplying that vector's length by that factor)
- * and returns a new vector with the result.
+ * Multiplies each element of a 3-element vector by a factor. Returns
+ * a new vector that will point in the same direction
+ * but with its length multiplied by the given factor.
  * @param {Array<Number>} a A 3-element vector.
- * @param {Number} scalar A factor to multiply.
+ * @param {Number} scalar A factor to multiply. To divide
+ * a vector by a number, the factor will be 1 divided by that number.
  * @returns {Array<Number>} The parameter "a".
  */
   "vec3scale":function(a, scalar) {
@@ -380,9 +391,9 @@ H3DU.Math = {
  * @param {Array<Number>} v1 The first vector to interpolate.
  * The interpolation will occur on each component of this vector and v2.
  * @param {Array<Number>} v2 The second vector to interpolate.
- * @param {Number} factor A value from 0 through 1. Closer to 0 means
+ * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear
- * interpolation, define a function that takes a value from 0 through 1 and returns
+ * interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns
  * a value generally ranging from 0 through 1, and pass the result of that
  * function to this method.<br>
  * The following are examples of interpolation functions. See also
@@ -475,18 +486,10 @@ H3DU.Math = {
  * @param {Array<Number>} vector A 3-element vector giving
  * the X, Y, and Z coordinates of the 3D point to transform.
  * @param {Array<Number>} matrix A 4x4 matrix to use to transform
- * the vector according to the {@link H3DU.Math.mat4projectVec3} method.
- * This will generally be
- * a projection-view matrix, that is, the projection matrix multiplied
- * by the view matrix, in that order, if the vector to transform is in <i>world space</i>,
- * or a model-view-projection matrix, that is, a projection-view matrix multiplied
- * by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.
- * The rest of the method will convert the transformed X and Y coordinates
- * to window coordinates. If the matrix includes a projection transform returned
- * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
- * similar {@link H3DU.Math} methods, the coordinates transformed this way will be
- * as described in {@link H3DU.Math.mat4projectVec3} under the "matrix" parameter,
- * before they are converted to window coordinates.
+ * the vector according to the {@link H3DU.Math.mat4projectVec3} method,
+ * before its transformed X and Y coordinates
+ * are converted to window coordinates.
+ * See that method for more information.
  * @param {Array<Number>} viewport A 4-element array specifying
  * the starting position and size of the viewport in window units
  * (such as pixels). In order, the four elements are the starting position's
@@ -524,11 +527,12 @@ H3DU.Math = {
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
   },
 /**
- * Multiplies each element of a 4-element vector by a factor
- * (thus multiplying that vector's length by that factor)
- * and stores the result in that vector.
+ * Multiplies each element of a 4-element vector by a factor, so
+ * that the vector points in the same direction
+ * but its length is multiplied by the given factor.
  * @param {Array<Number>} a A 4-element vector.
- * @param {Number} scalar A factor to multiply.
+ * @param {Number} scalar A factor to multiply. To divide
+ * a vector by a number, the factor will be 1 divided by that number.
  * @returns {Array<Number>} The parameter "a".
  */
   "vec4scaleInPlace":function(a, scalar) {
@@ -540,11 +544,12 @@ H3DU.Math = {
     return a;
   },
 /**
- * Multiplies each element of a 4-element vector by a factor
- * (thus multiplying that vector's length by that factor)
- * and returns a new vector with the result.
+ * Multiplies each element of a 4-element vector by a factor. Returns
+ * a new vector that will point in the same direction
+ * but with its length multiplied by the given factor.
  * @param {Array<Number>} a A 4-element vector.
- * @param {Number} scalar A factor to multiply.
+ * @param {Number} scalar A factor to multiply. To divide
+ * a vector by a number, the factor will be 1 divided by that number.
  * @returns {Array<Number>} The resulting 4-element vector.
  */
   "vec4scale":function(a, scalar) {
@@ -557,11 +562,11 @@ H3DU.Math = {
  * @param {Array<Number>} v1 The first vector to interpolate.
  * The interpolation will occur on each component of this vector and v2.
  * @param {Array<Number>} v2 The second vector to interpolate.
- * @param {Number} factor A value from 0 through 1. Closer to 0 means
+ * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2. For a nonlinear
- * interpolation, define a function that takes a value from 0 through 1
+ * interpolation, define a function that takes a value that usually ranges from 0 through 1
  * and generally returns
- * a value from 0 through 1, and pass the result of that function to this method.
+ * A value that usually ranges from 0 through 1, and pass the result of that function to this method.
  * See the examples in the documentation for {@link H3DU.Math.vec3lerp}
  * for examples of interpolation functions.
  * @returns {Array<Number>} The interpolated vector.
@@ -680,7 +685,11 @@ H3DU.Math = {
  * Returns the distance of this 3-element vector from the origin,
  * also known as its <i>length</i> or <i>magnitude</i>.
  * It's the same as the square root of the sum of the squares
- * of its components.
+ * of its components.<p>
+ * Note that if vectors are merely sorted or compared by their lengths,
+ * it's faster to sort or compare them by the squares of their lengths (to find
+ * the square of a 3-element vector's length, call {@link H3DU.Math.vec3dot}
+ * passing the same vector as both of its arguments).
  * @param {Array<Number>} a A 3-element vector.
  * @returns {Number} Return value. */
   "vec3length":function(a) {
@@ -694,7 +703,11 @@ H3DU.Math = {
  * Returns the distance of this 4-element vector from the origin,
  * also known as its <i>length</i> or <i>magnitude</i>.
  * It's the same as the square root of the sum of the squares
- * of its components.
+ * of its components.<p>
+ * Note that if vectors are merely sorted or compared by their lengths,
+ * it's faster to sort or compare them by the squares of their lengths (to find
+ * the square of a 4-element vector's length, call {@link H3DU.Math.vec4dot}
+ * passing the same vector as both of its arguments).
  * @param {Array<Number>} a A 4-element vector.
  * @returns {Number} Return value. */
   "vec4length":function(a) {
@@ -1011,6 +1024,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
  * @returns {Array<Number>} The generated quaternion.
+ * A quaternion's first three elements (X, Y, Z) describe an
+ * [axis of rotation]{@tutorial glmath} whose length is the sine of "angle",
+ * and is fourth element (W) is the cosine of "angle".
  */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
     "use strict";
@@ -1190,7 +1206,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * the {@link H3DU.Math.quatSlerp} method.
  * @param {Array<Number>} q1 The first quaternion. Must be a unit vector.
  * @param {Array<Number>} q2 The second quaternion. Must be a unit vector.
- * @param {Number} factor A value from 0 through 1. Closer to 0 means
+ * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion,
  * which will be a unit vector.
@@ -1229,7 +1245,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * than the [quatNlerp]{@link H3DU.Math.quatNlerp} method.
  * @param {Array<Number>} q1 The first quaternion. Must be a [unit vector]{@tutorial glmath}.
  * @param {Array<Number>} q2 The second quaternion. Must be a unit vector.
- * @param {Number} factor A value from 0 through 1. Closer to 0 means
+ * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array<Number>} The interpolated quaternion.
  * @see ["Understanding Slerp, Then Not Using It", Jonathan Blow](http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/),
@@ -1419,7 +1435,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns the transposed result of the inverted 3x3 upper left corner of
  * the given 4x4 matrix.<p>
- * This is usually used to convert a model-view matrix to a matrix
+ * This is usually used to convert a world matrix to a matrix
  * for transforming surface normals in order to keep them perpendicular
  * to a surface transformed by the world matrix. Normals are then
  * transformed by this matrix and then converted to [unit vectors]{@tutorial glmath}. But if the

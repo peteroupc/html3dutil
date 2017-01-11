@@ -4,7 +4,7 @@ This page will introduce the [**HTML 3D Library**](https://github.com/peteroupc/
 
 This library contains classes and utility methods to ease the development of HTML 3D applications, such as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 
-The library differs from many others because this one is in the public domain, so no license is required to use it.
+The library differs from many others because this one is in the public domain, so no permission is required to use it.
 
 This page includes information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.
 

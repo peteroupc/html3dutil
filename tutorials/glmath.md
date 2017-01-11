@@ -5,7 +5,7 @@ Here is an overview of these data types.
 
 ## Contents <a id=Contents></a>
 
-[Contents](#Contents)<br>[Vectors](#Vectors)<br>&nbsp;&nbsp;[Unit Vectors](#Unit_Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Describing Rotations](#Describing_Rotations)<br>&nbsp;&nbsp;[Axis of Rotation](#Axis_of_Rotation)<br>&nbsp;&nbsp;[Quaternions](#Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Makeup of Quaternions](#Makeup_of_Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Multiplying quaternions](#Multiplying_quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles](#Tait_Bryan_angles)<br>[Planes](#Planes)<br>[Boxes](#Boxes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Projection and view matrices](#Projection_and_view_matrices)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Cross product (`vec3cross`) and normals](#Cross_product_vec3cross_and_normals)<br>&nbsp;&nbsp;[Winding and face classification](#Winding_and_face_classification)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Finding a triangle's winding](#Finding_a_triangle_s_winding)<br>
+[Contents](#Contents)<br>[Vectors](#Vectors)<br>&nbsp;&nbsp;[Unit Vectors](#Unit_Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Describing Rotations](#Describing_Rotations)<br>&nbsp;&nbsp;[Axis of Rotation](#Axis_of_Rotation)<br>&nbsp;&nbsp;[Quaternions](#Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Generating Quaternions](#Generating_Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Multiplying Quaternions](#Multiplying_Quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles](#Tait_Bryan_angles)<br>&nbsp;&nbsp;[4x4 Matrices](#4x4_Matrices)<br>[Planes](#Planes)<br>[Boxes](#Boxes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Projection and view matrices](#Projection_and_view_matrices)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Cross product (`vec3cross`) and normals](#Cross_product_vec3cross_and_normals)<br>&nbsp;&nbsp;[Winding and face classification](#Winding_and_face_classification)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Finding a triangle's winding](#Finding_a_triangle_s_winding)<br>
 
 ## Vectors <a id=Vectors></a>
 
@@ -141,34 +141,32 @@ A quaternion is a 4-element vector that can describe a
 3D rotation. Functions dealing with quaternions begin with
 "quat".
 
+#### Generating Quaternions <a id=Generating_Quaternions></a>
+
+Functions that generate quaternions include:
+
+* {@link H3DU.Math.quatIdentity} - Generates a quaternion describing an
+absence of rotations.
+* {@link H3DU.Math.quatFromVectors} - Generates a quaternion describing
+a rotation from one vector to another.
+* {@link H3DU.Math.quatFromMat4} - Generates a quaternion from a [4x4 matrix](#Matrices).
+* {@link H3DU.Math.quatFromAxisAngle} - Generates a quaternion from an angle and [axis of rotation](#Axis_of_Rotation).
+* {@link H3DU.Math.quatFromTaitBryan} - Generates a quaternion from Tait-Bryan angles.
+
 #### Using Quaternions <a id=Using_Quaternions></a>
 
 For best results when using quaternions:
 
-* Store the rotation of each object as a single quaternion, created
- with {@link H3DU.Math.quatIdentity}.
+* Store the rotation of each object as a single quaternion.
 * As rotations happen each frame, convert the rotation (which may be
   in pitch/yaw/roll or another form, depending on the input device) to a quaternion
   and [multiply]{@link H3DU.Math.quatMultiply} that quaternion by the current
   quaternion to get the object's new rotation.
-* Normalize the rotation quaternion (using `quatNorm()` or `quatNormInPlace()`)
-  every few frames.
+* Normalize the rotation quaternion (using [`quatNorm()`]{@link H3DU.Math.quatNorm}
+ or [`quatNormInPlace()`]{@link H3DU.Math.quatNormInPlace})
+  every few frames. (Quaternions that describe a 3D rotation should be [unit vectors](#Unit_Vectors).)
 
-#### Makeup of Quaternions <a id=Makeup_of_Quaternions></a>
-
-A quaternion's...
-
-* ...first three elements (X, Y, Z) describe a 3D point, where the
-direction from the origin (0, 0, 0) to that point is the [axis of rotation](#Axis_of_Rotation),
-and the distance from the origin to that point is the sine
-of half the rotation angle. <small> (The distance is 0 at 0 and 360
-degrees, and 1 at 180 degrees.)</small>
-* ...fourth element (W) is the cosine of half the rotation angle.
-<small>(W is 1 at 0 degrees, 0 at 180 and -1 at 360 degrees.)</small>
-
-Quaternions that describe a 3D rotation should be [unit vectors](#Unit_Vectors).
-
-#### Multiplying quaternions <a id=Multiplying_quaternions></a>
+#### Multiplying Quaternions <a id=Multiplying_Quaternions></a>
 
 When two quaternions are multiplied (for example, with {@H3DU.Math.quatMultiply}),
 the result is a combined rotation in which the second rotation happens
@@ -197,6 +195,10 @@ Related functions:
 Converts from Tait-Bryan angles to a quaternion
 * [H3DU.Math.quatToTaitBryan()]{@link H3DU.Math.quatToTaitBryan} -
 Converts from a quaternion to Tait-Bryan angles
+
+### 4x4 Matrices <a id=4x4_Matrices></a>
+
+A 4x4 matrix can describe a 3D rotation; see ["Rotation", above](#Rotation).
 
 ## Planes <a id=Planes></a>
 
@@ -282,8 +284,7 @@ is positive (resp. negative) and the coordinate system is...
 #### Cross product (`vec3cross`) and normals <a id=Cross_product_vec3cross_and_normals></a>
 
 * Given a triangle formed by points A, B, and C, in that order, the [cross product]({@link H3DU.Math.vec3cross})
-of the vector (A minus C) with (B minus C), in that order, is a _normal_ of that triangle (a vector that points away
-from the triangle's surface).
+of the vector (A minus C) with (B minus C), in that order, is a _normal_ of that triangle (a vector that's perpendicular to the triangle's surface).
 * By extension, given a triangle formed by point A, point B, and point (0,0,0), in that order, the cross product of A
 with B, in that order, is a normal of that triangle.
 

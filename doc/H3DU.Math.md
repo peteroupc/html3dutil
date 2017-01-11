@@ -183,12 +183,10 @@ the same length but opposite direction.
 * [vec3normInPlace](#H3DU.Math.vec3normInPlace)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
 * [vec3perp](#H3DU.Math.vec3perp)<br>Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector.
-* [vec3scale](#H3DU.Math.vec3scale)<br>Multiplies a 3-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and returns a new vector with the result.
-* [vec3scaleInPlace](#H3DU.Math.vec3scaleInPlace)<br>Multiplies each element of a 3-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and stores the result in that vector.
+* [vec3scale](#H3DU.Math.vec3scale)<br>Multiplies each element of a 3-element vector by a factor.
+* [vec3scaleInPlace](#H3DU.Math.vec3scaleInPlace)<br>Multiplies each element of a 3-element vector by a factor, so
+that the vector points in the same direction
+but its length is multiplied by the given factor.
 * [vec3sub](#H3DU.Math.vec3sub)<br>Subtracts the second vector from the first vector and returns a new
 vector with the result.
 * [vec3subInPlace](#H3DU.Math.vec3subInPlace)<br>Subtracts the second vector from the first vector and stores
@@ -216,12 +214,10 @@ the same length but opposite direction.
 * [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)<br>Negates a 4-element vector in place.
 * [vec4norm](#H3DU.Math.vec4norm)<br>Converts 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 * [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
-* [vec4scale](#H3DU.Math.vec4scale)<br>Multiplies each element of a 4-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and returns a new vector with the result.
-* [vec4scaleInPlace](#H3DU.Math.vec4scaleInPlace)<br>Multiplies each element of a 4-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and stores the result in that vector.
+* [vec4scale](#H3DU.Math.vec4scale)<br>Multiplies each element of a 4-element vector by a factor.
+* [vec4scaleInPlace](#H3DU.Math.vec4scaleInPlace)<br>Multiplies each element of a 4-element vector by a factor, so
+that the vector points in the same direction
+but its length is multiplied by the given factor.
 
 ### H3DU.Math.GlobalPitchRollYaw <a id='H3DU.Math.GlobalPitchRollYaw'></a> (constant)
 
@@ -710,7 +706,7 @@ Return value. (Type: Array.&lt;Number>)
 Returns the transposed result of the inverted 3x3 upper left corner of
 the given 4x4 matrix.
 
-This is usually used to convert a model-view matrix to a matrix
+This is usually used to convert a world matrix to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the world matrix. Normals are then
 transformed by this matrix and then converted to <a href="tutorial-glmath.md">unit vectors</a>. But if the
@@ -1358,7 +1354,10 @@ Generates a quaternion from an angle and <a href="tutorial-glmath.md">axis of ro
 
 #### Return Value
 
-The generated quaternion. (Type: Array.&lt;Number>)
+The generated quaternion.
+A quaternion's first three elements (X, Y, Z) describe an
+<a href="tutorial-glmath.md">axis of rotation</a> whose length is the sine of "angle",
+and is fourth element (W) is the cosine of "angle". (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.quatFromMat4(m) <a id='H3DU.Math.quatFromMat4'></a>
 
@@ -1498,7 +1497,7 @@ the <a href="H3DU.Math.md#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a> method.
 * `q2` (Type: Array.&lt;Number>)<br>
     The second quaternion. Must be a unit vector.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
+    A value that usually ranges from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
 
 #### Return Value
 
@@ -1558,7 +1557,7 @@ than the <a href="H3DU.Math.md#H3DU.Math.quatNlerp">quatNlerp</a> method.
 * `q2` (Type: Array.&lt;Number>)<br>
     The second quaternion. Must be a unit vector.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
+    A value that usually ranges from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
 
 #### Return Value
 
@@ -1806,17 +1805,26 @@ sum of the products of their components (for example, <b>a</b>'s X times
 
 The following are properties of the dot product:
 <ul>
+<li>The dot
+product equals |<b>a</b>| \* |<b>b</b>| \* cos &theta;
+where |<b>x</b>| is the length of vector <b>x</b>, and
+&theta; is the shortest angle between <b>a</b> and <b>b</b>.
+It follows that:<ul>
+<li>A dot product of 0 indicates that the vectors are 90
+degrees apart, making them <i>orthogonal</i>
+(perpendicular to each other).
+<li>A dot product greater than 0 means less than 90 degrees apart.
+<li>A dot product less than 0 means greater than 90 degrees apart.
 <li>If both vectors are <a href="tutorial-glmath.md">unit vectors</a>, the cosine
 of the angle between them is equal to their dot product.
-<small>(More formally, the dot
-product equals |<b>a</b>| \* |<b>b</b>| \* cos &theta;
-where |<b>x</b>| is the length of vector <b>x</b>.)</small>
-However, the resulting angle (found using the <code>Math.acos</code>
-function) will never be negative, so it can't
+However, <code>Math.acos</code> won't return a negative angle
+from that cosine, so the dot product can't
 be used to determine if one vector is "ahead of" or "behind" another
 vector.
-<li>A dot product of 0 indicates that the two vectors
-are <i>orthogonal</i> (perpendicular to each other).
+<li>If both vectors are unit vectors, a dot product of 1 or -1 indicates
+that the two vectors are parallel (and the vectors are 0 or
+180 degrees apart, respectively.)
+</ul></li>
 <li>If the two vectors are the same, the return value indicates
 the vector's length squared. This is illustrated in the example.
 </ul>
@@ -1849,6 +1857,11 @@ also known as its <i>length</i> or <i>magnitude</i>.
 It's the same as the square root of the sum of the squares
 of its components.
 
+Note that if vectors are merely sorted or compared by their lengths,
+it's faster to sort or compare them by the squares of their lengths (to find
+the square of a 3-element vector's length, call <a href="H3DU.Math.md#H3DU.Math.vec3dot">H3DU.Math.vec3dot</a>
+passing the same vector as both of its arguments).
+
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
@@ -1870,7 +1883,7 @@ returns a new vector.
 * `v2` (Type: Array.&lt;Number>)<br>
     The second vector to interpolate.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear interpolation, define a function that takes a value from 0 through 1 and returns a value generally ranging from 0 through 1, and pass the result of that function to this method.<br> The following are examples of interpolation functions. See also the code examples following this list.<ul> <li>Linear: <code>factor</code>. Constant speed. <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0. For example, N=2 means a square, N=3 means cube, N=1/2 means square root, and N=1/3 means cube root. If N &gt; 1, this function eases in, that is, it starts slow and ends fast. If N &lt; 1, this function eases out, that is, it starts fast and ends slow. <li>Sine: <code>Math.sin(Math.PI\*0.5\*factor)</code>. This function eases in. <li>Smoothstep: <code>(3.0-2.0\*factor)\*factor\*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Discrete-step timing, where N is a number of steps greater than 0:<ul> <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor\*N))/N)</code>.</li> <li>Position end: <code>Math.floor(factor\*N)/N</code>.</li></ul> <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>, where <code>INTF(x)</code> is another interpolation function. This function reverses the speed behavior; for example, a function that eased in now eases out. <li>Ease: <code>factor &lt; 0.5 ? INTF(factor\*2)\*0.5 : 1.0-(INTF((1.0-factor)\*2)\*0.5)</code>, where <code>INTF(x)</code> is another interpolation function. Depending on the underlying function, this function eases in, then eases out, or vice versa. </ul>
+    A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns a value generally ranging from 0 through 1, and pass the result of that function to this method.<br> The following are examples of interpolation functions. See also the code examples following this list.<ul> <li>Linear: <code>factor</code>. Constant speed. <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0. For example, N=2 means a square, N=3 means cube, N=1/2 means square root, and N=1/3 means cube root. If N &gt; 1, this function eases in, that is, it starts slow and ends fast. If N &lt; 1, this function eases out, that is, it starts fast and ends slow. <li>Sine: <code>Math.sin(Math.PI\*0.5\*factor)</code>. This function eases in. <li>Smoothstep: <code>(3.0-2.0\*factor)\*factor\*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Discrete-step timing, where N is a number of steps greater than 0:<ul> <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor\*N))/N)</code>.</li> <li>Position end: <code>Math.floor(factor\*N)/N</code>.</li></ul> <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>, where <code>INTF(x)</code> is another interpolation function. This function reverses the speed behavior; for example, a function that eased in now eases out. <li>Ease: <code>factor &lt; 0.5 ? INTF(factor\*2)\*0.5 : 1.0-(INTF((1.0-factor)\*2)\*0.5)</code>, where <code>INTF(x)</code> is another interpolation function. Depending on the underlying function, this function eases in, then eases out, or vice versa. </ul>
 
 #### Return Value
 
@@ -2036,16 +2049,16 @@ vector. Returns (0,0,0) if "vec" is (0,0,0). (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a>
 
-Multiplies a 3-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and returns a new vector with the result.
+Multiplies each element of a 3-element vector by a factor. Returns
+a new vector that will point in the same direction
+but with its length multiplied by the given factor.
 
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
     A 3-element vector.
 * `scalar` (Type: Number)<br>
-    A factor to multiply.
+    A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
@@ -2053,16 +2066,16 @@ The parameter "a". (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec3scaleInPlace(a, scalar) <a id='H3DU.Math.vec3scaleInPlace'></a>
 
-Multiplies each element of a 3-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and stores the result in that vector.
+Multiplies each element of a 3-element vector by a factor, so
+that the vector points in the same direction
+but its length is multiplied by the given factor.
 
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
     A 3-element vector.
 * `scalar` (Type: Number)<br>
-    A factor to multiply.
+    A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
@@ -2117,7 +2130,7 @@ or downward depending on the "yUp" parameter.
 * `vector` (Type: Array.&lt;Number>)<br>
     A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
 * `matrix` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. This will generally be a projection-view matrix, that is, the projection matrix multiplied by the view matrix, in that order, if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, a projection-view matrix multiplied by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>. The rest of the method will convert the transformed X and Y coordinates to window coordinates. If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the coordinates transformed this way will be as described in <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> under the "matrix" parameter, before they are converted to window coordinates.
+    A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method, before its transformed X and Y coordinates are converted to window coordinates. See that method for more information.
 * `viewport` (Type: Array.&lt;Number>)<br>
     A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: Boolean) (optional)<br>
@@ -2269,6 +2282,11 @@ also known as its <i>length</i> or <i>magnitude</i>.
 It's the same as the square root of the sum of the squares
 of its components.
 
+Note that if vectors are merely sorted or compared by their lengths,
+it's faster to sort or compare them by the squares of their lengths (to find
+the square of a 4-element vector's length, call <a href="H3DU.Math.md#H3DU.Math.vec4dot">H3DU.Math.vec4dot</a>
+passing the same vector as both of its arguments).
+
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
@@ -2290,7 +2308,7 @@ returns a new vector.
 * `v2` (Type: Array.&lt;Number>)<br>
     The second vector to interpolate.
 * `factor` (Type: Number)<br>
-    A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from 0 through 1 and generally returns a value from 0 through 1, and pass the result of that function to this method. See the examples in the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
+    A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns A value that usually ranges from 0 through 1, and pass the result of that function to this method. See the examples in the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
 
 #### Return Value
 
@@ -2365,16 +2383,16 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 
 ### (static) H3DU.Math.vec4scale(a, scalar) <a id='H3DU.Math.vec4scale'></a>
 
-Multiplies each element of a 4-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and returns a new vector with the result.
+Multiplies each element of a 4-element vector by a factor. Returns
+a new vector that will point in the same direction
+but with its length multiplied by the given factor.
 
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
     A 4-element vector.
 * `scalar` (Type: Number)<br>
-    A factor to multiply.
+    A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
@@ -2382,16 +2400,16 @@ The resulting 4-element vector. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec4scaleInPlace(a, scalar) <a id='H3DU.Math.vec4scaleInPlace'></a>
 
-Multiplies each element of a 4-element vector by a factor
-(thus multiplying that vector's length by that factor)
-and stores the result in that vector.
+Multiplies each element of a 4-element vector by a factor, so
+that the vector points in the same direction
+but its length is multiplied by the given factor.
 
 #### Parameters
 
 * `a` (Type: Array.&lt;Number>)<br>
     A 4-element vector.
 * `scalar` (Type: Number)<br>
-    A factor to multiply.
+    A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
