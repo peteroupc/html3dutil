@@ -178,11 +178,15 @@ the result in the first vector.
 * [vec3negate](#H3DU.Math.vec3negate)<br>Negates a 3-element vector and returns a new
 vector with the result, which is generally a vector with
 the same length but opposite direction.
-* [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)<br>Negates a 3-element vector in place.
+* [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)<br>Negates a 3-element vector in place, generally resulting in a vector with
+the same length but opposite direction.
 * [vec3norm](#H3DU.Math.vec3norm)<br>Converts 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 * [vec3normInPlace](#H3DU.Math.vec3normInPlace)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
 * [vec3perp](#H3DU.Math.vec3perp)<br>Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector.
+* [vec3proj](#H3DU.Math.vec3proj)<br>Returns the projection of a 3-element vector on the given
+reference vector.
+* [vec3reflect](#H3DU.Math.vec3reflect)<br>Returns a vector that reflects off a surface.
 * [vec3scale](#H3DU.Math.vec3scale)<br>Multiplies each element of a 3-element vector by a factor.
 * [vec3scaleInPlace](#H3DU.Math.vec3scaleInPlace)<br>Multiplies each element of a 3-element vector by a factor, so
 that the vector points in the same direction
@@ -200,6 +204,10 @@ width and height.
 vector with the absolute value of each of its components.
 * [vec4absInPlace](#H3DU.Math.vec4absInPlace)<br>Sets each component of the given 4-element
 vector to its absolute value.
+* [vec4add](#H3DU.Math.vec4add)<br>Adds two 4-element vectors and returns a new
+vector with the result.
+* [vec4addInPlace](#H3DU.Math.vec4addInPlace)<br>Adds two 4-element vectors and stores
+the result in the first vector.
 * [vec4assign](#H3DU.Math.vec4assign)<br>Assigns the values of a 4-element vector into another
 4-element vector.
 * [vec4copy](#H3DU.Math.vec4copy)<br>Returns a copy of a 4-element vector.
@@ -211,13 +219,20 @@ returns a new vector.
 * [vec4negate](#H3DU.Math.vec4negate)<br>Negates a 4-element vector and returns a new
 vector with the result, which is generally a vector with
 the same length but opposite direction.
-* [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)<br>Negates a 4-element vector in place.
+* [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)<br>Negates a 4-element vector in place, generally resulting in a vector with
+the same length but opposite direction.
 * [vec4norm](#H3DU.Math.vec4norm)<br>Converts 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 * [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
+* [vec4proj](#H3DU.Math.vec4proj)<br>Returns the projection of a 4-element vector on the given
+reference vector.
 * [vec4scale](#H3DU.Math.vec4scale)<br>Multiplies each element of a 4-element vector by a factor.
 * [vec4scaleInPlace](#H3DU.Math.vec4scaleInPlace)<br>Multiplies each element of a 4-element vector by a factor, so
 that the vector points in the same direction
 but its length is multiplied by the given factor.
+* [vec4sub](#H3DU.Math.vec4sub)<br>Subtracts the second vector from the first vector and returns a new
+vector with the result.
+* [vec4subInPlace](#H3DU.Math.vec4subInPlace)<br>Subtracts the second vector from the first vector and stores
+the result in the first vector.
 
 ### H3DU.Math.GlobalPitchRollYaw <a id='H3DU.Math.GlobalPitchRollYaw'></a> (constant)
 
@@ -686,7 +701,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 
 This value should be greater than 0, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: Number)<br>
-    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
+    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br> In the usual case that "far" is greater than "near", depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of "far" to "near", the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
 
 #### Return Value
 
@@ -968,7 +983,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 
 This value should be greater than 0, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: Number)<br>
-    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
+    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br> In the usual case that "far" is greater than "near", depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of "far" to "near", the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
 
 #### Return Value
 
@@ -994,7 +1009,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 
 This value should be greater than 0, and should be set to the highest distance from the "camera" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: Number)<br>
-    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that "far" is greater than "near", are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of "far" to "near", the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)
+    The distance from the "camera" to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than "near", should be greater than 0, and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept.<br> In the usual case that "far" is greater than "near", depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of "far" to "near", the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
 
 #### Return Value
 
@@ -1538,7 +1553,7 @@ The resulting quaternion. (Type: Array.&lt;Number>)
 Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a spherical interpolation function.
 This is called spherical linear interpolation, or "slerp". (A spherical
-interpolation finds the angle between the two quaternions -- which
+interpolation finds the shortest angle between the two quaternions -- which
 are treated as 4D vectors -- and then finds a vector with a smaller angle
 between it and the first quaternion. The "factor" parameter specifies
 how small the new angle will be relative to the original angle.)
@@ -1668,6 +1683,8 @@ The vector "a". (Type: Array.&lt;Number>)
 Adds two 3-element vectors and returns a new
 vector with the result. Adding two vectors
 is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.
 
 #### Parameters
 
@@ -1685,6 +1702,8 @@ The resulting 3-element vector. (Type: Array.&lt;Number>)
 Adds two 3-element vectors and stores
 the result in the first vector. Adding two vectors
 is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.
 
 #### Parameters
 
@@ -1816,7 +1835,7 @@ degrees apart, making them <i>orthogonal</i>
 <li>A dot product greater than 0 means less than 90 degrees apart.
 <li>A dot product less than 0 means greater than 90 degrees apart.
 <li>If both vectors are <a href="tutorial-glmath.md">unit vectors</a>, the cosine
-of the angle between them is equal to their dot product.
+of the shortest angle between them is equal to their dot product.
 However, <code>Math.acos</code> won't return a negative angle
 from that cosine, so the dot product can't
 be used to determine if one vector is "ahead of" or "behind" another
@@ -1966,7 +1985,8 @@ The resulting 3-element vector. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec3negateInPlace(a) <a id='H3DU.Math.vec3negateInPlace'></a>
 
-Negates a 3-element vector in place.
+Negates a 3-element vector in place, generally resulting in a vector with
+the same length but opposite direction.
 Negating a vector
 is the same as reversing the sign of each of its components.
 
@@ -2047,6 +2067,47 @@ will not be converted to a <a href="tutorial-glmath.md">unit vector</a>.
 A perpendicular 3-element
 vector. Returns (0,0,0) if "vec" is (0,0,0). (Type: Array.&lt;Number>)
 
+### (static) H3DU.Math.vec3proj(vec, refVec) <a id='H3DU.Math.vec3proj'></a>
+
+Returns the projection of a 3-element vector on the given
+reference vector. Assuming both vectors
+start at the same point, the resulting vector
+will point in the same direction as the
+reference vector but will make the closest
+approach possible to the projected vector's
+endpoint. The difference between the projected
+vector and the return value will be perpendicular
+to the reference vector.
+
+#### Parameters
+
+* `vec` (Type: Array.&lt;Number>)<br>
+    The vector to project.
+* `refVec` (Type: Array.&lt;Number>)<br>
+    The reference vector whose length will be adjusted.
+
+#### Return Value
+
+The projection of
+"vec" on "refVec". Returns (0,0,0) if "refVec"'s
+length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec3reflect(incident, normal) <a id='H3DU.Math.vec3reflect'></a>
+
+Returns a vector that reflects off a surface.
+
+#### Parameters
+
+* `incident` (Type: Array.&lt;Number>)<br>
+    Incident vector, or a vector headed in the direction of the surface, as a 3-element vector.
+* `normal` (Type: Array.&lt;Number>)<br>
+    Surface normal vector, or a vector that's perpendicular to the surface, as a 3-element vector. Should be a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Return Value
+
+A vector that has the same length
+as "incident" but is reflected away from the surface. (Type: Array.&lt;Number>)
+
 ### (static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a>
 
 Multiplies each element of a 3-element vector by a factor. Returns
@@ -2114,7 +2175,8 @@ is the same as subtracting each of their components.
 
 #### Return Value
 
-The parameter "a" (Type: Array.&lt;Number>)
+The parameter "a"
+This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec3toWindowPoint(vector, matrix, viewport, [yUp]) <a id='H3DU.Math.vec3toWindowPoint'></a>
 
@@ -2157,10 +2219,11 @@ defined by A, B, and C, in any order.
 <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
 <li>The triple product is the same as the <i>determinant</i> of a 3x3 matrix whose
 rows or columns are the vectors A, B, and C, in that order.
-<li>Assume A is a <a href="tutorial-glmath.md">unit vector</a> and perpendicular to vectors B and C. If the triple product
-is negative (resp. positive), then A points directly away from (resp. points at) the cross product of
+<li>Assume A is perpendicular to vectors B and C. If the triple product
+is positive (resp. negative), then A points at (resp.
+points directly away from) the cross product of
 B and C -- which will be perpendicular -- and the angle from B to C, when rotated
-about vector A, is negative (resp. positive). (See the example below.)
+about vector A, is positive (resp. negative). (See the example below.)
 </ul>
 
 #### Parameters
@@ -2229,6 +2292,45 @@ vector to its absolute value.
 #### Return Value
 
 The vector "a". (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec4add(a, b) <a id='H3DU.Math.vec4add'></a>
+
+Adds two 4-element vectors and returns a new
+vector with the result. Adding two vectors
+is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    The first 4-element vector.
+* `b` (Type: Array.&lt;Number>)<br>
+    The second 4-element vector.
+
+#### Return Value
+
+The resulting 4-element vector. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec4addInPlace(a, b) <a id='H3DU.Math.vec4addInPlace'></a>
+
+Adds two 4-element vectors and stores
+the result in the first vector. Adding two vectors
+is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    The first 4-element vector.
+* `b` (Type: Array.&lt;Number>)<br>
+    The second 4-element vector.
+
+#### Return Value
+
+The parameter "a"
+This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec4assign(dst, src) <a id='H3DU.Math.vec4assign'></a>
 
@@ -2332,7 +2434,8 @@ The resulting 4-element vector. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.vec4negateInPlace(a) <a id='H3DU.Math.vec4negateInPlace'></a>
 
-Negates a 4-element vector in place.
+Negates a 4-element vector in place, generally resulting in a vector with
+the same length but opposite direction.
 Negating a vector
 is the same as reversing the sign of each of its components.
 
@@ -2381,6 +2484,31 @@ by its <a href="H3DU.Math.md#H3DU.Math.vec4length">length</a>.
 The parameter "vec".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
+### (static) H3DU.Math.vec4proj(vec, refVec) <a id='H3DU.Math.vec4proj'></a>
+
+Returns the projection of a 4-element vector on the given
+reference vector. Assuming both vectors
+start at the same point, the resulting vector
+will point in the same direction as the
+reference vector but will make the closest
+approach possible to the projected vector's
+endpoint. The difference between the projected
+vector and the return value will be perpendicular
+to the reference vector.
+
+#### Parameters
+
+* `vec` (Type: Array.&lt;Number>)<br>
+    The vector to project.
+* `refVec` (Type: Array.&lt;Number>)<br>
+    The reference vector whose length will be adjusted.
+
+#### Return Value
+
+The projection of
+"vec" on "refVec". Returns (0,0,0,0) if "refVec"'s
+length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+
 ### (static) H3DU.Math.vec4scale(a, scalar) <a id='H3DU.Math.vec4scale'></a>
 
 Multiplies each element of a 4-element vector by a factor. Returns
@@ -2414,3 +2542,38 @@ but its length is multiplied by the given factor.
 #### Return Value
 
 The parameter "a". (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec4sub(a, b) <a id='H3DU.Math.vec4sub'></a>
+
+Subtracts the second vector from the first vector and returns a new
+vector with the result. Subtracting two vectors
+is the same as subtracting each of their components.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    The first 4-element vector.
+* `b` (Type: Array.&lt;Number>)<br>
+    The second 4-element vector.
+
+#### Return Value
+
+The resulting 4-element vector.
+This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.vec4subInPlace(a, b) <a id='H3DU.Math.vec4subInPlace'></a>
+
+Subtracts the second vector from the first vector and stores
+the result in the first vector. Subtracting two vectors
+is the same as subtracting each of their components.
+
+#### Parameters
+
+* `a` (Type: Array.&lt;Number>)<br>
+    The first 4-element vector.
+* `b` (Type: Array.&lt;Number>)<br>
+    The second 4-element vector.
+
+#### Return Value
+
+The parameter "a" (Type: Array.&lt;Number>)

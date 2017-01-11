@@ -11,8 +11,8 @@ to WebGL contexts.
 
 * [dispose](#H3DU.TextureLoader_H3DU.TextureLoader_dispose)<br>Disposes all resources used by this texture loader.
 * [getTexture](#H3DU.TextureLoader_H3DU.TextureLoader_getTexture)<br>Gets an already loaded texture by name from this texture loader.
-* [loadAndMapTexture](#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexture)<br>Loads the textures referred to in an array of URLs and
-uploads their texture data to a WebGL context.
+* [loadAndMapTexture](#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexture)<br>Loads the texture referred to in an array of URLs and
+uploads its texture data to a WebGL context.
 * [loadAndMapTexturesAll](#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexturesAll)<br>Loads one or more textures by their URL and uploads their data to a WebGL context.
 * [loadTexture](#H3DU.TextureLoader_H3DU.TextureLoader_loadTexture)<br>Loads a texture by its URL and stores its data.
 * [loadTexturesAll](#H3DU.TextureLoader_H3DU.TextureLoader_loadTexturesAll)<br>Loads the textures referred to in an array of URLs and
@@ -44,8 +44,8 @@ if it doesn't exist. (Type: Texture)
 
 ### H3DU.TextureLoader#loadAndMapTexture(texture, context) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexture'></a>
 
-Loads the textures referred to in an array of URLs and
-uploads their texture data to a WebGL context.
+Loads the texture referred to in an array of URLs and
+uploads its texture data to a WebGL context.
 
 #### Parameters
 

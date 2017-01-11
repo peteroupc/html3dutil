@@ -102,8 +102,8 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
   return H3DU.getPromiseResultsAll(promises, resolve, reject);
 };
 /**
- * Loads the textures referred to in an array of URLs and
- * uploads their texture data to a WebGL context.
+ * Loads the texture referred to in an array of URLs and
+ * uploads its texture data to a WebGL context.
  * @param {String} texture URL of the texture data. Images with a TGA
  * extension that use the RGBA or grayscale format are supported.
  * Images supported by the browser will be loaded via
