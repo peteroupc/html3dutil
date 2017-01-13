@@ -482,10 +482,12 @@ H3DU.Math = {
  * <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0.
  * For example, N=2 means a square, N=3 means cube, N=1/2 means square root,
  * and N=1/3 means cube root. If N &gt; 1, this
- * function eases in, that is, it starts slow and ends fast. If N &lt; 1,
- * this function eases out, that is, it starts fast and ends slow.
- * <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function eases in.
+ * function starts slow and ends fast. If N &lt; 1,
+ * this function starts fast and ends slow.
+ * <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function starts fast and ends slow.
  * <li>Smoothstep: <code>(3.0-2.0*factor)*factor*factor</code>. This function
+ * starts and ends slow, and speeds up in the middle.
+ * <li>Perlin's "Smootherstep": <code>(10+factor*(factor*6-15))*factor*factor*factor</code>. This function
  * starts and ends slow, and speeds up in the middle.
  * <li>Discrete-step timing, where N is a number of steps greater than 0:<ul>
  * <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor*N))/N)</code>.</li>
@@ -493,7 +495,7 @@ H3DU.Math = {
  * <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>,
  * where <code>INTF(x)</code>
  * is another interpolation function. This function reverses the speed behavior;
- * for example, a function that eased in now eases out.
+ * for example, a function that started fast now starts slow.
  * <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>,
  * where <code>INTF(x)</code> is another interpolation function.
  * Depending on the underlying function, this function eases in,
@@ -1899,12 +1901,12 @@ m[0] * m[7] * m[5];
  * can be implemented by raising this value, and zooming in by lowering it.)
  * @param {Number} aspectRatio The ratio of width to height of the viewport, usually
  * the scene's aspect ratio.
- * @param {Number} near The distance from the "camera" to
+ * @param {Number} near The distance, in eye space, from the "camera" to
  * the near clipping plane. Objects closer than this distance won't be
  * seen.<p>This value should be greater than 0, and should be set to the highest distance
  * from the "camera" that the application can afford to clip out for being too
  * close, for example, 0.5, 1, or higher.
- * @param {Number} far The distance from the "camera" to
+ * @param {Number} far The distance, in eye space, from the "camera" to
  * the far clipping plane. Objects beyond this distance will be too far
  * to be seen.<br>This value is usually greater than "near",
  * should be greater than 0, and should be set
@@ -1958,8 +1960,8 @@ m[0] * m[7] * m[5];
  * the direction from the center of the "camera" to its top. This parameter may
  * be null or omitted, in which case the default is the vector (0, 1, 0),
  * the vector that results when the "camera" is held upright.<br>
- * This vector must not point in the same or opposite direction as
- * the view direction (the direction from "viewerPos" to "lookingAt").
+ * This vector must not be parallel to the view direction 
+ * (the direction from "viewerPos" to "lookingAt").
  * (See the example for one way to ensure this.)<br>
  * @returns {Array<Number>} The resulting 4x4 matrix.
  * @example <caption>The following example calls this method with an
@@ -2047,12 +2049,12 @@ m[0] * m[7] * m[5];
  * can be implemented by raising this value, and zooming in by lowering it.)
  * @param {Number} aspectRatio The ratio of width to height of the viewport, usually
  * the scene's aspect ratio.
- * @param {Number} near The distance from the "camera" to
+ * @param {Number} near The distance, in eye space, from the "camera" to
  * the near clipping plane. Objects closer than this distance won't be
  * seen.<p>This value should be greater than 0, and should be set to the highest distance
  * from the "camera" that the application can afford to clip out for being too
  * close, for example, 0.5, 1, or higher.
- * @param {Number} far The distance from the "camera" to
+ * @param {Number} far The distance, in eye space, from the "camera" to
  * the far clipping plane. Objects beyond this distance will be too far
  * to be seen.<br>This value is usually greater than "near",
  * should be greater than 0, and should be set
@@ -2178,23 +2180,23 @@ m[0] * m[7] * m[5];
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {Number} l X coordinate of the point where the left
+ * @param {Number} l X coordinate of the point in eye space where the left
  * clipping plane meets the near clipping plane.
- * @param {Number} r X coordinate of the point where the right
+ * @param {Number} r X coordinate of the point in eye space where the right
  * clipping plane meets the near clipping plane.
  * (If l is greater than r, X coordinates increase leftward; otherwise,
  * they increase rightward.)
- * @param {Number} b Y coordinate of the point where the bottom
+ * @param {Number} b Y coordinate of the point in eye space where the bottom
  * clipping plane meets the near clipping plane.
- * @param {Number} t Y coordinate of the point where the top
+ * @param {Number} t Y coordinate of the point in eye space where the top
  * clipping plane meets the near clipping plane.
  * (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
- * @param {Number} near The distance from the "camera" to
+ * @param {Number} near The distance, in eye space, from the "camera" to
  * the near clipping plane. Objects closer than this distance won't be
  * seen.<p>This value should be greater than 0, and should be set to the highest distance
  * from the "camera" that the application can afford to clip out for being too
  * close, for example, 0.5, 1, or higher.
- * @param {Number} far The distance from the "camera" to
+ * @param {Number} far The distance, in eye space, from the "camera" to
  * the far clipping plane. Objects beyond this distance will be too far
  * to be seen.<br>This value is usually greater than "near",
  * should be greater than 0, and should be set
