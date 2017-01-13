@@ -9,7 +9,7 @@ This section contains detailed information on matrices.
 
 ## Contents <a id=Contents></a>
 
-[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
+[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>&nbsp;&nbsp;[A Matrix Transforms Between Coordinate Systems](#A_Matrix_Transforms_Between_Coordinate_Systems)<br>[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
 
 ## Arrangement <a id=Arrangement></a>
 
@@ -80,6 +80,46 @@ For 3x3 matrices, the elements are arranged in the following order:
 </mfenced>
 </math>
 
+### A Matrix Transforms Between Coordinate Systems <a id=A_Matrix_Transforms_Between_Coordinate_Systems></a>
+
+A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate
+system.  These are four 3-element vectors that describe how the three axes and the center map
+to the new coordinate system in relation to the old coordinate system.
+
+The following depiction of a 4x4 matrix illustrates the meaning of each of its elements. To keep things
+simple, this matrix's transformation is one that keeps straight lines straight and parallel lines parallel.
+
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mi>[0] X-axis X</mi></mtd>
+ <mtd><mi>[4] Y-axis X</mi></mtd>
+ <mtd><mi>[8] Z-axis X</mi></mtd>
+ <mtd><mi>[12] Center X</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>[1] X-axis Y</mi></mtd>
+ <mtd><mi>[2] Y-axis Y</mi></mtd>
+ <mtd><mi>[3] Z-axis Y</mi></mtd>
+ <mtd><mi>[13] Center Y</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>[2] X-axis Z</mi></mtd>
+ <mtd><mi>[6] Y-axis Z</mi></mtd>
+ <mtd><mi>[10] Z-axis Z</mi></mtd>
+ <mtd><mi>[14] Center Z</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>[3] 0</mi></mtd>
+ <mtd><mi>[7] 0</mi></mtd>
+ <mtd><mi>[11] 0</mi></mtd>
+ <mtd><mi>[15] 1</mi></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
 ## Transforming Points <a id=Transforming_Points></a>
 
 The transformation formula multiplies a matrix by a 3D point to change that point's
@@ -88,12 +128,12 @@ position:
 * **a&prime;**<sub>_x_</sub> = matrix[0] &#x22c5; **a**<sub>_x_</sub> + matrix[4] &#x22c5; **a**<sub>_y_</sub> + matrix[8] &#x22c5; **a**<sub>_z_</sub> + matrix[12]
 * **a&prime;**<sub>_y_</sub> = matrix[1] &#x22c5; **a**<sub>_x_</sub> + matrix[5] &#x22c5; **a**<sub>_y_</sub> + matrix[9] &#x22c5; **a**<sub>_z_</sub> + matrix[13]
 * **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14]
-* **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15]
+* **w** = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15]
 
-If **a&prime;**<sub>_w_</sub> is other than 1, divide **a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>,
-and **a&prime;**<sub>_z_</sub> by **a&prime;**<sub>_w_</sub>. (See ["Other Transformations"](#Other_Transformations).
+If **w** is other than 1, divide **a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>,
+and **a&prime;**<sub>_z_</sub> by **w**. (See ["Other Transformations"](#Other_Transformations).
 For most of the discussion that follows, the last row of the matrix is ignored and we assume
-**a&prime;**<sub>_w_</sub> is always 1.)
+**w** is always 1.)
 
 The following sections describe different kinds of matrix transformations in more detail.
 
@@ -382,10 +422,9 @@ Related functions:
 
 ### Matrix Multiplication <a id=Matrix_Multiplication></a>
 
-Two matrices can be combined into a single transformation. To do so,
-the matrices are multiplied such that the transformations
-they describe happen in reverse order. For example, if the first matrix
-(input matrix) describes a translation and the second
+When two matrices are multiplied, the combined matrix will be such
+that the transformations they describe happen in reverse
+order. For example, if the first matrix (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will
 describe the effect of scaling then translation.
 
@@ -409,7 +448,7 @@ In all the transformations described above, the last row in the transformation m
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the `H3DU.Math` library.
 
-One example of such a transformation is the perspective projection matrix. When a 4-element
+One example of such a transformation is found in a _perspective projection_ matrix. When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
