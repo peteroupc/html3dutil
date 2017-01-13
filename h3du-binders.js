@@ -103,12 +103,13 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
   "use strict";
   if(texture === null || typeof texture === "undefined")return;
   var isFrameBuffer = texture instanceof H3DU.FrameBufferInfo;
-  if(!isFrameBuffer && !(texture instanceof H3DU.Texture)) {
+  if(!isFrameBuffer && !(texture instanceof H3DU.Texture) && !(texture instanceof H3DU.CubeMap)) {
     throw new Error("unsupported texture type");
   }
   var loadedTexture = null;
+  // var cubeMap = texture instanceof H3DU.CubeMap;
   if(!isFrameBuffer) {
-    if((typeof texture.image === "undefined" || texture.image === null) && texture.loadStatus === 0) {
+    if(texture.loadStatus === 0) {
       var that = this;
       var prog = program;
       texture.loadImage().then(function() {

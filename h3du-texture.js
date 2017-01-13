@@ -297,3 +297,33 @@ H3DU.Texture.prototype.getName = function() {
   "use strict";
   return name;
 };
+/** @private */
+H3DU.CubeMap = function(textures) {
+  "use strict";
+  this.textures = [];
+  for(var i = 0;i < 6;i++) {
+    this.textures.push(textures[i]);
+  }
+};
+/** @private */
+H3DU.CubeMap.prototype.getWidth = function() {
+  "use strict";
+  return this.textures[0].getWidth();
+};
+/** @private */
+H3DU.CubeMap.prototype.getHeight = function() {
+  "use strict";
+  return this.textures[0].getHeight();
+};
+/** @private */
+H3DU.CubeMap.prototype.loadImage = function() {
+  "use strict";
+  var promises = [];
+  for(var i = 0;i < 6;i++) {
+    promises.push(this.textures[i].loadImage());
+  }
+  var that = this;
+  return H3DU.getPromiseResultsAll(promises).then(function() {
+    return Promise.resolve(that);
+  });
+};

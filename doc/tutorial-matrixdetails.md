@@ -92,14 +92,12 @@ position:
 * **a&prime;**<sub>_x_</sub> = matrix[0] &#x22c5; **a**<sub>_x_</sub> + matrix[4] &#x22c5; **a**<sub>_y_</sub> + matrix[8] &#x22c5; **a**<sub>_z_</sub> + matrix[12]
 * **a&prime;**<sub>_y_</sub> = matrix[1] &#x22c5; **a**<sub>_x_</sub> + matrix[5] &#x22c5; **a**<sub>_y_</sub> + matrix[9] &#x22c5; **a**<sub>_z_</sub> + matrix[13]
 * **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14]
+* **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15]
 
-Note that:
-
-* For the purpose of transforming 3D points, the last row of the matrix above can be ignored,
-since it doesn't transform x, y, or z. (It would correspond to the W component of the
-output.)
-* To make the formula equivalent to multiplying by a 4-component vector, set the input
-vector's W component to 1.
+If **a&prime;**<sub>_w_</sub> is other than 1, divide **a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>,
+and **a&prime;**<sub>_z_</sub> by **a&prime;**<sub>_w_</sub>. (See ["Other Transformations"](#Other_Transformations).
+For most of the discussion that follows, the last row of the matrix is ignored and we assume
+**a&prime;**<sub>_w_</sub> is always 1.)
 
 The following sections describe different kinds of matrix transformations in more detail.
 
@@ -109,6 +107,8 @@ Related functions:
  Transforms a 4-element vector with a 4x4 matrix
 * <a href="H3DU.Math.md#H3DU.Math.mat3transform">H3DU.Math.mat3transform()</a> -
  Transforms a 3-element vector with a 3x3 matrix
+* H3DU.Math.mat3projectVec3 -
+ Does a perspective-correct transformation of a 3D point with a 4x4 matrix
 
 ### Translation <a id=Translation></a>
 

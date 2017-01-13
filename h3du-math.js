@@ -562,7 +562,7 @@ H3DU.Math = {
  * Returns the projection of a 3-element vector on the given
  * reference vector. Assuming both vectors
  * start at the same point, the resulting vector
- * will point in the same direction as the
+ * will be parallel to the
  * reference vector but will make the closest
  * approach possible to the projected vector's
  * endpoint. The difference between the projected
@@ -586,7 +586,7 @@ H3DU.Math = {
  * Returns the projection of a 4-element vector on the given
  * reference vector. Assuming both vectors
  * start at the same point, the resulting vector
- * will point in the same direction as the
+ * will be parallel to the
  * reference vector but will make the closest
  * approach possible to the projected vector's
  * endpoint. The difference between the projected
@@ -787,7 +787,7 @@ H3DU.Math = {
     return vec;
   },
 /**
- * Converts 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+ * Converts a 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
@@ -813,7 +813,7 @@ H3DU.Math = {
     return H3DU.Math.vec3normInPlace([vec[0], vec[1], vec[2]]);
   },
 /**
- * Converts 4-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+ * Converts a 4-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
@@ -955,6 +955,32 @@ H3DU.Math = {
     mat[8] === 0 && mat[9] === 0 && mat[10] === 1 && mat[11] === 0 &&
     mat[12] === 0 && mat[13] === 0 && mat[14] === 0 && mat[15] === 1
     );
+  },
+/**
+ * Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
+ * @param {Array<Number>} m A 3x3 matrix.
+ * @returns {Array<Number>} The resulting 3x3 matrix.
+ * Returns the identity matrix if this matrix is not invertible.
+ */
+  "mat3invert":function(m) {
+    "use strict";
+    var ret = [];
+    var t4 = m[4] * m[8] - m[5] * m[7];
+    var t5 = m[5] * m[6] - m[3] * m[8];
+    var t6 = m[3] * m[7] - m[4] * m[6];
+    var t7 = 1.0 / ((
+    m[0] * t4 + m[1] * t5 + m[2] * t6));
+    if(t7 === 0)return H3DU.Math.mat3identity();
+    ret[0] = t4 * t7;
+    ret[1] = ((m[2] * m[7] - m[1] * m[8])) * t7;
+    ret[2] = ((m[1] * m[5] - m[2] * m[4])) * t7;
+    ret[3] = t5 * t7;
+    ret[4] = ((m[0] * m[8] - m[2] * m[6])) * t7;
+    ret[5] = ((m[2] * m[3] - m[0] * m[5])) * t7;
+    ret[6] = t6 * t7;
+    ret[7] = ((m[1] * m[6] - m[0] * m[7])) * t7;
+    ret[8] = ((m[0] * m[4] - m[1] * m[3])) * t7;
+    return ret;
   },
 /**
  * Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
@@ -1170,8 +1196,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * of rotation.
  * @returns {Array<Number>} The generated quaternion.
  * A quaternion's first three elements (X, Y, Z) describe an
- * [axis of rotation]{@tutorial glmath} whose length is the sine of "angle",
- * and is fourth element (W) is the cosine of "angle".
+ * [axis of rotation]{@tutorial glmath} whose length is the sine of half of "angle",
+ * and its fourth element (W) is the cosine of half of "angle".
  */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
     "use strict";
@@ -1689,8 +1715,9 @@ m[0] * m[7] * m[5];
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate.
  * @param {Number} vw W coordinate. To transform a 3D
- * point, set W to 1; to transform a 2D
- * point, set Z and W to 1.
+ * point, set W to 1 and divide the result's X, Y, and Z by the
+ * result's W. To transform a 2D point, set Z to 0 and W to 1
+ * and divide the result's X and Y by the result's W.
  * @returns {Array<Number>} The transformed vector.
  */
   "mat4transform":function(mat, v, vy, vz, vw) {
@@ -1734,7 +1761,7 @@ m[0] * m[7] * m[5];
  * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
- * point, set Z to 1.
+ * point, set Z to 0.
  * @returns {Array<Number>} The transformed 3-element vector.
  */
   "mat4transformVec3":function(mat, v, vy, vz) {
@@ -1780,7 +1807,7 @@ m[0] * m[7] * m[5];
  * be a 3-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
- * point, set Z to 1.
+ * point, set Z to 0.
  * @returns {Array<Number>} The transformed 3-element vector.
  * The elements, in order, are
  * the transformed vector's X, Y, and Z coordinates.
@@ -1812,7 +1839,8 @@ m[0] * m[7] * m[5];
  * be a 4-element array giving the X, Y, and Z coordinates.
  * @param {Number} vy Y coordinate.
  * @param {Number} vz Z coordinate. To transform a 2D
- * point, set Z to 1.
+ * point, set Z to 1, and divide the result's X and Y by
+ * the result's Z.
  * @returns {Array<Number>} The transformed vector.
  */
   "mat3transform":function(mat, v, vy, vz) {
@@ -1960,7 +1988,7 @@ m[0] * m[7] * m[5];
  * the direction from the center of the "camera" to its top. This parameter may
  * be null or omitted, in which case the default is the vector (0, 1, 0),
  * the vector that results when the "camera" is held upright.<br>
- * This vector must not be parallel to the view direction 
+ * This vector must not be parallel to the view direction
  * (the direction from "viewerPos" to "lookingAt").
  * (See the example for one way to ensure this.)<br>
  * @returns {Array<Number>} The resulting 4x4 matrix.
@@ -2289,6 +2317,34 @@ m[0] * m[7] * m[5];
       }
     }
     return dst;
+  },
+/**
+ * Multiplies two 3x3 matrices. A new matrix is returned.
+ * The matrices are multiplied such that the transformations
+ * they describe happen in reverse order. For example, if the first
+ * matrix (input matrix) describes a translation and the second
+ * matrix describes a scaling, the multiplied matrix will describe
+ * the effect of scaling then translation. (Multiplying the first matrix
+ * by the second is the same as multiplying the second matrix
+ * by the first matrix's transpose; a transpose is a matrix whose rows
+ * are converted to columns and vice versa.)
+ * @param {Array<Number>} a The first matrix.
+ * @param {Array<Number>} b The second matrix.
+ * @returns {Array<Number>} The resulting 3x3 matrix.
+ */
+  "mat3multiply":function(a, b) {
+    "use strict";
+    var ret = [];
+    ret[0] = b[0] * a[0] + b[1] * a[3] + b[2] * a[6];
+    ret[1] = b[0] * a[1] + b[1] * a[4] + b[2] * a[7];
+    ret[2] = b[0] * a[2] + b[1] * a[5] + b[2] * a[8];
+    ret[3] = b[3] * a[0] + b[4] * a[3] + b[5] * a[6];
+    ret[4] = b[3] * a[1] + b[4] * a[4] + b[5] * a[7];
+    ret[5] = b[3] * a[2] + b[4] * a[5] + b[5] * a[8];
+    ret[6] = b[6] * a[0] + b[7] * a[3] + b[8] * a[6];
+    ret[7] = b[6] * a[1] + b[7] * a[4] + b[8] * a[7];
+    ret[8] = b[6] * a[2] + b[7] * a[5] + b[8] * a[8];
+    return ret;
   },
 /**
  * Multiplies two quaternions, creating a composite rotation.
