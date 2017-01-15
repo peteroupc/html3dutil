@@ -10,8 +10,8 @@ as well as a texture image to apply on that object's surface.
 
 <i>For more information on this constructor's parameters,
 see the H3DU.Material#setParams method. NOTE: It is preferred
-to set a material's parameters with the H3DU.Material#setParams method, rather than this
-constructor.</i>
+ to set a material's parameters with the H3DU.Material#setParams method, rather than this
+ constructor.</i>
 
 #### Parameters
 

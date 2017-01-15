@@ -410,12 +410,12 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [
  // if shading is disabled, this is solid color instead of material diffuse
-    "uniform vec4 md;\n",
-    "#ifdef SHADING\n",
-    "struct light {\n",
+    "uniform vec4 md;",
+    "#ifdef SHADING",
+    "struct light {",
 // NOTE: These struct members must be aligned to
 // vec4 size; otherwise, Chrome may have issues retaining
-// the value of lights[i].specular, causing flickering
+// the value of lights[i].specular, causing flickering.
 // ---
 // Source light direction/position, in camera/eye space
     " vec4 position;",
@@ -496,16 +496,16 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "vec3 fresnel(float dotnv, vec3 refl) {",
     " float idnv=1.0-dotnv;",
     " float idnvsq=idnv*idnv;",
-    " return refl+(vec(1.0)-refl)*idnvsq*idnvsq*idnv;",
+    " return refl+(vec3(1.0)-refl)*idnvsq*idnvsq*idnv;",
     "}",
     "vec3 reflectance(vec3 color, vec3 lightDir, vec3 viewDir, vec3 n, float rough, float metal) {",
     " vec3 h=normalize(viewDir+lightDir);",
-    " float dotnv=max(dot(n,viewDir),0.0);",
-    " float dothv=max(dot(h,viewDir),0.0);",
-    " float dotnh=max(dot(n,h),0.0);",
-    " float dotnl=max(dot(n,lightDir),0.0);",
+    " float dotnv=clamp(dot(n,viewDir),0.0,1.0);",
+    " float dothv=clamp(dot(h,viewDir),0.0,1.0);",
+    " float dotnh=clamp(dot(n,h),0.0,1.0);",
+    " float dotnl=clamp(dot(n,lightDir),0.0,1.0);",
     " vec3 refl=mix(vec3(0.04),color,metal);",
-    " vec3 fr=fresnel(dotnv,refl);",
+    " vec3 fr=fresnel(dothv,refl);",
     " vec3 refr=mix((vec3(1.0)-fr),vec3(0.0),metal);",
     " float ctden=max(4.0*dotnl*dotnv,0.0001);",
     " float alpha=rough*rough;",
@@ -543,16 +543,16 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
     "#endif",
 // diffuse
-    ""].join("\n");
+    ""].join("\n")+"\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
       "lightPower[" + i + "]=calcLightPower(lights[" + i + "],viewPositionVar);",
       "lightCosines[" + i + "]=clamp(dot(normal,lightPower[" + i + "].xyz),0.0,1.0);",
     // Lambert diffusion term
       "#ifndef PHYSICAL_BASED",
-      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w;\n",
+      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w;",
       "#else", "#ifndef SPECULAR",
-      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w;\n",
+      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w;",
       "#endif", "#endif",
       ""].join("\n");
   }
@@ -569,12 +569,13 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
 // not exactly greater than 0 in order to avoid speckling or
-// flickering specular highlights if the normal is perpendicular to
+// flickering specular highlights if the surface normal is perpendicular to
 // the light's direction vector
       "  spectmp = lightCosines[" + i + "] > 0.0001;",
       "  if (spectmp) {",
       "#ifdef PHYSICAL_BASED",
-      "    float roughness=clamp(1.0-mshin/64.0,0.0,1.0);",
+      // See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
+      "    float roughness=sqrt(2.0/(2.0+mshin));",
       "    lightedColor+=reflectance(materialDiffuse,lightPower[" + i + "].xyz,",
       "         viewDirection,normal,roughness,0.0)*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w*lightCosines[" + i + "];",
       "#else",
@@ -587,7 +588,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       ""].join("\n") + "\n";
   }
   shader += [
-    "#endif\n",
+    "#endif",
     " lightedColor+=me;", // emission
     " lightedColor/=vec3(1.0)+lightedColor;",
     " lightedColor=pow(lightedColor,vec3(0.45454545));",

@@ -6,15 +6,15 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, shininess */
+/* global H3DU */
 /**
  * Specifies parameters for geometry materials, which describe the appearance of a
  * 3D object. This includes how an object scatters, reflects, or absorbs light,
  * as well as a texture image to apply on that object's surface.<p>
  * <i>For more information on this constructor's parameters,
- * see the {@link H3DU.Material#setParams} method. NOTE: It is preferred
- * to set a material's parameters with the {@link H3DU.Material#setParams} method, rather than this
- * constructor.</i>
+ * see the {@link H3DU.Material#setParams} method.  NOTE: It is preferred
+ to set a material's parameters with the {@link H3DU.Material#setParams} method, rather than this
+ constructor.</i>
  * @class
  * @alias H3DU.Material
  * @param {Array<Number>} [ambient] A [color vector or string]{@link H3DU.toGLColor} giving the ambient color.
@@ -68,7 +68,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * colors are used for diffusion rather than this property.<p>
   * This value can have an optional fourth element giving the alpha component
   * (0-1). If this element is omitted, the default is 1.<p>
-  * @type {Array<Number>}
+ * @type {Array<Number>}
   * @default
   */
   this.diffuse = [0.8, 0.8, 0.8, 1.0];
@@ -86,7 +86,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * (all three components are the same), but can be colored if the material represents an
   * uncoated metal of some sort.<p>
   * NOTE: Before version 2.0, the default was (0,0,0).
-  * @type {Array<Number>}
+ * @type {Array<Number>}
   * @default
   */
   this.specular = [0.2, 0.2, 0.2];
@@ -101,7 +101,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * components.
   * For each of the three color components, positive values add to that component,
   * while negative values subtract from it. (0,0,0), the default, means no additive color.
-  * @type {Array<Number>}
+ * @type {Array<Number>}
   * @default
   */
   this.emission = [0, 0, 0];
@@ -169,12 +169,12 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * @default
   */
   this.shader = null;
-  this.setParams({
-    "ambient":ambient,
-    "diffuse":diffuse,
-    "specular":specular,
-    "shininess":shininess,
-    "emission":emission
+ this.setParams({
+   "ambient":ambient,
+   "diffuse":diffuse,
+   "specular":specular,
+   "shininess":shininess,
+   "emission":emission
   });
 };
 /**
@@ -188,17 +188,17 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
 H3DU.Material.prototype.copy = function() {
   "use strict";
   return new H3DU.Material().setParams({
-    "ambient":this.ambient,
-    "diffuse":this.diffuse,
-    "specular":this.specular,
-    "shininess":this.shininess,
-    "emission":this.emission,
-    "texture":this.texture,
-    "specularMap":this.specularMap,
-    "normalMap":this.normalMap,
-    "basic":this.basic,
-    "shader":this.shader
-  });
+   "ambient":this.ambient,
+   "diffuse":this.diffuse,
+   "specular":this.specular,
+   "shininess":this.shininess,
+   "emission":this.emission,
+   "texture":this.texture,
+   "specularMap":this.specularMap,
+   "normalMap":this.normalMap,
+   "basic":this.basic,
+   "shader":this.shader
+ });
 };
 /**
  * Sets parameters for this material object.
@@ -253,7 +253,7 @@ H3DU.Material.prototype.setParams = function(params) {
     if(this.emission.length > 3)this.emission = this.emission.slice(0, 3);
   }
   if(typeof params.shininess !== "undefined" && params.shininess !== null) {
-    this.shininess = Math.min(Math.max(0, shininess), 128);
+    this.shininess = Math.min(Math.max(0, params.shininess), 128);
   }
   if(typeof params.texture !== "undefined" && params.texture !== null) {
     param = params.texture;
