@@ -20,7 +20,7 @@ H3DU.Math = {
 /**
  * Finds the cross product of two 3-element vectors (called A and B).
  * The following are properties of the cross product:<ul>
- * <li>The cross product will be a vector that is perpendicular to both A and B.
+ * <li>The cross product will be a vector that is <i>orthogonal</i> (perpendicular) to both A and B.
  * <li>Switching the order of A and B results in a cross product
  * vector with the same length but opposite direction.
  * <li>If the cross product's [length]{@link H3DU.Math.vec3length} is 0, then A and B are parallel vectors.

@@ -42,8 +42,8 @@ The HTML 3D library uses the following transformations:
 * A _world matrix_ transforms an object's own coordinates to _world space_,
 the coordinate system shared by every object in the scene. The world matrix
 is not discussed in this page.
-* A _view matrix_ transforms coordinates in world space to _camera space_.
-* A _projection matrix_ transforms coordinates in camera space to _clip space_.
+* A _view matrix_ transforms coordinates in world space to _eye space_.
+* A _projection matrix_ transforms coordinates in eye space to _clip space_.
 
 As [explained later](#Vertex Coordinates in the Graphics System) on this page,
 however, these transformations and matrices are
@@ -53,7 +53,7 @@ and their transformed _window coordinates_ when rendering things on the screen.
 
 ## Projection Transform <a id=Projection_Transform></a>
 
-A _projection matrix_ transforms coordinates in camera space to _clip space_.
+A _projection matrix_ transforms coordinates in eye space to _clip space_.
 
 Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below.
@@ -194,8 +194,8 @@ This method allows you to set the projection matrix to an arbitrary <a href="tut
 
 ## View Transform <a id=View_Transform></a>
 
-The view matrix transforms _world space_ coordinates, shared by every object in a scene, to coordinates in _camera space_
-(also called _eye space_ or _view space_), in which the "camera" is located at the center of the coordinate system: (0, 0, 0).
+The view matrix transforms _world space_ coordinates, shared by every object in a scene, to coordinates in _eye space_
+(also called _camera space_ or _view space_), in which the "camera" is located at the center of the coordinate system: (0, 0, 0).
 A view matrix essentially rotates the camera and moves it to a given position in world space. Specifically:
 
 * The camera is rotated to point at a certain object or location on the scene. This is represented by

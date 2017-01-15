@@ -9,14 +9,17 @@ Here is an overview of these data types.
 
 ## Vectors <a id=Vectors></a>
 
-A vector is simply an array of elements that are related
-to each other. As such, a vector can describe a position, a direction,
-a ray, a color, or anything else. The methods in this class treat arrays
-as vectors.  Functions dealing with vectors begin with "vec".
-Many of H3DU.Math's functions use 3- or 4-element vectors.
+A vector is a line segment pointing in a certain _direction_ and
+having a certain _length_.  In addition to a direction, a vector can
+describe a position (by pointing to that position from
+a certain starting point), or a color.
 
-If a 4-element vector describes a position, direction,
-or normal, the elements are given as X, Y, Z, and W, in that order.
+In `H3DU.Math`, vectors are stored in arrays of numbers (usually
+three or four numbers), and functions dealing with vectors begin
+with "vec".
+
+If a 4-element vector describes a position or direction, the elements
+are given as X, Y, Z, and W, in that order.
 
 If a 4-element vector describes a color, the elements are given as red, green,
 blue, and alpha, in that order (where each element ranges from 0-1).
@@ -32,7 +35,8 @@ by the fourth.)
 
 A _unit vector_ is a vector with a length of 1. (A vector's _length_ is the square root
 of the sum of the squares of its components.) A vector can be "normalized" to
-a unit vector by dividing each of its components by its length.
+a unit vector by dividing each of its components by its length (doing so won't change
+the vector's direction).
 
 The following functions normalize vectors and find their length.
 
@@ -246,6 +250,13 @@ right-handed:
 the viewer_ whenever the X axis points to the right and the Y axis points up.
 * In a _right-handed_ coordinate system, the Z axis points _toward
 the viewer_ whenever the X axis points to the right and the Y axis points up.
+
+To show this more visually, point one hand's thumb to your right and
+its index finger up, and bend the other three fingers halfway down.  In a
+coordinate system named after the given hand (left-handed or
+right-handed), if the X axis points in the thumb's
+direction and the Y axis points in the index finger's direction, the Z axis will
+point in the direction the other three fingers point.
 
 ### Differences in Behavior <a id=Differences_in_Behavior></a>
 

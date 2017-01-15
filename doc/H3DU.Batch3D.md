@@ -22,7 +22,6 @@ of a frame buffer using a particular shader.
 * [primitiveCount](#H3DU.Batch3D_H3DU.Batch3D_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this batch of shapes.
 * [removeShape](#H3DU.Batch3D_H3DU.Batch3D_removeShape)<br>Removes all instances of a 3D shape from this batch of shapes.
-* [render](#H3DU.Batch3D_H3DU.Batch3D_render)<br>Renders this batch using the given scene object.
 * [setLookAt](#H3DU.Batch3D_H3DU.Batch3D_setLookAt)<br>Sets this batch's view matrix to represent a camera view.
 * [setProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_setProjectionMatrix)<br>Sets the projection matrix for this batch.
 * [setViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_setViewMatrix)<br>Sets the current view matrix for this batch of shapes.
@@ -186,19 +185,6 @@ Removes all instances of a 3D shape from this batch of shapes.
 
 * `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
     The 3D shape to remove.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
-
-### H3DU.Batch3D#render(scene) <a id='H3DU.Batch3D_H3DU.Batch3D_render'></a>
-
-Renders this batch using the given scene object.
-
-#### Parameters
-
-* `scene` (Type: Object)<br>
-    Description of scene.
 
 #### Return Value
 

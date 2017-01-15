@@ -20,30 +20,32 @@ H3DU.Batch3D = function() {
   this._viewMatrix = H3DU.Math.mat4identity();
   this.lights = new H3DU.Lights();
   this._projectionUpdater = null;
+  this._globalShader = null;
   this._frustum = null;
+  // TODO: Consider using a root node infrastructure, not a set of children
   this.shapes = [];
 };
 /** @private */
-H3DU.Batch3D._PerspectiveView = function(scene, fov, near, far) {
+H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
   "use strict";
   this.fov = fov;
   this.near = near;
   this.far = far;
-  this.scene = scene;
+  this.batch = batch;
   this.lastAspect = null;
 /** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect) {
       this.lastAspect = aspect;
-      this.scene.setProjectionMatrix(
+      this.batch.setProjectionMatrix(
      H3DU.Math.mat4perspective(this.fov, aspect, this.near, this.far));
     }
   };
   this.update();
 };
 /** @private */
-H3DU.Batch3D._OrthoView = function(scene, a, b, c, d, e, f) {
+H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   "use strict";
   this.a = a;
   this.b = b;
@@ -51,14 +53,14 @@ H3DU.Batch3D._OrthoView = function(scene, a, b, c, d, e, f) {
   this.d = d;
   this.e = e;
   this.f = f;
-  this.scene = scene;
+  this.batch = batch;
   this.lastAspect = null;
 /** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect) {
       this.lastAspect = aspect;
-      this.scene.setProjectionMatrix(
+      this.batch.setProjectionMatrix(
      H3DU.Math.mat4orthoAspect(this.a, this.b, this.c, this.d, this.e, this.f, aspect));
     }
   };
@@ -226,6 +228,14 @@ H3DU.Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
   "use strict";
   return this.orthoAspect(l, r, b, t, -1, 1);
 };
+
+/** @private */
+H3DU.Batch3D.prototype.useShader = function(shader) {
+  "use strict";
+  this._globalShader = shader;
+  return this;
+};
+
 /**
  * Sets the current view matrix for this batch of shapes.
  * @param {Array<Number>} mat A 4x4 matrix to use as the view matrix.
@@ -350,8 +360,14 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
   } else if(!shape.isCulled(this._getFrustum())) {
     var prog = null;
     var flags = 0;
-    if(shape.material instanceof H3DU.Material &&
-     shape.material.shader) {
+    if(typeof renderContext.shader !== "undefined" && renderContext.shader !== null) {
+      prog = renderContext.scene._programs.getCustomProgram(
+         renderContext.shader, renderContext.context);
+    } else if(typeof this._globalShader !== "undefined" && this._globalShader !== null) {
+      prog = renderContext.scene._programs.getCustomProgram(
+         this._globalShader, renderContext.context);
+    } else if(shape.material instanceof H3DU.Material &&
+     shape.material.shader !== null) {
       prog = renderContext.scene._programs.getCustomProgram(
          shape.material.shader, renderContext.context);
     }
@@ -387,17 +403,13 @@ H3DU.Batch3D.prototype.resize = function(width, height) {
   }
 };
 
-/**
- * Renders this batch using the given scene object.
- * @param {Object} scene Description of scene.
- * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
- */
-H3DU.Batch3D.prototype.render = function(scene) {
+/** @private */
+H3DU.Batch3D.prototype.render = function(scene, pass) {
   "use strict";
   var rc = {};
   rc.scene = scene;
   rc.context = scene.getContext();
+  rc.shader = pass.shader;
   for(var i = 0;i < this.shapes.length;i++) {
     this._renderShape(this.shapes[i], rc);
   }

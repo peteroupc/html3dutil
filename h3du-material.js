@@ -6,13 +6,15 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+/* global H3DU, shininess */
 /**
  * Specifies parameters for geometry materials, which describe the appearance of a
  * 3D object. This includes how an object scatters, reflects, or absorbs light,
  * as well as a texture image to apply on that object's surface.<p>
  * <i>For more information on this constructor's parameters,
- * see the {@link H3DU.Material#setParams} method.</i>
+ * see the {@link H3DU.Material#setParams} method. NOTE: It is preferred
+ * to set a material's parameters with the {@link H3DU.Material#setParams} method, rather than this
+ * constructor.</i>
  * @class
  * @alias H3DU.Material
  * @param {Array<Number>} [ambient] A [color vector or string]{@link H3DU.toGLColor} giving the ambient color.
@@ -24,17 +26,14 @@
 H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  // console.log([ambient,diffuse,specular,shininess,emission]+"")
   "use strict";
-  if(ambient !== null && typeof ambient !== "undefined")ambient = H3DU.toGLColor(ambient);
-  if(diffuse !== null && typeof diffuse !== "undefined")diffuse = H3DU.toGLColor(diffuse);
-  if(specular !== null && typeof specular !== "undefined")specular = H3DU.toGLColor(specular);
-  if(emission !== null && typeof emission !== "undefined")emission = H3DU.toGLColor(emission);
  /** Specular highlight exponent of this material.
   * The greater the number, the more concentrated the specular
   * highlights are (and the smoother the material behaves).
   * The lower the number, the more extended the highlights are (and the rougher the material behaves).
-  * Ranges from 0 through 128. Default is 32.
+  * Ranges from 0 through 128.
+  * @default
   */
-  this.shininess = shininess === null || typeof shininess === "undefined" ? 32 : Math.min(Math.max(0, shininess), 128);
+  this.shininess = 32;
  /** Ambient color of this material.<p>
   * Ambient color indicates how much an object's color is affected by ambient
   * lights, those that color pixels the same way regardless
@@ -50,13 +49,13 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * and (1,1,1) means total ambient color.<p>
   * Setting ambient color and diffusion color to the same value usually defines an object's
   * color.<p>
+  * @default
   */
-  this.ambient = ambient ? ambient.slice(0, 3) : [0.2, 0.2, 0.2];
+  this.ambient = [0.2, 0.2, 0.2];
  /**
   * Diffusion color of this material (also called "albedo"). This is the color seen when light passes through this material
   * and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
-  * differently depending
-  * on how directly they face diffuse lights, diffusion can contribute
+  * more brightly the more directly they face diffuse lights, diffusion can contribute
   * much of the 3D appearance of that object.<p>
   * This value is a 4-element array giving the red, green, blue, and
   * alpha components of the diffusion; the final diffusion color depends
@@ -69,8 +68,10 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * colors are used for diffusion rather than this property.<p>
   * This value can have an optional fourth element giving the alpha component
   * (0-1). If this element is omitted, the default is 1.<p>
+  * @type {Array<Number>}
+  * @default
   */
-  this.diffuse = diffuse ? diffuse.slice(0, diffuse.length) : [0.8, 0.8, 0.8, 1.0];
+  this.diffuse = [0.8, 0.8, 0.8, 1.0];
  /**
   * Specular highlight reflection of this material.
   * Specular reflection is a reflection in the opposite direction from the direction
@@ -83,10 +84,12 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
   * The specular color is usually grayscale
   * (all three components are the same), but can be colored if the material represents an
-  * uncoated metal of some sort. If this element is omitted, the default is (0.2,0.2,0.2).<p>
+  * uncoated metal of some sort.<p>
   * NOTE: Before version 2.0, the default was (0,0,0).
+  * @type {Array<Number>}
+  * @default
   */
-  this.specular = specular ? specular.slice(0, 3) : [0.2, 0.2, 0.2];
+  this.specular = [0.2, 0.2, 0.2];
  /**
   * Additive color emitted by objects with this material.
   * Used for objects that glow on their own, among other things.
@@ -98,13 +101,16 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * components.
   * For each of the three color components, positive values add to that component,
   * while negative values subtract from it. (0,0,0), the default, means no additive color.
+  * @type {Array<Number>}
+  * @default
   */
-  this.emission = emission ? emission.slice(0, 3) : [0, 0, 0];
+  this.emission = [0, 0, 0];
 /**
- * H3DU.Texture for this material. Each color in the texture
+ * Texture for this material. Each color in the texture
  * sets the diffusion (also called "albedo")
  * of each part of the material.
  * @default
+ * @type {H3DU.Texture}
  */
   this.texture = null;
 /**
@@ -163,6 +169,13 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * @default
   */
   this.shader = null;
+  this.setParams({
+    "ambient":ambient,
+    "diffuse":diffuse,
+    "specular":specular,
+    "shininess":shininess,
+    "emission":emission
+  });
 };
 /**
  * Clones this object's parameters to a new H3DU.Material
@@ -174,19 +187,18 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  */
 H3DU.Material.prototype.copy = function() {
   "use strict";
-  return new H3DU.Material(
-  this.ambient.slice(0, this.ambient.length),
-  this.diffuse.slice(0, this.diffuse.length),
-  this.specular.slice(0, this.specular.length),
-  this.shininess,
-  this.emission.slice(0, this.emission.length)
- ).setParams({
-   "texture":this.texture,
-   "specularMap":this.specularMap,
-   "normalMap":this.normalMap,
-   "basic":this.basic,
-   "shader":this.shader
- });
+  return new H3DU.Material().setParams({
+    "ambient":this.ambient,
+    "diffuse":this.diffuse,
+    "specular":this.specular,
+    "shininess":this.shininess,
+    "emission":this.emission,
+    "texture":this.texture,
+    "specularMap":this.specularMap,
+    "normalMap":this.normalMap,
+    "basic":this.basic,
+    "shader":this.shader
+  });
 };
 /**
  * Sets parameters for this material object.
@@ -241,7 +253,7 @@ H3DU.Material.prototype.setParams = function(params) {
     if(this.emission.length > 3)this.emission = this.emission.slice(0, 3);
   }
   if(typeof params.shininess !== "undefined" && params.shininess !== null) {
-    this.shininess = params.shininess;
+    this.shininess = Math.min(Math.max(0, shininess), 128);
   }
   if(typeof params.texture !== "undefined" && params.texture !== null) {
     param = params.texture;

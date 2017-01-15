@@ -100,8 +100,8 @@ simple, this matrix's transformation is one that keeps straight lines straight a
  </mtr>
  <mtr>
  <mtd><mi>[1] X-axis Y</mi></mtd>
- <mtd><mi>[2] Y-axis Y</mi></mtd>
- <mtd><mi>[3] Z-axis Y</mi></mtd>
+ <mtd><mi>[5] Y-axis Y</mi></mtd>
+ <mtd><mi>[9] Z-axis Y</mi></mtd>
  <mtd><mi>[13] Center Y</mi></mtd>
  </mtr>
  <mtr>
@@ -120,6 +120,44 @@ simple, this matrix's transformation is one that keeps straight lines straight a
 </mfenced>
 </math>
 
+The following is an example of a transformation matrix.
+
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>0.5</mi></mtd>
+ <mtd><mo>-0.866025</mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>0.866025</mtd>
+ <mtd><mi>0.5</mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>2</mi></mtd>
+ <mtd><mi>3</mi></mtd>
+ <mtd><mi>4</mi></mtd>
+ <mtd><mn>1</mn></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
+Here, the first column shows an X-axis vector is (1, 0, 0),
+the second column shows a Y-axis vector at (0, 0.5, 0.866025),
+the third column shows a Y-axis vector at (0, -0.866025, 0.5),
+and the fourth column centers the coordinate system at (2, 3, 4).
+
 ## Transforming Points <a id=Transforming_Points></a>
 
 The transformation formula multiplies a matrix by a 3D point to change that point's
@@ -128,12 +166,14 @@ position:
 * **a&prime;**<sub>_x_</sub> = matrix[0] &#x22c5; **a**<sub>_x_</sub> + matrix[4] &#x22c5; **a**<sub>_y_</sub> + matrix[8] &#x22c5; **a**<sub>_z_</sub> + matrix[12]
 * **a&prime;**<sub>_y_</sub> = matrix[1] &#x22c5; **a**<sub>_x_</sub> + matrix[5] &#x22c5; **a**<sub>_y_</sub> + matrix[9] &#x22c5; **a**<sub>_z_</sub> + matrix[13]
 * **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14]
-* **w** = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15]
+* **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15]
 
-If **w** is other than 1, divide **a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>,
-and **a&prime;**<sub>_z_</sub> by **w**. (See ["Other Transformations"](#Other_Transformations).
-For most of the discussion that follows, the last row of the matrix is ignored and we assume
-**w** is always 1.)
+> The **a&prime;**<sub>_w_</sub> appears here because matrix transformation actually involves multiplying by
+a 4-element vector, which in this case is the vector (**a**<sub>_x_</sub>, **a**<sub>_y_</sub>, **a**<sub>_z_</sub>, 1).
+The result will be  (**a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>, **a&prime;**<sub>_z_</sub>, **a&prime;**<sub>_w_</sub>), which
+is in _homogeneous coordinates_.  To convert these coordinates back to a 3D point, divide
+**a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>,
+and **a&prime;**<sub>_z_</sub> by **a&prime;**<sub>_w_</sub>. (See also ["Other Transformations"](#Other_Transformations).)
 
 The following sections describe different kinds of matrix transformations in more detail.
 
@@ -143,7 +183,7 @@ Related functions:
  Transforms a 4-element vector with a 4x4 matrix
 * [H3DU.Math.mat3transform()]{@link H3DU.Math.mat3transform} -
  Transforms a 3-element vector with a 3x3 matrix
-* {@link H3DU.Math.mat3projectVec3} -
+* {@link H3DU.Math.mat4projectVec3} -
  Does a perspective-correct transformation of a 3D point with a 4x4 matrix
 
 ### Translation <a id=Translation></a>
@@ -189,6 +229,7 @@ where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
 * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + tx
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + tz
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
 
 For example, we add the input x and `tx` to get the output x. If `tx` is 0, x
 remains unchanged. Likewise for y and z.
@@ -244,6 +285,7 @@ The scaling formula would look like:
 * **a&prime;**<sub>_x_</sub> = sx &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + sy &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + sz &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
 
 For example, we multiply the input x by `sx` to get the output x. If `sx` is 1, x
 remains unchanged. Likewise for y and z.
@@ -253,24 +295,30 @@ If `sx`, `sy`, or `sz` is -1, that coordinate is _reflected_ along the correspon
 If `sx`, `sy`, and `sz` are all 1, we have an _identity matrix_, where the input vector
 is equal to the output vector.
 
+> When the transformed X, Y, or Z axis has a length other than 1, the coordinate
+system will be scaled up or down along that axis.  The scalings given
+here will scale the lengths of the corresponding axes.  For example,
+if `sx` is 2, the X axis will be (2, 0, 0) and thus have a length of 2.
+
 Related functions:
 
-* [H3DU.Math.mat4identity()]{@link H3DU.Math.mat4identity} -
- Returns a 4x4 identity matrix
-* [H3DU.Math.mat3identity()]{@link H3DU.Math.mat3identity} -
- Returns a 3x3 identity matrix
 * [H3DU.Math.mat4scaled()]{@link H3DU.Math.mat4scaled} -
  Returns a scaling matrix
 * [H3DU.Math.mat4scale()]{@link H3DU.Math.mat4scale} -
  Multiplies a matrix by a scaling.
 * [H3DU.Math.mat4scaleInPlace()]{@link H3DU.Math.mat4scaleInPlace} -
  Multiplies a matrix in place by a scaling.
+* [H3DU.Math.mat4identity()]{@link H3DU.Math.mat4identity} -
+ Returns a 4x4 identity matrix
+* [H3DU.Math.mat3identity()]{@link H3DU.Math.mat3identity} -
+ Returns a 3x3 identity matrix
 
 ### Rotation <a id=Rotation></a>
 
 Rotation changes an object's orientation. Rotation uses the upper-left
-corner of a matrix. Given an angle of rotation, &theta; (in radians; multiply
-degrees by &pi; and divide by 180), the transformation matrix is as follows.
+corner of a matrix. Given an angle of rotation, &theta;,
+the transformation matrix is as follows. (For a list of common
+sines and cosines, see the end of this section.)
 
 <figure>
 <math>
@@ -375,6 +423,7 @@ which would look like:
 * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (cos &theta;) &#x22c5; **a**<sub>_y_</sub> + -(sin &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (sin &theta;) &#x22c5; **a**<sub>_y_</sub> + (cos &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
 
 Note that:
 
@@ -382,7 +431,7 @@ Note that:
 and the Y and Z coordinates are adjusted in the rotation. For rotations about the
 Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.
 * If the axis of rotation points toward the viewer, positive rotations mean
-counterclockwise rotation in right-handed coordinate systems. For example,
+counterclockwise rotation in [right-handed coordinate systems]{@tutorial glmath}. For example,
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.
@@ -396,6 +445,7 @@ point 60 degrees about the X axis.
 * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0 = **a**<sub>_x_</sub>
 * **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.5 &#x22c5; **a**<sub>_y_</sub> + -0.866025 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.866025 &#x22c5; **a**<sub>_y_</sub> + 0.5 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
 
 If a point is located at (10, 20, 30), the rotated point would now be:
 
@@ -410,6 +460,8 @@ If a point is located at (10, 20, 30), the rotated point would now be:
 * ~= 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30
 * ~= 17.3205 + 15
 * ~= 32.3205
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 1
+* = 1
 
 So the rotated point would be at about (10, -15.98075, 32.3205).
 
@@ -419,6 +471,19 @@ Related functions:
  Returns a rotation matrix
 * [H3DU.Math.mat4rotate()]{@link H3DU.Math.mat4rotate} -
  Multiplies a matrix by a translation.
+
+A list of common sines and cosines follows.  Values
+shown with three decimal places are approximate.
+
+| Angle | 0&deg;| 22.5&deg;| 30&deg;| 45&deg;| 60&deg;| 67.5&deg;| 90&deg;| 112.5&deg;| 120&deg;| 135&deg;| 150&deg;| 157.5&deg;| 180&deg;|
+ -------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
+| sin | 0 | 0.383 | 0.5 | 0.707 | 0.866 | 0.924 | 1 | 0.924 | 0.866 | 0.707 | 0.5 | 0.383 | 0 |
+| cos | 1 | 0.924 | 0.866 | 0.707 | 0.5 | 0.383 | 0 | -0.383 | -0.5 | -0.707 | -0.866 | -0.924 | -1 |
+
+| Angle | 180&deg;| 202.5&deg;| 210&deg;| 225&deg;| 240&deg;| 247.5&deg;| 270&deg;| 292.5&deg;| 300&deg;| 315&deg;| 330&deg;| 337.5&deg;| 360&deg;|
+ -------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
+| sin | 0 | -0.383 | -0.5 | -0.707 | -0.866 | -0.924 | -1 | -0.924 | -0.866 | -0.707 | -0.5 | -0.383 | 0 |
+| cos | -1 | -0.924 | -0.866 | -0.707 | -0.5 | -0.383 | 0 | 0.383 | 0.5 | 0.707 | 0.866 | 0.924 | 1 |
 
 ### Matrix Multiplication <a id=Matrix_Multiplication></a>
 
@@ -448,8 +513,8 @@ In all the transformations described above, the last row in the transformation m
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the `H3DU.Math` library.
 
-One example of such a transformation is found in a _perspective projection_ matrix. When a 4-element
-vector is transformed with this matrix, its W component is generated as follows:
+One example of such a transformation is found in a _perspective projection_ matrix. When
+a 4-element vector is transformed with this matrix, its W component is generated as follows:
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
 
@@ -490,4 +555,6 @@ matrix is too complicated to discuss here.
 Related functions:
 
 * [H3DU.Math.mat4invert()]{@link H3DU.Math.mat4invert} -
- Inverts a matrix
+ Inverts a 4x4 matrix
+* [H3DU.Math.mat4invert()]{@link H3DU.Math.mat4invert} -
+ Inverts a 3x3 matrix

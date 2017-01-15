@@ -1101,7 +1101,7 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
           pass.frameBuffer, this.context);
       this._clearForPass(pass);
       renderPasses[i].subScene.resize(width, height);
-      renderPasses[i].subScene.render(this);
+      renderPasses[i].subScene.render(this, pass);
       this._textureLoader.unbindFrameBuffer(
           pass.frameBuffer, this.context);
     }
@@ -1111,17 +1111,27 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
 };
 
 /**
- * Has no effect. (Previously, used a shader program to apply a texture filter after the
- * scene is rendered.)
+ * Uses a shader program to apply a texture filter after the
+ * scene is rendered.
  * @deprecated Use the {@link H3DU.Batch3D.forFilter} method to create a batch
- * for rendering filter effects from a frame buffer.
- * @param {H3DU.ShaderProgram|string|null} filterProgram Not used.
+ * for rendering filter effects from a frame buffer, or use the {@link H3DU.Batch3D.useShader}
+ * method. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method
+ * until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
+ * @param {H3DU.ShaderProgram|string|null} filterProgram The shader program to use.
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
  */
-H3DU.Scene3D.prototype.useFilter = function() {
+H3DU.Scene3D.prototype.useFilter = function(filterProgram) {
   "use strict";
-  console.warn("The useFilter method has no effect. Use the {@link H3DU.Batch3D.forFilter} method to " +
+  if(this._renderedOutsideScene) {
+    throw new Error("A non-default scene has been rendered, so this method is disabled.");
+  }
+  console.warn("The useFilter method is deprecated. Use the {@link H3DU.Batch3D.forFilter} method to " +
     "create a batch for rendering filter effects from a frame buffer.");
+  if(filterProgram instanceof H3DU.ShaderProgram) {
+    this._subScene.useShader(filterProgram.shaderInfo);
+  } else {
+    this._subScene.useShader(filterProgram);
+  }
   return this;
 };
