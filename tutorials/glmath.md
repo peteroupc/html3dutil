@@ -253,7 +253,7 @@ the viewer_ whenever the X axis points to the right and the Y axis points up.
 
 To show this more visually, point one hand's thumb to your right and
 its index finger up, and bend the other three fingers halfway down.  In a
-coordinate system named after the given hand (left-handed or
+coordinate system named after that hand (left-handed or
 right-handed), if the X axis points in the thumb's
 direction and the Y axis points in the index finger's direction, the Z axis will
 point in the direction the other three fingers point.

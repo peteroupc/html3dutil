@@ -47,7 +47,8 @@ The default is (0,0,0,1), or black. Not used in the default shader program.
 A 4-element vector giving an additional color to multiply with the diffusion
 color of each object (which is also called "albedo"), in the red, green,
 and blue components respectively. Diffuse color is the color
-seen when light passes through a material and bounces back (diffusion). Each component ranges from 0 to 1.
+seen when light passes through a material and bounces back (diffusion).
+Each component ranges from 0 to 1.
 The simulated diffusion scatters evenly, in every direction.
 The default is (1,1,1,1), or white.
 
@@ -74,6 +75,9 @@ A specular reflection is a reflection in the opposite direction from the directi
 the light reaches the object in, like a mirror. Specular reflections can cause shiny
 highlights depending on the viewing angle.
 The default is (1,1,1), or white.
+
+NOTE: <i>The default shader uses this only for <a href="H3DU.Material.md">H3DU.Material</a>, not
+for <a href="H3DU.md#H3DU.PbrMaterial">H3DU.PbrMaterial</a>.</i>
 
 ### H3DU.LightSource#setParams(params) <a id='H3DU.LightSource_H3DU.LightSource_setParams'></a>
 

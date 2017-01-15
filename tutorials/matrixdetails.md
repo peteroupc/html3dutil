@@ -129,24 +129,24 @@ The following is an example of a transformation matrix.
  <mtd><mn>1</mn></mtd>
  <mtd><mn>0</mn></mtd>
  <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
+ <mtd><mn>2</mn></mtd>
  </mtr>
  <mtr>
  <mtd><mn>0</mn></mtd>
  <mtd><mi>0.5</mi></mtd>
  <mtd><mo>-0.866025</mtd>
- <mtd><mn>0</mn></mtd>
+ <mtd><mn>3</mn></mtd>
  </mtr>
  <mtr>
  <mtd><mn>0</mn></mtd>
  <mtd><mi>0.866025</mtd>
  <mtd><mi>0.5</mtd>
- <mtd><mn>0</mn></mtd>
+ <mtd><mn>4</mn></mtd>
  </mtr>
  <mtr>
- <mtd><mi>2</mi></mtd>
- <mtd><mi>3</mi></mtd>
- <mtd><mi>4</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
  <mtd><mn>1</mn></mtd>
  </mtr>
 </mtable>
@@ -475,12 +475,12 @@ Related functions:
 A list of common sines and cosines follows.  Values
 shown with three decimal places are approximate.
 
-| Angle | 0&deg;| 22.5&deg;| 30&deg;| 45&deg;| 60&deg;| 67.5&deg;| 90&deg;| 112.5&deg;| 120&deg;| 135&deg;| 150&deg;| 157.5&deg;| 180&deg;|
+| &nbsp; | 0&deg;| 22.5&deg;| 30&deg;| 45&deg;| 60&deg;| 67.5&deg;| 90&deg;| 112.5&deg;| 120&deg;| 135&deg;| 150&deg;| 157.5&deg;| 180&deg;|
  -------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
 | sin | 0 | 0.383 | 0.5 | 0.707 | 0.866 | 0.924 | 1 | 0.924 | 0.866 | 0.707 | 0.5 | 0.383 | 0 |
 | cos | 1 | 0.924 | 0.866 | 0.707 | 0.5 | 0.383 | 0 | -0.383 | -0.5 | -0.707 | -0.866 | -0.924 | -1 |
 
-| Angle | 180&deg;| 202.5&deg;| 210&deg;| 225&deg;| 240&deg;| 247.5&deg;| 270&deg;| 292.5&deg;| 300&deg;| 315&deg;| 330&deg;| 337.5&deg;| 360&deg;|
+| &nbsp; | 180&deg;| 202.5&deg;| 210&deg;| 225&deg;| 240&deg;| 247.5&deg;| 270&deg;| 292.5&deg;| 300&deg;| 315&deg;| 330&deg;| 337.5&deg;| 360&deg;|
  -------|---|------|----|----|----|------|----|------|-----|-----|-----|-------|-----|
 | sin | 0 | -0.383 | -0.5 | -0.707 | -0.866 | -0.924 | -1 | -0.924 | -0.866 | -0.707 | -0.5 | -0.383 | 0 |
 | cos | -1 | -0.924 | -0.866 | -0.707 | -0.5 | -0.383 | 0 | 0.383 | 0.5 | 0.707 | 0.866 | 0.924 | 1 |

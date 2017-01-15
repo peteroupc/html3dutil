@@ -430,30 +430,24 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "uniform light lights[" + H3DU.Lights.MAX_LIGHTS + "];",
     "uniform vec3 ma;",
     "uniform vec3 me;",
+    "#ifdef METALNESS", "uniform float metalness;", "#endif",
+    "#ifdef METALNESS_MAP", "uniform sampler2D metalnessMap;", "#endif",
+    "#ifdef ROUGHNESS", "uniform float roughness;", "#endif",
+    "#ifdef ROUGHNESS_MAP", "uniform sampler2D roughnessMap;", "#endif",
+    "#ifdef SPECULAR_MAP", "uniform sampler2D specularMap;", "#endif",
+    "#ifdef NORMAL_MAP", "uniform sampler2D normalMap;", "#endif",
+    "#ifdef NORMAL_MAP", "varying mat3 tbnMatrixVar;", "#endif",
     "#ifdef SPECULAR",
     "uniform vec3 ms;",
     "uniform float mshin;",
-    "#ifdef SPECULAR_MAP",
-    "uniform sampler2D specularMap;",
-    "#endif",
-    "#ifdef NORMAL_MAP",
-    "uniform sampler2D normalMap;",
     "#endif",
     "#endif",
-    "#endif",
-    "#ifdef TEXTURE",
-    "uniform sampler2D sampler;",
-    "#endif",
+    "#ifdef TEXTURE", "uniform sampler2D sampler;", "#endif",
+    "#ifdef COLORATTR", "varying vec3 colorAttrVar;", "#endif",
     "varying vec2 uvVar;",
-    "#ifdef COLORATTR",
-    "varying vec3 colorAttrVar;",
-    "#endif",
     "#ifdef SHADING",
     "varying vec4 viewPositionVar;",
     "varying vec3 transformedNormalVar;",
-    "#ifdef NORMAL_MAP",
-    "varying mat3 tbnMatrixVar;",
-    "#endif",
     "vec4 calcLightPower(light lt, vec4 vertexPosition) {",
     " vec3 sdir;",
     " float attenuation;",
@@ -480,6 +474,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "}",
     "#endif",
 // ////////////
+    "#ifdef PHYSICAL_BASED",
     "#define ONE_DIV_PI 0.318309886",
     "#define PI 3.141592654",
     "float ndf(float dotnh, float alpha) {",
@@ -512,6 +507,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     " vec3 ctnum=ndf(dotnh,alpha)*gsmith(dotnv,dotnl,alpha)*fr;",
     " return refr*color*ONE_DIV_PI+ctnum/ctden;",
     "}",
+    "#endif",
 // ////////////
     "void main() {",
     " vec3 normal;",
@@ -543,7 +539,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
     "#endif",
 // diffuse
-    ""].join("\n")+"\n";
+    ""].join("\n") + "\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
       "lightPower[" + i + "]=calcLightPower(lights[" + i + "],viewPositionVar);",
@@ -557,13 +553,13 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       ""].join("\n");
   }
   shader += [
-    "#ifdef SPECULAR",
+    "vec3 materialSpecular=vec3(0.0);",
     "bool spectmp;",
-    "vec3 materialSpecular=ms;",
-    "#ifdef SPECULAR_MAP",
-    "materialSpecular*=texture2D(specularMap,uvVar).rgb;",
-    "#endif",
-    "// specular reflection",
+    // Specular reflection
+    "#ifdef SPECULAR", "materialSpecular=ms;", "#endif",
+    // TODO: Decide whether to multiply specular by the specular texture;
+    // here, this is not done anymore
+    "#ifdef SPECULAR_MAP", "materialSpecular=texture2D(specularMap,uvVar).rgb;", "#endif",
     "vec3 viewDirection=normalize((-viewPositionVar).xyz);"
   ].join("\n") + "\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
@@ -574,10 +570,18 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       "  spectmp = lightCosines[" + i + "] > 0.0001;",
       "  if (spectmp) {",
       "#ifdef PHYSICAL_BASED",
-      // See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
+      "float rough = 0.0;",
+      "float metal = 0.0;",
+      "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
+// Convert Blinn-Phong shininess to roughness
+// See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
+      "#ifndef ROUGHNESS", "rough=sqrt(2.0/(2.0+mshin));", "#endif",
+      "#ifdef ROUGHNESS_MAP", "rough=texture2D(roughnessMap,uvVar).r;", "#endif",
+      "#ifdef METALNESS", "metal=metalness;", "#endif",
+      "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).r;", "#endif",
       "    float roughness=sqrt(2.0/(2.0+mshin));",
       "    lightedColor+=reflectance(materialDiffuse,lightPower[" + i + "].xyz,",
-      "         viewDirection,normal,roughness,0.0)*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w*lightCosines[" + i + "];",
+      "         viewDirection,normal,rough,metal)*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w*lightCosines[" + i + "];",
       "#else",
 // Blinn-Phong specular term
       "    float specular=clamp(dot(normalize(viewDirection+lightPower[" + i + "].xyz),normal),0.0,1.0);",
@@ -588,7 +592,6 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       ""].join("\n") + "\n";
   }
   shader += [
-    "#endif",
     " lightedColor+=me;", // emission
     " lightedColor/=vec3(1.0)+lightedColor;",
     " lightedColor=pow(lightedColor,vec3(0.45454545));",

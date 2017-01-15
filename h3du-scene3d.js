@@ -94,6 +94,16 @@ H3DU.Scene3D.SPECULAR_ENABLED = 8;
 H3DU.Scene3D.TEXTURE_ENABLED = 16;
 /** @private */
 H3DU.Scene3D.COLORATTR_ENABLED = 32;
+/** @private */
+H3DU.Scene3D.ROUGHNESS_ENABLED = 1 << 6 | 0;
+/** @private */
+H3DU.Scene3D.ROUGHNESS_MAP_ENABLED = 1 << 7 | 0;
+/** @private */
+H3DU.Scene3D.METALNESS_ENABLED = 1 << 8 | 0;
+/** @private */
+H3DU.Scene3D.METALNESS_MAP_ENABLED = 1 << 9 | 0;
+/** @private */
+H3DU.Scene3D.PHYSICAL_BASED_ENABLED = 1 << 10 | 0;
 
 /** @private */
 H3DU.Scene3D._flagsForShape = function(shape) {
@@ -108,6 +118,17 @@ H3DU.Scene3D._flagsForShape = function(shape) {
     flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
     flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
     flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
+  }
+  if(material !== null && typeof material !== "undefined" && material instanceof H3DU.PbrMaterial) {
+    flags |= H3DU.Scene3D.LIGHTING_ENABLED | H3DU.Scene3D.PHYSICAL_BASED_ENABLED;
+    flags |= material.specular ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
+    flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
+    flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
+    flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
+    flags |= typeof material.roughness === "number" ? H3DU.Scene3D.ROUGHNESS_ENABLED : 0;
+    flags |= typeof material.metalness === "number" ? H3DU.Scene3D.METALNESS_ENABLED : 0;
+    flags |= material.metalnessMap ? H3DU.Scene3D.METALNESS_MAP_ENABLED : 0;
+    flags |= material.roughnessMap ? H3DU.Scene3D.ROUGHNESS_MAP_ENABLED : 0;
   }
   var buffer = shape.getMeshBuffer();
   if(buffer && !!buffer._getAttribute("colorAttr")) {
@@ -179,6 +200,16 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
     defines += "#define SHADING\n";
   if((flags & H3DU.Scene3D.SPECULAR_ENABLED) !== 0)
     defines += "#define SPECULAR\n";
+  if((flags & H3DU.Scene3D.PHYSICAL_BASED_ENABLED) !== 0)
+    defines += "#define PHYSICAL_BASED\n";
+  if((flags & H3DU.Scene3D.METALNESS_ENABLED) !== 0)
+    defines += "#define METALNESS\n";
+  if((flags & H3DU.Scene3D.METALNESS_MAP_ENABLED) !== 0)
+    defines += "#define METALNESS_MAP\n";
+  if((flags & H3DU.Scene3D.ROUGHNESS_ENABLED) !== 0)
+    defines += "#define ROUGHNESS\n";
+  if((flags & H3DU.Scene3D.ROUGHNESS_MAP_ENABLED) !== 0)
+    defines += "#define ROUGHNESS_MAP\n";
   if((flags & H3DU.Scene3D.NORMAL_MAP_ENABLED) !== 0)
     defines += "#define NORMAL_MAP\n";
   if((flags & H3DU.Scene3D.TEXTURE_ENABLED) !== 0)

@@ -39,7 +39,7 @@ H3DU.Shape = function(mesh) {
     throw new Error("Unsupported data type for mesh parameter (must be Mesh or MeshBuffer)");
   }
   this.transform = new H3DU.Transform();
-  this.material = new H3DU.Material();
+  this.material = new H3DU.PbrMaterial();
   this.parent = null;
   this.visible = true;
 };
@@ -154,9 +154,11 @@ H3DU.Shape.prototype.setShader = function(shader) {
 H3DU.Shape.prototype.setMaterialParams = function(params) {
   "use strict";
   if(this.material) {
+    // TODO: Be compatible with Material if "basic" parameter
+    // is specified
     this.material.setParams(params);
   } else {
-    this.material = new H3DU.Material().setParams(params);
+    this.material = new H3DU.PbrMaterial().setParams(params);
   }
   return this;
 };
@@ -190,7 +192,7 @@ H3DU.Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
 };
 /**
  * Sets this shape's material parameters.
- * @param {H3DU.Material} material The material object to use.
+ * @param {H3DU.Material|H3DU.PbrMaterial} material The material object to use.
  * This parameter can't be a {@link H3DU.Texture} object.
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#

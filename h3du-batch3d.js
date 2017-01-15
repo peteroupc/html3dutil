@@ -454,6 +454,9 @@ H3DU.Batch3D._getMaterialBinder = function(material) {
   if(material && material instanceof H3DU.Material) {
     return new H3DU._MaterialBinder(material);
   }
+  if(material && material instanceof H3DU.PbrMaterial) {
+    return new H3DU._MaterialBinder(material);
+  }
  // Return an empty binding object
   return {};
 };

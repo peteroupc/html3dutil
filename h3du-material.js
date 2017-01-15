@@ -12,9 +12,9 @@
  * 3D object. This includes how an object scatters, reflects, or absorbs light,
  * as well as a texture image to apply on that object's surface.<p>
  * <i>For more information on this constructor's parameters,
- * see the {@link H3DU.Material#setParams} method.  NOTE: It is preferred
- to set a material's parameters with the {@link H3DU.Material#setParams} method, rather than this
- constructor.</i>
+ * see the {@link H3DU.Material#setParams} method. NOTE: It is preferred
+ * to set a material's parameters with the {@link H3DU.Material#setParams} method, rather than this
+ * constructor.</i>
  * @class
  * @alias H3DU.Material
  * @param {Array<Number>} [ambient] A [color vector or string]{@link H3DU.toGLColor} giving the ambient color.
@@ -24,7 +24,6 @@
  * @param {Array<Number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
  */
 H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
- // console.log([ambient,diffuse,specular,shininess,emission]+"")
   "use strict";
  /** Specular highlight exponent of this material.
   * The greater the number, the more concentrated the specular
@@ -53,55 +52,26 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   */
   this.ambient = [0.2, 0.2, 0.2];
  /**
-  * Diffusion color of this material (also called "albedo"). This is the color seen when light passes through this material
-  * and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
-  * more brightly the more directly they face diffuse lights, diffusion can contribute
-  * much of the 3D appearance of that object.<p>
-  * This value is a 4-element array giving the red, green, blue, and
-  * alpha components of the diffusion; the final diffusion color depends
-  * on the diffusion colors of lights that shine on the material.
-  * (0,0,0,1) means no diffusion,
-  * and (1,1,1,1) means total diffusion.<p>
-  * Setting ambient and diffusion to the same value usually defines an object's
-  * color.<p>
-  * In the default shader program, if a mesh defines its own colors, those
-  * colors are used for diffusion rather than this property.<p>
-  * This value can have an optional fourth element giving the alpha component
-  * (0-1). If this element is omitted, the default is 1.<p>
- * @type {Array<Number>}
+  * Diffusion color of this material (also called "albedo").
+  * See {@link H3DU.PbrMaterial#diffuse}, except the information relating
+  * to the specular and metalness workflows.
+  * @type {Array<Number>}
   * @default
   */
   this.diffuse = [0.8, 0.8, 0.8, 1.0];
  /**
   * Specular highlight reflection of this material.
-  * Specular reflection is a reflection in the opposite direction from the direction
-  * the light reaches the material in, similar to a mirror. As a result, depending
-  * on the viewing angle, specular reflection can give off
-  * shiny highlights on the material.<p>
-  * This value is a 3-element array giving the red, green, and blue
-  * components of the specular reflection; the final specular color depends
-  * on the specular color of lights that shine on the material.
-  * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
-  * The specular color is usually grayscale
-  * (all three components are the same), but can be colored if the material represents an
-  * uncoated metal of some sort.<p>
-  * NOTE: Before version 2.0, the default was (0,0,0).
- * @type {Array<Number>}
+  * See {@link H3DU.PbrMaterial#specular}, except the information relating
+  * to the specular workflow.
+  * NOTE: Before version 2.0, this value's default was (0,0,0).
+  * @type {Array<Number>}
   * @default
   */
   this.specular = [0.2, 0.2, 0.2];
  /**
   * Additive color emitted by objects with this material.
-  * Used for objects that glow on their own, among other things.
-  * Each part of the object will be affected by the additive color the
-  * same way regardless of lighting (this property won't be used in the
-  * default shader if [H3DU.Scene3D.disableLighting()]{@link H3DU.Scene3D#disableLighting}
-  * is called, disabling lighting calculations).<p>
-  * This value is a 3-element array giving the red, green, and blue
-  * components.
-  * For each of the three color components, positive values add to that component,
-  * while negative values subtract from it. (0,0,0), the default, means no additive color.
- * @type {Array<Number>}
+  * See {@link H3DU.PbrMaterial#emission}.
+  * @type {Array<Number>}
   * @default
   */
   this.emission = [0, 0, 0];
@@ -114,47 +84,13 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  */
   this.texture = null;
 /**
- * Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
- * each part of the object's surface (note that the material must have a specular color of other
- * than the default black for this to have an effect).<p>
- * The specular map is usually grayscale (all three components are the same in each pixel),
- * but can be colored if the material represents an uncoated metal of some sort (in which case the specular
- * color property should be (1,1,1) or another grayscale color). See {@link H3DU.Material#specular}.<p>
- * Any texture used for specular maps should not be in JPEG format or any other
- * format that uses lossy compression, as compression artifacts can result in inaccurate
- * specular factors in certain areas.
+ * Specular map texture.
+ * See {@link H3DU.PbrMaterial#specularMap}.
  * @default
  */
   this.specularMap = null;
  /**
-  * Normal map (bump map) texture. Normal maps are used either to add
-  * a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
-  * appearance with fewer polygons.<p>
-  * In a normal map texture, each pixel is a vector in which
-  * each component (which usually ranges from 0-255 in most image formats) is scaled to
-  * the range [-1, 1], where:
-  * <ul>
-  * <li>The pixel's red component is the vector's X component.
-  * <li>The pixel's green component is the vector's Y component.
-  * <li>The pixel's blue component is the vector's Z component.
-  * <li>An unchanged normal vector will have the value (0, 0, 1), which is usually
-  * the value (127, 127, 255) in most image formats.
-  * <li>The vector is normalized so its length is about equal to 1.
-  * <li>The vector is expressed in tangent space, where the Z axis points outward
-  * and away from the surface's edges.
-  * </ul>
-  * Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
-  * to the vector given in that pixel. This tilt adjusts the normals used for the
-  * purpose of calculating lighting effects at that part of the surface.
-  * A strong tilt indicates strong relief detail at that point.<p>
-  * Any texture used for normal maps should not be in JPEG format or any other
-  * format that uses lossy compression, as compression artifacts can result in inaccurate
-  * normals in certain areas.
-  * <p>
-  * For normal mapping to work, an object's mesh must include normals,
-  * tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
-  * object only has normals and texture coordinates, the <code>recalcTangents()</code>
-  * method can calculate the tangents and bitangents appropriate for normal mapping.
+  * Normal map (bump map) texture. See {@link H3DU.PbrMaterial#normalMap}.
   * @default
   */
   this.normalMap = null;
@@ -169,18 +105,18 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * @default
   */
   this.shader = null;
- this.setParams({
-   "ambient":ambient,
-   "diffuse":diffuse,
-   "specular":specular,
-   "shininess":shininess,
-   "emission":emission
+  this.setParams({
+    "ambient":ambient,
+    "diffuse":diffuse,
+    "specular":specular,
+    "shininess":shininess,
+    "emission":emission
   });
 };
 /**
  * Clones this object's parameters to a new H3DU.Material
  * object and returns that object. The material's texture
- * maps and shader program, if any, won't be cloned, but rather, a reference
+ * maps and shader info, if any, won't be cloned, but rather, a reference
  * to the same object will be used.
  * @returns {H3DU.Material} A copy of this object.
  * @memberof! H3DU.Material#
@@ -188,17 +124,17 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
 H3DU.Material.prototype.copy = function() {
   "use strict";
   return new H3DU.Material().setParams({
-   "ambient":this.ambient,
-   "diffuse":this.diffuse,
-   "specular":this.specular,
-   "shininess":this.shininess,
-   "emission":this.emission,
-   "texture":this.texture,
-   "specularMap":this.specularMap,
-   "normalMap":this.normalMap,
-   "basic":this.basic,
-   "shader":this.shader
- });
+    "ambient":this.ambient,
+    "diffuse":this.diffuse,
+    "specular":this.specular,
+    "shininess":this.shininess,
+    "emission":this.emission,
+    "texture":this.texture,
+    "specularMap":this.specularMap,
+    "normalMap":this.normalMap,
+    "basic":this.basic,
+    "shader":this.shader
+  });
 };
 /**
  * Sets parameters for this material object.
@@ -235,7 +171,7 @@ H3DU.Material.prototype.copy = function() {
  */
 H3DU.Material.prototype.setParams = function(params) {
   "use strict";
-  var param;
+
   if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);
     if(this.ambient.length > 3)this.ambient = this.ambient.slice(0, 3);
@@ -256,28 +192,13 @@ H3DU.Material.prototype.setParams = function(params) {
     this.shininess = Math.min(Math.max(0, params.shininess), 128);
   }
   if(typeof params.texture !== "undefined" && params.texture !== null) {
-    param = params.texture;
-    if(typeof param === "string") {
-      this.texture = new H3DU.Texture(param);
-    } else {
-      this.texture = param;
-    }
+    this.texture = H3DU.Texture._texOrString(params.texture);
   }
   if(typeof params.specularMap !== "undefined" && params.specularMap !== null) {
-    param = params.specularMap;
-    if(typeof param === "string") {
-      this.specularMap = new H3DU.Texture(param);
-    } else {
-      this.specularMap = param;
-    }
+    this.specularMap = H3DU.Texture._texOrString(params.specularMap);
   }
   if(typeof params.normalMap !== "undefined" && params.normalMap !== null) {
-    param = params.normalMap;
-    if(typeof param === "string") {
-      this.normalMap = new H3DU.Texture(param);
-    } else {
-      this.normalMap = param;
-    }
+    this.normalMap = H3DU.Texture._texOrString(params.normalMap);
   }
   if(typeof params.basic !== "undefined" && params.basic !== null) {
     this.basic = params.basic;

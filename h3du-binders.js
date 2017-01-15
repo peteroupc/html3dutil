@@ -26,10 +26,6 @@ H3DU._MaterialBinder._textureSizeZeroZero = [0, 0];
 H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   "use strict";
   if(!this.mshade)return this;
-// if(this.mshade.diffuse.length!==4) {console.warn("creating new diffuse array");}
-// if(this.mshade.ambient.length!==3) {console.warn("creating new ambient array");}
-// if(this.mshade.specular.length!==3) {console.warn("creating new specular array");}
-// if(this.mshade.emission.length!==3) {console.warn("creating new emission array");}
   var uniforms = {
     "textureSize":H3DU._MaterialBinder._textureSizeZeroZero,
     "md":this.mshade.diffuse.length === 4 ? this.mshade.diffuse :
@@ -37,9 +33,16 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
       this.mshade.diffuse.length < 4 ? 1.0 : this.mshade.diffuse[3]]
   };
   if(!this.mshade.basic) {
-    uniforms.mshin = this.mshade.shininess;
-    uniforms.ma = this.mshade.ambient.length === 3 ? this.mshade.ambient :
+    if(this.mshade.shininess !== null && typeof this.mshade.shininess !== "undefined")
+      uniforms.mshin = this.mshade.shininess;
+    if(this.mshade.metalness !== null && typeof this.mshade.metalness !== "undefined")
+      uniforms.metalness = this.mshade.metalness;
+    if(this.mshade.roughness !== null && typeof this.mshade.roughness !== "undefined")
+      uniforms.roughness = this.mshade.roughness;
+    if(typeof this.mshade.ambient !== "undefined" && this.mshade.ambient !== null) {
+      uniforms.ma = this.mshade.ambient.length === 3 ? this.mshade.ambient :
      [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]];
+    }
     uniforms.ms = this.mshade.specular.length === 3 ? this.mshade.specular :
      [this.mshade.specular[0], this.mshade.specular[1], this.mshade.specular[2]];
     uniforms.me = this.mshade.emission.length === 3 ? this.mshade.emission :
@@ -49,6 +52,8 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   H3DU._MaterialBinder.bindTexture(this.mshade.texture, context, program, 0, loader);
   H3DU._MaterialBinder.bindTexture(this.mshade.specularMap, context, program, 1, loader);
   H3DU._MaterialBinder.bindTexture(this.mshade.normalMap, context, program, 2, loader);
+  H3DU._MaterialBinder.bindTexture(this.mshade.metalnessMap, context, program, 3, loader);
+  H3DU._MaterialBinder.bindTexture(this.mshade.roughnessMap, context, program, 3, loader);
   return this;
 };
 
@@ -134,6 +139,12 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
     }
     if(textureUnit === 2) {
       uniforms.normalMap = textureUnit;
+    }
+    if(textureUnit === 3) {
+      uniforms.metalnessMap = textureUnit;
+    }
+    if(textureUnit === 4) {
+      uniforms.roughnessMap = textureUnit;
     }
     program.setUniforms(uniforms);
     context.activeTexture(context.TEXTURE0 + textureUnit);

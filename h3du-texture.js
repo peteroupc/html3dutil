@@ -298,6 +298,14 @@ H3DU.Texture.prototype.getName = function() {
   return name;
 };
 /** @private */
+H3DU.Texture._texOrString = function(tex) {
+  "use strict";
+  return typeof param === "string" ? new H3DU.Texture(tex) : tex;
+};
+
+// //////////////////////////////////////////
+
+/** @private */
 H3DU.CubeMap = function(textures) {
   "use strict";
   this.textures = [];
