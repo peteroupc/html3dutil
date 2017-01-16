@@ -607,7 +607,6 @@ H3DU.Mesh.prototype.setVertex = function(index, x, y, z) {
   }
   var c = this.vertexCount();
   if(index < c) {
-
     index *= this.getStride();
     this.vertices[index] = x;
     this.vertices[index + 1] = y;
@@ -646,7 +645,6 @@ H3DU.Mesh.prototype.setVertexNormal = function(index, x, y, z) {
   }
   var c = this.vertexCount();
   if(index < c) {
-
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
     index *= this.getStride();
     index += H3DU.Mesh._normalOffset(this.attributeBits);

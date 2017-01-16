@@ -208,7 +208,7 @@ H3DU.Material.prototype.setParams = function(params) {
   }
   return this;
 };
-/** Convenience method that returns an H3DU.Material
+/** Convenience method that returns an {@link H3DU.Material}
  * object from an RGBA color.
  * @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
  * or the red color component (0-1).
@@ -228,7 +228,7 @@ H3DU.Material.fromColor = function(r, g, b, a) {
   return new H3DU.Material(color, color);
 };
 
-/** Convenience method that returns an H3DU.Material
+/** Convenience method that returns an {@link H3DU.Material}
  * object from a texture to apply to a 3D object's surface.
  * @param {H3DU.Texture|string} texture {@link H3DU.Texture} object, or a string with the
  * URL of the texture data. In the case of a string the texture will be loaded via
@@ -243,7 +243,7 @@ H3DU.Material.fromTexture = function(texture) {
 };
 
 /**
- * Convenience method that returns an H3DU.Material
+ * Convenience method that returns an {@link H3DU.Material}
  * object from a shader information object to use when drawing a 3D object.
  * @param {H3DU.ShaderInfo} shader Shader information object to use.
  * @returns {H3DU.Material} The resulting material object.

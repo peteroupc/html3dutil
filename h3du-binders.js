@@ -26,34 +26,39 @@ H3DU._MaterialBinder._textureSizeZeroZero = [0, 0];
 H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   "use strict";
   if(!this.mshade)return this;
+  var mat = this.mshade;
+  var diffuse = mat.albedo !== null ? mat.albedo : mat.diffuse;
   var uniforms = {
     "textureSize":H3DU._MaterialBinder._textureSizeZeroZero,
-    "md":this.mshade.diffuse.length === 4 ? this.mshade.diffuse :
-    [this.mshade.diffuse[0], this.mshade.diffuse[1], this.mshade.diffuse[2],
-      this.mshade.diffuse.length < 4 ? 1.0 : this.mshade.diffuse[3]]
+    "md":diffuse.length === 4 ? diffuse :
+    [diffuse[0], diffuse[1], diffuse[2],
+      diffuse.length < 4 ? 1.0 : diffuse[3]]
   };
-  if(!this.mshade.basic) {
-    if(this.mshade.shininess !== null && typeof this.mshade.shininess !== "undefined")
-      uniforms.mshin = this.mshade.shininess;
-    if(this.mshade.metalness !== null && typeof this.mshade.metalness !== "undefined")
-      uniforms.metalness = this.mshade.metalness;
-    if(this.mshade.roughness !== null && typeof this.mshade.roughness !== "undefined")
-      uniforms.roughness = this.mshade.roughness;
-    if(typeof this.mshade.ambient !== "undefined" && this.mshade.ambient !== null) {
-      uniforms.ma = this.mshade.ambient.length === 3 ? this.mshade.ambient :
-     [this.mshade.ambient[0], this.mshade.ambient[1], this.mshade.ambient[2]];
+  if(!mat.basic) {
+    if(typeof mat.shininess !== "undefined" && mat.shininess !== null)
+      uniforms.mshin = mat.shininess;
+    if(typeof mat.metalness !== "undefined" && mat.metalness !== null)
+      uniforms.metalness = mat.metalness;
+    if(typeof mat.roughness !== "undefined" && mat.roughness !== null)
+      uniforms.roughness = mat.roughness;
+    if(typeof mat.ambient !== "undefined" && mat.ambient !== null) {
+      uniforms.ma = mat.ambient.length === 3 ? mat.ambient :
+     [mat.ambient[0], mat.ambient[1], mat.ambient[2]];
     }
-    uniforms.ms = this.mshade.specular.length === 3 ? this.mshade.specular :
-     [this.mshade.specular[0], this.mshade.specular[1], this.mshade.specular[2]];
-    uniforms.me = this.mshade.emission.length === 3 ? this.mshade.emission :
-     [this.mshade.emission[0], this.mshade.emission[1], this.mshade.emission[2]];
+    uniforms.ms = mat.specular.length === 3 ? mat.specular :
+     [mat.specular[0], mat.specular[1], mat.specular[2]];
+    uniforms.me = mat.emission.length === 3 ? mat.emission :
+     [mat.emission[0], mat.emission[1], mat.emission[2]];
   }
   program.setUniforms(uniforms);
-  H3DU._MaterialBinder.bindTexture(this.mshade.texture, context, program, 0, loader);
-  H3DU._MaterialBinder.bindTexture(this.mshade.specularMap, context, program, 1, loader);
-  H3DU._MaterialBinder.bindTexture(this.mshade.normalMap, context, program, 2, loader);
-  H3DU._MaterialBinder.bindTexture(this.mshade.metalnessMap, context, program, 3, loader);
-  H3DU._MaterialBinder.bindTexture(this.mshade.roughnessMap, context, program, 3, loader);
+  if(typeof mat.albedoMap !== "undefined" && mat.albedoMap !== null)
+    H3DU._MaterialBinder.bindTexture(mat.albedoMap, context, program, 0, loader);
+  else
+    H3DU._MaterialBinder.bindTexture(mat.texture, context, program, 0, loader);
+  H3DU._MaterialBinder.bindTexture(mat.specularMap, context, program, 1, loader);
+  H3DU._MaterialBinder.bindTexture(mat.normalMap, context, program, 2, loader);
+  H3DU._MaterialBinder.bindTexture(mat.metalnessMap, context, program, 3, loader);
+  H3DU._MaterialBinder.bindTexture(mat.roughnessMap, context, program, 3, loader);
   return this;
 };
 
@@ -71,13 +76,14 @@ H3DU._LoadedTexture = function(textureImage, context) {
   // the lower left as in OpenGL and OpenGL ES, so we use this method call
   // to reestablish the lower left corner.
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
-  context.bindTexture(context.TEXTURE_2D, this.loadedTexture);
+  var target = context.TEXTURE_2D;
+  context.bindTexture(target, this.loadedTexture);
   if("src" in textureImage.image) {
-    context.texImage2D(context.TEXTURE_2D, 0,
+    context.texImage2D(target, 0,
       context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
       textureImage.image);
   } else {
-    context.texImage2D(context.TEXTURE_2D, 0,
+    context.texImage2D(target, 0,
      context.RGBA, textureImage.getWidth(), textureImage.getHeight(), 0,
      context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
   }
@@ -86,20 +92,73 @@ H3DU._LoadedTexture = function(textureImage, context) {
       H3DU._isPowerOfTwo(textureImage.getHeight())) {
     context.generateMipmap(context.TEXTURE_2D);
   } else {
-    context.texParameteri(context.TEXTURE_2D,
+    context.texParameteri(target,
         context.TEXTURE_MIN_FILTER, context.LINEAR);
-    context.texParameteri(context.TEXTURE_2D,
+    context.texParameteri(target,
         context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
-    context.texParameteri(context.TEXTURE_2D,
+    context.texParameteri(target,
         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
 };
+
+/** @private */
+H3DU._LoadedCubeMap = function(textureImage, context) {
+  "use strict";
+  if(!textureImage.image)throw new Error();
+  context = H3DU._toContext(context);
+  this.context = context;
+  this.loadedTexture = context.createTexture();
+  context.activeTexture(context.TEXTURE0);
+  // In WebGL, texture coordinates start at the upper left corner rather than
+  // the lower left as in OpenGL and OpenGL ES, so we use this method call
+  // to reestablish the lower left corner.
+  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
+  var target = context.TEXTURE_CUBE_MAP;
+  context.bindTexture(target, this.loadedTexture);
+  for(var i = 0;i < 6;i++) {
+    if("src" in textureImage.textures[i].image) {
+      context.texImage2D(context.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
+      context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
+      textureImage.textures[i].image);
+    } else {
+      context.texImage2D(context.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
+     context.RGBA, textureImage.getWidth(), textureImage.getHeight(), 0,
+     context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
+    }
+  }
+  // generate mipmaps for power-of-two textures
+  if(H3DU._isPowerOfTwo(textureImage.getWidth()) &&
+      H3DU._isPowerOfTwo(textureImage.getHeight())) {
+    context.generateMipmap(target);
+  } else {
+    context.texParameteri(target,
+        context.TEXTURE_MIN_FILTER, context.LINEAR);
+    context.texParameteri(target,
+        context.TEXTURE_WRAP_R, context.CLAMP_TO_EDGE);
+    context.texParameteri(target,
+        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+    context.texParameteri(target,
+        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+  }
+};
+
 /** @private */
 H3DU._LoadedTexture.prototype.dispose = function() {
   "use strict";
-  if(this.loadedTexture) {
+  if(this.loadedTexture && this.context) {
     this.context.deleteTexture(this.loadedTexture);
   }
+  this.context = null;
+  this.loadedTexture = null;
+};
+/** @private */
+H3DU._LoadedCubeMap.prototype.dispose = function() {
+  "use strict";
+  if(this.loadedTexture && this.context) {
+    this.context.deleteTexture(this.loadedTexture);
+  }
+  this.context = null;
+  this.loadedTexture = null;
 };
 // ///////////////////////////////
 
@@ -162,27 +221,33 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
          context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
       }
     } else {
-      context.bindTexture(context.TEXTURE_2D,
+      var target = texture instanceof H3DU.CubeMap ?
+      context.TEXTURE_CUBE_MAP : context.TEXTURE_2D;
+      context.bindTexture(target,
         loadedTexture.loadedTexture);
        // Set texture parameters
-      loader._setMaxAnisotropy(context);
+      loader._setMaxAnisotropy(context, target);
        // set magnification
-      context.texParameteri(context.TEXTURE_2D,
+      context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, context.LINEAR);
       var wrapMode = context.CLAMP_TO_EDGE;
       if(H3DU._isPowerOfTwo(texture.getWidth()) &&
           H3DU._isPowerOfTwo(texture.getHeight())) {
          // Enable mipmaps if texture's dimensions are powers of two
         if(!texture.clamp)wrapMode = context.REPEAT;
-        context.texParameteri(context.TEXTURE_2D,
+        context.texParameteri(target,
            context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
       } else {
-        context.texParameteri(context.TEXTURE_2D,
+        context.texParameteri(target,
          context.TEXTURE_MIN_FILTER, context.LINEAR);
       }
-      context.texParameteri(context.TEXTURE_2D,
+      if(target === context.TEXTURE_CUBE_MAP) {
+        context.texParameteri(target,
+         context.TEXTURE_WRAP_R, wrapMode);
+      }
+      context.texParameteri(target,
         context.TEXTURE_WRAP_S, wrapMode);
-      context.texParameteri(context.TEXTURE_2D,
+      context.texParameteri(target,
         context.TEXTURE_WRAP_T, wrapMode);
     }
   }

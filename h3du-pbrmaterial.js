@@ -38,14 +38,14 @@ H3DU.PbrMaterial = function(params) {
  * @type {Array<Number>}
  * @default
  */
-  this.diffuse = [0.8, 0.8, 0.8, 1.0];
+  this.albedo = [0.8, 0.8, 0.8, 1.0];
   /**
    * A texture indicating the diffusion of each part of the texture,
    * in the red, green, blue, and alpha channels.
    * @type {Number}
    * @default
    */
-  this.texture = null;
+  this.albedoMap = null;
   /**
    * A value indicating whether objects described by this material are metals.
    * This value ranges from 0 through 1. If 0, the surface is a nonmetal; if 1,
@@ -180,6 +180,7 @@ H3DU.PbrMaterial = function(params) {
   * @default
   */
   this.shader = null;
+  this.invertRoughness = false;
   if(params !== null && typeof params !== "undefined") {
     this.setParams(params);
   }
@@ -192,7 +193,7 @@ H3DU.PbrMaterial.Metallic = 1;
  * the possibilities given below, and whose values are those
  * allowed for each key.<ul>
  * <li><code>workflow</code> - Either {@link H3DU.PbrMaterial.Specular} or {@link H3DU.PbrMaterial.Metalness}
- * <li><code>diffuse</code> - A [color vector or string]{@link H3DU.toGLColor} giving
+ * <li><code>diffuse</code> or <code>albedo</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the diffusion color (also called "albedo"). (See {@link H3DU.Material#diffuse}.) The default is (0.8, 0.8, 0.8).
  * <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the specular reflection. (See {@link H3DU.Material#specular}.) The default is (0,0,0), meaning no specular highlights.
@@ -200,7 +201,7 @@ H3DU.PbrMaterial.Metallic = 1;
  * <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the additive color. (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
- * <li><code>texture</code> - {@link H3DU.Texture} object, or a string with the URL of the texture
+ * <li><code>texture</code> or <code>albedoMap</code> - {@link H3DU.Texture} object, or a string with the URL of the texture
  * to use.
  * <li><code>specularMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a specular
  * map texture (see {@link H3DU.Material#specularMap}).
@@ -219,8 +220,12 @@ H3DU.PbrMaterial.Metallic = 1;
 H3DU.PbrMaterial.prototype.setParams = function(params) {
   "use strict";
   if(typeof params.diffuse !== "undefined" && params.diffuse !== null) {
-    this.diffuse = H3DU.toGLColor(params.diffuse);
-    if(this.diffuse.length > 4)this.diffuse = this.diffuse.slice(0, 4);
+    this.albedo = H3DU.toGLColor(params.diffuse);
+    if(this.albedo.length > 4)this.albedo = this.diffuse.slice(0, 4);
+  }
+  if(typeof params.albedo !== "undefined" && params.albedo !== null) {
+    this.albedo = H3DU.toGLColor(params.albedo);
+    if(this.albedo.length > 4)this.albedo = this.albedo.slice(0, 4);
   }
   if(typeof params.specular !== "undefined" && params.specular !== null) {
     this.specular = H3DU.toGLColor(params.specular);
@@ -231,7 +236,10 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
     if(this.emission.length > 3)this.emission = this.emission.slice(0, 3);
   }
   if(typeof params.texture !== "undefined" && params.texture !== null) {
-    this.texture = H3DU.Texture._texOrString(params.texture);
+    this.albedoMap = H3DU.Texture._texOrString(params.texture);
+  }
+  if(typeof params.albedoMap !== "undefined" && params.albedoMap !== null) {
+    this.albedoMap = H3DU.Texture._texOrString(params.albedoMap);
   }
   if(typeof params.specularMap !== "undefined" && params.specularMap !== null) {
     this.specularMap = H3DU.Texture._texOrString(params.specularMap);
@@ -248,6 +256,9 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
   if(typeof params.metalness !== "undefined" && params.metalness !== null) {
     this.metalness = params.metalness;
   }
+  if(typeof params.invertRoughness !== "undefined" && params.invertRoughness !== null) {
+    this.invertRoughness = params.invertRoughness;
+  }
   if(typeof params.roughness !== "undefined" && params.roughness !== null) {
     this.roughness = params.roughness;
   }
@@ -258,7 +269,7 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
 };
 
 /**
- * Clones this object's parameters to a new H3DU.PbrMaterial
+ * Clones this object's parameters to a new {@link H3DU.PbrMaterial}
  * object and returns that object. The material's texture
  * maps and shader info, if any, won't be cloned, but rather, a reference
  * to the same object will be used.
@@ -272,10 +283,11 @@ H3DU.PbrMaterial.prototype.copy = function() {
     "metalnessMap":this.metalnessMap,
     "roughness":this.roughness,
     "roughnessMap":this.roughnessMap,
-    "diffuse":this.diffuse,
+    "albedo":this.albedo,
+    "invertRoughness":this.invertRoughness,
     "specular":this.specular,
     "emission":this.emission,
-    "texture":this.texture,
+    "albedoMap":this.albedoMap,
     "specularMap":this.specularMap,
     "normalMap":this.normalMap,
     "basic":this.basic,

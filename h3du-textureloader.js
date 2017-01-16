@@ -47,14 +47,14 @@ H3DU.TextureLoader.prototype.loadTexture = function(name) {
   return H3DU.Texture.loadTexture(name, this.textureImages);
 };
 /** @private */
-H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context) {
+H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var ma = this.maxAnisotropy;
   for(var i = 0;i < ma.length;i++) {
     if(ma[i][0] === context) {
       if(ma[i][2] >= 0) {
-        context.texParameteri(context.TEXTURE_2D, ma[i][2], ma[i][1]);
+        context.texParameteri(target, ma[i][2], ma[i][1]);
       } else {
         return;
       }
@@ -71,7 +71,7 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context) {
     var ret = context.getParameter(
     ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
     ma.push([context, ret, cnst]);
-    context.texParameteri(context.TEXTURE_2D, cnst, ret);
+    context.texParameteri(target, cnst, ret);
     return ret;
   }
 };
@@ -197,7 +197,9 @@ H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
       return lt[i][2];
     }
   }
-  var loadedTex = new H3DU._LoadedTexture(texture, context);
+  var loadedTex = texture instanceof H3DU.CubeMap ?
+     new H3DU._LoadedCubeMap(texture, context) :
+     new H3DU._LoadedTexture(texture, context);
   lt.push([texture, context, loadedTex]);
   return loadedTex;
 };

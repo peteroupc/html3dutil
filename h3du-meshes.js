@@ -437,7 +437,6 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
     mesh.normal3(0, 0, 1);
   }
   for(i = 0;i < loops;i++) {
-
     var zEnd = (i + 1) / loops;
     var radiusStart = lastRad;
     var radiusEnd = inner + height * zEnd;
