@@ -14,6 +14,7 @@ to WebGL contexts.
 * [loadAndMapTexture](#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexture)<br>Loads the texture referred to in an array of URLs and
 uploads its texture data to a WebGL context.
 * [loadAndMapTexturesAll](#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexturesAll)<br>Loads one or more textures by their URL and uploads their data to a WebGL context.
+* [loadCubeMap](#H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap)<br>TODO: Not documented yet.
 * [loadTexture](#H3DU.TextureLoader_H3DU.TextureLoader_loadTexture)<br>Loads a texture by its URL and stores its data.
 * [loadTexturesAll](#H3DU.TextureLoader_H3DU.TextureLoader_loadTexturesAll)<br>Loads the textures referred to in an array of URLs and
 stores their texture data.
@@ -81,6 +82,20 @@ A promise as described in
 <a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
+
+### H3DU.TextureLoader#loadCubeMap(texturesOrCubeMap, resolve, reject) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap'></a>
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `texturesOrCubeMap` (Type: *)
+* `resolve` (Type: *)
+* `reject` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 ### H3DU.TextureLoader#loadTexture(name) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadTexture'></a>
 

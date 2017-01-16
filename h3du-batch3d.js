@@ -366,7 +366,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
     } else if(typeof this._globalShader !== "undefined" && this._globalShader !== null) {
       prog = renderContext.scene._programs.getCustomProgram(
          this._globalShader, renderContext.context);
-    } else if(shape.material instanceof H3DU.Material &&
+    } else if((shape.material instanceof H3DU.Material || shape.material instanceof H3DU.PbrMaterial) &&
      shape.material.shader !== null) {
       prog = renderContext.scene._programs.getCustomProgram(
          shape.material.shader, renderContext.context);

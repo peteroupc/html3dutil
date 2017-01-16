@@ -305,33 +305,69 @@ H3DU.Texture._texOrString = function(tex) {
 
 // //////////////////////////////////////////
 
-/** @private */
+/**
+ * TODO: Not documented yet.
+ * @param {Array<String|Texture>} name An array of six elements,
+ * each of which is a URL of the texture data or the texture object itself.
+ * However, this constructor will not load those images yet.
+ */
 H3DU.CubeMap = function(textures) {
   "use strict";
   this.textures = [];
+  this.loadStatus = 0;
   for(var i = 0;i < 6;i++) {
-    this.textures.push(textures[i]);
+    this.textures.push(H3DU.Texture._texOrString(textures[i]));
   }
 };
-/** @private */
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.CubeMap#
+ */
 H3DU.CubeMap.prototype.getWidth = function() {
   "use strict";
   return this.textures[0].getWidth();
 };
-/** @private */
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.CubeMap#
+ */
 H3DU.CubeMap.prototype.getHeight = function() {
   "use strict";
   return this.textures[0].getHeight();
 };
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.CubeMap#
+ */
+H3DU.CubeMap.prototype.getTextures = function() {
+  "use strict";
+  return this.textures;
+};
 /** @private */
 H3DU.CubeMap.prototype.loadImage = function() {
   "use strict";
+  var i;
+  if(this.loadStatus === 2) {
+    for(i = 0;i < 6;i++) {
+      if(this.textures[i].loadStatus !== 2) {
+        this.loadStatus = 0;
+      }
+    }
+    if(this.loadStatus === 2) {
+      return Promise.resolve(this);
+    }
+  }
   var promises = [];
-  for(var i = 0;i < 6;i++) {
+  for(i = 0;i < 6;i++) {
     promises.push(this.textures[i].loadImage());
   }
   var that = this;
+  that.loadStatus = 1;
   return H3DU.getPromiseResultsAll(promises).then(function() {
+    that.loadStatus = 2;
     return Promise.resolve(that);
   });
 };

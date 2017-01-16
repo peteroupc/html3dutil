@@ -14,6 +14,7 @@ library.
 
 ### Methods
 
+* [CubeMap](#H3DU.CubeMap)<br>TODO: Not documented yet.
 * [MeshJSON.loadJSON](#H3DU.MeshJSON.loadJSON)<br>Loads a mesh from JSON format.
 * [MeshJSON.toJSON](#H3DU.MeshJSON.toJSON)<br>Converts a mesh to JSON format.
 * [ObjData.loadObjFromUrl](#H3DU.ObjData.loadObjFromUrl)<br>Loads a WaveFront OBJ file (along with its associated MTL, or
@@ -43,6 +44,15 @@ and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
 or a "polyfill" method.
 * [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
+
+### (static) H3DU.CubeMap(name) <a id='H3DU.CubeMap'></a>
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `name` (Type: Array.&lt;(String|Texture)>)<br>
+    An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet.
 
 ### (static) H3DU.MeshJSON.loadJSON(url) <a id='H3DU.MeshJSON.loadJSON'></a>
 

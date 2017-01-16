@@ -203,6 +203,25 @@ H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
   lt.push([texture, context, loadedTex]);
   return loadedTex;
 };
+/**
+ * TODO: Not documented yet.
+ * @param {*} texturesOrCubeMap
+ * @param {*} resolve
+ * @param {*} reject
+ * @returns {*} Return value.
+ * @memberof! H3DU.TextureLoader#
+ */
+H3DU.TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, reject) {
+  "use strict";
+  var cubemap = texturesOrCubeMap;
+  if(!(texturesOrCubeMap instanceof H3DU.CubeMap)) {
+    cubemap = new H3DU.CubeMap(texturesOrCubeMap);
+  }
+  return H3DU.TextureLoader.prototype.loadTexturesAll(cubemap.textures, resolve, reject)
+ .then(function() {
+   return Promise.resolve(cubemap);
+ });
+};
 
 /** @private */
 H3DU.TextureLoader.prototype.mapFrameBuffer = function(info, context) {

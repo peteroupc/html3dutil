@@ -730,7 +730,9 @@ H3DU.Math = {
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec3length}.
+ * by its [length]{@link H3DU.Math.vec3length}.<p>
+ * ("Norm", as used in this method's name, means "normalize"; this is not to be
+ * confused with a vector's "norm", another name for its length.)
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The parameter "vec".
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
@@ -765,7 +767,9 @@ H3DU.Math = {
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec4length}.
+ * by its [length]{@link H3DU.Math.vec4length}.<p>
+ * ("Norm", as used in this method's name, means "normalize"; this is not to be
+ * confused with a vector's "norm", another name for its length.)
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The parameter "vec".
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
@@ -791,7 +795,9 @@ H3DU.Math = {
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec3length}.
+ * by its [length]{@link H3DU.Math.vec3length}.<p>
+ * ("Norm", as used in this method's name, means "normalize"; this is not to be
+ * confused with a vector's "norm", another name for its length.)
  * @param {Array<Number>} vec A 3-element vector.
  * @returns {Array<Number>} The resulting vector.
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
@@ -817,7 +823,9 @@ H3DU.Math = {
  * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec4length}.
+ * by its [length]{@link H3DU.Math.vec4length}.<p>
+ * ("Norm", as used in this method's name, means "normalize"; this is not to be
+ * confused with a vector's "norm", another name for its length.)
  * @param {Array<Number>} vec A 4-element vector.
  * @returns {Array<Number>} The resulting vector.
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
@@ -2541,7 +2549,9 @@ m[0] * m[7] * m[5];
  * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
  * unless all the normal's components are 0.
  * The plane's distance will be divided by the
- * current normal's length.
+ * current normal's length.<p>
+ * ("Norm", as used in this method's name, means "normalize"; this is not to be
+ * confused with a vector's "norm", another name for its length.)
  * @param {Array<Number>} plane A four-element array
  * defining the plane. The first three elements of the array
  * are the X, Y, and Z components of the plane's normal vector, and
@@ -2821,7 +2831,9 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * When a quaternion is normalized, it describes the same rotation but the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.quatLength}.
+ * by its [length]{@link H3DU.Math.quatLength}.<p>
+ * ("Norm", as used in this method's name, means "normalize"; this is not to be
+ * confused with a vector's "norm", another name for its length.)
  * @function
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The parameter "quat".
@@ -2837,7 +2849,9 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * When a quaternion is normalized, the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.quatLength}.
+ * by its [length]{@link H3DU.Math.quatLength}.<p>
+ * ("Norm", as used in this method's name, means "normalize"; this is not to be
+ * confused with a vector's "norm", another name for its length.)
  * @function
  * @param {Array<Number>} quat A quaternion, containing four elements.
  * @returns {Array<Number>} The normalized quaternion.

@@ -104,7 +104,6 @@ H3DU._LoadedTexture = function(textureImage, context) {
 /** @private */
 H3DU._LoadedCubeMap = function(textureImage, context) {
   "use strict";
-  if(!textureImage.image)throw new Error();
   context = H3DU._toContext(context);
   this.context = context;
   this.loadedTexture = context.createTexture();
@@ -133,8 +132,6 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
   } else {
     context.texParameteri(target,
         context.TEXTURE_MIN_FILTER, context.LINEAR);
-    context.texParameteri(target,
-        context.TEXTURE_WRAP_R, context.CLAMP_TO_EDGE);
     context.texParameteri(target,
         context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
     context.texParameteri(target,
@@ -165,7 +162,14 @@ H3DU._LoadedCubeMap.prototype.dispose = function() {
 /** @private */
 H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUnit, loader) {
   "use strict";
-  if(texture === null || typeof texture === "undefined")return;
+  if(texture === null || typeof texture === "undefined") {
+    if(context) {
+      context.activeTexture(context.TEXTURE0 + textureUnit);
+      context.bindTexture(context.TEXTURE_2D, null);
+      context.bindTexture(context.TEXTURE_CUBE_MAP, null);
+    }
+    return;
+  }
   var isFrameBuffer = texture instanceof H3DU.FrameBufferInfo;
   if(!isFrameBuffer && !(texture instanceof H3DU.Texture) && !(texture instanceof H3DU.CubeMap)) {
     throw new Error("unsupported texture type");

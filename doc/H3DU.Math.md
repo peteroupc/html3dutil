@@ -445,6 +445,9 @@ to that quaternion becomes 1 (unless all its components are 0).
 A quaternion is normalized by dividing each of its components
 by its <a href="H3DU.Math.md#H3DU.Math.quatLength">length</a>.
 
+("Norm", as used in this method's name, means "normalize"; this is not to be
+confused with a vector's "norm", another name for its length.)
+
 #### Parameters
 
 * `quat` (Type: Array.&lt;Number>)<br>
@@ -466,6 +469,9 @@ When a quaternion is normalized, it describes the same rotation but the distance
 to that quaternion becomes 1 (unless all its components are 0).
 A quaternion is normalized by dividing each of its components
 by its <a href="H3DU.Math.md#H3DU.Math.quatLength">length</a>.
+
+("Norm", as used in this method's name, means "normalize"; this is not to be
+confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
@@ -1369,6 +1375,9 @@ unless all the normal's components are 0.
 The plane's distance will be divided by the
 current normal's length.
 
+("Norm", as used in this method's name, means "normalize"; this is not to be
+confused with a vector's "norm", another name for its length.)
+
 #### Parameters
 
 * `plane` (Type: Array.&lt;Number>)<br>
@@ -2046,6 +2055,9 @@ to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its <a href="H3DU.Math.md#H3DU.Math.vec3length">length</a>.
 
+("Norm", as used in this method's name, means "normalize"; this is not to be
+confused with a vector's "norm", another name for its length.)
+
 #### Parameters
 
 * `vec` (Type: Array.&lt;Number>)<br>
@@ -2079,6 +2091,9 @@ When a vector is normalized, its direction remains the same but the distance fro
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its <a href="H3DU.Math.md#H3DU.Math.vec3length">length</a>.
+
+("Norm", as used in this method's name, means "normalize"; this is not to be
+confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
@@ -2495,6 +2510,9 @@ to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its <a href="H3DU.Math.md#H3DU.Math.vec4length">length</a>.
 
+("Norm", as used in this method's name, means "normalize"; this is not to be
+confused with a vector's "norm", another name for its length.)
+
 #### Parameters
 
 * `vec` (Type: Array.&lt;Number>)<br>
@@ -2512,6 +2530,9 @@ When a vector is normalized, its direction remains the same but the distance fro
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its <a href="H3DU.Math.md#H3DU.Math.vec4length">length</a>.
+
+("Norm", as used in this method's name, means "normalize"; this is not to be
+confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 

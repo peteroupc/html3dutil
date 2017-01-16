@@ -50,10 +50,11 @@ might not necessarily result in a vector with a length of 1.
 
 ## Matrices <a id=Matrices></a>
 
-A matrix is a 16- or 9-element array that can describe a
+A matrix is an array that can describe a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with "mat".
+A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 For more details, see the {@tutorial matrixdetails} tutorial.
 
 ### Translation <a id=Translation></a>
@@ -119,9 +120,11 @@ quaternions, Tait-Bryan angles, and an angle and axis.
 A rotation can be described using an _angle_ and an _axis of rotation_,
 for example, in the {@link H3DU.Math.mat4rotate} method.
 
-An axis of rotation is a 3-element vector or three numbers that describe a ray
-that starts at the origin (0,0,0) and points toward a 3D point. The vector's elements are
-the X, Y, and Z coordinates of that point, in that order. Here are examples.
+An axis of rotation is a vector pointing in a certain direction.  When a point
+is rotated at any angle around this axis, the new point will lie
+on the same plane as the previous point.  The axis of rotation describes
+a vector that is perpendicular to that plane's surface (the plane's _normal_).
+Here are examples of an axis of rotation.
 
 * The X axis of rotation (upward or downward turn) is (1, 0, 0).
 * The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).
