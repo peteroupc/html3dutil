@@ -58,7 +58,8 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   H3DU._MaterialBinder.bindTexture(mat.specularMap, context, program, 1, loader);
   H3DU._MaterialBinder.bindTexture(mat.normalMap, context, program, 2, loader);
   H3DU._MaterialBinder.bindTexture(mat.metalnessMap, context, program, 3, loader);
-  H3DU._MaterialBinder.bindTexture(mat.roughnessMap, context, program, 3, loader);
+  H3DU._MaterialBinder.bindTexture(mat.roughnessMap, context, program, 4, loader);
+  H3DU._MaterialBinder.bindTexture(mat.environmentMap, context, program, 5, loader);
   return this;
 };
 
@@ -100,7 +101,6 @@ H3DU._LoadedTexture = function(textureImage, context) {
         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
 };
-
 /** @private */
 H3DU._LoadedCubeMap = function(textureImage, context) {
   "use strict";
@@ -109,9 +109,9 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
   this.loadedTexture = context.createTexture();
   context.activeTexture(context.TEXTURE0);
   // In WebGL, texture coordinates start at the upper left corner rather than
-  // the lower left as in OpenGL and OpenGL ES, so we use this method call
-  // to reestablish the lower left corner.
-  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
+  // the lower left as in OpenGL and OpenGL ES, but for cubemap textures,
+  // there is little benefit in reestablishing the lower left corner
+  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 0);
   var target = context.TEXTURE_CUBE_MAP;
   context.bindTexture(target, this.loadedTexture);
   for(var i = 0;i < 6;i++) {
@@ -209,6 +209,9 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
     if(textureUnit === 4) {
       uniforms.roughnessMap = textureUnit;
     }
+    if(textureUnit === 5) {
+      uniforms.envMap = textureUnit;
+    }
     program.setUniforms(uniforms);
     context.activeTexture(context.TEXTURE0 + textureUnit);
     if(isFrameBuffer) {
@@ -244,10 +247,6 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
       } else {
         context.texParameteri(target,
          context.TEXTURE_MIN_FILTER, context.LINEAR);
-      }
-      if(target === context.TEXTURE_CUBE_MAP) {
-        context.texParameteri(target,
-         context.TEXTURE_WRAP_R, wrapMode);
       }
       context.texParameteri(target,
         context.TEXTURE_WRAP_S, wrapMode);

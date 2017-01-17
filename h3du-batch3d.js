@@ -92,7 +92,18 @@ H3DU.Batch3D._setupMatrices = function(
   uniforms.world = worldMatrix;
   uniforms.modelMatrix = worldMatrix;
   uniforms.normalMatrix = invTrans;
-  var mvm = program.get("modelViewMatrix");
+  var mvm = program.get("inverseView");
+  if(mvm !== null && typeof mvm !== "undefined") {
+    var inverseView = H3DU.Math.mat4invert(viewMatrix);
+    uniforms.inverseView = inverseView;
+  }
+  mvm = program.get("inverseModelView");
+  if(mvm !== null && typeof mvm !== "undefined") {
+    var invv = H3DU.Math.mat4multiply(viewMatrix, worldMatrix);
+    inverseView = H3DU.Math.mat4invert(invv);
+    uniforms.inverseModelView = inverseView;
+  }
+  mvm = program.get("modelViewMatrix");
   if(mvm !== null && typeof mvm !== "undefined") {
     if(H3DU._isIdentityExceptTranslate(viewMatrix)) {
     // view matrix is just a translation matrix, so that getting the model-view
@@ -106,12 +117,10 @@ H3DU.Batch3D._setupMatrices = function(
      worldMatrix);
     }
     uniforms.modelViewMatrix = viewWorld;
-
     invTrans = H3DU.Math.mat4inverseTranspose3(viewWorld);
     uniforms.world = viewWorld;
     uniforms.modelMatrix = viewWorld;
     uniforms.normalMatrix = invTrans;
-
   }
   program.setUniforms(uniforms);
 };

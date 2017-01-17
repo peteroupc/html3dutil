@@ -52,7 +52,7 @@ TODO: Not documented yet.
 #### Parameters
 
 * `name` (Type: Array.&lt;(String|Texture)>)<br>
-    An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet.
+    An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six images are, in order, the image seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.
 
 ### (static) H3DU.MeshJSON.loadJSON(url) <a id='H3DU.MeshJSON.loadJSON'></a>
 

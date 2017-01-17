@@ -180,7 +180,16 @@ H3DU.PbrMaterial = function(params) {
   * @default
   */
   this.shader = null;
+  /**
+   * TODO
+   * @default
+   */
   this.invertRoughness = false;
+  /**
+   * TODO
+   * @default
+   */
+  this.environmentMap = null;
   if(params !== null && typeof params !== "undefined") {
     this.setParams(params);
   }
@@ -193,6 +202,9 @@ H3DU.PbrMaterial.Metallic = 1;
  * the possibilities given below, and whose values are those
  * allowed for each key.<ul>
  * <li><code>workflow</code> - Either {@link H3DU.PbrMaterial.Specular} or {@link H3DU.PbrMaterial.Metalness}
+ * <li><code>invertRoughness</code> - TODO.
+ * <li><code>environmentMap</code> - {@link H3DU.CubeMap} object of an environment
+ * map texture (see {@link H3DU.Material#environmentMap}).
  * <li><code>diffuse</code> or <code>albedo</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the diffusion color (also called "albedo"). (See {@link H3DU.Material#diffuse}.) The default is (0.8, 0.8, 0.8).
  * <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving
@@ -207,8 +219,8 @@ H3DU.PbrMaterial.Metallic = 1;
  * map texture (see {@link H3DU.Material#specularMap}).
  * <li><code>normalMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a normal
  * map (bump map) texture (see {@link H3DU.Material#normalMap}).
- * <li><code>metalnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a metalness texture (see {@link H3DU.Material#normalMap}).
- * <li><code>roughnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a roughness texture (see {@link H3DU.Material#normalMap}).
+ * <li><code>metalnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a metalness texture (see {@link H3DU.Material#metalnessMap}).
+ * <li><code>roughnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a roughness texture (see {@link H3DU.Material#roughnessMap}).
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
  * this parameter is deprecated.</i>
@@ -253,6 +265,9 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
   if(typeof params.roughnessMap !== "undefined" && params.roughnessMap !== null) {
     this.roughnessMap = H3DU.Texture._texOrString(params.roughnessMap);
   }
+  if(typeof params.environmentMap !== "undefined" && params.environmentMap !== null) {
+    this.environmentMap = params.environmentMap;
+  }
   if(typeof params.metalness !== "undefined" && params.metalness !== null) {
     this.metalness = params.metalness;
   }
@@ -279,6 +294,7 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
 H3DU.PbrMaterial.prototype.copy = function() {
   "use strict";
   return new H3DU.PbrMaterial({
+    "environmentMap":this.environmentMap,
     "metalness":this.metalness,
     "metalnessMap":this.metalnessMap,
     "roughness":this.roughness,

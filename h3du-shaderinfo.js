@@ -359,8 +359,8 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
     "#ifdef COLORATTR",
     "attribute vec3 colorAttr;",
     "varying vec3 colorAttrVar;",
-    "#endif\n" +
-"attribute vec3 tangent;",
+    "#endif",
+    "attribute vec3 tangent;",
     "attribute vec3 bitangent;",
     "uniform mat4 projection;",
     "uniform mat4 modelViewMatrix;",
@@ -435,6 +435,8 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef ROUGHNESS", "uniform float roughness;", "#endif",
     "#ifdef ROUGHNESS_MAP", "uniform sampler2D roughnessMap;", "#endif",
     "#ifdef SPECULAR_MAP", "uniform sampler2D specularMap;", "#endif",
+    "#ifdef ENV_MAP", "uniform samplerCube envMap;", "#endif",
+    "#ifdef ENV_MAP", "uniform mat4 inverseModelView;", "#endif",
     "#ifdef NORMAL_MAP", "uniform sampler2D normalMap;", "#endif",
     "#ifdef NORMAL_MAP", "varying mat3 tbnMatrixVar;", "#endif",
     "#ifdef SPECULAR",
@@ -532,7 +534,17 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "vec4 lightPower[" + H3DU.Lights.MAX_LIGHTS + "];",
     "float lightCosines[" + H3DU.Lights.MAX_LIGHTS + "];",
     "vec3 materialAmbient=ma;", // ambient
-    " vec3 materialDiffuse=pow(baseColor.rgb,vec3(2.2));",
+    "vec3 materialDiffuse=pow(baseColor.rgb,vec3(2.2));",
+    "vec3 viewDirection=normalize((-viewPositionVar).xyz);",
+    "vec3 environment=vec3(1.0);",
+    "#ifdef ENV_MAP",
+    "vec3 tnormal=normalize(vec3(inverseModelView*vec4(normal,0.0)));",
+    "vec3 tviewdir=normalize(vec3(inverseModelView*vec4(viewDirection,0.0)));",
+    "vec3 refl=reflect(-tviewdir,tnormal);",
+    "refl.x=-refl.x;",
+    "environment=vec3(textureCube(envMap,refl));",
+    "environment=pow(environment,vec3(2.2));",
+    "#endif",
     "#ifdef PHYSICAL_BASED",
     "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient
     "#else",
@@ -546,10 +558,8 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       "lightCosines[" + i + "]=clamp(dot(normal,lightPower[" + i + "].xyz),0.0,1.0);",
     // Lambert diffusion term
       "#ifndef PHYSICAL_BASED",
-      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w;",
-      "#else", "#ifndef SPECULAR",
-      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w;",
-      "#endif", "#endif",
+      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*(environment*lights[" + i + "].diffuse.xyz)*lightPower[" + i + "].w;",
+      "#endif",
       ""].join("\n");
   }
   shader += [
@@ -559,8 +569,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef SPECULAR", "materialSpecular=ms;", "#endif",
     // TODO: Decide whether to multiply specular by the specular texture;
     // here, this is not done anymore
-    "#ifdef SPECULAR_MAP", "materialSpecular=texture2D(specularMap,uvVar).rgb;", "#endif",
-    "vec3 viewDirection=normalize((-viewPositionVar).xyz);"
+    "#ifdef SPECULAR_MAP", "materialSpecular=texture2D(specularMap,uvVar).rgb;", "#endif"
   ].join("\n") + "\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
@@ -582,7 +591,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).r;", "#endif",
       "    float roughness=sqrt(2.0/(2.0+mshin));",
       "    lightedColor+=reflectance(materialDiffuse,lightPower[" + i + "].xyz,",
-      "         viewDirection,normal,rough,metal)*lights[" + i + "].diffuse.xyz*lightPower[" + i + "].w*lightCosines[" + i + "];",
+      "         viewDirection,normal,rough,metal)*(environment*lights[" + i + "].diffuse.xyz)*lightPower[" + i + "].w*lightCosines[" + i + "];",
       "#else",
 // Blinn-Phong specular term
       "    float specular=clamp(dot(normalize(viewDirection+lightPower[" + i + "].xyz),normal),0.0,1.0);",

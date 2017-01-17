@@ -310,6 +310,9 @@ H3DU.Texture._texOrString = function(tex) {
  * @param {Array<String|Texture>} name An array of six elements,
  * each of which is a URL of the texture data or the texture object itself.
  * However, this constructor will not load those images yet.
+ * The six images are, in order, the image seen when looking toward the positive
+ * X axis, the negative X axis, positive Y, negative Y, positive Z,
+ * and negative Z.
  */
 H3DU.CubeMap = function(textures) {
   "use strict";
@@ -320,8 +323,9 @@ H3DU.CubeMap = function(textures) {
   }
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Gets this texture's known width.
+ * @returns {Number} This texture's width in pixels.
+ * Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.CubeMap#
  */
 H3DU.CubeMap.prototype.getWidth = function() {
@@ -329,8 +333,9 @@ H3DU.CubeMap.prototype.getWidth = function() {
   return this.textures[0].getWidth();
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Gets this texture's known height.
+ * @returns {Number} This texture's height in pixels.
+ * Will be 0 if the texture's image data wasn't loaded yet.
  * @memberof! H3DU.CubeMap#
  */
 H3DU.CubeMap.prototype.getHeight = function() {
@@ -338,7 +343,8 @@ H3DU.CubeMap.prototype.getHeight = function() {
   return this.textures[0].getHeight();
 };
 /**
- * TODO: Not documented yet.
+ * Gets a reference to the array of textures used by this cube
+ * map. TODO: Reference or copy?
  * @returns {*} Return value.
  * @memberof! H3DU.CubeMap#
  */
