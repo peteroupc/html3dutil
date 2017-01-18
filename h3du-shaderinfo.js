@@ -410,6 +410,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [
     "#define ONE_DIV_PI 0.318309886",
+    "#define ONE_DIV_TWOPI 0.159154943",
     "#define PI 3.141592654",
     "#define tolinear(c) pow(c, vec3(2.2))",
     "#define fromlinear(c) pow(c, vec3(0.45454545))",
@@ -440,6 +441,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef ROUGHNESS_MAP", "uniform sampler2D roughnessMap;", "#endif",
     "#ifdef SPECULAR_MAP", "uniform sampler2D specularMap;", "#endif",
     "#ifdef ENV_MAP", "uniform samplerCube envMap;", "#endif",
+    "#ifdef ENV_EQUIRECT", "uniform sampler2D envMap;", "#endif",
     "uniform mat4 inverseView;",
     "#ifdef NORMAL_MAP", "uniform sampler2D normalMap;", "#endif",
     "#ifdef NORMAL_MAP", "varying mat3 tbnMatrixVar;", "#endif",
@@ -538,40 +540,33 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "normal = normalize(transformedNormalVar);",
     "#endif",
     "if(baseColor.a == 0.0)discard;",
-    "vec4 lightPower[" + H3DU.Lights.MAX_LIGHTS + "];",
-    "float lightCosines[" + H3DU.Lights.MAX_LIGHTS + "];",
-    "vec3 lightDiffuse[" + H3DU.Lights.MAX_LIGHTS + "];",
+    "vec4 lightPowerVec;",
+    "float lightCosine;",
     "vec3 materialAmbient=ma;", // ambient
     "vec3 materialDiffuse=tolinear(baseColor.rgb);",
     "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
     "vec3 viewDirection=normalize(tview.xyz/tview.w);",
     "vec3 environment=vec3(1.0);",
     "#ifdef ENV_MAP",
-    "vec3 refl=reflect(-viewDirection,normal);",
+    "vec3 eyepos=vec3(inverseView*vec4(viewPositionVar.xyz,1.0));",
+    "vec3 refl=reflect(-eyepos,normal);",
+    "environment=vec3(textureCube(envMap,vec3(-refl.x,refl.y,refl.z)));",
+    "environment=tolinear(environment);",
+  //  "materialDiffuse=environment;", // TODO
+    "#else", "#ifdef ENV_EQUIRECT",
+    "vec3 eyepos=vec3(inverseView*vec4(viewPositionVar.xyz,1.0));",
+    "vec3 refl=reflect(-eyepos,normal);",
     "refl.x=-refl.x;",
-    "environment=vec3(textureCube(envMap,refl));",
+    "environment=vec3(texture2D(envMap,vec2(",
+    "  (atan(refl.x,refl.z)+PI)*ONE_DIV_TWOPI, acos(clamp(-refl.y,-1.0,1.0))*ONE_DIV_PI )));",
     "environment=tolinear(environment);",
     "materialDiffuse=environment;",
-    "environment=vec3(1.0);",
-    "#endif",
+    "#endif", "#endif",
     "#ifdef PHYSICAL_BASED",
     "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient
     "#else",
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
     "#endif",
-    ""].join("\n") + "\n";
-  for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
-    shader += [
-      "lightPower[" + i + "]=calcLightPower(lights[" + i + "],viewPositionVar);",
-      "lightDiffuse[" + i + "]=tolinear(lights[" + i + "].diffuse.xyz);",
-      "lightCosines[" + i + "]=clamp(dot(normal,lightPower[" + i + "].xyz),0.0,1.0);",
-    // Lambert diffusion term
-      "#ifndef PHYSICAL_BASED",
-      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*(environment*lightDiffuse[" + i + "])*lightPower[" + i + "].w;",
-      "#endif",
-      ""].join("\n");
-  }
-  shader += [
     "vec3 materialSpecular=vec3(0.0);",
     "bool spectmp;",
     // Specular reflection
@@ -590,23 +585,27 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef INVERT_ROUGHNESS", "rough=1.0-rough;", "#endif",
     "#ifdef METALNESS", "metal=metalness;", "#endif",
     "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).r;", "#endif",
-    "#endif" // PHYSICAL_BASED
-  ].join("\n") + "\n";
+    "#endif", // PHYSICAL_BASED
+    ""].join("\n") + "\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
 // not exactly greater than 0 in order to avoid speckling or
 // flickering specular highlights if the surface normal is perpendicular to
 // the light's direction vector
-      "  spectmp = lightCosines[" + i + "] > 0.0001;",
+      "lightPowerVec=calcLightPower(lights[" + i + "],viewPositionVar);",
+      "lightCosine=clamp(dot(normal,lightPowerVec.xyz),0.0,1.0);",
+      "  spectmp = lightCosine > 0.0001;",
       "  if (spectmp) {",
       "#ifdef PHYSICAL_BASED",
-      "    lightedColor+=reflectance(materialDiffuse,normalize(lightPower[" + i + "].xyz),",
-      "         normalize(viewDirection),normal,rough,metal)*lightPower[" + i + "].w*lightCosines[" + i + "];",
+      "    lightedColor+=reflectance(materialDiffuse,normalize(lightPowerVec.xyz),",
+      "         normalize(viewDirection),normal,rough,metal)*lightPowerVec.w*lightCosine;",
       "#else",
-// Blinn-Phong specular term
-      "    float specular=clamp(dot(normalize(viewDirection+lightPower[" + i + "].xyz),normal),0.0,1.0);",
+      "    float specular=clamp(dot(normalize(viewDirection+lightPowerVec.xyz),normal),0.0,1.0);",
       "    specular=pow(specular,mshin);",
-      "    lightedColor+=materialSpecular*specular*lightPower[" + i + "].w*tolinear(lights[" + i + "].specular.xyz);",
+// Lambert diffusion term
+      "lightedColor+=materialDiffuse*lightCosine*tolinear(lights[" + i + "].diffuse.xyz)*lightPowerVec.w;",
+// Blinn-Phong specular term
+      "    lightedColor+=materialSpecular*specular*lightPowerVec.w*tolinear(lights[" + i + "].specular.xyz);",
       "#endif",
       "  }",
       ""].join("\n") + "\n";

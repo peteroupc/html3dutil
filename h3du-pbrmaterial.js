@@ -28,7 +28,7 @@ H3DU.PbrMaterial = function(params) {
  * and (1,1,1,1) means total diffusion.<p>
  * In physically-based rendering, the diffusion color should be the color of lights
  * absorbed by the surface without regard to the lighting environment.<p>
- * In the <b>specular workflow</b>, this color should generally be black, otherwise
+ * In the <b>specular workflow</b>, this color should generally be black or
  * a very dark shade of gray, if the object describes a metal.
  * In the <b>metallic workflow</b>, this should be the object's color for metals and nonmetals.<p>
  * In the default shader program, if a mesh defines its own colors, those

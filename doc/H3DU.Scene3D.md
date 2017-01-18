@@ -29,7 +29,7 @@ rather than through this class.</b>
 instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom
 H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [clear](#H3DU.Scene3D_H3DU.Scene3D_clear)<br>Clears the color, depth, and stencil buffers used in this scene,
-if any
+if any.
 * [clearDepth](#H3DU.Scene3D_H3DU.Scene3D_clearDepth)<br>Clears the depth buffer used in this scene, if any.
 * [createBuffer](#H3DU.Scene3D_H3DU.Scene3D_createBuffer)<br>Creates a frame buffer object associated with this scene.
 * [cullFace](#H3DU.Scene3D_H3DU.Scene3D_cullFace)<br>Specifies which kinds of triangle faces are culled (not drawn)
@@ -143,7 +143,7 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 ### H3DU.Scene3D#clear() <a id='H3DU.Scene3D_H3DU.Scene3D_clear'></a>
 
 Clears the color, depth, and stencil buffers used in this scene,
-if any
+if any.
 
 #### Return Value
 

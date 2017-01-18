@@ -57,10 +57,6 @@ H3DU.Scene3D = function(canvasOrContext) {
   this.context.canvas.width = this.width;
   this.context.canvas.height = this.height;
   if(this._is3d) {
-    var flags = H3DU.Scene3D.LIGHTING_ENABLED |
-     H3DU.Scene3D.SPECULAR_ENABLED |
-     H3DU.Scene3D.SPECULAR_MAP_ENABLED;
-    this._programs.getProgram(flags, this.context);
     this.context.viewport(0, 0, this.width, this.height);
     this.context.enable(this.context.BLEND);
     this.context.blendFunc(this.context.SRC_ALPHA, this.context.ONE_MINUS_SRC_ALPHA);
@@ -108,6 +104,8 @@ H3DU.Scene3D.PHYSICAL_BASED_ENABLED = 1 << 10 | 0;
 H3DU.Scene3D.INVERT_ROUGHNESS_ENABLED = 1 << 11 | 0;
 /** @private */
 H3DU.Scene3D.ENV_MAP_ENABLED = 1 << 12 | 0;
+/** @private */
+H3DU.Scene3D.ENV_EQUIRECT_ENABLED = 1 << 13 | 0;
 
 /** @private */
 H3DU.Scene3D._flagsForShape = function(shape) {
@@ -125,16 +123,25 @@ H3DU.Scene3D._flagsForShape = function(shape) {
   }
   if(material !== null && typeof material !== "undefined" && material instanceof H3DU.PbrMaterial) {
     flags |= H3DU.Scene3D.LIGHTING_ENABLED | H3DU.Scene3D.PHYSICAL_BASED_ENABLED;
-    flags |= material.specular ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
-    flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
+    if(material.workflow === H3DU.PbrMaterial.Metallic) {
+      flags |= typeof material.metalness === "number" ? H3DU.Scene3D.METALNESS_ENABLED : 0;
+      flags |= material.metalnessMap ? H3DU.Scene3D.METALNESS_MAP_ENABLED : 0;
+    } else {
+      flags |= material.specular ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
+      flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
+    }
     flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
     flags |= material.albedoMap ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
     flags |= material.invertRoughness === true ? H3DU.Scene3D.INVERT_ROUGHNESS_ENABLED : 0;
     flags |= typeof material.roughness === "number" ? H3DU.Scene3D.ROUGHNESS_ENABLED : 0;
-    flags |= typeof material.metalness === "number" ? H3DU.Scene3D.METALNESS_ENABLED : 0;
-    flags |= material.metalnessMap ? H3DU.Scene3D.METALNESS_MAP_ENABLED : 0;
     flags |= material.roughnessMap ? H3DU.Scene3D.ROUGHNESS_MAP_ENABLED : 0;
-    flags |= material.environmentMap ? H3DU.Scene3D.ENV_MAP_ENABLED : 0;
+    if(material.environmentMap) {
+      if(material.environmentMap instanceof H3DU.CubeMap) {
+        flags |= H3DU.Scene3D.ENV_MAP_ENABLED;
+      } else {
+        flags |= H3DU.Scene3D.ENV_EQUIRECT_ENABLED;
+      }
+    }
   }
   var buffer = shape.getMeshBuffer();
   if(buffer && !!buffer._getAttribute("colorAttr")) {
@@ -226,6 +233,8 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
     defines += "#define INVERT_ROUGHNESS\n";
   if((flags & H3DU.Scene3D.ENV_MAP_ENABLED) !== 0)
     defines += "#define ENV_MAP\n";
+  if((flags & H3DU.Scene3D.ENV_EQUIRECT_ENABLED) !== 0)
+    defines += "#define ENV_EQUIRECT\n";
   if((flags & H3DU.Scene3D.SPECULAR_MAP_ENABLED) !== 0)
     defines += "#define SPECULAR_MAP\n#define SPECULAR\n";
   var prog = new H3DU.ShaderProgram(context,
@@ -763,7 +772,6 @@ H3DU.Scene3D.prototype.loadTexture = function(name) {
  */
 H3DU.Scene3D.prototype.loadAndMapTexture = function(texture) {
   "use strict";
-
   var tex = null;
   if(texture.constructor === H3DU.Texture) {
     return this.loadAndMapTexture(texture.name);
@@ -806,7 +814,7 @@ H3DU.Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reje
 };
 /**
  * Clears the color, depth, and stencil buffers used in this scene,
- * if any
+ * if any.
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
  */

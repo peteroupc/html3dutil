@@ -132,11 +132,11 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
   } else {
     context.texParameteri(target,
         context.TEXTURE_MIN_FILTER, context.LINEAR);
-    context.texParameteri(target,
-        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
-    context.texParameteri(target,
-        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
+  context.texParameteri(target,
+        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+  context.texParameteri(target,
+        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
 };
 
 /** @private */

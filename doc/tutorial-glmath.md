@@ -54,7 +54,7 @@ might not necessarily result in a vector with a length of 1.
 
 ## Matrices <a id=Matrices></a>
 
-A matrix is an array that can describe a
+A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with "mat".

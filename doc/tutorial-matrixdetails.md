@@ -4,10 +4,11 @@
 
 ## Matrix Details <a id=Matrix_Details></a>
 
-A matrix is a 16- or 9-element array that describes a
+A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with "mat".
+A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 
 This section contains detailed information on matrices.
 
