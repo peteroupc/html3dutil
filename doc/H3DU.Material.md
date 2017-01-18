@@ -2,29 +2,24 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Material([ambient], [diffuse], [specular], [shininess], [emission]) <a id='H3DU.Material'></a>
+### H3DU.Material([params], [diffuse], [specular], [shininess], [emission]) <a id='H3DU.Material'></a>
 
 Specifies parameters for geometry materials, which describe the appearance of a
 3D object. This includes how an object scatters, reflects, or absorbs light,
 as well as a texture image to apply on that object's surface.
 
-<i>For more information on this constructor's parameters,
-see the H3DU.Material#setParams method. NOTE: It is preferred
-to set a material's parameters with the H3DU.Material#setParams method, rather than this
-constructor.</i>
-
 #### Parameters
 
-* `ambient` (Type: Array.&lt;Number>) (optional)<br>
-    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the ambient color.
+* `params` (Type: Array.&lt;Number>) (optional)<br>
+    An object as described in H3DU.Material#setParams. <i>Using this parameter as a <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the ambient color is deprecated since version 2.0.</i>
 * `diffuse` (Type: Array.&lt;Number>) (optional)<br>
-    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo").
+    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo"). <i>This parameter is deprecated.</i>
 * `specular` (Type: Array.&lt;Number>) (optional)<br>
-    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the specular highlight reflection.
+    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the specular highlight reflection. <i>This parameter is deprecated.</i>
 * `shininess` (Type: Array.&lt;Number>) (optional)<br>
-    Specular highlight exponent of this material.
+    Specular highlight exponent of this material. <i>This parameter is deprecated.</i>
 * `emission` (Type: Array.&lt;Number>) (optional)<br>
-    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the additive color emitted by an object.
+    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the additive color emitted by an object. <i>This parameter is deprecated.</i>
 
 ### Members
 

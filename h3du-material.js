@@ -11,19 +11,21 @@
  * Specifies parameters for geometry materials, which describe the appearance of a
  * 3D object. This includes how an object scatters, reflects, or absorbs light,
  * as well as a texture image to apply on that object's surface.<p>
- * <i>For more information on this constructor's parameters,
- * see the {@link H3DU.Material#setParams} method. NOTE: It is preferred
- * to set a material's parameters with the {@link H3DU.Material#setParams} method, rather than this
- * constructor.</i>
  * @class
  * @alias H3DU.Material
- * @param {Array<Number>} [ambient] A [color vector or string]{@link H3DU.toGLColor} giving the ambient color.
+ * @param {Array<Number>} [params] An object as described in {@link H3DU.Material#setParams}.
+ * <i>Using this parameter as a [color vector or string]{@link H3DU.toGLColor} giving the ambient color is deprecated
+ * since version 2.0.</i>
  * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffusion color (also called "albedo").
+ * <i>This parameter is deprecated.</i>
  * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the specular highlight reflection.
+ * <i>This parameter is deprecated.</i>
  * @param {Array<Number>} [shininess] Specular highlight exponent of this material.
+ * <i>This parameter is deprecated.</i>
  * @param {Array<Number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
+ * <i>This parameter is deprecated.</i>
  */
-H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
+H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   "use strict";
  /** Specular highlight exponent of this material.
   * The greater the number, the more concentrated the specular
@@ -105,13 +107,17 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
   * @default
   */
   this.shader = null;
-  this.setParams({
-    "ambient":ambient,
-    "diffuse":diffuse,
-    "specular":specular,
-    "shininess":shininess,
-    "emission":emission
-  });
+  if(params && (params.constructor === Array || typeof params === "string")) {
+    this.setParams({
+      "ambient":params,
+      "diffuse":diffuse,
+      "specular":specular,
+      "shininess":shininess,
+      "emission":emission
+    });
+  } else if(params !== null && typeof params !== "undefined") {
+    this.setParams(params);
+  }
 };
 /**
  * Clones this object's parameters to a new H3DU.Material

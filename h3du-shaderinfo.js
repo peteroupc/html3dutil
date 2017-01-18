@@ -366,8 +366,8 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
     "uniform mat4 modelViewMatrix;",
     "#ifdef SHADING",
     "uniform mat3 normalMatrix; /* internal */",
-    "#ifdef NORMAL_MAP",
     "uniform mat4 world;",
+    "#ifdef NORMAL_MAP",
     "varying mat3 tbnMatrixVar;",
     "#endif",
     "varying vec4 viewPositionVar;",
@@ -409,6 +409,10 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
   "use strict";
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [
+    "#define ONE_DIV_PI 0.318309886",
+    "#define PI 3.141592654",
+    "#define tolinear(c) pow(c, vec3(2.2))",
+    "#define fromlinear(c) pow(c, vec3(0.45454545))",
  // if shading is disabled, this is solid color instead of material diffuse
     "uniform vec4 md;",
     "#ifdef SHADING",
@@ -436,7 +440,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef ROUGHNESS_MAP", "uniform sampler2D roughnessMap;", "#endif",
     "#ifdef SPECULAR_MAP", "uniform sampler2D specularMap;", "#endif",
     "#ifdef ENV_MAP", "uniform samplerCube envMap;", "#endif",
-    "#ifdef ENV_MAP", "uniform mat4 inverseModelView;", "#endif",
+    "uniform mat4 inverseView;",
     "#ifdef NORMAL_MAP", "uniform sampler2D normalMap;", "#endif",
     "#ifdef NORMAL_MAP", "varying mat3 tbnMatrixVar;", "#endif",
     "#ifdef SPECULAR",
@@ -477,8 +481,6 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#endif",
 // ////////////
     "#ifdef PHYSICAL_BASED",
-    "#define ONE_DIV_PI 0.318309886",
-    "#define PI 3.141592654",
     "float ndf(float dotnh, float alpha) {",
     " float alphasq=alpha*alpha;",
     " float d=dotnh*dotnh*(alphasq-1.0)+1.0;",
@@ -490,6 +492,11 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     " float invk=(1.0-k);",
     " return dotnl/(dotnl*invk+k)*dotnv/(dotnv*invk+k);",
     "}",
+    "float gsmithindirect(float dotnv, float dotnl, float alpha) {",
+    " float k=alpha*alpha*0.5;",
+    " float invk=(1.0-k);",
+    " return dotnl/(dotnl*invk+k)*dotnv/(dotnv*invk+k);",
+    "}",
     "vec3 fresnel(float dothv, vec3 refl) {",
     " float id=1.0-dothv;",
     " float idsq=id*id;",
@@ -497,16 +504,16 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "}",
     "vec3 reflectance(vec3 color, vec3 lightDir, vec3 viewDir, vec3 n, float rough, float metal) {",
     " vec3 h=normalize(viewDir+lightDir);",
-    " float dotnv=clamp(dot(n,viewDir),0.0,1.0);",
-    " float dothv=clamp(dot(h,viewDir),0.0,1.0);",
+    " float dotnv=abs(dot(n,viewDir))+0.0001;",
     " float dotnh=clamp(dot(n,h),0.0,1.0);",
     " float dotnl=clamp(dot(n,lightDir),0.0,1.0);",
+    " float dothl=clamp(dot(h,lightDir),0.0,1.0);",
     " vec3 refl=mix(vec3(0.04),color,metal);",
-    " vec3 fr=fresnel(dothv,refl);",
+    " vec3 fr=fresnel(dothl,refl);",
     " vec3 refr=mix((vec3(1.0)-fr),vec3(0.0),metal);",
-    " float ctden=max(4.0*dotnl*dotnv,0.0001);",
-    " float alpha=rough*rough;",
+    " float alpha=rough*rough*rough*rough;",
     " vec3 ctnum=ndf(dotnh,alpha)*gsmith(dotnv,dotnl,alpha)*fr;",
+    " float ctden=min(4.0*dotnl*dotnv,0.0001);",
     " return refr*color*ONE_DIV_PI+ctnum/ctden;",
     "}",
     "#endif",
@@ -533,32 +540,34 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "if(baseColor.a == 0.0)discard;",
     "vec4 lightPower[" + H3DU.Lights.MAX_LIGHTS + "];",
     "float lightCosines[" + H3DU.Lights.MAX_LIGHTS + "];",
+    "vec3 lightDiffuse[" + H3DU.Lights.MAX_LIGHTS + "];",
     "vec3 materialAmbient=ma;", // ambient
-    "vec3 materialDiffuse=pow(baseColor.rgb,vec3(2.2));",
-    "vec3 viewDirection=normalize((-viewPositionVar).xyz);",
+    "vec3 materialDiffuse=tolinear(baseColor.rgb);",
+    "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
+    "vec3 viewDirection=normalize(tview.xyz/tview.w);",
     "vec3 environment=vec3(1.0);",
     "#ifdef ENV_MAP",
-    "vec3 tnormal=normalize(vec3(inverseModelView*vec4(normal,0.0)));",
-    "vec3 tviewdir=normalize(vec3(inverseModelView*vec4(viewDirection,0.0)));",
-    "vec3 refl=reflect(-tviewdir,tnormal);",
+    "vec3 refl=reflect(-viewDirection,normal);",
     "refl.x=-refl.x;",
     "environment=vec3(textureCube(envMap,refl));",
-    "environment=pow(environment,vec3(2.2));",
+    "environment=tolinear(environment);",
+    "materialDiffuse=environment;",
+    "environment=vec3(1.0);",
     "#endif",
     "#ifdef PHYSICAL_BASED",
     "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient
     "#else",
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
     "#endif",
-// diffuse
     ""].join("\n") + "\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
       "lightPower[" + i + "]=calcLightPower(lights[" + i + "],viewPositionVar);",
+      "lightDiffuse[" + i + "]=tolinear(lights[" + i + "].diffuse.xyz);",
       "lightCosines[" + i + "]=clamp(dot(normal,lightPower[" + i + "].xyz),0.0,1.0);",
     // Lambert diffusion term
       "#ifndef PHYSICAL_BASED",
-      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*(environment*lights[" + i + "].diffuse.xyz)*lightPower[" + i + "].w;",
+      "lightedColor+=materialDiffuse*lightCosines[" + i + "]*(environment*lightDiffuse[" + i + "])*lightPower[" + i + "].w;",
       "#endif",
       ""].join("\n");
   }
@@ -569,7 +578,19 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef SPECULAR", "materialSpecular=ms;", "#endif",
     // TODO: Decide whether to multiply specular by the specular texture;
     // here, this is not done anymore
-    "#ifdef SPECULAR_MAP", "materialSpecular=texture2D(specularMap,uvVar).rgb;", "#endif"
+    "#ifdef SPECULAR_MAP", "materialSpecular=texture2D(specularMap,uvVar).rgb;", "#endif",
+    "#ifdef PHYSICAL_BASED",
+    "float rough = 0.0;",
+    "float metal = 0.0;",
+    "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
+// Convert Blinn-Phong shininess to roughness
+// See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
+    "#ifndef ROUGHNESS", "rough=sqrt(2.0/(2.0+mshin));", "#endif",
+    "#ifdef ROUGHNESS_MAP", "rough=texture2D(roughnessMap,uvVar).r;", "#endif",
+    "#ifdef INVERT_ROUGHNESS", "rough=1.0-rough;", "#endif",
+    "#ifdef METALNESS", "metal=metalness;", "#endif",
+    "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).r;", "#endif",
+    "#endif" // PHYSICAL_BASED
   ].join("\n") + "\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
@@ -579,24 +600,13 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       "  spectmp = lightCosines[" + i + "] > 0.0001;",
       "  if (spectmp) {",
       "#ifdef PHYSICAL_BASED",
-      "float rough = 0.0;",
-      "float metal = 0.0;",
-      "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
-// Convert Blinn-Phong shininess to roughness
-// See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
-      "#ifndef ROUGHNESS", "rough=sqrt(2.0/(2.0+mshin));", "#endif",
-      "#ifdef ROUGHNESS_MAP", "rough=texture2D(roughnessMap,uvVar).r;", "#endif",
-      "#ifdef INVERT_ROUGHNESS", "rough=1.0-rough;", "#endif",
-      "#ifdef METALNESS", "metal=metalness;", "#endif",
-      "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).r;", "#endif",
-      "    float roughness=sqrt(2.0/(2.0+mshin));",
-      "    lightedColor+=reflectance(materialDiffuse,lightPower[" + i + "].xyz,",
-      "         viewDirection,normal,rough,metal)*(environment*lights[" + i + "].diffuse.xyz)*lightPower[" + i + "].w*lightCosines[" + i + "];",
+      "    lightedColor+=reflectance(materialDiffuse,normalize(lightPower[" + i + "].xyz),",
+      "         normalize(viewDirection),normal,rough,metal)*lightPower[" + i + "].w*lightCosines[" + i + "];",
       "#else",
 // Blinn-Phong specular term
       "    float specular=clamp(dot(normalize(viewDirection+lightPower[" + i + "].xyz),normal),0.0,1.0);",
       "    specular=pow(specular,mshin);",
-      "    lightedColor+=materialSpecular*specular*lightPower[" + i + "].w*lights[" + i + "].specular.xyz;",
+      "    lightedColor+=materialSpecular*specular*lightPower[" + i + "].w*tolinear(lights[" + i + "].specular.xyz);",
       "#endif",
       "  }",
       ""].join("\n") + "\n";
@@ -604,7 +614,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
   shader += [
     " lightedColor+=me;", // emission
     " lightedColor/=vec3(1.0)+lightedColor;",
-    " lightedColor=pow(lightedColor,vec3(0.45454545));",
+    " lightedColor=fromlinear(lightedColor);",
     " baseColor=vec4(lightedColor,baseColor.a);",
     "#endif",
     " gl_FragColor=baseColor;",

@@ -189,7 +189,7 @@ H3DU.PbrMaterial = function(params) {
    * TODO
    * @default
    */
-  this.environmentMap = null;
+  this.environmentMap = null; // TODO: Store environment maps in H3DU.Lights, not here
   if(params !== null && typeof params !== "undefined") {
     this.setParams(params);
   }

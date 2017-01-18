@@ -1614,9 +1614,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns the transposed result of the inverted 3x3 upper left corner of
  * the given 4x4 matrix.<p>
- * This is usually used to convert a world matrix to a matrix
+ * This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
  * for transforming surface normals in order to keep them perpendicular
- * to a surface transformed by the world matrix. Normals are then
+ * to a surface transformed by the model-view matrix. Normals are then
  * transformed by this matrix and then converted to [unit vectors]{@tutorial glmath}. But if the
  * input matrix uses only rotations, translations, and/or uniform scaling
  * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can

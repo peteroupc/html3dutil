@@ -134,7 +134,7 @@ of where they meet the near clipping plane.
 An orthographic projection is one in which the left and right clipping planes are parallel to each other,
 and the top and bottom clipping planes are parallel to each other. This results in the near and far clipping
 planes having the same size, unlike in a perspective projection, and
-objects with the same size not varying in size with their depth.
+objects with the same size not varying in size with their distance from the "camera".
 
 The following methods define an orthographic projection.
 
