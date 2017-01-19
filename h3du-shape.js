@@ -11,7 +11,10 @@
  * An object that associates a geometric mesh (the shape of the object) with
  * material data (which defines what is seen on the object's surface)
  * and a transformation matrix (which defines the object's position and size).
- * See the "{@tutorial shapes}" tutorial.
+ * See the "{@tutorial shapes}" tutorial.<p>
+ * NOTE: The default shader program assumes that all colors and the diffuse texture
+ * specified in this object are in
+ * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
  * @class
  * @alias H3DU.Shape
  * @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.

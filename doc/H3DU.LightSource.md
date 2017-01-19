@@ -6,6 +6,9 @@
 
 Specifies parameters for light sources.
 
+NOTE: The default shader program assumes that all colors specified in this object are in
+the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+
 #### Parameters
 
 * `params` (Type: Object | Array.&lt;Number>) (optional)<br>
@@ -40,7 +43,9 @@ and blue components respectively.
 A 4-element vector giving an additional color to multiply with the ambient
 color of each object, in the red, green,
 and blue components respectively.
-The default is (0,0,0,1), or black. Not used in the default shader program.
+The default is (0,0,0,1), or black.
+
+NOTE: This property is not used in the default shader program.
 
 Default Value: `"[0,0,0,1]"`
 

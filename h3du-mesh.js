@@ -27,7 +27,9 @@
  * See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
  * <p>NOTE: Previous versions of this class allowed meshes to contain more than one
  * primitive type (triangles, lines, and points are the primitive types). This is
- * no longer the case, to simplify the implementation.
+ * no longer the case, to simplify the implementation.<p>
+ * NOTE: The default shader program assumes that all colors specified in this object are in
+ * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
  * @class
  * @alias H3DU.Mesh
  * @param {Array<Number>} [vertices] An array that contains data on each
@@ -449,6 +451,7 @@ H3DU.Mesh.prototype.color3 = function(r, g, b) {
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
   */
+// TODO: Support 3D texture coordinates
 H3DU.Mesh.prototype.texCoord2 = function(u, v) {
   "use strict";
   if(typeof u === "number" && typeof v === "number") {

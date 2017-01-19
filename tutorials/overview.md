@@ -255,6 +255,8 @@ and applying them to 3D shapes.
 textures as specular reflection maps.
 * [demos/gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
+* [demos/skysphere.html](https://peteroupc.github.io/html3dutil/demos/skysphere.html) - Demonstrates how to
+implement a 360-degree background texture -- a _sky sphere_ -- using custom shader materials.
 
 ### Shaders <a id=Shaders></a>
 

@@ -552,7 +552,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "vec3 refl=reflect(-eyepos,normal);",
     "environment=vec3(textureCube(envMap,vec3(-refl.x,refl.y,refl.z)));",
     "environment=tolinear(environment);",
-  //  "materialDiffuse=environment;", // TODO
+  //  "materialDiffuse=environment;", // TODO: Implement image-based lights
     "#else", "#ifdef ENV_EQUIRECT",
     "vec3 eyepos=vec3(inverseView*vec4(viewPositionVar.xyz,1.0));",
     "vec3 refl=reflect(-eyepos,normal);",

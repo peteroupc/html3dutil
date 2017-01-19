@@ -10,7 +10,9 @@
 /**
  * A collection of light sources. It stores the scene's
  * ambient color as well as data on one or more light sources.
- * When constructed, the list of light sources will be empty.
+ * When constructed, the list of light sources will be empty.<p>
+ * NOTE: The default shader program assumes that all colors specified in this object are in
+ * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
  * @class
  * @alias H3DU.Lights
  */
@@ -28,7 +30,9 @@ H3DU.Lights = function() {
   * phenomenon is sunlight reaching an indoor room without
   * directly hitting it, such that the sunlight bounces off the walls
   * and so illuminates most of the room pretty much uniformly.
-  * Ambient lights simulate this phenomenon.</small>
+  * Ambient lights simulate this phenomenon.</small><p>
+  * NOTE: In the default shader program, this property is
+  * only used on objects that use {@link H3DU.Material}, not {@link H3DU.PbrMaterial}.
   * @default
   */
   this.sceneAmbient = [0.2, 0.2, 0.2];

@@ -8,6 +8,9 @@ A collection of light sources. It stores the scene's
 ambient color as well as data on one or more light sources.
 When constructed, the list of light sources will be empty.
 
+NOTE: The default shader program assumes that all colors specified in this object are in
+the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+
 ### Members
 
 * [.MAX_LIGHTS](#H3DU.Lights.MAX_LIGHTS)<br>Maximum number of lights supported
@@ -47,6 +50,9 @@ phenomenon is sunlight reaching an indoor room without
 directly hitting it, such that the sunlight bounces off the walls
 and so illuminates most of the room pretty much uniformly.
 Ambient lights simulate this phenomenon.</small>
+
+NOTE: In the default shader program, this property is
+only used on objects that use <a href="H3DU.Material.md">H3DU.Material</a>, not <a href="H3DU.md#H3DU.PbrMaterial">H3DU.PbrMaterial</a>.
 
 Default Value: `"[0.2,0.2,0.2]"`
 

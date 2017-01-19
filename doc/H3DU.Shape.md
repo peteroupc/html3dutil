@@ -9,6 +9,10 @@ material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
+NOTE: The default shader program assumes that all colors and the diffuse texture
+specified in this object are in
+the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+
 #### Parameters
 
 * `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>

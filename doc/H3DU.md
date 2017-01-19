@@ -126,6 +126,9 @@ A material for physically-based rendering. Specifies parameters for geometry mat
 which describe the appearance of a 3D object. This includes how an object
 scatters, reflects, or absorbs light.
 
+NOTE: The default shader program assumes that all colors and the albedo map specified in this object are in
+the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+
 #### Parameters
 
 * `params` (Type: Object) (optional)<br>

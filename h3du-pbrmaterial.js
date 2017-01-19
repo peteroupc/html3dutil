@@ -11,6 +11,8 @@
  * A material for physically-based rendering. Specifies parameters for geometry materials,
  * which describe the appearance of a 3D object. This includes how an object
  * scatters, reflects, or absorbs light.<p>
+ * NOTE: The default shader program assumes that all colors and the albedo map specified in this object are in
+ * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
  * @param {Object} [params] An object described in {@link H3DU.PbrMaterial.setParams}.
  */
 H3DU.PbrMaterial = function(params) {

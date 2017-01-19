@@ -9,7 +9,9 @@
 /* global H3DU */
 
 /**
- * Specifies parameters for light sources.
+ * Specifies parameters for light sources.<p>
+ * NOTE: The default shader program assumes that all colors specified in this object are in
+ * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
  * @class
  * @alias H3DU.LightSource
  * @param {Object|Array<Number>} [params] An object as described in "setParams". <i>Using this parameter
@@ -24,7 +26,8 @@ H3DU.LightSource = function(params, ambient, diffuse, specular) {
   * A 4-element vector giving an additional color to multiply with the ambient
   * color of each object, in the red, green,
   * and blue components respectively.
-  * The default is (0,0,0,1), or black. Not used in the default shader program.
+  * The default is (0,0,0,1), or black.<p>
+  * NOTE: This property is not used in the default shader program.
   * @default
   */
   this.ambient = [0, 0, 0, 1.0];

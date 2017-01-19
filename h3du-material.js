@@ -11,6 +11,8 @@
  * Specifies parameters for geometry materials, which describe the appearance of a
  * 3D object. This includes how an object scatters, reflects, or absorbs light,
  * as well as a texture image to apply on that object's surface.<p>
+ * NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
+ * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
  * @class
  * @alias H3DU.Material
  * @param {Array<Number>} [params] An object as described in {@link H3DU.Material#setParams}.
