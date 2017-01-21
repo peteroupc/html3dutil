@@ -291,6 +291,7 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
     context.shaderSource(shader, text);
     context.compileShader(shader);
     if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
+      if(!text)text = "";
       var lines = text.split("\n");
       // add line numbers
       for(var i = 0;i < lines.length;i++) {

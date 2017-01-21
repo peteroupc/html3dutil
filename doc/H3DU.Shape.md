@@ -148,7 +148,7 @@ Sets this shape's material parameters.
 
 #### Parameters
 
-* `material` (Type: <a href="H3DU.Material.md">H3DU.Material</a> | <a href="H3DU.md#H3DU.PbrMaterial">H3DU.PbrMaterial</a>)<br>
+* `material` (Type: <a href="H3DU.Material.md">H3DU.Material</a> | <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)<br>
     The material object to use. This parameter can't be a <a href="H3DU.Texture.md">H3DU.Texture</a> object.
 
 #### Return Value

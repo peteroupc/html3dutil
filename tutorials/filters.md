@@ -112,7 +112,7 @@ passes mentioned above, the following happens.
 
     * The 3D library renders the first pass.
         * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
-           switches the shader to the usual shaders for drawing the 3D scene.
+            uses the usual shaders for drawing the 3D scene.
         * The current frame is rendered onto the frame buffer. The frame buffer's texture will now contain a
           "snapshot" of the frame that can now be modified by graphics filters.
      * Then, the library renders the second pass.
@@ -254,27 +254,7 @@ black and white and shades of gray.
        0,0,0,1
     ]
 
-The following is an implementation of this filter.
-
-    function makeColorMatrix() {
-      "use strict";
-      return H3DU.ShaderInfo.makeEffect([
-        "uniform mat4 colorMatrix;",
-        "uniform float t;", // ranges from 0 to 1
-        "#define tolinear(c) pow(c, vec3(2.2))",
-        "#define fromlinear(c) pow(c, vec3(0.45454545))",
-        "vec3 mylerp(vec3 a, vec3 b, float t){",
-        " return a + (b - a) * t;",
-        "}",
-        "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
-        " vec4 tex=texture2D(sampler,uvCoord);",
-        " vec3 texRgb=tolinear(tex.rgb);",
-        " vec4 color=colorMatrix*vec4(texRgb,1.0);",
-        " vec3 colorRgb=mylerp(texRgb,color.rgb/color.a,t);",
-        " colorRgb=fromlinear(colorRgb);",
-        " return vec4(clamp(fromlinear(colorRgb),0.0,1.0),tex.a);",
-        "}"].join("\n"));
-    }
+This filter is implemented in the function `makeColorMatrix` in the demo.
 
 ### Pixelate Filter <a id=Pixelate_Filter></a>
 

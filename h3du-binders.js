@@ -27,7 +27,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   "use strict";
   if(!this.mshade)return this;
   var mat = this.mshade;
-  var diffuse = mat.albedo !== null ? mat.albedo : mat.diffuse;
+  var diffuse = typeof mat.albedo !== "undefined" && mat.albedo !== null ? mat.albedo : mat.diffuse;
   var uniforms = {
     "textureSize":H3DU._MaterialBinder._textureSizeZeroZero,
     "md":diffuse.length === 4 ? diffuse :

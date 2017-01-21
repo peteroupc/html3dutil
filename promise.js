@@ -121,7 +121,7 @@
  * @returns {Promise} A promise that resolves or is rejected according to
  * the first promise that resolves or is rejected. It will receive the
  * value associated with that promise.
- * @memberof! Promise#
+ * @method
  */
   Promise.race = function(all) {
     return new this(function(resolve, reject) {

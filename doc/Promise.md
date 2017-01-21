@@ -22,9 +22,9 @@ on its own.
 this promise is rejected.
 * [then](#Promise_Promise_then)<br>Creates a promise that calls a function depending on whether
 this promise resolves or is rejected.
-* [Promise.race](#Promise_Promise.race)<br>Creates a promise that resolves or is rejected when one of those promises
-resolves or is rejected.
 * [all](#Promise.all)<br>Wait for all these promises to complete.
+* [race](#Promise.race)<br>Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.
 * [reject](#Promise.reject)<br>Returns a promise that is rejected.
 * [resolve](#Promise.resolve)<br>Returns a promise that resolves.
 
@@ -58,10 +58,9 @@ this promise resolves or is rejected.
 
 A promise. (Type: <a href="Promise.md">Promise</a>)
 
-### Promise#Promise.race(all) <a id='Promise_Promise.race'></a>
+### (static) Promise.all(all) <a id='Promise.all'></a>
 
-Creates a promise that resolves or is rejected when one of those promises
-resolves or is rejected.
+Wait for all these promises to complete. One failed => this fails too.
 
 #### Parameters
 
@@ -72,9 +71,10 @@ resolves or is rejected.
 
 A promise that is resolved when all promises have resolved. (Type: <a href="Promise.md">Promise</a>)
 
-### (static) Promise.all(all) <a id='Promise.all'></a>
+### (static) Promise.race(all) <a id='Promise.race'></a>
 
-Wait for all these promises to complete. One failed => this fails too.
+Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.
 
 #### Parameters
 

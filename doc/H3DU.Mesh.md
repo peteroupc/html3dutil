@@ -101,6 +101,8 @@ to line segments.
 in this mesh.
 * [vertex2](#H3DU.Mesh_H3DU.Mesh_vertex2)<br>Adds a new vertex to this mesh.
 * [vertex3](#H3DU.Mesh_H3DU.Mesh_vertex3)<br>Adds a new vertex to this mesh.
+* [H3DU.MeshJSON.loadJSON](#H3DU.Mesh.H3DU.MeshJSON.loadJSON)<br>Loads a mesh from JSON format.
+* [H3DU.MeshJSON.toJSON](#H3DU.Mesh.H3DU.MeshJSON.toJSON)<br>Converts a mesh to JSON format.
 * [vertexCount](#H3DU.Mesh_vertexCount)<br>Gets the number of vertices included in this mesh.
 
 ### H3DU.Mesh.BITANGENTS_BIT <a id='H3DU.Mesh.BITANGENTS_BIT'></a> (constant)
@@ -658,6 +660,34 @@ and texture coordinates if they have been defined.
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+
+### (static) H3DU.Mesh.H3DU.MeshJSON.loadJSON(url) <a id='H3DU.Mesh.H3DU.MeshJSON.loadJSON'></a>
+
+Loads a mesh from JSON format.
+
+#### Parameters
+
+* `url` (Type: String)<br>
+    URL to a JSON mesh object, as used in the Public Domain HTML 3D Library.
+
+#### Return Value
+
+A promise that, when resolved, exposes an object
+that implements a property named <code>toShape</code>, which is
+a method that gets a <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> describing the 3D mesh. (Type: <a href="Promise.md">Promise</a>)
+
+### (static) H3DU.Mesh.H3DU.MeshJSON.toJSON(mesh) <a id='H3DU.Mesh.H3DU.MeshJSON.toJSON'></a>
+
+Converts a mesh to JSON format.
+
+#### Parameters
+
+* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
+    A mesh object, as used in the Public Domain HTML 3D Library.
+
+#### Return Value
+
+A JSON string describing the mesh. (Type: String)
 
 ### H3DU.Mesh#vertexCount() <a id='H3DU.Mesh_vertexCount'></a>
 

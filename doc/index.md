@@ -19,6 +19,7 @@ Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is
 contexts.</b>
 * <a href="H3DU.Camera.md">H3DU.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
+* <a href="H3DU.CubeMap.md">H3DU.CubeMap</a><br>TODO: Not documented yet.
 * <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of parametric curve functions for generating
 vertex positions and colors of a curve.
 * <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>Evaluator for a parametric surface in the form
@@ -53,6 +54,7 @@ of 4x4 transformation matrices.
 * <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
 of various geometric shapes.
 * <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
+* <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a><br>A material for physically-based rendering.
 * <a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for
 rendering that batch.
 * <a href="H3DU.Scene3D.md">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering

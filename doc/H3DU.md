@@ -14,15 +14,6 @@ library.
 
 ### Methods
 
-* [CubeMap](#H3DU.CubeMap)<br>TODO: Not documented yet.
-* [MeshJSON.loadJSON](#H3DU.MeshJSON.loadJSON)<br>Loads a mesh from JSON format.
-* [MeshJSON.toJSON](#H3DU.MeshJSON.toJSON)<br>Converts a mesh to JSON format.
-* [ObjData.loadObjFromUrl](#H3DU.ObjData.loadObjFromUrl)<br>Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available) asynchronously.
-* [ObjData.loadObjFromUrlWithTextures](#H3DU.ObjData.loadObjFromUrlWithTextures)<br>Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available), along with the textures it uses,
-asynchronously.
-* [PbrMaterial](#H3DU.PbrMaterial)<br>A material for physically-based rendering.
 * [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.
 * [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
@@ -44,95 +35,6 @@ and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
 or a "polyfill" method.
 * [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
-
-### (static) H3DU.CubeMap(name) <a id='H3DU.CubeMap'></a>
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `name` (Type: Array.&lt;(String|Texture)>)<br>
-    An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six images are, in order, the image seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.
-
-### (static) H3DU.MeshJSON.loadJSON(url) <a id='H3DU.MeshJSON.loadJSON'></a>
-
-Loads a mesh from JSON format.
-
-#### Parameters
-
-* `url` (Type: String)<br>
-    URL to a JSON mesh object, as used in the Public Domain HTML 3D Library.
-
-#### Return Value
-
-A promise that, when resolved, exposes an object
-that implements a property named <code>toShape</code>, which is
-a method that gets a <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> describing the 3D mesh. (Type: <a href="Promise.md">Promise</a>)
-
-### (static) H3DU.MeshJSON.toJSON(mesh) <a id='H3DU.MeshJSON.toJSON'></a>
-
-Converts a mesh to JSON format.
-
-#### Parameters
-
-* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
-    A mesh object, as used in the Public Domain HTML 3D Library.
-
-#### Return Value
-
-A JSON string describing the mesh. (Type: String)
-
-### (static) H3DU.ObjData.loadObjFromUrl(url) <a id='H3DU.ObjData.loadObjFromUrl'></a>
-
-Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available) asynchronously.
-
-#### Parameters
-
-* `url` (Type: String)<br>
-    The URL to load.
-
-#### Return Value
-
-A promise that resolves when
-the OBJ file is loaded successfully, whether or not its associated
-MTL is also loaded successfully (the result is an H3DU.ObjData object),
-and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.md">Promise</a>)
-
-### (static) H3DU.ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='H3DU.ObjData.loadObjFromUrlWithTextures'></a>
-
-Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available), along with the textures it uses,
-asynchronously.
-
-#### Parameters
-
-* `url` (Type: String)<br>
-    The URL to load.
-* `textureLoader` (Type: TextureLoader)<br>
-    An object to load textures with.
-
-#### Return Value
-
-A promise that resolves when
-the OBJ file and textures are loaded successfully, whether or not the associated
-MTL is also loaded successfully (the result is an H3DU.ObjData object),
-and is rejected when an error occurs when loading the OBJ file or any of
-its textures. (Type: <a href="Promise.md">Promise</a>)
-
-### (static) H3DU.PbrMaterial([params]) <a id='H3DU.PbrMaterial'></a>
-
-A material for physically-based rendering. Specifies parameters for geometry materials,
-which describe the appearance of a 3D object. This includes how an object
-scatters, reflects, or absorbs light.
-
-NOTE: The default shader program assumes that all colors and the albedo map specified in this object are in
-the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
-
-#### Parameters
-
-* `params` (Type: Object) (optional)<br>
-    An object described in H3DU.PbrMaterial.setParams.
 
 ### (static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU.createCanvasElement'></a>
 

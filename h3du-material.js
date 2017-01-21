@@ -57,16 +57,20 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   this.ambient = [0.2, 0.2, 0.2];
  /**
   * Diffusion color of this material (also called "albedo").
-  * See {@link H3DU.PbrMaterial#diffuse}, except the information relating
-  * to the specular and metalness workflows.
+  * This is the generally perceived color of the material when
+  * specular highlights are absent on the material's surface.
+  * See also {@link H3DU.PbrMaterial#diffuse}; this property corresponds
+  * more closely to that in the metallic workflow rather than the specular
+  * workflow.
   * @type {Array<Number>}
   * @default
   */
   this.diffuse = [0.8, 0.8, 0.8, 1.0];
  /**
   * Specular highlight reflection of this material.
-  * See {@link H3DU.PbrMaterial#specular}, except the information relating
-  * to the specular workflow.
+  * This is usually a shade of gray (all three components are the same),
+  * but can be colored if the material represents an uncoated metal of some sort.
+  * See also {@link H3DU.PbrMaterial#specular}.
   * NOTE: Before version 2.0, this value's default was (0,0,0).
   * @type {Array<Number>}
   * @default

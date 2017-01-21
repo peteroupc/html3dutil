@@ -11,30 +11,31 @@
  * A material for physically-based rendering. Specifies parameters for geometry materials,
  * which describe the appearance of a 3D object. This includes how an object
  * scatters, reflects, or absorbs light.<p>
- * NOTE: The default shader program assumes that all colors and the albedo map specified in this object are in
+ * NOTE: The default shader program assumes that all colors, as well as the albedo and
+ * specular map, specified in this object are in
  * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
  * @param {Object} [params] An object described in {@link H3DU.PbrMaterial.setParams}.
+ * @class
+ * @alias H3DU.PbrMaterial
  */
 H3DU.PbrMaterial = function(params) {
   "use strict";
 /**
- * Diffusion color of this material (also called "albedo").
- * This is the color seen when light passes through this material
- * and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
- * more brightly the more directly they face diffuse lights, diffusion can contribute
- * much of the 3D appearance of that object.<p>
+ * Albedo (or base color) of this material.<p>
  * This value is a 4-element array giving the red, green, blue, and
- * alpha components of the diffusion; the final diffusion color depends
- * on the colors of lights that shine on the material.
- * (0,0,0,1) means no diffusion,
- * and (1,1,1,1) means total diffusion.<p>
- * In physically-based rendering, the diffusion color should be the color of lights
- * absorbed by the surface without regard to the lighting environment.<p>
- * In the <b>specular workflow</b>, this color should generally be black or
- * a very dark shade of gray, if the object describes a metal.
- * In the <b>metallic workflow</b>, this should be the object's color for metals and nonmetals.<p>
+ * alpha components of the albedo (in the sRGB color space). (0,0,0,1) means an
+ * albedo value of black, and (1,1,1,1) means an albedo value of white.<p>
+ * In the <b>specular workflow</b>, this color specifies the amount
+ * of light that passes through the material and bounces back (<i>diffuse</i> color). For most nonmetals, this color
+ * is the generally observed color of the surface, though somewhat desaturated. Most metals reflect
+ * all the light that passes through them,
+ * so for most metals, this color should generally be black or a very
+ * dark shade of gray.<p>
+ * In the <b>metallic workflow</b>, this color specifies the amount
+ * of light that is reflected by this material's surface. For both metals and nonmetals, this color
+ * is the generally observed color of the surface. <p>
  * In the default shader program, if a mesh defines its own colors, those
- * colors are used for diffusion rather than this property.<p>
+ * colors are used rather than this property to set the color defined here.<p>
  * This value can have an optional fourth element giving the alpha component
  * (0-1). If this element is omitted, the default is 1.<p>
  * @type {Array<Number>}
@@ -42,7 +43,7 @@ H3DU.PbrMaterial = function(params) {
  */
   this.albedo = [0.8, 0.8, 0.8, 1.0];
   /**
-   * A texture indicating the diffusion of each part of the texture,
+   * A texture indicating the albedo (or base color) of each part of the texture,
    * in the red, green, blue, and alpha channels.
    * @type {Number}
    * @default
@@ -97,21 +98,21 @@ H3DU.PbrMaterial = function(params) {
   * on the viewing angle, specular reflection can give off
   * shiny highlights on the material.<p>
   * This value is a 3-element array giving the red, green, and blue
-  * components of the specular reflection; the final specular color depends
-  * on the specular color of lights that shine on the material.
-  * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
+  * components of the surface's base reflectivity when looking directly at the surface
+  * (base reflectivity at 0 degree incidence, or F<sub>0</sub>).
+  * For most nonmetals, this is a shade of gray ranging from
+  * (0.15, 0.15, 0.15) to (0.32, 0.32, 0.32) in sRGB. For most metals,
+  * this is a very bright version of the surface's color.<p>
   * This value is only used in the <b>specular workflow</b>.
-  * The specular color is usually a value close to (0.2, 0.2, 0.2),
-  * but can be colored if the material represents an uncoated metal of some sort.<p>
-  * This value is only used in the specular workflow.
   * @type {Array<Number>}
   * @default
   */
   this.specular = [0.2, 0.2, 0.2];
   /**
-   * A texture indicating the specular reflection of each part of the texture,
-   * as specified in the texture's red, green, and blue channels.
-   * This value is only used in the <b>specular workflow</b>.
+   * A texture where each pixel identifies the "specular" property of that
+   * part of the texture, as specified in the texture's red, green, and blue channels
+   * (in the sRGB color space).<p>
+   * This value is only used in the <b>specular workflow</b>.<p>
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * specular factors in certain areas.
@@ -119,14 +120,6 @@ H3DU.PbrMaterial = function(params) {
    * @default
    */
   this.specularMap = null;
-  /*
-     * [TODO: Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
- * each part of the object's surface (note that the material must have a specular color of other
- * than the default black for this to have an effect).<p>
- * The specular map is usually grayscale (all three components are the same in each pixel),
- * but can be colored if the material represents an uncoated metal of some sort (in which case the specular
- * color property should be (1,1,1) or another grayscale color).<p>]
- */
 /**
  * TODO
  * @default
@@ -206,30 +199,30 @@ H3DU.PbrMaterial.Metallic = 1;
  * <li><code>workflow</code> - Either {@link H3DU.PbrMaterial.Specular} or {@link H3DU.PbrMaterial.Metalness}
  * <li><code>invertRoughness</code> - TODO.
  * <li><code>environmentMap</code> - {@link H3DU.CubeMap} object of an environment
- * map texture (see {@link H3DU.Material#environmentMap}).
+ * map texture (see {@link H3DU.PbrMaterial#environmentMap}).
  * <li><code>diffuse</code> or <code>albedo</code> - A [color vector or string]{@link H3DU.toGLColor} giving
- * the diffusion color (also called "albedo"). (See {@link H3DU.Material#diffuse}.) The default is (0.8, 0.8, 0.8).
+ * the diffusion color (also called "albedo"). (See {@link H3DU.PbrMaterial#diffuse}.) The default is (0.8, 0.8, 0.8).
  * <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving
- * the specular reflection. (See {@link H3DU.Material#specular}.) The default is (0,0,0), meaning no specular highlights.
+ * the specular reflection. (See {@link H3DU.PbrMaterial#specular}.) The default is (0,0,0), meaning no specular highlights.
  * <li><code>roughness</code> - Roughness.
  * <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
- * the additive color. (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
+ * the additive color. (See {@link H3DU.PbrMaterial#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
  * <li><code>texture</code> or <code>albedoMap</code> - {@link H3DU.Texture} object, or a string with the URL of the texture
  * to use.
  * <li><code>specularMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a specular
- * map texture (see {@link H3DU.Material#specularMap}).
+ * map texture (see {@link H3DU.PbrMaterial#specularMap}).
  * <li><code>normalMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a normal
- * map (bump map) texture (see {@link H3DU.Material#normalMap}).
- * <li><code>metalnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a metalness texture (see {@link H3DU.Material#metalnessMap}).
- * <li><code>roughnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a roughness texture (see {@link H3DU.Material#roughnessMap}).
+ * map (bump map) texture (see {@link H3DU.PbrMaterial#normalMap}).
+ * <li><code>metalnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a metalness texture (see {@link H3DU.PbrMaterial#metalnessMap}).
+ * <li><code>roughnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a roughness texture (see {@link H3DU.PbrMaterial#roughnessMap}).
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
  * this parameter is deprecated.</i>
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
- * @returns {H3DU.Material} This object.
- * @memberof! H3DU.Material#
+ * @returns {H3DU.PbrMaterial} This object.
+ * @memberof! H3DU.PbrMaterial#
  */
 H3DU.PbrMaterial.prototype.setParams = function(params) {
   "use strict";
@@ -290,8 +283,8 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
  * object and returns that object. The material's texture
  * maps and shader info, if any, won't be cloned, but rather, a reference
  * to the same object will be used.
- * @returns {H3DU.Material} A copy of this object.
- * @memberof! H3DU.Material#
+ * @returns {H3DU.PbrMaterial} A copy of this object.
+ * @memberof! H3DU.PbrMaterial#
  */
 H3DU.PbrMaterial.prototype.copy = function() {
   "use strict";

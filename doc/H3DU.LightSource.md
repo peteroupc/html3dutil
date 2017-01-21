@@ -88,7 +88,7 @@ highlights depending on the viewing angle.
 The default is (1,1,1), or white.
 
 NOTE: <i>The default shader uses this only for <a href="H3DU.Material.md">H3DU.Material</a>, not
-for <a href="H3DU.md#H3DU.PbrMaterial">H3DU.PbrMaterial</a>.</i>
+for <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>.</i>
 
 Default Value: `"[1,1,1]"`
 

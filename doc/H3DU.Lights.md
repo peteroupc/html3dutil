@@ -52,7 +52,7 @@ and so illuminates most of the room pretty much uniformly.
 Ambient lights simulate this phenomenon.</small>
 
 NOTE: In the default shader program, this property is
-only used on objects that use <a href="H3DU.Material.md">H3DU.Material</a>, not <a href="H3DU.md#H3DU.PbrMaterial">H3DU.PbrMaterial</a>.
+only used on objects that use <a href="H3DU.Material.md">H3DU.Material</a>, not <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>.
 
 Default Value: `"[0.2,0.2,0.2]"`
 

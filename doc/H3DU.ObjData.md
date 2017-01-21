@@ -24,6 +24,11 @@ the HTML 3D Library. Example:
 ### Methods
 
 * [.loadMtlFromUrl](#H3DU.ObjData.loadMtlFromUrl)<br>Loads a material (MTL) file asynchronously.
+* [.loadObjFromUrl](#H3DU.ObjData.loadObjFromUrl)<br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.
+* [.loadObjFromUrlWithTextures](#H3DU.ObjData.loadObjFromUrlWithTextures)<br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available), along with the textures it uses,
+asynchronously.
 * [toShape](#H3DU.ObjData_H3DU.ObjData_toShape)<br>Creates one or more 3D shapes from the data
 in this OBJ file.
 * [toShapeFromName](#H3DU.ObjData_H3DU.ObjData_toShapeFromName)<br>Creates one or more <a href="H3DU.Shape.md">H3DU.Shape</a> objects from the named portion
@@ -62,6 +67,44 @@ Returns the material as <a href="H3DU.Material.md">H3DU.Material</a>, or null if
 <li><code>getMaterialNames()</code> - Gets an array of names of all the materials included in this MTL file.
 </li>
 </ul> (Type: <a href="Promise.md">Promise</a>)
+
+### H3DU.ObjData.loadObjFromUrl(url) <a id='H3DU.ObjData.loadObjFromUrl'></a>
+
+Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.
+
+#### Parameters
+
+* `url` (Type: String)<br>
+    The URL to load.
+
+#### Return Value
+
+A promise that resolves when
+the OBJ file is loaded successfully, whether or not its associated
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
+and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.md">Promise</a>)
+
+### H3DU.ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='H3DU.ObjData.loadObjFromUrlWithTextures'></a>
+
+Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available), along with the textures it uses,
+asynchronously.
+
+#### Parameters
+
+* `url` (Type: String)<br>
+    The URL to load.
+* `textureLoader` (Type: TextureLoader)<br>
+    An object to load textures with.
+
+#### Return Value
+
+A promise that resolves when
+the OBJ file and textures are loaded successfully, whether or not the associated
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
+and is rejected when an error occurs when loading the OBJ file or any of
+its textures. (Type: <a href="Promise.md">Promise</a>)
 
 ### H3DU.ObjData#toShape() <a id='H3DU.ObjData_H3DU.ObjData_toShape'></a>
 

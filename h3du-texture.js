@@ -313,6 +313,8 @@ H3DU.Texture._texOrString = function(tex) {
  * The six images are, in order, the image seen when looking toward the positive
  * X axis, the negative X axis, positive Y, negative Y, positive Z,
  * and negative Z.
+ * @class
+ * @alias H3DU.CubeMap
  */
 H3DU.CubeMap = function(textures) {
   "use strict";

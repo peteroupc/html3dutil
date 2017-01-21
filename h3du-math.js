@@ -22,7 +22,7 @@ H3DU.Math = {
  * The following are properties of the cross product:<ul>
  * <li>The cross product will be a vector that is <i>orthogonal</i> (perpendicular) to both A and B.
  * <li>Switching the order of A and B results in a cross product
- * vector with the same length but opposite direction.
+ * vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>.)
  * <li>If the cross product's [length]{@link H3DU.Math.vec3length} is 0, then A and B are parallel vectors.
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
  * While the cross product of A and B points toward the viewer,
@@ -93,6 +93,8 @@ H3DU.Math = {
  * </ul></li>
  * <li>If the two vectors are the same, the return value indicates
  * the vector's length squared. This is illustrated in the example.
+ * <li>Switching the order of the two vectors results in the
+ * same cross product. (Thus, the dot product is <i>commutative</i>.)
  * </ul>
  * @param {Array<Number>} a The first 3-element vector.
  * @param {Array<Number>} b The second 3-element vector.
@@ -689,7 +691,7 @@ H3DU.Math = {
     return a;
   },
 /**
- * Multiplies each element of a 4-element vector by a factor. Returns
+ * Multiplies each element of a 4-element vector by a factor, returning
  * a new vector that will point in the same direction
  * but with its length multiplied by the given factor.
  * @param {Array<Number>} a A 4-element vector.
@@ -2547,7 +2549,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
- * unless all the normal's components are 0.
+ * unless all the normal's components are 0, and sets this plane to the result.
  * The plane's distance will be divided by the
  * current normal's length.<p>
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
@@ -2578,7 +2580,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
- * unless all the normal's components are 0.
+ * unless all the normal's components are 0, and returns a new plane with the result.
  * The plane's distance will be divided by the
  * normal's length. Returns a new plane.
  * @param {Array<Number>} plane A four-element array

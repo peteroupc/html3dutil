@@ -170,7 +170,7 @@ than the right and bottom coordinates, respectively).
 * `str` (Type: String)<br>
     The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
 * `params` (Type: Object)<br>
-    An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul>
+    An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul>
 
 #### Return Value
 
