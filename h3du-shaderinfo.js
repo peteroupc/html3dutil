@@ -56,6 +56,16 @@ H3DU.ShaderInfo.prototype.getFragmentShader = function() {
   "use strict";
   return this.fragmentShader;
 };
+
+/**
+ * Has no effect. A method introduced for compatibility reasons.
+ * @deprecated
+ * @memberof! H3DU.ShaderInfo#
+ */
+H3DU.ShaderInfo.prototype.dispose = function() {
+  "use strict";
+};
+
 /**
  * Returns a new shader info object with the information in this object
  * copied to that object.
@@ -413,18 +423,19 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#define ONE_DIV_TWOPI 0.159154943",
     "#define PI 3.141592654",
     "#define TWOPI 6.283185307",
-    // Convert from sRGB to linear RGB
-    "#define tolinear(c) pow(c, vec3(2.2))",
-    // Convert from linear RGB to sRGB
-    "#define fromlinear(c) pow(c, vec3(0.45454545))",
     // Clamp to range [0, 1]
     "#define saturate(f) clamp(f, 0.0, 1.0)",
-    // Hejl--Burgess-Dawson tone-mapping operator mentioned
-  // at http://filmicgames.com/archives/75 (note that this
-  // operator automatically corrects linear to sRGB).
-    "vec3 tonemapHejlBD(vec3 linearColor) {",
-    " vec3 c2=max(linearColor-0.004,vec3(0.0));",
-    " return (6.2*c2+0.5)*c2/((6.2*c2+1.7)*c2+0.06);",
+    // Convert from sRGB to linear RGB
+    "vec3 tolinear(vec3 c) {",
+    " c=clamp(c);",
+    " bvec3 lt=lessThan(c,vec3(0.04045));",
+    " return mix(pow((0.055+c)*0.947867299,vec3(2.4)),0.077399381*c,vec3(lt));",
+    "}",
+    // Convert from linear RGB to sRGB
+    "vec3 fromlinear(vec3 c) {",
+    " c=clamp(c);",
+    " bvec3 lt=lessThan(c,vec3(0.0031308));",
+    " return mix(pow(c,vec3(0.41666666667))*1.055-0.055,12.92*c,vec3(lt));",
     "}",
      // John Hable's tonemapping function, mentioned at
      // at http://filmicgames.com/archives/75
@@ -536,6 +547,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     " float ctden=min(4.0*dotnl*dotnv,0.0001);",
     " return diffuse*ONE_DIV_PI+ctnum/ctden;",
     "}",
+    "#ifndef SPECULAR",
    // NOTE: Color parameter is in linear RGB
     "vec3 reflectance(vec3 color, vec3 lightDir, vec3 viewDir, vec3 n, float rough, float metal) {",
     " vec3 h=normalize(viewDir+lightDir);",
@@ -549,6 +561,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     " vec3 refr=mix((vec3(1.0)-fr),vec3(0.0),metal);",
     " return reflectancespec(refr*color, refl, lightDir, viewDir, n, rough);",
     "}",
+    "#endif",
     "#endif",
 // ////////////
     "void main() {",
@@ -571,7 +584,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "normal = normalize(transformedNormalVar);",
     "#endif",
     "vec4 lightPowerVec;",
-    "float lightCosine;",
+    "float lightCosine, specular;",
     "vec3 materialAmbient=ma;", // ambient
     "vec3 materialDiffuse=tolinear(baseColor.rgb);",
     "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
@@ -597,8 +610,8 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#else",
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
     "#endif",
-    "vec3 materialSpecular=vec3(0.0);",
-    "bool spectmp;",
+    "#if defined(SPECULAR) || defined(SPECULAR_MAP)", "vec3 materialSpecular=vec3(0.0);", "#endif",
+    "vec3 spectmp, lightFactor;",
     "float rough = 0.0;",
     "float metal = 0.0;",
     // Specular reflection
@@ -610,7 +623,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
 // Convert Blinn-Phong shininess to roughness
 // See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
-    "#ifndef ROUGHNESS", "#ifdef SPECULAR", "rough=sqrt(2.0/(2.0+mshin));", "#endif", "#endif",
+    "#ifndef ROUGHNESS", "#ifdef SPECULAR", "rough=clamp(sqrt(2.0/(2.0+mshin)),0.0,1.0);", "#endif", "#endif",
     "#ifdef ROUGHNESS_MAP", "rough=texture2D(roughnessMap,uvVar).r;", "#endif",
     "#ifdef INVERT_ROUGHNESS", "rough=1.0-rough;", "#endif",
     "#ifdef METALNESS", "metal=metalness;", "#endif",
@@ -619,27 +632,29 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     ""].join("\n") + "\n";
   for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
     shader += [
+      "lightPowerVec=calcLightPower(lights[" + i + "],viewPositionVar);",
+      "lightCosine=saturate(dot(normal,lightPowerVec.xyz));",
 // not exactly greater than 0 in order to avoid speckling or
 // flickering specular highlights if the surface normal is perpendicular to
 // the light's direction vector
-      "lightPowerVec=calcLightPower(lights[" + i + "],viewPositionVar);",
-      "lightCosine=saturate(dot(normal,lightPowerVec.xyz));",
-      "  spectmp = lightCosine > 0.0001;",
-      "  if (spectmp) {",
+      "spectmp = vec3(greaterThan(vec3(lightCosine),vec3(0.0001)));",
       "#ifdef PHYSICAL_BASED",
-      // TODO: Implement specular variant here
-      "    lightedColor+=reflectance(materialDiffuse,normalize(lightPowerVec.xyz),",
-      "         normalize(viewDirection),normal,rough,metal)*",
-      "     lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
+      "    lightFactor=spectmp*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
+      "#ifdef SPECULAR",
+      "    lightedColor+=reflectancespec(materialDiffuse,materialSpecular,normalize(lightPowerVec.xyz),",
+      "         normalize(viewDirection),normal,rough,metal)*lightFactor;",
       "#else",
-      "    float specular=saturate(dot(normalize(viewDirection+lightPowerVec.xyz),normal));",
+      "    lightedColor+=reflectance(materialDiffuse,normalize(lightPowerVec.xyz),",
+      "         normalize(viewDirection),normal,rough,metal)*lightFactor;",
+      "#endif",
+      "#else",
+      "    specular=saturate(dot(normalize(viewDirection+lightPowerVec.xyz),normal));",
       "    specular=pow(specular,mshin);",
 // Lambert diffusion term
-      "    lightedColor+=materialDiffuse*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
+      "    lightedColor+=spectmp*materialDiffuse*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
 // Blinn-Phong specular term
-      "    lightedColor+=materialSpecular*specular*lightPowerVec.w*tolinear(lights[" + i + "].specular.xyz);",
+      "    lightedColor+=spectmp*materialSpecular*specular*lightPowerVec.w*tolinear(lights[" + i + "].specular.xyz);",
       "#endif",
-      "  }",
       ""].join("\n") + "\n";
   }
   shader += [

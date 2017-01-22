@@ -158,7 +158,7 @@ The following is an example of a transformation matrix.
 </mfenced>
 </math>
 
-Here, the first column shows an X-axis vector is (1, 0, 0),
+Here, the first column shows an X-axis vector at (1, 0, 0),
 the second column shows a Y-axis vector at (0, 0.5, 0.866025),
 the third column shows a Y-axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).

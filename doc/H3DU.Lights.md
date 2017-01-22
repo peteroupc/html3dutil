@@ -9,7 +9,7 @@ ambient color as well as data on one or more light sources.
 When constructed, the list of light sources will be empty.
 
 NOTE: The default shader program assumes that all colors specified in this object are in
-the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 ### Members
 

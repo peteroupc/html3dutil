@@ -29,7 +29,7 @@
  * primitive type (triangles, lines, and points are the primitive types). This is
  * no longer the case, to simplify the implementation.<p>
  * NOTE: The default shader program assumes that all colors specified in this object are in
- * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+ * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @class
  * @alias H3DU.Mesh
  * @param {Array<Number>} [vertices] An array that contains data on each

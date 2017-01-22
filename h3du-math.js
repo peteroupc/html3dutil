@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, b3 */
+/* global H3DU, b3, lin */
 
 /**
  * A collection of math functions for working
@@ -2810,8 +2810,53 @@ m[0] * m[7] * m[5];
       if(d <= 0)return false;
     }
     return true;
+  },
+/**
+ * Converts a color in linear RGB to the sRGB color space, and returns
+ * a new vector with the result.<p>
+ * The sRGB color space is a gamma-corrected red-green-blue color space;
+ * it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
+ * of 1/2.2.
+ * @param {Array<Number>} lin A three- or four-element vector giving
+ * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
+ * is either the fourth element in the case of a four-element vector, or 1.0
+ * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
+ * @returns {Array<Number>} lin A four-element vector giving
+ * the red, green, blue, and alpha components, in that order, of the given color
+ * in the sRGB color space. The alpha component will be as specified
+ * in the "lin" parameter.
+ */
+  "colorTosRGB":function(lin) {
+    "use strict";
+    return [
+      lin[0] < 0.0031308 ? 12.92 * lin[0] : Math.pow(lin[0], 0.41666666667) * 1.055 - 0.055,
+      lin[1] < 0.0031308 ? 12.92 * lin[1] : Math.pow(lin[1], 0.41666666667) * 1.055 - 0.055,
+      lin[2] < 0.0031308 ? 12.92 * lin[2] : Math.pow(lin[2], 0.41666666667) * 1.055 - 0.055,
+      lin.length <= 3 ? 1.0 : lin[3]];
+  },
+/**
+ * Converts a color in sRGB to the linear RGB color space, and returns
+ * a new vector with the result.<p>
+ * The sRGB color space is a gamma-corrected red-green-blue color space;
+ * it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
+ * of 1/2.2.
+ * @param {Array<Number>} srgb A three- or four-element vector giving
+ * the red, green, and blue components, in that order, of an sRGB color. The alpha component
+ * is either the fourth element in the case of a four-element vector, or 1.0
+ * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
+ * @returns {Array<Number>} lin A three-element vector giving
+ * the red, green, and blue components, in that order, of the given color
+ * in linear RGB.The alpha component will be as specified
+ * in the "srgb" parameter.
+ */
+  "colorToLinear":function() {
+    "use strict";
+    return [
+      lin[0] < 0.04045 ? 0.077399381 * lin[0] : Math.pow((0.055 + lin[0]) * 0.947867299, 2.4),
+      lin[1] < 0.04045 ? 0.077399381 * lin[1] : Math.pow((0.055 + lin[1]) * 0.947867299, 2.4),
+      lin[2] < 0.04045 ? 0.077399381 * lin[2] : Math.pow((0.055 + lin[2]) * 0.947867299, 2.4),
+      lin.length <= 3 ? 1.0 : lin[3]];
   }
-
 };
 
 /**

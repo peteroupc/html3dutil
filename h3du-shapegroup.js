@@ -132,7 +132,7 @@ H3DU.ShapeGroup.prototype.setMaterial = function(material) {
  * the JavaScript DOM's Image class. However, this method
  * will not load that image if it hasn't been loaded yet.
  * NOTE: The default shader program assumes that the texture is in
- * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+ * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @memberof! H3DU.ShapeGroup#
  * @returns {Object} Return value.
  */

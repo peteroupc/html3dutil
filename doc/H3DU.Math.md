@@ -69,6 +69,10 @@ and stores the result in that quaternion.
 * [boxCenter](#H3DU.Math.boxCenter)<br>Finds the center of a 3D bounding box.
 * [boxDimensions](#H3DU.Math.boxDimensions)<br>Finds the dimensions of a 3D bounding box.
 * [boxIsEmpty](#H3DU.Math.boxIsEmpty)<br>Determines whether a 3D bounding box is empty.
+* [colorToLinear](#H3DU.Math.colorToLinear)<br>Converts a color in sRGB to the linear RGB color space, and returns
+a new vector with the result.
+* [colorTosRGB](#H3DU.Math.colorTosRGB)<br>Converts a color in linear RGB to the sRGB color space, and returns
+a new vector with the result.
 * [frustumHasBox](#H3DU.Math.frustumHasBox)<br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.
 * [frustumHasPoint](#H3DU.Math.frustumHasPoint)<br>Determines whether a point is
@@ -578,6 +582,48 @@ is larger than the corresponding maximum coordinate.
 <code>true</code> if at least one
 of the minimum coordinates is greater than its
 corresponding maximum coordinate; otherwise, <code>false</code>. (Type: Boolean)
+
+### (static) H3DU.Math.colorToLinear(srgb) <a id='H3DU.Math.colorToLinear'></a>
+
+Converts a color in sRGB to the linear RGB color space, and returns
+a new vector with the result.
+
+The sRGB color space is a gamma-corrected red-green-blue color space;
+it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
+of 1/2.2.
+
+#### Parameters
+
+* `srgb` (Type: Array.&lt;Number>)<br>
+    A three- or four-element vector giving the red, green, and blue components, in that order, of an sRGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
+
+#### Return Value
+
+lin A three-element vector giving
+the red, green, and blue components, in that order, of the given color
+in linear RGB.The alpha component will be as specified
+in the "srgb" parameter. (Type: Array.&lt;Number>)
+
+### (static) H3DU.Math.colorTosRGB(lin) <a id='H3DU.Math.colorTosRGB'></a>
+
+Converts a color in linear RGB to the sRGB color space, and returns
+a new vector with the result.
+
+The sRGB color space is a gamma-corrected red-green-blue color space;
+it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
+of 1/2.2.
+
+#### Parameters
+
+* `lin` (Type: Array.&lt;Number>)<br>
+    A three- or four-element vector giving the red, green, and blue components, in that order, of a linear RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
+
+#### Return Value
+
+lin A four-element vector giving
+the red, green, blue, and alpha components, in that order, of the given color
+in the sRGB color space. The alpha component will be as specified
+in the "lin" parameter. (Type: Array.&lt;Number>)
 
 ### (static) H3DU.Math.frustumHasBox(frustum, box) <a id='H3DU.Math.frustumHasBox'></a>
 

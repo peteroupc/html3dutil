@@ -38,6 +38,7 @@ a raster effect to a texture.
 * [.makeInvertEffect](#H3DU.ShaderInfo.makeInvertEffect)<br>Generates source code for a shader program that inverts the colors of a texture.
 * [copy](#H3DU.ShaderInfo_H3DU.ShaderInfo_copy)<br>Returns a new shader info object with the information in this object
 copied to that object.
+* [dispose](#H3DU.ShaderInfo_H3DU.ShaderInfo_dispose)<br><b>Deprecated: Yes</b>
 * [getFragmentShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader)<br>Gets the text of the fragment shader stored in this object.
 * [getVertexShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader)<br>Gets the text of the vertex shader stored in this object.
 * [setUniforms](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms)<br>Sets the values of one or more uniforms used by this shader program.
@@ -136,6 +137,12 @@ copied to that object.
 #### Return Value
 
 Return value. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
+
+### H3DU.ShaderInfo#dispose() <a id='H3DU.ShaderInfo_H3DU.ShaderInfo_dispose'></a>
+
+<b>Deprecated: Yes</b>
+
+Has no effect. A method introduced for compatibility reasons.
 
 ### H3DU.ShaderInfo#getFragmentShader() <a id='H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader'></a>
 

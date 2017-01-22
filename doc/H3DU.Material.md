@@ -9,7 +9,7 @@ Specifies parameters for geometry materials, which describe the appearance of a
 as well as a texture image to apply on that object's surface.
 
 NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
-the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
 
@@ -40,8 +40,6 @@ when processing objects that use this material.
 
 ### Methods
 
-* [.forShader](#H3DU.Material.forShader)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
-object from a shader information object to use when drawing a 3D object.
 * [.fromColor](#H3DU.Material.fromColor)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
 object from an RGBA color.
 * [.fromTexture](#H3DU.Material.fromTexture)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
@@ -85,7 +83,7 @@ Default Value: `false`
 Diffusion color of this material (also called "albedo").
 This is the generally perceived color of the material when
 specular highlights are absent on the material's surface.
-See also H3DU.PbrMaterial#diffuse; this property corresponds
+See also <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>; this property corresponds
 more closely to that in the metallic workflow rather than the specular
 workflow.
 
@@ -152,20 +150,6 @@ of each part of the material.
 Type: <a href="H3DU.Texture.md">H3DU.Texture</a>
 
 Default Value: `null`
-
-### H3DU.Material.forShader(shader) <a id='H3DU.Material.forShader'></a>
-
-Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
-object from a shader information object to use when drawing a 3D object.
-
-#### Parameters
-
-* `shader` (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)<br>
-    Shader information object to use.
-
-#### Return Value
-
-The resulting material object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
 
 ### H3DU.Material.fromColor(r, g, b, [a]) <a id='H3DU.Material.fromColor'></a>
 

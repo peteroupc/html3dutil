@@ -13,7 +13,7 @@
  * scatters, reflects, or absorbs light.<p>
  * NOTE: The default shader program assumes that all colors, as well as the albedo and
  * specular map, specified in this object are in
- * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+ * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @param {Object} [params] An object described in {@link H3DU.PbrMaterial.setParams}.
  * @class
  * @alias H3DU.PbrMaterial
@@ -23,21 +23,24 @@ H3DU.PbrMaterial = function(params) {
 /**
  * Albedo (or base color) of this material.<p>
  * This value is a 4-element array giving the red, green, blue, and
- * alpha components of the albedo (in the sRGB color space). (0,0,0,1) means an
+ * alpha components of the albedo (in the [sRGB color space]{@link H3DU.Math.colorTosRGB}). (0,0,0,1) means an
  * albedo value of black, and (1,1,1,1) means an albedo value of white.<p>
+ * In the <b>metallic workflow</b>, this color specifies the amount
+ * of light that is reflected by this material's surface. For both metals and nonmetals, this color
+ * is the generally observed color of the surface. <p>
  * In the <b>specular workflow</b>, this color specifies the amount
  * of light that passes through the material and bounces back (<i>diffuse</i> color). For most nonmetals, this color
  * is the generally observed color of the surface, though somewhat desaturated. Most metals reflect
  * all the light that passes through them,
  * so for most metals, this color should generally be black or a very
- * dark shade of gray.<p>
- * In the <b>metallic workflow</b>, this color specifies the amount
- * of light that is reflected by this material's surface. For both metals and nonmetals, this color
- * is the generally observed color of the surface. <p>
- * In the default shader program, if a mesh defines its own colors, those
- * colors are used rather than this property to set the color defined here.<p>
+ * dark shade of gray. (In physically-based rendering, the sum of albedo and specular
+ * colors should not exceed 1.0 in each [linear RGB]{@link H3DU.Math.colorToLinear} channel.)<p>
+ * In <b>both workflows in physically-based rendering, the albedo
+ * color should not have any added lighting.<p>
  * This value can have an optional fourth element giving the alpha component
  * (0-1). If this element is omitted, the default is 1.<p>
+ * In the default shader program, if a mesh defines its own colors, those
+ * colors are used rather than this property to set the color defined here.<p>
  * @type {Array<Number>}
  * @default
  */
@@ -73,7 +76,8 @@ H3DU.PbrMaterial = function(params) {
   /**
    * Describes the roughness of the surface described
    * by this material. The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>,
-   * which equals 1 minus roughness.
+   * which equals 1 minus roughness. To make this property equivalent to glossiness
+   * or smoothness, set the <code>invertRoughness</code> property to <code>true</code>.
    * @type {Number}
    * @default
    */
@@ -82,8 +86,8 @@ H3DU.PbrMaterial = function(params) {
    * A texture indicating the roughness of each part of the texture,
    * as specified in the texture's red channel.
    * The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>;
-   * to convert a texture to a glossiness or smoothness map, invert the roughness
-   * map's red channel.
+   * to convert a texture to a glossiness or smoothness map, set the
+   * <code>invertRoughness</code> property to <code>true</code>.
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * specular factors in certain areas.
@@ -111,7 +115,7 @@ H3DU.PbrMaterial = function(params) {
   /**
    * A texture where each pixel identifies the "specular" property of that
    * part of the texture, as specified in the texture's red, green, and blue channels
-   * (in the sRGB color space).<p>
+   * (in the [sRGB color space]{@link H3DU.Math.colorTosRGB}).<p>
    * This value is only used in the <b>specular workflow</b>.<p>
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
@@ -157,6 +161,10 @@ H3DU.PbrMaterial = function(params) {
   * @default
   */
   this.normalMap = null;
+  /**
+   * TODO
+   * @default
+   */
   this.occlusionMap = null;
  /**
   * Additive color emitted by objects with this material.

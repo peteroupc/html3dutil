@@ -12,7 +12,7 @@
  * 3D object. This includes how an object scatters, reflects, or absorbs light,
  * as well as a texture image to apply on that object's surface.<p>
  * NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
- * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+ * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @class
  * @alias H3DU.Material
  * @param {Array<Number>} [params] An object as described in {@link H3DU.Material#setParams}.
@@ -59,7 +59,7 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   * Diffusion color of this material (also called "albedo").
   * This is the generally perceived color of the material when
   * specular highlights are absent on the material's surface.
-  * See also {@link H3DU.PbrMaterial#diffuse}; this property corresponds
+  * See also {@link H3DU.PbrMaterial#albedo}; this property corresponds
   * more closely to that in the metallic workflow rather than the specular
   * workflow.
   * @type {Array<Number>}
@@ -251,17 +251,5 @@ H3DU.Material.fromColor = function(r, g, b, a) {
  */
 H3DU.Material.fromTexture = function(texture) {
   "use strict";
-  return new H3DU.Material().setParams({"texture":texture});
-};
-
-/**
- * Convenience method that returns an {@link H3DU.Material}
- * object from a shader information object to use when drawing a 3D object.
- * @param {H3DU.ShaderInfo} shader Shader information object to use.
- * @returns {H3DU.Material} The resulting material object.
- * @memberof! H3DU.Material
- */
-H3DU.Material.forShader = function(shader) {
-  "use strict";
-  return new H3DU.Material().setParams({"shader":shader});
+  return new H3DU.Material({"texture":texture});
 };

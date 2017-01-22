@@ -11,7 +11,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 NOTE: The default shader program assumes that all colors and the diffuse texture
 specified in this object are in
-the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
 

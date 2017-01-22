@@ -426,7 +426,7 @@ H3DU.Batch3D.prototype.render = function(scene, pass) {
   var rc = {};
   rc.scene = scene;
   rc.context = scene.getContext();
-  rc.shader = pass.shader;
+  rc.shader = pass ? pass.shader : null;
   for(var i = 0;i < this.shapes.length;i++) {
     this._renderShape(this.shapes[i], rc);
   }

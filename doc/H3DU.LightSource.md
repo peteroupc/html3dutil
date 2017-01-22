@@ -7,7 +7,7 @@
 Specifies parameters for light sources.
 
 NOTE: The default shader program assumes that all colors specified in this object are in
-the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
 
@@ -25,8 +25,8 @@ the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
 * [ambient](#H3DU.LightSource_ambient)<br>A 4-element vector giving an additional color to multiply with the ambient
 color of each object, in the red, green,
 and blue components respectively.
-* [diffuse](#H3DU.LightSource_diffuse)<br>A 4-element vector giving an additional color to multiply with the diffusion
-color of each object (which is also called "albedo"), in the red, green,
+* [diffuse](#H3DU.LightSource_diffuse)<br>A 4-element vector giving an additional color to multiply with the diffuse
+or albedo color (base color) of each object, in the red, green,
 and blue components respectively.
 * [position](#H3DU.LightSource_position)<br>Light position.
 * [radius](#H3DU.LightSource_radius)<br>Radius of the light source.
@@ -51,12 +51,10 @@ Default Value: `"[0,0,0,1]"`
 
 ### H3DU.LightSource#diffuse <a id='H3DU.LightSource_diffuse'></a>
 
-A 4-element vector giving an additional color to multiply with the diffusion
-color of each object (which is also called "albedo"), in the red, green,
-and blue components respectively. Diffuse color is the color
-seen when light passes through a material and bounces back (diffusion).
+A 4-element vector giving an additional color to multiply with the diffuse
+or albedo color (base color) of each object, in the red, green,
+and blue components respectively. See also <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>.
 Each component ranges from 0 to 1.
-The simulated diffusion scatters evenly, in every direction.
 The default is (1,1,1,1), or white.
 
 Default Value: `"[1,1,1,1]"`

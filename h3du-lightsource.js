@@ -11,7 +11,7 @@
 /**
  * Specifies parameters for light sources.<p>
  * NOTE: The default shader program assumes that all colors specified in this object are in
- * the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).
+ * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @class
  * @alias H3DU.LightSource
  * @param {Object|Array<Number>} [params] An object as described in "setParams". <i>Using this parameter
@@ -41,12 +41,10 @@ H3DU.LightSource = function(params, ambient, diffuse, specular) {
 
   this.position = [0, 0, 1, 0];
  /**
-  * A 4-element vector giving an additional color to multiply with the diffusion
-  * color of each object (which is also called "albedo"), in the red, green,
-  * and blue components respectively. Diffuse color is the color
-  * seen when light passes through a material and bounces back (diffusion).
+  * A 4-element vector giving an additional color to multiply with the diffuse
+  * or albedo color (base color) of each object, in the red, green,
+  * and blue components respectively. See also {@link H3DU.PbrMaterial#albedo}.
   * Each component ranges from 0 to 1.
-  * The simulated diffusion scatters evenly, in every direction.
   * The default is (1,1,1,1), or white.
   * @default
   */
