@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.InputTracker(element) <a id='H3DU.InputTracker'></a>
+ <a name='H3DU.InputTracker'></a>
+### H3DU.InputTracker(element)
 
 A class for tracking key press, mouse, touch, and mouse wheel
 events.
@@ -64,135 +65,157 @@ or the difference between
 those values and the values they had the last
 time this method was called.
 
-### H3DU.InputTracker.A <a id='H3DU.InputTracker.A'></a> (constant)
+<a id='H3DU.InputTracker.A'></a>
+### H3DU.InputTracker.A (constant)
 
 Key code for the A key. Add 1 through 25 to get
 the keys for the other letters of the English alphabet.
 
 Default Value: `65`
 
-### H3DU.InputTracker.ADD <a id='H3DU.InputTracker.ADD'></a> (constant)
+<a id='H3DU.InputTracker.ADD'></a>
+### H3DU.InputTracker.ADD (constant)
 
 Key code for the plus key.
 
 Default Value: `107`
 
-### H3DU.InputTracker.ALT <a id='H3DU.InputTracker.ALT'></a> (constant)
+<a id='H3DU.InputTracker.ALT'></a>
+### H3DU.InputTracker.ALT (constant)
 
 Key code for the return key.
 
 Default Value: `18`
 
-### H3DU.InputTracker.CTRL <a id='H3DU.InputTracker.CTRL'></a> (constant)
+<a id='H3DU.InputTracker.CTRL'></a>
+### H3DU.InputTracker.CTRL (constant)
 
 Key code for the return key.
 
 Default Value: `17`
 
-### H3DU.InputTracker.DELETE <a id='H3DU.InputTracker.DELETE'></a> (constant)
+<a id='H3DU.InputTracker.DELETE'></a>
+### H3DU.InputTracker.DELETE (constant)
 
 Key code for the delete key.
 
 Default Value: `46`
 
-### H3DU.InputTracker.DOWN <a id='H3DU.InputTracker.DOWN'></a> (constant)
+<a id='H3DU.InputTracker.DOWN'></a>
+### H3DU.InputTracker.DOWN (constant)
 
 Key code for the down arrow key.
 
 Default Value: `40`
 
-### H3DU.InputTracker.END <a id='H3DU.InputTracker.END'></a> (constant)
+<a id='H3DU.InputTracker.END'></a>
+### H3DU.InputTracker.END (constant)
 
 Key code for the end key.
 
 Default Value: `35`
 
-### H3DU.InputTracker.ENTER <a id='H3DU.InputTracker.ENTER'></a> (constant)
+<a id='H3DU.InputTracker.ENTER'></a>
+### H3DU.InputTracker.ENTER (constant)
 
 Key code for the enter key.
 
 Default Value: `13`
 
-### H3DU.InputTracker.ESC <a id='H3DU.InputTracker.ESC'></a> (constant)
+<a id='H3DU.InputTracker.ESC'></a>
+### H3DU.InputTracker.ESC (constant)
 
 Key code for the return key.
 
 Default Value: `27`
 
-### H3DU.InputTracker.HOME <a id='H3DU.InputTracker.HOME'></a> (constant)
+<a id='H3DU.InputTracker.HOME'></a>
+### H3DU.InputTracker.HOME (constant)
 
 Key code for the home key.
 
 Default Value: `36`
 
-### H3DU.InputTracker.LEFT <a id='H3DU.InputTracker.LEFT'></a> (constant)
+<a id='H3DU.InputTracker.LEFT'></a>
+### H3DU.InputTracker.LEFT (constant)
 
 Key code for the left arrow key.
 
 Default Value: `37`
 
-### H3DU.InputTracker.PAGEDOWN <a id='H3DU.InputTracker.PAGEDOWN'></a> (constant)
+<a id='H3DU.InputTracker.PAGEDOWN'></a>
+### H3DU.InputTracker.PAGEDOWN (constant)
 
 Key code for the page down key.
 
 Default Value: `34`
 
-### H3DU.InputTracker.PAGEUP <a id='H3DU.InputTracker.PAGEUP'></a> (constant)
+<a id='H3DU.InputTracker.PAGEUP'></a>
+### H3DU.InputTracker.PAGEUP (constant)
 
 Key code for the page up key.
 
 Default Value: `33`
 
-### H3DU.InputTracker.RETURN <a id='H3DU.InputTracker.RETURN'></a> (constant)
+<a id='H3DU.InputTracker.RETURN'></a>
+### H3DU.InputTracker.RETURN (constant)
 
 Key code for the return key.
 
 Default Value: `10`
 
-### H3DU.InputTracker.RIGHT <a id='H3DU.InputTracker.RIGHT'></a> (constant)
+<a id='H3DU.InputTracker.RIGHT'></a>
+### H3DU.InputTracker.RIGHT (constant)
 
 Key code for the right arrow key.
 
 Default Value: `39`
 
-### H3DU.InputTracker.SHIFT <a id='H3DU.InputTracker.SHIFT'></a> (constant)
+<a id='H3DU.InputTracker.SHIFT'></a>
+### H3DU.InputTracker.SHIFT (constant)
 
 Key code for the shift key.
 
 Default Value: `16`
 
-### H3DU.InputTracker.SPACE <a id='H3DU.InputTracker.SPACE'></a> (constant)
+<a id='H3DU.InputTracker.SPACE'></a>
+### H3DU.InputTracker.SPACE (constant)
 
 Key code for the space bar.
 
 Default Value: `32`
 
-### H3DU.InputTracker.SUBTRACT <a id='H3DU.InputTracker.SUBTRACT'></a> (constant)
+<a id='H3DU.InputTracker.SUBTRACT'></a>
+### H3DU.InputTracker.SUBTRACT (constant)
 
 Key code for the minus key.
 
 Default Value: `109`
 
-### H3DU.InputTracker.TAB <a id='H3DU.InputTracker.TAB'></a> (constant)
+<a id='H3DU.InputTracker.TAB'></a>
+### H3DU.InputTracker.TAB (constant)
 
 Key code for the tab key.
 
 Default Value: `9`
 
-### H3DU.InputTracker.UP <a id='H3DU.InputTracker.UP'></a> (constant)
+<a id='H3DU.InputTracker.UP'></a>
+### H3DU.InputTracker.UP (constant)
 
 Key code for the up arrow key.
 
 Default Value: `38`
 
-### H3DU.InputTracker.ZERO <a id='H3DU.InputTracker.ZERO'></a> (constant)
+<a id='H3DU.InputTracker.ZERO'></a>
+### H3DU.InputTracker.ZERO (constant)
 
 Key code for the 0 key. Add 1 through 9 to get
 the keys for the other basic digits 1 through 9.
 
 Default Value: `48`
 
-### H3DU.InputTracker#deltaXY() <a id='H3DU.InputTracker_H3DU.InputTracker_deltaXY'></a>
+ <a name='H3DU.InputTracker_H3DU.InputTracker_deltaXY'></a>
+### H3DU.InputTracker#deltaXY()
 
 Returns the current mouse position, delta
 mouse position, and delta mouse wheel
@@ -212,7 +235,8 @@ position.
 If this object's update method wasn't called, all these values
 will be 0. (Type: Object)
 
-### H3DU.InputTracker#dispose() <a id='H3DU.InputTracker_H3DU.InputTracker_dispose'></a>
+ <a name='H3DU.InputTracker_H3DU.InputTracker_dispose'></a>
+### H3DU.InputTracker#dispose()
 
 Disposes all resources used by this input tracker.
 
@@ -220,7 +244,8 @@ Disposes all resources used by this input tracker.
 
 Return value. (Type: Object)
 
-### H3DU.InputTracker#getKey() <a id='H3DU.InputTracker_H3DU.InputTracker_getKey'></a>
+ <a name='H3DU.InputTracker_H3DU.InputTracker_getKey'></a>
+### H3DU.InputTracker#getKey()
 
 Gets whether a key is pressed, as detected by this
 input tracker.
@@ -229,7 +254,8 @@ input tracker.
 
 key Key code of the key to check. (Type: Number)
 
-### H3DU.InputTracker#mousewheel(func) <a id='H3DU.InputTracker_H3DU.InputTracker_mousewheel'></a>
+ <a name='H3DU.InputTracker_H3DU.InputTracker_mousewheel'></a>
+### H3DU.InputTracker#mousewheel(func)
 
 <b>Deprecated: Will be removed in the future. Use the
 deltaTicks method to find out whether the user
@@ -246,7 +272,8 @@ Sets a function to handle mouse wheel events.
 
 Return value. (Type: Object)
 
-### H3DU.InputTracker#update() <a id='H3DU.InputTracker_H3DU.InputTracker_update'></a>
+ <a name='H3DU.InputTracker_H3DU.InputTracker_update'></a>
+### H3DU.InputTracker#update()
 
 Retrieves the current position of the mouse within
 the page's client area, as detected by the input

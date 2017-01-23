@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### Hypotrochoid() <a id='Hypotrochoid'></a>
+ <a name='Hypotrochoid'></a>
+### Hypotrochoid()
 
 <b>Deprecated: Use <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a> instead.</b>
 

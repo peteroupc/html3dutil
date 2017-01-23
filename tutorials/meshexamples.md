@@ -1,10 +1,11 @@
 This page contains source code for creating various kinds of 3D models on the fly.
 
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Cone](#Cone)<br>[Floor](#Floor)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>[Miscellaneous](#Miscellaneous)<br>
 
-## 3D Line <a id=3D_Line></a>
+## 3D Line
 
 This method creates a thin line-like 3D object.
 
@@ -24,7 +25,8 @@ This method creates a thin line-like 3D object.
       return line.transform(matrix);
     }
 
-## Cone <a id=Cone></a>
+<a id=Cone></a>
+## Cone
 
 This method creates a cone that's closed at its base.
 
@@ -34,7 +36,8 @@ This method creates a cone that's closed at its base.
       return H3DU.Meshes.createClosedCylinder(radius,0,height,slices,1);
     }
 
-## Floor <a id=Floor></a>
+<a id=Floor></a>
+## Floor
 
 This method creates a flat tiled floor.
 
@@ -71,7 +74,8 @@ This method creates a flat tiled floor.
      return mesh
     }
 
-## Striped Disk <a id=Striped_Disk></a>
+<a id=Striped_Disk></a>
+## Striped Disk
 
 This method creates a ring or disk striped in two colors.
 
@@ -97,7 +101,8 @@ This method creates a ring or disk striped in two colors.
      return ret;
     }
 
-## Washer <a id=Washer></a>
+<a id=Washer></a>
+## Washer
 
 This method creates a washer-shaped 3D model.
 
@@ -114,7 +119,8 @@ This method creates a washer-shaped 3D model.
       return innerCylinder.merge(outerCylinder).merge(base).merge(top);
     }
 
-## Miscellaneous <a id=Miscellaneous></a>
+<a id=Miscellaneous></a>
+## Miscellaneous
 
     function extrudePath(path, zStart, zEnd, flatness){
      var lines=path.getLines(flatness)

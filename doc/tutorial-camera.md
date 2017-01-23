@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-## Introduction <a id=Introduction></a>
+<a id=Introduction></a>
+## Introduction
 
 This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
@@ -11,11 +12,12 @@ and explains how the GL pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and Geometric Transforms](#The_Camera_and_Geometric_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Vertex Coordinates in the Graphics System](#Vertex_Coordinates_in_the_Graphics_System)<br>[Other Pages](#Other_Pages)<br>
 
-## The "Camera" and Geometric Transforms <a id=The_Camera_and_Geometric_Transforms></a>
+## The "Camera" and Geometric Transforms
 
 The [`Batch3D`](http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html) class
 of the HTML 3D Library has a concept of a "projection transform" and a "view transform".
@@ -35,7 +37,8 @@ which are shown in the example below.
     // points at (0, 2, 0), that is, up 2 units.
     batch3d.setLookAt([0,0,30], [0,2,0]);
 
-### Overview of Transformations <a id=Overview_of_Transformations></a>
+<a id=Overview_of_Transformations></a>
+### Overview of Transformations
 
 The HTML 3D library uses the following transformations:
 
@@ -51,14 +54,16 @@ merely for the convenience of the library; all the graphics pipeline expects is 
 space coordinates of the things it draws. The pipeline uses those coordinates
 and their transformed _window coordinates_ when rendering things on the screen.
 
-## Projection Transform <a id=Projection_Transform></a>
+<a id=Projection_Transform></a>
+## Projection Transform
 
 A _projection matrix_ transforms coordinates in eye space to _clip space_.
 
 Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below.
 
-### Perspective Projection <a id=Perspective_Projection></a>
+<a id=Perspective_Projection></a>
+### Perspective Projection
 
 A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects
 look bigger than more distant objects with the same size, making the
@@ -125,11 +130,13 @@ The resulting matrix can be passed to the `setProjectionMatrix` method of the `H
 of where they meet the near clipping plane.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.
 
-#### Demo <a id=Demo></a>
+<a id=Demo></a>
+#### Demo
 
 * [perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
-### Orthographic Projection <a id=Orthographic_Projection></a>
+<a id=Orthographic_Projection></a>
+### Orthographic Projection
 
 An orthographic projection is one in which the left and right clipping planes are parallel to each other,
 and the top and bottom clipping planes are parallel to each other. This results in the near and far clipping
@@ -178,7 +185,8 @@ projection like in `mat4orthoAspect`. The aspect ratio used when calculating the
 adapts automatically to the `H3DU.Scene3D` in which
 the `Batch3D` is rendered, and the method's six parameters are the same as in `mat4orthoAspect`.
 
-### Other Projections <a id=Other_Projections></a>
+<a id=Other_Projections></a>
+### Other Projections
 
 There are other kinds of possible projections, such as oblique projections
 or isometric projections. For these
@@ -192,7 +200,8 @@ This method allows you to set the projection matrix to an arbitrary <a href="tut
 
 * `matrix` - The 4x4 matrix to use.
 
-## View Transform <a id=View_Transform></a>
+<a id=View_Transform></a>
+## View Transform
 
 The view matrix transforms _world space_ coordinates, shared by every object in a scene, to coordinates in _eye space_
 (also called _camera space_ or _view space_), in which the "camera" is located at the center of the coordinate system: (0, 0, 0).
@@ -225,7 +234,8 @@ This method allows you to set the view matrix to an arbitrary <a href="tutorial-
 
 * `matrix` - The 4x4 matrix to use.
 
-## Vertex Coordinates in the Graphics System <a id=Vertex_Coordinates_in_the_Graphics_System></a>
+<a id=Vertex_Coordinates_in_the_Graphics_System></a>
+## Vertex Coordinates in the Graphics System
 
 The concepts of _eye space_, _camera space_, and _world space_, as well as
 the use of matrices related to them, such as _projection_, _view_, _model-view_,
@@ -254,7 +264,8 @@ will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels; to set the viewport's
 size, call the `setDimensions` method of `Scene3D`.
 
-## Other Pages <a id=Other_Pages></a>
+<a id=Other_Pages></a>
+## Other Pages
 
 The following pages of mine on CodeProject also discuss this library:
 

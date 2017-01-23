@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-## Version History <a id=Version_History></a>
+<a id=Version_History></a>
+## Version History
 
 Version 2.0.0-beta1:
 

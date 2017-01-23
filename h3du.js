@@ -197,12 +197,15 @@ var H3DU = {
     return c;
   },
 /**
- * @param {Object} context Description of context.
  * Returns whether the given object is a 3D rendering context.
+ * @param {Object} context The object to check.
  * @returns {Boolean} Return value.
  */
   "is3DContext":function(context) {
     "use strict";
+    if(context && WebGLRenderingContext && context instanceof WebGLRenderingContext) {
+      return true;
+    }
     return context && "compileShader" in context;
   },
 

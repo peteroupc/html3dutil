@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter) <a id='H3DU.Hypotrochoid'></a>
+ <a name='H3DU.Hypotrochoid'></a>
+### H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter)
 
 Parametric evaluator for a
 curve drawn by a circle that rolls along the inside
@@ -33,7 +34,8 @@ the HTML 3D Library. Example:
 * [scaleTo](#H3DU.Hypotrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
 
-### H3DU.Hypotrochoid#evaluate(u) <a id='H3DU.Hypotrochoid_evaluate'></a>
+ <a name='H3DU.Hypotrochoid_evaluate'></a>
+### H3DU.Hypotrochoid#evaluate(u)
 
 Generates a point on the curve from the given u coordinate.
 
@@ -47,7 +49,8 @@ Generates a point on the curve from the given u coordinate.
 A 3-element array specifying a 3D point.
 Only the X and Y coordinates will be other than 0. (Type: Array.&lt;Number>)
 
-### H3DU.Hypotrochoid#scaleTo(radius) <a id='H3DU.Hypotrochoid_scaleTo'></a>
+ <a name='H3DU.Hypotrochoid_scaleTo'></a>
+### H3DU.Hypotrochoid#scaleTo(radius)
 
 Creates a modified version of this curve so that it
 fits the given radius.

@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### Camera() <a id='Camera'></a>
+ <a name='Camera'></a>
+### Camera()
 
 <b>Deprecated: Use <a href="H3DU.Camera.md">H3DU.Camera</a> instead.</b>
 

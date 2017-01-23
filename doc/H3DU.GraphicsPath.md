@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.GraphicsPath() <a id='H3DU.GraphicsPath'></a>
+ <a name='H3DU.GraphicsPath'></a>
+### H3DU.GraphicsPath()
 
 Represents a two-dimensional path.
 
@@ -67,7 +68,8 @@ but not both.
 * [fromString](#H3DU.GraphicsPath.fromString)<br>Creates a graphics path from a string whose format follows
 the SVG specification.
 
-### GraphicsPath#arc(x, y, radius, startAngle, endAngle, ccw) <a id='H3DU.GraphicsPath_GraphicsPath_arc'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_arc'></a>
+### GraphicsPath#arc(x, y, radius, startAngle, endAngle, ccw)
 
 Adds path segments in the form of a circular arc to this path,
 using the parameterization specified in the "arc" method of the
@@ -92,7 +94,8 @@ HTML Canvas 2D Context.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#arcSvgTo(rx, ry, rot, largeArc, sweep, x2, y2) <a id='H3DU.GraphicsPath_GraphicsPath_arcSvgTo'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_arcSvgTo'></a>
+### GraphicsPath#arcSvgTo(rx, ry, rot, largeArc, sweep, x2, y2)
 
 Adds path segments in the form of an elliptical arc to this path,
 using the parameterization used by the SVG specification.
@@ -118,7 +121,8 @@ using the parameterization used by the SVG specification.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#arcTo(x1, y1, x2, y2, radius) <a id='H3DU.GraphicsPath_GraphicsPath_arcTo'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_arcTo'></a>
+### GraphicsPath#arcTo(x1, y1, x2, y2, radius)
 
 Adds path segments in the form of a circular arc to this path,
 using the parameterization specified in the "arcTo" method of the
@@ -141,7 +145,8 @@ HTML Canvas 2D Context.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#bezierCurveTo(x, y, x2, y2, x3, y3) <a id='H3DU.GraphicsPath_GraphicsPath_bezierCurveTo'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_bezierCurveTo'></a>
+### GraphicsPath#bezierCurveTo(x, y, x2, y2, x3, y3)
 
 Adds a cubic B&eacute;zier curve to this path starting
 at this path's current position.
@@ -165,7 +170,8 @@ at this path's current position.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#closePath() <a id='H3DU.GraphicsPath_GraphicsPath_closePath'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_closePath'></a>
+### GraphicsPath#closePath()
 
 Makes this path closed. Adds a line segment to the
 path's start position, if necessary.
@@ -174,7 +180,8 @@ path's start position, if necessary.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### (static) GraphicsPath#difference(path, [flatness]) <a id='H3DU.GraphicsPath.GraphicsPath_difference'></a>
+ <a name='H3DU.GraphicsPath.GraphicsPath_difference'></a>
+### (static) GraphicsPath#difference(path, [flatness])
 
 Computes the difference between this path's shape and another
 path's shape. The points given in the H3DU.GraphicsPath#union method
@@ -192,7 +199,8 @@ apply to this method.
 The difference between this path
 and the other path. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#getBounds() <a id='H3DU.GraphicsPath_GraphicsPath_getBounds'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_getBounds'></a>
+### GraphicsPath#getBounds()
 
 Calculates an axis-aligned bounding box that tightly
 fits this graphics path.
@@ -205,7 +213,8 @@ the lowest X and Y coordinates, and the last two are
 the highest X and Y coordinates. If the path is empty,
 returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;Number>)
 
-### GraphicsPath#getCurves([flatness]) <a id='H3DU.GraphicsPath_GraphicsPath_getCurves'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_getCurves'></a>
+### GraphicsPath#getCurves([flatness])
 
 Gets an object for the curves described by this path.
 The resulting object can be used to retrieve the points
@@ -250,7 +259,8 @@ recommended when drawing the path as a set of points, not lines, since
 the path may contain several disconnected parts.
 </ul> (Type: Object)
 
-### GraphicsPath#getLines([flatness]) <a id='H3DU.GraphicsPath_GraphicsPath_getLines'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_getLines'></a>
+### GraphicsPath#getLines([flatness])
 
 Gets an array of line segments approximating
 the path.
@@ -267,7 +277,8 @@ Each line segment is an array of four numbers: the X and
 Y coordinates of the start point, respectively, then the X and
 Y coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;Number>>)
 
-### GraphicsPath#getPoints(numPoints, [flatness]) <a id='H3DU.GraphicsPath_GraphicsPath_getPoints'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_getPoints'></a>
+### GraphicsPath#getPoints(numPoints, [flatness])
 
 Gets an array of points evenly spaced across the length
 of the path.
@@ -288,7 +299,8 @@ an empty array if <i>numPoints</i> is less than 1. Returns
 an array consisting of the start point if <i>numPoints</i>
 is 1. (Type: Array.&lt;Array.&lt;Number>>)
 
-### GraphicsPath#getTriangles([flatness]) <a id='H3DU.GraphicsPath_GraphicsPath_getTriangles'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_getTriangles'></a>
+### GraphicsPath#getTriangles([flatness])
 
 Converts the subpaths in this path to triangles.
 Treats each subpath as a polygon even if it isn't closed.
@@ -313,7 +325,8 @@ array, the first two, next two, and last two numbers each
 describe a vertex position of that triangle (X and Y coordinates
 in that order). (Type: Array.&lt;Array.&lt;Number>>)
 
-### (static) GraphicsPath#intersection(path, [flatness]) <a id='H3DU.GraphicsPath.GraphicsPath_intersection'></a>
+ <a name='H3DU.GraphicsPath.GraphicsPath_intersection'></a>
+### (static) GraphicsPath#intersection(path, [flatness])
 
 Computes the intersection, or the area common to both this path's shape
 and another path's shape. The points given in the H3DU.GraphicsPath#union method
@@ -331,7 +344,8 @@ apply to this method.
 A path whose shape is contained in
 both paths. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#isIncomplete() <a id='H3DU.GraphicsPath_GraphicsPath_isIncomplete'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_isIncomplete'></a>
+### GraphicsPath#isIncomplete()
 
 Returns whether the curve path is incomplete
 because of an error in parsing the curve string.
@@ -343,7 +357,8 @@ is added to the path.
 
 Return value. (Type: Boolean)
 
-### GraphicsPath#lineTo(x, y) <a id='H3DU.GraphicsPath_GraphicsPath_lineTo'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_lineTo'></a>
+### GraphicsPath#lineTo(x, y)
 
 Adds a line segment to the path, starting
 at the path's end position, then
@@ -360,7 +375,8 @@ sets the end position to the end of the segment.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#moveTo(x, y) <a id='H3DU.GraphicsPath_GraphicsPath_moveTo'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_moveTo'></a>
+### GraphicsPath#moveTo(x, y)
 
 Moves the current start position and end position to the given position.
 
@@ -375,7 +391,8 @@ Moves the current start position and end position to the given position.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#pathLength([flatness]) <a id='H3DU.GraphicsPath_GraphicsPath_pathLength'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_pathLength'></a>
+### GraphicsPath#pathLength([flatness])
 
 Finds the approximate length of this path.
 
@@ -389,7 +406,8 @@ Finds the approximate length of this path.
 Approximate length of this path
 in units. (Type: Number)
 
-### GraphicsPath#quadraticCurveTo(x, y, x2, y2) <a id='H3DU.GraphicsPath_GraphicsPath_quadraticCurveTo'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_quadraticCurveTo'></a>
+### GraphicsPath#quadraticCurveTo(x, y, x2, y2)
 
 Adds a quadratic B&eacute;zier curve to this path starting
 at this path's current position.
@@ -409,7 +427,8 @@ at this path's current position.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#rect(x, y, width, height) <a id='H3DU.GraphicsPath_GraphicsPath_rect'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_rect'></a>
+### GraphicsPath#rect(x, y, width, height)
 
 Adds four lines in an axis-aligned rectangle shape to the path.
 
@@ -428,7 +447,8 @@ Adds four lines in an axis-aligned rectangle shape to the path.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#reverse() <a id='H3DU.GraphicsPath_GraphicsPath_reverse'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_reverse'></a>
+### GraphicsPath#reverse()
 
 Returns a path that reverses the course of this path.
 
@@ -437,7 +457,8 @@ Returns a path that reverses the course of this path.
 A GraphicsPath
 object with its path segments reversed. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#toLinePath([flatness]) <a id='H3DU.GraphicsPath_GraphicsPath_toLinePath'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_toLinePath'></a>
+### GraphicsPath#toLinePath([flatness])
 
 Creates a path in which curves and arcs are decomposed
 to line segments.
@@ -452,7 +473,8 @@ to line segments.
 A path consisting only of line
 segments and close commands. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### GraphicsPath#toString() <a id='H3DU.GraphicsPath_GraphicsPath_toString'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_toString'></a>
+### GraphicsPath#toString()
 
 Returns this path in the form of a string in SVG path format.
 See <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath.fromString">H3DU.GraphicsPath.fromString</a>.
@@ -462,7 +484,8 @@ See <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath.fromString">H3DU.GraphicsPat
 A string describing the path in the SVG path
 format. (Type: String)
 
-### GraphicsPath#transform(trans) <a id='H3DU.GraphicsPath_GraphicsPath_transform'></a>
+ <a name='H3DU.GraphicsPath_GraphicsPath_transform'></a>
+### GraphicsPath#transform(trans)
 
 Returns a modified version of this path that is transformed
 according to the given affine transformation (a transformation
@@ -477,7 +500,8 @@ that keeps straight lines straight and parallel lines parallel).
 
 The transformed version of this path. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### (static) GraphicsPath#union(path, [flatness]) <a id='H3DU.GraphicsPath.GraphicsPath_union'></a>
+ <a name='H3DU.GraphicsPath.GraphicsPath_union'></a>
+### (static) GraphicsPath#union(path, [flatness])
 
 Computes the combination of this path's shape with another
 path's shape. The following points apply to this method:<ul>
@@ -509,7 +533,8 @@ this is in addition to "extras/pathclip.js". Example:
 
 The union of the two paths. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### (static) GraphicsPath#xor(path, [flatness]) <a id='H3DU.GraphicsPath.GraphicsPath_xor'></a>
+ <a name='H3DU.GraphicsPath.GraphicsPath_xor'></a>
+### (static) GraphicsPath#xor(path, [flatness])
 
 Computes the shape contained in either this path or another path,
 but not both. The points given in the H3DU.GraphicsPath#union method
@@ -527,7 +552,8 @@ apply to this method.
 A path whose shape is contained in
 only one of the two paths. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-### (static) H3DU.GraphicsPath.fromString(str) <a id='H3DU.GraphicsPath.fromString'></a>
+ <a name='H3DU.GraphicsPath.fromString'></a>
+### (static) H3DU.GraphicsPath.fromString(str)
 
 Creates a graphics path from a string whose format follows
 the SVG specification.

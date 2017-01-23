@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Lights() <a id='H3DU.Lights'></a>
+ <a name='H3DU.Lights'></a>
+### H3DU.Lights()
 
 A collection of light sources. It stores the scene's
 ambient color as well as data on one or more light sources.
@@ -29,14 +30,16 @@ values, and the default value for <code>sceneAmbient</code>.
 * [setParams](#H3DU.Lights_H3DU.Lights_setParams)<br>Sets parameters for the light source at the given index.
 * [setPointLight](#H3DU.Lights_H3DU.Lights_setPointLight)<br>Sets a point light.
 
-### H3DU.Lights.MAX_LIGHTS <a id='H3DU.Lights.MAX_LIGHTS'></a> (constant)
+<a id='H3DU.Lights.MAX_LIGHTS'></a>
+### H3DU.Lights.MAX_LIGHTS (constant)
 
 Maximum number of lights supported
 by the default shader program.
 
 Default Value: `3`
 
-### H3DU.Lights#sceneAmbient <a id='H3DU.Lights_sceneAmbient'></a>
+<a id='H3DU.Lights_sceneAmbient'></a>
+### H3DU.Lights#sceneAmbient
 
 Ambient color for the scene. This is the color of the light
 that shines on every part of every object equally and in
@@ -56,7 +59,8 @@ only used on objects that use <a href="H3DU.Material.md">H3DU.Material</a>, not 
 
 Default Value: `"[0.2,0.2,0.2]"`
 
-### H3DU.Lights#getCount() <a id='H3DU.Lights_H3DU.Lights_getCount'></a>
+ <a name='H3DU.Lights_H3DU.Lights_getCount'></a>
+### H3DU.Lights#getCount()
 
 Gets the number of lights defined in this object.
 
@@ -64,7 +68,8 @@ Gets the number of lights defined in this object.
 
 Return value. (Type: Number)
 
-### H3DU.Lights#getLight(index) <a id='H3DU.Lights_H3DU.Lights_getLight'></a>
+ <a name='H3DU.Lights_H3DU.Lights_getLight'></a>
+### H3DU.Lights#getLight(index)
 
 Gets information about the light source at the given index.
 
@@ -77,7 +82,8 @@ Gets information about the light source at the given index.
 
 The corresponding light source object. (Type: LightSource)
 
-### H3DU.Lights#setAmbient(r, g, b, [a]) <a id='H3DU.Lights_H3DU.Lights_setAmbient'></a>
+ <a name='H3DU.Lights_H3DU.Lights_setAmbient'></a>
+### H3DU.Lights#setAmbient(r, g, b, [a])
 
 Sets the color of the scene's ambient light.
 
@@ -96,7 +102,8 @@ Sets the color of the scene's ambient light.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Lights#setBasic() <a id='H3DU.Lights_H3DU.Lights_setBasic'></a>
+ <a name='H3DU.Lights_H3DU.Lights_setBasic'></a>
+### H3DU.Lights#setBasic()
 
 Resets this object to a basic configuration for
 light sources: one light source with its default
@@ -106,7 +113,8 @@ values, and the default value for <code>sceneAmbient</code>.
 
 This object. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
-### H3DU.Lights#setDirectionalLight(index, direction, [diffuse], [specular]) <a id='H3DU.Lights_H3DU.Lights_setDirectionalLight'></a>
+ <a name='H3DU.Lights_H3DU.Lights_setDirectionalLight'></a>
+### H3DU.Lights#setDirectionalLight(index, direction, [diffuse], [specular])
 
 Sets a directional light.
 
@@ -125,7 +133,8 @@ Sets a directional light.
 
 This object. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
-### H3DU.Lights#setParams(index, params) <a id='H3DU.Lights_H3DU.Lights_setParams'></a>
+ <a name='H3DU.Lights_H3DU.Lights_setParams'></a>
+### H3DU.Lights#setParams(index, params)
 
 Sets parameters for the light source at the given index.
 
@@ -140,7 +149,8 @@ Sets parameters for the light source at the given index.
 
 This object. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
-### H3DU.Lights#setPointLight(index, position, [diffuse], [specular]) <a id='H3DU.Lights_H3DU.Lights_setPointLight'></a>
+ <a name='H3DU.Lights_H3DU.Lights_setPointLight'></a>
+### H3DU.Lights#setPointLight(index, position, [diffuse], [specular])
 
 Sets a point light.
 

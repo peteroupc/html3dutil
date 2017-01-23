@@ -18,7 +18,6 @@
  */
 H3DU.MeshBuffer = function(mesh) {
   "use strict";
-  this._bounds = mesh.getBoundingBox();
   var vertices = new Float32Array(mesh.vertices);
   if(mesh.vertices.length >= 65536 || mesh.indices.length >= 65536) {
     this.indexBufferSize = 4;
@@ -33,8 +32,10 @@ H3DU.MeshBuffer = function(mesh) {
   this.format = mesh.attributeBits;
   var stride = H3DU.Mesh._getStride(this.format);
   this.numVertices = mesh.vertices.length / stride;
-  this.facesLength = mesh.indices.length;
   this.attributes = [];
+  // TODO: consider using default attribute names that can't be
+  // a GLSL identifier (e.g. starting with digit or dollar sign),
+  // for flexibility purposes
   this.attributes.push(["position", 0, vertices, 3, stride]);
   var o = H3DU.Mesh._normalOffset(this.format);
   if(o >= 0) {
@@ -93,6 +94,9 @@ H3DU.MeshBuffer.prototype.setAttribute = function(
   } else {
     this.attributes.push([name, startIndex, buffer, countPerVertex, stride]);
   }
+  if(name === "position") {
+    this._bounds = null;
+  }
   return this;
 };
 
@@ -120,10 +124,10 @@ H3DU.MeshBuffer.prototype._getAttribute = function(name) {
 H3DU.MeshBuffer.prototype.primitiveCount = function() {
   "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
-    return Math.floor(this.facesLength / 2);
+    return Math.floor(this.indices.length / 2);
   if((this.format & H3DU.Mesh.POINTS_BIT) !== 0)
-    return this.facesLength;
-  return Math.floor(this.facesLength / 3);
+    return this.indices.length;
+  return Math.floor(this.indices.length / 3);
 };
 /**
  * Finds the tightest
@@ -165,8 +169,10 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
         ret[5] = Math.max(ret[5], v[vi + 2]);
       }
     }
+    this._bounds = ret.slice(0, 6);
+    return ret;
   }
-  return this._bounds;
+  return this._bounds.slice(0, 6);
 };
 /**
  * Gets the type of primitive stored in this mesh buffer.
@@ -183,11 +189,7 @@ H3DU.MeshBuffer.prototype.primitiveType = function() {
   return H3DU.Mesh.TRIANGLES;
 };
 
-/**
- * @param {Object} name Description of name.
- * @memberof! H3DU.MeshBuffer#
- * @returns {Object} Return value.
- */
+/** @private */
 H3DU.MeshBuffer.prototype.getFormat = function() {
   "use strict";
   return this.format;

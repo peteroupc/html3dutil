@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### Promise([resolver]) <a id='Promise'></a>
+ <a name='Promise'></a>
+### Promise([resolver])
 
 A promise holds a value to be resolved in the future.
 
@@ -28,7 +29,8 @@ resolves or is rejected.
 * [reject](#Promise.reject)<br>Returns a promise that is rejected.
 * [resolve](#Promise.resolve)<br>Returns a promise that resolves.
 
-### Promise#catch(onRejected) <a id='Promise_Promise_catch'></a>
+ <a name='Promise_Promise_catch'></a>
+### Promise#catch(onRejected)
 
 Creates a promise that calls a function if
 this promise is rejected.
@@ -42,7 +44,8 @@ this promise is rejected.
 
 A promise. (Type: <a href="Promise.md">Promise</a>)
 
-### Promise#then(onFulfilled, [onRejected]) <a id='Promise_Promise_then'></a>
+ <a name='Promise_Promise_then'></a>
+### Promise#then(onFulfilled, [onRejected])
 
 Creates a promise that calls a function depending on whether
 this promise resolves or is rejected.
@@ -58,7 +61,8 @@ this promise resolves or is rejected.
 
 A promise. (Type: <a href="Promise.md">Promise</a>)
 
-### (static) Promise.all(all) <a id='Promise.all'></a>
+ <a name='Promise.all'></a>
+### (static) Promise.all(all)
 
 Wait for all these promises to complete. One failed => this fails too.
 
@@ -71,7 +75,8 @@ Wait for all these promises to complete. One failed => this fails too.
 
 A promise that is resolved when all promises have resolved. (Type: <a href="Promise.md">Promise</a>)
 
-### (static) Promise.race(all) <a id='Promise.race'></a>
+ <a name='Promise.race'></a>
+### (static) Promise.race(all)
 
 Creates a promise that resolves or is rejected when one of those promises
 resolves or is rejected.
@@ -85,7 +90,8 @@ resolves or is rejected.
 
 A promise that is resolved when all promises have resolved. (Type: <a href="Promise.md">Promise</a>)
 
-### (static) Promise.reject(value) <a id='Promise.reject'></a>
+ <a name='Promise.reject'></a>
+### (static) Promise.reject(value)
 
 Returns a promise that is rejected.
 
@@ -99,7 +105,8 @@ Returns a promise that is rejected.
 A promise that is rejected and takes the given value
 as its argument. (Type: <a href="Promise.md">Promise</a>)
 
-### (static) Promise.resolve(value) <a id='Promise.resolve'></a>
+ <a name='Promise.resolve'></a>
+### (static) Promise.resolve(value)
 
 Returns a promise that resolves.
 

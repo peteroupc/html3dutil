@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.TextFont() <a id='H3DU.TextFont'></a>
+ <a name='H3DU.TextFont'></a>
+### H3DU.TextFont()
 
 Represents a bitmap font, which supports drawing two-dimensional
 text. This class supports
@@ -61,7 +62,8 @@ drawn using this font.
 * [textShape](#H3DU.TextFont_H3DU.TextFont_textShape)<br>Creates a group of shapes containing the primitives needed to
 draw text in the given position, size, and color.
 
-### H3DU.TextFont.load(fontFileName) <a id='H3DU.TextFont.load'></a>
+ <a name='H3DU.TextFont.load'></a>
+### H3DU.TextFont.load(fontFileName)
 
 Loads a bitmap font definition from a file.
 Note that this method only loads the font data and not the bitmaps
@@ -78,7 +80,8 @@ A promise that is resolved
 when the font data is loaded successfully (the result will be
 an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.TextFont.md">H3DU.TextFont</a>>)
 
-### H3DU.TextFont.loadWithTextures(fontFileName, textureLoader) <a id='H3DU.TextFont.loadWithTextures'></a>
+ <a name='H3DU.TextFont.loadWithTextures'></a>
+### H3DU.TextFont.loadWithTextures(fontFileName, textureLoader)
 
 Loads a bitmap font definition from a file along with the textures
 used by that font.
@@ -103,7 +106,8 @@ following keys:<ul>
 in the order in which they are declared in the font data file.
 </ul> (Type: <a href="Promise.md">Promise</a>)
 
-### H3DU.TextFont#loadTextures(textureLoader) <a id='H3DU.TextFont_H3DU.TextFont_loadTextures'></a>
+ <a name='H3DU.TextFont_H3DU.TextFont_loadTextures'></a>
+### H3DU.TextFont#loadTextures(textureLoader)
 
 Loads the texture files used by this font object.
 
@@ -119,7 +123,8 @@ A promise as described in
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
-### H3DU.TextFont#makeTextMeshes(str, params) <a id='H3DU.TextFont_H3DU.TextFont_makeTextMeshes'></a>
+ <a name='H3DU.TextFont_H3DU.TextFont_makeTextMeshes'></a>
+### H3DU.TextFont#makeTextMeshes(str, params)
 
 Creates an array of meshes containing the primitives
 needed to draw text with this font.
@@ -137,7 +142,8 @@ An array of meshes representing the text.
 There is one mesh for each texture page of the font. If none of the
 text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;Mesh>)
 
-### H3DU.TextFont#measure(str, params) <a id='H3DU.TextFont_H3DU.TextFont_measure'></a>
+ <a name='H3DU.TextFont_H3DU.TextFont_measure'></a>
+### H3DU.TextFont#measure(str, params)
 
 Calculates the width and height of a text string when
 drawn using this font.
@@ -156,7 +162,8 @@ the first is the width of the string, and the second is the
 height of the string (taking into account line feed characters,
 U+000A, that break lines). (Type: Array.&lt;Number>)
 
-### H3DU.TextFont#textShape(str, params) <a id='H3DU.TextFont_H3DU.TextFont_textShape'></a>
+ <a name='H3DU.TextFont_H3DU.TextFont_textShape'></a>
+### H3DU.TextFont#textShape(str, params)
 
 Creates a group of shapes containing the primitives needed to
 draw text in the given position, size, and color.

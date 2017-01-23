@@ -22,7 +22,7 @@ H3DU.PbrMaterial = function(params) {
   "use strict";
 /**
  * Albedo (or base color) of this material.<p>
- * This value is a 4-element array giving the red, green, blue, and
+ * This value is a 3- or 4-element array giving the red, green, blue, and
  * alpha components of the albedo (in the [sRGB color space]{@link H3DU.Math.colorTosRGB}). (0,0,0,1) means an
  * albedo value of black, and (1,1,1,1) means an albedo value of white.<p>
  * In the <b>metallic workflow</b>, this color specifies the amount
@@ -30,12 +30,12 @@ H3DU.PbrMaterial = function(params) {
  * is the generally observed color of the surface. <p>
  * In the <b>specular workflow</b>, this color specifies the amount
  * of light that passes through the material and bounces back (<i>diffuse</i> color). For most nonmetals, this color
- * is the generally observed color of the surface, though somewhat desaturated. Most metals reflect
+ * is the generally observed color of the surface, though somewhat desaturated. Most metals absorb
  * all the light that passes through them,
  * so for most metals, this color should generally be black or a very
  * dark shade of gray. (In physically-based rendering, the sum of albedo and specular
  * colors should not exceed 1.0 in each [linear RGB]{@link H3DU.Math.colorToLinear} channel.)<p>
- * In <b>both workflows in physically-based rendering, the albedo
+ * In <b>both workflows</b> in physically-based rendering, the albedo
  * color should not have any added lighting.<p>
  * This value can have an optional fourth element giving the alpha component
  * (0-1). If this element is omitted, the default is 1.<p>
@@ -47,7 +47,8 @@ H3DU.PbrMaterial = function(params) {
   this.albedo = [0.8, 0.8, 0.8, 1.0];
   /**
    * A texture indicating the albedo (or base color) of each part of the texture,
-   * in the red, green, blue, and alpha channels.
+   * in the red, green, blue, and alpha channels. In physically-based rendering, the albedo
+   * texture should not have any added lighting or shadow detail.
    * @type {Number}
    * @default
    */
@@ -65,10 +66,12 @@ H3DU.PbrMaterial = function(params) {
   /**
    * A texture indicating the metalness of each part of the texture,
    * as specified in the texture's red channel.
+   * Each pixel value in the red channel (which ranges from 0-255 in most image
+   * formats) is scaled to the range [0, 1].<p>
    * This value is only used in the <b>metallic workflow</b>.
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
-   * specular factors in certain areas.
+   * metalness values in certain areas.
    * @type {Number}
    * @default
    */
@@ -85,18 +88,20 @@ H3DU.PbrMaterial = function(params) {
   /**
    * A texture indicating the roughness of each part of the texture,
    * as specified in the texture's red channel.
+   * Each pixel value in the red channel (which ranges from 0-255 in most image
+   * formats) is scaled to the range [0, 1].<p>
    * The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>;
-   * to convert a texture to a glossiness or smoothness map, set the
+   * to treat the texture as a glossiness or smoothness map, set the
    * <code>invertRoughness</code> property to <code>true</code>.
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
-   * specular factors in certain areas.
+   * roughness values in certain areas.
    * @type {Number}
    * @default
    */
   this.roughnessMap = null;
  /**
-  * Specular highlight reflection of this material.
+  * Specular reflectivity of this material.
   * Specular reflection is a reflection in the opposite direction from the direction
   * the light reaches the material in, similar to a mirror. As a result, depending
   * on the viewing angle, specular reflection can give off
@@ -125,7 +130,17 @@ H3DU.PbrMaterial = function(params) {
    */
   this.specularMap = null;
 /**
- * TODO
+ * Specifies which workflow to use when interpreting values for this
+ * material. <p>
+ * The <b>metallic workflow</b> (<code>H3DU.PbrMaterial.Metallic</code>, the default)
+ * is usually easier to understand and uses <code>albedo</code> to set the
+ * surface's color and <code>metalness</code> to set whether the surface
+ * is a metal or not.<p>
+ * The <b>specular workflow</b> (<code>H3DU.PbrMaterial.Specular</code>)
+ * uses <code>albedo</code> to set the
+ * surface's color for nonmetals and <code>specular</code> to set the
+ * surface's specular reflectivity.
+ * @type {Number}
  * @default
  */
   this.workflow = H3DU.PbrMaterial.Metallic;
@@ -225,8 +240,7 @@ H3DU.PbrMaterial.Metallic = 1;
  * <li><code>metalnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a metalness texture (see {@link H3DU.PbrMaterial#metalnessMap}).
  * <li><code>roughnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a roughness texture (see {@link H3DU.PbrMaterial#roughnessMap}).
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
- * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
- * this parameter is deprecated.</i>
+ * to use when rendering objects with this material.
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
  * @returns {H3DU.PbrMaterial} This object.

@@ -2,18 +2,20 @@
 
 [Back to documentation index.](index.md)
 
-## Introduction <a id=Introduction></a>
+<a id=Introduction></a>
+## Introduction
 
 This page describes what graphics filters are and how they work in my
 public domain [HTML 3D Library](http://peteroupc.github.io/html3dutil).
 It also describes several examples of graphics filters.
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Introduction](#Introduction)<br>[Contents](#Contents)<br>[Graphics Filters](#Graphics_Filters)<br>[Writing Graphics Filters](#Writing_Graphics_Filters)<br>[Using Graphics Filters](#Using_Graphics_Filters)<br>[Sample Code](#Sample_Code)<br>[Examples](#Examples)<br>&nbsp;&nbsp;[Grayscale](#Grayscale)<br>&nbsp;&nbsp;[Invert](#Invert)<br>&nbsp;&nbsp;[Red Tint](#Red_Tint)<br>&nbsp;&nbsp;[Mirror Filter](#Mirror_Filter)<br>&nbsp;&nbsp;[Matrix Filter](#Matrix_Filter)<br>&nbsp;&nbsp;[Color Matrix Filter](#Color_Matrix_Filter)<br>&nbsp;&nbsp;[Pixelate Filter](#Pixelate_Filter)<br>&nbsp;&nbsp;[Wave Filter](#Wave_Filter)<br>&nbsp;&nbsp;[Waterpaint Filter](#Waterpaint_Filter)<br>[Other Pages](#Other_Pages)<br>
 
-## Graphics Filters <a id=Graphics_Filters></a>
+## Graphics Filters
 
 In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame. They are implemented in a language called GLSL, or GL
@@ -28,7 +30,8 @@ For graphics filters to work, the 3D scene must be rendered to an off-screen buf
 a _frame buffer_. The frame buffer acts like a texture which will be rendered back to
 the screen with the help of the graphics filter's shader program.
 
-## Writing Graphics Filters <a id=Writing_Graphics_Filters></a>
+<a id=Writing_Graphics_Filters></a>
+## Writing Graphics Filters
 
 In the HTML 3D Library, use the `makeEffect` method of the `H3DU.ShaderInfo` class to create
 graphics filters:
@@ -76,7 +79,8 @@ A detailed treatment of GLSL is outside the scope of this page. More information
 be found by searching the Web; note that there are many versions of GLSL and the one used
 in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.
 
-## Using Graphics Filters <a id=Using_Graphics_Filters></a>
+<a id=Using_Graphics_Filters></a>
+## Using Graphics Filters
 
 To use a graphics filter, the application needs to prepare for its use by following these steps.
 
@@ -128,7 +132,8 @@ passes mentioned above, the following happens.
           The graphics filter can either use the current pixel's color or change it for each pixel.
           As a result, a "filtered" version of the current frame will be drawn.
 
-## Sample Code <a id=Sample_Code></a>
+<a id=Sample_Code></a>
+## Sample Code
 
 Here is sample code for using a graphics filter.
 
@@ -149,7 +154,8 @@ Here is sample code for using a graphics filter.
     // this method
     scene.render(renders);
 
-## Examples <a id=Examples></a>
+<a id=Examples></a>
+## Examples
 
 * [squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates graphics filters.
 
@@ -158,14 +164,16 @@ of graphics filters implemented as shaders.
 
 Here are more details on some of the filters it includes.
 
-### Grayscale <a id=Grayscale></a>
+<a id=Grayscale></a>
+### Grayscale
 
 ![Grayscale filtered image using former implementation](filters1.png)
 
 The grayscale filter converts the screen to black and white. This is currently
 implemented using the color matrix filter, described later, rather than the code already given above.
 
-### Invert <a id=Invert></a>
+<a id=Invert></a>
+### Invert
 
 ![Invert filtered image using former implementation](filters2.png)
 
@@ -184,7 +192,8 @@ demo this is currently implemented using the color matrix filter instead.
     "}"].join("\n"));
     }
 
-### Red Tint <a id=Red_Tint></a>
+<a id=Red_Tint></a>
+### Red Tint
 
 ![Red Tint filtered image using former implementation](filters9.png)
 
@@ -200,7 +209,8 @@ appears below.
     "}"].join("\n"));
     }
 
-### Mirror Filter <a id=Mirror_Filter></a>
+<a id=Mirror_Filter></a>
+### Mirror Filter
 
 ![Mirror filtered image](filters7.png)
 
@@ -218,7 +228,8 @@ the current X coordinate).
 
 With a simple change, this filter can be modified to do a vertical flip (`1.0-uvCoord.y`) or even both flips.
 
-### Matrix Filter <a id=Matrix_Filter></a>
+<a id=Matrix_Filter></a>
+### Matrix Filter
 
 ![Blur filtered image](filters4.png)
 ![Edge detect filtered image](filters8.png)
@@ -242,7 +253,8 @@ This filter is implemented in the function `makeKernelMatrix` in the demo. It is
 the "blur" and "edge detect" effects. The filter shows how it's possible for filters to read neighboring
 pixels, not just the current pixel, when implementing their effect.
 
-### Color Matrix Filter <a id=Color_Matrix_Filter></a>
+<a id=Color_Matrix_Filter></a>
+### Color Matrix Filter
 
 This filter enables another family of image processing filters, which modify colors
 based on a transformation matrix.  This is a 4x4 matrix that is multiplied by the red/green/blue
@@ -260,7 +272,8 @@ black and white and shades of gray.
 
 This filter is implemented in the function `makeColorMatrix` in the demo.
 
-### Pixelate Filter <a id=Pixelate_Filter></a>
+<a id=Pixelate_Filter></a>
+### Pixelate Filter
 
 ![Pixelate filtered image](filters5.png)
 
@@ -284,7 +297,8 @@ each "pixelated" pixel takes up.
 
 The demo changes the "coarseness" parameter with time to animate the pixelation effect.
 
-### Wave Filter <a id=Wave_Filter></a>
+<a id=Wave_Filter></a>
+### Wave Filter
 
 ![Wave filtered image](filters3.png)
 
@@ -294,7 +308,8 @@ frame for the undulation effect.
 
 This filter is implemented in the function `makeWave` in the demo.
 
-### Waterpaint Filter <a id=Waterpaint_Filter></a>
+<a id=Waterpaint_Filter></a>
+### Waterpaint Filter
 
 ![Waterpaint filtered image](filters6.png)
 
@@ -303,7 +318,8 @@ named "Themaister".
 
 This filter is implemented in the function `makeWaterpaint` in the demo.
 
-## Other Pages <a id=Other_Pages></a>
+<a id=Other_Pages></a>
+## Other Pages
 
 The following pages of mine on CodeProject also discuss this library:
 

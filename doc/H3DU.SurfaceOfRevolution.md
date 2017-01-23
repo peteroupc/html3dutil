@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis]) <a id='H3DU.SurfaceOfRevolution'></a>
+ <a name='H3DU.SurfaceOfRevolution'></a>
+### H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
 Parametric evaluator for a surface of revolution, which results by revolving
 an X/Y curve around an axis.
@@ -36,7 +37,8 @@ the HTML 3D Library. Example:
 whose curve is the graph of a single-variable function.
 * [.torus](#H3DU.SurfaceOfRevolution.torus)<br>Parametric evaluator for a torus, a special case of a surface of revolution.
 
-### H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis]) <a id='H3DU.SurfaceOfRevolution.fromFunction'></a>
+ <a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
+### H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
 
 Creates a parametric evaluator for a surface of revolution
 whose curve is the graph of a single-variable function.
@@ -87,7 +89,8 @@ which runs from 5 to 10 units, and with a radius of 2 units.
     "use strict"; return 2; }, // use a constant radius
     5, 10);
 
-### H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis]) <a id='H3DU.SurfaceOfRevolution.torus'></a>
+ <a name='H3DU.SurfaceOfRevolution.torus'></a>
+### H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])
 
 Parametric evaluator for a torus, a special case of a surface of revolution.
 

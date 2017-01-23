@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.MeshJSON() <a id='H3DU.MeshJSON'></a>
+ <a name='H3DU.MeshJSON'></a>
+### H3DU.MeshJSON()
 
 JSON exporter of graphics meshes.
 

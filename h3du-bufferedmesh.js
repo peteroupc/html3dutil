@@ -204,7 +204,6 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
 H3DU.BufferedMesh.prototype.draw = function(program) {
   "use strict";
   // Binding phase
-
   var context = program.getContext();
   if(this.vertsMap === null || this.face === null) {
     throw new Error("mesh buffer disposed");
@@ -215,10 +214,14 @@ H3DU.BufferedMesh.prototype.draw = function(program) {
   this._prepareDraw(program, context);
   // Drawing phase
   var primitive = context.TRIANGLES;
-  if((this.smb.format & H3DU.Mesh.LINES_BIT) !== 0)primitive = context.LINES;
-  if((this.smb.format & H3DU.Mesh.POINTS_BIT) !== 0)primitive = context.POINTS;
+  if((this.smb.format & H3DU.Mesh.LINES_BIT) !== 0) {
+    primitive = context.LINES;
+  }
+  if((this.smb.format & H3DU.Mesh.POINTS_BIT) !== 0) {
+    primitive = context.POINTS;
+  }
   context.drawElements(primitive,
-    this.smb.facesLength,
+    this.smb.indices.length,
     this.type, 0);
   var vaoExt = this._getVaoExtension(context);
   if(this.vao) {

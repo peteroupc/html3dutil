@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.BSplineCurve(controlPoints, knots, [bits]) <a id='H3DU.BSplineCurve'></a>
+ <a name='H3DU.BSplineCurve'></a>
+### H3DU.BSplineCurve(controlPoints, knots, [bits])
 
 A parametric evaluator for B-spline (basis spline) curves.
 
@@ -50,7 +51,8 @@ passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H
 * [evaluate](#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B-spline curve.
 
-### H3DU.BSplineCurve.DIVIDE_BIT <a id='H3DU.BSplineCurve.DIVIDE_BIT'></a> (constant)
+<a id='H3DU.BSplineCurve.DIVIDE_BIT'></a>
+### H3DU.BSplineCurve.DIVIDE_BIT (constant)
 
 Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
@@ -60,7 +62,8 @@ If this bit is set, the length of each control point must be at least 2.
 
 Default Value: `2`
 
-### H3DU.BSplineCurve.HOMOGENEOUS_BIT <a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a> (constant)
+<a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a>
+### H3DU.BSplineCurve.HOMOGENEOUS_BIT (constant)
 
 Indicates that each other coordinate of each control point
 was premultiplied by the last coordinate of the point, that is,
@@ -69,7 +72,8 @@ Only used with WEIGHTED_BIT.
 
 Default Value: `4`
 
-### H3DU.BSplineCurve.WEIGHTED_BIT <a id='H3DU.BSplineCurve.WEIGHTED_BIT'></a> (constant)
+<a id='H3DU.BSplineCurve.WEIGHTED_BIT'></a>
+### H3DU.BSplineCurve.WEIGHTED_BIT (constant)
 
 Indicates whether the last coordinate of each control point is a
 weight. If some of the weights differ, the curve is
@@ -80,11 +84,13 @@ method will be in homogeneous coordinates.
 
 Default Value: `1`
 
-### H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS <a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a> (constant)
+<a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a>
+### H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS (constant)
 
 Combination of WEIGHTED_BIT and DIVIDE_BIT.
 
-### H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits]) <a id='H3DU.BSplineCurve.clamped'></a>
+ <a name='H3DU.BSplineCurve.clamped'></a>
+### H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])
 
 Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points.
@@ -102,7 +108,8 @@ the curve will start and end at the first and last control points.
 
 Return value. (Type: <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>)
 
-### H3DU.BSplineCurve.clampedKnots(controlPoints, degree) <a id='H3DU.BSplineCurve.clampedKnots'></a>
+ <a name='H3DU.BSplineCurve.clampedKnots'></a>
+### H3DU.BSplineCurve.clampedKnots(controlPoints, degree)
 
 Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor,
@@ -120,7 +127,8 @@ first and last control points.
 
 A clamped uniform knot vector. (Type: Array.&lt;Number>)
 
-### H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits]) <a id='H3DU.BSplineCurve.uniform'></a>
+ <a name='H3DU.BSplineCurve.uniform'></a>
+### H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])
 
 Creates a B-spline curve with uniform knots.
 
@@ -137,7 +145,8 @@ Creates a B-spline curve with uniform knots.
 
 Return value. (Type: <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>)
 
-### H3DU.BSplineCurve.uniformKnots(controlPoints, degree) <a id='H3DU.BSplineCurve.uniformKnots'></a>
+ <a name='H3DU.BSplineCurve.uniformKnots'></a>
+### H3DU.BSplineCurve.uniformKnots(controlPoints, degree)
 
 Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
@@ -153,7 +162,8 @@ passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H
 
 A uniform knot vector. (Type: Array.&lt;Number>)
 
-### H3DU.BSplineCurve#evaluate(u) <a id='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a>
+ <a name='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a>
+### H3DU.BSplineCurve#evaluate(u)
 
 Evaluates the curve function based on a point
 in a B-spline curve.

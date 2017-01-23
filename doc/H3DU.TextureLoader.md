@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.TextureLoader() <a id='H3DU.TextureLoader'></a>
+ <a name='H3DU.TextureLoader'></a>
+### H3DU.TextureLoader()
 
 An object that caches loaded textures and uploads them
 to WebGL contexts.
@@ -21,7 +22,8 @@ stores their texture data.
 * [mapTexture](#H3DU.TextureLoader_H3DU.TextureLoader_mapTexture)<br>Uploads a texture object to a WebGL context.
 * [mapTextures](#H3DU.TextureLoader_H3DU.TextureLoader_mapTextures)<br>Uploads an array of textures to a WebGL context.
 
-### H3DU.TextureLoader#dispose() <a id='H3DU.TextureLoader_H3DU.TextureLoader_dispose'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_dispose'></a>
+### H3DU.TextureLoader#dispose()
 
 Disposes all resources used by this texture loader.
 
@@ -29,7 +31,8 @@ Disposes all resources used by this texture loader.
 
 Return value. (Type: void)
 
-### H3DU.TextureLoader#getTexture(name) <a id='H3DU.TextureLoader_H3DU.TextureLoader_getTexture'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_getTexture'></a>
+### H3DU.TextureLoader#getTexture(name)
 
 Gets an already loaded texture by name from this texture loader.
 
@@ -43,7 +46,8 @@ Gets an already loaded texture by name from this texture loader.
 The texture with the given name, or null
 if it doesn't exist. (Type: Texture)
 
-### H3DU.TextureLoader#loadAndMapTexture(texture, context) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexture'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexture'></a>
+### H3DU.TextureLoader#loadAndMapTexture(texture, context)
 
 Loads the texture referred to in an array of URLs and
 uploads its texture data to a WebGL context.
@@ -61,7 +65,8 @@ A promise that resolves when
 the texture is loaded successfully (the result will be an H3DU.Texture object)
 and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
-### H3DU.TextureLoader#loadAndMapTexturesAll(textures, context, [resolve], [reject]) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexturesAll'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexturesAll'></a>
+### H3DU.TextureLoader#loadAndMapTexturesAll(textures, context, [resolve], [reject])
 
 Loads one or more textures by their URL and uploads their data to a WebGL context.
 
@@ -83,7 +88,8 @@ A promise as described in
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
-### H3DU.TextureLoader#loadCubeMap(texturesOrCubeMap, resolve, reject) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap'></a>
+### H3DU.TextureLoader#loadCubeMap(texturesOrCubeMap, resolve, reject)
 
 TODO: Not documented yet.
 
@@ -97,7 +103,8 @@ TODO: Not documented yet.
 
 Return value. (Type: *)
 
-### H3DU.TextureLoader#loadTexture(name) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadTexture'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadTexture'></a>
+### H3DU.TextureLoader#loadTexture(name)
 
 Loads a texture by its URL and stores its data.
 
@@ -111,7 +118,8 @@ Loads a texture by its URL and stores its data.
 A promise that resolves when the texture
 is fully loaded. If it resolves, the result will be an H3DU.Texture object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
-### H3DU.TextureLoader#loadTexturesAll(textures, [resolve], [reject]) <a id='H3DU.TextureLoader_H3DU.TextureLoader_loadTexturesAll'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadTexturesAll'></a>
+### H3DU.TextureLoader#loadTexturesAll(textures, [resolve], [reject])
 
 Loads the textures referred to in an array of URLs and
 stores their texture data.
@@ -132,7 +140,8 @@ A promise as described in
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
-### H3DU.TextureLoader#mapTexture(texture, context) <a id='H3DU.TextureLoader_H3DU.TextureLoader_mapTexture'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_mapTexture'></a>
+### H3DU.TextureLoader#mapTexture(texture, context)
 
 Uploads a texture object to a WebGL context.
 
@@ -147,7 +156,8 @@ Uploads a texture object to a WebGL context.
 
 This object. (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)
 
-### H3DU.TextureLoader#mapTextures(textures, context) <a id='H3DU.TextureLoader_H3DU.TextureLoader_mapTextures'></a>
+ <a name='H3DU.TextureLoader_H3DU.TextureLoader_mapTextures'></a>
+### H3DU.TextureLoader#mapTextures(textures, context)
 
 Uploads an array of textures to a WebGL context.
 

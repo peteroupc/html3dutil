@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Texture(name) <a id='H3DU.Texture'></a>
+ <a name='H3DU.Texture'></a>
+### H3DU.Texture(name)
 
 Specifies a texture, which can serve as image data applied to
 the surface of a shape, or even a 2-dimensional array of pixels
@@ -32,7 +33,8 @@ and 32.
 * [setClamp](#H3DU.Texture_H3DU.Texture_setClamp)<br>Sets the wrapping behavior of texture coordinates that
 fall out of range when using this texture.
 
-### H3DU.Texture.fromUint8Array(array, width, height) <a id='H3DU.Texture.fromUint8Array'></a>
+ <a name='H3DU.Texture.fromUint8Array'></a>
+### H3DU.Texture.fromUint8Array(array, width, height)
 
 Creates a texture from a byte array specifying the texture data.
 
@@ -49,7 +51,8 @@ Creates a texture from a byte array specifying the texture data.
 
 The new H3DU.Texture object. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
 
-### H3DU.Texture.loadTexture(name, [textureCache]) <a id='H3DU.Texture.loadTexture'></a>
+ <a name='H3DU.Texture.loadTexture'></a>
+### H3DU.Texture.loadTexture(name, [textureCache])
 
 Loads a texture by its URL.
 
@@ -65,7 +68,8 @@ Loads a texture by its URL.
 A promise that resolves when the texture
 is fully loaded. If it resolves, the result will be an H3DU.Texture object. (Type: <a href="Promise.md">Promise</a>)
 
-### H3DU.Texture#dispose() <a id='H3DU.Texture_H3DU.Texture_dispose'></a>
+ <a name='H3DU.Texture_H3DU.Texture_dispose'></a>
+### H3DU.Texture#dispose()
 
 Disposes resources used by this texture.
 
@@ -73,7 +77,8 @@ Disposes resources used by this texture.
 
 Return value. (Type: Object)
 
-### H3DU.Texture#getHeight() <a id='H3DU.Texture_H3DU.Texture_getHeight'></a>
+ <a name='H3DU.Texture_H3DU.Texture_getHeight'></a>
+### H3DU.Texture#getHeight()
 
 Gets this texture's known height.
 
@@ -82,7 +87,8 @@ Gets this texture's known height.
 This texture's height in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
 
-### H3DU.Texture#getName() <a id='H3DU.Texture_H3DU.Texture_getName'></a>
+ <a name='H3DU.Texture_H3DU.Texture_getName'></a>
+### H3DU.Texture#getName()
 
 Gets the name of this texture.
 
@@ -90,7 +96,8 @@ Gets the name of this texture.
 
 Return value. (Type: String)
 
-### H3DU.Texture#getWidth() <a id='H3DU.Texture_H3DU.Texture_getWidth'></a>
+ <a name='H3DU.Texture_H3DU.Texture_getWidth'></a>
+### H3DU.Texture#getWidth()
 
 Gets this texture's known width.
 
@@ -99,7 +106,8 @@ Gets this texture's known width.
 This texture's width in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
 
-### H3DU.Texture#setClamp(clamp) <a id='H3DU.Texture_H3DU.Texture_setClamp'></a>
+ <a name='H3DU.Texture_H3DU.Texture_setClamp'></a>
+### H3DU.Texture#setClamp(clamp)
 
 Sets the wrapping behavior of texture coordinates that
 fall out of range when using this texture. This setting

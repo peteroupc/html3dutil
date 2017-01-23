@@ -57,9 +57,9 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
     H3DU._MaterialBinder.bindTexture(mat.texture, context, program, 0, loader);
   H3DU._MaterialBinder.bindTexture(mat.specularMap, context, program, 1, loader);
   H3DU._MaterialBinder.bindTexture(mat.normalMap, context, program, 2, loader);
-  H3DU._MaterialBinder.bindTexture(mat.metalnessMap, context, program, 3, loader);
-  H3DU._MaterialBinder.bindTexture(mat.roughnessMap, context, program, 4, loader);
-  H3DU._MaterialBinder.bindTexture(mat.environmentMap, context, program, 5, loader);
+  H3DU._MaterialBinder.bindTexture(mat.metalnessMap, context, program, 4, loader);
+  H3DU._MaterialBinder.bindTexture(mat.roughnessMap, context, program, 5, loader);
+  H3DU._MaterialBinder.bindTexture(mat.environmentMap, context, program, 6, loader);
   return this;
 };
 
@@ -175,7 +175,6 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
     throw new Error("unsupported texture type");
   }
   var loadedTexture = null;
-  // var cubeMap = texture instanceof H3DU.CubeMap;
   if(!isFrameBuffer) {
     if(texture.loadStatus === 0) {
       var that = this;
@@ -203,13 +202,13 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
     if(textureUnit === 2) {
       uniforms.normalMap = textureUnit;
     }
-    if(textureUnit === 3) {
+    if(textureUnit === 4) {
       uniforms.metalnessMap = textureUnit;
     }
-    if(textureUnit === 4) {
+    if(textureUnit === 5) {
       uniforms.roughnessMap = textureUnit;
     }
-    if(textureUnit === 5) {
+    if(textureUnit === 6) {
       uniforms.envMap = textureUnit;
     }
     program.setUniforms(uniforms);

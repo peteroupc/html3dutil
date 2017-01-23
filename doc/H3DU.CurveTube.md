@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.CurveTube(func, [thickness], [sweptCurve]) <a id='H3DU.CurveTube'></a>
+ <a name='H3DU.CurveTube'></a>
+### H3DU.CurveTube(func, [thickness], [sweptCurve])
 
 Evaluator for a parametric surface in the form
 of a tube extruded from a parametric curve.
@@ -34,7 +35,8 @@ the HTML 3D Library. Example:
 
 * [evaluate](#H3DU.CurveTube_H3DU.CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u and v coordinates.
 
-### H3DU.CurveTube#evaluate(u, v) <a id='H3DU.CurveTube_H3DU.CurveTube_evaluate'></a>
+ <a name='H3DU.CurveTube_H3DU.CurveTube_evaluate'></a>
+### H3DU.CurveTube#evaluate(u, v)
 
 Generates a point on the extruded tube from the given u and v coordinates.
 

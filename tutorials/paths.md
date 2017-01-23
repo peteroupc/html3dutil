@@ -1,22 +1,25 @@
-## Introduction <a id=Introduction></a>
+<a id=Introduction></a>
+## Introduction
 
 This article describes two-dimensional paths. This is an extra included in the HTML 3D Library.
 
 **Download the latest version of the Public Domain HTML 3D
 Library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
 
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Introduction](#Introduction)<br>[Contents](#Contents)<br>[Paths](#Paths)<br>[How to Use](#How_to_Use)<br>[Creating Paths](#Creating_Paths)<br>&nbsp;&nbsp;[SVG Path String](#SVG_Path_String)<br>&nbsp;&nbsp;[Building Paths](#Building_Paths)<br>[Path Segments](#Path_Segments)<br>[Methods](#Methods)<br>
 
-## Paths <a id=Paths></a>
+## Paths
 
 A path is a collection of two-dimensional line segments and/or curves. Many paths describe
 closed figures or connected strings of lines and curves. The `GraphicsPath` class
 currently supports line segments, quadratic and cubic B&eacute;zier curves, and elliptical arcs,
 as well as closed figures made from several path segments.
 
-## How to Use <a id=How_to_Use></a>
+<a id=How_to_Use></a>
+## How to Use
 
 2D paths are implemented in a class called [`H3DU.GraphicsPath`]{@link H3DU.GraphicsPath}, found in the file _extras/path.js_ in
 the HTML 3D Library download.  To use this class, you must include the script "extras/path.js",
@@ -25,12 +28,14 @@ as in this example.
     <script type="text/javascript" src="h3du_min.js"></script>
     <script type="text/javascript" src="extras/path.js"></script>
 
-## Creating Paths <a id=Creating_Paths></a>
+<a id=Creating_Paths></a>
+## Creating Paths
 
 There are two ways to create paths: using an SVG path string, or by calling methods that add
 its segments.
 
-### SVG Path String <a id=SVG_Path_String></a>
+<a id=SVG_Path_String></a>
+### SVG Path String
 
 If you've worked with SVG, you may be familiar with this format for describing 2D paths. An
 SVG path string consists of one or more path commands that start with a single letter.
@@ -53,7 +58,8 @@ example:
 
     var path = H3DU.GraphicsPath.fromString("M50,20C230,245,233,44,22,44")
 
-### Building Paths <a id=Building_Paths></a>
+<a id=Building_Paths></a>
+### Building Paths
 
 The other way to make paths is to call the `H3DU.GraphicsPath` constructor and call methods
 to add path segments to the path.
@@ -66,7 +72,8 @@ of connected lines and curves.
 * _.lineTo(x, y)_ - Adds a line segment from the current position to a new ending position.
 * _.closePath()_ - Closes the path by drawing a line to the starting point, if needed.
 
-## Path Segments <a id=Path_Segments></a>
+<a id=Path_Segments></a>
+## Path Segments
 
 Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
 Line segments are relatively easy to understand. The other two kinds of segments
@@ -83,7 +90,8 @@ An _elliptic arc_ is a curve which forms part of an ellipse. There are several w
 parameterize an elliptic arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
 of the `H3DU.GraphicsPath` class.
 
-## Methods <a id=Methods></a>
+<a id=Methods></a>
+## Methods
 
 * The _.getLength()_ method finds the approximate length of a path.
 * The _.getBounds()_ method finds the axis-aligned bounding box of a path.

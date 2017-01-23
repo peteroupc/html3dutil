@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-## Public-Domain HTML 3D Library <a id=Public_Domain_HTML_3D_Library></a>
+<a id=Public_Domain_HTML_3D_Library></a>
+## Public-Domain HTML 3D Library
 
 This page will introduce the [**HTML 3D Library**](https://github.com/peteroupc/html3dutil/releases), an open-source JavaScript library that I wrote.
 
@@ -12,15 +13,17 @@ The library differs from many others because this one is in the public domain, s
 
 This page includes information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.
 
-## Example <a id=Example></a>
+<a id=Example></a>
+## Example
 
 ![](https://peteroupc.github.io/html3dutil/html3d.png)
 
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>
 
-## How to Use <a id=How_to_Use></a>
+## How to Use
 
 1. [**Download the HTML 3D library**](https://github.com/peteroupc/html3dutil/releases).
 2. Extract the file <i>"h3du_min.js"</i>, and write the following code in every HTML page where you will use the library.
@@ -41,7 +44,8 @@ This page includes information on how to use the HTML 3D library, an overview of
         })
         </script>
 
-### List of Classes <a id=List_of_Classes></a>
+<a id=List_of_Classes></a>
+### List of Classes
 This is an overview of most of the JavaScript classes available in this library:
 
 * [`H3DU`](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the HTML 3D Library
@@ -74,7 +78,8 @@ For much more information on all of these classes, see my <a href="https://peter
 
 The following sections detail how a 3D application using this library works.
 
-### `H3DU.Scene3D` <a id=H3DU_Scene3D></a>
+<a id=H3DU_Scene3D></a>
+### `H3DU.Scene3D`
 
 The `H3DU.Scene3D` class is a renderer for a canvas GL context. It renders batches of 3D shapes
 in the form of `H3DU.Batch3D` objects.  Each `Batch3D` represents a so-called "scene graph". It holds
@@ -91,7 +96,8 @@ need to pass it to `new Scene3D()`. Once you do so, `H3DU.Scene3D` will use that
     var scene=new H3DU.Scene3D(canvas);
     var batch=new H3DU.Batch3D();
 
-### The "Camera" <a id=The_Camera></a>
+<a id=The_Camera></a>
+### The "Camera"
 
 The `H3DU.Batch3D` class has a concept of a "projection transform" and a "view transform". If we
 use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `H3DU.Batch3D` has methods for setting all these attributes of this abstract "camera". Two of them are `perspectiveAspect()` and `setLookAt()`, which are shown in the example below.
@@ -107,7 +113,8 @@ use the concept of a "camera", the projection is like setting the camera&#39;s f
 
 For more information, see _<a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The "Camera" and Geometric Transforms</a>_.
 
-### 3D Models <a id=3D_Models></a>
+<a id=3D_Models></a>
+### 3D Models
 
 Every 3D scene is made up of "meshes", or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `H3DU.Mesh` class, or create a built-in geometric shape using a method in the `H3DU.Meshes` class. The example below shows how you can create a box mesh:
 
@@ -133,7 +140,8 @@ features or parameters in the `Meshes` class; for that, see the
   <br>Same as calling `createPartialDisk` with `start` 0 and `sweep` 360.
 
 For more information on meshes, see <a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib">_Creating shapes using the Public Domain HTML 3D Library_</a>.
-### Shapes <a id=Shapes></a>
+<a id=Shapes></a>
+### Shapes
 
 Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
 Use the `H3DU.Shape` constructor method to convert the mesh to a shape. Then you can set the shape&#39;s properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D object batch.
@@ -166,7 +174,8 @@ Here are details on some of the `Shape` class&#39;s methods.
   * <dfn>`shape.copy()`</dfn>
   <br>Creates a copy of this shape. Can be more efficient than calling `new H3DU.Shape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.
 
-### The Render Loop <a id=The_Render_Loop></a>
+<a id=The_Render_Loop></a>
+### The Render Loop
 
 An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the `H3DU.Scene3D.render()` method, passing a batch of shapes to render. Render loops are created using the `H3DU.renderLoop()` method. Here is an example of a render loop.
 
@@ -179,7 +188,8 @@ An important part of a 3D application is the render loop. The render loop is a b
 
 The render loop method takes a parameter (here "time"), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.
 
-## A Skeleton for 3D Apps <a id=A_Skeleton_for_3D_Apps></a>
+<a id=A_Skeleton_for_3D_Apps></a>
+## A Skeleton for 3D Apps
 
 The following is a minimal skeleton you can use for writing HTML apps using this library.
 
@@ -195,21 +205,25 @@ The following is a minimal skeleton you can use for writing HTML apps using this
     </script>
     </body>
 
-## Demos <a id=Demos></a>
+<a id=Demos></a>
+## Demos
 
 The following are HTML Web pages showing a variety of features of the HTML 3D library. Each demo includes a link to access source code for that demo.
 
-### Simple Demos <a id=Simple_Demos></a>
+<a id=Simple_Demos></a>
+### Simple Demos
 
 * [demos/simple.html](https://peteroupc.github.io/html3dutil/demos/simple.html) - A simple demo using this library.
 * [demos/triangle.html](https://peteroupc.github.io/html3dutil/demos/triangle.html) - Demonstrates drawing a triangle.
 
-### Materials <a id=Materials></a>
+<a id=Materials></a>
+### Materials
 
 * [demos/selfpulse.html](https://peteroupc.github.io/html3dutil/demos/selfpulse.html) - Demonstrates
 a rotating, pulsating box.
 
-### Shapes and meshes <a id=Shapes_and_meshes></a>
+<a id=Shapes_and_meshes></a>
+### Shapes and meshes
 
 * [demos/compositeMesh.html](https://peteroupc.github.io/html3dutil/demos/compositeMesh.html) - Demonstrates
 combining multiple meshes into one.
@@ -226,7 +240,8 @@ platonic solids. Demonstrates:
 * [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 
-### Paths <a id=Paths></a>
+<a id=Paths></a>
+### Paths
 
 * [demos/marchingdots.html](https://peteroupc.github.io/html3dutil/demos/marchingdots.html) - Demo
 of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.
@@ -238,7 +253,8 @@ of a tube formed by a path curve.
 * [demos/pathshapes.html](https://peteroupc.github.io/html3dutil/demos/pathshapes.html) - Demo
 of 3D and 2D shapes generated by a 2D path.
 
-### Curves and Surfaces <a id=Curves_and_Surfaces></a>
+<a id=Curves_and_Surfaces></a>
+### Curves and Surfaces
 
 * [demos/surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates
 using evaluators to generate parametric surfaces.
@@ -251,7 +267,8 @@ parametric curves, with a custom formula editor.
 * [demos/implicit.html](https://peteroupc.github.io/html3dutil/demos/implicit.html) - Demonstrates
 implicit surfaces.
 
-### Textures <a id=Textures></a>
+<a id=Textures></a>
+### Textures
 
 * [demos/textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
 and applying them to 3D shapes.
@@ -262,26 +279,31 @@ texture -- a linear gradient from one color to another.
 * [demos/skysphere.html](https://peteroupc.github.io/html3dutil/demos/skysphere.html) - Demonstrates how to
 implement a 360-degree background texture -- a _sky sphere_ -- using custom shader materials.
 
-### Shaders <a id=Shaders></a>
+<a id=Shaders></a>
+### Shaders
 
 * [demos/squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates shader-based filters.
 
-### Particle Systems <a id=Particle_Systems></a>
+<a id=Particle_Systems></a>
+### Particle Systems
 
 * [demos/tris.html](https://peteroupc.github.io/html3dutil/demos/tris.html) - Demonstrates a particle system.
 * [demos/fallingballs.html](https://peteroupc.github.io/html3dutil/demos/fallingballs.html) - Demonstrates falling balls
 of different sizes.
 
-### Loading 3D Models <a id=Loading_3D_Models></a>
+<a id=Loading_3D_Models></a>
+### Loading 3D Models
 
 * [demos/obj.html](https://peteroupc.github.io/html3dutil/demos/obj.html) - An object file loader.
 * [demos/stl.html](https://peteroupc.github.io/html3dutil/demos/stl.html) - Demonstrates loading 3D models.
 
-### Text <a id=Text></a>
+<a id=Text></a>
+### Text
 
 * [demos/textwith3D.html](https://peteroupc.github.io/html3dutil/demos/textwith3d.html) - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.
 
-### Miscellaneous <a id=Miscellaneous></a>
+<a id=Miscellaneous></a>
+### Miscellaneous
 
 * [demos/background.html](https://peteroupc.github.io/html3dutil/demos/background.html) - A demo
 featuring a background with continuously drawn 3D shapes.
@@ -294,7 +316,8 @@ both functions for interpolating quaternion rotations.
 * [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 * [demos/gears.html](https://peteroupc.github.io/html3dutil/demos/gears.html) - A demonstration of rotating gears.
 
-## Example <a id=Example></a>
+<a id=Example></a>
+## Example
 
 The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the `<canvas>` element it uses on the page.
 

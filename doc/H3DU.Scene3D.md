@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Scene3D(canvasOrContext) <a id='H3DU.Scene3D'></a>
+ <a name='H3DU.Scene3D'></a>
+### H3DU.Scene3D(canvasOrContext)
 
 An object that holds a rendering context for rendering
 3D objects.
@@ -90,38 +91,46 @@ until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropp
 to set the shader programs they use.</b>
 * [vertexCount](#H3DU.Scene3D_H3DU.Scene3D_vertexCount)<br><b>Deprecated: Use the vertexCount method of <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
-### H3DU.Scene3D.BACK <a id='H3DU.Scene3D.BACK'></a> (constant)
+<a id='H3DU.Scene3D.BACK'></a>
+### H3DU.Scene3D.BACK (constant)
 
 Back side of a triangle. By default, triangles with clockwise winding are back-facing.
 
-### H3DU.Scene3D.CCW <a id='H3DU.Scene3D.CCW'></a> (constant)
+<a id='H3DU.Scene3D.CCW'></a>
+### H3DU.Scene3D.CCW (constant)
 
 Counterclockwise winding. A triangle has counterclockwise winding (or orientation) if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle's two-dimensional projection in _window coordinates_ (which roughly correspond to its location on the screen or frame buffer).
 
-### H3DU.Scene3D.CW <a id='H3DU.Scene3D.CW'></a> (constant)
+<a id='H3DU.Scene3D.CW'></a>
+### H3DU.Scene3D.CW (constant)
 
 Clockwise winding, the opposite of counterclockwise winding.
 
-### H3DU.Scene3D.FRONT <a id='H3DU.Scene3D.FRONT'></a> (constant)
+<a id='H3DU.Scene3D.FRONT'></a>
+### H3DU.Scene3D.FRONT (constant)
 
 Front side of a triangle. By default, triangles with counterclockwise winding are front-facing.
 
-### H3DU.Scene3D.FRONT_AND_BACK <a id='H3DU.Scene3D.FRONT_AND_BACK'></a> (constant)
+<a id='H3DU.Scene3D.FRONT_AND_BACK'></a>
+### H3DU.Scene3D.FRONT_AND_BACK (constant)
 
 Back and front sides of a triangle.
 
-### H3DU.Scene3D.NONE <a id='H3DU.Scene3D.NONE'></a> (constant)
+<a id='H3DU.Scene3D.NONE'></a>
+### H3DU.Scene3D.NONE (constant)
 
 No face culling.
 
-### H3DU.Scene3D#shapes <a id='H3DU.Scene3D_shapes'></a>
+<a id='H3DU.Scene3D_shapes'></a>
+### H3DU.Scene3D#shapes
 
 <b>Deprecated: Shapes should now be managed in <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects,
 rather than through this class.</b>
 
 An array of shapes that are part of the scene.
 
-### H3DU.Scene3D#addShape(shape) <a id='H3DU.Scene3D_H3DU.Scene3D_addShape'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_addShape'></a>
+### H3DU.Scene3D#addShape(shape)
 
 <b>Deprecated: Use the addShape method of individual <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instances
 instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom
@@ -140,7 +149,8 @@ Its parent will be set to no parent.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#clear() <a id='H3DU.Scene3D_H3DU.Scene3D_clear'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_clear'></a>
+### H3DU.Scene3D#clear()
 
 Clears the color, depth, and stencil buffers used in this scene,
 if any.
@@ -149,7 +159,8 @@ if any.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#clearDepth() <a id='H3DU.Scene3D_H3DU.Scene3D_clearDepth'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_clearDepth'></a>
+### H3DU.Scene3D#clearDepth()
 
 Clears the depth buffer used in this scene, if any.
 
@@ -157,7 +168,8 @@ Clears the depth buffer used in this scene, if any.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#createBuffer() <a id='H3DU.Scene3D_H3DU.Scene3D_createBuffer'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_createBuffer'></a>
+### H3DU.Scene3D#createBuffer()
 
 Creates a frame buffer object associated with this scene.
 
@@ -165,7 +177,8 @@ Creates a frame buffer object associated with this scene.
 
 A buffer with the same size as this scene. (Type: <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a>)
 
-### H3DU.Scene3D#cullFace(value) <a id='H3DU.Scene3D_H3DU.Scene3D_cullFace'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_cullFace'></a>
+### H3DU.Scene3D#cullFace(value)
 
 Specifies which kinds of triangle faces are culled (not drawn)
 when rendering this scene.
@@ -179,7 +192,8 @@ when rendering this scene.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#dispose() <a id='H3DU.Scene3D_H3DU.Scene3D_dispose'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_dispose'></a>
+### H3DU.Scene3D#dispose()
 
 Disposes all resources used by this object.
 
@@ -187,7 +201,8 @@ Disposes all resources used by this object.
 
 Return value. (Type: Object)
 
-### H3DU.Scene3D#frontFace(value) <a id='H3DU.Scene3D_H3DU.Scene3D_frontFace'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_frontFace'></a>
+### H3DU.Scene3D#frontFace(value)
 
 Specifies the winding of front faces.
 
@@ -200,7 +215,8 @@ Specifies the winding of front faces.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#getAspect() <a id='H3DU.Scene3D_H3DU.Scene3D_getAspect'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getAspect'></a>
+### H3DU.Scene3D#getAspect()
 
 Gets the ratio of width to height for this scene (getWidth()
 divided by getHeight()).
@@ -211,7 +227,8 @@ after each call to the render() method.
 
 Aspect ratio, or 1 if height is 0. (Type: Number)
 
-### H3DU.Scene3D#getCanvas() <a id='H3DU.Scene3D_H3DU.Scene3D_getCanvas'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getCanvas'></a>
+### H3DU.Scene3D#getCanvas()
 
 Gets the HTML canvas associated with this scene.
 
@@ -219,7 +236,8 @@ Gets the HTML canvas associated with this scene.
 
 Return value. (Type: Object)
 
-### H3DU.Scene3D#getClearColor() <a id='H3DU.Scene3D_H3DU.Scene3D_getClearColor'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getClearColor'></a>
+### H3DU.Scene3D#getClearColor()
 
 Gets the color used when clearing the screen each frame.
 
@@ -228,7 +246,8 @@ Gets the color used when clearing the screen each frame.
 An array of four numbers, from 0 through
 1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;Number>)
 
-### H3DU.Scene3D#getClientAspect() <a id='H3DU.Scene3D_H3DU.Scene3D_getClientAspect'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getClientAspect'></a>
+### H3DU.Scene3D#getClientAspect()
 
 Gets the ratio of width to height for this scene,
 as actually displayed on the screen.
@@ -237,7 +256,8 @@ as actually displayed on the screen.
 
 Aspect ratio, or 1 if height is 0. (Type: Number)
 
-### H3DU.Scene3D#getContext() <a id='H3DU.Scene3D_H3DU.Scene3D_getContext'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getContext'></a>
+### H3DU.Scene3D#getContext()
 
 Returns the WebGL context associated with this scene.
 
@@ -245,7 +265,8 @@ Returns the WebGL context associated with this scene.
 
 Return value. (Type: WebGLRenderingContext)
 
-### H3DU.Scene3D#getHeight() <a id='H3DU.Scene3D_H3DU.Scene3D_getHeight'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getHeight'></a>
+### H3DU.Scene3D#getHeight()
 
 Gets the viewport height for this scene.
 Note that if auto-resizing is enabled, this value may change
@@ -255,7 +276,8 @@ after each call to the render() method.
 
 Return value. (Type: Number)
 
-### H3DU.Scene3D#getLights() <a id='H3DU.Scene3D_H3DU.Scene3D_getLights'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getLights'></a>
+### H3DU.Scene3D#getLights()
 
 <b>Deprecated: Use the removeShape method of individual <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instances
 instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom
@@ -267,7 +289,8 @@ Gets the light sources used in this scene.
 
 The light sources used in this scene. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
-### H3DU.Scene3D#getProjectionMatrix() <a id='H3DU.Scene3D_H3DU.Scene3D_getProjectionMatrix'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getProjectionMatrix'></a>
+### H3DU.Scene3D#getProjectionMatrix()
 
 <b>Deprecated: Use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -277,7 +300,8 @@ Gets the current projection matrix for this scene.
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Scene3D#getViewMatrix() <a id='H3DU.Scene3D_H3DU.Scene3D_getViewMatrix'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getViewMatrix'></a>
+### H3DU.Scene3D#getViewMatrix()
 
 <b>Deprecated: Use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -287,7 +311,8 @@ Gets the current view matrix for this scene.
 
 Return value. (Type: Array.&lt;Number>)
 
-### H3DU.Scene3D#getWidth() <a id='H3DU.Scene3D_H3DU.Scene3D_getWidth'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getWidth'></a>
+### H3DU.Scene3D#getWidth()
 
 Gets the viewport width for this scene.
 Note that if auto-resizing is enabled, this value may change
@@ -297,7 +322,8 @@ after each call to the render() method.
 
 Return value. (Type: Number)
 
-### H3DU.Scene3D#loadAndMapTexture(texture) <a id='H3DU.Scene3D_H3DU.Scene3D_loadAndMapTexture'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_loadAndMapTexture'></a>
+### H3DU.Scene3D#loadAndMapTexture(texture)
 
 <b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
 instead.</b>
@@ -317,7 +343,8 @@ the image is loaded successfully and uploaded
 to a texture buffer (the result will be an H3DU.Texture
 object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>)
 
-### H3DU.Scene3D#loadAndMapTextures(textureFiles, [resolve], [reject]) <a id='H3DU.Scene3D_H3DU.Scene3D_loadAndMapTextures'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_loadAndMapTextures'></a>
+### H3DU.Scene3D#loadAndMapTextures(textureFiles, [resolve], [reject])
 
 <b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
 instead.</b>
@@ -342,7 +369,8 @@ The result will be an object with three properties:
 "successes", "failures", and "results".
 See <a href="H3DU.md#H3DU.getPromiseResults">H3DU.getPromiseResults</a>. (Type: <a href="Promise.md">Promise</a>)
 
-### H3DU.Scene3D#loadTexture(name) <a id='H3DU.Scene3D_H3DU.Scene3D_loadTexture'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_loadTexture'></a>
+### H3DU.Scene3D#loadTexture(name)
 
 <b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
 loadTexturesAll instead.</b>
@@ -360,7 +388,8 @@ A promise that is resolved when
 the image is loaded successfully (the result will be an H3DU.Texture
 object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>)
 
-### H3DU.Scene3D#makeShape(mesh) <a id='H3DU.Scene3D_H3DU.Scene3D_makeShape'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_makeShape'></a>
+### H3DU.Scene3D#makeShape(mesh)
 
 <b>Deprecated: Use the H3DU.Shape constructor instead.</b>
 
@@ -376,7 +405,8 @@ returns a shape object.
 
 The generated shape object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.Scene3D#primitiveCount() <a id='H3DU.Scene3D_H3DU.Scene3D_primitiveCount'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_primitiveCount'></a>
+### H3DU.Scene3D#primitiveCount()
 
 <b>Deprecated: Use the <code>primitiveCount</code> method of <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -387,7 +417,8 @@ and points) composed by all shapes in this scene.
 
 Return value. (Type: Number)
 
-### H3DU.Scene3D#removeShape(shape) <a id='H3DU.Scene3D_H3DU.Scene3D_removeShape'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_removeShape'></a>
+### H3DU.Scene3D#removeShape(shape)
 
 <b>Deprecated: Use the removeShape method of individual <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instances
 instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom
@@ -404,7 +435,8 @@ Removes all instances of a 3D shape from this scene.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#render(renderPasses) <a id='H3DU.Scene3D_H3DU.Scene3D_render'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_render'></a>
+### H3DU.Scene3D#render(renderPasses)
 
 Renders all shapes added to this scene.
 This is usually called in a render loop, such
@@ -422,7 +454,8 @@ buffer and depth buffer. This compatibility option may be dropped in the future.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setAmbient(r, g, b, [a]) <a id='H3DU.Scene3D_H3DU.Scene3D_setAmbient'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setAmbient'></a>
+### H3DU.Scene3D#setAmbient(r, g, b, [a])
 
 <b>Deprecated: Use the Lights method setAmbient instead and the <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> method getLights. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -443,7 +476,8 @@ Sets the color of the scene's ambient light.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setAutoResize(value) <a id='H3DU.Scene3D_H3DU.Scene3D_setAutoResize'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setAutoResize'></a>
+### H3DU.Scene3D#setAutoResize(value)
 
 Sets whether to check whether to resize the canvas
 when the render() method is called.
@@ -457,7 +491,8 @@ when the render() method is called.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setClearColor(r, g, b, [a]) <a id='H3DU.Scene3D_H3DU.Scene3D_setClearColor'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setClearColor'></a>
+### H3DU.Scene3D#setClearColor(r, g, b, [a])
 
 Sets the color used when clearing the screen each frame.
 This color is black by default.
@@ -477,7 +512,8 @@ This color is black by default.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setDimensions(width, height) <a id='H3DU.Scene3D_H3DU.Scene3D_setDimensions'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setDimensions'></a>
+### H3DU.Scene3D#setDimensions(width, height)
 
 Sets the viewport width and height for this scene.
 
@@ -492,7 +528,8 @@ Sets the viewport width and height for this scene.
 
 Return value. (Type: Number)
 
-### H3DU.Scene3D#setDirectionalLight(index, position, [diffuse], [specular]) <a id='H3DU.Scene3D_H3DU.Scene3D_setDirectionalLight'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setDirectionalLight'></a>
+### H3DU.Scene3D#setDirectionalLight(index, position, [diffuse], [specular])
 
 <b>Deprecated: Use the Lights method setDirectionalLight instead and the <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> method getLights. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -513,7 +550,8 @@ Sets a light source in this scene to a directional light.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setFrustum(left, right, bottom, top, near, far) <a id='H3DU.Scene3D_H3DU.Scene3D_setFrustum'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setFrustum'></a>
+### H3DU.Scene3D#setFrustum(left, right, bottom, top, near, far)
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -542,7 +580,8 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setLightParams(index, params) <a id='H3DU.Scene3D_H3DU.Scene3D_setLightParams'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setLightParams'></a>
+### H3DU.Scene3D#setLightParams(index, params)
 
 <b>Deprecated: Use the Lights method setParams instead and the <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> method getLights. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -559,7 +598,8 @@ Sets parameters for a light in this scene.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setLookAt(eye, [center], [up]) <a id='H3DU.Scene3D_H3DU.Scene3D_setLookAt'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setLookAt'></a>
+### H3DU.Scene3D#setLookAt(eye, [center], [up])
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setLookAt. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -580,7 +620,8 @@ This method takes a camera's position (<code>eye</code>), and the point the came
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setOrtho(left, right, bottom, top, near, far) <a id='H3DU.Scene3D_H3DU.Scene3D_setOrtho'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setOrtho'></a>
+### H3DU.Scene3D#setOrtho(left, right, bottom, top, near, far)
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -607,7 +648,8 @@ plane and the top to the bottom.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setOrtho2D(left, right, bottom, top) <a id='H3DU.Scene3D_H3DU.Scene3D_setOrtho2D'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setOrtho2D'></a>
+### H3DU.Scene3D#setOrtho2D(left, right, bottom, top)
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4ortho2d">H3DU.Math.mat4ortho2d</a>. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -629,7 +671,8 @@ The near and far clipping planes will be set to -1 and 1, respectively.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setOrtho2DAspect(left, right, bottom, top, [aspect]) <a id='H3DU.Scene3D_H3DU.Scene3D_setOrtho2DAspect'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setOrtho2DAspect'></a>
+### H3DU.Scene3D#setOrtho2DAspect(left, right, bottom, top, [aspect])
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -658,7 +701,8 @@ or squishing it.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setOrthoAspect(left, right, bottom, top, near, far, [aspect]) <a id='H3DU.Scene3D_H3DU.Scene3D_setOrthoAspect'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setOrthoAspect'></a>
+### H3DU.Scene3D#setOrthoAspect(left, right, bottom, top, near, far, [aspect])
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -692,7 +736,8 @@ or squishing it.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setPerspective(fov, aspect, near, far) <a id='H3DU.Scene3D_H3DU.Scene3D_setPerspective'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setPerspective'></a>
+### H3DU.Scene3D#setPerspective(fov, aspect, near, far)
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -722,7 +767,8 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
     // and will see objects from 0.1 to 100 units away.
     scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 
-### H3DU.Scene3D#setPointLight(index, position, [diffuse], [specular]) <a id='H3DU.Scene3D_H3DU.Scene3D_setPointLight'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setPointLight'></a>
+### H3DU.Scene3D#setPointLight(index, position, [diffuse], [specular])
 
 <b>Deprecated: Use the LightSource method setPointLight instead and the <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> method getLights. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -743,7 +789,8 @@ Sets a light source in this scene to a point light.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setProjectionMatrix(matrix) <a id='H3DU.Scene3D_H3DU.Scene3D_setProjectionMatrix'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setProjectionMatrix'></a>
+### H3DU.Scene3D#setProjectionMatrix(matrix)
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -760,7 +807,8 @@ H3DU.Scene3D#setOrtho2D, and H3DU.Scene3D#setPerspective methods.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setUseDevicePixelRatio(value) <a id='H3DU.Scene3D_H3DU.Scene3D_setUseDevicePixelRatio'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setUseDevicePixelRatio'></a>
+### H3DU.Scene3D#setUseDevicePixelRatio(value)
 
 Sets whether to use the device's pixel ratio (if supported by
 the browser) in addition to the canvas's size when setting
@@ -778,7 +826,8 @@ adjust the viewport.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#setViewMatrix(matrix) <a id='H3DU.Scene3D_H3DU.Scene3D_setViewMatrix'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_setViewMatrix'></a>
+### H3DU.Scene3D#setViewMatrix(matrix)
 
 <b>Deprecated: Instead of this method, use H3DU.Batch3D#setViewMatrix in conjunction with <a href="H3DU.Math.md#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
@@ -794,7 +843,8 @@ be set using the H3DU.Scene3D#setLookAt method.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#useFilter(filterProgram) <a id='H3DU.Scene3D_H3DU.Scene3D_useFilter'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_useFilter'></a>
+### H3DU.Scene3D#useFilter(filterProgram)
 
 <b>Deprecated: Use the <a href="H3DU.Batch3D.md#H3DU.Batch3D.forFilter">H3DU.Batch3D.forFilter</a> method to create a batch
 for rendering filter effects from a frame buffer, or use the H3DU.Batch3D.useShader
@@ -813,7 +863,8 @@ scene is rendered.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#useProgram(program) <a id='H3DU.Scene3D_H3DU.Scene3D_useProgram'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_useProgram'></a>
+### H3DU.Scene3D#useProgram(program)
 
 <b>Deprecated: Instead of this method, use the "setShader" program of individual shapes
 to set the shader programs they use.</b>
@@ -831,7 +882,8 @@ and prepared this object for the new program.)
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.Scene3D#vertexCount() <a id='H3DU.Scene3D_H3DU.Scene3D_vertexCount'></a>
+ <a name='H3DU.Scene3D_H3DU.Scene3D_vertexCount'></a>
+### H3DU.Scene3D#vertexCount()
 
 <b>Deprecated: Use the vertexCount method of <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 

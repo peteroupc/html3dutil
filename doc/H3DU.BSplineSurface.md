@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits]) <a id='H3DU.BSplineSurface'></a>
+ <a name='H3DU.BSplineSurface'></a>
+### H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits])
 
 A parametric evaluator for B-spline (basis spline) surfaces.
 
@@ -25,7 +26,8 @@ the surface's edges lie on the edges of the control point array.
 * [evaluate](#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B-spline surface.
 
-### H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits]) <a id='H3DU.BSplineSurface.clamped'></a>
+ <a name='H3DU.BSplineSurface.clamped'></a>
+### H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])
 
 Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.
@@ -45,7 +47,8 @@ the surface's edges lie on the edges of the control point array.
 
 Return value. (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
 
-### H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits]) <a id='H3DU.BSplineSurface.uniform'></a>
+ <a name='H3DU.BSplineSurface.uniform'></a>
+### H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])
 
 Creates a B-spline surface with uniform knots.
 
@@ -64,7 +67,8 @@ Creates a B-spline surface with uniform knots.
 
 Return value. (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
 
-### H3DU.BSplineSurface#evaluate(u, v) <a id='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a>
+ <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a>
+### H3DU.BSplineSurface#evaluate(u, v)
 
 Evaluates the surface function based on a point
 in a B-spline surface.

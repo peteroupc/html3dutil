@@ -1614,6 +1614,30 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return mat;
   },
 /**
+ * Returns the transpose of a 3x3 matrix. (A transpose is a
+ * matrix whose rows are converted to columns and vice versa.)
+ * @param {Array<Number>} m3 A 3x3 matrix.
+ * @returns {Array<Number>} The resulting 3x3 matrix.
+ */
+  "mat3transpose":function(m3) {
+    "use strict";
+    return H3DU.Math.mat3transposeInPlace(m3.slice(0, 16));
+  },
+/**
+ * Transposes a 3x3 matrix in place without creating
+ * a new matrix. (A transpose is a matrix whose rows
+ * are converted to columns and vice versa.)
+ * @param {Array<Number>} mat A 3x3 matrix.
+ * @returns {Array<Number>} The parameter "mat".
+ */
+  "mat3transposeInPlace":function(mat) {
+    "use strict";
+    var tmp = mat[1];mat[1] = mat[3];mat[3] = tmp;
+    tmp = mat[2];mat[2] = mat[6];mat[6] = tmp;
+    tmp = mat[5];mat[5] = mat[7];mat[7] = tmp;
+    return mat;
+  },
+/**
  * Returns the transposed result of the inverted 3x3 upper left corner of
  * the given 4x4 matrix.<p>
  * This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix

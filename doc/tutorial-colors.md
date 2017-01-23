@@ -4,11 +4,12 @@
 
 This page describes common identifiers and names for colors, as used in the HTML 3D Library's `toGLColor` method.
 
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Contents](#Contents)<br>[What Colors Can I Use?](#What_Colors_Can_I_Use)<br>[What Do Some Colors Look Like?](#What_Do_Some_Colors_Look_Like)<br>[What Is the Syntax for HTML Colors?](#What_Is_the_Syntax_for_HTML_Colors)<br>&nbsp;&nbsp;[Shortened Notation](#Shortened_Notation)<br>[How Do I Make HTML Colors?](#How_Do_I_Make_HTML_Colors)<br>[What Are Some Common HTML Colors?](#What_Are_Some_Common_HTML_Colors)<br>[How Do I Darken an HTML Color?](#How_Do_I_Darken_an_HTML_Color)<br>[How Do I Lighten a HTML Color?](#How_Do_I_Lighten_a_HTML_Color)<br>[How Do I Desaturate an HTML Color?](#How_Do_I_Desaturate_an_HTML_Color)<br>[What Is an RGB Color?](#What_Is_an_RGB_Color)<br>[What Is an HSL Color?](#What_Is_an_HSL_Color)<br>&nbsp;&nbsp;[HSL Example](#HSL_Example)<br>[What Is an Alpha Component?](#What_Is_an_Alpha_Component)<br>
 
-## What Colors Can I Use? <a id=What_Colors_Can_I_Use></a>
+## What Colors Can I Use?
 
 You can use values like the following.
 
@@ -19,7 +20,8 @@ You can use values like the following.
 * The newly-added color name `rebeccapurple`.
 * The word `transparent`, meaning a fully-transparent color.
 
-## What Do Some Colors Look Like? <a id=What_Do_Some_Colors_Look_Like></a>
+<a id=What_Do_Some_Colors_Look_Like></a>
+## What Do Some Colors Look Like?
 
 Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the "Web safe" colors, which were chosen "specifically because they matched the palettes selected by the then leading browser applications" for 256-color displays (according to [Wikipedia](http://en.wikipedia.org/wiki/Web_colors)), but this list is still useful because it's short yet gives you a variety of appropriate colors for most purposes.
 
@@ -41,7 +43,8 @@ The following list shows the colors defined in the [CSS3 Color Module section 4]
 
 ![A list of named colors. Each entry consists of a color swatch and the corresponding name.](colornames.svg)
 
-## What Is the Syntax for HTML Colors? <a id=What_Is_the_Syntax_for_HTML_Colors></a>
+<a id=What_Is_the_Syntax_for_HTML_Colors></a>
+## What Is the Syntax for HTML Colors?
 
 The notation used to name the colors in the preceding section is used in HTML to define colors. It&#8217;s also known as &#8220;hex colors&#8221;.
 
@@ -56,12 +59,14 @@ The notation may also include an additional base-16 number, as in this example: 
 
 It looks complicated at first, but the section "How Do I Make HTML Colors?" will show a way to easily make your own colors in this notation.
 
-### Shortened Notation <a id=Shortened_Notation></a>
+<a id=Shortened_Notation></a>
+### Shortened Notation
 
 * Colors with only three base-16 digits are the same as their expanded six-digit form. For example, `#f8c` is the same as `#ff88cc`.
 * Colors with only four base-16 digits are the same as their expanded eight-digit form. For example, `#f8ce` is the same as `#ff88ccee`.
 
-## How Do I Make HTML Colors? <a id=How_Do_I_Make_HTML_Colors></a>
+<a id=How_Do_I_Make_HTML_Colors></a>
+## How Do I Make HTML Colors?
 
 Look at the table below that shows some of the values possible for the red, green, and blue components of some colors.
 
@@ -75,7 +80,8 @@ If you choose the same value in all three rows, the result is black (if you choo
 
 After you choose the three values, combine them by writing the `#`, then the red value, then the green value, then the blue value. For example, if you choose `FF` for red, `A0` for green, and `00` for blue, write the resulting color (orange) like this: `#FFA000`.
 
-## What Are Some Common HTML Colors? <a id=What_Are_Some_Common_HTML_Colors></a>
+<a id=What_Are_Some_Common_HTML_Colors></a>
+## What Are Some Common HTML Colors?
 
 Now, what follows is a list of common colors that are possible by choosing a value in each row. See also the list of colors sorted by hue.
 
@@ -94,25 +100,29 @@ Now, what follows is a list of common colors that are possible by choosing a val
 | White |  FF | FF | FF | #FFFFFF |
 | Gray  | 80 | 80 | 80 | #808080 |
 
-## How Do I Darken an HTML Color? <a id=How_Do_I_Darken_an_HTML_Color></a>
+<a id=How_Do_I_Darken_an_HTML_Color></a>
+## How Do I Darken an HTML Color?
 
 To darken a color (make a *shade* of it), use the table shown in &#8220;How Do I Make HTML Colors?&#8221;, above, and move each component (red, green, and blue) the same number of steps to the left. If you can&#8217;t move a component that far to the left, that component becomes 00.
 
 For example, to make a darker sky blue, start with 00, FF, and FF for red, green, and blue. When we move these components ten steps to the left, we get 00, 60, and 60. The final color becomes #006060.
 
-## How Do I Lighten a HTML Color? <a id=How_Do_I_Lighten_a_HTML_Color></a>
+<a id=How_Do_I_Lighten_a_HTML_Color></a>
+## How Do I Lighten a HTML Color?
 
 Lightening a color (making a *tint* of it) is almost the same as darkening a color, except we move the same number of steps to the right rather than the left. If you can&#8217;t move a component that far to the right, that component becomes FF.
 
 For example, to make a lighter red, start with FF, 00, and 00 for red, green, and blue. When we move these components ten steps to the right, we get FF, A0, and A0. The final color becomes #FFA0A0.
 
-## How Do I Desaturate an HTML Color? <a id=How_Do_I_Desaturate_an_HTML_Color></a>
+<a id=How_Do_I_Desaturate_an_HTML_Color></a>
+## How Do I Desaturate an HTML Color?
 
 To make a desaturated (washed-out) version (or *tone*) of a color, move the color components closer to each other, in about the same proportion. (If they&#8217;re exactly the same, the result is a shade of gray.)
 
 For example, to make a washed-out red, start with FF, 00, and 00 for red, green, and blue. When we move these components closer to each other, we get C0, 40, and 40. The final color becomes #C04040.
 
-## What Is an RGB Color? <a id=What_Is_an_RGB_Color></a>
+<a id=What_Is_an_RGB_Color></a>
+## What Is an RGB Color?
 
 An RGB color contains the same information as an HTML color, except that each value is shown in the familiar base-10 format. For example, the value `rgb(192,64,0)` is the same as the HTML color value `#C04000`.
 
@@ -122,7 +132,8 @@ The steps for darkening, lightening, and desaturating RGB colors are pretty much
 
 An alternate syntax for RGB colors supports the alpha component (see "What Is an Alpha Component?", below): in the example `rgba(192,64,0,0.5)`, the `0.5` is the alpha component. This component can be used with either range for RGB colors, either 0-255 or percentages. (Note that the example starts with `rgba`, not just `rgb`.)
 
-## What Is an HSL Color? <a id=What_Is_an_HSL_Color></a>
+<a id=What_Is_an_HSL_Color></a>
+## What Is an HSL Color?
 
 An HSL color is a color represented in the Hue-Saturation-Lightness color space. Here&#8217;s what each component means in detail.
 
@@ -139,13 +150,15 @@ An HSL color is a color represented in the Hue-Saturation-Lightness color space.
 
 * **Lightness** is also a value ranging from 0% to 100%. It expresses the amount of black or white in the color. 0% means fully black, 100% means fully white, and 50% means the color contains neither black nor white. ***To darken a color***, lower the lightness, and ***to lighten a color***, raise the lightness.
 
-### HSL Example <a id=HSL_Example></a>
+<a id=HSL_Example></a>
+### HSL Example
 
 The value `hsl(240,100%,50%)` has a hue of 240 (blue), a saturation of 100% (fully saturated), and a lightness of 50% (neither black or white). It represents a vivid blue. If we lower lightness to 20%, we get a dark blue. If we also change the hue to 0, we get a dark red.
 
 An alternate syntax for HSL colors supports the alpha component (see "What Is an Alpha Component?", below): in the example `hsla(240,100%,50%,80%)`, the `80%` is the alpha component.
 
-## What Is an Alpha Component? <a id=What_Is_an_Alpha_Component></a>
+<a id=What_Is_an_Alpha_Component></a>
+## What Is an Alpha Component?
 
 An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it). If a color notation doesn't use an alpha component, the color is fully opaque.
 

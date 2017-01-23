@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Epitrochoid(outerRadius, innerRadius, distFromInnerCenter) <a id='H3DU.Epitrochoid'></a>
+ <a name='H3DU.Epitrochoid'></a>
+### H3DU.Epitrochoid(outerRadius, innerRadius, distFromInnerCenter)
 
 Parametric evaluator for a
 curve drawn by a circle that rolls along the outside
@@ -33,7 +34,8 @@ the HTML 3D Library. Example:
 * [scaleTo](#H3DU.Epitrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
 
-### H3DU.Epitrochoid#evaluate(u) <a id='H3DU.Epitrochoid_evaluate'></a>
+ <a name='H3DU.Epitrochoid_evaluate'></a>
+### H3DU.Epitrochoid#evaluate(u)
 
 Generates a point on the curve from the given u coordinate.
 
@@ -47,7 +49,8 @@ Generates a point on the curve from the given u coordinate.
 A 3-element array specifying a 3D point.
 Only the X and Y coordinates will be other than 0. (Type: Array.&lt;Number>)
 
-### H3DU.Epitrochoid#scaleTo(radius) <a id='H3DU.Epitrochoid_scaleTo'></a>
+ <a name='H3DU.Epitrochoid_scaleTo'></a>
+### H3DU.Epitrochoid#scaleTo(radius)
 
 Creates a modified version of this curve so that it
 fits the given radius.

@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### MeshJSON() <a id='MeshJSON'></a>
+ <a name='MeshJSON'></a>
+### MeshJSON()
 
 <b>Deprecated: Use <a href="H3DU.MeshJSON.md">H3DU.MeshJSON</a> instead.</b>
 

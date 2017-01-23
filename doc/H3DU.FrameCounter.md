@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.FrameCounter() <a id='H3DU.FrameCounter'></a>
+ <a name='H3DU.FrameCounter'></a>
+### H3DU.FrameCounter()
 
 A class for finding the frame rate of an HTML rendering.
 
@@ -22,7 +23,8 @@ the HTML 3D Library. Example:
 on how often the update method was called.
 * [update](#H3DU.FrameCounter_H3DU.FrameCounter_update)<br>Updates the state for determining the frame count.
 
-### H3DU.FrameCounter#getFPS() <a id='H3DU.FrameCounter_H3DU.FrameCounter_getFPS'></a>
+ <a name='H3DU.FrameCounter_H3DU.FrameCounter_getFPS'></a>
+### H3DU.FrameCounter#getFPS()
 
 Gets the calculated frames per second, based
 on how often the update method was called.
@@ -31,7 +33,8 @@ on how often the update method was called.
 
 Return value. (Type: Object)
 
-### H3DU.FrameCounter#update() <a id='H3DU.FrameCounter_H3DU.FrameCounter_update'></a>
+ <a name='H3DU.FrameCounter_H3DU.FrameCounter_update'></a>
+### H3DU.FrameCounter#update()
 
 Updates the state for determining the frame count.
 This method should be called once per frame.

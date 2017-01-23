@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.FrameBuffer(context, width, height) <a id='H3DU.FrameBuffer'></a>
+ <a name='H3DU.FrameBuffer'></a>
+### H3DU.FrameBuffer(context, width, height)
 
 <b>Deprecated: This class is likely to become a private class.
 Use the FrameBufferInfo class instead, which is not coupled to WebGL
@@ -39,15 +40,18 @@ bound to the WebGL context will remain unchanged.
 if either differs from the current width or height.
 * [unbind](#H3DU.FrameBuffer_H3DU.FrameBuffer_unbind)<br>Has no effect.
 
-### H3DU.FrameBuffer.height <a id='H3DU.FrameBuffer.height'></a>
+<a id='H3DU.FrameBuffer.height'></a>
+### H3DU.FrameBuffer.height
 
 The frame buffer's height.
 
-### H3DU.FrameBuffer.width <a id='H3DU.FrameBuffer.width'></a>
+<a id='H3DU.FrameBuffer.width'></a>
+### H3DU.FrameBuffer.width
 
 The frame buffer's width.
 
-### H3DU.FrameBuffer#bind() <a id='H3DU.FrameBuffer_H3DU.FrameBuffer_bind'></a>
+ <a name='H3DU.FrameBuffer_H3DU.FrameBuffer_bind'></a>
+### H3DU.FrameBuffer#bind()
 
 Has no effect. (Previously, bound this frame buffer to the WebGL context associated with
 it.)
@@ -56,7 +60,8 @@ it.)
 
 This object. (Type: <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a>)
 
-### H3DU.FrameBuffer#dispose() <a id='H3DU.FrameBuffer_H3DU.FrameBuffer_dispose'></a>
+ <a name='H3DU.FrameBuffer_H3DU.FrameBuffer_dispose'></a>
+### H3DU.FrameBuffer#dispose()
 
 Disposes all resources from this frame buffer object.
 
@@ -64,7 +69,8 @@ Disposes all resources from this frame buffer object.
 
 Return value. (Type: void)
 
-### H3DU.FrameBuffer#getContext() <a id='H3DU.FrameBuffer_H3DU.FrameBuffer_getContext'></a>
+ <a name='H3DU.FrameBuffer_H3DU.FrameBuffer_getContext'></a>
+### H3DU.FrameBuffer#getContext()
 
 Gets the WebGL context associated with this frame buffer.
 
@@ -72,7 +78,8 @@ Gets the WebGL context associated with this frame buffer.
 
 Return value. (Type: WebGLRenderingContext)
 
-### H3DU.FrameBuffer#resize(width, height) <a id='H3DU.FrameBuffer_H3DU.FrameBuffer_resize'></a>
+ <a name='H3DU.FrameBuffer_H3DU.FrameBuffer_resize'></a>
+### H3DU.FrameBuffer#resize(width, height)
 
 Resizes the frame buffer to a new width and height,
 if either differs from the current width or height.
@@ -88,7 +95,8 @@ if either differs from the current width or height.
 
 This object. (Type: <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a>)
 
-### H3DU.FrameBuffer#unbind() <a id='H3DU.FrameBuffer_H3DU.FrameBuffer_unbind'></a>
+ <a name='H3DU.FrameBuffer_H3DU.FrameBuffer_unbind'></a>
+### H3DU.FrameBuffer#unbind()
 
 Has no effect. (Previously, unbound this frame buffer from its associated WebGL context.)
 

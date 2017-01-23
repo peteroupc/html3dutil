@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.LightSource([params], [ambient], [diffuse], [specular]) <a id='H3DU.LightSource'></a>
+ <a name='H3DU.LightSource'></a>
+### H3DU.LightSource([params], [ambient], [diffuse], [specular])
 
 Specifies parameters for light sources.
 
@@ -38,7 +39,8 @@ and blue components respectively.
 
 * [setParams](#H3DU.LightSource_H3DU.LightSource_setParams)<br>Sets parameters for this material object.
 
-### H3DU.LightSource#ambient <a id='H3DU.LightSource_ambient'></a>
+<a id='H3DU.LightSource_ambient'></a>
+### H3DU.LightSource#ambient
 
 A 4-element vector giving an additional color to multiply with the ambient
 color of each object, in the red, green,
@@ -49,7 +51,8 @@ NOTE: This property is not used in the default shader program.
 
 Default Value: `"[0,0,0,1]"`
 
-### H3DU.LightSource#diffuse <a id='H3DU.LightSource_diffuse'></a>
+<a id='H3DU.LightSource_diffuse'></a>
+### H3DU.LightSource#diffuse
 
 A 4-element vector giving an additional color to multiply with the diffuse
 or albedo color (base color) of each object, in the red, green,
@@ -59,7 +62,8 @@ The default is (1,1,1,1), or white.
 
 Default Value: `"[1,1,1,1]"`
 
-### H3DU.LightSource#position <a id='H3DU.LightSource_position'></a>
+<a id='H3DU.LightSource_position'></a>
+### H3DU.LightSource#position
 
 Light position. An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
 <li> If W is 0, then X, Y, and Z specify a vector in world space; the light will shine the brightest on surfaces that face the light in
@@ -68,14 +72,16 @@ this vector's direction from the origin (0, 0, 0).
 
 Default Value: `"[0,0,1,0]"`
 
-### H3DU.LightSource#radius <a id='H3DU.LightSource_radius'></a>
+<a id='H3DU.LightSource_radius'></a>
+### H3DU.LightSource#radius
 
 Radius of the light source. If 0, the light's intensity doesn't change
 with distance.
 
 Default Value: `0`
 
-### H3DU.LightSource#specular <a id='H3DU.LightSource_specular'></a>
+<a id='H3DU.LightSource_specular'></a>
+### H3DU.LightSource#specular
 
 A 3-element vector giving the color of the light when it causes a specular
 reflection, in the red, green,
@@ -90,7 +96,8 @@ for <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>.</i>
 
 Default Value: `"[1,1,1]"`
 
-### H3DU.LightSource#setParams(params) <a id='H3DU.LightSource_H3DU.LightSource_setParams'></a>
+ <a name='H3DU.LightSource_H3DU.LightSource_setParams'></a>
+### H3DU.LightSource#setParams(params)
 
 Sets parameters for this material object.
 

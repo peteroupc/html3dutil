@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.FrameBufferInfo(width, height) <a id='H3DU.FrameBufferInfo'></a>
+ <a name='H3DU.FrameBufferInfo'></a>
+### H3DU.FrameBufferInfo(width, height)
 
 Describes a frame buffer. In the HTML 3D Library,
 each frame buffer consists of a texture of a given size and a <i>renderbuffer</i> of the same
@@ -21,7 +22,8 @@ size to use as the depth buffer.
 * [getWidth](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth)<br>Gets the width to use for the frame buffer.
 * [resize](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize)<br>Changes the width and height of this frame buffer information object.
 
-### H3DU.FrameBufferInfo#getHeight() <a id='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight'></a>
+ <a name='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight'></a>
+### H3DU.FrameBufferInfo#getHeight()
 
 Gets the height to use for the frame buffer.
 
@@ -29,7 +31,8 @@ Gets the height to use for the frame buffer.
 
 Return value. (Type: Number)
 
-### H3DU.FrameBufferInfo#getWidth() <a id='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth'></a>
+ <a name='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth'></a>
+### H3DU.FrameBufferInfo#getWidth()
 
 Gets the width to use for the frame buffer.
 
@@ -37,7 +40,8 @@ Gets the width to use for the frame buffer.
 
 Return value. (Type: Number)
 
-### H3DU.FrameBufferInfo#resize(width, height) <a id='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize'></a>
+ <a name='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize'></a>
+### H3DU.FrameBufferInfo#resize(width, height)
 
 Changes the width and height of this frame buffer information object.
 

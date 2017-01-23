@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.RenderPass3D(subScene, [parameters]) <a id='H3DU.RenderPass3D'></a>
+ <a name='H3DU.RenderPass3D'></a>
+### H3DU.RenderPass3D(subScene, [parameters])
 
 Describes a batch (a scene graph of 3D objects) and options for
 rendering that batch.
@@ -27,25 +28,29 @@ rendering that batch.
 
 * [setParams](#H3DU.RenderPass3D_H3DU.RenderPass3D_setParams)<br>Sets parameters for this render pass object.
 
-### H3DU.RenderPass3D#clearColor <a id='H3DU.RenderPass3D_clearColor'></a>
+<a id='H3DU.RenderPass3D_clearColor'></a>
+### H3DU.RenderPass3D#clearColor
 
 Whether to clear the color buffer before rendering the batch.
 
 Default Value: `true`
 
-### H3DU.RenderPass3D#clearDepth <a id='H3DU.RenderPass3D_clearDepth'></a>
+<a id='H3DU.RenderPass3D_clearDepth'></a>
+### H3DU.RenderPass3D#clearDepth
 
 Whether to clear the depth buffer before rendering the batch.
 
 Default Value: `true`
 
-### H3DU.RenderPass3D#clearStencil <a id='H3DU.RenderPass3D_clearStencil'></a>
+<a id='H3DU.RenderPass3D_clearStencil'></a>
+### H3DU.RenderPass3D#clearStencil
 
 Whether to clear the stencil buffer before rendering the batch.
 
 Default Value: `true`
 
-### H3DU.RenderPass3D#frameBuffer <a id='H3DU.RenderPass3D_frameBuffer'></a>
+<a id='H3DU.RenderPass3D_frameBuffer'></a>
+### H3DU.RenderPass3D#frameBuffer
 
 Framebuffer to render to.
 
@@ -53,7 +58,8 @@ Type: <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a>
 
 Default Value: `null`
 
-### H3DU.RenderPass3D#shader <a id='H3DU.RenderPass3D_shader'></a>
+<a id='H3DU.RenderPass3D_shader'></a>
+### H3DU.RenderPass3D#shader
 
 Shader to use.
 
@@ -61,13 +67,15 @@ Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>
 
 Default Value: `null`
 
-### H3DU.RenderPass3D#subScene <a id='H3DU.RenderPass3D_subScene'></a>
+<a id='H3DU.RenderPass3D_subScene'></a>
+### H3DU.RenderPass3D#subScene
 
 The batch to render.
 
 Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>
 
-### H3DU.RenderPass3D#setParams(parameters) <a id='H3DU.RenderPass3D_H3DU.RenderPass3D_setParams'></a>
+ <a name='H3DU.RenderPass3D_H3DU.RenderPass3D_setParams'></a>
+### H3DU.RenderPass3D#setParams(parameters)
 
 Sets parameters for this render pass object.
 

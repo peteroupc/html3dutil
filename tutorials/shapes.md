@@ -1,4 +1,5 @@
-## Introduction <a id=Introduction></a>
+<a id=Introduction></a>
+## Introduction
 
 This page explains how my [HTML 3D Library](http://peteroupc.github.io/html3dutil)
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
@@ -17,11 +18,12 @@ This page will discuss:
 
 NOTE: This page will largely discuss the 2.0.0-beta1 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the library's [change history]{@tutorial history} for more information.)
 
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Introduction](#Introduction)<br>[Contents](#Contents)<br>[Creating Shapes](#Creating_Shapes)<br>&nbsp;&nbsp;[Built-In Shapes](#Built_In_Shapes)<br>&nbsp;&nbsp;[Custom Shapes](#Custom_Shapes)<br>&nbsp;&nbsp;[The Mesh Constructor](#The_Mesh_Constructor)<br>&nbsp;&nbsp;[Vertex Methods](#Vertex_Methods)<br>&nbsp;&nbsp;[Transforming the Mesh](#Transforming_the_Mesh)<br>&nbsp;&nbsp;[Texture Coordinates](#Texture_Coordinates)<br>&nbsp;&nbsp;[Normals](#Normals)<br>&nbsp;&nbsp;&nbsp;&nbsp;[What Are Normals?](#What_Are_Normals)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Normals on Built-in Shapes](#Normals_on_Built_in_Shapes)<br>&nbsp;&nbsp;&nbsp;&nbsp;[recalcNormals()](#recalcNormals)<br>[Binding Shapes](#Binding_Shapes)<br>[Shape Groups](#Shape_Groups)<br>[Other Pages](#Other_Pages)<br>
 
-## Creating Shapes <a id=Creating_Shapes></a>
+## Creating Shapes
 
 The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.
@@ -42,7 +44,8 @@ Examples:
 See [Examples of Creating Meshes on the Fly](https://peteroupc.github.io/html3dutil/tutorial.meshexamples.html) for
 examples of 3D models that can be created using the Mesh class and built-in shapes.
 
-### Built-In Shapes <a id=Built_In_Shapes></a>
+<a id=Built_In_Shapes></a>
+### Built-In Shapes
 
 The [`H3DU.Meshes`]{@link H3DU.Meshes} class includes several handy methods for creating built-in shapes.
 All methods described below return a `H3DU.Mesh` object that describes the triangles they
@@ -66,7 +69,8 @@ are composed of.  See "Custom Shapes" below for more on meshes.
   with a hole where the middle of the complete disk would be.
 * [Meshes.createPlane()]{@link H3DU.Meshes.createPlane} - Creates a rectangle.
 
-### Custom Shapes <a id=Custom_Shapes></a>
+<a id=Custom_Shapes></a>
+### Custom Shapes
 
 Also included is a `H3DU.Mesh` class for defining shapes not given among the built-in ones.
 Shapes can consist of triangles, lines, or points.
@@ -74,7 +78,8 @@ Shapes can consist of triangles, lines, or points.
 There are two ways for specifying shapes: through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.
 
-### The Mesh Constructor <a id=The_Mesh_Constructor></a>
+<a id=The_Mesh_Constructor></a>
+### The Mesh Constructor
 
 The `H3DU.Mesh` constructor lets you define a shape from a predefined array of vertex data.
 Here's how.
@@ -139,7 +144,8 @@ previous step:
 
     Doing so will create a mesh with no vertices.
 
-### Vertex Methods <a id=Vertex_Methods></a>
+<a id=Vertex_Methods></a>
+### Vertex Methods
 
 Alternatively, or in addition, to the method described above,
 you can specify the mesh's shape by calling methods that give each vertex's position and parameters:
@@ -194,7 +200,8 @@ you call `mesh.mode(H3DU.Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` w
 "disconnected" from the previous one as far as the mesh object is concerned. However,
 a single `Mesh` can contain only one kind of primitive (triangles, lines, or points) at a time.
 
-### Transforming the Mesh <a id=Transforming_the_Mesh></a>
+<a id=Transforming_the_Mesh></a>
+### Transforming the Mesh
 
 Once you've created the mesh, you can use the `transform()` method to transform
 all the vertices in the mesh with a [4x4 matrix]{@tutorial glmath}. The
@@ -206,7 +213,8 @@ Example:
     // Use the transform to double the mesh's size
     mesh = mesh.transform(matrix);
 
-### Texture Coordinates <a id=Texture_Coordinates></a>
+<a id=Texture_Coordinates></a>
+### Texture Coordinates
 
 If the mesh has a texture associated with it, you must specify texture coordinates
 for each vertex in the mesh.  A texture coordinate is a set of two numbers,
@@ -218,12 +226,14 @@ increase to the top (1).
 For example, texture coordinates (0, 1) indicate the top left corner of the texture,
 and texture coordinates (0.5, 0.5) indicate the center of the texture.
 
-### Normals <a id=Normals></a>
+<a id=Normals></a>
+### Normals
 
 For lighting and shading to work correctly, you must specify normals for all the
 vertices in the mesh.
 
-#### What Are Normals? <a id=What_Are_Normals></a>
+<a id=What_Are_Normals></a>
+#### What Are Normals?
 
 A normal is a set of 3 numbers describing a particular direction. Generally,
 a normal's direction is perpendicular to a surface's edges, and points
@@ -235,12 +245,14 @@ light points to the surface. It will be lit the most brightly if the light
 is directly opposite to its normal, and not at all if the light is perpendicular to the
 normal or in the same direction as the normal.
 
-#### Normals on Built-in Shapes <a id=Normals_on_Built_in_Shapes></a>
+<a id=Normals_on_Built_in_Shapes></a>
+#### Normals on Built-in Shapes
 
 The `Meshes` class includes built-in methods that will automatically
 specify the proper normals.
 
-#### recalcNormals() <a id=recalcNormals></a>
+<a id=recalcNormals></a>
+#### recalcNormals()
 
 You can use the [`recalcNormals()`]{@link H3DU.Mesh#recalcNormals} method to
 recalculate the mesh's normals,
@@ -273,7 +285,8 @@ Example:
     // Both parameters can be omitted, setting both to false
     mesh = mesh.recalcNormals();
 
-## Binding Shapes <a id=Binding_Shapes></a>
+<a id=Binding_Shapes></a>
+## Binding Shapes
 
 Once you have a mesh of a 3D shape, you still need to attach it to a shape
 and a batch of shapes in order for the renderer to draw it. This is where
@@ -337,7 +350,8 @@ then translating (shifting) the shape in 3D space.
     Now, the next time `scene3d.render(batch)` is called, the [`H3DU.Scene3D`]{@link H3DU.Scene3D} will render the
 given shape to the scene through the 3D batch.
 
-## Shape Groups <a id=Shape_Groups></a>
+<a id=Shape_Groups></a>
+## Shape Groups
 
 The `H3DU.ShapeGroup` class represents a shape that's a combination of multiple shapes. Usually,
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
@@ -369,7 +383,8 @@ call `new H3DU.Shape(shape)`. Note that you can only add shapes, not meshes,
 to a shape group, just as for a 3D batch (`H3DU.Batch3D`). A shape group, though, is perfectly allowed to contain
 other shape groups.
 
-## Other Pages <a id=Other_Pages></a>
+<a id=Other_Pages></a>
+## Other Pages
 
 The following pages of mine on CodeProject also discuss this library:
 

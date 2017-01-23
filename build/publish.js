@@ -318,8 +318,8 @@ function fillCollection(docCollection, nodes, parentlong) {
       }
       var attribs = helper.getAttribs(node);
       var attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
+      entry += " <a name='" + Doc.toHash(node.longname) + "'></a>\n";
       entry += "### " + attribstr + elname + "(" + paramnames.join(", ") + ")";
-      entry += " <a id='" + Doc.toHash(node.longname) + "'></a>";
       if(node.kind === "event") {
         entry += " (event)";
       }
@@ -400,7 +400,8 @@ function fillCollection(docCollection, nodes, parentlong) {
         entry += "# " + safelongname + "\n\n";
         entry += "[Back to documentation index.](index.md)\n\n";
       }
-      entry += "### " + safelongname + " <a id='" + Doc.toHash(node.longname) + "'></a>";
+      entry += "<a id='" + Doc.toHash(node.longname) + "'></a>\n";
+      entry += "### " + safelongname;
       if(node.kind === "constant") {
         entry += " (constant)";
       }

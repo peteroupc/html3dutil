@@ -427,13 +427,13 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#define saturate(f) clamp(f, 0.0, 1.0)",
     // Convert from sRGB to linear RGB
     "vec3 tolinear(vec3 c) {",
-    " c=clamp(c);",
+    " c=clamp(c,0.0,1.0);",
     " bvec3 lt=lessThan(c,vec3(0.04045));",
     " return mix(pow((0.055+c)*0.947867299,vec3(2.4)),0.077399381*c,vec3(lt));",
     "}",
     // Convert from linear RGB to sRGB
     "vec3 fromlinear(vec3 c) {",
-    " c=clamp(c);",
+    " c=clamp(c,0.0,1.0);",
     " bvec3 lt=lessThan(c,vec3(0.0031308));",
     " return mix(pow(c,vec3(0.41666666667))*1.055-0.055,12.92*c,vec3(lt));",
     "}",
@@ -544,8 +544,8 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     " float dotnl=saturate(dot(n,lightDir));",
     " float dothl=saturate(dot(h,lightDir));",
     " vec3 ctnum=ndf(dotnh,rough*rough)*gsmith(dotnv,dotnl,rough)*fresnelschlick(dothl,specular);",
-    " float ctden=min(4.0*dotnl*dotnv,0.0001);",
-    " return diffuse*ONE_DIV_PI+ctnum/ctden;",
+    " float ctden=min(dotnl*dotnv,0.0001);",
+    " return diffuse*ONE_DIV_PI+ctnum*0.25/ctden;",
     "}",
     "#ifndef SPECULAR",
    // NOTE: Color parameter is in linear RGB

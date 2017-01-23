@@ -2,17 +2,20 @@
 
 [Back to documentation index.](index.md)
 
-## Contents <a id=Contents></a>
+<a id=Contents></a>
+## Contents
 
 [Contents](#Contents)<br>[Texture Loaders](#Texture_Loaders)<br>[Sample Code for Loading Textures](#Sample_Code_for_Loading_Textures)<br>&nbsp;&nbsp;[Loading a single texture](#Loading_a_single_texture)<br>&nbsp;&nbsp;[Loading multiple textures](#Loading_multiple_textures)<br>&nbsp;&nbsp;[Demos](#Demos)<br>
 
-## Texture Loaders <a id=Texture_Loaders></a>
+## Texture Loaders
 
 A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL contexts.
 
-## Sample Code for Loading Textures <a id=Sample_Code_for_Loading_Textures></a>
+<a id=Sample_Code_for_Loading_Textures></a>
+## Sample Code for Loading Textures
 
-### Loading a single texture <a id=Loading_a_single_texture></a>
+<a id=Loading_a_single_texture></a>
+### Loading a single texture
 
 The `loadAndMapTexture` method of `TextureLoader` returns a promise, which will receive either
 the texture loaded or an error. Loading a texture often happens asynchronously, so code that
@@ -34,7 +37,8 @@ In the sample code below, the variable `textureURL` is the URL of the texture to
   });
 ```
 
-### Loading multiple textures <a id=Loading_multiple_textures></a>
+<a id=Loading_multiple_textures></a>
+### Loading multiple textures
 
 If you need to load multiple textures, the `loadAndMapTexturesAll` method
 is much more convenient than `loadAndMapTexture` and also loads textures asynchronously.
@@ -66,7 +70,8 @@ In the sample code below, The variables `textureURL1` and `textureURL2` are URL 
   });
 ```
 
-### Demos <a id=Demos></a>
+<a id=Demos></a>
+### Demos
 
 * [textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
 and applying them to 3D shapes.

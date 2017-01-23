@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### CurveTube() <a id='CurveTube'></a>
+ <a name='CurveTube'></a>
+### CurveTube()
 
 <b>Deprecated: Use <a href="H3DU.CurveTube.md">H3DU.CurveTube</a> instead.</b>
 

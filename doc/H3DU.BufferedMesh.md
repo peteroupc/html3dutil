@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.BufferedMesh(mesh, context) <a id='H3DU.BufferedMesh'></a>
+ <a name='H3DU.BufferedMesh'></a>
+### H3DU.BufferedMesh(mesh, context)
 
 <b>Deprecated: This class is likely to become a private class.
 Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
@@ -26,7 +27,8 @@ A geometric mesh in the form of buffer objects.
 and points) composed by all shapes in this mesh.
 * [vertexCount](#H3DU.BufferedMesh_H3DU.BufferedMesh_vertexCount)<br>Gets the number of vertices composed by all shapes in this mesh.
 
-### H3DU.BufferedMesh#dispose() <a id='H3DU.BufferedMesh_H3DU.BufferedMesh_dispose'></a>
+ <a name='H3DU.BufferedMesh_H3DU.BufferedMesh_dispose'></a>
+### H3DU.BufferedMesh#dispose()
 
 Deletes the vertex and index buffers associated with this object.
 
@@ -34,7 +36,8 @@ Deletes the vertex and index buffers associated with this object.
 
 Return value. (Type: Object)
 
-### H3DU.BufferedMesh#draw(program) <a id='H3DU.BufferedMesh_H3DU.BufferedMesh_draw'></a>
+ <a name='H3DU.BufferedMesh_H3DU.BufferedMesh_draw'></a>
+### H3DU.BufferedMesh#draw(program)
 
 <b>Deprecated: Yes</b>
 
@@ -51,7 +54,8 @@ according to the data in its buffers.
 
 Return value. (Type: Object)
 
-### H3DU.BufferedMesh#getContext() <a id='H3DU.BufferedMesh_H3DU.BufferedMesh_getContext'></a>
+ <a name='H3DU.BufferedMesh_H3DU.BufferedMesh_getContext'></a>
+### H3DU.BufferedMesh#getContext()
 
 <b>Deprecated: Yes</b>
 
@@ -61,7 +65,8 @@ Returns the WebGL context associated with this object.
 
 Return value. (Type: WebGLRenderingContext)
 
-### H3DU.BufferedMesh#primitiveCount() <a id='H3DU.BufferedMesh_H3DU.BufferedMesh_primitiveCount'></a>
+ <a name='H3DU.BufferedMesh_H3DU.BufferedMesh_primitiveCount'></a>
+### H3DU.BufferedMesh#primitiveCount()
 
 Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
@@ -70,7 +75,8 @@ and points) composed by all shapes in this mesh.
 
 Return value. (Type: Number)
 
-### H3DU.BufferedMesh#vertexCount() <a id='H3DU.BufferedMesh_H3DU.BufferedMesh_vertexCount'></a>
+ <a name='H3DU.BufferedMesh_H3DU.BufferedMesh_vertexCount'></a>
+### H3DU.BufferedMesh#vertexCount()
 
 Gets the number of vertices composed by all shapes in this mesh.
 

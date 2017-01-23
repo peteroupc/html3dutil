@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### PrimitiveCounter() <a id='PrimitiveCounter'></a>
+ <a name='PrimitiveCounter'></a>
+### PrimitiveCounter()
 
 <b>Deprecated: Will be removed in the future.</b>
 
@@ -13,7 +14,8 @@ that displayed the number of primitives drawn.
 
 * [update](#PrimitiveCounter.update)<br><b>Deprecated: Will be removed in the future.</b>
 
-### (static) PrimitiveCounter.update() <a id='PrimitiveCounter.update'></a>
+ <a name='PrimitiveCounter.update'></a>
+### (static) PrimitiveCounter.update()
 
 <b>Deprecated: Will be removed in the future.</b>
 

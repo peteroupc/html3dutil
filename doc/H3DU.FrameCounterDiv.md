@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.FrameCounterDiv() <a id='H3DU.FrameCounterDiv'></a>
+ <a name='H3DU.FrameCounterDiv'></a>
+### H3DU.FrameCounterDiv()
 
 A class that displays a frame counter HTML element.
 
@@ -20,7 +21,8 @@ the HTML 3D Library. Example:
 
 * [update](#H3DU.FrameCounterDiv_H3DU.FrameCounterDiv_update)<br>Updates the frame counter HTML element.
 
-### H3DU.FrameCounterDiv#update() <a id='H3DU.FrameCounterDiv_H3DU.FrameCounterDiv_update'></a>
+ <a name='H3DU.FrameCounterDiv_H3DU.FrameCounterDiv_update'></a>
+### H3DU.FrameCounterDiv#update()
 
 Updates the frame counter HTML element.
 

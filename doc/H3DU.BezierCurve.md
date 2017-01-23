@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.BezierCurve(cp, [u1], [u2]) <a id='H3DU.BezierCurve'></a>
+ <a name='H3DU.BezierCurve'></a>
+### H3DU.BezierCurve(cp, [u1], [u2])
 
 A parametric evaluator for B&eacute;zier curves.
 
@@ -25,7 +26,8 @@ necessarily cross the curve.
 * [evaluate](#H3DU.BezierCurve_H3DU.BezierCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B&eacute;zier curve.
 
-### H3DU.BezierCurve#evaluate(u) <a id='H3DU.BezierCurve_H3DU.BezierCurve_evaluate'></a>
+ <a name='H3DU.BezierCurve_H3DU.BezierCurve_evaluate'></a>
+### H3DU.BezierCurve#evaluate(u)
 
 Evaluates the curve function based on a point
 in a B&eacute;zier curve.

@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.Trochoid(radius, distFromCenter) <a id='H3DU.Trochoid'></a>
+ <a name='H3DU.Trochoid'></a>
+### H3DU.Trochoid(radius, distFromCenter)
 
 Parametric evaluator for a
 curve drawn by a circle that rolls along the X axis.
@@ -28,7 +29,8 @@ the HTML 3D Library. Example:
 
 * [evaluate](#H3DU.Trochoid_evaluate)<br>Generates a point on the curve from the given u coordinate.
 
-### H3DU.Trochoid#evaluate(u) <a id='H3DU.Trochoid_evaluate'></a>
+ <a name='H3DU.Trochoid_evaluate'></a>
+### H3DU.Trochoid#evaluate(u)
 
 Generates a point on the curve from the given u coordinate.
 

@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### GraphicsPath() <a id='GraphicsPath'></a>
+ <a name='GraphicsPath'></a>
+### GraphicsPath()
 
 <b>Deprecated: Use <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a> instead.</b>
 

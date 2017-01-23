@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.ShapeGroup() <a id='H3DU.ShapeGroup'></a>
+ <a name='H3DU.ShapeGroup'></a>
+### H3DU.ShapeGroup()
 
 Represents a grouping of shapes. This object
 can hold both <a href="H3DU.Shape.md">H3DU.Shape</a> objects and
@@ -15,6 +16,7 @@ other <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> objects.
 ### Methods
 
 * [addShape](#H3DU.ShapeGroup_H3DU.ShapeGroup_addShape)<br>Adds a 3D shape to this shape group.
+* [copy](#H3DU.ShapeGroup_H3DU.ShapeGroup_copy)<br>TODO: Not documented yet.
 * [getBounds](#H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds)<br>Finds a bounding box that holds all vertices in this shape group.
 * [getMatrix](#H3DU.ShapeGroup_H3DU.ShapeGroup_getMatrix)<br>Gets a copy of the transformation needed to transform
 this shape group's coordinates to world coordinates.
@@ -37,14 +39,16 @@ of the given transform.
 * [setVisible](#H3DU.ShapeGroup_H3DU.ShapeGroup_setVisible)<br>Sets whether this shape group will be drawn on rendering.
 * [vertexCount](#H3DU.ShapeGroup_H3DU.ShapeGroup_vertexCount)<br>Gets the number of vertices composed by all shapes in this shape group.
 
-### H3DU.ShapeGroup#shapes <a id='H3DU.ShapeGroup_shapes'></a>
+<a id='H3DU.ShapeGroup_shapes'></a>
+### H3DU.ShapeGroup#shapes
 
 List of shapes contained in this group.
 This property should only be used to access properties
 and call methods on each shape, and not to add, remove
 or replace shapes directly.
 
-### H3DU.ShapeGroup#addShape(shape) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_addShape'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_addShape'></a>
+### H3DU.ShapeGroup#addShape(shape)
 
 Adds a 3D shape to this shape group. Its reference, not a copy,
 will be stored in the list of shapes.
@@ -58,7 +62,17 @@ will be stored in the list of shapes.
 
 This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
-### H3DU.ShapeGroup#getBounds() <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_copy'></a>
+### H3DU.ShapeGroup#copy()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+ (Type: *)
+
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds'></a>
+### H3DU.ShapeGroup#getBounds()
 
 Finds a bounding box that holds all vertices in this shape group.
 The bounding box is not guaranteed to be the
@@ -74,7 +88,8 @@ last three are the largest-valued X, Y, and Z coordinates.
 If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;Number>)
 
-### H3DU.ShapeGroup#getMatrix() <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_getMatrix'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_getMatrix'></a>
+### H3DU.ShapeGroup#getMatrix()
 
 Gets a copy of the transformation needed to transform
 this shape group's coordinates to world coordinates.
@@ -83,7 +98,8 @@ this shape group's coordinates to world coordinates.
 
 A 4x4 matrix. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.ShapeGroup#getTransform() <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_getTransform'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_getTransform'></a>
+### H3DU.ShapeGroup#getTransform()
 
 Gets a reference to the transform used by this shape group object.
 
@@ -91,7 +107,8 @@ Gets a reference to the transform used by this shape group object.
 
 Return value. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
-### H3DU.ShapeGroup#getVisible() <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_getVisible'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_getVisible'></a>
+### H3DU.ShapeGroup#getVisible()
 
 Gets whether this shape group will be drawn on rendering.
 
@@ -99,7 +116,8 @@ Gets whether this shape group will be drawn on rendering.
 
 value True if this shape group will be visible; otherwise, false. (Type: Boolean)
 
-### H3DU.ShapeGroup#primitiveCount() <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_primitiveCount'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_primitiveCount'></a>
+### H3DU.ShapeGroup#primitiveCount()
 
 Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this shape group.
@@ -108,7 +126,8 @@ and points) composed by all shapes in this shape group.
 
 Return value. (Type: Number)
 
-### H3DU.ShapeGroup#removeShape(shape) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_removeShape'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_removeShape'></a>
+### H3DU.ShapeGroup#removeShape(shape)
 
 Removes all instances of a 3D shape from this shape group
 
@@ -121,7 +140,8 @@ Removes all instances of a 3D shape from this shape group
 
 This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
-### H3DU.ShapeGroup#setMaterial(material) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterial'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterial'></a>
+### H3DU.ShapeGroup#setMaterial(material)
 
 Sets the material used by all shapes in this shape group.
 
@@ -134,7 +154,8 @@ Sets the material used by all shapes in this shape group.
 
 Return value. (Type: Object)
 
-### H3DU.ShapeGroup#setMaterialParams(params) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterialParams'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterialParams'></a>
+### H3DU.ShapeGroup#setMaterialParams(params)
 
 Sets material parameters for all shapes in this shape group.
 
@@ -147,7 +168,8 @@ Sets material parameters for all shapes in this shape group.
 
 This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.ShapeGroup#setPosition(x, y, z) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setPosition'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setPosition'></a>
+### H3DU.ShapeGroup#setPosition(x, y, z)
 
 Sets the relative position of the shapes in this group
 from their original position.
@@ -168,7 +190,8 @@ rather than the transform for each shape in the group.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.ShapeGroup#setQuaternion(quat) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion'></a>
+### H3DU.ShapeGroup#setQuaternion(quat)
 
 Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 See H3DU.Transform#setQuaternion.
@@ -184,7 +207,8 @@ rather than the transform for each shape in the group.
 
 This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
-### H3DU.ShapeGroup#setScale(x, y, z) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setScale'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setScale'></a>
+### H3DU.ShapeGroup#setScale(x, y, z)
 
 Sets the scale of this shape group relative to its original
 size. See H3DU.Transform#setScale.
@@ -204,7 +228,8 @@ rather than the transform for each shape in the group.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
-### H3DU.ShapeGroup#setShader(material) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setShader'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setShader'></a>
+### H3DU.ShapeGroup#setShader(material)
 
 Sets the shader program used by all shapes in this shape group.
 
@@ -217,7 +242,8 @@ Sets the shader program used by all shapes in this shape group.
 
 Return value. (Type: Object)
 
-### H3DU.ShapeGroup#setTexture(material) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setTexture'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setTexture'></a>
+### H3DU.ShapeGroup#setTexture(material)
 
 Sets the texture used by all shapes in this shape group.
 
@@ -230,7 +256,8 @@ Sets the texture used by all shapes in this shape group.
 
 Return value. (Type: Object)
 
-### H3DU.ShapeGroup#setTransform(transform) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setTransform'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setTransform'></a>
+### H3DU.ShapeGroup#setTransform(transform)
 
 Sets the transform used by this shape group to a copy
 of the given transform. Child
@@ -247,7 +274,8 @@ with the child shape's transform as it renders the child shape.
 
 Return value. (Type: Object)
 
-### H3DU.ShapeGroup#setVisible(value) <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_setVisible'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setVisible'></a>
+### H3DU.ShapeGroup#setVisible(value)
 
 Sets whether this shape group will be drawn on rendering.
 
@@ -260,7 +288,8 @@ Sets whether this shape group will be drawn on rendering.
 
 This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
-### H3DU.ShapeGroup#vertexCount() <a id='H3DU.ShapeGroup_H3DU.ShapeGroup_vertexCount'></a>
+ <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_vertexCount'></a>
+### H3DU.ShapeGroup#vertexCount()
 
 Gets the number of vertices composed by all shapes in this shape group.
 

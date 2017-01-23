@@ -2,7 +2,8 @@
 
 [Back to documentation index.](index.md)
 
-### H3DU.CurveEval() <a id='H3DU.CurveEval'></a>
+ <a name='H3DU.CurveEval'></a>
+### H3DU.CurveEval()
 
 An evaluator of parametric curve functions for generating
 vertex positions and colors of a curve.
@@ -32,7 +33,8 @@ to generate normals for a curve.</b>
 * [texCoord](#H3DU.CurveEval_H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
 * [vertex](#H3DU.CurveEval_H3DU.CurveEval_vertex)<br>Specifies a parametric curve function for generating vertex positions.
 
-### H3DU.CurveEval#color(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_color'></a>
+ <a name='H3DU.CurveEval_H3DU.CurveEval_color'></a>
+### H3DU.CurveEval#color(evaluator)
 
 Specifies a parametric curve function for generating color values.
 
@@ -45,7 +47,8 @@ Specifies a parametric curve function for generating color values.
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
-### H3DU.CurveEval#evalCurve(mesh, [mode], [n], [u1], [u2]) <a id='H3DU.CurveEval_H3DU.CurveEval_evalCurve'></a>
+ <a name='H3DU.CurveEval_H3DU.CurveEval_evalCurve'></a>
+### H3DU.CurveEval#evalCurve(mesh, [mode], [n], [u1], [u2])
 
 Generates vertices and attribute values that follow a parametric curve
 function.
@@ -67,7 +70,8 @@ function.
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
-### H3DU.CurveEval#evalOne(mesh, u) <a id='H3DU.CurveEval_H3DU.CurveEval_evalOne'></a>
+ <a name='H3DU.CurveEval_H3DU.CurveEval_evalOne'></a>
+### H3DU.CurveEval#evalOne(mesh, u)
 
 Generates vertex positions and attributes based on a point
 in a parametric curve.
@@ -83,7 +87,8 @@ in a parametric curve.
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
-### H3DU.CurveEval#normal(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_normal'></a>
+ <a name='H3DU.CurveEval_H3DU.CurveEval_normal'></a>
+### H3DU.CurveEval#normal(evaluator)
 
 <b>Deprecated: May be removed in the future; it makes little sense
 to generate normals for a curve.</b>
@@ -99,7 +104,8 @@ Specifies a parametric curve function for generating normals.
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
-### H3DU.CurveEval#texCoord(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_texCoord'></a>
+ <a name='H3DU.CurveEval_H3DU.CurveEval_texCoord'></a>
+### H3DU.CurveEval#texCoord(evaluator)
 
 Specifies a parametric curve function for generating texture coordinates.
 
@@ -112,7 +118,8 @@ Specifies a parametric curve function for generating texture coordinates.
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
-### H3DU.CurveEval#vertex(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_vertex'></a>
+ <a name='H3DU.CurveEval_H3DU.CurveEval_vertex'></a>
+### H3DU.CurveEval#vertex(evaluator)
 
 Specifies a parametric curve function for generating vertex positions.
 
