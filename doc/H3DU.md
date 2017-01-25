@@ -29,6 +29,7 @@ its work.
 * [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
 * [is3DContext](#H3DU.is3DContext)<br>Returns whether the given object is a 3D rendering context.
 * [loadFileFromUrl](#H3DU.loadFileFromUrl)<br>Loads a file from a URL asynchronously, using XMLHttpRequest.
+* [loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>TODO: Not documented yet.
 * [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 * [renderLoop](#H3DU.renderLoop)<br>This method will call a function once before returning,
@@ -221,6 +222,19 @@ the parameter's "data" property will be:<ul>
 <li>For response type "json", the JavaScript object decoded
 from JSON.
 <li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.md">Promise</a>)
+
+ <a name='H3DU.loadGltfFromUrl'></a>
+### (static) H3DU.loadGltfFromUrl(url)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `url` (Type: *)
+
+#### Return Value
+
+ (Type: *)
 
  <a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)

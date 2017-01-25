@@ -1026,8 +1026,8 @@ H3DU.Mesh._isIdentityInUpperLeft = function(m) {
   * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
   * will not build upon previous vertices. Future vertices should not be
   * added after calling this method without calling mode() first.
-  * @param {Array<Number>} matrix A 4x4 matrix describing
-  * the transformation. The normals will be transformed using the
+  * @param {Array<Number>} matrix A 4x4 matrix described in
+  * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
   * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
@@ -1043,8 +1043,7 @@ H3DU.Mesh.prototype.transform = function(matrix) {
     matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
   }
   for(var i = 0;i < v.length;i += stride) {
-    var xform = H3DU.Math.mat4transform(matrix,
-      v[i], v[i + 1], v[i + 2], 1.0);
+    var xform = H3DU.Math.mat4projectVec3(matrix, v);
     v[i] = xform[0];
     v[i + 1] = xform[1];
     v[i + 2] = xform[2];
@@ -1237,11 +1236,11 @@ H3DU.Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset
   }
 };
  /**
-  * Recalculates the tangent vectors for triangles
-  * in this mesh. Tangent vectors are required for
+  * Recalculates the tangent and bitangent vectors for triangles
+  * in this mesh. Tangent and bitangent vectors are required for
   * normal mapping (bump mapping) to work.
-  * This method only affects those parts of the mesh
-  * that define normals and texture coordinates.
+  * This method only has an effect if this mesh
+  * includes normals and texture coordinates.
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
   */
@@ -1340,7 +1339,8 @@ H3DU.Mesh.prototype.reverseWinding = function() {
  * Recalculates the normal vectors for triangles
  * in this mesh. For this to properly affect shading, each triangle in
  * the mesh must have its vertices defined in
- * counterclockwise order. Each normal calculated will
+ * counterclockwise order (if the triangle is being rendered
+ * in a right-handed coordinate system). Each normal calculated will
  * be normalized to have a length of 1 (unless the normal is (0,0,0)).
  * @param {Boolean} flat If true, each triangle in the mesh
  * will have the same normal, which usually leads to a flat

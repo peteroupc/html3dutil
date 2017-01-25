@@ -8,6 +8,7 @@ and explains how the GL pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
+
 <a id=Contents></a>
 ## Contents
 

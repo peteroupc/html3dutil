@@ -10,6 +10,7 @@ public domain [HTML 3D Library](http://peteroupc.github.io/html3dutil).
 It also describes several examples of graphics filters.
 
 **Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
+
 <a id=Contents></a>
 ## Contents
 

@@ -43,6 +43,7 @@ log is output to the JavaScript console.
 * [.makeCopyEffect](#H3DU.ShaderProgram.makeCopyEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b>
 * [.makeEffect](#H3DU.ShaderProgram.makeEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b>
 * [.makeEffectFragment](#H3DU.ShaderProgram.makeEffectFragment)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b>
+* [setSemantic](#H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic)<br>TODO: Not documented yet.
 * [dispose](#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose)<br>Disposes resources from this shader program.
 * [get](#H3DU.ShaderProgram_H3DU.ShaderProgram_get)<br>Gets the location of the given uniform or attribute's name in this program.
 * [getContext](#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext)<br>Gets the WebGL context associated with this shader program object.
@@ -161,6 +162,21 @@ a raster effect to a texture.
 #### Return Value
 
 The source text of the resulting fragment shader. (Type: String)
+
+ <a name='H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic'></a>
+### H3DU.ShaderInfo#setSemantic(name, sem, index)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `name` (Type: *)
+* `sem` (Type: *)
+* `index` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
  <a name='H3DU.ShaderProgram_H3DU.ShaderProgram_dispose'></a>
 ### H3DU.ShaderProgram#dispose()

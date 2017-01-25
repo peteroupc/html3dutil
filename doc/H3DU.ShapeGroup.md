@@ -69,7 +69,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
 
  <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds'></a>
 ### H3DU.ShapeGroup#getBounds()

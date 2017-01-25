@@ -35,6 +35,18 @@ if(!window.performance.now) {
   };
   window.performance._startTime = new Date().getTime() * 1000;
 }
+if(typeof Object.keys === "undefined") {
+  Object.keys = function(o) {
+    "use strict";
+    var ret = [];
+    for(var i in o) {
+      if(Object.prototype.hasOwnProperty.call(o, i)) {
+        ret[ret.length] = i;
+      }
+    }
+    return ret;
+  };
+}
 
 /**
  * The Public Domain HTML 3D Library contains classes and utility

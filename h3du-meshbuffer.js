@@ -31,40 +31,55 @@ H3DU.MeshBuffer = function(mesh) {
   }
   this.format = mesh.attributeBits;
   var stride = H3DU.Mesh._getStride(this.format);
-  this.numVertices = mesh.vertices.length / stride;
   this.attributes = [];
-  // TODO: consider using default attribute names that can't be
-  // a GLSL identifier (e.g. starting with digit or dollar sign),
-  // for flexibility purposes
-  this.attributes.push(["position", 0, vertices, 3, stride]);
+  this.attributes.push([H3DU.MeshBuffer.POSITION, 0, vertices, 3, stride, 0]);
   var o = H3DU.Mesh._normalOffset(this.format);
   if(o >= 0) {
-    this.attributes.push(["normal", o, vertices, 3, stride]);
+    this.attributes.push([H3DU.MeshBuffer.NORMAL, o, vertices, 3, stride, 0]);
   }
   o = H3DU.Mesh._colorOffset(this.format);
   if(o >= 0) {
-    this.attributes.push(["colorAttr", o, vertices, 3, stride]);
+    this.attributes.push([H3DU.MeshBuffer.COLOR, o, vertices, 3, stride, 0]);
   }
   o = H3DU.Mesh._texCoordOffset(this.format);
   if(o >= 0) {
-    this.attributes.push(["uv", o, vertices, 2, stride]);
+    this.attributes.push([H3DU.MeshBuffer.TEXCOORD, o, vertices, 2, stride, 0]);
   }
   o = H3DU.Mesh._tangentOffset(this.format);
   if(o >= 0) {
-    this.attributes.push(["tangent", o, vertices, 3, stride]);
+    this.attributes.push([H3DU.MeshBuffer.TANGENT, o, vertices, 3, stride, 0]);
   }
   o = H3DU.Mesh._bitangentOffset(this.format);
   if(o >= 0) {
-    this.attributes.push(["bitangent", o, vertices, 3, stride]);
+    this.attributes.push([H3DU.MeshBuffer.BITANGENT, o, vertices, 3, stride, 0]);
   }
 };
+/**
+ * TODO: Not documented yet.
+ * @param {*} indices
+ * @param {*} byteSize
+ * @returns {*} Return value.
+ * @memberof! H3DU.MeshBuffer#
+ */
+H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
+  "use strict";
+  this.indexBufferSize = byteSize;
+  this.indices = indices;
+  return this;
+};
+
 /**
  * Adds information about a buffer attribute to this
  * mesh buffer (or sets an
  * existing attribute's information). An attribute
  * gives information about the per-vertex data used and
  * stored in a vertex buffer.
- * @param {String} name The name of the attribute.
+ * @param {Number|String} semantic An attribute semantic, such
+ * as {@link H3DU.MeshBuffer.POSITION}, "POSITION", or "TEXCOORD_0".
+ * @param {Number} semanticIndex The set index of the attribute
+ * for the given semantic.
+ * 0 is the first index of the attribute, 1 is the second, and so on.
+ * This is ignored if "semantic" is a string.
  * @param {Float32Array|Array} buffer The buffer where
  * the per-vertex data is stored.
  * @param {Number} startIndex The index into the array
@@ -79,25 +94,63 @@ H3DU.MeshBuffer = function(mesh) {
  * @memberof! H3DU.MeshBuffer#
  */
 H3DU.MeshBuffer.prototype.setAttribute = function(
-  name, buffer, startIndex, countPerVertex, stride
+  name, index, buffer, startIndex, countPerVertex, stride
 ) {
   "use strict";
   if(buffer.constructor === Array) {
     buffer = new Float32Array(buffer);
   }
-  var attr = this._getAttribute(name);
+  var semanticIndex = 0;
+  var semantic = 0;
+  var sem = H3DU.MeshBuffer._resolveSemantic(name, index);
+  if(sem === null || typeof sem === "undefined") {
+    console.warn("Unsupported attribute semantic: " + name);
+    return this;
+  }
+  semantic = sem[0];
+  semanticIndex = sem[1];
+  var attr = this._getAttribute(semantic, semanticIndex);
   if(attr) {
     attr[1] = startIndex;
     attr[2] = buffer;
     attr[3] = countPerVertex;
     attr[4] = stride;
   } else {
-    this.attributes.push([name, startIndex, buffer, countPerVertex, stride]);
+    this.attributes.push([semantic, startIndex, buffer, countPerVertex, stride, semanticIndex]);
   }
   if(name === "position") {
     this._bounds = null;
   }
   return this;
+};
+/** @private */
+H3DU.MeshBuffer._resolveSemantic = function(name, index) {
+  "use strict";
+  if(typeof name === "number") {
+    return [name, index | 0];
+  } else {
+    var wka = H3DU.MeshBuffer._wellKnownAttributes[name];
+    if(wka === null || typeof wka === "undefined") {
+      var io = name.indexOf(name);
+      if(io < 0) {
+        return null;
+      }
+      wka = H3DU.MeshBuffer._wellKnownAttributes[name.substr(0, io)];
+      if(wka === null || typeof wka === "undefined") {
+        return null;
+      }
+      var number = name.substr(io + 1);
+      if(number.length <= 5 && (/^\d$/).test(number)) {
+  // Only allow 5-digit-or-less numbers; more than
+        // that is unreasonable
+        return new Uint32Array([wka, parseInt(number, 10)]);
+      } else {
+        return null;
+      }
+    } else {
+      return new Uint32Array([wka, 0]);
+    }
+  }
 };
 
 /** @private */
@@ -107,10 +160,14 @@ H3DU.MeshBuffer.prototype._getAttributes = function() {
 };
 
 /** @private */
-H3DU.MeshBuffer.prototype._getAttribute = function(name) {
+H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
   "use strict";
+  var idx = index === null || typeof index === "undefined" ? 0 : index;
   for(var i = 0;i < this.attributes.length;i++) {
-    if(this.attributes[i][0] === name)return this.attributes[i];
+    if(this.attributes[i][0] === name &&
+    this.attributes[i][5] === idx) {
+      return this.attributes[i];
+    }
   }
   return null;
 };
@@ -137,9 +194,10 @@ H3DU.MeshBuffer.prototype.primitiveCount = function() {
  * that fits all vertices in the mesh. The first three numbers
  * are the smallest-valued X, Y, and Z coordinates, and the
  * last three are the largest-valued X, Y, and Z coordinates.
- * If the mesh buffer is empty or has no attribute named
- * "position", returns the array [Inf, Inf, Inf, -Inf,
- * -Inf, -Inf].
+ * This calculation uses the attribute with the semantic POSITION
+ * and set index 0. If there is no such attribute,
+ * or no vertices are defined in this buffer, returns the array
+ * [Inf, Inf, Inf, -Inf, -Inf, -Inf].
  * @memberof! H3DU.MeshBuffer#
  */
 H3DU.MeshBuffer.prototype.getBounds = function() {
@@ -148,7 +206,7 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
     var empty = true;
     var inf = Number.POSITIVE_INFINITY;
     var ret = [inf, inf, inf, -inf, -inf, -inf];
-    var posattr = this._getAttribute("position");
+    var posattr = this._getAttribute(H3DU.MeshBuffer.POSITION);
     if(!posattr || posattr[3] < 3)return ret;
     var stride = posattr[4];
     var v = posattr[2];
@@ -188,6 +246,25 @@ H3DU.MeshBuffer.prototype.primitiveType = function() {
     return H3DU.Mesh.POINTS;
   return H3DU.Mesh.TRIANGLES;
 };
+// TODO: Consider moving these constants to their own class
+H3DU.MeshBuffer.POSITION = 0;
+H3DU.MeshBuffer.NORMAL = 1;
+H3DU.MeshBuffer.TEXCOORD = 2;
+H3DU.MeshBuffer.COLOR = 3;
+H3DU.MeshBuffer.JOINT = 4;
+H3DU.MeshBuffer.WEIGHT = 5;
+H3DU.MeshBuffer.TANGENT = 6;
+H3DU.MeshBuffer.BITANGENT = 7;
+H3DU.MeshBuffer._wellKnownAttributes = {
+  "POSITION":H3DU.MeshBuffer.POSITION,
+  "TEXCOORD":H3DU.MeshBuffer.TEXCOORD,
+  "TEXCOORD_0":H3DU.MeshBuffer.TEXCOORD,
+  "NORMAL":H3DU.MeshBuffer.NORMAL,
+  "JOINT":H3DU.MeshBuffer.JOINT,
+  "WEIGHT":H3DU.MeshBuffer.WEIGHT,
+  "TANGENT":H3DU.MeshBuffer.TANGENT,
+  "BITANGENT":H3DU.MeshBuffer.BITANGENT
+};
 
 /** @private */
 H3DU.MeshBuffer.prototype.getFormat = function() {
@@ -201,5 +278,5 @@ H3DU.MeshBuffer.prototype.getFormat = function() {
  */
 H3DU.MeshBuffer.prototype.vertexCount = function() {
   "use strict";
-  return this.numVertices;
+  return this.indices.length;
 };

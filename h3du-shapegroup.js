@@ -30,7 +30,7 @@ H3DU.ShapeGroup = function() {
 };
 /**
  * TODO: Not documented yet.
- * @returns {*}
+ * @returns {*} Return value.
  * @memberof! H3DU.ShapeGroup#
  */
 H3DU.ShapeGroup.prototype.copy = function() {

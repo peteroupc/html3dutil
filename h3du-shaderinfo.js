@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, console */
+/* global H3DU, Uint32Array, console */
 
 /**
  * Holds source code for a WebGL shader program. A shader program in
@@ -14,7 +14,7 @@
  * and a fragment shader (which processes pixels). Shader programs
  * are specially designed for running on a graphics processing unit,
  * or GPU.<p>
- * This class also stores uniform values associated with the shader
+ * This class also stores semantics and uniform values associated with the shader
  * source code.<p>
  * Note that this class is not associated with any WebGL context, so the
  * uniform values this object stores is not set for any WebGL context.
@@ -37,7 +37,35 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
   this.vertexShader = vertexShader;
   this.fragmentShader = fragmentShader;
   this.uniformValues = {};
+  this.attributeSemantics = {};
+  this.attributeSemantics.position = new Uint32Array([H3DU.MeshBuffer.POSITION, 0]);
+  this.attributeSemantics.tangent = new Uint32Array([H3DU.MeshBuffer.TANGENT, 0]);
+  this.attributeSemantics.bitangent = new Uint32Array([H3DU.MeshBuffer.BITANGENT, 0]);
+  this.attributeSemantics.normal = new Uint32Array([H3DU.MeshBuffer.NORMAL, 0]);
+  this.attributeSemantics.uv = new Uint32Array([H3DU.MeshBuffer.TEXCOORD, 0]);
+  this.attributeSemantics.colorAttr = new Uint32Array([H3DU.MeshBuffer.COLOR, 0]);
+  this.uniformSemantics = {};
+  this.uniformSemantics.projection = H3DU.ShaderInfo.PROJECTION;
+  this.uniformSemantics.world = H3DU.ShaderInfo.MODEL;
+  this.uniformSemantics.inverseView = H3DU.ShaderInfo.VIEWINVERSE;
+  this.uniformSemantics.modelViewMatrix = H3DU.ShaderInfo.MODELVIEW;
+  this.uniformSemantics.normalMatrix = H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE;
 };
+
+// TODO: Consider moving these constants to their own class
+H3DU.ShaderInfo.MODEL = 1;
+H3DU.ShaderInfo.VIEW = 2;
+H3DU.ShaderInfo.PROJECTION = 3;
+H3DU.ShaderInfo.MODELVIEW = 4;
+H3DU.ShaderInfo.MODELVIEWPROJECTION = 5;
+H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE = 6;
+H3DU.ShaderInfo.VIEWINVERSE = 7;
+
+H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
+  "use strict";
+  this.uniformSemantics[u] = sem;
+};
+
 /**
  * Gets the text of the vertex shader stored in this object.
  * @returns {String} return value.
@@ -67,6 +95,30 @@ H3DU.ShaderInfo.prototype.dispose = function() {
 };
 
 /**
+ * TODO: Not documented yet.
+ * @param {*} name
+ * @param {*} sem
+ * @param {*} index
+ * @returns {*} Return value.
+ * @memberof! H3DU.ShaderProgram#
+ */
+H3DU.ShaderInfo.prototype.setSemantic = function(name, sem, index) {
+  "use strict";
+  var an = this.attributeSemantics[name];
+  var semIndex = H3DU.MeshBuffer._resolveSemantic(sem, index);
+  if(!semIndex) {
+    throw new Error("Can't resolve " + [name, sem, index]);
+  }
+  if(an) {
+    an[0] = semIndex[0];
+    an[1] = semIndex[1];
+  } else {
+    this.attributeSemantics[name] = semIndex;
+  }
+  return this;
+};
+
+/**
  * Returns a new shader info object with the information in this object
  * copied to that object.
  * @returns {H3DU.ShaderInfo} Return value.
@@ -76,6 +128,16 @@ H3DU.ShaderInfo.prototype.copy = function() {
   "use strict";
   var sp = new H3DU.ShaderInfo(this.vertexShader, this.fragmentShader);
   sp.setUniforms(this.uniformValues);
+  for(var k in this.attributeSemantics)
+    if(Object.prototype.hasOwnProperty.call(this.attributeSemantics, k)) {
+      var v = this.attributeSemantics[k];
+      sp.attributeSemantics[k] = v.slice(0, 2);
+    }
+  for(k in this.uniformSemantics)
+    if(Object.prototype.hasOwnProperty.call(this.uniformSemantics, k)) {
+      v = this.uniformSemantics[k];
+      sp.uniformSemantics[k] = v;
+    }
   return sp;
 };
 /**
@@ -180,18 +242,10 @@ H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
 H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUniforms) {
   "use strict";
   var i;
-  if(typeof Object.keys === "undefined") {
-    for(i in uniforms) {
-      if(Object.prototype.hasOwnProperty.call(uniforms, i)) {
-        H3DU.ShaderInfo._setUniformInternal(uniforms, outputUniforms, i, changedUniforms);
-      }
-    }
-  } else {
-    var keys = Object.keys(uniforms);
-    for(var ki = 0;ki < keys.length;ki++) {
-      i = keys[ki];
-      H3DU.ShaderInfo._setUniformInternal(uniforms, outputUniforms, i, changedUniforms);
-    }
+  var keys = Object.keys(uniforms);
+  for(var ki = 0;ki < keys.length;ki++) {
+    i = keys[ki];
+    H3DU.ShaderInfo._setUniformInternal(uniforms, outputUniforms, i, changedUniforms);
   }
 };
 /** @private */
@@ -407,11 +461,7 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
 };
 
 /**
- * Gets the text of the default fragment shader.  Putting "#define SHADING\n"
- * at the start of the return value enables the lighting model.
- * Putting "#define SPECULAR\n"
- * at the start of the return value enables specular highlights (as long
- * as SHADING is also enabled).
+ * Gets the text of the default fragment shader.
  * @returns {String} The resulting shader text.
  * @memberof! H3DU.ShaderInfo
  */
@@ -543,7 +593,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     " float dotnh=saturate(dot(n,h));",
     " float dotnl=saturate(dot(n,lightDir));",
     " float dothl=saturate(dot(h,lightDir));",
-    " vec3 ctnum=ndf(dotnh,rough*rough)*gsmith(dotnv,dotnl,rough)*fresnelschlick(dothl,specular);",
+    " vec3 ctnum=ndf(dotnh,rough)*gsmith(dotnv,dotnl,rough)*fresnelschlick(dothl,specular);",
     " float ctden=min(dotnl*dotnv,0.0001);",
     " return diffuse*ONE_DIV_PI+ctnum*0.25/ctden;",
     "}",
@@ -595,7 +645,6 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "vec3 refl=reflect(-eyepos,normal);",
     "environment=vec3(textureCube(envMap,vec3(-refl.x,refl.y,refl.z)));",
     "environment=tolinear(environment);",
-  //  "materialDiffuse=environment;", // TODO: Implement image-based lights
     "#else", "#ifdef ENV_EQUIRECT",
     "vec3 eyepos=vec3(inverseView*vec4(viewPositionVar.xyz,1.0));",
     "vec3 refl=reflect(-eyepos,normal);",
@@ -603,7 +652,6 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "environment=vec3(texture2D(envMap,vec2(",
     "  (atan(refl.x,refl.z)+PI)*ONE_DIV_TWOPI, acos(clamp(-refl.y,-1.0,1.0))*ONE_DIV_PI )));",
     "environment=tolinear(environment);",
-//    "materialDiffuse=environment;",
     "#endif", "#endif",
     "#ifdef PHYSICAL_BASED",
     "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient

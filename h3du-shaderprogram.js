@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, console */
+/* global H3DU, attributeSemantics, console */
 
 /**
  * Represents a WebGL shader program. A shader program in
@@ -53,6 +53,8 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
   "use strict";
   if(!context)return;
   context = context.getContext ? context.getContext() : context;
+  this.CURRENT_PROGRAM = 35725;
+  this.FLOAT = 5126;
   this.shaderInfo = shaderInfo;
   this.context = context;
   this.prog = H3DU.ShaderProgram._compileShaders(context,
@@ -64,15 +66,23 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
   this.uniformTypes = {};
   this.savedUniforms = {};
   this.attributeNames = [];
+  this.attributeSemantics = {};
+  var keys = Object.keys(shaderInfo.attributeSemantics);
+  for(var i = 0;i < keys.length;i++) {
+    this.attributeSemantics[keys[i]] = shaderInfo.attributeSemantics[keys[i]].slice(0, 2);
+  }
+  this.uniformSemantics = {};
+  keys = Object.keys(shaderInfo.uniformSemantics);
+  for(i = 0;i < keys.length;i++) {
+    this.uniformSemantics[keys[i]] = shaderInfo.uniformSemantics[keys[i]];
+  }
   H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
-  this.uniformValues, this.savedUniforms);
-  this.CURRENT_PROGRAM = 35725;
-  this.FLOAT = 5126;
+    this.uniformValues, this.savedUniforms);
   if(typeof this.prog !== "undefined" && this.prog !== null) {
     var name = null;
     var ret = {};
     var count = context.getProgramParameter(this.prog, context.ACTIVE_ATTRIBUTES);
-    for (var i = 0; i < count; ++i) {
+    for (i = 0; i < count; ++i) {
       var attributeInfo = context.getActiveAttrib(this.prog, i);
       if(attributeInfo !== null && typeof attributeInfo !== "undefined") {
         name = attributeInfo.name;
@@ -97,11 +107,23 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
   }
 };
 /** @private */
-H3DU.ShaderProgram.prototype._disableOthers = function(attrs) {
+H3DU.ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index) {
+  "use strict";
+  for(var key in this.attributeSemantics) {
+    if(this.Object.prototype.hasOwnProperty.call(attributeSemantics, key)) {
+      var v = this.attributeSemantics[key];
+      if(v[0] === sem && v[1] === index) {
+        array.push(key);
+      }
+    }
+  }
+};
+/** @private */
+H3DU.ShaderProgram.prototype._disableOthers = function(names) {
   "use strict";
   var a = {};
-  for(var i = 0;i < attrs.length;i++) {
-    a[attrs[i][0]] = true;
+  for(var i = 0;i < names.length;i++) {
+    a[names[i]] = true;
   }
   for(i = 0;i < this.attributeNames.length;i++) {
     var name = this.attributeNames[i];
@@ -124,7 +146,22 @@ H3DU.ShaderProgram.prototype.dispose = function() {
   this.actives = {};
   this.attributes = {};
   this.uniformTypes = {};
+  this.attributeSemantics = {};
 };
+/** @private */
+H3DU.ShaderProgram.prototype.setSemantic = function(name, sem, index) {
+  "use strict";
+  var an = this.attributeSemantics[name];
+  var semIndex = H3DU.MeshBuffer._resolveSemantic(name, index);
+  if(an) {
+    an[0] = semIndex[0];
+    an[1] = semIndex[1];
+  } else {
+    this.attributeSemantics[name] = semIndex;
+  }
+  return null;
+};
+
 /**
  * Gets the WebGL context associated with this shader program object.
  * @returns {WebGLRenderingContext} Return value.
@@ -205,25 +242,17 @@ H3DU.ShaderProgram.prototype.getUniform = function(name) {
     return uv instanceof Array ? uv.slice(0, uv.length) : uv;
   }
 };
+
 /** @private */
 H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
   "use strict";
   var i;
   var uniformsLength = 0;
-  if(typeof Object.keys === "undefined") {
-    for(i in this.savedUniforms) {
-      if(Object.prototype.hasOwnProperty.call(this.savedUniforms, i)) {
-        this._setUniformInternal(this.savedUniforms, i);
-        uniformsLength++;
-      }
-    }
-  } else {
-    var keys = Object.keys(this.savedUniforms);
-    uniformsLength = keys.length;
-    for(var ki = 0;ki < uniformsLength;ki++) {
-      i = keys[ki];
-      this._setUniformInternal(this.savedUniforms, i);
-    }
+  var keys = Object.keys(this.savedUniforms);
+  uniformsLength = keys.length;
+  for(var ki = 0;ki < uniformsLength;ki++) {
+    i = keys[ki];
+    this._setUniformInternal(this.savedUniforms, i);
   }
   return uniformsLength;
 };

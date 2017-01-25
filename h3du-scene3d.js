@@ -144,7 +144,7 @@ H3DU.Scene3D._flagsForShape = function(shape) {
     }
   }
   var buffer = shape.getMeshBuffer();
-  if(buffer && !!buffer._getAttribute("colorAttr")) {
+  if(buffer && !!buffer._getAttribute(H3DU.MeshBuffer.COLOR)) {
     flags |= H3DU.Scene3D.COLORATTR_ENABLED;
   }
   return flags;

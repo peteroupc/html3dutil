@@ -22,6 +22,7 @@ and points) composed by all shapes in this mesh.
 * [setAttribute](#H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
+* [setIndices](#H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices)<br>TODO: Not documented yet.
 * [vertexCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds'></a>
@@ -37,9 +38,10 @@ axis-aligned bounding box
 that fits all vertices in the mesh. The first three numbers
 are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
-If the mesh buffer is empty or has no attribute named
-"position", returns the array [Inf, Inf, Inf, -Inf,
--Inf, -Inf]. (Type: Array.&lt;Number>)
+This calculation uses the attribute with the semantic POSITION
+and set index 0. If there is no such attribute,
+or no vertices are defined in this buffer, returns the array
+[Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;Number>)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount'></a>
 ### H3DU.MeshBuffer#primitiveCount()
@@ -62,7 +64,7 @@ Either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
 <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: Number)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute'></a>
-### H3DU.MeshBuffer#setAttribute(name, buffer, startIndex, countPerVertex, stride)
+### H3DU.MeshBuffer#setAttribute(semantic, semanticIndex, buffer, startIndex, countPerVertex, stride)
 
 Adds information about a buffer attribute to this
 mesh buffer (or sets an
@@ -72,8 +74,10 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: String)<br>
-    The name of the attribute.
+* `semantic` (Type: Number | String)<br>
+    An attribute semantic, such as H3DU.MeshBuffer.POSITION, "POSITION", or "TEXCOORD_0".
+* `semanticIndex` (Type: Number)<br>
+    The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 * `buffer` (Type: Float32Array | Array)<br>
     The buffer where the per-vertex data is stored.
 * `startIndex` (Type: Number)<br>
@@ -86,6 +90,20 @@ stored in a vertex buffer.
 #### Return Value
 
 This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+
+ <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices'></a>
+### H3DU.MeshBuffer#setIndices(indices, byteSize)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `indices` (Type: *)
+* `byteSize` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()

@@ -49,14 +49,13 @@ H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   if(this.arrayObjectExt) {
     this.vao = this.arrayObjectExt.createVertexArrayOES();
   }
-
   var attribs = smb._getAttributes();
   for(var i = 0;i < attribs.length;i++) {
     var vb = attribs[i][2];
     if(vb) {
       if(!this.vertsMap.get(vb)) {
-    // Vertex array not seen yet, create a buffer object
-    // and copy the array's data to that object
+       // Vertex array not seen yet, create a buffer object
+       // and copy the array's data to that object
         var vbuffer = context.createBuffer();
         if(vbuffer === null || typeof vbuffer === "undefined") {
           throw new Error("can't create buffer");
@@ -81,6 +80,7 @@ H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   this.context = context;
   this._lastKnownProgram = null;
   this._attribLocations = [];
+  this._attribNames = [];
 };
 /** @private */
 H3DU.BufferedMesh.prototype._toMeshBuffer = function() {
@@ -111,9 +111,7 @@ H3DU.BufferedMesh.prototype.getContext = function() {
   "use strict";
   return this.context;
 };
-/** @private
- * @returns {Object} Return value.
- */
+/** @private */
 H3DU.BufferedMesh.prototype.getFormat = function() {
   "use strict";
   return this.smb.format;
@@ -143,7 +141,9 @@ H3DU.BufferedMesh.prototype.dispose = function() {
   this.vao = null;
   this._lastKnownProgram = null;
   this._attribLocations = [];
+  this._attribNames = [];
 };
+
 /** @private */
 H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
   "use strict";
@@ -151,13 +151,19 @@ H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
     this._lastKnownProgram = program;
     var attrs = this.smb._getAttributes();
     this._attribLocations = [];
-
     for(var i = 0;i < attrs.length;i++) {
-      var loc = program.get(attrs[i][0]);
-      if(loc === null || typeof loc === "undefined") {
-        loc = -1;
+      var arrLoc = [];
+      var arrName = [];
+      program._addNamesWithSemantic(arrName, attrs[i][0], attrs[i][5]);
+      for(var j = 0;j < arrName.length;j++) {
+        var loc = program.get(arrName[j]);
+        if(loc === null || typeof loc === "undefined") {
+          loc = -1;
+        }
+        arrLoc.push(loc);
       }
-      this._attribLocations[i] = loc;
+      this._attribLocations[i] = arrLoc;
+      this._attribNames[i] = arrName;
     }
     return true;
   }
@@ -177,17 +183,21 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
   if(rebind) {
     context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
     var attrs = this.smb._getAttributes();
+    var attrNamesEnabled = [];
     for(var i = 0;i < this._attribLocations.length;i++) {
-      var attrib = this._attribLocations[i];
-      if(attrib >= 0) {
-        var vertBuffer = this.vertsMap.get(attrs[i][2]);
-        context.bindBuffer(context.ARRAY_BUFFER, vertBuffer);
-        context.enableVertexAttribArray(attrib);
-        context.vertexAttribPointer(attrib, attrs[i][3],
+      for(var j = 0;j < this._attribLocations[i].length;j++) {
+        var attrib = this._attribLocations[i][j];
+        if(attrib >= 0) {
+          var vertBuffer = this.vertsMap.get(attrs[i][2]);
+          context.bindBuffer(context.ARRAY_BUFFER, vertBuffer);
+          context.enableVertexAttribArray(attrib);
+          context.vertexAttribPointer(attrib, attrs[i][3],
          context.FLOAT, false, attrs[i][4] * 4, attrs[i][1] * 4);
+          attrNamesEnabled.push(this._attribNames[i][j]);
+        }
       }
     }
-    program._disableOthers(attrs);
+    program._disableOthers(attrNamesEnabled);
   }
 };
 /**

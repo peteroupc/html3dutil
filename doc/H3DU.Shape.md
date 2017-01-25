@@ -17,7 +17,7 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 #### Parameters
 
 * `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>
-    A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.md">H3DU.Mesh</a> objects, the <a href="H3DU.Material.md">H3DU.Material</a> created will use the mesh in its current state and won't track future changes. <i>Using <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i>
+    A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.md">H3DU.Mesh</a> objects, the <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a> created will use the mesh in its current state and won't track future changes. <i>Using <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i>
 
 ### Methods
 

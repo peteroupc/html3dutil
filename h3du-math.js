@@ -276,7 +276,7 @@ H3DU.Math = {
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];
-    b2 = b[3];
+    var b3 = b[3];
     a[0] += b0;
     a[1] += b1;
     a[2] += b2;
@@ -2838,9 +2838,9 @@ m[0] * m[7] * m[5];
 /**
  * Converts a color in linear RGB to the sRGB color space, and returns
  * a new vector with the result.<p>
- * The sRGB color space is a gamma-corrected red-green-blue color space;
- * it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
- * of 1/2.2.
+ * The sRGB color space is red-green-blue color space;
+ * it <i>roughly</i> differs from linear RGB in having an exponent
+ * of 1/2.2 from linear RGB.
  * @param {Array<Number>} lin A three- or four-element vector giving
  * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
  * is either the fourth element in the case of a four-element vector, or 1.0
@@ -2861,9 +2861,9 @@ m[0] * m[7] * m[5];
 /**
  * Converts a color in sRGB to the linear RGB color space, and returns
  * a new vector with the result.<p>
- * The sRGB color space is a gamma-corrected red-green-blue color space;
- * it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
- * of 1/2.2.
+ * The sRGB color space is red-green-blue color space;
+ * it <i>roughly</i> differs from linear RGB in having an exponent
+ * of 1/2.2 from linear RGB.
  * @param {Array<Number>} srgb A three- or four-element vector giving
  * the red, green, and blue components, in that order, of an sRGB color. The alpha component
  * is either the fourth element in the case of a four-element vector, or 1.0
@@ -2873,7 +2873,7 @@ m[0] * m[7] * m[5];
  * in linear RGB.The alpha component will be as specified
  * in the "srgb" parameter.
  */
-  "colorToLinear":function() {
+  "colorToLinear":function(lin) {
     "use strict";
     return [
       lin[0] < 0.04045 ? 0.077399381 * lin[0] : Math.pow((0.055 + lin[0]) * 0.947867299, 2.4),

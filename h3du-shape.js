@@ -18,7 +18,7 @@
  * @class
  * @alias H3DU.Shape
  * @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
- * Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.Material}
+ * Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.PbrMaterial}
  * created will use the mesh in its current state and won't
  * track future changes. <i>Using {@link H3DU.BufferedMesh} objects as the
  * parameter

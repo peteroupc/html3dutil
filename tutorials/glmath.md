@@ -10,7 +10,7 @@ Here is an overview of these data types.
 
 ## Vectors
 
-A vector is a line segment pointing in a certain _direction_ and
+A vector is a line segment pointing in a certain _direction_ in space and
 having a certain _length_.  In addition to a direction, a vector can
 describe a position (by pointing to that position from
 a certain starting point), or a color.

@@ -36,7 +36,7 @@ H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
 /** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
-    if(aspect !== this.lastAspect) {
+    if(aspect !== this.lastAspect && !isNaN(aspect)) {
       this.lastAspect = aspect;
       this.batch.setProjectionMatrix(
      H3DU.Math.mat4perspective(this.fov, aspect, this.near, this.far));
@@ -58,7 +58,7 @@ H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
 /** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
-    if(aspect !== this.lastAspect) {
+    if(aspect !== this.lastAspect && !isNaN(aspect)) {
       this.lastAspect = aspect;
       this.batch.setProjectionMatrix(
      H3DU.Math.mat4orthoAspect(this.a, this.b, this.c, this.d, this.e, this.f, aspect));
@@ -72,64 +72,54 @@ H3DU.Batch3D._setupMatrices = function(
   program,
   projMatrix,
   viewMatrix,
-  worldMatrix,
-  projAndView) {
+  worldMatrix) {
   "use strict";
   var uniforms = {};
-  var viewWorld;
-  if(projAndView) {
-    uniforms.view = viewMatrix;
-    uniforms.projection = projMatrix;
-    uniforms.viewMatrix = viewMatrix;
-    uniforms.projectionMatrix = projMatrix;
-    var viewInvW = program.get("projView");
-    if(viewInvW !== null && typeof viewInvW !== "undefined") {
-      var projView = H3DU.Math.mat4multiply(projMatrix, viewMatrix);
-      uniforms.projView = projView;
-    }
-  }
-  var invTrans = H3DU.Math.mat4inverseTranspose3(worldMatrix);
-  uniforms.world = worldMatrix;
-  uniforms.modelMatrix = worldMatrix;
-  uniforms.normalMatrix = invTrans;
-  var mvm = program.get("inverseView");
-  if(mvm !== null && typeof mvm !== "undefined") {
-    var inverseView = H3DU.Math.mat4invert(viewMatrix);
-    uniforms.inverseView = inverseView;
-  }
-  mvm = program.get("inverseWorld");
-  if(mvm !== null && typeof mvm !== "undefined") {
-    var inverseMatrix = H3DU.Math.mat4invert(worldMatrix);
-    uniforms.inverseWorld = inverseMatrix;
-  }
-  mvm = program.get("inverseModelView");
-  if(mvm !== null && typeof mvm !== "undefined") {
-    var invv = H3DU.Math.mat4multiply(viewMatrix, worldMatrix);
-    inverseView = H3DU.Math.mat4invert(invv);
-    uniforms.inverseModelView = inverseView;
-  }
-  mvm = program.get("world");
-  if(mvm !== null && typeof mvm !== "undefined") {
-    uniforms.world = worldMatrix;
-  }
-  mvm = program.get("modelViewMatrix");
-  if(mvm !== null && typeof mvm !== "undefined") {
-    if(H3DU._isIdentityExceptTranslate(viewMatrix)) {
+  var viewWorld = null;
+  for(var k in program.uniformSemantics)
+    if(Object.prototype.hasOwnProperty.call(program.uniformSemantics, k)) {
+      var v = program.uniformSemantics[k];
+      switch(v) {
+      case H3DU.ShaderInfo.MODEL:
+        uniforms[k] = worldMatrix;
+        break;
+      case H3DU.ShaderInfo.VIEW:
+        uniforms[k] = viewMatrix;
+        break;
+      case H3DU.ShaderInfo.PROJECTION:
+        uniforms[k] = projMatrix;
+        break;
+      case H3DU.ShaderInfo.MODELVIEW:
+      case H3DU.ShaderInfo.MODELVIEWPROJECTION:
+      case H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE:
+        if(!viewWorld) {
+          if(H3DU._isIdentityExceptTranslate(viewMatrix)) {
     // view matrix is just a translation matrix, so that getting the model-view
     // matrix amounts to simply adding the view's position
-      viewWorld = worldMatrix.slice(0, 16);
-      viewWorld[12] += viewMatrix[12];
-      viewWorld[13] += viewMatrix[13];
-      viewWorld[14] += viewMatrix[14];
-    } else {
-      viewWorld = H3DU.Math.mat4multiply(viewMatrix,
+            viewWorld = worldMatrix.slice(0, 16);
+            viewWorld[12] += viewMatrix[12];
+            viewWorld[13] += viewMatrix[13];
+            viewWorld[14] += viewMatrix[14];
+          } else {
+            viewWorld = H3DU.Math.mat4multiply(viewMatrix,
      worldMatrix);
+          }
+        }
+        if(v === H3DU.ShaderInfo.MODELVIEW) {
+          uniforms[k] = viewWorld;
+        } else if(v === H3DU.ShaderInfo.MODELVIEWPROJECTION) {
+          uniforms[k] = H3DU.Math.mat4multiply(projMatrix, viewWorld);
+        } else if(v === H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE) {
+          uniforms[k] = H3DU.Math.mat4inverseTranspose3(viewWorld);
+        }
+        break;
+      case H3DU.ShaderInfo.VIEWINVERSE:
+        uniforms[k] = H3DU.Math.mat4invert(viewMatrix);
+        break;
+      default:
+        break;
+      }
     }
-    uniforms.modelViewMatrix = viewWorld;
-    invTrans = H3DU.Math.mat4inverseTranspose3(viewWorld);
-    uniforms.modelMatrix = worldMatrix;
-    uniforms.normalMatrix = invTrans;
-  }
   program.setUniforms(uniforms);
 };
 /** @private */
@@ -393,18 +383,15 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
       prog = renderContext.scene._programs.getProgram(
            flags, renderContext.context);
     }
-    var projAndView = false;
     if(renderContext.prog !== prog) {
       prog.use();
-      projAndView = true;
       new H3DU._LightsBinder(this.lights).bind(prog, this._viewMatrix);
       renderContext.prog = prog;
     }
     H3DU.Batch3D._setupMatrices(prog,
       this._projectionMatrix,
       this._viewMatrix,
-      shape.getMatrix(),
-      projAndView);
+      shape.getMatrix());
     H3DU.Batch3D._getMaterialBinder(shape.material).bind(prog,
       renderContext.context,
       renderContext.scene._textureLoader);

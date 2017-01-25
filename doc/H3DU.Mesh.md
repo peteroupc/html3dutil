@@ -84,7 +84,7 @@ to unit length.
 or points) composed by all shapes in this mesh.
 * [recalcNormals](#H3DU.Mesh_H3DU.Mesh_recalcNormals)<br>Recalculates the normal vectors for triangles
 in this mesh.
-* [recalcTangents](#H3DU.Mesh_H3DU.Mesh_recalcTangents)<br>Recalculates the tangent vectors for triangles
+* [recalcTangents](#H3DU.Mesh_H3DU.Mesh_recalcTangents)<br>Recalculates the tangent and bitangent vectors for triangles
 in this mesh.
 * [reverseNormals](#H3DU.Mesh_H3DU.Mesh_reverseNormals)<br>Modifies this mesh by reversing the sign of normals it defines.
 * [reverseWinding](#H3DU.Mesh_H3DU.Mesh_reverseWinding)<br>Reverses the winding order of the triangles in this mesh
@@ -445,7 +445,8 @@ Return value. (Type: Number)
 Recalculates the normal vectors for triangles
 in this mesh. For this to properly affect shading, each triangle in
 the mesh must have its vertices defined in
-counterclockwise order. Each normal calculated will
+counterclockwise order (if the triangle is being rendered
+in a right-handed coordinate system). Each normal calculated will
 be normalized to have a length of 1 (unless the normal is (0,0,0)).
 
 #### Parameters
@@ -462,11 +463,11 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
  <a name='H3DU.Mesh_H3DU.Mesh_recalcTangents'></a>
 ### H3DU.Mesh#recalcTangents()
 
-Recalculates the tangent vectors for triangles
-in this mesh. Tangent vectors are required for
+Recalculates the tangent and bitangent vectors for triangles
+in this mesh. Tangent and bitangent vectors are required for
 normal mapping (bump mapping) to work.
-This method only affects those parts of the mesh
-that define normals and texture coordinates.
+This method only has an effect if this mesh
+includes normals and texture coordinates.
 
 #### Return Value
 
@@ -657,7 +658,7 @@ added after calling this method without calling mode() first.
 #### Parameters
 
 * `matrix` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix describing the transformation. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
+    A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
 
 #### Return Value
 
