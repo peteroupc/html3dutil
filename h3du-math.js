@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, b3, lin */
+/* global H3DU */
 
 /**
  * A collection of math functions for working
@@ -218,7 +218,7 @@ H3DU.Math = {
  * is the same as subtracting each of their components.
  * @param {Array<Number>} a The first 3-element vector.
  * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} The parameter "a"
+ * @returns {Array<Number>} The parameter "a".
  * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
  */
   "vec3subInPlace":function(a, b) {
@@ -267,7 +267,7 @@ H3DU.Math = {
  * combined paths described by the given vectors, in either order.
  * @param {Array<Number>} a The first 4-element vector.
  * @param {Array<Number>} b The second 4-element vector.
- * @returns {Array<Number>} The parameter "a"
+ * @returns {Array<Number>} The parameter "a".
  * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
  */
   "vec4addInPlace":function(a, b) {
@@ -978,18 +978,18 @@ H3DU.Math = {
     var t4 = m[4] * m[8] - m[5] * m[7];
     var t5 = m[5] * m[6] - m[3] * m[8];
     var t6 = m[3] * m[7] - m[4] * m[6];
-    var t7 = 1.0 / ((
-    m[0] * t4 + m[1] * t5 + m[2] * t6));
+    var t7 = 1.0 / (
+    m[0] * t4 + m[1] * t5 + m[2] * t6);
     if(t7 === 0)return H3DU.Math.mat3identity();
     ret[0] = t4 * t7;
-    ret[1] = ((m[2] * m[7] - m[1] * m[8])) * t7;
-    ret[2] = ((m[1] * m[5] - m[2] * m[4])) * t7;
+    ret[1] = (m[2] * m[7] - m[1] * m[8]) * t7;
+    ret[2] = (m[1] * m[5] - m[2] * m[4]) * t7;
     ret[3] = t5 * t7;
-    ret[4] = ((m[0] * m[8] - m[2] * m[6])) * t7;
-    ret[5] = ((m[2] * m[3] - m[0] * m[5])) * t7;
+    ret[4] = (m[0] * m[8] - m[2] * m[6]) * t7;
+    ret[5] = (m[2] * m[3] - m[0] * m[5]) * t7;
     ret[6] = t6 * t7;
-    ret[7] = ((m[1] * m[6] - m[0] * m[7])) * t7;
-    ret[8] = ((m[0] * m[4] - m[1] * m[3])) * t7;
+    ret[7] = (m[1] * m[6] - m[0] * m[7]) * t7;
+    ret[8] = (m[0] * m[4] - m[1] * m[3]) * t7;
     return ret;
   },
 /**

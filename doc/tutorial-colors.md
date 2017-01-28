@@ -23,7 +23,7 @@ You can use values like the following.
 <a id=What_Do_Some_Colors_Look_Like></a>
 ## What Do Some Colors Look Like?
 
-Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the "Web safe" colors, which were chosen "specifically because they matched the palettes selected by the then leading browser applications" for 256-color displays (according to [Wikipedia](http://en.wikipedia.org/wiki/Web_colors)), but this list is still useful because it's short yet gives you a variety of appropriate colors for most purposes.
+Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the "Web safe" colors, which were chosen "specifically because they matched the palettes selected by various browser applications" for 256-color displays (according to [Wikipedia](http://en.wikipedia.org/wiki/Web_colors)), but this list is still useful because it's short yet gives you a variety of appropriate colors for most purposes.
 
 ![A list of the "Web-safe colors". Each entry consists of a color swatch and the corresponding HTML name.](websafe.svg)
 
@@ -137,7 +137,7 @@ An alternate syntax for RGB colors supports the alpha component (see "What Is an
 
 An HSL color is a color represented in the Hue-Saturation-Lightness color space. Here&#8217;s what each component means in detail.
 
-* **Hue** ranges from 0 to 360 degrees. Each angle on the color wheel stands for a different hue:
+* **Hue** ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HLS) stands for a different hue:
 
     * Reds have hue 0 (say, 12 o&#8217;clock);
     * Yellows have hue 60 (2 o&#8217;clock);

@@ -51,24 +51,47 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
      [mat.emission[0], mat.emission[1], mat.emission[2]];
   }
   program.setUniforms(uniforms);
-  if(typeof mat.albedoMap !== "undefined" && mat.albedoMap !== null)
-    H3DU._MaterialBinder.bindTexture(mat.albedoMap, context, program, 0, loader);
-  else
-    H3DU._MaterialBinder.bindTexture(mat.texture, context, program, 0, loader);
-  H3DU._MaterialBinder.bindTexture(mat.specularMap, context, program, 1, loader);
-  H3DU._MaterialBinder.bindTexture(mat.normalMap, context, program, 2, loader);
-  H3DU._MaterialBinder.bindTexture(mat.metalnessMap, context, program, 4, loader);
-  H3DU._MaterialBinder.bindTexture(mat.roughnessMap, context, program, 5, loader);
-  H3DU._MaterialBinder.bindTexture(mat.environmentMap, context, program, 6, loader);
+  var sampler = 0;
+  var textures = [];
+  textures.push([typeof mat.albedoMap === "undefined" ? null : mat.albedoMap, "texture", "textureSize"]);
+  textures.push([typeof mat.texture === "undefined" ? null : mat.texture, "texture", "textureSize"]);
+  textures.push([typeof mat.specularMap === "undefined" ? null : mat.specularMap, "specularMap"]);
+  textures.push([typeof mat.normalMap === "undefined" ? null : mat.normalMap, "normalMap"]);
+  textures.push([typeof mat.metalnessMap === "undefined" ? null : mat.metalnessMap, "metalnessMap"]);
+  textures.push([typeof mat.roughnessMap === "undefined" ? null : mat.roughnessMap, "roughnessMap"]);
+  textures.push([typeof mat.environmentMap === "undefined" ? null : mat.environmentMap, "envMap"]);
+  for(var i = 0;i < textures.length;i++) {
+    if(textures[i][0] !== null && typeof textures[i][0] !== "undefined") {
+      var textureSizeName = typeof textures[i][2] === "undefined" ? null : textures[i][2];
+      H3DU._MaterialBinder.bindTexture(
+    textures[i][0], textures[i][0].info, context, program,
+          sampler++, loader, textures[i][1], textureSizeName);
+    }
+  }
+  for(var k in mat.shader || {})
+    if(Object.prototype.hasOwnProperty.call(mat.shader, k)) {
+      var v = mat.shader[k];
+      if(typeof v !== "undefined" && (v !== null && typeof v !== "undefined") && v instanceof H3DU.TextureInfo) {
+        H3DU._MaterialBinder.bindTexture(
+    v, v, context, program,
+          sampler++, loader, k, null);
+      }
+    }
   return this;
 };
 
 // ////////////////////////
 
 /** @private */
-H3DU._LoadedTexture = function(textureImage, context) {
+H3DU._LoadedTexture = function(texture, textureInfo, context) {
   "use strict";
-  if(!textureImage.image)throw new Error();
+  this._init(texture, textureInfo, context);
+};
+
+/** @private */
+H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
+  "use strict";
+  if(!texture.image)throw new Error();
   context = H3DU._toContext(context);
   this.context = context;
   this.loadedTexture = context.createTexture();
@@ -77,30 +100,34 @@ H3DU._LoadedTexture = function(textureImage, context) {
   // the lower left as in OpenGL and OpenGL ES, so we use this method call
   // to reestablish the lower left corner.
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
-  var target = context.TEXTURE_2D;
+  var target = textureInfo.target;
   context.bindTexture(target, this.loadedTexture);
-  if("src" in textureImage.image) {
+  if("src" in texture.image) {
     context.texImage2D(target, 0,
-      context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
-      textureImage.image);
+      textureInfo.internalFormat, textureInfo.format, context.UNSIGNED_BYTE,
+      texture.image);
   } else {
     context.texImage2D(target, 0,
-     context.RGBA, textureImage.getWidth(), textureImage.getHeight(), 0,
-     context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
+     textureInfo.internalFormat, texture.getWidth(), texture.getHeight(), 0,
+     textureInfo.format, context.UNSIGNED_BYTE, texture.image);
   }
+  context.texParameteri(target,
+        context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
   // generate mipmaps for power-of-two textures
-  if(H3DU._isPowerOfTwo(textureImage.getWidth()) &&
-      H3DU._isPowerOfTwo(textureImage.getHeight())) {
-    context.generateMipmap(context.TEXTURE_2D);
+  if(H3DU._isPowerOfTwo(texture.getWidth()) &&
+      H3DU._isPowerOfTwo(texture.getHeight())) {
+    context.generateMipmap(target);
   } else {
+        // TODO: Allow any parameter if context uses WebGL 2
     context.texParameteri(target,
-        context.TEXTURE_MIN_FILTER, context.LINEAR);
+           context.TEXTURE_MIN_FILTER, context.LINEAR);
     context.texParameteri(target,
         context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
     context.texParameteri(target,
         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
 };
+
 /** @private */
 H3DU._LoadedCubeMap = function(textureImage, context) {
   "use strict";
@@ -129,14 +156,7 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
   if(H3DU._isPowerOfTwo(textureImage.getWidth()) &&
       H3DU._isPowerOfTwo(textureImage.getHeight())) {
     context.generateMipmap(target);
-  } else {
-    context.texParameteri(target,
-        context.TEXTURE_MIN_FILTER, context.LINEAR);
   }
-  context.texParameteri(target,
-        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
-  context.texParameteri(target,
-        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
 };
 
 /** @private */
@@ -160,8 +180,11 @@ H3DU._LoadedCubeMap.prototype.dispose = function() {
 // ///////////////////////////////
 
 /** @private */
-H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUnit, loader) {
+H3DU._MaterialBinder.bindTexture = function(
+  texture, textureInfo, context, program,
+  textureUnit, loader, uniformName, sizeUniform) {
   "use strict";
+  if(!(typeof textureInfo !== "undefined" && (textureInfo !== null && typeof textureInfo !== "undefined")))throw new Error();
   if(texture === null || typeof texture === "undefined") {
     if(context) {
       context.activeTexture(context.TEXTURE0 + textureUnit);
@@ -171,45 +194,47 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
     return;
   }
   var isFrameBuffer = texture instanceof H3DU.FrameBufferInfo;
-  if(!isFrameBuffer && !(texture instanceof H3DU.Texture) && !(texture instanceof H3DU.CubeMap)) {
+  if(!isFrameBuffer &&
+     !(texture instanceof H3DU.Texture) &&
+     !(texture instanceof H3DU.CubeMap) &&
+     !(texture instanceof H3DU.TextureInfo)) {
     throw new Error("unsupported texture type");
   }
   var loadedTexture = null;
   if(!isFrameBuffer) {
+    if(texture instanceof H3DU.TextureInfo) {
+      var infoTexture = loader.getTexture(texture.uri);
+      if(infoTexture === null || typeof infoTexture === "undefined") {
+        var that = this;
+        var prog = program;
+        loader.loadAndMapTexture(texture, context).then(function() {
+        // try again loading the image
+          that.bind(prog, context, loader);
+        });
+      } else {
+        texture = infoTexture;
+      }
+    }
     if(texture.loadStatus === 0) {
-      var that = this;
-      var prog = program;
+      that = this;
+      prog = program;
       texture.loadImage().then(function() {
         // try again loading the image
-        that.bind(prog);
+        that.bind(prog, context, loader);
       });
       return;
     } else if(texture.loadStatus >= 2) {
-      loadedTexture = loader.mapTexture(texture, context);
+      loadedTexture = loader._mapTextureWithInfo(texture, textureInfo, context);
     }
   } else {
+    // TODO: Use something else than mapFrameBuffer
     texture = loader.mapFrameBuffer(texture, context);
   }
   if (loadedTexture !== null && typeof loadedTexture !== "undefined" || isFrameBuffer) {
     var uniforms = {};
-    if(textureUnit === 0) {
-      uniforms.sampler = textureUnit;
-      uniforms.textureSize = [texture.getWidth(), texture.getHeight()];
-    }
-    if(textureUnit === 1) {
-      uniforms.specularMap = textureUnit;
-    }
-    if(textureUnit === 2) {
-      uniforms.normalMap = textureUnit;
-    }
-    if(textureUnit === 4) {
-      uniforms.metalnessMap = textureUnit;
-    }
-    if(textureUnit === 5) {
-      uniforms.roughnessMap = textureUnit;
-    }
-    if(textureUnit === 6) {
-      uniforms.envMap = textureUnit;
+    uniforms[uniformName] = textureUnit;
+    if(typeof sizeUniform !== "undefined" && (sizeUniform !== null && typeof sizeUniform !== "undefined")) {
+      uniforms[sizeUniform] = [texture.getWidth(), texture.getHeight()];
     }
     program.setUniforms(uniforms);
     context.activeTexture(context.TEXTURE0 + textureUnit);
@@ -228,29 +253,31 @@ H3DU._MaterialBinder.bindTexture = function(texture, context, program, textureUn
       }
     } else {
       var target = texture instanceof H3DU.CubeMap ?
-      context.TEXTURE_CUBE_MAP : context.TEXTURE_2D;
+         context.TEXTURE_CUBE_MAP : textureInfo.target;
       context.bindTexture(target,
         loadedTexture.loadedTexture);
        // Set texture parameters
       loader._setMaxAnisotropy(context, target);
        // set magnification
       context.texParameteri(target,
-        context.TEXTURE_MAG_FILTER, context.LINEAR);
-      var wrapMode = context.CLAMP_TO_EDGE;
+        context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
       if(H3DU._isPowerOfTwo(texture.getWidth()) &&
           H3DU._isPowerOfTwo(texture.getHeight())) {
-         // Enable mipmaps if texture's dimensions are powers of two
-        if(!texture.clamp)wrapMode = context.REPEAT;
         context.texParameteri(target,
-           context.TEXTURE_MIN_FILTER, context.LINEAR_MIPMAP_LINEAR);
+           context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
+        context.texParameteri(target,
+          context.TEXTURE_WRAP_S, textureInfo.wrapS);
+        context.texParameteri(target,
+         context.TEXTURE_WRAP_T, textureInfo.wrapT);
       } else {
+        // TODO: Allow any parameter if context uses WebGL 2
         context.texParameteri(target,
          context.TEXTURE_MIN_FILTER, context.LINEAR);
+        context.texParameteri(target,
+          context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+        context.texParameteri(target,
+         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
       }
-      context.texParameteri(target,
-        context.TEXTURE_WRAP_S, wrapMode);
-      context.texParameteri(target,
-        context.TEXTURE_WRAP_T, wrapMode);
     }
   }
 };

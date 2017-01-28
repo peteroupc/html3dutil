@@ -445,7 +445,7 @@ counterclockwise rotation in [right-handed coordinate systems]{@tutorial glmath}
 clockwise.
 
 As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
-&theta; = 60).
+&theta; = 60&deg;).
 We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
 We plug those numbers into the rotation formula to get a formula for rotating a
 point 60 degrees about the X axis.

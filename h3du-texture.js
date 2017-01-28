@@ -31,8 +31,8 @@ H3DU.Texture = function(name) {
   this.loadStatus = 0;
   this.name = name;
   this.width = 0;
-  this.clamp = false;
   this.height = 0;
+  this.info = new H3DU.TextureInfo({"uri":name});
 };
 /**
  * Gets this texture's known width.
@@ -72,16 +72,20 @@ H3DU.Texture.prototype.getHeight = function() {
  */
 H3DU.Texture.prototype.setClamp = function(clamp) {
   "use strict";
-  this.clamp = clamp;
+  // TODO: Possibly deprecate this method
+  this.info.setParams({
+    "wrapS":clamp ? 33071 : 10497,
+    "wrapT":clamp ? 33071 : 10497
+  });
   return this;
 };
 
 /**
  * Loads a texture by its URL.
- * @param {String} name URL of the texture data. Images with a TGA
+ * @param {String|H3DU.TextureInfo} name URL of the texture data. Images with a TGA
  * extension that use the RGBA or grayscale format are supported.
  * Images supported by the browser will be loaded via
- * the JavaScript DOM's Image class.
+ * the JavaScript DOM's Image class. TODO: More docs.
  * @param {Object} [textureCache] An object whose keys
  * are the names of textures already loaded. This will help avoid loading
  * the same texture more than once. This parameter is optional
@@ -90,9 +94,10 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
  * @memberof! H3DU.Texture
  */
-H3DU.Texture.loadTexture = function(name, textureCache) {
+H3DU.Texture.loadTexture = function(info, textureCache) {
  // Get cached texture
   "use strict";
+  var name = info instanceof H3DU.TextureInfo ? info.uri : info;
   if(textureCache && textureCache[name]) {
     return Promise.resolve(textureCache[name]);
   }
@@ -134,18 +139,13 @@ H3DU.Texture.fromUint8Array = function(array, width, height) {
   return texImage;
 };
 
-/** @private
- * @param {Object} name Description of name.
- * @returns {Object} Return value.
- */
+/** @private */
 H3DU.Texture.loadTga = function(name) {
   "use strict";
-
   return H3DU.loadFileFromUrl(name, "arraybuffer")
  .then(function(buf) {
    var view = new DataView(buf.data);
-  // var id=view.getUint8(0);
-  // var cmaptype=view.getUint8(1);
+  // NOTE: id is byte 0; cmaptype is byte 1
    var imgtype = view.getUint8(2);
    if(imgtype !== 2 && imgtype !== 3) {
      return Promise.reject(new Error("unsupported image type"));
@@ -209,9 +209,7 @@ H3DU.Texture.loadTga = function(name) {
  });
 };
 
-/** @private
- * @returns {Object} Return value.
- */
+/** @private */
 H3DU.Texture.prototype.loadImage = function() {
   "use strict";
   if(typeof this.image !== "undefined" && this.image !== null) {
@@ -318,6 +316,7 @@ H3DU.Texture._texOrString = function(tex) {
  */
 H3DU.CubeMap = function(textures) {
   "use strict";
+  // TODO: Support TextureInfo
   this.textures = [];
   this.loadStatus = 0;
   for(var i = 0;i < 6;i++) {

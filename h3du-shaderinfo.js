@@ -60,7 +60,13 @@ H3DU.ShaderInfo.MODELVIEW = 4;
 H3DU.ShaderInfo.MODELVIEWPROJECTION = 5;
 H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE = 6;
 H3DU.ShaderInfo.VIEWINVERSE = 7;
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} u
+ * @param {*} sem
+ * @returns {*} Return value.
+ * @memberof! H3DU.ShaderInfo#
+ */
 H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
   "use strict";
   this.uniformSemantics[u] = sem;
@@ -180,6 +186,12 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
     }
     if(newUv) {
       if(changedUniforms)changedUniforms[i] = uv;
+    }
+  } else if(v instanceof H3DU.TextureInfo) {
+    if(!uv) {
+      uv.copyFrom(v);
+    } else {
+      uv = new H3DU.TextureInfo().copyFrom(v);
     }
   } else if(v.length === 3) {
     if(!uv) {

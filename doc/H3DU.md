@@ -234,7 +234,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
 
  <a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)

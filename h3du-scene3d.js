@@ -772,17 +772,12 @@ H3DU.Scene3D.prototype.loadTexture = function(name) {
  */
 H3DU.Scene3D.prototype.loadAndMapTexture = function(texture) {
   "use strict";
-  var tex = null;
+
   if(texture.constructor === H3DU.Texture) {
     return this.loadAndMapTexture(texture.name);
   } else {
-    tex = this.loadTexture(texture);
+    return this.loadAndMapTexture(texture);
   }
-  var that = this;
-  return tex.then(function(textureInner) {
-    that._textureLoader.mapTexture(textureInner, that);
-    return textureInner;
-  });
 };
 /**
  * Loads one or more textures from an image URL and uploads each of them

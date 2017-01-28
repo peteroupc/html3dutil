@@ -628,9 +628,9 @@ corresponding maximum coordinate; otherwise, <code>false</code>. (Type: Boolean)
 Converts a color in sRGB to the linear RGB color space, and returns
 a new vector with the result.
 
-The sRGB color space is a gamma-corrected red-green-blue color space;
-it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
-of 1/2.2.
+The sRGB color space is red-green-blue color space;
+it <i>roughly</i> differs from linear RGB in having an exponent
+of 1/2.2 from linear RGB.
 
 #### Parameters
 
@@ -650,9 +650,9 @@ in the "srgb" parameter. (Type: Array.&lt;Number>)
 Converts a color in linear RGB to the sRGB color space, and returns
 a new vector with the result.
 
-The sRGB color space is a gamma-corrected red-green-blue color space;
-it <i>roughly</i> differs from linear RGB in having a gamma correction exponent
-of 1/2.2.
+The sRGB color space is red-green-blue color space;
+it <i>roughly</i> differs from linear RGB in having an exponent
+of 1/2.2 from linear RGB.
 
 #### Parameters
 
@@ -2428,7 +2428,7 @@ is the same as subtracting each of their components.
 
 #### Return Value
 
-The parameter "a"
+The parameter "a".
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Math.vec3toWindowPoint'></a>
@@ -2588,7 +2588,7 @@ combined paths described by the given vectors, in either order.
 
 #### Return Value
 
-The parameter "a"
+The parameter "a".
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Math.vec4assign'></a>

@@ -29,21 +29,27 @@ H3DU.TextureLoader = function() {
  */
 H3DU.TextureLoader.prototype.getTexture = function(name) {
   "use strict";
+  var tex = this.textureImages[name] || null;
+  if(tex && tex.loadStatus !== 2) {
+    this.textureImages[name] = null;
+    return null;
+  }
   return this.textureImages[name] || null;
 };
 
 /**
  * Loads a texture by its URL and stores its data.
- * @param {String} name URL of the texture data. Images with a TGA
+ * @param {String|TextureInfo} name URL of the texture data. Images with a TGA
  * extension that use the RGBA or grayscale format are supported.
  * Images supported by the browser will be loaded via
- * the JavaScript DOM's Image class.
+ * the JavaScript DOM's Image class. TODO: More docs.
  * @returns {Promise<H3DU.Texture>} A promise that resolves when the texture
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
  * @memberof! H3DU.TextureLoader#
  */
 H3DU.TextureLoader.prototype.loadTexture = function(name) {
   "use strict";
+  // TODO: Support passing H3DU.Texture objects
   return H3DU.Texture.loadTexture(name, this.textureImages);
 };
 /** @private */
@@ -78,11 +84,8 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
 /**
  * Loads the textures referred to in an array of URLs and
  * stores their texture data.
- * @param {Array<String>} textures An array of URLs of
- * the texture data. Images with a TGA
- * extension that use the RGBA or grayscale format are supported.
- * Images supported by the browser will be loaded via
- * the JavaScript DOM's Image class.
+ * @param {Array<String|H3DU.TextureInfo>} textures An array of objects described in
+ * {@link H3DU.TextureLoader.loadTexture}.
  * @param {Function} [resolve] A function called as each
  * individual texture is loaded.
  * @param {Function} [reject] A function called as each
@@ -104,10 +107,8 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
 /**
  * Loads the texture referred to in an array of URLs and
  * uploads its texture data to a WebGL context.
- * @param {String} texture URL of the texture data. Images with a TGA
- * extension that use the RGBA or grayscale format are supported.
- * Images supported by the browser will be loaded via
- * the JavaScript DOM's Image class.
+ * @param {String|H3DU.TextureInfo} texture An object described in
+ * {@link H3DU.TextureLoader.loadTexture}.
  * @param {WebGLRenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
@@ -122,16 +123,15 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
   context = context.getContext ? context.getContext() : context;
   var that = this;
   return this.loadTexture(texture).then(function(tex) {
-    that.mapTexture(tex, context);
+    var texinfo = H3DU.TextureInfo._texInfoOrString(texture);
+    that._mapTextureWithInfo(tex, texinfo, context);
     return Promise.resolve(tex);
   });
 };
 /**
  * Loads one or more textures by their URL and uploads their data to a WebGL context.
- * @param {Array<String>} textures Arrays of URLs of the texture data. Images with a TGA
- * extension that use the RGBA or grayscale format are supported.
- * Images supported by the browser will be loaded via
- * the JavaScript DOM's Image class.
+ * @param {Array<String|H3DU.TextureInfo>} textures An array of objects described in
+ * {@link H3DU.TextureLoader.loadTexture}.
  * @param {WebGLRenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
@@ -150,45 +150,14 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var promises = [];
-
   for(var i = 0;i < textures.length;i++) {
     promises.push(this.loadAndMapTexture(textures[i], context));
   }
   return H3DU.getPromiseResultsAll(promises, resolve, reject);
 };
-/**
- * Uploads an array of textures to a WebGL context.
- * @param {Array<H3DU.Texture>} textures An array of texture objects to upload.
- * Each texture's data must already have been loaded. Textures with the
- * same name as textures already uploaded to the given context will be skipped.
- * @param {WebGLRenderingContext|object} context
- * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
- * implements a no-argument <code>getContext</code> method
- * that returns a WebGL context.
- * @returns {H3DU.TextureLoader} This object.
- * @memberof! H3DU.TextureLoader#
- */
-H3DU.TextureLoader.prototype.mapTextures = function(textures, context) {
-  "use strict";
-  context = context.getContext ? context.getContext() : context;
-  for(var i = 0;i < textures.length;i++) {
-    this.mapTexture(textures[i], context);
-  }
-  return this;
-};
-/**
- * Uploads a texture object to a WebGL context.
- * @param {H3DU.Texture} texture The texture object to map.
- * Each texture's data must already have been loaded. If the texture has the
- * same name as a texture already uploaded to the given context, it will be skipped.
- * @param {WebGLRenderingContext|object} context
- * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
- * implements a no-argument <code>getContext</code> method
- * that returns a WebGL context.
- * @returns {H3DU.TextureLoader} This object.
- * @memberof! H3DU.TextureLoader#
- */
-H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
+
+/** @private */
+H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var lt = this.loadedTextures;
@@ -199,10 +168,11 @@ H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
   }
   var loadedTex = texture instanceof H3DU.CubeMap ?
      new H3DU._LoadedCubeMap(texture, context) :
-     new H3DU._LoadedTexture(texture, context);
+     new H3DU._LoadedTexture(texture, textureInfo, context);
   lt.push([texture, context, loadedTex]);
   return loadedTex;
 };
+
 /**
  * TODO: Not documented yet.
  * @param {*} texturesOrCubeMap

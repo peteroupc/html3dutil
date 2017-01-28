@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, attributeSemantics, console */
+/* global H3DU, console */
 
 /**
  * Represents a WebGL shader program. A shader program in
@@ -110,7 +110,7 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
 H3DU.ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index) {
   "use strict";
   for(var key in this.attributeSemantics) {
-    if(this.Object.prototype.hasOwnProperty.call(attributeSemantics, key)) {
+    if(Object.prototype.hasOwnProperty.call(this.attributeSemantics, key)) {
       var v = this.attributeSemantics[key];
       if(v[0] === sem && v[1] === index) {
         array.push(key);
@@ -177,6 +177,14 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
   var uniform = this.get(i);
   if(uniform === null || typeof uniform === "undefined")return;
   var uv = uniforms[i];
+  if(uv instanceof H3DU.TextureInfo) {
+    // TODO: Skip TextureInfo for now
+    if(typeof this._textureInfoWarning === "undefined" || this._textureInfoWarning === null) {
+      console.log("TextureInfo not supported yet");
+    }
+    this._textureInfoWarning = true;
+    return;
+  }
   if(typeof uv === "number") {
     if(this.uniformTypes[i] === this.FLOAT) {
       this.context.uniform1f(uniform, uv);

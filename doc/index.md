@@ -80,6 +80,10 @@ used for some other purpose, such as a depth map, a height map,
 a bump map, a specular map, and so on.
 * <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
 texture.
+* <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a><br>Specifies information about a texture, which can serve as image data applied to
+the surface of a shape, or even a 2-dimensional array of pixels
+used for some other purpose, such as a depth map, a height map,
+a bump map, a specular map, and so on.
 * <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them
 to WebGL contexts.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
