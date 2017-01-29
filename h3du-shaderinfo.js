@@ -237,11 +237,11 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
 /** @private */
 H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
   "use strict";
-  for(var i = 0;i < len;i++) {
+  for(var i = 0; i < len; i++) {
     if(src[i] !== dst[i]) {
    // Arrays are different
       dst[i] = src[i];
-      for(var j = i + 1;j < len;j++) {
+      for(var j = i + 1; j < len; j++) {
         dst[j] = src[j];
       }
       return true;
@@ -255,7 +255,7 @@ H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, change
   "use strict";
   var i;
   var keys = Object.keys(uniforms);
-  for(var ki = 0;ki < keys.length;ki++) {
+  for(var ki = 0; ki < keys.length; ki++) {
     i = keys[ki];
     H3DU.ShaderInfo._setUniformInternal(uniforms, outputUniforms, i, changedUniforms);
   }
@@ -690,7 +690,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).r;", "#endif",
     "#endif", // PHYSICAL_BASED
     ""].join("\n") + "\n";
-  for(i = 0;i < H3DU.Lights.MAX_LIGHTS;i++) {
+  for(i = 0; i < H3DU.Lights.MAX_LIGHTS; i++) {
     shader += [
       "lightPowerVec=calcLightPower(lights[" + i + "],viewPositionVar);",
       "lightCosine=saturate(dot(normal,lightPowerVec.xyz));",

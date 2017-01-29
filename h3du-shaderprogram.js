@@ -68,12 +68,12 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
   this.attributeNames = [];
   this.attributeSemantics = {};
   var keys = Object.keys(shaderInfo.attributeSemantics);
-  for(var i = 0;i < keys.length;i++) {
+  for(var i = 0; i < keys.length; i++) {
     this.attributeSemantics[keys[i]] = shaderInfo.attributeSemantics[keys[i]].slice(0, 2);
   }
   this.uniformSemantics = {};
   keys = Object.keys(shaderInfo.uniformSemantics);
-  for(i = 0;i < keys.length;i++) {
+  for(i = 0; i < keys.length; i++) {
     this.uniformSemantics[keys[i]] = shaderInfo.uniformSemantics[keys[i]];
   }
   H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
@@ -122,10 +122,10 @@ H3DU.ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index)
 H3DU.ShaderProgram.prototype._disableOthers = function(names) {
   "use strict";
   var a = {};
-  for(var i = 0;i < names.length;i++) {
+  for(var i = 0; i < names.length; i++) {
     a[names[i]] = true;
   }
-  for(i = 0;i < this.attributeNames.length;i++) {
+  for(i = 0; i < this.attributeNames.length; i++) {
     var name = this.attributeNames[i];
     if(!a[name[0]]) {
       this.context.disableVertexAttribArray(name[1]);
@@ -258,7 +258,7 @@ H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
   var uniformsLength = 0;
   var keys = Object.keys(this.savedUniforms);
   uniformsLength = keys.length;
-  for(var ki = 0;ki < uniformsLength;ki++) {
+  for(var ki = 0; ki < uniformsLength; ki++) {
     i = keys[ki];
     this._setUniformInternal(this.savedUniforms, i);
   }
@@ -331,7 +331,7 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
       if(!text)text = "";
       var lines = text.split("\n");
       // add line numbers
-      for(var i = 0;i < lines.length;i++) {
+      for(var i = 0; i < lines.length; i++) {
         lines[i] = "/* " + (i + 1) + " */   " + lines[i];
       }
       console.log(lines.join("\n"));

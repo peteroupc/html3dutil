@@ -17,7 +17,7 @@ H3DU.FrameBufferLoader = function() {
 H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
   "use strict";
   var fb;
-  for(var i = 0;i < this._frameBuffers.length;i++) {
+  for(var i = 0; i < this._frameBuffers.length; i++) {
     fb = this._frameBuffers[i];
     if(fb[0] === info && fb[1] === context) {
       if(info.width !== fb[3] || info.height !== fb[4]) {
@@ -37,7 +37,7 @@ H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
 /** @private */
 H3DU.FrameBufferLoader.prototype.dispose = function() {
   "use strict";
-  for(var i = 0;i < this._frameBuffers.length;i++) {
+  for(var i = 0; i < this._frameBuffers.length; i++) {
     this._frameBuffers[i][2].dispose();
   }
   this._frameBuffers = [];

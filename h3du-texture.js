@@ -175,7 +175,7 @@ H3DU.Texture.loadTga = function(name) {
    var offset = 18;
    var io = 0;
    if(pixelsize === 32 && imgtype === 2) {
-     for(i = 0, io = 0;i < size;i++, io += 4) {
+     for(i = 0, io = 0; i < size; i++, io += 4) {
        arr[io + 2] = view.getUint8(offset);
        arr[io + 1] = view.getUint8(offset + 1);
        arr[io] = view.getUint8(offset + 2);
@@ -183,7 +183,7 @@ H3DU.Texture.loadTga = function(name) {
        offset += 4;
      }
    } else if(pixelsize === 24 && imgtype === 2) {
-     for(i = 0, io = 0;i < size;i++, io += 4) {
+     for(i = 0, io = 0; i < size; i++, io += 4) {
        arr[io + 2] = view.getUint8(offset);
        arr[io + 1] = view.getUint8(offset + 1);
        arr[io] = view.getUint8(offset + 2);
@@ -191,7 +191,7 @@ H3DU.Texture.loadTga = function(name) {
        offset += 3;
      }
    } else if(pixelsize === 8 && imgtype === 3) {
-     for(i = 0, io = 0;i < size;i++, io += 4) {
+     for(i = 0, io = 0; i < size; i++, io += 4) {
        var col = view.getUint8(offset);
        arr[io] = col;
        arr[io + 1] = col;
@@ -319,7 +319,7 @@ H3DU.CubeMap = function(textures) {
   // TODO: Support TextureInfo
   this.textures = [];
   this.loadStatus = 0;
-  for(var i = 0;i < 6;i++) {
+  for(var i = 0; i < 6; i++) {
     this.textures.push(H3DU.Texture._texOrString(textures[i]));
   }
 };
@@ -358,7 +358,7 @@ H3DU.CubeMap.prototype.loadImage = function() {
   "use strict";
   var i;
   if(this.loadStatus === 2) {
-    for(i = 0;i < 6;i++) {
+    for(i = 0; i < 6; i++) {
       if(this.textures[i].loadStatus !== 2) {
         this.loadStatus = 0;
       }
@@ -368,7 +368,7 @@ H3DU.CubeMap.prototype.loadImage = function() {
     }
   }
   var promises = [];
-  for(i = 0;i < 6;i++) {
+  for(i = 0; i < 6; i++) {
     promises.push(this.textures[i].loadImage());
   }
   var that = this;

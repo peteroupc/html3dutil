@@ -82,7 +82,7 @@ H3DU.Mesh._isCompatibleMode = function(oldMode, newMode) {
 /** @private */
 H3DU.Mesh._recalcNormalsStart = function(vertices, uniqueVertices, faces, stride, offset, flat) {
   "use strict";
-  for(var i = 0;i < vertices.length;i += stride) {
+  for(var i = 0; i < vertices.length; i += stride) {
     vertices[i + offset] = 0.0;
     vertices[i + offset + 1] = 0.0;
     vertices[i + offset + 2] = 0.0;
@@ -118,12 +118,12 @@ H3DU.Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, strid
           dupverts[1] = avgy;
           dupverts[2] = avgz;
           dupvertcount = 3;
-          for(i = 1;i < v.length;i++) {
+          for(i = 1; i < v.length; i++) {
             var dupfound = false;
             var nx = vertices[v[i]];
             var ny = vertices[v[i] + 1];
             var nz = vertices[v[i] + 2];
-            for(var j = 0;j < dupvertcount;j += 3) {
+            for(var j = 0; j < dupvertcount; j += 3) {
               if(nx === dupverts[j] && ny === dupverts[j + 1] && nz === dupverts[j + 2]) {
                 dupfound = true;
                 break;
@@ -138,7 +138,7 @@ H3DU.Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, strid
               avgz += nz;
             }
           }
-          for(i = 0;i < v.length;i++) {
+          for(i = 0; i < v.length; i++) {
             vertices[v[i]] = avgx;
             vertices[v[i] + 1] = avgy;
             vertices[v[i] + 2] = avgz;
@@ -148,7 +148,7 @@ H3DU.Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, strid
     }
   }
   // Normalize each normal of the vertex
-  for(i = 0;i < vertices.length;i += stride) {
+  for(i = 0; i < vertices.length; i += stride) {
     var x = vertices[i + offset];
     var y = vertices[i + offset + 1];
     var z = vertices[i + offset + 2];
@@ -169,7 +169,7 @@ H3DU.Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inwar
   var uniqueVertices = {};
   var len;
   H3DU.Mesh._recalcNormalsStart(vertices, uniqueVertices, faces, stride, offset, flat);
-  for(var i = 0;i < faces.length;i += 3) {
+  for(var i = 0; i < faces.length; i += 3) {
     var v1 = faces[i] * stride;
     var v2 = faces[i + 1] * stride;
     var v3 = faces[i + 2] * stride;
@@ -290,7 +290,7 @@ H3DU.Mesh.prototype.merge = function(other) {
   var oldIndexLength = this.indices.length;
   this.vertices.push.apply(this.vertices, other.vertices);
   this.indices.push.apply(this.indices, other.indices);
-  for(i = oldIndexLength;i < this.indices.length;i++) {
+  for(i = oldIndexLength; i < this.indices.length; i++) {
     this.indices[i] += oldVertexLength;
   }
   // Reset the primitive
@@ -543,7 +543,7 @@ H3DU.Mesh.prototype.setColor3 = function(r, g, b) {
   this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
   var stride = this.getStride();
   var colorOffset = H3DU.Mesh._colorOffset(this.attributeBits);
-  for(var i = colorOffset;i < this.vertices.length;i += stride) {
+  for(var i = colorOffset; i < this.vertices.length; i += stride) {
     this.vertices[i] = rr;
     this.vertices[i + 1] = gg;
     this.vertices[i + 2] = bb;
@@ -565,7 +565,7 @@ H3DU.Mesh.prototype.normalizeNormals = function() {
   var normalOffset = H3DU.Mesh._normalOffset(
      this.attributeBits);
   if(normalOffset < 0)return this;
-  for(i = 0;i < vertices.length;i += stride) {
+  for(i = 0; i < vertices.length; i += stride) {
     var x = vertices[i + normalOffset];
     var y = vertices[i + normalOffset + 1];
     var z = vertices[i + normalOffset + 2];
@@ -756,7 +756,7 @@ H3DU.Mesh.prototype._initialize = function(vertices, faces, format) {
   // Rebuild the list of vertices if a new kind of
   // attribute is added to the mesh
     var newVertices = [];
-    for(var i = 0;i < this.vertices.length;i += currentStride) {
+    for(var i = 0; i < this.vertices.length; i += currentStride) {
       var vx = this.vertices[i];
       var vy = this.vertices[i + 1];
       var vz = this.vertices[i + 2];
@@ -831,7 +831,7 @@ H3DU.Mesh.prototype._initialize = function(vertices, faces, format) {
      i >= 0 && triCount < 16 && tribits !== 7;
      i -= stride, triCount++) {
       var found = 7;
-      for(var j = 0;j < stride && found !== 0;j++) {
+      for(var j = 0; j < stride && found !== 0; j++) {
         if((found & 1) !== 0 && v[v1 + j] !== v[i + j]) {
           found &= ~1;
         }
@@ -934,13 +934,13 @@ H3DU.Mesh.prototype._makeRedundant = function() {
   var existingIndices = [];
   var stride = this.getStride();
   var originalIndicesLength = this.indices.length;
-  for(var i = 0;i < originalIndicesLength;i++) {
+  for(var i = 0; i < originalIndicesLength; i++) {
     var index = this.indices[i];
     if(existingIndices[index]) {
      // Index already exists, so duplicate
       var offset = index * stride;
       var newIndex = this.vertices.length / stride;
-      for(var j = 0;j < stride;j++) {
+      for(var j = 0; j < stride; j++) {
         this.vertices.push(this.vertices[offset + j]);
       }
       this.indices[i] = newIndex;
@@ -968,7 +968,7 @@ H3DU.Mesh._addLine = function(lineIndices, existingLines, f1, f2) {
   "use strict";
    // Ensure ordering of the indices
   if(f1 < f2) {
-    var tmp = f1;f1 = f2;f2 = tmp;
+    var tmp = f1; f1 = f2; f2 = tmp;
   }
   var e = existingLines[f1];
   if(e) {
@@ -1000,7 +1000,7 @@ H3DU.Mesh.prototype.toWireFrame = function() {
   }
   var lineIndices = [];
   var existingLines = {};
-  for(var i = 0;i < this.indices.length;i += 3) {
+  for(var i = 0; i < this.indices.length; i += 3) {
     var f1 = this.indices[i];
     var f2 = this.indices[i + 1];
     var f3 = this.indices[i + 2];
@@ -1042,7 +1042,7 @@ H3DU.Mesh.prototype.transform = function(matrix) {
   if(normalOffset >= 0 && isNonTranslation) {
     matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
   }
-  for(var i = 0;i < v.length;i += stride) {
+  for(var i = 0; i < v.length; i += stride) {
     var xform = H3DU.Math.mat4projectVec3(matrix, v);
     v[i] = xform[0];
     v[i + 1] = xform[1];
@@ -1096,9 +1096,9 @@ H3DU.Mesh.prototype.enumPrimitives = function(func) {
   var primSize = 3;
   if(prim === H3DU.Mesh.LINES)primSize = 2;
   if(prim === H3DU.Mesh.POINTS)primSize = 1;
-  for(var j = 0;j < this.indices.length;j += primSize) {
+  for(var j = 0; j < this.indices.length; j += primSize) {
     var p = [];
-    for(var k = 0;k < primSize;k++) {
+    for(var k = 0; k < primSize; k++) {
       var vi = this.indices[j + k] * stride;
       var info = {};
       info.position = [v[vi], v[vi + 1], v[vi + 2]];
@@ -1135,7 +1135,7 @@ H3DU.Mesh.prototype.getBoundingBox = function() {
   var ret = [inf, inf, inf, -inf, -inf, -inf];
   var stride = this.getStride();
   var v = this.vertices;
-  for(var j = 0;j < this.indices.length;j++) {
+  for(var j = 0; j < this.indices.length; j++) {
     var vi = this.indices[j] * stride;
     if(empty) {
       empty = false;
@@ -1190,7 +1190,7 @@ H3DU.Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset
  // that both fields are present)
 
   var vi = [0, 0, 0];
-  for(var i = 0;i < indices.length;i += 3) {
+  for(var i = 0; i < indices.length; i += 3) {
     vi[0] = indices[i] * stride;
     vi[1] = indices[i + 1] * stride;
     vi[2] = indices[i + 2] * stride;
@@ -1211,7 +1211,7 @@ H3DU.Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset
   // (where AA and BB are the orthonormalized versions of the tangent
   // and bitangent) as the tangent space transform, in order to avoid
   // the need to also specify a transformed normal due to matrix inversion.
-    for(var j = 0;j < 3;j++) {
+    for(var j = 0; j < 3; j++) {
       var m = ret;
       var vicur = vi[j];
       var norm0 = vertices[vicur + normalOffset];
@@ -1295,7 +1295,7 @@ H3DU.Mesh.prototype.reverseNormals = function() {
   var normalOffset = H3DU.Mesh._normalOffset(
      this.attributeBits);
   if(normalOffset < 0) return this;
-  for(i = 0;i < vertices.length;i += stride) {
+  for(i = 0; i < vertices.length; i += stride) {
     var x = vertices[i + normalOffset];
     var y = vertices[i + normalOffset + 1];
     var z = vertices[i + normalOffset + 2];
@@ -1330,7 +1330,7 @@ H3DU.Mesh.prototype.reverseWinding = function() {
    // Not a triangle mesh
     return this;
   }
-  for(var i = 0;i < this.indices.length;i += 3) {
+  for(var i = 0; i < this.indices.length; i += 3) {
     var f2 = this.indices[i + 1];
     var f3 = this.indices[i + 2];
     this.indices[i + 2] = f2;

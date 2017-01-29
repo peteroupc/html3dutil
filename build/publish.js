@@ -99,15 +99,15 @@ function Doc(name) {
     entry += memToIndex(this.events, "Events", docs);
     entry += memToIndex(this.methods, "Methods", docs);
     keys = Object.keys(this.members).sort();
-    for(var i = 0;i < keys.length;i++) {
+    for(var i = 0; i < keys.length; i++) {
       entry += this.members[keys[i]][0];
     }
     keys = Object.keys(this.events).sort();
-    for(i = 0;i < keys.length;i++) {
+    for(i = 0; i < keys.length; i++) {
       entry += this.events[keys[i]][0];
     }
     keys = Object.keys(this.methods).sort();
-    for(i = 0;i < keys.length;i++) {
+    for(i = 0; i < keys.length; i++) {
       entry += this.methods[keys[i]][0];
     }
     return entry;
@@ -211,7 +211,7 @@ function typeval(x) {
     xnames = [x.names];
   }
   var xn = [];
-  for(var i = 0;i < xnames.length;i++) {
+  for(var i = 0; i < xnames.length; i++) {
     var tname = xnames[i];
     tname = helper.linkto(tname, helper.htmlsafe(tname));
     xn.push(tname);
@@ -297,7 +297,7 @@ function fillCollection(docCollection, nodes, parentlong) {
       var paramnames = [];
       if(node.params) {
         var p = node.params;
-        for(i = 0;i < p.length;i++) {
+        for(i = 0; i < p.length; i++) {
           var pname = p[i].name;
           if(p[i].optional) {
             pname = "[" + pname + "]";
@@ -338,7 +338,7 @@ function fillCollection(docCollection, nodes, parentlong) {
       if (node.params) {
         p = node.params;
         entry += "#### Parameters\n\n";
-        for(i = 0;i < p.length;i++) {
+        for(i = 0; i < p.length; i++) {
           var pi = p[i];
           entry += "* " + jsname(pi.name);
           if(pi.type) {
@@ -374,13 +374,13 @@ function fillCollection(docCollection, nodes, parentlong) {
       }
       if(node.examples) {
         entry += "#### Example\n\n";
-        for(i = 0;i < node.examples.length;i++) {
+        for(i = 0; i < node.examples.length; i++) {
           entry += normexample(node.examples[i]) + "\n\n";
         }
       }
       if(node.see) {
         entry += "#### See Also\n\n";
-        for(i = 0;i < node.see.length;i++) {
+        for(i = 0; i < node.see.length; i++) {
           entry += normspace(node.see[i]) + "\n\n";
         }
       }
@@ -422,13 +422,13 @@ function fillCollection(docCollection, nodes, parentlong) {
       }
       if(node.examples) {
         entry += "#### Example\n\n";
-        for(i = 0;i < node.examples.length;i++) {
+        for(i = 0; i < node.examples.length; i++) {
           entry += normexample(node.examples[i]) + "\n\n";
         }
       }
       if(node.see) {
         entry += "#### See Also\n\n";
-        for(i = 0;i < node.see.length;i++) {
+        for(i = 0; i < node.see.length; i++) {
           entry += normspace(node.see[i]) + "\n\n";
         }
       }

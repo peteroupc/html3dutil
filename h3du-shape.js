@@ -298,7 +298,7 @@ H3DU.Shape.prototype.getBounds = function() {
     ];
     var bv = boxVertices[0];
     var retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
-    for(var i = 1;i < 8;i++) {
+    for(var i = 1; i < 8; i++) {
       bv = boxVertices[i];
       retval[0] = Math.min(retval[0], bv[0]);
       retval[1] = Math.min(retval[1], bv[1]);

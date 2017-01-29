@@ -471,7 +471,7 @@ function test() {
   ok(isApproxVec([20.085999999999995, 19.582999999999995, 32.593999999999994], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([0, 13, 23], curve.evaluate(1)), "Point at 1 is not correct.");
   testPathBounds();
-  for(var i = 0;i < testfunctions.length;i++) {
+  for(var i = 0; i < testfunctions.length; i++) {
     testfunctions[i]();
   }
 }
@@ -493,7 +493,7 @@ testfunctions.push(function() {
 testfunctions.push(function() {
   "use strict";
   // adapted from public domain World_Seed quat.tests.cpp
-  for(var i = 0;i < 1000;i++) {
+  for(var i = 0; i < 1000; i++) {
     var vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2,
       Math.random() * 4 - 2];
     ok(isApprox(Math.sqrt(H3DU.Math.vec4dot(vec, vec)), H3DU.Math.vec4length(vec)));
@@ -503,7 +503,7 @@ testfunctions.push(function() {
 });
 testfunctions.push(function() {
   "use strict";
-  for(var i = 0;i < 1000;i++) {
+  for(var i = 0; i < 1000; i++) {
     var vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2];
     var scalar = Math.random() * 4 - 2;
     var vec2;

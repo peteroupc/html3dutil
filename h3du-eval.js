@@ -225,7 +225,7 @@
   H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
 /** @private */
   H3DU.BSplineCurve._checkKnots = function(knots) {
-    for(var i = 1;i < knots.length;i++) {
+    for(var i = 1; i < knots.length; i++) {
       if(knots[i] < knots[i - 1])
         throw new Error();
     }
@@ -234,7 +234,7 @@
 /** @private */
   H3DU.BSplineCurve._getFactors = function(kn, t, order, numPoints, buffer) {
     var c = 1;
-    for(var i = 0;i < numPoints;i++) {
+    for(var i = 0; i < numPoints; i++) {
       buffer[i] = 0;
     }
     if(t === kn[0]) {
@@ -243,7 +243,7 @@
       buffer[numPoints - 1] = 1;
     } else {
       var k = -1;
-      for(i = 0;i <= kn.length;i++) {
+      for(i = 0; i <= kn.length; i++) {
         if(kn[i] <= t && t < kn[i + 1]) {
           k = i;
           break;
@@ -253,8 +253,8 @@
       var tmp = [];
       c = k - 1;
       tmp[k] = 1;
-      for(var kk = 2;kk <= order;kk++, c--) {
-        for(i = c;i <= k;i++) {
+      for(var kk = 2; kk <= order; kk++, c--) {
+        for(i = c; i <= k; i++) {
           var ret = 0,
             divisor = 0;
           var prv = i <= c ? 0 : tmp[i];
@@ -271,7 +271,7 @@
           buffer[i] = ret;
         }
         if(kk < order) {
-          for(i = c;i <= k;i++) {
+          for(i = c; i <= k; i++) {
             tmp[i] = buffer[i];
           }
         }
@@ -306,15 +306,15 @@
     var i, j, point;
     if((this.bits & H3DU.BSplineCurve.WEIGHTED_BIT) === 0) {
       ret = [];
-      for(i = 0;i < this.cplen;i++) {
+      for(i = 0; i < this.cplen; i++) {
         point = 0;
-        for(j = 0;j < numPoints;j++) {
+        for(j = 0; j < numPoints; j++) {
           point += this.controlPoints[j][i] * this.buffer[j];
         }
         ret[i] = point;
       }
       if((this.bits & H3DU.BSplineCurve.DIVIDE_BIT) !== 0) {
-        for(i = 0;i < this.cplen - 1;i++) {
+        for(i = 0; i < this.cplen - 1; i++) {
           ret[i] /= ret[this.cplen - 1];
         }
         ret = ret.slice(0, this.cplen - 1);
@@ -323,13 +323,13 @@
     } else {
   // this is a weighted NURBS
       var weight = 0;
-      for(j = 0;j < numPoints;j++) {
+      for(j = 0; j < numPoints; j++) {
         weight += this.buffer[j] * this.controlPoints[j][this.cplen];
       }
       var homogen = (this.bits & H3DU.BSplineCurve.HOMOGENEOUS_BIT) !== 0;
-      for(i = 0;i < this.cplen + 1;i++) {
+      for(i = 0; i < this.cplen + 1; i++) {
         point = 0;
-        for(j = 0;j < numPoints;j++) {
+        for(j = 0; j < numPoints; j++) {
           var w = this.buffer[j];
           if(!homogen)w *= this.controlPoints[j][this.cplen];
           point += this.controlPoints[j][i] * w;
@@ -337,7 +337,7 @@
         ret[i] = point / weight;
       }
       if((this.bits & H3DU.BSplineCurve.DIVIDE_BIT) !== 0) {
-        for(i = 0;i < this.cplen;i++) {
+        for(i = 0; i < this.cplen; i++) {
           ret[i] /= ret[this.cplen];
         }
         ret = ret.slice(0, this.cplen);
@@ -486,7 +486,7 @@
       throw new Error("too few control points for degree " + degree + " curve");
     var order = degree + 1;
     var ret = [];
-    for(var i = 0;i < controlPoints + order;i++) {
+    for(var i = 0; i < controlPoints + order; i++) {
       ret.push(i);
     }
     return ret;
@@ -510,13 +510,13 @@
     var order = degree + 1;
     var extras = controlPoints - order;
     var ret = [];
-    for(var i = 0;i < order;i++) {
+    for(var i = 0; i < order; i++) {
       ret.push(0);
     }
-    for(i = 0;i < extras;i++) {
+    for(i = 0; i < extras; i++) {
       ret.push(i + 1);
     }
-    for(i = 0;i < order;i++) {
+    for(i = 0; i < order; i++) {
       ret.push(extras + 1);
     }
     return ret;
@@ -553,17 +553,17 @@
     }
     var output = [];
     if((this.bits & H3DU.BSplineCurve.WEIGHTED_BIT) === 0) {
-      for(i = 0;i < this.cplen;i++) {
+      for(i = 0; i < this.cplen; i++) {
         value = 0;
-        for(tt = 0;tt < this.ucplen;tt++) {
-          for(uu = 0;uu < this.vcplen;uu++) {
+        for(tt = 0; tt < this.ucplen; tt++) {
+          for(uu = 0; uu < this.vcplen; uu++) {
             value += this.controlPoints[uu][tt][i] * bu[tt] * bv[uu];
           }
         }
         output[i] = value;
       }
       if((this.bits & H3DU.BSplineCurve.DIVIDE_BIT) !== 0) {
-        for(i = 0;i < this.cplen - 1;i++) {
+        for(i = 0; i < this.cplen - 1; i++) {
           output[i] /= output[this.cplen - 1];
         }
         output = output.slice(0, this.cplen - 1);
@@ -573,17 +573,17 @@
   // this is a weighted NURBS
       var weight = 0;
       var homogen = (this.bits & H3DU.BSplineCurve.HOMOGENEOUS_BIT) !== 0;
-      for(tt = 0;tt < this.ucplen;tt++) {
-        for(uu = 0;uu < this.vcplen;uu++) {
+      for(tt = 0; tt < this.ucplen; tt++) {
+        for(uu = 0; uu < this.vcplen; uu++) {
           w = bu[tt] * bv[uu] * this.controlPoints[uu][tt][this.cplen];
           weight += w;
         }
       }
-      for(i = 0;i < this.cplen + 1;i++) {
+      for(i = 0; i < this.cplen + 1; i++) {
         value = 0;
         weight = 0;
-        for(tt = 0;tt < this.ucplen;tt++) {
-          for(uu = 0;uu < this.vcplen;uu++) {
+        for(tt = 0; tt < this.ucplen; tt++) {
+          for(uu = 0; uu < this.vcplen; uu++) {
             w = bu[tt] * bv[uu];
             if(!homogen)w *= this.controlPoints[uu][tt][this.cplen];
             value += this.controlPoints[uu][tt][i] * w;
@@ -592,7 +592,7 @@
         output[i] = weight === 0 ? value : value / weight;
       }
       if((this.bits & H3DU.BSplineCurve.DIVIDE_BIT) !== 0) {
-        for(i = 0;i < this.cplen;i++) {
+        for(i = 0; i < this.cplen; i++) {
           output[i] /= output[this.cplen];
         }
         output = output.slice(0, this.cplen);
@@ -1113,9 +1113,9 @@
       var oldValues = [];
       var previousValues = [];
       this._saveValues(mesh, oldValues, 0);
-      for(i = 0;i < vn;i++) {
+      for(i = 0; i < vn; i++) {
         mesh.mode(H3DU.Mesh.TRIANGLE_STRIP);
-        for(j = 0, prevIndex = 0;j <= un;
+        for(j = 0, prevIndex = 0; j <= un;
       j++, prevIndex += H3DU._RECORDED_VALUES_SIZE) {
           jx = j * du + u1;
           if(i === 0) {
@@ -1133,23 +1133,23 @@
       this._restoreValues(mesh, oldValues, 0);
     } else if(mode === H3DU.Mesh.POINTS) {
       mesh.mode(H3DU.Mesh.POINTS);
-      for(i = 0;i <= vn;i++) {
-        for(j = 0;j <= un;j++) {
+      for(i = 0; i <= vn; i++) {
+        for(j = 0; j <= un; j++) {
           jx = j * du + u1;
           this.evalOne(mesh, jx, i * dv + v1);
         }
       }
     } else if(mode === H3DU.Mesh.LINES) {
-      for(i = 0;i <= vn;i++) {
+      for(i = 0; i <= vn; i++) {
         mesh.mode(H3DU.Mesh.LINE_STRIP);
-        for(j = 0;j <= un;j++) {
+        for(j = 0; j <= un; j++) {
           jx = j * du + u1;
           this.evalOne(mesh, jx, i * dv + v1);
         }
       }
-      for(i = 0;i <= un;i++) {
+      for(i = 0; i <= un; i++) {
         mesh.mode(H3DU.Mesh.LINE_STRIP);
-        for(j = 0;j <= vn;j++) {
+        for(j = 0; j <= vn; j++) {
           this.evalOne(mesh, i * du + u1, j * dv + v1);
         }
       }

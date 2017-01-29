@@ -160,11 +160,11 @@ H3DU.Scene3D.ProgramCache = function() {
 H3DU.Scene3D.ProgramCache.prototype.dispose = function() {
   "use strict";
   var i, p;
-  for(i = 0;i < this._customPrograms.length;i++) {
+  for(i = 0; i < this._customPrograms.length; i++) {
     p = this._customPrograms[i];
     p[2].dispose();
   }
-  for(i = 0;i < this._programs.length;i++) {
+  for(i = 0; i < this._programs.length; i++) {
     p = this._programs[i];
     if(p)p.dispose();
   }
@@ -179,7 +179,7 @@ H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
   // NOTE: Using H3DU.ShaderProgram objects in materials is deprecated
     return info;
   }
-  for(var i = 0;i < this._customPrograms.length;i++) {
+  for(var i = 0; i < this._customPrograms.length; i++) {
     var p = this._customPrograms[i];
     if(p[0] === info && p[1] === context) {
       p[2]._update();
@@ -200,7 +200,7 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
   if(!context)throw new Error();
   var pf = this._programs[flags];
   if(pf) {
-    for(var i = 0;i < pf.length;i++) {
+    for(var i = 0; i < pf.length; i++) {
       if(pf[i][0] === context) {
         return pf[i][1];
       }
@@ -801,7 +801,7 @@ H3DU.Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reje
   "use strict";
   var promises = [];
 
-  for(var i = 0;i < textureFiles.length;i++) {
+  for(var i = 0; i < textureFiles.length; i++) {
     var objf = textureFiles[i];
     promises.push(this.loadAndMapTexture(objf));
   }
@@ -1139,7 +1139,7 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
     this._subScene.render(this);
   } else {
     this._renderedOutsideScene = true;
-    for(var i = 0;i < renderPasses.length;i++) {
+    for(var i = 0; i < renderPasses.length; i++) {
       var pass = renderPasses[i];
       this._textureLoader.bindFrameBuffer(
           pass.frameBuffer, this.context);

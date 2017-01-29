@@ -57,7 +57,7 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var ma = this.maxAnisotropy;
-  for(var i = 0;i < ma.length;i++) {
+  for(var i = 0; i < ma.length; i++) {
     if(ma[i][0] === context) {
       if(ma[i][2] >= 0) {
         context.texParameteri(target, ma[i][2], ma[i][1]);
@@ -99,7 +99,7 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
 H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, reject) {
   "use strict";
   var promises = [];
-  for(var i = 0;i < textures.length;i++) {
+  for(var i = 0; i < textures.length; i++) {
     promises.push(this.loadTexture(textures[i]));
   }
   return H3DU.getPromiseResultsAll(promises, resolve, reject);
@@ -150,7 +150,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var promises = [];
-  for(var i = 0;i < textures.length;i++) {
+  for(var i = 0; i < textures.length; i++) {
     promises.push(this.loadAndMapTexture(textures[i], context));
   }
   return H3DU.getPromiseResultsAll(promises, resolve, reject);
@@ -161,7 +161,7 @@ H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var lt = this.loadedTextures;
-  for(var i = 0;i < lt.length;i++) {
+  for(var i = 0; i < lt.length; i++) {
     if(lt[i][0] === texture && lt[i][1] === context) {
       return lt[i][2];
     }
@@ -224,7 +224,7 @@ H3DU.TextureLoader.prototype.dispose = function() {
     }
   }
   var lt = this.loadedTextures;
-  for(var i = 0;i < lt.length;i++) {
+  for(var i = 0; i < lt.length; i++) {
     this.loadedTextures[i][2].dispose();
   }
   if(typeof this.fbLoader === "undefined" || this.fbLoader === null) {

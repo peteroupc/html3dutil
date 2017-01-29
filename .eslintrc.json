@@ -217,7 +217,7 @@
         "require-jsdoc": "off",
         "rest-spread-spacing": "error",
         "semi": "error",
-        "semi-spacing": "off",
+        "semi-spacing": "error",
         "sort-imports": "error",
         "sort-keys": "off",
         "sort-vars": "off",

@@ -319,7 +319,7 @@ H3DU.Batch3D.prototype.addShape = function(shape) {
 H3DU.Batch3D.prototype.vertexCount = function() {
   "use strict";
   var c = 0;
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
   }
   return c;
@@ -333,7 +333,7 @@ H3DU.Batch3D.prototype.vertexCount = function() {
 H3DU.Batch3D.prototype.primitiveCount = function() {
   "use strict";
   var c = 0;
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
   }
   return c;
@@ -347,7 +347,7 @@ H3DU.Batch3D.prototype.primitiveCount = function() {
  */
 H3DU.Batch3D.prototype.removeShape = function(shape) {
   "use strict";
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
       i--;
@@ -361,7 +361,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
   "use strict";
   if(shape.constructor === H3DU.ShapeGroup) {
     if(!shape.visible)return;
-    for(var i = 0;i < shape.shapes.length;i++) {
+    for(var i = 0; i < shape.shapes.length; i++) {
       this._renderShape(shape.shapes[i], renderContext);
     }
   } else if(!shape.isCulled(this._getFrustum())) {
@@ -414,7 +414,7 @@ H3DU.Batch3D.prototype.render = function(scene, pass) {
   rc.scene = scene;
   rc.context = scene.getContext();
   rc.shader = pass ? pass.shader : null;
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     this._renderShape(this.shapes[i], rc);
   }
   return this;

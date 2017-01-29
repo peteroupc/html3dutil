@@ -38,7 +38,7 @@ H3DU.ShapeGroup.prototype.copy = function() {
   var ret = new ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     ret.addShape(this.shapes[i].copy());
   }
   return ret;
@@ -135,7 +135,7 @@ H3DU.ShapeGroup.prototype.setTransform = function(transform) {
  */
 H3DU.ShapeGroup.prototype.setMaterial = function(material) {
   "use strict";
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     this.shapes[i].setMaterial(material);
   }
   return this;
@@ -154,7 +154,7 @@ H3DU.ShapeGroup.prototype.setMaterial = function(material) {
  */
 H3DU.ShapeGroup.prototype.setTexture = function(material) {
   "use strict";
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     this.shapes[i].setTexture(material);
   }
   return this;
@@ -169,7 +169,7 @@ H3DU.ShapeGroup.prototype.setTexture = function(material) {
  */
 H3DU.ShapeGroup.prototype.setShader = function(material) {
   "use strict";
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     this.shapes[i].setShader(material);
   }
   return this;
@@ -182,7 +182,7 @@ H3DU.ShapeGroup.prototype.setShader = function(material) {
  */
 H3DU.ShapeGroup.prototype.setMaterialParams = function(params) {
   "use strict";
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     this.shapes[i].setMaterialParams(params);
   }
   return this;
@@ -195,7 +195,7 @@ H3DU.ShapeGroup.prototype.setMaterialParams = function(params) {
  */
 H3DU.ShapeGroup.prototype.removeShape = function(shape) {
   "use strict";
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
       i--;
@@ -221,7 +221,7 @@ H3DU.ShapeGroup.prototype.getBounds = function() {
   var inf = Number.POSITIVE_INFINITY;
   var ret = [inf, inf, inf, -inf, -inf, -inf];
   var first = true;
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     var b = this.shapes[i].getBounds();
     // NOTE: The returned bounding
     if(!H3DU.Math.boxIsEmpty(b)) {
@@ -254,7 +254,7 @@ H3DU.ShapeGroup.prototype.getBounds = function() {
 H3DU.ShapeGroup.prototype.vertexCount = function() {
   "use strict";
   var c = 0;
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
   }
   return c;
@@ -268,7 +268,7 @@ H3DU.ShapeGroup.prototype.vertexCount = function() {
 H3DU.ShapeGroup.prototype.primitiveCount = function() {
   "use strict";
   var c = 0;
-  for(var i = 0;i < this.shapes.length;i++) {
+  for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
   }
   return c;

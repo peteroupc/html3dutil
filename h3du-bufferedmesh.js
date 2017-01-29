@@ -96,7 +96,7 @@ H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   if(typeof this.indices === "undefined" || this.indices === null)throw new Error("can't create face buffer");
   this.vao = this._createVertexArray(this.context);
   var attribs = smb._getAttributes();
-  for(var i = 0;i < attribs.length;i++) {
+  for(var i = 0; i < attribs.length; i++) {
     var vb = attribs[i][2];
     if(vb) {
       if(!this.vertsMap.get(vb)) {
@@ -167,7 +167,7 @@ H3DU.BufferedMesh.prototype.dispose = function() {
   "use strict";
   if(typeof this.vertsMap !== "undefined" && this.vertsMap !== null) {
     var verts = this.vertsMap.values();
-    for(var i = 0;i < verts.length;i++) {
+    for(var i = 0; i < verts.length; i++) {
       verts[i].dispose();
     }
   }
@@ -193,11 +193,11 @@ H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
     this._lastKnownProgram = program;
     var attrs = this.smb._getAttributes();
     this._attribLocations = [];
-    for(var i = 0;i < attrs.length;i++) {
+    for(var i = 0; i < attrs.length; i++) {
       var arrLoc = [];
       var arrName = [];
       program._addNamesWithSemantic(arrName, attrs[i][0], attrs[i][5]);
-      for(var j = 0;j < arrName.length;j++) {
+      for(var j = 0; j < arrName.length; j++) {
         var loc = program.get(arrName[j]);
         if(loc === null || typeof loc === "undefined") {
           loc = -1;
@@ -225,8 +225,8 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
     context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
     var attrs = this.smb._getAttributes();
     var attrNamesEnabled = [];
-    for(var i = 0;i < this._attribLocations.length;i++) {
-      for(var j = 0;j < this._attribLocations[i].length;j++) {
+    for(var i = 0; i < this._attribLocations.length; i++) {
+      for(var j = 0; j < this._attribLocations[i].length; j++) {
         var attrib = this._attribLocations[i][j];
         if(attrib >= 0) {
           var vertBuffer = this.vertsMap.get(attrs[i][2]);
@@ -304,7 +304,7 @@ H3DU.BufferedMesh._Map = function() {
 /** @private */
 H3DU.BufferedMesh._Map.prototype.get = function(o) {
   "use strict";
-  for(var i = 0;i < this.map.length;i++) {
+  for(var i = 0; i < this.map.length; i++) {
     if(this.map[i][0] === o)return this.map[i][1];
   }
   return null;
@@ -312,7 +312,7 @@ H3DU.BufferedMesh._Map.prototype.get = function(o) {
 /** @private */
 H3DU.BufferedMesh._Map.prototype.put = function(k, v) {
   "use strict";
-  for(var i = 0;i < this.map.length;i++) {
+  for(var i = 0; i < this.map.length; i++) {
     if(this.map[i][0] === k) {
       this.map[i][1] = v;
       return;
@@ -324,7 +324,7 @@ H3DU.BufferedMesh._Map.prototype.put = function(k, v) {
 H3DU.BufferedMesh._Map.prototype.values = function() {
   "use strict";
   var ret = [];
-  for(var i = 0;i < this.map.length;i++) {
+  for(var i = 0; i < this.map.length; i++) {
     ret.push(this.map[i][1]);
   }
   return ret;
@@ -342,7 +342,7 @@ H3DU.BufferedMesh._MeshLoader.prototype.draw = function(meshBuffer, prog) {
     throw new Error("Expected H3DU.MeshBuffer");
   }
   var context = prog.getContext();
-  for(var i = 0;i < this.meshes.length;i++) {
+  for(var i = 0; i < this.meshes.length; i++) {
     var m = this.meshes[i];
     if(m[0] === meshBuffer && m[1] === context) {
       m[2].draw(prog);
@@ -356,7 +356,7 @@ H3DU.BufferedMesh._MeshLoader.prototype.draw = function(meshBuffer, prog) {
 /** @private */
 H3DU.BufferedMesh._MeshLoader.prototype.dispose = function() {
   "use strict";
-  for(var i = 0;i < this.meshes.length;i++) {
+  for(var i = 0; i < this.meshes.length; i++) {
     this.meshes[i][2].dispose();
   }
   this.meshes = [];

@@ -8,6 +8,7 @@
  http://peteroupc.github.io/
 */
 // LATER: Convert batches/shape groups to glTF
+// TODO: Avoid making functions global
 function gltfMakeArray(componentType, buffer) {
   "use strict";
   if(componentType === 5120)return new Int8Array(buffer);
@@ -70,7 +71,7 @@ function GltfState(gltf, path, promiseResults, promiseKinds, promiseNames) {
   this.path = path;
   this.version = 0; // glTF 1.0
   this.animChannels = [];
-  for(var i = 0;i < promiseKinds.length;i++) {
+  for(var i = 0; i < promiseKinds.length; i++) {
     if(promiseKinds[i] === 0) {
       this.buffers[promiseNames[i]] = promiseResults[i].data;
     } else if(promiseKinds[i] === 1) {
@@ -309,7 +310,7 @@ GltfArray.prototype.toValueArray = function() {
   } else {
     var ret = [];
     var j = 0;
-    for(var i = 0;i < this.valueCount;i++) {
+    for(var i = 0; i < this.valueCount; i++) {
       ret.push(this.array.slice(j, j + this.elementsPerValue));
       j += this.elementsPerValue;
     }
@@ -478,7 +479,7 @@ GltfState.prototype.readMaterialValues = function(material, techInfo) {
       }
       var uniforms = techInfo.paramValues[materialKey];
       var unif = {};
-      for(var i = 0;i < uniforms.length;i++) {
+      for(var i = 0; i < uniforms.length; i++) {
         var uniformName = uniforms[i];
         if(typeof techInfo.paramTypes[uniformName] === "undefined" || techInfo.paramTypes[uniformName] === null) {
           this.error = "no type for " + uniformName;
@@ -513,7 +514,7 @@ GltfState.prototype.readAnimations = function() {
         }
       if(typeof animationValue.samplers !== "undefined" && animationValue.samplers !== null) {
         var channels = typeof animationValue.channels === "undefined" || animationValue.channels === null ? [] : animationValue.channels;
-        for(var i = 0;i < channels.length;i++) {
+        for(var i = 0; i < channels.length; i++) {
           if(typeof channels[i] === "undefined" || channels[i] === null) {
             return null;
           }
@@ -575,7 +576,7 @@ GltfState.prototype.readNode = function(node, nodeName, parent) {
       var firstShape = null;
       var shapeGroup = new H3DU.ShapeGroup();
       var prims = mesh.primitives || [];
-      for(var p = 0;p < prims.length;p++) {
+      for(var p = 0; p < prims.length; p++) {
         var prim = prims[p];
         var meshBuffer = new H3DU.MeshBuffer(new H3DU.Mesh());
         var array;
@@ -618,7 +619,7 @@ GltfState.prototype.readNode = function(node, nodeName, parent) {
         } else {
      // Synthesize a list of indices
           var indexArray = [];
-          for(var k = 0;k < maxCount;k++) {
+          for(var k = 0; k < maxCount; k++) {
             indexArray.push(k);
           }
           meshBuffer.setIndices(
@@ -665,7 +666,7 @@ GltfState.prototype.readNode = function(node, nodeName, parent) {
     }
   }
   if(typeof node.children !== "undefined" && node.children !== null) {
-    for(var i = 0;i < node.children.length;i++) {
+    for(var i = 0; i < node.children.length; i++) {
       if(typeof node.children[i] === "undefined" || node.children[i] === null) {
         return null;
       }
@@ -709,11 +710,7 @@ function Gltf() {
   this.batch = null;
   this.timer = {};
 }
-/**
- * TODO: Not documented yet.
- * @returns {*} Return value.
- * @memberof! Gltf#
- */
+/** @private */
 Gltf.prototype.getBatch = function() {
   "use strict";
   return this.batch;
@@ -774,12 +771,12 @@ Gltf._interpolate = function(node, s, e, t, path) {
  */
 Gltf.prototype.update = function(time) {
   "use strict";
-  for(var i = 0;i < this.animChannels.length;i++) {
+  for(var i = 0; i < this.animChannels.length; i++) {
     var ch = this.animChannels[i];
     var node = ch.target;
     var endTime = ch.sampler.input[ch.sampler.input.length - 1];
     var pos = H3DU.getTimePosition(this.timer, time, endTime * 1000.0);
-    for(var j = 0;j < ch.sampler.input.length - 1;j++) {
+    for(var j = 0; j < ch.sampler.input.length - 1; j++) {
       var s = ch.sampler.input[j] / endTime;
       var e = ch.sampler.input[j + 1] / endTime;
       var fac = s === e ? 0.0 : (pos - e) / (e - s);

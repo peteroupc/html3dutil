@@ -163,7 +163,7 @@ H3DU.MeshBuffer.prototype._getAttributes = function() {
 H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
   "use strict";
   var idx = index === null || typeof index === "undefined" ? 0 : index;
-  for(var i = 0;i < this.attributes.length;i++) {
+  for(var i = 0; i < this.attributes.length; i++) {
     if(this.attributes[i][0] === name &&
     this.attributes[i][5] === idx) {
       return this.attributes[i];
@@ -211,7 +211,7 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
     var stride = posattr[4];
     var v = posattr[2];
     var vindex = posattr[1];
-    for(var j = 0;j < this.indices.length;j++) {
+    for(var j = 0; j < this.indices.length; j++) {
       var vi = this.indices[j] * stride + vindex;
       if(empty) {
         empty = false;

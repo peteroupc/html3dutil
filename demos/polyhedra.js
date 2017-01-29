@@ -25,7 +25,7 @@ var Polyhedra = {};
 Polyhedra.normDistances = function(vertices, radius) {
   // Normalize distances from the origin
   "use strict";
-  for(var i = 0;i < vertices.length;i += 3) {
+  for(var i = 0; i < vertices.length; i += 3) {
     var vx = vertices[i];
     var vy = vertices[i + 1];
     var vz = vertices[i + 2];
@@ -38,7 +38,7 @@ Polyhedra.normDistances = function(vertices, radius) {
 /** @private */
 Polyhedra.scaleVertices = function(vertices, radius) {
   "use strict";
-  for(var i = 0;i < vertices.length;i += 3) {
+  for(var i = 0; i < vertices.length; i += 3) {
     vertices[i] *= radius;
     vertices[i + 1] *= radius;
     vertices[i + 2] *= radius;
@@ -69,9 +69,9 @@ Polyhedra.makeSphere = function(vi, radius, level) {
   }
   Polyhedra.normDistances(vertices, radius);
  // Subdivide the triangles into many smaller triangles
-  for(var i = 0;i < level;i++) {
+  for(var i = 0; i < level; i++) {
     var tris = indices.length;
-    for(var j = 0;j < tris;j += 3) {
+    for(var j = 0; j < tris; j += 3) {
       var i1 = indices[j];
       var i2 = indices[j + 1];
       var i3 = indices[j + 2];

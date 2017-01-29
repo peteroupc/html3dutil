@@ -311,7 +311,7 @@ var H3DU = {
       "results":[]
     };
     var newPromises = [];
-    for(var i = 0;i < promises.length;i++) {
+    for(var i = 0; i < promises.length; i++) {
       var index = i;
       newPromises.push(promises[i].then(
     promiseResolveFunc(progressResolve, ret, index),
@@ -320,13 +320,13 @@ var H3DU = {
     }
     return Promise.all(newPromises).then(function(results) {
   // compact the successes and failures arrays
-      for(var i = 0;i < ret.successes.length;i++) {
+      for(var i = 0; i < ret.successes.length; i++) {
         if(typeof ret.successes[i] === "undefined") {
           ret.successes.splice(i, 1);
           i -= 1;
         }
       }
-      for(i = 0;i < ret.failures.length;i++) {
+      for(i = 0; i < ret.failures.length; i++) {
         if(typeof ret.failures[i] === "undefined") {
           ret.failures.splice(i, 1);
           i -= 1;

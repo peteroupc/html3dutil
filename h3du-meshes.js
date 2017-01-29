@@ -62,7 +62,7 @@ H3DU.Meshes.createBox = function(xSize, ySize, zSize, inward) {
     -xSize, ySize, zSize, 0.0, 0.0, 1.0, 0.0, 1.0,
     -xSize, -ySize, zSize, 0.0, 0.0, 1.0, 0.0, 0.0];
   if(inward) {
-    for(var i = 0;i < vertices.length;i += 8) {
+    for(var i = 0; i < vertices.length; i += 8) {
       vertices[i + 3] = -vertices[i + 3];
       vertices[i + 4] = -vertices[i + 4];
       vertices[i + 5] = -vertices[i + 5];
@@ -138,7 +138,7 @@ H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, f
   var tc = [];
   var twopi = H3DU.Math.PiTimes2;
   var halfpi = Math.PI * 0.5;
-  for(var i = 0;i < slices;i++) {
+  for(var i = 0; i < slices; i++) {
     var t = i * 1.0 / slices;
     var angle = twopi * t;
     angle += halfpi;
@@ -166,7 +166,7 @@ H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, f
       cosSlopeNorm *= normDir;
     }
     var recipstacks = 1.0 / stacks;
-    for(i = 0;i < stacks;i++) {
+    for(i = 0; i < stacks; i++) {
       var zStart = lastZ;
       var zEnd = i + 1 === stacks ? 1.0 : (i + 1) * recipstacks;
       var zStartHeight = height * zStart;
@@ -182,7 +182,7 @@ H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, f
       mesh.texCoord2(1, zEnd);
       mesh.normal3(sc[0] * cosSlopeNorm, sc[1] * cosSlopeNorm, sinSlopeNorm);
       mesh.vertex3(sc[0] * radiusEnd, sc[1] * radiusEnd, zEndHeight);
-      for(var k = 2, j = 1;k <= slicesTimes2;k += 2, j++) {
+      for(var k = 2, j = 1; k <= slicesTimes2; k += 2, j++) {
         var tx = tc[j];
         var x, y;
         x = sc[k];
@@ -235,14 +235,14 @@ H3DU.Meshes.createLathe = function(points, slices, flat, inside) {
   if(slices <= 2)throw new Error("too few slices");
   if(points.length % 1 !== 0)throw new Error("points array length is not an even number");
   var i;
-  for(i = 0;i < points.length;i += 2) {
+  for(i = 0; i < points.length; i += 2) {
     if(points[i << 1] < 0)throw new Error("point's x is less than 0");
   }
   var sc = [];
   var tc = [];
   var halfpi = Math.PI * 0.5;
   var twopi = H3DU.Math.PiTimes2;
-  for(i = 0;i < slices;i++) {
+  for(i = 0; i < slices; i++) {
     var t = i * 1.0 / slices;
     var angle = twopi * t;
     angle += halfpi;
@@ -258,7 +258,7 @@ H3DU.Meshes.createLathe = function(points, slices, flat, inside) {
 
   var stacks = points.length / 2 - 1;
   var recipstacks = 1.0 / stacks;
-  for(i = 0;i < stacks;i++) {
+  for(i = 0; i < stacks; i++) {
     var zStart = lastZ;
     var zEnd = i + 1 === stacks ? 1.0 : (i + 1) * recipstacks;
     var index = i << 1;
@@ -274,7 +274,7 @@ H3DU.Meshes.createLathe = function(points, slices, flat, inside) {
     mesh.vertex3(sc[0] * radiusStart, sc[1] * radiusStart, zStartHeight);
     mesh.texCoord2(1, zEnd);
     mesh.vertex3(sc[0] * radiusStart, sc[1] * radiusEnd, zEndHeight);
-    for(var k = 2, j = 1;k <= slicesTimes2;k += 2, j++) {
+    for(var k = 2, j = 1; k <= slicesTimes2; k += 2, j++) {
       var tx = tc[j];
       var x, y;
       x = sc[k];
@@ -410,7 +410,7 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
   if(sweepDir < 0) {
     arcLength = -arcLength;
   }
-  for(i = 0;i <= slices;i++) {
+  for(i = 0; i <= slices; i++) {
     var t = i * 1.0 / slices;
     var angle = t === 1 && arcLength === twopi ? start : start + arcLength * t;
     angle = angle < 0 ? twopi - -angle % twopi : angle % twopi;
@@ -436,7 +436,7 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
   } else {
     mesh.normal3(0, 0, 1);
   }
-  for(i = 0;i < loops;i++) {
+  for(i = 0; i < loops; i++) {
     var zEnd = (i + 1) / loops;
     var radiusStart = lastRad;
     var radiusEnd = inner + height * zEnd;
@@ -449,7 +449,7 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
     var x, y, j, k;
     if(triangleFanBase) {
       var jStart = slicesTimes2 / 2;
-      for(k = slicesTimes2, j = jStart;k >= 0;k -= 2, j--) {
+      for(k = slicesTimes2, j = jStart; k >= 0; k -= 2, j--) {
         x = sc[k];
         y = sc[k + 1];
         if(k === slicesTimes2) {
@@ -460,7 +460,7 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
         mesh.vertex3(x * radiusEnd, y * radiusEnd, 0);
       }
     } else {
-      for(k = 0, j = 0;k <= slicesTimes2;k += 2, j++) {
+      for(k = 0, j = 0; k <= slicesTimes2; k += 2, j++) {
         x = sc[k];
         y = sc[k + 1];
         mesh.texCoord2((1 + x * reo) * 0.5, (1 + y * reo) * 0.5);
@@ -596,7 +596,7 @@ H3DU.Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   } else {
     mesh.normal3(0, 0, 1);
   }
-  for(var i = 0;i < heightDiv;i++) {
+  for(var i = 0; i < heightDiv; i++) {
     mesh.mode(H3DU.Mesh.TRIANGLE_STRIP);
     var iStart = i / heightDiv;
     var iNext = (i + 1) / heightDiv;
@@ -606,7 +606,7 @@ H3DU.Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
     mesh.vertex3(xStart, yNext, 0);
     mesh.texCoord2(0, iStart);
     mesh.vertex3(xStart, y, 0);
-    for(var j = 0;j < widthDiv;j++) {
+    for(var j = 0; j < widthDiv; j++) {
       var jx = (j + 1) / widthDiv;
       var x = xStart + width * jx;
       mesh.texCoord2(jx, iNext);
@@ -732,7 +732,7 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
   var twopi = H3DU.Math.PiTimes2;
   var halfpi = Math.PI * 0.5;
   // Generate longitude and horizontal texture coordinates
-  for(var i = 0;i < slices;i++) {
+  for(var i = 0; i < slices; i++) {
     var t = i * 1.0 / slices;
     angle = twopi * t;
     angle += halfpi;
@@ -747,7 +747,7 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
   sphereRatio /= sphereRatio + length;
   var zEnd = [];
   // Generate latitude and vertical texture coordinates
-  for(i = 1;i <= stacks;i++) {
+  for(i = 1; i <= stacks; i++) {
     var origt = i * 1.0 / stacks;
     angle = Math.PI * origt;
     cangle = Math.cos(angle);
@@ -768,7 +768,7 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
   }
   var startX = sc[0];
   var startY = sc[1];
-  for(i = 0;i < stacks;i++) {
+  for(i = 0; i < stacks; i++) {
     var zsCen = lastZeCen;
     var zeCen = zEnd[i];
     var texStart = lastTex;
@@ -802,7 +802,7 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
     var lastX = startX;
     var lastY = startY;
     var txMiddle, tx, x, y;
-    for(var k = 2, j = 1;k <= slicesTimes2;k += 2, j++) {
+    for(var k = 2, j = 1; k <= slicesTimes2; k += 2, j++) {
       tx = tc[j];
       if(i === stacks - 1) {
         txMiddle = lastTx + (tx - lastTx) * 0.5;
@@ -846,7 +846,7 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
       var hl = halfLength * 2;
       var endr2 = 1.0 - sr2;
       var he = 1.0 - sphereRatio;
-      for(var m = 0;m < middleStacks;m++) {
+      for(var m = 0; m < middleStacks; m++) {
         s = -halfLength + (m === 0 ? 0 : hl * m / middleStacks);
         var e = m === middleStacks - 1 ? halfLength : -halfLength + hl * (m + 1) / middleStacks;
         txs = sr2 + (m === 0 ? 0 : he * m / middleStacks);
@@ -856,7 +856,7 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
         normAndVertex(mesh, normDir, startX * radiusEnd, startY * radiusEnd, zEndHeight, s);
         mesh.texCoord2(1, txe);
         normAndVertex(mesh, normDir, startX * radiusEnd, startY * radiusEnd, zEndHeight, e);
-        for(k = 2, j = 1;k <= slicesTimes2;k += 2, j++) {
+        for(k = 2, j = 1; k <= slicesTimes2; k += 2, j++) {
           tx = tc[j];
           x = sc[k];
           y = sc[k + 1];
@@ -901,7 +901,7 @@ H3DU.Meshes.createPointedStar = function(points, firstRadius, secondRadius, inwa
   var recipPts2 = 1.0 / (points * 2);
   var recipRadius = 1.0 / Math.max(firstRadius, secondRadius);
   mesh.normal3(0, 0, inward ? -1 : 1).texCoord2(0.5, 0.5).vertex2(0, 0);
-  for(var i = 0;i < points * 2;i++) {
+  for(var i = 0; i < points * 2; i++) {
     var angle = deg360 * i * recipPts2;
     var cangle = Math.cos(angle);
     var sangle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(angle);

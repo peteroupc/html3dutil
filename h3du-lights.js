@@ -100,7 +100,7 @@ H3DU.Lights.prototype.getLight = function(index) {
   if(this.lights.length - oldLength >= 2) {
   // Ensure existence of lights that come between the new
   // light and the last light
-    for(var i = oldLength;i < this.lights.length;i++) {
+    for(var i = oldLength; i < this.lights.length; i++) {
       if(!this.lights[i]) {
         this.lights[i] = H3DU.Lights._createNewLight(i);
       }

@@ -60,7 +60,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   textures.push([typeof mat.metalnessMap === "undefined" ? null : mat.metalnessMap, "metalnessMap"]);
   textures.push([typeof mat.roughnessMap === "undefined" ? null : mat.roughnessMap, "roughnessMap"]);
   textures.push([typeof mat.environmentMap === "undefined" ? null : mat.environmentMap, "envMap"]);
-  for(var i = 0;i < textures.length;i++) {
+  for(var i = 0; i < textures.length; i++) {
     if(textures[i][0] !== null && typeof textures[i][0] !== "undefined") {
       var textureSizeName = typeof textures[i][2] === "undefined" ? null : textures[i][2];
       H3DU._MaterialBinder.bindTexture(
@@ -151,7 +151,7 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 0);
   var target = context.TEXTURE_CUBE_MAP;
   context.bindTexture(target, this.loadedTexture);
-  for(var i = 0;i < 6;i++) {
+  for(var i = 0; i < 6; i++) {
     if("src" in textureImage.textures[i].image) {
       context.texImage2D(context.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
       context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
@@ -328,7 +328,7 @@ H3DU._LightsBinder.prototype.bind = function(program, viewMatrix) {
   var uniforms = {};
   uniforms.sceneAmbient = lightsObject.sceneAmbient.length === 3 ?
     lightsObject.sceneAmbient : lightsObject.sceneAmbient.slice(0, 3);
-  for(var i = 0;i < lightsObject.lights.length;i++) {
+  for(var i = 0; i < lightsObject.lights.length; i++) {
     var lt = lightsObject.lights[i];
     ltname = "lights[" + i + "]";
     uniforms[ltname + ".diffuse"] = lt.diffuse.length === 4 ?
@@ -341,7 +341,7 @@ H3DU._LightsBinder.prototype.bind = function(program, viewMatrix) {
       0, 0, 0];
   }
  // Set empty values for undefined lights up to MAX_LIGHTS
-  for(i = lightsObject.lights.length;i < H3DU.Lights.MAX_LIGHTS;i++) {
+  for(i = lightsObject.lights.length; i < H3DU.Lights.MAX_LIGHTS; i++) {
     ltname = "lights[" + i + "]";
     uniforms[ltname + ".diffuse"] = H3DU._LightsBinder.emptyW1;
     uniforms[ltname + ".specular"] = H3DU._LightsBinder.emptyW1;

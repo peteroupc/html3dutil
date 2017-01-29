@@ -1072,7 +1072,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     r[13] = m[1] * tvar6 - tvar23 * m[12] + m[13] * (tvar22 - tvar0) + m[14] * (tvar5 - tvar17);
     r[14] = m[12] * tvar53 + m[13] * tvar58 + m[14] * tvar48;
     r[15] = m[8] * tvar49 + m[9] * tvar51 + m[10] * tvar52;
-    for(var i = 0;i < 16;i++) {
+    for(var i = 0; i < 16; i++) {
       r[i] *= det;
     }
     return r;
@@ -1605,12 +1605,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
  */
   "mat4transposeInPlace":function(mat) {
     "use strict";
-    var tmp = mat[1];mat[1] = mat[4];mat[4] = tmp;
-    tmp = mat[2];mat[2] = mat[8];mat[8] = tmp;
-    tmp = mat[3];mat[3] = mat[12];mat[12] = tmp;
-    tmp = mat[6];mat[6] = mat[9];mat[9] = tmp;
-    tmp = mat[7];mat[7] = mat[13];mat[13] = tmp;
-    tmp = mat[11];mat[11] = mat[14];mat[14] = tmp;
+    var tmp = mat[1]; mat[1] = mat[4]; mat[4] = tmp;
+    tmp = mat[2]; mat[2] = mat[8]; mat[8] = tmp;
+    tmp = mat[3]; mat[3] = mat[12]; mat[12] = tmp;
+    tmp = mat[6]; mat[6] = mat[9]; mat[9] = tmp;
+    tmp = mat[7]; mat[7] = mat[13]; mat[13] = tmp;
+    tmp = mat[11]; mat[11] = mat[14]; mat[14] = tmp;
     return mat;
   },
 /**
@@ -1632,9 +1632,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
  */
   "mat3transposeInPlace":function(mat) {
     "use strict";
-    var tmp = mat[1];mat[1] = mat[3];mat[3] = tmp;
-    tmp = mat[2];mat[2] = mat[6];mat[6] = tmp;
-    tmp = mat[5];mat[5] = mat[7];mat[7] = tmp;
+    var tmp = mat[1]; mat[1] = mat[3]; mat[3] = tmp;
+    tmp = mat[2]; mat[2] = mat[6]; mat[6] = tmp;
+    tmp = mat[5]; mat[5] = mat[7]; mat[7] = tmp;
     return mat;
   },
 /**
@@ -2708,7 +2708,7 @@ m[0] * m[7] * m[5];
   "frustumHasSphere":function(frustum, x, y, z, radius) {
     "use strict";
     if(radius < 0)throw new Error("radius is negative");
-    for(var i = 0;i < 6;i++) {
+    for(var i = 0; i < 6; i++) {
       var plane = frustum[i];
       var dot = plane[3] + plane[0] * x +
      plane[1] * y + plane[2] * z;
@@ -2791,7 +2791,7 @@ m[0] * m[7] * m[5];
     if(H3DU.Math.boxIsEmpty(box)) {
       return false;
     }
-    for(var i = 0;i < 6;i++) {
+    for(var i = 0; i < 6; i++) {
       var plane = frustum[i];
       var p3 = plane[3];
       var p0b0 = plane[0] * box[0];
@@ -2828,7 +2828,7 @@ m[0] * m[7] * m[5];
  */
   "frustumHasPoint":function(frustum, x, y, z) {
     "use strict";
-    for(var i = 0;i < 6;i++) {
+    for(var i = 0; i < 6; i++) {
       var d = frustum[i][0] * x + frustum[i][1] * y +
      frustum[i][2] * z + frustum[i][3];
       if(d <= 0)return false;
