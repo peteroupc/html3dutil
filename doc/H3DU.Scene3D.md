@@ -10,7 +10,7 @@ An object that holds a rendering context for rendering
 
 #### Parameters
 
-* `canvasOrContext` (Type: WebGLRenderingContext | object)<br>
+* `canvasOrContext` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
     A WebGL context to associate with this scene, or an HTML canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
 
 ### Members
@@ -263,7 +263,7 @@ Returns the WebGL context associated with this scene.
 
 #### Return Value
 
-Return value. (Type: WebGLRenderingContext)
+Return value. (Type: WebGLRenderingContext | WebGL2RenderingContext)
 
  <a name='H3DU.Scene3D_H3DU.Scene3D_getHeight'></a>
 ### H3DU.Scene3D#getHeight()

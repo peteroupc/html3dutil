@@ -188,10 +188,10 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
       if(changedUniforms)changedUniforms[i] = uv;
     }
   } else if(v instanceof H3DU.TextureInfo) {
-    if(!uv) {
-      uv.copyFrom(v);
+    if(uv === null || typeof uv === "undefined" || !(uv instanceof H3DU.TextureInfo)) {
+      uniformValues[i] = uv = new H3DU.TextureInfo().copyFrom(v);
     } else {
-      uv = new H3DU.TextureInfo().copyFrom(v);
+      uv.copyFrom(v);
     }
   } else if(v.length === 3) {
     if(!uv) {

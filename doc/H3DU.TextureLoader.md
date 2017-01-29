@@ -54,7 +54,7 @@ uploads its texture data to a WebGL context.
 
 * `texture` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)<br>
     An object described in H3DU.TextureLoader.loadTexture.
-* `context` (Type: WebGLRenderingContext | object)<br>
+* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
     A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
 
 #### Return Value
@@ -72,7 +72,7 @@ Loads one or more textures by their URL and uploads their data to a WebGL contex
 
 * `textures` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)>)<br>
     An array of objects described in H3DU.TextureLoader.loadTexture.
-* `context` (Type: WebGLRenderingContext | object)<br>
+* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
     A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
 * `resolve` (Type: function) (optional)<br>
     A function called as each individual texture is loaded.

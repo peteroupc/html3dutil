@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+/* global H3DU, WebGL2RenderingContext */
 /**
  * A geometric mesh in the form of buffer objects.
  * @deprecated This class is likely to become a private class.
@@ -16,7 +16,7 @@
  * @alias H3DU.BufferedMesh
  * @param {H3DU.Mesh|H3DU.MeshBuffer} mesh
  * A geometric mesh object. Cannot be null.
- * @param {WebGLRenderingContext|object} context A WebGL context to
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context A WebGL context to
  * create a buffer from, or an object, such as H3DU.Scene3D, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context. (Note that this constructor uses
@@ -34,21 +34,67 @@ H3DU.BufferedMesh = function(mesh, context) {
   this._initialize(mesh, context);
 };
 /** @private */
+H3DU.BufferedMesh.prototype._getArrayObjectExt = function(context) {
+  "use strict";
+  if(typeof this.arrayObjectExt === "undefined" || this.arrayObjectExt === null) {
+    this.arrayObjectExt = context.getExtension("OES_vertex_array_object");
+    this.arrayObjectExtContext = context;
+    return this.arrayObjectExt;
+  } else if(this.arrayObjectExtContext === context) {
+    return this.arrayObjectExt;
+  } else {
+    return context.getExtension("OES_vertex_array_object");
+  }
+};
+/** @private */
+H3DU.BufferedMesh.prototype._createVertexArray = function(context) {
+  "use strict";
+  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") &&
+  context instanceof WebGL2RenderingContext) {
+    return context.createVertexArray();
+  } else if(context instanceof WebGLRenderingContext) {
+    var ao = this._getArrayObjectExt(context);
+    return ao === null || typeof ao === "undefined" ? null : ao.createVertexArrayOES();
+  }
+  return null;
+};
+/** @private */
+H3DU.BufferedMesh.prototype._deleteVertexArray = function(context, va) {
+  "use strict";
+  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") &&
+  context instanceof WebGL2RenderingContext) {
+    context.deleteVertexArray(va);
+  } else if(context instanceof WebGLRenderingContext) {
+    var ao = this._getArrayObjectExt(context);
+    if(ao !== null && typeof ao !== "undefined") {
+      ao.deleteVertexArrayOES(va);
+    }
+  }
+};
+/** @private */
+H3DU.BufferedMesh.prototype._bindVertexArray = function(context, va) {
+  "use strict";
+  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") &&
+  context instanceof WebGL2RenderingContext) {
+    context.bindVertexArray(va);
+  } else if(context instanceof WebGLRenderingContext) {
+    var ao = this._getArrayObjectExt(context);
+    if(ao !== null && typeof ao !== "undefined") {
+      ao.bindVertexArrayOES(va);
+    }
+  }
+};
+/** @private */
 H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   "use strict";
   if(mesh === null || typeof mesh === "undefined")throw new Error("mesh is null");
   var smb = mesh instanceof H3DU.MeshBuffer ? mesh :
    new H3DU.MeshBuffer(mesh);
-  this.arrayObjectExt = context.getExtension("OES_vertex_array_object");
-  this.arrayObjectExtContext = context;
   this.smb = smb;
   this.vertsMap = new H3DU.BufferedMesh._Map();
   this.indices = context.createBuffer();
   if(typeof this.indices === "undefined" || this.indices === null)throw new Error("can't create face buffer");
-  this.vao = null;
-  if(this.arrayObjectExt) {
-    this.vao = this.arrayObjectExt.createVertexArrayOES();
-  }
+  this.vao = this._createVertexArray(this.context);
   var attribs = smb._getAttributes();
   for(var i = 0;i < attribs.length;i++) {
     var vb = attribs[i][2];
@@ -88,13 +134,8 @@ H3DU.BufferedMesh.prototype._toMeshBuffer = function() {
   return this.smb;
 };
 /** @private */
-H3DU.BufferedMesh.prototype._getVaoExtension = function(context) {
+H3DU.BufferedMesh.prototype._getVaoExtension = function() {
   "use strict";
-  if(this.arrayObjectExtContext === context) {
-    return this.arrayObjectExt;
-  } else {
-    return context.getExtension("OES_vertex_array_object");
-  }
 };
 /** @private */
 H3DU.BufferedMesh.prototype._getBounds = function() {
@@ -104,7 +145,7 @@ H3DU.BufferedMesh.prototype._getBounds = function() {
 /**
  * Returns the WebGL context associated with this object.
  * @deprecated
- * @returns {WebGLRenderingContext} Return value.
+ * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  * @memberof! H3DU.BufferedMesh#
  */
 H3DU.BufferedMesh.prototype.getContext = function() {
@@ -130,10 +171,11 @@ H3DU.BufferedMesh.prototype.dispose = function() {
       verts[i].dispose();
     }
   }
-  if(typeof this.indices !== "undefined" && this.indices !== null)
+  if(typeof this.indices !== "undefined" && this.indices !== null) {
     this.context.deleteBuffer(this.indices);
+  }
   if(typeof this.vao !== "undefined" && this.vao !== null) {
-    this.arrayObjectExt.deleteVertexArrayOES(this.vao);
+    this._deleteVertexArray(this.context, this.vao);
   }
   this.vertsMap = null;
   this.indices = null;
@@ -174,9 +216,8 @@ H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
 H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
   "use strict";
   var rebind = this._getAttribLocations(program, context);
-  var vaoExt = this._getVaoExtension(context);
   if(this.vao) {
-    vaoExt.bindVertexArrayOES(this.vao);
+    this._bindVertexArray(context, this.vao);
   } else {
     rebind = true;
   }
@@ -233,10 +274,7 @@ H3DU.BufferedMesh.prototype.draw = function(program) {
   context.drawElements(primitive,
     this.smb.indices.length,
     this.type, 0);
-  var vaoExt = this._getVaoExtension(context);
-  if(this.vao) {
-    vaoExt.bindVertexArrayOES(null);
-  }
+  this._bindVertexArray(context, null);
 };
 /**
  * Gets the number of vertices composed by all shapes in this mesh.

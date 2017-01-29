@@ -24,7 +24,7 @@
  */
 H3DU.TextureInfo = function(params) {
   "use strict";
-  this.url = "";
+  this.uri = "";
   this.format = 6408;
   this.internalFormat = 6408;
   this.target = 3553;
@@ -44,7 +44,7 @@ H3DU.TextureInfo = function(params) {
 H3DU.TextureInfo.prototype.copyFrom = function(other) {
   "use strict";
   if(typeof other !== "undefined" && (other !== null && typeof other !== "undefined")) {
-    this.url = typeof other.url === "undefined" || other.url === null ? "" : other.url;
+    this.uri = typeof other.uri === "undefined" || other.uri === null ? "" : other.uri;
     this.format = typeof other.format === "undefined" || other.format === null ? 6408 : other.format;
     this.internalFormat = typeof other.internalFormat === "undefined" || other.internalFormat === null ? 6408 : other.internalFormat;
     this.target = typeof other.target === "undefined" || other.target === null ? 3553 : other.target;
@@ -66,8 +66,8 @@ H3DU.TextureInfo.prototype.copyFrom = function(other) {
 H3DU.TextureInfo.prototype.setParams = function(params) {
   "use strict";
   if(typeof params !== "undefined" && (params !== null && typeof params !== "undefined")) {
-    if(typeof params.url !== "undefined" && params.url !== null) {
-      this.url = params.url;
+    if(typeof params.uri !== "undefined" && params.uri !== null) {
+      this.uri = params.uri;
     }
     if(typeof params.format !== "undefined" && params.format !== null) {
       this.format = params.format;

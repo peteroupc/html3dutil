@@ -12,7 +12,7 @@
  * 3D objects.
  * @class
  * @alias H3DU.Scene3D
- * @param {WebGLRenderingContext|object} canvasOrContext
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|object} canvasOrContext
  * A WebGL context to associate with this scene, or an HTML
  * canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that
  * implements a no-argument <code>getContext</code> method
@@ -244,7 +244,7 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
   return prog;
 };
 /** Returns the WebGL context associated with this scene.
- * @returns {WebGLRenderingContext} Return value.
+ * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  * @memberof! H3DU.Scene3D#
  */
 H3DU.Scene3D.prototype.getContext = function() {

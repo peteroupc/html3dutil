@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+/* global H3DU, WebGL2RenderingContext */
 /**
  * Contains classes that implement methods
  * binding certain HTML 3D Library objects
@@ -68,15 +68,17 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
           sampler++, loader, textures[i][1], textureSizeName);
     }
   }
-  for(var k in mat.shader || {})
-    if(Object.prototype.hasOwnProperty.call(mat.shader, k)) {
-      var v = mat.shader[k];
-      if(typeof v !== "undefined" && (v !== null && typeof v !== "undefined") && v instanceof H3DU.TextureInfo) {
-        H3DU._MaterialBinder.bindTexture(
+  if(typeof mat.shader !== "undefined" && mat.shader !== null) {
+    for(var k in mat.shader.uniformValues || {})
+      if(Object.prototype.hasOwnProperty.call(mat.shader.uniformValues, k)) {
+        var v = mat.shader.uniformValues[k];
+        if(typeof v !== "undefined" && (v !== null && typeof v !== "undefined") && v instanceof H3DU.TextureInfo) {
+          H3DU._MaterialBinder.bindTexture(
     v, v, context, program,
           sampler++, loader, k, null);
+        }
       }
-    }
+  }
   return this;
 };
 
@@ -114,13 +116,21 @@ H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
   // generate mipmaps for power-of-two textures
-  if(H3DU._isPowerOfTwo(texture.getWidth()) &&
+  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") && context instanceof WebGL2RenderingContext ||
+     H3DU._isPowerOfTwo(texture.getWidth()) &&
       H3DU._isPowerOfTwo(texture.getHeight())) {
     context.generateMipmap(target);
   } else {
-        // TODO: Allow any parameter if context uses WebGL 2
+    // WebGL 1 non-power-of-two texture
+    var filter = textureInfo.minFilter;
+    if(filter === context.NEAREST_MIPMAP_NEAREST ||
+        filter === context.NEAREST_MIPMAP_LINEAR)
+      filter = context.NEAREST;
+    if(filter === context.LINEAR_MIPMAP_NEAREST ||
+        filter === context.LINEAR_MIPMAP_LINEAR)
+      filter = context.LINEAR;
     context.texParameteri(target,
-           context.TEXTURE_MIN_FILTER, context.LINEAR);
+         context.TEXTURE_MIN_FILTER, filter);
     context.texParameteri(target,
         context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
     context.texParameteri(target,
@@ -156,6 +166,14 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
   if(H3DU._isPowerOfTwo(textureImage.getWidth()) &&
       H3DU._isPowerOfTwo(textureImage.getHeight())) {
     context.generateMipmap(target);
+  } else {
+    context.texParameteri(target,
+         context.TEXTURE_MIN_FILTER, context.LINEAR);
+    context.texParameteri(target,
+        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+    context.texParameteri(target,
+        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+
   }
 };
 
@@ -261,8 +279,9 @@ H3DU._MaterialBinder.bindTexture = function(
        // set magnification
       context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
-      if(H3DU._isPowerOfTwo(texture.getWidth()) &&
-          H3DU._isPowerOfTwo(texture.getHeight())) {
+      if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") && context instanceof WebGL2RenderingContext ||
+     H3DU._isPowerOfTwo(texture.getWidth()) &&
+      H3DU._isPowerOfTwo(texture.getHeight())) {
         context.texParameteri(target,
            context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
         context.texParameteri(target,
@@ -270,9 +289,16 @@ H3DU._MaterialBinder.bindTexture = function(
         context.texParameteri(target,
          context.TEXTURE_WRAP_T, textureInfo.wrapT);
       } else {
-        // TODO: Allow any parameter if context uses WebGL 2
+        // WebGL 1 non-power-of-two texture
+        var filter = textureInfo.minFilter;
+        if(filter === context.NEAREST_MIPMAP_NEAREST ||
+        filter === context.NEAREST_MIPMAP_LINEAR)
+          filter = context.NEAREST;
+        if(filter === context.LINEAR_MIPMAP_NEAREST ||
+        filter === context.LINEAR_MIPMAP_LINEAR)
+          filter = context.LINEAR;
         context.texParameteri(target,
-         context.TEXTURE_MIN_FILTER, context.LINEAR);
+         context.TEXTURE_MIN_FILTER, filter);
         context.texParameteri(target,
           context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
         context.texParameteri(target,

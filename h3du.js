@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global JSON, Promise */
+/* global JSON, Promise, WebGL2RenderingContext */
 /**
  * @license CC0-1.0
  */
@@ -142,9 +142,16 @@ var H3DU = {
       options.antialias = true;
     }
     try {
-      context = canvasElement.getContext("webgl", options);
+      context = canvasElement.getContext("webgl2", options);
     } catch(ex) {
       context = null;
+    }
+    if(!context) {
+      try {
+        context = canvasElement.getContext("webgl", options);
+      } catch(ex) {
+        context = null;
+      }
     }
     if(!context) {
       try {
@@ -174,6 +181,7 @@ var H3DU = {
         context = null;
       }
     }
+
     if(H3DU.is3DContext(context)) {
       context.getExtension("OES_element_index_uint");
       context.getExtension("OES_standard_derivatives");
@@ -215,7 +223,10 @@ var H3DU = {
  */
   "is3DContext":function(context) {
     "use strict";
-    if(context && WebGLRenderingContext && context instanceof WebGLRenderingContext) {
+    if(context && (typeof WebGLRenderingContext !== "undefined" && (WebGLRenderingContext !== null && typeof WebGLRenderingContext !== "undefined")) && context instanceof WebGLRenderingContext) {
+      return true;
+    }
+    if(context && (typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined")) && context instanceof WebGL2RenderingContext) {
       return true;
     }
     return context && "compileShader" in context;

@@ -27,7 +27,7 @@ log is output to the JavaScript console.
 
 #### Parameters
 
-* `context` (Type: WebGLRenderingContext | object)<br>
+* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
     A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
 * `vertexShader` (Type: String) (optional)<br>
     Source text of a vertex shader, in OpenGL ES Shading Language (GLSL). If null, a default vertex shader is used instead.
@@ -212,7 +212,7 @@ Gets the WebGL context associated with this shader program object.
 
 #### Return Value
 
-Return value. (Type: WebGLRenderingContext)
+Return value. (Type: WebGLRenderingContext | WebGL2RenderingContext)
 
  <a name='H3DU.ShaderProgram_H3DU.ShaderProgram_getUniform'></a>
 ### H3DU.ShaderProgram#getUniform(name)

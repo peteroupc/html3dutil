@@ -27,7 +27,7 @@
  * @deprecated This class is likely to become a private class.
  * Use the {@link H3DU.ShaderInfo} class instead, which is not coupled to WebGL
  * contexts.
- * @param {WebGLRenderingContext|object} context
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.
@@ -164,7 +164,7 @@ H3DU.ShaderProgram.prototype.setSemantic = function(name, sem, index) {
 
 /**
  * Gets the WebGL context associated with this shader program object.
- * @returns {WebGLRenderingContext} Return value.
+ * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  * @memberof! H3DU.ShaderProgram#
  */
 H3DU.ShaderProgram.prototype.getContext = function() {

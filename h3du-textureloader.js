@@ -109,7 +109,7 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
  * uploads its texture data to a WebGL context.
  * @param {String|H3DU.TextureInfo} texture An object described in
  * {@link H3DU.TextureLoader.loadTexture}.
- * @param {WebGLRenderingContext|object} context
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.
@@ -132,7 +132,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
  * Loads one or more textures by their URL and uploads their data to a WebGL context.
  * @param {Array<String|H3DU.TextureInfo>} textures An array of objects described in
  * {@link H3DU.TextureLoader.loadTexture}.
- * @param {WebGLRenderingContext|object} context
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.

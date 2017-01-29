@@ -993,8 +993,8 @@ H3DU.Mesh._addLine = function(lineIndices, existingLines, f1, f2) {
  */
 H3DU.Mesh.prototype.toWireFrame = function() {
   "use strict";
-	// LATER: Implement and favor MeshBuffer version of this method
-	if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
+  // LATER: Implement and favor MeshBuffer version of this method
+  if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
    // Not a triangle mesh
     return this;
   }
@@ -1086,8 +1086,8 @@ H3DU.Mesh.prototype.transform = function(matrix) {
  */
 H3DU.Mesh.prototype.enumPrimitives = function(func) {
   "use strict";
-	// LATER: Implement and favor MeshBuffer version of this method
-	var prim = this.primitiveType();
+  // LATER: Implement and favor MeshBuffer version of this method
+  var prim = this.primitiveType();
   var normals = H3DU.Mesh._normalOffset(this.attributeBits);
   var colors = H3DU.Mesh._colorOffset(this.attributeBits);
   var texcoords = H3DU.Mesh._texCoordOffset(this.attributeBits);
@@ -1128,7 +1128,7 @@ H3DU.Mesh.prototype.enumPrimitives = function(func) {
  * @memberof! H3DU.Mesh#
  */
 H3DU.Mesh.prototype.getBoundingBox = function() {
-	// LATER: Implement and favor MeshBuffer version of this method
+  // LATER: Implement and favor MeshBuffer version of this method
   "use strict";
   var empty = true;
   var inf = Number.POSITIVE_INFINITY;
@@ -1287,7 +1287,8 @@ H3DU.Mesh.prototype.recalcTangents = function() {
  * @memberof! H3DU.Mesh#
  */
 H3DU.Mesh.prototype.reverseNormals = function() {
-	// LATER: Implement and favor MeshBuffer version of this method  "use strict";
+  "use strict";
+  // LATER: Implement and favor MeshBuffer version of this method  "use strict";
   var i;
   var stride = this.getStride();
   var vertices = this.vertices;
@@ -1324,8 +1325,8 @@ H3DU.Mesh.prototype.reverseNormals = function() {
  */
 H3DU.Mesh.prototype.reverseWinding = function() {
   "use strict";
-	// LATER: Implement and favor MeshBuffer version of this method
-	if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
+  // LATER: Implement and favor MeshBuffer version of this method
+  if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
    // Not a triangle mesh
     return this;
   }

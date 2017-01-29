@@ -7,6 +7,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+// LATER: Convert batches/shape groups to glTF
 function gltfMakeArray(componentType, buffer) {
   "use strict";
   if(componentType === 5120)return new Int8Array(buffer);
@@ -166,6 +167,25 @@ GltfState.prototype.readTexture = function(texture) {
     "type":type
   });
 };
+/** @private */
+GltfState.prototype.getUniformValue = function(paramType, paramValue) {
+  "use strict";
+  var uniformValue = null;
+  if((paramType >= 5120 && paramType <= 5126 || paramType === 35678) && this.version > 0) {
+    uniformValue = paramValue[0];
+  } else {
+    uniformValue = paramValue;
+  }
+  if(paramType === 35678) {
+    if(typeof this.gltf.textures === "undefined" || this.gltf.textures === null ||
+ (typeof this.gltf.textures[uniformValue] === "undefined" || this.gltf.textures[uniformValue] === null)) {
+      return null;
+    }
+    var tex = this.gltf.textures[uniformValue];
+    uniformValue = this.readTexture(tex);
+  }
+  return uniformValue;
+};
 
 /** @private */
 GltfState.prototype.readTechnique = function(technique) {
@@ -178,6 +198,8 @@ GltfState.prototype.readTechnique = function(technique) {
   var shader = program.copy();
   var params = technique.parameters || {};
   var paramValues = {};
+  var paramTypes = {};
+  var unif = {};
   for(var uniformKey in technique.uniforms || {})
     if(Object.prototype.hasOwnProperty.call( technique.uniforms, uniformKey)) {
       var uniformValue = technique.uniforms[uniformKey];
@@ -188,25 +210,13 @@ GltfState.prototype.readTechnique = function(technique) {
       if(typeof param.type === "undefined" || param.type === null) {
         return null;
       }
+      paramTypes[uniformKey] = param.type;
       if(typeof param.value !== "undefined" && param.value !== null) {
-        var unif = {};
-        uniformValue = null;
-        if((param.type >= 5120 && param.type <= 5126 || param.type === 35678) && this.version > 0) {
-          uniformValue = param.value[0];
-        } else {
-          uniformValue = param.value;
+        var unifValue = this.getUniformValue( param.type, param.value);
+        if(unifValue === null || typeof unifValue === "undefined") {
+          return null;
         }
-        if(param.type === 35678) {
-          if(typeof this.gltf.textures === "undefined" || this.gltf.textures === null ||
- (typeof this.gltf.textures[uniformValue] === "undefined" || this.gltf.textures[uniformValue] === null)) {
-            return null;
-          }
-          var tex = this.gltf.textures[uniformValue];
-          uniformValue = this.readTexture(tex);
-          if(!uniformValue)return null;
-        }
-        unif[uniformKey] = uniformValue;
-        shader.setUniforms(unif);
+        unif[uniformKey] = unifValue;
       }
       if(typeof param.semantic !== "undefined" && param.semantic !== null) {
         var sem = 0;
@@ -245,6 +255,7 @@ GltfState.prototype.readTechnique = function(technique) {
         paramValues[uniformValue].push(uniformKey);
       }
     }
+  shader.setUniforms(unif);
   for(var attributeKey in technique.attributes || {})
     if(Object.prototype.hasOwnProperty.call( technique.attributes, attributeKey)) {
       var attributeValue = technique.attributes[attributeKey];
@@ -257,11 +268,13 @@ GltfState.prototype.readTechnique = function(technique) {
       }
       var semantic = param.semantic || null;
       if(semantic !== null && typeof semantic !== "undefined") {
+        // TODO: Flip Y texture coordinates for TEXCOORD semantics
         shader.setSemantic(attributeKey, semantic);
       }
     }
   return {
     "shader":shader,
+    "paramTypes":paramTypes,
     "paramValues":paramValues
   };
 };
@@ -460,12 +473,21 @@ GltfState.prototype.readMaterialValues = function(material, techInfo) {
     if(Object.prototype.hasOwnProperty.call( material.values, materialKey)) {
       var materialValue = material.values[materialKey];
       if(typeof techInfo.paramValues[materialKey] === "undefined" || techInfo.paramValues[materialKey] === null) {
+        this.error = "no values for " + materialKey;
         return null;
       }
       var uniforms = techInfo.paramValues[materialKey];
       var unif = {};
       for(var i = 0;i < uniforms.length;i++) {
-        unif[uniforms[i]] = materialValue;
+        var uniformName = uniforms[i];
+        if(typeof techInfo.paramTypes[uniformName] === "undefined" || techInfo.paramTypes[uniformName] === null) {
+          this.error = "no type for " + uniformName;
+          return null;
+        }
+        var materialType = techInfo.paramTypes[uniformName];
+        var unifValue = this.getUniformValue(materialType, materialValue);
+        if(unifValue === null || typeof unifValue === "undefined")return null;
+        unif[uniformName] = unifValue;
       }
       techInfo.shader.setUniforms(unif);
     }

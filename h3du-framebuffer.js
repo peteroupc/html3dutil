@@ -84,7 +84,7 @@ H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
  * contexts.
  * @class
  * @alias H3DU.FrameBuffer
- * @param {WebGLRenderingContext|object} context
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
  * WebGL context to associate with this buffer, or an object, such as H3DU.Scene3D, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.
@@ -187,7 +187,7 @@ H3DU.FrameBuffer.prototype.getHeight = function() {
 
 /**
  * Gets the WebGL context associated with this frame buffer.
- * @returns {WebGLRenderingContext} Return value.
+ * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  * @memberof! H3DU.FrameBuffer#
  */
 H3DU.FrameBuffer.prototype.getContext = function() {
