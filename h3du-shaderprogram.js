@@ -178,11 +178,7 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
   if(uniform === null || typeof uniform === "undefined")return;
   var uv = uniforms[i];
   if(uv instanceof H3DU.TextureInfo) {
-    // TODO: Skip TextureInfo for now
-    if(typeof this._textureInfoWarning === "undefined" || this._textureInfoWarning === null) {
-      console.log("TextureInfo not supported yet");
-    }
-    this._textureInfoWarning = true;
+    // NOTE: TextureInfo not supported for ShaderPrograms
     return;
   }
   if(typeof uv === "number") {

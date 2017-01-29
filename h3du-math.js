@@ -2838,9 +2838,10 @@ m[0] * m[7] * m[5];
 /**
  * Converts a color in linear RGB to the sRGB color space, and returns
  * a new vector with the result.<p>
- * The sRGB color space is red-green-blue color space;
+ * The sRGB color space is a nonlinear red-green-blue color space;
  * it <i>roughly</i> differs from linear RGB in having an exponent
- * of 1/2.2 from linear RGB.
+ * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+ * by a surface of the given color.
  * @param {Array<Number>} lin A three- or four-element vector giving
  * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
  * is either the fourth element in the case of a four-element vector, or 1.0
@@ -2853,17 +2854,18 @@ m[0] * m[7] * m[5];
   "colorTosRGB":function(lin) {
     "use strict";
     return [
-      lin[0] < 0.0031308 ? 12.92 * lin[0] : Math.pow(lin[0], 0.41666666667) * 1.055 - 0.055,
-      lin[1] < 0.0031308 ? 12.92 * lin[1] : Math.pow(lin[1], 0.41666666667) * 1.055 - 0.055,
-      lin[2] < 0.0031308 ? 12.92 * lin[2] : Math.pow(lin[2], 0.41666666667) * 1.055 - 0.055,
+      lin[0] <= 0.00304 ? 12.92 * lin[0] : Math.pow(lin[0], 0.41666666667) * 1.0556 - 0.0556,
+      lin[1] <= 0.00304 ? 12.92 * lin[1] : Math.pow(lin[1], 0.41666666667) * 1.0556 - 0.0556,
+      lin[2] <= 0.00304 ? 12.92 * lin[2] : Math.pow(lin[2], 0.41666666667) * 1.0556 - 0.0556,
       lin.length <= 3 ? 1.0 : lin[3]];
   },
 /**
  * Converts a color in sRGB to the linear RGB color space, and returns
  * a new vector with the result.<p>
- * The sRGB color space is red-green-blue color space;
+ * The sRGB color space is a nonlinear red-green-blue color space;
  * it <i>roughly</i> differs from linear RGB in having an exponent
- * of 1/2.2 from linear RGB.
+ * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+ * by a surface of the given color.
  * @param {Array<Number>} srgb A three- or four-element vector giving
  * the red, green, and blue components, in that order, of an sRGB color. The alpha component
  * is either the fourth element in the case of a four-element vector, or 1.0
@@ -2876,9 +2878,9 @@ m[0] * m[7] * m[5];
   "colorToLinear":function(lin) {
     "use strict";
     return [
-      lin[0] < 0.04045 ? 0.077399381 * lin[0] : Math.pow((0.055 + lin[0]) * 0.947867299, 2.4),
-      lin[1] < 0.04045 ? 0.077399381 * lin[1] : Math.pow((0.055 + lin[1]) * 0.947867299, 2.4),
-      lin[2] < 0.04045 ? 0.077399381 * lin[2] : Math.pow((0.055 + lin[2]) * 0.947867299, 2.4),
+      lin[0] <= 0.03928 ? 0.077399381 * lin[0] : Math.pow((0.0556 + lin[0]) * 0.947328534, 2.4),
+      lin[1] <= 0.03928 ? 0.077399381 * lin[1] : Math.pow((0.0556 + lin[1]) * 0.947328534, 2.4),
+      lin[2] <= 0.03928 ? 0.077399381 * lin[2] : Math.pow((0.0556 + lin[2]) * 0.947328534, 2.4),
       lin.length <= 3 ? 1.0 : lin[3]];
   }
 };

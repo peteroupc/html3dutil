@@ -15,6 +15,7 @@ library.
 
 ### Methods
 
+* [.loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>TODO: Not documented yet.
 * [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.
 * [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
@@ -29,7 +30,6 @@ its work.
 * [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
 * [is3DContext](#H3DU.is3DContext)<br>Returns whether the given object is a 3D rendering context.
 * [loadFileFromUrl](#H3DU.loadFileFromUrl)<br>Loads a file from a URL asynchronously, using XMLHttpRequest.
-* [loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>TODO: Not documented yet.
 * [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 * [renderLoop](#H3DU.renderLoop)<br>This method will call a function once before returning,
@@ -37,6 +37,30 @@ and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
 or a "polyfill" method.
 * [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
+
+ <a name='H3DU.loadGltfFromUrl'></a>
+### H3DU.loadGltfFromUrl(url)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `url` (Type: *)
+
+#### Return Value
+
+A promise; when it resolves, the result will
+be an object that implements the following methods:<ul>
+<li><code>getBatch()</code> - Gets an <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> object described
+by the glTF data.
+<li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
+strings for the texture images described by the glTF data. Each URI will be relative
+to the "url" parameter of the loadGltfFromFile method.
+<li><code>update(time)</code> - A single-parameter method that should be called
+if the glTF data describes an animation; this method updates the state of the
+3D batch in accordance with that animation. The single parameter, <code>time</code>
+(type Number), is a time stamp in milliseconds.
+</ul> (Type: <a href="Promise.md">Promise</a>.&lt;Object>)
 
  <a name='H3DU.createCanvasElement'></a>
 ### (static) H3DU.createCanvasElement(parent, width, height)
@@ -222,19 +246,6 @@ the parameter's "data" property will be:<ul>
 <li>For response type "json", the JavaScript object decoded
 from JSON.
 <li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.md">Promise</a>)
-
- <a name='H3DU.loadGltfFromUrl'></a>
-### (static) H3DU.loadGltfFromUrl(url)
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `url` (Type: *)
-
-#### Return Value
-
-Return value. (Type: *)
 
  <a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)

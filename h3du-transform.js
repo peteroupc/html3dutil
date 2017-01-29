@@ -16,7 +16,6 @@
 H3DU.Transform = function() {
   "use strict";
   /** @private */
-
   this.scale = [1, 1, 1];
   /** @private */
   this.position = [0, 0, 0];

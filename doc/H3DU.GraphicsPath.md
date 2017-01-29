@@ -65,6 +65,7 @@ that keeps straight lines straight and parallel lines parallel).
 path's shape.
 * [xor](#H3DU.GraphicsPath.GraphicsPath_xor)<br>Computes the shape contained in either this path or another path,
 but not both.
+* [rect](#H3DU.GraphicsPath_H3DU.GraphicsPath_rect)<br>TODO: Not documented yet.
 * [fromString](#H3DU.GraphicsPath.fromString)<br>Creates a graphics path from a string whose format follows
 the SVG specification.
 
@@ -551,6 +552,22 @@ apply to this method.
 
 A path whose shape is contained in
 only one of the two paths. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_rect'></a>
+### H3DU.GraphicsPath#rect(x, y, w, h)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `x` (Type: Number)
+* `y` (Type: Number)
+* `w` (Type: Number)
+* `h` (Type: Number)
+
+#### Return Value
+
+Return value. (Type: Number)
 
  <a name='H3DU.GraphicsPath.fromString'></a>
 ### (static) H3DU.GraphicsPath.fromString(str)

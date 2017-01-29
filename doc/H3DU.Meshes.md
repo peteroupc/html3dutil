@@ -8,6 +8,11 @@
 Contains methods that create meshes
 of various geometric shapes.
 
+Note that wherever a method in this class describes how texture
+coordinates are generated, it is assumed that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
+
 ### Methods
 
 * [.createBox](#H3DU.Meshes.createBox)<br>Creates a mesh of a box (rectangular prism), which

@@ -14,7 +14,8 @@
  * used for some other purpose, such as a depth map, a height map,
  * a bump map, a specular map, and so on.<p>
  * By default, texture coordinates go from (0,0) at the lower left corner
- * to (1,1) at the upper right corner.<p>
+ * to (1,1) at the upper right corner (because the "topDown" property is false
+ * by default).<p>
  * For best results, any textures to be used in WebGL should have
  * width and height each equal to a power of 2, such as 2, 4, 8, 16,
  * and 32.
@@ -25,6 +26,7 @@
 H3DU.TextureInfo = function(params) {
   "use strict";
   this.uri = "";
+  this.topDown = false;
   this.format = 6408;
   this.internalFormat = 6408;
   this.target = 3553;
@@ -53,13 +55,14 @@ H3DU.TextureInfo.prototype.copyFrom = function(other) {
     this.minFilter = typeof other.minFilter === "undefined" || other.minFilter === null ? 9986 : other.minFilter;
     this.wrapS = typeof other.wrapS === "undefined" || other.wrapS === null ? 10497 : other.wrapS;
     this.wrapT = typeof other.wrapT === "undefined" || other.wrapT === null ? 10497 : other.wrapT;
+    this.topDown = typeof other.topDown === "undefined" || other.topDown === null ? 10497 : other.topDown;
   }
   return this;
 };
 
 /**
  * TODO: Not documented yet.
- * @param {Object} params TODO: Not documented yet.
+ * @param {Object} params
  * @returns {H3DU.TextureInfo} This object.
  * @memberof! H3DU.TextureInfo#
  */
@@ -92,6 +95,9 @@ H3DU.TextureInfo.prototype.setParams = function(params) {
     }
     if(typeof params.wrapT !== "undefined" && params.wrapT !== null) {
       this.wrapT = params.wrapT;
+    }
+    if(typeof params.topDown !== "undefined" && params.topDown !== null) {
+      this.topDown = params.topDown;
     }
   }
   return this;

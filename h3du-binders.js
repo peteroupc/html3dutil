@@ -99,9 +99,10 @@ H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   this.loadedTexture = context.createTexture();
   context.activeTexture(context.TEXTURE0);
   // In WebGL, texture coordinates start at the upper left corner rather than
-  // the lower left as in OpenGL and OpenGL ES, so we use this method call
-  // to reestablish the lower left corner.
-  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, 1);
+  // the lower left as in OpenGL and OpenGL ES. If the texture info indicates
+  // top-down texture coordinates, no flipping is needed.
+  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL,
+  textureInfo.topDown ? 0 : 1);
   var target = textureInfo.target;
   context.bindTexture(target, this.loadedTexture);
   if("src" in texture.image) {
