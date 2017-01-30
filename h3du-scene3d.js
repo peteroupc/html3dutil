@@ -1150,7 +1150,6 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
           pass.frameBuffer, this.context);
     }
   }
-  if(this._is3d)this.context.flush();
   return this;
 };
 
