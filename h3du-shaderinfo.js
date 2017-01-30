@@ -490,13 +490,13 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     // Convert from sRGB to linear RGB
     "vec3 tolinear(vec3 c) {",
     " c=clamp(c,0.0,1.0);",
-    " bvec3 lt=lessThanOrEqual(c,vec3(0.03928));",
+    " bvec3 lt=lessThanEqual(c,vec3(0.03928));",
     " return mix(pow((0.0556+c)*0.947328534,vec3(2.4)),0.077399381*c,vec3(lt));",
     "}",
     // Convert from linear RGB to sRGB
     "vec3 fromlinear(vec3 c) {",
     " c=clamp(c,0.0,1.0);",
-    " bvec3 lt=lessThanOrEqual(c,vec3(0.00304));",
+    " bvec3 lt=lessThanEqual(c,vec3(0.00304));",
     " return mix(pow(c,vec3(0.41666666667))*1.0556-0.0556,12.92*c,vec3(lt));",
     "}",
      // John Hable's tonemapping function, mentioned at
