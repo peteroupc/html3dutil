@@ -11,7 +11,7 @@ Alias for the <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a> class.
 
 ### Methods
 
-* [getCurrentPoint](#GraphicsPath_GraphicsPath_getCurrentPoint)<br>TODO: Not documented yet.
+* [getCurrentPoint](#GraphicsPath_GraphicsPath_getCurrentPoint)<br>Gets the current point stored in this path.
 * [ellipse](#GraphicsPath_H3DU.GraphicsPath_ellipse)<br>TODO: Not documented yet.
 * [line](#GraphicsPath_H3DU.GraphicsPath_line)<br>TODO: Not documented yet.
 * [polygon](#GraphicsPath_H3DU.GraphicsPath_polygon)<br>TODO: Not documented yet.
@@ -20,11 +20,11 @@ Alias for the <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a> class.
  <a name='GraphicsPath_GraphicsPath_getCurrentPoint'></a>
 ### GraphicsPath#getCurrentPoint()
 
-TODO: Not documented yet.
+Gets the current point stored in this path.
 
 #### Return Value
 
-Return value. (Type: *)
+A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;Number>)
 
  <a name='GraphicsPath_H3DU.GraphicsPath_ellipse'></a>
 ### H3DU.GraphicsPath#ellipse(x, y, w, h)
