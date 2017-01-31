@@ -1043,7 +1043,7 @@ H3DU.Mesh.prototype.transform = function(matrix) {
     matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
   }
   for(var i = 0; i < v.length; i += stride) {
-    var xform = H3DU.Math.mat4projectVec3(matrix, v);
+    var xform = H3DU.Math.mat4projectVec3(matrix, v[i], v[i + 1], v[i + 2]);
     v[i] = xform[0];
     v[i + 1] = xform[1];
     v[i + 2] = xform[2];

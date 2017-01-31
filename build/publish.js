@@ -90,7 +90,7 @@ function Doc(name) {
           }
           indexStr += "* " + tname + "\n";
         });
-        return indexStr + "\n";
+        return indexStr + "\n\n";
       } else {
         return "";
       }

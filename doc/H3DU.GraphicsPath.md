@@ -39,6 +39,7 @@ at this path's current position.
 path's shape.
 * [getBounds](#H3DU.GraphicsPath_GraphicsPath_getBounds)<br>Calculates an axis-aligned bounding box that tightly
 fits this graphics path.
+* [getCurrentPoint](#H3DU.GraphicsPath_GraphicsPath_getCurrentPoint)<br>Gets the current point stored in this path.
 * [getCurves](#H3DU.GraphicsPath_GraphicsPath_getCurves)<br>Gets an object for the curves described by this path.
 * [getLines](#H3DU.GraphicsPath_GraphicsPath_getLines)<br>Gets an array of line segments approximating
 the path.
@@ -52,11 +53,12 @@ because of an error in parsing the curve string.
 * [lineTo](#H3DU.GraphicsPath_GraphicsPath_lineTo)<br>Adds a line segment to the path, starting
 at the path's end position, then
 sets the end position to the end of the segment.
+* [merge](#H3DU.GraphicsPath_GraphicsPath_merge)<br>Merges the path segments in another path onto this one.
 * [moveTo](#H3DU.GraphicsPath_GraphicsPath_moveTo)<br>Moves the current start position and end position to the given position.
 * [pathLength](#H3DU.GraphicsPath_GraphicsPath_pathLength)<br>Finds the approximate length of this path.
 * [quadraticCurveTo](#H3DU.GraphicsPath_GraphicsPath_quadraticCurveTo)<br>Adds a quadratic B&eacute;zier curve to this path starting
 at this path's current position.
-* [rect](#H3DU.GraphicsPath_GraphicsPath_rect)<br>Adds four lines in an axis-aligned rectangle shape to the path.
+* [rect](#H3DU.GraphicsPath_GraphicsPath_rect)<br>Adds path segments to this path that form an axis-aligned rectangle.
 * [reverse](#H3DU.GraphicsPath_GraphicsPath_reverse)<br>Returns a path that reverses the course of this path.
 * [toLinePath](#H3DU.GraphicsPath_GraphicsPath_toLinePath)<br>Creates a path in which curves and arcs are decomposed
 to line segments.
@@ -68,12 +70,19 @@ that keeps straight lines straight and parallel lines parallel).
 path's shape.
 * [xor](#H3DU.GraphicsPath.GraphicsPath_xor)<br>Computes the shape contained in either this path or another path,
 but not both.
+* [arcShape](#H3DU.GraphicsPath_H3DU.GraphicsPath_arcShape)<br>Adds path segments to this path that form an arc running along an axis-aligned
+ellipse, or a shape based on that arc and ellipse, given the ellipse's center
+and dimensions, start angle, and sweep angle.
 * [arcShapeForBox](#H3DU.GraphicsPath_H3DU.GraphicsPath_arcShapeForBox)<br>Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's corner point
 and dimensions, start angle, and sweep angle.
+* [ellipse](#H3DU.GraphicsPath_H3DU.GraphicsPath_ellipse)<br>Adds path segments to this path that form an axis-aligned ellipse given its center
+and dimensions.
 * [ellipseForBox](#H3DU.GraphicsPath_H3DU.GraphicsPath_ellipseForBox)<br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
 and dimensions.
-* [rect](#H3DU.GraphicsPath_H3DU.GraphicsPath_rect)<br>Adds path segments to this path that form an axis-aligned rectangle.
+* [line](#H3DU.GraphicsPath_H3DU.GraphicsPath_line)<br>Adds a line segment to this path.
+* [polygon](#H3DU.GraphicsPath_H3DU.GraphicsPath_polygon)<br>Adds path segments to this path that form a polygon or a connected line segment strand.
+* [roundRect](#H3DU.GraphicsPath_H3DU.GraphicsPath_roundRect)<br>Adds path segments to this path that form an axis-aligned rounded rectangle.
 * [fromString](#H3DU.GraphicsPath.fromString)<br>Creates a graphics path from a string whose format follows
 the SVG specification.
 
@@ -221,6 +230,15 @@ describing the bounding box. The first two are
 the lowest X and Y coordinates, and the last two are
 the highest X and Y coordinates. If the path is empty,
 returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;Number>)
+
+ <a name='H3DU.GraphicsPath_GraphicsPath_getCurrentPoint'></a>
+### GraphicsPath#getCurrentPoint()
+
+Gets the current point stored in this path.
+
+#### Return Value
+
+A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;Number>)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_getCurves'></a>
 ### GraphicsPath#getCurves([flatness])
@@ -384,6 +402,20 @@ sets the end position to the end of the segment.
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
+ <a name='H3DU.GraphicsPath_GraphicsPath_merge'></a>
+### GraphicsPath#merge(path)
+
+Merges the path segments in another path onto this one.
+
+#### Parameters
+
+* `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>
+    Another graphics path. Can be null.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
  <a name='H3DU.GraphicsPath_GraphicsPath_moveTo'></a>
 ### GraphicsPath#moveTo(x, y)
 
@@ -437,24 +469,24 @@ at this path's current position.
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_rect'></a>
-### GraphicsPath#rect(x, y, width, height)
+### GraphicsPath#rect(x, y, w, h)
 
-Adds four lines in an axis-aligned rectangle shape to the path.
+Adds path segments to this path that form an axis-aligned rectangle.
 
 #### Parameters
 
 * `x` (Type: Number)<br>
-    X coordinate of a corner of the rectangle.
+    X coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
 * `y` (Type: Number)<br>
-    Y coordinate of a corner of the rectangle.
-* `width` (Type: Number)<br>
-    X-offset (width) to another corner of the rectangle.
-* `height` (Type: Number)<br>
-    Y-offset (height) to another corner of the rectangle.
+    Y coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `w` (Type: Number)<br>
+    Width of the rectangle.
+* `h` (Type: Number)<br>
+    Height of the rectangle.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_reverse'></a>
 ### GraphicsPath#reverse()
@@ -561,6 +593,40 @@ apply to this method.
 A path whose shape is contained in
 only one of the two paths. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_arcShape'></a>
+### H3DU.GraphicsPath#arcShape(cx, cy, w, h, start, sweep, type)
+
+Adds path segments to this path that form an arc running along an axis-aligned
+ellipse, or a shape based on that arc and ellipse, given the ellipse's center
+and dimensions, start angle, and sweep angle.
+
+To use this method, you must include the script "extras/pathshapes.js";
+this is in addition to "extras/path.js". Example:
+
+    <script type="text/javascript" src="extras/path.js"></script>
+    <script type="text/javascript" src="extras/pathshapes.js"></script>
+
+#### Parameters
+
+* `cx` (Type: Number)<br>
+    X coordinate of the ellipse's center.
+* `cy` (Type: Number)<br>
+    Y coordinate of the ellipse's center.
+* `w` (Type: Number)<br>
+    Width of the ellipse's bounding box.
+* `h` (Type: Number)<br>
+    Height of the ellipse's bounding box.
+* `start` (Type: Number)<br>
+    Starting angle of the arc, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.
+* `sweep` (Type: Number)<br>
+    Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's X axis points right and the Y axis down, positive angles run clockwise and negative angles counterclockwise.
+* `type` (Type: Number)<br>
+    Type of arc to append to the path. If 0, will append an unclosed arc. If 1, will append an elliptical segment to the path (the arc and a line segment connecting its ends). If 2, will append a "pie slice" to the path (the arc and two line segments connecting each end of the arc to the ellipse's center).
+
+#### Return Value
+
+This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
  <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_arcShapeForBox'></a>
 ### H3DU.GraphicsPath#arcShapeForBox(x, y, w, h, start, sweep, type)
 
@@ -595,6 +661,33 @@ this is in addition to "extras/path.js". Example:
 
 This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_ellipse'></a>
+### H3DU.GraphicsPath#ellipse(cx, cy, w, h)
+
+Adds path segments to this path that form an axis-aligned ellipse given its center
+and dimensions.
+
+To use this method, you must include the script "extras/pathshapes.js";
+this is in addition to "extras/path.js". Example:
+
+    <script type="text/javascript" src="extras/path.js"></script>
+    <script type="text/javascript" src="extras/pathshapes.js"></script>
+
+#### Parameters
+
+* `cx` (Type: Number)<br>
+    X coordinate of the ellipse's center.
+* `cy` (Type: Number)<br>
+    Y coordinate of the ellipse's center.
+* `w` (Type: Number)<br>
+    Width of the ellipse's bounding box.
+* `h` (Type: Number)<br>
+    Height of the ellipse's bounding box.
+
+#### Return Value
+
+This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
  <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_ellipseForBox'></a>
 ### H3DU.GraphicsPath#ellipseForBox(x, y, w, h)
 
@@ -622,10 +715,59 @@ this is in addition to "extras/path.js". Example:
 
 This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
- <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_rect'></a>
-### H3DU.GraphicsPath#rect(x, y, w, h)
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_line'></a>
+### H3DU.GraphicsPath#line(x0, y0, x1, y1)
 
-Adds path segments to this path that form an axis-aligned rectangle.
+Adds a line segment to this path.
+
+To use this method, you must include the script "extras/pathshapes.js";
+this is in addition to "extras/path.js". Example:
+
+    <script type="text/javascript" src="extras/path.js"></script>
+    <script type="text/javascript" src="extras/pathshapes.js"></script>
+
+#### Parameters
+
+* `x0` (Type: Number)<br>
+    X coordinate of the line segment's starting point.
+* `y0` (Type: Number)<br>
+    Y coordinate of the line segment's starting point.
+* `x1` (Type: Number)<br>
+    X coordinate of the line segment's ending point.
+* `y1` (Type: Number)<br>
+    X coordinate of the line segment's ending point.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_polygon'></a>
+### H3DU.GraphicsPath#polygon(pointCoords, closed)
+
+Adds path segments to this path that form a polygon or a connected line segment strand.
+
+To use this method, you must include the script "extras/pathshapes.js";
+this is in addition to "extras/path.js". Example:
+
+    <script type="text/javascript" src="extras/path.js"></script>
+    <script type="text/javascript" src="extras/pathshapes.js"></script>
+
+#### Parameters
+
+* `pointCoords` (Type: Array.&lt;Number>)<br>
+    An array of numbers containing the X and Y coordinates of each point in the sequence of line segments. Each pair of numbers gives the X and Y coordinates, in that order, of one of the points in the sequence. The number of elements in the array must be even. If two or more pairs of numbers are given, line segments will connect each point given (except the last) to the next point given.
+* `closed` (Type: Number)<br>
+    If "true", the sequence of points describes a closed polygon and a command to close the path will be added to the path (even if only one pair of numbers is given in "pointCoords").
+
+#### Return Value
+
+This object. If "pointCoords" is empty, no path segments will be appended.
+Throws an error if "pointCoords" has an odd length. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_roundRect'></a>
+### H3DU.GraphicsPath#roundRect(x, y, w, h, arccx, arccy)
+
+Adds path segments to this path that form an axis-aligned rounded rectangle.
 
 To use this method, you must include the script "extras/pathshapes.js";
 this is in addition to "extras/path.js". Example:
@@ -643,6 +785,10 @@ this is in addition to "extras/path.js". Example:
     Width of the rectangle.
 * `h` (Type: Number)<br>
     Height of the rectangle.
+* `arccx` (Type: Number)<br>
+    Horizontal extent (from end to end) of the ellipse formed by each arc that makes up the rectangle's corners. Will be adjusted to be not less than 0 and not greater than "w".
+* `arccy` (Type: Number)<br>
+    Vertical extent (from end to end) of the ellipse formed by each arc that makes up the rectangle's corners. Will be adjusted to be not less than 0 and not greater than "h".
 
 #### Return Value
 

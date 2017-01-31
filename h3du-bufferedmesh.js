@@ -283,7 +283,7 @@ H3DU.BufferedMesh.prototype.draw = function(program) {
  */
 H3DU.BufferedMesh.prototype.vertexCount = function() {
   "use strict";
-  return this.smb.numVertices;
+  return this.smb.indices.length;
 };
 /**
  * Gets the number of primitives (triangles, lines,
