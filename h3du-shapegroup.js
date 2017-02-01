@@ -29,8 +29,13 @@ H3DU.ShapeGroup = function() {
   this.transform = new H3DU.Transform();
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Makes a copy of this shape group and the objects contained
+ * in it. The copied object will
+ * will have its own version of the transform and
+ * visibility flag, and any objects contained in this one
+ * will be copied using their <code>copy()</code> method.
+ * The copied shape group won't have a parent.
+ * @returns {H3DU.ShapeGroup} A copy of this shape group.
  * @memberof! H3DU.ShapeGroup#
  */
 H3DU.ShapeGroup.prototype.copy = function() {

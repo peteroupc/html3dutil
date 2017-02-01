@@ -57,12 +57,14 @@ H3DU.MeshBuffer = function(mesh) {
 /**
  * TODO: Not documented yet.
  * @param {*} indices
- * @param {*} byteSize
- * @returns {*} Return value.
+ * @param {Number} byteSize Size, in bytes, of each index. Must be 1, 2, or 4.
+ * @returns {H3DU.MeshBuffer} This object.
  * @memberof! H3DU.MeshBuffer#
  */
 H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
   "use strict";
+  if(byteSize !== 1 && byteSize !== 2 && byteSize !== 4)
+    throw new Error();
   this.indexBufferSize = byteSize;
   this.indices = indices;
   return this;

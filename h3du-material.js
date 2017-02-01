@@ -88,17 +88,19 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
  * sets the diffusion (also called "albedo")
  * of each part of the material.
  * @default
- * @type {H3DU.Texture}
+ * @type {H3DU.Texture|H3DU.TextureInfo}
  */
   this.texture = null;
 /**
  * Specular map texture.
  * See {@link H3DU.PbrMaterial#specularMap}.
+ * @type {H3DU.Texture|H3DU.TextureInfo}
  * @default
  */
   this.specularMap = null;
  /**
   * Normal map (bump map) texture. See {@link H3DU.PbrMaterial#normalMap}.
+  * @type {H3DU.Texture|H3DU.TextureInfo}
   * @default
   */
   this.normalMap = null;
@@ -167,12 +169,10 @@ H3DU.Material.prototype.copy = function() {
  * <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the additive color. (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
- * <li><code>texture</code> - {@link H3DU.Texture} object, or a string with the URL of the texture
+ * <li><code>texture</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the URL of the texture
  * to use.
- * <li><code>specularMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a specular
- * map texture (see {@link H3DU.Material#specularMap}).
- * <li><code>normalMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a normal
- * map (bump map) texture (see {@link H3DU.Material#normalMap}).
+ * <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#specularMap}).
+ * <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#normalMap}).
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
  * this parameter is deprecated.</i>
@@ -204,13 +204,13 @@ H3DU.Material.prototype.setParams = function(params) {
     this.shininess = Math.min(Math.max(0, params.shininess), 128);
   }
   if(typeof params.texture !== "undefined" && params.texture !== null) {
-    this.texture = H3DU.Texture._texOrString(params.texture);
+    this.texture = H3DU.TextureInfo._texInfoOrString(params.texture);
   }
   if(typeof params.specularMap !== "undefined" && params.specularMap !== null) {
-    this.specularMap = H3DU.Texture._texOrString(params.specularMap);
+    this.specularMap = H3DU.TextureInfo._texInfoOrString(params.specularMap);
   }
   if(typeof params.normalMap !== "undefined" && params.normalMap !== null) {
-    this.normalMap = H3DU.Texture._texOrString(params.normalMap);
+    this.normalMap = H3DU.TextureInfo._texInfoOrString(params.normalMap);
   }
   if(typeof params.basic !== "undefined" && params.basic !== null) {
     this.basic = params.basic;

@@ -15,7 +15,8 @@ library.
 
 ### Methods
 
-* [.loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>TODO: Not documented yet.
+* [.loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>Loads a 3D scene stored in glTF format, together with the buffers and
+shaders it uses.
 * [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.
 * [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
@@ -41,11 +42,13 @@ or a "polyfill" method.
  <a name='H3DU.loadGltfFromUrl'></a>
 ### H3DU.loadGltfFromUrl(url)
 
-TODO: Not documented yet.
+Loads a 3D scene stored in glTF format, together with the buffers and
+shaders it uses.
 
 #### Parameters
 
-* `url` (Type: *)
+* `url` (Type: String)<br>
+    URL of the glTF file to load.
 
 #### Return Value
 
@@ -60,7 +63,8 @@ to the "url" parameter of the loadGltfFromFile method.
 if the glTF data describes an animation; this method updates the state of the
 3D batch in accordance with that animation. The single parameter, <code>time</code>
 (type Number), is a time stamp in milliseconds.
-</ul> (Type: <a href="Promise.md">Promise</a>.&lt;Object>)
+</ul>If an error occurs in loading the glTF data or any of the buffers and shaders
+it uses, the promise will be rejected. (Type: <a href="Promise.md">Promise</a>.&lt;Object>)
 
  <a name='H3DU.createCanvasElement'></a>
 ### (static) H3DU.createCanvasElement(parent, width, height)

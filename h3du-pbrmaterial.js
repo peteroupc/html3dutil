@@ -49,7 +49,7 @@ H3DU.PbrMaterial = function(params) {
    * A texture indicating the albedo (or base color) of each part of the texture,
    * in the red, green, blue, and alpha channels. In physically-based rendering, the albedo
    * texture should not have any added lighting or shadow detail.
-   * @type {Number}
+   * @type {H3DU.Texture|H3DU.TextureInfo}
    * @default
    */
   this.albedoMap = null;
@@ -72,7 +72,7 @@ H3DU.PbrMaterial = function(params) {
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * metalness values in certain areas.
-   * @type {Number}
+   * @type {H3DU.Texture|H3DU.TextureInfo}
    * @default
    */
   this.metalnessMap = null;
@@ -96,7 +96,7 @@ H3DU.PbrMaterial = function(params) {
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * roughness values in certain areas.
-   * @type {Number}
+   * @type {H3DU.Texture|H3DU.TextureInfo}
    * @default
    */
   this.roughnessMap = null;
@@ -125,7 +125,7 @@ H3DU.PbrMaterial = function(params) {
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * specular factors in certain areas.
-   * @type {Number}
+   * @type {H3DU.Texture|H3DU.TextureInfo}
    * @default
    */
   this.specularMap = null;
@@ -173,11 +173,13 @@ H3DU.PbrMaterial = function(params) {
   * tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
   * object only has normals and texture coordinates, the <code>recalcTangents()</code>
   * method can calculate the tangents and bitangents appropriate for normal mapping.
+  * @type {H3DU.Texture|H3DU.TextureInfo}
   * @default
   */
   this.normalMap = null;
   /**
    * TODO
+   * @type {H3DU.Texture|H3DU.TextureInfo}
    * @default
    */
   this.occlusionMap = null;
@@ -231,14 +233,14 @@ H3DU.PbrMaterial.Metallic = 1;
  * <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the additive color. (See {@link H3DU.PbrMaterial#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
- * <li><code>texture</code> or <code>albedoMap</code> - {@link H3DU.Texture} object, or a string with the URL of the texture
+ * <li><code>texture</code> or <code>albedoMap</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the URL of the texture
  * to use.
- * <li><code>specularMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a specular
- * map texture (see {@link H3DU.PbrMaterial#specularMap}).
- * <li><code>normalMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a normal
- * map (bump map) texture (see {@link H3DU.PbrMaterial#normalMap}).
- * <li><code>metalnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a metalness texture (see {@link H3DU.PbrMaterial#metalnessMap}).
- * <li><code>roughnessMap</code> - {@link H3DU.Texture} object, or a string with the URL, of a roughness texture (see {@link H3DU.PbrMaterial#roughnessMap}).
+ * <li><code>specularMap</code> - Specular
+ * map texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#specularMap}).
+ * <li><code>normalMap</code> - Normal
+ * map (bump map) texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#normalMap}).
+ * <li><code>metalnessMap</code> - Metalness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#metalnessMap}).
+ * <li><code>roughnessMap</code> - Roughness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#roughnessMap}).
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material.
  * </ul>
@@ -265,22 +267,22 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
     if(this.emission.length > 3)this.emission = this.emission.slice(0, 3);
   }
   if(typeof params.texture !== "undefined" && params.texture !== null) {
-    this.albedoMap = H3DU.Texture._texOrString(params.texture);
+    this.albedoMap = H3DU.TextureInfo._texInfoOrString(params.texture);
   }
   if(typeof params.albedoMap !== "undefined" && params.albedoMap !== null) {
-    this.albedoMap = H3DU.Texture._texOrString(params.albedoMap);
+    this.albedoMap = H3DU.TextureInfo._texInfoOrString(params.albedoMap);
   }
   if(typeof params.specularMap !== "undefined" && params.specularMap !== null) {
-    this.specularMap = H3DU.Texture._texOrString(params.specularMap);
+    this.specularMap = H3DU.TextureInfo._texInfoOrString(params.specularMap);
   }
   if(typeof params.normalMap !== "undefined" && params.normalMap !== null) {
-    this.normalMap = H3DU.Texture._texOrString(params.normalMap);
+    this.normalMap = H3DU.TextureInfo._texInfoOrString(params.normalMap);
   }
   if(typeof params.metalnessMap !== "undefined" && params.metalnessMap !== null) {
-    this.metalnessMap = H3DU.Texture._texOrString(params.metalnessMap);
+    this.metalnessMap = H3DU.TextureInfo._texInfoOrString(params.metalnessMap);
   }
   if(typeof params.roughnessMap !== "undefined" && params.roughnessMap !== null) {
-    this.roughnessMap = H3DU.Texture._texOrString(params.roughnessMap);
+    this.roughnessMap = H3DU.TextureInfo._texInfoOrString(params.roughnessMap);
   }
   if(typeof params.environmentMap !== "undefined" && params.environmentMap !== null) {
     this.environmentMap = params.environmentMap;

@@ -30,7 +30,7 @@ H3DU.Texture = function(name) {
   this.name = name;
   this.width = 0;
   this.height = 0;
-  this.info = new H3DU.TextureInfo({"uri":name});
+  this.clamp = false;
 };
 /**
  * Gets this texture's known width.
@@ -52,6 +52,15 @@ H3DU.Texture.prototype.getHeight = function() {
   "use strict";
   return this.height;
 };
+/** @private */
+H3DU.Texture.prototype._toInfo = function() {
+  "use strict";
+  return new H3DU.TextureInfo({
+    "uri":this.name,
+    "wrapS":this.clamp ? 33071 : 10497,
+    "wrapT":this.clamp ? 33071 : 10497
+  });
+};
 
 /**
  * Sets the wrapping behavior of texture coordinates that
@@ -60,6 +69,8 @@ H3DU.Texture.prototype.getHeight = function() {
  * are both powers of two. For other textures, this setting
  * is ignored and out-of-range texture coordinates are
  * always clamped.
+ * @deprecated Use the TextureInfo class's "wrapS" and
+ * "wrapT" parameters instead.
  * @param {Boolean} clamp If true, the texture's texture
  * coordinates will be clamped to the range [0, 1]. If false,
  * the fractional parts of the texture coordinates'
@@ -70,11 +81,7 @@ H3DU.Texture.prototype.getHeight = function() {
  */
 H3DU.Texture.prototype.setClamp = function(clamp) {
   "use strict";
-  // TODO: Possibly deprecate this method
-  this.info.setParams({
-    "wrapS":clamp ? 33071 : 10497,
-    "wrapT":clamp ? 33071 : 10497
-  });
+  this.clamp = !!clamp;
   return this;
 };
 

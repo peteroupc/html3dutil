@@ -63,8 +63,10 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   for(var i = 0; i < textures.length; i++) {
     if(textures[i][0] !== null && typeof textures[i][0] !== "undefined") {
       var textureSizeName = typeof textures[i][2] === "undefined" ? null : textures[i][2];
+      var tex = textures[i][0];
+      var texInfo = tex instanceof H3DU.Texture ? tex._toInfo() : tex;
       H3DU._MaterialBinder.bindTexture(
-    textures[i][0], textures[i][0].info, context, program,
+          tex, texInfo, context, program,
           sampler++, loader, textures[i][1], textureSizeName);
     }
   }

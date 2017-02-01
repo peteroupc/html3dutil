@@ -27,8 +27,8 @@ and 32.
 * [getHeight](#H3DU.Texture_H3DU.Texture_getHeight)<br>Gets this texture's known height.
 * [getName](#H3DU.Texture_H3DU.Texture_getName)<br>Gets the name of this texture.
 * [getWidth](#H3DU.Texture_H3DU.Texture_getWidth)<br>Gets this texture's known width.
-* [setClamp](#H3DU.Texture_H3DU.Texture_setClamp)<br>Sets the wrapping behavior of texture coordinates that
-fall out of range when using this texture.
+* [setClamp](#H3DU.Texture_H3DU.Texture_setClamp)<br><b>Deprecated: Use the TextureInfo class's "wrapS" and
+"wrapT" parameters instead.</b>
 
  <a name='H3DU.Texture.fromUint8Array'></a>
 ### H3DU.Texture.fromUint8Array(array, width, height)
@@ -105,6 +105,9 @@ Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
 
  <a name='H3DU.Texture_H3DU.Texture_setClamp'></a>
 ### H3DU.Texture#setClamp(clamp)
+
+<b>Deprecated: Use the TextureInfo class's "wrapS" and
+"wrapT" parameters instead.</b>
 
 Sets the wrapping behavior of texture coordinates that
 fall out of range when using this texture. This setting

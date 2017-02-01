@@ -16,7 +16,8 @@ other <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> objects.
 ### Methods
 
 * [addShape](#H3DU.ShapeGroup_H3DU.ShapeGroup_addShape)<br>Adds a 3D shape to this shape group.
-* [copy](#H3DU.ShapeGroup_H3DU.ShapeGroup_copy)<br>TODO: Not documented yet.
+* [copy](#H3DU.ShapeGroup_H3DU.ShapeGroup_copy)<br>Makes a copy of this shape group and the objects contained
+in it.
 * [getBounds](#H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds)<br>Finds a bounding box that holds all vertices in this shape group.
 * [getMatrix](#H3DU.ShapeGroup_H3DU.ShapeGroup_getMatrix)<br>Gets a copy of the transformation needed to transform
 this shape group's coordinates to world coordinates.
@@ -65,11 +66,16 @@ This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
  <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_copy'></a>
 ### H3DU.ShapeGroup#copy()
 
-TODO: Not documented yet.
+Makes a copy of this shape group and the objects contained
+in it. The copied object will
+will have its own version of the transform and
+visibility flag, and any objects contained in this one
+will be copied using their <code>copy()</code> method.
+The copied shape group won't have a parent.
 
 #### Return Value
 
-Return value. (Type: *)
+A copy of this shape group. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
  <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_getBounds'></a>
 ### H3DU.ShapeGroup#getBounds()

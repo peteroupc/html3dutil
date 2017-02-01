@@ -99,11 +99,12 @@ TODO: Not documented yet.
 #### Parameters
 
 * `indices` (Type: *)
-* `byteSize` (Type: *)
+* `byteSize` (Type: Number)<br>
+    Size, in bytes, of each index. Must be 1, 2, or 4.
 
 #### Return Value
 
-Return value. (Type: *)
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()

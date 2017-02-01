@@ -125,7 +125,7 @@ H3DU.Shape.prototype.setColor = function(r, g, b, a) {
 };
 /**
  * Sets material parameters that give the shape a texture with the given URL.
- * @param {H3DU.Texture|String} name {@link H3DU.Texture} object, or a string with the
+ * @param {String|H3DU.Texture|H3DU.TextureInfo} name {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the
  * URL of the texture data. In the case of a string the texture will be loaded via
  * the JavaScript DOM's Image class. However, this method
  * will not load that image if it hasn't been loaded yet.
@@ -168,7 +168,7 @@ H3DU.Shape.prototype.setMaterialParams = function(params) {
 /**
  * Sets this shape's material to the given texture, and its ambient and
  * diffuse parameters to the given color.
- * @param {String} name {@link H3DU.Texture} object, or a string with the
+ * @param {String|H3DU.Texture|H3DU.TextureInfo} name {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the
  * URL of the texture data. In the case of a string the texture will be loaded via
  * the JavaScript DOM's Image class. However, this method
  * will not load that image if it hasn't been loaded yet.
