@@ -454,9 +454,9 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
     "gl_PointSize=1.0;",
     "gl_Position=(projection*modelViewMatrix)*positionVec4;",
     "#ifdef COLORATTR\n" +
-"colorAttrVar=colorAttr;\n" +
-"#endif\n" +
-"uvVar=uv;",
+    "colorAttrVar=colorAttr;\n" +
+    "#endif\n" +
+    "uvVar=uv;",
     "#ifdef SHADING",
     "transformedNormalVar=normalize(normalMatrix*normal);",
     "#ifdef NORMAL_MAP",

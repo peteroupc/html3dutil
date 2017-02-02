@@ -81,6 +81,7 @@
         this.version = 1;
     }
     this.programs = this.preparePrograms();
+    // TODO: Why Batch3D and not ShapeGroup?
     this.batch = new H3DU.Batch3D();
     this.imageUris = [];
     for(var k in this.gltf.images || {})

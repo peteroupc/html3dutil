@@ -75,7 +75,7 @@ stored in a vertex buffer.
 #### Parameters
 
 * `semantic` (Type: Number | String)<br>
-    An attribute semantic, such as <a href="H3DU.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+    An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
 * `semanticIndex` (Type: Number)<br>
     The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 * `buffer` (Type: Float32Array | Array)<br>

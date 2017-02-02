@@ -15,9 +15,9 @@ TODO: Not documented yet.
 ### Methods
 
 * [getHeight](#H3DU.CubeMap_H3DU.CubeMap_getHeight)<br>Gets this texture's known height.
-* [getTextures](#H3DU.CubeMap_H3DU.CubeMap_getTextures)<br>Gets a reference to the array of textures used by this cube
-map.
+* [getTexture](#H3DU.CubeMap_H3DU.CubeMap_getTexture)<br>Gets a texture used by this cube map.
 * [getWidth](#H3DU.CubeMap_H3DU.CubeMap_getWidth)<br>Gets this texture's known width.
+* [setTexture](#H3DU.CubeMap_H3DU.CubeMap_setTexture)<br>Sets a texture used by this cube map.
 
  <a name='H3DU.CubeMap_H3DU.CubeMap_getHeight'></a>
 ### H3DU.CubeMap#getHeight()
@@ -29,15 +29,19 @@ Gets this texture's known height.
 This texture's height in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
 
- <a name='H3DU.CubeMap_H3DU.CubeMap_getTextures'></a>
-### H3DU.CubeMap#getTextures()
+ <a name='H3DU.CubeMap_H3DU.CubeMap_getTexture'></a>
+### H3DU.CubeMap#getTexture(index)
 
-Gets a reference to the array of textures used by this cube
-map. TODO: Reference or copy?
+Gets a texture used by this cube map.
+
+#### Parameters
+
+* `index` (Type: Number)<br>
+    Texture index to get.
 
 #### Return Value
 
-Return value. (Type: *)
+The texture with the given index. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
 
  <a name='H3DU.CubeMap_H3DU.CubeMap_getWidth'></a>
 ### H3DU.CubeMap#getWidth()
@@ -48,3 +52,19 @@ Gets this texture's known width.
 
 This texture's width in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
+
+ <a name='H3DU.CubeMap_H3DU.CubeMap_setTexture'></a>
+### H3DU.CubeMap#setTexture(index, texture)
+
+Sets a texture used by this cube map.
+
+#### Parameters
+
+* `index` (Type: Number)<br>
+    Texture index to set, from 0 through 5.
+* `texture` (Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | String)<br>
+    An <a href="H3DU.Texture.md">H3DU.Texture</a> object or a string with the URL of the texture data.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.CubeMap.md">H3DU.CubeMap</a>)

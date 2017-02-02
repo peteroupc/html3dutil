@@ -15,47 +15,62 @@
  */
 H3DU.Semantic = {};
 /** Attribute semantic for a vertex position.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.POSITION = 0;
 /** Attribute semantic for a vertex normal.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic*/
 H3DU.Semantic.NORMAL = 1;
 /** Attribute semantic for a texture coordinate.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic*/
 H3DU.Semantic.TEXCOORD = 2;
 /** Attribute semantic for a color.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic*/
 H3DU.Semantic.COLOR = 3;
 /** Attribute semantic for a skinning joint.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic*/
 H3DU.Semantic.JOINT = 4;
 /** Attribute semantic for a skinning weight.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.WEIGHT = 5;
 /** Attribute semantic for a tangent vector.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.TANGENT = 6;
 /** Attribute semantic for a bitangent vector.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.BITANGENT = 7;
 /** Uniform semantic for a model matrix.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.MODEL = 101;
 /** Uniform semantic for a view matrix.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.VIEW = 102;
 /** Uniform semantic for a projection matrix.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.PROJECTION = 103;
 /** Uniform semantic for a model-view matrix.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.MODELVIEW = 104;
 /** Uniform semantic for a model-view-projection matrix.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.MODELVIEWPROJECTION = 105;
 /** Uniform semantic for the inverse of the 3x3 transpose of the model view matrix.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.MODELVIEWINVERSETRANSPOSE = 106;
 /** Uniform semantic for an inverse view matrix.
- * @const */
+ * @const
+ * @memberof! H3DU.Semantic */
 H3DU.Semantic.VIEWINVERSE = 107;

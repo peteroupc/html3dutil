@@ -52,7 +52,7 @@ uploads its texture data to a WebGL context.
 
 #### Parameters
 
-* `texture` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)<br>
+* `texture` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.Texture.md">H3DU.Texture</a>)<br>
     An object described in H3DU.TextureLoader.loadTexture.
 * `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
     A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
@@ -70,7 +70,7 @@ Loads one or more textures by their URL and uploads their data to a WebGL contex
 
 #### Parameters
 
-* `textures` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)>)<br>
+* `textures` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>|<a href="H3DU.Texture.md">H3DU.Texture</a>)>)<br>
     An array of objects described in H3DU.TextureLoader.loadTexture.
 * `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
     A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
@@ -102,14 +102,16 @@ TODO: Not documented yet.
 Return value. (Type: *)
 
  <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadTexture'></a>
-### H3DU.TextureLoader#loadTexture(name)
+### H3DU.TextureLoader#loadTexture(texture)
 
 Loads a texture by its URL and stores its data.
 
 #### Parameters
 
-* `name` (Type: String | TextureInfo)<br>
-    URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM's Image class. TODO: More docs.
+* `texture` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.Texture.md">H3DU.Texture</a>)<br>
+    An <a href="H3DU.Texture.md">H3DU.Texture</a> object, an <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data.
+
+ Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM's Image class.
 
 #### Return Value
 
@@ -124,7 +126,7 @@ stores their texture data.
 
 #### Parameters
 
-* `textures` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)>)<br>
+* `textures` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>|<a href="H3DU.Texture.md">H3DU.Texture</a>)>)<br>
     An array of objects described in H3DU.TextureLoader.loadTexture.
 * `resolve` (Type: function) (optional)<br>
     A function called as each individual texture is loaded.

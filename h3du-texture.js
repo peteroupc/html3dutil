@@ -87,10 +87,12 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
 
 /**
  * Loads a texture by its URL.
- * @param {String|H3DU.TextureInfo} name URL of the texture data. Images with a TGA
+ * @param {String|H3DU.TextureInfo|H3DU.Textureo} name An {@link H3DU.Texture} object,
+ * an {@link H3DU.TextureInfo} object, or a string with the
+ * URL of the texture data. Images with a TGA
  * extension that use the RGBA or grayscale format are supported.
  * Images supported by the browser will be loaded via
- * the JavaScript DOM's Image class. TODO: More docs.
+ * the JavaScript DOM's Image class.
  * @param {Object} [textureCache] An object whose keys
  * are the names of textures already loaded. This will help avoid loading
  * the same texture more than once. This parameter is optional
@@ -102,11 +104,16 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
 H3DU.Texture.loadTexture = function(info, textureCache) {
  // Get cached texture
   "use strict";
-  var name = info instanceof H3DU.TextureInfo ? info.uri : info;
-  if(textureCache && textureCache[name]) {
-    return Promise.resolve(textureCache[name]);
+  var texImage;
+  if(info instanceof H3DU.Texture) {
+    texImage = info;
+  } else {
+    var name = info instanceof H3DU.TextureInfo ? info.uri : info;
+    if(textureCache && textureCache[name]) {
+      return Promise.resolve(textureCache[name]);
+    }
+    texImage = new H3DU.Texture(name);
   }
-  var texImage = new H3DU.Texture(name);
   if(textureCache) {
     textureCache[name] = texImage;
   }
@@ -349,14 +356,29 @@ H3DU.CubeMap.prototype.getHeight = function() {
   return this.textures[0].getHeight();
 };
 /**
- * Gets a reference to the array of textures used by this cube
- * map. TODO: Reference or copy?
- * @returns {*} Return value.
+ * Sets a texture used by this cube map.
+ * @param {Number} index Texture index to set, from 0 through 5.
+ * @param {H3DU.Texture|String} texture An {@link H3DU.Texture} object
+ * or a string with the URL of the texture data.
+ * @returns {H3DU.CubeMap} This object.
  * @memberof! H3DU.CubeMap#
  */
-H3DU.CubeMap.prototype.getTextures = function() {
+H3DU.CubeMap.prototype.setTexture = function(index, texture) {
   "use strict";
-  return this.textures;
+  if(index < 0 || index >= 6)return this;
+  this.textures[index] = H3DU.Texture._texOrString(texture);
+  return this;
+};
+/**
+ * Gets a texture used by this cube map.
+ * @param {Number} index Texture index to get.
+ * @returns {H3DU.Texture} The texture with the given index.
+ * @memberof! H3DU.CubeMap#
+ */
+H3DU.CubeMap.prototype.getTexture = function(index) {
+  "use strict";
+  if(index < 0 || index >= 6)return this;
+  return this.textures[index];
 };
 /** @private */
 H3DU.CubeMap.prototype.loadImage = function() {

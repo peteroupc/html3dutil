@@ -27,7 +27,7 @@ and 32.
 
 * [copyFrom](#H3DU.TextureInfo_H3DU.TextureInfo_copyFrom)<br>Copies the parameters from another texture information object to this
 object.
-* [setParams](#H3DU.TextureInfo_H3DU.TextureInfo_setParams)<br>TODO: Not documented yet.
+* [setParams](#H3DU.TextureInfo_H3DU.TextureInfo_setParams)<br>Sets parameters for this texture information object.
 
  <a name='H3DU.TextureInfo_H3DU.TextureInfo_copyFrom'></a>
 ### H3DU.TextureInfo#copyFrom([other])
@@ -47,11 +47,12 @@ This object. (Type: <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)
  <a name='H3DU.TextureInfo_H3DU.TextureInfo_setParams'></a>
 ### H3DU.TextureInfo#setParams(params)
 
-TODO: Not documented yet.
+Sets parameters for this texture information object.
 
 #### Parameters
 
-* `params` (Type: Object)
+* `params` (Type: Object)<br>
+    An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>uri</code> - TODO: Not documented yet. <li><code>format</code> - TODO: Not documented yet. <li><code>internalFormat</code> - TODO: Not documented yet. <li><code>target</code> - TODO: Not documented yet. <li><code>type</code> - TODO: Not documented yet. <li><code>magFilter</code> - TODO: Not documented yet. <li><code>minFilter</code> - TODO: Not documented yet. <li><code>wrapS</code> - TODO: Not documented yet. <li><code>wrapT</code> - TODO: Not documented yet. <li><code>topDown</code> - TODO: Not documented yet. </ul> Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored unless otherwise noted.
 
 #### Return Value
 

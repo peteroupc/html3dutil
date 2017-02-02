@@ -55,8 +55,8 @@ Loads a texture by its URL.
 
 #### Parameters
 
-* `name` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)<br>
-    URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM's Image class. TODO: More docs.
+* `name` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | H3DU.Textureo)<br>
+    An <a href="H3DU.Texture.md">H3DU.Texture</a> object, an <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM's Image class.
 * `textureCache` (Type: Object) (optional)<br>
     An object whose keys are the names of textures already loaded. This will help avoid loading the same texture more than once. This parameter is optional and may be omitted.
 

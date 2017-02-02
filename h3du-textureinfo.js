@@ -62,8 +62,23 @@ H3DU.TextureInfo.prototype.copyFrom = function(other) {
 };
 
 /**
- * TODO: Not documented yet.
- * @param {Object} params
+ * Sets parameters for this texture information object.
+ * @param {Object} params An object whose keys have
+ * the possibilities given below, and whose values are those
+ * allowed for each key.<ul>
+ * <li><code>uri</code> - TODO: Not documented yet.
+ * <li><code>format</code> - TODO: Not documented yet.
+ * <li><code>internalFormat</code> - TODO: Not documented yet.
+ * <li><code>target</code> - TODO: Not documented yet.
+ * <li><code>type</code> - TODO: Not documented yet.
+ * <li><code>magFilter</code> - TODO: Not documented yet.
+ * <li><code>minFilter</code> - TODO: Not documented yet.
+ * <li><code>wrapS</code> - TODO: Not documented yet.
+ * <li><code>wrapT</code> - TODO: Not documented yet.
+ * <li><code>topDown</code> - TODO: Not documented yet.
+ * </ul>
+ * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
+ * unless otherwise noted.
  * @returns {H3DU.TextureInfo} This object.
  * @memberof! H3DU.TextureInfo#
  */

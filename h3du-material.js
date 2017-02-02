@@ -151,8 +151,8 @@ H3DU.Material.prototype.copy = function() {
 };
 /**
  * TODO: Not documented yet.
- * @returns {*} Return value.
-* @memberof! H3DU.Material#
+ * @returns {H3DU.Material} This object.
+ * @memberof! H3DU.Material#
  */
 H3DU.Material.prototype.makeBasic = function() {
   "use strict";
@@ -187,21 +187,21 @@ H3DU.Material.prototype.makeBasic = function() {
  * the additive color. (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
  * <li><code>texture</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the URL of the texture
- * to use.
- * <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#specularMap}).
- * <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#normalMap}).
- * <li><code>emissionMap</code> - Emission map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#emissionMap}).
+ * to use. Can be null.
+ * <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#specularMap}). Can be null.
+ * <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#normalMap}). Can be null.
+ * <li><code>emissionMap</code> - Emission map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#emissionMap}). Can be null.
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
  * this parameter is deprecated.</i>
  * </ul>
- * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
+ * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
+ * unless otherwise noted.
  * @returns {H3DU.Material} This object.
  * @memberof! H3DU.Material#
  */
 H3DU.Material.prototype.setParams = function(params) {
   "use strict";
-// TODO: Eliminate basic parameter in demos
   if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);
     if(this.ambient.length > 3)this.ambient = this.ambient.slice(0, 3);
@@ -260,7 +260,8 @@ H3DU.Material.fromColor = function(r, g, b, a) {
 
 /** Convenience method that returns an {@link H3DU.Material}
  * object from a texture to apply to a 3D object's surface.
- * @param {H3DU.Texture|string} texture {@link H3DU.Texture} object, or a string with the
+ * @param {H3DU.Texture|H3DU.TextureInfo|string} texture An {@link H3DU.Texture} object,
+ * an {@link H3DU.TextureInfo} object, or a string with the
  * URL of the texture data. In the case of a string the texture will be loaded via
  * the JavaScript DOM's Image class. However, this method
  * will not load that image yet.

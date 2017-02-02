@@ -224,8 +224,8 @@ H3DU.PbrMaterial.Specular = 0;
 H3DU.PbrMaterial.Metallic = 1;
 /**
  * TODO: Not documented yet.
- * @returns {*} Return value.
-* @memberof! H3DU.PbrMaterial#
+ * @returns {H3DU.PbrMaterial} This object.
+ * @memberof! H3DU.PbrMaterial#
  */
 H3DU.PbrMaterial.prototype.makeBasic = function() {
   "use strict";
@@ -254,9 +254,7 @@ H3DU.PbrMaterial.prototype.makeBasic = function() {
  * the possibilities given below, and whose values are those
  * allowed for each key.<ul>
  * <li><code>workflow</code> - Either {@link H3DU.PbrMaterial.Specular} or {@link H3DU.PbrMaterial.Metalness}
- * <li><code>invertRoughness</code> - TODO.
- * <li><code>environmentMap</code> - {@link H3DU.CubeMap} object of an environment
- * map texture (see {@link H3DU.PbrMaterial#environmentMap}).
+ * <li><code>invertRoughness</code> - TODO: Not documented yet.
  * <li><code>diffuse</code> or <code>albedo</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the diffusion color (also called "albedo"). (See {@link H3DU.PbrMaterial#diffuse}.) The default is (0.8, 0.8, 0.8).
  * <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving
@@ -266,18 +264,22 @@ H3DU.PbrMaterial.prototype.makeBasic = function() {
  * the additive color. (See {@link H3DU.PbrMaterial#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
  * <li><code>texture</code> or <code>albedoMap</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the URL of the texture
- * to use.
+ * to use. Can be null.
  * <li><code>specularMap</code> - Specular
  * map texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#specularMap}).
+ * Can be null.
  * <li><code>normalMap</code> - Normal
- * map (bump map) texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#normalMap}).
- * <li><code>metalnessMap</code> - Metalness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#metalnessMap}).
- * <li><code>roughnessMap</code> - Roughness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#roughnessMap}).
- * <li><code>emissionMap</code> - Emission texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#emissionMap}).
+ * map (bump map) texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#normalMap}). Can be null.
+ * <li><code>metalnessMap</code> - Metalness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#metalnessMap}). Can be null.
+ * <li><code>roughnessMap</code> - Roughness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#roughnessMap}). Can be null.
+ * <li><code>emissionMap</code> - Emission texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#emissionMap}). Can be null.
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
- * to use when rendering objects with this material.
+ * to use when rendering objects with this material. Can be null.
+ * <li><code>environmentMap</code> - {@link H3DU.CubeMap} object of an environment
+ * map texture (see {@link H3DU.PbrMaterial#environmentMap}). Can be null.
  * </ul>
- * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
+ * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
+ * unless otherwise noted.
  * @returns {H3DU.PbrMaterial} This object.
  * @memberof! H3DU.PbrMaterial#
  */
@@ -332,7 +334,7 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
   if(typeof params.roughness !== "undefined" && params.roughness !== null) {
     this.roughness = params.roughness;
   }
-  if(typeof params.shader !== "undefined" && params.shader !== null) {
+  if(typeof params.shader !== "undefined") {
     this.shader = params.shader;
   }
   return this;
