@@ -38,38 +38,30 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
   this.fragmentShader = fragmentShader;
   this.uniformValues = {};
   this.attributeSemantics = {};
-  this.attributeSemantics.position = new Uint32Array([H3DU.MeshBuffer.POSITION, 0]);
-  this.attributeSemantics.tangent = new Uint32Array([H3DU.MeshBuffer.TANGENT, 0]);
-  this.attributeSemantics.bitangent = new Uint32Array([H3DU.MeshBuffer.BITANGENT, 0]);
-  this.attributeSemantics.normal = new Uint32Array([H3DU.MeshBuffer.NORMAL, 0]);
-  this.attributeSemantics.uv = new Uint32Array([H3DU.MeshBuffer.TEXCOORD, 0]);
-  this.attributeSemantics.colorAttr = new Uint32Array([H3DU.MeshBuffer.COLOR, 0]);
+  this.attributeSemantics.position = new Uint32Array([H3DU.Semantic.POSITION, 0]);
+  this.attributeSemantics.tangent = new Uint32Array([H3DU.Semantic.TANGENT, 0]);
+  this.attributeSemantics.bitangent = new Uint32Array([H3DU.Semantic.BITANGENT, 0]);
+  this.attributeSemantics.normal = new Uint32Array([H3DU.Semantic.NORMAL, 0]);
+  this.attributeSemantics.uv = new Uint32Array([H3DU.Semantic.TEXCOORD, 0]);
+  this.attributeSemantics.colorAttr = new Uint32Array([H3DU.Semantic.COLOR, 0]);
   this.uniformSemantics = {};
-  this.uniformSemantics.projection = H3DU.ShaderInfo.PROJECTION;
-  this.uniformSemantics.world = H3DU.ShaderInfo.MODEL;
-  this.uniformSemantics.inverseView = H3DU.ShaderInfo.VIEWINVERSE;
-  this.uniformSemantics.modelViewMatrix = H3DU.ShaderInfo.MODELVIEW;
-  this.uniformSemantics.normalMatrix = H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE;
+  this.uniformSemantics.projection = H3DU.Semantic.PROJECTION;
+  this.uniformSemantics.world = H3DU.Semantic.MODEL;
+  this.uniformSemantics.inverseView = H3DU.Semantic.VIEWINVERSE;
+  this.uniformSemantics.modelViewMatrix = H3DU.Semantic.MODELVIEW;
+  this.uniformSemantics.normalMatrix = H3DU.Semantic.MODELVIEWINVERSETRANSPOSE;
 };
-
-// TODO: Consider moving these constants to their own class
-H3DU.ShaderInfo.MODEL = 1;
-H3DU.ShaderInfo.VIEW = 2;
-H3DU.ShaderInfo.PROJECTION = 3;
-H3DU.ShaderInfo.MODELVIEW = 4;
-H3DU.ShaderInfo.MODELVIEWPROJECTION = 5;
-H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE = 6;
-H3DU.ShaderInfo.VIEWINVERSE = 7;
 /**
- * TODO: Not documented yet.
- * @param {*} u
- * @param {*} sem
- * @returns {*} Return value.
+ * Sets a semantic for the given named uniform.
+ * @param {String} u The name of the uniform.
+ * @param {Number} sem A uniform semantic given in {@link H3DU.Semantic}.
+ * @returns {H3DU.ShaderInfo} This object.
  * @memberof! H3DU.ShaderInfo#
  */
 H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
   "use strict";
   this.uniformSemantics[u] = sem;
+  return this;
 };
 
 /**
@@ -101,11 +93,16 @@ H3DU.ShaderInfo.prototype.dispose = function() {
 };
 
 /**
- * TODO: Not documented yet.
- * @param {*} name
- * @param {*} sem
- * @param {*} index
- * @returns {*} Return value.
+ * Sets the semantic for a vertex attribute.
+ * @param {String} name Name of the attribute.
+ * @param {Number|String} semantic An attribute semantic, such
+ * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
+ * @param {Number} semanticIndex The set index of the attribute
+ * for the given semantic.
+ * 0 is the first index of the attribute, 1 is the second, and so on.
+ * This is ignored if "semantic" is a string.
+ * @returns {H3DU.ShaderInfo} This object. Throws an error if the given
+ * semantic is unsupported.
  * @memberof! H3DU.ShaderProgram#
  */
 H3DU.ShaderInfo.prototype.setSemantic = function(name, sem, index) {
@@ -536,6 +533,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#ifdef SPECULAR_MAP", "uniform sampler2D specularMap;", "#endif",
     "#ifdef ENV_MAP", "uniform samplerCube envMap;", "#endif",
     "#ifdef ENV_EQUIRECT", "uniform sampler2D envMap;", "#endif",
+    "#ifdef EMISSION_MAP", "uniform sampler2D emissionMap;", "#endif",
     "uniform mat4 inverseView;",
     "#ifdef NORMAL_MAP", "uniform sampler2D normalMap;", "#endif",
     "#ifdef NORMAL_MAP", "varying mat3 tbnMatrixVar;", "#endif",
@@ -647,7 +645,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#endif",
     "vec4 lightPowerVec;",
     "float lightCosine, specular;",
-    "vec3 materialAmbient=ma;", // ambient
+    "vec3 materialAmbient=tolinear(ma);", // ambient
     "vec3 materialDiffuse=tolinear(baseColor.rgb);",
     "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
     "vec3 viewDirection=normalize(tview.xyz/tview.w);",
@@ -718,8 +716,9 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       ""].join("\n") + "\n";
   }
   shader += [
-    " lightedColor+=me;", // emission
-    " lightedColor=tonemapHable(lightedColor);",
+    "#ifdef EMISSION_MAP", "lightedColor+=tolinear(texture2D(emissionMap,uvVar).rgb);", "#else",
+    " lightedColor+=tolinear(me);", "#endif",
+    // " lightedColor=tonemapHable(lightedColor);",
     " lightedColor=fromlinear(lightedColor);",
     " baseColor=vec4(lightedColor,baseColor.a);",
     "#endif",

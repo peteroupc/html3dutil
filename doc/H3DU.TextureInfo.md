@@ -25,13 +25,15 @@ and 32.
 
 ### Methods
 
-* [copyFrom](#H3DU.TextureInfo_H3DU.TextureInfo_copyFrom)<br>TODO: Not documented yet.
+* [copyFrom](#H3DU.TextureInfo_H3DU.TextureInfo_copyFrom)<br>Copies the parameters from another texture information object to this
+object.
 * [setParams](#H3DU.TextureInfo_H3DU.TextureInfo_setParams)<br>TODO: Not documented yet.
 
  <a name='H3DU.TextureInfo_H3DU.TextureInfo_copyFrom'></a>
 ### H3DU.TextureInfo#copyFrom([other])
 
-TODO: Not documented yet.
+Copies the parameters from another texture information object to this
+object.
 
 #### Parameters
 

@@ -24,6 +24,7 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 * [getMeshBuffer](#H3DU.Shape_getMeshBuffer)<br>Returns a reference to the mesh buffer used by this shape.
 * [copy](#H3DU.Shape_H3DU.Shape_copy)<br>Makes a copy of this object.
 * [getBounds](#H3DU.Shape_H3DU.Shape_getBounds)<br>Finds a bounding box that holds all vertices in this shape.
+* [getMaterial](#H3DU.Shape_H3DU.Shape_getMaterial)<br>Returns the material used by this shape object.
 * [getMatrix](#H3DU.Shape_H3DU.Shape_getMatrix)<br>Gets the transformation matrix used by this shape.
 * [getTransform](#H3DU.Shape_H3DU.Shape_getTransform)<br>Returns the transform used by this shape object.
 * [getVisible](#H3DU.Shape_H3DU.Shape_getVisible)<br>Gets whether this shape will be drawn on rendering.
@@ -87,6 +88,16 @@ are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Shape_H3DU.Shape_getMaterial'></a>
+### H3DU.Shape#getMaterial()
+
+Returns the material used by this shape object.
+The material won't be copied.
+
+#### Return Value
+
+Return value. (Type: <a href="H3DU.Material.md">H3DU.Material</a> | <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
 
  <a name='H3DU.Shape_H3DU.Shape_getMatrix'></a>
 ### H3DU.Shape#getMatrix()
@@ -173,7 +184,7 @@ Sets parameters of this shape's material.
 #### Parameters
 
 * `params` (Type: Object)<br>
-    An object described in H3DU.Material#setParams.
+    An object described in H3DU.PbrMaterial#setParams.
 
 #### Return Value
 

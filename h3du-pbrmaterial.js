@@ -11,8 +11,8 @@
  * A material for physically-based rendering. Specifies parameters for geometry materials,
  * which describe the appearance of a 3D object. This includes how an object
  * scatters, reflects, or absorbs light.<p>
- * NOTE: The default shader program assumes that all colors, as well as the albedo and
- * specular map, specified in this object are in
+ * NOTE: The default shader program assumes that all colors, as well as the albedo,
+ * specular, and emission maps, specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @param {Object} [params] An object described in {@link H3DU.PbrMaterial.setParams}.
  * @class
@@ -195,6 +195,12 @@ H3DU.PbrMaterial = function(params) {
   * @default
   */
   this.emission = [0, 0, 0];
+  /**
+   * Emission map texture.
+   * @type {H3DU.Texture|H3DU.TextureInfo}
+   * @default
+   */
+  this.emissionMap = null;
  /**
   * Shader program to use when rendering objects with this material.
   * @default
@@ -216,6 +222,32 @@ H3DU.PbrMaterial = function(params) {
 };
 H3DU.PbrMaterial.Specular = 0;
 H3DU.PbrMaterial.Metallic = 1;
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+* @memberof! H3DU.PbrMaterial#
+ */
+H3DU.PbrMaterial.prototype.makeBasic = function() {
+  "use strict";
+  // TODO: Not idempotent
+  return this.setParams({
+    "environmentMap":null,
+    "metalness":0.0,
+    "metalnessMap":null,
+    "roughness":0.0,
+    "roughnessMap":null,
+    "albedo":[0, 0, 0],
+    "invertRoughness":false,
+    "specular":[0, 0, 0],
+    "workflow":H3DU.PbrMaterial.Specular,
+    "emission":this.albedo,
+    "emissionMap":this.albedoMap,
+    "albedoMap":null,
+    "specularMap":null,
+    "normalMap":null
+  });
+};
+
 /**
  * Sets parameters for this material object.
  * @param {Object} params An object whose keys have
@@ -241,6 +273,7 @@ H3DU.PbrMaterial.Metallic = 1;
  * map (bump map) texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#normalMap}).
  * <li><code>metalnessMap</code> - Metalness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#metalnessMap}).
  * <li><code>roughnessMap</code> - Roughness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#roughnessMap}).
+ * <li><code>emissionMap</code> - Emission texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#emissionMap}).
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material.
  * </ul>
@@ -269,23 +302,26 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
   if(typeof params.texture !== "undefined" && params.texture !== null) {
     this.albedoMap = H3DU.TextureInfo._texInfoOrString(params.texture);
   }
-  if(typeof params.albedoMap !== "undefined" && params.albedoMap !== null) {
+  if(typeof params.albedoMap !== "undefined") {
     this.albedoMap = H3DU.TextureInfo._texInfoOrString(params.albedoMap);
   }
-  if(typeof params.specularMap !== "undefined" && params.specularMap !== null) {
+  if(typeof params.specularMap !== "undefined") {
     this.specularMap = H3DU.TextureInfo._texInfoOrString(params.specularMap);
   }
-  if(typeof params.normalMap !== "undefined" && params.normalMap !== null) {
+  if(typeof params.normalMap !== "undefined") {
     this.normalMap = H3DU.TextureInfo._texInfoOrString(params.normalMap);
   }
-  if(typeof params.metalnessMap !== "undefined" && params.metalnessMap !== null) {
+  if(typeof params.metalnessMap !== "undefined") {
     this.metalnessMap = H3DU.TextureInfo._texInfoOrString(params.metalnessMap);
   }
-  if(typeof params.roughnessMap !== "undefined" && params.roughnessMap !== null) {
+  if(typeof params.roughnessMap !== "undefined") {
     this.roughnessMap = H3DU.TextureInfo._texInfoOrString(params.roughnessMap);
   }
-  if(typeof params.environmentMap !== "undefined" && params.environmentMap !== null) {
-    this.environmentMap = params.environmentMap;
+  if(typeof params.environmentMap !== "undefined") {
+    this.environmentMap = H3DU.TextureInfo._texInfoOrString(params.environmentMap);
+  }
+  if(typeof params.emissionMap !== "undefined") {
+    this.emissionMap = H3DU.TextureInfo._texInfoOrString(params.emissionMap);
   }
   if(typeof params.metalness !== "undefined" && params.metalness !== null) {
     this.metalness = params.metalness;
@@ -325,7 +361,6 @@ H3DU.PbrMaterial.prototype.copy = function() {
     "albedoMap":this.albedoMap,
     "specularMap":this.specularMap,
     "normalMap":this.normalMap,
-    "basic":this.basic,
     "shader":this.shader
   });
 };

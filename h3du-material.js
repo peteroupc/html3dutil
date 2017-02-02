@@ -105,11 +105,11 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   */
   this.normalMap = null;
  /**
-  * If true, only the "diffuse" and "texture" properties of this object are used
-  * when processing objects that use this material.
+  * Emission map texture.
+  * @type {H3DU.Texture|H3DU.TextureInfo}
   * @default
   */
-  this.basic = false;
+  this.emissionMap = null;
  /**
   * Shader program to use when rendering objects with this material.
   * @default
@@ -146,18 +146,35 @@ H3DU.Material.prototype.copy = function() {
     "texture":this.texture,
     "specularMap":this.specularMap,
     "normalMap":this.normalMap,
-    "basic":this.basic,
     "shader":this.shader
   });
 };
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+* @memberof! H3DU.Material#
+ */
+H3DU.Material.prototype.makeBasic = function() {
+  "use strict";
+  // TODO: Not idempotent
+  return this.setParams({
+    "shininess":1.0,
+    "specular":[0, 0, 0],
+    "diffuse":[0, 0, 0],
+    "ambient":[0, 0, 0],
+    "texture":null,
+    "specularMap":null,
+    "normalMap":null,
+    "emission":this.diffuse,
+    "emissionMap":this.texture
+  });
+};
+
 /**
  * Sets parameters for this material object.
  * @param {Object} params An object whose keys have
  * the possibilities given below, and whose values are those
  * allowed for each key.<ul>
- * <li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties
- * of this material are used, and the object with this material will be drawn without
- * regard to lighting.
  * <li><code>ambient</code> - A [color vector or string]{@link H3DU.toGLColor} giving the ambient color. (See {@link H3DU.Material#ambient}.)
  * The default is (0.2, 0.2, 0.2).
  * <li><code>diffuse</code> - A [color vector or string]{@link H3DU.toGLColor} giving
@@ -173,6 +190,7 @@ H3DU.Material.prototype.copy = function() {
  * to use.
  * <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#specularMap}).
  * <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#normalMap}).
+ * <li><code>emissionMap</code> - Emission map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#emissionMap}).
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
  * this parameter is deprecated.</i>
@@ -183,7 +201,7 @@ H3DU.Material.prototype.copy = function() {
  */
 H3DU.Material.prototype.setParams = function(params) {
   "use strict";
-
+// TODO: Eliminate basic parameter in demos
   if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);
     if(this.ambient.length > 3)this.ambient = this.ambient.slice(0, 3);
@@ -203,17 +221,17 @@ H3DU.Material.prototype.setParams = function(params) {
   if(typeof params.shininess !== "undefined" && params.shininess !== null) {
     this.shininess = Math.min(Math.max(0, params.shininess), 128);
   }
-  if(typeof params.texture !== "undefined" && params.texture !== null) {
+  if(typeof params.texture !== "undefined") {
     this.texture = H3DU.TextureInfo._texInfoOrString(params.texture);
   }
-  if(typeof params.specularMap !== "undefined" && params.specularMap !== null) {
+  if(typeof params.specularMap !== "undefined") {
     this.specularMap = H3DU.TextureInfo._texInfoOrString(params.specularMap);
   }
-  if(typeof params.normalMap !== "undefined" && params.normalMap !== null) {
+  if(typeof params.normalMap !== "undefined") {
     this.normalMap = H3DU.TextureInfo._texInfoOrString(params.normalMap);
   }
-  if(typeof params.basic !== "undefined" && params.basic !== null) {
-    this.basic = params.basic;
+  if(typeof params.emissionMap !== "undefined") {
+    this.emissionMap = H3DU.TextureInfo._texInfoOrString(params.emissionMap);
   }
   if(typeof params.shader !== "undefined" && params.shader !== null) {
     this.shader = params.shader;

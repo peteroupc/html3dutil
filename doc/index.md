@@ -59,6 +59,8 @@ of various geometric shapes.
 rendering that batch.
 * <a href="H3DU.Scene3D.md">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering
 3D objects.
+* <a href="H3DU.Semantic.md">H3DU.Semantic</a><br>Contains constants for assigning semantics
+to uniforms and vertex attributes.
 * <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.
 * <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.
 Use the <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> class instead, which is not coupled to WebGL

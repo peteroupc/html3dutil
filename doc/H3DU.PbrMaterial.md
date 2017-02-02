@@ -9,8 +9,8 @@ A material for physically-based rendering. Specifies parameters for geometry mat
 which describe the appearance of a 3D object. This includes how an object
 scatters, reflects, or absorbs light.
 
-NOTE: The default shader program assumes that all colors, as well as the albedo and
-specular map, specified in this object are in
+NOTE: The default shader program assumes that all colors, as well as the albedo,
+specular, and emission maps, specified in this object are in
 the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
@@ -24,6 +24,7 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 * [albedoMap](#H3DU.PbrMaterial_albedoMap)<br>A texture indicating the albedo (or base color) of each part of the texture,
 in the red, green, blue, and alpha channels.
 * [emission](#H3DU.PbrMaterial_emission)<br>Additive color emitted by objects with this material.
+* [emissionMap](#H3DU.PbrMaterial_emissionMap)<br>Emission map texture.
 * [environmentMap](#H3DU.PbrMaterial_environmentMap)<br>TODO
 * [invertRoughness](#H3DU.PbrMaterial_invertRoughness)<br>TODO
 * [metalness](#H3DU.PbrMaterial_metalness)<br>A value indicating whether objects described by this material are metals.
@@ -47,6 +48,7 @@ material.
 
 * [copy](#H3DU.PbrMaterial_H3DU.PbrMaterial_copy)<br>Clones this object's parameters to a new <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>
 object and returns that object.
+* [makeBasic](#H3DU.PbrMaterial_H3DU.PbrMaterial_makeBasic)<br>TODO: Not documented yet.
 * [setParams](#H3DU.PbrMaterial_H3DU.PbrMaterial_setParams)<br>Sets parameters for this material object.
 
 <a id='H3DU.PbrMaterial_albedo'></a>
@@ -109,6 +111,15 @@ while negative values subtract from it. (0,0,0), the default, means no additive 
 Type: Array.&lt;Number>
 
 Default Value: `"[0,0,0]"`
+
+<a id='H3DU.PbrMaterial_emissionMap'></a>
+### H3DU.PbrMaterial#emissionMap
+
+Emission map texture.
+
+Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>
+
+Default Value: `null`
 
 <a id='H3DU.PbrMaterial_environmentMap'></a>
 ### H3DU.PbrMaterial#environmentMap
@@ -308,6 +319,15 @@ to the same object will be used.
 
 A copy of this object. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
 
+ <a name='H3DU.PbrMaterial_H3DU.PbrMaterial_makeBasic'></a>
+### H3DU.PbrMaterial#makeBasic()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+Return value. (Type: *)
+
  <a name='H3DU.PbrMaterial_H3DU.PbrMaterial_setParams'></a>
 ### H3DU.PbrMaterial#setParams(params)
 
@@ -316,7 +336,7 @@ Sets parameters for this material object.
 #### Parameters
 
 * `params` (Type: Object)<br>
-    An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>workflow</code> - Either H3DU.PbrMaterial.Specular or H3DU.PbrMaterial.Metalness <li><code>invertRoughness</code> - TODO. <li><code>environmentMap</code> - <a href="H3DU.CubeMap.md">H3DU.CubeMap</a> object of an environment map texture (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_environmentMap">H3DU.PbrMaterial#environmentMap</a>). <li><code>diffuse</code> or <code>albedo</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo"). (See H3DU.PbrMaterial#diffuse.) The default is (0.8, 0.8, 0.8). <li><code>specular</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the specular reflection. (See <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_specular">H3DU.PbrMaterial#specular</a>.) The default is (0,0,0), meaning no specular highlights. <li><code>roughness</code> - Roughness. <li><code>emission</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the additive color. (See <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_emission">H3DU.PbrMaterial#emission</a>.) If this is an array, its numbers can range from -1 to 1. The default is (0,0,0). <li><code>texture</code> or <code>albedoMap</code> - <a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture to use. <li><code>specularMap</code> - Specular map texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_specularMap">H3DU.PbrMaterial#specularMap</a>). <li><code>normalMap</code> - Normal map (bump map) texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_normalMap">H3DU.PbrMaterial#normalMap</a>). <li><code>metalnessMap</code> - Metalness texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_metalnessMap">H3DU.PbrMaterial#metalnessMap</a>). <li><code>roughnessMap</code> - Roughness texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_roughnessMap">H3DU.PbrMaterial#roughnessMap</a>). <li><code>shader</code> - <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> object for a WebGL shader program to use when rendering objects with this material. </ul> Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
+    An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>workflow</code> - Either H3DU.PbrMaterial.Specular or H3DU.PbrMaterial.Metalness <li><code>invertRoughness</code> - TODO. <li><code>environmentMap</code> - <a href="H3DU.CubeMap.md">H3DU.CubeMap</a> object of an environment map texture (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_environmentMap">H3DU.PbrMaterial#environmentMap</a>). <li><code>diffuse</code> or <code>albedo</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo"). (See H3DU.PbrMaterial#diffuse.) The default is (0.8, 0.8, 0.8). <li><code>specular</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the specular reflection. (See <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_specular">H3DU.PbrMaterial#specular</a>.) The default is (0,0,0), meaning no specular highlights. <li><code>roughness</code> - Roughness. <li><code>emission</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the additive color. (See <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_emission">H3DU.PbrMaterial#emission</a>.) If this is an array, its numbers can range from -1 to 1. The default is (0,0,0). <li><code>texture</code> or <code>albedoMap</code> - <a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture to use. <li><code>specularMap</code> - Specular map texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_specularMap">H3DU.PbrMaterial#specularMap</a>). <li><code>normalMap</code> - Normal map (bump map) texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_normalMap">H3DU.PbrMaterial#normalMap</a>). <li><code>metalnessMap</code> - Metalness texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_metalnessMap">H3DU.PbrMaterial#metalnessMap</a>). <li><code>roughnessMap</code> - Roughness texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_roughnessMap">H3DU.PbrMaterial#roughnessMap</a>). <li><code>emissionMap</code> - Emission texture, taking the same types as for "albedoMap" (see <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_emissionMap">H3DU.PbrMaterial#emissionMap</a>). <li><code>shader</code> - <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> object for a WebGL shader program to use when rendering objects with this material. </ul> Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.
 
 #### Return Value
 

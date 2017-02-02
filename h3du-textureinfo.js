@@ -38,7 +38,8 @@ H3DU.TextureInfo = function(params) {
   this.setParams(params);
 };
 /**
- * TODO: Not documented yet.
+ * Copies the parameters from another texture information object to this
+ * object.
  * @param {H3DU.TextureInfo} [other] Texture information object to copy.
  * @returns {H3DU.TextureInfo} This object.
  * @memberof! H3DU.TextureInfo#
@@ -101,7 +102,8 @@ H3DU.TextureInfo.prototype.setParams = function(params) {
     }
   }
   return this;
-};/** @private */
+};
+/** @private */
 H3DU.TextureInfo._texInfoOrString = function(tex) {
   "use strict";
   return typeof tex === "string" ? new H3DU.TextureInfo({"uri":tex}) : tex;

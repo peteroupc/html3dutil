@@ -42,7 +42,7 @@ copied to that object.
 * [dispose](#H3DU.ShaderInfo_H3DU.ShaderInfo_dispose)<br><b>Deprecated: Yes</b>
 * [getFragmentShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader)<br>Gets the text of the fragment shader stored in this object.
 * [getVertexShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader)<br>Gets the text of the vertex shader stored in this object.
-* [setUniformSemantic](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniformSemantic)<br>TODO: Not documented yet.
+* [setUniformSemantic](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniformSemantic)<br>Sets a semantic for the given named uniform.
 * [setUniforms](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms)<br>Sets the values of one or more uniforms used by this shader program.
 
  <a name='H3DU.ShaderInfo.getBasicVertex'></a>
@@ -173,16 +173,18 @@ return value. (Type: String)
  <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_setUniformSemantic'></a>
 ### H3DU.ShaderInfo#setUniformSemantic(u, sem)
 
-TODO: Not documented yet.
+Sets a semantic for the given named uniform.
 
 #### Parameters
 
-* `u` (Type: *)
-* `sem` (Type: *)
+* `u` (Type: String)<br>
+    The name of the uniform.
+* `sem` (Type: Number)<br>
+    A uniform semantic given in <a href="H3DU.Semantic.md">H3DU.Semantic</a>.
 
 #### Return Value
 
-Return value. (Type: *)
+This object. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
  <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms'></a>
 ### H3DU.ShaderInfo#setUniforms(uniforms)

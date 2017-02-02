@@ -43,7 +43,7 @@ log is output to the JavaScript console.
 * [.makeCopyEffect](#H3DU.ShaderProgram.makeCopyEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b>
 * [.makeEffect](#H3DU.ShaderProgram.makeEffect)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b>
 * [.makeEffectFragment](#H3DU.ShaderProgram.makeEffectFragment)<br><b>Deprecated: Use <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b>
-* [setSemantic](#H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic)<br>TODO: Not documented yet.
+* [setSemantic](#H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic)<br>Sets the semantic for a vertex attribute.
 * [dispose](#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose)<br>Disposes resources from this shader program.
 * [get](#H3DU.ShaderProgram_H3DU.ShaderProgram_get)<br>Gets the location of the given uniform or attribute's name in this program.
 * [getContext](#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext)<br>Gets the WebGL context associated with this shader program object.
@@ -164,19 +164,23 @@ a raster effect to a texture.
 The source text of the resulting fragment shader. (Type: String)
 
  <a name='H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic'></a>
-### H3DU.ShaderInfo#setSemantic(name, sem, index)
+### H3DU.ShaderInfo#setSemantic(name, semantic, semanticIndex)
 
-TODO: Not documented yet.
+Sets the semantic for a vertex attribute.
 
 #### Parameters
 
-* `name` (Type: *)
-* `sem` (Type: *)
-* `index` (Type: *)
+* `name` (Type: String)<br>
+    Name of the attribute.
+* `semantic` (Type: Number | String)<br>
+    An attribute semantic, such as <a href="H3DU.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `semanticIndex` (Type: Number)<br>
+    The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 
 #### Return Value
 
-Return value. (Type: *)
+This object. Throws an error if the given
+semantic is unsupported. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
  <a name='H3DU.ShaderProgram_H3DU.ShaderProgram_dispose'></a>
 ### H3DU.ShaderProgram#dispose()

@@ -32,31 +32,31 @@ H3DU.MeshBuffer = function(mesh) {
   this.format = mesh.attributeBits;
   var stride = H3DU.Mesh._getStride(this.format);
   this.attributes = [];
-  this.attributes.push([H3DU.MeshBuffer.POSITION, 0, vertices, 3, stride, 0]);
+  this.attributes.push([H3DU.Semantic.POSITION, 0, vertices, 3, stride, 0]);
   var o = H3DU.Mesh._normalOffset(this.format);
   if(o >= 0) {
-    this.attributes.push([H3DU.MeshBuffer.NORMAL, o, vertices, 3, stride, 0]);
+    this.attributes.push([H3DU.Semantic.NORMAL, o, vertices, 3, stride, 0]);
   }
   o = H3DU.Mesh._colorOffset(this.format);
   if(o >= 0) {
-    this.attributes.push([H3DU.MeshBuffer.COLOR, o, vertices, 3, stride, 0]);
+    this.attributes.push([H3DU.Semantic.COLOR, o, vertices, 3, stride, 0]);
   }
   o = H3DU.Mesh._texCoordOffset(this.format);
   if(o >= 0) {
-    this.attributes.push([H3DU.MeshBuffer.TEXCOORD, o, vertices, 2, stride, 0]);
+    this.attributes.push([H3DU.Semantic.TEXCOORD, o, vertices, 2, stride, 0]);
   }
   o = H3DU.Mesh._tangentOffset(this.format);
   if(o >= 0) {
-    this.attributes.push([H3DU.MeshBuffer.TANGENT, o, vertices, 3, stride, 0]);
+    this.attributes.push([H3DU.Semantic.TANGENT, o, vertices, 3, stride, 0]);
   }
   o = H3DU.Mesh._bitangentOffset(this.format);
   if(o >= 0) {
-    this.attributes.push([H3DU.MeshBuffer.BITANGENT, o, vertices, 3, stride, 0]);
+    this.attributes.push([H3DU.Semantic.BITANGENT, o, vertices, 3, stride, 0]);
   }
 };
 /**
- * TODO: Not documented yet.
- * @param {*} indices
+ * Sets the array of vertex indices used by this mesh buffer.
+ * @param {Uint16Array|Uint32Array|Uint8Array} indices Array of vertex indices.
  * @param {Number} byteSize Size, in bytes, of each index. Must be 1, 2, or 4.
  * @returns {H3DU.MeshBuffer} This object.
  * @memberof! H3DU.MeshBuffer#
@@ -77,7 +77,7 @@ H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
  * gives information about the per-vertex data used and
  * stored in a vertex buffer.
  * @param {Number|String} semantic An attribute semantic, such
- * as {@link H3DU.MeshBuffer.POSITION}, "POSITION", or "TEXCOORD_0".
+ * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * @param {Number} semanticIndex The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
@@ -92,7 +92,8 @@ H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
  * vector, this value is 3.
  * @param {Number} stride The number of elements from the start of
  * one per-vertex item to the start of the next.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
+ * semantic is unsupported.
  * @memberof! H3DU.MeshBuffer#
  */
 H3DU.MeshBuffer.prototype.setAttribute = function(
@@ -208,7 +209,7 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
     var empty = true;
     var inf = Number.POSITIVE_INFINITY;
     var ret = [inf, inf, inf, -inf, -inf, -inf];
-    var posattr = this._getAttribute(H3DU.MeshBuffer.POSITION);
+    var posattr = this._getAttribute(H3DU.Semantic.POSITION);
     if(!posattr || posattr[3] < 3)return ret;
     var stride = posattr[4];
     var v = posattr[2];
@@ -248,24 +249,15 @@ H3DU.MeshBuffer.prototype.primitiveType = function() {
     return H3DU.Mesh.POINTS;
   return H3DU.Mesh.TRIANGLES;
 };
-// TODO: Consider moving these constants to their own class
-H3DU.MeshBuffer.POSITION = 0;
-H3DU.MeshBuffer.NORMAL = 1;
-H3DU.MeshBuffer.TEXCOORD = 2;
-H3DU.MeshBuffer.COLOR = 3;
-H3DU.MeshBuffer.JOINT = 4;
-H3DU.MeshBuffer.WEIGHT = 5;
-H3DU.MeshBuffer.TANGENT = 6;
-H3DU.MeshBuffer.BITANGENT = 7;
 H3DU.MeshBuffer._wellKnownAttributes = {
-  "POSITION":H3DU.MeshBuffer.POSITION,
-  "TEXCOORD":H3DU.MeshBuffer.TEXCOORD,
-  "TEXCOORD_0":H3DU.MeshBuffer.TEXCOORD,
-  "NORMAL":H3DU.MeshBuffer.NORMAL,
-  "JOINT":H3DU.MeshBuffer.JOINT,
-  "WEIGHT":H3DU.MeshBuffer.WEIGHT,
-  "TANGENT":H3DU.MeshBuffer.TANGENT,
-  "BITANGENT":H3DU.MeshBuffer.BITANGENT
+  "POSITION":0,
+  "TEXCOORD":2,
+  "TEXCOORD_0":2,
+  "NORMAL":1,
+  "JOINT":4,
+  "WEIGHT":5,
+  "TANGENT":6,
+  "BITANGENT":7
 };
 
 /** @private */

@@ -80,18 +80,18 @@ H3DU.Batch3D._setupMatrices = function(
     if(Object.prototype.hasOwnProperty.call(program.uniformSemantics, k)) {
       var v = program.uniformSemantics[k];
       switch(v) {
-      case H3DU.ShaderInfo.MODEL:
+      case H3DU.Semantic.MODEL:
         uniforms[k] = worldMatrix;
         break;
-      case H3DU.ShaderInfo.VIEW:
+      case H3DU.Semantic.VIEW:
         uniforms[k] = viewMatrix;
         break;
-      case H3DU.ShaderInfo.PROJECTION:
+      case H3DU.Semantic.PROJECTION:
         uniforms[k] = projMatrix;
         break;
-      case H3DU.ShaderInfo.MODELVIEW:
-      case H3DU.ShaderInfo.MODELVIEWPROJECTION:
-      case H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE:
+      case H3DU.Semantic.MODELVIEW:
+      case H3DU.Semantic.MODELVIEWPROJECTION:
+      case H3DU.Semantic.MODELVIEWINVERSETRANSPOSE:
         if(!viewWorld) {
           if(H3DU._isIdentityExceptTranslate(viewMatrix)) {
     // view matrix is just a translation matrix, so that getting the model-view
@@ -105,15 +105,15 @@ H3DU.Batch3D._setupMatrices = function(
      worldMatrix);
           }
         }
-        if(v === H3DU.ShaderInfo.MODELVIEW) {
+        if(v === H3DU.Semantic.MODELVIEW) {
           uniforms[k] = viewWorld;
-        } else if(v === H3DU.ShaderInfo.MODELVIEWPROJECTION) {
+        } else if(v === H3DU.Semantic.MODELVIEWPROJECTION) {
           uniforms[k] = H3DU.Math.mat4multiply(projMatrix, viewWorld);
-        } else if(v === H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE) {
+        } else if(v === H3DU.Semantic.MODELVIEWINVERSETRANSPOSE) {
           uniforms[k] = H3DU.Math.mat4inverseTranspose3(viewWorld);
         }
         break;
-      case H3DU.ShaderInfo.VIEWINVERSE:
+      case H3DU.Semantic.VIEWINVERSE:
         uniforms[k] = H3DU.Math.mat4invert(viewMatrix);
         break;
       default:
@@ -237,8 +237,10 @@ H3DU.Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
 };
 
 /** @private */
-H3DU.Batch3D.prototype.useShader = function(shader) {
+H3DU.Batch3D.prototype._useShader = function(shader) {
   "use strict";
+  // NOTE: This method is here for compatibility only
+  // (see Scene3D#useFilter).
   this._globalShader = shader;
   return this;
 };

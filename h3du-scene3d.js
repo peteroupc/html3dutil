@@ -106,6 +106,8 @@ H3DU.Scene3D.INVERT_ROUGHNESS_ENABLED = 1 << 11 | 0;
 H3DU.Scene3D.ENV_MAP_ENABLED = 1 << 12 | 0;
 /** @private */
 H3DU.Scene3D.ENV_EQUIRECT_ENABLED = 1 << 13 | 0;
+/** @private */
+H3DU.Scene3D.EMISSION_MAP_ENABLED = 1 << 14 | 0;
 
 /** @private */
 H3DU.Scene3D._flagsForShape = function(shape) {
@@ -113,13 +115,14 @@ H3DU.Scene3D._flagsForShape = function(shape) {
   var flags = 0;
   var material = shape.material;
   if(material !== null && typeof material !== "undefined" && material instanceof H3DU.Material) {
-    flags |= !material.basic ? H3DU.Scene3D.LIGHTING_ENABLED : 0;
+    flags |= H3DU.Scene3D.LIGHTING_ENABLED;
     flags |= material.specular[0] !== 0 ||
         material.specular[1] !== 0 ||
         material.specular[2] !== 0 ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
     flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
     flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
     flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
+    flags |= material.emissionMap ? H3DU.Scene3D.EMISSION_MAP_ENABLED : 0;
   }
   if(material !== null && typeof material !== "undefined" && material instanceof H3DU.PbrMaterial) {
     flags |= H3DU.Scene3D.LIGHTING_ENABLED | H3DU.Scene3D.PHYSICAL_BASED_ENABLED;
@@ -131,6 +134,7 @@ H3DU.Scene3D._flagsForShape = function(shape) {
       flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
     }
     flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
+    flags |= material.emissionMap ? H3DU.Scene3D.EMISSION_MAP_ENABLED : 0;
     flags |= material.albedoMap ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
     flags |= material.invertRoughness === true ? H3DU.Scene3D.INVERT_ROUGHNESS_ENABLED : 0;
     flags |= typeof material.roughness === "number" ? H3DU.Scene3D.ROUGHNESS_ENABLED : 0;
@@ -144,7 +148,7 @@ H3DU.Scene3D._flagsForShape = function(shape) {
     }
   }
   var buffer = shape.getMeshBuffer();
-  if(buffer && !!buffer._getAttribute(H3DU.MeshBuffer.COLOR)) {
+  if(buffer && !!buffer._getAttribute(H3DU.Semantic.COLOR)) {
     flags |= H3DU.Scene3D.COLORATTR_ENABLED;
   }
   return flags;
@@ -235,6 +239,8 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
     defines += "#define ENV_MAP\n";
   if((flags & H3DU.Scene3D.ENV_EQUIRECT_ENABLED) !== 0)
     defines += "#define ENV_EQUIRECT\n";
+  if((flags & H3DU.Scene3D.EMISSION_MAP_ENABLED) !== 0)
+    defines += "#define EMISSION_MAP\n";
   if((flags & H3DU.Scene3D.SPECULAR_MAP_ENABLED) !== 0)
     defines += "#define SPECULAR_MAP\n#define SPECULAR\n";
   var prog = new H3DU.ShaderProgram(context,
@@ -772,11 +778,10 @@ H3DU.Scene3D.prototype.loadTexture = function(name) {
  */
 H3DU.Scene3D.prototype.loadAndMapTexture = function(texture) {
   "use strict";
-
   if(texture.constructor === H3DU.Texture) {
-    return this.loadAndMapTexture(texture.name);
-  } else {
-    return this.loadAndMapTexture(texture);
+    return this._textureLoader.loadAndMapTexture(texture.name, this.context);
+  } else if(typeof texture === "string") {
+    return this._textureLoader.loadAndMapTexture(texture, this.context);
   }
 };
 /**
@@ -1172,9 +1177,9 @@ H3DU.Scene3D.prototype.useFilter = function(filterProgram) {
   console.warn("The useFilter method is deprecated. Use the {@link H3DU.Batch3D.forFilter} method to " +
     "create a batch for rendering filter effects from a frame buffer.");
   if(filterProgram instanceof H3DU.ShaderProgram) {
-    this._subScene.useShader(filterProgram.shaderInfo);
+    this._subScene._useShader(filterProgram.shaderInfo);
   } else {
-    this._subScene.useShader(filterProgram);
+    this._subScene._useShader(filterProgram);
   }
   return this;
 };

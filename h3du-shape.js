@@ -150,15 +150,13 @@ H3DU.Shape.prototype.setShader = function(shader) {
 };
 /**
  * Sets parameters of this shape's material.
- * @param {Object} params An object described in {@link H3DU.Material#setParams}.
+ * @param {Object} params An object described in {@link H3DU.PbrMaterial#setParams}.
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
  */
 H3DU.Shape.prototype.setMaterialParams = function(params) {
   "use strict";
   if(this.material) {
-    // TODO: Be compatible with Material if "basic" parameter
-    // is specified
     this.material.setParams(params);
   } else {
     this.material = new H3DU.PbrMaterial().setParams(params);
@@ -235,6 +233,16 @@ H3DU.Shape.prototype.copy = function() {
 H3DU.Shape.prototype.getTransform = function() {
   "use strict";
   return this.transform;
+};
+/**
+ * Returns the material used by this shape object.
+ * The material won't be copied.
+ * @returns {H3DU.Material|H3DU.PbrMaterial} Return value.
+ * @memberof! H3DU.Shape#
+ */
+H3DU.Shape.prototype.getMaterial = function() {
+  "use strict";
+  return this.material;
 };
 /**
  * Finds a bounding box that holds all vertices in this shape.

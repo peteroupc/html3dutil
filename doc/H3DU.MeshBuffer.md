@@ -22,7 +22,7 @@ and points) composed by all shapes in this mesh.
 * [setAttribute](#H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
-* [setIndices](#H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices)<br>TODO: Not documented yet.
+* [setIndices](#H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices)<br>Sets the array of vertex indices used by this mesh buffer.
 * [vertexCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds'></a>
@@ -75,7 +75,7 @@ stored in a vertex buffer.
 #### Parameters
 
 * `semantic` (Type: Number | String)<br>
-    An attribute semantic, such as H3DU.MeshBuffer.POSITION, "POSITION", or "TEXCOORD_0".
+    An attribute semantic, such as <a href="H3DU.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
 * `semanticIndex` (Type: Number)<br>
     The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 * `buffer` (Type: Float32Array | Array)<br>
@@ -89,16 +89,18 @@ stored in a vertex buffer.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object.Throws an error if the given
+semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices'></a>
 ### H3DU.MeshBuffer#setIndices(indices, byteSize)
 
-TODO: Not documented yet.
+Sets the array of vertex indices used by this mesh buffer.
 
 #### Parameters
 
-* `indices` (Type: *)
+* `indices` (Type: Uint16Array | Uint32Array | Uint8Array)<br>
+    Array of vertex indices.
 * `byteSize` (Type: Number)<br>
     Size, in bytes, of each index. Must be 1, 2, or 4.
 
