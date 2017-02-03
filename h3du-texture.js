@@ -87,7 +87,7 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
 
 /**
  * Loads a texture by its URL.
- * @param {String|H3DU.TextureInfo|H3DU.Textureo} name An {@link H3DU.Texture} object,
+ * @param {String|H3DU.TextureInfo|H3DU.Texture} name An {@link H3DU.Texture} object,
  * an {@link H3DU.TextureInfo} object, or a string with the
  * URL of the texture data. Images with a TGA
  * extension that use the RGBA or grayscale format are supported.
@@ -105,19 +105,24 @@ H3DU.Texture.loadTexture = function(info, textureCache) {
  // Get cached texture
   "use strict";
   var texImage;
+  var name;
+  if(!(typeof info !== "undefined" && (info !== null && typeof info !== "undefined"))) {
+    throw new Error();
+  }
   if(info instanceof H3DU.Texture) {
+    name = info.name;
     texImage = info;
   } else {
-    var name = info instanceof H3DU.TextureInfo ? info.uri : info;
-    if(textureCache && textureCache[name]) {
+    name = info instanceof H3DU.TextureInfo ? info.uri : info;
+    if(textureCache && textureCache[name] && name && name.length > 0) {
       return Promise.resolve(textureCache[name]);
     }
     texImage = new H3DU.Texture(name);
   }
-  if(textureCache) {
+  if(textureCache && name && name.length > 0) {
     textureCache[name] = texImage;
   }
- // Load new texture and cache it
+ // Load new texture
   return texImage.loadImage().then(
   function(result) {
     return result;

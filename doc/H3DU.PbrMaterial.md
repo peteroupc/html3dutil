@@ -254,7 +254,7 @@ Default Value: `null`
 ### H3DU.PbrMaterial#specular
 
 Specular reflectivity of this material.
-Specular reflection is a reflection in the opposite direction from the direction
+Specular reflection is a bounced-back reflection from the direction
 the light reaches the material in, similar to a mirror. As a result, depending
 on the viewing angle, specular reflection can give off
 shiny highlights on the material.
@@ -264,7 +264,7 @@ components of the surface's base reflectivity when looking directly at the surfa
 (base reflectivity at 0 degree incidence, or F<sub>0</sub>).
 For most nonmetals, this is a shade of gray ranging from
 (0.15, 0.15, 0.15) to (0.32, 0.32, 0.32) in sRGB. For most metals,
-this is a very bright version of the surface's color.
+this is a very light version of the surface's color.
 
 This value is only used in the <b>specular workflow</b>.
 

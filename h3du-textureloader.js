@@ -50,9 +50,9 @@ H3DU.TextureLoader.prototype.getTexture = function(name) {
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
  * @memberof! H3DU.TextureLoader#
  */
-H3DU.TextureLoader.prototype.loadTexture = function() {
+H3DU.TextureLoader.prototype.loadTexture = function(texture) {
   "use strict";
-  return H3DU.Texture.loadTexture(name, this.textureImages);
+  return H3DU.Texture.loadTexture(texture, this.textureImages);
 };
 /** @private */
 H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
