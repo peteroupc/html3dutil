@@ -121,24 +121,6 @@ This method creates a washer-shaped 3D model.
 
 <a id=Miscellaneous></a>
 ## Miscellaneous
-
-    function extrudePath(path, zStart, zEnd, flatness){
-     var lines=path.getLines(flatness)
-     var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-     var z1=Math.min(zStart,zEnd)
-     var z2=Math.max(zStart,zEnd)
-     for(var i=0;i<lines.length;i++){
-      var line=lines[i]
-      mesh.vertex3(line[0],line[1],z1)
-       .vertex3(line[0],line[1],z2)
-       .vertex3(line[2],line[3],z1)
-       .vertex3(line[2],line[3],z1)
-       .vertex3(line[0],line[1],z2)
-       .vertex3(line[2],line[3],z2)
-     }
-     mesh.recalcNormals()
-     return mesh
-    }
     // Demonstrates making a mesh plane from triangles
     function createPathDisk(path, z, flatness){
      if(z==null)z=0
@@ -159,6 +141,7 @@ This method creates a washer-shaped 3D model.
      shape.setScale(H3DU.Math.boxDimensions(box))
      return shape
     }
+
     function wireBox(box, color){
       if(!color)color="gray";
      var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()

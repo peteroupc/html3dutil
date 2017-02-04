@@ -93,5 +93,5 @@ of the `H3DU.GraphicsPath` class.
 <a id=Methods></a>
 ## Methods
 
-* The _.getLength()_ method finds the approximate length of a path.
-* The _.getBounds()_ method finds the axis-aligned bounding box of a path.
+* The {@link H3DU.GraphicsPath.getLength} method finds the approximate length of a path.
+* The {@link H3DU.GraphicsPath.getBounds} method finds the axis-aligned bounding box of a path.

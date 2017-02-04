@@ -227,10 +227,9 @@ H3DU.PbrMaterial.Metallic = 1;
  * @returns {H3DU.PbrMaterial} This object.
  * @memberof! H3DU.PbrMaterial#
  */
-H3DU.PbrMaterial.prototype.makeBasic = function() {
+H3DU.PbrMaterial.prototype.fromBasic = function(color) {
   "use strict";
-  // TODO: Not idempotent
-  return this.setParams({
+  return new H3DU.PbrMaterial({
     "environmentMap":null,
     "metalness":0.0,
     "metalnessMap":null,
@@ -240,8 +239,33 @@ H3DU.PbrMaterial.prototype.makeBasic = function() {
     "invertRoughness":false,
     "specular":[0, 0, 0],
     "workflow":H3DU.PbrMaterial.Specular,
-    "emission":this.albedo,
-    "emissionMap":this.albedoMap,
+    "emission":color,
+    "emissionMap":null,
+    "albedoMap":null,
+    "specularMap":null,
+    "normalMap":null
+  });
+};
+
+/**
+ * TODO: Not documented yet.
+ * @returns {H3DU.PbrMaterial} This object.
+ * @memberof! H3DU.PbrMaterial#
+ */
+H3DU.PbrMaterial.prototype.fromBasicTexture = function(texture) {
+  "use strict";
+  return new H3DU.PbrMaterial({
+    "environmentMap":null,
+    "metalness":0.0,
+    "metalnessMap":null,
+    "roughness":0.0,
+    "roughnessMap":null,
+    "albedo":[0, 0, 0],
+    "invertRoughness":false,
+    "specular":[0, 0, 0],
+    "workflow":H3DU.PbrMaterial.Specular,
+    "emission":[0, 0, 0],
+    "emissionMap":texture,
     "albedoMap":null,
     "specularMap":null,
     "normalMap":null

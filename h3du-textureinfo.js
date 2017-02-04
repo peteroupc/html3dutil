@@ -66,16 +66,17 @@ H3DU.TextureInfo.prototype.copyFrom = function(other) {
  * @param {Object} params An object whose keys have
  * the possibilities given below, and whose values are those
  * allowed for each key.<ul>
- * <li><code>uri</code> - TODO: Not documented yet.
- * <li><code>format</code> - TODO: Not documented yet.
- * <li><code>internalFormat</code> - TODO: Not documented yet.
- * <li><code>target</code> - TODO: Not documented yet.
- * <li><code>type</code> - TODO: Not documented yet.
- * <li><code>magFilter</code> - TODO: Not documented yet.
- * <li><code>minFilter</code> - TODO: Not documented yet.
- * <li><code>wrapS</code> - TODO: Not documented yet.
- * <li><code>wrapT</code> - TODO: Not documented yet.
- * <li><code>topDown</code> - TODO: Not documented yet.
+ * <li><code>uri</code> - URI (Internet address) of the texture's data.
+ * <li><code>format</code> - Specifies the kind of data stored in each pixel of the texture.
+ * Can be 6406, 6407, 6408 (RGBA), 6409, 6410.
+ * <li><code>internalFormat</code> - Specifies the format of the texture.  Can be one of the values for "format".
+ * <li><code>target</code> - Specifies the texture target. Can be 3553 (TEXTURE_2D).
+ * <li><code>type</code> - Specifies the data type used to encode each pixel component in the texture. Can be 5121, 33635, 32819, 32820.
+ * <li><code>magFilter</code> - Specifies the filter to use when enlarging the texture. Can be 9728 (NEAREST) or 9729 (LINEAR).
+ * <li><code>minFilter</code> -  Specifies the filter to use when shrinking the texture.  Can be one of the values for "magFilter" or 9984, 9985, 9986 (NEAREST_MIPMAP_LINEAR), 9987.
+ * <li><code>wrapS</code> - Specifies the wrapping mode in the S (horizontal) axis. Can be 10497 (REPEAT), 33071, 33648.
+ * <li><code>wrapT</code> -Specifies the wrapping mode in the T (horizontal) axis.  Can be one of the values for "wrapS".
+ * <li><code>topDown</code> - If true, the image's data will be stored starting from the top row and proceeding downwards.
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
  * unless otherwise noted.

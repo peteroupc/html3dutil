@@ -54,7 +54,7 @@ shaders it uses.
 
 A promise; when it resolves, the result will
 be an object that implements the following methods:<ul>
-<li><code>getBatch()</code> - Gets an <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> object described
+<li><code>getShape()</code> - Gets an <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> object described
 by the glTF data.
 <li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
 strings for the texture images described by the glTF data. Each URI will be relative

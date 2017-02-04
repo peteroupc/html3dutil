@@ -268,7 +268,9 @@ The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 Creates a mesh of a 2D rectangle, centered at the origin.
 The plane's Z coordinate will be 0.
-Will also generate texture coordinates.
+Will also generate texture coordinates that increase toward
+the positive X and Y axes. The texture coordinates will range
+from 0 to 1 on each end of the 2D rectangle.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters

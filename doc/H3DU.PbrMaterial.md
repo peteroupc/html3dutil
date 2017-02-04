@@ -48,7 +48,8 @@ material.
 
 * [copy](#H3DU.PbrMaterial_H3DU.PbrMaterial_copy)<br>Clones this object's parameters to a new <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>
 object and returns that object.
-* [makeBasic](#H3DU.PbrMaterial_H3DU.PbrMaterial_makeBasic)<br>TODO: Not documented yet.
+* [fromBasic](#H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasic)<br>TODO: Not documented yet.
+* [fromBasicTexture](#H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasicTexture)<br>TODO: Not documented yet.
 * [setParams](#H3DU.PbrMaterial_H3DU.PbrMaterial_setParams)<br>Sets parameters for this material object.
 
 <a id='H3DU.PbrMaterial_albedo'></a>
@@ -319,8 +320,17 @@ to the same object will be used.
 
 A copy of this object. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
 
- <a name='H3DU.PbrMaterial_H3DU.PbrMaterial_makeBasic'></a>
-### H3DU.PbrMaterial#makeBasic()
+ <a name='H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasic'></a>
+### H3DU.PbrMaterial#fromBasic()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
+
+ <a name='H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasicTexture'></a>
+### H3DU.PbrMaterial#fromBasicTexture()
 
 TODO: Not documented yet.
 

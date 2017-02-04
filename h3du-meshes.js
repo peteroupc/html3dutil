@@ -566,7 +566,9 @@ H3DU.Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, in
 /**
  * Creates a mesh of a 2D rectangle, centered at the origin.
  * The plane's Z coordinate will be 0.
- * Will also generate texture coordinates.
+ * Will also generate texture coordinates that increase toward
+ * the positive X and Y axes. The texture coordinates will range
+ * from 0 to 1 on each end of the 2D rectangle.
  * See the "{@tutorial shapes}" tutorial.
  * @param {Number} [width] Width of the rectangle.
  * May be null or omitted; default is 1.

@@ -2111,7 +2111,8 @@ also known as its <i>length</i> or <i>magnitude</i>.
 It's the same as the square root of the sum of the squares
 of its components.
 
-Note that if vectors are merely sorted or compared by their lengths,
+Note that if vectors are merely sorted or compared by their lengths (and
+those lengths are not added or multiplied together or the like),
 it's faster to sort or compare them by the squares of their lengths (to find
 the square of a 3-element vector's length, call <a href="H3DU.Math.md#H3DU.Math.vec3dot">H3DU.Math.vec3dot</a>
 passing the same vector as both of its arguments).

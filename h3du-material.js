@@ -154,10 +154,9 @@ H3DU.Material.prototype.copy = function() {
  * @returns {H3DU.Material} This object.
  * @memberof! H3DU.Material#
  */
-H3DU.Material.prototype.makeBasic = function() {
+H3DU.Material.prototype.fromBasic = function(color) {
   "use strict";
-  // TODO: Not idempotent
-  return this.setParams({
+  return new H3DU.Material({
     "shininess":1.0,
     "specular":[0, 0, 0],
     "diffuse":[0, 0, 0],
@@ -165,8 +164,28 @@ H3DU.Material.prototype.makeBasic = function() {
     "texture":null,
     "specularMap":null,
     "normalMap":null,
-    "emission":this.diffuse,
-    "emissionMap":this.texture
+    "emission":color,
+    "emissionMap":null
+  });
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} texture
+ * @returns {*} Return value.
+* @memberof! H3DU.Material#
+ */
+H3DU.Material.prototype.fromBasicTexture = function(texture) {
+  "use strict";
+  return new H3DU.Material({
+    "shininess":1.0,
+    "specular":[0, 0, 0],
+    "diffuse":[0, 0, 0],
+    "ambient":[0, 0, 0],
+    "texture":null,
+    "specularMap":null,
+    "normalMap":null,
+    "emission":[0, 0, 0],
+    "emissionMap":texture
   });
 };
 

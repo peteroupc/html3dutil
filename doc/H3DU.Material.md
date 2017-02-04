@@ -46,7 +46,8 @@ object from an RGBA color.
 object from a texture to apply to a 3D object's surface.
 * [copy](#H3DU.Material_H3DU.Material_copy)<br>Clones this object's parameters to a new H3DU.Material
 object and returns that object.
-* [makeBasic](#H3DU.Material_H3DU.Material_makeBasic)<br>TODO: Not documented yet.
+* [fromBasic](#H3DU.Material_H3DU.Material_fromBasic)<br>TODO: Not documented yet.
+* [fromBasicTexture](#H3DU.Material_H3DU.Material_fromBasicTexture)<br>TODO: Not documented yet.
 * [setParams](#H3DU.Material_H3DU.Material_setParams)<br>Sets parameters for this material object.
 
 <a id='H3DU.Material_ambient'></a>
@@ -215,14 +216,27 @@ to the same object will be used.
 
 A copy of this object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
 
- <a name='H3DU.Material_H3DU.Material_makeBasic'></a>
-### H3DU.Material#makeBasic()
+ <a name='H3DU.Material_H3DU.Material_fromBasic'></a>
+### H3DU.Material#fromBasic()
 
 TODO: Not documented yet.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
+
+ <a name='H3DU.Material_H3DU.Material_fromBasicTexture'></a>
+### H3DU.Material#fromBasicTexture(texture)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `texture` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
  <a name='H3DU.Material_H3DU.Material_setParams'></a>
 ### H3DU.Material#setParams(params)
