@@ -223,11 +223,13 @@ H3DU.PbrMaterial = function(params) {
 H3DU.PbrMaterial.Specular = 0;
 H3DU.PbrMaterial.Metallic = 1;
 /**
- * TODO: Not documented yet.
- * @returns {H3DU.PbrMaterial} This object.
+ * Creates a material with its emission color set to the given color.
+ * The effect will be that objects with that material will be drawn in that
+ * color without shading.
+ * @returns {H3DU.PbrMaterial} A new material with the given emission color.
  * @memberof! H3DU.PbrMaterial#
  */
-H3DU.PbrMaterial.prototype.fromBasic = function(color) {
+H3DU.PbrMaterial.fromBasic = function(color) {
   "use strict";
   return new H3DU.PbrMaterial({
     "environmentMap":null,
@@ -248,11 +250,13 @@ H3DU.PbrMaterial.prototype.fromBasic = function(color) {
 };
 
 /**
- * TODO: Not documented yet.
- * @returns {H3DU.PbrMaterial} This object.
+ * Creates a material with its emission map set to the given texture.
+ * The effect will be that objects with that material will be drawn in that
+ * texture without shading.
+ * @returns {H3DU.PbrMaterial} A new material with the given emission map.
  * @memberof! H3DU.PbrMaterial#
  */
-H3DU.PbrMaterial.prototype.fromBasicTexture = function(texture) {
+H3DU.PbrMaterial.fromBasicTexture = function(texture) {
   "use strict";
   return new H3DU.PbrMaterial({
     "environmentMap":null,

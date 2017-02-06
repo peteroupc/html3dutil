@@ -51,7 +51,7 @@ Polyhedra.scaleVertices = function(vertices, radius) {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
  * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
@@ -107,7 +107,7 @@ Polyhedra.makeSphere = function(vi, radius, level) {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  * @returns {H3DU.Mesh} The generated mesh.
  */
@@ -193,7 +193,7 @@ Polyhedra.tetrahedron = function(radius, level) {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  */
 Polyhedra.octahedronFaces = function() {
@@ -222,7 +222,7 @@ Polyhedra.octahedronFaces = function() {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  */
 Polyhedra.tetrahedronFaces = function() {
@@ -237,7 +237,7 @@ Polyhedra.tetrahedronFaces = function() {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  */
 Polyhedra.icosahedronFaces = function() {
@@ -261,7 +261,7 @@ Polyhedra.icosahedronFaces = function() {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  */
 Polyhedra.hexahedronFaces = function() {
@@ -277,10 +277,10 @@ Polyhedra.hexahedronFaces = function() {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  */
-Polyhedra.hexahedronFaces2 = function() {
+Polyhedra.hexahedronFacesCompact = function() {
 // Alternate indexing of a hexahedron's faces
   "use strict";
   var v = Polyhedra.hexahedronFaces();
@@ -294,7 +294,7 @@ Polyhedra.hexahedronFaces2 = function() {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  */
 Polyhedra.dodecahedronFaces = function() {
@@ -310,10 +310,10 @@ Polyhedra.dodecahedronFaces = function() {
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
- * each element by 3 will get the index first coordinate of the corresponding
+ * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
  */
-Polyhedra.dodecahedronFaces2 = function() {
+Polyhedra.dodecahedronFacesCompact = function() {
 // Alternate indexing of a dodecahedron's faces
   "use strict";
   var df = Polyhedra.dodecahedronFaces();

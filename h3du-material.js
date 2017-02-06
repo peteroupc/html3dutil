@@ -150,11 +150,13 @@ H3DU.Material.prototype.copy = function() {
   });
 };
 /**
- * TODO: Not documented yet.
- * @returns {H3DU.Material} This object.
+ * Creates a material with its emission color set to the given color.
+ * The effect will be that objects with that material will be drawn in that
+ * color without shading.
+ * @returns {H3DU.Material} A new material with the given emission color.
  * @memberof! H3DU.Material#
  */
-H3DU.Material.prototype.fromBasic = function(color) {
+H3DU.Material.fromBasic = function(color) {
   "use strict";
   return new H3DU.Material({
     "shininess":1.0,
@@ -169,12 +171,13 @@ H3DU.Material.prototype.fromBasic = function(color) {
   });
 };
 /**
- * TODO: Not documented yet.
- * @param {*} texture
- * @returns {*} Return value.
-* @memberof! H3DU.Material#
+ * Creates a material with its emission texture set to the given texture.
+ * The effect will be that objects with that material will be drawn in that
+ * texture without shading.
+ * @returns {H3DU.Material} A new material with the given emission texture.
+ * @memberof! H3DU.Material#
  */
-H3DU.Material.prototype.fromBasicTexture = function(texture) {
+H3DU.Material.fromBasicTexture = function(texture) {
   "use strict";
   return new H3DU.Material({
     "shininess":1.0,

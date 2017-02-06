@@ -496,15 +496,6 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     " bvec3 lt=lessThanEqual(c,vec3(0.00304));",
     " return mix(pow(c,vec3(0.41666666667))*1.0556-0.0556,12.92*c,vec3(lt));",
     "}",
-     // John Hable's tonemapping function, mentioned at
-     // at http://filmicgames.com/archives/75
-    "#define HABLE_TONEMAP_WHITE 1.37906425",
-    "vec3 tonemapHable(vec3 c) {",
-    "  vec3 c2=c*2.0;",
-    "  return HABLE_TONEMAP_WHITE*",
-    "    (((c2*(0.15*c2+0.05)+0.004)/",
-    "     (c2*(0.15*c2+0.5)+0.06))-0.066666);",
-    "}",
  // if shading is disabled, this is solid color instead of material diffuse
     "uniform vec4 md;",
     "#ifdef SHADING",
@@ -575,6 +566,16 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "#endif",
 // ////////////
     "#ifdef PHYSICAL_BASED",
+     // John Hable's tonemapping function, mentioned at
+     // at http://filmicgames.com/archives/75
+    "#define HABLE_TONEMAP_WHITE 1.37906425",
+    "vec3 tonemapHable(vec3 c) {",
+    "  vec3 c2=c*2.0;",
+    "  return HABLE_TONEMAP_WHITE*",
+    "    (((c2*(0.15*c2+0.05)+0.004)/",
+    "     (c2*(0.15*c2+0.5)+0.06))-0.066666);",
+    "}",
+    // Reflectance function
     "float ndf(float dotnh, float alpha) {",
     " float alphasq=alpha*alpha;",
     " float d=dotnh*dotnh*(alphasq-1.0)+1.0;",
@@ -706,19 +707,21 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       "         normalize(viewDirection),normal,rough,metal)*lightFactor;",
       "#endif",
       "#else",
+     // Lambert diffusion term
+      "    lightedColor+=spectmp*materialDiffuse*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
+      "#ifdef SPECULAR",
       "    specular=saturate(dot(normalize(viewDirection+lightPowerVec.xyz),normal));",
       "    specular=pow(specular,mshin);",
-// Lambert diffusion term
-      "    lightedColor+=spectmp*materialDiffuse*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
-// Blinn-Phong specular term
+     // Blinn-Phong specular term
       "    lightedColor+=spectmp*materialSpecular*specular*lightPowerVec.w*tolinear(lights[" + i + "].specular.xyz);",
+      "#endif",
       "#endif",
       ""].join("\n") + "\n";
   }
   shader += [
     "#ifdef EMISSION_MAP", "lightedColor+=tolinear(texture2D(emissionMap,uvVar).rgb);", "#else",
     " lightedColor+=tolinear(me);", "#endif",
-    // " lightedColor=tonemapHable(lightedColor);",
+    // "#ifdef PHYSICAL_BASED"," lightedColor=tonemapHable(lightedColor);","#endif",
     " lightedColor=fromlinear(lightedColor);",
     " baseColor=vec4(lightedColor,baseColor.a);",
     "#endif",
