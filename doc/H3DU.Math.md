@@ -177,6 +177,10 @@ the result in the first vector.
 * [vec3dist](#H3DU.Math.vec3dist)<br>Finds the straight-line distance from one three-element vector
 to another, treating both as 3D points.
 * [vec3dot](#H3DU.Math.vec3dot)<br>Finds the dot product of two 3-element vectors.
+* [vec3fromWindowPoint](#H3DU.Math.vec3fromWindowPoint)<br>Unprojects the X and Y <i>window coordinates</i>,
+and a Z depth coordinate, given in a 3-element vector,
+using the given transformation matrix and viewport
+width and height.
 * [vec3length](#H3DU.Math.vec3length)<br>Returns the distance of this 3-element vector from the origin,
 also known as its <i>length</i> or <i>magnitude</i>.
 * [vec3lerp](#H3DU.Math.vec3lerp)<br>Does a linear interpolation between two 3-element vectors;
@@ -2103,6 +2107,32 @@ a vector's length using the dot product.
     // The vector's length is shorter than 20 units
     }
 
+ <a name='H3DU.Math.vec3fromWindowPoint'></a>
+### (static) H3DU.Math.vec3fromWindowPoint(vector, matrix, viewport, [yUp])
+
+Unprojects the X and Y <i>window coordinates</i>,
+and a Z depth coordinate, given in a 3-element vector,
+using the given transformation matrix and viewport
+width and height. The X coordinates in this space increase
+rightward and the Y coordinates in this space increase upward
+or downward depending on the "yUp" parameter.
+
+#### Parameters
+
+* `vector` (Type: Array.&lt;Number>)<br>
+    A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
+* `matrix` (Type: Array.&lt;Number>)<br>
+    A 4x4 matrix specifying the After undoing the viewport transformation, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix). To convert to object (model) space, this parameter will generally be a projection-view matrix multiplied by the world (model) matrix.
+* `viewport` (Type: Array.&lt;Number>)<br>
+    A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
+* `yUp` (Type: Boolean) (optional)<br>
+    If true, the viewport's starting position is at the lower left corner and Y coordinates in window coordinate space increase upward. If false, null, or omitted, the viewport's starting position is at the upper left corner and Y coordinates increase downward.
+
+#### Return Value
+
+A 3-element array giving the X and Y
+window coordinates, and the projected Z coordinate, in that order. (Type: Array.&lt;Number>)
+
  <a name='H3DU.Math.vec3length'></a>
 ### (static) H3DU.Math.vec3length(a)
 
@@ -2677,7 +2707,7 @@ returns a new vector.
 * `v2` (Type: Array.&lt;Number>)<br>
     The second vector to interpolate.
 * `factor` (Type: Number)<br>
-    A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns A value that usually ranges from 0 through 1, and pass the result of that function to this method. See the examples in the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
+    A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns A value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
 
 #### Return Value
 

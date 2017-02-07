@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, ShapeGroup */
+/* global H3DU */
 
 /**
  * Represents a grouping of shapes. This object
@@ -40,7 +40,7 @@ H3DU.ShapeGroup = function() {
  */
 H3DU.ShapeGroup.prototype.copy = function() {
   "use strict";
-  var ret = new ShapeGroup();
+  var ret = new H3DU.ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
   for(var i = 0; i < this.shapes.length; i++) {

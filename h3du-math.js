@@ -663,6 +663,49 @@ H3DU.Math = {
     return [x, y, vec[2]];
   },
 /**
+ * Unprojects the X and Y <i>window coordinates</i>,
+ * and a Z depth coordinate, given in a 3-element vector,
+ * using the given transformation matrix and viewport
+ * width and height. The X coordinates in this space increase
+ * rightward and the Y coordinates in this space increase upward
+ * or downward depending on the "yUp" parameter.
+ * @param {Array<Number>} vector A 3-element vector giving
+ * the X, Y, and Z coordinates of the 3D point to transform.
+ * @param {Array<Number>} matrix A 4x4 matrix specifying the
+ * After undoing the viewport transformation, the vector will
+ * be transformed by the inverse of this matrix according to the
+ * {@link H3DU.Math.mat4projectVec3} method. To convert to
+ * world space, this parameter will generally be a projection-view matrix
+ * (projection matrix multiplied by the view matrix). To convert to
+ * object (model) space, this parameter will generally be a projection-view matrix
+ * multiplied by the world (model) matrix.
+ * @param {Array<Number>} viewport A 4-element array specifying
+ * the starting position and size of the viewport in window units
+ * (such as pixels). In order, the four elements are the starting position's
+ * X coordinate, its Y coordinate, the viewport's width, and the viewport's
+ * height. Throws an error if the width or height is less than 0.
+ * @param {Boolean} [yUp] If true, the viewport's starting position is
+ * at the lower left corner and Y coordinates in window coordinate space
+ * increase upward. If false, null, or omitted, the viewport's starting
+ * position is at the upper left corner and Y coordinates increase downward.
+ * @returns {Array<Number>} A 3-element array giving the X and Y
+ * window coordinates, and the projected Z coordinate, in that order.
+ */
+  "vec3fromWindowPoint":function(vector, matrix, viewport, yUp) {
+    "use strict";
+    var halfWidth = viewport[2] * 0.5;
+    var halfHeight = viewport[3] * 0.5;
+    var x = 0,
+      y = 0;
+    if(halfWidth !== 0 && halfHeight !== 0) {
+      x = (vector[0] - viewport[0] - halfWidth) / halfWidth;
+      y = (vector[1] - viewport[1] - halfHeight) / halfHeight;
+    }
+    y = yUp ? y : -y;
+    var invMatrix = H3DU.Math.mat4invert(matrix);
+    return H3DU.Math.mat4projectVec3(invMatrix, [x, y, vector[2]]);
+  },
+/**
  * Finds the dot product of two 4-element vectors. It's the
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * @param {Array<Number>} a The first 4-element vector.
@@ -714,7 +757,7 @@ H3DU.Math = {
  * interpolation, define a function that takes a value that usually ranges from 0 through 1
  * and generally returns
  * A value that usually ranges from 0 through 1, and pass the result of that function to this method.
- * See the examples in the documentation for {@link H3DU.Math.vec3lerp}
+ * See the documentation for {@link H3DU.Math.vec3lerp}
  * for examples of interpolation functions.
  * @returns {Array<Number>} The interpolated vector.
  */
