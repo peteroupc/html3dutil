@@ -47,7 +47,7 @@ function is(a, b, msg) {
   "use strict";
   if(a !== b) {
     var infomsg = "got " + b + ", expected " + a;
-    if(msg !== null && typeof msg !== "undefined")infomsg += "<br>msg=" + msg;
+    if(typeof msg !== "undefined" && msg !== null)infomsg += "<br>msg=" + msg;
     info(infomsg);
     FailedTests++;
     return false;
@@ -533,4 +533,42 @@ testfunctions.push(function() {
   ok(isApproxVec([38.92860580162072, 79.92165694596828, 83.43612250004813, 0.7484543127177533], curve.evaluate(0.8)), "Point at 0.8 is not correct.");
   ok(isApproxVec([43.09755752226919, 69.4640461450384, 74.72805248156801, 0.8228526490100199], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([65.45798319327731, 65.30252100840337, 44.378151260504204, 0.794873949579832], curve.evaluate(1)), "Point at 1 is not correct.");
+});
+testfunctions.push(function() {
+  "use strict";
+  var pathtest = new H3DU.GraphicsPath()
+.moveTo(0.4713967368259978, 0.8819212643483549 )
+// top left
+.lineTo(-1, 1 )
+// bottom middle
+.lineTo( 0.19134171618254492, 0.46193976625564337 )
+// downward curve
+.lineTo( 0.2356983684129989, 0.44096063217417747 )
+.lineTo( 0.27778511650980114, 0.4157348061512726 )
+.lineTo( 0.31719664208182274, 0.3865052266813685 )
+.lineTo( 0.3535533905932738, 0.35355339059327373 )
+.lineTo( 0.3865052266813685, 0.31719664208182274 )
+.lineTo( 0.4157348061512726, 0.2777851165098011 )
+.lineTo( 0.4409606321741775, 0.23569836841299877 )
+.lineTo( 0.46193976625564337, 0.19134171618254492 )
+.lineTo( 0.4784701678661044, 0.14514233862723122 )
+// top right
+.closePath();
+  pathtest.getTriangles();
+  pathtest = new H3DU.GraphicsPath().moveTo(-1, 1 )
+// bottom middle
+.lineTo( 0.19134171618254492, 0.46193976625564337 )
+// downward curve
+.lineTo( 0.2356983684129989, 0.44096063217417747 )
+.lineTo( 0.27778511650980114, 0.4157348061512726 )
+.lineTo( 0.31719664208182274, 0.3865052266813685 )
+.lineTo( 0.3535533905932738, 0.35355339059327373 )
+.lineTo( 0.3865052266813685, 0.31719664208182274 )
+.lineTo( 0.4157348061512726, 0.2777851165098011 )
+.lineTo( 0.4409606321741775, 0.23569836841299877 )
+.lineTo( 0.46193976625564337, 0.19134171618254492 )
+.lineTo( 0.4784701678661044, 0.14514233862723122 )
+// top right
+.closePath();
+  pathtest.getTriangles();
 });

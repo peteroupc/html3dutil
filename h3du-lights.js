@@ -142,9 +142,9 @@ H3DU.Lights.prototype.setParams = function(index, params) {
 H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, specular) {
   "use strict";
   var ret = this.setParams(index, {"position":[direction[0], direction[1], direction[2], 0]});
-  if(diffuse !== null && typeof diffuse !== "undefined")
+  if(typeof diffuse !== "undefined" && diffuse !== null)
     ret = ret.setParams(index, {"diffuse":diffuse});
-  if(specular !== null && typeof specular !== "undefined")
+  if(typeof specular !== "undefined" && specular !== null)
     ret = ret.setParams(index, {"specular":specular});
   return ret;
 };
@@ -163,9 +163,9 @@ H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, 
 H3DU.Lights.prototype.setPointLight = function(index, position, diffuse, specular) {
   "use strict";
   var ret = this.setParams(index, {"position":[position[0], position[1], position[2], 1]});
-  if(diffuse !== null && typeof diffuse !== "undefined")
+  if(typeof diffuse !== "undefined" && diffuse !== null)
     ret = ret.setParams(index, {"diffuse":diffuse});
-  if(specular !== null && typeof specular !== "undefined")
+  if(typeof specular !== "undefined" && specular !== null)
     ret = ret.setParams(index, {"specular":specular});
   return ret;
 };

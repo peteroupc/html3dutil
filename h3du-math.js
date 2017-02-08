@@ -1308,7 +1308,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
     "use strict";
     var rollRad, pitchRad, yawRad;
-    if(mode === null || typeof mode === "undefined")mode = H3DU.Math.GlobalRollPitchYaw;
+    if(typeof mode === "undefined" || mode === null)mode = H3DU.Math.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(pitchDegrees.constructor === Array) {
       rollRad = (pitchDegrees[2] >= 0 && pitchDegrees[2] < 360 ? pitchDegrees[2] : pitchDegrees[2] % 360 + (pitchDegrees[2] < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy360;
@@ -1365,7 +1365,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var c0 = a[3];
     var c1, c2, c3;
     var e = 1;
-    if(mode === null || typeof mode === "undefined")mode = H3DU.Math.GlobalRollPitchYaw;
+    if(typeof mode === "undefined" || mode === null)mode = H3DU.Math.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(mode === H3DU.Math.GlobalRollPitchYaw) {
       c1 = a[1]; c2 = a[0]; c3 = a[2];
@@ -2081,8 +2081,8 @@ m[0] * m[7] * m[5];
  */
   "mat4lookat":function(viewerPos, lookingAt, up) {
     "use strict";
-    if(up === null || typeof up === "undefined")up = [0, 1, 0];
-    if(lookingAt === null || typeof lookingAt === "undefined")lookingAt = [0, 0, 0];
+    if(typeof up === "undefined" || up === null)up = [0, 1, 0];
+    if(typeof lookingAt === "undefined" || lookingAt === null)lookingAt = [0, 0, 0];
     var f = H3DU.Math.vec3sub(lookingAt, viewerPos);
     var len = H3DU.Math.vec3length(f);
     if(len < 1e-6) {

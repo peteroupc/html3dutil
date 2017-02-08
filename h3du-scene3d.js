@@ -114,7 +114,7 @@ H3DU.Scene3D._flagsForShape = function(shape) {
   "use strict";
   var flags = 0;
   var material = shape.material;
-  if(material !== null && typeof material !== "undefined" && material instanceof H3DU.Material) {
+  if(typeof material !== "undefined" && material !== null && material instanceof H3DU.Material) {
     flags |= H3DU.Scene3D.LIGHTING_ENABLED;
     flags |= material.specular[0] !== 0 ||
         material.specular[1] !== 0 ||
@@ -124,7 +124,7 @@ H3DU.Scene3D._flagsForShape = function(shape) {
     flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
     flags |= material.emissionMap ? H3DU.Scene3D.EMISSION_MAP_ENABLED : 0;
   }
-  if(material !== null && typeof material !== "undefined" && material instanceof H3DU.PbrMaterial) {
+  if(typeof material !== "undefined" && material !== null && material instanceof H3DU.PbrMaterial) {
     flags |= H3DU.Scene3D.LIGHTING_ENABLED | H3DU.Scene3D.PHYSICAL_BASED_ENABLED;
     if(material.workflow === H3DU.PbrMaterial.Metallic) {
       flags |= typeof material.metalness === "number" ? H3DU.Scene3D.METALNESS_ENABLED : 0;
@@ -599,7 +599,7 @@ H3DU.Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
  */
 H3DU.Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near, far, aspect) {
   "use strict";
-  if(aspect === null || typeof aspect === "undefined")aspect = this.getClientAspect();
+  if(typeof aspect === "undefined" || aspect === null)aspect = this.getClientAspect();
   if(aspect === 0)aspect = 1;
   return this.setProjectionMatrix(H3DU.Math.mat4orthoAspect(
    left, right, bottom, top, near, far, aspect));
@@ -1135,7 +1135,7 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
   this._setFace();
   var width = this.getClientWidth();
   var height = this.getClientHeight();
-  if(renderPasses === null || typeof renderPasses === "undefined") {
+  if(typeof renderPasses === "undefined" || renderPasses === null) {
     if(this._is3d) {
       this.context.clear(this.context.COLOR_BUFFER_BIT |
         this.context.DEPTH_BUFFER_BIT);

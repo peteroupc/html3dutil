@@ -482,7 +482,7 @@ H3DU.Mesh.prototype.texCoord2 = function(u, v) {
   */
 H3DU.Mesh.prototype.vertex3 = function(x, y, z) {
   "use strict";
-  if(x !== null && typeof x !== "undefined" && (y === null || typeof y === "undefined") && (z === null || typeof z === "undefined")) {
+  if(typeof x !== "undefined" && x !== null && ((typeof y === "undefined" || y === null)) && ((typeof z === "undefined" || z === null))) {
     if(typeof x !== "number")
       this._vertex3(x[0], x[1], x[2], this);
     else
@@ -506,7 +506,7 @@ H3DU.Mesh.prototype.vertex3 = function(x, y, z) {
   */
 H3DU.Mesh.prototype.vertex2 = function(x, y) {
   "use strict";
-  if(x !== null && typeof x !== "undefined" && (y === null || typeof y === "undefined")) {
+  if(typeof x !== "undefined" && x !== null && ((typeof y === "undefined" || y === null))) {
     if(typeof x !== "number")
       return this.vertex3(x[0], x[1], 0.0);
     else
@@ -721,7 +721,7 @@ H3DU.Mesh.prototype._initialize = function(vertices, faces, format) {
   if(prim !== 0 && prim !== H3DU.Mesh.LINES_BIT && prim !== H3DU.Mesh.POINTS_BIT) {
     throw new Error("invalid format");
   }
-  this.attributeBits = format === null || typeof format === "undefined" ? 0 : format;
+  this.attributeBits = typeof format === "undefined" || format === null ? 0 : format;
  /**
   * Gets the number of vertices included in this mesh.
   * @returns {Number} Return value.

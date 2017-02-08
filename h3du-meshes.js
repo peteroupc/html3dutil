@@ -127,8 +127,8 @@ H3DU.Meshes.createBox = function(xSize, ySize, zSize, inward) {
 H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
   "use strict";
   var mesh = new H3DU.Mesh();
-  if(slices === null || typeof slices === "undefined")slices = 32;
-  if(stacks === null || typeof stacks === "undefined")stacks = 1;
+  if(typeof slices === "undefined" || slices === null)slices = 32;
+  if(typeof stacks === "undefined" || stacks === null)stacks = 1;
   if(slices <= 2)throw new Error("too few slices");
   if(stacks < 1)throw new Error("too few stacks");
   if(height < 0)throw new Error("negative height");
@@ -235,7 +235,7 @@ H3DU.Meshes.createLathe = function(points, slices, flat, inside) {
  // NOTE: Y coordinate should not be the same from one point to the next
   var mesh = new H3DU.Mesh();
   if(points.length < 4)throw new Error("too few points");
-  if(slices === null || typeof slices === "undefined")slices = 32;
+  if(typeof slices === "undefined" || slices === null)slices = 32;
   if(slices <= 2)throw new Error("too few slices");
   if(points.length % 1 !== 0)throw new Error("points array length is not an even number");
   var i;
@@ -390,10 +390,10 @@ H3DU.Meshes.createDisk = function(inner, outer, slices, loops, inward) {
 H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, inward) {
   "use strict";
   var mesh = new H3DU.Mesh();
-  if(slices === null || typeof slices === "undefined")slices = 32;
-  if(loops === null || typeof loops === "undefined")loops = 1;
-  if(start === null || typeof start === "undefined")start = 0;
-  if(sweep === null || typeof sweep === "undefined")sweep = 360;
+  if(typeof slices === "undefined" || slices === null)slices = 32;
+  if(typeof loops === "undefined" || loops === null)loops = 1;
+  if(typeof start === "undefined" || start === null)start = 0;
+  if(typeof sweep === "undefined" || sweep === null)sweep = 360;
   if(slices <= 2)throw new Error("too few slices");
   if(loops < 1)throw new Error("too few loops");
   if(inner > outer)throw new Error("inner greater than outer");
@@ -499,8 +499,8 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
 H3DU.Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward) {
   "use strict";
   var mesh = new H3DU.Mesh();
-  if(crosswise === null || typeof crosswise === "undefined")crosswise = 16;
-  if(lengthwise === null || typeof lengthwise === "undefined")lengthwise = 16;
+  if(typeof crosswise === "undefined" || crosswise === null)crosswise = 16;
+  if(typeof lengthwise === "undefined" || lengthwise === null)lengthwise = 16;
   if(crosswise < 3)throw new Error("crosswise is less than 3");
   if(lengthwise < 3)throw new Error("lengthwise is less than 3");
   if(inner < 0 || outer < 0)throw new Error("inner or outer is less than 0");
@@ -587,10 +587,10 @@ H3DU.Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, in
 H3DU.Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   "use strict";
   var mesh = new H3DU.Mesh();
-  if(width === null || typeof width === "undefined")width = 1;
-  if(height === null || typeof height === "undefined")height = 1;
-  if(widthDiv === null || typeof widthDiv === "undefined")widthDiv = 1;
-  if(heightDiv === null || typeof heightDiv === "undefined")heightDiv = 1;
+  if(typeof width === "undefined" || width === null)width = 1;
+  if(typeof height === "undefined" || height === null)height = 1;
+  if(typeof widthDiv === "undefined" || widthDiv === null)widthDiv = 1;
+  if(typeof heightDiv === "undefined" || heightDiv === null)heightDiv = 1;
   if(width < 0 || height < 0)throw new Error("width or height is less than 0");
   if(heightDiv <= 0 || widthDiv <= 0)
     throw new Error("widthDiv or heightDiv is 0 or less");
@@ -702,7 +702,7 @@ H3DU.Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  */
 H3DU.Meshes.createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
   "use strict";
-  if(stacks === null || typeof stacks === "undefined")stacks = 8;
+  if(typeof stacks === "undefined" || stacks === null)stacks = 8;
   if(stacks < 1)throw new Error("too few stacks");
   return H3DU.Meshes._createCapsule(radius, length, slices, stacks * 2, middleStacks, flat, inside);
 };
@@ -711,11 +711,11 @@ H3DU.Meshes.createCapsule = function(radius, length, slices, stacks, middleStack
 H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
   "use strict";
   var mesh = new H3DU.Mesh();
-  if(slices === null || typeof slices === "undefined")slices = 16;
-  if(stacks === null || typeof stacks === "undefined")stacks = 16;
-  if(middleStacks === null || typeof middleStacks === "undefined")middleStacks = 1;
-  if(radius === null || typeof radius === "undefined")radius = 1;
-  if(length === null || typeof length === "undefined")length = 1;
+  if(typeof slices === "undefined" || slices === null)slices = 16;
+  if(typeof stacks === "undefined" || stacks === null)stacks = 16;
+  if(typeof middleStacks === "undefined" || middleStacks === null)middleStacks = 1;
+  if(typeof radius === "undefined" || radius === null)radius = 1;
+  if(typeof length === "undefined" || length === null)length = 1;
   if(stacks < 2)throw new Error("too few stacks");
   if(slices <= 2)throw new Error("too few slices");
   if(middleStacks < 1 && length > 0)throw new Error("too few middle stacks");

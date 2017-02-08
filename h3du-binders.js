@@ -62,7 +62,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   textures.push([typeof mat.environmentMap === "undefined" ? null : mat.environmentMap, "envMap"]);
   textures.push([typeof mat.emissionMap === "undefined" ? null : mat.emissionMap, "emissionMap"]);
   for(var i = 0; i < textures.length; i++) {
-    if(textures[i][0] !== null && typeof textures[i][0] !== "undefined") {
+    if(typeof textures[i][0] !== "undefined" && textures[i][0] !== null) {
       var textureSizeName = typeof textures[i][2] === "undefined" ? null : textures[i][2];
       var tex = textures[i][0];
       var texInfo = tex instanceof H3DU.Texture ? tex._toInfo() : tex;
@@ -75,7 +75,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
     for(var k in mat.shader.uniformValues || {})
       if(Object.prototype.hasOwnProperty.call(mat.shader.uniformValues, k)) {
         var v = mat.shader.uniformValues[k];
-        if(typeof v !== "undefined" && (v !== null && typeof v !== "undefined") && v instanceof H3DU.TextureInfo) {
+        if(typeof v !== "undefined" && v !== null && v instanceof H3DU.TextureInfo) {
           H3DU._MaterialBinder.bindTexture(
     v, v, context, program,
           sampler++, loader, k, null);
@@ -121,7 +121,7 @@ H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
   // generate mipmaps for power-of-two textures
-  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") && context instanceof WebGL2RenderingContext ||
+  if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null && context instanceof WebGL2RenderingContext ||
      H3DU._isPowerOfTwo(texture.getWidth()) &&
       H3DU._isPowerOfTwo(texture.getHeight())) {
     context.generateMipmap(target);
@@ -207,8 +207,8 @@ H3DU._MaterialBinder.bindTexture = function(
   texture, textureInfo, context, program,
   textureUnit, loader, uniformName, sizeUniform) {
   "use strict";
-  if(!(typeof textureInfo !== "undefined" && (textureInfo !== null && typeof textureInfo !== "undefined")))throw new Error();
-  if(texture === null || typeof texture === "undefined") {
+  if(!((typeof textureInfo !== "undefined" && textureInfo !== null)))throw new Error();
+  if(typeof texture === "undefined" || texture === null) {
     if(context) {
       context.activeTexture(context.TEXTURE0 + textureUnit);
       context.bindTexture(context.TEXTURE_2D, null);
@@ -227,7 +227,7 @@ H3DU._MaterialBinder.bindTexture = function(
   if(!isFrameBuffer) {
     if(texture instanceof H3DU.TextureInfo) {
       var infoTexture = loader.getTexture(texture.uri);
-      if(infoTexture === null || typeof infoTexture === "undefined") {
+      if(typeof infoTexture === "undefined" || infoTexture === null) {
         var that = this;
         var prog = program;
         loader.loadAndMapTexture(texture, context).then(function() {
@@ -253,10 +253,10 @@ H3DU._MaterialBinder.bindTexture = function(
     // TODO: Use something else than mapFrameBuffer
     texture = loader.mapFrameBuffer(texture, context);
   }
-  if (loadedTexture !== null && typeof loadedTexture !== "undefined" || isFrameBuffer) {
+  if (typeof loadedTexture !== "undefined" && loadedTexture !== null || isFrameBuffer) {
     var uniforms = {};
     uniforms[uniformName] = textureUnit;
-    if(typeof sizeUniform !== "undefined" && (sizeUniform !== null && typeof sizeUniform !== "undefined")) {
+    if(typeof sizeUniform !== "undefined" && sizeUniform !== null) {
       uniforms[sizeUniform] = [texture.getWidth(), texture.getHeight()];
     }
     program.setUniforms(uniforms);
@@ -284,7 +284,7 @@ H3DU._MaterialBinder.bindTexture = function(
        // set magnification
       context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
-      if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") && context instanceof WebGL2RenderingContext ||
+      if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null && context instanceof WebGL2RenderingContext ||
      H3DU._isPowerOfTwo(texture.getWidth()) &&
       H3DU._isPowerOfTwo(texture.getHeight())) {
         context.texParameteri(target,

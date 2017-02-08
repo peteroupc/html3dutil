@@ -84,7 +84,7 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
     var count = context.getProgramParameter(this.prog, context.ACTIVE_ATTRIBUTES);
     for (i = 0; i < count; ++i) {
       var attributeInfo = context.getActiveAttrib(this.prog, i);
-      if(attributeInfo !== null && typeof attributeInfo !== "undefined") {
+      if(typeof attributeInfo !== "undefined" && attributeInfo !== null) {
         name = attributeInfo.name;
         var attr = context.getAttribLocation(this.prog, name);
         if(attr >= 0) {
@@ -97,7 +97,7 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
     count = context.getProgramParameter(this.prog, context.ACTIVE_UNIFORMS);
     for (i = 0; i < count; ++i) {
       var uniformInfo = this.context.getActiveUniform(this.prog, i);
-      if(uniformInfo !== null && typeof uniformInfo !== "undefined") {
+      if(typeof uniformInfo !== "undefined" && uniformInfo !== null) {
         name = uniformInfo.name;
         ret[name] = this.context.getUniformLocation(this.prog, name);
         this.uniformTypes[name] = uniformInfo.type;
@@ -175,7 +175,7 @@ H3DU.ShaderProgram.prototype.getContext = function() {
 H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
   "use strict";
   var uniform = this.get(i);
-  if(uniform === null || typeof uniform === "undefined")return;
+  if(typeof uniform === "undefined" || uniform === null)return;
   var uv = uniforms[i];
   if(uv instanceof H3DU.TextureInfo) {
     // NOTE: TextureInfo not supported for ShaderPrograms
@@ -219,7 +219,7 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
 H3DU.ShaderProgram.prototype.get = function(name) {
   "use strict";
   var ret = this.actives[name];
-  return ret === null || typeof ret === "undefined" ? null : ret;
+  return typeof ret === "undefined" || ret === null ? null : ret;
 };
 /**
  * Gets the value of the given uniform in this program. This method
@@ -240,7 +240,7 @@ H3DU.ShaderProgram.prototype.getUniform = function(name) {
  // using a cache since context.getUniform can be slow with
  // repeated calls
   var uv = this.uniformValues[name];
-  if(uv === null || typeof uv === "undefined") {
+  if(typeof uv === "undefined" || uv === null) {
     return this.context.getUniform(this.program, loc);
   } else {
     return uv instanceof Array ? uv.slice(0, uv.length) : uv;
@@ -342,7 +342,7 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
   var fs = !fragmentShader || fragmentShader.length === 0 ? null :
     compileShader(context, context.FRAGMENT_SHADER, fragmentShader);
   var program = null;
-  if(vs !== null && typeof vs !== "undefined" && (fs !== null && typeof fs !== "undefined")) {
+  if(typeof vs !== "undefined" && vs !== null && ((typeof fs !== "undefined" && fs !== null))) {
     program = context.createProgram();
     context.attachShader(program, vs);
     context.attachShader(program, fs);
@@ -355,8 +355,8 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
     context.detachShader(program, vs);
     context.detachShader(program, fs);
   }
-  if(vs !== null && typeof vs !== "undefined")context.deleteShader(vs);
-  if(fs !== null && typeof fs !== "undefined")context.deleteShader(fs);
+  if(typeof vs !== "undefined" && vs !== null)context.deleteShader(vs);
+  if(typeof fs !== "undefined" && fs !== null)context.deleteShader(fs);
   return program;
 };
 

@@ -123,7 +123,7 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
       "shininess":shininess,
       "emission":emission
     });
-  } else if(params !== null && typeof params !== "undefined") {
+  } else if(typeof params !== "undefined" && params !== null) {
     this.setParams(params);
   }
 };

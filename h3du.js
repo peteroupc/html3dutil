@@ -13,10 +13,11 @@
 /*
   Polyfills
 */
-if(!window.requestAnimationFrame) {
-  window.requestAnimationFrame = window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-  if(!window.requestAnimationFrame) {
+if(typeof window.requestAnimationFrame === "undefined" || window.requestAnimationFrame === null) {
+  window.requestAnimationFrame = (typeof window.mozRequestAnimationFrame === "undefined" ? null : window.mozRequestAnimationFrame) ||
+    (typeof window.webkitRequestAnimationFrame === "undefined" ? null : window.webkitRequestAnimationFrame) ||
+  (typeof window.msRequestAnimationFrame === "undefined" ? null : window.msRequestAnimationFrame);
+  if(typeof window.requestAnimationFrame === "undefined" || window.requestAnimationFrame === null) {
     window.requestAnimationFrame = function(func) {
       "use strict";
       window.setTimeout(function() {
@@ -25,17 +26,17 @@ if(!window.requestAnimationFrame) {
     };
   }
 }
-if(!window.performance) {
+if(typeof window.performance === "undefined" || window.performance === null) {
   window.performance = {};
 }
-if(!window.performance.now) {
+if(typeof window.performance.now === "undefined" || window.performance.now === null) {
   window.performance.now = function() {
     "use strict";
     return new Date().getTime() * 1000 - window.performance._startTime;
   };
   window.performance._startTime = new Date().getTime() * 1000;
 }
-if(typeof Object.keys === "undefined") {
+if(typeof Object.keys === "undefined" || Object.keys === null) {
   Object.keys = function(o) {
     "use strict";
     var ret = [];
@@ -102,14 +103,14 @@ var H3DU = {
     if(parent) {
       parent.appendChild(canvas);
     }
-    if(width === null || typeof width === "undefined") {
+    if(typeof width === "undefined" || width === null) {
       canvas.width = Math.ceil(canvas.clientWidth) + "";
     } else if(width < 0) {
       throw new Error("width negative");
     } else {
       canvas.width = Math.ceil(width) + "";
     }
-    if(height === null || typeof height === "undefined") {
+    if(typeof height === "undefined" || height === null) {
       canvas.height = Math.ceil(canvas.clientHeight) + "";
     } else if(height < 0) {
       throw new Error("height negative");
@@ -203,9 +204,9 @@ var H3DU = {
     "use strict";
     var c = H3DU.get3DOr2DContext(canvasElement);
     var errmsg = null;
-    if(!c && window.WebGLShader) {
+    if(!c && (typeof window.WebGLShader !== "undefined" && window.WebGLShader !== null)) {
       errmsg = "Failed to initialize graphics support required by this page.";
-    } else if(window.WebGLShader && !H3DU.is3DContext(c)) {
+    } else if(typeof window.WebGLShader !== "undefined" && window.WebGLShader !== null && !H3DU.is3DContext(c)) {
       errmsg = "This page requires WebGL, but it failed to start. Your computer might not support WebGL.";
     } else if(!c || !H3DU.is3DContext(c)) {
       errmsg = "This page requires a WebGL-supporting browser.";
@@ -223,10 +224,10 @@ var H3DU = {
  */
   "is3DContext":function(context) {
     "use strict";
-    if(context && (typeof WebGLRenderingContext !== "undefined" && (WebGLRenderingContext !== null && typeof WebGLRenderingContext !== "undefined")) && context instanceof WebGLRenderingContext) {
+    if(context && ((typeof WebGLRenderingContext !== "undefined" && WebGLRenderingContext !== null)) && context instanceof WebGLRenderingContext) {
       return true;
     }
-    if(context && (typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined")) && context instanceof WebGL2RenderingContext) {
+    if(context && ((typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null)) && context instanceof WebGL2RenderingContext) {
       return true;
     }
     return context && "compileShader" in context;
@@ -842,7 +843,7 @@ H3DU.newFrames = function(timer, timeInMs) {
       return c >= 65 && c <= 70 ? c + 10 - 65 : c >= 97 && c <= 102 ? c + 10 - 97 : -1;
     };
     constructor.rgbHex = function(str, hexval, hash) {
-      if (str === null || typeof str === "undefined" || str.length === 0) {
+      if (typeof str === "undefined" || str === null || str.length === 0) {
         return false;
       }
       var slen = str.length;
@@ -885,7 +886,7 @@ H3DU.newFrames = function(timer, timeInMs) {
     };
 
     constructor.colorToRgba = constructor.colorToRgba = function(x) {
-      if (x === null || typeof x === "undefined" || x.length === 0) {
+      if (typeof x === "undefined" || x === null || x.length === 0) {
         return null;
       }
       x = x.replace(/^[\r\n\t \u000c]+|[\r\n\t \u000c]+$/g, "");
@@ -893,7 +894,7 @@ H3DU.newFrames = function(timer, timeInMs) {
       if (x === "transparent") {
         return [0, 0, 0, 0];
       }
-      if (x === null || typeof x === "undefined" || x.length === 0) {
+      if (typeof x === "undefined" || x === null || x.length === 0) {
         return null;
       }
       var ret = [0, 0, 0, 0];
@@ -915,7 +916,7 @@ H3DU.newFrames = function(timer, timeInMs) {
         return ColorValidator.hsla(x, 5, x.length, ret) === x.length ? ret : null;
       }
       var colors = ColorValidator.colorToRgbaSetUpNamedColors();
-      if (colors[x] !== null && typeof colors[x] !== "undefined") {
+      if (typeof colors[x] !== "undefined" && colors[x] !== null) {
         var colorValue = colors[x];
         ColorValidator.rgbHex(colorValue, ret, false);
         return ret;
@@ -1016,7 +1017,7 @@ H3DU.newFrames = function(timer, timeInMs) {
  * clamped to 1.
  */
   exports.toGLColor = function(r, g, b, a) {
-    if(r === null || typeof r === "undefined")return [0, 0, 0, 0];
+    if(typeof r === "undefined" || r === null)return [0, 0, 0, 0];
     if(typeof r === "string") {
       var rgba = ColorValidator.colorToRgba(r) || [0, 0, 0, 0];
       var mul = 1.0 / 255;

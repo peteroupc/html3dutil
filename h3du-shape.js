@@ -26,7 +26,7 @@
  */
 H3DU.Shape = function(mesh) {
   "use strict";
-  if(mesh === null || typeof mesh === "undefined")throw new Error("mesh is null");
+  if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   if(mesh instanceof H3DU.Mesh) {
     this.meshBuffer = new H3DU.MeshBuffer(mesh);
   } else if(mesh instanceof H3DU.BufferedMesh) {

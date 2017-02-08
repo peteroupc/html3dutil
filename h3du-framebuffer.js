@@ -45,7 +45,7 @@ H3DU.FrameBufferLoader.prototype.dispose = function() {
 /** @private */
 H3DU.FrameBufferLoader.prototype.bind = function(info, context) {
   "use strict";
-  if(info !== null && typeof info !== "undefined") {
+  if(typeof info !== "undefined" && info !== null) {
     var fc = this.mapFrameBuffer(info, context);
     context.activeTexture(context.TEXTURE0 + fc.textureUnit);
     context.bindFramebuffer(
@@ -61,7 +61,7 @@ H3DU.FrameBufferLoader.prototype.bind = function(info, context) {
 /** @private */
 H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
   "use strict";
-  if(info !== null && typeof info !== "undefined") {
+  if(typeof info !== "undefined" && info !== null) {
     context.framebufferTexture2D(
      context.FRAMEBUFFER, context.COLOR_ATTACHMENT0,
      context.TEXTURE_2D, null, 0);

@@ -46,7 +46,7 @@ H3DU.TextureInfo = function(params) {
  */
 H3DU.TextureInfo.prototype.copyFrom = function(other) {
   "use strict";
-  if(typeof other !== "undefined" && (other !== null && typeof other !== "undefined")) {
+  if(typeof other !== "undefined" && other !== null) {
     this.uri = typeof other.uri === "undefined" || other.uri === null ? "" : other.uri;
     this.format = typeof other.format === "undefined" || other.format === null ? 6408 : other.format;
     this.internalFormat = typeof other.internalFormat === "undefined" || other.internalFormat === null ? 6408 : other.internalFormat;
@@ -85,7 +85,7 @@ H3DU.TextureInfo.prototype.copyFrom = function(other) {
  */
 H3DU.TextureInfo.prototype.setParams = function(params) {
   "use strict";
-  if(typeof params !== "undefined" && (params !== null && typeof params !== "undefined")) {
+  if(typeof params !== "undefined" && params !== null) {
     if(typeof params.uri !== "undefined" && params.uri !== null) {
       this.uri = params.uri;
     }

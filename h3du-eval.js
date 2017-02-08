@@ -481,7 +481,7 @@
   H3DU.BSplineCurve.uniformKnots = function(controlPoints, degree) {
     if(typeof controlPoints === "object")
       controlPoints = controlPoints.length;
-    if(degree === null || typeof degree === "undefined")degree = 3;
+    if(typeof degree === "undefined" || degree === null)degree = 3;
     if(controlPoints < degree + 1)
       throw new Error("too few control points for degree " + degree + " curve");
     var order = degree + 1;
@@ -504,7 +504,7 @@
   H3DU.BSplineCurve.clampedKnots = function(controlPoints, degree) {
     if(typeof controlPoints === "object")
       controlPoints = controlPoints.length;
-    if(degree === null || typeof degree === "undefined")degree = 3;
+    if(typeof degree === "undefined" || degree === null)degree = 3;
     if(controlPoints < degree + 1)
       throw new Error("too few control points for degree " + degree + " curve");
     var order = degree + 1;
@@ -775,7 +775,7 @@
       u1 = 0.0;
       u2 = 1.0;
     }
-    if(mode === null || typeof mode === "undefined")mode = H3DU.Mesh.LINES;
+    if(typeof mode === "undefined" || mode === null)mode = H3DU.Mesh.LINES;
     if(mode === H3DU.Mesh.POINTS)
       mesh.mode(H3DU.Mesh.POINTS);
     else if(mode === H3DU.Mesh.LINES)
@@ -1097,7 +1097,7 @@
     if(typeof vn === "undefined")vn = 24;
     if(un <= 0)throw new Error("invalid un");
     if(vn <= 0)throw new Error("invalid vn");
-    if(mode === null || typeof mode === "undefined")mode = H3DU.Mesh.TRIANGLES;
+    if(typeof mode === "undefined" || mode === null)mode = H3DU.Mesh.TRIANGLES;
     if(typeof v1 === "undefined" && typeof v2 === "undefined") {
       v1 = 0.0;
       v2 = 1.0;

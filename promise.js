@@ -199,7 +199,7 @@
     }
     var then;
     /* 2.3.3. Otherwise, if x is an object or function, */
-    if (x !== null && typeof x !== "undefined" && (typeof x === "object" || typeof x === "function")) {
+    if (typeof x !== "undefined" && x !== null && (typeof x === "object" || typeof x === "function")) {
       try {
         then = x.then;
       } catch (e) {

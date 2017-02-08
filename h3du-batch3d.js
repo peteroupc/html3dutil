@@ -381,7 +381,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
          shape.material.shader, renderContext.context);
     }
     flags = H3DU.Scene3D._flagsForShape(shape);
-    if(prog === null || typeof prog === "undefined") {
+    if(typeof prog === "undefined" || prog === null) {
       prog = renderContext.scene._programs.getProgram(
            flags, renderContext.context);
     }
@@ -437,7 +437,7 @@ H3DU.Batch3D.prototype.render = function(scene, pass) {
  */
 H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   "use strict";
-  if(shader === null || typeof shader === "undefined") {
+  if(typeof shader === "undefined" || shader === null) {
     shader = H3DU.ShaderProgram.makeCopyEffect(scene);
   }
   var ret = new H3DU.Batch3D(scene);

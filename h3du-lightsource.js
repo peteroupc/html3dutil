@@ -74,7 +74,7 @@ H3DU.LightSource = function(params, ambient, diffuse, specular) {
       "specular":specular,
       "ambient":ambient
     });
-  } else if(params !== null && typeof params !== "undefined") {
+  } else if(typeof params !== "undefined" && params !== null) {
     this.setParams(params);
   }
 };

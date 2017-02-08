@@ -106,7 +106,7 @@ H3DU.MeshBuffer.prototype.setAttribute = function(
   var semanticIndex = 0;
   var semantic = 0;
   var sem = H3DU.MeshBuffer._resolveSemantic(name, index);
-  if(sem === null || typeof sem === "undefined") {
+  if(typeof sem === "undefined" || sem === null) {
     console.warn("Unsupported attribute semantic: " + name);
     return this;
   }
@@ -133,13 +133,13 @@ H3DU.MeshBuffer._resolveSemantic = function(name, index) {
     return [name, index | 0];
   } else {
     var wka = H3DU.MeshBuffer._wellKnownAttributes[name];
-    if(wka === null || typeof wka === "undefined") {
+    if(typeof wka === "undefined" || wka === null) {
       var io = name.indexOf(name);
       if(io < 0) {
         return null;
       }
       wka = H3DU.MeshBuffer._wellKnownAttributes[name.substr(0, io)];
-      if(wka === null || typeof wka === "undefined") {
+      if(typeof wka === "undefined" || wka === null) {
         return null;
       }
       var number = name.substr(io + 1);
@@ -165,7 +165,7 @@ H3DU.MeshBuffer.prototype._getAttributes = function() {
 /** @private */
 H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
   "use strict";
-  var idx = index === null || typeof index === "undefined" ? 0 : index;
+  var idx = typeof index === "undefined" || index === null ? 0 : index;
   for(var i = 0; i < this.attributes.length; i++) {
     if(this.attributes[i][0] === name &&
     this.attributes[i][5] === idx) {

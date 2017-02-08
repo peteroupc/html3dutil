@@ -25,7 +25,7 @@ function getPoints(curves, numPoints, offset) {
 /* exported pathFloor */
 function pathFloor(path, z, flatness) {
   "use strict";
-  if(z === null || typeof z === "undefined")z = 0;
+  if(typeof z === "undefined" || z === null)z = 0;
   var tris = path.getTriangles(flatness);
   var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
    .normal3(0, 0, 1);

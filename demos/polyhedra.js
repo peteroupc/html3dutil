@@ -63,7 +63,7 @@ Polyhedra.makeSphere = function(vi, radius, level) {
   "use strict";
   var vertices = vi[0];
   var indices = vi[1];
-  if(level === null || typeof level === "undefined" || level <= 0) {
+  if(typeof level === "undefined" || level === null || level <= 0) {
     Polyhedra.scaleVertices(vertices, radius);
     return vi;
   }

@@ -49,24 +49,24 @@ H3DU.BufferedMesh.prototype._getArrayObjectExt = function(context) {
 /** @private */
 H3DU.BufferedMesh.prototype._createVertexArray = function(context) {
   "use strict";
-  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") &&
+  if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
   context instanceof WebGL2RenderingContext) {
     return context.createVertexArray();
   } else if(context instanceof WebGLRenderingContext) {
     var ao = this._getArrayObjectExt(context);
-    return ao === null || typeof ao === "undefined" ? null : ao.createVertexArrayOES();
+    return typeof ao === "undefined" || ao === null ? null : ao.createVertexArrayOES();
   }
   return null;
 };
 /** @private */
 H3DU.BufferedMesh.prototype._deleteVertexArray = function(context, va) {
   "use strict";
-  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") &&
+  if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
   context instanceof WebGL2RenderingContext) {
     context.deleteVertexArray(va);
   } else if(context instanceof WebGLRenderingContext) {
     var ao = this._getArrayObjectExt(context);
-    if(ao !== null && typeof ao !== "undefined") {
+    if(typeof ao !== "undefined" && ao !== null) {
       ao.deleteVertexArrayOES(va);
     }
   }
@@ -74,12 +74,12 @@ H3DU.BufferedMesh.prototype._deleteVertexArray = function(context, va) {
 /** @private */
 H3DU.BufferedMesh.prototype._bindVertexArray = function(context, va) {
   "use strict";
-  if(typeof WebGL2RenderingContext !== "undefined" && (WebGL2RenderingContext !== null && typeof WebGL2RenderingContext !== "undefined") &&
+  if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
   context instanceof WebGL2RenderingContext) {
     context.bindVertexArray(va);
   } else if(context instanceof WebGLRenderingContext) {
     var ao = this._getArrayObjectExt(context);
-    if(ao !== null && typeof ao !== "undefined") {
+    if(typeof ao !== "undefined" && ao !== null) {
       ao.bindVertexArrayOES(va);
     }
   }
@@ -87,7 +87,7 @@ H3DU.BufferedMesh.prototype._bindVertexArray = function(context, va) {
 /** @private */
 H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   "use strict";
-  if(mesh === null || typeof mesh === "undefined")throw new Error("mesh is null");
+  if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   var smb = mesh instanceof H3DU.MeshBuffer ? mesh :
    new H3DU.MeshBuffer(mesh);
   this.smb = smb;
@@ -103,7 +103,7 @@ H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
        // Vertex array not seen yet, create a buffer object
        // and copy the array's data to that object
         var vbuffer = context.createBuffer();
-        if(vbuffer === null || typeof vbuffer === "undefined") {
+        if(typeof vbuffer === "undefined" || vbuffer === null) {
           throw new Error("can't create buffer");
         }
         context.bindBuffer(context.ARRAY_BUFFER, vbuffer);
@@ -199,7 +199,7 @@ H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
       program._addNamesWithSemantic(arrName, attrs[i][0], attrs[i][5]);
       for(var j = 0; j < arrName.length; j++) {
         var loc = program.get(arrName[j]);
-        if(loc === null || typeof loc === "undefined") {
+        if(typeof loc === "undefined" || loc === null) {
           loc = -1;
         }
         arrLoc.push(loc);

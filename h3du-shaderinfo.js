@@ -28,10 +28,10 @@
  */
 H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
   "use strict";
-  if(vertexShader === null || typeof vertexShader === "undefined") {
+  if(typeof vertexShader === "undefined" || vertexShader === null) {
     vertexShader = H3DU.ShaderInfo.getDefaultVertex();
   }
-  if(fragmentShader === null || typeof fragmentShader === "undefined") {
+  if(typeof fragmentShader === "undefined" || fragmentShader === null) {
     fragmentShader = H3DU.ShaderInfo.getDefaultFragment();
   }
   this.vertexShader = vertexShader;
@@ -173,7 +173,7 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
   var uv = uniformValues[i];
   if(typeof v === "number") {
     var newUv = false;
-    if(uv === null || typeof uv === "undefined") {
+    if(typeof uv === "undefined" || uv === null) {
       uniformValues[i] = uv = v;
       newUv = true;
     } else if(uv !== v) {
@@ -185,7 +185,7 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
       if(changedUniforms)changedUniforms[i] = uv;
     }
   } else if(v instanceof H3DU.TextureInfo) {
-    if(uv === null || typeof uv === "undefined" || !(uv instanceof H3DU.TextureInfo)) {
+    if(typeof uv === "undefined" || uv === null || !(uv instanceof H3DU.TextureInfo)) {
       uniformValues[i] = uv = new H3DU.TextureInfo().copyFrom(v);
     } else {
       uv.copyFrom(v);

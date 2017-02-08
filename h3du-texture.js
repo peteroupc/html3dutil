@@ -106,7 +106,7 @@ H3DU.Texture.loadTexture = function(info, textureCache) {
   "use strict";
   var texImage;
   var name;
-  if(!(typeof info !== "undefined" && (info !== null && typeof info !== "undefined"))) {
+  if(!((typeof info !== "undefined" && info !== null))) {
     throw new Error();
   }
   if(info instanceof H3DU.Texture) {
