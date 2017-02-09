@@ -482,7 +482,7 @@ H3DU.Mesh.prototype.texCoord2 = function(u, v) {
   */
 H3DU.Mesh.prototype.vertex3 = function(x, y, z) {
   "use strict";
-  if(typeof x !== "undefined" && x !== null && ((typeof y === "undefined" || y === null)) && ((typeof z === "undefined" || z === null))) {
+  if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
     if(typeof x !== "number")
       this._vertex3(x[0], x[1], x[2], this);
     else
@@ -506,7 +506,7 @@ H3DU.Mesh.prototype.vertex3 = function(x, y, z) {
   */
 H3DU.Mesh.prototype.vertex2 = function(x, y) {
   "use strict";
-  if(typeof x !== "undefined" && x !== null && ((typeof y === "undefined" || y === null))) {
+  if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null)) {
     if(typeof x !== "number")
       return this.vertex3(x[0], x[1], 0.0);
     else

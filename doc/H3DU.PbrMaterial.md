@@ -31,7 +31,6 @@ in the red, green, blue, and alpha channels.
 * [metalnessMap](#H3DU.PbrMaterial_metalnessMap)<br>A texture indicating the metalness of each part of the texture,
 as specified in the texture's red channel.
 * [normalMap](#H3DU.PbrMaterial_normalMap)<br>Normal map (bump map) texture.
-* [occlusionMap](#H3DU.PbrMaterial_occlusionMap)<br>TODO
 * [roughness](#H3DU.PbrMaterial_roughness)<br>Describes the roughness of the surface described
 by this material.
 * [roughnessMap](#H3DU.PbrMaterial_roughnessMap)<br>A texture indicating the roughness of each part of the texture,
@@ -199,15 +198,6 @@ For normal mapping to work, an object's mesh must include normals,
 tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
 object only has normals and texture coordinates, the <code>recalcTangents()</code>
 method can calculate the tangents and bitangents appropriate for normal mapping.
-
-Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>
-
-Default Value: `null`
-
-<a id='H3DU.PbrMaterial_occlusionMap'></a>
-### H3DU.PbrMaterial#occlusionMap
-
-TODO
 
 Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>
 

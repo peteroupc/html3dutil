@@ -133,7 +133,7 @@ H3DU.ShaderProgram.prototype._disableOthers = function(names) {
   }
 };
 /** Disposes resources from this shader program.
- * @returns {void} Return value.
+ * @returns {void} This method doesn't return a value.
  * @memberof! H3DU.ShaderProgram#
  */
 H3DU.ShaderProgram.prototype.dispose = function() {
@@ -342,7 +342,7 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
   var fs = !fragmentShader || fragmentShader.length === 0 ? null :
     compileShader(context, context.FRAGMENT_SHADER, fragmentShader);
   var program = null;
-  if(typeof vs !== "undefined" && vs !== null && ((typeof fs !== "undefined" && fs !== null))) {
+  if(typeof vs !== "undefined" && vs !== null && (typeof fs !== "undefined" && fs !== null)) {
     program = context.createProgram();
     context.attachShader(program, vs);
     context.attachShader(program, fs);

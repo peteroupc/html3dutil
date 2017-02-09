@@ -37,3 +37,42 @@ function pathFloor(path, z, flatness) {
   }
   return mesh;
 }
+
+/* exported pointMarch */
+function pointMarch(
+  group, // shape group containing the marching points
+  curves, // curves of the path
+  t // value from 0 to 1 specifying the point in time of the animation
+) {
+  "use strict";
+  var POINTCOUNT = 50;
+  var adjust = t * (1.0 / (POINTCOUNT - 1));
+  var pts = getPoints(curves, POINTCOUNT, adjust);
+  for(var i = 0; i < pts.length; i++) {
+    if(!group.getShape(i)) {
+      continue;
+    }
+    group.getShape(i).setVisible(true).setPosition(pts[i][0], pts[i][1], 0);
+  }
+  for(var j = pts.length; j < POINTCOUNT; j++) {
+    if(!group.getShape(j)) {
+      continue;
+    }
+    group.getShape(j).setVisible(false);
+  }
+}
+
+/* exported makeTubeFromPath */
+function makeTubeFromPath(path, flatness, thickness, pathSection) {
+  "use strict";
+  var mesh = new H3DU.Mesh();
+  var curves = path.getCurves(flatness);
+  var resolution = Math.ceil(curves.getLength() / flatness / 10);
+  var curveSection = pathSection ? pathSection.getCurves(flatness) : null;
+  new H3DU.SurfaceEval()
+    .vertex(new H3DU.CurveTube(curves, thickness, curveSection))
+    .setAutoNormal(true)
+    .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
+      Math.ceil(2 * thickness / flatness));
+  return mesh;
+}

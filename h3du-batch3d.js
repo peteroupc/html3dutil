@@ -22,7 +22,7 @@ H3DU.Batch3D = function() {
   this._projectionUpdater = null;
   this._globalShader = null;
   this._frustum = null;
-  // TODO: Consider using a root node infrastructure, not a set of children
+  /** @private */
   this.shapes = [];
 };
 /** @private */
@@ -298,7 +298,8 @@ H3DU.Batch3D.prototype.getLights = function() {
 };
 
 /**
- * Adds a 3D shape to this batch of shapes. Its reference, not a copy,
+ * Adds a 3D shape to this batch of shapes, at the end of the list
+ * of shapes. Its reference, not a copy,
  * will be stored in the 3D scene's list of shapes.
  * Its parent will be set to no parent.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
@@ -309,6 +310,40 @@ H3DU.Batch3D.prototype.addShape = function(shape) {
   "use strict";
   shape.parent = null;
   this.shapes.push(shape);
+  return this;
+};
+/**
+ * Returns the number of shapes and/or shape groups that
+ * are direct children of this batch.
+ * @returns {Number} Return value.
+ * @memberof! H3DU.Batch3D#
+ */
+H3DU.Batch3D.prototype.shapeCount = function() {
+  "use strict";
+  return this.shapes.length;
+};
+/**
+ * Gets the shape or shape group located
+ * in this batch at the given index.
+ * @param {Number} index Integer index, starting from 0, of the shape or shape group to set.
+ * @returns {H3DU.Shape|H3DU.ShapeGroup} The shape or shape group located
+ * in this batch at the given index, or null if none is found there.
+ * @memberof! H3DU.Batch3D#
+ */
+H3DU.Batch3D.prototype.getShape = function(index) {
+  "use strict";
+  return typeof this.shapes[index] === "undefined" ? null : this.shapes[index];
+};
+/**
+ * Sets a shape or shape group at the given index in this batch.
+ * @param {Number} index Integer index, starting from 0, to set the shape or shape group at.
+ * @param {H3DU.Shape|H3DU.ShapeGroup} shape Shape object to set at the given index.
+ * @returns {H3DU.Batch
+ * @memberof! H3DU.Batch3D#
+ */
+H3DU.Batch3D.prototype.setShape = function(index, shape) {
+  "use strict";
+  this.shapes[index] = shape;
   return this;
 };
 

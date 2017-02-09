@@ -947,6 +947,7 @@ H3DU.Scene3D.prototype.addShape = function(shape) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
   }
   this._subScene.addShape(shape);
+  this.shapes.push(shape);
   return this;
 };
 /**
@@ -984,6 +985,12 @@ H3DU.Scene3D.prototype.removeShape = function(shape) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
   }
   this._subScene.removeShape(shape);
+  for(var i = 0; i < this.shapes.length; i++) {
+    if(this.shapes[i] === shape) {
+      this.shapes.splice(i, 1);
+      i--;
+    }
+  }
   return this;
 };
 /**
@@ -1115,7 +1122,7 @@ H3DU.Scene3D.prototype._clearForPass = function(pass) {
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
  * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} renderPasses An array of scenes
- * to draw, or a single batch to render. Can be null.
+ * to draw, or a single batch to render. Can currently be null.
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
  */
@@ -1140,8 +1147,14 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
       this.context.clear(this.context.COLOR_BUFFER_BIT |
         this.context.DEPTH_BUFFER_BIT);
     }
+    var oldshapes = this._subScene.shapes;
+    var arr = [];
+    // arr=arr.concat(this._subScene.shapes)
+    arr = arr.concat(this.shapes);
+    this._subScene.shapes = arr;
     this._subScene.resize(width, height);
     this._subScene.render(this);
+    this._subScene.shapes = oldshapes;
   } else {
     this._renderedOutsideScene = true;
     for(var i = 0; i < renderPasses.length; i++) {

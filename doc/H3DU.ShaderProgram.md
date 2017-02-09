@@ -189,7 +189,7 @@ Disposes resources from this shader program.
 
 #### Return Value
 
-Return value. (Type: void)
+This method doesn't return a value. (Type: void)
 
  <a name='H3DU.ShaderProgram_H3DU.ShaderProgram_get'></a>
 ### H3DU.ShaderProgram#get(name)

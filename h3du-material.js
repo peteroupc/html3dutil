@@ -94,6 +94,10 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
 /**
  * Specular map texture.
  * See {@link H3DU.PbrMaterial#specularMap}.
+ * NOTE: If this property specifies a texture, this property will be used
+ * for the specular reflection rather than the "specular" property. This behavior
+ * is a change from versions earlier than 2.0, where this property, if present,
+ * multiplied the value of the "specular" property.
  * @type {H3DU.Texture|H3DU.TextureInfo}
  * @default
  */

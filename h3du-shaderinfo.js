@@ -675,8 +675,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "float metal = 0.0;",
     // Specular reflection
     "#ifdef SPECULAR", "materialSpecular=tolinear(ms);", "#endif",
-    // TODO: Decide whether to multiply specular by the specular texture;
-    // here, this is not done anymore
+    // NOTE: Default shader no longer multiplies specular by the specular texture
     "#ifdef SPECULAR_MAP", "materialSpecular=tolinear(texture2D(specularMap,uvVar).rgb);", "#endif",
     "#ifdef PHYSICAL_BASED",
     "#ifdef ROUGHNESS", "rough=roughness;", "#endif",

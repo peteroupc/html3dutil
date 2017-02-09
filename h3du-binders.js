@@ -207,7 +207,7 @@ H3DU._MaterialBinder.bindTexture = function(
   texture, textureInfo, context, program,
   textureUnit, loader, uniformName, sizeUniform) {
   "use strict";
-  if(!((typeof textureInfo !== "undefined" && textureInfo !== null)))throw new Error();
+  if(!(typeof textureInfo !== "undefined" && textureInfo !== null))throw new Error();
   if(typeof texture === "undefined" || texture === null) {
     if(context) {
       context.activeTexture(context.TEXTURE0 + textureUnit);

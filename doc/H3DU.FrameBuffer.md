@@ -67,7 +67,7 @@ Disposes all resources from this frame buffer object.
 
 #### Return Value
 
-Return value. (Type: void)
+This method doesn't return a value. (Type: void)
 
  <a name='H3DU.FrameBuffer_H3DU.FrameBuffer_getContext'></a>
 ### H3DU.FrameBuffer#getContext()
@@ -102,4 +102,4 @@ Has no effect. (Previously, unbound this frame buffer from its associated WebGL 
 
 #### Return Value
 
-Return value. (Type: void)
+This method doesn't return a value. (Type: void)

@@ -161,7 +161,7 @@ H3DU.Transform.prototype.resetTransform = function() {
 H3DU.Transform.prototype.setScale = function(x, y, z) {
   "use strict";
   if(this.complexMatrix)return this;
-  if(typeof x !== "undefined" && x !== null && ((typeof y === "undefined" || y === null)) && ((typeof z === "undefined" || z === null))) {
+  if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
     if(typeof x !== "number")
       this.scale = [x[0], x[1], x[2]];
     else
@@ -194,7 +194,7 @@ H3DU.Transform.prototype.setScale = function(x, y, z) {
 H3DU.Transform.prototype.setPosition = function(x, y, z) {
   "use strict";
   if(this.complexMatrix)return this;
-  if(typeof x !== "undefined" && x !== null && ((typeof y === "undefined" || y === null)) && ((typeof z === "undefined" || z === null))) {
+  if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
     if(typeof x !== "number")
       this.position = [x[0], x[1], x[2]];
     else
@@ -228,7 +228,7 @@ H3DU.Transform.prototype.setPosition = function(x, y, z) {
 H3DU.Transform.prototype.movePosition = function(x, y, z) {
   "use strict";
   if(this.complexMatrix)return this;
-  if(typeof x !== "undefined" && x !== null && ((typeof y === "undefined" || y === null)) && ((typeof z === "undefined" || z === null))) {
+  if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
     if(typeof x !== "number") {
       this.position[0] += x[0];
       this.position[1] += x[1];

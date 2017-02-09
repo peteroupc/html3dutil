@@ -21,6 +21,9 @@ H3DU.ShapeGroup = function() {
   * This property should only be used to access properties
   * and call methods on each shape, and not to add, remove
   * or replace shapes directly.
+  * @deprecated Use the {@link H3DU.ShapeGroup#shapeCount},
+  * {@link H3DU.ShapeGroup#getShape}, and
+  * {@link H3DU.ShapeGroup#setShape} methods instead.
   * @readonly
   */
   this.shapes = [];
@@ -28,6 +31,41 @@ H3DU.ShapeGroup = function() {
   this.visible = true;
   this.transform = new H3DU.Transform();
 };
+/**
+ * Returns the number of shapes and/or shape groups that
+ * are direct children of this shape group.
+ * @returns {Number} Return value.
+ * @memberof! H3DU.ShapeGroup#
+ */
+H3DU.ShapeGroup.prototype.shapeCount = function() {
+  "use strict";
+  return this.shapes.length;
+};
+/**
+ * Gets the shape or shape group located
+ * in this shape group at the given index.
+ * @param {Number} index Integer index, starting from 0, of the shape or shape group to set.
+ * @returns {H3DU.Shape|H3DU.ShapeGroup} The shape or shape group located
+ * in this shape group at the given index, or null if none is found there.
+ * @memberof! H3DU.ShapeGroup#
+ */
+H3DU.ShapeGroup.prototype.getShape = function(index) {
+  "use strict";
+  return typeof this.shapes[index] === "undefined" ? null : this.shapes[index];
+};
+/**
+ * Sets a shape or shape group at the given index in this shape group.
+ * @param {Number} index Integer index, starting from 0, to set the shape or shape group at.
+ * @param {H3DU.Shape|H3DU.ShapeGroup} shape Shape object to set at the given index.
+ * @returns {H3DU.ShapeGroup} This object.
+ * @memberof! H3DU.ShapeGroup#
+ */
+H3DU.ShapeGroup.prototype.setShape = function(index, shape) {
+  "use strict";
+  this.shapes[index] = shape;
+  return this;
+};
+
 /**
  * Makes a copy of this shape group and the objects contained
  * in it. The copied object will
@@ -50,7 +88,8 @@ H3DU.ShapeGroup.prototype.copy = function() {
 };
 
 /**
- * Adds a 3D shape to this shape group. Its reference, not a copy,
+ * Adds a 3D shape to this shape group, at the end of the list
+ * of shapes. Its reference, not a copy,
  * will be stored in the list of shapes.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
  * @returns {H3DU.ShapeGroup} This object.

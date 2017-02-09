@@ -27,7 +27,7 @@ Disposes all resources used by this texture loader.
 
 #### Return Value
 
-Return value. (Type: void)
+This method doesn't return a value. (Type: void)
 
  <a name='H3DU.TextureLoader_H3DU.TextureLoader_getTexture'></a>
 ### H3DU.TextureLoader#getTexture(name)
@@ -75,9 +75,9 @@ Loads one or more textures by their URL and uploads their data to a WebGL contex
 * `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
     A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
 * `resolve` (Type: function) (optional)<br>
-    A function called as each individual texture is loaded.
+    A function called as each individual texture is loaded and its promise resolves.
 * `reject` (Type: function) (optional)<br>
-    A function called as each individual texture is loaded.
+    A function called as each individual texture is loaded and its promise is rejected.
 
 #### Return Value
 
@@ -87,15 +87,17 @@ resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
  <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap'></a>
-### H3DU.TextureLoader#loadCubeMap(texturesOrCubeMap, resolve, reject)
+### H3DU.TextureLoader#loadCubeMap(texturesOrCubeMap, [resolve], [reject])
 
 TODO: Not documented yet.
 
 #### Parameters
 
 * `texturesOrCubeMap` (Type: *)
-* `resolve` (Type: *)
-* `reject` (Type: *)
+* `resolve` (Type: function) (optional)<br>
+    A function called as each individual texture is loaded and its promise resolves.
+* `reject` (Type: function) (optional)<br>
+    A function called as each individual texture is loaded and its promise is rejected.
 
 #### Return Value
 
@@ -129,9 +131,9 @@ stores their texture data.
 * `textures` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>|<a href="H3DU.Texture.md">H3DU.Texture</a>)>)<br>
     An array of objects described in H3DU.TextureLoader.loadTexture.
 * `resolve` (Type: function) (optional)<br>
-    A function called as each individual texture is loaded.
+    A function called as each individual texture is loaded and its promise resolves.
 * `reject` (Type: function) (optional)<br>
-    A function called as each individual texture is loaded.
+    A function called as each individual texture is loaded and its promise is rejected.
 
 #### Return Value
 

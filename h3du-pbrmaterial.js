@@ -19,6 +19,7 @@
  * @alias H3DU.PbrMaterial
  */
 H3DU.PbrMaterial = function(params) {
+  // LATER: Support ambient occlusion maps.
   "use strict";
 /**
  * Albedo (or base color) of this material.<p>
@@ -177,12 +178,6 @@ H3DU.PbrMaterial = function(params) {
   * @default
   */
   this.normalMap = null;
-  /**
-   * TODO
-   * @type {H3DU.Texture|H3DU.TextureInfo}
-   * @default
-   */
-  this.occlusionMap = null;
  /**
   * Additive color emitted by objects with this material.
   * Used for objects that glow on their own, among other things.

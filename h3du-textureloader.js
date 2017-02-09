@@ -89,9 +89,9 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
  * @param {Array<String|H3DU.TextureInfo|H3DU.Texture>} textures An array of objects described in
  * {@link H3DU.TextureLoader.loadTexture}.
  * @param {Function} [resolve] A function called as each
- * individual texture is loaded.
+ * individual texture is loaded and its promise resolves.
  * @param {Function} [reject] A function called as each
- * individual texture is loaded.
+ * individual texture is loaded and its promise is rejected.
  * @returns {Promise<H3DU.Texture>} A promise as described in
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
@@ -139,9 +139,9 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.
  * @param {Function} [resolve] A function called as each
- * individual texture is loaded.
+ * individual texture is loaded and its promise resolves.
  * @param {Function} [reject] A function called as each
- * individual texture is loaded.
+ * individual texture is loaded and its promise is rejected.
  * @returns {Promise<H3DU.Texture>} A promise as described in
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
@@ -178,8 +178,10 @@ H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo
 /**
  * TODO: Not documented yet.
  * @param {*} texturesOrCubeMap
- * @param {*} resolve
- * @param {*} reject
+ * @param {Function} [resolve] A function called as each
+ * individual texture is loaded and its promise resolves.
+ * @param {Function} [reject] A function called as each
+ * individual texture is loaded and its promise is rejected.
  * @returns {*} Return value.
  * @memberof! H3DU.TextureLoader#
  */
@@ -216,7 +218,7 @@ H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
 /**
  * Disposes all resources used by this texture loader.
  * @memberof! H3DU.TextureLoader#
- * @returns {void} Return value.
+ * @returns {void} This method doesn't return a value.
  */
 H3DU.TextureLoader.prototype.dispose = function() {
   "use strict";

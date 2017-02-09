@@ -224,10 +224,10 @@ var H3DU = {
  */
   "is3DContext":function(context) {
     "use strict";
-    if(context && ((typeof WebGLRenderingContext !== "undefined" && WebGLRenderingContext !== null)) && context instanceof WebGLRenderingContext) {
+    if(context && (typeof WebGLRenderingContext !== "undefined" && WebGLRenderingContext !== null) && context instanceof WebGLRenderingContext) {
       return true;
     }
-    if(context && ((typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null)) && context instanceof WebGL2RenderingContext) {
+    if(context && (typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null) && context instanceof WebGL2RenderingContext) {
       return true;
     }
     return context && "compileShader" in context;
