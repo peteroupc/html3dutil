@@ -660,25 +660,27 @@ H3DU.Math = {
     var vecY = yUp ? vec[1] : -vec[1];
     var x = vec[0] * halfWidth + halfWidth + viewport[0];
     var y = vecY * halfHeight + halfHeight + viewport[1];
+    // TODO: Consider changing Z to range [0,1] rather than [-1,1]
     return [x, y, vec[2]];
   },
 /**
  * Unprojects the X and Y <i>window coordinates</i>,
  * and a Z depth coordinate, given in a 3-element vector,
  * using the given transformation matrix and viewport
- * width and height. The X coordinates in this space increase
- * rightward and the Y coordinates in this space increase upward
+ * width and height. X window coordinates increase
+ * rightward and Y window coordinates increase upward
  * or downward depending on the "yUp" parameter.
  * @param {Array<Number>} vector A 3-element vector giving
  * the X, Y, and Z coordinates of the 3D point to transform.
  * @param {Array<Number>} matrix A 4x4 matrix specifying the
- * After undoing the viewport transformation, the vector will
+ * After undoing the transformation to X and Y window coordinates, the vector will
  * be transformed by the inverse of this matrix according to the
  * {@link H3DU.Math.mat4projectVec3} method. To convert to
  * world space, this parameter will generally be a projection-view matrix
  * (projection matrix multiplied by the view matrix). To convert to
- * object (model) space, this parameter will generally be a projection-view matrix
- * multiplied by the world (model) matrix.
+ * object (model) space, this parameter will generally be a model-view-projection
+ * matrix (a projection-view matrix
+ * multiplied by the world [model] matrix).
  * @param {Array<Number>} viewport A 4-element array specifying
  * the starting position and size of the viewport in window units
  * (such as pixels). In order, the four elements are the starting position's
@@ -695,14 +697,15 @@ H3DU.Math = {
     "use strict";
     var halfWidth = viewport[2] * 0.5;
     var halfHeight = viewport[3] * 0.5;
-    var x = 0,
-      y = 0;
+    var x = 0;
+    var y = 0;
     if(halfWidth !== 0 && halfHeight !== 0) {
       x = (vector[0] - viewport[0] - halfWidth) / halfWidth;
       y = (vector[1] - viewport[1] - halfHeight) / halfHeight;
     }
     y = yUp ? y : -y;
     var invMatrix = H3DU.Math.mat4invert(matrix);
+    // TODO: Consider changing Z to range [0,1] rather than [-1,1]
     return H3DU.Math.mat4projectVec3(invMatrix, [x, y, vector[2]]);
   },
 /**
@@ -899,6 +902,60 @@ H3DU.Math = {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   },
 /**
+ * Returns a 3-element vector in which each element of the given 3-element vector is clamped
+ * so it's not less than one value or greater than another value.
+ * @param {Number} min Lowest possible value. Should not be greater than "max".
+ * @param {Number} max Highest possible value. Should not be less than "min".
+ * @param {Array<Number>} a The resulting vector. */
+  "vec3clamp":function(a, min, max) {
+    "use strict";
+    return H3DU.Math.vec3clampInPlace(H3DU.Math.vec3copy(a), min, max);
+  },
+/**
+ * Returns a 4-element vector in which each element of the given 4-element vector is clamped
+ * so it's not less than one value or greater than another value.
+ * @param {Number} min Lowest possible value. Should not be greater than "max".
+ * @param {Number} max Highest possible value. Should not be less than "min".
+ * @param {Array<Number>} a The resulting vector. */
+  "vec4clamp":function(a, min, max) {
+    "use strict";
+    return H3DU.Math.vec4clampInPlace(H3DU.Math.vec4copy(a), min, max);
+  },
+/**
+ * Clamps each element of the given 3-element vector
+ * so it's not less than one value or greater than another value.
+ * @param {Number} min Lowest possible value. Should not be greater than "max".
+ * @param {Number} max Highest possible value. Should not be less than "min".
+ * @param {Array<Number>} a The vector "a". */
+  "vec3clampInPlace":function(a, min, max) {
+    "use strict";
+    var x = Math.min(max, Math.max(min, a[0]));
+    var y = Math.min(max, Math.max(min, a[1]));
+    var z = Math.min(max, Math.max(min, a[2]));
+    a[0] = x;
+    a[1] = y;
+    a[2] = z;
+    return a;
+  },
+/**
+ * Clamps each element of the given 4-element vector
+ * so it's not less than one value or greater than another value.
+ * @param {Number} min Lowest possible value. Should not be greater than "max".
+ * @param {Number} max Highest possible value. Should not be less than "min".
+ * @param {Array<Number>} a The vector "a". */
+  "vec4clampInPlace":function(a, min, max) {
+    "use strict";
+    var x = Math.min(max, Math.max(min, a[0]));
+    var y = Math.min(max, Math.max(min, a[1]));
+    var z = Math.min(max, Math.max(min, a[2]));
+    var w = Math.min(max, Math.max(min, a[3]));
+    a[0] = x;
+    a[1] = y;
+    a[2] = z;
+    a[3] = w;
+    return a;
+  },
+/**
  * Returns the distance of this 4-element vector from the origin,
  * also known as its <i>length</i> or <i>magnitude</i>.
  * It's the same as the square root of the sum of the squares
@@ -925,6 +982,7 @@ H3DU.Math = {
     "use strict";
     return [1, 0, 0, 0, 1, 0, 0, 0, 1];
   },
+
 /**
  * Returns the identity 4x4 matrix (a matrix that keeps
  * vectors unchanged when they are transformed with this matrix).
@@ -946,7 +1004,20 @@ H3DU.Math = {
  * @returns {Array<Number>} Return value. */
   "mat4copy":function(mat) {
     "use strict";
-    return mat.slice(0, 16);
+    return [mat[0], mat[1], mat[2], mat[3],
+      mat[4], mat[5], mat[6], mat[7],
+      mat[8], mat[9], mat[10], mat[11],
+      mat[12], mat[13], mat[14], mat[15]];
+  },
+/**
+ * Returns a copy of a 3x3 matrix.
+ * @param {Array<Number>} mat A 3x3atrix.
+ * @returns {Array<Number>} Return value. */
+  "mat3copy":function(mat) {
+    "use strict";
+    return [mat[0], mat[1], mat[2], mat[3],
+      mat[4], mat[5], mat[6], mat[7],
+      mat[8]];
   },
 /**
  * Returns a copy of a 3-element vector.
@@ -954,7 +1025,7 @@ H3DU.Math = {
  * @returns {Array<Number>} Return value. */
   "vec3copy":function(vec) {
     "use strict";
-    return vec.slice(0, 3);
+    return [vec[0], vec[1], vec[2]];
   },
 /**
  * Returns a copy of a 4-element vector.
@@ -962,7 +1033,7 @@ H3DU.Math = {
  * @returns {Array<Number>} Return value. */
   "vec4copy":function(vec) {
     "use strict";
-    return vec.slice(0, 4);
+    return [vec[0], vec[1], vec[2], vec[3]];
   },
 /**
  * Assigns the values of a 3-element vector into another
@@ -1638,7 +1709,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  */
   "mat4transpose":function(m4) {
     "use strict";
-    return H3DU.Math.mat4transposeInPlace(m4.slice(0, 16));
+    return H3DU.Math.mat4transposeInPlace(H3DU.Math.mat4copy(m4));
   },
 /**
  * Transposes a 4x4 matrix in place without creating
@@ -1665,7 +1736,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  */
   "mat3transpose":function(m3) {
     "use strict";
-    return H3DU.Math.mat3transposeInPlace(m3.slice(0, 16));
+    return H3DU.Math.mat3transposeInPlace(H3DU.Math.mat3copy(m3));
   },
 /**
  * Transposes a 3x3 matrix in place without creating
@@ -1829,10 +1900,10 @@ m[0] * m[7] * m[5];
  * (those elements correspond to the last
  * row of the matrix in column-major order) and as though the 3-element
  * vector had a fourth element valued at 1.<p>
- * For transforming 3-dimensional coordinates
- * with a matrix that may be in a perspective
- * projection (whose last row is not necessarily (0, 0, 0, 1)), use
- * the {@link H3DU.Math.mat4projectVec3} method instead.
+ * For most purposes, use
+ * the {@link H3DU.Math.mat4projectVec3} method instead, which supports
+ * 4x4 matrices that may be in a perspective
+ * projection (whose last row is not necessarily (0, 0, 0, 1)).
  * @param {Array<Number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v X coordinate.
  * If "vy" and "vz" are omitted, this value can instead
@@ -2052,11 +2123,11 @@ m[0] * m[7] * m[5];
  * <li>The Z axis is parallel to the direction from the "camera"
  * to the <code>lookingAt</code> point.</ul><p>
  * This method is designed for use in a [right-handed coordinate system]{@tutorial glmath}
- * (the "camera" will point away from the Z axis).
+ * (the Z axis's direction will be from the "camera" to the point looked at).
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
- * 10, 12, and 14); doing so will point the "camera" toward the Z axis.
+ * 10, 12, and 14); the Z axis's direction will thus be from the point looked at to the "camera".
  * @param {Array<Number>} viewerPos A 3-element vector specifying
  * the "camera" position in world space.
  * @param {Array<Number>} [lookingAt] A 3-element vector specifying
@@ -2505,7 +2576,7 @@ m[0] * m[7] * m[5];
         cost * mat[4] - sint * mat[0], cost * mat[5] - sint * mat[1], cost * mat[6] - sint * mat[2], cost * mat[7] - sint * mat[3],
         mat[8], mat[9], mat[10], mat[11], mat[12], mat[13], mat[14], mat[15]];
     } else if(v0 === 0 && v1 === 0 && v2 === 0) {
-      return mat.slice(0, 16);
+      return H3DU.Math.mat4copy(mat);
     } else {
       var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
       v0 *= iscale;
@@ -2663,7 +2734,7 @@ m[0] * m[7] * m[5];
  */
   "planeNorm":function(plane) {
     "use strict";
-    return H3DU.Math.planeNormInPlace(plane.slice(0, 4));
+    return H3DU.Math.planeNormInPlace(H3DU.Math.vec4copy(plane));
   },
 /**
  * Finds the six clipping planes of a view frustum defined

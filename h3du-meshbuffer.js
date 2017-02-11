@@ -190,6 +190,51 @@ H3DU.MeshBuffer.prototype.primitiveCount = function() {
   return Math.floor(this.indices.length / 3);
 };
 /**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.MeshBuffer#
+ */
+H3DU.MeshBuffer.prototype.getPrimitives = function() {
+  "use strict";
+  var count = 3;
+  var primtype = this.primitiveType();
+  if(primtype === H3DU.Mesh.LINES) {
+    count = 2;
+  }
+  if(primtype === H3DU.Mesh.POINTS) {
+    count = 1;
+  }
+  var posattr = this._getAttribute(H3DU.Semantic.POSITION);
+  if(!posattr || posattr[3] < 3) {
+    return [];
+  }
+  var primcount = this.primitiveCount();
+  var stride = posattr[4];
+  var v = posattr[2];
+  var vindex = posattr[1];
+  var ret = [];
+  for(var j = 0; j < primcount; j++) {
+    var jc = j * count;
+    var i1 = this.indices[jc];
+    var i2 = count < 2 ? i1 : this.indices[jc + 1];
+    var i3 = count < 3 ? i2 : this.indices[jc + 2];
+    var vi1 = i1 * stride + vindex;
+    var vi2 = i2 * stride + vindex;
+    var vi3 = i3 * stride + vindex;
+    var primitive = [];
+    primitive.push( [v[vi1], v[vi1 + 1], v[vi1 + 2]]);
+    if(count >= 2) {
+      primitive.push([v[vi2], v[vi2 + 1], v[vi2 + 2]]);
+    }
+    if(count >= 3) {
+      primitive.push([v[vi3], v[vi3 + 1], v[vi3 + 2]]);
+    }
+    ret.push(primitive);
+  }
+  return ret;
+};
+
+/**
  * Finds the tightest
  * bounding box that holds all vertices in the mesh buffer.
  * @returns {Array<Number>} An array of six numbers describing the tightest
