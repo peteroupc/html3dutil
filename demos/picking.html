@@ -11,6 +11,9 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </head>
 <body>
 <canvas width="600" height="450" id=canvas></canvas>
+<div style="position:absolute;left:0;top:0">
+<input id=scalepicked type=checkbox><label for=scalepicked>Scale picked object</label>
+</div>
 <script id="demo">
 /* global H3DU, Polyhedra */
 // <!--
@@ -462,42 +465,46 @@ function getIntersectionRayTree(ray, tree) {
   return result;
 }
 
-function makeRay(startpt, endpt) {
+function makeRay(startPt, focusPt) {
   "use strict";
-  var dist = H3DU.Math.vec3sub(endpt, startpt);
-  return [startpt[0], startpt[1], startpt[2], dist[0], dist[1], dist[2]];
+  var dist = H3DU.Math.vec3sub(focusPt, startPt);
+  return [startPt[0], startPt[1], startPt[2], dist[0], dist[1], dist[2]];
 }
 
-function raypick(x, y, scene, sub) {
+function raypick(x, y, projView, viewport, objects) {
   "use strict";
   var w = scene.getWidth();
   var h = scene.getHeight();
-  var projview = H3DU.Math.mat4multiply(
-    sub.getProjectionMatrix(), sub.getViewMatrix());
-  var near = H3DU.Math.vec3fromWindowPoint([x, y, -1], projview, [0, 0, w, h]);
-  var far = H3DU.Math.vec3fromWindowPoint([x, y, 1], projview, [0, 0, w, h]);
+  var near = H3DU.Math.vec3fromWindowPoint([x, y, -1], projView, [0, 0, w, h]);
+  var far = H3DU.Math.vec3fromWindowPoint([x, y, 1], projView, [0, 0, w, h]);
   var ray = makeRay(near, far); // Near and far will be in world coordinates
-  var group = sub.getShape(0);
-  for(var i = 0; i < group.shapeCount(); i++) {
-    var shape = group.getShape(i);
+  var bestDist = Number.POSITIVE_INFINITY;
+  var ret = [-1, null];
+  for(var i = 0; i < objects.length; i++) {
+    var shape = objects[i];
     var bounds = shape.getBounds();
     if(getIntersectionRayBox(ray, bounds)) {
       var worldMatrix = shape.getMatrix();
-      var mvp = H3DU.Math.mat4multiply(projview, worldMatrix);
+      var mvp = H3DU.Math.mat4multiply(projView, worldMatrix);
       near = H3DU.Math.vec3fromWindowPoint([x, y, -1], mvp, [0, 0, w, h]);
       far = H3DU.Math.vec3fromWindowPoint([x, y, 1], mvp, [0, 0, w, h]);
       ray = makeRay(near, far); // Near and far will be in local coordinates
       var finePick = pickPoint(shape.getMeshBuffer(), ray);
-      console.log(i);
-      console.log(finePick);
       if(finePick) {
-       // Fine pick point will be in local coordinates
-        return [i, finePick.point];
+       // Fine pick point will be in local coordinates; convert
+       // to world coordinates to check distance from the near plane
+        var world = H3DU.Math.mat4projectVec3(finePick.point, worldMatrix);
+        var dist = H3DU.Math.vec3dist(near, world);
+        if(ret[0] === -1 || dist < bestDist) {
+       // Choose this point if it's the first or closest intersecting point
+    // to the near plane
+          bestDist = dist;
+          ret = [i, finePick.point];
+        }
       }
-      return [i, null];
     }
   }
-  return -1;
+  return ret;
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
@@ -505,7 +512,7 @@ function raypick(x, y, scene, sub) {
 var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .cullFace(H3DU.Scene3D.BACK)
    .setClearColor("white");
-var input = new H3DU.InputTracker(document);
+var input = new H3DU.InputTracker(document.getElementById("canvas"));
 var sub = new H3DU.Batch3D()
    .orthoAspect(-20, 20, -10, 10, -20, 20);
 sub.getLights().setBasic();
@@ -539,6 +546,10 @@ for(var i = 0; i < shapeGroup.shapeCount(); i++) {
 }
 shapeGroup.addShape(pickdot);
 var lastPress = false;
+function scalePickedObject() {
+  "use strict";
+  return document.getElementById("scalepicked").checked;
+}
 setInterval(function() {
   "use strict";
   input.update();
@@ -546,18 +557,9 @@ setInterval(function() {
     if(lastPress === false) {
     // Left button was just pressed
       var mousePos = input.mousePos();
-      var o = raypick(mousePos.cx, mousePos.cy, scene, sub, objects);
-      for(var i = 0; i < objects.length; i++) {
-        if(o[0] === i) {
-    // Do raypicking again to correctly position the picking dot, because
-    // the object being picked will be scaled.  This is not necessary
-    // if the object won't be scaled.
-          o = raypick(mousePos.cx, mousePos.cy, scene, sub, objects);
-          objects[i].getTransform().setScale(1.5);
-        } else {
-          objects[i].getTransform().setScale(1.0);
-        }
-      }
+      var viewport = [0, 0, scene.getWidth(), scene.getHeight()];
+      var projview = sub.getProjectionViewMatrix();
+      var o = raypick(mousePos.cx, mousePos.cy, projview, viewport, objects);
       if(o[1]) {
         pickdotShape = objects[o[0]];
         pickdotLocal = o[1];
@@ -575,8 +577,14 @@ setInterval(function() {
 H3DU.renderLoop(function(time) {
   "use strict";
   for(var i = 0; i < shapeGroup.shapeCount(); i++) {
-    shapeGroup.getShape(i).setQuaternion(
+    var shape = shapeGroup.getShape(i);
+    shape.setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
+    if(shape === pickdotShape && scalePickedObject()) {
+      shape.getTransform().setScale(1.5);
+    } else {
+      shape.getTransform().setScale(1.0);
+    }
   }
   if(pickdotShape) {
     var matrix = pickdotShape.getMatrix();

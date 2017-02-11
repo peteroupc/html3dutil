@@ -269,6 +269,20 @@ H3DU.Batch3D.prototype.getProjectionMatrix = function() {
   "use strict";
   return this._projectionMatrix.slice(0, 16);
 };
+
+/**
+ * Gets the current projection matrix multiplied by the current
+ * view matrix for this batch of shapes.
+ * @returns {Array<Number>} A 4x4 matrix used as the current
+ * projection-view matrix.
+ * @memberof! H3DU.Batch3D#
+ */
+H3DU.Batch3D.prototype.getProjectionViewMatrix = function() {
+  "use strict";
+  return H3DU.Math.mat4multiply(
+        this.getProjectionMatrix(), this.getViewMatrix());
+};
+
 /**
  * Gets the current view matrix for this batch of shapes.
  * @returns {Array<Number>} Return value.
@@ -303,11 +317,13 @@ H3DU.Batch3D.prototype.getLights = function() {
  * will be stored in the 3D scene's list of shapes.
  * Its parent will be set to no parent.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
+ * Throws an error if null.
  * @returns {H3DU.Batch3D} This object.
  * @memberof! H3DU.Batch3D#
  */
 H3DU.Batch3D.prototype.addShape = function(shape) {
   "use strict";
+  if(!shape)throw new Error();
   shape.parent = null;
   this.shapes.push(shape);
   return this;

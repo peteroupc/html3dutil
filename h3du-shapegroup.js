@@ -92,11 +92,13 @@ H3DU.ShapeGroup.prototype.copy = function() {
  * of shapes. Its reference, not a copy,
  * will be stored in the list of shapes.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
+ * Throws an error if null.
  * @returns {H3DU.ShapeGroup} This object.
  * @memberof! H3DU.ShapeGroup#
  */
 H3DU.ShapeGroup.prototype.addShape = function(shape) {
   "use strict";
+  if(!shape)throw new Error();
   shape.parent = this;
   this.shapes.push(shape);
   return this;
