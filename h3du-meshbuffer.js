@@ -190,11 +190,16 @@ H3DU.MeshBuffer.prototype.primitiveCount = function() {
   return Math.floor(this.indices.length / 3);
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Gets an array of vertex positions held by this mesh buffer,
+ * arranged by primitive
+ * @returns {Array<Array<Number>>} An array of primitives,
+ * each of which holds the vertices that make up that primitive.
+ * If this mesh holds triangles, each primitive will contain three
+ * vertices; if lines, two; and if points, one. Each vertex is a 3-element
+ * array containing that vertex's X, Y, and Z coordinates, in that order.
  * @memberof! H3DU.MeshBuffer#
  */
-H3DU.MeshBuffer.prototype.getPrimitives = function() {
+H3DU.MeshBuffer.prototype.getPositions = function() {
   "use strict";
   var count = 3;
   var primtype = this.primitiveType();

@@ -700,7 +700,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       "    lightFactor=spectmp*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
       "#ifdef SPECULAR",
       "    lightedColor+=reflectancespec(materialDiffuse,materialSpecular,normalize(lightPowerVec.xyz),",
-      "         normalize(viewDirection),normal,rough,metal)*lightFactor;",
+      "         normalize(viewDirection),normal,rough)*lightFactor;",
       "#else",
       "    lightedColor+=reflectance(materialDiffuse,normalize(lightPowerVec.xyz),",
       "         normalize(viewDirection),normal,rough,metal)*lightFactor;",
