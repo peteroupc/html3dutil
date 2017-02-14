@@ -202,7 +202,10 @@ H3DU.PbrMaterial = function(params) {
   */
   this.shader = null;
   /**
-   * TODO
+   * If true, the roughness property is treated as a "glossiness" property,
+   * or 1 minus roughness, and the roughness map is treated as a "glossiness"
+   * map, or an inverted roughness map.
+   * @type {Boolean}
    * @default
    */
   this.invertRoughness = false;
@@ -277,7 +280,9 @@ H3DU.PbrMaterial.fromBasicTexture = function(texture) {
  * the possibilities given below, and whose values are those
  * allowed for each key.<ul>
  * <li><code>workflow</code> - Either {@link H3DU.PbrMaterial.Specular} or {@link H3DU.PbrMaterial.Metalness}
- * <li><code>invertRoughness</code> - TODO: Not documented yet.
+ * <li><code>invertRoughness</code> - If true, the roughness property is treated as a "glossiness" property,
+ * or 1 minus roughness, and the roughness map is treated as a "glossiness"
+ * map, or an inverted roughness map. See {@link H3DU.PbrMaterial#invertRoughness}.
  * <li><code>diffuse</code> or <code>albedo</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the diffusion color (also called "albedo"). (See {@link H3DU.PbrMaterial#diffuse}.) The default is (0.8, 0.8, 0.8).
  * <li><code>specular</code> - A [color vector or string]{@link H3DU.toGLColor} giving

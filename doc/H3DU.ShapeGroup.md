@@ -70,7 +70,7 @@ will be stored in the list of shapes.
 #### Parameters
 
 * `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
-    A 3D shape.
+    A 3D shape. Throws an error if null.
 
 #### Return Value
 

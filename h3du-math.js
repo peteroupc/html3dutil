@@ -123,8 +123,8 @@ H3DU.Math = {
  * box) where three of its sides having a vertex in common are
  * defined by A, B, and C, in any order.
  * <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
- * <li>The triple product is the same as the <i>determinant</i> of a 3x3 matrix whose
- * rows or columns are the vectors A, B, and C, in that order.
+ * <li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
+ * of a 3x3 matrix whose rows or columns are the vectors A, B, and C, in that order.
  * <li>Assume A is perpendicular to vectors B and C. If the triple product
  * is positive (resp. negative), then A points at (resp.
  * points directly away from) the cross product of
@@ -1085,7 +1085,7 @@ H3DU.Math = {
  * Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
  * @param {Array<Number>} m A 3x3 matrix.
  * @returns {Array<Number>} The resulting 3x3 matrix.
- * Returns the identity matrix if this matrix is not invertible.
+ * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
  */
   "mat3invert":function(m) {
     "use strict";
@@ -1111,7 +1111,7 @@ H3DU.Math = {
  * Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
  * @param {Array<Number>} m A 4x4 matrix.
  * @returns {Array<Number>} The resulting 4x4 matrix.
- * Returns the identity matrix if this matrix is not invertible.
+ * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
  */
   "mat4invert":function(m) {
     "use strict";

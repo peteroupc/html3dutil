@@ -410,7 +410,11 @@ function fillCollection(docCollection, nodes, parentlong) {
       }
       entry += (node.virtual ? " (virtual)" : "") + "\n\n";
       if(typeof node.deprecated !== "undefined" && node.deprecated !== null) {
-        entry += "<b>Deprecated: " + normspace(node.deprecated) + "</b>\n\n";
+        if(node.deprecated === true) {
+          entry += "<b>Deprecated: Yes</b>\n\n";
+        } else {
+          entry += "<b>Deprecated: " + normspace(node.deprecated || "") + "</b>\n\n";
+        }
       }
       entry += normspace(node.description || "") + "\n\n";
       if(typeof node.type !== "undefined" && node.type !== null) {

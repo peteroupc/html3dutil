@@ -16,6 +16,8 @@ A geometric mesh in the form of buffer objects.
 
 * [getBounds](#H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds)<br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
+* [getPositions](#H3DU.MeshBuffer_H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
+arranged by primitive
 * [primitiveCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
 * [primitiveType](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType)<br>Gets the type of primitive stored in this mesh buffer.
@@ -42,6 +44,20 @@ This calculation uses the attribute with the semantic POSITION
 and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
 [Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_getPositions'></a>
+### H3DU.MeshBuffer#getPositions()
+
+Gets an array of vertex positions held by this mesh buffer,
+arranged by primitive
+
+#### Return Value
+
+An array of primitives,
+each of which holds the vertices that make up that primitive.
+If this mesh holds triangles, each primitive will contain three
+vertices; if lines, two; and if points, one. Each vertex is a 3-element
+array containing that vertex's X, Y, and Z coordinates, in that order. (Type: Array.&lt;Array.&lt;Number>>)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount'></a>
 ### H3DU.MeshBuffer#primitiveCount()

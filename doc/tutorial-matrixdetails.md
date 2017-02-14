@@ -178,8 +178,8 @@ position:
 * **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15]
 
 > The **a&prime;**<sub>_w_</sub> appears here because matrix transformation actually involves multiplying by
-a 4-element vector, which in this case is the vector (**a**<sub>_x_</sub>, **a**<sub>_y_</sub>, **a**<sub>_z_</sub>, 1).
-The result will be  (**a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>, **a&prime;**<sub>_z_</sub>, **a&prime;**<sub>_w_</sub>), which
+a 4-element vector, which in this case is the vector (**a**<sub>_x_</sub>, **a**<sub>_y_</sub>, **a**<sub>_z_</sub>, 1)<sup>_T_</sup>.
+The result will be  (**a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>, **a&prime;**<sub>_z_</sub>, **a&prime;**<sub>_w_</sub>)<sup>_T_</sup>, which
 is in _homogeneous coordinates_.  To convert these coordinates back to a 3D point, divide
 **a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>,
 and **a&prime;**<sub>_z_</sub> by **a&prime;**<sub>_w_</sub>. (See also ["Other Transformations"](#Other_Transformations).)
@@ -511,6 +511,19 @@ of multiplying matrices is important. This multiplication
 behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
 D3DX and DirectXMath libraries.
 
+To get an insight of how matrix multiplication works, treat the second matrix as a set
+of column vectors (with the same number of rows as the number of columns in the
+first matrix).  Multiplying the two matrices transforms these vectors in the same way
+as if the column vectors were transformed individually.  (This also explains why there can
+be one or more column vectors in the second matrix and not just four in the case of a 4x4 matrix,
+and also why transforming a column vector is the same as multiplying a 4x4 matrix by a
+matrix with one column and four rows.*)
+
+This insight reveals a practical use of matrix multiplication: transforming four 4-element
+vectors at once using a single matrix operation involving two 4x4 matrices.  After the
+matrix multiplication, the transformed vectors will be contained in each of the four columns
+of the output matrix.
+
 The methods `mat4multiply`, `mat4scale`, `mat4scaleInPlace`, `mat4translate`, and
 mat4rotate involve multiplying 4x4 matrices.
 
@@ -518,6 +531,9 @@ Related functions:
 
 * <a href="H3DU.Math.md#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a> -
  Multiplies two matrices
+
+\* Reading the [tutorial by Dmitry Sokolov](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection)
+led me to this highly useful insight.
 
 <a id=Other_Transformations></a>
 ### Other Transformations

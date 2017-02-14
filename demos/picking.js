@@ -1,4 +1,4 @@
-/* global H3DU, mesh, scene */
+/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -71,6 +71,113 @@ function getIntersectionRayBox(ray, box) {
     ray[1] + ray[4] * mn,
     ray[2] + ray[5] * mn
   ];
+}
+
+function triangleToPlane(face) {
+  "use strict";
+  var ac = H3DU.Math.vec3sub(face[0], face[2]);
+  var bc = H3DU.Math.vec3sub(face[1], face[2]);
+  // Find a normal of the triangle
+  var planeNormal = H3DU.Math.vec3normInPlace(H3DU.Math.vec3cross(ac, bc));
+  // Find the triangle's centroid, which will lie on the plane
+  var planeOrigin = [
+    (face[0][0] + face[1][0] + face[2][0]) / 3.0,
+    (face[0][1] + face[1][1] + face[2][1]) / 3.0,
+    (face[0][2] + face[1][2] + face[2][2]) / 3.0
+  ];
+  var plane = [
+    planeNormal[0], planeNormal[1], planeNormal[2],
+    planeOrigin[0], planeOrigin[1], planeOrigin[2]];
+  return plane;
+}
+function getClosestPointToTriangle3D(p, a, b, c) {
+  "use strict";
+  var ab = H3DU.Math.vec3sub(b, a);
+  var ac = H3DU.Math.vec3sub(c, a);
+  var ap = H3DU.Math.vec3sub(p, a);
+  var d1 = H3DU.Math.vec3dot(ab, ap);
+  var d2 = H3DU.Math.vec3dot(ac, ap);
+  if (d1 <= 0 && d2 <= 0) {
+    return a;
+  }
+  var bp = H3DU.Math.vec3sub(p, b);
+  var d3 = H3DU.Math.vec3dot(ab, bp);
+  var d4 = H3DU.Math.vec3dot(ac, bp);
+  if (d3 >= 0 && d4 <= d3) {
+    return b;
+  }
+  var vc = d1 * d4 - d3 * d2;
+  if (vc <= 0 && d1 >= 0 && d3 <= 0) {
+    var v = d1 / (d1 - d3);
+    return H3DU.Math.vec3add(a, H3DU.Math.vec3scale(ab, v));
+  }
+  var cp = H3DU.Math.vec3sub(p, c);
+  var d5 = H3DU.Math.vec3dot(ab, cp);
+  var d6 = H3DU.Math.vec3dot(ac, cp);
+  if (d6 >= 0 && d5 <= d6) {
+    return c;
+  }
+  var vb = d5 * d2 - d1 * d6;
+  if (vb <= 0 && d2 >= 0 && d6 <= 0) {
+    var w = d2 / (d2 - d6);
+    return H3DU.Math.vec3add(a, H3DU.Math.vec3scale(ac, w));
+  }
+  var va = d3 * d6 - d5 * d4;
+  if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0) {
+    w = (d4 - d3) / (d4 - d3 + (d5 - d6));
+    var tvec = H3DU.Math.vec3sub(c, b);
+    return H3DU.Math.vec3add(b, H3DU.Math.vec3scale(tvec, w));
+  }
+  var denom = 1.0 / (va + vb + vc);
+  v = vb * denom;
+  w = vc * denom;
+  var abv = H3DU.Math.vec3scale(ab, v);
+  var acw = H3DU.Math.vec3scale(ac, w);
+  return H3DU.Math.vec3add(a, H3DU.Math.vec3add(abv, acw));
+}
+
+// NOTE: Planes are as defined in the source library, HE_Mesh,
+  // not as defined in H3DU.Math
+function getIntersectionRayPlane(ray, plane) {
+  "use strict";
+  var r1origin = ray.slice(0, 3);
+  var r1direction = H3DU.Math.vec3normInPlace([ray[3], ray[4], ray[5]]);
+  var ab = r1direction;
+  var p1normal = plane.slice(0, 3);
+  var p1origin = plane.slice(3, 6);
+  var p1d = H3DU.Math.vec3dot(p1normal, p1origin);
+  var denom = H3DU.Math.vec3dot(p1normal, ab);
+  var t = p1d - H3DU.Math.vec3dot(p1normal, r1origin);
+  if(denom === 0) {
+   // Ray's direction and plane's normal are orthogonal to each
+   // other. Assume no intersection.
+    return null;
+  }
+  t /= denom;
+  if (t >= -EPSILON) {
+    t = Math.max(0, t);
+    var result = [
+      r1origin[0] + r1direction[0] * t,
+      r1origin[1] + r1direction[1] * t,
+      r1origin[2] + r1direction[2] * t
+    ];
+    return result;
+  }
+  return null;
+}
+function getIntersectionRayTriangle(ray, face) {
+  "use strict";
+  var lpi = getIntersectionRayPlane(ray, triangleToPlane(face));
+  if (typeof lpi !== "undefined" && lpi !== null) {
+    var p1 = lpi;
+    var tmp = getClosestPointToTriangle3D(p1,
+      face[0], face[1], face[2]);
+    var dist = H3DU.Math.vec3dist(tmp, p1);
+    if (Math.abs(dist) < EPSILON) {
+      return lpi;
+    }
+  }
+  return null;
 }
 
 function facesBounds(faces) {
@@ -161,6 +268,32 @@ function classifyPolygonToPlane3D(polygon, plane) {
   return AABBTree.ON;
 }
 
+function getIntersectionRayTree(ray, tree) {
+  "use strict";
+  var result = [];
+  var queue = [];
+  queue.push(tree.getRoot());
+  var current;
+  while (queue.length > 0) {
+    current = queue.pop();
+    if (getIntersectionRayBox(ray, current.aabb)) {
+      if (current.isLeaf) {
+        result.push(current);
+      } else {
+        if (typeof current.positive !== "undefined" && current.positive !== null) {
+          queue.push(current.positive);
+        }
+        if (typeof current.negative !== "undefined" && current.negative !== null) {
+          queue.push(current.negative);
+        }
+        if (typeof current.mid !== "undefined" && current.mid !== null) {
+          queue.push(current.mid);
+        }
+      }
+    }
+  }
+  return result;
+}
 var AABBNode = function() {
   "use strict";
   this.level = -1;
@@ -182,10 +315,10 @@ AABBTree.prototype._buildTree = function(mesh) {
   "use strict";
   this.root = new AABBNode();
   var faces = mesh.getPositions();
-  this._buildNode(this.root, faces, mesh, 0);
+  this._buildNode(this.root, faces, 0);
 };
 /** @private */
-AABBTree.prototype._buildNode = function(node, faces, root, level) {
+AABBTree.prototype._buildNode = function(node, faces, level) {
   "use strict";
   node.level = level;
   node.aabb = facesBounds(faces);
@@ -227,17 +360,17 @@ AABBTree.prototype._buildNode = function(node, faces, root, level) {
     node.isLeaf = true;
     if (mid.length > 0) {
       node.mid = new AABBNode();
-      this._buildNode(node.mid, mid, mesh, level + 1);
+      this._buildNode(node.mid, mid, level + 1);
       node.isLeaf = false;
     }
     if (neg.length > 0) {
       node.negative = new AABBNode();
-      this._buildNode(node.negative, neg, mesh, level + 1);
+      this._buildNode(node.negative, neg, level + 1);
       node.isLeaf = false;
     }
     if (pos.length > 0) {
       node.positive = new AABBNode();
-      this._buildNode(node.positive, pos, mesh, level + 1);
+      this._buildNode(node.positive, pos, level + 1);
       node.isLeaf = false;
     }
   }
@@ -311,146 +444,7 @@ function pickPoint(mesh, ray) {
   };
 }
 
-function getIntersectionRayTriangle(ray, face) {
-  "use strict";
-  var ac = H3DU.Math.vec3sub(face[0], face[2]);
-  var bc = H3DU.Math.vec3sub(face[1], face[2]);
-  // Find a normal of the triangle
-  var planeNormal = H3DU.Math.vec3normInPlace(H3DU.Math.vec3cross(ac, bc));
-  // Find the triangle's centroid, which will lie on the plane
-  var planeOrigin = [
-    (face[0][0] + face[1][0] + face[2][0]) / 3.0,
-    (face[0][1] + face[1][1] + face[2][1]) / 3.0,
-    (face[0][2] + face[1][2] + face[2][2]) / 3.0
-  ];
-  var plane = [
-    planeNormal[0], planeNormal[1], planeNormal[2],
-    planeOrigin[0], planeOrigin[1], planeOrigin[2]];
-  var lpi = getIntersectionRayPlane(ray, plane);
-  if (typeof lpi !== "undefined" && lpi !== null) {
-    var p1 = lpi;
-    var tmp = getClosestPointToTriangle3D(p1,
-      face[0], face[1], face[2]);
-    var dist = H3DU.Math.vec3dist(tmp, p1);
-    if (Math.abs(dist) < EPSILON) {
-      return lpi;
-    }
-  }
-  return null;
-}
-
-  // NOTE: Planes are as defined in the source library, HE_Mesh,
-  // not as defined in H3DU.Math
-function getIntersectionRayPlane(ray, plane) {
-  "use strict";
-  var r1origin = ray.slice(0, 3);
-  var r1direction = H3DU.Math.vec3normInPlace([ray[3], ray[4], ray[5]]);
-  var ab = r1direction;
-  var p1normal = plane.slice(0, 3);
-  var p1origin = plane.slice(3, 6);
-  var p1d = H3DU.Math.vec3dot(p1normal, p1origin);
-  var denom = H3DU.Math.vec3dot(p1normal, ab);
-  var t = p1d - H3DU.Math.vec3dot(p1normal, r1origin);
-  if(denom === 0) {
-  // Ray's direction and plane's normal are orthogonal to each
-  // other. Assume for now that coplanar rays intersect with the plane.
-  // This is a detail added by Peter O.
-  // which was not handled in HE_Mesh as of Feb. 11
-    var cp = H3DU.Math.vec3dot(p1normal, r1origin) - p1d;
-    if(cp * cp < EPSILON) {
-      // The ray's origin's squared distance to the plane is less than EPSILON,
-      // so assume it lies on the plane and intersects with it
-      return [r1origin[0], r1origin[1], r1origin[2]];
-    }
-    return null;
-  }
-  t /= denom;
-  if (t >= -EPSILON) {
-    t = Math.max(0, t);
-    var result = [
-      r1origin[0] + r1direction[0] * t,
-      r1origin[1] + r1direction[1] * t,
-      r1origin[2] + r1direction[2] * t
-    ];
-    return result;
-  }
-  return null;
-}
-
-function getClosestPointToTriangle3D(p, a, b, c) {
-  "use strict";
-  var ab = H3DU.Math.vec3sub(b, a);
-  var ac = H3DU.Math.vec3sub(c, a);
-  var ap = H3DU.Math.vec3sub(p, a);
-  var d1 = H3DU.Math.vec3dot(ab, ap);
-  var d2 = H3DU.Math.vec3dot(ac, ap);
-  if (d1 <= 0 && d2 <= 0) {
-    return a;
-  }
-  var bp = H3DU.Math.vec3sub(p, b);
-  var d3 = H3DU.Math.vec3dot(ab, bp);
-  var d4 = H3DU.Math.vec3dot(ac, bp);
-  if (d3 >= 0 && d4 <= d3) {
-    return b;
-  }
-  var vc = d1 * d4 - d3 * d2;
-  if (vc <= 0 && d1 >= 0 && d3 <= 0) {
-    var v = d1 / (d1 - d3);
-    return H3DU.Math.vec3add(a, H3DU.Math.vec3scale(ab, v));
-  }
-  var cp = H3DU.Math.vec3sub(p, c);
-  var d5 = H3DU.Math.vec3dot(ab, cp);
-  var d6 = H3DU.Math.vec3dot(ac, cp);
-  if (d6 >= 0 && d5 <= d6) {
-    return c;
-  }
-  var vb = d5 * d2 - d1 * d6;
-  if (vb <= 0 && d2 >= 0 && d6 <= 0) {
-    var w = d2 / (d2 - d6);
-    return H3DU.Math.vec3add(a, H3DU.Math.vec3scale(ac, w));
-  }
-  var va = d3 * d6 - d5 * d4;
-  if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0) {
-    w = (d4 - d3) / (d4 - d3 + (d5 - d6));
-    var tvec = H3DU.Math.vec3sub(c, b);
-    return H3DU.Math.vec3add(b, H3DU.Math.vec3scale(tvec, w));
-  }
-  var denom = 1.0 / (va + vb + vc);
-  v = vb * denom;
-  w = vc * denom;
-  var abv = H3DU.Math.vec3scale(ab, v);
-  var acw = H3DU.Math.vec3scale(ac, w);
-  return H3DU.Math.vec3add(a, H3DU.Math.vec3add(abv, acw));
-}
-
-function getIntersectionRayTree(ray, tree) {
-  "use strict";
-  var result = [];
-  var queue = [];
-  queue.push(tree.getRoot());
-  var current;
-  while (queue.length > 0) {
-    current = queue.pop();
-    if (getIntersectionRayBox(ray, current.aabb)) {
-      if (current.isLeaf) {
-        result.push(current);
-      } else {
-        if (typeof current.positive !== "undefined" && current.positive !== null) {
-          queue.push(current.positive);
-        }
-        if (typeof current.negative !== "undefined" && current.negative !== null) {
-          queue.push(current.negative);
-        }
-        if (typeof current.mid !== "undefined" && current.mid !== null) {
-          queue.push(current.mid);
-        }
-      }
-    }
-  }
-  return result;
-}
-
-function _makeRay(startPt, focusPt) {
+function makeRay(startPt, focusPt) {
   "use strict";
   var dist = H3DU.Math.vec3sub(focusPt, startPt);
   return [startPt[0], startPt[1], startPt[2], dist[0], dist[1], dist[2]];
@@ -459,11 +453,9 @@ function _makeRay(startPt, focusPt) {
 /* exported raypick */
 function raypick(x, y, projView, viewport, objects) {
   "use strict";
-  var w = scene.getWidth();
-  var h = scene.getHeight();
-  var near = H3DU.Math.vec3fromWindowPoint([x, y, -1], projView, [0, 0, w, h]);
-  var far = H3DU.Math.vec3fromWindowPoint([x, y, 1], projView, [0, 0, w, h]);
-  var ray = _makeRay(near, far); // Near and far will be in world coordinates
+  var near = H3DU.Math.vec3fromWindowPoint([x, y, -1], projView, viewport);
+  var far = H3DU.Math.vec3fromWindowPoint([x, y, 1], projView, viewport);
+  var ray = makeRay(near, far); // Near and far will be in world coordinates
   var bestDist = Number.POSITIVE_INFINITY;
   var ret = {"index":-1};
   for(var i = 0; i < objects.length; i++) {
@@ -478,9 +470,9 @@ function raypick(x, y, projView, viewport, objects) {
     if(getIntersectionRayBox(ray, bounds)) {
       var worldMatrix = shape.getMatrix();
       var mvp = H3DU.Math.mat4multiply(projView, worldMatrix);
-      near = H3DU.Math.vec3fromWindowPoint([x, y, -1], mvp, [0, 0, w, h]);
-      far = H3DU.Math.vec3fromWindowPoint([x, y, 1], mvp, [0, 0, w, h]);
-      ray = _makeRay(near, far); // Near and far will be in local coordinates
+      near = H3DU.Math.vec3fromWindowPoint([x, y, -1], mvp, viewport);
+      far = H3DU.Math.vec3fromWindowPoint([x, y, 1], mvp, viewport);
+      ray = makeRay(near, far); // Near and far will be in local coordinates
       var finePick = pickPoint(shape.getMeshBuffer(), ray);
       if(finePick) {
        // Fine pick point will be in local coordinates; convert

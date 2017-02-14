@@ -52,4 +52,7 @@ Dir.chdir(".."){
  filesForDoc=files|Dir.glob("extras/*.js")
  filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
  `jsdoc -u tutorials -t build -R README.md -d doc #{filesForDoc}`
+ svgs=%w( doc/websafe.svg doc/colornames.svg).each{|s|
+  `svgo -i #{ffq(s)} -o #{ffq(s)}`
+ }
 }

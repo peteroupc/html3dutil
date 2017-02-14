@@ -17,6 +17,8 @@ of a frame buffer using a particular shader.
 of shapes.
 * [getLights](#H3DU.Batch3D_H3DU.Batch3D_getLights)<br>Gets the light sources used by this batch.
 * [getProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_getProjectionMatrix)<br>Gets the current projection matrix for this batch of shapes.
+* [getProjectionViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_getProjectionViewMatrix)<br>Gets the current projection matrix multiplied by the current
+view matrix for this batch of shapes.
 * [getShape](#H3DU.Batch3D_H3DU.Batch3D_getShape)<br>Gets the shape or shape group located
 in this batch at the given index.
 * [getViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_getViewMatrix)<br>Gets the current view matrix for this batch of shapes.
@@ -67,7 +69,7 @@ Its parent will be set to no parent.
 #### Parameters
 
 * `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
-    A 3D shape.
+    A 3D shape. Throws an error if null.
 
 #### Return Value
 
@@ -91,6 +93,17 @@ Gets the current projection matrix for this batch of shapes.
 
 A 4x4 matrix used as the current
 projection matrix. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Batch3D_H3DU.Batch3D_getProjectionViewMatrix'></a>
+### H3DU.Batch3D#getProjectionViewMatrix()
+
+Gets the current projection matrix multiplied by the current
+view matrix for this batch of shapes.
+
+#### Return Value
+
+A 4x4 matrix used as the current
+projection-view matrix. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Batch3D_H3DU.Batch3D_getShape'></a>
 ### H3DU.Batch3D#getShape(index)

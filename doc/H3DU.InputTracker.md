@@ -46,17 +46,21 @@ the HTML 3D Library. Example:
 * [.TAB](#H3DU.InputTracker.TAB)<br>Key code for the tab key.
 * [.UP](#H3DU.InputTracker.UP)<br>Key code for the up arrow key.
 * [.ZERO](#H3DU.InputTracker.ZERO)<br>Key code for the 0 key.
+* [deltaXY](#H3DU.InputTracker_H3DU.InputTracker_deltaXY)<br><b>Deprecated: Yes</b>
+* [leftButton](#H3DU.InputTracker_leftButton)<br>True if the left mouse button was detected as being down.
+* [middleButton](#H3DU.InputTracker_middleButton)<br>True if the middle mouse button was detected as being down.
+* [rightButton](#H3DU.InputTracker_rightButton)<br>True if the right mouse button was detected as being down.
 
 ### Methods
 
-* [deltaXY](#H3DU.InputTracker_H3DU.InputTracker_deltaXY)<br>Returns the current mouse position, delta
-mouse position, and delta mouse wheel
-position (see the "update" method).
 * [dispose](#H3DU.InputTracker_H3DU.InputTracker_dispose)<br>Disposes all resources used by this input tracker.
 * [getKey](#H3DU.InputTracker_H3DU.InputTracker_getKey)<br>Gets whether a key is pressed, as detected by this
 input tracker.
+* [mousePos](#H3DU.InputTracker_H3DU.InputTracker_mousePos)<br>Returns the current mouse position, delta
+mouse position, and delta mouse wheel
+position (see the "update" method).
 * [mousewheel](#H3DU.InputTracker_H3DU.InputTracker_mousewheel)<br><b>Deprecated: Will be removed in the future. Use the
-deltaTicks method to find out whether the user
+mousePos method to find out whether the user
 has rotated the mouse wheel.</b>
 * [update](#H3DU.InputTracker_H3DU.InputTracker_update)<br>Retrieves the current position of the mouse within
 the page's client area, as detected by the input
@@ -214,26 +218,33 @@ the keys for the other basic digits 1 through 9.
 
 Default Value: `48`
 
- <a name='H3DU.InputTracker_H3DU.InputTracker_deltaXY'></a>
-### H3DU.InputTracker#deltaXY()
+<a id='H3DU.InputTracker_H3DU.InputTracker_deltaXY'></a>
+### H3DU.InputTracker#H3DU.InputTracker#deltaXY
 
-Returns the current mouse position, delta
-mouse position, and delta mouse wheel
-position (see the "update" method).
+<b>Deprecated: Yes</b>
 
-#### Return Value
+An alias for H3DU.InputTracker#mousePos.
 
-An object containing the following keys:<ul>
-<li><code>cx</code> - X coordinate of the current mouse
-position.
-<li><code>cx</code> - Y coordinate of the current mouse
-position.
-<li><code>x</code> - X component of the delta mouse position.
-<li><code>y</code> - Y component of the delta mouse position.
-<li><code>ticks</code> - The delta mouse wheel position.
-</ul>
-If this object's update method wasn't called, all these values
-will be 0. (Type: Object)
+<a id='H3DU.InputTracker_leftButton'></a>
+### H3DU.InputTracker#leftButton
+
+True if the left mouse button was detected as being down.
+
+Type: Boolean
+
+<a id='H3DU.InputTracker_middleButton'></a>
+### H3DU.InputTracker#middleButton
+
+True if the middle mouse button was detected as being down.
+
+Type: Boolean
+
+<a id='H3DU.InputTracker_rightButton'></a>
+### H3DU.InputTracker#rightButton
+
+True if the right mouse button was detected as being down.
+
+Type: Boolean
 
  <a name='H3DU.InputTracker_H3DU.InputTracker_dispose'></a>
 ### H3DU.InputTracker#dispose()
@@ -254,11 +265,32 @@ input tracker.
 
 key Key code of the key to check. (Type: Number)
 
+ <a name='H3DU.InputTracker_H3DU.InputTracker_mousePos'></a>
+### H3DU.InputTracker#mousePos()
+
+Returns the current mouse position, delta
+mouse position, and delta mouse wheel
+position (see the "update" method).
+
+#### Return Value
+
+An object containing the following keys:<ul>
+<li><code>cx</code> - X coordinate of the current mouse
+position.
+<li><code>cx</code> - Y coordinate of the current mouse
+position.
+<li><code>x</code> - X component of the delta mouse position.
+<li><code>y</code> - Y component of the delta mouse position.
+<li><code>ticks</code> - The delta mouse wheel position.
+</ul>
+If this object's update method wasn't called, all these values
+will be 0. (Type: Object)
+
  <a name='H3DU.InputTracker_H3DU.InputTracker_mousewheel'></a>
 ### H3DU.InputTracker#mousewheel(func)
 
 <b>Deprecated: Will be removed in the future. Use the
-deltaTicks method to find out whether the user
+mousePos method to find out whether the user
 has rotated the mouse wheel.</b>
 
 Sets a function to handle mouse wheel events.

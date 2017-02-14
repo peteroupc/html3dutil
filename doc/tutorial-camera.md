@@ -256,7 +256,8 @@ As the name suggests, clip space coordinates are used for clipping primitives to
 screen. Each clip space vertex is in _homogeneous coordinates_, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
 perspective matrix returned by <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, for example,
-transforms W to the negative Z coordinate in eye space.
+transforms W to the negative Z coordinate in eye space, that is, it will increase with
+the distance to the coordinates from the "eye" or "camera".
 
 To take perspective into account, the clip space X, Y, and Z coordinates are
 divided by the clip space W, and then converted to _window coordinates_,
@@ -264,6 +265,12 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels; to set the viewport's
 size, call the `setDimensions` method of `Scene3D`.
+
+Dividing the X, Y, and Z coordinates by the clip space W results in the effect
+that as W gets higher and higher (and farther and farther from the "eye" or "camera"),
+the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
+is the _perspective_ effect mentioned earlier: objects will appear smaller and smaller
+as they are more and more distant from the "camera".
 
 <a id=Other_Pages></a>
 ## Other Pages
