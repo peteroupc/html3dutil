@@ -651,6 +651,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
     "vec3 viewDirection=normalize(tview.xyz/tview.w);",
     "vec3 environment=vec3(1.0);",
+/* LATER: Support environment maps
     "#ifdef ENV_MAP",
     "vec3 eyepos=vec3(inverseView*vec4(viewPositionVar.xyz,1.0));",
     "vec3 refl=reflect(-eyepos,normal);",
@@ -664,6 +665,7 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "  (atan(refl.x,refl.z)+PI)*ONE_DIV_TWOPI, acos(clamp(-refl.y,-1.0,1.0))*ONE_DIV_PI )));",
     "environment=tolinear(environment);",
     "#endif", "#endif",
+*/
     "#ifdef PHYSICAL_BASED",
     "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient
     "#else",

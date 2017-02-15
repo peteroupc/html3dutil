@@ -8,6 +8,10 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * A binary space partitioning (BSP) tree.
+ * @param {Array<Polygon>} An array of polygons forming the BSP tree
+ */
 function BspTree(polygons) {
   "use strict";
   this.plane = null;
@@ -22,8 +26,9 @@ BspTree._negatePlane = function(plane) {
   return [-plane[0], -plane[1], -plane[2], plane[3], plane[4], plane[5]];
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Generates a mesh buffer containing the polygons
+ * stored in this BSP tree.
+ * @returns {H3DU.MeshBuffer} Return value.
  * @memberof! BspTree#
  */
 BspTree.prototype.toMeshBuffer = function() {
@@ -70,8 +75,8 @@ BspTree.prototype._getFacesInternal = function(polygons) {
   }
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Gets a copy of the polygons used in this BSP tree.
+ * @returns {Array<Polygon>} An array of the polygons.
  * @memberof! BspTree#
  */
 BspTree.prototype.getPolygons = function() {
@@ -81,8 +86,8 @@ BspTree.prototype.getPolygons = function() {
   return p;
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Flips the solid and empty space for this BSP tree.
+ * @returns {BspTree} This object.
  * @memberof! BspTree#
  */
 BspTree.prototype.flip = function() {
@@ -107,6 +112,11 @@ BspTree.prototype.flip = function() {
   this.backTree = ft;
   return this;
 };
+/**
+ * Describes a convex polygon.
+ * @param {<Array<Array<Number>>} verts An array of three 3-element vectors
+ * describing a triangle.
+ */
 function Polygon(verts) {
   "use strict";
   this.plane = null;
@@ -255,7 +265,7 @@ BspTree.prototype._clipInternal = function(polygons) {
 /**
  * TODO: Not documented yet.
  * @param {*} node
- * @returns {*} Return value.
+ * @returns {BspTree} This object.
  * @memberof! BspTree#
  */
 BspTree.prototype.clip = function(node) {
@@ -270,9 +280,10 @@ BspTree.prototype.clip = function(node) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} mesh
- * @returns {*} Return value. */
+ * Generates a BSP tree from a mesh buffer.
+ * @param {H3DU.MeshBuffer} mesh A mesh buffer.
+ * @returns {BspTree} The resulting BSP tree.
+ */
 BspTree.fromMeshBuffer = function(mesh) {
   "use strict";
   if(mesh.primitiveType() === H3DU.Mesh.TRIANGLES) {
@@ -288,8 +299,8 @@ BspTree.fromMeshBuffer = function(mesh) {
   }
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Creates a copy of this BSP tree.
+ * @returns {BspTree} A copy of this object.
  * @memberof! BspTree#
  */
 BspTree.prototype.copy = function() {
@@ -307,7 +318,7 @@ BspTree.prototype._clipflip2 = function(other) {
 /**
  * TODO: Not documented yet.
  * @param {*} other
- * @returns {*} Return value.
+ * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */
 BspTree.prototype.union = function(other) {
@@ -321,7 +332,7 @@ BspTree.prototype.union = function(other) {
 /**
  * TODO: Not documented yet.
  * @param {*} other
- * @returns {*} Return value.
+ * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */
 BspTree.prototype.difference = function(other) {
@@ -335,7 +346,7 @@ BspTree.prototype.difference = function(other) {
 /**
  * TODO: Not documented yet.
  * @param {*} other
- * @returns {*} Return value.
+ * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */
 BspTree.prototype.intersection = function(other) {
@@ -349,7 +360,7 @@ BspTree.prototype.intersection = function(other) {
 /**
  * TODO: Not documented yet.
  * @param {*} other
- * @returns {*} Return value.
+ * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */
 BspTree.prototype.xor = function(other) {

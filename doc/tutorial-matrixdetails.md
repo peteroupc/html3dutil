@@ -16,14 +16,9 @@ This section contains detailed information on matrices.
 <a id=Contents></a>
 ## Contents
 
-[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>&nbsp;&nbsp;[A Matrix Transforms Between Coordinate Systems](#A_Matrix_Transforms_Between_Coordinate_Systems)<br>[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>
+[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>&nbsp;&nbsp;[A Matrix Transforms Between Coordinate Systems](#A_Matrix_Transforms_Between_Coordinate_Systems)<br>&nbsp;&nbsp;[Why a 4x4 Matrix?](#Why_a_4x4_Matrix)<br>[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Other Transformations](#Other_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>[Rotation Example](#Rotation_Example)<br>
 
 ## Arrangement
-
-All functions dealing with 4x4 matrices assume that
-the translation elements in x, y, and z are located in the
-13th, 14th, and 15th elements of the matrix array
-(zero-based indices 12, 13, and 14).
 
 In mathematical publications,
 matrices are often notated in column-major order, in which each
@@ -166,23 +161,43 @@ the second column shows a Y-axis vector at (0, 0.5, 0.866025),
 the third column shows a Y-axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).
 
+<a id=Why_a_4x4_Matrix></a>
+### Why a 4x4 Matrix?
+A matrix can describe _linear transformations_ from one vector in space
+to another.  These transformations, which include [scaling](#Scaling),
+[rotation](#Rotation), and shearing, can change where a vector points _at_,
+but not where it points _from_.  It's enough to use a 3x3 matrix to describe
+linear transformations in 3D space.
+
+But certain other transformations, such as [translation](#Translation) and
+[perspective](#Other_Transformations), are common in 3D computer graphics.
+To describe translation and perspective in 3D, the 3x3 matrix must be
+augmented by an additional row and column, turning it into a 4x4 matrix.
+
+A 4x4 matrix can describe linear transformations in 4D space and
+transform 4-element vectors.  A 4-element vector has four components:
+X, Y, Z, and W. If a 4-element vector represents a 3D point, these
+components are the point's _homogeneous coordinates_ (unless the
+vector's _w_ is 0).  To convert these coordinates back to 3D, divide
+X, Y, and Z by W.  This is usually only required, however, if the
+matrix describes a perspective projection (see
+["Other Transformations"](#Other_Transformations)).
+
+A similar situation applies in 2D between 2x2 and 3x3 matrices as it does
+in 3D between 3x3 and 4x4 matrices.
+
 <a id=Transforming_Points></a>
 ## Transforming Points
 
 The transformation formula multiplies a matrix by a 3D point to change that point's
 position:
 
-* **a&prime;**<sub>_x_</sub> = matrix[0] &#x22c5; **a**<sub>_x_</sub> + matrix[4] &#x22c5; **a**<sub>_y_</sub> + matrix[8] &#x22c5; **a**<sub>_z_</sub> + matrix[12]
-* **a&prime;**<sub>_y_</sub> = matrix[1] &#x22c5; **a**<sub>_x_</sub> + matrix[5] &#x22c5; **a**<sub>_y_</sub> + matrix[9] &#x22c5; **a**<sub>_z_</sub> + matrix[13]
-* **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14]
-* **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15]
+* **a&prime;**<sub>_x_</sub> = matrix[0] &#x22c5; **a**<sub>_x_</sub> + matrix[4] &#x22c5; **a**<sub>_y_</sub> + matrix[8] &#x22c5; **a**<sub>_z_</sub> + matrix[12] &#x22c5; **a**<sub>_w_</sub>
+* **a&prime;**<sub>_y_</sub> = matrix[1] &#x22c5; **a**<sub>_x_</sub> + matrix[5] &#x22c5; **a**<sub>_y_</sub> + matrix[9] &#x22c5; **a**<sub>_z_</sub> + matrix[13] &#x22c5; **a**<sub>_w_</sub>
+* **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14] &#x22c5; **a**<sub>_w_</sub>
+* **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15] &#x22c5; **a**<sub>_w_</sub>
 
-> The **a&prime;**<sub>_w_</sub> appears here because matrix transformation actually involves multiplying by
-a 4-element vector, which in this case is the vector (**a**<sub>_x_</sub>, **a**<sub>_y_</sub>, **a**<sub>_z_</sub>, 1)<sup>_T_</sup>.
-The result will be  (**a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>, **a&prime;**<sub>_z_</sub>, **a&prime;**<sub>_w_</sub>)<sup>_T_</sup>, which
-is in _homogeneous coordinates_.  To convert these coordinates back to a 3D point, divide
-**a&prime;**<sub>_x_</sub>, **a&prime;**<sub>_y_</sub>,
-and **a&prime;**<sub>_z_</sub> by **a&prime;**<sub>_w_</sub>. (See also ["Other Transformations"](#Other_Transformations).)
+For more on why **a&prime;**<sub>_w_</sub> appears here, see ["Why a 4x4 Matrix?"](#Why_a_4x4_Matrix).  In each formula that follows,  **a**<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
 
 The following sections describe different kinds of matrix transformations in more detail.
 
@@ -194,62 +209,6 @@ Related functions:
  Transforms a 3-element vector with a 3x3 matrix
 * <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> -
  Does a perspective-correct transformation of a 3D point with a 4x4 matrix
-
-<a id=Translation></a>
-### Translation
-
-A translation is a shifting of an object's position. In a transformation matrix,
-this shifting effectively happens after all other transformations such as scaling and rotation.
-It uses the 13th, 14th, and 15th elements of the matrix as seen here:
-
-<math>
-<mfenced open="[" close="]">
- <mtable>
- <mtr>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>tx</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>ty</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>0</mn></mtd>
- <mtd><mn>1</mn></mtd>
- <mtd><mn>tz</mn></mtd>
- </mtr>
- <mtr>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mi>0</mi></mtd>
- <mtd><mn>1</mn></mtd>
- </mtr>
-</mtable>
-</mfenced>
-</math>
-
-where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
-`tz` is added to the Z coordinate. The transformation formulas would look like:
-
-* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + tx
-* **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
-* **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + tz
-* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
-
-For example, we add the input x and `tx` to get the output x. If `tx` is 0, x
-remains unchanged. Likewise for y and z.
-
-Related functions:
-
-* <a href="H3DU.Math.md#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a> -
- Returns a translation matrix
-* <a href="H3DU.Math.md#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a> -
- Multiplies a matrix by a translation.
 
 <a id=Scaling></a>
 ### Scaling
@@ -296,7 +255,7 @@ The scaling formula would look like:
 * **a&prime;**<sub>_x_</sub> = sx &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + sy &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + sz &#x22c5; **a**<sub>_z_</sub> + 0
-* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
 
 For example, we multiply the input x by `sx` to get the output x. If `sx` is 1, x
 remains unchanged. Likewise for y and z.
@@ -324,11 +283,66 @@ Related functions:
 * <a href="H3DU.Math.md#H3DU.Math.mat3identity">H3DU.Math.mat3identity()</a> -
  Returns a 3x3 identity matrix
 
+<a id=Translation></a>
+### Translation
+
+A translation is a shifting of an object's position. In a transformation matrix,
+this shifting effectively happens after all other transformations such as scaling and rotation.
+It uses the 13th, 14th, and 15th elements of the matrix as seen here:
+
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>tx</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>ty</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>tz</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mn>1</mn></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
+where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
+`tz` is added to the Z coordinate. The transformation formulas would look like:
+
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + tx
+* **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
+* **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + tz
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
+
+For example, we add the input x and `tx` to get the output x. If `tx` is 0, x
+remains unchanged. Likewise for y and z.
+
+Related functions:
+
+* <a href="H3DU.Math.md#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a> -
+ Returns a translation matrix
+* <a href="H3DU.Math.md#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a> -
+ Multiplies a matrix by a translation.
+
 <a id=Rotation></a>
 ### Rotation
 
-Rotation changes an object's orientation. Rotation uses the upper-left
-corner of a matrix. Given an angle of rotation, &theta;,
+Rotation changes an object's orientation. Given an angle of rotation, &theta;,
 the transformation matrix is as follows. (For a list of common
 sines and cosines, see the end of this section.)
 
@@ -429,14 +443,6 @@ sines and cosines, see the end of this section.)
 </math>
 <figcaption>Rotation about the Z axis.</figcaption></figure>
 
-For conciseness, we only give the rotation formula for the X axis,
-which would look like:
-
-* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
-* **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (cos &theta;) &#x22c5; **a**<sub>_y_</sub> + -(sin &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
-* **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (sin &theta;) &#x22c5; **a**<sub>_y_</sub> + (cos &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
-* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
-
 Note that:
 
 * When we rotate a point about the X axis, the X coordinate is unchanged
@@ -448,34 +454,8 @@ counterclockwise rotation in <a href="tutorial-glmath.md">right-handed coordinat
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.
 
-As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
-&theta; = 60&deg;).
-We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
-We plug those numbers into the rotation formula to get a formula for rotating a
-point 60 degrees about the X axis.
-
-* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0 = **a**<sub>_x_</sub>
-* **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.5 &#x22c5; **a**<sub>_y_</sub> + -0.866025 &#x22c5; **a**<sub>_z_</sub> + 0
-* **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.866025 &#x22c5; **a**<sub>_y_</sub> + 0.5 &#x22c5; **a**<sub>_z_</sub> + 0
-* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
-
-If a point is located at (10, 20, 30), the rotated point would now be:
-
-* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 0
-* = 1 &#x22c5; 10
-* = 10
-* **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; 10 + 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30 + 0
-* ~= 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30
-* ~= 10 + -25.98075
-* ~= -15.98075
-* **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; 10 + 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30 + 0
-* ~= 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30
-* ~= 17.3205 + 15
-* ~= 32.3205
-* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 1
-* = 1
-
-So the rotated point would be at about (10, -15.98075, 32.3205).
+See ["Rotation example"](#Rotation_Example) for an illustration of a rotation
+transformation.
 
 Related functions:
 
@@ -511,10 +491,10 @@ of multiplying matrices is important. This multiplication
 behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
 D3DX and DirectXMath libraries.
 
-To get an insight of how matrix multiplication works, treat the second matrix as a set
+To get an insight of how matrix multiplication works, treat the second matrix as a group
 of column vectors (with the same number of rows as the number of columns in the
-first matrix).  Multiplying the two matrices transforms these vectors in the same way
-as if the column vectors were transformed individually.  (This also explains why there can
+first matrix).  Multiplying the two matrices transforms these vectors to new ones in the
+same way as if the column vectors were transformed individually.  (This also explains why there can
 be one or more column vectors in the second matrix and not just four in the case of a 4x4 matrix,
 and also why transforming a column vector is the same as multiplying a 4x4 matrix by a
 matrix with one column and four rows.*)
@@ -592,5 +572,43 @@ Related functions:
  Inverts a 4x4 matrix
 * <a href="H3DU.Math.md#H3DU.Math.mat4invert">H3DU.Math.mat4invert()</a> -
  Inverts a 3x3 matrix
+
+<a id=Rotation_Example></a>
+## Rotation Example
+
+As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
+&theta; = 60&deg;).  First, we find the rotation formula for the X axis:
+
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (cos &theta;) &#x22c5; **a**<sub>_y_</sub> + -(sin &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (sin &theta;) &#x22c5; **a**<sub>_y_</sub> + (cos &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
+
+We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
+We plug those numbers into the rotation formula to get a formula for rotating a
+point 60 degrees about the X axis.
+
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0 = **a**<sub>_x_</sub>
+* **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.5 &#x22c5; **a**<sub>_y_</sub> + -0.866025 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.866025 &#x22c5; **a**<sub>_y_</sub> + 0.5 &#x22c5; **a**<sub>_z_</sub> + 0
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
+
+If a point is located at (10, 20, 30), the rotated point would now be:
+
+* **a&prime;**<sub>_x_</sub> = 1 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 0
+* = 1 &#x22c5; 10
+* = 10
+* **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; 10 + 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30 + 0
+* ~= 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30
+* ~= 10 + -25.98075
+* ~= -15.98075
+* **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; 10 + 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30 + 0
+* ~= 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30
+* ~= 17.3205 + 15
+* ~= 32.3205
+* **a&prime;**<sub>_w_</sub> = 0 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 1
+* = 1
+
+So the rotated point would be at about (10, -15.98075, 32.3205).
 
 [Back to documentation index.](index.md)

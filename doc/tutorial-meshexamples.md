@@ -149,8 +149,8 @@ This method creates a washer-shaped 3D model.
     function wireBox(box, color){
       if(!color)color="gray";
      var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
-     var shape=new H3DU.Shape(boxMesh).setColor(color)
-        .setMaterialParams({"basic":true})
+     var shape=new H3DU.Shape(boxMesh).setMaterial(
+        H3DU.Material.fromBasic(color))
      return setBoxSizeAndBounds(shape,box)
     }
 

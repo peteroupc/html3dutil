@@ -139,7 +139,7 @@ H3DU.Scene3D._flagsForShape = function(shape) {
     flags |= material.invertRoughness === true ? H3DU.Scene3D.INVERT_ROUGHNESS_ENABLED : 0;
     flags |= typeof material.roughness === "number" ? H3DU.Scene3D.ROUGHNESS_ENABLED : 0;
     flags |= material.roughnessMap ? H3DU.Scene3D.ROUGHNESS_MAP_ENABLED : 0;
-    if(material.environmentMap) {
+    if(typeof material.environmentMap !== "undefined" && material.environmentMap !== null) {
       if(material.environmentMap instanceof H3DU.CubeMap) {
         flags |= H3DU.Scene3D.ENV_MAP_ENABLED;
       } else {

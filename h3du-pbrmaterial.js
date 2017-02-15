@@ -209,11 +209,7 @@ H3DU.PbrMaterial = function(params) {
    * @default
    */
   this.invertRoughness = false;
-  /**
-   * TODO
-   * @default
-   */
-  this.environmentMap = null; // TODO: Store environment maps in H3DU.Lights, not here
+  // LATER: Support environment maps; store them in H3DU.Lights, not here
   if(typeof params !== "undefined" && params !== null) {
     this.setParams(params);
   }
@@ -347,9 +343,11 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
   if(typeof params.roughnessMap !== "undefined") {
     this.roughnessMap = H3DU.TextureInfo._texInfoOrString(params.roughnessMap);
   }
+  /*
   if(typeof params.environmentMap !== "undefined") {
     this.environmentMap = H3DU.TextureInfo._texInfoOrString(params.environmentMap);
   }
+  */
   if(typeof params.emissionMap !== "undefined") {
     this.emissionMap = H3DU.TextureInfo._texInfoOrString(params.emissionMap);
   }
