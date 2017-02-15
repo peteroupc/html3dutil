@@ -182,10 +182,10 @@ so it's not less than one value or greater than another value.
 * [vec3dist](#H3DU.Math.vec3dist)<br>Finds the straight-line distance from one three-element vector
 to another, treating both as 3D points.
 * [vec3dot](#H3DU.Math.vec3dot)<br>Finds the dot product of two 3-element vectors.
-* [vec3fromWindowPoint](#H3DU.Math.vec3fromWindowPoint)<br>Unprojects the X and Y <i>window coordinates</i>,
-and a Z depth coordinate, given in a 3-element vector,
+* [vec3fromWindowPoint](#H3DU.Math.vec3fromWindowPoint)<br>Unprojects the <i>window coordinates</i> given in a
+3-element vector,
 using the given transformation matrix and viewport
-width and height.
+rectangle.
 * [vec3length](#H3DU.Math.vec3length)<br>Returns the distance of this 3-element vector from the origin,
 also known as its <i>length</i> or <i>magnitude</i>.
 * [vec3lerp](#H3DU.Math.vec3lerp)<br>Does a linear interpolation between two 3-element vectors;
@@ -214,10 +214,9 @@ but its length is multiplied by the given factor.
 vector with the result.
 * [vec3subInPlace](#H3DU.Math.vec3subInPlace)<br>Subtracts the second vector from the first vector and stores
 the result in the first vector.
-* [vec3toWindowPoint](#H3DU.Math.vec3toWindowPoint)<br>Transforms the 3D point specified in this 3-element vector to its X
-and Y <i>window coordinates</i>, and its projected Z coordinate,
-using the given transformation matrix and viewport
-width and height.
+* [vec3toWindowPoint](#H3DU.Math.vec3toWindowPoint)<br>Transforms the 3D point specified in this 3-element vector to its
+<i>window coordinates</i>
+using the given transformation matrix and viewport rectangle.
 * [vec3triple](#H3DU.Math.vec3triple)<br>Finds the scalar triple product of three vectors (A, B, and C).
 * [vec4abs](#H3DU.Math.vec4abs)<br>Returns a new 4-element
 vector with the absolute value of each of its components.
@@ -894,11 +893,11 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 * `l` (Type: Number)<br>
     X coordinate of the point in eye space where the left clipping plane meets the near clipping plane.
 * `r` (Type: Number)<br>
-    X coordinate of the point in eye space where the right clipping plane meets the near clipping plane. (If l is greater than r, X coordinates increase leftward; otherwise, they increase rightward.)
+    X coordinate of the point in eye space where the right clipping plane meets the near clipping plane. ("l" is usually less than "r", so that X coordinates increase leftward. If "l" is greater than "r", X coordinates increase in the opposite direction.)
 * `b` (Type: Number)<br>
     Y coordinate of the point in eye space where the bottom clipping plane meets the near clipping plane.
 * `t` (Type: Number)<br>
-    Y coordinate of the point in eye space where the top clipping plane meets the near clipping plane. (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+    Y coordinate of the point in eye space where the top clipping plane meets the near clipping plane. ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If "b" is greater than "t", Y coordinates increase in the opposite direction.)
 * `near` (Type: Number)<br>
     The distance, in eye space, from the "camera" to the near clipping plane. Objects closer than this distance won't be seen.
 
@@ -1067,11 +1066,11 @@ objects with the same size won't appear smaller as they get more distant from th
 * `l` (Type: Number)<br>
     Leftmost coordinate of the orthographic view.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the orthographic view. (If l is greater than r, X coordinates increase leftward; otherwise, they increase rightward.)
+    Rightmost coordinate of the orthographic view. ("l" is usually less than "r", so that X coordinates increase leftward. If "l" is greater than "r", X coordinates increase in the opposite direction.)
 * `b` (Type: Number)<br>
-    Bottommost coordinate of the orthographic view.
+    Bottommost coordinate of the orthographic v iew.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the orthographic view. (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+    Topmost coordinate of the orthographic view. ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If "b" is greater than "t", Y coordinates increase in the opposite direction.)
 * `n` (Type: Number)<br>
     Distance from the "camera" to the near clipping plane. A positive value means the plane is in front of the viewer.
 * `f` (Type: Number)<br>
@@ -1096,11 +1095,11 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 * `l` (Type: Number)<br>
     Leftmost coordinate of the orthographic view.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the orthographic view. (If l is greater than r, X coordinates increase leftward; otherwise, they increase rightward.)
+    Rightmost coordinate of the orthographic view. ("l" is usually less than "r", so that X coordinates increase leftward. If "l" is greater than "r", X coordinates increase in the opposite direction.)
 * `b` (Type: Number)<br>
-    Bottommost coordinate of the orthographic view.
+    Bottommost coordinate of the orthographic v iew.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the orthographic view. (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+    Topmost coordinate of the orthographic view. ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If "b" is greater than "t", Y coordinates increase in the opposite direction.)
 
 #### Return Value
 
@@ -1127,11 +1126,11 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 * `l` (Type: Number)<br>
     Leftmost coordinate of the view rectangle.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the view rectangle. (If l is greater than r, X coordinates increase leftward; otherwise, they increase rightward.)
+    Rightmost coordinate of the orthographic view. ("l" is usually less than "r", so that X coordinates increase leftward. If "l" is greater than "r", X coordinates increase in the opposite direction.)
 * `b` (Type: Number)<br>
-    Bottommost coordinate of the view rectangle.
+    Bottommost coordinate of the orthographic v iew.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the view rectangle. (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+    Topmost coordinate of the orthographic view. ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If "b" is greater than "t", Y coordinates increase in the opposite direction.)
 * `aspect` (Type: Number)<br>
     The ratio of width to height of the viewport, usually the scene's aspect ratio.
 
@@ -1160,11 +1159,11 @@ objects with the same size won't appear smaller as they get more distant from th
 * `l` (Type: Number)<br>
     Leftmost coordinate of the view rectangle.
 * `r` (Type: Number)<br>
-    Rightmost coordinate of the view rectangle. (If l is greater than r, X coordinates increase leftward; otherwise, they increase rightward.)
+    Rightmost coordinate of the orthographic view. ("l" is usually less than "r", so that X coordinates increase leftward. If "l" is greater than "r", X coordinates increase in the opposite direction.)
 * `b` (Type: Number)<br>
-    Bottommost coordinate of the view rectangle.
+    Bottommost coordinate of the orthographic v iew.
 * `t` (Type: Number)<br>
-    Topmost coordinate of the view rectangle. (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)
+    Topmost coordinate of the orthographic view. ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If "b" is greater than "t", Y coordinates increase in the opposite direction.)
 * `n` (Type: Number)<br>
     Distance from the "camera" to the near clipping plane. A positive value means the plane is in front of the viewer.
 * `f` (Type: Number)<br>
@@ -1246,7 +1245,9 @@ then returning that vector's new X, Y, and Z.
 #### Parameters
 
 * `mat` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix, that is, the projection matrix multiplied by the view matrix, in that order, if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, a projection-view matrix multiplied by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>. If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the view volume will range from -1 to 1 in the X, Y, and Z coordinates (as is the case in WebGL) and the X, Y, and Z coordinates increase from left to right, front to back, and bottom to top (as is the case in WebGL). (For Y coordinates that increase from top to bottom, reverse the sign of the Y coordinate of this method's return value.)
+    A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.
+
+ If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods' documentation.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X coordinate of a 3D point to transform. If "vy" and "vz" are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: Number)<br>
@@ -1382,7 +1383,7 @@ off top.
 #### Parameters
 
 * `matrix` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix. This will usually be a projection-view matrix (projection matrix multiplied by view matrix).
+    A 4x4 matrix. This will usually be a projection-view matrix (projection matrix multiplied by view matrix, in that order).
 
 #### Return Value
 
@@ -2163,28 +2164,36 @@ a vector's length using the dot product.
  <a name='H3DU.Math.vec3fromWindowPoint'></a>
 ### (static) H3DU.Math.vec3fromWindowPoint(vector, matrix, viewport, [yUp])
 
-Unprojects the X and Y <i>window coordinates</i>,
-and a Z depth coordinate, given in a 3-element vector,
+Unprojects the <i>window coordinates</i> given in a
+3-element vector,
 using the given transformation matrix and viewport
-width and height. X window coordinates increase
-rightward and Y window coordinates increase upward
-or downward depending on the "yUp" parameter.
+rectangle.
+
+In the window coordinate space, X coordinates increase
+rightward and Y coordinates increase upward
+or downward depending on the "yUp" parameter, and
+Z coordinates within the view volume range from 0 to 1 and
+increase from front to back.
 
 #### Parameters
 
 * `vector` (Type: Array.&lt;Number>)<br>
     A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
 * `matrix` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix specifying the After undoing the transformation to X and Y window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (a projection-view matrix multiplied by the world [model] matrix).
+    A 4x4 matrix. After undoing the transformation to X and Y window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method.
+
+ To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order).
+
+If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is null, false, or omitted, the Y coordinates increase downward instead of upward and vice versa.
 * `viewport` (Type: Array.&lt;Number>)<br>
     A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: Boolean) (optional)<br>
-    If true, the viewport's starting position is at the lower left corner and Y coordinates in window coordinate space increase upward. If false, null, or omitted, the viewport's starting position is at the upper left corner and Y coordinates increase downward.
+    If false, null, or omitted, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates will increase downward, the viewport's starting position is at the upper left corner.
 
 #### Return Value
 
-A 3-element array giving the X and Y
-window coordinates, and the projected Z coordinate, in that order. (Type: Array.&lt;Number>)
+A 3-element array giving the coordinates
+of the unprojected point, in that order. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Math.vec3length'></a>
 ### (static) H3DU.Math.vec3length(a)
@@ -2520,28 +2529,29 @@ This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (T
  <a name='H3DU.Math.vec3toWindowPoint'></a>
 ### (static) H3DU.Math.vec3toWindowPoint(vector, matrix, viewport, [yUp])
 
-Transforms the 3D point specified in this 3-element vector to its X
-and Y <i>window coordinates</i>, and its projected Z coordinate,
-using the given transformation matrix and viewport
-width and height. The X coordinates in this space increase
-rightward and the Y coordinates in this space increase upward
-or downward depending on the "yUp" parameter.
+Transforms the 3D point specified in this 3-element vector to its
+<i>window coordinates</i>
+using the given transformation matrix and viewport rectangle.
 
 #### Parameters
 
 * `vector` (Type: Array.&lt;Number>)<br>
     A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
 * `matrix` (Type: Array.&lt;Number>)<br>
-    A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method, before its transformed X and Y coordinates are converted to window coordinates. See that method for more information.
+    A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates.
+
+This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.
+
+If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is null, false, or omitted, the Y coordinates increase downward instead of upward and vice versa.
 * `viewport` (Type: Array.&lt;Number>)<br>
     A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: Boolean) (optional)<br>
-    If true, the viewport's starting position is at the lower left corner and Y coordinates in window coordinate space increase upward. If false, null, or omitted, the viewport's starting position is at the upper left corner and Y coordinates increase downward.
+    If false, null, or omitted, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates will increase downward, the viewport's starting position is at the upper left corner.
 
 #### Return Value
 
-A 3-element array giving the X and Y
-window coordinates, and the projected Z coordinate, in that order. (Type: Array.&lt;Number>)
+A 3-element array giving the window
+coordinates, in that order. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Math.vec3triple'></a>
 ### (static) H3DU.Math.vec3triple(a, b, c)

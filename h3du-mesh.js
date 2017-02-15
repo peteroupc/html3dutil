@@ -1288,7 +1288,7 @@ H3DU.Mesh.prototype.recalcTangents = function() {
  */
 H3DU.Mesh.prototype.reverseNormals = function() {
   "use strict";
-  // LATER: Implement and favor MeshBuffer version of this method  "use strict";
+  // LATER: Implement and favor MeshBuffer version of this method
   var i;
   var stride = this.getStride();
   var vertices = this.vertices;

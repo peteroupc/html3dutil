@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, WebGL2RenderingContext */
+/* global H3DU, WebGL2RenderingContext, texture */
 /**
  * Contains classes that implement methods
  * binding certain HTML 3D Library objects
@@ -92,32 +92,9 @@ H3DU._LoadedTexture = function(texture, textureInfo, context) {
   "use strict";
   this._init(texture, textureInfo, context);
 };
-
 /** @private */
-H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
+H3DU._LoadedTexture.textureFilters = function(context, texture, textureInfo, target) {
   "use strict";
-  if(!texture.image)throw new Error();
-  context = H3DU._toContext(context);
-  this.context = context;
-  this.loadedTexture = context.createTexture();
-  context.activeTexture(context.TEXTURE0);
-  // In WebGL, texture coordinates start at the upper left corner rather than
-  // the lower left as in OpenGL and OpenGL ES. If the texture info indicates
-  // top-down texture coordinates, no flipping is needed.
-  // TODO: Non-DOMElement recommends top-down.
-  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL,
-  textureInfo.topDown ? 0 : 1);
-  var target = textureInfo.target;
-  context.bindTexture(target, this.loadedTexture);
-  if("src" in texture.image) {
-    context.texImage2D(target, 0,
-      textureInfo.internalFormat, textureInfo.format, context.UNSIGNED_BYTE,
-      texture.image);
-  } else {
-    context.texImage2D(target, 0,
-     textureInfo.internalFormat, texture.getWidth(), texture.getHeight(), 0,
-     textureInfo.format, context.UNSIGNED_BYTE, texture.image);
-  }
   context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
   // generate mipmaps for power-of-two textures
@@ -144,6 +121,34 @@ H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
 };
 
 /** @private */
+H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
+  "use strict";
+  if(!texture.image)throw new Error();
+  context = H3DU._toContext(context);
+  this.context = context;
+  this.loadedTexture = context.createTexture();
+  context.activeTexture(context.TEXTURE0);
+  // In WebGL, texture coordinates start at the upper left corner rather than
+  // the lower left as in OpenGL and OpenGL ES. If the texture info indicates
+  // top-down texture coordinates, no flipping is needed.
+  // TODO: Non-DOMElement recommends top-down.
+  context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL,
+  textureInfo.topDown ? 0 : 1);
+  var target = textureInfo.target;
+  context.bindTexture(target, this.loadedTexture);
+  if("src" in texture.image) {
+    context.texImage2D(target, 0,
+      textureInfo.internalFormat, textureInfo.format, context.UNSIGNED_BYTE,
+      texture.image);
+  } else {
+    context.texImage2D(target, 0,
+     textureInfo.internalFormat, texture.getWidth(), texture.getHeight(), 0,
+     textureInfo.format, context.UNSIGNED_BYTE, texture.image);
+  }
+  H3DU._LoadedTexture.textureFilters(context, texture, textureInfo, target);
+};
+
+/** @private */
 H3DU._LoadedCubeMap = function(textureImage, context) {
   "use strict";
   context = H3DU._toContext(context);
@@ -167,19 +172,7 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
      context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
     }
   }
-  // generate mipmaps for power-of-two textures
-  if(H3DU._isPowerOfTwo(textureImage.getWidth()) &&
-      H3DU._isPowerOfTwo(textureImage.getHeight())) {
-    context.generateMipmap(target);
-  } else {
-    context.texParameteri(target,
-         context.TEXTURE_MIN_FILTER, context.LINEAR);
-    context.texParameteri(target,
-        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
-    context.texParameteri(target,
-        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
-
-  }
+  H3DU._LoadedTexture.textureFilters(context, texture, new H3DU.TextureInfo(), target);
 };
 
 /** @private */

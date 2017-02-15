@@ -93,7 +93,8 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `texturesOrCubeMap` (Type: *)
+* `texturesOrCubeMap` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>|<a href="H3DU.Texture.md">H3DU.Texture</a>)> | <a href="H3DU.CubeMap.md">H3DU.CubeMap</a>)<br>
+    TODO: Not documented yet
 * `resolve` (Type: function) (optional)<br>
     A function called as each individual texture is loaded and its promise resolves.
 * `reject` (Type: function) (optional)<br>
@@ -101,7 +102,10 @@ TODO: Not documented yet.
 
 #### Return Value
 
-Return value. (Type: *)
+A promise that resolves when
+all textures used by the cube map are loaded successfully
+(the result will be an H3DU.CubeMap object)
+and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
  <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadTexture'></a>
 ### H3DU.TextureLoader#loadTexture(texture)

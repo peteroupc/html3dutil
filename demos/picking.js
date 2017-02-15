@@ -453,7 +453,7 @@ function makeRay(startPt, focusPt) {
 /* exported raypick */
 function raypick(x, y, projView, viewport, objects) {
   "use strict";
-  var near = H3DU.Math.vec3fromWindowPoint([x, y, -1], projView, viewport);
+  var near = H3DU.Math.vec3fromWindowPoint([x, y, 0], projView, viewport);
   var far = H3DU.Math.vec3fromWindowPoint([x, y, 1], projView, viewport);
   var ray = makeRay(near, far); // Near and far will be in world coordinates
   var bestDist = Number.POSITIVE_INFINITY;
@@ -470,7 +470,7 @@ function raypick(x, y, projView, viewport, objects) {
     if(getIntersectionRayBox(ray, bounds)) {
       var worldMatrix = shape.getMatrix();
       var mvp = H3DU.Math.mat4multiply(projView, worldMatrix);
-      near = H3DU.Math.vec3fromWindowPoint([x, y, -1], mvp, viewport);
+      near = H3DU.Math.vec3fromWindowPoint([x, y, 0], mvp, viewport);
       far = H3DU.Math.vec3fromWindowPoint([x, y, 1], mvp, viewport);
       ray = makeRay(near, far); // Near and far will be in local coordinates
       var finePick = pickPoint(shape.getMeshBuffer(), ray);

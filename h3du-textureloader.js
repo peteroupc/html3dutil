@@ -177,12 +177,15 @@ H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo
 
 /**
  * TODO: Not documented yet.
- * @param {*} texturesOrCubeMap
+ * @param {Array<String|H3DU.TextureInfo|H3DU.Texture>|H3DU.CubeMap} texturesOrCubeMap TODO: Not documented yet
  * @param {Function} [resolve] A function called as each
  * individual texture is loaded and its promise resolves.
  * @param {Function} [reject] A function called as each
  * individual texture is loaded and its promise is rejected.
- * @returns {*} Return value.
+ * @returns {Promise<H3DU.Texture>} A promise that resolves when
+ * all textures used by the cube map are loaded successfully
+ * (the result will be an H3DU.CubeMap object)
+ * and is rejected when an error occurs.
  * @memberof! H3DU.TextureLoader#
  */
 H3DU.TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, reject) {

@@ -69,6 +69,22 @@ H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
   this.indices = indices;
   return this;
 };
+/**
+ * TODO: Not documented yet.
+ * @param {*} primType
+ * @returns {*}
+ * @memberof! H3DU.MeshBuffer#
+ */
+H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {
+  "use strict";
+  if(primType === H3DU.Mesh.TRIANGLES) {
+    this.format = 0;
+  } else if(primType === H3DU.Mesh.LINES) {
+    this.format = H3DU.Mesh.LINES_BIT;
+  } else if(primType === H3DU.Mesh.POINTS) {
+    this.format = H3DU.Mesh.POINTS_BIT;
+  }
+};
 
 /**
  * Adds information about a buffer attribute to this
