@@ -272,7 +272,7 @@ function getIntersectionRayTree(ray, tree) {
   "use strict";
   var result = [];
   var queue = [];
-  queue.push(tree.getRoot());
+  queue.push(tree.root);
   var current;
   while (queue.length > 0) {
     current = queue.pop();
@@ -304,11 +304,6 @@ var AABBNode = function() {
   this.mid = null;
   this.separator = null;
   this.isLeaf = false;
-};
-/** @private */
-AABBTree.prototype.getRoot = function() {
-  "use strict";
-  return this.root;
 };
 /** @private */
 AABBTree.prototype._buildTree = function(mesh) {

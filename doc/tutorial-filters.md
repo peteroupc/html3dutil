@@ -78,7 +78,7 @@ can be used in the `textureEffect` function.
 
 A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
 be found by searching the Web; note that there are many versions of GLSL and the one used
-in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.
+in most HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.
 
 <a id=Using_Graphics_Filters></a>
 ## Using Graphics Filters

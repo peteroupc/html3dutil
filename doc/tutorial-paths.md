@@ -25,7 +25,7 @@ as well as closed figures made from several path segments.
 <a id=How_to_Use></a>
 ## How to Use
 
-2D paths are implemented in a class called <a href="H3DU.GraphicsPath.md">`H3DU.GraphicsPath`</a>, found in the file _extras/path.js_ in
+2D paths are implemented in a class called `H3DU.GraphicsPath`, found in the file _extras/path.js_ in
 the HTML 3D Library download.  To use this class, you must include the script "extras/path.js",
 as in this example.
 
@@ -56,7 +56,7 @@ lines, the "Q", "C", "S", and "T" commands create B&eacute;zier curves, the "A" 
 creates elliptical arcs, and the "Z" command closes the path. If the letters are
 lower-cased, X and Y coordinates are relative to the current position.
 
-For more information, see the <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath.fromString">H3DU.GraphicsPath.fromString</a> method documentation.
+For more information, see the H3DU.GraphicsPath.fromString method documentation.
 That method is also how you create a 2D path from an SVG path string, as in this
 example:
 

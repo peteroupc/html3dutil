@@ -32,7 +32,7 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are
 - The experimental 2D canvas renderer in _surfaces2d.html_, was abandoned.
 - Added `dispose` method to `H3DU.Scene3D`.
 - Added `createPointedStar` and `createLathe` methods to `H3DU.Meshes`.
-- Added `getBounds` and `toLinePath` methods to <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>, an extra, as well
+- Added `getBounds` and `toLinePath` methods to H3DU.GraphicsPath, an extra, as well
  as an extra that adds methods that compute the intersection, difference, union, and XOR of two
  polygons. Path triangulation now supports polygons with holes.
 - The default light configuration is no lights when creating a <a href="H3DU.LightSource.md">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.md">H3DU.Scene3D</a> without rendering a custom `Batch3D`, in which case the default is one light source with its default values.

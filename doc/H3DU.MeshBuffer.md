@@ -136,7 +136,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()

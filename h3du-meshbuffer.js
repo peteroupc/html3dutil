@@ -72,7 +72,7 @@ H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
 /**
  * TODO: Not documented yet.
  * @param {*} primType
- * @returns {*}
+ * @returns {*} Return value.
  * @memberof! H3DU.MeshBuffer#
  */
 H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {

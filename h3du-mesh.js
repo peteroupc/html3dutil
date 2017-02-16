@@ -25,11 +25,19 @@
  * For bump mapping to work properly, a mesh needs to define
  * normals, tangents, bitangents, and texture coordinates.<p>
  * See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
- * <p>NOTE: Previous versions of this class allowed meshes to contain more than one
+ * <p>Notes:<ul>
+ * <li>Previous versions of this class allowed meshes to contain more than one
  * primitive type (triangles, lines, and points are the primitive types). This is
  * no longer the case, to simplify the implementation.<p>
- * NOTE: The default shader program assumes that all colors specified in this object are in
+ * <li>The default shader program assumes that all colors specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
+ * <li>Starting in version 2.0, this class should not be used as a general purpose
+ * class for storing geometric meshes. It should only be used as a convenient
+ * way to build mesh buffers. In the future, some of the functionality in this class
+ * may be reimplemented in the MeshBuffer class and the corresponding methods
+ * in this class may be rewritten by having them convert objects to a MeshBuffer and
+ * call the new MeshBuffer method; this may affect performance. Afterward,
+ * or at that point, those methods may be deprecated.</li></ul>
  * @class
  * @alias H3DU.Mesh
  * @param {Array<Number>} [vertices] An array that contains data on each

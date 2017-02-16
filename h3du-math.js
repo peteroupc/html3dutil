@@ -58,6 +58,13 @@ H3DU.Math = {
  * var normal=H3DU.Math.vec3cross(da,db);
  * // Find the triangle's area
  * var area=H3DU.Math.vec3length(normal)*0.5;
+ * @example <caption>The following example finds the cosine and sine of
+ * the angle between two unit vectors and the orthogonal unit vector of both.</caption>
+ * var cr=H3DU.Math.vec3cross(unitA,unitB);
+ * var cosine=H3DU.Math.vec3dot(unitA,unitB); // Cosine of the angle
+ * var sine=H3DU.Math.vec3length(cr); // Sine of the angle
+ * // Cross product as a unit vector
+ * var normCross=sine==0 ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
  */
   "vec3cross":function(a, b) {
     "use strict";
@@ -137,28 +144,6 @@ H3DU.Math = {
  * @param {Array<Number>} c The third 3-element vector, or the
  * second parameter to the cross product.
  * @returns {Number} A number giving the triple product.
- * @example <caption>The following example finds the signed angle of
- * two vectors that lie on a plane with the given normal.</caption>
- * // The following example uses the positive Z axis as the normal
- * // vector, since it's known to be perpendicular to vectorB and vectorC
- * var normalVector = [0, 0, 1];
- * var vectorB = [4, 2, 0];
- * var vectorC = [5, 0, 0];
- * vectorB=H3DU.Math.vec3normInPlace(vectorB);
- * vectorC=H3DU.Math.vec3normInPlace(vectorC);
- * normalVector=H3DU.Math.vec3normInPlace(normalVector);
- * var dot=H3DU.Math.dot(vectorB,vectorC);
- * // adjust dot for robustness
- * dot=(dot<-1 ? -1 : (dot>1 ? 1 : dot));
- * // acos will always return a positive angle here
- * var angle=Math.acos(dot);
- * var triple=H3DU.Math.vec3triple(normalVector,vectorB,vectorC);
- * // The angle is negative if triple product is negative.
- * // NOTE: While the "normalVector" points toward the viewer,
- * // a positive value for the angle means the angle runs in
- * // a counterclockwise direction for right-handed coordinate systems
- * // and in a clockwise direction for left-handed systems.
- * angle*=(triple<0 ? -1.0 : 1.0);
  */
   "vec3triple":function(a, b, c) {
     "use strict";
@@ -632,30 +617,31 @@ H3DU.Math = {
  * @param {Array<Number>} matrix A 4x4 matrix to use to transform
  * the vector according to the {@link H3DU.Math.mat4projectVec3} method,
  * before the transformed vector is converted to window coordinates.
- * <p>This parameter will generally be
+ * <br>This parameter will generally be
  * a projection-view matrix (projection matrix multiplied
  * by the view matrix, in that order), if the vector to transform is in <i>world space</i>,
  * or a model-view-projection matrix, that is, (projection-view matrix multiplied
  * by the model [world] matrix, in that order), if the vector is in <i>model
  * (object) space</i>.
- * <p>If the matrix includes a projection transform returned
+ * <br>If the matrix includes a projection transform returned
  * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
  * similar {@link H3DU.Math} methods, then in the <i>window coordinate</i> space,
  * X coordinates increase rightward, Y coordinates increase upward, and
  * Z coordinates within the view volume range from 0 to 1 and
  * increase from front to back, unless otherwise specified in those methods' documentation.
- * If "yUp" is null, false, or omitted, the Y coordinates increase downward
- * instead of upward and vice versa.
+ * If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward
+ * instead of upward or vice versa.
  * @param {Array<Number>} viewport A 4-element array specifying
  * the starting position and size of the viewport in window units
  * (such as pixels). In order, the four elements are the starting position's
  * X coordinate, its Y coordinate, the viewport's width, and the viewport's
  * height. Throws an error if the width or height is less than 0.
- * @param {Boolean} [yUp] If false, null, or omitted, reverses the sign of
+ * @param {Boolean} [yUp] If omitted or a "falsy" value, reverses the sign of
  * the Y coordinate returned by the {@link H3DU.Math.mat4projectVec3} method
- * before converting it to window coordinates. If window Y coordinates increase
+ * before converting it to window coordinates. If true, the Y
+ * coordinate will remain unchanged. If window Y coordinates increase
  * upward, the viewport's starting position is at the lower left corner. If those
- * coordinates will increase downward, the viewport's starting position is
+ * coordinates increase downward, the viewport's starting position is
  * at the upper left corner.
  * @returns {Array<Number>} A 3-element array giving the window
  * coordinates, in that order.
@@ -687,35 +673,21 @@ H3DU.Math = {
  * @param {Array<Number>} vector A 3-element vector giving
  * the X, Y, and Z coordinates of the 3D point to transform.
  * @param {Array<Number>} matrix A 4x4 matrix.
- * After undoing the transformation to X and Y window coordinates, the vector will
+ * After undoing the transformation to window coordinates, the vector will
  * be transformed by the inverse of this matrix according to the
- * {@link H3DU.Math.mat4projectVec3} method.<p>
+ * {@link H3DU.Math.mat4projectVec3} method.<br>
  * To convert to
  * world space, this parameter will generally be a projection-view matrix
  * (projection matrix multiplied by the view matrix, in that order). To convert to
  * object (model) space, this parameter will generally be a model-view-projection
  * matrix (projection-view matrix
  * multiplied by the world [model] matrix, in that order).
- * <p>If the matrix includes a projection transform returned
- * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
- * similar {@link H3DU.Math} methods, then in the <i>window coordinate</i> space,
- * X coordinates increase rightward, Y coordinates increase upward, and
- * Z coordinates within the view volume range from 0 to 1 and
- * increase from front to back, unless otherwise specified in those methods' documentation.
- * If "yUp" is null, false, or omitted, the Y coordinates increase downward
- * instead of upward and vice versa.
- * @param {Array<Number>} viewport A 4-element array specifying
- * the starting position and size of the viewport in window units
- * (such as pixels). In order, the four elements are the starting position's
- * X coordinate, its Y coordinate, the viewport's width, and the viewport's
- * height. Throws an error if the width or height is less than 0.
- * @param {Boolean} [yUp] If false, null, or omitted, reverses the sign of
- * the Y coordinate returned by the {@link H3DU.Math.mat4projectVec3} method
- * before converting it to window coordinates. If window Y coordinates increase
- * upward, the viewport's starting position is
- * at the lower left corner. If those coordinates will increase
- * downward, the viewport's starting position is
- * at the upper left corner.
+ * See {@link H3DU.Math.vec3toWindowPoint} for the meaning of window coordinates
+ * with respect to the "matrix" and "yUp" parameters.
+ * @param {Boolean} viewport Has the same meaning as "viewport" in
+ * the {@link H3DU.Math.vec3toWindowPoint} method.
+ * @param {Boolean} [yUp] Has the same meaning as "yUp" in
+ * the {@link H3DU.Math.vec3toWindowPoint} method.
  * @returns {Array<Number>} A 3-element array giving the coordinates
  * of the unprojected point, in that order.
  */
@@ -930,19 +902,20 @@ H3DU.Math = {
 /**
  * Returns a 3-element vector in which each element of the given 3-element vector is clamped
  * so it's not less than one value or greater than another value.
+ * @param {Array<Number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @param {Array<Number>} a The resulting vector. */
+ * @returns {Array<Number>} The resulting vector. */
   "vec3clamp":function(a, min, max) {
     "use strict";
     return H3DU.Math.vec3clampInPlace(H3DU.Math.vec3copy(a), min, max);
   },
 /**
  * Returns a 4-element vector in which each element of the given 4-element vector is clamped
- * so it's not less than one value or greater than another value.
+ * @param {Array<Number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @param {Array<Number>} a The resulting vector. */
+ * @returns {Array<Number>} The resulting vector. */
   "vec4clamp":function(a, min, max) {
     "use strict";
     return H3DU.Math.vec4clampInPlace(H3DU.Math.vec4copy(a), min, max);
@@ -950,9 +923,10 @@ H3DU.Math = {
 /**
  * Clamps each element of the given 3-element vector
  * so it's not less than one value or greater than another value.
+ * @param {Array<Number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @param {Array<Number>} a The vector "a". */
+ * @returns {Array<Number>} The resulting vector. */
   "vec3clampInPlace":function(a, min, max) {
     "use strict";
     var x = Math.min(max, Math.max(min, a[0]));
@@ -966,9 +940,10 @@ H3DU.Math = {
 /**
  * Clamps each element of the given 4-element vector
  * so it's not less than one value or greater than another value.
+ * @param {Array<Number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @param {Array<Number>} a The vector "a". */
+ * @returns {Array<Number>} The resulting vector. */
   "vec4clampInPlace":function(a, min, max) {
     "use strict";
     var x = Math.min(max, Math.max(min, a[0]));
@@ -1291,7 +1266,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     if(d > 0) {
       d = 1 / Math.sqrt(d);
       return [a[0] * d, a[1] * d, a[2] * d,
-        Math.acos(w) * H3DU.Math.Num360DividedByPi];
+        Math.min(1.0, Math.max(0.0, Math.acos(w))) * H3DU.Math.Num360DividedByPi];
     } else {
       return [0, 1, 0, 0];
     }
@@ -1658,7 +1633,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return [t1 * q[3] - (t2 * q[2] - t3 * q[1]) + q[0] * t4,
       t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4,
-      t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4];
+      t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4, 1.0];
   },
 /**
  * Generates a quaternion from the rotation described in a 4x4 matrix.
@@ -1970,7 +1945,7 @@ m[0] * m[7] * m[5];
  * by the view matrix, in that order), if the vector to transform is in <i>world space</i>,
  * or a model-view-projection matrix, that is, (projection-view matrix multiplied
  * by the model [world] matrix, in that order), if the vector is in <i>model
- * (object) space</i>.<p>
+ * (object) space</i>.<br>
  * If the matrix includes a projection transform returned
  * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
  * similar {@link H3DU.Math} methods, the X, Y, and Z coordinates within the
@@ -2218,7 +2193,7 @@ m[0] * m[7] * m[5];
  * @param {Number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.
  * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {Number} b Bottommost coordinate of the orthographic v iew.
+ * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
  * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
  * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
@@ -2288,7 +2263,7 @@ m[0] * m[7] * m[5];
  * @param {Number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.
  * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {Number} b Bottommost coordinate of the orthographic v iew.
+ * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
  * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
  * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
@@ -2312,7 +2287,7 @@ m[0] * m[7] * m[5];
  * @param {Number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.
  * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {Number} b Bottommost coordinate of the orthographic v iew.
+ * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
  * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
  * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
@@ -2338,7 +2313,7 @@ m[0] * m[7] * m[5];
  * @param {Number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.
  * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {Number} b Bottommost coordinate of the orthographic v iew.
+ * @param {Number} b Bottommost coordinate of the orthographic view.
  * @param {Number} t Topmost coordinate of the orthographic view.
  * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
  * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
@@ -2577,21 +2552,21 @@ m[0] * m[7] * m[5];
       v0 = v;
       v1 = vy;
       v2 = vz;
-      ang = (angle >= 0 && angle < 360 ? angle : angle % 360 + (angle < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
+      ang = angle;
     } else if(typeof v === "undefined") {
       v0 = angle[0];
       v1 = angle[1];
       v2 = angle[2];
       ang = angle[3];
-      ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
     } else {
       v0 = v[0];
       v1 = v[1];
       v2 = v[2];
-      ang = (angle >= 0 && angle < 360 ? angle : angle % 360 + (angle < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
+      ang = angle;
     }
+    ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
     var cost = Math.cos(ang);
-    var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
+    var sint = ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost);
     if( v0 === 1 && v1 === 0 && v2 === 0 ) {
       return [mat[0], mat[1], mat[2], mat[3],
         cost * mat[4] + mat[8] * sint, cost * mat[5] + mat[9] * sint, cost * mat[6] + mat[10] * sint, cost * mat[7] + mat[11] * sint,
@@ -2672,18 +2647,56 @@ m[0] * m[7] * m[5];
       v0 = v;
       v1 = vy;
       v2 = vz;
-      ang = (angle >= 0 && angle < 360 ? angle : angle % 360 + (angle < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
+      ang = angle;
     } else if(typeof v === "undefined") {
       v0 = angle[0];
       v1 = angle[1];
       v2 = angle[2];
       ang = angle[3];
-      ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
     } else {
       v0 = v[0];
       v1 = v[1];
       v2 = v[2];
-      ang = (angle >= 0 && angle < 360 ? angle : angle % 360 + (angle < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
+      ang = angle;
+    }
+    ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * H3DU.Math.PiDividedBy180;
+    if(ang === 90 || ang === -270) {
+      var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      v0 *= iscale;
+      v1 *= iscale;
+      v2 *= iscale;
+      return [v0 * v0, v0 * v1 + v2, v0 * v2 - v1, 0.0,
+        v1 * v0 - v2, v1 * v1, v1 * v2 + v0, 0.0,
+        v2 * v0 + v1, v2 * v1 - v0, v2 * v2, 0.0,
+        0.0, 0.0, 0.0, 1.0];
+    }
+    if(ang === -90 || ang === 270) {
+      iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      v0 *= iscale;
+      v1 *= iscale;
+      v2 *= iscale;
+      return [v0 * v0, v0 * v1 - v2, v0 * v2 + v1, 0.0,
+        v1 * v0 + v2, v1 * v1, v1 * v2 - v0, 0,
+        v2 * v0 - v1, v2 * v1 + v0, v2 * v2, 0,
+        0.0, 0.0, 0.0, 1.0];
+    }
+    if(ang === 180 || ang === -180) {
+      iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      v0 *= iscale;
+      v1 *= iscale;
+      v2 *= iscale;
+      return [v0 * v0 * 2.0 - 1.0,
+        v0 * v1 * 2.0,
+        v0 * v2 * 2.0,
+        0.0,
+        v1 * v0 * 2.0,
+        v1 * v1 * 2.0 - 1.0,
+        v1 * v2 * 2.0,
+        0.0,
+        v2 * v0 * 2.0,
+        v2 * v1 * 2.0,
+        v2 * v2 * 2.0 - 1.0,
+        0.0, 0.0, 0.0, 0.0, 1.0];
     }
     var cost = Math.cos(ang);
     var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
@@ -2696,7 +2709,7 @@ m[0] * m[7] * m[5];
     } else if(v0 === 0 && v1 === 0 && v2 === 0) {
       return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
     } else {
-      var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
       v0 *= iscale;
       v1 *= iscale;
       v2 *= iscale;
