@@ -70,9 +70,10 @@ H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} primType
- * @returns {*} Return value.
+ * Sets the type of graphics primitives stored in this mesh buffer.
+ * @param {Number} primType The primitive type, either {@link H3DU.Mesh.TRIANGLES},
+ * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
+ * @returns {H3DU.MeshBuffer} This object.
  * @memberof! H3DU.MeshBuffer#
  */
 H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {
@@ -84,6 +85,7 @@ H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {
   } else if(primType === H3DU.Mesh.POINTS) {
     this.format = H3DU.Mesh.POINTS_BIT;
   }
+  return this;
 };
 
 /**

@@ -15,7 +15,7 @@ to WebGL contexts.
 * [loadAndMapTexture](#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexture)<br>Loads the texture referred to in an array of URLs and
 uploads its texture data to a WebGL context.
 * [loadAndMapTexturesAll](#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexturesAll)<br>Loads one or more textures by their URL and uploads their data to a WebGL context.
-* [loadCubeMap](#H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap)<br>TODO: Not documented yet.
+* [loadCubeMap](#H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap)<br>Loads the textures described in a cube map.
 * [loadTexture](#H3DU.TextureLoader_H3DU.TextureLoader_loadTexture)<br>Loads a texture by its URL and stores its data.
 * [loadTexturesAll](#H3DU.TextureLoader_H3DU.TextureLoader_loadTexturesAll)<br>Loads the textures referred to in an array of URLs and
 stores their texture data.
@@ -89,12 +89,12 @@ resolves, each item in the resulting array will be a loaded
  <a name='H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap'></a>
 ### H3DU.TextureLoader#loadCubeMap(texturesOrCubeMap, [resolve], [reject])
 
-TODO: Not documented yet.
+Loads the textures described in a cube map.
 
 #### Parameters
 
 * `texturesOrCubeMap` (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>|<a href="H3DU.Texture.md">H3DU.Texture</a>)> | <a href="H3DU.CubeMap.md">H3DU.CubeMap</a>)<br>
-    TODO: Not documented yet
+    Either an array of objects described in H3DU.TextureLoader.loadTexture or a cube map object.
 * `resolve` (Type: function) (optional)<br>
     A function called as each individual texture is loaded and its promise resolves.
 * `reject` (Type: function) (optional)<br>

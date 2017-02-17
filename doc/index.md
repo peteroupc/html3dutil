@@ -5,6 +5,7 @@
 * <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a> instead.</b>
 * <a href="FrameCounter.md">FrameCounter</a><br><b>Deprecated: Use <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a> instead.</b>
 * <a href="FrameCounterDiv.md">FrameCounterDiv</a><br><b>Deprecated: Use <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a> instead.</b>
+* <a href="GraphicsPath.md">GraphicsPath</a><br><b>Deprecated: Use <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a> instead.</b>
 * <a href="H3DU.md">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
@@ -18,7 +19,7 @@ Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is
 contexts.</b>
 * <a href="H3DU.Camera.md">H3DU.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
-* <a href="H3DU.CubeMap.md">H3DU.CubeMap</a><br>TODO: Not documented yet.
+* <a href="H3DU.CubeMap.md">H3DU.CubeMap</a><br>A cube map, or a set of six textures forming the sides of a cube.
 * <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of parametric curve functions for generating
 vertex positions and colors of a curve.
 * <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>Evaluator for a parametric surface in the form
@@ -32,6 +33,7 @@ contexts.</b>
 * <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.
 * <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.
 * <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.
+* <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
 * <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a><br>Parametric evaluator for a
 curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed with a center of (0,0).

@@ -25,7 +25,7 @@ and points) composed by all shapes in this mesh.
 mesh buffer (or sets an
 existing attribute's information).
 * [setIndices](#H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices)<br>Sets the array of vertex indices used by this mesh buffer.
-* [setPrimitiveType](#H3DU.MeshBuffer_H3DU.MeshBuffer_setPrimitiveType)<br>TODO: Not documented yet.
+* [setPrimitiveType](#H3DU.MeshBuffer_H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
 * [vertexCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds'></a>
@@ -128,15 +128,16 @@ This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_setPrimitiveType'></a>
 ### H3DU.MeshBuffer#setPrimitiveType(primType)
 
-TODO: Not documented yet.
+Sets the type of graphics primitives stored in this mesh buffer.
 
 #### Parameters
 
-* `primType` (Type: *)
+* `primType` (Type: Number)<br>
+    The primitive type, either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>.
 
 #### Return Value
 
-Return value. (Type: *)
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
  <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()

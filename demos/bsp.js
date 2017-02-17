@@ -263,8 +263,8 @@ BspTree.prototype._clipInternal = function(polygons) {
   return ret;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} node
+ * Clips the solid areas of another BSP tree out of this one.
+ * @param {BspTree} node Another BSP tree.
  * @returns {BspTree} This object.
  * @memberof! BspTree#
  */
@@ -316,8 +316,9 @@ BspTree.prototype._clipflip2 = function(other) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} other
+ * Generates a BSP tree that consists of the solid areas of
+ * this tree or the given tree or both.
+ * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */
@@ -330,8 +331,9 @@ BspTree.prototype.union = function(other) {
         otherBsp._clipflip2(thisBsp).getPolygons()));
 };
 /**
- * TODO: Not documented yet.
- * @param {*} other
+ * Generates a BSP tree that consists of the solid areas of
+ * this tree that are not common to the given tree.
+ * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */
@@ -344,8 +346,9 @@ BspTree.prototype.difference = function(other) {
          otherBsp._clipflip2(thisBsp).getPolygons())).flip();
 };
 /**
- * TODO: Not documented yet.
- * @param {*} other
+ * Generates a BSP tree that consists of the solid areas common
+ * to both this tree and the given tree.
+ * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */
@@ -358,8 +361,9 @@ BspTree.prototype.intersection = function(other) {
          otherBsp.getPolygons())).flip();
 };
 /**
- * TODO: Not documented yet.
- * @param {*} other
+ * Generates a BSP tree that consists of the solid areas of
+ * this tree or the given tree but not both.
+ * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  * @memberof! BspTree#
  */

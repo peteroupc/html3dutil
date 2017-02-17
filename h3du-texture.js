@@ -317,15 +317,23 @@ H3DU.Texture._texOrString = function(tex) {
   "use strict";
   return typeof tex === "string" ? new H3DU.Texture(tex) : tex;
 };
+/** @private */
+H3DU.Texture._texOrInfoOrString = function(tex) {
+  "use strict";
+  if(typeof tex === "undefined" || tex === null)return null;
+  if(typeof tex === "string")return new H3DU.Texture(tex);
+  if(tex instanceof H3DU.TextureInfo)return new H3DU.TextureInfo(tex.uri);
+  return tex;
+};
 
 // //////////////////////////////////////////
 
 /**
- * TODO: Not documented yet.
- * @param {Array<String|Texture>} name An array of six elements,
+ * A cube map, or a set of six textures forming the sides of a cube.
+ * @param {Array<String|Texture|TextureInfo>} name An array of six elements,
  * each of which is a URL of the texture data or the texture object itself.
  * However, this constructor will not load those images yet.
- * The six images are, in order, the image seen when looking toward the positive
+ * The six texture are, in order, the texture seen when looking toward the positive
  * X axis, the negative X axis, positive Y, negative Y, positive Z,
  * and negative Z.
  * @class
@@ -333,11 +341,10 @@ H3DU.Texture._texOrString = function(tex) {
  */
 H3DU.CubeMap = function(textures) {
   "use strict";
-  // TODO: Support TextureInfo
   this.textures = [];
   this.loadStatus = 0;
   for(var i = 0; i < 6; i++) {
-    this.textures.push(H3DU.Texture._texOrString(textures[i]));
+    this.textures.push(H3DU.Texture._texOrInfoOrString(textures[i]));
   }
 };
 /**
@@ -363,7 +370,8 @@ H3DU.CubeMap.prototype.getHeight = function() {
 /**
  * Sets a texture used by this cube map.
  * @param {Number} index Texture index to set, from 0 through 5.
- * @param {H3DU.Texture|String} texture An {@link H3DU.Texture} object
+ * @param {H3DU.Texture|H3DU.TextureInfo|String} texture An {@link H3DU.Texture} object,
+ * a texture information object,
  * or a string with the URL of the texture data.
  * @returns {H3DU.CubeMap} This object.
  * @memberof! H3DU.CubeMap#
@@ -371,7 +379,7 @@ H3DU.CubeMap.prototype.getHeight = function() {
 H3DU.CubeMap.prototype.setTexture = function(index, texture) {
   "use strict";
   if(index < 0 || index >= 6)return this;
-  this.textures[index] = H3DU.Texture._texOrString(texture);
+  this.textures[index] = H3DU.Texture._texOrInfoOrString(texture);
   return this;
 };
 /**

@@ -2967,7 +2967,171 @@ m[0] * m[7] * m[5];
         return false;
       }
     }
+    // To increase robustness in frustum culling; see
+    // <http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm>
+    var pts = H3DU.Math._frustumPoints(frustum);
+    for(i = 0; i < 3; i++) {
+      var minval = box[i];
+      if(pts[i] < minval && pts[3 + i] < minval && pts[6 + i] < minval &&
+      pts[9 + i] < minval && pts[12 + i] < minval && pts[15 + i] < minval &&
+    pts[18 + i] < minval && pts[21 + i] < minval) {
+        return false;
+      }
+      var maxval = box[i + 3];
+      if(pts[i] > maxval && pts[3 + i] > maxval && pts[6 + i] > maxval &&
+      pts[9 + i] > maxval && pts[12 + i] > maxval && pts[15 + i] > maxval &&
+    pts[18 + i] > maxval && pts[21 + i] > maxval) {
+        return false;
+      }
+    }
     return true;
+  },
+/** @private */
+  "_frustumPoints":function(frustum) {
+    "use strict";
+    var p0 = frustum[0];
+    var p1 = frustum[1];
+    var p2 = frustum[2];
+    var p3 = frustum[3];
+    var p4 = frustum[4];
+    var p5 = frustum[5];
+  // left-top-near, left-bottom-near, right-top-near, ..., right-bottom-far
+    var ret = [];
+    var t1 = p2[1] * p4[2];
+    var t2 = p2[2] * p4[1];
+    var t3 = t1 - t2;
+    var t4 = p2[2] * p4[0];
+    var t5 = p2[0] * p4[2];
+    var t6 = t4 - t5;
+    var t7 = p2[0] * p4[1];
+    var t8 = p2[1] * p4[0];
+    var t9 = t7 - t8;
+    var t10 = p0[2] * p2[0];
+    var t11 = p0[0] * p2[2];
+    var t12 = p0[0] * p2[1];
+    var t13 = p0[1] * p2[0];
+    var t14 = p4[2] * p0[0];
+    var t15 = p4[0] * p0[2];
+    var t16 = p4[0] * p0[1];
+    var t17 = p4[1] * p0[0];
+    var t18 = 1.0 / (p0[0] * t3 + p0[1] * t6 + p0[2] * t9);
+    var t19 = p4[1] * p0[2];
+    var t20 = p4[2] * p0[1];
+    var t21 = p0[1] * p2[2];
+    var t22 = p0[2] * p2[1];
+    var t23 = -p0[3];
+    var t24 = -p2[3];
+    var t25 = -p4[3];
+    ret[0] = (t3 * t23 + (t19 - t20) * t24 + (t21 - t22) * t25) * t18;
+    ret[1] = (t6 * t23 + (t14 - t15) * t24 + (t10 - t11) * t25) * t18;
+    ret[2] = (t9 * t23 + (t16 - t17) * t24 + (t12 - t13) * t25) * t18;
+    var t26 = p3[1] * p4[2];
+    var t27 = p3[2] * p4[1];
+    var t28 = t26 - t27;
+    var t29 = p3[2] * p4[0];
+    var t30 = p3[0] * p4[2];
+    var t31 = t29 - t30;
+    var t32 = p3[0] * p4[1];
+    var t33 = p3[1] * p4[0];
+    var t34 = t32 - t33;
+    var t35 = p0[2] * p3[0];
+    var t36 = p0[0] * p3[2];
+    var t37 = p0[0] * p3[1];
+    var t38 = p0[1] * p3[0];
+    var t39 = 1.0 / (p0[0] * t28 + p0[1] * t31 + p0[2] * t34);
+    var t40 = p0[1] * p3[2];
+    var t41 = p0[2] * p3[1];
+    var t42 = -p3[3];
+    ret[3] = (t28 * t23 + (t19 - t20) * t42 + (t40 - t41) * t25) * t39;
+    ret[4] = (t31 * t23 + (t14 - t15) * t42 + (t35 - t36) * t25) * t39;
+    ret[5] = (t34 * t23 + (t16 - t17) * t42 + (t37 - t38) * t25) * t39;
+    var t43 = t1 - t2;
+    var t44 = t4 - t5;
+    var t45 = t7 - t8;
+    var t46 = p1[2] * p2[0];
+    var t47 = p1[0] * p2[2];
+    var t48 = p1[0] * p2[1];
+    var t49 = p1[1] * p2[0];
+    var t50 = p4[2] * p1[0];
+    var t51 = p4[0] * p1[2];
+    var t52 = p4[0] * p1[1];
+    var t53 = p4[1] * p1[0];
+    var t54 = 1.0 / (p1[0] * t43 + p1[1] * t44 + p1[2] * t45);
+    var t55 = p4[1] * p1[2];
+    var t56 = p4[2] * p1[1];
+    var t57 = p1[1] * p2[2];
+    var t58 = p1[2] * p2[1];
+    var t59 = -p1[3];
+    ret[6] = (t43 * t59 + (t55 - t56) * t24 + (t57 - t58) * t25) * t54;
+    ret[7] = (t44 * t59 + (t50 - t51) * t24 + (t46 - t47) * t25) * t54;
+    ret[8] = (t45 * t59 + (t52 - t53) * t24 + (t48 - t49) * t25) * t54;
+    var t60 = t26 - t27;
+    var t61 = t29 - t30;
+    var t62 = t32 - t33;
+    var t63 = p1[2] * p3[0];
+    var t64 = p1[0] * p3[2];
+    var t65 = p1[0] * p3[1];
+    var t66 = p1[1] * p3[0];
+    var t67 = 1.0 / (p1[0] * t60 + p1[1] * t61 + p1[2] * t62);
+    var t68 = p1[1] * p3[2];
+    var t69 = p1[2] * p3[1];
+    ret[9] = (t60 * t59 + (t55 - t56) * t42 + (t68 - t69) * t25) * t67;
+    ret[10] = (t61 * t59 + (t50 - t51) * t42 + (t63 - t64) * t25) * t67;
+    ret[11] = (t62 * t59 + (t52 - t53) * t42 + (t65 - t66) * t25) * t67;
+    var t70 = p2[1] * p5[2];
+    var t71 = p2[2] * p5[1];
+    var t72 = t70 - t71;
+    var t73 = p2[2] * p5[0];
+    var t74 = p2[0] * p5[2];
+    var t75 = t73 - t74;
+    var t76 = p2[0] * p5[1];
+    var t77 = p2[1] * p5[0];
+    var t78 = t76 - t77;
+    var t79 = p5[2] * p0[0];
+    var t80 = p5[0] * p0[2];
+    var t81 = p5[0] * p0[1];
+    var t82 = p5[1] * p0[0];
+    var t83 = 1.0 / (p0[0] * t72 + p0[1] * t75 + p0[2] * t78);
+    var t84 = p5[1] * p0[2];
+    var t85 = p5[2] * p0[1];
+    var t86 = -p5[3];
+    ret[12] = (t72 * t23 + (t84 - t85) * t24 + (t21 - t22) * t86) * t83;
+    ret[13] = (t75 * t23 + (t79 - t80) * t24 + (t10 - t11) * t86) * t83;
+    ret[14] = (t78 * t23 + (t81 - t82) * t24 + (t12 - t13) * t86) * t83;
+    var t87 = p3[1] * p5[2];
+    var t88 = p3[2] * p5[1];
+    var t89 = t87 - t88;
+    var t90 = p3[2] * p5[0];
+    var t91 = p3[0] * p5[2];
+    var t92 = t90 - t91;
+    var t93 = p3[0] * p5[1];
+    var t94 = p3[1] * p5[0];
+    var t95 = t93 - t94;
+    var t96 = 1.0 / (p0[0] * t89 + p0[1] * t92 + p0[2] * t95);
+    ret[15] = (t89 * t23 + (t84 - t85) * t42 + (t40 - t41) * t86) * t96;
+    ret[16] = (t92 * t23 + (t79 - t80) * t42 + (t35 - t36) * t86) * t96;
+    ret[17] = (t95 * t23 + (t81 - t82) * t42 + (t37 - t38) * t86) * t96;
+    var t97 = t70 - t71;
+    var t98 = t73 - t74;
+    var t99 = t76 - t77;
+    var t100 = p5[2] * p1[0];
+    var t101 = p5[0] * p1[2];
+    var t102 = p5[0] * p1[1];
+    var t103 = p5[1] * p1[0];
+    var t104 = 1.0 / (p1[0] * t97 + p1[1] * t98 + p1[2] * t99);
+    var t105 = p5[1] * p1[2];
+    var t106 = p5[2] * p1[1];
+    ret[18] = (t97 * t59 + (t105 - t106) * t24 + (t57 - t58) * t86) * t104;
+    ret[19] = (t98 * t59 + (t100 - t101) * t24 + (t46 - t47) * t86) * t104;
+    ret[20] = (t99 * t59 + (t102 - t103) * t24 + (t48 - t49) * t86) * t104;
+    var t107 = t87 - t88;
+    var t108 = t90 - t91;
+    var t109 = t93 - t94;
+    var t110 = 1.0 / (p1[0] * t107 + p1[1] * t108 + p1[2] * t109);
+    ret[21] = (t107 * t59 + (t105 - t106) * t42 + (t68 - t69) * t86) * t110;
+    ret[22] = (t108 * t59 + (t100 - t101) * t42 + (t63 - t64) * t86) * t110;
+    ret[23] = (t109 * t59 + (t102 - t103) * t42 + (t65 - t66) * t86) * t110;
+    return ret;
   },
 /**
  * Determines whether a point is

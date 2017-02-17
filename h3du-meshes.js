@@ -140,11 +140,9 @@ H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, f
   var normDir = inside ? -1 : 1;
   var sc = [];
   var tc = [];
-
-  // var halfpi = Math.PI * 0.5;
   var angleStep = H3DU.Math.PiTimes2 / slices;
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   var sangle = 1.0; // sin(90.0deg)
   var cangle = 0; // cos(90.0deg)
   for(var i = 0; i < slices; i++) {
@@ -170,9 +168,11 @@ H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, f
       var dy = baseRad - topRad;
       var dx = height;
       var len = Math.sqrt(dx * dx + dy * dy);
+     // Convert to a unit vector
       if(len !== 0) {
-        dy /= len;
-        dx /= len;
+        var ilen = 1.0 / len;
+        dy *= ilen;
+        dx *= ilen;
       }
       cosSlopeNorm = dx * normDir;
       sinSlopeNorm = dy * normDir;
@@ -252,11 +252,9 @@ H3DU.Meshes.createLathe = function(points, slices, flat, inside) {
   }
   var sc = [];
   var tc = [];
-  // var halfpi = Math.PI * 0.5;
-
   var angleStep = H3DU.Math.PiTimes2 / slices;
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   var sangle = 1.0; // sin(90.0deg)
   var cangle = 0; // cos(90.0deg)
   for(i = 0; i < slices; i++) {
@@ -425,14 +423,14 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
   var twopi = H3DU.Math.PiTimes2;
   var arcLength = sweep === 360 ? twopi : sweep * H3DU.Math.PiDividedBy180;
   start *= H3DU.Math.PiDividedBy180;
-  if(sweepDir > 0) {
+  if(sweepDir < 0) {
     arcLength = -arcLength;
   }
   var angleStep = arcLength / slices;
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   var cangle = Math.cos(start);
-  var sangle = (start>=0 && start<6.283185307179586) ? (start<=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(start);
+  var sangle = start >= 0 && start < 6.283185307179586 ? start <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(start);
   var cstart = cangle;
   var sstart = sangle;
   for(i = 0; i <= slices; i++) {
@@ -443,10 +441,10 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
     }
     var t = i * 1.0 / slices;
     tc.push(t);
-    var tsin = cosStep * cangle + sinStep * sangle;
-    var tcos = cosStep * sangle - sinStep * cangle;
-    cangle = tsin;
-    sangle = tcos;
+    var tsin = cosStep * sangle + sinStep * cangle;
+    var tcos = cosStep * cangle - sinStep * sangle;
+    cangle = tcos;
+    sangle = tsin;
   }
   if(fullCircle) {
     sc[0] = 0;
@@ -539,7 +537,7 @@ H3DU.Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, in
   var cangle, sangle, u;
   var angleStep = H3DU.Math.PiTimes2 / crosswise;
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
   for(var i = 0; i < crosswise; i++) {
@@ -553,7 +551,7 @@ H3DU.Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, in
   sci.push(sci[1]);
   angleStep = H3DU.Math.PiTimes2 / lengthwise;
   cosStep = Math.cos(angleStep);
-  sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
   for(i = 0; i < lengthwise; i++) {
@@ -773,12 +771,10 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
   var verticalTexCoords = [];
   var tc = [];
   var s;
-
-  // var halfpi = Math.PI * 0.5;
   // Generate longitude and horizontal texture coordinates
   var angleStep = H3DU.Math.PiTimes2 / slices;
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 1.0; // sin(90.0deg)
   cangle = 0; // cos(90.0deg)
   for(var i = 0; i < slices; i++) {
@@ -798,7 +794,7 @@ H3DU.Meshes._createCapsule = function(radius, length, slices, stacks, middleStac
   // Generate latitude and vertical texture coordinates
   angleStep = Math.PI / stacks;
   cosStep = Math.cos(angleStep);
-  sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = sinStep;
   cangle = cosStep;
   for(i = 0; i < stacks; i++) {
@@ -949,16 +945,13 @@ H3DU.Meshes.createPointedStar = function(points, firstRadius, secondRadius, inwa
   if(points < 2 || firstRadius < 0 || secondRadius < 0)return mesh;
   if(firstRadius <= 0 && secondRadius <= 0)return mesh;
   mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
-
   var startX = 0;
   var startY = 0;
-
-  // var recipPts2 = 1.0 / (points * 2);
   var recipRadius = 1.0 / Math.max(firstRadius, secondRadius);
   mesh.normal3(0, 0, inward ? -1 : 1).texCoord2(0.5, 0.5).vertex2(0, 0);
   var angleStep = H3DU.Math.PiTimes2 / (points * 2);
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var sangle = 0.0; // sin(0.0deg)
   var cangle = 1.0; // cos(0.0deg)
   for(var i = 0; i < points * 2; i++) {

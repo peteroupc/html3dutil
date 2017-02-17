@@ -73,6 +73,27 @@ function getIntersectionRayBox(ray, box) {
   ];
 }
 
+/* exported polygonToPlane */
+function polygonToPlane(polygon) {
+  "use strict";
+  if(polygon.length < 3) {
+    return [0, 0, 0, 0, 0, 0];
+  }
+  var normal = H3DU.Math.vec3cross(polygon[0], polygon[1]);
+  var centroid = H3DU.Math.vec3copy(polygon[0]);
+  for(var i = 1; i < polygon.length; i++) {
+    var nextIndex = i + 1 === polygon.length ? 0 : i + 1;
+    H3DU.Math.vec3addInPlace(normal,
+       H3DU.Math.vec3cross(polygon[i], polygon[nextIndex]));
+    H3DU.Math.vec3addInPlace(centroid, polygon[i]);
+  }
+  H3DU.Math.vec3scaleInPlace(centroid, 1.0 / polygon.length);
+  var plane = [
+    normal[0], normal[1], normal[2],
+    centroid[0], centroid[1], centroid[2]];
+  return plane;
+}
+
 function triangleToPlane(face) {
   "use strict";
   var ac = H3DU.Math.vec3sub(face[0], face[2]);
