@@ -131,7 +131,7 @@ H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   // In WebGL, texture coordinates start at the upper left corner rather than
   // the lower left as in OpenGL and OpenGL ES. If the texture info indicates
   // top-down texture coordinates, no flipping is needed.
-  // TODO: Non-DOMElement recommends top-down.
+  // NOTE: Non-DOMElement recommends top-down.
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL,
   textureInfo.topDown ? 0 : 1);
   var target = textureInfo.target;
@@ -243,7 +243,6 @@ H3DU._MaterialBinder.bindTexture = function(
       loadedTexture = loader._mapTextureWithInfo(texture, textureInfo, context);
     }
   } else {
-    // TODO: Use something else than mapFrameBuffer
     texture = loader.mapFrameBuffer(texture, context);
   }
   if (typeof loadedTexture !== "undefined" && loadedTexture !== null || isFrameBuffer) {

@@ -179,6 +179,7 @@ H3DU.Scene3D.ProgramCache.prototype.dispose = function() {
 H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
   "use strict";
   if(!context)throw new Error();
+  if(!H3DU.is3DContext(context))return null;
   if(info instanceof H3DU.ShaderProgram) {
   // NOTE: Using H3DU.ShaderProgram objects in materials is deprecated
     return info;
@@ -202,6 +203,7 @@ H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
 H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
   "use strict";
   if(!context)throw new Error();
+  if(!H3DU.is3DContext(context))return null;
   var pf = this._programs[flags];
   if(pf) {
     for(var i = 0; i < pf.length; i++) {

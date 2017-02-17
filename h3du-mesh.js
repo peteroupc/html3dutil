@@ -459,9 +459,9 @@ H3DU.Mesh.prototype.color3 = function(r, g, b) {
   * @returns {H3DU.Mesh} This object.
   * @memberof! H3DU.Mesh#
   */
-// TODO: Support 3D texture coordinates
 H3DU.Mesh.prototype.texCoord2 = function(u, v) {
   "use strict";
+// LATER: Support 3D texture coordinates
   if(typeof u === "number" && typeof v === "number") {
     this.texCoord[0] = u;
     this.texCoord[1] = v;

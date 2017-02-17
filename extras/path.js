@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, define, exports */
+/* global define, exports */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -181,7 +181,7 @@
     this.startPos = [0, 0];
     this.endPos = [0, 0];
   }
-/** @private */
+/* JSDOC PRIVATE */
   var Triangulate = {};
   GraphicsPath.CLOSE = 0;
   GraphicsPath.LINE = 1;
@@ -200,7 +200,7 @@
   GraphicsPath.prototype.isIncomplete = function() {
     return this.incomplete;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._startPoint = function(a) {
     if(a[0] === GraphicsPath.CLOSE) {
       return [0, 0];
@@ -208,7 +208,7 @@
       return [a[1], a[2]];
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._endPoint = function(a) {
     if(a[0] === GraphicsPath.CLOSE) {
       return [0, 0];
@@ -218,7 +218,7 @@
       return [a[a.length - 2], a[a.length - 1]];
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._point = function(seg, t) {
     var a, b, x, y;
     if(seg[0] === GraphicsPath.CLOSE) {
@@ -271,7 +271,7 @@
       return [0, 0];
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._normalize = function(v2) {
     var len = Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
     if(len !== 0) {
@@ -282,7 +282,7 @@
     return v2;
   };
 
-  /** @private */
+  /* JSDOC PRIVATE */
   GraphicsPath._tangent = function(seg, t) {
     var a, b, x, y;
     if(seg[0] === GraphicsPath.LINE) {
@@ -329,7 +329,7 @@
     }
   };
 
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._subdivide2 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, list, flatness, mode, depth) {
     var x1 = a1 + (a3 - a1) * tcut;
     var x2 = a3 + (a5 - a3) * tcut;
@@ -347,7 +347,7 @@
     GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._flattenCubic(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, list, flatness, mode, depth + 1);
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._subdivide3 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, tcut2, list, flatness, mode, depth) {
     var x1 = a1 + (a3 - a1) * tcut;
     var x2 = a3 + (a5 - a3) * tcut;
@@ -366,7 +366,7 @@
     GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._subdivide2(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, tcutx, list, flatness, mode, depth + 1);
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
  /* if(depth<1) {
@@ -404,7 +404,7 @@
       GraphicsPath._subdivide2(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, 0.5, list, flatness, mode, depth);
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
     if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a2 - a4 - a4 + a6) <= flatness) {
@@ -428,7 +428,7 @@
       GraphicsPath._flattenQuad(xc, yc, x2, y2, a5, a6, tmid, t2, list, flatness, mode, depth + 1);
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._flattenArc = function(a, t1, t2, list, flatness, mode, depth) {
     var rot = a[5];
     var crot = Math.cos(rot);
@@ -436,7 +436,7 @@
     var ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
     GraphicsPath._flattenArcInternal(ellipseInfo, a[1], a[2], a[8], a[9], a[12], a[13], t1, t2, list, flatness, mode, depth);
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1, theta2, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
     var thetaMid = (theta1 + theta2) * 0.5;
@@ -464,7 +464,7 @@
       GraphicsPath._flattenArcInternal(ellipseInfo, xmid, ymid, x2, y2, thetaMid, theta2, tmid, t2, list, flatness, mode, depth + 1);
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath.prototype._start = function() {
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
@@ -472,7 +472,7 @@
     }
     return [0, 0];
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath.prototype._end = function() {
     for(var i = this.segments.length - 1; i >= 0; i--) {
       var s = this.segments[i];
@@ -562,7 +562,7 @@
     }
     return ret;
   };
-   /** @private */
+   /* JSDOC PRIVATE */
   GraphicsPath._quadCurveLength = function(x1, y1, x2, y2, x3, y3) {
     var integrand = function(t) {
       // Length of derivative of quadratic Bezier vector function
@@ -573,7 +573,7 @@
     };
     return GraphicsPath._numIntegrate(integrand, 0, 1);
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._cubicCurveLength = function(x1, y1, x2, y2, x3, y3, x4, y4) {
     var integrand = function(t) {
       // Length of derivative of cubic Bezier vector function
@@ -591,7 +591,7 @@
     };
     return GraphicsPath._numIntegrate(integrand, 0, 1);
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._length = function(a) {
     if(a[0] === GraphicsPath.LINE) {
       var dx = a[3] - a[1];
@@ -765,7 +765,7 @@
     return path;
   };
 
-  /** @private */
+  /* JSDOC PRIVATE */
   GraphicsPath._accBounds = function(ret, first, s, t) {
     if(t >= 0 && t <= 1) {
       var pt = GraphicsPath._point(s, t);
@@ -780,7 +780,7 @@
       }
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._accBoundsArc = function(ret, first, rx, ry, cphi, sphi, cx, cy, angle) {
     var ca = Math.cos(angle);
     var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
@@ -796,7 +796,7 @@
       ret[3] = Math.max(py, ret[3]);
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._normAngleRadians = function(angle) {
     var twopi = Math.PI * 2;
     var normAngle = angle;
@@ -808,7 +808,7 @@
     }
     return normAngle;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
     var twopi = Math.PI * 2;
     var diff = endAngle - startAngle;
@@ -1007,7 +1007,7 @@
       ret.closePath();
     return ret;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
     if(!nodegen) {
       curPath.push(x, y);
@@ -1018,7 +1018,7 @@
     }
   };
 
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
     var tmp = [];
     var subpaths = [];
@@ -1065,7 +1065,7 @@
     }
     return subpaths;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._CurveList = function(curves) {
     this.curves = curves;
     this.cumulativeLengths = [];
@@ -1110,7 +1110,7 @@
     }
     return null;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._Curve = function(segments) {
     this.segments = segments;
     var totalLength = 0;
@@ -1530,7 +1530,7 @@
     return [this.endPos[0], this.endPos[1]];
   };
 
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
     var t1 = x1 - x0;
     var t2 = y1 - y0;
@@ -1612,7 +1612,7 @@
   GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
     return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngle, ccw, drawLine) {
     if(radius < 0) {
       throw new Error("IndexSizeError");
@@ -1712,7 +1712,7 @@
     0.028531388628933663, 0.9747285559713095,
     0.0123412297999872, 0.9951872199970213
   ];
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._numIntegrate = function(func, xmin, xmax) {
 /*
 * Estimates the integral of a function. The integral
@@ -1749,7 +1749,7 @@
     }
     return ret * bm;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._ellipticArcLength = function(xRadius, yRadius, startAngle, endAngle) {
     if(startAngle === endAngle || xRadius <= 0 || yRadius <= 0)return 0;
     if(xRadius === yRadius) {
@@ -1766,7 +1766,7 @@
     return Math.abs(mx * GraphicsPath._numIntegrate(
    ellipticIntegrand, startAngle, endAngle));
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._vecangle = function(a, b, c, d) {
     var dot = a * c + b * d;
     var denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
@@ -1780,7 +1780,7 @@
     if(sgn < 0)ret = -ret;
     return ret;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._arcSvgToCenterParam = function(a) {
     var x1 = a[1];
     var y1 = a[2];
@@ -1835,7 +1835,7 @@
   };
   GraphicsPath._toRadians = Math.PI / 180;
   GraphicsPath._toDegrees = 180.0 / Math.PI;
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) {
     var crot = Math.cos(rot);
     var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
@@ -1850,16 +1850,16 @@
     var ret = [];
     var t5 = Math.tan(step * 0.5);
     var t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
-    step = H3DU.Math.PiTimes2 / arcs;
-    var cosStep = Math.cos(step);
-    var sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
-    var t2 = Math.cos(angle1);
-    var t1 = angle1 >= 0 && angle1 < 6.283185307179586 ? angle1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(angle1);
-    for(var i = 0; i < arcs; i++) {
-      var ts = cosStep * t1 + sinStep * t2;
-      var tc = cosStep * t2 - sinStep * t1;
-      var t3 = ts;
-      var t4 = tc;
+var step=Math.PI*2.0/arcs;
+var cosStep = Math.cos(step);
+var sinStep = (step>=0 && step<6.283185307179586) ? (step <= 3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(step);
+var t2 = Math.cos(angle1);
+var t1 = (angle1>=0 && angle1<6.283185307179586) ? (angle1 <= 3.141592653589793 ? Math.sqrt(1.0-t2*t2) : -Math.sqrt(1.0-t2*t2)) : Math.sin(angle1);
+for(var i=0;i<arcs;i++) {
+ var ts = cosStep*t1 + sinStep*t2;
+ var tc = cosStep*t2 - sinStep*t1;
+ var t3=ts;
+var t4=tc;
       var t8 = [cx + rx * crot * t2 - ry * srot * t1, cy + rx * srot * t2 + ry * crot * t1];
       var t9 = [cx + rx * crot * t4 - ry * srot * t3, cy + rx * srot * t4 + ry * crot * t3];
       var t10 = [-rx * crot * t1 - ry * srot * t2, -rx * srot * t1 + ry * crot * t2];
@@ -1867,9 +1867,9 @@
       var t12 = [t8[0] + t10[0] * t7, t8[1] + t10[1] * t7];
       var t13 = [t9[0] - t11[0] * t7, t9[1] - t11[1] * t7];
       ret.push([t8[0], t8[1], t12[0], t12[1], t13[0], t13[1], t9[0], t9[1]]);
-      t2 = tc;
-      t1 = ts;
-    }
+ t2 = tc;
+ t1 = ts;
+}
     return ret;
   };
 
@@ -1935,7 +1935,7 @@
     this.incomplete = false;
     return this;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._nextAfterWs = function(str, index) {
     while(index[0] < str.length) {
       var c = str.charCodeAt(index[0]);
@@ -1946,7 +1946,7 @@
     }
     return -1;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._nextAfterSepReq = function(str, index) {
     var comma = false;
     var havesep = false;
@@ -1966,7 +1966,7 @@
     }
     return -1;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._nextAfterSep = function(str, index) {
     var comma = false;
     while(index[0] < str.length) {
@@ -1982,14 +1982,14 @@
     }
     return -1;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._peekNextNumber = function(str, index) {
     var oldindex = index[0];
     var ret = GraphicsPath._nextNumber(str, index, true) !== null;
     index[0] = oldindex;
     return ret;
   };
-/** @private */
+/* JSDOC PRIVATE */
   GraphicsPath._nextNumber = function(str, index, afterSep) {
     var oldindex = index[0];
     var c = afterSep ?
@@ -2517,7 +2517,7 @@
   Triangulate._CONVEX = 1;
   Triangulate._EAR = 2;
   Triangulate._REFLEX = 3;
-/** @private */
+/* JSDOC PRIVATE */
   Triangulate._pointInTri = function(i1, i2, i3, p) {
     if(p[0] === i1[0] && p[1] === i1[1])return false;
     if(p[0] === i2[0] && p[1] === i2[1])return false;
@@ -2550,7 +2550,7 @@
       return false;
     }
   };
-  /** @private */
+  /* JSDOC PRIVATE */
   Triangulate._vertClass = function(v, ori, vertices) {
     var curori = Triangulate._triOrient(v.prev.data, v.data, v.next.data);
     if(curori === 0 || curori === ori) {
@@ -2569,14 +2569,14 @@
       return Triangulate._REFLEX;
     }
   };
-/** @private */
+/* JSDOC PRIVATE */
   Triangulate._triOrient = function(v1, v2, v3) {
     var ori = v1[0] * v2[1] - v1[1] * v2[0];
     ori += v2[0] * v3[1] - v2[1] * v3[0];
     ori += v3[0] * v1[1] - v3[1] * v1[0];
     return ori === 0 ? 0 : ori < 0 ? -1 : 1;
   };
-/** @private */
+/* JSDOC PRIVATE */
   Triangulate._triangleMidAngle = function(v1, v2, v3) {
     var dx1 = v2[0] - v1[0];
     var dy1 = v2[1] - v1[1];
@@ -2598,7 +2598,7 @@
     return Math.acos(dot);
   };
 
-/** @private */
+/* JSDOC PRIVATE */
   Triangulate._Contour = function(vertices) {
     this.vertexList = new LinkedList();
     var vertLength = vertices.length;
@@ -2840,7 +2840,7 @@
     }
     return tris;
   };
-/** @private */
+/* JSDOC PRIVATE */
   Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
     var vpnode = dstNode;
     var c2node = maxPoint;
@@ -2861,7 +2861,7 @@
     count += 2;
     return count;
   };
-/** @private */
+/* JSDOC PRIVATE */
   Triangulate._triangulate = function(contour, tris) {
     var t1, tri;
     if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
@@ -2944,8 +2944,9 @@
     }
     tris.push(tri);
   };
+  if(typeof exports.H3DU!=="undefined" && exports.H3DU!==null){
   exports.H3DU.GraphicsPath = GraphicsPath;
-
+  }
 /* exported GraphicsPath */
 /**
  * Alias for the {@link H3DU.GraphicsPath} class.

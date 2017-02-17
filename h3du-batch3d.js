@@ -436,6 +436,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
       prog = renderContext.scene._programs.getProgram(
            flags, renderContext.context);
     }
+    if(prog!=null){
     if(renderContext.prog !== prog) {
       prog.use();
       new H3DU._LightsBinder(this.lights).bind(prog, this._viewMatrix);
@@ -449,6 +450,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
       renderContext.context,
       renderContext.scene._textureLoader);
     renderContext.scene._meshLoader.draw(shape.meshBuffer, prog);
+    }
   }
 };
 

@@ -300,11 +300,12 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
     var mfp = meshesForPage[i];
     if(!mfp)continue;
     var sh = new H3DU.Shape(mfp);
-    var material = new H3DU.Material(color, color).setParams({
+    var material = new H3DU.Material().setParams({
       "texture":textures ? textures[i] : this.pages[i],
-      "basic":true,
+      "diffuse":color,
       "shader": shader
     });
+    console.log(material)
     sh.setMaterial(material);
     group.addShape(sh);
   }
@@ -909,6 +910,7 @@ H3DU.TextFont.load = function(fontFileName) {
 };
 /** @private */
 H3DU.TextFont._textShader = function(msdf) {
+	// TODO: Investigate text display regression
   "use strict";
   var shader = [
     "#ifdef GL_OES_standard_derivatives",
