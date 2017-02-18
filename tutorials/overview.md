@@ -239,6 +239,7 @@ platonic solids. Demonstrates:
     * How to position HTML elements on top of 3D models based on their 3D positions.
 * [demos/clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
+* [demos/gears.html](https://peteroupc.github.io/html3dutil/demos/gears.html) - A demonstration of rotating gears.
 
 <a id=Paths></a>
 ### Paths
@@ -283,6 +284,9 @@ implement a 360-degree background texture -- a _sky sphere_ -- using custom shad
 ### Shaders
 
 * [demos/squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates shader-based filters.
+* [demos/raymarch.html](https://peteroupc.github.io/html3dutil/demos/gears.html) - A demonstration of the following:
+      * Custom shaders in HTML `script` blocks.
+      * The "ray marching" technique for procedural 3D content.
 
 <a id=Particle_Systems></a>
 ### Particle Systems
@@ -301,8 +305,7 @@ of different sizes.
 ### Selecting Objects
 
 * [demos/picking.html](https://peteroupc.github.io/html3dutil/demos/picking.html),  [demos/picking2.html](https://peteroupc.github.io/html3dutil/demos/picking2.html),
-[demos/picking3.html](https://peteroupc.github.io/html3dutil/demos/picking3.html),
-- These demos demonstrate how object picking can be implemented.
+[demos/picking3.html](https://peteroupc.github.io/html3dutil/demos/picking3.html) - These demos demonstrate how object picking can be implemented.
 
 <a id=Text></a>
 ### Text
@@ -321,7 +324,6 @@ illustrating a simple animation of 3D shapes.
 the difference between {@link H3DU.Math.quatNlerp} and {@link H3DU.Math.quatSlerp},
 both functions for interpolating quaternion rotations.
 * [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
-* [demos/gears.html](https://peteroupc.github.io/html3dutil/demos/gears.html) - A demonstration of rotating gears.
 
 <a id=Example></a>
 ## Example

@@ -439,7 +439,6 @@ H3DU.Scene3D.prototype.setDimensions = function(width, height) {
   if(typeof this.fbo !== "undefined" && this.fbo) {
     this.fbo.dispose();
     this.fbo = this.createBuffer();
-    if(this.fboQuad)this.fboQuad.setMaterial(this.fbo);
   }
 };
 /**

@@ -81,24 +81,6 @@ function isApproxVec(vec1, vec2, delta) {
   }
   return true;
 }
-/*
-function isEqualVec(vec1, vec2) {
-  "use strict";
-vec1 = Array.prototype.slice.call(vec1);
-  vec2 = Array.prototype.slice.call(vec2);
-
-  if (vec1.length !== vec2.length) {
-    return false;
-  }
-  for (var i = 0, len = vec1.length; i < len; i++) {
-    if (vec1[i] !== vec2[i]) {
-      info("isEqualVec got [" + vec1 + "], expected [" + vec2 + "] instead.");
-      return false;
-    }
-  }
-  return true;
-}
-*/
 var testfunctions = [];
 function testPathBounds() {
   "use strict";
