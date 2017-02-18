@@ -32,11 +32,12 @@ H3DU.TextureInfo = function(params) {
   this.target = 3553;
   this.type = 5121;
   this.magFilter = 9729;
-  this.minFilter = 9986;
+  this.minFilter = 9987; // NOTE: Different from glTF default of 9986
   this.wrapS = 10497;
   this.wrapT = 10497;
   this.setParams(params);
 };
+
 /**
  * Copies the parameters from another texture information object to this
  * object.

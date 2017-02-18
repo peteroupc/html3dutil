@@ -648,6 +648,11 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     "float lightCosine, specular;",
     "vec3 materialAmbient=tolinear(ma);", // ambient
     "vec3 materialDiffuse=tolinear(baseColor.rgb);",
+    "vec3 materialEmission;",
+    "#ifdef EMISSION_MAP", "materialEmission=texture2D(emissionMap,uvVar).rgb;", "#else",
+    " materialEmission=me.rgb;", "#endif",
+    " materialEmission=tolinear(materialEmission);",
+    "float materialAlpha=baseColor.a;",
     "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
     "vec3 viewDirection=normalize(tview.xyz/tview.w);",
     "vec3 environment=vec3(1.0);",
@@ -720,11 +725,10 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
       ""].join("\n") + "\n";
   }
   shader += [
-    "#ifdef EMISSION_MAP", "lightedColor+=tolinear(texture2D(emissionMap,uvVar).rgb);", "#else",
-    " lightedColor+=tolinear(me);", "#endif",
+    " lightedColor+=materialEmission.rgb;",
     // "#ifdef PHYSICAL_BASED"," lightedColor=tonemapHable(lightedColor);","#endif",
     " lightedColor=fromlinear(lightedColor);",
-    " baseColor=vec4(lightedColor,baseColor.a);",
+    " baseColor=vec4(lightedColor,materialAlpha);",
     "#endif",
     " gl_FragColor=baseColor;",
     "}"

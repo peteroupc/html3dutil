@@ -31,8 +31,7 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 * [primitiveCount](#H3DU.Shape_H3DU.Shape_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this scene.
 * [setColor](#H3DU.Shape_H3DU.Shape_setColor)<br>Sets material parameters that give the shape a certain color.
-* [setMaterial](#H3DU.Shape_H3DU.Shape_setMaterial)<br>Sets this shape's material parameters.
-* [setMaterialParams](#H3DU.Shape_H3DU.Shape_setMaterialParams)<br>Sets parameters of this shape's material.
+* [setMaterial](#H3DU.Shape_H3DU.Shape_setMaterial)<br>Sets this shape's material parameter object.
 * [setPosition](#H3DU.Shape_H3DU.Shape_setPosition)<br>Sets the relative position of this shape from its original
 position.
 * [setQuaternion](#H3DU.Shape_H3DU.Shape_setQuaternion)<br>Sets this object's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
@@ -165,26 +164,12 @@ This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
  <a name='H3DU.Shape_H3DU.Shape_setMaterial'></a>
 ### H3DU.Shape#setMaterial(material)
 
-Sets this shape's material parameters.
+Sets this shape's material parameter object.
 
 #### Parameters
 
 * `material` (Type: <a href="H3DU.Material.md">H3DU.Material</a> | <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)<br>
-    The material object to use. This parameter can't be a <a href="H3DU.Texture.md">H3DU.Texture</a> object.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
-
- <a name='H3DU.Shape_H3DU.Shape_setMaterialParams'></a>
-### H3DU.Shape#setMaterialParams(params)
-
-Sets parameters of this shape's material.
-
-#### Parameters
-
-* `params` (Type: Object)<br>
-    An object described in H3DU.PbrMaterial#setParams.
+    The material object to use. Throws an error if this parameter is null, is omitted, or is a <a href="H3DU.Texture.md">H3DU.Texture</a> object
 
 #### Return Value
 

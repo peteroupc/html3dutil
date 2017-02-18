@@ -118,10 +118,11 @@ H3DU.Shape.prototype.getVisible = function() {
 H3DU.Shape.prototype.setColor = function(r, g, b, a) {
   "use strict";
   var c = H3DU.toGLColor(r, g, b, a);
-  return this.setMaterialParams({
+  this._ensureMaterial().setParams({
     "ambient":c,
     "diffuse":c
   });
+  return this;
 };
 /**
  * Sets material parameters that give the shape a texture with the given URL.
@@ -134,7 +135,8 @@ H3DU.Shape.prototype.setColor = function(r, g, b, a) {
  */
 H3DU.Shape.prototype.setTexture = function(name) {
   "use strict";
-  return this.setMaterialParams({"texture":name});
+  this._ensureMaterial().setParams({"texture":name});
+  return this;
 };
 /**
  * Sets this shape's material to a shader with the given URL.
@@ -146,23 +148,18 @@ H3DU.Shape.prototype.setTexture = function(name) {
  */
 H3DU.Shape.prototype.setShader = function(shader) {
   "use strict";
-  return this.setMaterialParams({"shader":shader});
-};
-/**
- * Sets parameters of this shape's material.
- * @param {Object} params An object described in {@link H3DU.PbrMaterial#setParams}.
- * @returns {H3DU.Shape} This object.
- * @memberof! H3DU.Shape#
- */
-H3DU.Shape.prototype.setMaterialParams = function(params) {
-  "use strict";
-  if(this.material) {
-    this.material.setParams(params);
-  } else {
-    this.material = new H3DU.PbrMaterial().setParams(params);
-  }
+  this._ensureMaterial().setParams({"shader":shader});
   return this;
 };
+/** @private */
+H3DU.Shape.prototype._ensureMaterial = function() {
+  "use strict";
+  if(typeof this.material === "undefined" || this.material === null) {
+    this.material = new H3DU.PbrMaterial();
+  }
+  return this.material;
+};
+
 /**
  * Sets this shape's material to the given texture, and its ambient and
  * diffuse parameters to the given color.
@@ -185,22 +182,26 @@ H3DU.Shape.prototype.setMaterialParams = function(params) {
 H3DU.Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
   "use strict";
   var c = H3DU.toGLColor(r, g, b, a);
-  return this.setMaterialParams({
+  this._ensureMaterial().setParams({
     "texture":name,
     "ambient":c,
     "diffuse":c
   });
+  return this;
 };
 /**
- * Sets this shape's material parameters.
+ * Sets this shape's material parameter object.
  * @param {H3DU.Material|H3DU.PbrMaterial} material The material object to use.
- * This parameter can't be a {@link H3DU.Texture} object.
+ * Throws an error if this parameter is null, is omitted, or is a {@link H3DU.Texture} object
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
  */
 H3DU.Shape.prototype.setMaterial = function(material) {
   "use strict";
-  if(material && material instanceof H3DU.Texture)
+  if(typeof material === "undefined" || material === null) {
+    throw new Error();
+  }
+  if(material instanceof H3DU.Texture)
     throw new Error("Material parameter can't directly be a Texture");
   this.material = material;
   return this;

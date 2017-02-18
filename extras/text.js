@@ -293,19 +293,22 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
   var hasColor = typeof color !== "undefined" && color !== null;
   if(hasColor) {
     shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader(msdf));
+  } else {
+    shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textureShader());
   }
-  color = hasColor ? color : [0, 0, 0, 0];
+  color = hasColor ? color : [0, 0, 0, 1.0];
   var meshesForPage = this.makeTextMeshes(str, params);
   for(var i = 0; i < meshesForPage.length; i++) {
     var mfp = meshesForPage[i];
     if(!mfp)continue;
     var sh = new H3DU.Shape(mfp);
+    var texmap = textures ? textures[i] : this.pages[i];
     var material = new H3DU.Material().setParams({
-      "texture":textures ? textures[i] : this.pages[i],
+      "texture":texmap,
       "diffuse":color,
       "shader": shader
     });
-    console.log(material)
+    console.log(material);
     sh.setMaterial(material);
     group.addShape(sh);
   }
@@ -314,8 +317,6 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
 /** @private */
 H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
   "use strict";
-// var height=(typeof params.lineHeight !== "undefined" &&
-// params.lineHeight !== null) ? params.lineHeight : this.common.lineHeight;
   var lastChar = -1;
   for(var i = startPos; i < endPos; i++) {
     var c = str.charCodeAt(i);
@@ -908,9 +909,28 @@ H3DU.TextFont.load = function(fontFileName) {
    });
   }
 };
+
+/** @private */
+H3DU.TextFont._textureShader = function() {
+  "use strict";
+  var shader = [
+    "#ifdef GL_ES",
+    "#ifndef GL_FRAGMENT_PRECISION_HIGH",
+    "precision mediump float;",
+    "#else",
+    "precision highp float;",
+    "#endif",
+    "#endif",
+    "uniform sampler2D sampler;",
+    "varying vec2 uvVar;",
+    "void main() {",
+    "  gl_FragColor=texture2D(sampler, uvVar);",
+    "}"].join("\n");
+  return shader;
+};
+
 /** @private */
 H3DU.TextFont._textShader = function(msdf) {
-	// TODO: Investigate text display regression
   "use strict";
   var shader = [
     "#ifdef GL_OES_standard_derivatives",
@@ -1000,6 +1020,7 @@ H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
     if(!sprites[i])throw new Error();
     this._makeSprite(sprites[i].name, sprites[i].index, sprites[i].x, sprites[i].y, meshes);
   }
+  var shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textureShader());
   var group = new H3DU.ShapeGroup();
   for(i = 0; i < meshes.length; i++) {
     var mfp = meshes[i];
@@ -1007,7 +1028,7 @@ H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
     var sh = new H3DU.Shape(mfp);
     var material = new H3DU.Material().setParams({
       "texture":this.textures[i],
-      "basic":true
+      "shader":shader
     });
     sh.setMaterial(material);
     group.addShape(sh);

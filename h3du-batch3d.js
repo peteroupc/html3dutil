@@ -436,20 +436,20 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
       prog = renderContext.scene._programs.getProgram(
            flags, renderContext.context);
     }
-    if(prog!=null){
-    if(renderContext.prog !== prog) {
-      prog.use();
-      new H3DU._LightsBinder(this.lights).bind(prog, this._viewMatrix);
-      renderContext.prog = prog;
-    }
-    H3DU.Batch3D._setupMatrices(prog,
+    if(typeof prog !== "undefined" && prog !== null) {
+      if(renderContext.prog !== prog) {
+        prog.use();
+        new H3DU._LightsBinder(this.lights).bind(prog, this._viewMatrix);
+        renderContext.prog = prog;
+      }
+      H3DU.Batch3D._setupMatrices(prog,
       this._projectionMatrix,
       this._viewMatrix,
       shape.getMatrix());
-    H3DU.Batch3D._getMaterialBinder(shape.material).bind(prog,
+      H3DU.Batch3D._getMaterialBinder(shape.material).bind(prog,
       renderContext.context,
       renderContext.scene._textureLoader);
-    renderContext.scene._meshLoader.draw(shape.meshBuffer, prog);
+      renderContext.scene._meshLoader.draw(shape.meshBuffer, prog);
     }
   }
 };

@@ -54,6 +54,7 @@ This is an overview of most of the JavaScript classes available in this library:
 * [`H3DU.MeshBuffer`](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model
 * [`H3DU.Meshes`](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
 * [`H3DU.Material`](https://peteroupc.github.io/html3dutil/H3DU.Material.html),
+ [`H3DU.PbrMaterial`](https://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html),
  [`H3DU.Texture`](https://peteroupc.github.io/html3dutil/H3DU.Texture.html) - Represents textures and colors for a 3D object&#39;s appearance.
 * [`H3DU.Lights`](https://peteroupc.github.io/html3dutil/H3DU.Lights.html),
  [`H3DU.LightSource`](https://peteroupc.github.io/html3dutil/H3DU.LightSource.html) - Represents light sources
@@ -157,7 +158,7 @@ Use the `H3DU.Shape` constructor method to convert the mesh to a shape. Then you
     // Add the shape to the scene
     batch.addShape(shape);
 
-The appearance of a 3D shape is known in the 3D graphics world as a "material". It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/H3DU.Material.html">`Material`</a> class holds data on some of these parameters, and is part of the definition of a shape.
+The appearance of a 3D shape is known in the 3D graphics world as a "material". It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/H3DU.Material.html">`Material`</a> class holds data on some of these parameters, and is part of the definition of a shape. The <a href="http://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html">`PbrMaterial`</a> class does the same, but uses physically-based shading algorithms.
 
 Here are details on some of the `Shape` class&#39;s methods.
 
@@ -301,7 +302,9 @@ of different sizes.
 <a id=Selecting_Objects></a>
 ### Selecting Objects
 
-* [demos/picking.html](https://peteroupc.github.io/html3dutil/demos/picking.html),  [demos/picking2.html](https://peteroupc.github.io/html3dutil/demos/picking2.html) - These demos demonstrate how object picking can be implemented.
+* [demos/picking.html](https://peteroupc.github.io/html3dutil/demos/picking.html),  [demos/picking2.html](https://peteroupc.github.io/html3dutil/demos/picking2.html),
+[demos/picking3.html](https://peteroupc.github.io/html3dutil/demos/picking3.html),
+- These demos demonstrate how object picking can be implemented.
 
 <a id=Text></a>
 ### Text

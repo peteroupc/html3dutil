@@ -236,9 +236,11 @@ A 4-element array can describe a plane in the following manner:
  coordinates of any point lying on the plane.
 * A, B, and C are
  the X, Y, and Z components of the plane's normal vector.
+* D is the signed distance from the plane to the origin (0,0,0).
+It's positive if the plane's normal points toward the origin, and
+negative if it points away from the origin.
 * D is the negative dot product of the
- plane's normal and any point on the plane. D's absolute value
- is the distance from the plane to the origin (0,0,0).
+ plane's normal and any point on the plane.
 
 There is one method that deals with planes:
 

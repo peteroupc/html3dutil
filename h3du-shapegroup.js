@@ -221,19 +221,6 @@ H3DU.ShapeGroup.prototype.setShader = function(material) {
   return this;
 };
 /**
- * Sets material parameters for all shapes in this shape group.
- * @param {Object} params An object described in {@link H3DU.Material#setParams}.
- * @returns {H3DU.Shape} This object.
- * @memberof! H3DU.ShapeGroup#
- */
-H3DU.ShapeGroup.prototype.setMaterialParams = function(params) {
-  "use strict";
-  for(var i = 0; i < this.shapes.length; i++) {
-    this.shapes[i].setMaterialParams(params);
-  }
-  return this;
-};
-/**
  * Removes all instances of a 3D shape from this shape group
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
  * @returns {H3DU.ShapeGroup} This object.

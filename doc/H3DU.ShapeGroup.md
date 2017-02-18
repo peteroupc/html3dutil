@@ -32,7 +32,6 @@ in this shape group at the given index.
 and points) composed by all shapes in this shape group.
 * [removeShape](#H3DU.ShapeGroup_H3DU.ShapeGroup_removeShape)<br>Removes all instances of a 3D shape from this shape group
 * [setMaterial](#H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterial)<br>Sets the material used by all shapes in this shape group.
-* [setMaterialParams](#H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterialParams)<br>Sets material parameters for all shapes in this shape group.
 * [setPosition](#H3DU.ShapeGroup_H3DU.ShapeGroup_setPosition)<br>Sets the relative position of the shapes in this group
 from their original position.
 * [setQuaternion](#H3DU.ShapeGroup_H3DU.ShapeGroup_setQuaternion)<br>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
@@ -188,20 +187,6 @@ Sets the material used by all shapes in this shape group.
 #### Return Value
 
 Return value. (Type: Object)
-
- <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setMaterialParams'></a>
-### H3DU.ShapeGroup#setMaterialParams(params)
-
-Sets material parameters for all shapes in this shape group.
-
-#### Parameters
-
-* `params` (Type: Object)<br>
-    An object described in H3DU.Material#setParams.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
  <a name='H3DU.ShapeGroup_H3DU.ShapeGroup_setPosition'></a>
 ### H3DU.ShapeGroup#setPosition(x, y, z)

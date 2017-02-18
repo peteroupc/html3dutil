@@ -82,7 +82,7 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   * @type {Array<Number>}
   * @default
   */
-  this.emission = [0, 0, 0];
+  this.emission = [0, 0, 0]; // LATER: Support 4-component emissions (to support basic shading with alpha properly)
 /**
  * Texture for this material. Each color in the texture
  * sets the diffusion (also called "albedo")
@@ -113,7 +113,7 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   * @type {H3DU.Texture|H3DU.TextureInfo}
   * @default
   */
-  this.emissionMap = null;
+  this.emissionMap = null; // LATER: Support 4-component emissions (to support basic shading with alpha properly)
  /**
   * Shader program to use when rendering objects with this material.
   * @default
