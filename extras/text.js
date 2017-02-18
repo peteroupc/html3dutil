@@ -958,7 +958,7 @@ H3DU.TextFont._textShader = function(msdf) {
     " float dsmooth=0.06;",
     " float o=smoothstep(0.5-dsmooth,0.5+dsmooth,df);",
     "#endif",
-    " gl_FragColor=vec4(md.rgb,pow(md.a*o,0.4545));",
+    " gl_FragColor=vec4(md.rgb,md.a*o);",
     "}"].join("\n");
   return shader;
 };

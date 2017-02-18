@@ -13,6 +13,8 @@ The library differs from many others because this one is in the public domain, s
 
 This page includes information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.
 
+NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta2 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the section "History" for more information.)
+
 <a id=Example></a>
 ## Example
 
@@ -21,7 +23,7 @@ This page includes information on how to use the HTML 3D library, an overview of
 <a id=Contents></a>
 ## Contents
 
-[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Selecting Objects](#Selecting_Objects)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>
+[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Selecting Objects](#Selecting_Objects)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>[History](#History)<br>&nbsp;&nbsp;[Version 2.0.0-beta2](#Version_2_0_0_beta2)<br>&nbsp;&nbsp;[Version 2.0.0-beta1:](#Version_2_0_0_beta1)<br>
 
 ## How to Use
 
@@ -370,9 +372,43 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
     </script>
     </body>
 
-<h2>History</h2>
+<a id=History></a>
+## History
 
-Version 2.0.0-beta1:
+<a id=Version_2_0_0_beta2></a>
+### Version 2.0.0-beta2
+
+The changes in beta 2 from beta 1 include:
+
+- Added H3DU.PbrMaterial class and supported physically-based shading in the default shader.
+- H3DU.Shape objects contain H3DU.PbrMaterial by default.
+- Extras folder contains a glTF loader, which is preliminary and incomplete.
+- H3DU.Scene3D will create a WebGL 2 rendering context if possible and supported by the browser.
+- H3DU.MeshBuffer stores vertex data by semantic (such as position, normal or texture coordinates), rather than by name.
+- The new H3DU.Semantic class contains constants for attribute and uniform semantics.
+- The new H3DU.TextureInfo class is a lightweight class for storing a texture's settings, but not its data.
+- H3DU.ShaderInfo class can now accept H3DU.TextureInfo objects as uniform values.
+- H3DU.Material can accept a parameter object in the constructor as it can in the setParams method, similarly to the
+  new H3DU.PbrMaterial class.
+- Added fromBasic and fromBasicTexture methods to H3DU.Material class.
+- Many new methods were added to the H3DU.Math class, including methods to add and
+   subtract 4-element vectors, to clamp vectors, and to convert to and from linear RGB colors,
+   as well as vec3proj, vec4proj, mat3invert, and vec3fromWindowPoint methods.
+   The frustumHasBox method was improved.
+- The shapeCount, getShape, setShape, and copy methods were added to H3DU.ShapeGroup.
+- New H3DU.CubeMap class holds information on the textures that make up a cube map.
+   However, cube maps are not yet supported in the default shader (its code is
+   currently commented out)
+- In the H3DU.GraphicsPath extra, added methods for high-level shapes and path
+   interpolation and improved code on path triangulation.
+- H3DU.TextFont extra supports multichannel signed distance field fonts.
+- Several new demos were added.
+- Some methods were removed: setMaterialParams methods from both H3DU.Shape and H3DU.ShapeGroup; mapTexture and mapTexturesAll methods from TextureLoader; and forShader method from H3DU.Material.
+- Renamed setOrientation and multOrientation in H3DU.Transform to setRotation and multRotation, and deprecated the old names.
+- Bug fixes.
+
+<a id=Version_2_0_0_beta1></a>
+### Version 2.0.0-beta1:
 
 - All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now <a href="H3DU.Shape.md">H3DU.Shape</a> and `Mesh` is now <a href="H3DU.Mesh.md">H3DU.Mesh</a>.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
 - `Scene3D`, now <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> class. Scene3D's `render` method now takes an array of `Batch3D`s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
@@ -402,7 +438,7 @@ Version 2.0.0-beta1:
  polygons. Path triangulation now supports polygons with holes.
 - The default light configuration is no lights when creating a <a href="H3DU.LightSource.md">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.md">H3DU.Scene3D</a> without rendering a custom `Batch3D`, in which case the default is one light source with its default values.
 - The default value for specular materials (<a href="H3DU.Material.md">H3DU.Material</a>) is now (0.1, 0.1, 0.1). The default value for shininess is now 32.
-- The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
+- The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, `TRIANGLE_FAN` and `QUAD_STRIP`) in the same mesh is still supported.
 - Many of the tutorials were edited heavily to accommodate the new version. The `GraphicsPath` tutorial was added.
 - There were also numerous bug fixes.
 - A known issue: When using the <a href="H3DU.Camera.md">H3DU.Camera</a> in conjunction with the compatibility behavior of <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, only one side of the scene will appear lighted by default.
