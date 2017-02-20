@@ -154,7 +154,7 @@ The following is an example of a transformation matrix.
 
 Here, the first column shows an X-axis vector at (1, 0, 0),
 the second column shows a Y-axis vector at (0, 0.5, 0.866025),
-the third column shows a Y-axis vector at (0, -0.866025, 0.5),
+the third column shows a Z-axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).
 
 <a id=Why_a_4x4_Matrix></a>
@@ -174,7 +174,7 @@ A 4x4 matrix can describe linear transformations in 4D space and
 transform 4-element vectors.  A 4-element vector has four components:
 X, Y, Z, and W. If a 4-element vector represents a 3D point, these
 components are the point's _homogeneous coordinates_ (unless the
-vector's _w_ is 0).  To convert these coordinates back to 3D, divide
+vector's W is 0).  To convert these coordinates back to 3D, divide
 X, Y, and Z by W.  This is usually only required, however, if the
 matrix describes a perspective projection (see
 ["Other Transformations"](#Other_Transformations)).
@@ -449,6 +449,9 @@ counterclockwise rotation in [right-handed coordinate systems]{@tutorial glmath}
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.
+* Rotating a point by an arbitrary axis of rotation is more complicated to describe.
+When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
+ <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
 
 See ["Rotation example"](#Rotation_Example) for an illustration of a rotation
 transformation.
@@ -544,18 +547,19 @@ An inverted matrix describes a transformation that undoes another transformation
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.
 
-To invert a **translation**, reverse the sign of the translation elements `tx`, `ty`, and `tz`
+To invert a **translation**, reverse the sign of the translation elements (given above as `tx`, `ty`, and `tz`)
 and generate a new translation matrix with the new translation elements. For example,
 to invert the translation (5, 2, -3), use the translation (-5, -2, 3).
 
-To invert a **scaling**, use the reciprocal of `sx`, `sy`, and `sz`
+To invert a **scaling**, use 1 divided by each of the scaling elements (given above as `sx`, `sy`, and `sz`)
 and generate a new scaling matrix with those elements.
 For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
 
-To invert a **rotation**, swap the 2nd and 5th elements of the matrix, the 3rd and 9th
-elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4, 2, 8,
-6, and 9 respectively). The effect is like reversing the angle of the rotation to reset an object
-to its previous orientation.
+To invert a **rotation** for a 4x4 matrix, swap the 2nd and 5th elements of the matrix,
+the 3rd and 9th elements, and the 7th and 10th elements of the matrix (zero-based
+elements 1, 4, 2, 8, 6, and 9 respectively). The effect is like reversing the angle of the
+rotation to reset an object to its previous orientation.  In general, to invert a rotation for
+any NxN matrix, _transpose_ that matrix (so that its rows become its columns and vice versa).
 
 Matrices that use some combination of translation, scaling, and rotation
 as well as other kinds of matrices are more complicated

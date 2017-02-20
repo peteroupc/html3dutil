@@ -292,6 +292,7 @@ implement a 360-degree background texture -- a _sky sphere_ -- using custom shad
       * Custom shaders in HTML `script` blocks.
       * The "ray marching" technique for procedural 3D content.
 * [demos/checkerboard.html](https://peteroupc.github.io/html3dutil/demos/checkerboard.html) - Shader for generating a checkerboard texture.
+* [demos/marble.html](https://peteroupc.github.io/html3dutil/demos/marble.html) - Shader for generating a marble background.
 
 <a id=Particle_Systems></a>
 ### Particle Systems

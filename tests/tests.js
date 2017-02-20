@@ -41,6 +41,7 @@ function ok(a, b) {
   if(!a) {
     FailedTests++;
     clog(b || "");
+    throw new Error();
   }
 }
 function is(a, b, msg) {

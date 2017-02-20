@@ -1285,13 +1285,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "quatFromVectors":function(vec1, vec2) {
     "use strict";
     var ret = H3DU.Math.vec3cross(vec1, vec2);
-    var vecLengths = H3DU.Math.vec3length(vec1) * H3DU.Math.vec3length(vec2);
     if(H3DU.Math.vec3dot(ret, ret) < 1e-9) {
       // The vectors are parallel or close to parallel; there are two possible cases
-      var vn1 = H3DU.Math.vec3norm(vec1);
-      var vn2 = H3DU.Math.vec3norm(vec2);
-      var dot = H3DU.Math.vec3dot(vn1, vn2);
-      if(Math.abs(dot) >= 1 - 1e-9) {
+      var dot = H3DU.Math.vec3dot(vec1, vec2);
+      if(dot > 0) {
        // The vectors point in the same direction or almost so
         return [0, 0, 0, 1];
       } else {
@@ -1300,6 +1297,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
         ret[3] = 0;
       }
     } else {
+      var vecLengths = H3DU.Math.vec3length(vec1) * H3DU.Math.vec3length(vec2);
       if(vecLengths === 0)vecLengths = 1; // degenerate case
       ret[3] = vecLengths + H3DU.Math.vec3dot(vec1, vec2);
     }
