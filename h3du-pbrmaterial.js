@@ -50,7 +50,7 @@ H3DU.PbrMaterial = function(params) {
    * A texture indicating the albedo (or base color) of each part of the texture,
    * in the red, green, blue, and alpha channels. In physically-based rendering, the albedo
    * texture should not have any added lighting or shadow detail.
-   * @type {H3DU.Texture|H3DU.TextureInfo}
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */
   this.albedoMap = null;
@@ -73,7 +73,7 @@ H3DU.PbrMaterial = function(params) {
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * metalness values in certain areas.
-   * @type {H3DU.Texture|H3DU.TextureInfo}
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */
   this.metalnessMap = null;
@@ -97,7 +97,7 @@ H3DU.PbrMaterial = function(params) {
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * roughness values in certain areas.
-   * @type {H3DU.Texture|H3DU.TextureInfo}
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */
   this.roughnessMap = null;
@@ -126,7 +126,7 @@ H3DU.PbrMaterial = function(params) {
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate
    * specular factors in certain areas.
-   * @type {H3DU.Texture|H3DU.TextureInfo}
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */
   this.specularMap = null;
@@ -174,7 +174,7 @@ H3DU.PbrMaterial = function(params) {
   * tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
   * object only has normals and texture coordinates, the <code>recalcTangents()</code>
   * method can calculate the tangents and bitangents appropriate for normal mapping.
-  * @type {H3DU.Texture|H3DU.TextureInfo}
+  * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
   * @default
   */
   this.normalMap = null;
@@ -192,7 +192,7 @@ H3DU.PbrMaterial = function(params) {
   this.emission = [0, 0, 0];
   /**
    * Emission map texture.
-   * @type {H3DU.Texture|H3DU.TextureInfo}
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */
   this.emissionMap = null;
@@ -287,7 +287,7 @@ H3DU.PbrMaterial.fromBasicTexture = function(texture) {
  * <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the additive color. (See {@link H3DU.PbrMaterial#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
- * <li><code>texture</code> or <code>albedoMap</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the URL of the texture
+ * <li><code>texture</code> or <code>albedoMap</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, {@link H3DU.FrameBufferInfo} object, ora string with the URL of the texture
  * to use. Can be null.
  * <li><code>specularMap</code> - Specular
  * map texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#specularMap}).

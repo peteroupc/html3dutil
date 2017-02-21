@@ -286,7 +286,7 @@ Sets the texture used by all shapes in this shape group.
 #### Parameters
 
 * `material` (Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | String)<br>
-    <a href="H3DU.Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. NOTE: The default shader program assumes that the texture is in the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
+    <a href="H3DU.Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Return Value
 

@@ -88,7 +88,7 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
  * sets the diffusion (also called "albedo")
  * of each part of the material.
  * @default
- * @type {H3DU.Texture|H3DU.TextureInfo}
+ * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
  */
   this.texture = null;
 /**
@@ -98,19 +98,19 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
  * for the specular reflection rather than the "specular" property. This behavior
  * is a change from versions earlier than 2.0, where this property, if present,
  * multiplied the value of the "specular" property.
- * @type {H3DU.Texture|H3DU.TextureInfo}
+ * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
  * @default
  */
   this.specularMap = null;
  /**
   * Normal map (bump map) texture. See {@link H3DU.PbrMaterial#normalMap}.
-  * @type {H3DU.Texture|H3DU.TextureInfo}
+  * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
   * @default
   */
   this.normalMap = null;
  /**
   * Emission map texture.
-  * @type {H3DU.Texture|H3DU.TextureInfo}
+  * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
   * @default
   */
   this.emissionMap = null; // LATER: Support 4-component emissions (to support basic shading with alpha properly)
@@ -212,7 +212,7 @@ H3DU.Material.fromBasicTexture = function(texture) {
  * <li><code>emission</code> - A [color vector or string]{@link H3DU.toGLColor} giving
  * the additive color. (See {@link H3DU.Material#emission}.) If this is an array, its numbers can
  * range from -1 to 1. The default is (0,0,0).
- * <li><code>texture</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the URL of the texture
+ * <li><code>texture</code> - {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, {@link H3DU.FrameBufferInfo} object, ora string with the URL of the texture
  * to use. Can be null.
  * <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#specularMap}). Can be null.
  * <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#normalMap}). Can be null.
