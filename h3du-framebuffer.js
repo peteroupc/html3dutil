@@ -21,7 +21,8 @@ H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
     fb = this._frameBuffers[i];
     if(fb[0] === info && fb[1] === context) {
       if(info.width !== fb[3] || info.height !== fb[4]) {
-         // Width and height change, rebuild frame buffer
+  // Width and/or height given in frame buffer info
+  // have changed, rebuild frame buffer
         fb[2].dispose();
         fb[2] = new H3DU.FrameBuffer(fb[1], info.width, info.height);
         fb[3] = info.width;
@@ -30,6 +31,7 @@ H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
       return fb[2];
     }
   }
+  // console.log("mapping frame buffer")
   fb = new H3DU.FrameBuffer(context, info.width, info.height);
   this._frameBuffers.push([info, context, fb, info.width, info.height]);
   return fb;
@@ -43,11 +45,12 @@ H3DU.FrameBufferLoader.prototype.dispose = function() {
   this._frameBuffers = [];
 };
 /** @private */
-H3DU.FrameBufferLoader.prototype.bind = function(info, context) {
+H3DU.FrameBufferLoader.prototype.bind = function(info, context, textureUnit) {
   "use strict";
   if(typeof info !== "undefined" && info !== null) {
     var fc = this.mapFrameBuffer(info, context);
-    context.activeTexture(context.TEXTURE0 + fc.textureUnit);
+    // console.log("binding frame buffer to unit "+textureUnit)
+    context.activeTexture(context.TEXTURE0 + textureUnit);
     context.bindFramebuffer(
     context.FRAMEBUFFER, fc.buffer);
     context.framebufferTexture2D(
@@ -56,12 +59,15 @@ H3DU.FrameBufferLoader.prototype.bind = function(info, context) {
     context.framebufferRenderbuffer(
    context.FRAMEBUFFER, context.DEPTH_ATTACHMENT,
    context.RENDERBUFFER, fc.depthbuffer);
+    return fc;
   }
+  return null;
 };
 /** @private */
 H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
   "use strict";
   if(typeof info !== "undefined" && info !== null) {
+    // console.log("unbinding frame buffer")
     context.framebufferTexture2D(
      context.FRAMEBUFFER, context.COLOR_ATTACHMENT0,
      context.TEXTURE_2D, null, 0);

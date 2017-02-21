@@ -13,18 +13,18 @@
  * Describes a batch (a scene graph of 3D objects) and options for
  * rendering that batch.
  * @class H3DU.RenderPass3D
- * @param {H3DU.Batch3D} subScene The batch to render using
+ * @param {H3DU.Batch3D} batch The batch to render using
  * the options described by this object.
  * @param {Object} [parameters] An object whose keys have
  * the possibilities given in {@link H3DU.RenderParams#setParams}, and whose values are those
  * allowed for each key.
  */
-H3DU.RenderPass3D = function(subScene, parameters) {
+H3DU.RenderPass3D = function(batch, parameters) {
   "use strict";
  /** The batch to render.
   * @type {H3DU.Batch3D}
   */
-  this.subScene = subScene;
+  this.batch = batch;
  /** Whether to clear the color buffer before rendering the batch.
   * @default
   */
@@ -47,6 +47,12 @@ H3DU.RenderPass3D = function(subScene, parameters) {
   * @default
   */
   this.shader = null;
+ /** Use the dimensions of the given framebuffer rather than those
+  * of the scene rendering it.
+  * @type {H3DU.ShaderInfo}
+  * @default
+  */
+  this.useFrameBufferSize = false;
   this.setParams(parameters);
 };
 /**
@@ -60,6 +66,8 @@ H3DU.RenderPass3D = function(subScene, parameters) {
  * <li><code>clearStencil</code> - Whether to clear the stencil buffer before rendering the batch. Either true or false.
  * <li><code>frameBuffer</code> - Framebuffer to render to. An {@link H3DU.FrameBufferInfo} object.
  * <li><code>shader</code> - Shader to use. An {@link H3DU.ShaderInfo} object.
+ * <li><code>useFrameBufferSize</code> - Use the dimensions of the given framebuffer rather than those
+ * of the scene rendering it.
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.
  * @returns {H3DU.RenderPass3D} This object.
@@ -79,6 +87,9 @@ H3DU.RenderPass3D.prototype.setParams = function(parameters) {
   }
   if(typeof parameters.clearStencil !== "undefined") {
     this.clearStencil = parameters.clearStencil;
+  }
+  if(typeof parameters.useFrameBufferSize !== "undefined") {
+    this.useFrameBufferSize = parameters.useFrameBufferSize;
   }
   if(typeof parameters.frameBuffer !== "undefined") {
     if(parameters.frameBuffer instanceof H3DU.FrameBuffer) {

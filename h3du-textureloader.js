@@ -209,10 +209,10 @@ H3DU.TextureLoader.prototype.mapFrameBuffer = function(info, context) {
   return this.fbLoader.mapFrameBuffer(info, context);
 };
 /** @private */
-H3DU.TextureLoader.prototype.bindFrameBuffer = function(info, context) {
+H3DU.TextureLoader.prototype.bindFrameBuffer = function(info, context, textureUnit) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
-  this.fbLoader.bind(info, context);
+  return this.fbLoader.bind(info, context, textureUnit);
 };
 /** @private */
 H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {

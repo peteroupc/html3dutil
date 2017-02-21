@@ -37,12 +37,16 @@ if any.
 when rendering this scene.
 * [dispose](#H3DU.Scene3D_H3DU.Scene3D_dispose)<br>Disposes all resources used by this object.
 * [frontFace](#H3DU.Scene3D_H3DU.Scene3D_frontFace)<br>Specifies the winding of front faces.
-* [getAspect](#H3DU.Scene3D_H3DU.Scene3D_getAspect)<br>Gets the ratio of width to height for this scene (getWidth()
+* [getAspect](#H3DU.Scene3D_H3DU.Scene3D_getAspect)<br>Gets the ratio of viewport width to viewport height for this scene (getWidth()
 divided by getHeight()).
+* [getAutoResize](#H3DU.Scene3D_H3DU.Scene3D_getAutoResize)<br>Gets whether to check whether to resize the canvas
+when the render() method is called.
 * [getCanvas](#H3DU.Scene3D_H3DU.Scene3D_getCanvas)<br>Gets the HTML canvas associated with this scene.
 * [getClearColor](#H3DU.Scene3D_H3DU.Scene3D_getClearColor)<br>Gets the color used when clearing the screen each frame.
 * [getClientAspect](#H3DU.Scene3D_H3DU.Scene3D_getClientAspect)<br>Gets the ratio of width to height for this scene,
 as actually displayed on the screen.
+* [getClientHeight](#H3DU.Scene3D_H3DU.Scene3D_getClientHeight)<br>Gets the height for this scene as actually displayed on the screen.
+* [getClientWidth](#H3DU.Scene3D_H3DU.Scene3D_getClientWidth)<br>Gets the width for this scene as actually displayed on the screen.
 * [getContext](#H3DU.Scene3D_H3DU.Scene3D_getContext)<br>Returns the WebGL context associated with this scene.
 * [getHeight](#H3DU.Scene3D_H3DU.Scene3D_getHeight)<br>Gets the viewport height for this scene.
 * [getLights](#H3DU.Scene3D_H3DU.Scene3D_getLights)<br><b>Deprecated: Use the removeShape method of individual <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instances
@@ -218,7 +222,7 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
  <a name='H3DU.Scene3D_H3DU.Scene3D_getAspect'></a>
 ### H3DU.Scene3D#getAspect()
 
-Gets the ratio of width to height for this scene (getWidth()
+Gets the ratio of viewport width to viewport height for this scene (getWidth()
 divided by getHeight()).
 Note that if auto-resizing is enabled, this value may change
 after each call to the render() method.
@@ -226,6 +230,16 @@ after each call to the render() method.
 #### Return Value
 
 Aspect ratio, or 1 if height is 0. (Type: Number)
+
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getAutoResize'></a>
+### H3DU.Scene3D#getAutoResize()
+
+Gets whether to check whether to resize the canvas
+when the render() method is called.
+
+#### Return Value
+
+Return value. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
  <a name='H3DU.Scene3D_H3DU.Scene3D_getCanvas'></a>
 ### H3DU.Scene3D#getCanvas()
@@ -255,6 +269,24 @@ as actually displayed on the screen.
 #### Return Value
 
 Aspect ratio, or 1 if height is 0. (Type: Number)
+
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getClientHeight'></a>
+### H3DU.Scene3D#getClientHeight()
+
+Gets the height for this scene as actually displayed on the screen.
+
+#### Return Value
+
+Return value. (Type: Number)
+
+ <a name='H3DU.Scene3D_H3DU.Scene3D_getClientWidth'></a>
+### H3DU.Scene3D#getClientWidth()
+
+Gets the width for this scene as actually displayed on the screen.
+
+#### Return Value
+
+Return value. (Type: Number)
 
  <a name='H3DU.Scene3D_H3DU.Scene3D_getContext'></a>
 ### H3DU.Scene3D#getContext()

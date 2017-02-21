@@ -493,7 +493,7 @@ H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   if(typeof shader === "undefined" || shader === null) {
     shader = H3DU.ShaderProgram.makeCopyEffect(scene);
   }
-  var ret = new H3DU.Batch3D(scene);
+  var ret = new H3DU.Batch3D();
   var mesh = new H3DU.Mesh(
     [-1, 1, 0, 0, 1,
       -1, -1, 0, 0, 0,

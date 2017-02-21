@@ -279,6 +279,7 @@ textures as specular reflection maps.
 texture -- a linear gradient from one color to another.
 * [demos/skysphere.html](https://peteroupc.github.io/html3dutil/demos/skysphere.html) - Demonstrates how to
 implement a 360-degree background texture -- a _sky sphere_ -- using custom shader materials.
+* [demos/procedtexture.html](https://peteroupc.github.io/html3dutil/demos/procedtexture.html) - Demonstrates how to apply a shader-generated texture to a 3D shape.
 
 <a id=Shaders></a>
 ### Shaders

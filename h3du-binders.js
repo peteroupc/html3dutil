@@ -256,11 +256,12 @@ H3DU._MaterialBinder.bindTexture = function(
     if(isFrameBuffer) {
       context.bindTexture(context.TEXTURE_2D,
          texture.colorTexture);
+      // TODO: support Textureinfo in frame buffers
       if(texture.colorTexture) {
         context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_MAG_FILTER, context.NEAREST);
+         context.TEXTURE_MAG_FILTER, context.LINEAR);
         context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_MIN_FILTER, context.NEAREST);
+         context.TEXTURE_MIN_FILTER, context.LINEAR);
         context.texParameteri(context.TEXTURE_2D,
          context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
         context.texParameteri(context.TEXTURE_2D,

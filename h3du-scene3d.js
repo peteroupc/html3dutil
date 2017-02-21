@@ -369,6 +369,18 @@ H3DU.Scene3D.prototype.setAutoResize = function(value) {
   this.autoResize = !!value;
   return this;
 };
+
+/**
+ * Gets whether to check whether to resize the canvas
+ * when the render() method is called.
+ * @returns {H3DU.Scene3D} Return value.
+ * @memberof! H3DU.Scene3D#
+ */
+H3DU.Scene3D.prototype.getAutoResize = function() {
+  "use strict";
+  return !!this.autoResize;
+};
+
 /**
  * Sets whether to use the device's pixel ratio (if supported by
  * the browser) in addition to the canvas's size when setting
@@ -464,7 +476,7 @@ H3DU.Scene3D.prototype.getHeight = function() {
   return this.height;
 };
 /**
- * Gets the ratio of width to height for this scene (getWidth()
+ * Gets the ratio of viewport width to viewport height for this scene (getWidth()
  * divided by getHeight()).
  * Note that if auto-resizing is enabled, this value may change
  * after each call to the render() method.
@@ -477,15 +489,19 @@ H3DU.Scene3D.prototype.getAspect = function() {
   if(ch <= 0)return 1;
   return this.getWidth() / ch;
 };
-/** @private
- * @returns {Object} Return value.
+/**
+ * Gets the width for this scene as actually displayed on the screen.
+ * @returns {Number} Return value.
+ * @memberof! H3DU.Scene3D#
  */
 H3DU.Scene3D.prototype.getClientWidth = function() {
   "use strict";
   return this.context.canvas.clientWidth;
 };
-/** @private
- * @returns {Object} Return value.
+/**
+ * Gets the height for this scene as actually displayed on the screen.
+ * @returns {Number} Return value.
+ * @memberof! H3DU.Scene3D#
  */
 H3DU.Scene3D.prototype.getClientHeight = function() {
   "use strict";
@@ -1158,15 +1174,33 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
     this._subScene.shapes = oldshapes;
   } else {
     this._renderedOutsideScene = true;
+    var oldWidth = this.getWidth();
+    var oldHeight = this.getHeight();
     for(var i = 0; i < renderPasses.length; i++) {
       var pass = renderPasses[i];
-      this._textureLoader.bindFrameBuffer(
-          pass.frameBuffer, this.context);
+      var restoreDims = false;
+      var passWidth = width;
+      var passHeight = height;
+      if(pass.frameBuffer) {
+        if(pass.useFrameBufferSize) {
+          restoreDims = true;
+          passWidth = pass.frameBuffer.getWidth();
+          passHeight = pass.frameBuffer.getHeight();
+          this.setDimensions(passWidth, passHeight);
+        }
+        this._textureLoader.bindFrameBuffer(
+             pass.frameBuffer, this.context, 0);
+      }
       this._clearForPass(pass);
-      renderPasses[i].subScene.resize(width, height);
-      renderPasses[i].subScene.render(this, pass);
-      this._textureLoader.unbindFrameBuffer(
+      renderPasses[i].batch.resize(passWidth, passHeight);
+      renderPasses[i].batch.render(this, pass);
+      if(pass.frameBuffer) {
+        if(restoreDims) {
+          this.setDimensions(oldWidth, oldHeight);
+        }
+        this._textureLoader.unbindFrameBuffer(
           pass.frameBuffer, this.context);
+      }
     }
   }
   return this;
