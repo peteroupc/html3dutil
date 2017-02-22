@@ -1,3 +1,4 @@
+/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -31,18 +32,18 @@ function fragmentShaderLib() {
     "",
     "float signedrandsmooth(float seed) {",
     " return signedrand(seed)*0.5+",
-    "     signedrand(seed-0.95)*0.25+",
-    "     signedrand(seed+0.95)*0.25;",
+    "     signedrand(seed-0.75)*0.25+",
+    "     signedrand(seed+0.75)*0.25;",
     "}",
     "float signedrandsmooth(vec2 seed) {",
     " return signedrand(seed)*0.5+",
-    "     signedrand(seed-0.95)*0.25+",
-    "     signedrand(seed+0.95)*0.25;",
+    "     signedrand(seed-0.75)*0.25+",
+    "     signedrand(seed+0.75)*0.25;",
     "}",
     "float signedrandsmooth(vec3 seed) {",
     " return signedrand(seed)*0.5+",
-    "     signedrand(seed-0.95)*0.25+",
-    "     signedrand(seed+0.95)*0.25;",
+    "     signedrand(seed-0.75)*0.25+",
+    "     signedrand(seed+0.75)*0.25;",
     "}",
     "float smootherstep(float a, float b, float f) {",
     " return a+((10.0+f*(f*6.0-15.0))*f*f*f)*(b-a);",
@@ -82,18 +83,70 @@ function fragmentShaderLib() {
     " float r6=signedrandsmooth(fl+zo.yxy);",
     " float r7=signedrandsmooth(fl+zo.yyx);",
     " float r8=signedrandsmooth(fl+zo.yyy);",
-    " float m1=mix(mix(r1,r3,f.x),mix(r2,r4,f.x),f.y);",
-    " float m2=mix(mix(r5,r7,f.x),mix(r6,r8,f.x),f.y);",
-    " return mix(m1,m2,f.z);",
+    " float m1=mix(mix(r1,r3,f.y),mix(r2,r4,f.y),f.z);",
+    " float m2=mix(mix(r5,r7,f.y),mix(r6,r8,f.y),f.z);",
+    " return mix(m1,m2,f.x);",
     "}",
     "float fbm(vec2 x, float freq, float amp, float lac, float gain) {",
-    " float ret=0.0;",
-    " for(int i=0;i<6;i++) { // 6 octaves, or iterations",
+    // Unrolled to avoid compilation failures.
+    // 6 "octaves", or iterations.
+    "   float ret=0.0;",
     "   ret+=noise(x*freq)*amp;",
     "   amp*=gain;",
     "   freq*=lac;",
-    " }",
+    "    ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
     " return ret;",
+    "}",
+    "float fbm(vec3 x, float freq, float amp, float lac, float gain) {",
+    // Unrolled to avoid compilation failures.
+    // 6 "octaves", or iterations.
+    "   float ret=0.0;",
+    "   ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "    ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
+    "   amp*=gain;",
+    "   freq*=lac;",
+    "   ret+=noise(x*freq)*amp;",
+    " return ret;",
+    "}",
+    // "octaves" 6, freq 1.0, amp 1.0, lac 2.0, gain 0.5
+    "float fbm(vec3 x) {",
+    "   return noise(x) +",
+    "     noise(x*2.0)*0.5 +",
+    "     noise(x*4.0)*0.25 +",
+    "     noise(x*8.0)*0.125 +",
+    "     noise(x*16.0)*0.0625 +",
+    "    noise(x*32.0)*0.03125;",
+    "}",
+    "float fbm(vec2 x) {",
+    "   return noise(x) +",
+    "     noise(x*2.0)*0.5 +",
+    "     noise(x*4.0)*0.25 +",
+    "     noise(x*8.0)*0.125 +",
+    "     noise(x*16.0)*0.0625 +",
+    "    noise(x*32.0)*0.03125;",
     "}",
     "vec3 palette(vec3 offset, vec3 scale, vec3 c, vec3 d, float t) {",
     " // See <http://www.iquilezles.org/www/articles/palettes/palettes.htm>",
@@ -110,4 +163,27 @@ function fragmentShaderLib() {
     " return ret;",
     "}",
     ""].join("\n");
+}
+
+/* exported renderTexture */
+function renderTexture(scene, shader, width, height) {
+  "use strict";
+  if(typeof width === "undefined" || width === null)width = 512;
+  if(typeof height === "undefined" || height === null)height = 512;
+// Create a quad to fill the frame buffer
+  var batch = new H3DU.Batch3D().addShape(
+  new H3DU.Shape(new H3DU.Mesh(
+    [-1, 1, 0, -1, -1, 0,
+      1, 1, 0, 1, -1, 0],
+     [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
+// Create a frame buffer info with the given dimensions
+  var fbo = new H3DU.FrameBufferInfo(width, height);
+// Render to the frame buffer
+  scene.render([
+    new H3DU.RenderPass3D(batch, {
+      "frameBuffer":fbo,
+      "useFrameBufferSize":true
+    })
+  ]);
+  return fbo;
 }

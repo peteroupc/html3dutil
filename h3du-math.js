@@ -31,17 +31,16 @@ H3DU.Math = {
  * <li>If A and B are [unit vectors]{@tutorial glmath}, the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
  * cross product. <small>(More formally, the length of the cross
- * product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
+ * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; |sin &theta;|;
  * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
  * <li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
  * to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
  * </ul>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
- * follows:<pre>
- * <b>c</b>.x = <b>a</b>.y * <b>b</b>.z - <b>a</b>.z * <b>b</b>.y
- * <b>c</b>.y = <b>a</b>.z * <b>b</b>.x - <b>a</b>.x * <b>b</b>.z
- * <b>c</b>.z = <b>a</b>.x * <b>b</b>.y - <b>a</b>.y * <b>b</b>.x
- * </pre>
+ * follows:<br>
+ * <b>c</b>.x = <b>a</b>.y &#x2a; <b>b</b>.z - <b>a</b>.z &#x2a; <b>b</b>.y<br>
+ * <b>c</b>.y = <b>a</b>.z &#x2a; <b>b</b>.x - <b>a</b>.x &#x2a; <b>b</b>.z<br>
+ * <b>c</b>.z = <b>a</b>.x &#x2a; <b>b</b>.y - <b>a</b>.y &#x2a; <b>b</b>.x<br>
  * @param {Array<Number>} a The first 3-element vector.
  * @param {Array<Number>} b The second 3-element vector.
  * @returns {Array<Number>} A 3-element vector containing the cross product.
@@ -79,7 +78,7 @@ H3DU.Math = {
  * The following are properties of the dot product:
  * <ul>
  * <li>The dot
- * product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
+ * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; cos &theta;
  * where |<b>x</b>| is the length of vector <b>x</b>, and
  * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
  * It follows that:<ul>
@@ -97,6 +96,11 @@ H3DU.Math = {
  * <li>If both vectors are unit vectors, a dot product of 1 or -1 indicates
  * that the two vectors are parallel (and the vectors are 0 or
  * 180 degrees apart, respectively.)
+ * <li>If one of the vectors is a unit vector, the dot product's absolute
+ * value will be the length that vector must have to make the closest
+ * approach to the other vector's endpoint. If the dot product is negative,
+ * the unit vector must also be in the opposite direction to approach the
+ * other vector's endpoint.
  * </ul></li>
  * <li>If the two vectors are the same, the return value indicates
  * the vector's length squared. This is illustrated in the example.
@@ -709,6 +713,7 @@ H3DU.Math = {
 /**
  * Finds the dot product of two 4-element vectors. It's the
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
+ * For properties of the dot product, see {@link H3DU.Math.vec3dot}.
  * @param {Array<Number>} a The first 4-element vector.
  * @param {Array<Number>} b The second 4-element vector.
  * @returns {Object} Return value.

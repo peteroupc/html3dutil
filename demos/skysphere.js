@@ -31,7 +31,6 @@ function createSkysphere(size, texture) {
       "void main() {",
       " vec3 pos=normalize(positionVar.xyz);",
       " pos.x=-pos.x;",
-      " gl_FragColor=vec4(0.0);",
       " gl_FragColor=texture2D(texture,vec2(",
       "  (atan(pos.x,pos.z)+PI)*ONE_DIV_TWOPI, acos(clamp(-pos.y,-1.0,1.0))*ONE_DIV_PI ));",
       "}"
@@ -40,18 +39,16 @@ function createSkysphere(size, texture) {
   var shader = new H3DU.ShaderInfo(
  ["attribute vec3 position;",
    "uniform mat4 projection;",
+   "uniform mat4 worldMatrix;",
    "uniform mat4 modelViewMatrix;",
    "varying vec4 positionVar;",
    "void main() {",
-   "vec4 positionVec4;",
-   "positionVec4.w=1.0;",
-   "positionVec4.xyz=position;",
-   "gl_PointSize=1.0;",
-   "positionVar=positionVec4;",
-   "gl_Position=(projection*modelViewMatrix)*positionVec4;",
+   "positionVar=worldMatrix*vec4(position,1.0);",
+   "gl_Position=(projection*modelViewMatrix)*vec4(position,1.0);",
    "}"
  ].join("\n"), fragment
 );
+  shader.setUniformSemantic("worldMatrix", H3DU.Semantic.MODEL);
   return new H3DU.Shape(H3DU.Meshes.createSphere(size))
   .setTexture(texture)
   .setShader(shader);

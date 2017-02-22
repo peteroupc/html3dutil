@@ -18,7 +18,7 @@ This section contains detailed information on matrices.
 
 In mathematical publications,
 matrices are often notated in column-major order, in which each
-element of the matrix is placed in columns, rather than in rows, as in the following example:
+element of the matrix is placed in columns as opposed to rows, as in the following example:
 
 <math>
 <mfenced open="[" close="]">
@@ -156,6 +156,9 @@ Here, the first column shows an X-axis vector at (1, 0, 0),
 the second column shows a Y-axis vector at (0, 0.5, 0.866025),
 the third column shows a Z-axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).
+
+Provided the matrix can be [inverted](#Matrix_Inversions), the three axis vectors are
+_basis vectors_ of the coordinate system.
 
 <a id=Why_a_4x4_Matrix></a>
 ### Why a 4x4 Matrix?
