@@ -17,6 +17,25 @@ source code.
 Note that this class is not associated with any WebGL context, so the
 uniform values this object stores is not set for any WebGL context.
 
+Currently, the following attribute names are associated
+with this object by default:<ul>
+<li><code>position</code> - "POSITION" semantic</li>
+<li><code>normal</code> - "NORMAL" semantic</li>
+<li><code>uv</code> - "TEXCOORD_0" semantic</li>
+<li><code>tangent</code> - Attribute for tangents.</li>
+<li><code>bitangent</code> - Attribute for bitangents</li>
+<li><code>colorAttr</code> - "COLOR"</li>
+</ul>
+
+Currently, the following uniform names are associated
+with this object by default:<ul>
+<li><code>projection</code> - Projection matrix</li>
+<li><code>modelViewMatrix</code> - Model-view matrix</li>
+<li><code>normalMatrix</code> - Inverse transpose of the model-view matrix</li>
+<li><code>world</code> - World matrix.</li>
+<li><code>inverseView</code> - Inverse view matrix.</li>
+</ul>
+
 #### Parameters
 
 * `vertexShader` (Type: String) (optional)<br>
