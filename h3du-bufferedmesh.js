@@ -256,7 +256,7 @@ H3DU.BufferedMesh.prototype.draw = function(program) {
   "use strict";
   // Binding phase
   var context = program.getContext();
-  if((typeof this.vertsMap === "undefined" || this.vertsMap === null) || this.face === null) {
+  if(typeof this.vertsMap === "undefined" || this.vertsMap === null || (typeof this.face === "undefined" || this.face === null)) {
     throw new Error("mesh buffer disposed");
   }
   if(context !== this.context) {
