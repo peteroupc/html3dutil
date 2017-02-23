@@ -22,17 +22,21 @@ H3DU.Math = {
  * The following are properties of the cross product:<ul>
  * <li>The cross product will be a vector that is <i>orthogonal</i> (perpendicular) to both A and B.
  * <li>Switching the order of A and B results in a cross product
- * vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>.)
- * <li>If the cross product's [length]{@link H3DU.Math.vec3length} is 0, then A and B are parallel vectors.
+ * vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>,
+ * but it is <i>anticommutative</i>.)
+ * </ul>
  * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
  * While the cross product of A and B points toward the viewer,
  * the triangle's vertices are oriented counterclockwise for [right-handed coordinate systems]{@tutorial glmath},
  * or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
- * <li>If A and B are [unit vectors]{@tutorial glmath}, the absolute value
- * of the sine of the shortest angle between them is equal to the length of their
- * cross product. <small>(More formally, the length of the cross
- * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; |sin &theta;|;
- * where |<b>x</b>| is the length of vector <b>x</b>.)</small>
+ * <li>The length of the cross
+ * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; |sin &theta;|
+ * where |<b>x</b>| is the length of vector <b>x</b>, and
+ * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
+ * It follows that:<ul>
+ * <li>If the length is 0, then A and B are parallel vectors (0 or 180 degrees apart).
+ * <li>If A and B are [unit vectors]{@tutorial glmath}, the length equals the absolute value
+ * of the sine of the shortest angle between A and B.
  * <li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
  * to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
  * </ul>
@@ -60,8 +64,11 @@ H3DU.Math = {
  * @example <caption>The following example finds the cosine and sine of
  * the angle between two unit vectors and the orthogonal unit vector of both.</caption>
  * var cr=H3DU.Math.vec3cross(unitA,unitB);
- * var cosine=H3DU.Math.vec3dot(unitA,unitB); // Cosine of the angle
- * var sine=H3DU.Math.vec3length(cr); // Sine of the angle
+ * // Cosine of the angle. Will be positive or negative depending on
+ * var cosine=H3DU.Math.vec3dot(unitA,unitB);
+ * // Sine of the angle. Note that the sine will always be 0 or greater because
+ * // the shortest angle between the vectors will always be 0 to 180 degrees.
+ * var sine=H3DU.Math.vec3length(cr);
  * // Cross product as a unit vector
  * var normCross=sine==0 ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
  */

@@ -94,6 +94,9 @@ Rotation changes an object's orientation.
 To create a rotation matrix, use [H3DU.Math.mat4rotated()]{@link H3DU.Math.mat4rotated},
 and specify the angle (in degrees) to rotate, and the [axis of rotation](#Axis_of_Rotation). For example, specifying `(45, [1, 0, 0])` means a 45-degree rotation around the X axis, and `(80, [0, 2, 3])` means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
 
+When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
+ <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
+
 To multiply an existing matrix by a rotation, use
 [H3DU.Math.mat4rotate()]{@link H3DU.Math.mat4rotate}. This will put the rotation
 before the other transformations.

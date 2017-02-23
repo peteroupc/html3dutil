@@ -29,10 +29,12 @@ See the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces
 in a parametric surface.
 * [evalSurface](#H3DU.SurfaceEval_H3DU.SurfaceEval_evalSurface)<br>Generates the vertex positions and attributes of a parametric
 surface.
-* [normal](#H3DU.SurfaceEval_H3DU.SurfaceEval_normal)<br>Specifies a parametric surface function for generating normals.
-* [setAutoNormal](#H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal)<br>Sets whether this object will automatically generate
-normals rather than use the parametric evaluator
-specified for normal generation, if any.
+* [normal](#H3DU.SurfaceEval_H3DU.SurfaceEval_normal)<br><b>Deprecated: Use the "vertex" method instead, specifying an object
+that implements a method named "gradient".</b>
+* [setAutoNormal](#H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal)<br><b>Deprecated: In the future, this class may always generate
+normals, rendering this method unnecessary. You should use the "vertex"
+method, specifying an object that implements a method named
+"gradient".</b>
 * [texCoord](#H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord)<br>Specifies a parametric surface function for generating texture coordinates.
 * [vertex](#H3DU.SurfaceEval_H3DU.SurfaceEval_vertex)<br>Specifies a parametric surface function for generating vertex positions.
 
@@ -61,7 +63,7 @@ in a parametric surface.
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
     H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.
 * `u` (Type: Number)<br>
-    U-coordinate of the curve to evaluate
+    U-coordinate of the curve to evaluate.
 * `v` (Type: Number)<br>
     V-coordinate of the curve to evaluate.
 
@@ -101,26 +103,10 @@ This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
  <a name='H3DU.SurfaceEval_H3DU.SurfaceEval_normal'></a>
 ### H3DU.SurfaceEval#normal(evaluator)
 
+<b>Deprecated: Use the "vertex" method instead, specifying an object
+that implements a method named "gradient".</b>
+
 Specifies a parametric surface function for generating normals.
-
-To generate normals for a function for a regular surface (usually
-a continuous, unbroken surface such as a sphere, disk, or open
-cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
-the function used for vertex calculation (we'll call it <b>F</b>) with
-respect to u, then find the partial derivative of <b>F</b> with respect to
-v, then take their <a href="H3DU.Math.md#H3DU.Math.vec3cross">cross product</a>, then convert the result to a
-<a href="tutorial-glmath.md">unit vector</a>.
-In mathematical notation, this looks like:
-<b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
-&#x2202;<b>F</b>/&#x2202;<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.
-
-If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
-as the H3DU.SurfaceEval class doesn't know the implementation of the method used
-for vertex calculation.
-
-(Note: &#x2202;<b>F</b>/&#x2202;<i>u</i> is also called the <i>bitangent</i>
-or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
-called the <i>tangent vector</i>.)
 
 #### Parameters
 
@@ -131,42 +117,13 @@ called the <i>tangent vector</i>.)
 
 This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
 
-#### Example
-
-The following example sets the normal generation
-function for a parametric surface. To illustrate how the method is derived
-from the vector calculation method, that method is also given below. To
-derive the normal calculation, first look at the vector function:
-
-<b>F</b>(u, v) = (cos(u), sin(u), sin(u)\*cos(v))
-
-Then, find the partial derivatives with respect to u and v:
-
-&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)\*cos(v))<br>
-&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)\*sin(u))
-
-Next, take their cross product:
-
-<b>c</b>(u, v) = (-sin(v)\*cos(u)\*sin(u), -sin(v)\*sin(u)\*sin(u), 0)<br>
-
-And finally, normalize the result:
-
-<b>n</b>(u, v) = <b>c</b>(u, v)/|<b>c</b>(u, v)|
-
-    surfaceEval.vertex({"evaluate":function(u,v) {
-    "use strict";
-    return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
-    }})
-    .normal({"evaluate":function(u,v) {
-    "use strict";
-    return H3DU.Math.vec3normInPlace([
-    Math.cos(u)*-Math.sin(v)*Math.sin(u),
-    Math.sin(u)*-Math.sin(v)*Math.sin(u),
-    0]);
-    }})
-
  <a name='H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal'></a>
 ### H3DU.SurfaceEval#setAutoNormal(value)
+
+<b>Deprecated: In the future, this class may always generate
+normals, rendering this method unnecessary. You should use the "vertex"
+method, specifying an object that implements a method named
+"gradient".</b>
 
 Sets whether this object will automatically generate
 normals rather than use the parametric evaluator
@@ -214,8 +171,41 @@ Specifies a parametric surface function for generating vertex positions.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named "evaluate". It takes the following parameters in this order:<ul> <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1. <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of the result of the evaluation.
+    An object that may or must contain the following methods:<ul> <li>evaluate(<code>u</code>, <code>v</code>) - A method that takes a horizontal-axis coordinate (<code>u</code>), generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1. This method is required. This method returns a vector of the result of the evaluation. <li>gradient(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the gradient of the surface at the given coordinates. The return value should not be "normalized" to a unit vector. This method is optional. <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the tangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector. This method is optional. <li>bitangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the bitangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector. This method is optional. </ul>
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
+
+#### Example
+
+The following example sets the vertex position and
+normal generation
+function for a parametric surface. To illustrate how the method is derived
+from the vector calculation method, that method is also given below. To
+derive the normal calculation, first look at the vector function:
+
+<b>F</b>(u, v) = (cos(u), sin(u), sin(u)\*cos(v))
+
+Then, find the partial derivatives with respect to u and v:
+
+&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)\*cos(v))<br>
+&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)\*sin(u))
+
+Next, take their cross product:
+
+<b>c</b>(u, v) = (-sin(v)\*cos(u)\*sin(u), -sin(v)\*sin(u)\*sin(u), 0)<br>
+
+The result is the gradient, which will be normal to the surface.
+
+    surfaceEval.vertex({"evaluate":function(u,v) {
+    "use strict";
+    return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+    },
+    "gradient":function(u,v) {
+    "use strict";
+    return [
+    Math.cos(u)*-Math.sin(v)*Math.sin(u),
+    Math.sin(u)*-Math.sin(v)*Math.sin(u),
+    0];
+    }})

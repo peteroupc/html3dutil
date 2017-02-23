@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+/* global H3DU, vu */
 (function(global) {
   "use strict";
 /**
@@ -625,11 +625,14 @@
 
 /**
  * Specifies a parametric curve function for generating vertex positions.
- * @param {Object} evaluator An object that must contain a function
- * named "evaluate". It takes the following parameter:<ul>
- * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
+ * @param {Object} evaluator An object that may or must contain the
+ * following methods:<ul>
+ * <li>evaluate(<code>u</code>) - A method that takes a curve coordinate (<code>u</code>),
+ * generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation.
+ * <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
+ * and returns the tangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
+ * This method is optional.
  * </ul>
- * The evaluator function returns an array of the result of the evaluation.
  * @returns {H3DU.CurveEval} This object.
  * @example <caption>The following function sets a circle as the curve
  * to use for generating vertex positions.</caption>
@@ -806,6 +809,7 @@
   H3DU.SurfaceEval = function() {
     this.colorSurface = null;
     this.normalSurface = null;
+    this.generateNormals = false;
     this.texCoordSurface = null;
     this.vertexSurface = null;
     this.autoNormal = false;
@@ -815,6 +819,10 @@
  * normals rather than use the parametric evaluator
  * specified for normal generation, if any.
  * By default, normals won't be generated automatically.
+ * @deprecated In the future, this class may always generate
+ * normals, rendering this method unnecessary.  You should use the "vertex"
+ * method, specifying an object that implements a method named
+ * "gradient".
  * @param {Boolean} value Either true or false. True means normals
  * will automatically be generated; false means they won't.
  * @returns {H3DU.SurfaceEval} This object.
@@ -826,43 +834,25 @@
   };
 /**
  * Specifies a parametric surface function for generating vertex positions.
- * @param {Object} evaluator An object that must contain a function
- * named "evaluate". It takes the following parameters in this order:<ul>
- * <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
- * <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
+ * @param {Object} evaluator An object that may or must contain the
+ * following methods:<ul>
+ * <li>evaluate(<code>u</code>, <code>v</code>) - A method that takes a horizontal-axis coordinate (<code>u</code>),
+ * generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1.
+ * This method is required. This method returns a vector of the result of the evaluation.
+ * <li>gradient(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
+ * and returns the gradient of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
+ * This method is optional.
+ * <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
+ * and returns the tangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
+ * This method is optional.
+ * <li>bitangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
+ * and returns the bitangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
+ * This method is optional.
  * </ul>
- * The evaluator function returns an array of the result of the evaluation.
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
- */
-  H3DU.SurfaceEval.prototype.vertex = function(evaluator) {
-    this.vertexSurface = evaluator;
-    return this;
-  };
-/**
- * Specifies a parametric surface function for generating normals.
- * <p>
- * To generate normals for a function for a regular surface (usually
- * a continuous, unbroken surface such as a sphere, disk, or open
- * cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
- * the function used for vertex calculation (we'll call it <b>F</b>) with
- * respect to u, then find the partial derivative of <b>F</b> with respect to
- * v, then take their [cross product]{@link H3DU.Math.vec3cross}, then convert the result to a
- * [unit vector]{@tutorial glmath}.
- * In mathematical notation, this looks like:
- * <b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
- * &#x2202;<b>F</b>/&#x2202;<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
- * If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
- * as the H3DU.SurfaceEval class doesn't know the implementation of the method used
- * for vertex calculation.<p>
- * (Note: &#x2202;<b>F</b>/&#x2202;<i>u</i> is also called the <i>bitangent</i>
- * or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
- * called the <i>tangent vector</i>.)
- * @param {Object} evaluator An object that must contain a function
- * named "evaluate", giving 3 values as a result. See {@link H3DU.SurfaceEval#vertex}.
- * </ul>
- * @returns {H3DU.SurfaceEval} This object.
- * @example <caption>The following example sets the normal generation
+ * @example <caption>The following example sets the vertex position and
+ * normal generation
  * function for a parametric surface. To illustrate how the method is derived
  * from the vector calculation method, that method is also given below. To
  * derive the normal calculation, first look at the vector function:<p>
@@ -872,24 +862,42 @@
  * &#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
  * Next, take their cross product:<p>
  * <b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
- * And finally, normalize the result:<p>
- * <b>n</b>(u, v) = <b>c</b>(u, v)/|<b>c</b>(u, v)|<p>
+ * The result is the gradient, which will be normal to the surface.
  * </caption>
  * surfaceEval.vertex({"evaluate":function(u,v) {
  * "use strict";
  * return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
- * }})
- * .normal({"evaluate":function(u,v) {
+ * },
+ * "gradient":function(u,v) {
  * "use strict";
- * return H3DU.Math.vec3normInPlace([
+ * return [
  * Math.cos(u)*-Math.sin(v)*Math.sin(u),
  * Math.sin(u)*-Math.sin(v)*Math.sin(u),
- * 0]);
+ * 0];
  * }})
+ */
+  H3DU.SurfaceEval.prototype.vertex = function(evaluator) {
+    this.vertexSurface = evaluator;
+    this.generateNormals = this.normalSurface || !!this.autoNormal ||
+    typeof this.vertexSurface !== "undefined" && this.vertexSurface !== null &&
+    (typeof this.vertexSurface.gradient !== "undefined" && this.vertexSurface.gradient !== null);
+    return this;
+  };
+/**
+ * Specifies a parametric surface function for generating normals.
+ * @deprecated Use the "vertex" method instead, specifying an object
+ * that implements a method named "gradient".
+ * @param {Object} evaluator An object that must contain a function
+ * named "evaluate", giving 3 values as a result. See {@link H3DU.SurfaceEval#vertex}.
+ * </ul>
+ * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
  */
   H3DU.SurfaceEval.prototype.normal = function(evaluator) {
     this.normalSurface = evaluator;
+    this.generateNormals = this.normalSurface || !!this.autoNormal ||
+    typeof this.vertexSurface !== "undefined" && this.vertexSurface !== null &&
+    (typeof this.vertexSurface.gradient !== "undefined" && this.vertexSurface.gradient !== null);
     return this;
   };
 /**
@@ -922,6 +930,157 @@
     this.texCoordSurface = evaluator;
     return this;
   };
+/**
+ * TODO: Not documented yet.
+ * <p>To generate normals for a function for a regular surface (usually
+ * a continuous, unbroken surface such as a sphere, disk, or open
+ * cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
+ * the function used for vertex calculation (we'll call it <b>F</b>) with
+ * respect to u, then find the partial derivative of <b>F</b> with respect to
+ * v, then take their [cross product]{@link H3DU.Math.vec3cross}. The result will be
+ * the gradient, which will be normal to the surface.
+ * In mathematical notation, this looks like:
+ * <b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
+ * &#x2202;<b>F</b>/&#x2202;<i>v</i>.<p>
+ * (Note: &#x2202;<b>F</b>/&#x2202;<i>u</i> is also called the <i>bitangent</i>
+ * or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
+ * called the <i>tangent vector</i>.)
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U-coordinate of the surface to evaluate.
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A gradient vector of at least 3 elements. */
+  H3DU.SurfaceEval.numGradient = function(e, u, v) {
+    var vu, vv;
+
+    var vertex = null;
+    if(typeof e.bitangent !== "undefined" && e.bitangent !== null && (typeof e.tangent !== "undefined" && e.tangent !== null)) {
+      vu = e.bitangent(u, v);
+      vv = e.tangent(u, v);
+    } else {
+      vu = H3DU.SurfaceEval.numBitangent(e, u, v);
+      vv = H3DU.SurfaceEval.numTangent(e, u, v);
+    }
+    if(H3DU.Math.vec3length(vu) === 0) {
+      return vv;
+    }
+    if(H3DU.Math.vec3length(vv) === 0 && vu[2] === vertex[2]) {
+         // partial derivative of v is degenerate and
+         // the close evaluation returns the same
+         // z as this evaluation
+      return [0, 0, 1];
+    } else if(H3DU.Math.vec3length(vv) !== 0) {
+      return H3DU.Math.vec3cross(vu, vv);
+    } else {
+      return vu;
+    }
+  };
+/**
+ * Finds an approximate tangent vector for the given surface evaluator
+ * at the given U and V coordinates by using numerical differentiation
+ * of the "evaluate" method with respect to the V axis.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U-coordinate of the surface to evaluate.
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A tangent vector of at least 3 elements. */
+  H3DU.SurfaceEval.numTangent = function(e, u, v) {
+    var du = 0.00001;
+
+    var vertex = e.evaluate(u, v);
+   // Find the partial derivatives of u and v
+    var vu = e.evaluate(u, v + du);
+    if(vu[0] === 0 && vu[1] === 0 && vu[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vu = e.evaluate(u, v + du);
+    }
+    H3DU.Math.vec3subInPlace(vu, vertex);
+    H3DU.Math.vec3scaleInPlace(vu, 1.0 / du);
+    return vu;
+  };
+/**
+ * Finds an approximate bitangent vector for the given surface evaluator
+ * at the given U and V coordinates by using numerical differentiation
+ * of the "evaluate" method with respect to the U axis.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U-coordinate of the surface to evaluate.
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A bitangent vector of at least 3 elements. */
+  H3DU.SurfaceEval.numBitangent = function(e, u, v) {
+    var du = 0.00001;
+
+    var vertex = e.evaluate(u, v);
+   // Find the partial derivatives of u and v
+    var vu = e.evaluate(u + du, v);
+    if(vu[0] === 0 && vu[1] === 0 && vu[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vu = e.evaluate(u + du, v);
+    }
+    H3DU.Math.vec3subInPlace(vu, vertex);
+    H3DU.Math.vec3scaleInPlace(vu, 1.0 / du);
+    return vu;
+  };
+/**
+ * TODO: Not documented yet.
+ * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
+ * @param {Number} u U-coordinate of the surface to evaluate.
+ * @returns {*} Return value. */
+  H3DU.CurveEval.numTangent = function(e, u) {
+    var du = 0.00001;
+
+    var vertex = e.evaluate(u);
+   // Find the partial derivatives of u and v
+    var vu = e.evaluate(u + du);
+    if(vu[0] === 0 && vu[1] === 0 && vu[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vu = e.evaluate(u + du);
+    }
+    H3DU.Math.vec3subInPlace(vu, vertex);
+    H3DU.Math.vec3scaleInPlace(vu, 1.0 / du);
+    return vu;
+  };
+/**
+ * TODO: Not documented yet.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U-coordinate of the surface to evaluate.
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A gradient vector of at least 3 elements. */
+  H3DU.SurfaceEval.findGradient = function(e, u, v) {
+    return typeof e.gradient !== "undefined" && e.gradient !== null ? e.gradient(u, v) :
+     H3DU.SurfaceEval.numGradient(e, u, v);
+  };
+/**
+ * TODO: Not documented yet.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U-coordinate of the surface to evaluate.
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A tangent vector of at least 3 elements. */
+  H3DU.SurfaceEval.findTangent = function(e, u, v) {
+    return typeof e.tangent !== "undefined" && e.tangent !== null ? e.tangent(u, v) :
+     H3DU.SurfaceEval.numTangent(e, u, v);
+  };
+/**
+ * TODO: Not documented yet.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U-coordinate of the surface to evaluate.
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A bitangent vector of at least 3 elements. */
+  H3DU.SurfaceEval.findBitangent = function(e, u, v) {
+    return typeof e.bitangent !== "undefined" && e.bitangent !== null ? e.bitangent(u, v) :
+     H3DU.SurfaceEval.numBitangent(e, u, v);
+  };
+/**
+ * TODO: Not documented yet.
+ * @param {*} e
+ * @param {*} u
+ * @param {*} v
+ * @returns {*} Return value. */
+  H3DU.CurveEval.findTangent = function(e, u) {
+    return typeof e.tangent !== "undefined" && e.tangent !== null ? e.tangent(u) :
+     H3DU.CurveEval.numTangent(e, u);
+  };
+
 /** @private */
   H3DU._OLD_VALUES_SIZE = 8;
 /** @private */
@@ -933,7 +1092,7 @@
  * will be generated. When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {Number} u U-coordinate of the curve to evaluate
+ * @param {Number} u U-coordinate of the curve to evaluate.
  * @param {Number} v V-coordinate of the curve to evaluate.
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
@@ -958,7 +1117,7 @@
       buffer[index + 4] = mesh.color[1];
       buffer[index + 5] = mesh.color[2];
     }
-    if(this.normalSurface || this.autoNormal) {
+    if(this.generateNormals) {
       buffer[index + 0] = mesh.normal[0];
       buffer[index + 1] = mesh.normal[1];
       buffer[index + 2] = mesh.normal[2];
@@ -973,7 +1132,7 @@
     if(this.colorSurface) {
       mesh.color3(buffer[index + 3], buffer[index + 4], buffer[index + 5]);
     }
-    if(this.normalSurface || this.autoNormal) {
+    if(this.generateNormals) {
       mesh.normal3(buffer[index + 0], buffer[index + 1], buffer[index + 2]);
     }
     if(this.texCoordSurface) {
@@ -994,7 +1153,13 @@
       buffer[index + 9] = texcoord[0];
       buffer[index + 10] = texcoord.length <= 1 ? 0 : texcoord[1];
     }
-    if(this.normalSurface && !this.autoNormal) {
+    if(!this.autoNormal && (typeof this.vertexSurface.gradient !== "undefined" && this.vertexSurface.gradient !== null)) {
+      normal = H3DU.Math.vec3norm(this.vertexSurface.gradient(u, v));
+      buffer[index + 3] = normal[0];
+      buffer[index + 4] = normal[1];
+      buffer[index + 5] = normal[2];
+    } else if(this.normalSurface && !this.autoNormal) {
+      // NOTE: This is deprecated
       normal = this.normalSurface.evaluate(u, v);
       buffer[index + 3] = normal[0];
       buffer[index + 4] = normal[1];
@@ -1006,42 +1171,14 @@
       buffer[index + 1] = vertex[1];
       buffer[index + 2] = vertex[2];
       if(this.autoNormal) {
-        var du = 0.00001;
-        var dv = 0.00001;
-   // Find the partial derivatives of u and v
-        var vu = this.vertexSurface.evaluate(u + du, v);
-        if(vu[0] === 0 && vu[1] === 0 && vu[2] === 0) {
-    // too abrupt, try the other direction
-          du = -du;
-          vu = this.vertexSurface.evaluate(u + du, v);
+        var gradient;
+        if(typeof this.vertexSurface.gradient !== "undefined" && this.vertexSurface.gradient !== null) {
+          gradient = this.vertexSurface.gradient(u, v);
+        } else {
+          gradient = H3DU.SurfaceEval.numGradient(
+       this.vertexSurface, u, v);
         }
-
-        var vv = this.vertexSurface.evaluate(u, v + dv);
-        if(vv[0] === 0 && vv[1] === 0 && vv[2] === 0) {
-    // too abrupt, try the other direction
-          dv = -dv;
-          vv = this.vertexSurface.evaluate(u, v + dv);
-        }
-        H3DU.Math.vec3subInPlace(vv, vertex);
-        H3DU.Math.vec3subInPlace(vu, vertex);
-   // Divide by the deltas of u and v
-        H3DU.Math.vec3scaleInPlace(vu, 1.0 / du);
-        H3DU.Math.vec3scaleInPlace(vv, 1.0 / dv);
-        H3DU.Math.vec3normInPlace(vu);
-        H3DU.Math.vec3normInPlace(vv);
-        if(H3DU.Math.vec3length(vu) === 0) {
-    // partial derivative of u is degenerate
-    // console.log([vu,vv,u,v]+" u degen")
-          vu = vv;
-        } else if(H3DU.Math.vec3length(vv) === 0 && vu[2] === vertex[2]) {
-     // partial derivative of v is degenerate and
-     // the close evaluation returns the same
-     // z as this evaluation
-          vu = [0, 0, 1];
-        } else if(H3DU.Math.vec3length(vv) !== 0) {
-          vu = H3DU.Math.vec3cross(vu, vv);
-          H3DU.Math.vec3normInPlace(vu);
-        }
+        H3DU.Math.vec3normInPlace(gradient);
         buffer[index + 3] = vu[0];
         buffer[index + 4] = vu[1];
         buffer[index + 5] = vu[2];
@@ -1054,7 +1191,7 @@
       if(this.colorSurface) {
         mesh.color3(buffer[index + 6], buffer[index + 7], buffer[index + 8]);
       }
-      if(this.normalSurface || this.autoNormal) {
+      if(this.generateNormals) {
         mesh.normal3(buffer[index + 3], buffer[index + 4], buffer[index + 5]);
       }
       if(this.texCoordSurface) {

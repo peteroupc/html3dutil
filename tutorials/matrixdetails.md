@@ -452,7 +452,7 @@ counterclockwise rotation in [right-handed coordinate systems]{@tutorial glmath}
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.
-* Rotating a point by an arbitrary axis of rotation is more complicated to describe.
+* Rotating a point around an arbitrary axis of rotation is more complicated to describe.
 When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
 
@@ -561,13 +561,10 @@ For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
 To invert a **rotation** for a 4x4 matrix, swap the 2nd and 5th elements of the matrix,
 the 3rd and 9th elements, and the 7th and 10th elements of the matrix (zero-based
 elements 1, 4, 2, 8, 6, and 9 respectively). The effect is like reversing the angle of the
-rotation to reset an object to its previous orientation.  In general, to invert a rotation for
-any NxN matrix, _transpose_ that matrix (so that its rows become its columns and vice versa).
+rotation to reset an object to its previous orientation.  In general, to invert an NxN
+rotation matrix, _transpose_ that matrix (so that its rows become its columns and vice versa).
 
-Matrices that use some combination of translation, scaling, and rotation
-as well as other kinds of matrices are more complicated
-to invert. In fact, some matrices can't be inverted at all. The formula for inverting a general
-matrix is too complicated to discuss here.
+Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all.  The formula for inverting a general matrix is too complicated to discuss here.
 
 Related functions:
 
