@@ -280,7 +280,7 @@ the X, Y, and Z coordinates of the point lying on the curve at the given
 "u" position (however, the z will always be 0 since paths can currently
 only be 2-dimensional).
 <li><code>tangent(u)</code> - Takes one parameter, "u", with the same meaning
-as for the "evaluate" method, and returns a 3-element array containing the
+as for the <code>evaluate</code> method, and returns a 3-element array containing the
 the X, Y, and Z components of the
 tangent vector (which will generally be a <a href="tutorial-glmath.md">unit vector</a>) at the given point on the curve
 (the z will always be 0 since paths can currently
@@ -288,11 +288,11 @@ only be 2-dimensional).
 </ul>
 <li><code>getLength()</code> - Returns the approximate total length of the path,
 in units.
-<li><code>tangent(u)</code> - Has the same effect as the "tangent"
+<li><code>tangent(u)</code> - Has the same effect as the <code>tangent</code>
 method for each curve, but applies to the path as a whole.
-<li><code>evaluate(u)</code> - Has the same effect as the "evaluate"
+<li><code>evaluate(u)</code> - Has the same effect as the <code>evaluate</code>
 method for each curve, but applies to the path as a whole.
-Note that calling this "evaluate" method is only
+Note that calling this <code>evaluate</code> method is only
 recommended when drawing the path as a set of points, not lines, since
 the path may contain several disconnected parts.
 </ul> (Type: Object)

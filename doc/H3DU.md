@@ -17,7 +17,8 @@ library.
 
 * [.loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.
-* [CurveEval.findTangent](#H3DU.CurveEval.findTangent)<br>TODO: Not documented yet.
+* [CurveEval.findTangent](#H3DU.CurveEval.findTangent)<br>Finds an approximate tangent (derivative) for the given curve evaluator
+at the given U coordinate.
 * [CurveEval.numTangent](#H3DU.CurveEval.numTangent)<br>TODO: Not documented yet.
 * [SurfaceEval.findBitangent](#H3DU.SurfaceEval.findBitangent)<br>Finds an approximate bitangent vector for the given surface evaluator
 at the given U and V coordinates.
@@ -28,11 +29,11 @@ at the given U and V coordinates.
 at the given U and V coordinates.
 * [SurfaceEval.numBitangent](#H3DU.SurfaceEval.numBitangent)<br>Finds an approximate bitangent vector for the given surface evaluator
 at the given U and V coordinates by using numerical differentiation
-of the "evaluate" method with respect to the V axis.
+of the <code>evaluate</code> method with respect to the V axis.
 * [SurfaceEval.numGradient](#H3DU.SurfaceEval.numGradient)<br>TODO: Not documented yet.
 * [SurfaceEval.numTangent](#H3DU.SurfaceEval.numTangent)<br>Finds an approximate tangent vector for the given surface evaluator
 at the given U and V coordinates by using numerical differentiation
-of the "evaluate" method with respect to the U axis.
+of the <code>evaluate</code> method with respect to the U axis.
 * [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.
 * [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
@@ -85,7 +86,10 @@ it uses, the promise will be rejected. (Type: <a href="Promise.md">Promise</a>.&
  <a name='H3DU.CurveEval.findTangent'></a>
 ### (static) H3DU.CurveEval.findTangent(e, u)
 
-TODO: Not documented yet.
+Finds an approximate tangent (derivative) for the given curve evaluator
+at the given U coordinate. This method calls the evaluator's <code>tangent</code>
+method if it implements it; otherwise, does a numerical differentiation
+with respect to the U axis using the <code>evaluate</code> method.
 
 #### Parameters
 
@@ -96,7 +100,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
-Return value. (Type: *)
+A tangent vector. (Type: Array.&lt;Number>)
 
  <a name='H3DU.CurveEval.numTangent'></a>
 ### (static) H3DU.CurveEval.numTangent(e, u)
@@ -118,9 +122,9 @@ Return value. (Type: *)
 ### (static) H3DU.SurfaceEval.findBitangent(e, u, v)
 
 Finds an approximate bitangent vector for the given surface evaluator
-at the given U and V coordinates. This method calls the evaluator's "bitangent"
+at the given U and V coordinates. This method calls the evaluator's <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
-with respect to the V axis using the "evaluate" method.
+with respect to the V axis using the <code>evaluate</code> method.
 
 #### Parameters
 
@@ -133,15 +137,15 @@ with respect to the V axis using the "evaluate" method.
 
 #### Return Value
 
-A bitangent vector of at least 3 elements. (Type: Array.&lt;Number>)
+A bitangent vector . (Type: Array.&lt;Number>)
 
  <a name='H3DU.SurfaceEval.findGradient'></a>
 ### (static) H3DU.SurfaceEval.findGradient(e, u, v)
 
 Finds an approximate gradient vector for
 the given surface evaluator
-at the given U and V coordinates. This method calls the evaluator's "gradient"
-method if it implements it; otherwise, calls the evaluator's "bitangent" and "tangent" methods if it implements them; otherwise, does a numerical differentiation using the "evaluate" method.
+at the given U and V coordinates. This method calls the evaluator's <code>gradient</code>
+method if it implements it; otherwise, calls the evaluator's <code>bitangent</code> and <code>tangent</code> methods if it implements them; otherwise, does a numerical differentiation using the <code>evaluate</code> method.
 
 To generate normals for a function for a regular surface (usually
 a continuous, unbroken surface such as a sphere, disk, or open
@@ -168,15 +172,15 @@ and the bitangent (or binormal) vector, respectively.)
 
 #### Return Value
 
-A gradient vector of at least 3 elements. (Type: Array.&lt;Number>)
+A gradient vector . (Type: Array.&lt;Number>)
 
  <a name='H3DU.SurfaceEval.findTangent'></a>
 ### (static) H3DU.SurfaceEval.findTangent(e, u, v)
 
 Finds an approximate tangent vector for the given surface evaluator
-at the given U and V coordinates. This method calls the evaluator's "tangent"
+at the given U and V coordinates. This method calls the evaluator's <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
-with respect to the U axis using the "evaluate" method.
+with respect to the U axis using the <code>evaluate</code> method.
 
 #### Parameters
 
@@ -189,16 +193,16 @@ with respect to the U axis using the "evaluate" method.
 
 #### Return Value
 
-A tangent vector of at least 3 elements. (Type: Array.&lt;Number>)
+A tangent vector . (Type: Array.&lt;Number>)
 
  <a name='H3DU.SurfaceEval.numBitangent'></a>
 ### (static) H3DU.SurfaceEval.numBitangent(e, u, v)
 
 Finds an approximate bitangent vector for the given surface evaluator
 at the given U and V coordinates by using numerical differentiation
-of the "evaluate" method with respect to the V axis.
+of the <code>evaluate</code> method with respect to the V axis.
 The bitangent vector is the vector pointing toward the V axis, or alternatively,
-the partial derivative of the "evaluate" method with respect to V.
+the partial derivative of the <code>evaluate</code> method with respect to V.
 
 #### Parameters
 
@@ -236,9 +240,9 @@ A gradient vector of at least 3 elements. (Type: Array.&lt;Number>)
 
 Finds an approximate tangent vector for the given surface evaluator
 at the given U and V coordinates by using numerical differentiation
-of the "evaluate" method with respect to the U axis.
+of the <code>evaluate</code> method with respect to the U axis.
 The tangent vector is the vector pointing toward the U axis, or alternatively,
-the partial derivative of the "evaluate" method with respect to U.
+the partial derivative of the <code>evaluate</code> method with respect to U.
 
 #### Parameters
 

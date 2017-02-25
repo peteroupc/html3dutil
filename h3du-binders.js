@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, WebGL2RenderingContext, texture */
+/* global H3DU, WebGL2RenderingContext */
 /**
  * Contains classes that implement methods
  * binding certain HTML 3D Library objects
@@ -172,7 +172,7 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
      context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
     }
   }
-  H3DU._LoadedTexture.textureFilters(context, texture, new H3DU.TextureInfo(), target);
+  H3DU._LoadedTexture.textureFilters(context, textureImage, new H3DU.TextureInfo(), target);
 };
 
 /** @private */

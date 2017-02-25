@@ -5,7 +5,7 @@
  <a name='H3DU.BSplineSurface'></a>
 ### H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits])
 
-A parametric evaluator for B-spline (basis spline) surfaces.
+A surface evaluator object for a B-spline (basis spline) surface.
 
 #### Parameters
 
@@ -45,7 +45,9 @@ the surface's edges lie on the edges of the control point array.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
+Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
 
  <a name='H3DU.BSplineSurface.uniform'></a>
 ### H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])
@@ -65,7 +67,9 @@ Creates a B-spline surface with uniform knots.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
+Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
 
  <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a>
 ### H3DU.BSplineSurface#evaluate(u, v)

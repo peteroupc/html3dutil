@@ -5,7 +5,7 @@
  <a name='H3DU.BezierSurface'></a>
 ### H3DU.BezierSurface(cp, [u1], [u2], [v1], [v2])
 
-A parametric evaluator for B&eacute;zier surfaces.
+A surface evaluator object for a B&eacute;zier surface.
 
 A B&eacute;zier surface is defined by a series of control points, where
 the control points on each corner define the endpoints of the surface, and

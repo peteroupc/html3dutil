@@ -5,8 +5,7 @@
  <a name='H3DU.Epitrochoid'></a>
 ### H3DU.Epitrochoid(outerRadius, innerRadius, distFromInnerCenter)
 
-Parametric evaluator for a
-curve drawn by a circle that rolls along the outside
+A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 
 This class is considered a supplementary class to the

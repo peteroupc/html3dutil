@@ -31,7 +31,7 @@ in a parametric curve.
 * [normal](#H3DU.CurveEval_H3DU.CurveEval_normal)<br><b>Deprecated: May be removed in the future; it makes little sense
 to generate normals for a curve.</b>
 * [texCoord](#H3DU.CurveEval_H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
-* [vertex](#H3DU.CurveEval_H3DU.CurveEval_vertex)<br>Specifies a parametric curve function for generating vertex positions.
+* [vertex](#H3DU.CurveEval_H3DU.CurveEval_vertex)<br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
 
  <a name='H3DU.CurveEval_H3DU.CurveEval_color'></a>
 ### H3DU.CurveEval#color(evaluator)
@@ -41,7 +41,7 @@ Specifies a parametric curve function for generating color values.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named "evaluate", giving 3 values as a result. See H3DU.CurveEval#vertex. </ul>
+    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See H3DU.CurveEval#vertex. </ul>
 
 #### Return Value
 
@@ -98,7 +98,7 @@ Specifies a parametric curve function for generating normals.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named "evaluate", giving 3 values as a result. See H3DU.CurveEval#vertex. </ul>
+    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See H3DU.CurveEval#vertex. </ul>
 
 #### Return Value
 
@@ -112,7 +112,7 @@ Specifies a parametric curve function for generating texture coordinates.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named "evaluate", giving one or two values as a result. See H3DU.CurveEval#vertex. </ul>
+    An object that must contain a function named <code>evaluate</code>, giving one or two values as a result. See H3DU.CurveEval#vertex. </ul>
 
 #### Return Value
 
@@ -121,14 +121,14 @@ This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
  <a name='H3DU.CurveEval_H3DU.CurveEval_vertex'></a>
 ### H3DU.CurveEval#vertex(evaluator)
 
-Specifies a parametric curve function for generating vertex positions.
+Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
 
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that may or must contain the following methods:<ul> <li>evaluate(<code>u</code>) - A method that takes a curve coordinate (<code>u</code>), generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation. <li>tangent(<code>u</code>) - A method that takes the same parameter as "evaluate" and returns the tangent of the surface at the given coordinate.
+    A <b>curve evaluator object</b>, which is an object that may or must contain the following methods:<ul> <li><code>evaluate(u)</code> - A method that takes a curve coordinate (<code>u</code>), generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation. <li><code>tangent(u)</code> - A method that takes the same parameter as <code>evaluate</code> and returns the tangent of the surface at the given coordinate.
 
- The <b>tangent</b> of a curve is a vector which is the derivative of the "evaluate" method at the given coordinate. The tangent vector returned by the "tangent" method should not be "normalized" to a unit vector. This method is optional. </ul>
+ The <b>tangent</b> of a curve is a vector which is the derivative of the <code>evaluate</code> method at the given coordinate. The tangent vector returned by this method should not be "normalized" to a unit vector. This method is optional. </ul>
 
 #### Return Value
 
