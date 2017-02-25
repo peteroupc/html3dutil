@@ -72,7 +72,7 @@ function fragmentShaderLib() {
     " return mix(mix(r1,r3,f.x),mix(r2,r4,f.x),f.y);",
     "}",
     "float noise(vec3 seed) {",
-    " vec3 f=smoothstep(0.0,1.0,fract(seed));",
+    " vec3 f=smootherstep(0.0,1.0,fract(seed));",
     " vec2 zo=vec2(0.0,1.0);",
     " vec3 fl=floor(seed);",
     " float r1=signedrandsmooth(fl+zo.xxx);",

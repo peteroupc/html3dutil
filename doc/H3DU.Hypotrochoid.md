@@ -30,14 +30,14 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [evaluate](#H3DU.Hypotrochoid_evaluate)<br>Generates a point on the curve from the given u coordinate.
+* [evaluate](#H3DU.Hypotrochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
 * [scaleTo](#H3DU.Hypotrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
 
  <a name='H3DU.Hypotrochoid_evaluate'></a>
 ### H3DU.Hypotrochoid#evaluate(u)
 
-Generates a point on the curve from the given u coordinate.
+Generates a point on the curve from the given U coordinate.
 
 #### Parameters
 

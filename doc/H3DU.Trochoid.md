@@ -27,12 +27,12 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [evaluate](#H3DU.Trochoid_evaluate)<br>Generates a point on the curve from the given u coordinate.
+* [evaluate](#H3DU.Trochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
 
  <a name='H3DU.Trochoid_evaluate'></a>
 ### H3DU.Trochoid#evaluate(u)
 
-Generates a point on the curve from the given u coordinate.
+Generates a point on the curve from the given U coordinate.
 
 #### Parameters
 

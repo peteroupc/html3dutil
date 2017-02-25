@@ -126,7 +126,9 @@ Specifies a parametric curve function for generating vertex positions.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that may or must contain the following methods:<ul> <li>evaluate(<code>u</code>) - A method that takes a curve coordinate (<code>u</code>), generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation. <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the tangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector. This method is optional. </ul>
+    An object that may or must contain the following methods:<ul> <li>evaluate(<code>u</code>) - A method that takes a curve coordinate (<code>u</code>), generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation. <li>tangent(<code>u</code>) - A method that takes the same parameter as "evaluate" and returns the tangent of the surface at the given coordinate.
+
+ The <b>tangent</b> of a curve is a vector which is the derivative of the "evaluate" method at the given coordinate. The tangent vector returned by the "tangent" method should not be "normalized" to a unit vector. This method is optional. </ul>
 
 #### Return Value
 

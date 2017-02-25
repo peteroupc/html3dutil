@@ -23,11 +23,11 @@ the HTML 3D Library. Example:
 * `curve` (Type: function)<br>
     Curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve function must contain a function named "evaluate", which takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of at least 2 elements: the first element is the X coordinate of the curve's position (corresponding to elevation), and the second element is the Y coordinate (corresponding to radius).
 
- If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must restrict the curve definition to no more than half of the curve.
+ If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must restrict the curve definition to no more than half of the curve.
 * `minval` (Type: Number)<br>
-    Smallest V-coordinate.
+    Smallest V coordinate.
 * `maxval` (Type: Number)<br>
-    Largest V-coordinate. If _minval_ is greater than _maxval_, both values will be swapped.
+    Largest V coordinate. If _minval_ is greater than _maxval_, both values will be swapped.
 * `axis` (Type: Array.&lt;Number>) (optional)<br>
     Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 

@@ -35,12 +35,12 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [evaluate](#H3DU.CurveTube_H3DU.CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u and v coordinates.
+* [evaluate](#H3DU.CurveTube_H3DU.CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u and V coordinates.
 
  <a name='H3DU.CurveTube_H3DU.CurveTube_evaluate'></a>
 ### H3DU.CurveTube#evaluate(u, v)
 
-Generates a point on the extruded tube from the given u and v coordinates.
+Generates a point on the extruded tube from the given u and V coordinates.
 
 #### Parameters
 

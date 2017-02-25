@@ -63,9 +63,9 @@ in a parametric surface.
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
     H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.
 * `u` (Type: Number)<br>
-    U-coordinate of the curve to evaluate.
+    U coordinate of the curve to evaluate.
 * `v` (Type: Number)<br>
-    V-coordinate of the curve to evaluate.
+    V coordinate of the curve to evaluate.
 
 #### Return Value
 
@@ -84,17 +84,17 @@ surface.
 * `mode` (Type: Number) (optional)<br>
     If this value is H3DU.Mesh.TRIANGLES, or is null or omitted, generates a series of triangles defining the surface. If this value is H3DU.Mesh.LINES, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.
 * `un` (Type: Number) (optional)<br>
-    Number of subdivisions along the U-axis. Default is 24.
+    Number of subdivisions along the U axis. Default is 24.
 * `vn` (Type: Number) (optional)<br>
-    Number of subdivisions along the V-axis. Default is 24.
+    Number of subdivisions along the V axis. Default is 24.
 * `u1` (Type: Number) (optional)<br>
-    Starting U-coordinate of the surface to evaluate. Default is 0.
+    Starting U coordinate of the surface to evaluate. Default is 0.
 * `u2` (Type: Number) (optional)<br>
-    Ending U-coordinate of the surface to evaluate. Default is 1.
+    Ending U coordinate of the surface to evaluate. Default is 1.
 * `v1` (Type: Number) (optional)<br>
-    Starting U-coordinate of the surface to evaluate. Default is 0.
+    Starting U coordinate of the surface to evaluate. Default is 0.
 * `v2` (Type: Number) (optional)<br>
-    Ending U-coordinate of the surface to evaluate. Default is 1.
+    Ending U coordinate of the surface to evaluate. Default is 1.
 
 #### Return Value
 
@@ -171,7 +171,7 @@ Specifies a parametric surface function for generating vertex positions.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that may or must contain the following methods:<ul> <li>evaluate(<code>u</code>, <code>v</code>) - A method that takes a horizontal-axis coordinate (<code>u</code>), generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1. This method is required. This method returns a vector of the result of the evaluation. <li>gradient(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the gradient of the surface at the given coordinates. The return value should not be "normalized" to a unit vector. This method is optional. <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the tangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector. This method is optional. <li>bitangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the bitangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector. This method is optional. </ul>
+    An object that may or must contain the following methods:<ul> <li>evaluate(<code>u</code>, <code>v</code>) - A method that takes a horizontal-axis coordinate (<code>u</code>), generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1. This method is required. This method returns a vector of the result of the evaluation. <li>gradient(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the gradient of the surface at the given coordinates.<br> The <b>gradient</b> is a vector pointing up and away from the surface, or alternatively, the cross product of the tangent vector and bitangent vector, in that order. The gradient returned by this method should not be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. This method is optional. <li><a id="tangentvector"></a>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the tangent vector of the surface at the given coordinates.<br> The <b>tangent vector</b> is the vector pointing toward the U axis, or alternatively, the partial derivative of the "evaluate" method with respect to U. The bitangent vector returned by this method should not be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. <li><a id="bitangentvector"></a>bitangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate" and returns the bitangent vector of the surface at the given coordinates. This method is optional.<br> The <b>bitangent vector</b> is the vector pointing toward the V axis, or alternatively, the partial derivative of the "evaluate" method with respect to V. The bitangent vector returned by this method should not be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. </ul>
 
 #### Return Value
 

@@ -6,9 +6,345 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, vu */
+/* global H3DU, elementsPerValue, vu */
 (function(global) {
   "use strict";
+
+  (function(H3DU) {
+    function binco(n, i) {
+      if(i === 0 || i === n) {
+        return 1;
+      } else if(n < binco._fact.length) {
+        return binco._fact[n] / (binco._fact[i] * binco._fact[n - i]);
+      } else {
+        return binco(n - 1, i - 1) * n / i;
+      }
+    }
+// Factorials that don't exceed MAX_SAFE_INTEGER
+    binco._fact = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,
+      3628800, 39916800, 479001600, 6227020800, 87178291200,
+      1307674368000, 20922789888000, 355687428096000,
+      6402373705728000];
+    function zeros(count) {
+      var ret = [];
+      for(var i = 0; i < count; i++) {
+        ret.push(0);
+      }
+      return ret;
+    }
+    function linear(points, elementsPerValue, t) {
+      var ret = [];
+      var p0 = points[0];
+      var p1 = points[1];
+      for(var i = 0; i < elementsPerValue; i++) {
+        var pp0 = p0[i];
+        ret[i] = pp0 + (p1[i] - pp0) * t;
+      }
+      return ret;
+    }
+    function subtract(p1, p0) {
+      var ret = [];
+      for(var i = 0; i < elementsPerValue; i++) {
+        ret[i] = p1[i] - p0[i];
+      }
+      return ret;
+    }
+    function bezierCubic(points, elementsPerValue, t) {
+      var ret = [];
+      var p0 = points[0];
+      var p1 = points[1];
+      var p2 = points[2];
+      var p3 = points[3];
+      for(var i = 0; i < elementsPerValue; i++) {
+        var pp0 = p0[i];
+        var pp1 = p1[i];
+        var pp2 = p2[i];
+        ret[i] =
+    ((pp0 * -1 * t + pp0 * 3) * t + pp0 * -3) * t + pp0 +
+    ((pp1 * 3 * t + pp1 * -6) * t + pp1 * 3) * t +
+    (pp2 * -3 * t + pp2 * 3) * t * t +
+    p3[i] * t * t * t;
+      }
+      return ret;
+    }
+
+    function bezierCubicDerivative(points, elementsPerValue, t) {
+      var ret = [];
+      var p0 = points[0];
+      var p1 = points[1];
+
+      var p3 = points[3];
+      for(var i = 0; i < elementsPerValue; i++) {
+        var pp0 = p0[i];
+        var pp1 = p1[i];
+
+        ret[i] = (-pp0 * 3 * t + pp0 * 6) * t + -pp0 * 3 +
+   ((pp1 * 9 * t + -pp1 * 12) * t + pp1 * 3) +
+   (-pp1 * 9 * t + pp1 * 6) * t +
+   p3[i] * 3 * t * t;
+      }
+      return ret;
+    }
+    function bezierQuadratic(points, elementsPerValue, t) {
+      var ret = [];
+  // var t2 = t * t;
+      var p0 = points[0];
+      var p1 = points[1];
+      var p2 = points[2];
+      for(var i = 0; i < elementsPerValue; i++) {
+        var pp0 = p0[i];
+        var pp1 = p1[i];
+        ret[i] =
+    (pp0 * 1 * t + pp0 * -2) * t + pp0 +
+    (pp1 * -2 * t + pp1 * 2) * t +
+    p2[i] * t * t;
+      }
+      return ret;
+    }
+    function bezierQuadraticDerivative(points, elementsPerValue, t) {
+      var ret = [];
+  // var t2 = t * t;
+      var p0 = points[0];
+      var p1 = points[1];
+      var p2 = points[2];
+      for(var i = 0; i < elementsPerValue; i++) {
+        var pp0 = p0[i];
+        var pp1 = p1[i];
+        ret[i] = pp0 * 2 * t + pp0 * -2 +
+   (pp1 * -4 * t + pp1 * 2) +
+   p2[i] * 2 * t;
+      }
+      return ret;
+    }
+    function evaluatePolys(matrix, rows, cols, points, elementsPerValue, t) {
+      var ret = [];
+      for(var i = 0; i < elementsPerValue; i++) {
+        ret[i] = 0;
+      }
+      for(i = 0; i < rows; i++) {
+        var index = cols * i + (cols - 1);
+        var ct = 1.0;
+        var point = points[i];
+        for(var j = 0; j < cols; j++) {
+          var c = matrix[index];
+          if(c !== 0) {
+            var cell = c * ct;
+            for(var k = 0; k < elementsPerValue; k++) {
+              ret[k] += cell * point[k];
+            }
+          }
+          ct *= t;
+          index--;
+        }
+      }
+      return ret;
+    }
+
+    function getCoefficients(matrix, rows, cols, t) {
+      var ret = [];
+      for(var i = 0; i < rows; i++) {
+        var index = cols * i + (cols - 1);
+        var ct = 1.0;
+        var coeff = 0;
+        for(var j = 0; j < cols; j++) {
+          coeff += matrix[index] * ct;
+          ct *= t;
+          index--;
+        }
+        ret.push(coeff);
+      }
+      return ret;
+    }
+
+    function combineCoeffs(coeffsU, coeffsV, cp, elementsPerValue) {
+      var ret = [];
+      for(var i = 0; i < elementsPerValue; i++) {
+        ret[i] = 0;
+      }
+      for(i = 0; i < coeffsV.length; i++) {
+        var ci = coeffsV[i];
+        var pointsU = cp[i];
+        for(var j = 0; j < coeffsU.length; j++) {
+          var cell = ci * coeffsU[j];
+          var point = pointsU[j];
+          for(var k = 0; k < elementsPerValue; k++) {
+            ret[k] += cell * point[k];
+          }
+        }
+      }
+      return ret;
+    }
+
+    function makeDerivativeMatrix(matrix, rows, cols) {
+      var deriv = [];
+      var derivIndex = 0;
+  // NOTE: The derivative matrix will contain one
+  // fewer column, since the degree of each polynomial
+  // (row) will be reduced by 1
+      for(var i = 0; i < rows; i++) {
+        var index = cols * i;
+        var power = cols - 1;
+        for(var j = 0; j < cols - 1; j++) {
+          deriv[derivIndex] = matrix[index] * power;
+          derivIndex++;
+          power--;
+          index++;
+        }
+      }
+      return deriv;
+    }
+
+    function makeBezierMatrix(degree) {
+ // Generates a matrix where each row
+  // is a Bernstein polynomial of the given degree.
+      var mat = [];
+      var negation = (degree & 1) === 0 ? 1 : -1;
+      for(var i = 0; i <= degree; i++) {
+        var minor = degree - i;
+        var neg = negation;
+        for(var j = 0; j <= degree; j++) {
+          if(j > minor) {
+            mat.push(0);
+          } else {
+            var binom = binco(minor, j);
+            mat.push(binom * neg);
+            neg = -neg;
+          }
+        }
+        negation = -negation;
+      }
+      for(i = 1; i < degree; i++) {
+        binom = binco(degree, i);
+        var index = (degree + 1) * i;
+        for(j = 0; j < degree; j++) {
+          mat[index] *= binom;
+          index++;
+        }
+      }
+      return mat;
+    }
+/** @private */
+    H3DU._PolynomialCurve = function(cp, u1, u2) {
+      if(typeof u1 === "undefined" && typeof u2 === "undefined") {
+        this.uoffset = 0;
+        this.umul = 1;
+      } else if(u1 === u2) {
+        throw new Error("u1 and u2 can't be equal");
+      } else {
+        this.uoffset = u1;
+        this.umul = 1.0 / (u2 - u1);
+      }
+      if(!cp || cp.length < 1)throw new Error();
+      this.degree = cp.length - 1;
+      this.matrix = null;
+      this.derivMatrix = null;
+      this.cp = cp;
+      this.elements = cp[0].length;
+    };
+/** @private */
+    H3DU._PolynomialCurve.prototype.setBasis = function(basis, degree) {
+      this.matrix = basis;
+      this.degree = degree;
+      this.derivMatrix = makeDerivativeMatrix(this.matrix, degree, degree);
+    };
+/** @private */
+    H3DU._PolynomialCurve.prototype.evaluate = function(u) {
+      var t = (u - this.uoffset) * this.umul;
+      if(this.degree === 0) {
+      // Constant
+        return this.cp[0].slice(0, this.cp[0].length);
+      }
+      return evaluatePolys(this.matrix, this.degree + 1, this.degree + 1,
+       this.cp, this.elements, t);
+    };
+/** @private */
+    H3DU._PolynomialCurve.prototype.tangent = function(u) {
+      var t = (u - this.uoffset) * this.umul;
+      if(this.degree === 0) {
+        return zeros(this.cp[0].length);
+      }
+      return evaluatePolys(this.matrix, this.degree + 1, this.degree + 1,
+       this.cp, this.elements, t);
+    };
+/** @private */
+    H3DU._PolynomialSurface = function(cp, u1, u2, v1, v2) {
+      if(typeof u1 === "undefined" && typeof u2 === "undefined" &&
+    typeof v1 === "undefined" && typeof v2 === "undefined") {
+        this.uoffset = 0;
+        this.umul = 1;
+        this.voffset = 0;
+        this.vmul = 1;
+      } else if(u1 === u2) {
+        throw new Error("u1 and u2 can't be equal");
+      } else if(v1 === v2) {
+        throw new Error("v1 and v2 can't be equal");
+      } else {
+        this.uoffset = u1;
+        this.umul = 1.0 / (u2 - u1);
+        this.voffset = v1;
+        this.vmul = 1.0 / (v2 - v1);
+      }
+      this.degreeU = cp[0].length - 1;
+      this.degreeV = cp.length - 1;
+      this.matrixU = null;
+      this.derivMatrixU = null;
+      this.cp = cp;
+      this.elements = cp[0][0].length;
+    };
+/** @private */
+    H3DU._PolynomialSurface.prototype.setBasis = function(basisU, basisV, degreeU, degreeV) {
+      if(this.cp.length - 1 < degreeV)throw new Error();
+      if(this.cp[0].length - 1 < degreeU)throw new Error();
+      this.degreeU = degreeU;
+      this.degreeV = degreeV;
+      this.matrixU = basisU;
+      this.derivMatrixU = makeDerivativeMatrix(this.matrixU, this.degreeU + 1, this.degreeU + 1);
+      if(this.degreeU === this.degreeV) {
+        this.matrixV = this.matrixU;
+        this.derivMatrixV = this.derivMatrixU;
+      } else {
+        this.matrixV = basisV;
+        this.derivMatrixV = makeDerivativeMatrix(this.matrixV, this.degreeV + 1, this.degreeV + 1);
+      }
+    };
+/** @private */
+    H3DU._PolynomialSurface.prototype.evaluate = function(u, v) {
+      var tu = (u - this.uoffset) * this.umul;
+      var tv = (v - this.voffset) * this.vmul;
+      if(this.degreeU === 0 && this.degreeV === 0) {
+      // Constant
+        return this.cp[0][0].slice(0, this.cp[0][0].length);
+      }
+      var coeffsU = getCoefficients(this.matrixU, this.degreeU + 1, this.degreeU + 1, tu);
+      var coeffsV = getCoefficients(this.matrixV, this.degreeV + 1, this.degreeV + 1, tv);
+      var ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
+      return ret;
+    };
+/** @private */
+    H3DU._PolynomialSurface.prototype.bitangent = function(u, v) {
+      var tu = (u - this.uoffset) * this.umul;
+      var tv = (v - this.voffset) * this.vmul;
+      if(this.degreeU === 0 && this.degreeV === 0) {
+        return zeros(this.cp[0][0].length);
+      }
+      var coeffsU = getCoefficients(this.matrixU, this.degreeU + 1, this.degreeU + 1, tu);
+      var coeffsV = getCoefficients(this.derivMatrixV, this.degreeV + 1, this.degreeV, tv);
+      var ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
+      return ret;
+    };
+/** @private */
+    H3DU._PolynomialSurface.prototype.tangent = function(u, v) {
+      var tu = (u - this.uoffset) * this.umul;
+      var tv = (v - this.voffset) * this.vmul;
+      if(this.degreeU === 0 && this.degreeV === 0) {
+        return zeros(this.cp[0][0].length);
+      }
+      var coeffsU = getCoefficients(this.derivMatrixU, this.degreeU + 1, this.degreeU, tu);
+      var coeffsV = getCoefficients(this.matrixV, this.degreeV + 1, this.degreeV + 1, tv);
+      var ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
+      return ret;
+    };
+
 /**
  * A parametric evaluator for B&eacute;zier curves.<p>
  * A B&eacute;zier curve is defined by a series of control points, where
@@ -31,26 +367,20 @@
  * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
  * May be omitted; default is 1.
  */
-  H3DU.BezierCurve = function(cp, u1, u2) {
-    if(typeof u1 === "undefined" && typeof u2 === "undefined") {
-      this.uoffset = 0;
-      this.umul = 1;
-    } else if(u1 === u2) {
-      throw new Error("u1 and u2 can't be equal");
-    } else {
-      this.uoffset = u1;
-      this.umul = 1.0 / (u2 - u1);
-    }
-    this.evaluator = H3DU.BSplineCurve.clamped(cp, cp.length - 1);
-  };
+    H3DU.BezierCurve = function(cp, u1, u2) {
+      this.curve = new H3DU._PolynomialCurve(cp, u1, u2);
+      if(this.curve.degree <= 3) {
+        this.curve.setBasis(makeBezierMatrix(this.curve.degree), this.curve.degree);
+      }
+      if(!this.curve.cp)throw new Error();
+    };
 /**
  * Evaluates the curve function based on a point
  * in a B&eacute;zier curve.
  * @param {Number} u Point on the curve to evaluate (generally within the range
  * given in the constructor).
  * @returns {Array<Number>} An array of the result of
- * the evaluation. Its length will be equal to the
- * length of a control point, as specified in the constructor.
+ * the evaluation. It will have as many elements as a control point, as specified in the constructor.
  * @example
  * // Generate 11 points forming the B&eacute;zier curve.
  * // Assumes the curve was created with u1=0 and u2=1 (the default).
@@ -60,9 +390,43 @@
  * }
  * @memberof! H3DU.BezierCurve#
  */
-  H3DU.BezierCurve.prototype.evaluate = function(u) {
-    return this.evaluator.evaluate((u - this.uoffset) * this.umul);
-  };
+    H3DU.BezierCurve.prototype.evaluate = function(u) {
+      if(!this.curve.cp)throw new Error();
+      if(this.curve.degree === 2) {
+        return bezierQuadratic(this.curve.cp, this.curve.elements,
+      (u - this.curve.uoffset) * this.curve.umul);
+      }
+      if(this.curve.degree === 3) {
+        return bezierCubic(this.curve.cp, this.curve.elements,
+   (u - this.curve.uoffset) * this.curve.umul);
+      }
+      if(this.curve.degree === 1) {
+        return linear(this.curve.cp, this.curve.elements,
+      (u - this.curve.uoffset) * this.curve.umul);
+      }
+      return this.curve.evaluate(u);
+    };
+/**
+ * TODO: Not documented yet.
+ * @param {*} u
+ * @returns {*} Return value.
+ * @memberof! H3DU.BezierCurve#
+ */
+    H3DU.BezierCurve.prototype.tangent = function(u) {
+      if(this.curve.degree === 2) {
+        return bezierQuadraticDerivative(this.curve.cp, this.curve.elements,
+      (u - this.curve.uoffset) * this.curve.umul);
+      }
+      if(this.curve.degree === 3) {
+        return bezierCubicDerivative(this.curve.cp, this.curve.elements,
+      (u - this.curve.uoffset) * this.curve.umul);
+      }
+      if(this.curve.degree === 1) {
+        return subtract(this.curve.cp[1], this.curve.cp[0]);
+      }
+      return this.curve.evaluate(u);
+    };
+
 /**
  * A parametric evaluator for B&eacute;zier surfaces.<p>
  * A B&eacute;zier surface is defined by a series of control points, where
@@ -81,56 +445,155 @@
  * both the U and V axes results in a flat surface.
  * <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
  * surface along the U axis.
- * <li>The first control point's length represents the size of all the control
- * points.
+ * <li>The number of elements in the first control point's represents the number of elements in all the control points.
  * </ul>
  * @param {Number} [u1] Starting point for the purpose of interpolation along the
- * U-axis; it will correspond to 0.
+ * U axis; it will correspond to 0.
  * May be omitted; default is 0.
  * @param {Number} [u2] Ending point for the purpose of interpolation along the
- * U-axis; it will correspond to 1.
+ * U axis; it will correspond to 1.
  * May be omitted; default is 1.
  * @param {Number} [v1] Starting point for the purpose of interpolation along the
- * V-axis; it will correspond to 0.
+ * V axis; it will correspond to 0.
  * May be omitted; default is 0.
  * @param {Number} [v2] Ending point for the purpose of interpolation along the
- * V-axis; it will correspond to 1.
+ * V axis; it will correspond to 1.
  * May be omitted; default is 1.
  */
-  H3DU.BezierSurface = function(cp, u1, u2, v1, v2) {
-    if(typeof u1 === "undefined" && typeof u2 === "undefined" &&
-    typeof v1 === "undefined" && typeof v2 === "undefined") {
-      this.uoffset = 0;
-      this.umul = 1;
-      this.voffset = 0;
-      this.vmul = 1;
-    } else if(u1 === u2) {
-      throw new Error("u1 and u2 can't be equal");
-    } else if(v1 === v2) {
-      throw new Error("v1 and v2 can't be equal");
-    } else {
-      this.uoffset = u1;
-      this.umul = 1.0 / (u2 - u1);
-      this.voffset = v1;
-      this.vmul = 1.0 / (v2 - v1);
-    }
-    this.evaluator = H3DU.BSplineSurface.clamped(cp, cp[0].length - 1, cp.length - 1);
-  };
+    H3DU.BezierSurface = function(cp, u1, u2, v1, v2) {
+      this.curve = new H3DU._PolynomialSurface(cp, u1, u2, v1, v2);
+      this.curve.setBasis(makeBezierMatrix(this.curve.degreeU),
+          makeBezierMatrix(this.curve.degreeV), this.curve.degreeU,
+      this.curve.degreeV);
+    };
+
 /**
  * Evaluates the surface function based on a point
  * in a B&eacute;zier surface.
- * @param {Number} u U-coordinate of the surface to evaluate (generally within the range
+ * @param {Number} u U coordinate of the surface to evaluate (generally within the range
  * given in the constructor).
- * @param {Number} v V-coordinate of the surface to evaluate.
+ * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array of the result of
- * the evaluation. Its length will be equal to the
- * length of a control point, as specified in the constructor.
+ * the evaluation. It will have as many elements as a control point, as specified in the constructor.
  * @memberof! H3DU.BezierSurface#
  */
-  H3DU.BezierSurface.prototype.evaluate = function(u, v) {
-    return this.evaluator.evaluate((u - this.uoffset) * this.umul,
-   (v - this.voffset) * this.vmul);
-  };
+    H3DU.BezierSurface.prototype.evaluate = function(u, v) {
+      return this.curve.evaluate(u, v);
+    };
+/**
+ * Finds the [tangent vector]{@link H3DU.SurfaceEval#vertex} at the given point on this surface.
+ * @param {Number} u U coordinate of the surface to evaluate (generally within the range
+ * given in the constructor).
+ * @param {Number} v V coordinate of the surface to evaluate.
+ * @returns {Array<Number>} An array of the tangent vector at the given U and V
+ * coordinates. It will have as many elements as a control point, as specified in the constructor.
+ * @memberof! H3DU.BezierSurface#
+ */
+    H3DU.BezierSurface.prototype.tangent = function(u, v) {
+      return this.curve.tangent(u, v);
+    };
+/**
+ * Finds the [bitangent vector]{@link H3DU.SurfaceEval#vertex} at the given point on this surface.
+ * @param {Number} u U coordinate of the surface to evaluate (generally within the range
+ * given in the constructor).
+ * @param {Number} v V coordinate of the surface to evaluate.
+ * @returns {Array<Number>} An array of the bitangent vector at the given U and V
+ * coordinates. It will have as many elements as a control point, as specified in the constructor.
+ * @memberof! H3DU.BezierSurface#
+ */
+    H3DU.BezierSurface.prototype.bitangent = function(u, v) {
+      return this.curve.bitangent(u, v);
+    };
+/**
+ * Creates a B&eacute;zier curve from the control points of a Hermite curve.
+ * @param {Array<Array<Number>>} curve An array of four control points,
+ * each with the same number of elements. The first and second control points
+ * are the start and end points of the Hermite curve, respectively; the third control
+ * point is the tangent vector (derivative) at the start point; and the fourth control point is
+ * the tangent vector at the end point.
+ * @param {Number} [u1] Starting point for the purpose of interpolation; it will correspond to 0.
+ * May be omitted; default is 0.
+ * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
+ * May be omitted; default is 1.
+ * @returns {H3DU.BezierCurve} A B&eacute;zier curve describing the same path as the Hermite curve.
+ * @memberof! H3DU.BezierCurve#
+ */
+    H3DU.BezierCurve.fromHermiteCurve = function(curve, u1, u2) {
+      // TODO: consider making this an extra, for splines
+      var ret = [[], [], [], []];
+      for(var i = 0; i < curve[0].length; i++) {
+        var p1 = curve[0][i];
+        var p4 = curve[1][i];
+        var p2 = p1 + curve[2][i] / 3;
+        var p3 = p4 - curve[3][i] / 3;
+        ret[0][i] = p1;
+        ret[1][i] = p2;
+        ret[2][i] = p3;
+        ret[3][i] = p4;
+      }
+      return new H3DU.BezierCurve(ret, u1, u2);
+    };
+
+/** @private */
+    H3DU.BezierCurve._lerp = function(a, b, t) {
+      var ret = [];
+      for(var i = 0; i < a.length; i++) {
+        ret[i] = a[i] + (b[i] - a[i]) * t;
+      }
+      return ret;
+    };
+/** @private */
+    H3DU.BezierCurve.prototype._makeNew = function(c) {
+      var ret = new H3DU.BezierCurve(c);
+      ret.curve.uoffset = this.curve.uoffset;
+      ret.curve.umul = this.curve.umul;
+      return ret;
+    };
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.BezierCurve#
+ */
+    H3DU.BezierCurve.prototype.getPoints = function() {
+      return this.curve.cp;
+    };
+/**
+ * Splits this B&eacute;zier curve into two.
+ * @param {Number} u U coordinate of the point in the curve to split it in two (generally within the range
+ * given in the constructor).
+ * @returns {Array<BezierCurve>} An array of two B&eacute;zier curves: the
+ * first is the curve from the start of the original curve to the point given in "u", and the second
+ * is the curve from that point to the end of the original curve.
+ * @memberof! H3DU.BezierCurve#
+ */
+    H3DU.BezierCurve.prototype.split = function(u) {
+      var tu = (u - this.curve.uoffset) * this.curve.umul;
+      if(this.curve.degree === 0)return [this, this];
+      var points = this.curve.cp;
+      var buffer = [];
+      var front = [];
+      var back = [];
+      var stage = points.length;
+      var frontIndex = 0;
+      var backIndex = this.curve.degree;
+      front[frontIndex] = points[frontIndex];
+      back[backIndex] = points[backIndex];
+      frontIndex++;
+      backIndex--;
+      while(stage > 1) {
+        for(var i = 0; i < stage - 1; i++) {
+          buffer[i] = H3DU.BezierCurve._lerp(points[i], points[i + 1], tu);
+        }
+        front[frontIndex] = buffer[0];
+        back[backIndex] = buffer[stage - 2];
+        frontIndex++;
+        backIndex--;
+        points = buffer;
+        stage--;
+      }
+      return [this._makeNew(front), this._makeNew(back)];
+    };
+  }(H3DU));
 
 /**
  * A parametric evaluator for B-spline (basis spline) curves.
@@ -144,7 +607,7 @@
  * Its size must be at least 2 plus the number of control
  * points and not more than twice the number of control points.<p>
  * The length of this parameter minus 1, minus the number
- * of control points, represents the degree of the B-spline
+ * of control points, represents the <i>degree</i> of the B-spline
  * curve. For example, a degree-3 (cubic) B-spline curve contains 4 more
  * knots than the number of control points. A degree of 1
  * results in straight line segments.<p>
@@ -297,7 +760,6 @@
   H3DU.BSplineCurve.prototype.evaluate = function(u) {
     var numPoints = this.controlPoints.length;
     var order = this.knots.length - numPoints;
-
     u = this.knots[order - 1] + u * (this.knots[numPoints] -
     this.knots[order - 1]);
     H3DU.BSplineCurve._getFactors(this.knots, u, order, numPoints,
@@ -361,9 +823,9 @@
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Array<Number>} knotsU Knot vector of the curve, along the U-axis.
+ * @param {Array<Number>} knotsU Knot vector of the curve, along the U axis.
  * For more information, see {@link H3DU.BSplineCurve}.
- * @param {Array<Number>} knotsV Knot vector of the curve, along the V-axis.
+ * @param {Array<Number>} knotsV Knot vector of the curve, along the V axis.
  * @param {Boolean} [bits] Bits for defining input
  * and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
  * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
@@ -402,7 +864,9 @@
   };
 /**
  * Creates a B-spline curve with uniform knots, except that
- * the curve will start and end at the first and last control points.
+ * the curve will start and end at the first and last control points and will
+ * be tangent to the line between the first and second control points
+ * and to the line between the next-to-last and last control points.
  * @param {Array<Array<Number>>} controlPoints Array of
  * control points as specified in the {@link H3DU.BSplineCurve} constructor.
  * @param {Number} [degree] Degree of the B-Spline
@@ -437,10 +901,10 @@
  * @param {Array<Array<Array<Number>>>} controlPoints Array of
  * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
  * @param {Number} [degreeU] Degree of the B-Spline
- * surface along the U-axis. For example, 3 means a degree-3 (cubic) curve.
+ * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
  * If null or omitted, the default is 3.
  * @param {Number} [degreeV] Degree of the B-Spline
- * surface along the V-axis
+ * surface along the V axis
  * If null or omitted, the default is 3.
  * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
  * @returns {H3DU.BSplineSurface} Return value.
@@ -456,10 +920,10 @@
  * @param {Array<Array<Array<Number>>>} controlPoints Array of
  * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
  * @param {Number} [degreeU] Degree of the B-Spline
- * surface along the U-axis. For example, 3 means a degree-3 (cubic) curve.
+ * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
  * If null or omitted, the default is 3.
  * @param {Number} [degreeV] Degree of the B-Spline
- * surface along the V-axis
+ * surface along the V axis
  * If null or omitted, the default is 3.
  * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
  * @returns {H3DU.BSplineSurface} Return value.
@@ -474,7 +938,9 @@
  * Generates a knot vector with uniform knots, to be
  * passed to the {@link H3DU.BSplineCurve} or {@link H3DU.BSplineCurve} constructor.
  * @param {Number} controlPoints Number of control points the curve will have.
- * @param {Number} degree Degree of the curve.
+ * @param {Number} degree Degree of the B-Spline
+ * curve. For example, 3 means a degree-3 (cubic) curve.
+ * If null or omitted, the default is 3.
  * @returns {Array<Number>} A uniform knot vector.
  * @memberof! H3DU.BSplineCurve
  */
@@ -494,10 +960,13 @@
 /**
  * Generates a knot vector with uniform knots, to be
  * passed to the {@link H3DU.BSplineCurve} or {@link H3DU.BSplineCurve} constructor,
- * except that with the knot vector, the curve will start and end at the
- * first and last control points.
+ * except that with the knot vector, curve will start and end at the first and last control points and will
+ * be tangent to the line between the first and second control points
+ * and to the line between the next-to-last and last control points.
  * @param {Number} controlPoints Number of control points the curve will have.
- * @param {Number} degree Degree of the curve.
+ * @param {Number} degree Degree of the B-Spline
+ * curve. For example, 3 means a degree-3 (cubic) curve.
+ * If null or omitted, the default is 3.
  * @returns {Array<Number>} A clamped uniform knot vector.
  * @memberof! H3DU.BSplineCurve
  */
@@ -525,11 +994,11 @@
 /**
  * Evaluates the surface function based on a point
  * in a B-spline surface.
- * @param {Number} u U-coordinate of the surface to evaluate (from 0 through 1).
- * @param {Number} v V-coordinate of the surface to evaluate.
+ * @param {Number} u U coordinate of the surface to evaluate (from 0 through 1).
+ * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array of the result of
- * the evaluation. Its length will be equal to the
- * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
+ * the evaluation. It will have as many elements as a control point (or one fewer
+ * if DIVIDE_BIT is set), as specified in the constructor.
  * @memberof! H3DU.BSplineSurface#
  */
   H3DU.BSplineSurface.prototype.evaluate = function(u, v) {
@@ -629,8 +1098,9 @@
  * following methods:<ul>
  * <li>evaluate(<code>u</code>) - A method that takes a curve coordinate (<code>u</code>),
  * generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation.
- * <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
- * and returns the tangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
+ * <li>tangent(<code>u</code>) - A method that takes the same parameter as "evaluate"
+ * and returns the tangent of the surface at the given coordinate.<p>
+ * The <b>tangent</b> of a curve is a vector which is the derivative of the "evaluate" method at the given coordinate.  The tangent vector returned by the "tangent" method should not be "normalized" to a [unit vector]{@link tutorial}.
  * This method is optional.
  * </ul>
  * @returns {H3DU.CurveEval} This object.
@@ -644,6 +1114,8 @@
  * @memberof! H3DU.CurveEval#
  */
   H3DU.CurveEval.prototype.vertex = function(evaluator) {
+    // TODO: Document the "normal" method of evaluators.
+    // TODO: Change the deprecation reason for CurveEval#normal
     this.vertexCurve = evaluator;
     return this;
   };
@@ -840,14 +1312,19 @@
  * generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1.
  * This method is required. This method returns a vector of the result of the evaluation.
  * <li>gradient(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
- * and returns the gradient of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
+ * and returns the gradient of the surface at the given coordinates.<br>
+ * The <b>gradient</b> is a vector pointing up and away from the surface, or alternatively,
+ * the cross product of the tangent vector and bitangent vector, in that order. The gradient returned by this method should not be "normalized" to a [unit vector]{@tutorial glmath}.
  * This method is optional.
- * <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
- * and returns the tangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
- * This method is optional.
- * <li>bitangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
- * and returns the bitangent of the surface at the given coordinates. The return value should not be "normalized" to a unit vector.
- * This method is optional.
+ * <li><a id="tangentvector"></a>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
+ * and returns the tangent vector of the surface at the given coordinates.<br>
+ * The <b>tangent vector</b> is the vector pointing toward the U axis, or alternatively,
+ * the partial derivative of the "evaluate" method with respect to U. The bitangent vector returned by this method should not be "normalized" to a [unit vector]{@tutorial glmath}.
+ * <li><a id="bitangentvector"></a>bitangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as "evaluate"
+ * and returns the bitangent vector of the surface at the given coordinates.
+ * This method is optional.<br>
+ * The <b>bitangent vector</b> is the vector pointing toward the V axis, or alternatively,
+ * the partial derivative of the "evaluate" method with respect to V.  The bitangent vector returned by this method should not be "normalized" to a [unit vector]{@tutorial glmath}.
  * </ul>
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
@@ -932,6 +1409,103 @@
   };
 /**
  * TODO: Not documented yet.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U coordinate of the surface to evaluate.
+ * @param {Number} v V coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A gradient vector of at least 3 elements. */
+  H3DU.SurfaceEval.numGradient = function(e, u, v) {
+    // TODO: Decide whether this method should be public; if not, remove all calls elsewhere
+    var bitan, tan;
+    if(typeof e.bitangent !== "undefined" && e.bitangent !== null && (typeof e.tangent !== "undefined" && e.tangent !== null)) {
+      bitan = e.bitangent(u, v);
+      tan = e.tangent(u, v);
+    } else {
+      bitan = H3DU.SurfaceEval.numBitangent(e, u, v);
+      tan = H3DU.SurfaceEval.numTangent(e, u, v);
+    }
+    if(H3DU.Math.vec3length(bitan) === 0) {
+      return tan;
+    }
+    if(H3DU.Math.vec3length(tan) !== 0) {
+      return H3DU.Math.vec3cross(tan, bitan);
+    } else {
+      return bitan;
+    }
+  };
+/**
+ * Finds an approximate tangent vector for the given surface evaluator
+ * at the given U and V coordinates by using numerical differentiation
+ * of the "evaluate" method with respect to the U axis.
+ * The tangent vector is the vector pointing toward the U axis, or alternatively,
+ * the partial derivative of the "evaluate" method with respect to U.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U coordinate of the surface to evaluate.
+ * @param {Number} v V coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A tangent vector of at least 3 elements. */
+  H3DU.SurfaceEval.numTangent = function(e, u, v) {
+    // TODO: Decide whether this method should be public; if not, remove all calls elsewhere
+    var du = 0.00001;
+    var vertex = e.evaluate(u, v);
+    var vector = e.evaluate(u + du, v);
+    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vector = e.evaluate(u + du, v);
+    }
+    H3DU.Math.vec3subInPlace(vector, vertex);
+    H3DU.Math.vec3scaleInPlace(vector, 1.0 / du);
+    return vector;
+  };
+/**
+ * Finds an approximate bitangent vector for the given surface evaluator
+ * at the given U and V coordinates by using numerical differentiation
+ * of the "evaluate" method with respect to the V axis.
+ * The bitangent vector is the vector pointing toward the V axis, or alternatively,
+ * the partial derivative of the "evaluate" method with respect to V.
+ * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
+ * @param {Number} u U coordinate of the surface to evaluate.
+ * @param {Number} v V coordinate of the surface to evaluate.
+ * @returns {Array<Number>} A bitangent vector of at least 3 elements. */
+  H3DU.SurfaceEval.numBitangent = function(e, u, v) {
+    // TODO: Decide whether this method should be public; if not, remove all calls elsewhere
+    var du = 0.00001;
+    var vertex = e.evaluate(u, v);
+   // Find the partial derivatives of u and v
+    var vector = e.evaluate(u, v + du);
+    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vector = e.evaluate(u, v + du);
+    }
+    H3DU.Math.vec3subInPlace(vector, vertex);
+    H3DU.Math.vec3scaleInPlace(vector, 1.0 / du);
+    return vector;
+  };
+/**
+ * TODO: Not documented yet.
+ * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
+ * @param {Number} u U coordinate of the curve to evaluate.
+ * @returns {*} Return value. */
+  H3DU.CurveEval.numTangent = function(e, u) {
+    // TODO: Decide whether this method should be public; if not, remove all calls elsewhere
+    var du = 0.00001;
+    var vertex = e.evaluate(u);
+   // Find the partial derivatives of u and v
+    var vector = e.evaluate(u + du);
+    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vector = e.evaluate(u + du);
+    }
+    H3DU.Math.vec3subInPlace(vector, vertex);
+    H3DU.Math.vec3scaleInPlace(vector, 1.0 / du);
+    return vector;
+  };
+/**
+ * Finds an approximate [gradient vector]{@link H3DU.SurfaceEval#vertex} for
+ * the given surface evaluator
+ * at the given U and V coordinates. This method calls the evaluator's "gradient"
+ * method if it implements it; otherwise, calls the evaluator's "bitangent" and "tangent" methods if it implements them; otherwise, does a numerical differentiation using the "evaluate" method.
  * <p>To generate normals for a function for a regular surface (usually
  * a continuous, unbroken surface such as a sphere, disk, or open
  * cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
@@ -942,129 +1516,37 @@
  * In mathematical notation, this looks like:
  * <b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
  * &#x2202;<b>F</b>/&#x2202;<i>v</i>.<p>
- * (Note: &#x2202;<b>F</b>/&#x2202;<i>u</i> is also called the <i>bitangent</i>
- * or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
- * called the <i>tangent vector</i>.)
+ * (Note: These two partial derivatives are also called the [tangent vector]{@link H3DU.SurfaceEval#vertex}
+ * and the [bitangent (or binormal) vector]{@link H3DU.SurfaceEval#vertex}, respectively.)
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U-coordinate of the surface to evaluate.
- * @param {Number} v V-coordinate of the surface to evaluate.
- * @returns {Array<Number>} A gradient vector of at least 3 elements. */
-  H3DU.SurfaceEval.numGradient = function(e, u, v) {
-    var vu, vv;
-
-    var vertex = null;
-    if(typeof e.bitangent !== "undefined" && e.bitangent !== null && (typeof e.tangent !== "undefined" && e.tangent !== null)) {
-      vu = e.bitangent(u, v);
-      vv = e.tangent(u, v);
-    } else {
-      vu = H3DU.SurfaceEval.numBitangent(e, u, v);
-      vv = H3DU.SurfaceEval.numTangent(e, u, v);
-    }
-    if(H3DU.Math.vec3length(vu) === 0) {
-      return vv;
-    }
-    if(H3DU.Math.vec3length(vv) === 0 && vu[2] === vertex[2]) {
-         // partial derivative of v is degenerate and
-         // the close evaluation returns the same
-         // z as this evaluation
-      return [0, 0, 1];
-    } else if(H3DU.Math.vec3length(vv) !== 0) {
-      return H3DU.Math.vec3cross(vu, vv);
-    } else {
-      return vu;
-    }
-  };
-/**
- * Finds an approximate tangent vector for the given surface evaluator
- * at the given U and V coordinates by using numerical differentiation
- * of the "evaluate" method with respect to the V axis.
- * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U-coordinate of the surface to evaluate.
- * @param {Number} v V-coordinate of the surface to evaluate.
- * @returns {Array<Number>} A tangent vector of at least 3 elements. */
-  H3DU.SurfaceEval.numTangent = function(e, u, v) {
-    var du = 0.00001;
-
-    var vertex = e.evaluate(u, v);
-   // Find the partial derivatives of u and v
-    var vu = e.evaluate(u, v + du);
-    if(vu[0] === 0 && vu[1] === 0 && vu[2] === 0) {
-    // too abrupt, try the other direction
-      du = -du;
-      vu = e.evaluate(u, v + du);
-    }
-    H3DU.Math.vec3subInPlace(vu, vertex);
-    H3DU.Math.vec3scaleInPlace(vu, 1.0 / du);
-    return vu;
-  };
-/**
- * Finds an approximate bitangent vector for the given surface evaluator
- * at the given U and V coordinates by using numerical differentiation
- * of the "evaluate" method with respect to the U axis.
- * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U-coordinate of the surface to evaluate.
- * @param {Number} v V-coordinate of the surface to evaluate.
- * @returns {Array<Number>} A bitangent vector of at least 3 elements. */
-  H3DU.SurfaceEval.numBitangent = function(e, u, v) {
-    var du = 0.00001;
-
-    var vertex = e.evaluate(u, v);
-   // Find the partial derivatives of u and v
-    var vu = e.evaluate(u + du, v);
-    if(vu[0] === 0 && vu[1] === 0 && vu[2] === 0) {
-    // too abrupt, try the other direction
-      du = -du;
-      vu = e.evaluate(u + du, v);
-    }
-    H3DU.Math.vec3subInPlace(vu, vertex);
-    H3DU.Math.vec3scaleInPlace(vu, 1.0 / du);
-    return vu;
-  };
-/**
- * TODO: Not documented yet.
- * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
- * @param {Number} u U-coordinate of the surface to evaluate.
- * @returns {*} Return value. */
-  H3DU.CurveEval.numTangent = function(e, u) {
-    var du = 0.00001;
-
-    var vertex = e.evaluate(u);
-   // Find the partial derivatives of u and v
-    var vu = e.evaluate(u + du);
-    if(vu[0] === 0 && vu[1] === 0 && vu[2] === 0) {
-    // too abrupt, try the other direction
-      du = -du;
-      vu = e.evaluate(u + du);
-    }
-    H3DU.Math.vec3subInPlace(vu, vertex);
-    H3DU.Math.vec3scaleInPlace(vu, 1.0 / du);
-    return vu;
-  };
-/**
- * TODO: Not documented yet.
- * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U-coordinate of the surface to evaluate.
- * @param {Number} v V-coordinate of the surface to evaluate.
+ * @param {Number} u U coordinate of the surface to evaluate.
+ * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} A gradient vector of at least 3 elements. */
   H3DU.SurfaceEval.findGradient = function(e, u, v) {
     return typeof e.gradient !== "undefined" && e.gradient !== null ? e.gradient(u, v) :
      H3DU.SurfaceEval.numGradient(e, u, v);
   };
 /**
- * TODO: Not documented yet.
+ * Finds an approximate [tangent vector]{@link H3DU.SurfaceEval#vertex} for the given surface evaluator
+ * at the given U and V coordinates. This method calls the evaluator's "tangent"
+ * method if it implements it; otherwise, does a numerical differentiation
+ * with respect to the U axis using the "evaluate" method.
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U-coordinate of the surface to evaluate.
- * @param {Number} v V-coordinate of the surface to evaluate.
+ * @param {Number} u U coordinate of the surface to evaluate.
+ * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} A tangent vector of at least 3 elements. */
   H3DU.SurfaceEval.findTangent = function(e, u, v) {
     return typeof e.tangent !== "undefined" && e.tangent !== null ? e.tangent(u, v) :
      H3DU.SurfaceEval.numTangent(e, u, v);
   };
 /**
- * TODO: Not documented yet.
+ * Finds an approximate [bitangent vector]{@link H3DU.SurfaceEval#vertex} for the given surface evaluator
+ * at the given U and V coordinates. This method calls the evaluator's "bitangent"
+ * method if it implements it; otherwise, does a numerical differentiation
+ * with respect to the V axis using the "evaluate" method.
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U-coordinate of the surface to evaluate.
- * @param {Number} v V-coordinate of the surface to evaluate.
+ * @param {Number} u U coordinate of the surface to evaluate.
+ * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} A bitangent vector of at least 3 elements. */
   H3DU.SurfaceEval.findBitangent = function(e, u, v) {
     return typeof e.bitangent !== "undefined" && e.bitangent !== null ? e.bitangent(u, v) :
@@ -1072,9 +1554,8 @@
   };
 /**
  * TODO: Not documented yet.
- * @param {*} e
- * @param {*} u
- * @param {*} v
+ * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
+ * @param {Number} u U coordinate of the curve to evaluate.
  * @returns {*} Return value. */
   H3DU.CurveEval.findTangent = function(e, u) {
     return typeof e.tangent !== "undefined" && e.tangent !== null ? e.tangent(u) :
@@ -1092,8 +1573,8 @@
  * will be generated. When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {Number} u U-coordinate of the curve to evaluate.
- * @param {Number} v V-coordinate of the curve to evaluate.
+ * @param {Number} u U coordinate of the curve to evaluate.
+ * @param {Number} v V coordinate of the curve to evaluate.
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
  */
@@ -1214,17 +1695,17 @@
  * a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
- * @param {Number} [un] Number of subdivisions along the U-axis.
+ * @param {Number} [un] Number of subdivisions along the U axis.
  * Default is 24.
- * @param {Number} [vn] Number of subdivisions along the V-axis.
+ * @param {Number} [vn] Number of subdivisions along the V axis.
  * Default is 24.
- * @param {Number} [u1] Starting U-coordinate of the surface to evaluate.
+ * @param {Number} [u1] Starting U coordinate of the surface to evaluate.
  * Default is 0.
- * @param {Number} [u2] Ending U-coordinate of the surface to evaluate.
+ * @param {Number} [u2] Ending U coordinate of the surface to evaluate.
  * Default is 1.
- * @param {Number} [v1] Starting U-coordinate of the surface to evaluate.
+ * @param {Number} [v1] Starting U coordinate of the surface to evaluate.
  * Default is 0.
- * @param {Number} [v2] Ending U-coordinate of the surface to evaluate.
+ * @param {Number} [v2] Ending U coordinate of the surface to evaluate.
  * Default is 1.
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
