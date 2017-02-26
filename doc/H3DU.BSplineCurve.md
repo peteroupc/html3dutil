@@ -30,12 +30,15 @@ A curve evaluator object for a B-spline (basis spline) curve.
 * [.DIVIDE_BIT](#H3DU.BSplineCurve.DIVIDE_BIT)<br>Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
 coordinate.
-* [.HOMOGENEOUS_BIT](#H3DU.BSplineCurve.HOMOGENEOUS_BIT)<br>Indicates that each other coordinate of each control point
-was premultiplied by the last coordinate of the point, that is,
-each control point is in homogeneous coordinates.
-* [.WEIGHTED_BIT](#H3DU.BSplineCurve.WEIGHTED_BIT)<br>Indicates whether the last coordinate of each control point is a
-weight.
-* [.WEIGHTED_DIVIDE_BITS](#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS)<br>Combination of WEIGHTED_BIT and DIVIDE_BIT.
+* [.HOMOGENEOUS_BIT](#H3DU.BSplineCurve.HOMOGENEOUS_BIT)<br><b>Deprecated: This bit is deprecated because the B-spline
+equation works the same whether control points are in conventional
+coordinates or in homogeneous coordinates.</b>
+* [.WEIGHTED_BIT](#H3DU.BSplineCurve.WEIGHTED_BIT)<br><b>Deprecated: Support for this control point format may be dropped
+in the future. Instead of using this bit, supply control points in homogeneous
+coordinates (where each other coordinate is premultiplied by the last)
+and use <code>DIVIDE_BIT</code> to convert the
+results to conventional coordinates.</b>
+* [.WEIGHTED_DIVIDE_BITS](#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS)<br><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b>
 
 ### Methods
 
@@ -53,20 +56,28 @@ and to the line between the next-to-last and last control points.
 passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 * [evaluate](#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B-spline curve.
+* [tangent](#H3DU.BSplineCurve_H3DU.BSplineCurve_tangent)<br>TODO: Not documented yet.
 
 <a id='H3DU.BSplineCurve.DIVIDE_BIT'></a>
 ### H3DU.BSplineCurve.DIVIDE_BIT (constant)
 
 Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
-coordinate. This is used with WEIGHTED_BIT to convert
+coordinate. This is used to convert
 homogeneous coordinates to conventional coordinates.
 If this bit is set, the length of each control point must be at least 2.
+
+A B-spline curve that has control points whose last coordinate is other than
+1 is a <i>rational</i> B-spline curve.
 
 Default Value: `2`
 
 <a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a>
 ### H3DU.BSplineCurve.HOMOGENEOUS_BIT (constant)
+
+<b>Deprecated: This bit is deprecated because the B-spline
+equation works the same whether control points are in conventional
+coordinates or in homogeneous coordinates.</b>
 
 Indicates that each other coordinate of each control point
 was premultiplied by the last coordinate of the point, that is,
@@ -78,17 +89,24 @@ Default Value: `4`
 <a id='H3DU.BSplineCurve.WEIGHTED_BIT'></a>
 ### H3DU.BSplineCurve.WEIGHTED_BIT (constant)
 
+<b>Deprecated: Support for this control point format may be dropped
+in the future. Instead of using this bit, supply control points in homogeneous
+coordinates (where each other coordinate is premultiplied by the last)
+and use <code>DIVIDE_BIT</code> to convert the
+results to conventional coordinates.</b>
+
 Indicates whether the last coordinate of each control point is a
 weight. If some of the weights differ, the curve is
 considered a <i>rational</i> B-spline curve.
-If this bit is set, the length of each control point must be at least 2,
-and points returned by the curve's <code>evaluate</code>
+If this bit is set, points returned by the curve's <code>evaluate</code>
 method will be in homogeneous coordinates.
 
 Default Value: `1`
 
 <a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a>
 ### H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS (constant)
+
+<b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b>
 
 Combination of WEIGHTED_BIT and DIVIDE_BIT.
 
@@ -200,3 +218,16 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
     for(var i=0;i<=10;i++) {
     points.push(curve.evaluate(i/10.0));
     }
+
+ <a name='H3DU.BSplineCurve_H3DU.BSplineCurve_tangent'></a>
+### H3DU.BSplineCurve#tangent(u)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `u` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)

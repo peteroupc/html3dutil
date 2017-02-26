@@ -59,8 +59,8 @@ The HTML 3D Library supports parametric surfaces using a class named
 [`SurfaceEval`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html). It helps
 generate verteX coordinates, texture coordinates, normals, and colors using a parametric surface
 function. The following helper function, `makeMesh`, generates a parametric surface mesh
-that was used to produce the pictures on this page. `makeMesh` is only included in the demo, not
-in the HTML 3D Library.
+that was used to produce the pictures on this page. A function similar to the `makeMesh` function
+presented here is included in the demos that come with the HTML 3D Library.
 
 The comments explain how `makeMesh` works in detail.
 
@@ -75,7 +75,7 @@ The comments explain how `makeMesh` works in detail.
       // the same parameters U and V as the surface
       // function for 3D points.
       var colorGradient={
-       evaluate:function(u,v){ return [1-u,v,u]; }
+       "evaluate":function(u,v){ return [1-u,v,u]; }
       }
      // generate the parametric surface.
      new H3DU.SurfaceEval()
@@ -86,12 +86,11 @@ The comments explain how `makeMesh` works in detail.
     // which is required for lighting to work correctly
       .setAutoNormal(true)
     // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U-coordinates ranging
-    // from 0 to 1, and resolution+1
-    // different V-coordinates ranging from 0 to 1
-    // Instead of Mesh.TRIANGLES, we could use
-    // Mesh.LINES to create a wireframe mesh,
-    // or Mesh.POINTS to create a point mesh.
+    // mesh, using resolution+1 different U coordinates,
+    //and resolution+1 different V coordinates.
+    // Instead of H3DU.Mesh.TRIANGLES, we could use
+    // H3DU.Mesh.LINES to create a wireframe mesh,
+    // or H3DU.Mesh.POINTS to create a point mesh.
       .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,resolution);
     // Surface generated, return the mesh
     return mesh;
@@ -120,11 +119,11 @@ And the following evaluator generates a circle:
 
     var evaluator = {
       "evaluate":function(u, v){
-         // Extend the range of v
-         v*=Math.PI*2;
          // Return circle coordinates.
          return [u*Math.cos(v),u*Math.sin(v),0];
-      }
+      },
+      // Declare the usual range of the coordinates
+      "endpoints":function(){ return [0,1,0,Math.PI*2]; }
     }
 
 ![The parametric surface.](surfaces3.png)
@@ -134,12 +133,12 @@ but a _cone_, whose length runs along the negative Z axis:
 
     var evaluator = {
       "evaluate":function(u, v){
-         // Extend the range of v
-         v*=Math.PI*2;
          // Return cone coordinates, using the u
          // parameter as the Z axis.
          return [u*Math.cos(v),u*Math.sin(v),-u];
-      }
+      },
+      // Declare the usual range of the coordinates
+      "endpoints":function(){ return [0,1,0,Math.PI*2]; }
     }
 
 The following shape was rotated to show the Z axis; the rotation isn't perfect.

@@ -28,7 +28,17 @@ the HTML 3D Library. Example:
 
 ### Methods
 
+* [endpoints](#H3DU.CurveTube_H3DU.CurveTube_endpoints)<br>TODO: Not documented yet.
 * [evaluate](#H3DU.CurveTube_H3DU.CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u and V coordinates.
+
+ <a name='H3DU.CurveTube_H3DU.CurveTube_endpoints'></a>
+### H3DU.CurveTube#endpoints()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+Return value. (Type: *)
 
  <a name='H3DU.CurveTube_H3DU.CurveTube_evaluate'></a>
 ### H3DU.CurveTube#evaluate(u, v)

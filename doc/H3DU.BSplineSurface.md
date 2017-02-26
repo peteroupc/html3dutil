@@ -23,8 +23,10 @@ A surface evaluator object for a B-spline (basis spline) surface.
 * [.clamped](#H3DU.BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.
 * [.uniform](#H3DU.BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
+* [bitangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent)<br>TODO: Not documented yet.
 * [evaluate](#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B-spline surface.
+* [tangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_tangent)<br>TODO: Not documented yet.
 
  <a name='H3DU.BSplineSurface.clamped'></a>
 ### H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])
@@ -71,6 +73,20 @@ Return value. The first
 knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
 
+ <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent'></a>
+### H3DU.BSplineSurface#bitangent(u, v)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `u` (Type: *)
+* `v` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
+
  <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a>
 ### H3DU.BSplineSurface#evaluate(u, v)
 
@@ -89,3 +105,17 @@ in a B-spline surface.
 An array of the result of
 the evaluation. It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_tangent'></a>
+### H3DU.BSplineSurface#tangent(u, v)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `u` (Type: *)
+* `v` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)

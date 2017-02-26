@@ -88,13 +88,13 @@ surface.
 * `vn` (Type: Number) (optional)<br>
     Number of subdivisions along the V axis. Default is 24.
 * `u1` (Type: Number) (optional)<br>
-    Starting U coordinate of the surface to evaluate. Default is 0.
+    Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the surface evaluator object, or 0 if not given.
 * `u2` (Type: Number) (optional)<br>
-    Ending U coordinate of the surface to evaluate. Default is 1.
+    Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the surface evaluator object, or 1 if not given.
 * `v1` (Type: Number) (optional)<br>
-    Starting V coordinate of the surface to evaluate. Default is 0.
+    Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the surface evaluator object, or 0 if not given.
 * `v2` (Type: Number) (optional)<br>
-    Ending V coordinate of the surface to evaluate. Default is 1.
+    Ending V coordinate of the surface to evaluate. Default is the ending V coordinate given by the surface evaluator object, or 1 if not given.
 
 #### Return Value
 

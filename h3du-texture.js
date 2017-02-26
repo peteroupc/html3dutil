@@ -95,8 +95,7 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
  * the JavaScript DOM's Image class.
  * @param {Object} [textureCache] An object whose keys
  * are the names of textures already loaded. This will help avoid loading
- * the same texture more than once. This parameter is optional
- * and may be omitted.
+ * the same texture more than once.
  * @returns {Promise} A promise that resolves when the texture
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
  * @memberof! H3DU.Texture

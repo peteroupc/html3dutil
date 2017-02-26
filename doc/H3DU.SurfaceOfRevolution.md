@@ -36,6 +36,8 @@ the HTML 3D Library. Example:
 * [.fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a surface evaluator object for a surface of revolution
 whose curve is the graph of a single-variable function.
 * [.torus](#H3DU.SurfaceOfRevolution.torus)<br>A surface evaluator object for a torus, a special case of a surface of revolution.
+* [endpoints](#H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_endpoints)<br>TODO: Not documented yet.
+* [evaluate](#H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_evaluate)<br>TODO: Not documented yet.
 
  <a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
 ### H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
@@ -108,3 +110,26 @@ A surface evaluator object for a torus, a special case of a surface of revolutio
 #### Return Value
 
 Return value. (Type: <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a>)
+
+ <a name='H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_endpoints'></a>
+### H3DU.SurfaceOfRevolution#endpoints()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+Return value. (Type: *)
+
+ <a name='H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_evaluate'></a>
+### H3DU.SurfaceOfRevolution#evaluate(u, v)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `u` (Type: *)
+* `v` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)

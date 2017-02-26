@@ -60,11 +60,11 @@ function.
 * `mode` (Type: Number) (optional)<br>
     If this value is H3DU.Mesh.LINES, or is null or omitted, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.
 * `n` (Type: Number) (optional)<br>
-    Number of subdivisions of the curve to be drawn. May be omitted; default is 24.
+    Number of subdivisions of the curve to be drawn. Default is 24.
 * `u1` (Type: Number) (optional)<br>
-    Starting point of the curve (within the range given in the <code>vector</code>, <code>normal</code>, <code>color</code>, and <code>texCoord</code> methods). May be omitted; default is 0.
+    Starting point of the curve. Default is the starting coordinate given by the curve evaluator object, or 0 if not given.
 * `u2` (Type: Number) (optional)<br>
-    Ending point of the curve (within the range given in the <code>vector</code>, <code>normal</code>, <code>color</code>, and <code>texCoord</code> methods). May be omitted; default is 1.
+    Ending point of the curve. Default is the ending coordinate given by the curve evaluator object, or 1 if not given.
 
 #### Return Value
 
