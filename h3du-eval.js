@@ -14,8 +14,14 @@
     function binco(n, i) {
       if(i === 0 || i === n) {
         return 1;
+      } else if(i>n){
+	return 0;
+      } else if(i==1 || n-1==i) {
+	return n;
       } else if(n < binco._fact.length) {
         return binco._fact[n] / (binco._fact[i] * binco._fact[n - i]);
+      } else if(n/2 < i && n-i!=i) {
+	return binco(n,n-i);
       } else {
         return binco(n - 1, i - 1) * n / i;
       }
@@ -809,9 +815,12 @@
   };
 
 /**
- * TODO: Not documented yet.
+ * Finds the [tangent]{@link H3DU.CurveEval#vertex} (derivative) of
+ * this curve at the given point.
  * @param {Number} u Point on the curve to evaluate.
- * @returns {*} Return value.
+ * @returns {Array<Number>} An array giving the tangent vector.
+ * It will have as many elements as a control point (or one fewer
+ * if DIVIDE_BIT is set), as specified in the constructor.
  * @memberof! H3DU.BSplineCurve#
  */
   H3DU.BSplineCurve.prototype.tangent = function(u) {
@@ -1106,7 +1115,8 @@
     return output;
   };
 /**
- * TODO: Not documented yet.
+ * Finds the [tangent vector]{@link H3DU.SurfaceEval#vertex} at the
+  given point on the surface.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array giving the tangent vector.
@@ -1147,7 +1157,8 @@
     return ret;
   };
 /**
- * TODO: Not documented yet.
+ * Finds the [bitangent vector]{@link H3DU.SurfaceEval#vertex} at the
+  given point on the surface.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array giving the bitangent vector.
@@ -1448,19 +1459,18 @@
  * <li><a id="tangentvector"></a><code>tangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code>
  * and returns the tangent vector of the surface at the given coordinates. This method is optional.<br>
  * The <b>tangent vector</b> is the vector pointing toward the U axis,
- * or alternatively, the partial derivative of the <code>evaluate</code> method with respect to U.
+ * or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
  * The tangent vector returned by this method should not be "normalized" to a [unit vector]{@tutorial glmath}.
  * <li><a id="bitangentvector"></a><code>bitangent(u, v)</code> -
  * A method that takes the same parameters as <code>evaluate</code>
  * and returns the bitangent vector of the surface at the given coordinates.
- * This method is optional.
+ * This method is optional.<br>
+ * The <b>bitangent vector</b> is the vector pointing toward the V axis, or alternatively,
+ * the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>.  The bitangent vector returned by this method should not be "normalized" to a [unit vector]{@tutorial glmath}.
  * <li><code>endpoints()</code> - A method that returns a four-element array. The first and second
  * elements are the starting and ending U coordinates, respectively, of the surface, and the third
  * and fourth elements are its starting and ending V coordinates. This method is
  * optional. If not given, the default end points are <code>[0, 1, 0, 1]</code>.
- * <br>
- * The <b>bitangent vector</b> is the vector pointing toward the V axis, or alternatively,
- * the partial derivative of the <code>evaluate</code> method with respect to V.  The bitangent vector returned by this method should not be "normalized" to a [unit vector]{@tutorial glmath}.
  * </ul>
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#

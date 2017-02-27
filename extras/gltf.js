@@ -83,8 +83,11 @@
     if(typeof this.gltf.asset !== "undefined" && this.gltf.asset !== null) {
       if(!(typeof this.gltf.asset.version !== "undefined" && this.gltf.asset.version !== null)) {
         this.error = "No version despite appearance of asset object";
-      } else if(this.gltf.asset.version === "1.1")
+      } else if(this.gltf.asset.version === "1.1"){
         this.version = 1;
+      } else if(this.gltf.asset.version=="2.0"){
+	      this.version=2;
+      }
     }
     this.programs = this.preparePrograms();
     this.batch = new H3DU.ShapeGroup();
