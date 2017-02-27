@@ -82,6 +82,79 @@ function isApproxVec(vec1, vec2, delta) {
   }
   return true;
 }
+
+// ///////////////////////////////////////////
+
+/* exported compareWithNumericalBitangentSurface */
+function compareWithNumericalBitangentSurface(curve) {
+  "use strict";
+  var oldtan = curve.bitangent;
+  if(!(typeof oldtan !== "undefined" && oldtan !== null)) {
+   // Skip this test if no bitangent method is defined
+    return;
+  }
+  for(var j = 0; j <= 100; j += 5) {
+    for(var i = 0; i <= 100; i += 5) {
+  // Analytical tangent
+      var anatan = H3DU.SurfaceEval.findBitangent(curve, i / 100.0, j / 100.0);
+      curve.bitangent = null;
+  // Numerical tangent
+      var numtan = H3DU.SurfaceEval.findBitangent(curve, i / 100.0, j / 100.0);
+      var tandiff = H3DU.Math.vec3sub(numtan, anatan);
+      tandiff[0] = Math.round(tandiff[0] * 10000) / 10000;
+      tandiff[1] = Math.round(tandiff[1] * 10000) / 10000;
+      tandiff[2] = Math.round(tandiff[2] * 10000) / 10000;
+      if(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) > 0.001) {
+        console.log([i / 100.0, tandiff + ""]);
+      }
+      curve.bitangent = oldtan;
+    }
+  }
+}
+
+/* exported compareWithNumericalTangentSurface */
+function compareWithNumericalTangentSurface(curve) {
+  "use strict";
+  var oldtan = curve.tangent;
+  for(var j = 0; j <= 100; j += 5) {
+    for(var i = 0; i <= 100; i += 5) {
+  // Analytical tangent
+      var anatan = H3DU.SurfaceEval.findTangent(curve, i / 100.0, j / 100.0);
+      curve.tangent = null;
+  // Numerical tangent
+      var numtan = H3DU.SurfaceEval.findTangent(curve, i / 100.0, j / 100.0);
+      var tandiff = H3DU.Math.vec3sub(numtan, anatan);
+      tandiff[0] = Math.round(tandiff[0] * 10000) / 10000;
+      tandiff[1] = Math.round(tandiff[1] * 10000) / 10000;
+      tandiff[2] = Math.round(tandiff[2] * 10000) / 10000;
+      if(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) > 0.001) {
+        console.log([i / 100.0, tandiff + ""]);
+      }
+      curve.tangent = oldtan;
+    }
+  }
+}
+function compareWithNumericalTangent(curve) {
+  "use strict";
+  var oldtan = curve.tangent;
+  for(var i = 0; i <= 100; i += 5) {
+  // Analytical tangent
+    var anatan = H3DU.CurveEval.findTangent(curve, i / 100.0);
+    curve.tangent = null;
+  // Numerical tangent
+    var numtan = H3DU.CurveEval.findTangent(curve, i / 100.0);
+    var tandiff = H3DU.Math.vec3sub(numtan, anatan);
+    tandiff[0] = Math.round(tandiff[0] * 10000) / 10000;
+    tandiff[1] = Math.round(tandiff[1] * 10000) / 10000;
+    tandiff[2] = Math.round(tandiff[2] * 10000) / 10000;
+    if(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) > 0.001) {
+      console.log([i / 100.0, tandiff + ""]);
+    }
+    curve.tangent = oldtan;
+  }
+}
+// ////////////////////////////////////////
+
 var testfunctions = [];
 function testPathBounds() {
   "use strict";
@@ -406,6 +479,7 @@ function test() {
     3.464101552963257, 1
   ]), "The mat4lookat() function didn't compute the values correctly.");
   var curve = new H3DU.BSplineCurve([[73, 5, 63], [53, 62, 79], [51, 20, 4], [22, 0, 73], [85, 31, 29], [15, 55, 8], [85, 63, 80], [83, 14, 57], [8, 94, 38], [81, 1, 29]], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+  compareWithNumericalTangent(curve);
   ok(isApproxVec([56, 45.5, 63.83333333333334], curve.evaluate(0)), "Point at 0 is not correct.");
   ok(isApproxVec([50.1375, 33.41216666666666, 34.32249999999999], curve.evaluate(0.1)), "Point at 0.1 is not correct.");
   ok(isApproxVec([39.409333333333336, 13.335999999999991, 35.57866666666668], curve.evaluate(0.2)), "Point at 0.2 is not correct.");
@@ -418,6 +492,7 @@ function test() {
   ok(isApproxVec([56.9928333333333, 44.59600000000003, 51.573666666666654], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([32.66666666666667, 65.16666666666667, 39.66666666666667], curve.evaluate(1)), "Point at 1 is not correct.");
   curve = new H3DU.BSplineCurve([[73, 5, 63], [53, 62, 79], [51, 20, 4], [22, 0, 73], [85, 31, 29], [15, 55, 8], [85, 63, 80], [83, 14, 57], [8, 94, 38], [81, 1, 29]], [0, 0, 0, 0, 0.14285714285714285, 0.2857142857142857, 0.42857142857142855, 0.5714285714285714, 0.7142857142857143, 0.8571428571428571, 1, 1, 1, 1]);
+  compareWithNumericalTangent(curve);
   ok(isApproxVec([73, 5, 63], curve.evaluate(0)), "Point at 0 is not correct.");
   ok(isApproxVec([50.92666666666666, 39.25216666666667, 46.68124999999999], curve.evaluate(0.1)), "Point at 0.1 is not correct.");
   ok(isApproxVec([39.44533333333333, 14.091999999999997, 36.92866666666667], curve.evaluate(0.2)), "Point at 0.2 is not correct.");
@@ -430,6 +505,7 @@ function test() {
   ok(isApproxVec([45.91658333333332, 56.070166666666665, 48.14908333333333], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([81, 1, 29], curve.evaluate(1)), "Point at 1 is not correct.");
   curve = new H3DU.BezierCurve([[32, 4, 71], [40, 29, 57], [87, 34, 9], [26, 25, 64]]);
+  compareWithNumericalTangent(curve);
   ok(isApproxVec([32, 4, 71], curve.evaluate(0)), "Point at 0 is not correct.");
   ok(isApproxVec([35.423, 10.906, 65.917], curve.evaluate(0.1)), "Point at 0.1 is not correct.");
   ok(isApproxVec([40.30400000000001, 16.648000000000003, 59.61600000000001], curve.evaluate(0.2)), "Point at 0.2 is not correct.");
@@ -442,6 +518,7 @@ function test() {
   ok(isApproxVec([41.207, 27.273999999999997, 50.453], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([26, 25, 64], curve.evaluate(1)), "Point at 1 is not correct.");
   curve = new H3DU.BSplineCurve([[79, 62, 32], [21, 3, 72], [80, 41, 57], [0, 13, 23]], [0, 0, 0, 0, 1, 1, 1, 1]);
+  compareWithNumericalTangent(curve);
   ok(isApproxVec([79, 62, 32], curve.evaluate(0)), "Point at 0 is not correct.");
   ok(isApproxVec([64.85400000000001, 47.047000000000004, 42.386], curve.evaluate(0.1)), "Point at 0.1 is not correct.");
   ok(isApproxVec([56.192000000000014, 36.93600000000001, 49.688], curve.evaluate(0.2)), "Point at 0.2 is not correct.");
@@ -505,6 +582,7 @@ testfunctions.push(function() {
   "use strict";
   var curve = new H3DU.BSplineCurve([[95, 22, 18, 0.62], [52, 19, 31, 0.98], [30, 10, 47, 0.77], [3, 90, 43, 0.08], [63, 11, 53, 0.85], [86, 93, 94, 0.96], [65, 99, 57, 0.46], [25, 73, 97, 0.86], [74, 60, 36, 0.79], [76, 79, 19, 0.74]], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
     H3DU.BSplineCurve.WEIGHTED_BIT);
+  compareWithNumericalTangent(curve);
   ok(isApproxVec(curve.evaluate(0), [53.83050847457627, 18.045197740112997, 31.802259887005643, 0.9075141242937852]), "Point at 0 is not correct.");
   ok(isApproxVec(curve.evaluate(0.1), [39.420162433556044, 14.321542060245289, 40.07784398823571, 0.8547808516864986]), "Point at 0.1 is not correct.");
   ok(isApproxVec(curve.evaluate(0.2), [30.364985645414666, 16.05422241482044, 45.69432858458372, 0.7400270841232869]), "Point at 0.2 is not correct.");
@@ -516,6 +594,21 @@ testfunctions.push(function() {
   ok(isApproxVec([38.92860580162072, 79.92165694596828, 83.43612250004813, 0.7484543127177533], curve.evaluate(0.8)), "Point at 0.8 is not correct.");
   ok(isApproxVec([43.09755752226919, 69.4640461450384, 74.72805248156801, 0.8228526490100199], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([65.45798319327731, 65.30252100840337, 44.378151260504204, 0.794873949579832], curve.evaluate(1)), "Point at 1 is not correct.");
+});
+
+testfunctions.push(function() {
+  "use strict";
+  var curve = new H3DU.BezierCurve([
+  [24, 43.905643],
+  [2.3366679, 43.905643],
+  [3.8443565, 45.413332],
+  [3.8443565, 23.75]]);
+  var curve2 = H3DU.BSplineCurve.clamped(curve.curve.cp, 3);
+  for(var i = 0; i <= 100; i++) {
+    var a = curve.evaluate(i / 100.0);
+    var b = curve2.evaluate(i / 100.0);
+    ok(isApproxVec(a, b));
+  }
 });
 
 testfunctions.push(function() {

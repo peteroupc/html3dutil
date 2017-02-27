@@ -80,12 +80,16 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `u` (Type: *)
-* `v` (Type: *)
+* `u` (Type: Number)<br>
+    U coordinate of the surface to evaluate.
+* `v` (Type: Number)<br>
+    V coordinate of the surface to evaluate.
 
 #### Return Value
 
-Return value. (Type: *)
+An array giving the bitangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
 
  <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a>
 ### H3DU.BSplineSurface#evaluate(u, v)
@@ -96,7 +100,7 @@ in a B-spline surface.
 #### Parameters
 
 * `u` (Type: Number)<br>
-    U coordinate of the surface to evaluate (from 0 through 1).
+    U coordinate of the surface to evaluate. NOTE: Since version 2.0, this parameter and the "v" parameter are no longer scaled according to the curve's knot vector.
 * `v` (Type: Number)<br>
     V coordinate of the surface to evaluate.
 
@@ -113,9 +117,13 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `u` (Type: *)
-* `v` (Type: *)
+* `u` (Type: Number)<br>
+    U coordinate of the surface to evaluate.
+* `v` (Type: Number)<br>
+    V coordinate of the surface to evaluate.
 
 #### Return Value
 
-Return value. (Type: *)
+An array giving the tangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)

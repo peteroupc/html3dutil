@@ -12,15 +12,7 @@ A curve evaluator object for a B-spline (basis spline) curve.
 * `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point's length represents the size of all the control points.
 * `knots` (Type: Array.&lt;Number>)<br>
-    Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.
-
- The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains 4 more knots than the number of control points. A degree of 1 results in straight line segments.
-
- The knot vector must be a monotonically nondecreasing sequence and the first knot must not equal the last.
-
- If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i> B-spline curve.
-
- If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve, in which the first and last control points match the curve's end points.
+    Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i>B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.<br> If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve, in which the first and last control points match the curve's end points.
 
 * `bits` (Type: Boolean) (optional)<br>
     Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT, H3DU.BSplineCurve.HOMOGENEOUS_BIT, and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
@@ -203,7 +195,7 @@ in a B-spline curve.
 #### Parameters
 
 * `u` (Type: Number)<br>
-    Point on the curve to evaluate (from 0 through 1).
+    Point on the curve to evaluate. NOTE: Since version 2.0, this parameter is no longer scaled according to the curve's knot vector.
 
 #### Return Value
 
@@ -226,7 +218,8 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `u` (Type: *)
+* `u` (Type: Number)<br>
+    Point on the curve to evaluate.
 
 #### Return Value
 
