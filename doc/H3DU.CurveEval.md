@@ -19,10 +19,15 @@ dimensions, a curve function has the following form:
 where x(u) returns an X coordinate, y(u) a Y coordinate,
 and z(u) returns a Z coordinate.
 
+This class also contains methods for calculating several useful
+properties of a parametric curve, such as its tangent vector.
 For more information, see the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a> tutorial.
 
 ### Methods
 
+* [.findEndPoints](#H3DU.CurveEval.findEndPoints)<br>Finds the end points of the curve described by the given curve evaluator object.
+* [.findTangent](#H3DU.CurveEval.findTangent)<br>Finds an approximate tangent (derivative) for the given curve evaluator object
+at the given U coordinate.
 * [color](#H3DU.CurveEval_H3DU.CurveEval_color)<br>Specifies a parametric curve function for generating color values.
 * [evalCurve](#H3DU.CurveEval_H3DU.CurveEval_evalCurve)<br>Generates vertices and attribute values that follow a parametric curve
 function.
@@ -32,6 +37,41 @@ in a parametric curve.
 to generate normals for a curve.</b>
 * [texCoord](#H3DU.CurveEval_H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
 * [vertex](#H3DU.CurveEval_H3DU.CurveEval_vertex)<br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
+
+ <a name='H3DU.CurveEval.findEndPoints'></a>
+### H3DU.CurveEval.findEndPoints(e)
+
+Finds the end points of the curve described by the given curve evaluator object.
+This method calls the evaluator's <code>endpoints</code>
+method if it implements it; otherwise, returns <code>[0, 1]</code>
+
+#### Parameters
+
+* `e` (Type: Object)<br>
+    An object described in H3DU.CurveEval#vertex.
+
+#### Return Value
+
+A two-element array giving the curve's end points. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.CurveEval.findTangent'></a>
+### H3DU.CurveEval.findTangent(e, u)
+
+Finds an approximate tangent (derivative) for the given curve evaluator object
+at the given U coordinate. This method calls the evaluator's <code>tangent</code>
+method if it implements it; otherwise, does a numerical differentiation
+with respect to the U axis using the <code>evaluate</code> method.
+
+#### Parameters
+
+* `e` (Type: Object)<br>
+    An object described in H3DU.CurveEval#vertex.
+* `u` (Type: Number)<br>
+    U coordinate of the curve to evaluate.
+
+#### Return Value
+
+A tangent vector. (Type: Array.&lt;Number>)
 
  <a name='H3DU.CurveEval_H3DU.CurveEval_color'></a>
 ### H3DU.CurveEval#color(evaluator)

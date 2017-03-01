@@ -17,13 +17,13 @@ necessarily cross the surface.
 * `cp` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The number of elements in the first control point's represents the number of elements in all the control points. </ul>
 * `u1` (Type: Number) (optional)<br>
-    Starting point for the purpose of interpolation along the U axis; it will correspond to 0. Default is 0.
+    No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation along the U axis.)
 * `u2` (Type: Number) (optional)<br>
-    Ending point for the purpose of interpolation along the U axis; it will correspond to 1. Default is 1.
+    No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation along the U axis.)
 * `v1` (Type: Number) (optional)<br>
-    Starting point for the purpose of interpolation along the V axis; it will correspond to 0. Default is 0.
+    No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation along the V axis.)
 * `v2` (Type: Number) (optional)<br>
-    Ending point for the purpose of interpolation along the V axis; it will correspond to 1. Default is 1.
+    No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation along the V axis.)
 
 ### Methods
 

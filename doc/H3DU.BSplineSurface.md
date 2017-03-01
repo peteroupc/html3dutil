@@ -23,10 +23,12 @@ A surface evaluator object for a B-spline (basis spline) surface.
 * [.clamped](#H3DU.BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.
 * [.uniform](#H3DU.BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
-* [bitangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent)<br>TODO: Not documented yet.
+* [bitangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent)<br>Finds the bitangent vector at the
+given point on the surface.
 * [evaluate](#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B-spline surface.
-* [tangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_tangent)<br>TODO: Not documented yet.
+* [tangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_tangent)<br>Finds the tangent vector at the
+given point on the surface.
 
  <a name='H3DU.BSplineSurface.clamped'></a>
 ### H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])
@@ -76,7 +78,8 @@ versions.) (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
  <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent'></a>
 ### H3DU.BSplineSurface#bitangent(u, v)
 
-TODO: Not documented yet.
+Finds the bitangent vector at the
+given point on the surface.
 
 #### Parameters
 
@@ -113,7 +116,8 @@ if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>
  <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_tangent'></a>
 ### H3DU.BSplineSurface#tangent(u, v)
 
-TODO: Not documented yet.
+Finds the tangent vector at the
+given point on the surface.
 
 #### Parameters
 

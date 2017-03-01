@@ -17,17 +17,8 @@ library.
 
 * [.loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.
-* [CurveEval.findEndPoints](#H3DU.CurveEval.findEndPoints)<br>Finds the end points of the curve described by the given curve evaluator object.
-* [CurveEval.findTangent](#H3DU.CurveEval.findTangent)<br>Finds an approximate tangent (derivative) for the given curve evaluator object
-at the given U coordinate.
-* [SurfaceEval.findBitangent](#H3DU.SurfaceEval.findBitangent)<br>Finds an approximate bitangent vector for the given surface evaluator object
-at the given U and V coordinates.
-* [SurfaceEval.findEndPoints](#H3DU.SurfaceEval.findEndPoints)<br>Finds the end points of the surface described by the given surface evaluator object.
-* [SurfaceEval.findGradient](#H3DU.SurfaceEval.findGradient)<br>Finds an approximate gradient vector for
-the given surface evaluator
-at the given U and V coordinates.
-* [SurfaceEval.findTangent](#H3DU.SurfaceEval.findTangent)<br>Finds an approximate tangent vector for the given surface evaluator object
-at the given U and V coordinates.
+* [GraphicsPath.regularPolygon](#H3DU.GraphicsPath.regularPolygon)<br>TODO: Not documented yet.
+* [GraphicsPath.regularStar](#H3DU.GraphicsPath.regularStar)<br>TODO: Not documented yet.
 * [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.
 * [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
@@ -77,133 +68,42 @@ if the glTF data describes an animation; this method updates the state of the
 </ul>If an error occurs in loading the glTF data or any of the buffers and shaders
 it uses, the promise will be rejected. (Type: <a href="Promise.md">Promise</a>.&lt;Object>)
 
- <a name='H3DU.CurveEval.findEndPoints'></a>
-### (static) H3DU.CurveEval.findEndPoints(e)
+ <a name='H3DU.GraphicsPath.regularPolygon'></a>
+### (static) H3DU.GraphicsPath.regularPolygon(path, cx, cy, sides, radius, phaseInDegrees)
 
-Finds the end points of the curve described by the given curve evaluator object.
-This method calls the evaluator's <code>endpoints</code>
-method if it implements it; otherwise, returns <code>[0, 1]</code>
+TODO: Not documented yet.
 
 #### Parameters
 
-* `e` (Type: Object)<br>
-    An object described in H3DU.CurveEval#vertex.
+* `path` (Type: *)
+* `cx` (Type: *)
+* `cy` (Type: *)
+* `sides` (Type: *)
+* `radius` (Type: *)
+* `phaseInDegrees` (Type: *)
 
 #### Return Value
 
-A two-element array giving the curve's end points. (Type: Array.&lt;Number>)
+Return value. (Type: *)
 
- <a name='H3DU.CurveEval.findTangent'></a>
-### (static) H3DU.CurveEval.findTangent(e, u)
+ <a name='H3DU.GraphicsPath.regularStar'></a>
+### (static) H3DU.GraphicsPath.regularStar(path, cx, cy, points, radiusOut, radiusIn, phaseInDegrees)
 
-Finds an approximate tangent (derivative) for the given curve evaluator object
-at the given U coordinate. This method calls the evaluator's <code>tangent</code>
-method if it implements it; otherwise, does a numerical differentiation
-with respect to the U axis using the <code>evaluate</code> method.
+TODO: Not documented yet.
 
 #### Parameters
 
-* `e` (Type: Object)<br>
-    An object described in H3DU.CurveEval#vertex.
-* `u` (Type: Number)<br>
-    U coordinate of the curve to evaluate.
+* `path` (Type: *)
+* `cx` (Type: *)
+* `cy` (Type: *)
+* `points` (Type: *)
+* `radiusOut` (Type: *)
+* `radiusIn` (Type: *)
+* `phaseInDegrees` (Type: *)
 
 #### Return Value
 
-A tangent vector. (Type: Array.&lt;Number>)
-
- <a name='H3DU.SurfaceEval.findBitangent'></a>
-### (static) H3DU.SurfaceEval.findBitangent(e, u, v)
-
-Finds an approximate bitangent vector for the given surface evaluator object
-at the given U and V coordinates. This method calls the evaluator's <code>bitangent</code>
-method if it implements it; otherwise, does a numerical differentiation
-with respect to the V axis using the <code>evaluate</code> method.
-
-#### Parameters
-
-* `e` (Type: Object)<br>
-    An object described in H3DU.SurfaceEval#vertex.
-* `u` (Type: Number)<br>
-    U coordinate of the surface to evaluate.
-* `v` (Type: Number)<br>
-    V coordinate of the surface to evaluate.
-
-#### Return Value
-
-A bitangent vector . (Type: Array.&lt;Number>)
-
- <a name='H3DU.SurfaceEval.findEndPoints'></a>
-### (static) H3DU.SurfaceEval.findEndPoints(e)
-
-Finds the end points of the surface described by the given surface evaluator object.
-This method calls the evaluator's <code>endpoints</code>
-method if it implements it; otherwise, returns <code>[0, 1]</code>
-
-#### Parameters
-
-* `e` (Type: Object)<br>
-    An object described in H3DU.SurfaceEval#vertex.
-
-#### Return Value
-
-A four-element array giving the surface's end points. (Type: Array.&lt;Number>)
-
- <a name='H3DU.SurfaceEval.findGradient'></a>
-### (static) H3DU.SurfaceEval.findGradient(e, u, v)
-
-Finds an approximate gradient vector for
-the given surface evaluator
-at the given U and V coordinates. This method calls the evaluator's <code>gradient</code>
-method if it implements it; otherwise, calls the evaluator's <code>bitangent</code> and <code>tangent</code> methods if it implements them; otherwise, does a numerical differentiation using the <code>evaluate</code> method.
-
-To generate normals for a function for a regular surface (usually
-a continuous, unbroken surface such as a sphere, disk, or open
-cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
-the function used for vertex calculation (we'll call it <b>F</b>) with
-respect to u, then find the partial derivative of <b>F</b> with respect to
-v, then take their <a href="H3DU.Math.md#H3DU.Math.vec3cross">cross product</a>. The result will be
-the gradient, which will be normal to the surface.
-In mathematical notation, this looks like:
-<b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
-&#x2202;<b>F</b>/&#x2202;<i>v</i>.
-
-(Note: These two partial derivatives are also called the tangent vector
-and the bitangent (or binormal) vector, respectively.)
-
-#### Parameters
-
-* `e` (Type: Object)<br>
-    An object described in H3DU.SurfaceEval#vertex.
-* `u` (Type: Number)<br>
-    U coordinate of the surface to evaluate.
-* `v` (Type: Number)<br>
-    V coordinate of the surface to evaluate.
-
-#### Return Value
-
-A gradient vector . (Type: Array.&lt;Number>)
-
- <a name='H3DU.SurfaceEval.findTangent'></a>
-### (static) H3DU.SurfaceEval.findTangent(e, u, v)
-
-Finds an approximate tangent vector for the given surface evaluator object
-at the given U and V coordinates. This method calls the evaluator's <code>tangent</code>
-method if it implements it; otherwise, does a numerical differentiation
-with respect to the U axis using the <code>evaluate</code> method.
-
-#### Parameters
-
-* `e` (Type: Object)<br>
-    An object described in H3DU.SurfaceEval#vertex.
-* `u` (Type: Number)<br>
-    U coordinate of the surface to evaluate.
-* `v` (Type: Number)<br>
-    V coordinate of the surface to evaluate.
-
-#### Return Value
-
-A tangent vector . (Type: Array.&lt;Number>)
+Return value. (Type: *)
 
  <a name='H3DU.createCanvasElement'></a>
 ### (static) H3DU.createCanvasElement(parent, width, height)

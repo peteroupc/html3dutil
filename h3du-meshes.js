@@ -142,7 +142,7 @@ H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, f
   var tc = [];
   var angleStep = H3DU.Math.PiTimes2 / slices;
   var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var sangle = 1.0; // sin(90.0deg)
   var cangle = 0; // cos(90.0deg)
   for(var i = 0; i < slices; i++) {
@@ -254,7 +254,7 @@ H3DU.Meshes.createLathe = function(points, slices, flat, inside) {
   var tc = [];
   var angleStep = H3DU.Math.PiTimes2 / slices;
   var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var sangle = 1.0; // sin(90.0deg)
   var cangle = 0; // cos(90.0deg)
   for(i = 0; i < slices; i++) {
@@ -271,7 +271,6 @@ H3DU.Meshes.createLathe = function(points, slices, flat, inside) {
   tc.push(1);
   var slicesTimes2 = slices * 2;
   var lastZ = 0;
-
   var stacks = points.length / 2 - 1;
   var recipstacks = 1.0 / stacks;
   for(i = 0; i < stacks; i++) {
@@ -531,7 +530,6 @@ H3DU.Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, in
   if(inner === 0)return mesh;
   var tubeRadius = inner;
   var circleRad = outer;
-
   var sci = [];
   var scj = [];
   var cangle, sangle, u;

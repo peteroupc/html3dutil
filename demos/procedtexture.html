@@ -31,7 +31,7 @@ void main(){
 </script>
 
 <script id="demo">
-/* global H3DU, fragmentShaderLib */
+/* global H3DU, fragmentShaderLib, renderTexture */
 var vertexShader = document.getElementById("vertex").textContent;
 var fragmentShader = "precision mediump float;\n" +
   fragmentShaderLib() + "\n" +
@@ -42,9 +42,9 @@ var scene = new H3DU.Scene3D(document.getElementById("canvas"))
 var shader = new H3DU.ShaderInfo(vertexShader, fragmentShader);
 shader.setUniforms({"u_time":0});
 
-///////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
 // Create a frame buffer info for a procedural texture
-var fbo=renderTexture(scene,shader);
+var fbo = renderTexture(scene, shader);
 // //////////////////////////////////////////////////////
 var b2 = new H3DU.Batch3D()
    .perspectiveAspect(45, 0.1, 100)

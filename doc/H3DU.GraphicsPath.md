@@ -79,6 +79,7 @@ and dimensions, start angle, and sweep angle.
 * [arcShapeForBox](#H3DU.GraphicsPath_H3DU.GraphicsPath_arcShapeForBox)<br>Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's corner point
 and dimensions, start angle, and sweep angle.
+* [arrow](#H3DU.GraphicsPath_H3DU.GraphicsPath_arrow)<br>TODO: Not documented yet.
 * [ellipse](#H3DU.GraphicsPath_H3DU.GraphicsPath_ellipse)<br>Adds path segments to this path that form an axis-aligned ellipse given its center
 and dimensions.
 * [ellipseForBox](#H3DU.GraphicsPath_H3DU.GraphicsPath_ellipseForBox)<br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
@@ -700,6 +701,25 @@ this is in addition to "extras/path.js". Example:
 #### Return Value
 
 This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_arrow'></a>
+### H3DU.GraphicsPath#arrow(x0, y0, x1, y1, headWidth, headLength, tailWidth)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `x0` (Type: *)
+* `y0` (Type: *)
+* `x1` (Type: *)
+* `y1` (Type: *)
+* `headWidth` (Type: *)
+* `headLength` (Type: *)
+* `tailWidth` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
  <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_ellipse'></a>
 ### H3DU.GraphicsPath#ellipse(cx, cy, w, h)

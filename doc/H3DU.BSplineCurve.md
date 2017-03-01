@@ -43,12 +43,17 @@ passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H
 except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.
+* [.fromCardinalSpline](#H3DU.BSplineCurve.fromCardinalSpline)<br>Creates an array of B-Spline curves from the control points of a cardinal spline.
+* [.fromHermiteSpline](#H3DU.BSplineCurve.fromHermiteSpline)<br>Creates an array of B-Spline curves from the control points of a Hermite spline.
 * [.uniform](#H3DU.BSplineCurve.uniform)<br>Creates a B-spline curve with uniform knots.
 * [.uniformKnots](#H3DU.BSplineCurve.uniformKnots)<br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
+* [endpoints](#H3DU.BSplineCurve_H3DU.BSplineCurve_endpoints)<br>TODO: Not documented yet.
 * [evaluate](#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B-spline curve.
-* [tangent](#H3DU.BSplineCurve_H3DU.BSplineCurve_tangent)<br>TODO: Not documented yet.
+* [split](#H3DU.BSplineCurve_H3DU.BSplineCurve_split)<br>Splits this B-Spline curve into two at the given point.
+* [tangent](#H3DU.BSplineCurve_H3DU.BSplineCurve_tangent)<br>Finds the tangent (derivative) of
+this curve at the given point.
 
 <a id='H3DU.BSplineCurve.DIVIDE_BIT'></a>
 ### H3DU.BSplineCurve.DIVIDE_BIT (constant)
@@ -147,6 +152,38 @@ A clamped uniform knot vector.
 The first knot will be 0 and the last knot will be 1.
 (This is a change in version 2.0.) (Type: Array.&lt;Number>)
 
+ <a name='H3DU.BSplineCurve.fromCardinalSpline'></a>
+### H3DU.BSplineCurve.fromCardinalSpline(curve, [tension])
+
+Creates an array of B-Spline curves from the control points of a cardinal spline.
+
+#### Parameters
+
+* `curve` (Type: Array.&lt;Array.&lt;Number>>)<br>
+    An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.
+* `tension` (Type: Number) (optional)<br>
+    A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).
+
+#### Return Value
+
+A array of cubic B-Spline curves describing the
+same path as the cardinal spline. (Type: <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>)
+
+ <a name='H3DU.BSplineCurve.fromHermiteSpline'></a>
+### H3DU.BSplineCurve.fromHermiteSpline(curve)
+
+Creates an array of B-Spline curves from the control points of a Hermite spline.
+
+#### Parameters
+
+* `curve` (Type: Array.&lt;Array.&lt;Number>>)<br>
+    An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.
+
+#### Return Value
+
+A array of cubic B-Spline curves describing the
+same path as the Hermite spline. (Type: <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>)
+
  <a name='H3DU.BSplineCurve.uniform'></a>
 ### H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])
 
@@ -186,6 +223,15 @@ A uniform knot vector. The first
 knot will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: Array.&lt;Number>)
 
+ <a name='H3DU.BSplineCurve_H3DU.BSplineCurve_endpoints'></a>
+### H3DU.BSplineCurve#endpoints()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+Return value. (Type: *)
+
  <a name='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a>
 ### H3DU.BSplineCurve#evaluate(u)
 
@@ -211,10 +257,30 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
     points.push(curve.evaluate(i/10.0));
     }
 
+ <a name='H3DU.BSplineCurve_H3DU.BSplineCurve_split'></a>
+### H3DU.BSplineCurve#split(u)
+
+Splits this B-Spline curve into two at the given point.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    Point on the curve where this curve will be split.
+
+#### Return Value
+
+An array containing two B-Spline curves: the
+first is the part of the curve before the given point, and the second
+is the part of the curve after the given point. The first element
+will be null if <code>u</code> is at or before the start of the curve.
+The second element
+will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>>)
+
  <a name='H3DU.BSplineCurve_H3DU.BSplineCurve_tangent'></a>
 ### H3DU.BSplineCurve#tangent(u)
 
-TODO: Not documented yet.
+Finds the tangent (derivative) of
+this curve at the given point.
 
 #### Parameters
 
@@ -223,4 +289,6 @@ TODO: Not documented yet.
 
 #### Return Value
 
-Return value. (Type: *)
+An array giving the tangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)

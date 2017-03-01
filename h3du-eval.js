@@ -9,361 +9,73 @@
 /* global H3DU */
 (function(global) {
   "use strict";
+  function zeros(count) {
+    var ret = [];
+    for(var i = 0; i < count; i++) {
+      ret.push(0);
+    }
+    return ret;
+  }
+  function linear(points, elementsPerValue, t) {
+    var ret = [];
+    var p0 = points[0];
+    var p1 = points[1];
+    for(var i = 0; i < elementsPerValue; i++) {
+      var pp0 = p0[i];
+      ret[i] = pp0 + (p1[i] - pp0) * t;
+    }
+    return ret;
+  }
+  function subtract(p1, p0, elementsPerValue) {
+    var ret = [];
+    for(var i = 0; i < elementsPerValue; i++) {
+      ret[i] = p1[i] - p0[i];
+    }
+    return ret;
+  }
+  function bezierCubic(points, elementsPerValue, t) {
+    var ret = [];
+    var p0 = points[0];
+    var p1 = points[1];
+    var p2 = points[2];
+    var p3 = points[3];
+    for(var i = 0; i < elementsPerValue; i++) {
+      ret[i] = (((3 - t) * t - 3) * t + 1) * p0[i] + ((3 * t - 6) * t + 3) * t * p1[i] + (-3 * t + 3) * t * t * p2[i] + t * t * t * p3[i];
+    }
+    return ret;
+  }
 
-  (function(H3DU) {
-    function binco(n, i) {
-      if(i === 0 || i === n) {
-        return 1;
-      } else if(i>n){
-	return 0;
-      } else if(i==1 || n-1==i) {
-	return n;
-      } else if(n < binco._fact.length) {
-        return binco._fact[n] / (binco._fact[i] * binco._fact[n - i]);
-      } else if(n/2 < i && n-i!=i) {
-	return binco(n,n-i);
-      } else {
-        return binco(n - 1, i - 1) * n / i;
-      }
+  function bezierCubicDerivative(points, elementsPerValue, t) {
+    var ret = [];
+    var p0 = points[0];
+    var p1 = points[1];
+    var p2 = points[2];
+    var p3 = points[3];
+    for(var i = 0; i < elementsPerValue; i++) {
+      ret[i] = ((-3 * t + 6) * t - 3) * p0[i] + ((9 * t - 12) * t + 3) * p1[i] + (-9 * t + 6) * t * p2[i] + 3 * t * t * p3[i];
     }
-// Factorials that don't exceed MAX_SAFE_INTEGER
-    binco._fact = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,
-      3628800, 39916800, 479001600, 6227020800, 87178291200,
-      1307674368000, 20922789888000, 355687428096000,
-      6402373705728000];
-    function zeros(count) {
-      var ret = [];
-      for(var i = 0; i < count; i++) {
-        ret.push(0);
-      }
-      return ret;
+    return ret;
+  }
+  function bezierQuadratic(points, elementsPerValue, t) {
+    var ret = [];
+    var p0 = points[0];
+    var p1 = points[1];
+    var p2 = points[2];
+    for(var i = 0; i < elementsPerValue; i++) {
+      ret[i] = ((t - 2) * t + 1) * p0[i] + (-2 * t + 2) * t * p1[i] + t * t * p2[i];
     }
-    function linear(points, elementsPerValue, t) {
-      var ret = [];
-      var p0 = points[0];
-      var p1 = points[1];
-      for(var i = 0; i < elementsPerValue; i++) {
-        var pp0 = p0[i];
-        ret[i] = pp0 + (p1[i] - pp0) * t;
-      }
-      return ret;
+    return ret;
+  }
+  function bezierQuadraticDerivative(points, elementsPerValue, t) {
+    var ret = [];
+    var p0 = points[0];
+    var p1 = points[1];
+    var p2 = points[2];
+    for(var i = 0; i < elementsPerValue; i++) {
+      ret[i] = (2 * t - 2) * p0[i] + (-4 * t + 2) * p1[i] + 2 * t * p2[i];
     }
-    function subtract(p1, p0, elementsPerValue) {
-      var ret = [];
-      for(var i = 0; i < elementsPerValue; i++) {
-        ret[i] = p1[i] - p0[i];
-      }
-      return ret;
-    }
-    function bezierCubic(points, elementsPerValue, t) {
-      var ret = [];
-      var p0 = points[0];
-      var p1 = points[1];
-      var p2 = points[2];
-      var p3 = points[3];
-      for(var i = 0; i < elementsPerValue; i++) {
-        var pp0 = p0[i];
-        var pp1 = p1[i];
-        var pp2 = p2[i];
-        ret[i] =
-    ((pp0 * -1 * t + pp0 * 3) * t + pp0 * -3) * t + pp0 +
-    ((pp1 * 3 * t + pp1 * -6) * t + pp1 * 3) * t +
-    (pp2 * -3 * t + pp2 * 3) * t * t +
-    p3[i] * t * t * t;
-      }
-      return ret;
-    }
-
-    function bezierCubicDerivative(points, elementsPerValue, t) {
-      var ret = [];
-      var p0 = points[0];
-      var p1 = points[1];
-      var p2 = points[2];
-      var p3 = points[3];
-      for(var i = 0; i < elementsPerValue; i++) {
-        var pp0 = p0[i];
-        var pp1 = p1[i];
-        var pp2 = p2[i];
-        ret[i] = (-pp0 * 3 * t + pp0 * 6) * t + -pp0 * 3 +
-   ((pp1 * 9 * t + -pp1 * 12) * t + pp1 * 3) +
-   (-pp2 * 9 * t + pp2 * 6) * t +
-   p3[i] * 3 * t * t;
-      }
-      return ret;
-    }
-    function bezierQuadratic(points, elementsPerValue, t) {
-      var ret = [];
-      var p0 = points[0];
-      var p1 = points[1];
-      var p2 = points[2];
-      for(var i = 0; i < elementsPerValue; i++) {
-        var pp0 = p0[i];
-        var pp1 = p1[i];
-        ret[i] =
-    (pp0 * 1 * t + pp0 * -2) * t + pp0 +
-    (pp1 * -2 * t + pp1 * 2) * t +
-    p2[i] * t * t;
-      }
-      return ret;
-    }
-    function bezierQuadraticDerivative(points, elementsPerValue, t) {
-      var ret = [];
-      var p0 = points[0];
-      var p1 = points[1];
-      var p2 = points[2];
-      for(var i = 0; i < elementsPerValue; i++) {
-        var pp0 = p0[i];
-        var pp1 = p1[i];
-        ret[i] = pp0 * 2 * t + pp0 * -2 +
-   (pp1 * -4 * t + pp1 * 2) +
-   p2[i] * 2 * t;
-      }
-      return ret;
-    }
-    function evaluatePolys(matrix, rows, cols, points, elementsPerValue, t) {
-      var ret = [];
-      for(var i = 0; i < elementsPerValue; i++) {
-        ret[i] = 0;
-      }
-      for(i = 0; i < rows; i++) {
-        var index = cols * i + (cols - 1);
-        var ct = 1.0;
-        var point = points[i];
-        for(var j = 0; j < cols; j++) {
-          var c = matrix[index];
-          if(c !== 0) {
-            var cell = c * ct;
-            for(var k = 0; k < elementsPerValue; k++) {
-              ret[k] += cell * point[k];
-            }
-          }
-          ct *= t;
-          index--;
-        }
-      }
-      return ret;
-    }
-
-    function getCoefficients(matrix, rows, cols, t) {
-      var ret = [];
-      for(var i = 0; i < rows; i++) {
-        var index = cols * i + (cols - 1);
-        var ct = 1.0;
-        var coeff = 0;
-        for(var j = 0; j < cols; j++) {
-          coeff += matrix[index] * ct;
-          ct *= t;
-          index--;
-        }
-        ret.push(coeff);
-      }
-      return ret;
-    }
-
-    function combineCoeffs(coeffsU, coeffsV, cp, elementsPerValue) {
-      var ret = [];
-      for(var i = 0; i < elementsPerValue; i++) {
-        ret[i] = 0;
-      }
-      for(i = 0; i < coeffsV.length; i++) {
-        var ci = coeffsV[i];
-        var pointsU = cp[i];
-        for(var j = 0; j < coeffsU.length; j++) {
-          var cell = ci * coeffsU[j];
-          var point = pointsU[j];
-          for(var k = 0; k < elementsPerValue; k++) {
-            ret[k] += cell * point[k];
-          }
-        }
-      }
-      return ret;
-    }
-
-    function makeDerivativeMatrix(matrix, rows, cols) {
-      var deriv = [];
-      var derivIndex = 0;
-  // NOTE: The derivative matrix will contain one
-  // fewer column, since the degree of each polynomial
-  // (row) will be reduced by 1
-      for(var i = 0; i < rows; i++) {
-        var index = cols * i;
-        var power = cols - 1;
-        for(var j = 0; j < cols - 1; j++) {
-          deriv[derivIndex] = matrix[index] * power;
-          derivIndex++;
-          power--;
-          index++;
-        }
-      }
-      return deriv;
-    }
-
-    function makeBezierMatrix(degree) {
- // Generates a matrix where each row
-  // is a Bernstein polynomial of the given degree.
-      var mat = [];
-      var negation = (degree & 1) === 0 ? 1 : -1;
-      for(var i = 0; i <= degree; i++) {
-        var minor = degree - i;
-        var neg = negation;
-        for(var j = 0; j <= degree; j++) {
-          if(j > minor) {
-            mat.push(0);
-          } else {
-            var binom = binco(minor, j);
-            mat.push(binom * neg);
-            neg = -neg;
-          }
-        }
-        negation = -negation;
-      }
-      for(i = 1; i < degree; i++) {
-        binom = binco(degree, i);
-        var index = (degree + 1) * i;
-        for(j = 0; j < degree; j++) {
-          mat[index] *= binom;
-          index++;
-        }
-      }
-      return mat;
-    }
-/** @private */
-    H3DU._PolynomialCurve = function(cp, u1, u2) {
-      if(typeof u1 === "undefined" && typeof u2 === "undefined") {
-        this.uoffset = 0;
-        this.umul = 1;
-        this.u2 = 1;
-      } else if(u1 === u2) {
-        throw new Error("u1 and u2 can't be equal");
-      } else {
-        this.uoffset = u1;
-        this.umul = 1.0 / (u2 - u1);
-        this.u2 = u2;
-      }
-      if(!cp || cp.length < 1)throw new Error();
-      this.degree = cp.length - 1;
-      this.matrix = null;
-      this.derivMatrix = null;
-      this.cp = cp;
-      this.elements = cp[0].length;
-    };
-/** @private */
-    H3DU._PolynomialCurve.prototype.setBasis = function(basis, degree) {
-      this.matrix = basis;
-      this.degree = degree;
-      this.derivMatrix = makeDerivativeMatrix(this.matrix, degree + 1, degree + 1);
-    };
-/** @private */
-    H3DU._PolynomialCurve.prototype.evaluate = function(u) {
-      var t = (u - this.uoffset) * this.umul;
-      if(this.degree === 0) {
-      // Constant
-        return this.cp[0].slice(0, this.cp[0].length);
-      }
-      return evaluatePolys(this.matrix, this.degree + 1, this.degree + 1,
-       this.cp, this.elements, t);
-    };
-/** @private */
-    H3DU._PolynomialCurve.prototype.tangent = function(u) {
-      var t = (u - this.uoffset) * this.umul;
-      if(this.degree === 0) {
-        return zeros(this.cp[0].length);
-      }
-      return evaluatePolys(this.matrix, this.degree + 1, this.degree + 1,
-       this.cp, this.elements, t);
-    };
-/** @private */
-    H3DU._PolynomialSurface = function(cp, u1, u2, v1, v2) {
-      if(typeof u1 === "undefined" && typeof u2 === "undefined" &&
-    typeof v1 === "undefined" && typeof v2 === "undefined") {
-        this.uoffset = 0;
-        this.umul = 1;
-        this.voffset = 0;
-        this.vmul = 1;
-        this.u2 = 1;
-        this.v2 = 1;
-      } else if(u1 === u2) {
-        throw new Error("u1 and u2 can't be equal");
-      } else if(v1 === v2) {
-        throw new Error("v1 and v2 can't be equal");
-      } else {
-        this.uoffset = u1;
-        this.umul = 1.0 / (u2 - u1);
-        this.voffset = v1;
-        this.vmul = 1.0 / (v2 - v1);
-        this.u2 = u2;
-        this.v2 = v2;
-      }
-      this.degreeU = cp[0].length - 1;
-      this.degreeV = cp.length - 1;
-      this.matrixU = null;
-      this.derivMatrixU = null;
-      this.cp = cp;
-      this.elements = cp[0][0].length;
-    };
-
-/** @private */
-    H3DU._PolynomialSurface.prototype.endpoints = function() {
-      return [this.uoffset, this.u2];
-    };
-/** @private */
-    H3DU._PolynomialSurface.prototype.setBasis = function(basisU, basisV, degreeU, degreeV) {
-      if(this.cp.length - 1 < degreeV)throw new Error();
-      if(this.cp[0].length - 1 < degreeU)throw new Error();
-      this.degreeU = degreeU;
-      this.degreeV = degreeV;
-      this.matrixU = basisU;
-      this.derivMatrixU = makeDerivativeMatrix(this.matrixU, this.degreeU + 1, this.degreeU + 1);
-      if(this.degreeU === this.degreeV) {
-        this.matrixV = this.matrixU;
-        this.derivMatrixV = this.derivMatrixU;
-      } else {
-        this.matrixV = basisV;
-        this.derivMatrixV = makeDerivativeMatrix(this.matrixV, this.degreeV + 1, this.degreeV + 1);
-      }
-    };
-/** @private */
-    H3DU._PolynomialSurface.prototype.evaluate = function(u, v) {
-      var tu = (u - this.uoffset) * this.umul;
-      var tv = (v - this.voffset) * this.vmul;
-      if(this.degreeU === 0 && this.degreeV === 0) {
-      // Constant
-        return this.cp[0][0].slice(0, this.cp[0][0].length);
-      }
-      var coeffsU = getCoefficients(this.matrixU, this.degreeU + 1, this.degreeU + 1, tu);
-      var coeffsV = getCoefficients(this.matrixV, this.degreeV + 1, this.degreeV + 1, tv);
-      var ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
-      return ret;
-    };
-/** @private */
-    H3DU._PolynomialSurface.prototype.bitangent = function(u, v) {
-      var tu = (u - this.uoffset) * this.umul;
-      var tv = (v - this.voffset) * this.vmul;
-      if(this.degreeU === 0 && this.degreeV === 0) {
-        return zeros(this.cp[0][0].length);
-      }
-      var coeffsU = getCoefficients(this.matrixU, this.degreeU + 1, this.degreeU + 1, tu);
-      var coeffsV = getCoefficients(this.derivMatrixV, this.degreeV + 1, this.degreeV, tv);
-      var ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
-      return ret;
-    };
-/** @private */
-    H3DU._PolynomialSurface.prototype.tangent = function(u, v) {
-      var tu = (u - this.uoffset) * this.umul;
-      var tv = (v - this.voffset) * this.vmul;
-      if(this.degreeU === 0 && this.degreeV === 0) {
-        return zeros(this.cp[0][0].length);
-      }
-      var coeffsU = getCoefficients(this.derivMatrixU, this.degreeU + 1, this.degreeU, tu);
-      var coeffsV = getCoefficients(this.matrixV, this.degreeV + 1, this.degreeV + 1, tv);
-      var ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
-      return ret;
-    };
-/** @private */
-    H3DU._PolynomialSurface.prototype.endpoints = function() {
-      return [this.uoffset, this.u2, this.voffset, this.v2];
-    };
-
+    return ret;
+  }
 /**
  * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a B&eacute;zier curve.<p>
  * A B&eacute;zier curve is defined by a series of control points, where
@@ -381,18 +93,16 @@
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Number} [u1] Starting point for the purpose of interpolation; it will correspond to 0.
- * Default is 0.
- * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
- * Default is 1.
+ * @param {Number} [u1] No longer used since version 2.0. The starting and ending
+ * points will be (0, 0). (This parameter was the starting point for the
+ * purpose of interpolation.)
+ * @param {Number} [u2] No longer used since version 2.0. The starting and ending
+ * points will be (0, 0). (This parameter was the ending point for the
+ * purpose of interpolation.)
  */
-    H3DU.BezierCurve = function(cp, u1, u2) {
-      this.curve = new H3DU._PolynomialCurve(cp, u1, u2);
-      if(this.curve.degree > 3) {
-        this.curve.setBasis(makeBezierMatrix(this.curve.degree), this.curve.degree);
-      }
-      if(!this.curve.cp)throw new Error();
-    };
+  H3DU.BezierCurve = function(cp) {
+    this.curve = H3DU.BSplineCurve.clamped(cp, cp.length - 1, 0);
+  };
 /**
  * Evaluates the curve function based on a point
  * in a B&eacute;zier curve.
@@ -409,22 +119,9 @@
  * }
  * @memberof! H3DU.BezierCurve#
  */
-    H3DU.BezierCurve.prototype.evaluate = function(u) {
-      if(!this.curve.cp)throw new Error();
-      if(this.curve.degree === 2) {
-        return bezierQuadratic(this.curve.cp, this.curve.elements,
-      (u - this.curve.uoffset) * this.curve.umul);
-      }
-      if(this.curve.degree === 3) {
-        return bezierCubic(this.curve.cp, this.curve.elements,
-   (u - this.curve.uoffset) * this.curve.umul);
-      }
-      if(this.curve.degree === 1) {
-        return linear(this.curve.cp, this.curve.elements,
-      (u - this.curve.uoffset) * this.curve.umul);
-      }
-      return this.curve.evaluate(u);
-    };
+  H3DU.BezierCurve.prototype.evaluate = function(u) {
+    return this.curve.evaluate(u);
+  };
 /**
  * Finds the [tangent]{@link H3DU.CurveEval#vertex} (derivative) of
  * this curve at the given point.
@@ -434,28 +131,9 @@
  * It will have as many elements as a control point, as specified in the constructor.
  * @memberof! H3DU.BezierCurve#
  */
-    H3DU.BezierCurve.prototype.tangent = function(u) {
-      if(this.curve.degree === 2) {
-        return bezierQuadraticDerivative(this.curve.cp, this.curve.elements,
-      (u - this.curve.uoffset) * this.curve.umul);
-      }
-      if(this.curve.degree === 3) {
-        return bezierCubicDerivative(this.curve.cp, this.curve.elements,
-      (u - this.curve.uoffset) * this.curve.umul);
-      }
-      if(this.curve.degree === 1) {
-        return subtract(this.curve.cp[1], this.curve.cp[0], this.curve.elements);
-      }
-      return this.curve.evaluate(u);
-    };
-/**
- * TODO: Not documented yet.
- * @returns {*} Return value.
- * @memberof! H3DU.BezierCurve#
- */
-    H3DU.BezierCurve.prototype.endpoints = function() {
-      return this.curve.endpoints();
-    };
+  H3DU.BezierCurve.prototype.tangent = function(u) {
+    return this.curve.tangent(u);
+  };
 
 /**
  * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a B&eacute;zier surface.<p>
@@ -477,26 +155,22 @@
  * surface along the U axis.
  * <li>The number of elements in the first control point's represents the number of elements in all the control points.
  * </ul>
- * @param {Number} [u1] Starting point for the purpose of interpolation along the
- * U axis; it will correspond to 0.
- * Default is 0.
- * @param {Number} [u2] Ending point for the purpose of interpolation along the
- * U axis; it will correspond to 1.
- * Default is 1.
- * @param {Number} [v1] Starting point for the purpose of interpolation along the
- * V axis; it will correspond to 0.
- * Default is 0.
- * @param {Number} [v2] Ending point for the purpose of interpolation along the
- * V axis; it will correspond to 1.
- * Default is 1.
+ * @param {Number} [u1] No longer used since version 2.0. The starting and ending
+ * points will be (0, 0). (This parameter was the starting point for the
+ * purpose of interpolation along the U axis.)
+ * @param {Number} [u2] No longer used since version 2.0. The starting and ending
+ * points will be (0, 0). (This parameter was the ending point for the
+ * purpose of interpolation along the U axis.)
+ * @param {Number} [v1] No longer used since version 2.0. The starting and ending
+ * points will be (0, 0). (This parameter was the starting point for the
+ * purpose of interpolation along the V axis.)
+ * @param {Number} [v2] No longer used since version 2.0. The starting and ending
+ * points will be (0, 0). (This parameter was the ending point for the
+ * purpose of interpolation along the V axis.)
  */
-    H3DU.BezierSurface = function(cp, u1, u2, v1, v2) {
-      // TODO: Consider deprecating u1/u2/v1/v2
-      this.curve = new H3DU._PolynomialSurface(cp, u1, u2, v1, v2);
-      this.curve.setBasis(makeBezierMatrix(this.curve.degreeU),
-          makeBezierMatrix(this.curve.degreeV), this.curve.degreeU,
-      this.curve.degreeV);
-    };
+  H3DU.BezierSurface = function(cp) {
+    this.curve = H3DU.BSplineSurface.clamped(cp, cp[0].length - 1, 0);
+  };
 
 /**
  * Evaluates the surface function based on a point
@@ -508,9 +182,9 @@
  * the evaluation. It will have as many elements as a control point, as specified in the constructor.
  * @memberof! H3DU.BezierSurface#
  */
-    H3DU.BezierSurface.prototype.evaluate = function(u, v) {
-      return this.curve.evaluate(u, v);
-    };
+  H3DU.BezierSurface.prototype.evaluate = function(u, v) {
+    return this.curve.evaluate(u, v);
+  };
 /**
  * Finds the [tangent vector]{@link H3DU.SurfaceEval#vertex} at the given point on this surface.
  * @param {Number} u U coordinate of the surface to evaluate (generally within the range
@@ -520,9 +194,9 @@
  * coordinates. It will have as many elements as a control point, as specified in the constructor.
  * @memberof! H3DU.BezierSurface#
  */
-    H3DU.BezierSurface.prototype.tangent = function(u, v) {
-      return this.curve.tangent(u, v);
-    };
+  H3DU.BezierSurface.prototype.tangent = function(u, v) {
+    return this.curve.tangent(u, v);
+  };
 /**
  * Finds the [bitangent vector]{@link H3DU.SurfaceEval#vertex} at the given point on this surface.
  * @param {Number} u U coordinate of the surface to evaluate (generally within the range
@@ -532,80 +206,17 @@
  * coordinates. It will have as many elements as a control point, as specified in the constructor.
  * @memberof! H3DU.BezierSurface#
  */
-    H3DU.BezierSurface.prototype.bitangent = function(u, v) {
-      return this.curve.bitangent(u, v);
-    };
+  H3DU.BezierSurface.prototype.bitangent = function(u, v) {
+    return this.curve.bitangent(u, v);
+  };
 /**
  * TODO: Not documented yet.
  * @returns {*} Return value.
  * @memberof! H3DU.BezierSurface#
  */
-    H3DU.BezierSurface.prototype.endpoints = function() {
-      return this.curve.endpoints();
-    };
-
-/** @private */
-    H3DU.BezierCurve._lerp = function(a, b, t) {
-      var ret = [];
-      for(var i = 0; i < a.length; i++) {
-        ret[i] = a[i] + (b[i] - a[i]) * t;
-      }
-      return ret;
-    };
-/** @private */
-    H3DU.BezierCurve.prototype._makeNew = function(c) {
-      var ret = new H3DU.BezierCurve(c);
-      ret.curve.uoffset = this.curve.uoffset;
-      ret.curve.umul = this.curve.umul;
-      ret.curve.u2 = this.curve.u2;
-      return ret;
-    };
-/**
- * TODO: Not documented yet.
- * @returns {Array<Array<Number>>} TODO: Not documented yet.
- * @memberof! H3DU.BezierCurve#
- */
-    H3DU.BezierCurve.prototype.getPoints = function() {
-      return this.curve.cp;
-    };
-/**
- * Splits this B&eacute;zier curve into two.
- * @param {Number} u U coordinate of the point in the curve to split it in two (generally within the range
- * given in the constructor).
- * @returns {Array<BezierCurve>} An array of two B&eacute;zier curves: the
- * first is the curve from the start of the original curve to the point given in "u", and the second
- * is the curve from that point to the end of the original curve.
- * @memberof! H3DU.BezierCurve#
- */
-    H3DU.BezierCurve.prototype.split = function(u) {
-      var tu = (u - this.curve.uoffset) * this.curve.umul;
-      if(this.curve.degree === 0)return [this, this];
-      var points = this.curve.cp;
-      var buffer = [];
-      var front = [];
-      var back = [];
-      var stage = points.length;
-      var frontIndex = 0;
-      var backIndex = this.curve.degree;
-      front[frontIndex] = points[frontIndex];
-      back[backIndex] = points[backIndex];
-      frontIndex++;
-      backIndex--;
-      while(stage > 1) {
-        for(var i = 0; i < stage - 1; i++) {
-          buffer[i] = H3DU.BezierCurve._lerp(points[i], points[i + 1], tu);
-        }
-        front[frontIndex] = buffer[0];
-        back[backIndex] = buffer[stage - 2];
-        frontIndex++;
-        backIndex--;
-        points = buffer;
-        stage--;
-      }
-      return [this._makeNew(front), this._makeNew(back)];
-    };
-  }(H3DU));
-
+  H3DU.BezierSurface.prototype.endpoints = function() {
+    return this.curve.endpoints();
+  };
 /**
  * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a B-spline (basis spline) curve.
  * @class
@@ -650,7 +261,7 @@
       this.controlPoints = H3DU.BSplineCurve._convertToHomogen(this.controlPoints);
     }
     var order = knots.length - this.controlPoints.length;
-    if(order < 2 || order > this.controlPoints.length)
+    if(order < 1 || order > this.controlPoints.length)
       throw new Error();
     H3DU.BSplineCurve._checkKnots(knots, order - 1);
     var cplen = this.controlPoints[0].length;
@@ -659,6 +270,22 @@
       cplenNeeded = 2;
     }
     if(cplen < cplenNeeded)throw new Error();
+    this.fastBezier = false;
+    if(order === controlPoints.length && order <= 4) {
+      this.fastBezier = true;
+      for(var i = 0; i < order; i++) {
+        if(knots[0] !== 0) {
+          this.fastBezier = false;
+          break;
+        }
+      }
+      for(i = order; this.fastBezier && i < knots.length; i++) {
+        if(knots[0] !== 1) {
+          this.fastBezier = false;
+          break;
+        }
+      }
+    }
     this.knots = knots;
     this.buffer = [];
     this.controlPoints = controlPoints;
@@ -729,13 +356,68 @@
     if(degree + 1 >= knots.length)throw new Error();
   };
 /** @private */
-  H3DU.BSplineCurve._getFactors = function(kn, t, order, numPoints, buffer) {
-    var c = 1;
+  H3DU.BSplineCurve._nfunc = function(i, d, u, kn) {
+    if(d === 0) {
+      return kn[i] <= u && u < kn[i + 1] ? 1 : 0;
+    }
+    if(kn[i] > u)return 0;
+    if(kn[i] === kn[i + d] && kn[i + d + 1] === kn[i + 1])return 0;
+    if(kn[i + d + 1] < u)return 0;
+    var v1 = kn[i] === kn[i + d] ? 0 : H3DU.BSplineCurve._nfunc(i, d - 1, u, kn);
+    var v2 = kn[i + d + 1] === kn[i + 1] ? 0 : H3DU.BSplineCurve._nfunc(i + 1, d - 1, u, kn);
+    if(v1 + v2 === 0) {
+      return 0;
+    }
+    var ret = 0;
+    if(v1 !== 0) {
+      var den2 = kn[i + d] - kn[i];
+      ret += (u - kn[i]) * v1 * (den2 === 0 ? 1 : 1.0 / den2);
+    }
+    if(v2 !== 0) {
+      den2 = kn[i + d + 1] - kn[i + 1];
+      ret += (kn[i + d + 1] - u) * v2 * (den2 === 0 ? 1 : 1.0 / den2);
+    }
+    return ret;
+  };
+/** @private */
+  H3DU.BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
+    var multStart = 1;
+    var multEnd = 1;
     for(var i = 0; i < numPoints; i++) {
       buffer[i] = 0;
     }
-    if(t === kn[kn.length - 1]) {
+    for(i = 1; i < kn.length; i++) {
+      if(kn[i] === kn[0]) {
+        multStart += 1;
+      } else {
+        break;
+      }
+    }
+    for(i = kn.length - 2; i >= 0; i--) {
+      if(kn[i] === kn[kn.length - 1]) {
+        multEnd += 1;
+      } else {
+        break;
+      }
+    }
+    if(t >= kn[kn.length - 1 - degree] &&
+        kn[kn.length - 1 - degree] === kn[kn.length - 1]) {
       buffer[numPoints - 1] = 1;
+      return;
+    }
+    if(multStart !== degree + 1 || multEnd !== degree + 1) {
+      // Not a clamped curve
+      for(i = 0; i < numPoints; i++) {
+        buffer[i] = H3DU.BSplineCurve._nfunc(i, degree, t, kn);
+      }
+      return;
+    }
+    if(t <= kn[degree]) {
+      buffer[0] = 1;
+
+    } else if(t >= kn[kn.length - 1 - degree]) {
+      buffer[numPoints - 1] = 1;
+
     } else {
       var k = -1;
       for(i = 0; i <= kn.length; i++) {
@@ -745,31 +427,19 @@
         }
       }
       if(k < 0)return;
-      var tmp = [];
-      c = k - 1;
-      tmp[k] = 1;
-      for(var kk = 2; kk <= order; kk++, c--) {
-        for(i = c; i <= k; i++) {
-          var ret = 0,
-            divisor = 0;
-          var prv = i <= c ? 0 : tmp[i];
-          var nxt = i >= k ? 0 : tmp[i + 1];
-          if(prv !== 0) {
-            divisor = kn[i + kk - 1] - kn[i];
-            ret += divisor === 0 ? 0 : prv * (t - kn[i]) / divisor;
-          }
-          if(nxt !== 0) {
-            var ikk = kn[i + kk];
-            divisor = ikk - kn[i + 1];
-            ret += divisor === 0 ? 0 : nxt * (ikk - t) / divisor;
-          }
-          buffer[i] = ret;
+      var numAfter = kn[k + 1] - t;
+      var knotStart = kn[k];
+      var numBefore = t - knotStart;
+      buffer[k] = 1;
+      for(var d = 1; d <= degree; d++) {
+        var den = kn[k + 1] - kn[k - d + 1];
+        buffer[k - d] = buffer[k - d + 1] * numAfter / den;
+        for(i = k - d + 1; i < k; i++) {
+          var kni = kn[i];
+          buffer[i] *= (t - kni) / (kn[i + d] - kni);
+          buffer[i] += buffer[i + 1] * (kn[i + d + 1] - t) / (kn[i + d + 1] - kn[i + 1]);
         }
-        if(kk < order) {
-          for(i = c; i <= k; i++) {
-            tmp[i] = buffer[i];
-          }
-        }
+        buffer[k] *= numBefore / (kn[k + d] - knotStart);
       }
     }
   };
@@ -792,26 +462,233 @@
  * @memberof! H3DU.BSplineCurve#
  */
   H3DU.BSplineCurve.prototype.evaluate = function(u) {
-    var numPoints = this.controlPoints.length;
-    var order = this.knots.length - numPoints;
-    var elementsPerPoint = this.controlPoints[0].length;
-    H3DU.BSplineCurve._getFactors(this.knots, u, order, numPoints,
-     this.buffer);
     var ret = [];
-    var i, j;
-    ret = [];
-    for(i = 0; i < elementsPerPoint; i++) {
-      ret[i] = 0;
-    }
-    for(j = 0; j < numPoints; j++) {
-      for(i = 0; i < elementsPerPoint; i++) {
-        ret[i] += this.controlPoints[j][i] * this.buffer[j];
+    if(this.fastBezier) {
+      var cp = this.controlPoints;
+      switch(cp.length) {
+      case 1:
+        ret = cp[0].slice(0, cp[0].length);
+        break;
+      case 2:
+        ret = linear(cp, cp[0].length, u);
+        break;
+      case 3:
+        ret = bezierQuadratic(cp, cp[0].length, u);
+        break;
+      case 4:
+        ret = bezierCubic(cp, cp[0].length, u);
+        break;
+      default:
+        break;
+      }
+    } else {
+      var numPoints = this.controlPoints.length;
+      var degree = this.knots.length - numPoints - 1;
+      var elementsPerPoint = this.controlPoints[0].length;
+      ret = null;
+      if(u <= this.knots[degree]) {
+        if(this.knots[degree] === this.knots[0]) {
+          ret = this.controlPoints[0].slice(0, elementsPerPoint);
+        } else {
+          u = this.knots[degree];
+        }
+      } else if(u >= this.knots[this.knots.length - 1 - degree]) {
+        if(this.knots[this.knots.length - 1 - degree] === this.knots[this.knots.length - 1]) {
+          ret = this.controlPoints[numPoints - 1].slice(0, elementsPerPoint);
+        } else {
+          u = this.knots[this.knots.length - 1 - degree];
+        }
+      }
+
+      if(typeof ret === "undefined" || ret === null) {
+        var mult = 0;
+        var index = -1;
+        var i;
+        for(i = 0; i < this.knots.length; i++) {
+          var curKnot = this.knots[i];
+          var isThisKnot = u === curKnot;
+          if(isThisKnot)mult++;
+          if(curKnot < this.knots[i + 1]) {
+            if(isThisKnot) {
+              index = i;
+              break;
+            } else if(curKnot < u && u < this.knots[i + 1]) {
+              index = i;
+              break;
+            }
+          }
+        }
+        if(index < 0)throw new Error();
+        if(mult > degree)throw new Error();
+        if(mult === degree) {
+          ret = this.controlPoints[index - degree].slice(0, elementsPerPoint);
+        } else {
+          var h = degree - mult;
+          var buffer = [];
+          for(i = index - degree; i <= index - mult; i++) {
+            buffer.push(this.controlPoints[i]);
+          }
+          for(var r = 1; r <= h; r++) {
+            var lastPt = buffer[r - 1];
+            for(i = r; i < buffer.length; i++) {
+              var kindex = index - degree + i;
+              var ki = this.knots[kindex];
+              var a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
+              var thisPt = buffer[i];
+              var newPt = [];
+            // console.log("p"+[kindex,r]+"="+(1-a)+"*p"+[kindex-1,r-1]+"+"+(a)+"*p"+[kindex,r-1])
+              for(var j = 0; j < elementsPerPoint; j++) {
+                newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
+              }
+              buffer[i] = newPt;
+              lastPt = thisPt;
+            }
+          }
+          ret = buffer[buffer.length - 1].slice(0, elementsPerPoint);
+        }
       }
     }
     if((this.bits & H3DU.BSplineCurve.DIVIDE_BIT) !== 0) {
       ret = H3DU.BSplineCurve._fromHomogen(ret);
     }
     return ret;
+  };
+/** @private */
+  H3DU.BSplineCurve._splitKnots = function(knots, degree, u) {
+    var lastFront = -1;
+    var firstBack = -1;
+    var front = [];
+    var back = [];
+    for(var i = 0; i < knots.length; i++) {
+      if(knots[i] > u) {
+        firstBack = i;
+        break;
+      } else if(knots[i] < u) {
+        lastFront = i;
+      }
+    }
+    if(lastFront < 0 || firstBack < 0)throw new Error();
+    for(i = 0; i <= lastFront; i++) {
+      front.push(knots[i]);
+    }
+    for(i = 0; i < degree + 1; i++) {
+      front.push(u);
+      back.push(u);
+    }
+    for(i = firstBack; i < knots.length; i++) {
+      back.push(knots[i]);
+    }
+    return [front, back];
+  };
+/**
+ * Splits this B-Spline curve into two at the given point.
+ * @param {Number} u Point on the curve where this curve will be split.
+ * @returns {Array<H3DU.BSplineCurve>} An array containing two B-Spline curves: the
+ * first is the part of the curve before the given point, and the second
+ * is the part of the curve after the given point. The first element
+ * will be null if <code>u</code> is at or before the start of the curve.
+ * The second element
+ * will be null if <code>u</code> is at or after the end of the curve.
+ * @memberof! H3DU.BSplineCurve#
+ */
+  H3DU.BSplineCurve.prototype.split = function(u) {
+    var numPoints = this.controlPoints.length;
+    var degree = this.knots.length - numPoints - 1;
+    var elementsPerPoint = this.controlPoints[0].length;
+    var i;
+    if(u <= this.knots[degree]) {
+      return [null, this];
+    } else if(u >= this.knots[this.knots.length - 1 - degree]) {
+      return [this, null];
+    }
+    var mult = 0;
+    var index = -1;
+    for(i = 0; i < this.knots.length; i++) {
+      var curKnot = this.knots[i];
+      var isThisKnot = u === curKnot;
+      if(isThisKnot)mult++;
+      if(curKnot < this.knots[i + 1]) {
+        if(isThisKnot) {
+          index = i;
+          break;
+        } else if(curKnot < u && u < this.knots[i + 1]) {
+          index = i;
+          break;
+        }
+      }
+    }
+    if(index < 0)throw new Error();
+    if(mult > degree)throw new Error();
+    var newKnots = H3DU.BSplineCurve._splitKnots(this.knots, degree, u);
+    var front = [];
+    var backPoints = [];
+    if(mult === degree) {
+      front = this.controlPoints.slice(0, index - degree + 1);
+      backPoints = this.controlPoints.slice(index - degree, this.controlPoints.length);
+    } else {
+      var h = degree - mult;
+      var buffer = [];
+      for(i = index - degree; i <= index - mult; i++) {
+        buffer.push(this.controlPoints[i]);
+      }
+  // Start array of front points
+      front = [];
+      for(i = 0; i <= index - degree; i++) {
+        front.push(this.controlPoints[i]);
+      }
+      var back = [];
+      for(var r = 1; r <= h; r++) {
+        var lastPt = buffer[r - 1];
+        for(i = r; i < buffer.length; i++) {
+          var kindex = index - degree + i;
+          var ki = this.knots[kindex];
+          var a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
+          var thisPt = buffer[i];
+          var newPt = [];
+          for(var j = 0; j < elementsPerPoint; j++) {
+            newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
+          }
+          buffer[i] = newPt;
+          lastPt = thisPt;
+          if(i === r) {
+            front.push(newPt);
+          } else if(i + 1 === buffer.length) {
+            back.push(newPt);
+          }
+        }
+      }
+  // Generate array of back points
+      backPoints.push(front[front.length - 1]);
+      for(i = back.length - 1; i >= 0; i--) {
+        backPoints.push(back[i]);
+      }
+      for(i = index - mult; i < numPoints; i++) {
+        backPoints.push(this.controlPoints[i]);
+      }
+    }
+    var curve1 = new H3DU.BSplineCurve(front, newKnots[0], this.bits);
+    var curve2 = new H3DU.BSplineCurve(backPoints, newKnots[1], this.bits);
+    return [curve1, curve2];
+  };
+
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.BSplineCurve#
+ */
+  H3DU.BSplineCurve.prototype.endpoints = function() {
+    var numPoints = this.controlPoints.length;
+    var degree = this.knots.length - numPoints - 1;
+    return [this.knots[degree], this.knots[this.knots.length - 1 - degree]];
+  };
+
+/**
+ * TODO: Not documented yet.
+ * @returns {Array<Array<Number>>} TODO: Not documented yet.
+ * @memberof! H3DU.SplineCurve#
+ */
+  H3DU.BSplineCurve.prototype.getPoints = function() {
+    return this.controlPoints;
   };
 
 /**
@@ -824,28 +701,48 @@
  * @memberof! H3DU.BSplineCurve#
  */
   H3DU.BSplineCurve.prototype.tangent = function(u) {
-    var numPoints = this.controlPoints.length;
-    var order = this.knots.length - numPoints;
-    var elementsPerPoint = this.controlPoints[0].length;
-    H3DU.BSplineCurve._getFactors(this.knots, u, order - 1, numPoints,
-     this.buffer);
     var ret = [];
-    var i, j;
-    var coeffs = [];
-    for(i = 0; i < numPoints; i++) {
-      coeffs[i] = 0;
-    }
-    for(j = 0; j < numPoints - 1; j++) {
-      var pix = (order - 1) * this.buffer[j + 1] / (this.knots[j + order] - this.knots[j + 1]);
-      coeffs[j + 1] += pix;
-      coeffs[j] -= pix;
-    }
-    for(i = 0; i < elementsPerPoint; i++) {
-      var value = 0;
-      for(j = 0; j < numPoints; j++) {
-        value += coeffs[j] * this.controlPoints[j][i];
+    if(this.fastBezier) {
+      var cp = this.controlPoints;
+      switch(cp.length) {
+      case 1:
+        ret = zeros(cp[0].length);
+        break;
+      case 2:
+        ret = subtract(cp[1], cp[0], cp[0].length);
+        break;
+      case 3:
+        ret = bezierQuadraticDerivative(cp, cp[0].length, u);
+        break;
+      case 4:
+        ret = bezierCubicDerivative(cp, cp[0].length, u);
+        break;
+      default:
+        break;
       }
-      ret[i] = value;
+    } else {
+      var numPoints = this.controlPoints.length;
+      var degree = this.knots.length - numPoints - 1;
+      var elementsPerPoint = this.controlPoints[0].length;
+      H3DU.BSplineCurve._getFactors(this.knots, u, degree - 1, numPoints,
+     this.buffer);
+      var i, j;
+      var coeffs = [];
+      for(i = 0; i < numPoints; i++) {
+        coeffs[i] = 0;
+      }
+      for(j = 0; j < numPoints - 1; j++) {
+        var pix = degree * this.buffer[j + 1] / (this.knots[j + degree + 1] - this.knots[j + 1]);
+        coeffs[j + 1] += pix;
+        coeffs[j] -= pix;
+      }
+      for(i = 0; i < elementsPerPoint; i++) {
+        var value = 0;
+        for(j = 0; j < numPoints; j++) {
+          value += coeffs[j] * this.controlPoints[j][i];
+        }
+        ret[i] = value;
+      }
     }
     if((this.bits & H3DU.BSplineCurve.DIVIDE_BIT) !== 0) {
       ret = H3DU.BSplineCurve._fromHomogen(ret);
@@ -922,14 +819,14 @@
     }
     if(cplen < cplenNeeded)throw new Error();
     if(!knotsU || !knotsV)throw new Error();
-    this.orderU = knotsU.length - ucplen;
-    this.orderV = knotsV.length - vcplen;
+    this.degreeU = knotsU.length - ucplen - 1;
+    this.degreeV = knotsV.length - vcplen - 1;
     this.vcplen = vcplen;
     this.ucplen = ucplen;
-    if(this.orderU < 2 || this.orderU > ucplen)throw new Error();
-    if(this.orderV < 2 || this.orderV > vcplen)throw new Error();
-    H3DU.BSplineCurve._checkKnots(knotsU, this.orderU - 1);
-    H3DU.BSplineCurve._checkKnots(knotsV, this.orderV - 1);
+    if(this.degreeU < 1 || this.degreeU + 1 > ucplen)throw new Error();
+    if(this.degreeV < 1 || this.degreeV + 1 > vcplen)throw new Error();
+    H3DU.BSplineCurve._checkKnots(knotsU, this.degreeU);
+    H3DU.BSplineCurve._checkKnots(knotsV, this.degreeV);
     this.knotsU = knotsU;
     this.knotsV = knotsV;
     this.bufferU = [];
@@ -973,6 +870,7 @@
     return new H3DU.BSplineCurve(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints.length, degree), bits);
   };
+
 /**
  * Creates a B-spline surface with uniform knots, except that
  * the surface's edges lie on the edges of the control point array.
@@ -1095,9 +993,9 @@
     var bu = this.bufferU;
     var bv = this.bufferV;
     var tt, uu, i, value;
-    H3DU.BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
+    H3DU.BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
      this.bufferU);
-    H3DU.BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
+    H3DU.BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
      this.bufferV);
     var output = [];
     for(i = 0; i < elementsPerPoint; i++) {
@@ -1116,7 +1014,7 @@
   };
 /**
  * Finds the [tangent vector]{@link H3DU.SurfaceEval#vertex} at the
-  given point on the surface.
+ * given point on the surface.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array giving the tangent vector.
@@ -1128,9 +1026,9 @@
     var elementsPerPoint = this.controlPoints[0][0].length;
     var bv = this.bufferV;
     var tt, uu, i, value;
-    H3DU.BSplineCurve._getFactors(this.knotsU, u, this.orderU - 1, this.ucplen,
+    H3DU.BSplineCurve._getFactors(this.knotsU, u, this.degreeU - 1, this.ucplen,
      this.bufferU);
-    H3DU.BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
+    H3DU.BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
      this.bufferV);
     var ret = [];
     var coeffs = [];
@@ -1138,7 +1036,7 @@
       coeffs[i] = 0;
     }
     for(var j = 0; j < this.ucplen - 1; j++) {
-      var pix = (this.orderU - 1) * this.bufferU[j + 1] / (this.knotsU[j + this.orderU] - this.knotsU[j + 1]);
+      var pix = this.degreeU * this.bufferU[j + 1] / (this.knotsU[j + this.degreeU + 1] - this.knotsU[j + 1]);
       coeffs[j + 1] += pix;
       coeffs[j] -= pix;
     }
@@ -1158,7 +1056,7 @@
   };
 /**
  * Finds the [bitangent vector]{@link H3DU.SurfaceEval#vertex} at the
-  given point on the surface.
+ * given point on the surface.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
  * @returns {Array<Number>} An array giving the bitangent vector.
@@ -1169,11 +1067,10 @@
   H3DU.BSplineSurface.prototype.bitangent = function(u, v) {
     var elementsPerPoint = this.controlPoints[0][0].length;
     var bu = this.bufferU;
-
     var tt, uu, i, value;
-    H3DU.BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
+    H3DU.BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
      this.bufferU);
-    H3DU.BSplineCurve._getFactors(this.knotsV, v, this.orderV - 1, this.vcplen,
+    H3DU.BSplineCurve._getFactors(this.knotsV, v, this.degreeV - 1, this.vcplen,
      this.bufferV);
     var ret = [];
     var coeffs = [];
@@ -1181,7 +1078,7 @@
       coeffs[i] = 0;
     }
     for(var j = 0; j < this.vcplen - 1; j++) {
-      var pix = (this.orderV - 1) * this.bufferV[j + 1] / (this.knotsV[j + this.orderV] - this.knotsV[j + 1]);
+      var pix = this.degreeV * this.bufferV[j + 1] / (this.knotsV[j + this.degreeV + 1] - this.knotsV[j + 1]);
       coeffs[j + 1] += pix;
       coeffs[j] -= pix;
     }
@@ -1219,6 +1116,8 @@
  * <b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
  * where x(u) returns an X coordinate, y(u) a Y coordinate,
  * and z(u) returns a Z coordinate.<p>
+ * This class also contains methods for calculating several useful
+ * properties of a parametric curve, such as its tangent vector.
  * For more information, see the {@tutorial surfaces} tutorial.
  * @class
  * @alias H3DU.CurveEval
@@ -1585,7 +1484,7 @@
 /**
  * Finds an approximate [gradient vector]{@link H3DU.SurfaceEval#vertex} for
  * the given surface evaluator
- * at the given U and V coordinates. This method calls the evaluator's <code>gradient</code>
+ * at the given U and V coordinates.<p>This method calls the evaluator's <code>gradient</code>
  * method if it implements it; otherwise, calls the evaluator's <code>bitangent</code> and <code>tangent</code> methods if it implements them; otherwise, does a numerical differentiation using the <code>evaluate</code> method.
  * <p>To generate normals for a function for a regular surface (usually
  * a continuous, unbroken surface such as a sphere, disk, or open
@@ -1602,7 +1501,9 @@
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} A gradient vector . */
+ * @returns {Array<Number>} A gradient vector.
+ * @memberof! H3DU.SurfaceEval
+ */
   H3DU.SurfaceEval.findGradient = function(e, u, v) {
     if(typeof e.gradient !== "undefined" && e.gradient !== null) {
       return e.gradient(u, v);
@@ -1633,7 +1534,9 @@
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} A tangent vector . */
+ * @returns {Array<Number>} A tangent vector .
+ * @memberof! H3DU.SurfaceEval
+ */
   H3DU.SurfaceEval.findTangent = function(e, u, v) {
     return typeof e.tangent !== "undefined" && e.tangent !== null ? e.tangent(u, v) :
      H3DU.SurfaceEval._tangentHelper(e, u, v, e.evaluate(u, v));
@@ -1646,7 +1549,9 @@
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} A bitangent vector . */
+ * @returns {Array<Number>} A bitangent vector .
+ * @memberof! H3DU.SurfaceEval
+ */
   H3DU.SurfaceEval.findBitangent = function(e, u, v) {
     return typeof e.bitangent !== "undefined" && e.bitangent !== null ? e.bitangent(u, v) :
      H3DU.SurfaceEval._bitangentHelper(e, u, v, e.evaluate(u, v));
@@ -1658,7 +1563,9 @@
  * with respect to the U axis using the <code>evaluate</code> method.
  * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
  * @param {Number} u U coordinate of the curve to evaluate.
- * @returns {Array<Number>} A tangent vector. */
+ * @returns {Array<Number>} A tangent vector.
+ * @memberof! H3DU.CurveEval
+ */
   H3DU.CurveEval.findTangent = function(e, u) {
     if(typeof e.tangent !== "undefined" && e.tangent !== null) {
       return e.tangent(u);
@@ -1679,7 +1586,9 @@
  * This method calls the evaluator's <code>endpoints</code>
  * method if it implements it; otherwise, returns <code>[0, 1]</code>
  * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
- * @returns {Array<Number>} A two-element array giving the curve's end points. */
+ * @returns {Array<Number>} A two-element array giving the curve's end points.
+ * @memberof! H3DU.CurveEval
+ */
   H3DU.CurveEval.findEndPoints = function(e) {
     if(typeof e !== "undefined" && e !== null && (typeof e.endpoints !== "undefined" && e.endpoints !== null))return e.endpoints();
     return [0, 1];
@@ -1689,7 +1598,9 @@
  * This method calls the evaluator's <code>endpoints</code>
  * method if it implements it; otherwise, returns <code>[0, 1]</code>
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @returns {Array<Number>} A four-element array giving the surface's end points. */
+ * @returns {Array<Number>} A four-element array giving the surface's end points.
+ * @memberof! H3DU.SurfaceEval
+ */
   H3DU.SurfaceEval.findEndPoints = function(e) {
     if(typeof e !== "undefined" && e !== null && (typeof e.endpoints !== "undefined" && e.endpoints !== null))return e.endpoints();
     return [0, 1, 0, 1];

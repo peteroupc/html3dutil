@@ -636,8 +636,8 @@ H3DU.ShaderInfo.getDefaultFragment = function() {
     // metallic workflow is used)
     " vec3 refl=mix(vec3(0.04),color,metal);",
     " vec3 fr=fresnelschlick(dothl,refl);",
-    " vec3 refr=mix((vec3(1.0)-fr),vec3(0.0),metal);",
-    " return reflectancespec(refr*color, refl, lightDir, viewDir, n, rough);",
+    " vec3 refr=mix((vec3(1.0)-fr)*color,vec3(0.0),metal);",
+    " return reflectancespec(refr, refl, lightDir, viewDir, n, rough);",
     "}",
     "#endif",
     "#endif",
