@@ -17,8 +17,6 @@ library.
 
 * [.loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.
-* [GraphicsPath.regularPolygon](#H3DU.GraphicsPath.regularPolygon)<br>TODO: Not documented yet.
-* [GraphicsPath.regularStar](#H3DU.GraphicsPath.regularStar)<br>TODO: Not documented yet.
 * [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.
 * [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
@@ -67,43 +65,6 @@ if the glTF data describes an animation; this method updates the state of the
 (type Number), is a time stamp in milliseconds.
 </ul>If an error occurs in loading the glTF data or any of the buffers and shaders
 it uses, the promise will be rejected. (Type: <a href="Promise.md">Promise</a>.&lt;Object>)
-
- <a name='H3DU.GraphicsPath.regularPolygon'></a>
-### (static) H3DU.GraphicsPath.regularPolygon(path, cx, cy, sides, radius, phaseInDegrees)
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `path` (Type: *)
-* `cx` (Type: *)
-* `cy` (Type: *)
-* `sides` (Type: *)
-* `radius` (Type: *)
-* `phaseInDegrees` (Type: *)
-
-#### Return Value
-
-Return value. (Type: *)
-
- <a name='H3DU.GraphicsPath.regularStar'></a>
-### (static) H3DU.GraphicsPath.regularStar(path, cx, cy, points, radiusOut, radiusIn, phaseInDegrees)
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `path` (Type: *)
-* `cx` (Type: *)
-* `cy` (Type: *)
-* `points` (Type: *)
-* `radiusOut` (Type: *)
-* `radiusIn` (Type: *)
-* `phaseInDegrees` (Type: *)
-
-#### Return Value
-
-Return value. (Type: *)
 
  <a name='H3DU.createCanvasElement'></a>
 ### (static) H3DU.createCanvasElement(parent, width, height)

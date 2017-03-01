@@ -86,6 +86,8 @@ and dimensions.
 and dimensions.
 * [line](#H3DU.GraphicsPath_H3DU.GraphicsPath_line)<br>Adds a line segment to this path.
 * [polygon](#H3DU.GraphicsPath_H3DU.GraphicsPath_polygon)<br>Adds path segments to this path that form a polygon or a connected line segment strand.
+* [regularPolygon](#H3DU.GraphicsPath_H3DU.GraphicsPath_regularPolygon)<br>TODO: Not documented yet.
+* [regularStar](#H3DU.GraphicsPath_H3DU.GraphicsPath_regularStar)<br>TODO: Not documented yet.
 * [roundRect](#H3DU.GraphicsPath_H3DU.GraphicsPath_roundRect)<br>Adds path segments to this path that form an axis-aligned rounded rectangle.
 * [fromString](#H3DU.GraphicsPath.fromString)<br>Creates a graphics path from a string whose format follows
 the SVG specification.
@@ -707,6 +709,12 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 
 TODO: Not documented yet.
 
+To use this method, you must include the script "extras/pathshapes.js";
+this is in addition to "extras/path.js". Example:
+
+    <script type="text/javascript" src="extras/path.js"></script>
+    <script type="text/javascript" src="extras/pathshapes.js"></script>
+
 #### Parameters
 
 * `x0` (Type: *)
@@ -823,6 +831,48 @@ this is in addition to "extras/path.js". Example:
 
 This object. If "pointCoords" is empty, no path segments will be appended.
 Throws an error if "pointCoords" has an odd length. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_regularPolygon'></a>
+### H3DU.GraphicsPath#regularPolygon(cx, cy, sides, radius, phaseInDegrees)
+
+TODO: Not documented yet.
+
+To use this method, you must include the script "extras/pathshapes.js";
+this is in addition to "extras/path.js". Example:
+
+    <script type="text/javascript" src="extras/path.js"></script>
+    <script type="text/javascript" src="extras/pathshapes.js"></script>
+
+#### Parameters
+
+* `cx` (Type: *)
+* `cy` (Type: *)
+* `sides` (Type: *)
+* `radius` (Type: *)
+* `phaseInDegrees` (Type: *)
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+ <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_regularStar'></a>
+### H3DU.GraphicsPath#regularStar(path, cx, cy, points, radiusOut, radiusIn, phaseInDegrees)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `path` (Type: *)
+* `cx` (Type: *)
+* `cy` (Type: *)
+* `points` (Type: *)
+* `radiusOut` (Type: *)
+* `radiusIn` (Type: *)
+* `phaseInDegrees` (Type: *)
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
  <a name='H3DU.GraphicsPath_H3DU.GraphicsPath_roundRect'></a>
 ### H3DU.GraphicsPath#roundRect(x, y, w, h, arccx, arccy)

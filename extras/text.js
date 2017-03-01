@@ -308,7 +308,6 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
       "diffuse":color,
       "shader": shader
     });
-    console.log(material);
     sh.setMaterial(material);
     group.addShape(sh);
   }
@@ -876,9 +875,7 @@ H3DU.TextFont.load = function(fontFileName) {
    function(data) {
      var ret = H3DU.TextFont._loadBinaryFontInner(data);
      return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
-   }, function(e) {
-      console.log(e);
-    });
+   });
   } else if(/\.fnt$/i.exec(fontFileName)) {
     return H3DU.loadFileFromUrl(fontFileName, "arraybuffer").then(
    function(data) {

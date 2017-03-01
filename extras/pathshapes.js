@@ -254,6 +254,10 @@ H3DU.GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, 
 };
 /**
  * TODO: Not documented yet.
+ * <p>To use this method, you must include the script "extras/pathshapes.js";
+ * this is in addition to "extras/path.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
  * @param {*} x0
  * @param {*} y0
  * @param {*} x1
@@ -302,16 +306,21 @@ H3DU.GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLeng
 };
 /**
  * TODO: Not documented yet.
- * @param {*} path
+ * <p>To use this method, you must include the script "extras/pathshapes.js";
+ * this is in addition to "extras/path.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
  * @param {*} cx
  * @param {*} cy
  * @param {*} sides
  * @param {*} radius
  * @param {*} phaseInDegrees
- * @returns {*} Return value. */
-H3DU.GraphicsPath.regularPolygon = function(path, cx, cy, sides, radius, phaseInDegrees) {
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
+ */
+H3DU.GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInDegrees) {
   "use strict";
-  if(sides <= 0)return path;
+  if(sides <= 0)return this;
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
@@ -325,16 +334,16 @@ H3DU.GraphicsPath.regularPolygon = function(path, cx, cy, sides, radius, phaseIn
     var x = cx + c * radius;
     var y = cy + s * radius;
     if(i === 0) {
-      path.moveTo(x, y);
+      this.moveTo(x, y);
     } else {
-      path.lineTo(x, y);
+      this.lineTo(x, y);
     }
     var ts = cosStep * s + sinStep * c;
     var tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
-  return path.closePath();
+  return this.closePath();
 };
 /**
  * TODO: Not documented yet.
@@ -345,10 +354,12 @@ H3DU.GraphicsPath.regularPolygon = function(path, cx, cy, sides, radius, phaseIn
  * @param {*} radiusOut
  * @param {*} radiusIn
  * @param {*} phaseInDegrees
- * @returns {*} Return value. */
-H3DU.GraphicsPath.regularStar = function(path, cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
+ */
+H3DU.GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
   "use strict";
-  if(points <= 0)return path;
+  if(points <= 0)return this;
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
@@ -364,14 +375,14 @@ H3DU.GraphicsPath.regularStar = function(path, cx, cy, points, radiusOut, radius
     var x = cx + c * radius;
     var y = cy + s * radius;
     if(i === 0) {
-      path.moveTo(x, y);
+      this.moveTo(x, y);
     } else {
-      path.lineTo(x, y);
+      this.lineTo(x, y);
     }
     var ts = cosStep * s + sinStep * c;
     var tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
-  return path.closePath();
+  return this.closePath();
 };
