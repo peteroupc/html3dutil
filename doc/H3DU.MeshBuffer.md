@@ -14,21 +14,21 @@ A geometric mesh in the form of buffer objects.
 
 ### Methods
 
-* [getBounds](#H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds)<br>Finds the tightest
+* [getBounds](#H3DU.MeshBuffer_getBounds)<br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
-* [getPositions](#H3DU.MeshBuffer_H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
+* [getPositions](#H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive
-* [primitiveCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+* [primitiveCount](#H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
-* [primitiveType](#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType)<br>Gets the type of primitive stored in this mesh buffer.
-* [setAttribute](#H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
+* [primitiveType](#H3DU.MeshBuffer_primitiveType)<br>Gets the type of primitive stored in this mesh buffer.
+* [setAttribute](#H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
-* [setIndices](#H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices)<br>Sets the array of vertex indices used by this mesh buffer.
-* [setPrimitiveType](#H3DU.MeshBuffer_H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
-* [vertexCount](#H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
+* [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the array of vertex indices used by this mesh buffer.
+* [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
+* [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds'></a>
+ <a name='H3DU.MeshBuffer_getBounds'></a>
 ### H3DU.MeshBuffer#getBounds()
 
 Finds the tightest
@@ -46,7 +46,7 @@ and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
 [Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;Number>)
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_getPositions'></a>
+ <a name='H3DU.MeshBuffer_getPositions'></a>
 ### H3DU.MeshBuffer#getPositions()
 
 Gets an array of vertex positions held by this mesh buffer,
@@ -60,7 +60,7 @@ If this mesh holds triangles, each primitive will contain three
 vertices; if lines, two; and if points, one. Each vertex is a 3-element
 array containing that vertex's X, Y, and Z coordinates, in that order. (Type: Array.&lt;Array.&lt;Number>>)
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount'></a>
+ <a name='H3DU.MeshBuffer_primitiveCount'></a>
 ### H3DU.MeshBuffer#primitiveCount()
 
 Gets the number of primitives (triangles, lines,
@@ -70,7 +70,7 @@ and points) composed by all shapes in this mesh.
 
 Return value. (Type: Number)
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType'></a>
+ <a name='H3DU.MeshBuffer_primitiveType'></a>
 ### H3DU.MeshBuffer#primitiveType()
 
 Gets the type of primitive stored in this mesh buffer.
@@ -80,7 +80,7 @@ Gets the type of primitive stored in this mesh buffer.
 Either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
 <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: Number)
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute'></a>
+ <a name='H3DU.MeshBuffer_setAttribute'></a>
 ### H3DU.MeshBuffer#setAttribute(semantic, semanticIndex, buffer, startIndex, countPerVertex, stride)
 
 Adds information about a buffer attribute to this
@@ -109,7 +109,7 @@ stored in a vertex buffer.
 This object.Throws an error if the given
 semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_setIndices'></a>
+ <a name='H3DU.MeshBuffer_setIndices'></a>
 ### H3DU.MeshBuffer#setIndices(indices, byteSize)
 
 Sets the array of vertex indices used by this mesh buffer.
@@ -125,7 +125,7 @@ Sets the array of vertex indices used by this mesh buffer.
 
 This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_setPrimitiveType'></a>
+ <a name='H3DU.MeshBuffer_setPrimitiveType'></a>
 ### H3DU.MeshBuffer#setPrimitiveType(primType)
 
 Sets the type of graphics primitives stored in this mesh buffer.
@@ -139,7 +139,7 @@ Sets the type of graphics primitives stored in this mesh buffer.
 
 This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
- <a name='H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount'></a>
+ <a name='H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()
 
 Gets the number of vertices in this mesh buffer

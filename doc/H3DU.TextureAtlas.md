@@ -29,14 +29,14 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [.load](#H3DU.TextureAtlas.load)<br>Loads a texture atlas definition from a file.
-* [.loadWithTextures](#H3DU.TextureAtlas.loadWithTextures)<br>Loads a texture atlas definition from a file along with the textures
+* [load](#H3DU.TextureAtlas.load)<br>Loads a texture atlas definition from a file.
+* [loadTextures](#H3DU.TextureAtlas_loadTextures)<br>Loads the texture files used by this texture atlas.
+* [loadWithTextures](#H3DU.TextureAtlas.loadWithTextures)<br>Loads a texture atlas definition from a file along with the textures
 it uses.
-* [loadTextures](#H3DU.TextureAtlas_H3DU.TextureAtlas_loadTextures)<br>Loads the texture files used by this texture atlas.
-* [makeSprites](#H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites)<br>Makes a shape group used to display one or more sprites.
+* [makeSprites](#H3DU.TextureAtlas_makeSprites)<br>Makes a shape group used to display one or more sprites.
 
  <a name='H3DU.TextureAtlas.load'></a>
-### H3DU.TextureAtlas.load(atlasFileName)
+### (static) H3DU.TextureAtlas.load(atlasFileName)
 
 Loads a texture atlas definition from a file.
 Note that this method only loads the texture atlas data and not the bitmaps
@@ -53,8 +53,25 @@ A promise that is resolved
 when the texture atlas data is loaded successfully (the result will be
 an H3DU.TextureAtlas object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>>)
 
+ <a name='H3DU.TextureAtlas_loadTextures'></a>
+### H3DU.TextureAtlas#loadTextures(textureLoader)
+
+Loads the texture files used by this texture atlas.
+
+#### Parameters
+
+* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
+    Texture loader object to use when loading the textures.
+
+#### Return Value
+
+A promise as described in
+<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
+resolves, each item in the resulting array will be a loaded
+<a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>>)
+
  <a name='H3DU.TextureAtlas.loadWithTextures'></a>
-### H3DU.TextureAtlas.loadWithTextures(atlasFileName, textureLoader)
+### (static) H3DU.TextureAtlas.loadWithTextures(atlasFileName, textureLoader)
 
 Loads a texture atlas definition from a file along with the textures
 it uses.
@@ -79,24 +96,7 @@ following keys:<ul>
 in the order in which they are declared in the font data file.
 </ul> (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.TextureAtlas_H3DU.TextureAtlas_loadTextures'></a>
-### H3DU.TextureAtlas#loadTextures(textureLoader)
-
-Loads the texture files used by this texture atlas.
-
-#### Parameters
-
-* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
-    Texture loader object to use when loading the textures.
-
-#### Return Value
-
-A promise as described in
-<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
-resolves, each item in the resulting array will be a loaded
-<a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>>)
-
- <a name='H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites'></a>
+ <a name='H3DU.TextureAtlas_makeSprites'></a>
 ### H3DU.TextureAtlas#makeSprites(sprites)
 
 Makes a shape group used to display one or more sprites.

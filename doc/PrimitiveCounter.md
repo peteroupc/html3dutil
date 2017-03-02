@@ -12,10 +12,10 @@ that displayed the number of primitives drawn.
 
 ### Methods
 
-* [update](#PrimitiveCounter.update)<br><b>Deprecated: Will be removed in the future.</b>
+* [update](#PrimitiveCounter_update)<br><b>Deprecated: Will be removed in the future.</b>
 
- <a name='PrimitiveCounter.update'></a>
-### (static) PrimitiveCounter.update()
+ <a name='PrimitiveCounter_update'></a>
+### PrimitiveCounter#update()
 
 <b>Deprecated: Will be removed in the future.</b>
 

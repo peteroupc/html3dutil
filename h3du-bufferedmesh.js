@@ -13,7 +13,7 @@
  * Use the {@link H3DU.MeshBuffer} class instead, which is not coupled to WebGL
  * contexts.
  * @class
- * @alias H3DU.BufferedMesh
+ * @memberof H3DU
  * @param {H3DU.Mesh|H3DU.MeshBuffer} mesh
  * A geometric mesh object. Cannot be null.
  * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context A WebGL context to
@@ -33,7 +33,7 @@ H3DU.BufferedMesh = function(mesh, context) {
   }
   this._initialize(mesh, context);
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._getArrayObjectExt = function(context) {
   "use strict";
   if(typeof this.arrayObjectExt === "undefined" || this.arrayObjectExt === null) {
@@ -46,7 +46,7 @@ H3DU.BufferedMesh.prototype._getArrayObjectExt = function(context) {
     return context.getExtension("OES_vertex_array_object");
   }
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._createVertexArray = function(context) {
   "use strict";
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
@@ -58,7 +58,7 @@ H3DU.BufferedMesh.prototype._createVertexArray = function(context) {
   }
   return null;
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._deleteVertexArray = function(context, va) {
   "use strict";
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
@@ -71,7 +71,7 @@ H3DU.BufferedMesh.prototype._deleteVertexArray = function(context, va) {
     }
   }
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._bindVertexArray = function(context, va) {
   "use strict";
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
@@ -84,7 +84,7 @@ H3DU.BufferedMesh.prototype._bindVertexArray = function(context, va) {
     }
   }
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   "use strict";
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
@@ -128,16 +128,16 @@ H3DU.BufferedMesh.prototype._initialize = function(mesh, context) {
   this._attribLocations = [];
   this._attribNames = [];
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._toMeshBuffer = function() {
   "use strict";
   return this.smb;
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._getVaoExtension = function() {
   "use strict";
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._getBounds = function() {
   "use strict";
   return this._bounds;
@@ -146,13 +146,13 @@ H3DU.BufferedMesh.prototype._getBounds = function() {
  * Returns the WebGL context associated with this object.
  * @deprecated
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
- * @memberof! H3DU.BufferedMesh#
+ * @instance
  */
 H3DU.BufferedMesh.prototype.getContext = function() {
   "use strict";
   return this.context;
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype.getFormat = function() {
   "use strict";
   return this.smb.format;
@@ -160,7 +160,7 @@ H3DU.BufferedMesh.prototype.getFormat = function() {
 
 /**
  * Deletes the vertex and index buffers associated with this object.
- * @memberof! H3DU.BufferedMesh#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.BufferedMesh.prototype.dispose = function() {
@@ -186,7 +186,7 @@ H3DU.BufferedMesh.prototype.dispose = function() {
   this._attribNames = [];
 };
 
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
   "use strict";
   if(this._lastKnownProgram !== program) {
@@ -212,7 +212,7 @@ H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
   return false;
 };
 
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
   "use strict";
   var rebind = this._getAttribLocations(program, context);
@@ -249,7 +249,7 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
  * @param {H3DU.ShaderProgram} program A shader program object to get
  * the IDs from for attributes named "position", "normal",
  * "colorAttr", and "uv", and the "useColorAttr" uniform.
- * @memberof! H3DU.BufferedMesh#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.BufferedMesh.prototype.draw = function(program) {
@@ -279,7 +279,7 @@ H3DU.BufferedMesh.prototype.draw = function(program) {
 /**
  * Gets the number of vertices composed by all shapes in this mesh.
  * @returns {Number} Return value.
- * @memberof! H3DU.BufferedMesh#
+ * @instance
  */
 H3DU.BufferedMesh.prototype.vertexCount = function() {
   "use strict";
@@ -289,19 +289,19 @@ H3DU.BufferedMesh.prototype.vertexCount = function() {
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this mesh.
  * @returns {Number} Return value.
- * @memberof! H3DU.BufferedMesh#
+ * @instance
  */
 H3DU.BufferedMesh.prototype.primitiveCount = function() {
   "use strict";
   return this.smb.primitiveCount();
 };
 
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh._Map = function() {
   "use strict";
   this.map = [];
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh._Map.prototype.get = function(o) {
   "use strict";
   for(var i = 0; i < this.map.length; i++) {
@@ -309,7 +309,7 @@ H3DU.BufferedMesh._Map.prototype.get = function(o) {
   }
   return null;
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh._Map.prototype.put = function(k, v) {
   "use strict";
   for(var i = 0; i < this.map.length; i++) {
@@ -320,7 +320,7 @@ H3DU.BufferedMesh._Map.prototype.put = function(k, v) {
   }
   this.map.push([k, v]);
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh._Map.prototype.values = function() {
   "use strict";
   var ret = [];
@@ -330,12 +330,12 @@ H3DU.BufferedMesh._Map.prototype.values = function() {
   return ret;
 };
 
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh._MeshLoader = function() {
   "use strict";
   this.meshes = [];
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh._MeshLoader.prototype.draw = function(meshBuffer, prog) {
   "use strict";
   if(!(meshBuffer instanceof H3DU.MeshBuffer)) {
@@ -353,7 +353,7 @@ H3DU.BufferedMesh._MeshLoader.prototype.draw = function(meshBuffer, prog) {
   this.meshes.push([meshBuffer, context, bm]);
   bm.draw(prog);
 };
-/** @private */
+/** @ignore */
 H3DU.BufferedMesh._MeshLoader.prototype.dispose = function() {
   "use strict";
   for(var i = 0; i < this.meshes.length; i++) {

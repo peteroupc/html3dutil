@@ -16,7 +16,7 @@
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @param {Object} [params] An object described in {@link H3DU.PbrMaterial.setParams}.
  * @class
- * @alias H3DU.PbrMaterial
+ * @memberof H3DU
  */
 H3DU.PbrMaterial = function(params) {
   // LATER: Support ambient occlusion maps.
@@ -221,7 +221,6 @@ H3DU.PbrMaterial.Metallic = 1;
  * The effect will be that objects with that material will be drawn in that
  * color without shading.
  * @returns {H3DU.PbrMaterial} A new material with the given emission color.
- * @memberof! H3DU.PbrMaterial#
  */
 H3DU.PbrMaterial.fromBasic = function(color) {
   "use strict";
@@ -248,7 +247,6 @@ H3DU.PbrMaterial.fromBasic = function(color) {
  * The effect will be that objects with that material will be drawn in that
  * texture without shading.
  * @returns {H3DU.PbrMaterial} A new material with the given emission map.
- * @memberof! H3DU.PbrMaterial#
  */
 H3DU.PbrMaterial.fromBasicTexture = function(texture) {
   "use strict";
@@ -305,7 +303,7 @@ H3DU.PbrMaterial.fromBasicTexture = function(texture) {
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
  * unless otherwise noted.
  * @returns {H3DU.PbrMaterial} This object.
- * @memberof! H3DU.PbrMaterial#
+ * @instance
  */
 H3DU.PbrMaterial.prototype.setParams = function(params) {
   "use strict";
@@ -372,7 +370,7 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
  * maps and shader info, if any, won't be cloned, but rather, a reference
  * to the same object will be used.
  * @returns {H3DU.PbrMaterial} A copy of this object.
- * @memberof! H3DU.PbrMaterial#
+ * @instance
  */
 H3DU.PbrMaterial.prototype.copy = function() {
   "use strict";

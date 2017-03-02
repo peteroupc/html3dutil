@@ -5,7 +5,7 @@
  <a name='H3DU.BezierSurface'></a>
 ### H3DU.BezierSurface(cp, [u1], [u2], [v1], [v2])
 
-A surface evaluator object for a B&eacute;zier surface.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B&eacute;zier surface.
 
 A B&eacute;zier surface is defined by a series of control points, where
 the control points on each corner define the endpoints of the surface, and
@@ -27,16 +27,16 @@ necessarily cross the surface.
 
 ### Methods
 
-* [bitangent](#H3DU.BezierSurface_H3DU.BezierSurface_bitangent)<br>Finds the bitangent vector at the given point on this surface.
-* [endpoints](#H3DU.BezierSurface_H3DU.BezierSurface_endpoints)<br>TODO: Not documented yet.
-* [evaluate](#H3DU.BezierSurface_H3DU.BezierSurface_evaluate)<br>Evaluates the surface function based on a point
+* [bitangent](#H3DU.BezierSurface_bitangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector</a> at the given point on this surface.
+* [endpoints](#H3DU.BezierSurface_endpoints)<br>TODO: Not documented yet.
+* [evaluate](#H3DU.BezierSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B&eacute;zier surface.
-* [tangent](#H3DU.BezierSurface_H3DU.BezierSurface_tangent)<br>Finds the tangent vector at the given point on this surface.
+* [tangent](#H3DU.BezierSurface_tangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the given point on this surface.
 
- <a name='H3DU.BezierSurface_H3DU.BezierSurface_bitangent'></a>
+ <a name='H3DU.BezierSurface_bitangent'></a>
 ### H3DU.BezierSurface#bitangent(u, v)
 
-Finds the bitangent vector at the given point on this surface.
+Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector</a> at the given point on this surface.
 
 #### Parameters
 
@@ -50,7 +50,7 @@ Finds the bitangent vector at the given point on this surface.
 An array of the bitangent vector at the given U and V
 coordinates. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number>)
 
- <a name='H3DU.BezierSurface_H3DU.BezierSurface_endpoints'></a>
+ <a name='H3DU.BezierSurface_endpoints'></a>
 ### H3DU.BezierSurface#endpoints()
 
 TODO: Not documented yet.
@@ -59,7 +59,7 @@ TODO: Not documented yet.
 
 Return value. (Type: *)
 
- <a name='H3DU.BezierSurface_H3DU.BezierSurface_evaluate'></a>
+ <a name='H3DU.BezierSurface_evaluate'></a>
 ### H3DU.BezierSurface#evaluate(u, v)
 
 Evaluates the surface function based on a point
@@ -77,10 +77,10 @@ in a B&eacute;zier surface.
 An array of the result of
 the evaluation. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number>)
 
- <a name='H3DU.BezierSurface_H3DU.BezierSurface_tangent'></a>
+ <a name='H3DU.BezierSurface_tangent'></a>
 ### H3DU.BezierSurface#tangent(u, v)
 
-Finds the tangent vector at the given point on this surface.
+Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the given point on this surface.
 
 #### Parameters
 

@@ -5,7 +5,7 @@
  <a name='H3DU.CurveTube'></a>
 ### H3DU.CurveTube(func, [thickness], [sweptCurve])
 
-A surface evaluator object for a tube extruded from a parametric curve.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -20,18 +20,18 @@ the HTML 3D Library. Example:
 #### Parameters
 
 * `func` (Type: Object)<br>
-    A curve evaluator object that describes the 3-dimensional curve to extrude a tube from.
+    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from.
 * `thickness` (Type: Number) (optional)<br>
     Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.
 * `sweptCurve` (Type: Object) (optional)<br>
-    A curve evaluator object that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the "thickness" parameter.
+    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the "thickness" parameter.
 
 ### Methods
 
-* [endpoints](#H3DU.CurveTube_H3DU.CurveTube_endpoints)<br>TODO: Not documented yet.
-* [evaluate](#H3DU.CurveTube_H3DU.CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u and V coordinates.
+* [endpoints](#H3DU.CurveTube_endpoints)<br>TODO: Not documented yet.
+* [evaluate](#H3DU.CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u and V coordinates.
 
- <a name='H3DU.CurveTube_H3DU.CurveTube_endpoints'></a>
+ <a name='H3DU.CurveTube_endpoints'></a>
 ### H3DU.CurveTube#endpoints()
 
 TODO: Not documented yet.
@@ -40,7 +40,7 @@ TODO: Not documented yet.
 
 Return value. (Type: *)
 
- <a name='H3DU.CurveTube_H3DU.CurveTube_evaluate'></a>
+ <a name='H3DU.CurveTube_evaluate'></a>
 ### H3DU.CurveTube#evaluate(u, v)
 
 Generates a point on the extruded tube from the given u and V coordinates.

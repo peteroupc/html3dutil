@@ -19,47 +19,11 @@ on its own.
 
 ### Methods
 
-* [catch](#Promise_Promise_catch)<br>Creates a promise that calls a function if
-this promise is rejected.
-* [then](#Promise_Promise_then)<br>Creates a promise that calls a function depending on whether
-this promise resolves or is rejected.
 * [all](#Promise.all)<br>Wait for all these promises to complete.
 * [race](#Promise.race)<br>Creates a promise that resolves or is rejected when one of those promises
 resolves or is rejected.
 * [reject](#Promise.reject)<br>Returns a promise that is rejected.
 * [resolve](#Promise.resolve)<br>Returns a promise that resolves.
-
- <a name='Promise_Promise_catch'></a>
-### Promise#catch(onRejected)
-
-Creates a promise that calls a function if
-this promise is rejected.
-
-#### Parameters
-
-* `onRejected` (Type: function)<br>
-    To be called once this promise gets rejected
-
-#### Return Value
-
-A promise. (Type: <a href="Promise.md">Promise</a>)
-
- <a name='Promise_Promise_then'></a>
-### Promise#then(onFulfilled, [onRejected])
-
-Creates a promise that calls a function depending on whether
-this promise resolves or is rejected.
-
-#### Parameters
-
-* `onFulfilled` (Type: function)<br>
-    To be called once this promise gets fulfilled
-* `onRejected` (Type: function) (optional)<br>
-    To be called once this promise gets rejected
-
-#### Return Value
-
-A promise. (Type: <a href="Promise.md">Promise</a>)
 
  <a name='Promise.all'></a>
 ### (static) Promise.all(all)

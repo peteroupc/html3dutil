@@ -15,14 +15,14 @@
 
 // /////////////////////
 
-/** @private */
+/** @ignore */
 H3DU._MaterialBinder = function(mshade) {
   "use strict";
   this.mshade = mshade;
 };
-/** @private */
+/** @ignore */
 H3DU._MaterialBinder._textureSizeZeroZero = [0, 0];
-/** @private */
+/** @ignore */
 H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
   "use strict";
   if(!this.mshade)return this;
@@ -87,12 +87,12 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
 
 // ////////////////////////
 
-/** @private */
+/** @ignore */
 H3DU._LoadedTexture = function(texture, textureInfo, context) {
   "use strict";
   this._init(texture, textureInfo, context);
 };
-/** @private */
+/** @ignore */
 H3DU._LoadedTexture.textureFilters = function(context, texture, textureInfo, target) {
   "use strict";
   context.texParameteri(target,
@@ -120,7 +120,7 @@ H3DU._LoadedTexture.textureFilters = function(context, texture, textureInfo, tar
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   "use strict";
   if(!texture.image)throw new Error();
@@ -148,7 +148,7 @@ H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   H3DU._LoadedTexture.textureFilters(context, texture, textureInfo, target);
 };
 
-/** @private */
+/** @ignore */
 H3DU._LoadedCubeMap = function(textureImage, context) {
   "use strict";
   context = H3DU._toContext(context);
@@ -175,7 +175,7 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
   H3DU._LoadedTexture.textureFilters(context, textureImage, new H3DU.TextureInfo(), target);
 };
 
-/** @private */
+/** @ignore */
 H3DU._LoadedTexture.prototype.dispose = function() {
   "use strict";
   if(this.loadedTexture && this.context) {
@@ -184,7 +184,7 @@ H3DU._LoadedTexture.prototype.dispose = function() {
   this.context = null;
   this.loadedTexture = null;
 };
-/** @private */
+/** @ignore */
 H3DU._LoadedCubeMap.prototype.dispose = function() {
   "use strict";
   if(this.loadedTexture && this.context) {
@@ -195,7 +195,7 @@ H3DU._LoadedCubeMap.prototype.dispose = function() {
 };
 // ///////////////////////////////
 
-/** @private */
+/** @ignore */
 H3DU._MaterialBinder.bindTexture = function(
   texture, textureInfo, context, program,
   textureUnit, loader, uniformName, sizeUniform) {
@@ -308,7 +308,7 @@ H3DU._MaterialBinder.bindTexture = function(
 
 // ////////////////////////
 
-/** @private */
+/** @ignore */
 H3DU._LightsBinder = function(lights) {
   "use strict";
   this.lights = lights;
@@ -316,7 +316,7 @@ H3DU._LightsBinder = function(lights) {
 H3DU._LightsBinder.emptyW1 = [0, 0, 0, 1];
 H3DU._LightsBinder.emptyW0 = [0, 0, 0, 0];
 H3DU._LightsBinder.emptyAtten = [1, 0, 0, 0];
-/** @private */
+/** @ignore */
 H3DU._LightsBinder.prototype.bind = function(program, viewMatrix) {
   "use strict";
   var ltname;

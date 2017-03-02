@@ -8,12 +8,12 @@
 */
 /* global H3DU */
 
-/** @private */
+/** @ignore */
 H3DU.FrameBufferLoader = function() {
   "use strict";
   this._frameBuffers = [];
 };
-/** @private */
+/** @ignore */
 H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
   "use strict";
   var fb;
@@ -36,7 +36,7 @@ H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
   this._frameBuffers.push([info, context, fb, info.width, info.height]);
   return fb;
 };
-/** @private */
+/** @ignore */
 H3DU.FrameBufferLoader.prototype.dispose = function() {
   "use strict";
   for(var i = 0; i < this._frameBuffers.length; i++) {
@@ -44,7 +44,7 @@ H3DU.FrameBufferLoader.prototype.dispose = function() {
   }
   this._frameBuffers = [];
 };
-/** @private */
+/** @ignore */
 H3DU.FrameBufferLoader.prototype.bind = function(info, context, textureUnit) {
   "use strict";
   if(typeof info !== "undefined" && info !== null) {
@@ -63,7 +63,7 @@ H3DU.FrameBufferLoader.prototype.bind = function(info, context, textureUnit) {
   }
   return null;
 };
-/** @private */
+/** @ignore */
 H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
   "use strict";
   if(typeof info !== "undefined" && info !== null) {
@@ -89,7 +89,7 @@ H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
  * Use the FrameBufferInfo class instead, which is not coupled to WebGL
  * contexts.
  * @class
- * @alias H3DU.FrameBuffer
+ * @memberof H3DU
  * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
  * WebGL context to associate with this buffer, or an object, such as H3DU.Scene3D, that
  * implements a no-argument <code>getContext</code> method
@@ -110,20 +110,16 @@ H3DU.FrameBuffer = function(context, width, height) {
   this.textureUnit = 3;
   this._init(context, width, height);
 };
-/** @private */
+/** @ignore */
 H3DU.FrameBuffer.prototype._init = function(context, width, height) {
   "use strict";
   this.buffer = context.createFramebuffer();
  // create color texture
   this.colorTexture = context.createTexture();
  /** The frame buffer's width.
-  * @memberof! H3DU.FrameBuffer
-  * @alias width
   * @readonly */
   this.width = Math.ceil(width);
  /** The frame buffer's height.
-  * @memberof! H3DU.FrameBuffer
-  * @alias height
   * @readonly */
   this.height = Math.ceil(height);
   this.context.activeTexture(this.context.TEXTURE0 + this.textureUnit);
@@ -167,7 +163,7 @@ H3DU.FrameBuffer.prototype._init = function(context, width, height) {
  * @param {Number} height New height, in pixels, of the frame buffer.
  * Fractional values are rounded up.
  * @returns {H3DU.FrameBuffer} This object.
- * @memberof! H3DU.FrameBuffer#
+ * @instance
  */
 H3DU.FrameBuffer.prototype.resize = function(width, height) {
   "use strict";
@@ -180,12 +176,12 @@ H3DU.FrameBuffer.prototype.resize = function(width, height) {
   return this;
 };
 
-/** @private */
+/** @ignore */
 H3DU.FrameBuffer.prototype.getWidth = function() {
   "use strict";
   return this.width;
 };
-/** @private */
+/** @ignore */
 H3DU.FrameBuffer.prototype.getHeight = function() {
   "use strict";
   return this.height;
@@ -194,7 +190,7 @@ H3DU.FrameBuffer.prototype.getHeight = function() {
 /**
  * Gets the WebGL context associated with this frame buffer.
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
- * @memberof! H3DU.FrameBuffer#
+ * @instance
  */
 H3DU.FrameBuffer.prototype.getContext = function() {
   "use strict";
@@ -204,7 +200,7 @@ H3DU.FrameBuffer.prototype.getContext = function() {
  * Has no effect. (Previously, bound this frame buffer to the WebGL context associated with
  * it.)
  * @returns {H3DU.FrameBuffer} This object.
- * @memberof! H3DU.FrameBuffer#
+ * @instance
  */
 H3DU.FrameBuffer.prototype.bind = function() {
   "use strict";
@@ -213,16 +209,18 @@ H3DU.FrameBuffer.prototype.bind = function() {
 };
 /**
  * Has no effect. (Previously, unbound this frame buffer from its associated WebGL context.)
- * @memberof! H3DU.FrameBuffer#
- * @returns {void} This method doesn't return a value.*/
+ * @returns {void} This method doesn't return a value.*
+ * @instance
+ */
 H3DU.FrameBuffer.prototype.unbind = function() {
   "use strict";
   console.log("FrameBuffer unbind method has no effect.");
 };
 /**
  * Disposes all resources from this frame buffer object.
- * @memberof! H3DU.FrameBuffer#
- * @returns {void} This method doesn't return a value.*/
+ * @returns {void} This method doesn't return a value.*
+ * @instance
+ */
 H3DU.FrameBuffer.prototype.dispose = function() {
   "use strict";
   if(typeof this.buffer !== "undefined" && this.buffer !== null) {

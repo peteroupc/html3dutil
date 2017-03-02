@@ -19,9 +19,9 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [update](#H3DU.FrameCounterDiv_H3DU.FrameCounterDiv_update)<br>Updates the frame counter HTML element.
+* [update](#H3DU.FrameCounterDiv_update)<br>Updates the frame counter HTML element.
 
- <a name='H3DU.FrameCounterDiv_H3DU.FrameCounterDiv_update'></a>
+ <a name='H3DU.FrameCounterDiv_update'></a>
 ### H3DU.FrameCounterDiv#update()
 
 Updates the frame counter HTML element.

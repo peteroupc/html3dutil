@@ -37,7 +37,7 @@ and blue components respectively.
 
 ### Methods
 
-* [setParams](#H3DU.LightSource_H3DU.LightSource_setParams)<br>Sets parameters for this material object.
+* [setParams](#H3DU.LightSource_setParams)<br>Sets parameters for this material object.
 
 <a id='H3DU.LightSource_ambient'></a>
 ### H3DU.LightSource#ambient
@@ -96,7 +96,7 @@ for <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>.</i>
 
 Default Value: `"[1,1,1]"`
 
- <a name='H3DU.LightSource_H3DU.LightSource_setParams'></a>
+ <a name='H3DU.LightSource_setParams'></a>
 ### H3DU.LightSource#setParams(params)
 
 Sets parameters for this material object.

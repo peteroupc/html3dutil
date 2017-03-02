@@ -14,21 +14,21 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 ### Members
 
-* [.MAX_LIGHTS](#H3DU.Lights.MAX_LIGHTS)<br>Maximum number of lights supported
+* [MAX_LIGHTS](#H3DU.Lights.MAX_LIGHTS)<br>Maximum number of lights supported
 by the default shader program.
 * [sceneAmbient](#H3DU.Lights_sceneAmbient)<br>Ambient color for the scene.
 
 ### Methods
 
-* [getCount](#H3DU.Lights_H3DU.Lights_getCount)<br>Gets the number of lights defined in this object.
-* [getLight](#H3DU.Lights_H3DU.Lights_getLight)<br>Gets information about the light source at the given index.
-* [setAmbient](#H3DU.Lights_H3DU.Lights_setAmbient)<br>Sets the color of the scene's ambient light.
-* [setBasic](#H3DU.Lights_H3DU.Lights_setBasic)<br>Resets this object to a basic configuration for
+* [getCount](#H3DU.Lights_getCount)<br>Gets the number of lights defined in this object.
+* [getLight](#H3DU.Lights_getLight)<br>Gets information about the light source at the given index.
+* [setAmbient](#H3DU.Lights_setAmbient)<br>Sets the color of the scene's ambient light.
+* [setBasic](#H3DU.Lights_setBasic)<br>Resets this object to a basic configuration for
 light sources: one light source with its default
 values, and the default value for <code>sceneAmbient</code>.
-* [setDirectionalLight](#H3DU.Lights_H3DU.Lights_setDirectionalLight)<br>Sets a directional light.
-* [setParams](#H3DU.Lights_H3DU.Lights_setParams)<br>Sets parameters for the light source at the given index.
-* [setPointLight](#H3DU.Lights_H3DU.Lights_setPointLight)<br>Sets a point light.
+* [setDirectionalLight](#H3DU.Lights_setDirectionalLight)<br>Sets a directional light.
+* [setParams](#H3DU.Lights_setParams)<br>Sets parameters for the light source at the given index.
+* [setPointLight](#H3DU.Lights_setPointLight)<br>Sets a point light.
 
 <a id='H3DU.Lights.MAX_LIGHTS'></a>
 ### H3DU.Lights.MAX_LIGHTS (constant)
@@ -59,7 +59,7 @@ only used on objects that use <a href="H3DU.Material.md">H3DU.Material</a>, not 
 
 Default Value: `"[0.2,0.2,0.2]"`
 
- <a name='H3DU.Lights_H3DU.Lights_getCount'></a>
+ <a name='H3DU.Lights_getCount'></a>
 ### H3DU.Lights#getCount()
 
 Gets the number of lights defined in this object.
@@ -68,7 +68,7 @@ Gets the number of lights defined in this object.
 
 Return value. (Type: Number)
 
- <a name='H3DU.Lights_H3DU.Lights_getLight'></a>
+ <a name='H3DU.Lights_getLight'></a>
 ### H3DU.Lights#getLight(index)
 
 Gets information about the light source at the given index.
@@ -82,7 +82,7 @@ Gets information about the light source at the given index.
 
 The corresponding light source object. (Type: LightSource)
 
- <a name='H3DU.Lights_H3DU.Lights_setAmbient'></a>
+ <a name='H3DU.Lights_setAmbient'></a>
 ### H3DU.Lights#setAmbient(r, g, b, [a])
 
 Sets the color of the scene's ambient light.
@@ -102,7 +102,7 @@ Sets the color of the scene's ambient light.
 
 This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
- <a name='H3DU.Lights_H3DU.Lights_setBasic'></a>
+ <a name='H3DU.Lights_setBasic'></a>
 ### H3DU.Lights#setBasic()
 
 Resets this object to a basic configuration for
@@ -113,7 +113,7 @@ values, and the default value for <code>sceneAmbient</code>.
 
 This object. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
- <a name='H3DU.Lights_H3DU.Lights_setDirectionalLight'></a>
+ <a name='H3DU.Lights_setDirectionalLight'></a>
 ### H3DU.Lights#setDirectionalLight(index, direction, [diffuse], [specular])
 
 Sets a directional light.
@@ -133,7 +133,7 @@ Sets a directional light.
 
 This object. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
- <a name='H3DU.Lights_H3DU.Lights_setParams'></a>
+ <a name='H3DU.Lights_setParams'></a>
 ### H3DU.Lights#setParams(index, params)
 
 Sets parameters for the light source at the given index.
@@ -149,7 +149,7 @@ Sets parameters for the light source at the given index.
 
 This object. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
- <a name='H3DU.Lights_H3DU.Lights_setPointLight'></a>
+ <a name='H3DU.Lights_setPointLight'></a>
 ### H3DU.Lights#setPointLight(index, position, [diffuse], [specular])
 
 Sets a point light.

@@ -18,7 +18,7 @@
  * Throws an error if this value is less than 0. The height will be set
  * to this value rounded up.
  * @class
- * @alias H3DU.FrameBufferInfo
+ * @memberof H3DU
  */
 H3DU.FrameBufferInfo = function(width, height) {
   "use strict";
@@ -35,7 +35,7 @@ H3DU.FrameBufferInfo = function(width, height) {
  * Throws an error if this value is less than 0. The height will be set
  * to this value rounded up.
  * @returns {H3DU.FrameBufferInfo} This object.
- * @memberof! H3DU.FrameBufferInfo#
+ * @instance
  */
 H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
   "use strict";
@@ -49,7 +49,7 @@ H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
 /**
  * Gets the width to use for the frame buffer.
  * @returns {Number} Return value.
- * @memberof! H3DU.FrameBufferInfo#
+ * @instance
  */
 H3DU.FrameBufferInfo.prototype.getWidth = function() {
   "use strict";
@@ -58,7 +58,7 @@ H3DU.FrameBufferInfo.prototype.getWidth = function() {
 /**
  * Gets the height to use for the frame buffer.
  * @returns {Number} Return value.
- * @memberof! H3DU.FrameBufferInfo#
+ * @instance
  */
 H3DU.FrameBufferInfo.prototype.getHeight = function() {
   "use strict";

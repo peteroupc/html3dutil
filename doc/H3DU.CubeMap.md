@@ -14,12 +14,12 @@ A cube map, or a set of six textures forming the sides of a cube.
 
 ### Methods
 
-* [getHeight](#H3DU.CubeMap_H3DU.CubeMap_getHeight)<br>Gets this texture's known height.
-* [getTexture](#H3DU.CubeMap_H3DU.CubeMap_getTexture)<br>Gets a texture used by this cube map.
-* [getWidth](#H3DU.CubeMap_H3DU.CubeMap_getWidth)<br>Gets this texture's known width.
-* [setTexture](#H3DU.CubeMap_H3DU.CubeMap_setTexture)<br>Sets a texture used by this cube map.
+* [getHeight](#H3DU.CubeMap_getHeight)<br>Gets this texture's known height.
+* [getTexture](#H3DU.CubeMap_getTexture)<br>Gets a texture used by this cube map.
+* [getWidth](#H3DU.CubeMap_getWidth)<br>Gets this texture's known width.
+* [setTexture](#H3DU.CubeMap_setTexture)<br>Sets a texture used by this cube map.
 
- <a name='H3DU.CubeMap_H3DU.CubeMap_getHeight'></a>
+ <a name='H3DU.CubeMap_getHeight'></a>
 ### H3DU.CubeMap#getHeight()
 
 Gets this texture's known height.
@@ -29,7 +29,7 @@ Gets this texture's known height.
 This texture's height in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
 
- <a name='H3DU.CubeMap_H3DU.CubeMap_getTexture'></a>
+ <a name='H3DU.CubeMap_getTexture'></a>
 ### H3DU.CubeMap#getTexture(index)
 
 Gets a texture used by this cube map.
@@ -43,7 +43,7 @@ Gets a texture used by this cube map.
 
 The texture with the given index. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
 
- <a name='H3DU.CubeMap_H3DU.CubeMap_getWidth'></a>
+ <a name='H3DU.CubeMap_getWidth'></a>
 ### H3DU.CubeMap#getWidth()
 
 Gets this texture's known width.
@@ -53,7 +53,7 @@ Gets this texture's known width.
 This texture's width in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
 
- <a name='H3DU.CubeMap_H3DU.CubeMap_setTexture'></a>
+ <a name='H3DU.CubeMap_setTexture'></a>
 ### H3DU.CubeMap#setTexture(index, texture)
 
 Sets a texture used by this cube map.

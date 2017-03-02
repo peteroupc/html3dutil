@@ -5,7 +5,7 @@
  <a name='H3DU.BezierCurve'></a>
 ### H3DU.BezierCurve(cp, [u1], [u2])
 
-A curve evaluator object for a B&eacute;zier curve.
+A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a B&eacute;zier curve.
 
 A B&eacute;zier curve is defined by a series of control points, where
 the first and last control points define the endpoints of the curve, and
@@ -23,12 +23,12 @@ necessarily cross the curve.
 
 ### Methods
 
-* [evaluate](#H3DU.BezierCurve_H3DU.BezierCurve_evaluate)<br>Evaluates the curve function based on a point
+* [evaluate](#H3DU.BezierCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B&eacute;zier curve.
-* [tangent](#H3DU.BezierCurve_H3DU.BezierCurve_tangent)<br>Finds the tangent (derivative) of
+* [tangent](#H3DU.BezierCurve_tangent)<br>Finds the <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">tangent</a> (derivative) of
 this curve at the given point.
 
- <a name='H3DU.BezierCurve_H3DU.BezierCurve_evaluate'></a>
+ <a name='H3DU.BezierCurve_evaluate'></a>
 ### H3DU.BezierCurve#evaluate(u)
 
 Evaluates the curve function based on a point
@@ -53,10 +53,10 @@ the evaluation. It will have as many elements as a control point, as specified i
     points.push(curve.evaluate(i/10.0));
     }
 
- <a name='H3DU.BezierCurve_H3DU.BezierCurve_tangent'></a>
+ <a name='H3DU.BezierCurve_tangent'></a>
 ### H3DU.BezierCurve#tangent(u)
 
-Finds the tangent (derivative) of
+Finds the <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">tangent</a> (derivative) of
 this curve at the given point.
 
 #### Parameters

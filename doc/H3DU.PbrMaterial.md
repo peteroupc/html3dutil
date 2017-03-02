@@ -46,11 +46,11 @@ material.
 
 ### Methods
 
-* [copy](#H3DU.PbrMaterial_H3DU.PbrMaterial_copy)<br>Clones this object's parameters to a new <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>
+* [copy](#H3DU.PbrMaterial_copy)<br>Clones this object's parameters to a new <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>
 object and returns that object.
-* [setParams](#H3DU.PbrMaterial_H3DU.PbrMaterial_setParams)<br>Sets parameters for this material object.
-* [H3DU.PbrMaterial.fromBasic](#H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasic)<br>Creates a material with its emission color set to the given color.
-* [H3DU.PbrMaterial.fromBasicTexture](#H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasicTexture)<br>Creates a material with its emission map set to the given texture.
+* [fromBasic](#H3DU.PbrMaterial.fromBasic)<br>Creates a material with its emission color set to the given color.
+* [fromBasicTexture](#H3DU.PbrMaterial.fromBasicTexture)<br>Creates a material with its emission map set to the given texture.
+* [setParams](#H3DU.PbrMaterial_setParams)<br>Sets parameters for this material object.
 
 <a id='H3DU.PbrMaterial_albedo'></a>
 ### H3DU.PbrMaterial#albedo
@@ -296,7 +296,7 @@ surface's specular reflectivity.
 
 Type: Number
 
- <a name='H3DU.PbrMaterial_H3DU.PbrMaterial_copy'></a>
+ <a name='H3DU.PbrMaterial_copy'></a>
 ### H3DU.PbrMaterial#copy()
 
 Clones this object's parameters to a new <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>
@@ -308,7 +308,29 @@ to the same object will be used.
 
 A copy of this object. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
 
- <a name='H3DU.PbrMaterial_H3DU.PbrMaterial_setParams'></a>
+ <a name='H3DU.PbrMaterial.fromBasic'></a>
+### (static) H3DU.PbrMaterial.fromBasic()
+
+Creates a material with its emission color set to the given color.
+The effect will be that objects with that material will be drawn in that
+color without shading.
+
+#### Return Value
+
+A new material with the given emission color. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
+
+ <a name='H3DU.PbrMaterial.fromBasicTexture'></a>
+### (static) H3DU.PbrMaterial.fromBasicTexture()
+
+Creates a material with its emission map set to the given texture.
+The effect will be that objects with that material will be drawn in that
+texture without shading.
+
+#### Return Value
+
+A new material with the given emission map. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
+
+ <a name='H3DU.PbrMaterial_setParams'></a>
 ### H3DU.PbrMaterial#setParams(params)
 
 Sets parameters for this material object.
@@ -321,25 +343,3 @@ Sets parameters for this material object.
 #### Return Value
 
 This object. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
-
- <a name='H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasic'></a>
-### H3DU.PbrMaterial#H3DU.PbrMaterial.fromBasic()
-
-Creates a material with its emission color set to the given color.
-The effect will be that objects with that material will be drawn in that
-color without shading.
-
-#### Return Value
-
-A new material with the given emission color. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
-
- <a name='H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasicTexture'></a>
-### H3DU.PbrMaterial#H3DU.PbrMaterial.fromBasicTexture()
-
-Creates a material with its emission map set to the given texture.
-The effect will be that objects with that material will be drawn in that
-texture without shading.
-
-#### Return Value
-
-A new material with the given emission map. (Type: <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)

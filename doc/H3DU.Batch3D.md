@@ -11,34 +11,51 @@ position, and light sources to illuminate the 3D scene.
 
 ### Methods
 
-* [.forFilter](#H3DU.Batch3D.forFilter)<br>Creates a batch whose purpose is to render the contents
-of a frame buffer using a particular shader.
-* [addShape](#H3DU.Batch3D_H3DU.Batch3D_addShape)<br>Adds a 3D shape to this batch of shapes, at the end of the list
+* [addShape](#H3DU.Batch3D_addShape)<br>Adds a 3D shape to this batch of shapes, at the end of the list
 of shapes.
-* [getLights](#H3DU.Batch3D_H3DU.Batch3D_getLights)<br>Gets the light sources used by this batch.
-* [getProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_getProjectionMatrix)<br>Gets the current projection matrix for this batch of shapes.
-* [getProjectionViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_getProjectionViewMatrix)<br>Gets the current projection matrix multiplied by the current
+* [forFilter](#H3DU.Batch3D.forFilter)<br>Creates a batch whose purpose is to render the contents
+of a frame buffer using a particular shader.
+* [getLights](#H3DU.Batch3D_getLights)<br>Gets the light sources used by this batch.
+* [getProjectionMatrix](#H3DU.Batch3D_getProjectionMatrix)<br>Gets the current projection matrix for this batch of shapes.
+* [getProjectionViewMatrix](#H3DU.Batch3D_getProjectionViewMatrix)<br>Gets the current projection matrix multiplied by the current
 view matrix for this batch of shapes.
-* [getShape](#H3DU.Batch3D_H3DU.Batch3D_getShape)<br>Gets the shape or shape group located
+* [getShape](#H3DU.Batch3D_getShape)<br>Gets the shape or shape group located
 in this batch at the given index.
-* [getViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_getViewMatrix)<br>Gets the current view matrix for this batch of shapes.
-* [ortho2DAspect](#H3DU.Batch3D_H3DU.Batch3D_ortho2DAspect)<br>Uses a 2D orthographic projection for this batch.
-* [orthoAspect](#H3DU.Batch3D_H3DU.Batch3D_orthoAspect)<br>Uses an orthographic projection for this batch.
-* [perspectiveAspect](#H3DU.Batch3D_H3DU.Batch3D_perspectiveAspect)<br>Uses a perspective projection for this batch.
-* [primitiveCount](#H3DU.Batch3D_H3DU.Batch3D_primitiveCount)<br>Gets the number of primitives (triangles, lines,
+* [getViewMatrix](#H3DU.Batch3D_getViewMatrix)<br>Gets the current view matrix for this batch of shapes.
+* [ortho2DAspect](#H3DU.Batch3D_ortho2DAspect)<br>Uses a 2D orthographic projection for this batch.
+* [orthoAspect](#H3DU.Batch3D_orthoAspect)<br>Uses an orthographic projection for this batch.
+* [perspectiveAspect](#H3DU.Batch3D_perspectiveAspect)<br>Uses a perspective projection for this batch.
+* [primitiveCount](#H3DU.Batch3D_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this batch of shapes.
-* [removeShape](#H3DU.Batch3D_H3DU.Batch3D_removeShape)<br>Removes all instances of a 3D shape from this batch of shapes.
-* [setLookAt](#H3DU.Batch3D_H3DU.Batch3D_setLookAt)<br>Sets this batch's view matrix to represent a camera view.
-* [setProjectionMatrix](#H3DU.Batch3D_H3DU.Batch3D_setProjectionMatrix)<br>Sets the projection matrix for this batch.
-* [setShape](#H3DU.Batch3D_H3DU.Batch3D_setShape)<br>Sets a shape or shape group at the given index in this batch.
-* [setViewMatrix](#H3DU.Batch3D_H3DU.Batch3D_setViewMatrix)<br>Sets the current view matrix for this batch of shapes.
-* [shapeCount](#H3DU.Batch3D_H3DU.Batch3D_shapeCount)<br>Returns the number of shapes and/or shape groups that
+* [removeShape](#H3DU.Batch3D_removeShape)<br>Removes all instances of a 3D shape from this batch of shapes.
+* [setLookAt](#H3DU.Batch3D_setLookAt)<br>Sets this batch's view matrix to represent a camera view.
+* [setProjectionMatrix](#H3DU.Batch3D_setProjectionMatrix)<br>Sets the projection matrix for this batch.
+* [setShape](#H3DU.Batch3D_setShape)<br>Sets a shape or shape group at the given index in this batch.
+* [setViewMatrix](#H3DU.Batch3D_setViewMatrix)<br>Sets the current view matrix for this batch of shapes.
+* [shapeCount](#H3DU.Batch3D_shapeCount)<br>Returns the number of shapes and/or shape groups that
 are direct children of this batch.
-* [vertexCount](#H3DU.Batch3D_H3DU.Batch3D_vertexCount)<br>Gets the number of vertices composed by
+* [vertexCount](#H3DU.Batch3D_vertexCount)<br>Gets the number of vertices composed by
 all shapes in this batch of shapes.
 
+ <a name='H3DU.Batch3D_addShape'></a>
+### H3DU.Batch3D#addShape(shape)
+
+Adds a 3D shape to this batch of shapes, at the end of the list
+of shapes. Its reference, not a copy,
+will be stored in the 3D scene's list of shapes.
+Its parent will be set to no parent.
+
+#### Parameters
+
+* `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
+    A 3D shape. Throws an error if null.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
+
  <a name='H3DU.Batch3D.forFilter'></a>
-### H3DU.Batch3D.forFilter(scene, fbo, shader)
+### (static) H3DU.Batch3D.forFilter(scene, fbo, shader)
 
 Creates a batch whose purpose is to render the contents
 of a frame buffer using a particular shader. This is often used
@@ -58,24 +75,7 @@ See the <a href="tutorial-filters.md">Graphics Filters</a> tutorial.
 
 The created batch. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_addShape'></a>
-### H3DU.Batch3D#addShape(shape)
-
-Adds a 3D shape to this batch of shapes, at the end of the list
-of shapes. Its reference, not a copy,
-will be stored in the 3D scene's list of shapes.
-Its parent will be set to no parent.
-
-#### Parameters
-
-* `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
-    A 3D shape. Throws an error if null.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
-
- <a name='H3DU.Batch3D_H3DU.Batch3D_getLights'></a>
+ <a name='H3DU.Batch3D_getLights'></a>
 ### H3DU.Batch3D#getLights()
 
 Gets the light sources used by this batch.
@@ -84,7 +84,7 @@ Gets the light sources used by this batch.
 
 Return value. (Type: <a href="H3DU.Lights.md">H3DU.Lights</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_getProjectionMatrix'></a>
+ <a name='H3DU.Batch3D_getProjectionMatrix'></a>
 ### H3DU.Batch3D#getProjectionMatrix()
 
 Gets the current projection matrix for this batch of shapes.
@@ -94,7 +94,7 @@ Gets the current projection matrix for this batch of shapes.
 A 4x4 matrix used as the current
 projection matrix. (Type: Array.&lt;Number>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_getProjectionViewMatrix'></a>
+ <a name='H3DU.Batch3D_getProjectionViewMatrix'></a>
 ### H3DU.Batch3D#getProjectionViewMatrix()
 
 Gets the current projection matrix multiplied by the current
@@ -105,7 +105,7 @@ view matrix for this batch of shapes.
 A 4x4 matrix used as the current
 projection-view matrix. (Type: Array.&lt;Number>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_getShape'></a>
+ <a name='H3DU.Batch3D_getShape'></a>
 ### H3DU.Batch3D#getShape(index)
 
 Gets the shape or shape group located
@@ -121,7 +121,7 @@ in this batch at the given index.
 The shape or shape group located
 in this batch at the given index, or null if none is found there. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_getViewMatrix'></a>
+ <a name='H3DU.Batch3D_getViewMatrix'></a>
 ### H3DU.Batch3D#getViewMatrix()
 
 Gets the current view matrix for this batch of shapes.
@@ -130,7 +130,7 @@ Gets the current view matrix for this batch of shapes.
 
 Return value. (Type: Array.&lt;Number>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_ortho2DAspect'></a>
+ <a name='H3DU.Batch3D_ortho2DAspect'></a>
 ### H3DU.Batch3D#ortho2DAspect(l, r, b, t)
 
 Uses a 2D orthographic projection for this batch. It will be adjusted
@@ -158,7 +158,7 @@ or squishing it.
 
 This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_orthoAspect'></a>
+ <a name='H3DU.Batch3D_orthoAspect'></a>
 ### H3DU.Batch3D#orthoAspect(l, r, b, t, e, f)
 
 Uses an orthographic projection for this batch. It will be adjusted
@@ -191,7 +191,7 @@ or squishing it.
 
 This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_perspectiveAspect'></a>
+ <a name='H3DU.Batch3D_perspectiveAspect'></a>
 ### H3DU.Batch3D#perspectiveAspect(fov, near, far)
 
 Uses a perspective projection for this batch. It will be adjusted
@@ -213,7 +213,7 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 
 This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_primitiveCount'></a>
+ <a name='H3DU.Batch3D_primitiveCount'></a>
 ### H3DU.Batch3D#primitiveCount()
 
 Gets the number of primitives (triangles, lines,
@@ -223,7 +223,7 @@ and points) composed by all shapes in this batch of shapes.
 
 Return value. (Type: Number)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_removeShape'></a>
+ <a name='H3DU.Batch3D_removeShape'></a>
 ### H3DU.Batch3D#removeShape(shape)
 
 Removes all instances of a 3D shape from this batch of shapes.
@@ -237,7 +237,7 @@ Removes all instances of a 3D shape from this batch of shapes.
 
 This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_setLookAt'></a>
+ <a name='H3DU.Batch3D_setLookAt'></a>
 ### H3DU.Batch3D#setLookAt(eye, [center], [up])
 
 Sets this batch's view matrix to represent a camera view.
@@ -257,7 +257,7 @@ This method takes a camera's position (<code>eye</code>), and the point the came
 
 This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_setProjectionMatrix'></a>
+ <a name='H3DU.Batch3D_setProjectionMatrix'></a>
 ### H3DU.Batch3D#setProjectionMatrix(mat)
 
 Sets the projection matrix for this batch.
@@ -271,7 +271,7 @@ Sets the projection matrix for this batch.
 
 This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_setShape'></a>
+ <a name='H3DU.Batch3D_setShape'></a>
 ### H3DU.Batch3D#setShape(index, shape)
 
 Sets a shape or shape group at the given index in this batch.
@@ -287,7 +287,7 @@ Sets a shape or shape group at the given index in this batch.
 
 {H3DU.Batch
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_setViewMatrix'></a>
+ <a name='H3DU.Batch3D_setViewMatrix'></a>
 ### H3DU.Batch3D#setViewMatrix(mat)
 
 Sets the current view matrix for this batch of shapes.
@@ -301,7 +301,7 @@ Sets the current view matrix for this batch of shapes.
 
 This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_shapeCount'></a>
+ <a name='H3DU.Batch3D_shapeCount'></a>
 ### H3DU.Batch3D#shapeCount()
 
 Returns the number of shapes and/or shape groups that
@@ -311,7 +311,7 @@ are direct children of this batch.
 
 Return value. (Type: Number)
 
- <a name='H3DU.Batch3D_H3DU.Batch3D_vertexCount'></a>
+ <a name='H3DU.Batch3D_vertexCount'></a>
 ### H3DU.Batch3D#vertexCount()
 
 Gets the number of vertices composed by

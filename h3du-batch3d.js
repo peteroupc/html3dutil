@@ -12,7 +12,7 @@
  * 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
  * position, and light sources to illuminate the 3D scene.
  * @class
- * @alias H3DU.Batch3D
+ * @memberof H3DU
  */
 H3DU.Batch3D = function() {
   "use strict";
@@ -22,10 +22,10 @@ H3DU.Batch3D = function() {
   this._projectionUpdater = null;
   this._globalShader = null;
   this._frustum = null;
-  /** @private */
+  /** @ignore */
   this.shapes = [];
 };
-/** @private */
+/** @ignore */
 H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
   "use strict";
   this.fov = fov;
@@ -33,7 +33,7 @@ H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
   this.far = far;
   this.batch = batch;
   this.lastAspect = null;
-/** @private */
+/** @ignore */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect && !isNaN(aspect)) {
@@ -44,7 +44,7 @@ H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
   };
   this.update();
 };
-/** @private */
+/** @ignore */
 H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   "use strict";
   this.a = a;
@@ -55,7 +55,7 @@ H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   this.f = f;
   this.batch = batch;
   this.lastAspect = null;
-/** @private */
+/** @ignore */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect && !isNaN(aspect)) {
@@ -67,7 +67,7 @@ H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   this.update();
 };
 
-/** @private */
+/** @ignore */
 H3DU.Batch3D._setupMatrices = function(
   program,
   projMatrix,
@@ -122,7 +122,7 @@ H3DU.Batch3D._setupMatrices = function(
     }
   program.setUniforms(uniforms);
 };
-/** @private */
+/** @ignore */
 H3DU.Batch3D._isSameMatrix = function(a, b) {
   "use strict";
   return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] &&
@@ -136,7 +136,7 @@ H3DU.Batch3D._isSameMatrix = function(a, b) {
  * Sets the projection matrix for this batch.
  * @param {Array<Number>} mat A 16-element matrix (4x4).
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
   "use strict";
@@ -155,7 +155,7 @@ H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
  * @param {Number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
  * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
   "use strict";
@@ -179,7 +179,7 @@ H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
  * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
  * so it points perpendicular to the camera's view direction.)
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
   "use strict";
@@ -207,7 +207,7 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
  * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
   "use strict";
@@ -229,14 +229,14 @@ H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
  * @param {Number} t Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
   "use strict";
   return this.orthoAspect(l, r, b, t, -1, 1);
 };
 
-/** @private */
+/** @ignore */
 H3DU.Batch3D.prototype._useShader = function(shader) {
   "use strict";
   // NOTE: This method is here for compatibility only
@@ -249,7 +249,7 @@ H3DU.Batch3D.prototype._useShader = function(shader) {
  * Sets the current view matrix for this batch of shapes.
  * @param {Array<Number>} mat A 4x4 matrix to use as the view matrix.
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.setViewMatrix = function(mat) {
   "use strict";
@@ -263,7 +263,7 @@ H3DU.Batch3D.prototype.setViewMatrix = function(mat) {
  * Gets the current projection matrix for this batch of shapes.
  * @returns {Array<Number>} A 4x4 matrix used as the current
  * projection matrix.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.getProjectionMatrix = function() {
   "use strict";
@@ -275,7 +275,7 @@ H3DU.Batch3D.prototype.getProjectionMatrix = function() {
  * view matrix for this batch of shapes.
  * @returns {Array<Number>} A 4x4 matrix used as the current
  * projection-view matrix.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.getProjectionViewMatrix = function() {
   "use strict";
@@ -286,13 +286,13 @@ H3DU.Batch3D.prototype.getProjectionViewMatrix = function() {
 /**
  * Gets the current view matrix for this batch of shapes.
  * @returns {Array<Number>} Return value.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.getViewMatrix = function() {
   "use strict";
   return this._viewMatrix.slice(0, 16);
 };
-/** @private */
+/** @ignore */
 H3DU.Batch3D.prototype._getFrustum = function() {
   "use strict";
   if(typeof this._frustum === "undefined" || this._frustum === null) {
@@ -304,7 +304,7 @@ H3DU.Batch3D.prototype._getFrustum = function() {
 /**
  * Gets the light sources used by this batch.
  * @returns {H3DU.Lights} Return value.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.getLights = function() {
   "use strict";
@@ -319,7 +319,7 @@ H3DU.Batch3D.prototype.getLights = function() {
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
  * Throws an error if null.
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.addShape = function(shape) {
   "use strict";
@@ -332,7 +332,7 @@ H3DU.Batch3D.prototype.addShape = function(shape) {
  * Returns the number of shapes and/or shape groups that
  * are direct children of this batch.
  * @returns {Number} Return value.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.shapeCount = function() {
   "use strict";
@@ -344,7 +344,7 @@ H3DU.Batch3D.prototype.shapeCount = function() {
  * @param {Number} index Integer index, starting from 0, of the shape or shape group to set.
  * @returns {H3DU.Shape|H3DU.ShapeGroup} The shape or shape group located
  * in this batch at the given index, or null if none is found there.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.getShape = function(index) {
   "use strict";
@@ -355,7 +355,7 @@ H3DU.Batch3D.prototype.getShape = function(index) {
  * @param {Number} index Integer index, starting from 0, to set the shape or shape group at.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape Shape object to set at the given index.
  * @returns {H3DU.Batch
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.setShape = function(index, shape) {
   "use strict";
@@ -367,7 +367,7 @@ H3DU.Batch3D.prototype.setShape = function(index, shape) {
  * Gets the number of vertices composed by
  * all shapes in this batch of shapes.
  * @returns {Number} Return value.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.vertexCount = function() {
   "use strict";
@@ -381,7 +381,7 @@ H3DU.Batch3D.prototype.vertexCount = function() {
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this batch of shapes.
  * @returns {Number} Return value.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.primitiveCount = function() {
   "use strict";
@@ -396,7 +396,7 @@ H3DU.Batch3D.prototype.primitiveCount = function() {
  * Removes all instances of a 3D shape from this batch of shapes.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
  * @returns {H3DU.Batch3D} This object.
- * @memberof! H3DU.Batch3D#
+ * @instance
  */
 H3DU.Batch3D.prototype.removeShape = function(shape) {
   "use strict";
@@ -409,7 +409,7 @@ H3DU.Batch3D.prototype.removeShape = function(shape) {
   return this;
 };
 
-/** @private */
+/** @ignore */
 H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
   "use strict";
   if(shape.constructor === H3DU.ShapeGroup) {
@@ -454,7 +454,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU.Batch3D.prototype.resize = function(width, height) {
   "use strict";
   if(this._projectionUpdater) {
@@ -462,7 +462,7 @@ H3DU.Batch3D.prototype.resize = function(width, height) {
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU.Batch3D.prototype.render = function(scene, pass) {
   "use strict";
   var rc = {};
@@ -486,7 +486,6 @@ H3DU.Batch3D.prototype.render = function(scene, pass) {
  * @param {H3DU.ShaderInfo} shader Contains information about
  * the shader to use when rendering the contents of the frame buffer
  * @returns {H3DU.Batch3D} The created batch.
- * @memberof! H3DU.Batch3D
  */
 H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   "use strict";
@@ -507,7 +506,7 @@ H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   ret.addShape(shape);
   return ret;
 };
-/** @private */
+/** @ignore */
 H3DU.Batch3D._getMaterialBinder = function(material) {
   "use strict";
   if(material && material instanceof H3DU.Material) {

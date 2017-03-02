@@ -138,12 +138,24 @@ function DocCollection() {
     return this.docs[parent];
   };
   this.addMethod = function(parent, name, entry, longname) {
+    if(!parent) {
+      console.log("tried to add method" + [parent, name, longname]);
+      return;
+    }
     this.get(parent).methods[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addEvent = function(parent, name, entry, longname) {
+    if(!parent) {
+      console.log("tried to add member" + [parent, name, longname]);
+      return;
+    }
     this.get(parent).events[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addMember = function(parent, name, entry, longname) {
+    if(!parent) {
+      console.log("tried to add member" + [parent, name, longname]);
+      return;
+    }
     this.get(parent).members[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addConstructor = function(parent, entry) {
@@ -273,6 +285,9 @@ function registerLinks(docCollection, nodes) {
     if(node.undocumented === true) {
       return;
     }
+    if(node.ignore === true) {
+      return;
+    }
     if(node.access === "private") {
       return;
     }
@@ -290,6 +305,13 @@ function fillCollection(docCollection, nodes, parentlong) {
   nodes.forEach(function (node) {
     var i;
     var entry;
+    if(!parentlong && !node.undocumented && !node.ignore) {
+   // console.log([node.longname,node.undocumented,node.access,node.memberof,node.kind])
+      if(node.longname.indexOf("._") >= 0) {
+        console.log(node);
+      }
+    }
+    if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
     if(node.memberof !== parentlong)return;

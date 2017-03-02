@@ -15,7 +15,7 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 #### Parameters
 
 * `params` (Type: Array.&lt;Number>) (optional)<br>
-    An object as described in H3DU.Material#setParams. <i>Using this parameter as a <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the ambient color is deprecated since version 2.0.</i>
+    An object as described in <a href="H3DU.Material.md#H3DU.Material_setParams">H3DU.Material#setParams</a>. <i>Using this parameter as a <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the ambient color is deprecated since version 2.0.</i>
 * `diffuse` (Type: Array.&lt;Number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo"). <i>This parameter is deprecated.</i>
 * `specular` (Type: Array.&lt;Number>) (optional)<br>
@@ -40,15 +40,15 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 ### Methods
 
-* [.fromColor](#H3DU.Material.fromColor)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
-object from an RGBA color.
-* [.fromTexture](#H3DU.Material.fromTexture)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
-object from a texture to apply to a 3D object's surface.
-* [copy](#H3DU.Material_H3DU.Material_copy)<br>Clones this object's parameters to a new H3DU.Material
+* [copy](#H3DU.Material_copy)<br>Clones this object's parameters to a new H3DU.Material
 object and returns that object.
-* [setParams](#H3DU.Material_H3DU.Material_setParams)<br>Sets parameters for this material object.
-* [H3DU.Material.fromBasic](#H3DU.Material_H3DU.Material.fromBasic)<br>Creates a material with its emission color set to the given color.
-* [H3DU.Material.fromBasicTexture](#H3DU.Material_H3DU.Material.fromBasicTexture)<br>Creates a material with its emission texture set to the given texture.
+* [fromBasic](#H3DU.Material.fromBasic)<br>Creates a material with its emission color set to the given color.
+* [fromBasicTexture](#H3DU.Material.fromBasicTexture)<br>Creates a material with its emission texture set to the given texture.
+* [fromColor](#H3DU.Material.fromColor)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
+object from an RGBA color.
+* [fromTexture](#H3DU.Material.fromTexture)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
+object from a texture to apply to a 3D object's surface.
+* [setParams](#H3DU.Material_setParams)<br>Sets parameters for this material object.
 
 <a id='H3DU.Material_ambient'></a>
 ### H3DU.Material#ambient
@@ -172,8 +172,42 @@ Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md"
 
 Default Value: `null`
 
+ <a name='H3DU.Material_copy'></a>
+### H3DU.Material#copy()
+
+Clones this object's parameters to a new H3DU.Material
+object and returns that object. The material's texture
+maps and shader info, if any, won't be cloned, but rather, a reference
+to the same object will be used.
+
+#### Return Value
+
+A copy of this object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
+
+ <a name='H3DU.Material.fromBasic'></a>
+### (static) H3DU.Material.fromBasic()
+
+Creates a material with its emission color set to the given color.
+The effect will be that objects with that material will be drawn in that
+color without shading.
+
+#### Return Value
+
+A new material with the given emission color. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
+
+ <a name='H3DU.Material.fromBasicTexture'></a>
+### (static) H3DU.Material.fromBasicTexture()
+
+Creates a material with its emission texture set to the given texture.
+The effect will be that objects with that material will be drawn in that
+texture without shading.
+
+#### Return Value
+
+A new material with the given emission texture. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
+
  <a name='H3DU.Material.fromColor'></a>
-### H3DU.Material.fromColor(r, g, b, [a])
+### (static) H3DU.Material.fromColor(r, g, b, [a])
 
 Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
 object from an RGBA color.
@@ -194,7 +228,7 @@ object from an RGBA color.
 The resulting material object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
 
  <a name='H3DU.Material.fromTexture'></a>
-### H3DU.Material.fromTexture(texture)
+### (static) H3DU.Material.fromTexture(texture)
 
 Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
 object from a texture to apply to a 3D object's surface.
@@ -208,19 +242,7 @@ object from a texture to apply to a 3D object's surface.
 
 The resulting material object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
 
- <a name='H3DU.Material_H3DU.Material_copy'></a>
-### H3DU.Material#copy()
-
-Clones this object's parameters to a new H3DU.Material
-object and returns that object. The material's texture
-maps and shader info, if any, won't be cloned, but rather, a reference
-to the same object will be used.
-
-#### Return Value
-
-A copy of this object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
-
- <a name='H3DU.Material_H3DU.Material_setParams'></a>
+ <a name='H3DU.Material_setParams'></a>
 ### H3DU.Material#setParams(params)
 
 Sets parameters for this material object.
@@ -233,25 +255,3 @@ Sets parameters for this material object.
 #### Return Value
 
 This object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
-
- <a name='H3DU.Material_H3DU.Material.fromBasic'></a>
-### H3DU.Material#H3DU.Material.fromBasic()
-
-Creates a material with its emission color set to the given color.
-The effect will be that objects with that material will be drawn in that
-color without shading.
-
-#### Return Value
-
-A new material with the given emission color. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
-
- <a name='H3DU.Material_H3DU.Material.fromBasicTexture'></a>
-### H3DU.Material#H3DU.Material.fromBasicTexture()
-
-Creates a material with its emission texture set to the given texture.
-The effect will be that objects with that material will be drawn in that
-texture without shading.
-
-#### Return Value
-
-A new material with the given emission texture. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)

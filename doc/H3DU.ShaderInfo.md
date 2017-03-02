@@ -45,27 +45,45 @@ with this object by default:<ul>
 
 ### Methods
 
-* [.getBasicVertex](#H3DU.ShaderInfo.getBasicVertex)<br>Gets the text of a basic vertex shader.
-* [.getDefaultFragment](#H3DU.ShaderInfo.getDefaultFragment)<br>Gets the text of the default fragment shader.
-* [.getDefaultVertex](#H3DU.ShaderInfo.getDefaultVertex)<br>Gets the text of the default vertex shader.
-* [.makeCopyEffect](#H3DU.ShaderInfo.makeCopyEffect)<br>Generates source code for a shader program that copies the colors of a texture.
-* [.makeEdgeDetectEffect](#H3DU.ShaderInfo.makeEdgeDetectEffect)<br>Generates source code for a shader program that generates a two-color texture showing
-the source texture's edges.
-* [.makeEffect](#H3DU.ShaderInfo.makeEffect)<br>Generates source code for a shader program for applying
-a raster effect (postprocessing effect) to a texture.
-* [.makeEffectFragment](#H3DU.ShaderInfo.makeEffectFragment)<br>Generates source code for a fragment shader for applying
-a raster effect to a texture.
-* [.makeInvertEffect](#H3DU.ShaderInfo.makeInvertEffect)<br>Generates source code for a shader program that inverts the colors of a texture.
-* [copy](#H3DU.ShaderInfo_H3DU.ShaderInfo_copy)<br>Returns a new shader info object with the information in this object
+* [copy](#H3DU.ShaderInfo_copy)<br>Returns a new shader info object with the information in this object
 copied to that object.
-* [dispose](#H3DU.ShaderInfo_H3DU.ShaderInfo_dispose)<br><b>Deprecated: Yes</b>
-* [getFragmentShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader)<br>Gets the text of the fragment shader stored in this object.
-* [getVertexShader](#H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader)<br>Gets the text of the vertex shader stored in this object.
-* [setUniformSemantic](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniformSemantic)<br>Sets a semantic for the given named uniform.
-* [setUniforms](#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms)<br>Sets the values of one or more uniforms used by this shader program.
+* [dispose](#H3DU.ShaderInfo_dispose)<br><b>Deprecated: Yes</b>
+* [getBasicVertex](#H3DU.ShaderInfo.getBasicVertex)<br>Gets the text of a basic vertex shader.
+* [getDefaultFragment](#H3DU.ShaderInfo.getDefaultFragment)<br>Gets the text of the default fragment shader.
+* [getDefaultVertex](#H3DU.ShaderInfo.getDefaultVertex)<br>Gets the text of the default vertex shader.
+* [getFragmentShader](#H3DU.ShaderInfo_getFragmentShader)<br>Gets the text of the fragment shader stored in this object.
+* [getVertexShader](#H3DU.ShaderInfo_getVertexShader)<br>Gets the text of the vertex shader stored in this object.
+* [makeCopyEffect](#H3DU.ShaderInfo.makeCopyEffect)<br>Generates source code for a shader program that copies the colors of a texture.
+* [makeEdgeDetectEffect](#H3DU.ShaderInfo.makeEdgeDetectEffect)<br>Generates source code for a shader program that generates a two-color texture showing
+the source texture's edges.
+* [makeEffect](#H3DU.ShaderInfo.makeEffect)<br>Generates source code for a shader program for applying
+a raster effect (postprocessing effect) to a texture.
+* [makeEffectFragment](#H3DU.ShaderInfo.makeEffectFragment)<br>Generates source code for a fragment shader for applying
+a raster effect to a texture.
+* [makeInvertEffect](#H3DU.ShaderInfo.makeInvertEffect)<br>Generates source code for a shader program that inverts the colors of a texture.
+* [setSemantic](#H3DU.ShaderInfo_setSemantic)<br>Sets the semantic for a vertex attribute.
+* [setUniformSemantic](#H3DU.ShaderInfo_setUniformSemantic)<br>Sets a semantic for the given named uniform.
+* [setUniforms](#H3DU.ShaderInfo_setUniforms)<br>Sets the values of one or more uniforms used by this shader program.
+
+ <a name='H3DU.ShaderInfo_copy'></a>
+### H3DU.ShaderInfo#copy()
+
+Returns a new shader info object with the information in this object
+copied to that object.
+
+#### Return Value
+
+Return value. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
+
+ <a name='H3DU.ShaderInfo_dispose'></a>
+### H3DU.ShaderInfo#dispose()
+
+<b>Deprecated: Yes</b>
+
+Has no effect. A method introduced for compatibility reasons.
 
  <a name='H3DU.ShaderInfo.getBasicVertex'></a>
-### H3DU.ShaderInfo.getBasicVertex()
+### (static) H3DU.ShaderInfo.getBasicVertex()
 
 Gets the text of a basic vertex shader.
 
@@ -74,7 +92,7 @@ Gets the text of a basic vertex shader.
 The resulting shader text. (Type: String)
 
  <a name='H3DU.ShaderInfo.getDefaultFragment'></a>
-### H3DU.ShaderInfo.getDefaultFragment()
+### (static) H3DU.ShaderInfo.getDefaultFragment()
 
 Gets the text of the default fragment shader.
 
@@ -83,7 +101,7 @@ Gets the text of the default fragment shader.
 The resulting shader text. (Type: String)
 
  <a name='H3DU.ShaderInfo.getDefaultVertex'></a>
-### H3DU.ShaderInfo.getDefaultVertex()
+### (static) H3DU.ShaderInfo.getDefaultVertex()
 
 Gets the text of the default vertex shader. Putting "#define SHADING\n"
 at the start of the return value enables the lighting model.
@@ -92,8 +110,26 @@ at the start of the return value enables the lighting model.
 
 The resulting shader text. (Type: String)
 
+ <a name='H3DU.ShaderInfo_getFragmentShader'></a>
+### H3DU.ShaderInfo#getFragmentShader()
+
+Gets the text of the fragment shader stored in this object.
+
+#### Return Value
+
+return value. (Type: String)
+
+ <a name='H3DU.ShaderInfo_getVertexShader'></a>
+### H3DU.ShaderInfo#getVertexShader()
+
+Gets the text of the vertex shader stored in this object.
+
+#### Return Value
+
+return value. (Type: String)
+
  <a name='H3DU.ShaderInfo.makeCopyEffect'></a>
-### H3DU.ShaderInfo.makeCopyEffect()
+### (static) H3DU.ShaderInfo.makeCopyEffect()
 
 Generates source code for a shader program that copies the colors of a texture.
 
@@ -102,7 +138,7 @@ Generates source code for a shader program that copies the colors of a texture.
 The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
  <a name='H3DU.ShaderInfo.makeEdgeDetectEffect'></a>
-### H3DU.ShaderInfo.makeEdgeDetectEffect()
+### (static) H3DU.ShaderInfo.makeEdgeDetectEffect()
 
 Generates source code for a shader program that generates a two-color texture showing
 the source texture's edges.
@@ -112,7 +148,7 @@ the source texture's edges.
 The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
  <a name='H3DU.ShaderInfo.makeEffect'></a>
-### H3DU.ShaderInfo.makeEffect(functionCode)
+### (static) H3DU.ShaderInfo.makeEffect(functionCode)
 
 Generates source code for a shader program for applying
 a raster effect (postprocessing effect) to a texture.
@@ -131,7 +167,7 @@ a raster effect (postprocessing effect) to a texture.
 The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
  <a name='H3DU.ShaderInfo.makeEffectFragment'></a>
-### H3DU.ShaderInfo.makeEffectFragment(functionCode)
+### (static) H3DU.ShaderInfo.makeEffectFragment(functionCode)
 
 Generates source code for a fragment shader for applying
 a raster effect to a texture.
@@ -146,7 +182,7 @@ a raster effect to a texture.
 The source text of the resulting fragment shader. (Type: String)
 
  <a name='H3DU.ShaderInfo.makeInvertEffect'></a>
-### H3DU.ShaderInfo.makeInvertEffect()
+### (static) H3DU.ShaderInfo.makeInvertEffect()
 
 Generates source code for a shader program that inverts the colors of a texture.
 
@@ -154,42 +190,26 @@ Generates source code for a shader program that inverts the colors of a texture.
 
 The resulting shader program. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
- <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_copy'></a>
-### H3DU.ShaderInfo#copy()
+ <a name='H3DU.ShaderInfo_setSemantic'></a>
+### H3DU.ShaderInfo#setSemantic(name, semantic, semanticIndex)
 
-Returns a new shader info object with the information in this object
-copied to that object.
+Sets the semantic for a vertex attribute.
 
-#### Return Value
+#### Parameters
 
-Return value. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
-
- <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_dispose'></a>
-### H3DU.ShaderInfo#dispose()
-
-<b>Deprecated: Yes</b>
-
-Has no effect. A method introduced for compatibility reasons.
-
- <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader'></a>
-### H3DU.ShaderInfo#getFragmentShader()
-
-Gets the text of the fragment shader stored in this object.
+* `name` (Type: String)<br>
+    Name of the attribute.
+* `semantic` (Type: Number | String)<br>
+    An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `semanticIndex` (Type: Number)<br>
+    The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 
 #### Return Value
 
-return value. (Type: String)
+This object. Throws an error if the given
+semantic is unsupported. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
- <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader'></a>
-### H3DU.ShaderInfo#getVertexShader()
-
-Gets the text of the vertex shader stored in this object.
-
-#### Return Value
-
-return value. (Type: String)
-
- <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_setUniformSemantic'></a>
+ <a name='H3DU.ShaderInfo_setUniformSemantic'></a>
 ### H3DU.ShaderInfo#setUniformSemantic(u, sem)
 
 Sets a semantic for the given named uniform.
@@ -205,7 +225,7 @@ Sets a semantic for the given named uniform.
 
 This object. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
- <a name='H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms'></a>
+ <a name='H3DU.ShaderInfo_setUniforms'></a>
 ### H3DU.ShaderInfo#setUniforms(uniforms)
 
 Sets the values of one or more uniforms used by this shader program.

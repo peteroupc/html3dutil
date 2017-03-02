@@ -71,7 +71,7 @@ H3DU.RenderPass3D = function(batch, parameters) {
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.
  * @returns {H3DU.RenderPass3D} This object.
- * @memberof! H3DU.RenderPass3D#
+ * @instance
  */
 H3DU.RenderPass3D.prototype.setParams = function(parameters) {
   "use strict";

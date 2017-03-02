@@ -17,7 +17,7 @@
  * width and height each equal to a power of 2, such as 2, 4, 8, 16,
  * and 32.
  * @class
- * @alias H3DU.Texture
+ * @memberof H3DU
  * @param {String} name URL of the texture data. Based on the
  * URL, the texture may be loaded via the JavaScript DOM's Image
  * class. However, this constructor will not load that image yet.
@@ -36,7 +36,7 @@ H3DU.Texture = function(name) {
  * Gets this texture's known width.
  * @returns {Number} This texture's width in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
- * @memberof! H3DU.Texture#
+ * @instance
  */
 H3DU.Texture.prototype.getWidth = function() {
   "use strict";
@@ -46,13 +46,13 @@ H3DU.Texture.prototype.getWidth = function() {
  * Gets this texture's known height.
  * @returns {Number} This texture's height in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
- * @memberof! H3DU.Texture#
+ * @instance
  */
 H3DU.Texture.prototype.getHeight = function() {
   "use strict";
   return this.height;
 };
-/** @private */
+/** @ignore */
 H3DU.Texture.prototype._toInfo = function() {
   "use strict";
   return new H3DU.TextureInfo({
@@ -77,7 +77,7 @@ H3DU.Texture.prototype._toInfo = function() {
  * be used as the coordinates (causing wraparound).
  * The default is false.
  * @returns {H3DU.Texture} This object.
- * @memberof! H3DU.Texture#
+ * @instance
  */
 H3DU.Texture.prototype.setClamp = function(clamp) {
   "use strict";
@@ -98,7 +98,6 @@ H3DU.Texture.prototype.setClamp = function(clamp) {
  * the same texture more than once.
  * @returns {Promise} A promise that resolves when the texture
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
- * @memberof! H3DU.Texture
  */
 H3DU.Texture.loadTexture = function(info, textureCache) {
  // Get cached texture
@@ -140,7 +139,6 @@ H3DU.Texture.loadTexture = function(info, textureCache) {
  * @param {Uint8Array} width Width, in pixels, of the texture.
  * @param {Uint8Array} height Height, in pixels, of the texture.
  * @returns {H3DU.Texture} The new H3DU.Texture object.
- * @memberof! H3DU.Texture
  */
 H3DU.Texture.fromUint8Array = function(array, width, height) {
   "use strict";
@@ -155,7 +153,7 @@ H3DU.Texture.fromUint8Array = function(array, width, height) {
   return texImage;
 };
 
-/** @private */
+/** @ignore */
 H3DU.Texture.loadTga = function(name) {
   "use strict";
   return H3DU.loadFileFromUrl(name, "arraybuffer")
@@ -225,7 +223,7 @@ H3DU.Texture.loadTga = function(name) {
  });
 };
 
-/** @private */
+/** @ignore */
 H3DU.Texture.prototype.loadImage = function() {
   "use strict";
   if(typeof this.image !== "undefined" && this.image !== null) {
@@ -281,7 +279,7 @@ H3DU.Texture.prototype.loadImage = function() {
 };
 /**
  * Disposes resources used by this texture.
- * @memberof! H3DU.Texture#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.Texture.prototype.dispose = function() {
@@ -305,18 +303,18 @@ H3DU.Texture.prototype.dispose = function() {
 /**
  * Gets the name of this texture.
  * @returns {String} Return value.
- * @memberof! H3DU.Texture#
+ * @instance
  */
 H3DU.Texture.prototype.getName = function() {
   "use strict";
   return name;
 };
-/** @private */
+/** @ignore */
 H3DU.Texture._texOrString = function(tex) {
   "use strict";
   return typeof tex === "string" ? new H3DU.Texture(tex) : tex;
 };
-/** @private */
+/** @ignore */
 H3DU.Texture._texOrInfoOrString = function(tex) {
   "use strict";
   if(typeof tex === "undefined" || tex === null)return null;
@@ -336,7 +334,7 @@ H3DU.Texture._texOrInfoOrString = function(tex) {
  * X axis, the negative X axis, positive Y, negative Y, positive Z,
  * and negative Z.
  * @class
- * @alias H3DU.CubeMap
+ * @memberof H3DU
  */
 H3DU.CubeMap = function(textures) {
   "use strict";
@@ -350,7 +348,7 @@ H3DU.CubeMap = function(textures) {
  * Gets this texture's known width.
  * @returns {Number} This texture's width in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
- * @memberof! H3DU.CubeMap#
+ * @instance
  */
 H3DU.CubeMap.prototype.getWidth = function() {
   "use strict";
@@ -360,7 +358,7 @@ H3DU.CubeMap.prototype.getWidth = function() {
  * Gets this texture's known height.
  * @returns {Number} This texture's height in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
- * @memberof! H3DU.CubeMap#
+ * @instance
  */
 H3DU.CubeMap.prototype.getHeight = function() {
   "use strict";
@@ -373,7 +371,7 @@ H3DU.CubeMap.prototype.getHeight = function() {
  * a texture information object,
  * or a string with the URL of the texture data.
  * @returns {H3DU.CubeMap} This object.
- * @memberof! H3DU.CubeMap#
+ * @instance
  */
 H3DU.CubeMap.prototype.setTexture = function(index, texture) {
   "use strict";
@@ -385,14 +383,14 @@ H3DU.CubeMap.prototype.setTexture = function(index, texture) {
  * Gets a texture used by this cube map.
  * @param {Number} index Texture index to get.
  * @returns {H3DU.Texture} The texture with the given index.
- * @memberof! H3DU.CubeMap#
+ * @instance
  */
 H3DU.CubeMap.prototype.getTexture = function(index) {
   "use strict";
   if(index < 0 || index >= 6)return this;
   return this.textures[index];
 };
-/** @private */
+/** @ignore */
 H3DU.CubeMap.prototype.loadImage = function() {
   "use strict";
   var i;

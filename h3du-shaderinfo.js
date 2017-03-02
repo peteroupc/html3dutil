@@ -36,7 +36,7 @@
  * <li><code>inverseView</code> - Inverse view matrix.</li>
  * </ul>
  * @class
- * @alias H3DU.ShaderInfo
+ * @memberof H3DU
  * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
  * ES Shading Language (GLSL). If null, a default
  * vertex shader is used instead.
@@ -73,7 +73,7 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
  * @param {String} u The name of the uniform.
  * @param {Number} sem A uniform semantic given in {@link H3DU.Semantic}.
  * @returns {H3DU.ShaderInfo} This object.
- * @memberof! H3DU.ShaderInfo#
+ * @instance
  */
 H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
   "use strict";
@@ -84,7 +84,7 @@ H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
 /**
  * Gets the text of the vertex shader stored in this object.
  * @returns {String} return value.
- * @memberof! H3DU.ShaderInfo#
+ * @instance
  */
 H3DU.ShaderInfo.prototype.getVertexShader = function() {
   "use strict";
@@ -93,7 +93,7 @@ H3DU.ShaderInfo.prototype.getVertexShader = function() {
 /**
  * Gets the text of the fragment shader stored in this object.
  * @returns {String} return value.
- * @memberof! H3DU.ShaderInfo#
+ * @instance
  */
 H3DU.ShaderInfo.prototype.getFragmentShader = function() {
   "use strict";
@@ -103,7 +103,7 @@ H3DU.ShaderInfo.prototype.getFragmentShader = function() {
 /**
  * Has no effect. A method introduced for compatibility reasons.
  * @deprecated
- * @memberof! H3DU.ShaderInfo#
+ * @instance
  */
 H3DU.ShaderInfo.prototype.dispose = function() {
   "use strict";
@@ -120,7 +120,7 @@ H3DU.ShaderInfo.prototype.dispose = function() {
  * This is ignored if "semantic" is a string.
  * @returns {H3DU.ShaderInfo} This object. Throws an error if the given
  * semantic is unsupported.
- * @memberof! H3DU.ShaderProgram#
+ * @instance
  */
 H3DU.ShaderInfo.prototype.setSemantic = function(name, sem, index) {
   "use strict";
@@ -142,7 +142,7 @@ H3DU.ShaderInfo.prototype.setSemantic = function(name, sem, index) {
  * Returns a new shader info object with the information in this object
  * copied to that object.
  * @returns {H3DU.ShaderInfo} Return value.
- * @memberof! H3DU.ShaderInfo#
+ * @instance
  */
 H3DU.ShaderInfo.prototype.copy = function() {
   "use strict";
@@ -176,14 +176,14 @@ H3DU.ShaderInfo.prototype.copy = function() {
  * 9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
  * respectively, or a Number if the uniform is a "float" or "int".
  * @returns {H3DU.ShaderInfo} This object.
- * @memberof! H3DU.ShaderInfo#
+ * @instance
  */
 H3DU.ShaderInfo.prototype.setUniforms = function(uniforms) {
   "use strict";
   H3DU.ShaderInfo._setUniformsInternal(uniforms, this.uniformValues, null);
   return this;
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, changedUniforms) {
   "use strict";
   var v = uniforms[i];
@@ -248,7 +248,7 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
   "use strict";
   for(var i = 0; i < len; i++) {
@@ -264,7 +264,7 @@ H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
   return false;
 };
 
-/** @private */
+/** @ignore */
 H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUniforms) {
   "use strict";
   var i;
@@ -274,7 +274,7 @@ H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, change
     H3DU.ShaderInfo._setUniformInternal(uniforms, outputUniforms, i, changedUniforms);
   }
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderInfo.fragmentShaderHeader = function() {
   "use strict";
   return "" +
@@ -292,7 +292,6 @@ H3DU.ShaderInfo.fragmentShaderHeader = function() {
  * a raster effect to a texture.
  * @param {String} functionCode See {@link H3DU.ShaderInfo.makeEffect}.
  * @returns {String} The source text of the resulting fragment shader.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.makeEffectFragment = function(functionCode) {
   "use strict";
@@ -313,7 +312,6 @@ H3DU.ShaderInfo.makeEffectFragment = function(functionCode) {
 /**
  * Generates source code for a shader program that copies the colors of a texture.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.makeCopyEffect = function() {
   "use strict";
@@ -345,7 +343,6 @@ H3DU.ShaderInfo.makeCopyEffect = function() {
  * this requirement, the shader code is also free to define additional uniforms,
  * constants, functions, and so on (but not another "main" function).
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.makeEffect = function(functionCode) {
   "use strict";
@@ -356,7 +353,6 @@ H3DU.ShaderInfo.makeEffect = function(functionCode) {
 /**
  * Generates source code for a shader program that inverts the colors of a texture.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.makeInvertEffect = function() {
   "use strict";
@@ -371,7 +367,6 @@ H3DU.ShaderInfo.makeInvertEffect = function() {
  * Generates source code for a shader program that generates a two-color texture showing
  * the source texture's edges.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
   "use strict";
@@ -409,7 +404,6 @@ H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
 /**
  * Gets the text of a basic vertex shader.
  * @returns {String} The resulting shader text.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.getBasicVertex = function() {
   "use strict";
@@ -438,7 +432,6 @@ H3DU.ShaderInfo.getBasicVertex = function() {
  * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
  * at the start of the return value enables the lighting model.
  * @returns {String} The resulting shader text.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.getDefaultVertex = function() {
   "use strict";
@@ -489,7 +482,6 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
 /**
  * Gets the text of the default fragment shader.
  * @returns {String} The resulting shader text.
- * @memberof! H3DU.ShaderInfo
  */
 H3DU.ShaderInfo.getDefaultFragment = function() {
   "use strict";

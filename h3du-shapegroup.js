@@ -13,7 +13,7 @@
  * can hold both {@link H3DU.Shape} objects and
  * other {@link H3DU.ShapeGroup} objects.
  * @class
- * @alias H3DU.ShapeGroup
+ * @memberof H3DU
  */
 H3DU.ShapeGroup = function() {
   "use strict";
@@ -35,7 +35,7 @@ H3DU.ShapeGroup = function() {
  * Returns the number of shapes and/or shape groups that
  * are direct children of this shape group.
  * @returns {Number} Return value.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.shapeCount = function() {
   "use strict";
@@ -47,7 +47,7 @@ H3DU.ShapeGroup.prototype.shapeCount = function() {
  * @param {Number} index Integer index, starting from 0, of the shape or shape group to set.
  * @returns {H3DU.Shape|H3DU.ShapeGroup} The shape or shape group located
  * in this shape group at the given index, or null if none is found there.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.getShape = function(index) {
   "use strict";
@@ -58,7 +58,7 @@ H3DU.ShapeGroup.prototype.getShape = function(index) {
  * @param {Number} index Integer index, starting from 0, to set the shape or shape group at.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape Shape object to set at the given index.
  * @returns {H3DU.ShapeGroup} This object.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.setShape = function(index, shape) {
   "use strict";
@@ -74,7 +74,7 @@ H3DU.ShapeGroup.prototype.setShape = function(index, shape) {
  * will be copied using their <code>copy()</code> method.
  * The copied shape group won't have a parent.
  * @returns {H3DU.ShapeGroup} A copy of this shape group.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.copy = function() {
   "use strict";
@@ -94,7 +94,7 @@ H3DU.ShapeGroup.prototype.copy = function() {
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
  * Throws an error if null.
  * @returns {H3DU.ShapeGroup} This object.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.addShape = function(shape) {
   "use strict";
@@ -107,7 +107,7 @@ H3DU.ShapeGroup.prototype.addShape = function(shape) {
  * Sets whether this shape group will be drawn on rendering.
  * @param {Boolean} value True if this shape group will be visible; otherwise, false.
  * @returns {H3DU.ShapeGroup} This object.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.setVisible = function(value) {
   "use strict";
@@ -117,7 +117,7 @@ H3DU.ShapeGroup.prototype.setVisible = function(value) {
 /**
  * Gets whether this shape group will be drawn on rendering.
  * @returns {Boolean} value True if this shape group will be visible; otherwise, false.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.getVisible = function() {
   "use strict";
@@ -126,7 +126,7 @@ H3DU.ShapeGroup.prototype.getVisible = function() {
 /**
  * Gets a reference to the transform used by this shape group object.
  * @returns {H3DU.Transform} Return value.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.getTransform = function() {
   "use strict";
@@ -136,7 +136,7 @@ H3DU.ShapeGroup.prototype.getTransform = function() {
  * Gets a copy of the transformation needed to transform
  * this shape group's coordinates to world coordinates.
  * @returns {H3DU.Transform} A 4x4 matrix.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.getMatrix = function() {
   "use strict";
@@ -165,7 +165,7 @@ H3DU.ShapeGroup.prototype.getMatrix = function() {
  * with the child shape's transform as it renders the child shape.
  * @param {H3DU.Transform} transform The transform to
  * copy for the use of this shape group.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setTransform = function(transform) {
@@ -176,7 +176,7 @@ H3DU.ShapeGroup.prototype.setTransform = function(transform) {
 /**
  * Sets the material used by all shapes in this shape group.
  * @param {H3DU.Material} material The material to use.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setMaterial = function(material) {
@@ -198,7 +198,7 @@ H3DU.ShapeGroup.prototype.setMaterial = function(material) {
  * demo in the HTML 3D Library to see how this is done).
  * NOTE: The default shader program assumes that the texture is in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setTexture = function(material) {
@@ -213,7 +213,7 @@ H3DU.ShapeGroup.prototype.setTexture = function(material) {
  * @param {H3DU.ShaderInfo} material Source code for a WebGL
  * shader program. <i>Using a {@link H3DU.ShaderProgram} here
  * is deprecated.</i>
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.ShapeGroup.prototype.setShader = function(material) {
@@ -227,7 +227,7 @@ H3DU.ShapeGroup.prototype.setShader = function(material) {
  * Removes all instances of a 3D shape from this shape group
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
  * @returns {H3DU.ShapeGroup} This object.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.removeShape = function(shape) {
   "use strict";
@@ -250,7 +250,7 @@ H3DU.ShapeGroup.prototype.removeShape = function(shape) {
  * last three are the largest-valued X, Y, and Z coordinates.
  * If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
  * -Inf, -Inf].
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.getBounds = function() {
   "use strict";
@@ -285,7 +285,7 @@ H3DU.ShapeGroup.prototype.getBounds = function() {
 /**
  * Gets the number of vertices composed by all shapes in this shape group.
  * @returns {Number} Return value.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.vertexCount = function() {
   "use strict";
@@ -299,7 +299,7 @@ H3DU.ShapeGroup.prototype.vertexCount = function() {
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this shape group.
  * @returns {Number} Return value.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.primitiveCount = function() {
   "use strict";
@@ -320,7 +320,7 @@ H3DU.ShapeGroup.prototype.primitiveCount = function() {
  * @param {Number} y Y coordinate.
  * @param {Number} z Z coordinate.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.setPosition = function(x, y, z) {
   "use strict";
@@ -334,7 +334,7 @@ H3DU.ShapeGroup.prototype.setPosition = function(x, y, z) {
  * rather than the transform for each shape in the group.
  * @param {Array<Number>} quat A four-element array describing the rotation.
  * @returns {H3DU.Shape} This object.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.setQuaternion = function(quat) {
   "use strict";
@@ -351,7 +351,7 @@ H3DU.ShapeGroup.prototype.setQuaternion = function(quat) {
  * @param {Number} y Scaling factor for this object's height.
  * @param {Number} z Scaling factor for this object's depth.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.ShapeGroup#
+ * @instance
  */
 H3DU.ShapeGroup.prototype.setScale = function(x, y, z) {
   "use strict";

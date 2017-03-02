@@ -19,11 +19,11 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [getFPS](#H3DU.FrameCounter_H3DU.FrameCounter_getFPS)<br>Gets the calculated frames per second, based
+* [getFPS](#H3DU.FrameCounter_getFPS)<br>Gets the calculated frames per second, based
 on how often the update method was called.
-* [update](#H3DU.FrameCounter_H3DU.FrameCounter_update)<br>Updates the state for determining the frame count.
+* [update](#H3DU.FrameCounter_update)<br>Updates the state for determining the frame count.
 
- <a name='H3DU.FrameCounter_H3DU.FrameCounter_getFPS'></a>
+ <a name='H3DU.FrameCounter_getFPS'></a>
 ### H3DU.FrameCounter#getFPS()
 
 Gets the calculated frames per second, based
@@ -33,7 +33,7 @@ on how often the update method was called.
 
 Return value. (Type: Object)
 
- <a name='H3DU.FrameCounter_H3DU.FrameCounter_update'></a>
+ <a name='H3DU.FrameCounter_update'></a>
 ### H3DU.FrameCounter#update()
 
 Updates the state for determining the frame count.

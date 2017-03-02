@@ -20,7 +20,7 @@
  * width and height each equal to a power of 2, such as 2, 4, 8, 16,
  * and 32.
  * @class
- * @alias H3DU.TextureInfo
+ * @memberof H3DU
  * @param {Object} [params] An object as described in {@link H3DU.TextureInfo.setParams}.
  */
 H3DU.TextureInfo = function(params) {
@@ -43,7 +43,7 @@ H3DU.TextureInfo = function(params) {
  * object.
  * @param {H3DU.TextureInfo} [other] Texture information object to copy.
  * @returns {H3DU.TextureInfo} This object.
- * @memberof! H3DU.TextureInfo#
+ * @instance
  */
 H3DU.TextureInfo.prototype.copyFrom = function(other) {
   "use strict";
@@ -82,7 +82,7 @@ H3DU.TextureInfo.prototype.copyFrom = function(other) {
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
  * unless otherwise noted.
  * @returns {H3DU.TextureInfo} This object.
- * @memberof! H3DU.TextureInfo#
+ * @instance
  */
 H3DU.TextureInfo.prototype.setParams = function(params) {
   "use strict";
@@ -120,7 +120,7 @@ H3DU.TextureInfo.prototype.setParams = function(params) {
   }
   return this;
 };
-/** @private */
+/** @ignore */
 H3DU.TextureInfo._texInfoOrString = function(tex) {
   "use strict";
   return typeof tex === "string" ? new H3DU.TextureInfo({"uri":tex}) : tex;

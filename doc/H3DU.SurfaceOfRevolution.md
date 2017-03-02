@@ -5,7 +5,7 @@
  <a name='H3DU.SurfaceOfRevolution'></a>
 ### H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
-A surface evaluator object for a surface of revolution, which results by revolving
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution, which results by revolving
 an X/Y curve around an axis.
 
 This class is considered a supplementary class to the
@@ -21,7 +21,7 @@ the HTML 3D Library. Example:
 #### Parameters
 
 * `curve` (Type: Object)<br>
-    A curve evaluator object that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
+    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
 
  If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must restrict the curve definition to no more than half of the curve.
 * `minval` (Type: Number)<br>
@@ -33,16 +33,39 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [.fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a surface evaluator object for a surface of revolution
+* [endpoints](#H3DU.SurfaceOfRevolution_endpoints)<br>TODO: Not documented yet.
+* [evaluate](#H3DU.SurfaceOfRevolution_evaluate)<br>TODO: Not documented yet.
+* [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
-* [.torus](#H3DU.SurfaceOfRevolution.torus)<br>A surface evaluator object for a torus, a special case of a surface of revolution.
-* [endpoints](#H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_endpoints)<br>TODO: Not documented yet.
-* [evaluate](#H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_evaluate)<br>TODO: Not documented yet.
+* [torus](#H3DU.SurfaceOfRevolution.torus)<br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
+
+ <a name='H3DU.SurfaceOfRevolution_endpoints'></a>
+### H3DU.SurfaceOfRevolution#endpoints()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+Return value. (Type: *)
+
+ <a name='H3DU.SurfaceOfRevolution_evaluate'></a>
+### H3DU.SurfaceOfRevolution#evaluate(u, v)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `u` (Type: *)
+* `v` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
  <a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
-### H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
+### (static) H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
 
-Creates a surface evaluator object for a surface of revolution
+Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 The resulting surface will have a circular cross section
 along its length.
@@ -92,9 +115,9 @@ which runs from 5 to 10 units, and with a radius of 2 units.
     5, 10);
 
  <a name='H3DU.SurfaceOfRevolution.torus'></a>
-### H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])
+### (static) H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])
 
-A surface evaluator object for a torus, a special case of a surface of revolution.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
 #### Parameters
 
@@ -103,33 +126,10 @@ A surface evaluator object for a torus, a special case of a surface of revolutio
 * `innerRadius` (Type: Number)<br>
     Radius from the inner edge to the innermost part of the torus.
 * `curve` (Type: Object) (optional)<br>
-    A curve evaluator object that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section.
+    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section.
 * `axis` (Type: Array.&lt;Number>) (optional)<br>
     Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value
 
 Return value. (Type: <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a>)
-
- <a name='H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_endpoints'></a>
-### H3DU.SurfaceOfRevolution#endpoints()
-
-TODO: Not documented yet.
-
-#### Return Value
-
-Return value. (Type: *)
-
- <a name='H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_evaluate'></a>
-### H3DU.SurfaceOfRevolution#evaluate(u, v)
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `u` (Type: *)
-* `v` (Type: *)
-
-#### Return Value
-
-Return value. (Type: *)

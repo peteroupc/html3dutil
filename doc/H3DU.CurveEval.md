@@ -25,55 +25,20 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 
 ### Methods
 
-* [.findEndPoints](#H3DU.CurveEval.findEndPoints)<br>Finds the end points of the curve described by the given curve evaluator object.
-* [.findTangent](#H3DU.CurveEval.findTangent)<br>Finds an approximate tangent (derivative) for the given curve evaluator object
-at the given U coordinate.
-* [color](#H3DU.CurveEval_H3DU.CurveEval_color)<br>Specifies a parametric curve function for generating color values.
-* [evalCurve](#H3DU.CurveEval_H3DU.CurveEval_evalCurve)<br>Generates vertices and attribute values that follow a parametric curve
+* [color](#H3DU.CurveEval_color)<br>Specifies a parametric curve function for generating color values.
+* [evalCurve](#H3DU.CurveEval_evalCurve)<br>Generates vertices and attribute values that follow a parametric curve
 function.
-* [evalOne](#H3DU.CurveEval_H3DU.CurveEval_evalOne)<br>Generates vertex positions and attributes based on a point
+* [evalOne](#H3DU.CurveEval_evalOne)<br>Generates vertex positions and attributes based on a point
 in a parametric curve.
-* [normal](#H3DU.CurveEval_H3DU.CurveEval_normal)<br><b>Deprecated: May be removed in the future; it makes little sense
+* [findEndPoints](#H3DU.CurveEval.findEndPoints)<br>Finds the end points of the curve described by the given <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a>.
+* [findTangent](#H3DU.CurveEval.findTangent)<br>Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">tangent (derivative)</a> for the given curve evaluator object
+at the given U coordinate.
+* [normal](#H3DU.CurveEval_normal)<br><b>Deprecated: May be removed in the future; it makes little sense
 to generate normals for a curve.</b>
-* [texCoord](#H3DU.CurveEval_H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
-* [vertex](#H3DU.CurveEval_H3DU.CurveEval_vertex)<br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
+* [texCoord](#H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
+* [vertex](#H3DU.CurveEval_vertex)<br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
 
- <a name='H3DU.CurveEval.findEndPoints'></a>
-### H3DU.CurveEval.findEndPoints(e)
-
-Finds the end points of the curve described by the given curve evaluator object.
-This method calls the evaluator's <code>endpoints</code>
-method if it implements it; otherwise, returns <code>[0, 1]</code>
-
-#### Parameters
-
-* `e` (Type: Object)<br>
-    An object described in H3DU.CurveEval#vertex.
-
-#### Return Value
-
-A two-element array giving the curve's end points. (Type: Array.&lt;Number>)
-
- <a name='H3DU.CurveEval.findTangent'></a>
-### H3DU.CurveEval.findTangent(e, u)
-
-Finds an approximate tangent (derivative) for the given curve evaluator object
-at the given U coordinate. This method calls the evaluator's <code>tangent</code>
-method if it implements it; otherwise, does a numerical differentiation
-with respect to the U axis using the <code>evaluate</code> method.
-
-#### Parameters
-
-* `e` (Type: Object)<br>
-    An object described in H3DU.CurveEval#vertex.
-* `u` (Type: Number)<br>
-    U coordinate of the curve to evaluate.
-
-#### Return Value
-
-A tangent vector. (Type: Array.&lt;Number>)
-
- <a name='H3DU.CurveEval_H3DU.CurveEval_color'></a>
+ <a name='H3DU.CurveEval_color'></a>
 ### H3DU.CurveEval#color(evaluator)
 
 Specifies a parametric curve function for generating color values.
@@ -81,13 +46,13 @@ Specifies a parametric curve function for generating color values.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See H3DU.CurveEval#vertex. </ul>
+    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">H3DU.CurveEval#vertex</a>. </ul>
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
- <a name='H3DU.CurveEval_H3DU.CurveEval_evalCurve'></a>
+ <a name='H3DU.CurveEval_evalCurve'></a>
 ### H3DU.CurveEval#evalCurve(mesh, [mode], [n], [u1], [u2])
 
 Generates vertices and attribute values that follow a parametric curve
@@ -102,15 +67,15 @@ function.
 * `n` (Type: Number) (optional)<br>
     Number of subdivisions of the curve to be drawn. Default is 24.
 * `u1` (Type: Number) (optional)<br>
-    Starting point of the curve. Default is the starting coordinate given by the curve evaluator object, or 0 if not given.
+    Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a>, or 0 if not given.
 * `u2` (Type: Number) (optional)<br>
-    Ending point of the curve. Default is the ending coordinate given by the curve evaluator object, or 1 if not given.
+    Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a>, or 1 if not given.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
- <a name='H3DU.CurveEval_H3DU.CurveEval_evalOne'></a>
+ <a name='H3DU.CurveEval_evalOne'></a>
 ### H3DU.CurveEval#evalOne(mesh, u)
 
 Generates vertex positions and attributes based on a point
@@ -127,7 +92,42 @@ in a parametric curve.
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
- <a name='H3DU.CurveEval_H3DU.CurveEval_normal'></a>
+ <a name='H3DU.CurveEval.findEndPoints'></a>
+### (static) H3DU.CurveEval.findEndPoints(e)
+
+Finds the end points of the curve described by the given <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a>.
+This method calls the evaluator's <code>endpoints</code>
+method if it implements it; otherwise, returns <code>[0, 1]</code>
+
+#### Parameters
+
+* `e` (Type: Object)<br>
+    An object described in <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">H3DU.CurveEval#vertex</a>.
+
+#### Return Value
+
+A two-element array giving the curve's end points. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.CurveEval.findTangent'></a>
+### (static) H3DU.CurveEval.findTangent(e, u)
+
+Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">tangent (derivative)</a> for the given curve evaluator object
+at the given U coordinate. This method calls the evaluator's <code>tangent</code>
+method if it implements it; otherwise, does a numerical differentiation
+with respect to the U axis using the <code>evaluate</code> method.
+
+#### Parameters
+
+* `e` (Type: Object)<br>
+    An object described in <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">H3DU.CurveEval#vertex</a>.
+* `u` (Type: Number)<br>
+    U coordinate of the curve to evaluate.
+
+#### Return Value
+
+A tangent vector. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.CurveEval_normal'></a>
 ### H3DU.CurveEval#normal(evaluator)
 
 <b>Deprecated: May be removed in the future; it makes little sense
@@ -138,13 +138,13 @@ Specifies a parametric curve function for generating normals.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See H3DU.CurveEval#vertex. </ul>
+    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">H3DU.CurveEval#vertex</a>. </ul>
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
- <a name='H3DU.CurveEval_H3DU.CurveEval_texCoord'></a>
+ <a name='H3DU.CurveEval_texCoord'></a>
 ### H3DU.CurveEval#texCoord(evaluator)
 
 Specifies a parametric curve function for generating texture coordinates.
@@ -152,13 +152,13 @@ Specifies a parametric curve function for generating texture coordinates.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named <code>evaluate</code>, giving one or two values as a result. See H3DU.CurveEval#vertex. </ul>
+    An object that must contain a function named <code>evaluate</code>, giving one or two values as a result. See <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">H3DU.CurveEval#vertex</a>. </ul>
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
- <a name='H3DU.CurveEval_H3DU.CurveEval_vertex'></a>
+ <a name='H3DU.CurveEval_vertex'></a>
 ### H3DU.CurveEval#vertex(evaluator)
 
 Specifies a curve evaluator object for generating the vertex positions of a parametric curve.

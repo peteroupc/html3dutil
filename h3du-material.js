@@ -14,7 +14,7 @@
  * NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @class
- * @alias H3DU.Material
+ * @memberof H3DU
  * @param {Array<Number>} [params] An object as described in {@link H3DU.Material#setParams}.
  * <i>Using this parameter as a [color vector or string]{@link H3DU.toGLColor} giving the ambient color is deprecated
  * since version 2.0.</i>
@@ -137,7 +137,7 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
  * maps and shader info, if any, won't be cloned, but rather, a reference
  * to the same object will be used.
  * @returns {H3DU.Material} A copy of this object.
- * @memberof! H3DU.Material#
+ * @instance
  */
 H3DU.Material.prototype.copy = function() {
   "use strict";
@@ -158,7 +158,6 @@ H3DU.Material.prototype.copy = function() {
  * The effect will be that objects with that material will be drawn in that
  * color without shading.
  * @returns {H3DU.Material} A new material with the given emission color.
- * @memberof! H3DU.Material#
  */
 H3DU.Material.fromBasic = function(color) {
   "use strict";
@@ -179,7 +178,6 @@ H3DU.Material.fromBasic = function(color) {
  * The effect will be that objects with that material will be drawn in that
  * texture without shading.
  * @returns {H3DU.Material} A new material with the given emission texture.
- * @memberof! H3DU.Material#
  */
 H3DU.Material.fromBasicTexture = function(texture) {
   "use strict";
@@ -224,7 +222,7 @@ H3DU.Material.fromBasicTexture = function(texture) {
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
  * unless otherwise noted.
  * @returns {H3DU.Material} This object.
- * @memberof! H3DU.Material#
+ * @instance
  */
 H3DU.Material.prototype.setParams = function(params) {
   "use strict";
@@ -276,7 +274,6 @@ H3DU.Material.prototype.setParams = function(params) {
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Material} The resulting material object.
- * @memberof! H3DU.Material
  */
 H3DU.Material.fromColor = function(r, g, b, a) {
   "use strict";
@@ -292,7 +289,6 @@ H3DU.Material.fromColor = function(r, g, b, a) {
  * the JavaScript DOM's Image class. However, this method
  * will not load that image yet.
  * @returns {H3DU.Material} The resulting material object.
- * @memberof! H3DU.Material
  */
 H3DU.Material.fromTexture = function(texture) {
   "use strict";

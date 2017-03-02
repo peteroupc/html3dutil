@@ -11,7 +11,7 @@
 /**
  * A geometric mesh in the form of buffer objects.
  * @class
- * @alias H3DU.MeshBuffer
+ * @memberof H3DU
  * @param {H3DU.Mesh} mesh A geometric mesh object.
  * A series of default attributes will be set based on that mesh's
  * data.
@@ -59,7 +59,7 @@ H3DU.MeshBuffer = function(mesh) {
  * @param {Uint16Array|Uint32Array|Uint8Array} indices Array of vertex indices.
  * @param {Number} byteSize Size, in bytes, of each index. Must be 1, 2, or 4.
  * @returns {H3DU.MeshBuffer} This object.
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
   "use strict";
@@ -74,7 +74,7 @@ H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
  * @param {Number} primType The primitive type, either {@link H3DU.Mesh.TRIANGLES},
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  * @returns {H3DU.MeshBuffer} This object.
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {
   "use strict";
@@ -112,7 +112,7 @@ H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * one per-vertex item to the start of the next.
  * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
  * semantic is unsupported.
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.setAttribute = function(
   name, index, buffer, startIndex, countPerVertex, stride
@@ -144,7 +144,7 @@ H3DU.MeshBuffer.prototype.setAttribute = function(
   }
   return this;
 };
-/** @private */
+/** @ignore */
 H3DU.MeshBuffer._resolveSemantic = function(name, index) {
   "use strict";
   if(typeof name === "number") {
@@ -174,13 +174,13 @@ H3DU.MeshBuffer._resolveSemantic = function(name, index) {
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU.MeshBuffer.prototype._getAttributes = function() {
   "use strict";
   return this.attributes;
 };
 
-/** @private */
+/** @ignore */
 H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
   "use strict";
   var idx = typeof index === "undefined" || index === null ? 0 : index;
@@ -197,7 +197,7 @@ H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this mesh.
  * @returns {Number} Return value.
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.primitiveCount = function() {
   "use strict";
@@ -215,7 +215,7 @@ H3DU.MeshBuffer.prototype.primitiveCount = function() {
  * If this mesh holds triangles, each primitive will contain three
  * vertices; if lines, two; and if points, one. Each vertex is a 3-element
  * array containing that vertex's X, Y, and Z coordinates, in that order.
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.getPositions = function() {
   "use strict";
@@ -269,7 +269,7 @@ H3DU.MeshBuffer.prototype.getPositions = function() {
  * and set index 0. If there is no such attribute,
  * or no vertices are defined in this buffer, returns the array
  * [Inf, Inf, Inf, -Inf, -Inf, -Inf].
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.getBounds = function() {
   "use strict";
@@ -307,7 +307,7 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
  * Gets the type of primitive stored in this mesh buffer.
  * @returns {Number} Either {@link H3DU.Mesh.TRIANGLES},
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.primitiveType = function() {
   "use strict";
@@ -328,7 +328,7 @@ H3DU.MeshBuffer._wellKnownAttributes = {
   "BITANGENT":7
 };
 
-/** @private */
+/** @ignore */
 H3DU.MeshBuffer.prototype.getFormat = function() {
   "use strict";
   return this.format;
@@ -336,7 +336,7 @@ H3DU.MeshBuffer.prototype.getFormat = function() {
 /**
  * Gets the number of vertices in this mesh buffer
  * @returns {Number} Return value.
- * @memberof! H3DU.MeshBuffer#
+ * @instance
  */
 H3DU.MeshBuffer.prototype.vertexCount = function() {
   "use strict";

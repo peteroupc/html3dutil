@@ -11,7 +11,7 @@
  * An object that caches loaded textures and uploads them
  * to WebGL contexts.
  * @class
- * @alias H3DU.TextureLoader
+ * @memberof H3DU
  */
 H3DU.TextureLoader = function() {
   "use strict";
@@ -25,7 +25,7 @@ H3DU.TextureLoader = function() {
  * @param {String} name The name of the texture, usually its file name.
  * @returns {Texture} The texture with the given name, or null
  * if it doesn't exist.
- * @memberof! H3DU.TextureLoader#
+ * @instance
  */
 H3DU.TextureLoader.prototype.getTexture = function(name) {
   "use strict";
@@ -48,13 +48,13 @@ H3DU.TextureLoader.prototype.getTexture = function(name) {
  * the JavaScript DOM's Image class.
  * @returns {Promise<H3DU.Texture>} A promise that resolves when the texture
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
- * @memberof! H3DU.TextureLoader#
+ * @instance
  */
 H3DU.TextureLoader.prototype.loadTexture = function(texture) {
   "use strict";
   return H3DU.Texture.loadTexture(texture, this.textureImages);
 };
-/** @private */
+/** @ignore */
 H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -96,7 +96,7 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @memberof! H3DU.TextureLoader#
+ * @instance
  */
 H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, reject) {
   "use strict";
@@ -118,7 +118,7 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
  * @returns {Promise<H3DU.Texture>} A promise that resolves when
  * the texture is loaded successfully (the result will be an H3DU.Texture object)
  * and is rejected when an error occurs.
- * @memberof! H3DU.TextureLoader#
+ * @instance
  */
 H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
   "use strict";
@@ -146,7 +146,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @memberof! H3DU.TextureLoader#
+ * @instance
  */
 H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context, resolve, reject) {
   "use strict";
@@ -158,7 +158,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
   return H3DU.getPromiseResultsAll(promises, resolve, reject);
 };
 
-/** @private */
+/** @ignore */
 H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -188,7 +188,7 @@ H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo
  * all textures used by the cube map are loaded successfully
  * (the result will be an H3DU.CubeMap object)
  * and is rejected when an error occurs.
- * @memberof! H3DU.TextureLoader#
+ * @instance
  */
 H3DU.TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, reject) {
   "use strict";
@@ -202,19 +202,19 @@ H3DU.TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, 
  });
 };
 
-/** @private */
+/** @ignore */
 H3DU.TextureLoader.prototype.mapFrameBuffer = function(info, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   return this.fbLoader.mapFrameBuffer(info, context);
 };
-/** @private */
+/** @ignore */
 H3DU.TextureLoader.prototype.bindFrameBuffer = function(info, context, textureUnit) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   return this.fbLoader.bind(info, context, textureUnit);
 };
-/** @private */
+/** @ignore */
 H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
@@ -222,8 +222,8 @@ H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
 };
 /**
  * Disposes all resources used by this texture loader.
- * @memberof! H3DU.TextureLoader#
  * @returns {void} This method doesn't return a value.
+ * @instance
  */
 H3DU.TextureLoader.prototype.dispose = function() {
   "use strict";

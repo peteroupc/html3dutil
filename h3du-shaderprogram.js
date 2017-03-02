@@ -23,7 +23,7 @@
  * If compiling or linking the shader program fails, a diagnostic
  * log is output to the JavaScript console.
  * @class
- * @alias H3DU.ShaderProgram
+ * @memberof H3DU
  * @deprecated This class is likely to become a private class.
  * Use the {@link H3DU.ShaderInfo} class instead, which is not coupled to WebGL
  * contexts.
@@ -41,14 +41,14 @@ H3DU.ShaderProgram = function(context, vertexShader, fragmentShader) {
   "use strict";
   this._init(context, new H3DU.ShaderInfo(vertexShader, fragmentShader));
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram._fromShaderInfo = function(context, shader) {
   "use strict";
   var ret = new H3DU.ShaderProgram(null);
   ret._init(context, shader);
   return ret;
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
   "use strict";
   if(!context)return;
@@ -106,7 +106,7 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
     this.actives = ret;
   }
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index) {
   "use strict";
   for(var key in this.attributeSemantics) {
@@ -118,7 +118,7 @@ H3DU.ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index)
     }
   }
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram.prototype._disableOthers = function(names) {
   "use strict";
   var a = {};
@@ -134,7 +134,7 @@ H3DU.ShaderProgram.prototype._disableOthers = function(names) {
 };
 /** Disposes resources from this shader program.
  * @returns {void} This method doesn't return a value.
- * @memberof! H3DU.ShaderProgram#
+ * @instance
  */
 H3DU.ShaderProgram.prototype.dispose = function() {
   "use strict";
@@ -148,7 +148,7 @@ H3DU.ShaderProgram.prototype.dispose = function() {
   this.uniformTypes = {};
   this.attributeSemantics = {};
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram.prototype.setSemantic = function(name, sem, index) {
   "use strict";
   var an = this.attributeSemantics[name];
@@ -165,13 +165,13 @@ H3DU.ShaderProgram.prototype.setSemantic = function(name, sem, index) {
 /**
  * Gets the WebGL context associated with this shader program object.
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
- * @memberof! H3DU.ShaderProgram#
+ * @instance
  */
 H3DU.ShaderProgram.prototype.getContext = function() {
   "use strict";
   return this.context;
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
   "use strict";
   var uniform = this.get(i);
@@ -214,7 +214,7 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
  * "unif[0].member2".
  * @returns {number|WebGLUniformLocation|null} The location of the uniform or attribute
  * name, or null if it doesn't exist.
- * @memberof! H3DU.ShaderProgram#
+ * @instance
  */
 H3DU.ShaderProgram.prototype.get = function(name) {
   "use strict";
@@ -229,7 +229,7 @@ H3DU.ShaderProgram.prototype.get = function(name) {
  * vertex or fragment shader of this shader program. See get().
  * @returns {Number|Array<Number>} The uniform's value, or null if it doesn't exist or if
  * an attribute is named, not a uniform.
- * @memberof! H3DU.ShaderProgram#
+ * @instance
  */
 H3DU.ShaderProgram.prototype.getUniform = function(name) {
   "use strict";
@@ -247,7 +247,7 @@ H3DU.ShaderProgram.prototype.getUniform = function(name) {
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
   "use strict";
   var i;
@@ -267,7 +267,7 @@ H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
  * the WebGL context when the "setUniforms" method
  * was called), sets their values now.
  * @returns {H3DU.ShaderProgram} This object.
- * @memberof! H3DU.ShaderProgram#
+ * @instance
  */
 H3DU.ShaderProgram.prototype.use = function() {
   "use strict";
@@ -277,7 +277,7 @@ H3DU.ShaderProgram.prototype.use = function() {
   }
   return this;
 };
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram.prototype._update = function() {
   "use strict";
   H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
@@ -300,7 +300,7 @@ H3DU.ShaderProgram.prototype._update = function() {
  * 9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
  * respectively, or a Number if the uniform is a "float" or "int".
  * @returns {H3DU.ShaderProgram} This object.
- * @memberof! H3DU.ShaderProgram#
+ * @instance
  */
 H3DU.ShaderProgram.prototype.setUniforms = function(uniforms) {
   "use strict";
@@ -316,7 +316,7 @@ H3DU.ShaderProgram.prototype.setUniforms = function(uniforms) {
   return this;
 };
 
-/** @private */
+/** @ignore */
 H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentShader) {
   "use strict";
   function compileShader(context, kind, text) {
@@ -366,7 +366,6 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
  * @deprecated Use {@link H3DU.ShaderInfo.makeEffectFragment} instead.
  * @param {String} functionCode See H3DU.ShaderProgram.makeEffect().
  * @returns {String} The source text of the resulting fragment shader.
- * @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
   "use strict";
@@ -376,7 +375,6 @@ H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
  * Generates a shader program that copies the colors of a texture.
  * @deprecated Use {@link H3DU.ShaderInfo.makeCopyEffect} instead.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.makeCopyEffect = function() {
   "use strict";
@@ -401,7 +399,6 @@ H3DU.ShaderProgram.makeCopyEffect = function() {
  * this requirement, the shader code is also free to define additional uniforms,
  * constants, functions, and so on (but not another "main" function).
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
   "use strict";
@@ -412,7 +409,6 @@ H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
  * @deprecated Use {@link H3DU.ShaderInfo.makeInvertEffect} instead.
  * @param {Object} [context] No longer used; ignored.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.getInvertEffect = function() {
   "use strict";
@@ -424,7 +420,6 @@ H3DU.ShaderProgram.getInvertEffect = function() {
  * @deprecated Use {@link H3DU.ShaderInfo.makeEdgeDetectEffect} instead.
  * @param {Object} [context] No longer used; ignored.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
- * @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.getEdgeDetectEffect = function() {
   "use strict";
@@ -438,7 +433,6 @@ H3DU.ShaderProgram.getEdgeDetectEffect = function() {
  * at the start of the return value enables the lighting model.
  * @deprecated Use {@link H3DU.ShaderInfo.getDefaultVertex} instead.
  * @returns {String} The resulting shader text.
- * @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.getDefaultVertex = function() {
   "use strict";
@@ -453,7 +447,6 @@ H3DU.ShaderProgram.getDefaultVertex = function() {
  * as SHADING is also enabled).
  * @deprecated Use {@link H3DU.ShaderInfo.getDefaultFragment} instead.
  * @returns {String} The resulting shader text.
- * @memberof! H3DU.ShaderProgram
  */
 H3DU.ShaderProgram.getDefaultFragment = function() {
   "use strict";

@@ -5,7 +5,7 @@
  <a name='H3DU.Trochoid'></a>
 ### H3DU.Trochoid(radius, distFromCenter)
 
-A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
+A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the X axis.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that

@@ -25,11 +25,11 @@ and 32.
 
 ### Methods
 
-* [copyFrom](#H3DU.TextureInfo_H3DU.TextureInfo_copyFrom)<br>Copies the parameters from another texture information object to this
+* [copyFrom](#H3DU.TextureInfo_copyFrom)<br>Copies the parameters from another texture information object to this
 object.
-* [setParams](#H3DU.TextureInfo_H3DU.TextureInfo_setParams)<br>Sets parameters for this texture information object.
+* [setParams](#H3DU.TextureInfo_setParams)<br>Sets parameters for this texture information object.
 
- <a name='H3DU.TextureInfo_H3DU.TextureInfo_copyFrom'></a>
+ <a name='H3DU.TextureInfo_copyFrom'></a>
 ### H3DU.TextureInfo#copyFrom([other])
 
 Copies the parameters from another texture information object to this
@@ -44,7 +44,7 @@ object.
 
 This object. (Type: <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)
 
- <a name='H3DU.TextureInfo_H3DU.TextureInfo_setParams'></a>
+ <a name='H3DU.TextureInfo_setParams'></a>
 ### H3DU.TextureInfo#setParams(params)
 
 Sets parameters for this texture information object.

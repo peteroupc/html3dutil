@@ -5,7 +5,7 @@
  <a name='H3DU.BSplineSurface'></a>
 ### H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits])
 
-A surface evaluator object for a B-spline (basis spline) surface.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
 
 #### Parameters
 
@@ -20,18 +20,37 @@ A surface evaluator object for a B-spline (basis spline) surface.
 
 ### Methods
 
-* [.clamped](#H3DU.BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
-the surface's edges lie on the edges of the control point array.
-* [.uniform](#H3DU.BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
-* [bitangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent)<br>Finds the bitangent vector at the
+* [bitangent](#H3DU.BSplineSurface_bitangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector</a> at the
 given point on the surface.
-* [evaluate](#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
+* [clamped](#H3DU.BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
+the surface's edges lie on the edges of the control point array.
+* [evaluate](#H3DU.BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B-spline surface.
-* [tangent](#H3DU.BSplineSurface_H3DU.BSplineSurface_tangent)<br>Finds the tangent vector at the
+* [tangent](#H3DU.BSplineSurface_tangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the
+given point on the surface.
+* [uniform](#H3DU.BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
+
+ <a name='H3DU.BSplineSurface_bitangent'></a>
+### H3DU.BSplineSurface#bitangent(u, v)
+
+Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector</a> at the
 given point on the surface.
 
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of the surface to evaluate.
+* `v` (Type: Number)<br>
+    V coordinate of the surface to evaluate.
+
+#### Return Value
+
+An array giving the bitangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+
  <a name='H3DU.BSplineSurface.clamped'></a>
-### H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])
+### (static) H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])
 
 Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.
@@ -53,8 +72,46 @@ Return value. The first
 knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
 
+ <a name='H3DU.BSplineSurface_evaluate'></a>
+### H3DU.BSplineSurface#evaluate(u, v)
+
+Evaluates the surface function based on a point
+in a B-spline surface.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of the surface to evaluate. NOTE: Since version 2.0, this parameter and the "v" parameter are no longer scaled according to the curve's knot vector.
+* `v` (Type: Number)<br>
+    V coordinate of the surface to evaluate.
+
+#### Return Value
+
+An array of the result of
+the evaluation. It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.BSplineSurface_tangent'></a>
+### H3DU.BSplineSurface#tangent(u, v)
+
+Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the
+given point on the surface.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of the surface to evaluate.
+* `v` (Type: Number)<br>
+    V coordinate of the surface to evaluate.
+
+#### Return Value
+
+An array giving the tangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+
  <a name='H3DU.BSplineSurface.uniform'></a>
-### H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])
+### (static) H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])
 
 Creates a B-spline surface with uniform knots.
 
@@ -74,60 +131,3 @@ Creates a B-spline surface with uniform knots.
 Return value. The first
 knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
-
- <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent'></a>
-### H3DU.BSplineSurface#bitangent(u, v)
-
-Finds the bitangent vector at the
-given point on the surface.
-
-#### Parameters
-
-* `u` (Type: Number)<br>
-    U coordinate of the surface to evaluate.
-* `v` (Type: Number)<br>
-    V coordinate of the surface to evaluate.
-
-#### Return Value
-
-An array giving the bitangent vector.
-It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
-
- <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a>
-### H3DU.BSplineSurface#evaluate(u, v)
-
-Evaluates the surface function based on a point
-in a B-spline surface.
-
-#### Parameters
-
-* `u` (Type: Number)<br>
-    U coordinate of the surface to evaluate. NOTE: Since version 2.0, this parameter and the "v" parameter are no longer scaled according to the curve's knot vector.
-* `v` (Type: Number)<br>
-    V coordinate of the surface to evaluate.
-
-#### Return Value
-
-An array of the result of
-the evaluation. It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
-
- <a name='H3DU.BSplineSurface_H3DU.BSplineSurface_tangent'></a>
-### H3DU.BSplineSurface#tangent(u, v)
-
-Finds the tangent vector at the
-given point on the surface.
-
-#### Parameters
-
-* `u` (Type: Number)<br>
-    U coordinate of the surface to evaluate.
-* `v` (Type: Number)<br>
-    V coordinate of the surface to evaluate.
-
-#### Return Value
-
-An array giving the tangent vector.
-It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)

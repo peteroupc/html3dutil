@@ -11,7 +11,7 @@
  * An object that holds a rendering context for rendering
  * 3D objects.
  * @class
- * @alias H3DU.Scene3D
+ * @memberof H3DU
  * @param {WebGLRenderingContext|WebGL2RenderingContext|object} canvasOrContext
  * A WebGL context to associate with this scene, or an HTML
  * canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that
@@ -70,7 +70,7 @@ H3DU.Scene3D = function(canvasOrContext) {
 };
 /**
  * Gets the HTML canvas associated with this scene.
- * @memberof! H3DU.Scene3D#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.prototype.getCanvas = function() {
@@ -78,38 +78,38 @@ H3DU.Scene3D.prototype.getCanvas = function() {
   return this.context ? this.context.canvas : null;
 };
 
-/** @private */
+/** @ignore */
 H3DU.Scene3D.LIGHTING_ENABLED = 1;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.SPECULAR_MAP_ENABLED = 2;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.NORMAL_MAP_ENABLED = 4;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.SPECULAR_ENABLED = 8;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.TEXTURE_ENABLED = 16;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.COLORATTR_ENABLED = 32;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.ROUGHNESS_ENABLED = 1 << 6 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.ROUGHNESS_MAP_ENABLED = 1 << 7 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.METALNESS_ENABLED = 1 << 8 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.METALNESS_MAP_ENABLED = 1 << 9 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.PHYSICAL_BASED_ENABLED = 1 << 10 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.INVERT_ROUGHNESS_ENABLED = 1 << 11 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.ENV_MAP_ENABLED = 1 << 12 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.ENV_EQUIRECT_ENABLED = 1 << 13 | 0;
-/** @private */
+/** @ignore */
 H3DU.Scene3D.EMISSION_MAP_ENABLED = 1 << 14 | 0;
 
-/** @private */
+/** @ignore */
 H3DU.Scene3D._flagsForShape = function(shape) {
   "use strict";
   var flags = 0;
@@ -153,9 +153,7 @@ H3DU.Scene3D._flagsForShape = function(shape) {
   }
   return flags;
 };
-/** @private
- * @returns {Object} Return value.
- */
+/** @ignore */
 H3DU.Scene3D.ProgramCache = function() {
   "use strict";
   this._programs = [];
@@ -175,7 +173,7 @@ H3DU.Scene3D.ProgramCache.prototype.dispose = function() {
   this._customPrograms = [];
   this._programs = [];
 };
-/** @private */
+/** @ignore */
 H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
   "use strict";
   if(!context)throw new Error();
@@ -195,11 +193,7 @@ H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
   this._customPrograms.push([info, context, prog]);
   return prog;
 };
-/** @private
- * @param {Object} flags Description of flags.
- * @param {Object} context Description of context.
- * @returns {Object} Return value.
- */
+/** @ignore */
 H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
   "use strict";
   if(!context)throw new Error();
@@ -253,43 +247,37 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
 };
 /** Returns the WebGL context associated with this scene.
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getContext = function() {
   "use strict";
   return this.context;
 };
 /** No face culling.
- * @memberof! H3DU.Scene3D
  * @const
  */
 H3DU.Scene3D.NONE = 0;
 /** Back side of a triangle. By default, triangles with clockwise winding are back-facing.
- * @memberof! H3DU.Scene3D
  * @const
  */
 H3DU.Scene3D.BACK = 1;
 /**
  * Front side of a triangle. By default, triangles with counterclockwise winding are front-facing.
- * @memberof! H3DU.Scene3D
  * @const
  */
 H3DU.Scene3D.FRONT = 2;
 /**
  * Back and front sides of a triangle.
- * @memberof! H3DU.Scene3D
  * @const
  */
 H3DU.Scene3D.FRONT_AND_BACK = 3;
 /**
  * Counterclockwise winding. A triangle has counterclockwise winding (or orientation) if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle's two-dimensional projection in _window coordinates_ (which roughly correspond to its location on the screen or frame buffer).
- * @memberof! H3DU.Scene3D
  * @const
  */
 H3DU.Scene3D.CCW = 0;
 /**
  * Clockwise winding, the opposite of counterclockwise winding.
- * @memberof! H3DU.Scene3D
  * @const
  */
 H3DU.Scene3D.CW = 1;
@@ -301,7 +289,7 @@ H3DU.Scene3D.CW = 1;
  * enables face culling of the specified faces. For any other value,
  * disables face culling. By default, face culling is disabled.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.cullFace = function(value) {
   "use strict";
@@ -314,7 +302,7 @@ H3DU.Scene3D.prototype.cullFace = function(value) {
   }
   return this;
 };
-/** @private */
+/** @ignore */
 H3DU.Scene3D.prototype._setFace = function() {
   "use strict";
   if(!this._is3d)return;
@@ -345,7 +333,7 @@ H3DU.Scene3D.prototype._setFace = function() {
  * default behavior. If using a left-handed coordinate system,
  * set this value to {@link H3DU.Scene3D.CW}.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.frontFace = function(value) {
   "use strict";
@@ -362,7 +350,7 @@ H3DU.Scene3D.prototype.frontFace = function(value) {
  * @param {Boolean} value If true, will check whether to resize the canvas
  * when the render() method is called. Default is true.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setAutoResize = function(value) {
   "use strict";
@@ -374,7 +362,7 @@ H3DU.Scene3D.prototype.setAutoResize = function(value) {
  * Gets whether to check whether to resize the canvas
  * when the render() method is called.
  * @returns {H3DU.Scene3D} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getAutoResize = function() {
   "use strict";
@@ -390,7 +378,7 @@ H3DU.Scene3D.prototype.getAutoResize = function() {
  * @param {Boolean} value If true, use the device's pixel ratio
  * when setting the viewport's dimensions. Default is true.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setUseDevicePixelRatio = function(value) {
   "use strict";
@@ -407,7 +395,7 @@ H3DU.Scene3D.prototype.setUseDevicePixelRatio = function(value) {
   * Gets the color used when clearing the screen each frame.
   * @returns {Array<Number>} An array of four numbers, from 0 through
   * 1, specifying the red, green, blue, and alpha components of the color.
-  * @memberof! H3DU.Scene3D#
+  * @instance
   */
 H3DU.Scene3D.prototype.getClearColor = function() {
   "use strict";
@@ -421,7 +409,7 @@ H3DU.Scene3D.prototype.getClearColor = function() {
  * to set the shader programs they use.
  * @param {H3DU.ShaderProgram|null} program No longer used.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.useProgram = function() {
   "use strict";
@@ -435,7 +423,7 @@ H3DU.Scene3D.prototype.useProgram = function() {
  * @param {Number} height Height of the scene, in pixels.
  * Will be rounded up.
  * @returns {Number} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setDimensions = function(width, height) {
   "use strict";
@@ -458,7 +446,7 @@ H3DU.Scene3D.prototype.setDimensions = function(width, height) {
  * Note that if auto-resizing is enabled, this value may change
  * after each call to the render() method.
  * @returns {Number} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getWidth = function() {
   "use strict";
@@ -469,7 +457,7 @@ H3DU.Scene3D.prototype.getWidth = function() {
  * Note that if auto-resizing is enabled, this value may change
  * after each call to the render() method.
  * @returns {Number} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getHeight = function() {
   "use strict";
@@ -481,7 +469,7 @@ H3DU.Scene3D.prototype.getHeight = function() {
  * Note that if auto-resizing is enabled, this value may change
  * after each call to the render() method.
  * @returns {Number} Aspect ratio, or 1 if height is 0.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getAspect = function() {
   "use strict";
@@ -492,7 +480,7 @@ H3DU.Scene3D.prototype.getAspect = function() {
 /**
  * Gets the width for this scene as actually displayed on the screen.
  * @returns {Number} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getClientWidth = function() {
   "use strict";
@@ -501,7 +489,7 @@ H3DU.Scene3D.prototype.getClientWidth = function() {
 /**
  * Gets the height for this scene as actually displayed on the screen.
  * @returns {Number} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getClientHeight = function() {
   "use strict";
@@ -511,7 +499,7 @@ H3DU.Scene3D.prototype.getClientHeight = function() {
  * Gets the ratio of width to height for this scene,
  * as actually displayed on the screen.
  * @returns {Number} Aspect ratio, or 1 if height is 0.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getClientAspect = function() {
   "use strict";
@@ -522,7 +510,7 @@ H3DU.Scene3D.prototype.getClientAspect = function() {
 /**
  * Creates a frame buffer object associated with this scene.
  * @returns {H3DU.FrameBuffer} A buffer with the same size as this scene.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.createBuffer = function() {
   "use strict";
@@ -533,7 +521,7 @@ H3DU.Scene3D.prototype.createBuffer = function() {
  * Gets the current projection matrix for this scene.
  * @deprecated Use {@link H3DU.Batch3D} instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getProjectionMatrix = function() {
   "use strict";
@@ -547,7 +535,7 @@ H3DU.Scene3D.prototype.getProjectionMatrix = function() {
  * Gets the current view matrix for this scene.
  * @deprecated Use {@link H3DU.Batch3D} instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {Array<Number>} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getViewMatrix = function() {
   "use strict";
@@ -580,7 +568,7 @@ H3DU.Scene3D.prototype.getViewMatrix = function() {
  * // Set the perspective projection. Camera has a 45-degree field of view
  * // and will see objects from 0.1 to 100 units away.
  * scene.setPerspective(45,scene.getClientAspect(),0.1,100);
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
   "use strict";
@@ -612,7 +600,7 @@ H3DU.Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height). If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near, far, aspect) {
   "use strict";
@@ -638,7 +626,7 @@ H3DU.Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near,
  * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height). If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, aspect) {
   "use strict";
@@ -667,7 +655,7 @@ H3DU.Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, asp
  * the far clipping plane. Objects beyond this distance will be too far
  * to be seen.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far) {
   "use strict";
@@ -692,7 +680,7 @@ H3DU.Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far
  * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setOrtho = function(left, right, bottom, top, near, far) {
   "use strict";
@@ -710,14 +698,14 @@ H3DU.Scene3D.prototype.setOrtho = function(left, right, bottom, top, near, far) 
  * @param {Number} top Topmost coordinate of the 2D view.
  * (Note that top can be greater than bottom or vice versa.)
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setOrtho2D = function(left, right, bottom, top) {
   "use strict";
   return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, -1, 1));
 };
-/** @private */
+/** @ignore */
 H3DU.Scene3D.prototype._setClearColor = function() {
   "use strict";
   if(this._is3d) {
@@ -728,7 +716,7 @@ H3DU.Scene3D.prototype._setClearColor = function() {
 };
 /**
  * Disposes all resources used by this object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.Scene3D.prototype.dispose = function() {
@@ -758,7 +746,7 @@ H3DU.Scene3D.prototype.dispose = function() {
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setClearColor = function(r, g, b, a) {
   "use strict";
@@ -773,7 +761,7 @@ H3DU.Scene3D.prototype.setClearColor = function(r, g, b, a) {
  * @returns {Promise} A promise that is resolved when
  * the image is loaded successfully (the result will be an H3DU.Texture
  * object), and is rejected when an error occurs.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.loadTexture = function(name) {
   "use strict";
@@ -791,7 +779,7 @@ H3DU.Scene3D.prototype.loadTexture = function(name) {
  * the image is loaded successfully and uploaded
  * to a texture buffer (the result will be an H3DU.Texture
  * object), and is rejected when an error occurs.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.loadAndMapTexture = function(texture) {
   "use strict";
@@ -817,7 +805,7 @@ H3DU.Scene3D.prototype.loadAndMapTexture = function(texture) {
  * The result will be an object with three properties:
  * "successes", "failures", and "results".
  * See {@link H3DU.getPromiseResults}.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reject) {
   "use strict";
@@ -833,7 +821,7 @@ H3DU.Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reje
  * Clears the color, depth, and stencil buffers used in this scene,
  * if any.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.clear = function() {
   "use strict";
@@ -848,7 +836,7 @@ H3DU.Scene3D.prototype.clear = function() {
 /**
  * Clears the depth buffer used in this scene, if any.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.clearDepth = function() {
   "use strict";
@@ -862,7 +850,7 @@ H3DU.Scene3D.prototype.clearDepth = function() {
  * all shapes in this scene.
  * @deprecated Use the vertexCount method of {@link H3DU.Batch3D} objects instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {Number} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.vertexCount = function() {
   "use strict";
@@ -877,7 +865,7 @@ H3DU.Scene3D.prototype.vertexCount = function() {
  * and points) composed by all shapes in this scene.
  * @deprecated Use the <code>primitiveCount</code> method of {@link H3DU.Batch3D} objects instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {Number} Return value.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.primitiveCount = function() {
   "use strict";
@@ -894,7 +882,7 @@ H3DU.Scene3D.prototype.primitiveCount = function() {
  * @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setProjectionMatrix = function(matrix) {
   "use strict";
@@ -911,7 +899,7 @@ H3DU.Scene3D.prototype.setProjectionMatrix = function(matrix) {
  * @deprecated Instead of this method, use {@link H3DU.Batch3D#setViewMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Array<Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setViewMatrix = function(matrix) {
   "use strict";
@@ -940,7 +928,7 @@ H3DU.Scene3D.prototype.setViewMatrix = function(matrix) {
  * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
  * so it points perpendicular to the camera's view direction.)
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setLookAt = function(eye, center, up) {
   "use strict";
@@ -955,7 +943,7 @@ H3DU.Scene3D.prototype.setLookAt = function(eye, center, up) {
  * H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.addShape = function(shape) {
   "use strict";
@@ -975,7 +963,7 @@ H3DU.Scene3D.prototype.addShape = function(shape) {
  * created will use the mesh in its current state and won't
  * track future changes.
  * @returns {H3DU.Shape} The generated shape object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.makeShape = function(mesh) {
   "use strict";
@@ -993,7 +981,7 @@ H3DU.Scene3D.prototype.makeShape = function(mesh) {
  * H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.removeShape = function(shape) {
   "use strict";
@@ -1016,7 +1004,7 @@ H3DU.Scene3D.prototype.removeShape = function(shape) {
  * instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom
  * H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @returns {H3DU.Lights} The light sources used in this scene.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.getLights = function() {
   "use strict";
@@ -1041,7 +1029,7 @@ H3DU.Scene3D.prototype.getLights = function() {
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setDirectionalLight = function(index, position, diffuse, specular) {
   "use strict";
@@ -1060,7 +1048,7 @@ H3DU.Scene3D.prototype.setDirectionalLight = function(index, position, diffuse, 
  * if the light doesn't exist.
  * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setLightParams = function(index, params) {
   "use strict";
@@ -1085,7 +1073,7 @@ H3DU.Scene3D.prototype.setLightParams = function(index, params) {
  * @param {Number} [a] Alpha color component (0-1).
  * Currently not used.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setAmbient = function(r, g, b, a) {
   "use strict";
@@ -1109,7 +1097,7 @@ H3DU.Scene3D.prototype.setAmbient = function(r, g, b, a) {
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.setPointLight = function(index, position, diffuse, specular) {
   "use strict";
@@ -1120,7 +1108,7 @@ H3DU.Scene3D.prototype.setPointLight = function(index, position, diffuse, specul
   this.getLights().setPointLight(index, position, diffuse, specular);
   return this;
 };
-/** @private */
+/** @ignore */
 H3DU.Scene3D.prototype._clearForPass = function(pass) {
   "use strict";
   var flags = 0;
@@ -1141,7 +1129,7 @@ H3DU.Scene3D.prototype._clearForPass = function(pass) {
  * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} renderPasses An array of scenes
  * to draw, or a single batch to render. Can currently be null.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.render = function(renderPasses) {
   "use strict";
@@ -1215,7 +1203,7 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
  * until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {H3DU.ShaderProgram|string|null} filterProgram The shader program to use.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Scene3D#
+ * @instance
  */
 H3DU.Scene3D.prototype.useFilter = function(filterProgram) {
   "use strict";

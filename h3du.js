@@ -57,7 +57,6 @@ if(typeof Object.keys === "undefined" || Object.keys === null) {
  * This page describes miscellaneous utility methods included in the
  * library.
  * @namespace
- * @alias H3DU
  */
 var H3DU = {
 /**
@@ -1039,7 +1038,7 @@ H3DU.newFrames = function(timer, timeInMs) {
   };
 }(H3DU));
 
-/** @private */
+/** @ignore */
 H3DU._isIdentityExceptTranslate = function(mat) {
   "use strict";
   return (
@@ -1050,13 +1049,13 @@ H3DU._isIdentityExceptTranslate = function(mat) {
   );
 };
 
-/** @private */
+/** @ignore */
 H3DU._toContext = function(context) {
   "use strict";
   return context && context.getContext ? context.getContext() : context;
 };
 
-/** @private */
+/** @ignore */
 H3DU._isPowerOfTwo = function(a) {
   "use strict";
   if(Math.floor(a) !== a || a <= 0)return false;

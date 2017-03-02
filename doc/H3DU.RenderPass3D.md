@@ -28,7 +28,7 @@ of the scene rendering it.
 
 ### Methods
 
-* [setParams](#H3DU.RenderPass3D_H3DU.RenderPass3D_setParams)<br>Sets parameters for this render pass object.
+* [setParams](#H3DU.RenderPass3D_setParams)<br>Sets parameters for this render pass object.
 
 <a id='H3DU.RenderPass3D_batch'></a>
 ### H3DU.RenderPass3D#batch
@@ -86,7 +86,7 @@ Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>
 
 Default Value: `false`
 
- <a name='H3DU.RenderPass3D_H3DU.RenderPass3D_setParams'></a>
+ <a name='H3DU.RenderPass3D_setParams'></a>
 ### H3DU.RenderPass3D#setParams(parameters)
 
 Sets parameters for this render pass object.

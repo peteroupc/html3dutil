@@ -137,7 +137,8 @@
    * @param {function} onFulfilled To be called once this promise gets fulfilled
    * @param {function} [onRejected] To be called once this promise gets rejected
    * @returns {Promise} A promise.
-   * @memberof! Promise#
+   * @instance
+   * @memberof Promise#
    */
   Promise.prototype.then = function(onFulfilled, onRejected) {
     this._cb.fulfilled.push(onFulfilled);
@@ -154,7 +155,7 @@
     /* 2.2.7. then must return a promise. */
     return thenPromise;
   };
-  /** @private */
+  /** @ignore */
   Promise.prototype.fulfill = function(value) {
     if (this._state !== 0) {
       return this;
@@ -169,7 +170,7 @@
 
     return this;
   };
-  /** @private */
+  /** @ignore */
   Promise.prototype.reject = function(value) {
     if (this._state !== 0) {
       return this;
@@ -184,7 +185,7 @@
 
     return this;
   };
-  /** @private */
+  /** @ignore */
   Promise.prototype.resolve = function(x) {
     /* 2.3.1. If promise and x refer to the same object, reject promise with a TypeError as the reason. */
     if (x === this) {
@@ -248,7 +249,7 @@
     /* 2.3.4. If x is not an object or function, fulfill promise with x. */
     this.fulfill(x);
   };
-  /** @private */
+  /** @ignore */
   Promise.prototype.chain = function(promise) {
     var resolve = function(value) {
       promise.resolve(value);
@@ -264,19 +265,20 @@
    * this promise is rejected.
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise} A promise.
-   * @memberof! Promise#
+   * @instance
+   * @memberof Promise#
    */
   Promise.prototype.catch = function(onRejected) {
     return this.then(null, onRejected);
   };
-/** @private */
+/** @ignore */
   Promise.prototype._schedule = function() {
     if (this._timeout) {
       return;
     } /* resolution already scheduled */
     this._timeout = setTimeout(this._processQueue.bind(this), 0);
   };
-/** @private */
+/** @ignore */
   Promise.prototype._processQueue = function() {
     this._timeout = null;
 
@@ -286,7 +288,7 @@
       this._executeCallback(this._state === 1 ? onFulfilled : onRejected);
     }
   };
-/** @private */
+/** @ignore */
   Promise.prototype._executeCallback = function(cb) {
     var thenPromise = this._thenPromises.shift();
 
@@ -311,7 +313,7 @@
       thenPromise.reject(e);
     }
   };
-/** @private */
+/** @ignore */
   Promise.prototype._invokeResolver = function(resolver) {
     try {
       resolver(this.resolve.bind(this), this.reject.bind(this));

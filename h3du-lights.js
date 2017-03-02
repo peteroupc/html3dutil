@@ -14,7 +14,7 @@
  * NOTE: The default shader program assumes that all colors specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @class
- * @alias H3DU.Lights
+ * @memberof H3DU
  */
 H3DU.Lights = function() {
   "use strict";
@@ -42,7 +42,7 @@ H3DU.Lights = function() {
  * light sources: one light source with its default
  * values, and the default value for <code>sceneAmbient</code>.
  * @returns {H3DU.Lights} This object.
- * @memberof! H3DU.Lights#
+ * @instance
  */
 H3DU.Lights.prototype.setBasic = function() {
   "use strict";
@@ -62,10 +62,9 @@ H3DU.Lights.prototype.setBasic = function() {
  * by the default shader program.
  * @const
  * @default
- * @memberof! H3DU.Lights
  */
 H3DU.Lights.MAX_LIGHTS = 3;
-/** @private */
+/** @ignore */
 H3DU.Lights._createNewLight = function(index) {
   "use strict";
   var ret = new H3DU.LightSource();
@@ -78,7 +77,7 @@ H3DU.Lights._createNewLight = function(index) {
 /**
  * Gets the number of lights defined in this object.
  * @returns {Number} Return value.
- * @memberof! H3DU.Lights#
+ * @instance
  */
 H3DU.Lights.prototype.getCount = function() {
   "use strict";
@@ -91,7 +90,7 @@ H3DU.Lights.prototype.getCount = function() {
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @returns {LightSource} The corresponding light source object.
- * @memberof! H3DU.Lights#
+ * @instance
  */
 H3DU.Lights.prototype.getLight = function(index) {
   "use strict";
@@ -115,7 +114,7 @@ H3DU.Lights.prototype.getLight = function(index) {
  * If the light doesn't exist at that index, it will be created.
  * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
  * @returns {H3DU.Lights} This object.
- * @memberof! H3DU.Lights#
+ * @instance
  */
 H3DU.Lights.prototype.setParams = function(index, params) {
   "use strict";
@@ -137,7 +136,7 @@ H3DU.Lights.prototype.setParams = function(index, params) {
  * If null or omitted, the specular highlight color will
  * remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Lights} This object.
- * @memberof! H3DU.Lights#
+ * @instance
  */
 H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, specular) {
   "use strict";
@@ -158,7 +157,7 @@ H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, 
  * @param {Array<Number>} [diffuse] Diffuse color, as described in {@link H3DU.Lights.setDirectionalLight}.
  * @param {Array<Number>} [specular] Specular color, as described in {@link H3DU.Lights.setDirectionalLight}.
  * @returns {H3DU.Lights} This object.
- * @memberof! H3DU.Lights#
+ * @instance
  */
 H3DU.Lights.prototype.setPointLight = function(index, position, diffuse, specular) {
   "use strict";
@@ -182,7 +181,7 @@ H3DU.Lights.prototype.setPointLight = function(index, position, diffuse, specula
  * @param {Number} [a] Alpha color component (0-1).
  * Currently not used.
  * @returns {H3DU.Scene3D} This object.
- * @memberof! H3DU.Lights#
+ * @instance
  */
 H3DU.Lights.prototype.setAmbient = function(r, g, b, a) {
   "use strict";

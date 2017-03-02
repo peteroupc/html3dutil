@@ -13,7 +13,7 @@
  * NOTE: The default shader program assumes that all colors specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @class
- * @alias H3DU.LightSource
+ * @memberof H3DU
  * @param {Object|Array<Number>} [params] An object as described in "setParams". <i>Using this parameter
  * as described in the "position" property is deprecated since version 2.0.</i>
  * @param {Array<Number>} [ambient] See "ambient" property. <i>This parameter is deprecated.</i>
@@ -95,7 +95,7 @@ H3DU.LightSource = function(params, ambient, diffuse, specular) {
  * </ul>
  * If a value is null or undefined, it is ignored.
  * @returns {H3DU.Material} This object.
- * @memberof! H3DU.LightSource#
+ * @instance
  */
 H3DU.LightSource.prototype.setParams = function(params) {
   "use strict";

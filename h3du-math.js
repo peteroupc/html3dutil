@@ -14,7 +14,7 @@
  * mathematical objects.<p>
  * See the tutorial "{@tutorial glmath}" for more information.
  * @class
- * @alias H3DU.Math
+ * @memberof H3DU
  */
 H3DU.Math = {
 /**
@@ -2997,7 +2997,7 @@ m[0] * m[7] * m[5];
     }
     return true;
   },
-/** @private */
+/** @ignore */
   "_frustumPoints":function(frustum) {
     "use strict";
     var p0 = frustum[0];
@@ -3229,7 +3229,6 @@ m[0] * m[7] * m[5];
  * @returns {Number} Return value.
  * @method
  * @static
- * @memberof! H3DU.Math
  * @see {@link H3DU.Math.vec4dot}
  */
 H3DU.Math.quatDot = H3DU.Math.vec4dot;
@@ -3247,7 +3246,6 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
- * @memberof! H3DU.Math
  * @see {@link H3DU.Math.vec4normInPlace}
  */
 H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
@@ -3265,7 +3263,6 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
- * @memberof! H3DU.Math
  * @see {@link H3DU.Math.vec4norm}
  */
 H3DU.Math.quatNorm = H3DU.Math.vec4norm;
@@ -3278,7 +3275,6 @@ H3DU.Math.quatNorm = H3DU.Math.vec4norm;
  * @returns {Number} Return value.
  * @method
  * @static
- * @memberof! H3DU.Math
  * @see {@link H3DU.Math.vec4length}
  */
 H3DU.Math.quatLength = H3DU.Math.vec4length;
@@ -3291,7 +3287,6 @@ H3DU.Math.quatLength = H3DU.Math.vec4length;
  * @returns {Array<Number>} The parameter "a".
  * @method
  * @static
- * @memberof! H3DU.Math
  * @see {@link H3DU.Math.vec4scaleInPlace}
  */
 H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
@@ -3304,7 +3299,6 @@ H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
  * @returns {Array<Number>} The resulting quaternion.
  * @method
  * @static
- * @memberof! H3DU.Math
  * @see {@link H3DU.Math.vec4scaleInPlace}
  */
 H3DU.Math.quatScale = H3DU.Math.vec4scale;
@@ -3314,20 +3308,17 @@ H3DU.Math.quatScale = H3DU.Math.vec4scale;
  * @returns {Array<Number>} Return value.
  * @method
  * @static
- * @memberof! H3DU.Math
  * @see {@link H3DU.Math.vec4copy}
  */
 H3DU.Math.quatCopy = H3DU.Math.vec4copy;
 /**
  * Closest approximation to pi times 2, or a 360-degree turn in radians.
- * @memberof! H3DU.Math
  * @const
  * @default
  */
 H3DU.Math.PiTimes2 = 6.283185307179586476925286766559;
 /**
  * Closest approximation to pi divided by 2, or a 90-degree turn in radians.
- * @memberof! H3DU.Math
  * @const
  * @default
  */
@@ -3335,7 +3326,6 @@ H3DU.Math.HalfPi = 1.5707963267948966192313216916398;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @memberof! H3DU.Math
  * @const
  * @default
  */
@@ -3343,7 +3333,6 @@ H3DU.Math.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @memberof! H3DU.Math
  * @const
  * @default
  */
@@ -3359,7 +3348,6 @@ H3DU.Math.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @memberof! H3DU.Math
  * @const
  * @default
  */
@@ -3367,7 +3355,6 @@ H3DU.Math.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @memberof! H3DU.Math
  * @const
  * @default
  */
@@ -3375,79 +3362,67 @@ H3DU.Math.ToDegrees = H3DU.Math.Num180DividedByPi;
 /**
  * Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
  * or in the reverse order around
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.GlobalPitchYawRoll = 0;
 /**
  * Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.GlobalPitchRollYaw = 1;
 /**
  * Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.GlobalYawPitchRoll = 2;
 /**
  * Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.GlobalYawRollPitch = 3;
 /**
  * Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.GlobalRollPitchYaw = 4;
 /**
  * Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.GlobalRollYawPitch = 5;
 /**
  * Indicates that a rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.LocalPitchYawRoll = H3DU.Math.GlobalRollYawPitch;
 /**
  * Indicates that a rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.LocalPitchRollYaw = H3DU.Math.GlobalYawRollPitch;
 /**
  * Indicates that a rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.LocalYawPitchRoll = H3DU.Math.GlobalRollPitchYaw;
 /**
  * Indicates that a rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.LocalYawRollPitch = H3DU.Math.GlobalPitchRollYaw;
 /**
  * Indicates that a rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.LocalRollPitchYaw = H3DU.Math.GlobalYawPitchRoll;
 /**
  * Indicates that a rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.LocalRollYawPitch = H3DU.Math.GlobalPitchYawRoll;
@@ -3455,7 +3430,6 @@ H3DU.Math.LocalRollYawPitch = H3DU.Math.GlobalPitchYawRoll;
  * Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
  * @deprecated This constant's name is ambiguous between local and global rotations.
  * Use {@link H3DU.Math.GlobalPitchYawRoll} instead.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.PitchYawRoll = 0;
@@ -3463,7 +3437,6 @@ H3DU.Math.PitchYawRoll = 0;
  * Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
  * @deprecated This constant's name is ambiguous between local and global rotations.
  * Use {@link H3DU.Math.GlobalPitchRollYaw} instead.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.PitchRollYaw = 1;
@@ -3471,7 +3444,6 @@ H3DU.Math.PitchRollYaw = 1;
  * Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
  * @deprecated This constant's name is ambiguous between local and global rotations.
  * Use {@link H3DU.Math.GlobalYawPitchRoll} instead.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.YawPitchRoll = 2;
@@ -3479,7 +3451,6 @@ H3DU.Math.YawPitchRoll = 2;
  * Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
  * @deprecated This constant's name is ambiguous between local and global rotations.
  * Use {@link H3DU.Math.GlobalYawRollPitch} instead.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.YawRollPitch = 3;
@@ -3487,7 +3458,6 @@ H3DU.Math.YawRollPitch = 3;
  * Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
  * @deprecated This constant's name is ambiguous between local and global rotations.
  * Use {@link H3DU.Math.GlobalRollPitchYaw} instead.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.RollPitchYaw = 4;
@@ -3495,7 +3465,6 @@ H3DU.Math.RollPitchYaw = 4;
  * Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
  * @deprecated This constant's name is ambiguous between local and global rotations.
  * Use {@link H3DU.Math.GlobalRollYawPitch} instead.
- * @memberof! H3DU.Math
  * @const
  */
 H3DU.Math.RollYawPitch = 5;
@@ -3507,6 +3476,5 @@ H3DU.Math.RollYawPitch = 5;
  * @returns {Array<Number>} Return value.
  * @method
  * @static
- * @memberof! H3DU.Math
  */
 H3DU.Math.quatInverse = H3DU.Math.quatInvert;

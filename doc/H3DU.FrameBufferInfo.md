@@ -18,11 +18,11 @@ size to use as the depth buffer.
 
 ### Methods
 
-* [getHeight](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight)<br>Gets the height to use for the frame buffer.
-* [getWidth](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth)<br>Gets the width to use for the frame buffer.
-* [resize](#H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize)<br>Changes the width and height of this frame buffer information object.
+* [getHeight](#H3DU.FrameBufferInfo_getHeight)<br>Gets the height to use for the frame buffer.
+* [getWidth](#H3DU.FrameBufferInfo_getWidth)<br>Gets the width to use for the frame buffer.
+* [resize](#H3DU.FrameBufferInfo_resize)<br>Changes the width and height of this frame buffer information object.
 
- <a name='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getHeight'></a>
+ <a name='H3DU.FrameBufferInfo_getHeight'></a>
 ### H3DU.FrameBufferInfo#getHeight()
 
 Gets the height to use for the frame buffer.
@@ -31,7 +31,7 @@ Gets the height to use for the frame buffer.
 
 Return value. (Type: Number)
 
- <a name='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_getWidth'></a>
+ <a name='H3DU.FrameBufferInfo_getWidth'></a>
 ### H3DU.FrameBufferInfo#getWidth()
 
 Gets the width to use for the frame buffer.
@@ -40,7 +40,7 @@ Gets the width to use for the frame buffer.
 
 Return value. (Type: Number)
 
- <a name='H3DU.FrameBufferInfo_H3DU.FrameBufferInfo_resize'></a>
+ <a name='H3DU.FrameBufferInfo_resize'></a>
 ### H3DU.FrameBufferInfo#resize(width, height)
 
 Changes the width and height of this frame buffer information object.
