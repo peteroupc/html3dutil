@@ -28,11 +28,11 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [endpoints](#H3DU.CurveTube_endpoints)<br>TODO: Not documented yet.
+* [endPoints](#H3DU.CurveTube_endPoints)<br>TODO: Not documented yet.
 * [evaluate](#H3DU.CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u and V coordinates.
 
- <a name='H3DU.CurveTube_endpoints'></a>
-### H3DU.CurveTube#endpoints()
+ <a name='H3DU.CurveTube_endPoints'></a>
+### H3DU.CurveTube#endPoints()
 
 TODO: Not documented yet.
 

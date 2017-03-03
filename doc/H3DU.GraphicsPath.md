@@ -335,7 +335,7 @@ of the path.
 
 Array of points lying on
 the path and evenly spaced across the length of the path,
-starting and ending with the path's endpoints. Returns
+starting and ending with the path's endPoints. Returns
 an empty array if <i>numPoints</i> is less than 1. Returns
 an array consisting of the start point if <i>numPoints</i>
 is 1. (Type: Array.&lt;Array.&lt;Number>>)
@@ -590,7 +590,7 @@ The transformed version of this path. (Type: <a href="H3DU.GraphicsPath.md">H3DU
 Computes the combination of this path's shape with another
 path's shape. The following points apply to this method:<ul>
 <li>This method treats unclosed subpaths as implicitly closed
-by connecting their endpoints with their start points.
+by connecting their endPoints with their start points.
 <li>Currently, the algorithm supports only polygons made up
 of line segments, so curves and arcs are converted to line
 segments before applying the operation.

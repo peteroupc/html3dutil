@@ -3,10 +3,11 @@
 [Back to documentation index.](index.md)
 
  <a name='H3DU.Epitrochoid'></a>
-### H3DU.Epitrochoid(outerRadius, innerRadius, distFromInnerCenter)
+### H3DU.Epitrochoid(outerRadius, innerRadius, distFromInnerCenter, phaseInDegrees)
 
 A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
+The rolling circle will start at the positive X axis of the fixed circle.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -26,6 +27,8 @@ the HTML 3D Library. Example:
     Radius of the rolling circle. An epicycloid results when outerRadius=innerRadius.
 * `distFromInnerCenter` (Type: Number)<br>
     Distance from the center of the rolling circle to the drawing pen. A prolate epitrochoid results when distFromInnerCenter is greater than innerRadius.
+* `phaseInDegrees` (Type: Number)<br>
+    Starting angle of the rolling circle from the positive X axis, in degrees. Default is 0.
 
 ### Methods
 

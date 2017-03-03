@@ -5,12 +5,10 @@
  <a name='H3DU.BezierCurve'></a>
 ### H3DU.BezierCurve(cp, [u1], [u2])
 
-A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a B&eacute;zier curve.
+<b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+to create a B&eacute;zier curve.</b>
 
-A B&eacute;zier curve is defined by a series of control points, where
-the first and last control points define the endpoints of the curve, and
-the remaining control points define the curve's shape, though they don't
-necessarily cross the curve.
+A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a B&eacute;zier curve.
 
 #### Parameters
 

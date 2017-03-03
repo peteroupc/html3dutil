@@ -12,8 +12,10 @@ as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
 * <a href="H3DU.Batch3D.md">H3DU.Batch3D</a><br>A `Batch3D` represents a so-called "scene graph".
-* <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a B&eacute;zier curve.
-* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B&eacute;zier surface.
+* <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+to create a B&eacute;zier curve.</b>
+* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+to create a B&eacute;zier curve.</b>
 * <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
 Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
 contexts.</b>
@@ -33,7 +35,9 @@ contexts.</b>
 * <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.
 * <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
 * <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
-of another circle, whose position is fixed with a center of (0,0).
+of another circle, whose position is fixed, with a center of (0,0).
+* <a href="H3DU.Hypotrochoid.rose.md">H3DU.Hypotrochoid.rose</a><br>Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
+form of hypotrochoid.
 * <a href="H3DU.InputTracker.md">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.
 * <a href="H3DU.LightSource.md">H3DU.LightSource</a><br>Specifies parameters for light sources.

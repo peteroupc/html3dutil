@@ -217,58 +217,6 @@ H3DU.PbrMaterial = function(params) {
 H3DU.PbrMaterial.Specular = 0;
 H3DU.PbrMaterial.Metallic = 1;
 /**
- * Creates a material with its emission color set to the given color.
- * The effect will be that objects with that material will be drawn in that
- * color without shading.
- * @returns {H3DU.PbrMaterial} A new material with the given emission color.
- */
-H3DU.PbrMaterial.fromBasic = function(color) {
-  "use strict";
-  return new H3DU.PbrMaterial({
-    "environmentMap":null,
-    "metalness":0.0,
-    "metalnessMap":null,
-    "roughness":0.0,
-    "roughnessMap":null,
-    "albedo":[0, 0, 0],
-    "invertRoughness":false,
-    "specular":[0, 0, 0],
-    "workflow":H3DU.PbrMaterial.Specular,
-    "emission":color,
-    "emissionMap":null,
-    "albedoMap":null,
-    "specularMap":null,
-    "normalMap":null
-  });
-};
-
-/**
- * Creates a material with its emission map set to the given texture.
- * The effect will be that objects with that material will be drawn in that
- * texture without shading.
- * @returns {H3DU.PbrMaterial} A new material with the given emission map.
- */
-H3DU.PbrMaterial.fromBasicTexture = function(texture) {
-  "use strict";
-  return new H3DU.PbrMaterial({
-    "environmentMap":null,
-    "metalness":0.0,
-    "metalnessMap":null,
-    "roughness":0.0,
-    "roughnessMap":null,
-    "albedo":[0, 0, 0],
-    "invertRoughness":false,
-    "specular":[0, 0, 0],
-    "workflow":H3DU.PbrMaterial.Specular,
-    "emission":[0, 0, 0],
-    "emissionMap":texture,
-    "albedoMap":null,
-    "specularMap":null,
-    "normalMap":null
-  });
-};
-
-/**
  * Sets parameters for this material object.
  * @param {Object} params An object whose keys have
  * the possibilities given below, and whose values are those

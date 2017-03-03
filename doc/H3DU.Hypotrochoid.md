@@ -3,10 +3,10 @@
 [Back to documentation index.](index.md)
 
  <a name='H3DU.Hypotrochoid'></a>
-### H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter)
+### H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [phaseInDegrees])
 
 A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
-of another circle, whose position is fixed with a center of (0,0).
+of another circle, whose position is fixed, with a center of (0,0).
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -25,7 +25,9 @@ the HTML 3D Library. Example:
 * `innerRadius` (Type: Number)<br>
     Radius of the rolling circle. A hypocycloid results when outerRadius=innerRadius.
 * `distFromInnerCenter` (Type: Number)<br>
-    Distance from the center of the rolling circle to the drawing pen.. A prolate hypotrochoid results when distFromInnerCenter is greater than innerRadius.
+    Distance from the center of the rolling circle to the drawing pen. A prolate hypotrochoid results when distFromInnerCenter is greater than innerRadius.
+* `phaseInDegrees` (Type: Number) (optional)<br>
+    Starting angle of the inner circle from the positive X axis, in degrees. Default is 0.
 
 ### Methods
 

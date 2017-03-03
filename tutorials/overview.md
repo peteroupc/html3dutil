@@ -267,6 +267,7 @@ parametric surfaces, with a custom formula editor.
 parametric curves, with a custom formula editor.
 * [demos/implicit.html](https://peteroupc.github.io/html3dutil/demos/implicit.html) - Demonstrates
 implicit surfaces.
+* [demos/invoevo.html](https://peteroupc.github.io/html3dutil/demos/invoevo.html) - Demonstrates drawing certain custom curves.
 
 <a id=Textures></a>
 ### Textures

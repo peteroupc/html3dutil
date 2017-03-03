@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 /* global H3DU */
-/* exported BezierCurve, BezierSurface, BSplineCurve, BSplineSurface, GLUtil, GLMath, CurveEval, SurfaceEval, Lights, LightSource, Material, Mesh, Meshes, Scene3D, ShaderProgram, Shape, ShapeGroup, Texture, TextureLoader, Transform, ShaderInfo, RenderPass3D */
+/* exported BezierCurve, BezierSurface, BSplineCurve, BSplineSurface, BufferedMesh, FrameBuffer, GLUtil, GLMath, CurveEval, SurfaceEval, Lights, LightSource, Material, Mesh, Meshes, Scene3D, ShaderProgram, Shape, ShapeGroup, Texture, TextureLoader, Transform, ShaderInfo, RenderPass3D */
 /** @deprecated Use {@link H3DU.BezierCurve} instead. */
 var BezierCurve = H3DU.BezierCurve;
 /** @deprecated Use {@link H3DU.BezierSurface} instead. */
@@ -19,6 +19,8 @@ var BSplineSurface = H3DU.BSplineSurface;
 /** @deprecated Use H3DU instead. */
 var GLUtil = H3DU;
 var GLMath = H3DU.Math;
+var BufferedMesh = H3DU.BufferedMesh;
+var FrameBuffer = H3DU.FrameBuffer;
 var CurveEval = H3DU.CurveEval;
 var SurfaceEval = H3DU.SurfaceEval;
 var Lights = H3DU.Lights;

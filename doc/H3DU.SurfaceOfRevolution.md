@@ -33,14 +33,14 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [endpoints](#H3DU.SurfaceOfRevolution_endpoints)<br>TODO: Not documented yet.
+* [endPoints](#H3DU.SurfaceOfRevolution_endPoints)<br>TODO: Not documented yet.
 * [evaluate](#H3DU.SurfaceOfRevolution_evaluate)<br>TODO: Not documented yet.
 * [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 * [torus](#H3DU.SurfaceOfRevolution.torus)<br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
- <a name='H3DU.SurfaceOfRevolution_endpoints'></a>
-### H3DU.SurfaceOfRevolution#endpoints()
+ <a name='H3DU.SurfaceOfRevolution_endPoints'></a>
+### H3DU.SurfaceOfRevolution#endPoints()
 
 TODO: Not documented yet.
 

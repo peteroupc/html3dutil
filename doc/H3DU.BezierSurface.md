@@ -5,12 +5,10 @@
  <a name='H3DU.BezierSurface'></a>
 ### H3DU.BezierSurface(cp, [u1], [u2], [v1], [v2])
 
-A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B&eacute;zier surface.
+<b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+to create a B&eacute;zier curve.</b>
 
-A B&eacute;zier surface is defined by a series of control points, where
-the control points on each corner define the endpoints of the surface, and
-the remaining control points define the surface's shape, though they don't
-necessarily cross the surface.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B&eacute;zier surface.
 
 #### Parameters
 
@@ -28,7 +26,7 @@ necessarily cross the surface.
 ### Methods
 
 * [bitangent](#H3DU.BezierSurface_bitangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector</a> at the given point on this surface.
-* [endpoints](#H3DU.BezierSurface_endpoints)<br>TODO: Not documented yet.
+* [endPoints](#H3DU.BezierSurface_endPoints)<br>TODO: Not documented yet.
 * [evaluate](#H3DU.BezierSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B&eacute;zier surface.
 * [tangent](#H3DU.BezierSurface_tangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the given point on this surface.
@@ -50,8 +48,8 @@ Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector
 An array of the bitangent vector at the given U and V
 coordinates. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number>)
 
- <a name='H3DU.BezierSurface_endpoints'></a>
-### H3DU.BezierSurface#endpoints()
+ <a name='H3DU.BezierSurface_endPoints'></a>
+### H3DU.BezierSurface#endPoints()
 
 TODO: Not documented yet.
 

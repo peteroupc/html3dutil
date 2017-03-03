@@ -45,6 +45,7 @@ method, specifying an object that implements a method named
 "gradient".</b>
 * [texCoord](#H3DU.SurfaceEval_texCoord)<br>Specifies a parametric surface function for generating texture coordinates.
 * [vertex](#H3DU.SurfaceEval_vertex)<br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.
+* [wrapEvaluator](#H3DU.SurfaceEval.wrapEvaluator)<br>TODO: Not documented yet.
 
  <a name='H3DU.SurfaceEval_color'></a>
 ### H3DU.SurfaceEval#color(evaluator)
@@ -133,7 +134,7 @@ A bitangent vector . (Type: Array.&lt;Number>)
 ### (static) H3DU.SurfaceEval.findEndPoints(e)
 
 Finds the end points of the surface described by the given <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a>.
-This method calls the evaluator's <code>endpoints</code>
+This method calls the evaluator's <code>endPoints</code>
 method if it implements it; otherwise, returns <code>[0, 1]</code>
 
 #### Parameters
@@ -274,7 +275,7 @@ Specifies a surface evaluator object for generating the vertex positions of a pa
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    A <b>surface evaluator object</b>, which is an object that may or must contain the following methods:<ul> <li><code>evaluate(u, v)</code> - A method that takes a horizontal-axis coordinate (<code>u</code>), generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1. This method is required. This method returns a vector of the result of the evaluation. <li><code>gradient(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the gradient of the surface at the given coordinates. This method is optional.<br> The <b>gradient</b> is a vector pointing up and away from the surface, or alternatively, the cross product of the tangent vector and bitangent vector, in that order. The gradient returned by this method should not be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. <li><a id="tangentvector"></a><code>tangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the tangent vector of the surface at the given coordinates. This method is optional.<br> The <b>tangent vector</b> is the vector pointing in the direction of the U axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>. The tangent vector returned by this method should not be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. <li><a id="bitangentvector"></a><code>bitangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the bitangent vector of the surface at the given coordinates. This method is optional.<br> The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method should not be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. <li><code>endpoints()</code> - A method that returns a four-element array. The first and second elements are the starting and ending U coordinates, respectively, of the surface, and the third and fourth elements are its starting and ending V coordinates. This method is optional. If not given, the default end points are <code>[0, 1, 0, 1]</code>. </ul>
+    A <b>surface evaluator object</b>, which is an object that may contain the following methods (except that <code>evaluate</code> is required):<ul> <li><code>evaluate(u, v)</code> - A method that takes a horizontal-axis coordinate (<code>u</code>), generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1. This method is required. This method returns a vector of the result of the evaluation. <li><code>gradient(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the gradient of the surface at the given coordinates. This method is optional.<br> The <b>gradient</b> is a vector pointing up and away from the surface, or alternatively, the cross product of the tangent vector and bitangent vector, in that order. The gradient returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. <li><a id="tangentvector"></a><code>tangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the tangent vector of the surface at the given coordinates. This method is optional.<br> The <b>tangent vector</b> is the vector pointing in the direction of the U axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>. The tangent vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. <li><a id="bitangentvector"></a><code>bitangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the bitangent vector of the surface at the given coordinates. This method is optional.<br> The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. <li><code>endPoints()</code> - A method that returns a four-element array. The first and second elements are the starting and ending U coordinates, respectively, of the surface, and the third and fourth elements are its starting and ending V coordinates. This method is optional. If not given, the default end points are <code>[0, 1, 0, 1]</code>. </ul>
 
 #### Return Value
 
@@ -312,3 +313,16 @@ The result is the gradient, which will be normal to the surface.
     Math.sin(u)*-Math.sin(v)*Math.sin(u),
     0];
     }})
+
+ <a name='H3DU.SurfaceEval.wrapEvaluator'></a>
+### (static) H3DU.SurfaceEval.wrapEvaluator(evaluator)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `evaluator` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
