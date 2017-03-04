@@ -54,7 +54,8 @@ in a B-spline curve.
 * [fromBezierCurve](#H3DU.BSplineCurve.fromBezierCurve)<br>Creates a B-spline curve from the control points of a B&eacute;zier curve.
 * [fromCardinalSpline](#H3DU.BSplineCurve.fromCardinalSpline)<br>Creates an array of B-spline curves from the control points of a cardinal spline.
 * [fromHermiteSpline](#H3DU.BSplineCurve.fromHermiteSpline)<br>Creates an array of B-spline curves from the control points of a Hermite spline.
-* [getPoints](#H3DU.BSplineCurve_getPoints)<br>TODO: Not documented yet.
+* [getPoints](#H3DU.BSplineCurve_getPoints)<br>Gets a reference to the array of control points used
+in this curve object.
 * [split](#H3DU.BSplineCurve_split)<br>Splits this B-spline curve into two at the given point.
 * [tangent](#H3DU.BSplineCurve_tangent)<br>Finds the <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">tangent</a> (derivative) of
 this curve at the given point.
@@ -252,11 +253,12 @@ same path as the Hermite spline. (Type: <a href="H3DU.BSplineCurve.md">H3DU.BSpl
  <a name='H3DU.BSplineCurve_getPoints'></a>
 ### H3DU.BSplineCurve#getPoints()
 
-TODO: Not documented yet.
+Gets a reference to the array of control points used
+in this curve object.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: Array.&lt;Array.&lt;Number>>)
+An object described in the constructor to <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>. (Type: Array.&lt;Array.&lt;Number>>)
 
  <a name='H3DU.BSplineCurve_split'></a>
 ### H3DU.BSplineCurve#split(u)

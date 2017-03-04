@@ -23,17 +23,33 @@ the HTML 3D Library. Example:
 * `outerRadius` (Type: Number)<br>
     Radius of the circle whose position is fixed.
 * `innerRadius` (Type: Number)<br>
-    Radius of the rolling circle. A hypocycloid results when outerRadius=innerRadius.
+    Radius of the rolling circle. A hypocycloid results when distFromInnerCenter=innerRadius.
 * `distFromInnerCenter` (Type: Number)<br>
-    Distance from the center of the rolling circle to the drawing pen. A prolate hypotrochoid results when distFromInnerCenter is greater than innerRadius.
+    Distance from the center of the rolling circle to the drawing pen.
 * `phaseInDegrees` (Type: Number) (optional)<br>
     Starting angle of the inner circle from the positive X axis, in degrees. Default is 0.
 
 ### Methods
 
+* [endPoints](#H3DU.Hypotrochoid_endPoints)<br>Gets the endpoints of this curve.
 * [evaluate](#H3DU.Hypotrochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
+* [rose](#H3DU.Hypotrochoid.rose)<br>Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
+form of hypotrochoid.
 * [scaleTo](#H3DU.Hypotrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
+
+ <a name='H3DU.Hypotrochoid_endPoints'></a>
+### H3DU.Hypotrochoid#endPoints()
+
+Gets the endpoints of this curve.
+For this curve evaluator object, the curve
+starts at 0 and ends at &pi;\*2.
+
+#### Return Value
+
+An array containing the two
+endpoints of the curve. The first number is the start of the curve,
+and the second number is the end of the curve. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Hypotrochoid_evaluate'></a>
 ### H3DU.Hypotrochoid#evaluate(u)
@@ -49,6 +65,21 @@ Generates a point on the curve from the given U coordinate.
 
 A 3-element array specifying a 3D point.
 Only the X and Y coordinates will be other than 0. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Hypotrochoid.rose'></a>
+### (static) H3DU.Hypotrochoid.rose(n, distFromInnerCenter, [phaseInDegrees])
+
+Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
+form of hypotrochoid.
+
+#### Parameters
+
+* `n` (Type: Number)<br>
+    Parameter that determines the petal form of the rose. For example, the rose is symmetrical if this number is even.
+* `distFromInnerCenter` (Type: Number)<br>
+    Distance from the center of the rolling circle to the drawing pen. A prolate hypotrochoid results when distFromInnerCenter is greater than innerRadius.
+* `phaseInDegrees` (Type: Number) (optional)<br>
+    Starting angle of the inner circle from the positive X axis, in degrees. Default is 0.
 
  <a name='H3DU.Hypotrochoid_scaleTo'></a>
 ### H3DU.Hypotrochoid#scaleTo(radius)

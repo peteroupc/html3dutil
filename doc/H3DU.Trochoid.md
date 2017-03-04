@@ -26,7 +26,21 @@ the HTML 3D Library. Example:
 
 ### Methods
 
+* [endPoints](#H3DU.Trochoid_endPoints)<br>Gets the endpoints of this curve.
 * [evaluate](#H3DU.Trochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
+
+ <a name='H3DU.Trochoid_endPoints'></a>
+### H3DU.Trochoid#endPoints()
+
+Gets the endpoints of this curve.
+For this curve evaluator object, the curve
+starts at 0 and ends at &pi;\*2.
+
+#### Return Value
+
+An array containing the two
+endpoints of the curve. The first number is the start of the curve,
+and the second number is the end of the curve. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Trochoid_evaluate'></a>
 ### H3DU.Trochoid#evaluate(u)

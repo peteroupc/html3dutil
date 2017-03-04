@@ -681,8 +681,9 @@
   };
 
 /**
- * TODO: Not documented yet.
- * @returns {Array<Array<Number>>} TODO: Not documented yet.
+ * Gets a reference to the array of control points used
+ * in this curve object.
+ * @returns {Array<Array<Number>>} An object described in the constructor to {@link H3DU.BSplineCurve}.
  * @instance
  */
   H3DU.BSplineCurve.prototype.getPoints = function() {
@@ -1192,12 +1193,30 @@
  * </ul>
  * @returns {H3DU.CurveEval} This object.
  * @example <caption>The following function sets a circle as the curve
- * to use for generating vertex positions.</caption>
- * // "u" can range from 0 to 2*Math.PI
+ * to use for generating vertex positions. It demonstrates how all methods
+ * defined for curve evaluator objects can be implemented.</caption>
  * curveEval.vertex({"evaluate":function(u) {
  * "use strict";
  * return [Math.cos(u),Math.sin(u),0]
- * }});
+ * },
+ * "tangent":function(u) {
+ * return [-Math.sin(u),Math.cos(u),0]
+ * },
+ * "accel":function(u) {
+ * return [-Math.cos(u),-Math.sin(u),0]
+ * },
+ * "normal":function(u) {
+ * // NOTE: The tangent vector will already be a
+ * // unit vector, so we use the accel vector instead
+ * return H3DU.Math.vec3norm(this.accel(u));
+ * },
+ * "arcLength":function(u) {
+ * return u;
+ * },
+ * "endPoints":function(u) {
+ * return [0,H3DU.Math.PiTimes2]
+ * }
+ * });
  * @instance
  */
   H3DU.CurveEval.prototype.vertex = function(evaluator) {
@@ -1659,8 +1678,8 @@
   };
 
 /**
- * Finds an approximate [acceleration vector]{@link H3DU.CurveEval#vertex} for the given
- * curve evaluator object
+ * Finds an approximate [acceleration vector]{@link H3DU.CurveEval#vertex}
+ * (second derivative) for the given curve evaluator object
  * at the given U coordinate. This method calls the evaluator's <code>accel</code>
  * method if it implements it; otherwise, does a numerical differentiation
  * using the {@link H3DU.CurveEval.findTangent} method.
@@ -1685,7 +1704,7 @@
     return vector;
   };
 
-  H3DU.CurveEval._gaussLegendre24 = [
+  H3DU.CurveEval._legendreGauss24 = [
     0.12793819534675216, 0.06405689286260563,
     0.1258374563468283, 0.1911188674736163,
     0.12167047292780339, 0.3150426796961634,
@@ -1708,11 +1727,10 @@
     return Math.sqrt(ret);
   };
 /**
- * Finds the approximate [arc length]{@link H3DU.CurveEval#vertex} between the start of the curve
+ * Finds an approximate [arc length]{@link H3DU.CurveEval#vertex} between the start of the curve
  * described by the given curve evaluator object and the point at the given U coordinate.
  * This method calls the evaluator's <code>arcLength</code>
- * method if it implements it; otherwise, calculates a numerical integral using the {@link H3DU.CurveEval.findTangent}
- * method.
+ * method if it implements it; otherwise, calculates a numerical integral using the {@link H3DU.CurveEval.findTangent} method.
  * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
  * @param {Number} u U coordinate of the curve to evaluate.
  * @returns {Array<Number>} A tangent vector.
@@ -1729,7 +1747,7 @@
     var bm = (mx - mn) * 0.5;
     var bp = (mx + mn) * 0.5;
     var ret = 0;
-    var lg = H3DU.CurveEval._gaussLegendre24;
+    var lg = H3DU.CurveEval._legendreGauss24;
     for(var i = 0; i < lg.length; i += 2) {
       var weight = lg[i];
       var abscissa = lg[i + 1];
@@ -1741,9 +1759,11 @@
     return ret * bm * dir;
   };
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
- * @returns {*} Return value. */
+ * Wraps a curve evaluator object to one that implements all
+ * methods defined in the documentation for {@link H3DU.CurveEval#vertex}.
+ * @param {Object} evaluator The curve evaluator object to wrap.
+ * @returns {Object} A wrapper for the given curve evaluator object.
+ */
   H3DU.CurveEval.wrapEvaluator = function(evaluator) {
     return {
       "evaluate":function(u) {
@@ -1767,16 +1787,18 @@
     };
   };
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
- * @returns {*} Return value. */
+ * Wraps a surface evaluator object to one that implements all
+ * methods defined in the documentation for {@link H3DU.SurfaceEval#vertex}.
+ * @param {Object} evaluator The surface evaluator object to wrap.
+ * @returns {Object} A wrapper for the given surface evaluator object.
+ */
   H3DU.SurfaceEval.wrapEvaluator = function(evaluator) {
     return {
       "evaluate":function(u, v) {
         return evaluator.evaluate(u, v);
       },
       "bitangent":function(u, v) {
-        return H3DU.SurfaceEval.findArcLength(evaluator, u, v);
+        return H3DU.SurfaceEval.findBitangent(evaluator, u, v);
       },
       "tangent":function(u, v) {
         return H3DU.SurfaceEval.findTangent(evaluator, u, v);

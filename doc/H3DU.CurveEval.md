@@ -30,10 +30,10 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 function.
 * [evalOne](#H3DU.CurveEval_evalOne)<br>Generates vertex positions and attributes based on a point
 in a parametric curve.
-* [findAccel](#H3DU.CurveEval.findAccel)<br>Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">acceleration vector</a> for the given
-curve evaluator object
+* [findAccel](#H3DU.CurveEval.findAccel)<br>Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">acceleration vector</a>
+(second derivative) for the given curve evaluator object
 at the given U coordinate.
-* [findArcLength](#H3DU.CurveEval.findArcLength)<br>Finds the approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">arc length</a> between the start of the curve
+* [findArcLength](#H3DU.CurveEval.findArcLength)<br>Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">arc length</a> between the start of the curve
 described by the given curve evaluator object and the point at the given U coordinate.
 * [findEndPoints](#H3DU.CurveEval.findEndPoints)<br>Finds the end points of the curve described by the given <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a>.
 * [findNormal](#H3DU.CurveEval.findNormal)<br>Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">principal normal vector</a> for the given
@@ -44,7 +44,8 @@ at the given U coordinate.
 * [normal](#H3DU.CurveEval_normal)<br><b>Deprecated: Use the "vertex" method instead.</b>
 * [texCoord](#H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
 * [vertex](#H3DU.CurveEval_vertex)<br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
-* [wrapEvaluator](#H3DU.CurveEval.wrapEvaluator)<br>TODO: Not documented yet.
+* [wrapEvaluator](#H3DU.CurveEval.wrapEvaluator)<br>Wraps a curve evaluator object to one that implements all
+methods defined in the documentation for <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">H3DU.CurveEval#vertex</a>.
 
  <a name='H3DU.CurveEval_color'></a>
 ### H3DU.CurveEval#color(evaluator)
@@ -103,8 +104,8 @@ This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
  <a name='H3DU.CurveEval.findAccel'></a>
 ### (static) H3DU.CurveEval.findAccel(e, u)
 
-Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">acceleration vector</a> for the given
-curve evaluator object
+Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">acceleration vector</a>
+(second derivative) for the given curve evaluator object
 at the given U coordinate. This method calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation
 using the <a href="H3DU.CurveEval.md#H3DU.CurveEval.findTangent">H3DU.CurveEval.findTangent</a> method.
@@ -123,11 +124,10 @@ A tangent vector. (Type: Array.&lt;Number>)
  <a name='H3DU.CurveEval.findArcLength'></a>
 ### (static) H3DU.CurveEval.findArcLength(e, u)
 
-Finds the approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">arc length</a> between the start of the curve
+Finds an approximate <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">arc length</a> between the start of the curve
 described by the given curve evaluator object and the point at the given U coordinate.
 This method calls the evaluator's <code>arcLength</code>
-method if it implements it; otherwise, calculates a numerical integral using the <a href="H3DU.CurveEval.md#H3DU.CurveEval.findTangent">H3DU.CurveEval.findTangent</a>
-method.
+method if it implements it; otherwise, calculates a numerical integral using the <a href="H3DU.CurveEval.md#H3DU.CurveEval.findTangent">H3DU.CurveEval.findTangent</a> method.
 
 #### Parameters
 
@@ -250,23 +250,43 @@ This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 #### Example
 
 The following function sets a circle as the curve
-to use for generating vertex positions.
+to use for generating vertex positions. It demonstrates how all methods
+defined for curve evaluator objects can be implemented.
 
-    // "u" can range from 0 to 2*Math.PI
     curveEval.vertex({"evaluate":function(u) {
     "use strict";
     return [Math.cos(u),Math.sin(u),0]
-    }});
+    },
+    "tangent":function(u) {
+    return [-Math.sin(u),Math.cos(u),0]
+    },
+    "accel":function(u) {
+    return [-Math.cos(u),-Math.sin(u),0]
+    },
+    "normal":function(u) {
+    // NOTE: The tangent vector will already be a
+    // unit vector, so we use the accel vector instead
+    return H3DU.Math.vec3norm(this.accel(u));
+    },
+    "arcLength":function(u) {
+    return u;
+    },
+    "endPoints":function(u) {
+    return [0,H3DU.Math.PiTimes2]
+    }
+    });
 
  <a name='H3DU.CurveEval.wrapEvaluator'></a>
 ### (static) H3DU.CurveEval.wrapEvaluator(evaluator)
 
-TODO: Not documented yet.
+Wraps a curve evaluator object to one that implements all
+methods defined in the documentation for <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">H3DU.CurveEval#vertex</a>.
 
 #### Parameters
 
-* `evaluator` (Type: *)
+* `evaluator` (Type: Object)<br>
+    The curve evaluator object to wrap.
 
 #### Return Value
 
-Return value. (Type: *)
+A wrapper for the given curve evaluator object. (Type: Object)

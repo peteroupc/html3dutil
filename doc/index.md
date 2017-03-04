@@ -36,8 +36,6 @@ contexts.</b>
 * <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
 * <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
-* <a href="H3DU.Hypotrochoid.rose.md">H3DU.Hypotrochoid.rose</a><br>Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
-form of hypotrochoid.
 * <a href="H3DU.InputTracker.md">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.
 * <a href="H3DU.LightSource.md">H3DU.LightSource</a><br>Specifies parameters for light sources.

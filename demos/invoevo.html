@@ -7,12 +7,14 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="../extras/curvetube.js"></script>
+<script type="text/javascript" src="../extras/evaluators.js"></script>
 <script type="text/javascript" src="../extras/path.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
 <canvas id=canvas></canvas>
-<div style="position:absolute;left:0;top:0;width:25%">Involute and evolute of an ellipse</div>
+<div style="position:absolute;left:0;top:0;width:25%">Involute, evolute, and inverse curve
+of an ellipse</div>
 <script id="demo">
 /* global H3DU */
 // <!--
@@ -29,12 +31,11 @@ function makeCurvePath(curve) {
   "use strict";
   var ce = new H3DU.CurveEval();
   var mesh = new H3DU.Mesh();
-  ce.vertex(curve);
-  ce.evalCurve(mesh, H3DU.Mesh.LINES, 60);
+  ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, 60);
   return mesh;
 }
 
-var _vecNormInPlaceAndScale = function(vec, scale) {
+function _vecNormInPlaceAndScale(vec, scale) {
   "use strict";
   var len = 0;
   for(var i = 0; i < vec.length; i++) {
@@ -52,23 +53,24 @@ var _vecNormInPlaceAndScale = function(vec, scale) {
     }
   }
   return vec;
-};
-var _vecAdd = function(v1, v2) {
+}
+function _vecAdd(v1, v2) {
   "use strict";
   var ret = [];
   for(var i = 0; i < v1.length; i++) {
     ret[i] = v1[i] + v2[i];
   }
   return ret;
-};
-var _vecScale = function(v1, s) {
+}
+function _vecScale(v1, s) {
   "use strict";
   var ret = [];
   for(var i = 0; i < v1.length; i++) {
     ret[i] = v1[i] * s;
   }
   return ret;
-};
+}
+
 function curveInvolute(evaluator) {
   "use strict";
   var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
@@ -77,8 +79,9 @@ function curveInvolute(evaluator) {
       var arclen = neweval.arcLength(u);
       var tangent = neweval.tangent(u);
       var position = neweval.evaluate(u);
+  // var denom = Math.sqrt(tangent[0] * tangent[0] + tangent[1] * tangent[1]);
       return _vecAdd(position,
-          _vecNormInPlaceAndScale(tangent, -arclen));
+        _vecNormInPlaceAndScale(tangent, -arclen));
     },
     "endPoints":function() {
       return neweval.endPoints();
@@ -100,6 +103,90 @@ function curveEvolute(evaluator) {
         position[1] + numpart * tangent[0] / denom,
         0
       ];
+    },
+    "endPoints":function() {
+      return neweval.endPoints();
+    }
+  };
+}
+/* exported curveRadialCurve */
+function curveRadialCurve(evaluator, ox, oy) {
+  "use strict";
+  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  return {
+    "evaluate":function(u) {
+      var tangent = neweval.tangent(u);
+      var accel = neweval.accel(u);
+      var denom = tangent[0] * accel[1] - accel[0] * tangent[1];
+      var numpart = tangent[0] * tangent[0] + tangent[1] * tangent[1];
+      return [
+        ox - numpart * tangent[1] / denom,
+        oy + numpart * tangent[0] / denom,
+        0
+      ];
+    },
+    "endPoints":function() {
+      return neweval.endPoints();
+    }
+  };
+}
+function curveOrthotomic(evaluator, ox, oy) {
+  "use strict";
+  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  return {
+    "evaluate":function(u) {
+      var position = neweval.evaluate(u);
+      var dx = position[0] - ox;
+      var dy = position[1] - oy;
+      var tangent = neweval.tangent(u);
+      var denom = tangent[0] * tangent[0] + tangent[1] * tangent[1];
+      var rate = 2 * (tangent[0] * dy - tangent[1] * dx) / denom;
+      return [ox - tangent[1] * rate, oy + tangent[0] * rate, 0];
+    },
+    "endPoints":function() {
+      return neweval.endPoints();
+    }
+  };
+}
+/* exported curveCatacaustic */
+function curveCatacaustic(evaluator, ox, oy) {
+  "use strict";
+  return curveEvolute(curveOrthotomic(evaluator, ox, oy));
+}
+/* exported curvePedalCurve */
+function curvePedalCurve(evaluator, ox, oy) {
+  "use strict";
+  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  return {
+    "evaluate":function(u) {
+      var position = neweval.evaluate(u);
+      var tangent = neweval.tangent(u);
+      var tangentXSq = tangent[0] * tangent[0];
+      var tangentYSq = tangent[1] * tangent[1];
+      var tanXY = tangent[0] * tangent[1];
+      var denom = tangentXSq + tangentYSq;
+      return [
+        (ox * tangentXSq + tangentYSq * position[0] + (oy - position[1]) * tanXY) / denom,
+        (oy * tangentYSq + tangentXSq * position[1] + (ox - position[0]) * tanXY) / denom,
+        0];
+    },
+    "endPoints":function() {
+      return neweval.endPoints();
+    }
+  };
+}
+
+function curveInverse(evaluator, ox, oy, radius) {
+  "use strict";
+  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  return {
+    "evaluate":function(u) {
+      var position = neweval.evaluate(u);
+      var dx = position[0] - ox;
+      var dy = position[1] - oy;
+      var rsq = radius * radius;
+      var denom = dx * dx + dy * dy;
+      return [ox + dx * rsq / denom, oy + dy * rsq / denom];
     },
     "endPoints":function() {
       return neweval.endPoints();
@@ -129,7 +216,7 @@ var simpleCurve = {
     return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
   },
   "endPoints":function() {
-    "use strict"; return [0, Math.PI * 2];
+    "use strict"; return [-Math.PI, Math.PI];
   }
 };
 
@@ -142,13 +229,16 @@ var sub = new H3DU.Batch3D()
 var group = new H3DU.ShapeGroup();
 sub.getLights().setBasic();
 var mesh = makeCurvePath(simpleCurve);
-sub.addShape(
+group.addShape(
     new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("blue")));
 mesh = makeCurvePath(curveInvolute(simpleCurve));
-sub.addShape(
+group.addShape(
     new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("red")));
 mesh = makeCurvePath(curveEvolute(simpleCurve));
-sub.addShape(
+group.addShape(
+    new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("orange")));
+mesh = makeCurvePath(curveInverse(simpleCurve, 0, 0, 1));
+group.addShape(
     new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("green")));
 sub.addShape(group);
 H3DU.renderLoop(function() {

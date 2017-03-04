@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
  <a name='H3DU.Epitrochoid'></a>
-### H3DU.Epitrochoid(outerRadius, innerRadius, distFromInnerCenter, phaseInDegrees)
+### H3DU.Epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, phaseInDegrees)
 
 A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
@@ -23,18 +23,32 @@ the HTML 3D Library. Example:
 
 * `outerRadius` (Type: Number)<br>
     Radius of the circle whose position is fixed.
-* `innerRadius` (Type: Number)<br>
-    Radius of the rolling circle. An epicycloid results when outerRadius=innerRadius.
-* `distFromInnerCenter` (Type: Number)<br>
-    Distance from the center of the rolling circle to the drawing pen. A prolate epitrochoid results when distFromInnerCenter is greater than innerRadius.
+* `rollerRadius` (Type: Number)<br>
+    Radius of the rolling circle. An epicycloid results when distFromRollerCenter=rollerRadius.
+* `distFromRollerCenter` (Type: Number)<br>
+    Distance from the center of the rolling circle to the drawing pen.
 * `phaseInDegrees` (Type: Number)<br>
     Starting angle of the rolling circle from the positive X axis, in degrees. Default is 0.
 
 ### Methods
 
+* [endPoints](#H3DU.Epitrochoid_endPoints)<br>Gets the endpoints of this curve.
 * [evaluate](#H3DU.Epitrochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
 * [scaleTo](#H3DU.Epitrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
+
+ <a name='H3DU.Epitrochoid_endPoints'></a>
+### H3DU.Epitrochoid#endPoints()
+
+Gets the endpoints of this curve.
+For this curve evaluator object, the curve
+starts at 0 and ends at &pi;\*2.
+
+#### Return Value
+
+An array containing the two
+endpoints of the curve. The first number is the start of the curve,
+and the second number is the end of the curve. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Epitrochoid_evaluate'></a>
 ### H3DU.Epitrochoid#evaluate(u)

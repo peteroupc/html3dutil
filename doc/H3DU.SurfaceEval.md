@@ -45,7 +45,8 @@ method, specifying an object that implements a method named
 "gradient".</b>
 * [texCoord](#H3DU.SurfaceEval_texCoord)<br>Specifies a parametric surface function for generating texture coordinates.
 * [vertex](#H3DU.SurfaceEval_vertex)<br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.
-* [wrapEvaluator](#H3DU.SurfaceEval.wrapEvaluator)<br>TODO: Not documented yet.
+* [wrapEvaluator](#H3DU.SurfaceEval.wrapEvaluator)<br>Wraps a surface evaluator object to one that implements all
+methods defined in the documentation for <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>.
 
  <a name='H3DU.SurfaceEval_color'></a>
 ### H3DU.SurfaceEval#color(evaluator)
@@ -317,12 +318,14 @@ The result is the gradient, which will be normal to the surface.
  <a name='H3DU.SurfaceEval.wrapEvaluator'></a>
 ### (static) H3DU.SurfaceEval.wrapEvaluator(evaluator)
 
-TODO: Not documented yet.
+Wraps a surface evaluator object to one that implements all
+methods defined in the documentation for <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>.
 
 #### Parameters
 
-* `evaluator` (Type: *)
+* `evaluator` (Type: Object)<br>
+    The surface evaluator object to wrap.
 
 #### Return Value
 
-Return value. (Type: *)
+A wrapper for the given surface evaluator object. (Type: Object)
