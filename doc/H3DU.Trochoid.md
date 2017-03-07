@@ -28,6 +28,7 @@ the HTML 3D Library. Example:
 
 * [endPoints](#H3DU.Trochoid_endPoints)<br>Gets the endpoints of this curve.
 * [evaluate](#H3DU.Trochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
+* [tangent](#H3DU.Trochoid_tangent)<br>TODO: Not documented yet.
 
  <a name='H3DU.Trochoid_endPoints'></a>
 ### H3DU.Trochoid#endPoints()
@@ -56,3 +57,16 @@ Generates a point on the curve from the given U coordinate.
 
 A 3-element array specifying a 3D point.
 Only the X and Y coordinates will be other than 0. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Trochoid_tangent'></a>
+### H3DU.Trochoid#tangent(u)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `u` (Type: *)
+
+#### Return Value
+
+ (Type: *)

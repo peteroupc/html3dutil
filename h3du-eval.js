@@ -102,6 +102,15 @@
     this.curve = H3DU.BSplineCurve.clamped(cp, cp.length - 1, 0);
   };
 /**
+ * Returns the starting and ending U coordinates of this curve.
+ * @returns {Array<Number>} A two-element array. The first and second
+ * elements are the starting and ending U coordinates, respectively, of the curve.
+ * @instance
+ */
+  H3DU.BezierCurve.prototype.endPoints = function() {
+    return this.surface.endPoints();
+  };
+/**
  * Evaluates the curve function based on a point
  * in a B&eacute;zier curve.
  * @param {Number} u Point on the curve to evaluate (generally within the range
@@ -120,19 +129,6 @@
   H3DU.BezierCurve.prototype.evaluate = function(u) {
     return this.curve.evaluate(u);
   };
-/**
- * Finds the [tangent]{@link H3DU.CurveEval#vertex} (derivative) of
- * this curve at the given point.
- * @param {Number} u Point on the curve to evaluate (generally within the range
- * given in the constructor).
- * @returns {Array<Number>} An array giving the tangent at the given point.
- * It will have as many elements as a control point, as specified in the constructor.
- * @instance
- */
-  H3DU.BezierCurve.prototype.tangent = function(u) {
-    return this.curve.tangent(u);
-  };
-
 /**
  * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a B&eacute;zier surface.<p>
  * @deprecated Instead of this class, use {@link H3DU.BSplineCurve.fromBezierCurve}
@@ -165,7 +161,7 @@
  * purpose of interpolation along the V axis.)
  */
   H3DU.BezierSurface = function(cp) {
-    this.curve = H3DU.BSplineSurface.clamped(cp, cp[0].length - 1, cp.length - 1, 0);
+    this.surface = H3DU.BSplineSurface.clamped(cp, cp[0].length - 1, cp.length - 1, 0);
   };
 
 /**
@@ -179,45 +175,23 @@
  * @instance
  */
   H3DU.BezierSurface.prototype.evaluate = function(u, v) {
-    return this.curve.evaluate(u, v);
+    return this.surface.evaluate(u, v);
   };
 /**
- * Finds the [tangent vector]{@link H3DU.SurfaceEval#vertex} at the given point on this surface.
- * @param {Number} u U coordinate of the surface to evaluate (generally within the range
- * given in the constructor).
- * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} An array of the tangent vector at the given U and V
- * coordinates. It will have as many elements as a control point, as specified in the constructor.
- * @instance
- */
-  H3DU.BezierSurface.prototype.tangent = function(u, v) {
-    return this.curve.tangent(u, v);
-  };
-/**
- * Finds the [bitangent vector]{@link H3DU.SurfaceEval#vertex} at the given point on this surface.
- * @param {Number} u U coordinate of the surface to evaluate (generally within the range
- * given in the constructor).
- * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} An array of the bitangent vector at the given U and V
- * coordinates. It will have as many elements as a control point, as specified in the constructor.
- * @instance
- */
-  H3DU.BezierSurface.prototype.bitangent = function(u, v) {
-    return this.curve.bitangent(u, v);
-  };
-/**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Returns the starting and ending U and V coordinates of this surface.
+ * @returns {Array<Number>} A four-element array. The first and second
+ * elements are the starting and ending U coordinates, respectively, of the surface, and the third
+ * and fourth elements are its starting and ending V coordinates.
  * @instance
  */
   H3DU.BezierSurface.prototype.endPoints = function() {
-    return this.curve.endPoints();
+    return this.surface.endPoints();
   };
 /**
  * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a B-spline (basis spline) curve.
  * B-spline curves can also represent all B&eacute;zier curves (see {@link H3DU.BSplineCurve.fromBezierCurve}).
  * A B&eacute;zier curve is defined by a series of control points, where
- * the first and last control points define the endPoints of the curve, and
+ * the first and last control points define the end points of the curve, and
  * the remaining control points define the curve's shape, though they don't
  * necessarily cross the curve.
  * @class
@@ -670,8 +644,9 @@
   };
 
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Returns the starting and coordinates of this curve.
+ * @returns {Array<Number>} A two-element array containing
+ * the starting and ending U coordinates, respectively, of the curve.
  * @instance
  */
   H3DU.BSplineCurve.prototype.endPoints = function() {
@@ -691,15 +666,15 @@
   };
 
 /**
- * Finds the [tangent]{@link H3DU.CurveEval#vertex} (derivative) of
+ * Finds the [velocity]{@link H3DU.CurveEval#vertex} (derivative) of
  * this curve at the given point.
  * @param {Number} u Point on the curve to evaluate.
- * @returns {Array<Number>} An array giving the tangent vector.
+ * @returns {Array<Number>} An array giving the velocity vector.
  * It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
  * @instance
  */
-  H3DU.BSplineCurve.prototype.tangent = function(u) {
+  H3DU.BSplineCurve.prototype.velocity = function(u) {
     var ret = [];
     if(this.fastBezier) {
       var cp = this.controlPoints;
@@ -779,7 +754,7 @@
  * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a B-spline (basis spline) surface.
  * B-spline surfaces can also represent all B&eacute;zier surfaces (see {@link H3DU.BSplineSurface.fromBezierSurface}).
  * A B&eacute;zier surface is defined by a series of control points, where
- * the control points on each corner define the endPoints of the surface, and
+ * the control points on each corner define the end points of the surface, and
  * the remaining control points define the surface's shape, though they don't
  * necessarily cross the surface.
  * @class
@@ -1153,7 +1128,7 @@
  * where x(u) returns an X coordinate, y(u) a Y coordinate,
  * and z(u) returns a Z coordinate.<p>
  * This class also contains methods for calculating several useful
- * properties of a parametric curve, such as its tangent vector.
+ * properties of a parametric curve, such as its velocity and arc length.<p>
  * For more information, see the {@tutorial surfaces} tutorial.
  * @class
  * @memberof H3DU
@@ -1171,9 +1146,9 @@
  * following methods (except that <code>evaluate</code> is required):<ul>
  * <li><code>evaluate(u)</code> - A method that takes a curve coordinate (<code>u</code>),
  * generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation.
- * <li><code>tangent(u)</code> - A method that takes the same parameter as <code>evaluate</code>
- * and returns the tangent (or velocity) of the surface at the given coordinate.<p>
- * The <b>tangent</b> of a curve is a vector which is the derivative of the <code>evaluate</code> method at the given coordinate.  The tangent vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * <li><code>velocity(u)</code> - A method that takes the same parameter as <code>evaluate</code>
+ * and returns the velocity of the surface at the given coordinate.<p>
+ * The <b>velocity</b> of a curve is a vector which is the derivative of the <code>evaluate</code> method at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
  * This method is optional.
  * <li><code>accel(u)</code> - A method that takes the same parameter as <code>evaluate</code>
  * and returns the acceleration of the surface at the given coordinate.<p>
@@ -1181,12 +1156,12 @@
  * This method is optional.
  * <li><code>normal(u)</code> - A method that takes the same parameter as <code>evaluate</code>
  * and returns the principal normal of the surface at the given coordinate, as a unit vector.<p>
- * The <b>principal normal</b> of a curve is the derivative of the "normalized" tangent vector divided by that derivative's length.  The normal returned by this method <i>should</i> be "normalized" to a [unit vector]{@tutorial glmath}. (Compare with the "gradient"
+ * The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity vector divided by that derivative's length.  The normal returned by this method <i>should</i> be "normalized" to a [unit vector]{@tutorial glmath}. (Compare with the "gradient"
  * method for {@link H3DU.SurfaceEval#vertex}.)
  * This method is optional.
  * <li><code>arcLength(u)</code> - A method that takes the same parameter as <code>evaluate</code>
  * and returns the length of the curve from the starting point to the point at the given coordinate.<p>
- * The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the tangent vector. This method is optional.
+ * The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector. This method is optional.
  * <li><code>endPoints()</code> - A method that returns a two-element array. The first element
  * is the starting coordinate of the curve, and the second is its ending coordinate. This method is
  * optional. If not given, the default end points are <code>[0, 1]</code>.
@@ -1199,16 +1174,16 @@
  * "use strict";
  * return [Math.cos(u),Math.sin(u),0]
  * },
- * "tangent":function(u) {
+ * "velocity":function(u) {
  * return [-Math.sin(u),Math.cos(u),0]
  * },
  * "accel":function(u) {
  * return [-Math.cos(u),-Math.sin(u),0]
  * },
  * "normal":function(u) {
- * // NOTE: The tangent vector will already be a
+ * // NOTE: The velocity vector will already be a
  * // unit vector, so we use the accel vector instead
- * return H3DU.Math.vec3norm(this.accel(u));
+ * return H3DU.Math.vec3normalize(this.accel(u));
  * },
  * "arcLength":function(u) {
  * return u;
@@ -1626,17 +1601,17 @@
      H3DU.SurfaceEval._bitangentHelper(e, u, v, e.evaluate(u, v));
   };
 /**
- * Finds an approximate [tangent (derivative)]{@link H3DU.CurveEval#vertex} for the given curve evaluator object
- * at the given U coordinate. This method calls the evaluator's <code>tangent</code>
+ * Finds an approximate [velocity (derivative)]{@link H3DU.CurveEval#vertex} for the given curve evaluator object
+ * at the given U coordinate. This method calls the evaluator's <code>velocity</code>
  * method if it implements it; otherwise, does a numerical differentiation
  * using the <code>evaluate</code> method.
  * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
  * @param {Number} u U coordinate of the curve to evaluate.
- * @returns {Array<Number>} A tangent vector.
+ * @returns {Array<Number>} A velocity vector.
  */
-  H3DU.CurveEval.findTangent = function(e, u) {
-    if(typeof e.tangent !== "undefined" && e.tangent !== null) {
-      return e.tangent(u);
+  H3DU.CurveEval.findVelocity = function(e, u) {
+    if(typeof e.velocity !== "undefined" && e.velocity !== null) {
+      return e.velocity(u);
     }
     var du = H3DU.SurfaceEval._EPSILON;
     var vector = e.evaluate(u + du);
@@ -1655,26 +1630,26 @@
  * curve evaluator object
  * at the given U coordinate. This method calls the evaluator's <code>normal</code>
  * method if it implements it; otherwise, does a numerical differentiation
- * using the {@link H3DU.CurveEval.findTangent} and {@link H3DU.CurveEval.findAccel} methods.
+ * using the {@link H3DU.CurveEval.findVelocity} and {@link H3DU.CurveEval.findAccel} methods.
  * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
  * @param {Number} u U coordinate of the curve to evaluate.
- * @returns {Array<Number>} A tangent vector.
+ * @returns {Array<Number>} A velocity vector.
  */
   H3DU.CurveEval.findNormal = function(e, u) {
     if(typeof e.normal !== "undefined" && e.normal !== null) {
       return e.normal(u);
     }
     var du = H3DU.SurfaceEval._EPSILON;
-    var vector = H3DU.Math.vec3normInPlace(H3DU.CurveEval.findTangent(e, u + du));
+    var vector = H3DU.Math.vec3normalizeInPlace(H3DU.CurveEval.findVelocity(e, u + du));
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
-      vector = H3DU.Math.vec3normInPlace(H3DU.CurveEval.findTangent(e, u + du));
+      vector = H3DU.Math.vec3normalizeInPlace(H3DU.CurveEval.findVelocity(e, u + du));
     }
     H3DU.Math.vec3subInPlace(vector,
-       H3DU.Math.vec3normInPlace(H3DU.CurveEval.findTangent(e, u)));
+       H3DU.Math.vec3normalizeInPlace(H3DU.CurveEval.findVelocity(e, u)));
     H3DU.Math.vec3scaleInPlace(vector, 1.0 / du);
-    return H3DU.Math.vec3norm(vector);
+    return H3DU.Math.vec3normalize(vector);
   };
 
 /**
@@ -1682,24 +1657,24 @@
  * (second derivative) for the given curve evaluator object
  * at the given U coordinate. This method calls the evaluator's <code>accel</code>
  * method if it implements it; otherwise, does a numerical differentiation
- * using the {@link H3DU.CurveEval.findTangent} method.
+ * using the {@link H3DU.CurveEval.findVelocity} method.
  * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
  * @param {Number} u U coordinate of the curve to evaluate.
- * @returns {Array<Number>} A tangent vector.
+ * @returns {Array<Number>} A velocity vector.
  */
   H3DU.CurveEval.findAccel = function(e, u) {
     if(typeof e.accel !== "undefined" && e.accel !== null) {
       return e.accel(u);
     }
     var du = H3DU.SurfaceEval._EPSILON;
-    var vector = H3DU.CurveEval.findTangent(e, u + du);
+    var vector = H3DU.CurveEval.findVelocity(e, u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
-      vector = H3DU.CurveEval.findTangent(e, u + du);
+      vector = H3DU.CurveEval.findVelocity(e, u + du);
     }
     H3DU.Math.vec3subInPlace(vector,
-      H3DU.CurveEval.findTangent(e, u));
+      H3DU.CurveEval.findVelocity(e, u));
     H3DU.Math.vec3scaleInPlace(vector, 1.0 / du);
     return vector;
   };
@@ -1733,7 +1708,7 @@
  * method if it implements it; otherwise, calculates a numerical integral using the {@link H3DU.CurveEval.findTangent} method.
  * @param {Object} e An object described in {@link H3DU.CurveEval#vertex}.
  * @param {Number} u U coordinate of the curve to evaluate.
- * @returns {Array<Number>} A tangent vector.
+ * @returns {Array<Number>} A velocity vector.
  */
   H3DU.CurveEval.findArcLength = function(e, u) {
     if(typeof e.arcLength !== "undefined" && e.arcLength !== null) {
@@ -1743,7 +1718,7 @@
     if(u === ep[0])return 0;
     var mn = Math.min(u, ep[0]);
     var mx = Math.max(u, ep[0]);
-    var dir = u > ep[0] ? 1 : -1;
+    var dir = u >= ep[0] ? 1 : -1;
     var bm = (mx - mn) * 0.5;
     var bp = (mx + mn) * 0.5;
     var ret = 0;
@@ -1751,9 +1726,9 @@
     for(var i = 0; i < lg.length; i += 2) {
       var weight = lg[i];
       var abscissa = lg[i + 1];
-      var x = H3DU.CurveEval.findTangent(e, bm * abscissa + bp);
+      var x = H3DU.CurveEval.findVelocity(e, bm * abscissa + bp);
       ret += weight * H3DU.CurveEval._vecLength(x);
-      x = H3DU.CurveEval.findTangent(e, -bm * abscissa + bp);
+      x = H3DU.CurveEval.findVelocity(e, -bm * abscissa + bp);
       ret += weight * H3DU.CurveEval._vecLength(x);
     }
     return ret * bm * dir;
@@ -1772,8 +1747,8 @@
       "arcLength":function(u) {
         return H3DU.CurveEval.findArcLength(evaluator, u);
       },
-      "tangent":function(u) {
-        return H3DU.CurveEval.findTangent(evaluator, u);
+      "velocity":function(u) {
+        return H3DU.CurveEval.findVelocity(evaluator, u);
       },
       "accel":function(u) {
         return H3DU.CurveEval.findAccel(evaluator, u);
@@ -1906,7 +1881,7 @@
       buffer[index + 10] = texcoord.length <= 1 ? 0 : texcoord[1];
     }
     if(!this.autoNormal && (typeof this.vertexSurface.gradient !== "undefined" && this.vertexSurface.gradient !== null)) {
-      normal = H3DU.Math.vec3norm(this.vertexSurface.gradient(u, v));
+      normal = H3DU.Math.vec3normalize(this.vertexSurface.gradient(u, v));
       buffer[index + 3] = normal[0];
       buffer[index + 4] = normal[1];
       buffer[index + 5] = normal[2];
@@ -1923,7 +1898,7 @@
       buffer[index + 1] = vertex[1];
       buffer[index + 2] = vertex[2];
       if(this.autoNormal) {
-        normal = H3DU.Math.vec3norm(H3DU.SurfaceEval.findGradient(
+        normal = H3DU.Math.vec3normalize(H3DU.SurfaceEval.findGradient(
             this.vertexSurface, u, v));
         buffer[index + 3] = normal[0];
         buffer[index + 4] = normal[1];

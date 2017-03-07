@@ -40,7 +40,7 @@ H3DU._FrenetFrames = function(func) {
     var tangent = H3DU._FrenetFrames._getTangent(func, t, e0);
     var normal;
     if(i > 0) {
-      normal = H3DU.Math.vec3normInPlace(
+      normal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(this.binormals[i - 1], tangent));
       if(normal[0] === 0 && normal[1] === 0 && normal[2] === 0) {
         // Normal is calculated to be 0, indicating that the tangent
@@ -50,7 +50,7 @@ H3DU._FrenetFrames = function(func) {
     } else {
       normal = H3DU._FrenetFrames.normalFromTangent(tangent);
     }
-    var binormal = H3DU.Math.vec3normInPlace(
+    var binormal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(tangent, normal));
     this.normals[i] = normal;
     this.binormals[i] = binormal;
@@ -96,12 +96,12 @@ H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
   } else {
     var direction = t === 1 ? -1 : 1;
     var sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
-    tangent = H3DU.Math.vec3normInPlace(
+    tangent = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
     if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0) {
       direction = -direction;
       sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
-      tangent = H3DU.Math.vec3normInPlace(
+      tangent = H3DU.Math.vec3normalizeInPlace(
             H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
     }
     if(direction < 0) {
@@ -110,12 +110,12 @@ H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
       H3DU.Math.vec3scaleInPlace(tangent, -1);
     }
   }
-  return H3DU.Math.vec3normInPlace(tangent);
+  return H3DU.Math.vec3normalizeInPlace(tangent);
 };
 /** @ignore */
 H3DU._FrenetFrames.normalFromTangent = function(tangent) {
   "use strict";
-  return H3DU.Math.vec3normInPlace(H3DU.Math.vec3perp(tangent));
+  return H3DU.Math.vec3normalizeInPlace(H3DU.Math.vec3perp(tangent));
 };
 /** @ignore */
 H3DU._FrenetFrames._EPSILON = 0.000001;
@@ -144,9 +144,9 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
       index = Math.floor(index);
       e0 = sample;
       tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
-      normal = H3DU.Math.vec3normInPlace(
+      normal = H3DU.Math.vec3normalizeInPlace(
      H3DU.Math.vec3cross(this.binormals[index], tangent));
-      binormal = H3DU.Math.vec3normInPlace(
+      binormal = H3DU.Math.vec3normalizeInPlace(
      H3DU.Math.vec3cross(tangent, normal));
       b = binormal;
       n = normal;
@@ -162,7 +162,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
     e0 = sample;
     tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
     normal = H3DU._FrenetFrames.normalFromTangent(tangent);
-    binormal = H3DU.Math.vec3normInPlace(
+    binormal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(tangent, normal));
     b = binormal;
     n = normal;

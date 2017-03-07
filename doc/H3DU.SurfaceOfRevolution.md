@@ -34,7 +34,7 @@ the HTML 3D Library. Example:
 ### Methods
 
 * [endPoints](#H3DU.SurfaceOfRevolution_endPoints)<br>TODO: Not documented yet.
-* [evaluate](#H3DU.SurfaceOfRevolution_evaluate)<br>TODO: Not documented yet.
+* [evaluate](#H3DU.SurfaceOfRevolution_evaluate)<br>Finds the coordinates of the given point of this surface.
 * [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 * [torus](#H3DU.SurfaceOfRevolution.torus)<br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
@@ -51,16 +51,19 @@ Return value. (Type: *)
  <a name='H3DU.SurfaceOfRevolution_evaluate'></a>
 ### H3DU.SurfaceOfRevolution#evaluate(u, v)
 
-TODO: Not documented yet.
+Finds the coordinates of the given point of this surface.
 
 #### Parameters
 
-* `u` (Type: *)
-* `v` (Type: *)
+* `u` (Type: Number)<br>
+    U coordinate of the surface to evaluate.
+* `v` (Type: Number)<br>
+    V coordinate of the surface to evaluate.
 
 #### Return Value
 
-Return value. (Type: *)
+An array containing the coordinates
+of the position at the given point. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number>)
 
  <a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
 ### (static) H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])

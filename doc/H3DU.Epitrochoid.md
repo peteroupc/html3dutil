@@ -3,11 +3,24 @@
 [Back to documentation index.](index.md)
 
  <a name='H3DU.Epitrochoid'></a>
-### H3DU.Epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, phaseInDegrees)
+### H3DU.Epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, [phaseInDegree])
 
 A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 The rolling circle will start at the positive X axis of the fixed circle.
+
+The following curves can be generated with this class (in the following
+descriptions, O = <code>outerRadius</code>, R means <code>rollerRadius</code>,
+and D = <code>distFromRollerCenter</code>).<ul>
+<li>Epicycloid: D = R.</li>
+<li>Curtate epicycloid: D < R.</li>
+<li>Prolate epicycloid: D > R.</li>
+<li>Cardioid: R = O; D = O.</li>
+<li>Nephroid: R = O/2; D = O/2.</li>
+<li>Ranunculoid: R = O/5; D = O/5.</li>
+<li>N-cusped epicycloid: R = O/N; D = O/N.</li>
+<li>Circle: O = 0; the radius will be R - D.</li>
+<li>Epicycloid: R = D.</li></ul>
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -27,8 +40,8 @@ the HTML 3D Library. Example:
     Radius of the rolling circle. An epicycloid results when distFromRollerCenter=rollerRadius.
 * `distFromRollerCenter` (Type: Number)<br>
     Distance from the center of the rolling circle to the drawing pen.
-* `phaseInDegrees` (Type: Number)<br>
-    Starting angle of the rolling circle from the positive X axis, in degrees. Default is 0.
+* `phaseInDegree` (Type: Number) (optional)<br>
+    Rotation angle of the curve, in degrees. Default is 0.
 
 ### Methods
 

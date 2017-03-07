@@ -577,7 +577,7 @@ testfunctions.push(function() {
   // "normAxis" is used in the isApproxVec test because, as
   // documented, the axis of rotation need not be a unit vector
   var axis = [1.1, 1.2, 1.3];
-  var normAxis = H3DU.Math.vec3norm(axis);
+  var normAxis = H3DU.Math.vec3normalize(axis);
   var angle = 2.1;
   var res = H3DU.Math.quatFromAxisAngle(angle * H3DU.Math.ToDegrees, axis);
   ok(isApproxVec(

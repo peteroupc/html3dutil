@@ -796,7 +796,7 @@ H3DU.Math = {
  * @returns {Array<Number>} The parameter "vec".
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
-  "vec3normInPlace":function(vec) {
+  "vec3normalizeInPlace":function(vec) {
     "use strict";
     var x = vec[0];
     var y = vec[1];
@@ -833,7 +833,7 @@ H3DU.Math = {
  * @returns {Array<Number>} The parameter "vec".
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
-  "vec4normInPlace":function(vec) {
+  "vec4normalizeInPlace":function(vec) {
     "use strict";
     var x = vec[0];
     var y = vec[1];
@@ -867,15 +867,15 @@ H3DU.Math = {
  * // Find difference between endPt and startPt
  * var delta=H3DU.Math.vec3sub(endPt,startPt);
  * // Normalize delta to a unit vector
- * var deltaNorm=H3DU.Math.vec3norm(delta);
+ * var deltaNorm=H3DU.Math.vec3normalize(delta);
  * // Rescale to the desired length, here, 10
  * H3DU.Math.vec3scaleInPlace(deltaNorm,10);
  * // Find the new endpoint
  * endPt=H3DU.Math.vec3add(startPt,deltaNorm);
  */
-  "vec3norm":function(vec) {
+  "vec3normalize":function(vec) {
     "use strict";
-    return H3DU.Math.vec3normInPlace([vec[0], vec[1], vec[2]]);
+    return H3DU.Math.vec3normalizeInPlace([vec[0], vec[1], vec[2]]);
   },
 /**
  * Converts a 4-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
@@ -889,9 +889,9 @@ H3DU.Math = {
  * @returns {Array<Number>} The resulting vector.
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
-  "vec4norm":function(vec) {
+  "vec4normalize":function(vec) {
     "use strict";
-    return H3DU.Math.vec4normInPlace([vec[0], vec[1], vec[2], vec[3]]);
+    return H3DU.Math.vec4normalizeInPlace([vec[0], vec[1], vec[2], vec[3]]);
   },
 /**
  * Returns the distance of this 3-element vector from the origin,
@@ -1314,7 +1314,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       if(vecLengths === 0)vecLengths = 1; // degenerate case
       ret[3] = vecLengths + H3DU.Math.vec3dot(vec1, vec2);
     }
-    return H3DU.Math.quatNormInPlace(ret);
+    return H3DU.Math.quatNormalizeInPlace(ret);
   },
 /**
  * Generates a quaternion from an angle and [axis of rotation]{@tutorial glmath}.
@@ -1358,7 +1358,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     var cost = Math.cos(ang);
     var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
-    var vec = H3DU.Math.vec3normInPlace([v0, v1, v2]);
+    var vec = H3DU.Math.vec3normalizeInPlace([v0, v1, v2]);
     var ret = [vec[0], vec[1], vec[2], cost];
     ret[0] *= sint;
     ret[1] *= sint;
@@ -1532,9 +1532,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var t9 = q2[3] * factor;
     var t10 = q1[0] * q2[0] + q1[1] * q2[1] + q1[2] * q2[2] + q1[3] * q2[3];
     if (t10 < 0.0) {
-      return H3DU.Math.quatNormInPlace([t2 - t6, t3 - t7, t4 - t8, t5 - t9]);
+      return H3DU.Math.quatNormalizeInPlace([t2 - t6, t3 - t7, t4 - t8, t5 - t9]);
     } else {
-      return H3DU.Math.quatNormInPlace([t2 + t6, t3 + t7, t4 + t8, t5 + t9]);
+      return H3DU.Math.quatNormalizeInPlace([t2 + t6, t3 + t7, t4 + t8, t5 + t9]);
     }
   },
 /**
@@ -2174,14 +2174,14 @@ m[0] * m[7] * m[5];
    // "f" is the normalized vector from "viewerPos" to "lookingAt"
     H3DU.Math.vec3scaleInPlace(f, 1.0 / len);
     // normalize the "up" vector
-    up = H3DU.Math.vec3norm(up);
+    up = H3DU.Math.vec3normalize(up);
     // make "s" a vector perpendicular to "f" and "up" vector;
     // "s" will point rightward from the camera's viewpoint.
     var s = H3DU.Math.vec3cross(f, up);
-    H3DU.Math.vec3normInPlace(s);
+    H3DU.Math.vec3normalizeInPlace(s);
     // orthonormalize the "up" vector
     var u = H3DU.Math.vec3cross(s, f);
-    H3DU.Math.vec3normInPlace(u);
+    H3DU.Math.vec3normalizeInPlace(u);
     // negate the "f" vector so that it points forward from
     // the camera's viewpoint
     H3DU.Math.vec3negateInPlace(f);
@@ -2520,7 +2520,7 @@ m[0] * m[7] * m[5];
  * If both quaternions are [unit vectors]{@tutorial glmath}, the resulting
  * quaternion will also be a unit vector. However, for best results, you should
  * normalize the quaternions every few multiplications (using
- * {@link H3DU.Math.quatNorm} or {@link H3DU.Math.quatNormInPlace}), since successive
+ * {@link H3DU.Math.quatNormalize} or {@link H3DU.Math.quatNormalizeInPlace}), since successive
  * multiplications can cause rounding errors.
  * @param {Array<Number>} a The first quaternion.
  * @param {Array<Number>} b The second quaternion.
@@ -2756,7 +2756,7 @@ m[0] * m[7] * m[5];
  * divided by the normal's length.
  * @returns {Array<Number>} The parameter "plane".
  */
-  "planeNormInPlace":function(plane) {
+  "planeNormalizeInPlace":function(plane) {
     "use strict";
     var x = plane[0];
     var y = plane[1];
@@ -2787,9 +2787,9 @@ m[0] * m[7] * m[5];
  * the plane.
  * Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
-  "planeNorm":function(plane) {
+  "planeNormalize":function(plane) {
     "use strict";
-    return H3DU.Math.planeNormInPlace(H3DU.Math.vec4copy(plane));
+    return H3DU.Math.planeNormalizeInPlace(H3DU.Math.vec4copy(plane));
   },
 /**
  * Finds the six clipping planes of a view frustum defined
@@ -2807,48 +2807,48 @@ m[0] * m[7] * m[5];
  * 4-element arrays representing the six clipping planes of the
  * view frustum. In order, they are the left, right, top,
  * bottom, near, and far clipping planes. All six planes
- * will be normalized (see {@link H3DU.Math.planeNormInPlace}).
+ * will be normalized (see {@link H3DU.Math.planeNormalizeInPlace}).
  */
   "mat4toFrustumPlanes":function(matrix) {
     "use strict";
     var frustum = [[], [], [], [], [], []];
  // Left clipping plane
-    frustum[0] = H3DU.Math.planeNormInPlace([
+    frustum[0] = H3DU.Math.planeNormalizeInPlace([
       matrix[3] + matrix[0],
       matrix[7] + matrix[4],
       matrix[11] + matrix[8],
       matrix[15] + matrix[12]
     ]);
  // Right clipping plane
-    frustum[1] = H3DU.Math.planeNormInPlace([
+    frustum[1] = H3DU.Math.planeNormalizeInPlace([
       matrix[3] - matrix[0],
       matrix[7] - matrix[4],
       matrix[11] - matrix[8],
       matrix[15] - matrix[12]
     ]);
  // Top clipping plane
-    frustum[2] = H3DU.Math.planeNormInPlace([
+    frustum[2] = H3DU.Math.planeNormalizeInPlace([
       matrix[3] - matrix[1],
       matrix[7] - matrix[5],
       matrix[11] - matrix[9],
       matrix[15] - matrix[13]
     ]);
  // Bottom clipping plane
-    frustum[3] = H3DU.Math.planeNormInPlace([
+    frustum[3] = H3DU.Math.planeNormalizeInPlace([
       matrix[3] + matrix[1],
       matrix[7] + matrix[5],
       matrix[11] + matrix[9],
       matrix[15] + matrix[13]
     ]);
  // Near clipping plane
-    frustum[4] = H3DU.Math.planeNormInPlace([
+    frustum[4] = H3DU.Math.planeNormalizeInPlace([
       matrix[3] + matrix[2],
       matrix[7] + matrix[6],
       matrix[11] + matrix[10],
       matrix[15] + matrix[14]
     ]);
  // Far clipping plane
-    frustum[5] = H3DU.Math.planeNormInPlace([
+    frustum[5] = H3DU.Math.planeNormalizeInPlace([
       matrix[3] - matrix[2],
       matrix[7] - matrix[6],
       matrix[11] - matrix[10],
@@ -3246,9 +3246,9 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
- * @see {@link H3DU.Math.vec4normInPlace}
+ * @see {@link H3DU.Math.vec4normalizeInPlace}
  */
-H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
+H3DU.Math.quatNormalizeInPlace = H3DU.Math.vec4normalizeInPlace;
 /**
  * Converts a quaternion to a [unit vector]{@tutorial glmath}; returns a new quaternion.
  * When a quaternion is normalized, the distance from the origin
@@ -3263,9 +3263,9 @@ H3DU.Math.quatNormInPlace = H3DU.Math.vec4normInPlace;
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
- * @see {@link H3DU.Math.vec4norm}
+ * @see {@link H3DU.Math.vec4normalize}
  */
-H3DU.Math.quatNorm = H3DU.Math.vec4norm;
+H3DU.Math.quatNormalize = H3DU.Math.vec4normalize;
 /**
  * Returns the distance of this quaternion from the origin.
  * It's the same as the square root of the sum of the squares
@@ -3478,3 +3478,66 @@ H3DU.Math.RollYawPitch = 5;
  * @static
  */
 H3DU.Math.quatInverse = H3DU.Math.quatInvert;
+/**
+ * Deprecated alias for {@link H3DU.Math.vec3normalize}
+ * @deprecated Use {@link H3DU.Math.vec3normalize} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} vec Vector to normalize.
+ * @returns {Array<Number>} The normalized vector.
+ */
+H3DU.Math.vec3norm=H3DU.Math.vec3normalize;
+/**
+ * Deprecated alias for {@link H3DU.Math.vec4normalize}
+ * @deprecated Use {@link H3DU.Math.vec4normalize} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} vec Vector to normalize.
+ * @returns {Array<Number>} The normalized vector.
+ */
+H3DU.Math.vec4norm=H3DU.Math.vec4normalize;
+/**
+ * Deprecated alias for {@link H3DU.Math.quatNormalize}
+ * @deprecated Use {@link H3DU.Math.quatNormalize} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} quat Quaternion to normalize.
+ * @returns {Array<Number>} The normalized quaternion.
+ */
+H3DU.Math.quatNorm=H3DU.Math.quatNormalize;
+/**
+ * Deprecated alias for {@link H3DU.Math.vec3normalizeInPlace}
+ * @deprecated Use {@link H3DU.Math.vec3normalizeInPlace} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} vec Vector to normalize in place.
+ * @returns {Array<Number>} The parameter "vec"
+ */
+H3DU.Math.vec3normInPlace=H3DU.Math.vec3normalizeInPlace;
+/**
+ * Deprecated alias for {@link H3DU.Math.vec4normalizeInPlace}
+ * @deprecated Use {@link H3DU.Math.vec4normalizeInPlace} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} vec Vector to normalize in place.
+ * @returns {Array<Number>} The parameter "vec"
+ */
+H3DU.Math.vec4normInPlace=H3DU.Math.vec4normalizeInPlace;
+/**
+ * Deprecated alias for {@link H3DU.Math.quatNormalizeInPlace}
+ * @deprecated Use {@link H3DU.Math.quatNormalizeInPlace} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} quat Quaternion to normalize in place.
+ * @returns {Array<Number>} The parameter "quat"
+ */
+H3DU.Math.quatNormInPlace=H3DU.Math.quatNormalizeInPlace;
+/**
+ * Deprecated alias for {@link H3DU.Math.planeNormalizeInPlace}
+ * @deprecated Use {@link H3DU.Math.planeNormalizeInPlace} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} plane Plane to normalize in place.
+ * @returns {Array<Number>} The parameter "plane"
+ */
+H3DU.Math.planeNormInPlace=H3DU.Math.planeNormalizeInPlace;

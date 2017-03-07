@@ -1059,7 +1059,7 @@ H3DU.Mesh.prototype.transform = function(matrix) {
      // they point in the correct direction
       xform = H3DU.Math.mat3transform(matrixForNormals,
       v[i + normalOffset], v[i + normalOffset + 1], v[i + normalOffset + 2]);
-      H3DU.Math.vec3normInPlace(xform);
+      H3DU.Math.vec3normalizeInPlace(xform);
       v[i + normalOffset] = xform[0];
       v[i + normalOffset + 1] = xform[1];
       v[i + normalOffset + 2] = xform[2];
@@ -1224,13 +1224,13 @@ H3DU.Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset
       var norm1 = vertices[vicur + normalOffset + 1];
       var norm2 = vertices[vicur + normalOffset + 2];
       var t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
-      var tangent = H3DU.Math.vec3normInPlace([
+      var tangent = H3DU.Math.vec3normalizeInPlace([
         m[0] - t20 * norm0,
         m[1] - t20 * norm1,
         m[2] - t20 * norm2]);
       var t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
       var t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
-      var bitangent = H3DU.Math.vec3normInPlace([
+      var bitangent = H3DU.Math.vec3normalizeInPlace([
         m[3] - t22 * norm0 - t23 * tangent[0],
         m[4] - t22 * norm1 - t23 * tangent[1],
         m[5] - t22 * norm2 - t23 * tangent[2]]);

@@ -67,7 +67,7 @@ H3DU.Transform.prototype.getPosition = function() {
 H3DU.Transform.prototype.getQuaternion = function() {
   "use strict";
   if(this.complexMatrix) {
-    return H3DU.Math.quatNormInPlace(
+    return H3DU.Math.quatNormalizeInPlace(
     H3DU.Math.quatFromMat4(this.matrix));
   } else {
     return this.rotation.slice(0, 4);
@@ -105,7 +105,7 @@ H3DU.Transform.prototype.setMatrix = function(value) {
   this.matrix = value.slice(0, 16);
   this.position = [this.matrix[12], this.matrix[13], this.matrix[14]];
   this.rotation = H3DU.Math.quatFromMat4(this.matrix);
-  this.rotation = H3DU.Math.quatNormInPlace(this.rotation);
+  this.rotation = H3DU.Math.quatNormalizeInPlace(this.rotation);
   this.scale = [this.matrix[0], this.matrix[5], this.matrix[10]];
   this._isIdentity =
     value[0] === 1 && value[1] === 0 && value[2] === 0 && value[3] === 0 &&
@@ -272,7 +272,7 @@ H3DU.Transform.prototype.setQuaternion = function(quat) {
   "use strict";
   if(this.complexMatrix)return this;
   this.rotation = quat.slice(0, 4);
-  H3DU.Math.quatNormInPlace(this.rotation);
+  H3DU.Math.quatNormalizeInPlace(this.rotation);
   this._matrixDirty = true;
   return this;
 };
@@ -356,7 +356,7 @@ H3DU.Transform.prototype.setOrientation = function(angle, v, vy, vz) {
 H3DU.Transform.prototype.multQuaternion = function(quat) {
   "use strict";
   if(this.complexMatrix)return this;
-  this.rotation = H3DU.Math.quatNormInPlace(
+  this.rotation = H3DU.Math.quatNormalizeInPlace(
    H3DU.Math.quatMultiply(this.rotation, quat));
   this._matrixDirty = true;
   return this;

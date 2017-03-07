@@ -8,7 +8,7 @@
 A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
 B-spline surfaces can also represent all B&eacute;zier surfaces (see <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>).
 A B&eacute;zier surface is defined by a series of control points, where
-the control points on each corner define the endPoints of the surface, and
+the control points on each corner define the end points of the surface, and
 the remaining control points define the surface's shape, though they don't
 necessarily cross the surface.
 

@@ -3,10 +3,24 @@
 [Back to documentation index.](index.md)
 
  <a name='H3DU.Hypotrochoid'></a>
-### H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [phaseInDegrees])
+### H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees])
 
 A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
+
+The following curves can be generated with this class (in the following
+descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
+and D = <code>distFromRollerCenter</code>).<ul>
+<li>Hypocycloid: D = R.</li>
+<li>Curtate hypocycloid: D < R.</li>
+<li>Prolate hypocycloid: D > R.</li>
+<li>Circle: O = R\*2; the circle will have radius R - D.</li>
+<li>Ellipse: O = R\*2; the ellipse (unrotated) will have width abs(R+D)\*2
+and height abs(R-D)\*2.</li>
+<li>Line segment with length O\*2: O = R\*2; D = R.</li>
+<li>Deltoid: O = R\*3; D = R.</li>
+<li>Astroid: O = R\*4; D = R.</li>
+<li>N-pointed hypocycloid: O = R \* N; D = R.</li></ul>
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -26,17 +40,31 @@ the HTML 3D Library. Example:
     Radius of the rolling circle. A hypocycloid results when distFromInnerCenter=innerRadius.
 * `distFromInnerCenter` (Type: Number)<br>
     Distance from the center of the rolling circle to the drawing pen.
-* `phaseInDegrees` (Type: Number) (optional)<br>
-    Starting angle of the inner circle from the positive X axis, in degrees. Default is 0.
+* `rotationDegrees` (Type: Number) (optional)<br>
+    Rotation angle of the curve, in degrees. Default is 0.
 
 ### Methods
 
+* [arcLength](#H3DU.Hypotrochoid_arcLength)<br>TODO: Not documented yet.
 * [endPoints](#H3DU.Hypotrochoid_endPoints)<br>Gets the endpoints of this curve.
-* [evaluate](#H3DU.Hypotrochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
+* [evaluate](#H3DU.Hypotrochoid_evaluate)<br>Finds the coordinates of a point on the curve from the given U coordinate.
 * [rose](#H3DU.Hypotrochoid.rose)<br>Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
 form of hypotrochoid.
 * [scaleTo](#H3DU.Hypotrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
+
+ <a name='H3DU.Hypotrochoid_arcLength'></a>
+### H3DU.Hypotrochoid#arcLength(u)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `u` (Type: *)
+
+#### Return Value
+
+Return value. \* @instance (Type: *)
 
  <a name='H3DU.Hypotrochoid_endPoints'></a>
 ### H3DU.Hypotrochoid#endPoints()
@@ -54,7 +82,7 @@ and the second number is the end of the curve. (Type: Array.&lt;Number>)
  <a name='H3DU.Hypotrochoid_evaluate'></a>
 ### H3DU.Hypotrochoid#evaluate(u)
 
-Generates a point on the curve from the given U coordinate.
+Finds the coordinates of a point on the curve from the given U coordinate.
 
 #### Parameters
 
@@ -64,10 +92,10 @@ Generates a point on the curve from the given U coordinate.
 #### Return Value
 
 A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0. (Type: Array.&lt;Number>)
+Only the X and Y coordinates can be other than 0. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Hypotrochoid.rose'></a>
-### (static) H3DU.Hypotrochoid.rose(n, distFromInnerCenter, [phaseInDegrees])
+### (static) H3DU.Hypotrochoid.rose(n, distFromInnerCenter, [rotationDegrees])
 
 Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
 form of hypotrochoid.
@@ -78,7 +106,7 @@ form of hypotrochoid.
     Parameter that determines the petal form of the rose. For example, the rose is symmetrical if this number is even.
 * `distFromInnerCenter` (Type: Number)<br>
     Distance from the center of the rolling circle to the drawing pen. A prolate hypotrochoid results when distFromInnerCenter is greater than innerRadius.
-* `phaseInDegrees` (Type: Number) (optional)<br>
+* `rotationDegrees` (Type: Number) (optional)<br>
     Starting angle of the inner circle from the positive X axis, in degrees. Default is 0.
 
  <a name='H3DU.Hypotrochoid_scaleTo'></a>
