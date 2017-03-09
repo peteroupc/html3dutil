@@ -358,6 +358,9 @@ function fillCollection(docCollection, nodes, parentlong) {
         entry += " (event)";
       }
       entry += (node.virtual ? " (virtual)" : "") + "\n\n";
+      if(node.augments) {
+        entry += "**Augments:** " + augmentsval(node.augments) + "\n\n";
+      }
       if(typeof node.deprecated !== "undefined" && node.deprecated !== null) {
         var dep = node.deprecated === true ? "Yes" : node.deprecated;
         entry += "<b>Deprecated: " + normspace(dep) + "</b>\n\n";
@@ -368,9 +371,6 @@ function fillCollection(docCollection, nodes, parentlong) {
       entry += normspace(node.description || "") + "\n\n";
       if(node.fires) {
         entry += "**Fires:** " + normspace(node.fires || "") + "\n\n";
-      }
-      if(node.augments) {
-        entry += "**Augments:** " + augmentsval(node.augments) + "\n\n";
       }
       if (node.params) {
         p = node.params;

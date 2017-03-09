@@ -79,7 +79,7 @@
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a B&eacute;zier curve.<p>
  * @class
- * @augments H3DU.BezierCurve
+ * @augments H3DU.Curve
  * @deprecated Instead of this class, use {@link H3DU.BSplineCurve.fromBezierCurve}
  * to create a B&eacute;zier curve.
  * @memberof H3DU
@@ -94,8 +94,8 @@
   H3DU.BezierCurve = function(cp) {
     this.curve = H3DU.BSplineCurve.clamped(cp, cp.length - 1, 0);
   };
-  H3DU.BezierCurve.prototype = Object.create(H3DU.Curve.prototype);
-  Object.assign(H3DU.BezierCurve.prototype, {"constructor": H3DU.BezierCurve});
+
+  H3DU.BezierCurve.prototype=Object.assign(Object.create(H3DU.Curve.prototype),H3DU.BezierCurve.prototype);
 /**
  * Returns the starting and ending U coordinates of this curve.
  * @returns {Array<Number>} A two-element array. The first and second
@@ -175,7 +175,7 @@
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a B-spline (basis spline) curve.
  * B-spline curves can also represent all B&eacute;zier curves (see {@link H3DU.BSplineCurve.fromBezierCurve}).
- * <p><b>B&eacute;zier Curves</b>
+ * <p><b>B&eacute;zier Curves</b><p>
  * A B&eacute;zier curve is defined by a series of control points, where
  * the first and last control points define the end points of the curve, and
  * the remaining control points define the curve's shape, though they don't
@@ -1327,16 +1327,7 @@
   };
 /**
  * An evaluator of parametric functions for generating
- * vertex positions, normals, colors, and texture coordinates
- * of a surface.<p>
- * A parametric surface is a surface whose points are based on a
- * parametric surface function. A surface function takes two numbers
- * (U and V) and returns a point (in 1, 2, 3 or more dimensions, but
- * usually 2 or 3) that lies on the surface. For example, in 3
- * dimensions, a surface function has the following form:<p>
- * <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
- * where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
- * and z(u, v) returns a Z coordinate.<p>
+ * vertex attributes of a surface.<p>
  * See the {@tutorial surfaces} tutorial for more information.
  * @class
  * @memberof H3DU
@@ -1521,18 +1512,6 @@
  * the given surface evaluator
  * at the given U and V coordinates.<p>This method calls the evaluator's <code>gradient</code>
  * method if it implements it; otherwise, calls the evaluator's <code>bitangent</code> and <code>tangent</code> methods if it implements them; otherwise, does a numerical differentiation using the <code>evaluate</code> method.
- * <p>To generate normals for a function for a regular surface (usually
- * a continuous, unbroken surface such as a sphere, disk, or open
- * cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
- * the function used for vertex calculation (we'll call it <b>F</b>) with
- * respect to u, then find the partial derivative of <b>F</b> with respect to
- * v, then take their [cross product]{@link H3DU.Math.vec3cross}. The result will be
- * the gradient, which will be normal to the surface.
- * In mathematical notation, this looks like:
- * <b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
- * &#x2202;<b>F</b>/&#x2202;<i>v</i>.<p>
- * (Note: These two partial derivatives are also called the [tangent vector]{@link H3DU.SurfaceEval#vertex}
- * and the [bitangent (or binormal) vector]{@link H3DU.SurfaceEval#vertex}, respectively.)
  * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.

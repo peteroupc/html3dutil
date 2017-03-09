@@ -232,7 +232,7 @@ var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
  * A hypocycloid results when distFromInnerCenter=innerRadius.
  * @param {Number} distFromInnerCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {Number} [rotationDegrees] Rotation angle of the curve, in degrees. Default is 0.
+ * @param {Number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
 H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
   "use strict";
@@ -280,7 +280,8 @@ H3DU.Hypotrochoid.prototype.evaluate = function(u) {
    * @function
    * @returns {Array<Number>} An array containing the two
    * endpoints of the curve. The first number is the start of the curve,
-   * and the second number is the end of the curve. * @instance
+   * and the second number is the end of the curve.
+   * @instance
    */
 H3DU.Hypotrochoid.prototype.endPoints = function() {
   "use strict";
@@ -341,10 +342,9 @@ H3DU.Hypotrochoid.prototype.arcLength = function(u) {
  * @param {Number} n Parameter that determines the petal form of the rose.
  * For example, the rose is symmetrical if this number is even.
  * @param {Number} distFromInnerCenter Distance from the center of the
- * rolling circle to the drawing pen. A prolate hypotrochoid results when
- * distFromInnerCenter is greater than innerRadius.
- * @param {Number} [rotationDegrees] Starting angle of the inner circle from
- * the positive X axis, in degrees. Default is 0.
+ * rolling circle to the drawing pen.
+ * @param {Number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+ * @returns {H3DU.Hypotrochoid} The resulting curve evaluator object.
  */
 H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
   "use strict";
@@ -457,7 +457,7 @@ H3DU.Trochoid.prototype.velocity = function(u) {
  * An epicycloid results when distFromRollerCenter=rollerRadius.
  * @param {Number} distFromRollerCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {Number} [rotationDegrees] Rotation angle of the curve, in degrees. Default is 0.
+ * @param {Number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
 H3DU.Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rotationDegrees) {
   "use strict";

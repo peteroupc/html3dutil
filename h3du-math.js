@@ -3545,3 +3545,12 @@ H3DU.Math.quatNormInPlace = H3DU.Math.quatNormalizeInPlace;
  * @returns {Array<Number>} The parameter "plane"
  */
 H3DU.Math.planeNormInPlace = H3DU.Math.planeNormalizeInPlace;
+/**
+ * Deprecated alias for {@link H3DU.Math.planeNormalize}
+ * @deprecated Use {@link H3DU.Math.planeNormalize} instead.
+ * The name of this method may be confused with a vector's "norm", another name for its length.
+ * @function
+ * @param {Array<Number>} plane Plane to normalize.
+ * @returns {Array<Number>} The normalized plane.
+ */
+H3DU.Math.planeNorm = H3DU.Math.planeNormalize;
