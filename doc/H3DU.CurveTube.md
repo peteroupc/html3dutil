@@ -20,11 +20,11 @@ the HTML 3D Library. Example:
 #### Parameters
 
 * `func` (Type: Object)<br>
-    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from.
+    A <a href="H3DU.Curve.md">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from.
 * `thickness` (Type: Number) (optional)<br>
     Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.
 * `sweptCurve` (Type: Object) (optional)<br>
-    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the "thickness" parameter.
+    A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the "thickness" parameter.
 
 ### Methods
 

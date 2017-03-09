@@ -1359,7 +1359,7 @@
   };
 
 /**
- * Gets a [curve evaluator object]{@link H3DU.CurveEval#vertex} for
+ * Gets a [curve evaluator object]{@link H3DU.Curve} for
  * the curves described by this path. The return value doesn't track changes to the path.
  * @param {Number} [flatness] When curves and arcs
  * are decomposed to line segments for the purpose of
@@ -1405,6 +1405,8 @@
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getCurves = function(flatness) {
+    // NOTE: Uses a "tangent" method, not "velocity", because
+    // that method's return values are generally unit vectors.
     var subpaths = [];
     var curves = [];
     if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;

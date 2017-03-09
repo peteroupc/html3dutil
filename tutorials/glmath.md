@@ -92,7 +92,11 @@ before the other transformations.
 Rotation changes an object's orientation.
 
 To create a rotation matrix, use [H3DU.Math.mat4rotated()]{@link H3DU.Math.mat4rotated},
-and specify the angle (in degrees) to rotate, and the [axis of rotation](#Axis_of_Rotation). For example, specifying `(45, [1, 0, 0])` means a 45-degree rotation around the X axis, and `(80, [0, 2, 3])` means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
+and specify the angle (in degrees) to rotate, and the [axis of rotation](#Axis_of_Rotation). For example:
+
+* Specifying `(45, [1, 0, 0])` means a 45-degree rotation of the point around the X axis.
+* Specifying `(80, [0, 2, 3])` means a 45-degree rotation of the point around the axis that
+  starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
 
 When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
@@ -129,11 +133,11 @@ quaternions, Tait-Bryan angles, and an angle and axis.
 <a id=Axis_of_Rotation></a>
 ### Axis of Rotation
 
-A rotation can be described using an _angle_ and an _axis of rotation_,
-for example, in the {@link H3DU.Math.mat4rotate} method.
+A rotation of vectors or points can be described using an _angle_
+and an _axis of rotation_, for example, in the {@link H3DU.Math.mat4rotate} method.
 
-An axis of rotation is a vector pointing in a certain direction.  When a point
-is rotated at any angle around this axis, the new point will lie
+An axis of rotation is a vector pointing in a certain direction.  When a point (or vector)
+is rotated at any angle around this axis, the new point (or vector) will lie
 on the same plane as the previous point.  The axis of rotation describes
 a vector that is perpendicular to that plane's surface (the plane's _normal_).
 Here are examples of an axis of rotation.
@@ -158,8 +162,7 @@ method need not be a [unit vector](#Unit_Vectors).
 ### Quaternions
 
 A quaternion is a 4-element vector that can describe a
-3D rotation. Functions dealing with quaternions begin with
-"quat".
+3D rotation. Functions dealing with quaternions begin with "quat".
 
 <a id=Generating_Quaternions></a>
 #### Generating Quaternions
@@ -182,6 +185,7 @@ For best results when using quaternions:
 * Store the rotation of each object as a single quaternion.
 * As rotations happen each frame, convert the rotation (which may be
   in pitch/yaw/roll or another form, depending on the input device) to a quaternion
+  (see ["Generating Quaternions"](#Generating_Quaternions)
   and [multiply]{@link H3DU.Math.quatMultiply} that quaternion by the current
   quaternion to get the object's new rotation.
 * Normalize the rotation quaternion (using [`quatNorm()`]{@link H3DU.Math.quatNorm}
@@ -200,8 +204,8 @@ Like matrix multiplication, the order in which you multiply quaternions is impor
 ### Tait-Bryan angles
 
 Pitch-yaw-roll angles (also called Tait-Bryan angles) describe three different rotations
-around three different axes, called the pitch, yaw, and roll axes (or the X, Y, Z axes,
-respectively), which occur one after the other.  However:
+of the same vector around three different axes, called the pitch, yaw, and roll axes
+(or the X, Y, Z axes, respectively), which occur one after the other.  However:
 
 * There are multiple conventions for pitch-yaw-roll angles, including the order of
 rotations (for example: pitch-roll-yaw, roll-pitch-yaw), and whether the rotations occur
@@ -223,7 +227,7 @@ Converts from a quaternion to Tait-Bryan angles
 <a id=4x4_Matrices></a>
 ### 4x4 Matrices
 
-A 4x4 matrix can describe a 3D rotation; see ["Rotation", above](#Rotation).
+A 4x4 matrix can describe a 3D vector rotation; see ["Rotation", above](#Rotation).
 
 <a id=Planes></a>
 ## Planes

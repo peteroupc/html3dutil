@@ -93,7 +93,7 @@ point to the camera's position.
 #### Return Value
 
 The return value as a unit
-vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vector</a> with a length of 1).
+vector (a <a href="H3DU.Math.md#H3DU.Math.vec3normalize">"normalized" vector</a> with a length of 1).
 Returns (0,0,0) if the reference point is the same as the camera's position. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Camera_moveAngleHorizontal'></a>

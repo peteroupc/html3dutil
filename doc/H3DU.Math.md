@@ -13,25 +13,25 @@ See the tutorial "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for mo
 
 ### Members
 
-* [GlobalPitchRollYaw](#H3DU.Math.GlobalPitchRollYaw)<br>Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
-* [GlobalPitchYawRoll](#H3DU.Math.GlobalPitchYawRoll)<br>Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
+* [GlobalPitchRollYaw](#H3DU.Math.GlobalPitchRollYaw)<br>Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+* [GlobalPitchYawRoll](#H3DU.Math.GlobalPitchYawRoll)<br>Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
 or in the reverse order around
-* [GlobalRollPitchYaw](#H3DU.Math.GlobalRollPitchYaw)<br>Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
-* [GlobalRollYawPitch](#H3DU.Math.GlobalRollYawPitch)<br>Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
-* [GlobalYawPitchRoll](#H3DU.Math.GlobalYawPitchRoll)<br>Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
-* [GlobalYawRollPitch](#H3DU.Math.GlobalYawRollPitch)<br>Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+* [GlobalRollPitchYaw](#H3DU.Math.GlobalRollPitchYaw)<br>Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+* [GlobalRollYawPitch](#H3DU.Math.GlobalRollYawPitch)<br>Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+* [GlobalYawPitchRoll](#H3DU.Math.GlobalYawPitchRoll)<br>Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+* [GlobalYawRollPitch](#H3DU.Math.GlobalYawRollPitch)<br>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 * [HalfPi](#H3DU.Math.HalfPi)<br>Closest approximation to pi divided by 2, or a 90-degree turn in radians.
-* [LocalPitchRollYaw](#H3DU.Math.LocalPitchRollYaw)<br>Indicates that a rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
+* [LocalPitchRollYaw](#H3DU.Math.LocalPitchRollYaw)<br>Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
 occur around the rotated object's new axes and not necessarily the original axes.
-* [LocalPitchYawRoll](#H3DU.Math.LocalPitchYawRoll)<br>Indicates that a rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
+* [LocalPitchYawRoll](#H3DU.Math.LocalPitchYawRoll)<br>Indicates that a vector's rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
 occur around the rotated object's new axes and not necessarily the original axes.
-* [LocalRollPitchYaw](#H3DU.Math.LocalRollPitchYaw)<br>Indicates that a rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
+* [LocalRollPitchYaw](#H3DU.Math.LocalRollPitchYaw)<br>Indicates that a vector's rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
 occur around the rotated object's new axes and not necessarily the original axes.
-* [LocalRollYawPitch](#H3DU.Math.LocalRollYawPitch)<br>Indicates that a rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
+* [LocalRollYawPitch](#H3DU.Math.LocalRollYawPitch)<br>Indicates that a vector's rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
-* [LocalYawPitchRoll](#H3DU.Math.LocalYawPitchRoll)<br>Indicates that a rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
+* [LocalYawPitchRoll](#H3DU.Math.LocalYawPitchRoll)<br>Indicates that a vector's rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
 occur around the rotated object's new axes and not necessarily the original axes.
-* [LocalYawRollPitch](#H3DU.Math.LocalYawRollPitch)<br>Indicates that a rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
+* [LocalYawRollPitch](#H3DU.Math.LocalYawRollPitch)<br>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
 * [Num180DividedByPi](#H3DU.Math.Num180DividedByPi)<br>Closest approximation to 180 divided by pi, or the number of
 degrees in a radian.
@@ -104,10 +104,11 @@ retaining the view rectangle's aspect ratio.
 given an X axis field of view.
 * [mat4projectVec3](#H3DU.Math.mat4projectVec3)<br>Transforms a 3-element vector with a 4x4 matrix and returns
 a perspective-correct version of the vector as a 3D point.
-* [mat4rotate](#H3DU.Math.mat4rotate)<br>Multiplies a 4x4 matrix by a rotation transformation,
+* [mat4rotate](#H3DU.Math.mat4rotate)<br>Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
 and returns a new matrix.
-* [mat4rotated](#H3DU.Math.mat4rotated)<br>Returns a 4x4 matrix representing a rotation transformation
-given in the form of a rotation angle and an <a href="tutorial-glmath.md">axis of rotation</a>.
+* [mat4rotated](#H3DU.Math.mat4rotated)<br>Returns a 4x4 matrix representing a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>.
 * [mat4scale](#H3DU.Math.mat4scale)<br>Multiplies a 4x4 matrix by a scaling transformation.
 * [mat4scaleInPlace](#H3DU.Math.mat4scaleInPlace)<br>Modifies a 4x4 matrix by multiplying it by a
 scaling transformation.
@@ -125,15 +126,18 @@ of a 4x4 matrix (in column-major order) and returns the transformed vector.
 * [mat4transpose](#H3DU.Math.mat4transpose)<br>Returns the transpose of a 4x4 matrix.
 * [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)<br>Transposes a 4x4 matrix in place without creating
 a new matrix.
-* [planeNorm](#H3DU.Math.planeNorm)<br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
+* [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+* [planeNormalize](#H3DU.Math.planeNormalize)<br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
 unless all the normal's components are 0, and returns a new plane with the result.
-* [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
+* [planeNormalizeInPlace](#H3DU.Math.planeNormalizeInPlace)<br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
 unless all the normal's components are 0, and sets this plane to the result.
 * [quatConjugate](#H3DU.Math.quatConjugate)<br>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's <a href="tutorial-glmath.md">axis of rotation</a>).
 * [quatCopy](#H3DU.Math.quatCopy)<br>Returns a copy of a quaternion.
 * [quatDot](#H3DU.Math.quatDot)<br>Finds the dot product of two quaternions.
-* [quatFromAxisAngle](#H3DU.Math.quatFromAxisAngle)<br>Generates a quaternion from an angle and <a href="tutorial-glmath.md">axis of rotation</a>.
-* [quatFromMat4](#H3DU.Math.quatFromMat4)<br>Generates a quaternion from the rotation described in a 4x4 matrix.
+* [quatFromAxisAngle](#H3DU.Math.quatFromAxisAngle)<br>Generates a quaternion from a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
+* [quatFromMat4](#H3DU.Math.quatFromMat4)<br>Generates a quaternion from the vector rotation described in a 4x4 matrix.
 * [quatFromTaitBryan](#H3DU.Math.quatFromTaitBryan)<br>Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
 * [quatFromVectors](#H3DU.Math.quatFromVectors)<br>Generates a quaternion describing a rotation between
 two 3-element vectors.
@@ -146,23 +150,29 @@ two 3-element vectors.
 * [quatNlerp](#H3DU.Math.quatNlerp)<br>Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a linear interpolation function, and converts
 it to a <a href="tutorial-glmath.md">unit vector</a>.
-* [quatNorm](#H3DU.Math.quatNorm)<br>Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>; returns a new quaternion.
-* [quatNormInPlace](#H3DU.Math.quatNormInPlace)<br>Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>.
-* [quatRotate](#H3DU.Math.quatRotate)<br>Multiplies a quaternion by a rotation transformation
-described as an angle and <a href="tutorial-glmath.md">axis of rotation</a>.
+* [quatNorm](#H3DU.Math.quatNorm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+* [quatNormInPlace](#H3DU.Math.quatNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+* [quatNormalize](#H3DU.Math.quatNormalize)<br>Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>; returns a new quaternion.
+* [quatNormalizeInPlace](#H3DU.Math.quatNormalizeInPlace)<br>Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>.
+* [quatRotate](#H3DU.Math.quatRotate)<br>Multiplies a quaternion by a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>.
 * [quatScale](#H3DU.Math.quatScale)<br>Multiplies each element of a quaternion by a factor
 and returns the result as a new quaternion.
 * [quatScaleInPlace](#H3DU.Math.quatScaleInPlace)<br>Multiplies each element of a quaternion by a factor
 and stores the result in that quaternion.
 * [quatSlerp](#H3DU.Math.quatSlerp)<br>Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a spherical interpolation function.
-* [quatToAxisAngle](#H3DU.Math.quatToAxisAngle)<br>Calculates the angle and <a href="tutorial-glmath.md">axis of rotation</a> for this
-quaternion.
+* [quatToAxisAngle](#H3DU.Math.quatToAxisAngle)<br>Calculates the vector rotation for this quaternion in the form
+of the angle to rotate the vector by and an <a href="tutorial-glmath.md">axis of rotation</a> to
+rotate that vector around.
 * [quatToMat4](#H3DU.Math.quatToMat4)<br>Generates a 4x4 matrix describing the rotation
 described by this quaternion.
 * [quatToTaitBryan](#H3DU.Math.quatToTaitBryan)<br>Converts this quaternion to the same version of the rotation
 in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
-* [quatTransform](#H3DU.Math.quatTransform)<br>Transforms a 3- or 4-element vector using a quaternion's rotation.
+* [quatTransform](#H3DU.Math.quatTransform)<br>Transforms a 3- or 4-element vector using a
+quaternion's vector rotation.
 * [vec3abs](#H3DU.Math.vec3abs)<br>Returns a new 3-element
 vector with the absolute value of each of its components.
 * [vec3absInPlace](#H3DU.Math.vec3absInPlace)<br>Sets each component of the given 3-element
@@ -199,8 +209,12 @@ vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)<br>Negates a 3-element vector in place, generally resulting in a vector with
 the same length but opposite direction.
-* [vec3norm](#H3DU.Math.vec3norm)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
-* [vec3normInPlace](#H3DU.Math.vec3normInPlace)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
+* [vec3norm](#H3DU.Math.vec3norm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+* [vec3normInPlace](#H3DU.Math.vec3normInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalizeInPlace">H3DU.Math.vec3normalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+* [vec3normalize](#H3DU.Math.vec3normalize)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
+* [vec3normalizeInPlace](#H3DU.Math.vec3normalizeInPlace)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
 * [vec3perp](#H3DU.Math.vec3perp)<br>Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector.
 * [vec3proj](#H3DU.Math.vec3proj)<br>Returns the projection of a 3-element vector on the given
@@ -242,8 +256,12 @@ vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)<br>Negates a 4-element vector in place, generally resulting in a vector with
 the same length but opposite direction.
-* [vec4norm](#H3DU.Math.vec4norm)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
-* [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
+* [vec4norm](#H3DU.Math.vec4norm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+* [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+* [vec4normalize](#H3DU.Math.vec4normalize)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
+* [vec4normalizeInPlace](#H3DU.Math.vec4normalizeInPlace)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
 * [vec4proj](#H3DU.Math.vec4proj)<br>Returns the projection of a 4-element vector on the given
 reference vector.
 * [vec4scale](#H3DU.Math.vec4scale)<br>Multiplies each element of a 4-element vector by a factor, returning
@@ -260,33 +278,33 @@ the result in the first vector.
 <a id='H3DU.Math.GlobalPitchRollYaw'></a>
 ### H3DU.Math.GlobalPitchRollYaw (constant)
 
-Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
 
 <a id='H3DU.Math.GlobalPitchYawRoll'></a>
 ### H3DU.Math.GlobalPitchYawRoll (constant)
 
-Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
+Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
 or in the reverse order around
 
 <a id='H3DU.Math.GlobalRollPitchYaw'></a>
 ### H3DU.Math.GlobalRollPitchYaw (constant)
 
-Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
 
 <a id='H3DU.Math.GlobalRollYawPitch'></a>
 ### H3DU.Math.GlobalRollYawPitch (constant)
 
-Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 
 <a id='H3DU.Math.GlobalYawPitchRoll'></a>
 ### H3DU.Math.GlobalYawPitchRoll (constant)
 
-Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 
 <a id='H3DU.Math.GlobalYawRollPitch'></a>
 ### H3DU.Math.GlobalYawRollPitch (constant)
 
-Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
 <a id='H3DU.Math.HalfPi'></a>
 ### H3DU.Math.HalfPi (constant)
@@ -298,37 +316,37 @@ Default Value: `1.5707963267948966`
 <a id='H3DU.Math.LocalPitchRollYaw'></a>
 ### H3DU.Math.LocalPitchRollYaw (constant)
 
-Indicates that a rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
+Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a id='H3DU.Math.LocalPitchYawRoll'></a>
 ### H3DU.Math.LocalPitchYawRoll (constant)
 
-Indicates that a rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
+Indicates that a vector's rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a id='H3DU.Math.LocalRollPitchYaw'></a>
 ### H3DU.Math.LocalRollPitchYaw (constant)
 
-Indicates that a rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
+Indicates that a vector's rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a id='H3DU.Math.LocalRollYawPitch'></a>
 ### H3DU.Math.LocalRollYawPitch (constant)
 
-Indicates that a rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
+Indicates that a vector's rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a id='H3DU.Math.LocalYawPitchRoll'></a>
 ### H3DU.Math.LocalYawPitchRoll (constant)
 
-Indicates that a rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
+Indicates that a vector's rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a id='H3DU.Math.LocalYawRollPitch'></a>
 ### H3DU.Math.LocalYawRollPitch (constant)
 
-Indicates that a rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
+Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a id='H3DU.Math.Num180DividedByPi'></a>
@@ -360,7 +378,7 @@ Default Value: `6.283185307179586`
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
 Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchRollYaw">H3DU.Math.GlobalPitchRollYaw</a> instead.</b>
 
-Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
 
 <a id='H3DU.Math.PitchYawRoll'></a>
 ### H3DU.Math.PitchYawRoll (constant)
@@ -368,7 +386,7 @@ Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
 Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchYawRoll">H3DU.Math.GlobalPitchYawRoll</a> instead.</b>
 
-Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
 
 <a id='H3DU.Math.RollPitchYaw'></a>
 ### H3DU.Math.RollPitchYaw (constant)
@@ -376,7 +394,7 @@ Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
 Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a> instead.</b>
 
-Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
 
 <a id='H3DU.Math.RollYawPitch'></a>
 ### H3DU.Math.RollYawPitch (constant)
@@ -384,7 +402,7 @@ Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
 Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollYawPitch">H3DU.Math.GlobalRollYawPitch</a> instead.</b>
 
-Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 
 <a id='H3DU.Math.ToDegrees'></a>
 ### H3DU.Math.ToDegrees (constant)
@@ -404,7 +422,7 @@ of radians in a degree. Multiply by this number to convert degrees to radians.
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
 Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawPitchRoll">H3DU.Math.GlobalYawPitchRoll</a> instead.</b>
 
-Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 
 <a id='H3DU.Math.YawRollPitch'></a>
 ### H3DU.Math.YawRollPitch (constant)
@@ -412,7 +430,7 @@ Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
 Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a> instead.</b>
 
-Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
  <a name='H3DU.Math.boxCenter'></a>
 ### (static) H3DU.Math.boxCenter(box)
@@ -1095,7 +1113,8 @@ the transformed vector's X, Y, and Z coordinates. (Type: Array.&lt;Number>)
  <a name='H3DU.Math.mat4rotate'></a>
 ### (static) H3DU.Math.mat4rotate(mat, angle, v, vy, vz)
 
-Multiplies a 4x4 matrix by a rotation transformation,
+Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
 and returns a new matrix.
 The effect will be that the rotation transformation will
 happen before the transformation described in the given matrix,
@@ -1121,8 +1140,8 @@ The resulting 4x4 matrix. (Type: Array.&lt;Number>)
  <a name='H3DU.Math.mat4rotated'></a>
 ### (static) H3DU.Math.mat4rotated(angle, v, vy, vz)
 
-Returns a 4x4 matrix representing a rotation transformation
-given in the form of a rotation angle and an <a href="tutorial-glmath.md">axis of rotation</a>.
+Returns a 4x4 matrix representing a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>.
 
 #### Parameters
 
@@ -1222,7 +1241,7 @@ An array of six
 4-element arrays representing the six clipping planes of the
 view frustum. In order, they are the left, right, top,
 bottom, near, and far clipping planes. All six planes
-will be normalized (see <a href="H3DU.Math.md#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace</a>). (Type: Array.&lt;Array.&lt;Number>>)
+will be normalized (see <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a>). (Type: Array.&lt;Array.&lt;Number>>)
 
  <a name='H3DU.Math.mat4toMat3'></a>
 ### (static) H3DU.Math.mat4toMat3(m4)
@@ -1366,8 +1385,25 @@ are converted to columns and vice versa.)
 
 The parameter "mat". (Type: Array.&lt;Number>)
 
- <a name='H3DU.Math.planeNorm'></a>
-### (static) H3DU.Math.planeNorm(plane)
+ <a name='H3DU.Math.planeNormInPlace'></a>
+### (static) H3DU.Math.planeNormInPlace(plane)
+
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a>
+
+#### Parameters
+
+* `plane` (Type: Array.&lt;Number>)<br>
+    Plane to normalize in place.
+
+#### Return Value
+
+The parameter "plane" (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Math.planeNormalize'></a>
+### (static) H3DU.Math.planeNormalize(plane)
 
 Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
 unless all the normal's components are 0, and returns a new plane with the result.
@@ -1385,8 +1421,8 @@ A normalized version of
 the plane.
 Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
- <a name='H3DU.Math.planeNormInPlace'></a>
-### (static) H3DU.Math.planeNormInPlace(plane)
+ <a name='H3DU.Math.planeNormalizeInPlace'></a>
+### (static) H3DU.Math.planeNormalizeInPlace(plane)
 
 Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
 unless all the normal's components are 0, and sets this plane to the result.
@@ -1457,7 +1493,8 @@ Return value. (Type: Number)
  <a name='H3DU.Math.quatFromAxisAngle'></a>
 ### (static) H3DU.Math.quatFromAxisAngle(angle, v, vy, vz)
 
-Generates a quaternion from an angle and <a href="tutorial-glmath.md">axis of rotation</a>.
+Generates a quaternion from a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
 
 #### Parameters
 
@@ -1480,7 +1517,7 @@ and its fourth element (W) is the cosine of half of "angle". (Type: Array.&lt;Nu
  <a name='H3DU.Math.quatFromMat4'></a>
 ### (static) H3DU.Math.quatFromMat4(m)
 
-Generates a quaternion from the rotation described in a 4x4 matrix.
+Generates a quaternion from the vector rotation described in a 4x4 matrix.
 The upper 3x3 portion of the matrix is used for this calculation.
 The results are undefined if the matrix includes any transformation
 other than rotation.
@@ -1503,13 +1540,13 @@ See "Axis of Rotation" in "<a href="tutorial-glmath.md">H3DU's Math Functions</a
 #### Parameters
 
 * `pitchDegrees` (Type: Number)<br>
-    Rotation about the X axis (upward or downward turn), in degrees. This can instead be a 3-element array giving the rotation about the X axis, Y axis, and Z axis, respectively.
+    Vector rotation about the X axis (upward or downward turn), in degrees. This can instead be a 3-element array giving the rotation about the X axis, Y axis, and Z axis, respectively.
 * `yawDegrees` (Type: Number)<br>
-    Rotation about the Y axis (left or right turn), in degrees. May be null or omitted if "pitchDegrees" is an array.
+    Vector rotation about the Y axis (left or right turn), in degrees. May be null or omitted if "pitchDegrees" is an array.
 * `rollDegrees` (Type: Number)<br>
-    Rotation about the Z axis (swaying side by side), in degrees. May be null or omitted if "pitchDegrees" is an array.
+    Vector rotation about the Z axis (swaying side by side), in degrees. May be null or omitted if "pitchDegrees" is an array.
 * `mode` (Type: Number) (optional)<br>
-    Specifies the order in which the rotations will occur (in terms of their effect). This is one of the <a href="H3DU.Math.md">H3DU.Math</a> constants such as <a href="H3DU.Math.md#H3DU.Math.LocalPitchYawRoll">H3DU.Math.LocalPitchYawRoll</a> and <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a>. If null or omitted, the default is <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
+    Specifies the order in which the rotations will occur (in terms of their effect). This is one of the <a href="H3DU.Math.md">H3DU.Math</a> constants such as <a href="H3DU.Math.md#H3DU.Math.LocalPitchYawRoll">H3DU.Math.LocalPitchYawRoll</a> and <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a>. If null or omitted, the default is <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
 
 #### Return Value
 
@@ -1625,7 +1662,7 @@ in the global coordinate frame.
 If both quaternions are <a href="tutorial-glmath.md">unit vectors</a>, the resulting
 quaternion will also be a unit vector. However, for best results, you should
 normalize the quaternions every few multiplications (using
-<a href="H3DU.Math.md#H3DU.Math.quatNorm">H3DU.Math.quatNorm</a> or <a href="H3DU.Math.md#H3DU.Math.quatNormInPlace">H3DU.Math.quatNormInPlace</a>), since successive
+<a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a> or <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a>), since successive
 multiplications can cause rounding errors.
 
 #### Parameters
@@ -1670,6 +1707,40 @@ which will be a unit vector. (Type: Array.&lt;Number>)
  <a name='H3DU.Math.quatNorm'></a>
 ### (static) H3DU.Math.quatNorm(quat)
 
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a>
+
+#### Parameters
+
+* `quat` (Type: Array.&lt;Number>)<br>
+    Quaternion to normalize.
+
+#### Return Value
+
+The normalized quaternion. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Math.quatNormInPlace'></a>
+### (static) H3DU.Math.quatNormInPlace(quat)
+
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a>
+
+#### Parameters
+
+* `quat` (Type: Array.&lt;Number>)<br>
+    Quaternion to normalize in place.
+
+#### Return Value
+
+The parameter "quat" (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Math.quatNormalize'></a>
+### (static) H3DU.Math.quatNormalize(quat)
+
 Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>; returns a new quaternion.
 When a quaternion is normalized, the distance from the origin
 to that quaternion becomes 1 (unless all its components are 0).
@@ -1691,10 +1762,10 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a>
 
- <a name='H3DU.Math.quatNormInPlace'></a>
-### (static) H3DU.Math.quatNormInPlace(quat)
+ <a name='H3DU.Math.quatNormalizeInPlace'></a>
+### (static) H3DU.Math.quatNormalizeInPlace(quat)
 
 Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>.
 When a quaternion is normalized, it describes the same rotation but the distance from the origin
@@ -1717,13 +1788,13 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.vec4normInPlace">H3DU.Math.vec4normInPlace</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a>
 
  <a name='H3DU.Math.quatRotate'></a>
 ### (static) H3DU.Math.quatRotate(quat, angle, v, vy, vz)
 
-Multiplies a quaternion by a rotation transformation
-described as an angle and <a href="tutorial-glmath.md">axis of rotation</a>.
+Multiplies a quaternion by a rotation transformation that rotates vectors
+by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>.
 The result is such that the angle-axis
 rotation happens before the quaternion's rotation when applied
 in the global coordinate frame.
@@ -1830,8 +1901,9 @@ for additional background
  <a name='H3DU.Math.quatToAxisAngle'></a>
 ### (static) H3DU.Math.quatToAxisAngle(a)
 
-Calculates the angle and <a href="tutorial-glmath.md">axis of rotation</a> for this
-quaternion.
+Calculates the vector rotation for this quaternion in the form
+of the angle to rotate the vector by and an <a href="tutorial-glmath.md">axis of rotation</a> to
+rotate that vector around.
 
 #### Parameters
 
@@ -1871,18 +1943,19 @@ in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
 * `a` (Type: Array.&lt;Number>)<br>
     A quaternion. Should be a <a href="tutorial-glmath.md">unit vector</a>.
 * `mode` (Type: Number) (optional)<br>
-    Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). This is one of the <a href="H3DU.Math.md">H3DU.Math</a> constants such as <a href="H3DU.Math.md#H3DU.Math.LocalPitchYawRoll">H3DU.Math.LocalPitchYawRoll</a> and <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a>. If null or omitted, the default is <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
+    Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). This is one of the <a href="H3DU.Math.md">H3DU.Math</a> constants such as <a href="H3DU.Math.md#H3DU.Math.LocalPitchYawRoll">H3DU.Math.LocalPitchYawRoll</a> and <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a>. If null or omitted, the default is <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
 
 #### Return Value
 
 A 3-element array containing the
-pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order, in degrees.
+pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
 See "Axis of Rotation" in "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for the meaning of each angle. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Math.quatTransform'></a>
 ### (static) H3DU.Math.quatTransform(q, v)
 
-Transforms a 3- or 4-element vector using a quaternion's rotation.
+Transforms a 3- or 4-element vector using a
+quaternion's vector rotation.
 
 #### Parameters
 
@@ -2357,6 +2430,40 @@ The parameter "a". (Type: Array.&lt;Number>)
  <a name='H3DU.Math.vec3norm'></a>
 ### (static) H3DU.Math.vec3norm(vec)
 
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a>
+
+#### Parameters
+
+* `vec` (Type: Array.&lt;Number>)<br>
+    Vector to normalize.
+
+#### Return Value
+
+The normalized vector. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Math.vec3normInPlace'></a>
+### (static) H3DU.Math.vec3normInPlace(vec)
+
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalizeInPlace">H3DU.Math.vec3normalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec3normalizeInPlace">H3DU.Math.vec3normalizeInPlace</a>
+
+#### Parameters
+
+* `vec` (Type: Array.&lt;Number>)<br>
+    Vector to normalize in place.
+
+#### Return Value
+
+The parameter "vec" (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Math.vec3normalize'></a>
+### (static) H3DU.Math.vec3normalize(vec)
+
 Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
@@ -2386,14 +2493,14 @@ length of a line segment.
     // Find difference between endPt and startPt
     var delta=H3DU.Math.vec3sub(endPt,startPt);
     // Normalize delta to a unit vector
-    var deltaNorm=H3DU.Math.vec3norm(delta);
+    var deltaNorm=H3DU.Math.vec3normalize(delta);
     // Rescale to the desired length, here, 10
     H3DU.Math.vec3scaleInPlace(deltaNorm,10);
     // Find the new endpoint
     endPt=H3DU.Math.vec3add(startPt,deltaNorm);
 
- <a name='H3DU.Math.vec3normInPlace'></a>
-### (static) H3DU.Math.vec3normInPlace(vec)
+ <a name='H3DU.Math.vec3normalizeInPlace'></a>
+### (static) H3DU.Math.vec3normalizeInPlace(vec)
 
 Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
 When a vector is normalized, its direction remains the same but the distance from the origin
@@ -2843,6 +2950,40 @@ The parameter "a". (Type: Array.&lt;Number>)
  <a name='H3DU.Math.vec4norm'></a>
 ### (static) H3DU.Math.vec4norm(vec)
 
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a>
+
+#### Parameters
+
+* `vec` (Type: Array.&lt;Number>)<br>
+    Vector to normalize.
+
+#### Return Value
+
+The normalized vector. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Math.vec4normInPlace'></a>
+### (static) H3DU.Math.vec4normInPlace(vec)
+
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a>
+
+#### Parameters
+
+* `vec` (Type: Array.&lt;Number>)<br>
+    Vector to normalize in place.
+
+#### Return Value
+
+The parameter "vec" (Type: Array.&lt;Number>)
+
+ <a name='H3DU.Math.vec4normalize'></a>
+### (static) H3DU.Math.vec4normalize(vec)
+
 Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
@@ -2862,8 +3003,8 @@ confused with a vector's "norm", another name for its length.)
 The resulting vector.
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
 
- <a name='H3DU.Math.vec4normInPlace'></a>
-### (static) H3DU.Math.vec4normInPlace(vec)
+ <a name='H3DU.Math.vec4normalizeInPlace'></a>
+### (static) H3DU.Math.vec4normalizeInPlace(vec)
 
 Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
 When a vector is normalized, its direction remains the same but the distance from the origin

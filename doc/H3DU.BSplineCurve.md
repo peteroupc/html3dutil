@@ -5,12 +5,16 @@
  <a name='H3DU.BSplineCurve'></a>
 ### H3DU.BSplineCurve(controlPoints, knots, [bits])
 
-A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.
+A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
+
+<b>B&eacute;zier Curves</b>
 A B&eacute;zier curve is defined by a series of control points, where
 the first and last control points define the end points of the curve, and
 the remaining control points define the curve's shape, though they don't
 necessarily cross the curve.
+
+**Augments:** <a href="H3DU.Curve.md">H3DU.Curve</a>
 
 #### Parameters
 
@@ -39,6 +43,9 @@ results to conventional coordinates.</b>
 
 ### Methods
 
+* [accel](#H3DU.BSplineCurve_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.
+* [arcLength](#H3DU.BSplineCurve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
 * [clamped](#H3DU.BSplineCurve.clamped)<br>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
@@ -56,12 +63,13 @@ in a B-spline curve.
 * [fromHermiteSpline](#H3DU.BSplineCurve.fromHermiteSpline)<br>Creates an array of B-spline curves from the control points of a Hermite spline.
 * [getPoints](#H3DU.BSplineCurve_getPoints)<br>Gets a reference to the array of control points used
 in this curve object.
+* [normal](#H3DU.BSplineCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [split](#H3DU.BSplineCurve_split)<br>Splits this B-spline curve into two at the given point.
-* [tangent](#H3DU.BSplineCurve_tangent)<br>Finds the <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">tangent</a> (derivative) of
-this curve at the given point.
 * [uniform](#H3DU.BSplineCurve.uniform)<br>Creates a B-spline curve with uniform knots.
 * [uniformKnots](#H3DU.BSplineCurve.uniformKnots)<br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
+* [velocity](#H3DU.BSplineCurve_velocity)<br>Finds the velocity (derivative) of
+this curve at the given point.
 
 <a id='H3DU.BSplineCurve.DIVIDE_BIT'></a>
 ### H3DU.BSplineCurve.DIVIDE_BIT (constant)
@@ -114,6 +122,45 @@ Default Value: `1`
 <b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b>
 
 Combination of WEIGHTED_BIT and DIVIDE_BIT.
+
+ <a name='H3DU.BSplineCurve_accel'></a>
+### H3DU.BSplineCurve#accel(u)
+
+Finds an approximate acceleration vector at the given U coordinate of this curve.
+This method calls the evaluator's <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.
+
+The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+
+ <a name='H3DU.BSplineCurve_arcLength'></a>
+### H3DU.BSplineCurve#arcLength(u)
+
+Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
+This method calls the evaluator's <code>arcLength</code>
+method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
+
+The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of a point on the curve.
+
+#### Return Value
+
+The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;Number>)
 
  <a name='H3DU.BSplineCurve.clamped'></a>
 ### (static) H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])
@@ -196,14 +243,14 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
     }
 
  <a name='H3DU.BSplineCurve.fromBezierCurve'></a>
-### (static) H3DU.BSplineCurve.fromBezierCurve(controlPoints, [bits])
+### (static) H3DU.BSplineCurve.fromBezierCurve(cp, [bits])
 
 Creates a B-spline curve from the control points of a B&eacute;zier curve.
 
 #### Parameters
 
-* `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
-    Array of control points as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor. The curve's degree will equal the number of control points minus 1.
+* `cp` (Type: Array.&lt;Array.&lt;Number>>)<br>
+    An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point's length represents the size of all the control points. </ul>
 * `bits` (Type: Number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 
@@ -261,6 +308,27 @@ in this curve object.
 
 An object described in the constructor to <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>. (Type: Array.&lt;Array.&lt;Number>>)
 
+ <a name='H3DU.BSplineCurve_normal'></a>
+### H3DU.BSplineCurve#normal(u)
+
+Finds an approximate principal normal vector at the given U coordinate of this curve.
+This method calls the evaluator's <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
+
+The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
+vector divided by that derivative's length. The normal returned by this method
+<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with H3DU.Surface#gradient.)
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+
  <a name='H3DU.BSplineCurve_split'></a>
 ### H3DU.BSplineCurve#split(u)
 
@@ -279,23 +347,6 @@ is the part of the curve after the given point. The first element
 will be null if <code>u</code> is at or before the start of the curve.
 The second element
 will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>>)
-
- <a name='H3DU.BSplineCurve_tangent'></a>
-### H3DU.BSplineCurve#tangent(u)
-
-Finds the <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">tangent</a> (derivative) of
-this curve at the given point.
-
-#### Parameters
-
-* `u` (Type: Number)<br>
-    Point on the curve to evaluate.
-
-#### Return Value
-
-An array giving the tangent vector.
-It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
 
  <a name='H3DU.BSplineCurve.uniform'></a>
 ### (static) H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])
@@ -335,3 +386,20 @@ passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H
 A uniform knot vector. The first
 knot will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: Array.&lt;Number>)
+
+ <a name='H3DU.BSplineCurve_velocity'></a>
+### H3DU.BSplineCurve#velocity(u)
+
+Finds the velocity (derivative) of
+this curve at the given point.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    Point on the curve to evaluate.
+
+#### Return Value
+
+An array giving the velocity vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)

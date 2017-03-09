@@ -5,8 +5,9 @@
  <a name='H3DU.SurfaceOfRevolution'></a>
 ### H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
-A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution, which results by revolving
-an X/Y curve around an axis.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
+which results by revolving
+a two-dimensional curve around an axis.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -21,7 +22,7 @@ the HTML 3D Library. Example:
 #### Parameters
 
 * `curve` (Type: Object)<br>
-    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
+    A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
 
  If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must restrict the curve definition to no more than half of the curve.
 * `minval` (Type: Number)<br>
@@ -129,7 +130,7 @@ A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object
 * `innerRadius` (Type: Number)<br>
     Radius from the inner edge to the innermost part of the torus.
 * `curve` (Type: Object) (optional)<br>
-    A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section.
+    A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section with a radius of 1.
 * `axis` (Type: Array.&lt;Number>) (optional)<br>
     Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 

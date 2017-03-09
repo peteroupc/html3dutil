@@ -231,6 +231,17 @@ function typeval(x) {
   return xn.join(" | ");
 }
 
+function augmentsval(x) {
+  "use strict";
+  var xn = [];
+  for(var i = 0; i < x.length; i++) {
+    var tname = x[i];
+    tname = helper.linkto(tname, helper.htmlsafe(tname));
+    xn.push(tname);
+  }
+  return xn.join(", ");
+}
+
 function typeNames(nodes) {
   "use strict";
   var names = {};
@@ -306,7 +317,8 @@ function fillCollection(docCollection, nodes, parentlong) {
     var i;
     var entry;
     if(!parentlong && !node.undocumented && !node.ignore) {
-   // console.log([node.longname,node.undocumented,node.access,node.memberof,node.kind])
+      // if(node.kind === "class")
+      //   console.log(node)
       if(node.longname.indexOf("._") >= 0) {
         console.log(node);
       }
@@ -356,6 +368,9 @@ function fillCollection(docCollection, nodes, parentlong) {
       entry += normspace(node.description || "") + "\n\n";
       if(node.fires) {
         entry += "**Fires:** " + normspace(node.fires || "") + "\n\n";
+      }
+      if(node.augments) {
+        entry += "**Augments:** " + augmentsval(node.augments) + "\n\n";
       }
       if (node.params) {
         p = node.params;

@@ -32,7 +32,8 @@ the surface's edges lie on the edges of the control point array.
 * [evaluate](#H3DU.BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B-spline surface.
 * [fromBezierSurface](#H3DU.BSplineSurface.fromBezierSurface)<br>Creates a B-spline surface from the control points of a B&eacute;zier surface.
-* [getPoints](#H3DU.BSplineSurface.getPoints)<br>TODO: Not documented yet.
+* [getPoints](#H3DU.BSplineSurface.getPoints)<br>Gets a reference to the array of control point arrays used
+in this surface object.
 * [tangent](#H3DU.BSplineSurface_tangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the
 given point on the surface.
 * [uniform](#H3DU.BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
@@ -106,7 +107,7 @@ Creates a B-spline surface from the control points of a B&eacute;zier surface.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
-    Array of control points as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor. The curve's degree along the U axis will equal the number of control points in the first control point array minus 1. The curve's degree along the V axis will equal the number of control point arrays minus 1.
+    An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The number of elements in the first control point represents the number of elements in all the control points. </ul>
 * `bits` (Type: Number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
 
@@ -117,11 +118,12 @@ Return value. (Type: <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a>)
  <a name='H3DU.BSplineSurface.getPoints'></a>
 ### (static) H3DU.BSplineSurface.getPoints()
 
-TODO: Not documented yet.
+Gets a reference to the array of control point arrays used
+in this surface object.
 
 #### Return Value
 
-Return value. (Type: *)
+An object described in the constructor to <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>. (Type: Array.&lt;Array.&lt;Number>>)
 
  <a name='H3DU.BSplineSurface_tangent'></a>
 ### H3DU.BSplineSurface#tangent(u, v)

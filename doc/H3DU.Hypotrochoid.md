@@ -5,15 +5,15 @@
  <a name='H3DU.Hypotrochoid'></a>
 ### H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees])
 
-A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
+A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
 
 The following curves can be generated with this class (in the following
 descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
 and D = <code>distFromRollerCenter</code>).<ul>
-<li>Hypocycloid: D = R.</li>
-<li>Curtate hypocycloid: D < R.</li>
-<li>Prolate hypocycloid: D > R.</li>
+<li>Hypocycloid: D = R (hypotrochoid touching the fixed circle).</li>
+<li>Curtate hypocycloid: D < R (hypotrochoid not touching the fixed circle).</li>
+<li>Prolate hypocycloid: D > R (hypotrochoid crossing the fixed circle).</li>
 <li>Circle: O = R\*2; the circle will have radius R - D.</li>
 <li>Ellipse: O = R\*2; the ellipse (unrotated) will have width abs(R+D)\*2
 and height abs(R-D)\*2.</li>
@@ -32,6 +32,8 @@ the HTML 3D Library. Example:
 
     <script type="text/javascript" src="extras/evaluators.js"></script>
 
+**Augments:** <a href="H3DU.Curve.md">H3DU.Curve</a>
+
 #### Parameters
 
 * `outerRadius` (Type: Number)<br>
@@ -45,26 +47,52 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [arcLength](#H3DU.Hypotrochoid_arcLength)<br>TODO: Not documented yet.
+* [accel](#H3DU.Hypotrochoid_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.
+* [arcLength](#H3DU.Hypotrochoid_arcLength)<br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
 * [endPoints](#H3DU.Hypotrochoid_endPoints)<br>Gets the endpoints of this curve.
 * [evaluate](#H3DU.Hypotrochoid_evaluate)<br>Finds the coordinates of a point on the curve from the given U coordinate.
-* [rose](#H3DU.Hypotrochoid.rose)<br>Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
+* [normal](#H3DU.Hypotrochoid_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
+* [rose](#H3DU.Hypotrochoid.rose)<br>Creates a <a href="H3DU.Curve.md">curve evaluator object</a> for a rose, a special
 form of hypotrochoid.
 * [scaleTo](#H3DU.Hypotrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
+* [velocity](#H3DU.Hypotrochoid_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
+
+ <a name='H3DU.Hypotrochoid_accel'></a>
+### H3DU.Hypotrochoid#accel(u)
+
+Finds an approximate acceleration vector at the given U coordinate of this curve.
+This method calls the evaluator's <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.
+
+The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Hypotrochoid_arcLength'></a>
 ### H3DU.Hypotrochoid#arcLength(u)
 
-TODO: Not documented yet.
+Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: *)
+* `u` (Type: Number)<br>
+    U coordinate of a point on the curve.
 
 #### Return Value
 
-Return value. \* @instance (Type: *)
+The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;Number>)
 
  <a name='H3DU.Hypotrochoid_endPoints'></a>
 ### H3DU.Hypotrochoid#endPoints()
@@ -77,7 +105,7 @@ starts at 0 and ends at &pi;\*2.
 
 An array containing the two
 endpoints of the curve. The first number is the start of the curve,
-and the second number is the end of the curve. (Type: Array.&lt;Number>)
+and the second number is the end of the curve. \* @instance (Type: Array.&lt;Number>)
 
  <a name='H3DU.Hypotrochoid_evaluate'></a>
 ### H3DU.Hypotrochoid#evaluate(u)
@@ -94,10 +122,31 @@ Finds the coordinates of a point on the curve from the given U coordinate.
 A 3-element array specifying a 3D point.
 Only the X and Y coordinates can be other than 0. (Type: Array.&lt;Number>)
 
+ <a name='H3DU.Hypotrochoid_normal'></a>
+### H3DU.Hypotrochoid#normal(u)
+
+Finds an approximate principal normal vector at the given U coordinate of this curve.
+This method calls the evaluator's <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
+
+The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
+vector divided by that derivative's length. The normal returned by this method
+<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with H3DU.Surface#gradient.)
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+
  <a name='H3DU.Hypotrochoid.rose'></a>
 ### (static) H3DU.Hypotrochoid.rose(n, distFromInnerCenter, [rotationDegrees])
 
-Creates a <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
+Creates a <a href="H3DU.Curve.md">curve evaluator object</a> for a rose, a special
 form of hypotrochoid.
 
 #### Parameters
@@ -123,3 +172,23 @@ fits the given radius.
 #### Return Value
 
 Return value. (Type: <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a>)
+
+ <a name='H3DU.Hypotrochoid_velocity'></a>
+### H3DU.Hypotrochoid#velocity(u)
+
+Finds an approximate velocity vector at the given U coordinate of this curve.
+This method calls the evaluator's <code>velocity</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the position (from the <code>evaluate</code> method).
+
+The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: Number)<br>
+    U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a velocity vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)

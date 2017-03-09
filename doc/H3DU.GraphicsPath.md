@@ -40,7 +40,8 @@ path's shape.
 * [getBounds](#H3DU.GraphicsPath_GraphicsPath_getBounds)<br>Calculates an axis-aligned bounding box that tightly
 fits this graphics path.
 * [getCurrentPoint](#H3DU.GraphicsPath_GraphicsPath_getCurrentPoint)<br>Gets the current point stored in this path.
-* [getCurves](#H3DU.GraphicsPath_GraphicsPath_getCurves)<br>Gets an object for the curves described by this path.
+* [getCurves](#H3DU.GraphicsPath_GraphicsPath_getCurves)<br>Gets a <a href="H3DU.Curve.md">curve evaluator object</a> for
+the curves described by this path.
 * [getLines](#H3DU.GraphicsPath_GraphicsPath_getLines)<br>Gets an array of line segments approximating
 the path.
 * [getPoints](#H3DU.GraphicsPath_GraphicsPath_getPoints)<br>Gets an array of points evenly spaced across the length
@@ -249,14 +250,8 @@ A two-element array giving the X and Y coordinates of the current point. (Type: 
  <a name='H3DU.GraphicsPath_GraphicsPath_getCurves'></a>
 ### GraphicsPath#getCurves([flatness])
 
-Gets an object for the curves described by this path.
-The resulting object can be used to retrieve the points
-that lie on the path or as a parameter for one of
-the <a href="H3DU.CurveEval.md">H3DU.CurveEval</a> methods, in the
-<a href="CurveTube.md">CurveTube</a> class, or any other class that
-accepts parametric curves.
-
-The return value doesn't track changes to the path.
+Gets a <a href="H3DU.Curve.md">curve evaluator object</a> for
+the curves described by this path. The return value doesn't track changes to the path.
 
 #### Parameters
 

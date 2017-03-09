@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, c, console, i */
+/* global H3DU, console */
 // Portions adapted from public domain Mozilla unit tests
 
 var EPSILON = 0.001;
@@ -104,9 +104,7 @@ function compareWithNumericalBitangentSurface(curve) {
       tandiff[0] = Math.round(tandiff[0] * 10000) / 10000;
       tandiff[1] = Math.round(tandiff[1] * 10000) / 10000;
       tandiff[2] = Math.round(tandiff[2] * 10000) / 10000;
-      if(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) > 0.001) {
-        console.log([i / 100.0, tandiff + ""]);
-      }
+      ok(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) <= 0.001);
       curve.bitangent = oldtan;
     }
   }
@@ -127,9 +125,7 @@ function compareWithNumericalTangentSurface(curve) {
       tandiff[0] = Math.round(tandiff[0] * 10000) / 10000;
       tandiff[1] = Math.round(tandiff[1] * 10000) / 10000;
       tandiff[2] = Math.round(tandiff[2] * 10000) / 10000;
-      if(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) > 0.001) {
-        console.log([i / 100.0, tandiff + ""]);
-      }
+      ok(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) <= 0.001);
       curve.tangent = oldtan;
     }
   }
@@ -140,51 +136,48 @@ function valueDiff(numtan, anatan) {
   tandiff[0] = Math.round(tandiff[0] * 10000) / 10000;
   tandiff[1] = Math.round(tandiff[1] * 10000) / 10000;
   tandiff[2] = Math.round(tandiff[2] * 10000) / 10000;
-  if(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) > 0.001) {
-    console.log([i / 100.0, tandiff + ""]);
-  }
-
+  ok(Math.abs(tandiff[0] + tandiff[1] + tandiff[2]) <= 0.001);
 }
 function compareWithNumericalCurveValues(curve) {
   "use strict";
   var oldtan = curve.tangent;
   for(var i = 0; i <= 100; i += 5) {
   // Analytical tangent
-    var anatan = H3DU.CurveEval.findTangent(curve, i / 100.0);
+    var anatan = new H3DU.Curve(curve).velocity( i / 100.0);
     curve.tangent = null;
   // Numerical tangent
-    var numtan = H3DU.CurveEval.findTangent(curve, i / 100.0);
+    var numtan = new H3DU.Curve(curve).velocity( i / 100.0);
     valueDiff(numtan, anatan);
     curve.tangent = oldtan;
   }
-  if(typeof c.arcLength !== "undefined" && c.arcLength !== null) {
+  if(typeof curve.arcLength !== "undefined" && curve.arcLength !== null) {
     for(i = 0; i <= 10; i++) {
-      var al = c.arcLength;
-      anatan = H3DU.CurveEval.findArcLength(c, i / 5.0);
-      c.arcLength = null;
-      numtan = H3DU.CurveEval.findArcLength(c, i / 5.0);
+      var al = curve.arcLength;
+      anatan = new H3DU.Curve(curve).arcLength( i / 5.0);
+      curve.arcLength = null;
+      numtan = new H3DU.Curve(curve).arcLength( i / 5.0);
       valueDiff(numtan, anatan);
-      c.arcLength = al;
+      curve.arcLength = al;
     }
   }
-  if(typeof c.tangent !== "undefined" && c.tangent !== null) {
+  if(typeof curve.tangent !== "undefined" && curve.tangent !== null) {
     for(i = 0; i <= 10; i++) {
-      al = c.tangent;
-      anatan = H3DU.CurveEval.findTangent(c, i / 5.0);
-      c.tangent = null;
-      numtan = H3DU.CurveEval.findTangent(c, i / 5.0);
+      al = curve.tangent;
+      anatan = new H3DU.Curve(curve).velocity( i / 5.0);
+      curve.tangent = null;
+      numtan = new H3DU.Curve(curve).velocity( i / 5.0);
       valueDiff(numtan, anatan);
-      c.tangent = al;
+      curve.tangent = al;
     }
   }
-  if(typeof c.accel !== "undefined" && c.accel !== null) {
+  if(typeof curve.accel !== "undefined" && curve.accel !== null) {
     for(i = 0; i <= 10; i++) {
-      al = c.accel;
-      anatan = H3DU.CurveEval.findAccel(c, i / 5.0);
-      c.accel = null;
-      numtan = H3DU.CurveEval.findAccel(c, i / 5.0);
+      al = curve.accel;
+      anatan = new H3DU.Curve(curve).accel( i / 5.0);
+      curve.accel = null;
+      numtan = new H3DU.Curve(curve).accel(i / 5.0);
       valueDiff(numtan, anatan);
-      c.accel = al;
+      curve.accel = al;
     }
   }
 }

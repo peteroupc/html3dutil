@@ -346,7 +346,7 @@ Related functions:
 ### Rotation
 
 Rotation changes an object's orientation. Given an angle of rotation, &theta;,
-the transformation matrix is as follows. (For a list of common
+the transformation matrix for rotating 3D points is as follows. (For a list of common
 sines and cosines, see the end of this section.)
 
 <figure>

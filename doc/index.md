@@ -9,23 +9,27 @@
 * <a href="H3DU.md">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
-* <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.
+* <a href="H3DU.ArcLengthParamCurve.md">H3DU.ArcLengthParamCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> that
+wraps another curve evaluator object and remaps its U coordinates
+to an <i>arc length parameterization</i>.
+* <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
 * <a href="H3DU.Batch3D.md">H3DU.Batch3D</a><br>A `Batch3D` represents a so-called "scene graph".
 * <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b>
-* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
-to create a B&eacute;zier curve.</b>
+* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
+to create a B&eacute;zier surface.</b>
 * <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
 Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
 contexts.</b>
 * <a href="H3DU.Camera.md">H3DU.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.CubeMap.md">H3DU.CubeMap</a><br>A cube map, or a set of six textures forming the sides of a cube.
-* <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of parametric curve functions for generating
+* <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
+* <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.
 * <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.
-* <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
+* <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.
 Use the FrameBufferInfo class instead, which is not coupled to WebGL
@@ -34,7 +38,7 @@ contexts.</b>
 * <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.
 * <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.
 * <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
-* <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
+* <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.InputTracker.md">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.
@@ -71,8 +75,9 @@ and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating
 vertex positions, normals, colors, and texture coordinates
 of a surface.
-* <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution, which results by revolving
-an X/Y curve around an axis.
+* <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
+which results by revolving
+a two-dimensional curve around an axis.
 * <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
 text.
 * <a href="H3DU.Texture.md">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to
@@ -89,7 +94,7 @@ a bump map, a specular map, and so on.
 to WebGL contexts.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
-* <a href="H3DU.Trochoid.md">H3DU.Trochoid</a><br>A <a href="H3DU.CurveEval.md#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the X axis.
+* <a href="H3DU.Trochoid.md">H3DU.Trochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the X axis.
 * <a href="Hypotrochoid.md">Hypotrochoid</a><br><b>Deprecated: Use <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a> instead.</b>
 * <a href="InputTracker.md">InputTracker</a><br><b>Deprecated: Use <a href="H3DU.InputTracker.md">H3DU.InputTracker</a> instead.</b>
 * <a href="MatrixStack.md">MatrixStack</a><br><b>Deprecated: Use <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a> instead.</b>

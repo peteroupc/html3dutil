@@ -1194,7 +1194,6 @@ H3DU.Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset
  // and bitangent will always be contiguous (this method will
  // always be called after the recalcTangents method ensures
  // that both fields are present)
-
   var vi = [0, 0, 0];
   for(var i = 0; i < indices.length; i += 3) {
     vi[0] = indices[i] * stride;
