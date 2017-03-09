@@ -34,7 +34,7 @@ H3DU.ShapeGroup = function() {
 /**
  * Returns the number of shapes and/or shape groups that
  * are direct children of this shape group.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.ShapeGroup.prototype.shapeCount = function() {
@@ -116,7 +116,7 @@ H3DU.ShapeGroup.prototype.setVisible = function(value) {
 };
 /**
  * Gets whether this shape group will be drawn on rendering.
- * @returns {Boolean} value True if this shape group will be visible; otherwise, false.
+ * @returns {boolean} value True if this shape group will be visible; otherwise, false.
  * @instance
  */
 H3DU.ShapeGroup.prototype.getVisible = function() {
@@ -243,7 +243,7 @@ H3DU.ShapeGroup.prototype.removeShape = function(shape) {
  * Finds a bounding box that holds all vertices in this shape group.
  * The bounding box is not guaranteed to be the
  * tightest, and the box will be in world space coordinates.
- * @returns {Array<Number>} An array of six numbers describing an
+ * @returns {Array<number>} An array of six numbers describing an
  * axis-aligned bounding box
  * that fits all vertices in the shape group. The first three numbers
  * are the smallest-valued X, Y, and Z coordinates, and the
@@ -284,7 +284,7 @@ H3DU.ShapeGroup.prototype.getBounds = function() {
 
 /**
  * Gets the number of vertices composed by all shapes in this shape group.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.ShapeGroup.prototype.vertexCount = function() {
@@ -298,7 +298,7 @@ H3DU.ShapeGroup.prototype.vertexCount = function() {
 /**
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this shape group.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.ShapeGroup.prototype.primitiveCount = function() {
@@ -332,7 +332,7 @@ H3DU.ShapeGroup.prototype.setPosition = function(x, y, z) {
  * See {@link H3DU.Transform#setQuaternion}.
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
- * @param {Array<Number>} quat A four-element array describing the rotation.
+ * @param {Array<number>} quat A four-element array describing the rotation.
  * @returns {H3DU.Shape} This object.
  * @instance
  */

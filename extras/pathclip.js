@@ -1218,7 +1218,7 @@
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
@@ -1240,7 +1240,7 @@
  * path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
@@ -1263,7 +1263,7 @@
  * and another path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
@@ -1286,7 +1286,7 @@
  * but not both. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.

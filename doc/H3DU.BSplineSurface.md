@@ -16,9 +16,9 @@ necessarily cross the surface.
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point's length represents the size of all the control points. </ul>
-* `knotsU` (Type: Array.&lt;Number>)<br>
+* `knotsU` (Type: Array.&lt;number>)<br>
     Knot vector of the curve, along the U axis. For more information, see <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>.
-* `knotsV` (Type: Array.&lt;Number>)<br>
+* `knotsV` (Type: Array.&lt;number>)<br>
     Knot vector of the curve, along the V axis.
 * `bits` (Type: Boolean) (optional)<br>
     Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT, H3DU.BSplineCurve.HOMOGENEOUS_BIT, and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
@@ -55,7 +55,7 @@ given point on the surface.
 
 An array giving the bitangent vector.
 It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineSurface.clamped'></a>
 ### (static) H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])
@@ -67,11 +67,11 @@ the surface's edges lie on the edges of the control point array.
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;Number>>>)<br>
     Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
-* `degreeU` (Type: Number) (optional)<br>
+* `degreeU` (Type: number) (optional)<br>
     Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
-* `degreeV` (Type: Number) (optional)<br>
+* `degreeV` (Type: number) (optional)<br>
     Degree of the B-spline surface along the V axis If null or omitted, the default is 3.
-* `bits` (Type: Number) (optional)<br>
+* `bits` (Type: number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
 
 #### Return Value
@@ -97,7 +97,7 @@ in a B-spline surface.
 
 An array of the result of
 the evaluation. It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineSurface.fromBezierSurface'></a>
 ### (static) H3DU.BSplineSurface.fromBezierSurface(controlPoints, [bits])
@@ -108,7 +108,7 @@ Creates a B-spline surface from the control points of a B&eacute;zier surface.
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The number of elements in the first control point represents the number of elements in all the control points. </ul>
-* `bits` (Type: Number) (optional)<br>
+* `bits` (Type: number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
 
 #### Return Value
@@ -142,7 +142,7 @@ given point on the surface.
 
 An array giving the tangent vector.
 It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineSurface.uniform'></a>
 ### (static) H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])
@@ -153,11 +153,11 @@ Creates a B-spline surface with uniform knots.
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;Number>>>)<br>
     Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
-* `degreeU` (Type: Number) (optional)<br>
+* `degreeU` (Type: number) (optional)<br>
     Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
-* `degreeV` (Type: Number) (optional)<br>
+* `degreeV` (Type: number) (optional)<br>
     Degree of the B-spline surface along the V axis If null or omitted, the default is 3.
-* `bits` (Type: Number) (optional)<br>
+* `bits` (Type: number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
 
 #### Return Value

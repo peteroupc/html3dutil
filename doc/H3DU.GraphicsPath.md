@@ -216,7 +216,7 @@ apply to this method.
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>
     A path to combine with this one.
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -236,7 +236,7 @@ An array of four numbers
 describing the bounding box. The first two are
 the lowest X and Y coordinates, and the last two are
 the highest X and Y coordinates. If the path is empty,
-returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;Number>)
+returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;number>)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_getCurrentPoint'></a>
 ### GraphicsPath#getCurrentPoint()
@@ -245,7 +245,7 @@ Gets the current point stored in this path.
 
 #### Return Value
 
-A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;Number>)
+A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;number>)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_getCurves'></a>
 ### GraphicsPath#getCurves([flatness])
@@ -255,7 +255,7 @@ the curves described by this path. The return value doesn't track changes to the
 
 #### Parameters
 
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1. This is only used to make the arc-length parameterization more accurate if the path contains curves or arcs.
 
 #### Return Value
@@ -303,7 +303,7 @@ the path.
 
 #### Parameters
 
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -323,7 +323,7 @@ of the path.
 
 * `numPoints` (Type: Number)<br>
     Number of points to return.
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -350,7 +350,7 @@ differs from the first subpath's winding order can be holes.
 
 #### Parameters
 
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -390,7 +390,7 @@ apply to this method.
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>
     A path to combine with this one.
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -409,7 +409,7 @@ is added to the path.
 
 #### Return Value
 
-Return value. (Type: Boolean)
+Return value. (Type: boolean)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_lineTo'></a>
 ### GraphicsPath#lineTo(x, y)
@@ -466,13 +466,13 @@ Finds the approximate length of this path.
 
 #### Parameters
 
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     No longer used by this method.
 
 #### Return Value
 
 Approximate length of this path
-in units. (Type: Number)
+in units. (Type: number)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_quadraticCurveTo'></a>
 ### GraphicsPath#quadraticCurveTo(x, y, x2, y2)
@@ -544,7 +544,7 @@ to line segments.
 
 #### Parameters
 
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -561,7 +561,7 @@ See H3DU.GraphicsPath.fromString.
 #### Return Value
 
 A string describing the path in the SVG path
-format. (Type: String)
+format. (Type: string)
 
  <a name='H3DU.GraphicsPath_GraphicsPath_transform'></a>
 ### GraphicsPath#transform(trans)
@@ -572,7 +572,7 @@ that keeps straight lines straight and parallel lines parallel).
 
 #### Parameters
 
-* `trans` (Type: Array.&lt;Number>)<br>
+* `trans` (Type: Array.&lt;number>)<br>
     An array of six numbers describing a 2-dimensional affine transformation. For each point in the current path, its new X coordinate is `trans[0] \* X + trans[2] \* Y + trans[4]`, and its new Y coordinate is `trans[1] \* X + trans[3] \* Y + trans[5]`.
 
 #### Return Value
@@ -605,7 +605,7 @@ this is in addition to "extras/path.js". Example:
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>
     A path to combine with this one.
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -623,7 +623,7 @@ apply to this method.
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>
     A path to combine with this one.
-* `flatness` (Type: Number) (optional)<br>
+* `flatness` (Type: number) (optional)<br>
     When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
 
 #### Return Value
@@ -849,7 +849,7 @@ this is in addition to "extras/path.js". Example:
 
 #### Parameters
 
-* `pointCoords` (Type: Array.&lt;Number>)<br>
+* `pointCoords` (Type: Array.&lt;number>)<br>
     An array of numbers containing the X and Y coordinates of each point in the sequence of line segments. Each pair of numbers gives the X and Y coordinates, in that order, of one of the points in the sequence. The number of elements in the array must be even. If two or more pairs of numbers are given, line segments will connect each point given (except the last) to the next point given.
 * `closed` (Type: Number)<br>
     If "true", the sequence of points describes a closed polygon and a command to close the path will be added to the path (even if only one pair of numbers is given in "pointCoords").

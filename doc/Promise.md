@@ -52,7 +52,9 @@ resolves or is rejected.
 
 #### Return Value
 
-A promise that is resolved when all promises have resolved. (Type: <a href="Promise.md">Promise</a>)
+A promise that resolves or is rejected according to
+the first promise that resolves or is rejected. It will receive the
+value associated with that promise. (Type: <a href="Promise.md">Promise</a>)
 
  <a name='Promise.reject'></a>
 ### (static) Promise.reject(value)

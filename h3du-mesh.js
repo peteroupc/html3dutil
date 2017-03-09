@@ -40,15 +40,15 @@
  * or at that point, those methods may be deprecated.</li></ul>
  * @class
  * @memberof H3DU
- * @param {Array<Number>} [vertices] An array that contains data on each
+ * @param {Array<number>} [vertices] An array that contains data on each
  * vertex of the mesh.
  * Each vertex is made up of the same number of elements, as defined in
  * format. May be null or omitted, in which case an empty vertex array is used.
- * @param {Array<Number>} [indices] An array of vertex indices. Each trio of
+ * @param {Array<number>} [indices] An array of vertex indices. Each trio of
  * indices specifies a separate triangle, or each pair of indices specifies
  * a line segment.
  * If null or omitted, creates an initially empty mesh.
- * @param {Number} [format] A set of bit flags depending on the kind of data
+ * @param {number} [format] A set of bit flags depending on the kind of data
  * each vertex contains. Each vertex contains 3 elements plus:<ul>
  * <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus
  * <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus
@@ -674,7 +674,7 @@ H3DU.Mesh.prototype.setVertexNormal = function(index, x, y, z) {
  * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
- * @returns {Array<Number>} A 3-element array giving
+ * @returns {Array<number>} A 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * position, or null if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
@@ -699,7 +699,7 @@ H3DU.Mesh.prototype.getVertex = function(index) {
  * The index ranges from 0 to less than
  * the number of vertices in the mesh, not the
  * number of vertex indices.
- * @returns {Array<Number>} A 3-element array giving
+ * @returns {Array<number>} A 3-element array giving
  * the X, Y, and Z coordinates, respectively, of the vertex
  * normal, or null if the index is less than 0 or
  * equals the number of vertices in this mesh or greater.
@@ -732,7 +732,7 @@ H3DU.Mesh.prototype._initialize = function(vertices, faces, format) {
   this.attributeBits = typeof format === "undefined" || format === null ? 0 : format;
  /**
   * Gets the number of vertices included in this mesh.
-  * @returns {Number} Return value.
+  * @returns {number} Return value.
   */
   this.vertexCount = function() {
     return this.vertices.length / this.getStride();
@@ -958,7 +958,7 @@ H3DU.Mesh.prototype._makeRedundant = function() {
 /**
  * Gets the number of primitives (triangles, lines,
  * or points) composed by all shapes in this mesh.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Mesh.prototype.primitiveCount = function() {
@@ -1032,7 +1032,7 @@ H3DU.Mesh._isIdentityInUpperLeft = function(m) {
   * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
   * will not build upon previous vertices. Future vertices should not be
   * added after calling this method without calling mode() first.
-  * @param {Array<Number>} matrix A 4x4 matrix described in
+  * @param {Array<number>} matrix A 4x4 matrix described in
   * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
   * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
   * @returns {H3DU.Mesh} This object.
@@ -1124,7 +1124,7 @@ H3DU.Mesh.prototype.enumPrimitives = function(func) {
 /**
  * Finds the tightest axis-aligned
  * bounding box that holds all vertices in the mesh.
- * @returns {Array<Number>} An array of six numbers describing the tightest
+ * @returns {Array<number>} An array of six numbers describing the tightest
  * axis-aligned bounding box
  * that fits all vertices in the mesh. The first three numbers
  * are the smallest-valued X, Y, and Z coordinates, and the

@@ -83,7 +83,7 @@ H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
 
 /**
  * Gets the text of the vertex shader stored in this object.
- * @returns {String} return value.
+ * @returns {string} return value.
  * @instance
  */
 H3DU.ShaderInfo.prototype.getVertexShader = function() {
@@ -92,7 +92,7 @@ H3DU.ShaderInfo.prototype.getVertexShader = function() {
 };
 /**
  * Gets the text of the fragment shader stored in this object.
- * @returns {String} return value.
+ * @returns {string} return value.
  * @instance
  */
 H3DU.ShaderInfo.prototype.getFragmentShader = function() {
@@ -291,7 +291,7 @@ H3DU.ShaderInfo.fragmentShaderHeader = function() {
  * Generates source code for a fragment shader for applying
  * a raster effect to a texture.
  * @param {String} functionCode See {@link H3DU.ShaderInfo.makeEffect}.
- * @returns {String} The source text of the resulting fragment shader.
+ * @returns {string} The source text of the resulting fragment shader.
  */
 H3DU.ShaderInfo.makeEffectFragment = function(functionCode) {
   "use strict";
@@ -403,7 +403,7 @@ H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
 
 /**
  * Gets the text of a basic vertex shader.
- * @returns {String} The resulting shader text.
+ * @returns {string} The resulting shader text.
  */
 H3DU.ShaderInfo.getBasicVertex = function() {
   "use strict";
@@ -431,7 +431,7 @@ H3DU.ShaderInfo.getBasicVertex = function() {
 /**
  * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
  * at the start of the return value enables the lighting model.
- * @returns {String} The resulting shader text.
+ * @returns {string} The resulting shader text.
  */
 H3DU.ShaderInfo.getDefaultVertex = function() {
   "use strict";
@@ -481,7 +481,7 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
 
 /**
  * Gets the text of the default fragment shader.
- * @returns {String} The resulting shader text.
+ * @returns {string} The resulting shader text.
  */
 H3DU.ShaderInfo.getDefaultFragment = function() {
   "use strict";

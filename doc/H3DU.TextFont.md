@@ -160,7 +160,7 @@ drawn using this font.
 An array of two numbers;
 the first is the width of the string, and the second is the
 height of the string (taking into account line feed characters,
-U+000A, that break lines). (Type: Array.&lt;Number>)
+U+000A, that break lines). (Type: Array.&lt;number>)
 
  <a name='H3DU.TextFont_textShape'></a>
 ### H3DU.TextFont#textShape(str, params)

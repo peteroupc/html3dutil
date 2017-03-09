@@ -27,7 +27,7 @@ Gets this texture's known height.
 #### Return Value
 
 This texture's height in pixels.
-Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
+Will be 0 if the texture's image data wasn't loaded yet. (Type: number)
 
  <a name='H3DU.CubeMap_getTexture'></a>
 ### H3DU.CubeMap#getTexture(index)
@@ -51,7 +51,7 @@ Gets this texture's known width.
 #### Return Value
 
 This texture's width in pixels.
-Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
+Will be 0 if the texture's image data wasn't loaded yet. (Type: number)
 
  <a name='H3DU.CubeMap_setTexture'></a>
 ### H3DU.CubeMap#setTexture(index, texture)

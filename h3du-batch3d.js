@@ -42,7 +42,7 @@ H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
      H3DU.Math.mat4perspective(this.fov, aspect, this.near, this.far));
     }
   };
-  this.update();
+  this.update(1.0, 1.0);
 };
 /** @ignore */
 H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
@@ -64,7 +64,7 @@ H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
      H3DU.Math.mat4orthoAspect(this.a, this.b, this.c, this.d, this.e, this.f, aspect));
     }
   };
-  this.update();
+  this.update(1.0, 1.0);
 };
 
 /** @ignore */
@@ -134,7 +134,7 @@ H3DU.Batch3D._isSameMatrix = function(a, b) {
 };
 /**
  * Sets the projection matrix for this batch.
- * @param {Array<Number>} mat A 16-element matrix (4x4).
+ * @param {Array<number>} mat A 16-element matrix (4x4).
  * @returns {H3DU.Batch3D} This object.
  * @instance
  */
@@ -166,12 +166,12 @@ H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
  * Sets this batch's view matrix to represent a camera view.
  * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
  * (<code>center</code>).
- * @param {Array<Number>} eye A 3-element vector specifying
+ * @param {Array<number>} eye A 3-element vector specifying
  * the camera position in world space.
- * @param {Array<Number>} [center] A 3-element vector specifying
+ * @param {Array<number>} [center] A 3-element vector specifying
  * the point in world space that the camera is looking at. May be null or omitted,
  * in which case the default is the coordinates (0,0,0).
- * @param {Array<Number>} [up] A 3-element vector specifying
+ * @param {Array<number>} [up] A 3-element vector specifying
  * the direction from the center of the camera to its top. This parameter may
  * be null or omitted, in which case the default is the vector (0, 1, 0),
  * the vector that results when the camera is held upright. This
@@ -247,7 +247,7 @@ H3DU.Batch3D.prototype._useShader = function(shader) {
 
 /**
  * Sets the current view matrix for this batch of shapes.
- * @param {Array<Number>} mat A 4x4 matrix to use as the view matrix.
+ * @param {Array<number>} mat A 4x4 matrix to use as the view matrix.
  * @returns {H3DU.Batch3D} This object.
  * @instance
  */
@@ -261,7 +261,7 @@ H3DU.Batch3D.prototype.setViewMatrix = function(mat) {
 };
 /**
  * Gets the current projection matrix for this batch of shapes.
- * @returns {Array<Number>} A 4x4 matrix used as the current
+ * @returns {Array<number>} A 4x4 matrix used as the current
  * projection matrix.
  * @instance
  */
@@ -273,7 +273,7 @@ H3DU.Batch3D.prototype.getProjectionMatrix = function() {
 /**
  * Gets the current projection matrix multiplied by the current
  * view matrix for this batch of shapes.
- * @returns {Array<Number>} A 4x4 matrix used as the current
+ * @returns {Array<number>} A 4x4 matrix used as the current
  * projection-view matrix.
  * @instance
  */
@@ -285,7 +285,7 @@ H3DU.Batch3D.prototype.getProjectionViewMatrix = function() {
 
 /**
  * Gets the current view matrix for this batch of shapes.
- * @returns {Array<Number>} Return value.
+ * @returns {Array<number>} Return value.
  * @instance
  */
 H3DU.Batch3D.prototype.getViewMatrix = function() {
@@ -331,7 +331,7 @@ H3DU.Batch3D.prototype.addShape = function(shape) {
 /**
  * Returns the number of shapes and/or shape groups that
  * are direct children of this batch.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Batch3D.prototype.shapeCount = function() {
@@ -354,7 +354,7 @@ H3DU.Batch3D.prototype.getShape = function(index) {
  * Sets a shape or shape group at the given index in this batch.
  * @param {Number} index Integer index, starting from 0, to set the shape or shape group at.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape Shape object to set at the given index.
- * @returns {H3DU.Batch
+ * @returns {H3DU.Batch} This object.
  * @instance
  */
 H3DU.Batch3D.prototype.setShape = function(index, shape) {
@@ -366,7 +366,7 @@ H3DU.Batch3D.prototype.setShape = function(index, shape) {
 /**
  * Gets the number of vertices composed by
  * all shapes in this batch of shapes.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Batch3D.prototype.vertexCount = function() {
@@ -380,7 +380,7 @@ H3DU.Batch3D.prototype.vertexCount = function() {
 /**
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this batch of shapes.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Batch3D.prototype.primitiveCount = function() {

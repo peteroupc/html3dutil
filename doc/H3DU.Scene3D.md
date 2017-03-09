@@ -229,7 +229,7 @@ after each call to the render() method.
 
 #### Return Value
 
-Aspect ratio, or 1 if height is 0. (Type: Number)
+Aspect ratio, or 1 if height is 0. (Type: number)
 
  <a name='H3DU.Scene3D_getAutoResize'></a>
 ### H3DU.Scene3D#getAutoResize()
@@ -258,7 +258,7 @@ Gets the color used when clearing the screen each frame.
 #### Return Value
 
 An array of four numbers, from 0 through
-1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;Number>)
+1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;number>)
 
  <a name='H3DU.Scene3D_getClientAspect'></a>
 ### H3DU.Scene3D#getClientAspect()
@@ -268,7 +268,7 @@ as actually displayed on the screen.
 
 #### Return Value
 
-Aspect ratio, or 1 if height is 0. (Type: Number)
+Aspect ratio, or 1 if height is 0. (Type: number)
 
  <a name='H3DU.Scene3D_getClientHeight'></a>
 ### H3DU.Scene3D#getClientHeight()
@@ -277,7 +277,7 @@ Gets the height for this scene as actually displayed on the screen.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Scene3D_getClientWidth'></a>
 ### H3DU.Scene3D#getClientWidth()
@@ -286,7 +286,7 @@ Gets the width for this scene as actually displayed on the screen.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Scene3D_getContext'></a>
 ### H3DU.Scene3D#getContext()
@@ -306,7 +306,7 @@ after each call to the render() method.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Scene3D_getLights'></a>
 ### H3DU.Scene3D#getLights()
@@ -330,7 +330,7 @@ Gets the current projection matrix for this scene.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Scene3D_getViewMatrix'></a>
 ### H3DU.Scene3D#getViewMatrix()
@@ -341,7 +341,7 @@ Gets the current view matrix for this scene.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Scene3D_getWidth'></a>
 ### H3DU.Scene3D#getWidth()
@@ -352,7 +352,7 @@ after each call to the render() method.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Scene3D_loadAndMapTexture'></a>
 ### H3DU.Scene3D#loadAndMapTexture(texture)
@@ -447,7 +447,7 @@ and points) composed by all shapes in this scene.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Scene3D_removeShape'></a>
 ### H3DU.Scene3D#removeShape(shape)
@@ -501,7 +501,7 @@ Sets the color of the scene's ambient light.
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: Number) (optional)<br>
+* `a` (Type: number) (optional)<br>
     Alpha color component (0-1). Currently not used.
 
 #### Return Value
@@ -537,7 +537,7 @@ This color is black by default.
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: Number) (optional)<br>
+* `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
 
 #### Return Value
@@ -558,7 +558,7 @@ Sets the viewport width and height for this scene.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Scene3D_setDirectionalLight'></a>
 ### H3DU.Scene3D#setDirectionalLight(index, position, [diffuse], [specular])
@@ -571,11 +571,11 @@ Sets a light source in this scene to a directional light.
 
 * `index` (Type: Number)<br>
     Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn't exist.
-* `position` (Type: Array.&lt;Number>)<br>
+* `position` (Type: Array.&lt;number>)<br>
     A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).
-* `diffuse` (Type: Array.&lt;Number>) (optional)<br>
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
-* `specular` (Type: Array.&lt;Number>) (optional)<br>
+* `specular` (Type: Array.&lt;number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 
 #### Return Value
@@ -641,11 +641,11 @@ This method takes a camera's position (<code>eye</code>), and the point the came
 
 #### Parameters
 
-* `eye` (Type: Array.&lt;Number>)<br>
+* `eye` (Type: Array.&lt;number>)<br>
     A 3-element vector specifying the camera position in world space.
-* `center` (Type: Array.&lt;Number>) (optional)<br>
+* `center` (Type: Array.&lt;number>) (optional)<br>
     A 3-element vector specifying the point in world space that the camera is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).
-* `up` (Type: Array.&lt;Number>) (optional)<br>
+* `up` (Type: Array.&lt;number>) (optional)<br>
     A 3-element vector specifying the direction from the center of the camera to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the camera is held upright. This vector must not point in the same or opposite direction as the camera's view direction. (For best results, rotate the vector (0, 1, 0) so it points perpendicular to the camera's view direction.)
 
 #### Return Value
@@ -726,7 +726,7 @@ or squishing it.
     Bottommost coordinate of the view rectangle.
 * `top` (Type: Number)<br>
     Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)
-* `aspect` (Type: Number) (optional)<br>
+* `aspect` (Type: number) (optional)<br>
     Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene's aspect ratio instead.
 
 #### Return Value
@@ -761,7 +761,7 @@ or squishing it.
     Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
 * `far` (Type: Number)<br>
     Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.
-* `aspect` (Type: Number) (optional)<br>
+* `aspect` (Type: number) (optional)<br>
     Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene's aspect ratio instead.
 
 #### Return Value
@@ -810,11 +810,11 @@ Sets a light source in this scene to a point light.
 
 * `index` (Type: Number)<br>
     Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on.
-* `position` (Type: Array.&lt;Number>)<br>
+* `position` (Type: Array.&lt;number>)<br>
     Light position. (See <a href="H3DU.LightSource.md#H3DU.LightSource_position">H3DU.LightSource#position</a>.)
-* `diffuse` (Type: Array.&lt;Number>) (optional)<br>
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
-* `specular` (Type: Array.&lt;Number>) (optional)<br>
+* `specular` (Type: Array.&lt;number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 
 #### Return Value
@@ -832,7 +832,7 @@ matrix can also be set using the <a href="H3DU.Scene3D.md#H3DU.Scene3D_setFrustu
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;Number>)<br>
+* `matrix` (Type: Array.&lt;number>)<br>
     A 16-element matrix (4x4).
 
 #### Return Value
@@ -868,7 +868,7 @@ be set using the <a href="H3DU.Scene3D.md#H3DU.Scene3D_setLookAt">H3DU.Scene3D#s
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;Number>)<br>
+* `matrix` (Type: Array.&lt;number>)<br>
     A 16-element matrix (4x4).
 
 #### Return Value
@@ -924,4 +924,4 @@ all shapes in this scene.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)

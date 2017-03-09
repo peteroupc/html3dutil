@@ -126,6 +126,8 @@ of a 4x4 matrix (in column-major order) and returns the transformed vector.
 * [mat4transpose](#H3DU.Math.mat4transpose)<br>Returns the transpose of a 4x4 matrix.
 * [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)<br>Transposes a 4x4 matrix in place without creating
 a new matrix.
+* [planeNorm](#H3DU.Math.planeNorm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
 * [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 * [planeNormalize](#H3DU.Math.planeNormalize)<br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
@@ -200,9 +202,9 @@ rectangle.
 also known as its <i>length</i> or <i>magnitude</i>.
 * [vec3lerp](#H3DU.Math.vec3lerp)<br>Does a linear interpolation between two 3-element vectors;
 returns a new vector.
-* [vec3mul](#H3DU.Math.vec3mul)<br>Multiplies two vectors and returns a new
+* [vec3mul](#H3DU.Math.vec3mul)<br>Multiplies each of the components of two 3-element vectors and returns a new
 vector with the result.
-* [vec3mulInPlace](#H3DU.Math.vec3mulInPlace)<br>Multiplies two 3-element vectors and stores
+* [vec3mulInPlace](#H3DU.Math.vec3mulInPlace)<br>Multiplies each of the components of two 3-element vectors and stores
 the result in the first vector.
 * [vec3negate](#H3DU.Math.vec3negate)<br>Negates a 3-element vector and returns a new
 vector with the result, which is generally a vector with
@@ -439,14 +441,14 @@ Finds the center of a 3D bounding box.
 
 #### Parameters
 
-* `box` (Type: Array.&lt;Number>)<br>
+* `box` (Type: Array.&lt;number>)<br>
     An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
 
 A 3-element array containing the
 X, Y, and Z coordinates, respectively, of the bounding box's
-center. (Type: Array.&lt;Number>)
+center. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.boxDimensions'></a>
 ### (static) H3DU.Math.boxDimensions(box)
@@ -456,7 +458,7 @@ the first three values of the given array with its last three values.
 
 #### Parameters
 
-* `box` (Type: Array.&lt;Number>)<br>
+* `box` (Type: Array.&lt;number>)<br>
     An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
@@ -465,7 +467,7 @@ A 3-element array containing the
 width, height, and depth of the bounding box, respectively. If
 at least one of the minimum coordinates is greater than its
 corresponding maximum coordinate, the array can contain
-negative values. (Type: Array.&lt;Number>)
+negative values. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.boxIsEmpty'></a>
 ### (static) H3DU.Math.boxIsEmpty(box)
@@ -476,14 +478,14 @@ is larger than the corresponding maximum coordinate.
 
 #### Parameters
 
-* `box` (Type: Array.&lt;Number>)<br>
+* `box` (Type: Array.&lt;number>)<br>
     An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
 
 <code>true</code> if at least one
 of the minimum coordinates is greater than its
-corresponding maximum coordinate; otherwise, <code>false</code>. (Type: Boolean)
+corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)
 
  <a name='H3DU.Math.colorToLinear'></a>
 ### (static) H3DU.Math.colorToLinear(srgb)
@@ -498,7 +500,7 @@ by a surface of the given color.
 
 #### Parameters
 
-* `srgb` (Type: Array.&lt;Number>)<br>
+* `srgb` (Type: Array.&lt;number>)<br>
     A three- or four-element vector giving the red, green, and blue components, in that order, of an sRGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
 
 #### Return Value
@@ -506,7 +508,7 @@ by a surface of the given color.
 lin A three-element vector giving
 the red, green, and blue components, in that order, of the given color
 in linear RGB.The alpha component will be as specified
-in the "srgb" parameter. (Type: Array.&lt;Number>)
+in the "srgb" parameter. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.colorTosRGB'></a>
 ### (static) H3DU.Math.colorTosRGB(lin)
@@ -521,7 +523,7 @@ by a surface of the given color.
 
 #### Parameters
 
-* `lin` (Type: Array.&lt;Number>)<br>
+* `lin` (Type: Array.&lt;number>)<br>
     A three- or four-element vector giving the red, green, and blue components, in that order, of a linear RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
 
 #### Return Value
@@ -529,7 +531,7 @@ by a surface of the given color.
 lin A four-element vector giving
 the red, green, blue, and alpha components, in that order, of the given color
 in the sRGB color space. The alpha component will be as specified
-in the "lin" parameter. (Type: Array.&lt;Number>)
+in the "lin" parameter. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.frustumHasBox'></a>
 ### (static) H3DU.Math.frustumHasBox(frustum, box)
@@ -541,7 +543,7 @@ is at least partially inside a view frustum.
 
 * `frustum` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of six 4-element arrays representing the six clipping planes of the view frustum. In order, they are the left, right, top, bottom, near, and far clipping planes.
-* `box` (Type: Array.&lt;Number>)<br>
+* `box` (Type: Array.&lt;number>)<br>
     An axis-aligned bounding box in world space, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
@@ -550,7 +552,7 @@ is at least partially inside a view frustum.
 may be partially or totally
 inside the frustum; <code>false</code> if the box is
 definitely outside the frustum, or if the box is empty
-(see "boxIsEmpty"). (Type: Boolean)
+(see "boxIsEmpty"). (Type: boolean)
 
  <a name='H3DU.Math.frustumHasPoint'></a>
 ### (static) H3DU.Math.frustumHasPoint(frustum, x, y, z)
@@ -572,7 +574,7 @@ outside or inside a view frustum.
 #### Return Value
 
 true if the point is inside;
-otherwise false; (Type: Boolean)
+otherwise false; (Type: boolean)
 
  <a name='H3DU.Math.frustumHasSphere'></a>
 ### (static) H3DU.Math.frustumHasSphere(frustum, x, y, z, radius)
@@ -597,7 +599,7 @@ partially inside a view frustum.
 
 <code>true</code> if the sphere
 is partially or totally
-inside the frustum; <code>false</code> otherwise. (Type: Boolean)
+inside the frustum; <code>false</code> otherwise. (Type: boolean)
 
  <a name='H3DU.Math.mat3copy'></a>
 ### (static) H3DU.Math.mat3copy(mat)
@@ -606,12 +608,12 @@ Returns a copy of a 3x3 matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 3x3atrix.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat3identity'></a>
 ### (static) H3DU.Math.mat3identity()
@@ -621,7 +623,7 @@ vectors unchanged when they are transformed with this matrix).
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat3invert'></a>
 ### (static) H3DU.Math.mat3invert(m)
@@ -630,13 +632,13 @@ Finds the inverse of a 3x3 matrix, describing a transformation that undoes the g
 
 #### Parameters
 
-* `m` (Type: Array.&lt;Number>)<br>
+* `m` (Type: Array.&lt;number>)<br>
     A 3x3 matrix.
 
 #### Return Value
 
 The resulting 3x3 matrix.
-Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat3multiply'></a>
 ### (static) H3DU.Math.mat3multiply(a, b)
@@ -651,37 +653,49 @@ by the second is the same as multiplying the second matrix
 by the first matrix's transpose; a transpose is a matrix whose rows
 are converted to columns and vice versa.)
 
+The matrix multiplication is effectively done by breaking up matrix <code>b</code>
+into three 3-element vectors (the first 3 elements make up the first vector, and so on),
+<a href="H3DU.Math.md#H3DU.Math.mat3multiply">transforming</a> each vector with
+matrix <code>a</code>, and putting the vectors back together into a new matrix.
+
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first matrix.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;Number>)
+The resulting 3x3 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat3transform'></a>
-### (static) H3DU.Math.mat3transform(mat, v, vy, vz)
+### (static) H3DU.Math.mat3transform(mat, v, [vy], [vz])
 
 Transforms a 3-element vector with a 3x3 matrix and returns
 the transformed vector.
 
+Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
+is effectively done by breaking up <code>mat</code> into three 3-element vectors
+(the first 3 elements make up the first vector, and so on), multiplying
+each vector in <code>mat</code> by the corresponding component in
+<code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
+get the transformed vector.
+
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 3x3 matrix.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X coordinate. If "vy", and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number) (optional)<br>
     Y coordinate.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number) (optional)<br>
     Z coordinate. To transform a 2D point, set Z to 1, and divide the result's X and Y by the result's Z.
 
 #### Return Value
 
-The transformed vector. (Type: Array.&lt;Number>)
+The transformed vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat3transpose'></a>
 ### (static) H3DU.Math.mat3transpose(m3)
@@ -691,12 +705,12 @@ matrix whose rows are converted to columns and vice versa.)
 
 #### Parameters
 
-* `m3` (Type: Array.&lt;Number>)<br>
+* `m3` (Type: Array.&lt;number>)<br>
     A 3x3 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;Number>)
+The resulting 3x3 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat3transposeInPlace'></a>
 ### (static) H3DU.Math.mat3transposeInPlace(mat)
@@ -707,12 +721,12 @@ are converted to columns and vice versa.)
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 3x3 matrix.
 
 #### Return Value
 
-The parameter "mat". (Type: Array.&lt;Number>)
+The parameter "mat". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4copy'></a>
 ### (static) H3DU.Math.mat4copy(mat)
@@ -721,12 +735,12 @@ Returns a copy of a 4x4 matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4frustum'></a>
 ### (static) H3DU.Math.mat4frustum(l, r, b, t, near, far)
@@ -758,7 +772,7 @@ This value should be greater than 0, and should be set to the highest distance f
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4identity'></a>
 ### (static) H3DU.Math.mat4identity()
@@ -768,7 +782,7 @@ vectors unchanged when they are transformed with this matrix).
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4inverseTranspose3'></a>
 ### (static) H3DU.Math.mat4inverseTranspose3(m4)
@@ -786,13 +800,13 @@ be used instead of the inverse-transpose matrix to transform the normals.
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;Number>)<br>
+* `m4` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
 The resulting 3x3 matrix. If the matrix
-can't be inverted, returns the identity 3x3 matrix. (Type: Array.&lt;Number>)
+can't be inverted, returns the identity 3x3 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4invert'></a>
 ### (static) H3DU.Math.mat4invert(m)
@@ -801,13 +815,13 @@ Finds the inverse of a 4x4 matrix, describing a transformation that undoes the g
 
 #### Parameters
 
-* `m` (Type: Array.&lt;Number>)<br>
+* `m` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
 The resulting 4x4 matrix.
-Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4isIdentity'></a>
 ### (static) H3DU.Math.mat4isIdentity(mat)
@@ -816,12 +830,12 @@ Returns whether a 4x4 matrix is the identity matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
-Return value. (Type: Boolean)
+Return value. (Type: boolean)
 
  <a name='H3DU.Math.mat4lookat'></a>
 ### (static) H3DU.Math.mat4lookat(viewerPos, [lookingAt], [up])
@@ -850,16 +864,16 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 #### Parameters
 
-* `viewerPos` (Type: Array.&lt;Number>)<br>
+* `viewerPos` (Type: Array.&lt;number>)<br>
     A 3-element vector specifying the "camera" position in world space.
-* `lookingAt` (Type: Array.&lt;Number>) (optional)<br>
+* `lookingAt` (Type: Array.&lt;number>) (optional)<br>
     A 3-element vector specifying the point in world space that the "camera" is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).
-* `up` (Type: Array.&lt;Number>) (optional)<br>
+* `up` (Type: Array.&lt;number>) (optional)<br>
     A 3-element vector specifying the direction from the center of the "camera" to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the "camera" is held upright.<br> This vector must not be parallel to the view direction (the direction from "viewerPos" to "lookingAt"). (See the example for one way to ensure this.)<br>
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
 #### Example
 
@@ -886,16 +900,21 @@ by the second is the same as multiplying the second matrix
 by the first matrix's transpose; a transpose is a matrix whose rows
 are converted to columns and vice versa.)
 
+The matrix multiplication is effectively done by breaking up matrix <code>b</code>
+into four 4-element vectors (the first 4 elements make up the first vector, and so on),
+<a href="H3DU.Math.md#H3DU.Math.mat4multiply">transforming</a> each vector with
+matrix <code>a</code>, and putting the vectors back together into a new matrix.
+
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first matrix.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4ortho'></a>
 ### (static) H3DU.Math.mat4ortho(l, r, b, t, n, f)
@@ -929,7 +948,7 @@ objects with the same size won't appear smaller as they get more distant from th
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4ortho2d'></a>
 ### (static) H3DU.Math.mat4ortho2d(l, r, b, t)
@@ -954,7 +973,7 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4ortho2dAspect'></a>
 ### (static) H3DU.Math.mat4ortho2dAspect(l, r, b, t, aspect)
@@ -987,7 +1006,7 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4orthoAspect'></a>
 ### (static) H3DU.Math.mat4orthoAspect(l, r, b, t, n, f, aspect)
@@ -1024,7 +1043,7 @@ objects with the same size won't appear smaller as they get more distant from th
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4perspective'></a>
 ### (static) H3DU.Math.mat4perspective(fovY, aspectRatio, near, far)
@@ -1051,7 +1070,7 @@ This value should be greater than 0, and should be set to the highest distance f
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4perspectiveHorizontal'></a>
 ### (static) H3DU.Math.mat4perspectiveHorizontal(fovX, aspectRatio, near, far)
@@ -1078,37 +1097,37 @@ This value should be greater than 0, and should be set to the highest distance f
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4projectVec3'></a>
-### (static) H3DU.Math.mat4projectVec3(mat, v, vy, vz)
+### (static) H3DU.Math.mat4projectVec3(mat, v, [vy], [vz])
 
 Transforms a 3-element vector with a 4x4 matrix and returns
 a perspective-correct version of the vector as a 3D point.
 
 The transformation involves
-multiplying the matrix by a 4-element column vector with the same X,
-Y, and Z coordinates, but with a W coordinate equal to 1, and
-then dividing X, Y, and Z of the resulting 4-element
+transforming a 4-element column vector with the same X,
+Y, and Z coordinates, but with a W coordinate equal to 1, with the 4x4 matrix, and
+then dividing X, Y, and Z of the transformed 4-element
 vector by that vector's W (a <i>perspective divide</i>),
 then returning that vector's new X, Y, and Z.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods' documentation.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X coordinate of a 3D point to transform. If "vy" and "vz" are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number) (optional)<br>
     Y coordinate.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number) (optional)<br>
     Z coordinate. To transform a 2D point, set Z to 0.
 
 #### Return Value
 
 The transformed 3-element vector.
 The elements, in order, are
-the transformed vector's X, Y, and Z coordinates. (Type: Array.&lt;Number>)
+the transformed vector's X, Y, and Z coordinates. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4rotate'></a>
 ### (static) H3DU.Math.mat4rotate(mat, angle, v, vy, vz)
@@ -1122,7 +1141,7 @@ when applied in the global coordinate frame.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix to multiply.
 * `angle` (Type: Array.&lt;Number> | Number)<br>
     The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the <a href="tutorial-glmath.md">axis of rotation</a> as the first three elements, followed by the angle in degrees as the fourth element.
@@ -1135,7 +1154,7 @@ when applied in the global coordinate frame.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4rotated'></a>
 ### (static) H3DU.Math.mat4rotated(angle, v, vy, vz)
@@ -1156,7 +1175,7 @@ by the given rotation angle and around the given <a href="tutorial-glmath.md">ax
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4scale'></a>
 ### (static) H3DU.Math.mat4scale(mat, v3, v3y, v3z)
@@ -1165,7 +1184,7 @@ Multiplies a 4x4 matrix by a scaling transformation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     4x4 matrix to multiply.
 * `v3` (Type: Array.&lt;Number> | Number)<br>
     Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
@@ -1176,7 +1195,7 @@ Multiplies a 4x4 matrix by a scaling transformation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4scaleInPlace'></a>
 ### (static) H3DU.Math.mat4scaleInPlace(mat, v3, v3y, v3z)
@@ -1186,7 +1205,7 @@ scaling transformation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 * `v3` (Type: Array.&lt;Number> | Number)<br>
     Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
@@ -1197,7 +1216,7 @@ scaling transformation.
 
 #### Return Value
 
-The same parameter as "mat". (Type: Array.&lt;Number>)
+The same parameter as "mat". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4scaled'></a>
 ### (static) H3DU.Math.mat4scaled(v3, v3y, v3z)
@@ -1215,7 +1234,7 @@ Returns a 4x4 matrix representing a scaling transformation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4toFrustumPlanes'></a>
 ### (static) H3DU.Math.mat4toFrustumPlanes(matrix)
@@ -1232,7 +1251,7 @@ off top.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;Number>)<br>
+* `matrix` (Type: Array.&lt;number>)<br>
     A 4x4 matrix. This will usually be a projection-view matrix (projection matrix multiplied by view matrix, in that order).
 
 #### Return Value
@@ -1251,38 +1270,45 @@ Returns the upper-left part of a 4x4 matrix as a new
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;Number>)<br>
+* `m4` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;Number>)
+The resulting 3x3 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4transform'></a>
-### (static) H3DU.Math.mat4transform(mat, v, vy, vz, vw)
+### (static) H3DU.Math.mat4transform(mat, v, [vy], [vz], [vw])
 
 Transforms a 4-element vector with a 4x4 matrix and returns
 the transformed vector.
 
+Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
+is effectively done by breaking up <code>mat</code> into four 4-element vectors
+(the first 4 elements make up the first vector, and so on), multiplying
+each vector in <code>mat</code> by the corresponding component in
+<code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
+get the transformed vector.
+
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X coordinate. If "vy", "vz", and "vw" are omitted, this value can instead be a 4-element array giving the X, Y, Z, and W coordinates.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number) (optional)<br>
     Y coordinate.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number) (optional)<br>
     Z coordinate.
-* `vw` (Type: Number)<br>
+* `vw` (Type: number) (optional)<br>
     W coordinate. To transform a 3D point, set W to 1 and divide the result's X, Y, and Z by the result's W. To transform a 2D point, set Z to 0 and W to 1 and divide the result's X and Y by the result's W.
 
 #### Return Value
 
-The transformed vector. (Type: Array.&lt;Number>)
+The transformed vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4transformVec3'></a>
-### (static) H3DU.Math.mat4transformVec3(mat, v, vy, vz)
+### (static) H3DU.Math.mat4transformVec3(mat, v, [vy], [vz])
 
 Transforms a 3-element vector with the first three rows
 of a 4x4 matrix (in column-major order) and returns the transformed vector.
@@ -1303,18 +1329,18 @@ projection (whose last row is not necessarily (0, 0, 0, 1)).
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 * `v` (Type: Array.&lt;Number> | Number)<br>
     X coordinate. If "vy" and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number) (optional)<br>
     Y coordinate.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number) (optional)<br>
     Z coordinate. To transform a 2D point, set Z to 0.
 
 #### Return Value
 
-The transformed 3-element vector. (Type: Array.&lt;Number>)
+The transformed 3-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4translate'></a>
 ### (static) H3DU.Math.mat4translate(mat, v3, v3y, v3z)
@@ -1323,7 +1349,7 @@ Multiplies a 4x4 matrix by a translation transformation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     The matrix to multiply.
 * `v3` (Type: Array.&lt;Number> | Number)<br>
     Translation along the X axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the translations along the X, Y, and Z axes.
@@ -1334,7 +1360,7 @@ Multiplies a 4x4 matrix by a translation transformation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4translated'></a>
 ### (static) H3DU.Math.mat4translated(v3, v3y, v3z)
@@ -1352,7 +1378,7 @@ Returns a 4x4 matrix representing a translation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4transpose'></a>
 ### (static) H3DU.Math.mat4transpose(m4)
@@ -1362,12 +1388,12 @@ matrix whose rows are converted to columns and vice versa.)
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;Number>)<br>
+* `m4` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;Number>)
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.mat4transposeInPlace'></a>
 ### (static) H3DU.Math.mat4transposeInPlace(mat)
@@ -1378,12 +1404,29 @@ are converted to columns and vice versa.)
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
-The parameter "mat". (Type: Array.&lt;Number>)
+The parameter "mat". (Type: Array.&lt;number>)
+
+ <a name='H3DU.Math.planeNorm'></a>
+### (static) H3DU.Math.planeNorm(plane)
+
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a> instead.
+The name of this method may be confused with a vector's "norm", another name for its length.</b>
+
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a>
+
+#### Parameters
+
+* `plane` (Type: Array.&lt;number>)<br>
+    Plane to normalize.
+
+#### Return Value
+
+The normalized plane. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.planeNormInPlace'></a>
 ### (static) H3DU.Math.planeNormInPlace(plane)
@@ -1395,12 +1438,12 @@ Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU
 
 #### Parameters
 
-* `plane` (Type: Array.&lt;Number>)<br>
+* `plane` (Type: Array.&lt;number>)<br>
     Plane to normalize in place.
 
 #### Return Value
 
-The parameter "plane" (Type: Array.&lt;Number>)
+The parameter "plane" (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.planeNormalize'></a>
 ### (static) H3DU.Math.planeNormalize(plane)
@@ -1412,14 +1455,14 @@ normal's length. Returns a new plane.
 
 #### Parameters
 
-* `plane` (Type: Array.&lt;Number>)<br>
+* `plane` (Type: Array.&lt;number>)<br>
     A four-element array defining the plane. The first three elements of the array are the X, Y, and Z components of the plane's normal vector, and the fourth element is the shortest distance from the plane to the origin, or if negative, from the origin to the plane, divided by the normal's length.
 
 #### Return Value
 
 A normalized version of
 the plane.
-Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.planeNormalizeInPlace'></a>
 ### (static) H3DU.Math.planeNormalizeInPlace(plane)
@@ -1434,12 +1477,12 @@ confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
-* `plane` (Type: Array.&lt;Number>)<br>
+* `plane` (Type: Array.&lt;number>)<br>
     A four-element array defining the plane. The first three elements of the array are the X, Y, and Z components of the plane's normal vector, and the fourth element is the shortest distance from the plane to the origin, or if negative, from the origin to the plane, divided by the normal's length.
 
 #### Return Value
 
-The parameter "plane". (Type: Array.&lt;Number>)
+The parameter "plane". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatConjugate'></a>
 ### (static) H3DU.Math.quatConjugate(quat)
@@ -1448,12 +1491,12 @@ Returns a quaternion that describes a rotation that undoes the given rotation (a
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A quaternion, containing four elements.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatCopy'></a>
 ### (static) H3DU.Math.quatCopy()
@@ -1462,7 +1505,7 @@ Returns a copy of a quaternion.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
 #### See Also
 
@@ -1477,14 +1520,14 @@ their components (for example, <b>a</b>'s X times <b>b</b>'s X).
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first quaternion.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second quaternion.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
 #### See Also
 
@@ -1512,7 +1555,7 @@ by the given rotation angle and around the given <a href="tutorial-glmath.md">ax
 The generated quaternion.
 A quaternion's first three elements (X, Y, Z) describe an
 <a href="tutorial-glmath.md">axis of rotation</a> whose length is the sine of half of "angle",
-and its fourth element (W) is the cosine of half of "angle". (Type: Array.&lt;Number>)
+and its fourth element (W) is the cosine of half of "angle". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatFromMat4'></a>
 ### (static) H3DU.Math.quatFromMat4(m)
@@ -1524,12 +1567,12 @@ other than rotation.
 
 #### Parameters
 
-* `m` (Type: Array.&lt;Number>)<br>
+* `m` (Type: Array.&lt;number>)<br>
     A 4x4 matrix.
 
 #### Return Value
 
-The resulting quaternion. (Type: Array.&lt;Number>)
+The resulting quaternion. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatFromTaitBryan'></a>
 ### (static) H3DU.Math.quatFromTaitBryan(pitchDegrees, yawDegrees, rollDegrees, [mode])
@@ -1545,12 +1588,12 @@ See "Axis of Rotation" in "<a href="tutorial-glmath.md">H3DU's Math Functions</a
     Vector rotation about the Y axis (left or right turn), in degrees. May be null or omitted if "pitchDegrees" is an array.
 * `rollDegrees` (Type: Number)<br>
     Vector rotation about the Z axis (swaying side by side), in degrees. May be null or omitted if "pitchDegrees" is an array.
-* `mode` (Type: Number) (optional)<br>
+* `mode` (Type: number) (optional)<br>
     Specifies the order in which the rotations will occur (in terms of their effect). This is one of the <a href="H3DU.Math.md">H3DU.Math</a> constants such as <a href="H3DU.Math.md#H3DU.Math.LocalPitchYawRoll">H3DU.Math.LocalPitchYawRoll</a> and <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a>. If null or omitted, the default is <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
 
 #### Return Value
 
-The generated quaternion. (Type: Array.&lt;Number>)
+The generated quaternion. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatFromVectors'></a>
 ### (static) H3DU.Math.quatFromVectors(vec1, vec2)
@@ -1563,15 +1606,15 @@ in the second vector. The vectors need not be <a href="tutorial-glmath.md">unit 
 
 #### Parameters
 
-* `vec1` (Type: Array.&lt;Number>)<br>
+* `vec1` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `vec2` (Type: Array.&lt;Number>)<br>
+* `vec2` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
 The generated quaternion, which
-will be a unit vector. (Type: Array.&lt;Number>)
+will be a unit vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatIdentity'></a>
 ### (static) H3DU.Math.quatIdentity()
@@ -1580,7 +1623,7 @@ Returns the identity quaternion of multiplication, (0, 0, 0, 1).
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatInverse'></a>
 ### (static) H3DU.Math.quatInverse(quat)
@@ -1592,12 +1635,12 @@ Returns a new quaternion; same as the quatInverse method.
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A quaternion, containing four elements.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatInvert'></a>
 ### (static) H3DU.Math.quatInvert(quat)
@@ -1606,12 +1649,12 @@ Returns a quaternion that describes a rotation that undoes the given rotation (a
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A quaternion, containing four elements.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
 #### See Also
 
@@ -1624,12 +1667,12 @@ Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A quaternion, containing four elements.
 
 #### Return Value
 
-Return value. (Type: Boolean)
+Return value. (Type: boolean)
 
  <a name='H3DU.Math.quatLength'></a>
 ### (static) H3DU.Math.quatLength(quat)
@@ -1640,12 +1683,12 @@ of its components.
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     The quaternion.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
 #### See Also
 
@@ -1665,16 +1708,21 @@ normalize the quaternions every few multiplications (using
 <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a> or <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a>), since successive
 multiplications can cause rounding errors.
 
+Quaternion multiplication is not commutative except in the last component
+of the resulting quaternion, since the definition of quaternion multiplication
+includes taking a cross product of <code>a</code>'s and <code>b</code>'s first three components,
+in that order, and the cross product is not commutative (see also <a href="H3DU.Math.md#H3DU.Math.vec3cross">H3DU.Math.vec3cross</a>).
+
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first quaternion.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second quaternion.
 
 #### Return Value
 
-The resulting quaternion. (Type: Array.&lt;Number>)
+The resulting quaternion. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatNlerp'></a>
 ### (static) H3DU.Math.quatNlerp(q1, q2, factor)
@@ -1692,9 +1740,9 @@ the <a href="H3DU.Math.md#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a> method.
 
 #### Parameters
 
-* `q1` (Type: Array.&lt;Number>)<br>
+* `q1` (Type: Array.&lt;number>)<br>
     The first quaternion. Must be a unit vector.
-* `q2` (Type: Array.&lt;Number>)<br>
+* `q2` (Type: Array.&lt;number>)<br>
     The second quaternion. Must be a unit vector.
 * `factor` (Type: Number)<br>
     A value that usually ranges from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
@@ -1702,7 +1750,7 @@ the <a href="H3DU.Math.md#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a> method.
 #### Return Value
 
 The interpolated quaternion,
-which will be a unit vector. (Type: Array.&lt;Number>)
+which will be a unit vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatNorm'></a>
 ### (static) H3DU.Math.quatNorm(quat)
@@ -1714,12 +1762,12 @@ Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.qu
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     Quaternion to normalize.
 
 #### Return Value
 
-The normalized quaternion. (Type: Array.&lt;Number>)
+The normalized quaternion. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatNormInPlace'></a>
 ### (static) H3DU.Math.quatNormInPlace(quat)
@@ -1731,12 +1779,12 @@ Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     Quaternion to normalize in place.
 
 #### Return Value
 
-The parameter "quat" (Type: Array.&lt;Number>)
+The parameter "quat" (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatNormalize'></a>
 ### (static) H3DU.Math.quatNormalize(quat)
@@ -1752,13 +1800,13 @@ confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A quaternion, containing four elements.
 
 #### Return Value
 
 The normalized quaternion.
-Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 #### See Also
 
@@ -1778,13 +1826,13 @@ confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A quaternion, containing four elements.
 
 #### Return Value
 
 The parameter "quat".
-Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 #### See Also
 
@@ -1799,13 +1847,13 @@ The result is such that the angle-axis
 rotation happens before the quaternion's rotation when applied
 in the global coordinate frame.
 
-This method is equivalent to the following:
+This method is equivalent to the following (see also <a href="H3DU.Math.md#H3DU.Math.quatMultiply">H3DU.Math.quatMultiply</a>):
 
     return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     Quaternion to rotate.
 * `angle` (Type: Array.&lt;Number> | Number)<br>
     The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element.
@@ -1818,7 +1866,7 @@ This method is equivalent to the following:
 
 #### Return Value
 
-The resulting quaternion. (Type: Array.&lt;Number>)
+The resulting quaternion. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatScale'></a>
 ### (static) H3DU.Math.quatScale(a, scalar)
@@ -1828,14 +1876,14 @@ and returns the result as a new quaternion.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A quaternion.
 * `scalar` (Type: Number)<br>
     A factor to multiply.
 
 #### Return Value
 
-The resulting quaternion. (Type: Array.&lt;Number>)
+The resulting quaternion. (Type: Array.&lt;number>)
 
 #### See Also
 
@@ -1849,14 +1897,14 @@ and stores the result in that quaternion.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A quaternion.
 * `scalar` (Type: Number)<br>
     A factor to multiply.
 
 #### Return Value
 
-The parameter "a". (Type: Array.&lt;Number>)
+The parameter "a". (Type: Array.&lt;number>)
 
 #### See Also
 
@@ -1882,16 +1930,16 @@ than the <a href="H3DU.Math.md#H3DU.Math.quatNlerp">quatNlerp</a> method.
 
 #### Parameters
 
-* `q1` (Type: Array.&lt;Number>)<br>
+* `q1` (Type: Array.&lt;number>)<br>
     The first quaternion. Must be a <a href="tutorial-glmath.md">unit vector</a>.
-* `q2` (Type: Array.&lt;Number>)<br>
+* `q2` (Type: Array.&lt;number>)<br>
     The second quaternion. Must be a unit vector.
 * `factor` (Type: Number)<br>
     A value that usually ranges from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
 
 #### Return Value
 
-The interpolated quaternion. (Type: Array.&lt;Number>)
+The interpolated quaternion. (Type: Array.&lt;number>)
 
 #### See Also
 
@@ -1907,7 +1955,7 @@ rotate that vector around.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A quaternion. Must be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value
@@ -1915,7 +1963,7 @@ rotate that vector around.
 A 4-element array giving the axis
 of rotation as the first three elements, followed by the angle
 in degrees as the fourth element. If "a" is a unit vector, the axis
-of rotation will be a unit vector. (Type: Array.&lt;Number>)
+of rotation will be a unit vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatToMat4'></a>
 ### (static) H3DU.Math.quatToMat4(quat)
@@ -1925,12 +1973,12 @@ described by this quaternion.
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A quaternion, containing four elements.
 
 #### Return Value
 
-The generated 4x4 matrix. (Type: Array.&lt;Number>)
+The generated 4x4 matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatToTaitBryan'></a>
 ### (static) H3DU.Math.quatToTaitBryan(a, [mode])
@@ -1940,16 +1988,16 @@ in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A quaternion. Should be a <a href="tutorial-glmath.md">unit vector</a>.
-* `mode` (Type: Number) (optional)<br>
+* `mode` (Type: number) (optional)<br>
     Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). This is one of the <a href="H3DU.Math.md">H3DU.Math</a> constants such as <a href="H3DU.Math.md#H3DU.Math.LocalPitchYawRoll">H3DU.Math.LocalPitchYawRoll</a> and <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a>. If null or omitted, the default is <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object's new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.
 
 #### Return Value
 
 A 3-element array containing the
 pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
-See "Axis of Rotation" in "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for the meaning of each angle. (Type: Array.&lt;Number>)
+See "Axis of Rotation" in "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for the meaning of each angle. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.quatTransform'></a>
 ### (static) H3DU.Math.quatTransform(q, v)
@@ -1959,9 +2007,9 @@ quaternion's vector rotation.
 
 #### Parameters
 
-* `q` (Type: Array.&lt;Number>)<br>
+* `q` (Type: Array.&lt;number>)<br>
     A quaternion describing the rotation.
-* `v` (Type: Array.&lt;Number>)<br>
+* `v` (Type: Array.&lt;number>)<br>
     A 3- or 4-element vector to transform. The fourth element, if any, is ignored.
 
 #### Return Value
@@ -1969,7 +2017,7 @@ quaternion's vector rotation.
 A 4-element vector representing
 the transformed vector. The fourth element will be 1.0.
 If the input vector has 3 elements, a 3-element vector will
-be returned instead. (Type: Array.&lt;Number>)
+be returned instead. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3abs'></a>
 ### (static) H3DU.Math.vec3abs(a)
@@ -1979,12 +2027,12 @@ vector with the absolute value of each of its components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
-The resulting 3-element vector. (Type: Array.&lt;Number>)
+The resulting 3-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3absInPlace'></a>
 ### (static) H3DU.Math.vec3absInPlace(a)
@@ -1994,12 +2042,12 @@ vector to its absolute value.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
-The vector "a". (Type: Array.&lt;Number>)
+The vector "a". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3add'></a>
 ### (static) H3DU.Math.vec3add(a, b)
@@ -2012,14 +2060,14 @@ combined paths described by the given vectors, in either order.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
-The resulting 3-element vector. (Type: Array.&lt;Number>)
+The resulting 3-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3addInPlace'></a>
 ### (static) H3DU.Math.vec3addInPlace(a, b)
@@ -2032,14 +2080,14 @@ combined paths described by the given vectors, in either order.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
-The parameter "a" (Type: Array.&lt;Number>)
+The parameter "a" (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3assign'></a>
 ### (static) H3DU.Math.vec3assign(dst, src)
@@ -2049,14 +2097,14 @@ Assigns the values of a 3-element vector into another
 
 #### Parameters
 
-* `dst` (Type: Array.&lt;Number>)<br>
+* `dst` (Type: Array.&lt;number>)<br>
     The 3-element vector to assign to.
-* `src` (Type: Array.&lt;Number>)<br>
+* `src` (Type: Array.&lt;number>)<br>
     The 3-element vector whose values will be copied.
 
 #### Return Value
 
-The parameter "dst" (Type: Array.&lt;Number>)
+The parameter "dst" (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3clamp'></a>
 ### (static) H3DU.Math.vec3clamp(a, min, max)
@@ -2066,7 +2114,7 @@ so it's not less than one value or greater than another value.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The vector to clamp.
 * `min` (Type: Number)<br>
     Lowest possible value. Should not be greater than "max".
@@ -2075,7 +2123,7 @@ so it's not less than one value or greater than another value.
 
 #### Return Value
 
-The resulting vector. (Type: Array.&lt;Number>)
+The resulting vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3clampInPlace'></a>
 ### (static) H3DU.Math.vec3clampInPlace(a, min, max)
@@ -2085,7 +2133,7 @@ so it's not less than one value or greater than another value.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The vector to clamp.
 * `min` (Type: Number)<br>
     Lowest possible value. Should not be greater than "max".
@@ -2094,7 +2142,7 @@ so it's not less than one value or greater than another value.
 
 #### Return Value
 
-The resulting vector. (Type: Array.&lt;Number>)
+The resulting vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3copy'></a>
 ### (static) H3DU.Math.vec3copy(vec)
@@ -2103,12 +2151,12 @@ Returns a copy of a 3-element vector.
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3cross'></a>
 ### (static) H3DU.Math.vec3cross(a, b)
@@ -2143,14 +2191,14 @@ follows:<br>
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
-A 3-element vector containing the cross product. (Type: Array.&lt;Number>)
+A 3-element vector containing the cross product. (Type: Array.&lt;number>)
 
 #### Example
 
@@ -2190,14 +2238,14 @@ to another, treating both as 3D points.
 
 #### Parameters
 
-* `vecFrom` (Type: Array.&lt;Number>)<br>
+* `vecFrom` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `vecTo` (Type: Array.&lt;Number>)<br>
+* `vecTo` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
-The distance between the two vectors. (Type: Number)
+The distance between the two vectors. (Type: number)
 
  <a name='H3DU.Math.vec3dot'></a>
 ### (static) H3DU.Math.vec3dot(a, b)
@@ -2241,14 +2289,14 @@ same cross product. (Thus, the dot product is <i>commutative</i>.)
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
-A number representing the dot product. (Type: Number)
+A number representing the dot product. (Type: number)
 
 #### Example
 
@@ -2276,9 +2324,9 @@ increase from front to back.
 
 #### Parameters
 
-* `vector` (Type: Array.&lt;Number>)<br>
+* `vector` (Type: Array.&lt;number>)<br>
     A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
-* `matrix` (Type: Array.&lt;Number>)<br>
+* `matrix` (Type: Array.&lt;number>)<br>
     A 4x4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method.<br> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
 * `viewport` (Type: Boolean)<br>
     Has the same meaning as "viewport" in the <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> method.
@@ -2288,7 +2336,7 @@ increase from front to back.
 #### Return Value
 
 A 3-element array giving the coordinates
-of the unprojected point, in that order. (Type: Array.&lt;Number>)
+of the unprojected point, in that order. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3length'></a>
 ### (static) H3DU.Math.vec3length(a)
@@ -2306,12 +2354,12 @@ passing the same vector as both of its arguments).
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Math.vec3lerp'></a>
 ### (static) H3DU.Math.vec3lerp(v1, v2, factor)
@@ -2321,16 +2369,16 @@ returns a new vector.
 
 #### Parameters
 
-* `v1` (Type: Array.&lt;Number>)<br>
+* `v1` (Type: Array.&lt;number>)<br>
     The first vector to interpolate. The interpolation will occur on each component of this vector and v2.
-* `v2` (Type: Array.&lt;Number>)<br>
+* `v2` (Type: Array.&lt;number>)<br>
     The second vector to interpolate.
 * `factor` (Type: Number)<br>
     A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns a value generally ranging from 0 through 1, and pass the result of that function to this method.<br> The following are examples of interpolation functions. See also the code examples following this list.<ul> <li>Linear: <code>factor</code>. Constant speed. <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0. For example, N=2 means a square, N=3 means cube, N=1/2 means square root, and N=1/3 means cube root. If N &gt; 1, this function starts slow and ends fast. If N &lt; 1, this function starts fast and ends slow. <li>Sine: <code>Math.sin(Math.PI\*0.5\*factor)</code>. This function starts fast and ends slow. <li>Smoothstep: <code>(3.0-2.0\*factor)\*factor\*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Perlin's "Smootherstep": <code>(10+factor\*(factor\*6-15))\*factor\*factor\*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Discrete-step timing, where N is a number of steps greater than 0:<ul> <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor\*N))/N)</code>.</li> <li>Position end: <code>Math.floor(factor\*N)/N</code>.</li></ul> <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>, where <code>INTF(x)</code> is another interpolation function. This function reverses the speed behavior; for example, a function that started fast now starts slow. <li>Ease: <code>factor &lt; 0.5 ? INTF(factor\*2)\*0.5 : 1.0-(INTF((1.0-factor)\*2)\*0.5)</code>, where <code>INTF(x)</code> is another interpolation function. Depending on the underlying function, this function eases in, then eases out, or vice versa. </ul>
 
 #### Return Value
 
-The interpolated vector. (Type: Array.&lt;Number>)
+The interpolated vector. (Type: Array.&lt;number>)
 
 #### Example
 
@@ -2360,38 +2408,36 @@ and end, and speeds up in the middle.
  <a name='H3DU.Math.vec3mul'></a>
 ### (static) H3DU.Math.vec3mul(a, b)
 
-Multiplies two vectors and returns a new
-vector with the result. Multiplying two vectors
-is the same as multiplying each of their components.
+Multiplies each of the components of two 3-element vectors and returns a new
+vector with the result.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
-The resulting 3-element vector. (Type: Array.&lt;Number>)
+The resulting 3-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3mulInPlace'></a>
 ### (static) H3DU.Math.vec3mulInPlace(a, b)
 
-Multiplies two 3-element vectors and stores
-the result in the first vector. Multiplying two vectors
-is the same as multiplying each of their components.
+Multiplies each of the components of two 3-element vectors and stores
+the result in the first vector.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
-The parameter "a" (Type: Array.&lt;Number>)
+The parameter "a" (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3negate'></a>
 ### (static) H3DU.Math.vec3negate(a)
@@ -2403,12 +2449,12 @@ is the same as reversing the sign of each of its components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
-The resulting 3-element vector. (Type: Array.&lt;Number>)
+The resulting 3-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3negateInPlace'></a>
 ### (static) H3DU.Math.vec3negateInPlace(a)
@@ -2420,12 +2466,12 @@ is the same as reversing the sign of each of its components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
-The parameter "a". (Type: Array.&lt;Number>)
+The parameter "a". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3norm'></a>
 ### (static) H3DU.Math.vec3norm(vec)
@@ -2437,12 +2483,12 @@ Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.ve
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     Vector to normalize.
 
 #### Return Value
 
-The normalized vector. (Type: Array.&lt;Number>)
+The normalized vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3normInPlace'></a>
 ### (static) H3DU.Math.vec3normInPlace(vec)
@@ -2454,12 +2500,12 @@ Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec3normalizeInPlace">H3DU.
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     Vector to normalize in place.
 
 #### Return Value
 
-The parameter "vec" (Type: Array.&lt;Number>)
+The parameter "vec" (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3normalize'></a>
 ### (static) H3DU.Math.vec3normalize(vec)
@@ -2475,13 +2521,13 @@ confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
 The resulting vector.
-Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 #### Example
 
@@ -2513,13 +2559,13 @@ confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
 The parameter "vec".
-Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3perp'></a>
 ### (static) H3DU.Math.vec3perp(vec)
@@ -2530,13 +2576,13 @@ will not be converted to a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 
 #### Return Value
 
 A perpendicular 3-element
-vector. Returns (0,0,0) if "vec" is (0,0,0). (Type: Array.&lt;Number>)
+vector. Returns (0,0,0) if "vec" is (0,0,0). (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3proj'></a>
 ### (static) H3DU.Math.vec3proj(vec, refVec)
@@ -2553,16 +2599,16 @@ to the reference vector.
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     The vector to project.
-* `refVec` (Type: Array.&lt;Number>)<br>
+* `refVec` (Type: Array.&lt;number>)<br>
     The reference vector whose length will be adjusted.
 
 #### Return Value
 
 The projection of
 "vec" on "refVec". Returns (0,0,0) if "refVec"'s
-length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3reflect'></a>
 ### (static) H3DU.Math.vec3reflect(incident, normal)
@@ -2571,15 +2617,15 @@ Returns a vector that reflects off a surface.
 
 #### Parameters
 
-* `incident` (Type: Array.&lt;Number>)<br>
+* `incident` (Type: Array.&lt;number>)<br>
     Incident vector, or a vector headed in the direction of the surface, as a 3-element vector.
-* `normal` (Type: Array.&lt;Number>)<br>
+* `normal` (Type: Array.&lt;number>)<br>
     Surface normal vector, or a vector that's perpendicular to the surface, as a 3-element vector. Should be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value
 
 A vector that has the same length
-as "incident" but is reflected away from the surface. (Type: Array.&lt;Number>)
+as "incident" but is reflected away from the surface. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3scale'></a>
 ### (static) H3DU.Math.vec3scale(a, scalar)
@@ -2590,14 +2636,14 @@ but with its length multiplied by the given factor.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 * `scalar` (Type: Number)<br>
     A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
-The parameter "a". (Type: Array.&lt;Number>)
+The parameter "a". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3scaleInPlace'></a>
 ### (static) H3DU.Math.vec3scaleInPlace(a, scalar)
@@ -2608,14 +2654,14 @@ but its length is multiplied by the given factor.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 3-element vector.
 * `scalar` (Type: Number)<br>
     A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
-The parameter "a". (Type: Array.&lt;Number>)
+The parameter "a". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3sub'></a>
 ### (static) H3DU.Math.vec3sub(a, b)
@@ -2626,15 +2672,15 @@ is the same as subtracting each of their components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
 The resulting 3-element vector.
-This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
+This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3subInPlace'></a>
 ### (static) H3DU.Math.vec3subInPlace(a, b)
@@ -2645,15 +2691,15 @@ is the same as subtracting each of their components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector.
 
 #### Return Value
 
 The parameter "a".
-This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
+This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3toWindowPoint'></a>
 ### (static) H3DU.Math.vec3toWindowPoint(vector, matrix, viewport, [yUp])
@@ -2664,11 +2710,11 @@ using the given transformation matrix and viewport rectangle.
 
 #### Parameters
 
-* `vector` (Type: Array.&lt;Number>)<br>
+* `vector` (Type: Array.&lt;number>)<br>
     A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
-* `matrix` (Type: Array.&lt;Number>)<br>
+* `matrix` (Type: Array.&lt;number>)<br>
     A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>. <br>If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward instead of upward or vice versa.
-* `viewport` (Type: Array.&lt;Number>)<br>
+* `viewport` (Type: Array.&lt;number>)<br>
     A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: Boolean) (optional)<br>
     If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
@@ -2676,7 +2722,7 @@ using the given transformation matrix and viewport rectangle.
 #### Return Value
 
 A 3-element array giving the window
-coordinates, in that order. (Type: Array.&lt;Number>)
+coordinates, in that order. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec3triple'></a>
 ### (static) H3DU.Math.vec3triple(a, b, c)
@@ -2704,16 +2750,16 @@ about vector A, is positive (resp. negative). (See the example below.)
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 3-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 3-element vector, or the first parameter to the cross product.
-* `c` (Type: Array.&lt;Number>)<br>
+* `c` (Type: Array.&lt;number>)<br>
     The third 3-element vector, or the second parameter to the cross product.
 
 #### Return Value
 
-A number giving the triple product. (Type: Number)
+A number giving the triple product. (Type: number)
 
  <a name='H3DU.Math.vec4abs'></a>
 ### (static) H3DU.Math.vec4abs(a)
@@ -2723,12 +2769,12 @@ vector with the absolute value of each of its components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
-The resulting 4-element vector. (Type: Array.&lt;Number>)
+The resulting 4-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4absInPlace'></a>
 ### (static) H3DU.Math.vec4absInPlace(a)
@@ -2738,12 +2784,12 @@ vector to its absolute value.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
-The vector "a". (Type: Array.&lt;Number>)
+The vector "a". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4add'></a>
 ### (static) H3DU.Math.vec4add(a, b)
@@ -2756,14 +2802,14 @@ combined paths described by the given vectors, in either order.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 4-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 4-element vector.
 
 #### Return Value
 
-The resulting 4-element vector. (Type: Array.&lt;Number>)
+The resulting 4-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4addInPlace'></a>
 ### (static) H3DU.Math.vec4addInPlace(a, b)
@@ -2776,15 +2822,15 @@ combined paths described by the given vectors, in either order.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 4-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 4-element vector.
 
 #### Return Value
 
 The parameter "a".
-This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
+This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4assign'></a>
 ### (static) H3DU.Math.vec4assign(dst, src)
@@ -2794,14 +2840,14 @@ Assigns the values of a 4-element vector into another
 
 #### Parameters
 
-* `dst` (Type: Array.&lt;Number>)<br>
+* `dst` (Type: Array.&lt;number>)<br>
     The 4-element vector to copy the source values to.
-* `src` (Type: Array.&lt;Number>)<br>
+* `src` (Type: Array.&lt;number>)<br>
     The 4-element vector whose values will be copied.
 
 #### Return Value
 
-The parameter "dst". (Type: Array.&lt;Number>)
+The parameter "dst". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4clamp'></a>
 ### (static) H3DU.Math.vec4clamp(a, min, max)
@@ -2810,7 +2856,7 @@ Returns a 4-element vector in which each element of the given 4-element vector i
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The vector to clamp.
 * `min` (Type: Number)<br>
     Lowest possible value. Should not be greater than "max".
@@ -2819,7 +2865,7 @@ Returns a 4-element vector in which each element of the given 4-element vector i
 
 #### Return Value
 
-The resulting vector. (Type: Array.&lt;Number>)
+The resulting vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4clampInPlace'></a>
 ### (static) H3DU.Math.vec4clampInPlace(a, min, max)
@@ -2829,7 +2875,7 @@ so it's not less than one value or greater than another value.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The vector to clamp.
 * `min` (Type: Number)<br>
     Lowest possible value. Should not be greater than "max".
@@ -2838,7 +2884,7 @@ so it's not less than one value or greater than another value.
 
 #### Return Value
 
-The resulting vector. (Type: Array.&lt;Number>)
+The resulting vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4copy'></a>
 ### (static) H3DU.Math.vec4copy(vec)
@@ -2847,12 +2893,12 @@ Returns a copy of a 4-element vector.
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4dot'></a>
 ### (static) H3DU.Math.vec4dot(a, b)
@@ -2863,9 +2909,9 @@ For properties of the dot product, see <a href="H3DU.Math.md#H3DU.Math.vec3dot">
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 4-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 4-element vector.
 
 #### Return Value
@@ -2887,12 +2933,12 @@ passing the same vector as both of its arguments).
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Math.vec4lerp'></a>
 ### (static) H3DU.Math.vec4lerp(v1, v2, factor)
@@ -2902,16 +2948,16 @@ returns a new vector.
 
 #### Parameters
 
-* `v1` (Type: Array.&lt;Number>)<br>
+* `v1` (Type: Array.&lt;number>)<br>
     The first vector to interpolate. The interpolation will occur on each component of this vector and v2.
-* `v2` (Type: Array.&lt;Number>)<br>
+* `v2` (Type: Array.&lt;number>)<br>
     The second vector to interpolate.
 * `factor` (Type: Number)<br>
     A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns A value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
 
 #### Return Value
 
-The interpolated vector. (Type: Array.&lt;Number>)
+The interpolated vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4negate'></a>
 ### (static) H3DU.Math.vec4negate(a)
@@ -2923,12 +2969,12 @@ is the same as reversing the sign of each of its components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
-The resulting 4-element vector. (Type: Array.&lt;Number>)
+The resulting 4-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4negateInPlace'></a>
 ### (static) H3DU.Math.vec4negateInPlace(a)
@@ -2940,12 +2986,12 @@ is the same as reversing the sign of each of its components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
-The parameter "a". (Type: Array.&lt;Number>)
+The parameter "a". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4norm'></a>
 ### (static) H3DU.Math.vec4norm(vec)
@@ -2957,12 +3003,12 @@ Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.ve
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     Vector to normalize.
 
 #### Return Value
 
-The normalized vector. (Type: Array.&lt;Number>)
+The normalized vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4normInPlace'></a>
 ### (static) H3DU.Math.vec4normInPlace(vec)
@@ -2974,12 +3020,12 @@ Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     Vector to normalize in place.
 
 #### Return Value
 
-The parameter "vec" (Type: Array.&lt;Number>)
+The parameter "vec" (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4normalize'></a>
 ### (static) H3DU.Math.vec4normalize(vec)
@@ -2995,13 +3041,13 @@ confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
 The resulting vector.
-Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4normalizeInPlace'></a>
 ### (static) H3DU.Math.vec4normalizeInPlace(vec)
@@ -3017,13 +3063,13 @@ confused with a vector's "norm", another name for its length.)
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 
 #### Return Value
 
 The parameter "vec".
-Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4proj'></a>
 ### (static) H3DU.Math.vec4proj(vec, refVec)
@@ -3040,16 +3086,16 @@ to the reference vector.
 
 #### Parameters
 
-* `vec` (Type: Array.&lt;Number>)<br>
+* `vec` (Type: Array.&lt;number>)<br>
     The vector to project.
-* `refVec` (Type: Array.&lt;Number>)<br>
+* `refVec` (Type: Array.&lt;number>)<br>
     The reference vector whose length will be adjusted.
 
 #### Return Value
 
 The projection of
 "vec" on "refVec". Returns (0,0,0,0) if "refVec"'s
-length is 0 or extremely close to 0. (Type: Array.&lt;Number>)
+length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4scale'></a>
 ### (static) H3DU.Math.vec4scale(a, scalar)
@@ -3060,14 +3106,14 @@ but with its length multiplied by the given factor.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 * `scalar` (Type: Number)<br>
     A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
-The resulting 4-element vector. (Type: Array.&lt;Number>)
+The resulting 4-element vector. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4scaleInPlace'></a>
 ### (static) H3DU.Math.vec4scaleInPlace(a, scalar)
@@ -3078,14 +3124,14 @@ but its length is multiplied by the given factor.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     A 4-element vector.
 * `scalar` (Type: Number)<br>
     A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.
 
 #### Return Value
 
-The parameter "a". (Type: Array.&lt;Number>)
+The parameter "a". (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4sub'></a>
 ### (static) H3DU.Math.vec4sub(a, b)
@@ -3096,15 +3142,15 @@ is the same as subtracting each of their components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 4-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 4-element vector.
 
 #### Return Value
 
 The resulting 4-element vector.
-This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number>)
+This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
  <a name='H3DU.Math.vec4subInPlace'></a>
 ### (static) H3DU.Math.vec4subInPlace(a, b)
@@ -3115,11 +3161,11 @@ is the same as subtracting each of their components.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;Number>)<br>
+* `a` (Type: Array.&lt;number>)<br>
     The first 4-element vector.
-* `b` (Type: Array.&lt;Number>)<br>
+* `b` (Type: Array.&lt;number>)<br>
     The second 4-element vector.
 
 #### Return Value
 
-The parameter "a" (Type: Array.&lt;Number>)
+The parameter "a" (Type: Array.&lt;number>)

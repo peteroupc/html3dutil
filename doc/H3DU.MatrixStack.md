@@ -86,7 +86,7 @@ Gets a copy of the matrix at the top of this stack.
 
 #### Return Value
 
-. (Type: Array.&lt;Number>)
+. (Type: Array.&lt;number>)
 
  <a name='H3DU.MatrixStack_loadIdentity'></a>
 ### H3DU.MatrixStack#loadIdentity()
@@ -104,7 +104,7 @@ Modifies the matrix at the top of this stack by replacing it with the given matr
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A matrix to replace the top of the stack with.
 
 #### Return Value
@@ -119,7 +119,7 @@ transpose of the given matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A matrix whose transpose will replace the top of the stack.
 
 #### Return Value
@@ -170,7 +170,7 @@ the effect of scaling then translation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A matrix to multiply the current one by.
 
 #### Return Value
@@ -190,7 +190,7 @@ the effect of translation then scaling.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A matrix whose transpose the current matrix will be multiplied by.
 
 #### Return Value
@@ -287,7 +287,7 @@ a matrix that transforms the view to a portion of the viewport.
     Width of the desired viewport portion.
 * `wh` (Type: Number)<br>
     Height of the desired viewport portion.
-* `vp` (Type: Array.&lt;Number>)<br>
+* `vp` (Type: Array.&lt;number>)<br>
     A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.
 
 #### Return Value

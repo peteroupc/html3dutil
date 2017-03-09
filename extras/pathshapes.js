@@ -33,7 +33,7 @@ H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {Array<Number>} pointCoords An array of numbers containing the X and Y coordinates
+ * @param {Array<number>} pointCoords An array of numbers containing the X and Y coordinates
  * of each point in the sequence of line segments. Each pair of numbers gives the X and Y
  * coordinates, in that order, of one of the points in the sequence.
  * The number of elements in the array must be even. If two or more pairs of numbers are given, line

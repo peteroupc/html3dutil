@@ -31,7 +31,7 @@ H3DU.MatrixStack = function() {
 };
 /**
  * Gets a copy of the matrix at the top of this stack.
- * @returns {Array<Number>}.
+ * @returns {Array<number>}.
  * @instance
  */
 H3DU.MatrixStack.prototype.get = function() {
@@ -50,7 +50,7 @@ H3DU.MatrixStack.prototype.loadIdentity = function() {
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the given matrix.
- * @param {Array<Number>} mat A matrix to replace the top of the stack with.
+ * @param {Array<number>} mat A matrix to replace the top of the stack with.
  * @returns {H3DU.MatrixStack} This object.
  * @instance
  */
@@ -62,7 +62,7 @@ H3DU.MatrixStack.prototype.loadMatrix = function(mat) {
 /**
  * Modifies the matrix at the top of this stack by replacing it with the
  * transpose of the given matrix.
- * @param {Array<Number>} mat A matrix whose transpose will
+ * @param {Array<number>} mat A matrix whose transpose will
  * replace the top of the stack.
  * @returns {H3DU.MatrixStack} This object.
  * @instance
@@ -87,7 +87,7 @@ H3DU.MatrixStack.prototype.loadTransposeMatrix = function(mat) {
  * at the top of the stack describes a translation and the matrix
  * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
- * @param {Array<Number>} mat A matrix to multiply the current one by.
+ * @param {Array<number>} mat A matrix to multiply the current one by.
  * @returns {H3DU.MatrixStack} This object.
  * @instance
  */
@@ -115,7 +115,7 @@ H3DU.MatrixStack.prototype.multMatrix = function(mat) {
  * at the top of the stack describes a translation and the matrix
  * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of translation then scaling.
- * @param {Array<Number>} mat A matrix whose transpose the current
+ * @param {Array<number>} mat A matrix whose transpose the current
  * matrix will be multiplied by.
  * @returns {H3DU.MatrixStack} This object.
  * @instance
@@ -512,7 +512,7 @@ H3DU.MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
  * @param {Number} wy Y coordinate of the center of the desired viewport portion.
  * @param {Number} ww Width of the desired viewport portion.
  * @param {Number} wh Height of the desired viewport portion.
- * @param {Array<Number>} vp A 4-element array giving the X and Y coordinates
+ * @param {Array<number>} vp A 4-element array giving the X and Y coordinates
  * of the lower left corner followed by the width and height
  * of a rectangle indicating the current viewport.
  * @returns {H3DU.MatrixStack} This object.

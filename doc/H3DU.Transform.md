@@ -67,7 +67,7 @@ multiplied in that order, otherwise.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Transform_getPosition'></a>
 ### H3DU.Transform#getPosition()
@@ -77,7 +77,7 @@ of an object relative to its original position.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Transform_getQuaternion'></a>
 ### H3DU.Transform#getQuaternion()
@@ -86,7 +86,7 @@ Returns a copy of the rotation of an object in the form of a <a href="tutorial-g
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Transform_getScale'></a>
 ### H3DU.Transform#getScale()
@@ -97,7 +97,7 @@ For each component, 1 means no scaling.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Transform_isIdentity'></a>
 ### H3DU.Transform#isIdentity()
@@ -106,7 +106,7 @@ Returns whether this transform is the identity transform.
 
 #### Return Value
 
-Return value. (Type: Boolean)
+Return value. (Type: boolean)
 
  <a name='H3DU.Transform_movePosition'></a>
 ### H3DU.Transform#movePosition(x, y, z)
@@ -168,7 +168,7 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.md#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> or <a href="H3DU.Math.md#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>.
 
 #### Return Value
@@ -239,7 +239,7 @@ accordingly to the matrix given.
 
 #### Parameters
 
-* `value` (Type: Array.&lt;Number>)<br>
+* `value` (Type: Array.&lt;number>)<br>
     A 4x4 matrix. This method will copy the value of this parameter.
 
 #### Return Value
@@ -300,7 +300,7 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.md#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> and <a href="H3DU.Math.md#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>, among others.
 
 #### Return Value

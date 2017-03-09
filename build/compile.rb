@@ -19,7 +19,10 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
   formatting=(false) ? "--formatting PRETTY_PRINT" : ""
   opt=(advanced) ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS"
   cmd="java -jar #{ffq($compilerJar)} #{formatting} "+
-     "--generate_exports --language_in ECMASCRIPT6 --language_out ECMASCRIPT3 "+
+    # " --warning_level=VERBOSE --jscomp_off=globalThis "+
+     " --generate_exports "+
+     #" --externs extern.js"+
+     " --language_in ECMASCRIPT6 --language_out ECMASCRIPT3 "+
      "--compilation_level #{opt} #{inputs} "+
      (useSourceMap ? "--create_source_map #{ffq(sourceMap)} " : "")+
      "--js_output_file #{ffq(output)} --rewrite_polyfills false"
@@ -43,7 +46,7 @@ end
 require './generate-websafe-svg'
 
 Dir.chdir(".."){
- files=%w( promise.js h3du.js )
+ files=%w( promise.js h3du.js h3du-curve.js h3du-surface.js )
  files|=Dir.glob("h3du-*.js")
  filesToCompile=files|(%w( oldnames.js ))
  normalizeAndCompile(filesToCompile,"h3du_min.js",false,ARGV.include?("--sourcemap"))

@@ -72,9 +72,9 @@ contexts.</b>
 material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.
+* <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating
-vertex positions, normals, colors, and texture coordinates
-of a surface.
+vertex attributes of a surface.
 * <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.
@@ -117,6 +117,7 @@ from one coordinate system to another.
 * <a href="tutorial-overview.md">Library Overview</a>
 * <a href="tutorial-paths.md">2-Dimensional Graphics Paths</a>
 * <a href="tutorial-shapes.md">Creating Shapes</a>
+* <a href="tutorial-subclass.md">Subclassing</a>
 * <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a>
 * <a href="tutorial-textures.md">Texture Examples</a>
 

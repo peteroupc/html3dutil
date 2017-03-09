@@ -15,16 +15,16 @@
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @class
  * @memberof H3DU
- * @param {Array<Number>} [params] An object as described in {@link H3DU.Material#setParams}.
+ * @param {Array<number>} [params] An object as described in {@link H3DU.Material#setParams}.
  * <i>Using this parameter as a [color vector or string]{@link H3DU.toGLColor} giving the ambient color is deprecated
  * since version 2.0.</i>
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffusion color (also called "albedo").
+ * @param {Array<number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffusion color (also called "albedo").
  * <i>This parameter is deprecated.</i>
- * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the specular highlight reflection.
+ * @param {Array<number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the specular highlight reflection.
  * <i>This parameter is deprecated.</i>
- * @param {Array<Number>} [shininess] Specular highlight exponent of this material.
+ * @param {Array<number>} [shininess] Specular highlight exponent of this material.
  * <i>This parameter is deprecated.</i>
- * @param {Array<Number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
+ * @param {Array<number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
  * <i>This parameter is deprecated.</i>
  */
 H3DU.Material = function(params, diffuse, specular, shininess, emission) {
@@ -270,7 +270,7 @@ H3DU.Material.prototype.setParams = function(params) {
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {Number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} [a] Alpha color component (0-1).
+ * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Material} The resulting material object.

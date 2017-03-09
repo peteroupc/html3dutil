@@ -100,7 +100,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
  * @param {String} str The text string to measure. Line breaks
  * ("\n", "\r", "\r\n") are recognized by this method.
  * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
- * @returns {Array<Number>} An array of two numbers;
+ * @returns {Array<number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).

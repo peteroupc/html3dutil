@@ -16,7 +16,7 @@ var Polyhedra = {};
 /**
  * Normalizes the distance from the origin to each vertex in the given
  * array to a fixed radius.
- * @param {Array<Number>} vertices An array of vertices, where each
+ * @param {Array<number>} vertices An array of vertices, where each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array.
  * @param {Number} radius Distance from the origin where each vertex
  * will be normalized to.

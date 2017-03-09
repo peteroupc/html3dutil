@@ -48,7 +48,7 @@ H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
 };
 /**
  * Gets the width to use for the frame buffer.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.FrameBufferInfo.prototype.getWidth = function() {
@@ -57,7 +57,7 @@ H3DU.FrameBufferInfo.prototype.getWidth = function() {
 };
 /**
  * Gets the height to use for the frame buffer.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.FrameBufferInfo.prototype.getHeight = function() {

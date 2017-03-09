@@ -478,7 +478,7 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
  * @param {Number} ymax Greatest value along the Y axis.
  * @param {Number} zmin Smallest value along the Z axis.
  * @param {Number} zmax Greatest value along the Z axis.
- * @returns {Array<Number>} An array of six numbers describing a tight
+ * @returns {Array<number>} An array of six numbers describing a tight
  * axis-aligned bounding box
  * that fits this implicit surface within the given area. The first three numbers
  * are the smallest-valued X, Y, and Z coordinates, and the

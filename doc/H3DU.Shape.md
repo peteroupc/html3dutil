@@ -77,7 +77,7 @@ that fits all vertices in the shape. The first three numbers
 are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
--Inf, -Inf]. (Type: Array.&lt;Number>)
+-Inf, -Inf]. (Type: Array.&lt;number>)
 
  <a name='H3DU.Shape_getMaterial'></a>
 ### H3DU.Shape#getMaterial()
@@ -97,7 +97,7 @@ See <a href="H3DU.Transform.md#H3DU.Transform_getMatrix">H3DU.Transform#getMatri
 
 #### Return Value
 
-The current transformation matrix. (Type: Array.&lt;Number>)
+The current transformation matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Shape_getMeshBuffer'></a>
 ### H3DU.Shape#getMeshBuffer()
@@ -125,7 +125,7 @@ Gets whether this shape will be drawn on rendering.
 
 #### Return Value
 
-True if this shape will be visible; otherwise, false. (Type: Boolean)
+True if this shape will be visible; otherwise, false. (Type: boolean)
 
  <a name='H3DU.Shape_primitiveCount'></a>
 ### H3DU.Shape#primitiveCount()
@@ -135,7 +135,7 @@ and points) composed by all shapes in this scene.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Shape_setColor'></a>
 ### H3DU.Shape#setColor(r, g, b, [a])
@@ -154,7 +154,7 @@ precedence over the color given in this method.
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: Number) (optional)<br>
+* `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
 
 #### Return Value
@@ -202,7 +202,7 @@ See <a href="H3DU.Transform.md#H3DU.Transform_setQuaternion">H3DU.Transform#setQ
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A four-element array describing the rotation.
 
 #### Return Value
@@ -272,7 +272,7 @@ diffuse parameters to the given color.
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: Number) (optional)<br>
+* `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
 
 #### Return Value
@@ -316,4 +316,4 @@ all shapes in this scene.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)

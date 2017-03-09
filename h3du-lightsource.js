@@ -16,9 +16,9 @@
  * @memberof H3DU
  * @param {Object|Array<Number>} [params] An object as described in "setParams". <i>Using this parameter
  * as described in the "position" property is deprecated since version 2.0.</i>
- * @param {Array<Number>} [ambient] See "ambient" property. <i>This parameter is deprecated.</i>
- * @param {Array<Number>} [diffuse] See "diffuse" property. <i>This parameter is deprecated.</i>
- * @param {Array<Number>} [specular] See "specular" property. <i>This parameter is deprecated.</i>
+ * @param {Array<number>} [ambient] See "ambient" property. <i>This parameter is deprecated.</i>
+ * @param {Array<number>} [diffuse] See "diffuse" property. <i>This parameter is deprecated.</i>
+ * @param {Array<number>} [specular] See "specular" property. <i>This parameter is deprecated.</i>
  */
 H3DU.LightSource = function(params, ambient, diffuse, specular) {
   "use strict";

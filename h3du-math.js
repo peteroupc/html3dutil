@@ -45,9 +45,9 @@ H3DU.Math = {
  * <b>c</b>.x = <b>a</b>.y &#x2a; <b>b</b>.z - <b>a</b>.z &#x2a; <b>b</b>.y<br>
  * <b>c</b>.y = <b>a</b>.z &#x2a; <b>b</b>.x - <b>a</b>.x &#x2a; <b>b</b>.z<br>
  * <b>c</b>.z = <b>a</b>.x &#x2a; <b>b</b>.y - <b>a</b>.y &#x2a; <b>b</b>.x<br>
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} A 3-element vector containing the cross product.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {Array<number>} A 3-element vector containing the cross product.
  * @example <caption>The following example uses the cross product to
  * calculate a triangle's normal vector and its area.</caption>
  * var a=triangle[0];
@@ -115,9 +115,9 @@ H3DU.Math = {
  * <li>Switching the order of the two vectors results in the
  * same cross product. (Thus, the dot product is <i>commutative</i>.)
  * </ul>
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Number} A number representing the dot product.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {number} A number representing the dot product.
  * @example <caption>The following shows a fast way to compare
  * a vector's length using the dot product.</caption>
  * // Check if the vector's length squared is less than 20 units squared
@@ -150,12 +150,12 @@ H3DU.Math = {
  * B and C -- which will be perpendicular -- and the angle from B to C, when rotated
  * about vector A, is positive (resp. negative). (See the example below.)
  * </ul>
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector, or the
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector, or the
  * first parameter to the cross product.
- * @param {Array<Number>} c The third 3-element vector, or the
+ * @param {Array<number>} c The third 3-element vector, or the
  * second parameter to the cross product.
- * @returns {Number} A number giving the triple product.
+ * @returns {number} A number giving the triple product.
  */
   "vec3triple":function(a, b, c) {
     "use strict";
@@ -167,9 +167,9 @@ H3DU.Math = {
  * is the same as adding each of their components.
  * The resulting vector describes a straight-line path for the
  * combined paths described by the given vectors, in either order.
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} The resulting 3-element vector.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3add":function(a, b) {
     "use strict";
@@ -179,9 +179,9 @@ H3DU.Math = {
  * Subtracts the second vector from the first vector and returns a new
  * vector with the result. Subtracting two vectors
  * is the same as subtracting each of their components.<p>
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} The resulting 3-element vector.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {Array<number>} The resulting 3-element vector.
  * This is the vector <i>to <code>a</code> from <code>b</code></i>.
  */
   "vec3sub":function(a, b) {
@@ -194,9 +194,9 @@ H3DU.Math = {
  * is the same as adding each of their components.
  * The resulting vector describes a straight-line path for the
  * combined paths described by the given vectors, in either order.
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} The parameter "a"
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {Array<number>} The parameter "a"
  */
   "vec3addInPlace":function(a, b) {
 // Use variables in case a and b are the same
@@ -213,9 +213,9 @@ H3DU.Math = {
  * Subtracts the second vector from the first vector and stores
  * the result in the first vector. Subtracting two vectors
  * is the same as subtracting each of their components.
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} The parameter "a".
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {Array<number>} The parameter "a".
  * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
  */
   "vec3subInPlace":function(a, b) {
@@ -235,9 +235,9 @@ H3DU.Math = {
  * is the same as adding each of their components.
  * The resulting vector describes a straight-line path for the
  * combined paths described by the given vectors, in either order.
- * @param {Array<Number>} a The first 4-element vector.
- * @param {Array<Number>} b The second 4-element vector.
- * @returns {Array<Number>} The resulting 4-element vector.
+ * @param {Array<number>} a The first 4-element vector.
+ * @param {Array<number>} b The second 4-element vector.
+ * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4add":function(a, b) {
     "use strict";
@@ -247,9 +247,9 @@ H3DU.Math = {
  * Subtracts the second vector from the first vector and returns a new
  * vector with the result. Subtracting two vectors
  * is the same as subtracting each of their components.<p>
- * @param {Array<Number>} a The first 4-element vector.
- * @param {Array<Number>} b The second 4-element vector.
- * @returns {Array<Number>} The resulting 4-element vector.
+ * @param {Array<number>} a The first 4-element vector.
+ * @param {Array<number>} b The second 4-element vector.
+ * @returns {Array<number>} The resulting 4-element vector.
  * This is the vector <i>to <code>a</code> from <code>b</code></i>.
  */
   "vec4sub":function(a, b) {
@@ -262,9 +262,9 @@ H3DU.Math = {
  * is the same as adding each of their components.
  * The resulting vector describes a straight-line path for the
  * combined paths described by the given vectors, in either order.
- * @param {Array<Number>} a The first 4-element vector.
- * @param {Array<Number>} b The second 4-element vector.
- * @returns {Array<Number>} The parameter "a".
+ * @param {Array<number>} a The first 4-element vector.
+ * @param {Array<number>} b The second 4-element vector.
+ * @returns {Array<number>} The parameter "a".
  * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
  */
   "vec4addInPlace":function(a, b) {
@@ -284,9 +284,9 @@ H3DU.Math = {
  * Subtracts the second vector from the first vector and stores
  * the result in the first vector. Subtracting two vectors
  * is the same as subtracting each of their components.
- * @param {Array<Number>} a The first 4-element vector.
- * @param {Array<Number>} b The second 4-element vector.
- * @returns {Array<Number>} The parameter "a"
+ * @param {Array<number>} a The first 4-element vector.
+ * @param {Array<number>} b The second 4-element vector.
+ * @returns {Array<number>} The parameter "a"
  */
   "vec4subInPlace":function(a, b) {
 // Use variables in case a and b are the same
@@ -305,8 +305,8 @@ H3DU.Math = {
 /**
  * Returns a new 3-element
  * vector with the absolute value of each of its components.
- * @param {Array<Number>} a A 3-element vector.
- * @returns {Array<Number>} The resulting 3-element vector.
+ * @param {Array<number>} a A 3-element vector.
+ * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3abs":function(a) {
     "use strict";
@@ -315,8 +315,8 @@ H3DU.Math = {
 /**
  * Returns a new 4-element
  * vector with the absolute value of each of its components.
- * @param {Array<Number>} a A 4-element vector.
- * @returns {Array<Number>} The resulting 4-element vector.
+ * @param {Array<number>} a A 4-element vector.
+ * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4abs":function(a) {
     "use strict";
@@ -325,8 +325,8 @@ H3DU.Math = {
 /**
  * Sets each component of the given 3-element
  * vector to its absolute value.
- * @param {Array<Number>} a A 3-element vector.
- * @returns {Array<Number>} The vector "a".
+ * @param {Array<number>} a A 3-element vector.
+ * @returns {Array<number>} The vector "a".
  */
   "vec3absInPlace":function(a) {
     "use strict";
@@ -338,8 +338,8 @@ H3DU.Math = {
 /**
  * Sets each component of the given 4-element
  * vector to its absolute value.
- * @param {Array<Number>} a A 4-element vector.
- * @returns {Array<Number>} The vector "a".
+ * @param {Array<number>} a A 4-element vector.
+ * @returns {Array<number>} The vector "a".
  */
   "vec4absInPlace":function(a) {
     "use strict";
@@ -354,8 +354,8 @@ H3DU.Math = {
  * vector with the result, which is generally a vector with
  * the same length but opposite direction. Negating a vector
  * is the same as reversing the sign of each of its components.
- * @param {Array<Number>} a A 3-element vector.
- * @returns {Array<Number>} The resulting 3-element vector.
+ * @param {Array<number>} a A 3-element vector.
+ * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3negate":function(a) {
     "use strict";
@@ -366,8 +366,8 @@ H3DU.Math = {
  * vector with the result, which is generally a vector with
  * the same length but opposite direction. Negating a vector
  * is the same as reversing the sign of each of its components.
- * @param {Array<Number>} a A 4-element vector.
- * @returns {Array<Number>} The resulting 4-element vector.
+ * @param {Array<number>} a A 4-element vector.
+ * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4negate":function(a) {
     "use strict";
@@ -378,8 +378,8 @@ H3DU.Math = {
  * the same length but opposite direction.
  * Negating a vector
  * is the same as reversing the sign of each of its components.
- * @param {Array<Number>} a A 3-element vector.
- * @returns {Array<Number>} The parameter "a".
+ * @param {Array<number>} a A 3-element vector.
+ * @returns {Array<number>} The parameter "a".
  */
   "vec3negateInPlace":function(a) {
     "use strict";
@@ -393,8 +393,8 @@ H3DU.Math = {
  * the same length but opposite direction.
  * Negating a vector
  * is the same as reversing the sign of each of its components.
- * @param {Array<Number>} a A 4-element vector.
- * @returns {Array<Number>} The parameter "a".
+ * @param {Array<number>} a A 4-element vector.
+ * @returns {Array<number>} The parameter "a".
  */
   "vec4negateInPlace":function(a) {
     "use strict";
@@ -405,24 +405,22 @@ H3DU.Math = {
     return a;
   },
 /**
- * Multiplies two vectors and returns a new
- * vector with the result. Multiplying two vectors
- * is the same as multiplying each of their components.
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} The resulting 3-element vector.
+ * Multiplies each of the components of two 3-element vectors and returns a new
+ * vector with the result.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3mul":function(a, b) {
     "use strict";
     return [a[0] * b[0], a[1] * b[1], a[2] * b[2]];
   },
 /**
- * Multiplies two 3-element vectors and stores
- * the result in the first vector. Multiplying two vectors
- * is the same as multiplying each of their components.
- * @param {Array<Number>} a The first 3-element vector.
- * @param {Array<Number>} b The second 3-element vector.
- * @returns {Array<Number>} The parameter "a"
+ * Multiplies each of the components of two 3-element vectors and stores
+ * the result in the first vector.
+ * @param {Array<number>} a The first 3-element vector.
+ * @param {Array<number>} b The second 3-element vector.
+ * @returns {Array<number>} The parameter "a"
  */
   "vec3mulInPlace":function(a, b) {
 // Use variables in case a and b are the same
@@ -439,10 +437,10 @@ H3DU.Math = {
  * Multiplies each element of a 3-element vector by a factor, so
  * that the vector points in the same direction
  * but its length is multiplied by the given factor.
- * @param {Array<Number>} a A 3-element vector.
+ * @param {Array<number>} a A 3-element vector.
  * @param {Number} scalar A factor to multiply. To divide
  * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<Number>} The parameter "a".
+ * @returns {Array<number>} The parameter "a".
  */
   "vec3scaleInPlace":function(a, scalar) {
     "use strict";
@@ -455,10 +453,10 @@ H3DU.Math = {
  * Multiplies each element of a 3-element vector by a factor. Returns
  * a new vector that will point in the same direction
  * but with its length multiplied by the given factor.
- * @param {Array<Number>} a A 3-element vector.
+ * @param {Array<number>} a A 3-element vector.
  * @param {Number} scalar A factor to multiply. To divide
  * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<Number>} The parameter "a".
+ * @returns {Array<number>} The parameter "a".
  */
   "vec3scale":function(a, scalar) {
     "use strict";
@@ -467,9 +465,9 @@ H3DU.Math = {
 /**
  * Does a linear interpolation between two 3-element vectors;
  * returns a new vector.
- * @param {Array<Number>} v1 The first vector to interpolate.
+ * @param {Array<number>} v1 The first vector to interpolate.
  * The interpolation will occur on each component of this vector and v2.
- * @param {Array<Number>} v2 The second vector to interpolate.
+ * @param {Array<number>} v2 The second vector to interpolate.
  * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear
  * interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns
@@ -500,7 +498,7 @@ H3DU.Math = {
  * Depending on the underlying function, this function eases in,
  * then eases out, or vice versa.
  * </ul>
- * @returns {Array<Number>} The interpolated vector.
+ * @returns {Array<number>} The interpolated vector.
  * @example <caption>The following code does a nonlinear
  * interpolation of two vectors that uses the cube of "factor" rather than
  * "factor". Rather than at a constant speed, the vectors are interpolated
@@ -531,8 +529,8 @@ H3DU.Math = {
  * Returns an arbitrary 3-element vector that is perpendicular
  * (orthogonal) to the given 3-element vector. The return value
  * will not be converted to a [unit vector]{@tutorial glmath}.
- * @param {Array<Number>} vec A 3-element vector.
- * @returns {Array<Number>} A perpendicular 3-element
+ * @param {Array<number>} vec A 3-element vector.
+ * @returns {Array<number>} A perpendicular 3-element
  * vector.  Returns (0,0,0) if "vec" is (0,0,0).
  */
   "vec3perp":function(vec) {
@@ -567,10 +565,10 @@ H3DU.Math = {
  * endpoint. The difference between the projected
  * vector and the return value will be perpendicular
  * to the reference vector.
- * @param {Array<Number>} vec The vector to project.
- * @param {Array<Number>} refVec The reference vector whose length
+ * @param {Array<number>} vec The vector to project.
+ * @param {Array<number>} refVec The reference vector whose length
  * will be adjusted.
- * @returns {Array<Number>} The projection of
+ * @returns {Array<number>} The projection of
  * "vec" on "refVec".  Returns (0,0,0) if "refVec"'s
  * length is 0 or extremely close to 0.
  */
@@ -591,10 +589,10 @@ H3DU.Math = {
  * endpoint. The difference between the projected
  * vector and the return value will be perpendicular
  * to the reference vector.
- * @param {Array<Number>} vec The vector to project.
- * @param {Array<Number>} refVec The reference vector whose length
+ * @param {Array<number>} vec The vector to project.
+ * @param {Array<number>} refVec The reference vector whose length
  * will be adjusted.
- * @returns {Array<Number>} The projection of
+ * @returns {Array<number>} The projection of
  * "vec" on "refVec".  Returns (0,0,0,0) if "refVec"'s
  * length is 0 or extremely close to 0.
  */
@@ -607,12 +605,12 @@ H3DU.Math = {
   },
 /**
  * Returns a vector that reflects off a surface.
- * @param {Array<Number>} incident Incident vector, or
+ * @param {Array<number>} incident Incident vector, or
  * a vector headed in the direction of the surface, as a 3-element vector.
- * @param {Array<Number>} normal Surface normal vector, or
+ * @param {Array<number>} normal Surface normal vector, or
  * a vector that's perpendicular to the surface, as a 3-element vector.
  * Should be a [unit vector]{@tutorial glmath}.
- * @returns {Array<Number>} A vector that has the same length
+ * @returns {Array<number>} A vector that has the same length
  * as "incident" but is reflected away from the surface.
  */
   "vec3reflect":function(incident, normal) {
@@ -624,9 +622,9 @@ H3DU.Math = {
  * Transforms the 3D point specified in this 3-element vector to its
  * <i>window coordinates</i>
  * using the given transformation matrix and viewport rectangle.
- * @param {Array<Number>} vector A 3-element vector giving
+ * @param {Array<number>} vector A 3-element vector giving
  * the X, Y, and Z coordinates of the 3D point to transform.
- * @param {Array<Number>} matrix A 4x4 matrix to use to transform
+ * @param {Array<number>} matrix A 4x4 matrix to use to transform
  * the vector according to the {@link H3DU.Math.mat4projectVec3} method,
  * before the transformed vector is converted to window coordinates.
  * <br>This parameter will generally be
@@ -643,7 +641,7 @@ H3DU.Math = {
  * increase from front to back, unless otherwise specified in those methods' documentation.
  * If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward
  * instead of upward or vice versa.
- * @param {Array<Number>} viewport A 4-element array specifying
+ * @param {Array<number>} viewport A 4-element array specifying
  * the starting position and size of the viewport in window units
  * (such as pixels). In order, the four elements are the starting position's
  * X coordinate, its Y coordinate, the viewport's width, and the viewport's
@@ -655,7 +653,7 @@ H3DU.Math = {
  * upward, the viewport's starting position is at the lower left corner. If those
  * coordinates increase downward, the viewport's starting position is
  * at the upper left corner.
- * @returns {Array<Number>} A 3-element array giving the window
+ * @returns {Array<number>} A 3-element array giving the window
  * coordinates, in that order.
  */
   "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
@@ -682,9 +680,9 @@ H3DU.Math = {
  * or downward depending on the "yUp" parameter, and
  * Z coordinates within the view volume range from 0 to 1 and
  * increase from front to back.
- * @param {Array<Number>} vector A 3-element vector giving
+ * @param {Array<number>} vector A 3-element vector giving
  * the X, Y, and Z coordinates of the 3D point to transform.
- * @param {Array<Number>} matrix A 4x4 matrix.
+ * @param {Array<number>} matrix A 4x4 matrix.
  * After undoing the transformation to window coordinates, the vector will
  * be transformed by the inverse of this matrix according to the
  * {@link H3DU.Math.mat4projectVec3} method.<br>
@@ -700,7 +698,7 @@ H3DU.Math = {
  * the {@link H3DU.Math.vec3toWindowPoint} method.
  * @param {Boolean} [yUp] Has the same meaning as "yUp" in
  * the {@link H3DU.Math.vec3toWindowPoint} method.
- * @returns {Array<Number>} A 3-element array giving the coordinates
+ * @returns {Array<number>} A 3-element array giving the coordinates
  * of the unprojected point, in that order.
  */
   "vec3fromWindowPoint":function(vector, matrix, viewport, yUp) {
@@ -722,8 +720,8 @@ H3DU.Math = {
  * Finds the dot product of two 4-element vectors. It's the
  * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * For properties of the dot product, see {@link H3DU.Math.vec3dot}.
- * @param {Array<Number>} a The first 4-element vector.
- * @param {Array<Number>} b The second 4-element vector.
+ * @param {Array<number>} a The first 4-element vector.
+ * @param {Array<number>} b The second 4-element vector.
  * @returns {Object} Return value.
  */
   "vec4dot":function(a, b) {
@@ -734,10 +732,10 @@ H3DU.Math = {
  * Multiplies each element of a 4-element vector by a factor, so
  * that the vector points in the same direction
  * but its length is multiplied by the given factor.
- * @param {Array<Number>} a A 4-element vector.
+ * @param {Array<number>} a A 4-element vector.
  * @param {Number} scalar A factor to multiply. To divide
  * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<Number>} The parameter "a".
+ * @returns {Array<number>} The parameter "a".
  */
   "vec4scaleInPlace":function(a, scalar) {
     "use strict";
@@ -751,10 +749,10 @@ H3DU.Math = {
  * Multiplies each element of a 4-element vector by a factor, returning
  * a new vector that will point in the same direction
  * but with its length multiplied by the given factor.
- * @param {Array<Number>} a A 4-element vector.
+ * @param {Array<number>} a A 4-element vector.
  * @param {Number} scalar A factor to multiply. To divide
  * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<Number>} The resulting 4-element vector.
+ * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4scale":function(a, scalar) {
     "use strict";
@@ -763,9 +761,9 @@ H3DU.Math = {
 /**
  * Does a linear interpolation between two 4-element vectors;
  * returns a new vector.
- * @param {Array<Number>} v1 The first vector to interpolate.
+ * @param {Array<number>} v1 The first vector to interpolate.
  * The interpolation will occur on each component of this vector and v2.
- * @param {Array<Number>} v2 The second vector to interpolate.
+ * @param {Array<number>} v2 The second vector to interpolate.
  * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to v1, and closer to 1 means closer to v2. For a nonlinear
  * interpolation, define a function that takes a value that usually ranges from 0 through 1
@@ -773,7 +771,7 @@ H3DU.Math = {
  * A value that usually ranges from 0 through 1, and pass the result of that function to this method.
  * See the documentation for {@link H3DU.Math.vec3lerp}
  * for examples of interpolation functions.
- * @returns {Array<Number>} The interpolated vector.
+ * @returns {Array<number>} The interpolated vector.
  */
   "vec4lerp":function(v1, v2, factor) {
     "use strict";
@@ -792,8 +790,8 @@ H3DU.Math = {
  * by its [length]{@link H3DU.Math.vec3length}.<p>
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
  * confused with a vector's "norm", another name for its length.)
- * @param {Array<Number>} vec A 3-element vector.
- * @returns {Array<Number>} The parameter "vec".
+ * @param {Array<number>} vec A 3-element vector.
+ * @returns {Array<number>} The parameter "vec".
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec3normalizeInPlace":function(vec) {
@@ -813,9 +811,9 @@ H3DU.Math = {
 /**
  * Finds the straight-line distance from one three-element vector
  * to another, treating both as 3D points.
- * @param {Array<Number>} vecFrom The first 3-element vector.
- * @param {Array<Number>} vecTo The second 3-element vector.
- * @returns {Number} The distance between the two vectors.
+ * @param {Array<number>} vecFrom The first 3-element vector.
+ * @param {Array<number>} vecTo The second 3-element vector.
+ * @returns {number} The distance between the two vectors.
  */
   "vec3dist":function(vecFrom, vecTo) {
     "use strict";
@@ -829,8 +827,8 @@ H3DU.Math = {
  * by its [length]{@link H3DU.Math.vec4length}.<p>
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
  * confused with a vector's "norm", another name for its length.)
- * @param {Array<Number>} vec A 4-element vector.
- * @returns {Array<Number>} The parameter "vec".
+ * @param {Array<number>} vec A 4-element vector.
+ * @returns {Array<number>} The parameter "vec".
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec4normalizeInPlace":function(vec) {
@@ -857,8 +855,8 @@ H3DU.Math = {
  * by its [length]{@link H3DU.Math.vec3length}.<p>
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
  * confused with a vector's "norm", another name for its length.)
- * @param {Array<Number>} vec A 3-element vector.
- * @returns {Array<Number>} The resulting vector.
+ * @param {Array<number>} vec A 3-element vector.
+ * @returns {Array<number>} The resulting vector.
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @example <caption>The following example changes the
  * length of a line segment. </caption>
@@ -885,8 +883,8 @@ H3DU.Math = {
  * by its [length]{@link H3DU.Math.vec4length}.<p>
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
  * confused with a vector's "norm", another name for its length.)
- * @param {Array<Number>} vec A 4-element vector.
- * @returns {Array<Number>} The resulting vector.
+ * @param {Array<number>} vec A 4-element vector.
+ * @returns {Array<number>} The resulting vector.
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec4normalize":function(vec) {
@@ -903,8 +901,8 @@ H3DU.Math = {
  * it's faster to sort or compare them by the squares of their lengths (to find
  * the square of a 3-element vector's length, call {@link H3DU.Math.vec3dot}
  * passing the same vector as both of its arguments).
- * @param {Array<Number>} a A 3-element vector.
- * @returns {Number} Return value. */
+ * @param {Array<number>} a A 3-element vector.
+ * @returns {number} Return value. */
   "vec3length":function(a) {
     "use strict";
     var dx = a[0];
@@ -915,20 +913,20 @@ H3DU.Math = {
 /**
  * Returns a 3-element vector in which each element of the given 3-element vector is clamped
  * so it's not less than one value or greater than another value.
- * @param {Array<Number>} a The vector to clamp.
+ * @param {Array<number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @returns {Array<Number>} The resulting vector. */
+ * @returns {Array<number>} The resulting vector. */
   "vec3clamp":function(a, min, max) {
     "use strict";
     return H3DU.Math.vec3clampInPlace(H3DU.Math.vec3copy(a), min, max);
   },
 /**
  * Returns a 4-element vector in which each element of the given 4-element vector is clamped
- * @param {Array<Number>} a The vector to clamp.
+ * @param {Array<number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @returns {Array<Number>} The resulting vector. */
+ * @returns {Array<number>} The resulting vector. */
   "vec4clamp":function(a, min, max) {
     "use strict";
     return H3DU.Math.vec4clampInPlace(H3DU.Math.vec4copy(a), min, max);
@@ -936,10 +934,10 @@ H3DU.Math = {
 /**
  * Clamps each element of the given 3-element vector
  * so it's not less than one value or greater than another value.
- * @param {Array<Number>} a The vector to clamp.
+ * @param {Array<number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @returns {Array<Number>} The resulting vector. */
+ * @returns {Array<number>} The resulting vector. */
   "vec3clampInPlace":function(a, min, max) {
     "use strict";
     var x = Math.min(max, Math.max(min, a[0]));
@@ -953,10 +951,10 @@ H3DU.Math = {
 /**
  * Clamps each element of the given 4-element vector
  * so it's not less than one value or greater than another value.
- * @param {Array<Number>} a The vector to clamp.
+ * @param {Array<number>} a The vector to clamp.
  * @param {Number} min Lowest possible value. Should not be greater than "max".
  * @param {Number} max Highest possible value. Should not be less than "min".
- * @returns {Array<Number>} The resulting vector. */
+ * @returns {Array<number>} The resulting vector. */
   "vec4clampInPlace":function(a, min, max) {
     "use strict";
     var x = Math.min(max, Math.max(min, a[0]));
@@ -978,8 +976,8 @@ H3DU.Math = {
  * it's faster to sort or compare them by the squares of their lengths (to find
  * the square of a 4-element vector's length, call {@link H3DU.Math.vec4dot}
  * passing the same vector as both of its arguments).
- * @param {Array<Number>} a A 4-element vector.
- * @returns {Number} Return value. */
+ * @param {Array<number>} a A 4-element vector.
+ * @returns {number} Return value. */
   "vec4length":function(a) {
     "use strict";
     var dx = a[0];
@@ -991,7 +989,7 @@ H3DU.Math = {
 /**
  * Returns the identity 3x3 matrix (a matrix that keeps
  * vectors unchanged when they are transformed with this matrix).
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<number>} Return value. */
   "mat3identity":function() {
     "use strict";
     return [1, 0, 0, 0, 1, 0, 0, 0, 1];
@@ -1000,13 +998,13 @@ H3DU.Math = {
 /**
  * Returns the identity 4x4 matrix (a matrix that keeps
  * vectors unchanged when they are transformed with this matrix).
- * @returns {Array<Number>} Return value. */
+ * @returns {Array<number>} Return value. */
   "mat4identity":function() {
     "use strict";
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   },
 /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
- * @returns {Array<Number>} Return value.
+ * @returns {Array<number>} Return value.
  */
   "quatIdentity":function() {
     "use strict";
@@ -1014,8 +1012,8 @@ H3DU.Math = {
   },
 /**
  * Returns a copy of a 4x4 matrix.
- * @param {Array<Number>} mat A 4x4 matrix.
- * @returns {Array<Number>} Return value. */
+ * @param {Array<number>} mat A 4x4 matrix.
+ * @returns {Array<number>} Return value. */
   "mat4copy":function(mat) {
     "use strict";
     return [mat[0], mat[1], mat[2], mat[3],
@@ -1025,8 +1023,8 @@ H3DU.Math = {
   },
 /**
  * Returns a copy of a 3x3 matrix.
- * @param {Array<Number>} mat A 3x3atrix.
- * @returns {Array<Number>} Return value. */
+ * @param {Array<number>} mat A 3x3atrix.
+ * @returns {Array<number>} Return value. */
   "mat3copy":function(mat) {
     "use strict";
     return [mat[0], mat[1], mat[2], mat[3],
@@ -1035,16 +1033,16 @@ H3DU.Math = {
   },
 /**
  * Returns a copy of a 3-element vector.
- * @param {Array<Number>} vec A 3-element vector.
- * @returns {Array<Number>} Return value. */
+ * @param {Array<number>} vec A 3-element vector.
+ * @returns {Array<number>} Return value. */
   "vec3copy":function(vec) {
     "use strict";
     return [vec[0], vec[1], vec[2]];
   },
 /**
  * Returns a copy of a 4-element vector.
- * @param {Array<Number>} vec A 4-element vector.
- * @returns {Array<Number>} Return value. */
+ * @param {Array<number>} vec A 4-element vector.
+ * @returns {Array<number>} Return value. */
   "vec4copy":function(vec) {
     "use strict";
     return [vec[0], vec[1], vec[2], vec[3]];
@@ -1052,11 +1050,11 @@ H3DU.Math = {
 /**
  * Assigns the values of a 3-element vector into another
  * 3-element vector.
- * @param {Array<Number>} dst The 3-element vector to
+ * @param {Array<number>} dst The 3-element vector to
  * assign to.
- * @param {Array<Number>} src The 3-element vector whose
+ * @param {Array<number>} src The 3-element vector whose
  * values will be copied.
- * @returns {Array<Number>} The parameter "dst"
+ * @returns {Array<number>} The parameter "dst"
  */
   "vec3assign":function(dst, src) {
     "use strict";
@@ -1068,11 +1066,11 @@ H3DU.Math = {
 /**
  * Assigns the values of a 4-element vector into another
  * 4-element vector.
- * @param {Array<Number>} dst The 4-element vector to copy
+ * @param {Array<number>} dst The 4-element vector to copy
  * the source values to.
- * @param {Array<Number>} src The 4-element vector whose
+ * @param {Array<number>} src The 4-element vector whose
  * values will be copied.
- * @returns {Array<Number>} The parameter "dst".
+ * @returns {Array<number>} The parameter "dst".
  */
   "vec4assign":function(dst, src) {
     "use strict";
@@ -1084,8 +1082,8 @@ H3DU.Math = {
   },
 /**
  * Returns whether a 4x4 matrix is the identity matrix.
- * @param {Array<Number>} mat A 4x4 matrix.
- * @returns {Boolean} Return value. */
+ * @param {Array<number>} mat A 4x4 matrix.
+ * @returns {boolean} Return value. */
   "mat4isIdentity":function(mat) {
     "use strict";
     return (
@@ -1097,8 +1095,8 @@ H3DU.Math = {
   },
 /**
  * Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
- * @param {Array<Number>} m A 3x3 matrix.
- * @returns {Array<Number>} The resulting 3x3 matrix.
+ * @param {Array<number>} m A 3x3 matrix.
+ * @returns {Array<number>} The resulting 3x3 matrix.
  * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
  */
   "mat3invert":function(m) {
@@ -1123,8 +1121,8 @@ H3DU.Math = {
   },
 /**
  * Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
- * @param {Array<Number>} m A 4x4 matrix.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @param {Array<number>} m A 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
  */
   "mat4invert":function(m) {
@@ -1208,16 +1206,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a [unit vector]{@tutorial glmath}.
- * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} Return value. */
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ * @returns {Array<number>} Return value. */
   "quatConjugate":function(quat) {
     "use strict";
     return [-quat[0], -quat[1], -quat[2], quat[3]];
   },
 /**
  * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a [unit vector]{@tutorial glmath}.
- * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} Return value.
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ * @returns {Array<number>} Return value.
  * @see {@link H3DU.Math.quatConjugate}
  */
   "quatInvert":function(quat) {
@@ -1228,8 +1226,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
 /**
  * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
- * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Boolean} Return value.
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ * @returns {boolean} Return value.
  */
   "quatIsIdentity":function(quat) {
     "use strict";
@@ -1238,8 +1236,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Generates a 4x4 matrix describing the rotation
  * described by this quaternion.
- * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} The generated 4x4 matrix.
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ * @returns {Array<number>} The generated 4x4 matrix.
  */
   "quatToMat4":function(quat) {
     "use strict";
@@ -1267,8 +1265,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * Calculates the vector rotation for this quaternion in the form
  * of the angle to rotate the vector by and an [axis of rotation]{@tutorial glmath} to
  * rotate that vector around.
- * @param {Array<Number>} a A quaternion. Must be a [unit vector]{@tutorial glmath}.
- * @returns {Array<Number>} A 4-element array giving the axis
+ * @param {Array<number>} a A quaternion. Must be a [unit vector]{@tutorial glmath}.
+ * @returns {Array<number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If "a" is a unit vector, the axis
  * of rotation will be a unit vector.
@@ -1291,9 +1289,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * will describe the rotation required to rotate
  * the ray described in the first vector toward the ray described
  * in the second vector. The vectors need not be [unit vectors]{@tutorial glmath}.
- * @param {Array<Number>} vec1 The first 3-element vector.
- * @param {Array<Number>} vec2 The second 3-element vector.
- * @returns {Array<Number>} The generated quaternion, which
+ * @param {Array<number>} vec1 The first 3-element vector.
+ * @param {Array<number>} vec2 The second 3-element vector.
+ * @returns {Array<number>} The generated quaternion, which
  * will be a unit vector.
  */
   "quatFromVectors":function(vec1, vec2) {
@@ -1333,7 +1331,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @returns {Array<Number>} The generated quaternion.
+ * @returns {Array<number>} The generated quaternion.
  * A quaternion's first three elements (X, Y, Z) describe an
  * [axis of rotation]{@tutorial glmath} whose length is the sine of half of "angle",
  * and its fourth element (W) is the cosine of half of "angle".
@@ -1378,7 +1376,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {Number} rollDegrees Vector rotation about the Z axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {Number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
+ * @param {number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
  * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
  * and {@link H3DU.Math.GlobalYawRollPitch}. If null or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
  * The constants starting with <code>Global</code>
@@ -1388,7 +1386,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
  * angles). The order of <code>Local</code> rotations has the same result as the reversed
  * order of <code>Global</code> rotations and vice versa.
- * @returns {Array<Number>} The generated quaternion.
+ * @returns {Array<number>} The generated quaternion.
  */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
     "use strict";
@@ -1429,8 +1427,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
- * @param {Array<Number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
- * @param {Number} [mode] Specifies the order in which the rotations will occur
+ * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
+ * @param {number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
  * and {@link H3DU.Math.GlobalYawRollPitch}. If null or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
@@ -1441,7 +1439,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
  * angles). The order of <code>Local</code> rotations has the same result as the reversed
  * order of <code>Global</code> rotations and vice versa.
- * @returns {Array<Number>} A 3-element array containing the
+ * @returns {Array<number>} A 3-element array containing the
  * pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
  * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
  */
@@ -1514,11 +1512,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * however, the difference in this velocity when interpolating is
  * rarely noticeable and this method is generally faster than
  * the {@link H3DU.Math.quatSlerp} method.
- * @param {Array<Number>} q1 The first quaternion. Must be a unit vector.
- * @param {Array<Number>} q2 The second quaternion. Must be a unit vector.
+ * @param {Array<number>} q1 The first quaternion. Must be a unit vector.
+ * @param {Array<number>} q2 The second quaternion. Must be a unit vector.
  * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
- * @returns {Array<Number>} The interpolated quaternion,
+ * @returns {Array<number>} The interpolated quaternion,
  * which will be a unit vector.
  */
   "quatNlerp":function(q1, q2, factor) {
@@ -1553,11 +1551,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * unsuitable for blending multiple quaternion rotations,
  * and this method is generally more computationally expensive
  * than the [quatNlerp]{@link H3DU.Math.quatNlerp} method.
- * @param {Array<Number>} q1 The first quaternion. Must be a [unit vector]{@tutorial glmath}.
- * @param {Array<Number>} q2 The second quaternion. Must be a unit vector.
+ * @param {Array<number>} q1 The first quaternion. Must be a [unit vector]{@tutorial glmath}.
+ * @param {Array<number>} q2 The second quaternion. Must be a unit vector.
  * @param {Number} factor A value that usually ranges from 0 through 1. Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
- * @returns {Array<Number>} The interpolated quaternion.
+ * @returns {Array<number>} The interpolated quaternion.
  * @see ["Understanding Slerp, Then Not Using It", Jonathan Blow](http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/),
  * for additional background
  */
@@ -1598,10 +1596,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * The result is such that the angle-axis
  * rotation happens before the quaternion's rotation when applied
  * in the global coordinate frame.<p>
- * This method is equivalent to the following:<pre>
+ * This method is equivalent to the following (see also {@link H3DU.Math.quatMultiply}):<pre>
  * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
  * </pre>
- * @param {Array<Number>} quat Quaternion to rotate.
+ * @param {Array<number>} quat Quaternion to rotate.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
@@ -1615,7 +1613,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @returns {Array<Number>} The resulting quaternion.
+ * @returns {Array<number>} The resulting quaternion.
  */
   "quatRotate":function(quat, angle, v, vy, vz) {
     "use strict";
@@ -1625,11 +1623,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Transforms a 3- or 4-element vector using a
  * quaternion's vector rotation.
- * @param {Array<Number>} q A quaternion describing
+ * @param {Array<number>} q A quaternion describing
  * the rotation.
- * @param {Array<Number>} v A 3- or 4-element vector to
+ * @param {Array<number>} v A 3- or 4-element vector to
  * transform. The fourth element, if any, is ignored.
- * @returns {Array<Number>} A 4-element vector representing
+ * @returns {Array<number>} A 4-element vector representing
  * the transformed vector. The fourth element will be 1.0.
  * If the input vector has 3 elements, a 3-element vector will
  * be returned instead.
@@ -1654,8 +1652,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * The upper 3x3 portion of the matrix is used for this calculation.
  * The results are undefined if the matrix includes any transformation
  * other than rotation.
- * @param {Array<Number>} m A 4x4 matrix.
- * @returns {Array<Number>} The resulting quaternion.
+ * @param {Array<number>} m A 4x4 matrix.
+ * @returns {Array<number>} The resulting quaternion.
  */
   "quatFromMat4":function(m) {
     "use strict";
@@ -1705,8 +1703,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns the upper-left part of a 4x4 matrix as a new
  * 3x3 matrix.
- * @param {Array<Number>} m4 A 4x4 matrix.
- * @returns {Array<Number>} The resulting 3x3 matrix.
+ * @param {Array<number>} m4 A 4x4 matrix.
+ * @returns {Array<number>} The resulting 3x3 matrix.
  */
   "mat4toMat3":function(m4) {
     "use strict";
@@ -1719,8 +1717,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns the transpose of a 4x4 matrix. (A transpose is a
  * matrix whose rows are converted to columns and vice versa.)
- * @param {Array<Number>} m4 A 4x4 matrix.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @param {Array<number>} m4 A 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4transpose":function(m4) {
     "use strict";
@@ -1730,8 +1728,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * Transposes a 4x4 matrix in place without creating
  * a new matrix. (A transpose is a matrix whose rows
  * are converted to columns and vice versa.)
- * @param {Array<Number>} mat A 4x4 matrix.
- * @returns {Array<Number>} The parameter "mat".
+ * @param {Array<number>} mat A 4x4 matrix.
+ * @returns {Array<number>} The parameter "mat".
  */
   "mat4transposeInPlace":function(mat) {
     "use strict";
@@ -1746,8 +1744,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns the transpose of a 3x3 matrix. (A transpose is a
  * matrix whose rows are converted to columns and vice versa.)
- * @param {Array<Number>} m3 A 3x3 matrix.
- * @returns {Array<Number>} The resulting 3x3 matrix.
+ * @param {Array<number>} m3 A 3x3 matrix.
+ * @returns {Array<number>} The resulting 3x3 matrix.
  */
   "mat3transpose":function(m3) {
     "use strict";
@@ -1757,8 +1755,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * Transposes a 3x3 matrix in place without creating
  * a new matrix. (A transpose is a matrix whose rows
  * are converted to columns and vice versa.)
- * @param {Array<Number>} mat A 3x3 matrix.
- * @returns {Array<Number>} The parameter "mat".
+ * @param {Array<number>} mat A 3x3 matrix.
+ * @returns {Array<number>} The parameter "mat".
  */
   "mat3transposeInPlace":function(mat) {
     "use strict";
@@ -1777,8 +1775,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * input matrix uses only rotations, translations, and/or uniform scaling
  * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
  * be used instead of the inverse-transpose matrix to transform the normals.
- * @param {Array<Number>} m4 A 4x4 matrix.
- * @returns {Array<Number>} The resulting 3x3 matrix. If the matrix
+ * @param {Array<number>} m4 A 4x4 matrix.
+ * @returns {Array<number>} The resulting 3x3 matrix. If the matrix
  * can't be inverted, returns the identity 3x3 matrix.
  */
   "mat4inverseTranspose3":function(m4) {
@@ -1821,7 +1819,7 @@ m[0] * m[7] * m[5];
   },
 /**
  * Multiplies a 4x4 matrix by a scaling transformation.
- * @param {Array<Number>} mat 4x4 matrix to multiply.
+ * @param {Array<number>} mat 4x4 matrix to multiply.
  * @param {Array<Number>|Number} v3 Scale factor along the
  * X axis. A scale factor can be negative, in which case the transformation
  * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
@@ -1829,7 +1827,7 @@ m[0] * m[7] * m[5];
  * Z axes.
  * @param {Number} v3y Scale factor along the Y axis.
  * @param {Number} v3z Scale factor along the Z axis.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4scale":function(mat, v3, v3y, v3z) {
     "use strict";
@@ -1859,7 +1857,7 @@ m[0] * m[7] * m[5];
  * Z axes.
  * @param {Number} v3y Scale factor along the Y axis.
  * @param {Number} v3z Scale factor along the Z axis.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4scaled":function(v3, v3y, v3z) {
     "use strict";
@@ -1871,18 +1869,24 @@ m[0] * m[7] * m[5];
   },
 /**
  * Transforms a 4-element vector with a 4x4 matrix and returns
- * the transformed vector.
- * @param {Array<Number>} mat A 4x4 matrix.
+ * the transformed vector.<p>
+ * Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
+ * is effectively done by breaking up <code>mat</code> into four 4-element vectors
+ * (the first 4 elements make up the first vector, and so on), multiplying
+ * each vector in <code>mat</code> by the corresponding component in
+ * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
+ * get the transformed vector.
+ * @param {Array<number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v X coordinate.
  * If "vy", "vz", and "vw" are omitted, this value can instead
  * be a 4-element array giving the X, Y, Z, and W coordinates.
- * @param {Number} vy Y coordinate.
- * @param {Number} vz Z coordinate.
- * @param {Number} vw W coordinate. To transform a 3D
+ * @param {number} [vy] Y coordinate.
+ * @param {number} [vz] Z coordinate.
+ * @param {number} [vw] W coordinate. To transform a 3D
  * point, set W to 1 and divide the result's X, Y, and Z by the
  * result's W. To transform a 2D point, set Z to 0 and W to 1
  * and divide the result's X and Y by the result's W.
- * @returns {Array<Number>} The transformed vector.
+ * @returns {Array<number>} The transformed vector.
  */
   "mat4transform":function(mat, v, vy, vz, vw) {
     "use strict";
@@ -1919,14 +1923,14 @@ m[0] * m[7] * m[5];
  * the {@link H3DU.Math.mat4projectVec3} method instead, which supports
  * 4x4 matrices that may be in a perspective
  * projection (whose last row is not necessarily (0, 0, 0, 1)).
- * @param {Array<Number>} mat A 4x4 matrix.
+ * @param {Array<number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v X coordinate.
  * If "vy" and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
- * @param {Number} vy Y coordinate.
- * @param {Number} vz Z coordinate. To transform a 2D
+ * @param {number} [vy] Y coordinate.
+ * @param {number} [vz] Z coordinate. To transform a 2D
  * point, set Z to 0.
- * @returns {Array<Number>} The transformed 3-element vector.
+ * @returns {Array<number>} The transformed 3-element vector.
  */
   "mat4transformVec3":function(mat, v, vy, vz) {
     "use strict";
@@ -1948,12 +1952,12 @@ m[0] * m[7] * m[5];
  * Transforms a 3-element vector with a 4x4 matrix and returns
  * a perspective-correct version of the vector as a 3D point. <p>
  * The transformation involves
- * multiplying the matrix by a 4-element column vector with the same X,
- * Y, and Z coordinates, but with a W coordinate equal to 1, and
- * then dividing X, Y, and Z of the resulting 4-element
+ * transforming a 4-element column vector with the same X,
+ * Y, and Z coordinates, but with a W coordinate equal to 1, with the 4x4 matrix, and
+ * then dividing X, Y, and Z of the transformed 4-element
  * vector by that vector's W (a <i>perspective divide</i>),
  * then returning that vector's new X, Y, and Z.<p>
- * @param {Array<Number>} mat A 4x4 matrix to use to transform
+ * @param {Array<number>} mat A 4x4 matrix to use to transform
  * the vector. This will generally be
  * a projection-view matrix (projection matrix multiplied
  * by the view matrix, in that order), if the vector to transform is in <i>world space</i>,
@@ -1969,10 +1973,10 @@ m[0] * m[7] * m[5];
  * @param {Array<Number>|Number} v X coordinate of a 3D point to transform.
  * If "vy" and "vz" are omitted, this value can instead
  * be a 3-element array giving the X, Y, and Z coordinates.
- * @param {Number} vy Y coordinate.
- * @param {Number} vz Z coordinate. To transform a 2D
+ * @param {number} [vy] Y coordinate.
+ * @param {number} [vz] Z coordinate. To transform a 2D
  * point, set Z to 0.
- * @returns {Array<Number>} The transformed 3-element vector.
+ * @returns {Array<number>} The transformed 3-element vector.
  * The elements, in order, are
  * the transformed vector's X, Y, and Z coordinates.
  */
@@ -1996,16 +2000,22 @@ m[0] * m[7] * m[5];
   },
 /**
  * Transforms a 3-element vector with a 3x3 matrix and returns
- * the transformed vector.
- * @param {Array<Number>} mat A 3x3 matrix.
+ * the transformed vector.<p>
+ * Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
+ * is effectively done by breaking up <code>mat</code> into three 3-element vectors
+ * (the first 3 elements make up the first vector, and so on), multiplying
+ * each vector in <code>mat</code> by the corresponding component in
+ * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
+ * get the transformed vector.
+ * @param {Array<number>} mat A 3x3 matrix.
  * @param {Array<Number>|Number} v X coordinate.
  * If "vy", and "vz" are omitted, this value can instead
  * be a 4-element array giving the X, Y, and Z coordinates.
- * @param {Number} vy Y coordinate.
- * @param {Number} vz Z coordinate. To transform a 2D
+ * @param {number} [vy] Y coordinate.
+ * @param {number} [vz] Z coordinate. To transform a 2D
  * point, set Z to 1, and divide the result's X and Y by
  * the result's Z.
- * @returns {Array<Number>} The transformed vector.
+ * @returns {Array<number>} The transformed vector.
  */
   "mat3transform":function(mat, v, vy, vz) {
     "use strict";
@@ -2031,7 +2041,7 @@ m[0] * m[7] * m[5];
  * Z axes.
  * @param {Number} v3y Translation along the Y axis.
  * @param {Number} v3z Translation along the Z axis.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4translated":function(v3, v3y, v3z) {
     "use strict";
@@ -2049,14 +2059,14 @@ m[0] * m[7] * m[5];
   },
 /**
  * Multiplies a 4x4 matrix by a translation transformation.
- * @param {Array<Number>} mat The matrix to multiply.
+ * @param {Array<number>} mat The matrix to multiply.
  * @param {Array<Number>|Number} v3 Translation along the
  * X axis.  If "v3y" and "v3z" are omitted, this value can instead
  * be a 3-element array giving the translations along the X, Y, and
  * Z axes.
  * @param {Number} v3y Translation along the Y axis.
  * @param {Number} v3z Translation along the Z axis.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4translate":function(mat, v3, v3y, v3z) {
     "use strict";
@@ -2111,7 +2121,7 @@ m[0] * m[7] * m[5];
  * concentrated the values will be around the near plane, and the
  * more likely two objects close to the far plane will have identical depth values.
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4perspective":function(fovY, aspectRatio, near, far) {
     "use strict";
@@ -2143,19 +2153,19 @@ m[0] * m[7] * m[5];
  * reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
  * 10, 12, and 14); the Z axis's direction will thus be from the point looked at to the "camera".
- * @param {Array<Number>} viewerPos A 3-element vector specifying
+ * @param {Array<number>} viewerPos A 3-element vector specifying
  * the "camera" position in world space.
- * @param {Array<Number>} [lookingAt] A 3-element vector specifying
+ * @param {Array<number>} [lookingAt] A 3-element vector specifying
  * the point in world space that the "camera" is looking at. May be null or omitted,
  * in which case the default is the coordinates (0,0,0).
- * @param {Array<Number>} [up] A 3-element vector specifying
+ * @param {Array<number>} [up] A 3-element vector specifying
  * the direction from the center of the "camera" to its top. This parameter may
  * be null or omitted, in which case the default is the vector (0, 1, 0),
  * the vector that results when the "camera" is held upright.<br>
  * This vector must not be parallel to the view direction
  * (the direction from "viewerPos" to "lookingAt").
  * (See the example for one way to ensure this.)<br>
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  * @example <caption>The following example calls this method with an
  * up vector of (0, 1, 0) except if the view direction is parallel to that
  * vector or nearly so.</caption>
@@ -2182,7 +2192,7 @@ m[0] * m[7] * m[5];
     // "s" will point rightward from the camera's viewpoint.
     var s = H3DU.Math.vec3cross(f, up);
     H3DU.Math.vec3normalizeInPlace(s);
-    // orthonormalize the "up" vector
+    // orthogonalize the "up" vector
     var u = H3DU.Math.vec3cross(s, f);
     H3DU.Math.vec3normalizeInPlace(u);
     // negate the "f" vector so that it points forward from
@@ -2217,7 +2227,7 @@ m[0] * m[7] * m[5];
  * plane. A positive value means the plane is in front of the viewer.
  * (Note that n can be greater than f or vice versa.) The absolute difference
  * between n and f should be as small as the application can accept.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4ortho":function(l, r, b, t, n, f) {
     "use strict";
@@ -2260,7 +2270,7 @@ m[0] * m[7] * m[5];
  * concentrated the values will be around the near plane, and the
  * more likely two objects close to the far plane will have identical depth values.
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4perspectiveHorizontal":function(fovX, aspectRatio, near, far) {
     "use strict";
@@ -2281,7 +2291,7 @@ m[0] * m[7] * m[5];
  * @param {Number} t Topmost coordinate of the orthographic view.
  * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
  * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4ortho2d":function(l, r, b, t) {
     "use strict";
@@ -2307,7 +2317,7 @@ m[0] * m[7] * m[5];
  * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
  * @param {Number} aspect The ratio of width to height of the viewport, usually
  * the scene's aspect ratio.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4ortho2dAspect":function(l, r, b, t, aspect) {
     "use strict";
@@ -2339,7 +2349,7 @@ m[0] * m[7] * m[5];
  * between n and f should be as small as the application can accept.
  * @param {Number} aspect The ratio of width to height of the viewport, usually
  * the scene's aspect ratio.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4orthoAspect":function(l, r, b, t, n, f, aspect) {
     "use strict";
@@ -2406,7 +2416,7 @@ m[0] * m[7] * m[5];
  * concentrated the values will be around the near plane, and the
  * more likely two objects close to the far plane will have identical depth values.
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4frustum":function(l, r, b, t, near, far) {
     "use strict";
@@ -2423,7 +2433,7 @@ m[0] * m[7] * m[5];
 /**
  * Modifies a 4x4 matrix by multiplying it by a
  * scaling transformation.
- * @param {Array<Number>} mat A 4x4 matrix.
+ * @param {Array<number>} mat A 4x4 matrix.
  * @param {Array<Number>|Number} v3 Scale factor along the
  * X axis. A scale factor can be negative, in which case the transformation
  * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
@@ -2431,7 +2441,7 @@ m[0] * m[7] * m[5];
  * Z axes.
  * @param {Number} v3y Scale factor along the Y axis.
  * @param {Number} v3z Scale factor along the Z axis.
- * @returns {Array<Number>} The same parameter as "mat".
+ * @returns {Array<number>} The same parameter as "mat".
  */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
     "use strict";
@@ -2459,6 +2469,7 @@ m[0] * m[7] * m[5];
     mat[11] *= z;
     return mat;
   },
+
 /**
  * Multiplies two 4x4 matrices. A new matrix is returned.
  * The matrices are multiplied such that the transformations
@@ -2469,9 +2480,13 @@ m[0] * m[7] * m[5];
  * by the second is the same as multiplying the second matrix
  * by the first matrix's transpose; a transpose is a matrix whose rows
  * are converted to columns and vice versa.)
- * @param {Array<Number>} a The first matrix.
- * @param {Array<Number>} b The second matrix.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * <p>The matrix multiplication is effectively done by breaking up matrix <code>b</code>
+ * into four 4-element vectors (the first 4 elements make up the first vector, and so on),
+ * [transforming]{@link H3DU.Math.mat4multiply} each vector with
+ * matrix <code>a</code>, and putting the vectors back together into a new matrix.
+ * @param {Array<number>} a The first matrix.
+ * @param {Array<number>} b The second matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4multiply":function(a, b) {
     "use strict";
@@ -2497,9 +2512,13 @@ m[0] * m[7] * m[5];
  * by the second is the same as multiplying the second matrix
  * by the first matrix's transpose; a transpose is a matrix whose rows
  * are converted to columns and vice versa.)
- * @param {Array<Number>} a The first matrix.
- * @param {Array<Number>} b The second matrix.
- * @returns {Array<Number>} The resulting 3x3 matrix.
+ * <p>The matrix multiplication is effectively done by breaking up matrix <code>b</code>
+ * into three 3-element vectors (the first 3 elements make up the first vector, and so on),
+ * [transforming]{@link H3DU.Math.mat3multiply} each vector with
+ * matrix <code>a</code>, and putting the vectors back together into a new matrix.
+ * @param {Array<number>} a The first matrix.
+ * @param {Array<number>} b The second matrix.
+ * @returns {Array<number>} The resulting 3x3 matrix.
  */
   "mat3multiply":function(a, b) {
     "use strict";
@@ -2524,10 +2543,14 @@ m[0] * m[7] * m[5];
  * quaternion will also be a unit vector. However, for best results, you should
  * normalize the quaternions every few multiplications (using
  * {@link H3DU.Math.quatNormalize} or {@link H3DU.Math.quatNormalizeInPlace}), since successive
- * multiplications can cause rounding errors.
- * @param {Array<Number>} a The first quaternion.
- * @param {Array<Number>} b The second quaternion.
- * @returns {Array<Number>} The resulting quaternion.
+ * multiplications can cause rounding errors.<p>
+ * Quaternion multiplication is not commutative except in the last component
+ * of the resulting quaternion, since the definition of quaternion multiplication
+ * includes taking a cross product of <code>a</code>'s and <code>b</code>'s first three components,
+ * in that order, and the cross product is not commutative (see also {@link H3DU.Math.vec3cross}).
+ * @param {Array<number>} a The first quaternion.
+ * @param {Array<number>} b The second quaternion.
+ * @returns {Array<number>} The resulting quaternion.
  */
   "quatMultiply":function(a, b) {
     "use strict";
@@ -2544,7 +2567,7 @@ m[0] * m[7] * m[5];
  * The effect will be that the rotation transformation will
  * happen before the transformation described in the given matrix,
  * when applied in the global coordinate frame.
- * @param {Array<Number>} mat A 4x4 matrix to multiply.
+ * @param {Array<number>} mat A 4x4 matrix to multiply.
  * @param {Array<Number>|Number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the [axis of rotation]{@tutorial glmath}
@@ -2558,7 +2581,7 @@ m[0] * m[7] * m[5];
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4rotate":function(mat, angle, v, vy, vz) {
     "use strict";
@@ -2653,7 +2676,7 @@ m[0] * m[7] * m[5];
  * of rotation.
  * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @returns {Array<Number>} The resulting 4x4 matrix.
+ * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4rotated":function(angle, v, vy, vz) {
     "use strict";
@@ -2752,13 +2775,13 @@ m[0] * m[7] * m[5];
  * current normal's length.<p>
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
  * confused with a vector's "norm", another name for its length.)
- * @param {Array<Number>} plane A four-element array
+ * @param {Array<number>} plane A four-element array
  * defining the plane. The first three elements of the array
  * are the X, Y, and Z components of the plane's normal vector, and
  * the fourth element is the shortest distance from the plane
  * to the origin, or if negative, from the origin to the plane,
  * divided by the normal's length.
- * @returns {Array<Number>} The parameter "plane".
+ * @returns {Array<number>} The parameter "plane".
  */
   "planeNormalizeInPlace":function(plane) {
     "use strict";
@@ -2781,13 +2804,13 @@ m[0] * m[7] * m[5];
  * unless all the normal's components are 0, and returns a new plane with the result.
  * The plane's distance will be divided by the
  * normal's length. Returns a new plane.
- * @param {Array<Number>} plane A four-element array
+ * @param {Array<number>} plane A four-element array
  * defining the plane. The first three elements of the array
  * are the X, Y, and Z components of the plane's normal vector, and
  * the fourth element is the shortest distance from the plane
  * to the origin, or if negative, from the origin to the plane,
  * divided by the normal's length.
- * @returns {Array<Number>} A normalized version of
+ * @returns {Array<number>} A normalized version of
  * the plane.
  * Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
@@ -2804,7 +2827,7 @@ m[0] * m[7] * m[5];
  * sides, one plane (the far plane) forms its base, and a
  * final plane (the near plane) is the pyramid's chopped
  * off top.
- * @param {Array<Number>} matrix A 4x4 matrix. This will
+ * @param {Array<number>} matrix A 4x4 matrix. This will
  * usually be a projection-view matrix (projection matrix
  * multiplied by view matrix, in that order).
  * @returns {Array<Array<Number>>} An array of six
@@ -2875,7 +2898,7 @@ m[0] * m[7] * m[5];
  * in world space.
  * @param {Number} radius Radius of the sphere
  * in world-space units.
- * @returns {Boolean} <code>true</code> if the sphere
+ * @returns {boolean} <code>true</code> if the sphere
  * is partially or totally
  * inside the frustum; <code>false</code> otherwise.
  */
@@ -2894,12 +2917,12 @@ m[0] * m[7] * m[5];
  * Determines whether a 3D bounding box is empty.
  * This is determined if the minimum coordinate
  * is larger than the corresponding maximum coordinate.
- * @param {Array<Number>} box An axis-aligned bounding
+ * @param {Array<number>} box An axis-aligned bounding
  * box, which is an array of six values.
  * The first three values are the smallest X, Y, and Z coordinates,
  * and the last three values are the largest X, Y, and Z
  * coordinates.
- * @returns {Boolean} <code>true</code> if at least one
+ * @returns {boolean} <code>true</code> if at least one
  * of the minimum coordinates is greater than its
  * corresponding maximum coordinate; otherwise, <code>false</code>.
  */
@@ -2910,12 +2933,12 @@ m[0] * m[7] * m[5];
 /**
  * Finds the dimensions of a 3D bounding box. This is done by subtracting
  * the first three values of the given array with its last three values.
- * @param {Array<Number>} box An axis-aligned bounding
+ * @param {Array<number>} box An axis-aligned bounding
  * box, which is an array of six values.
  * The first three values are the smallest X, Y, and Z coordinates,
  * and the last three values are the largest X, Y, and Z
  * coordinates.
- * @returns {Array<Number>} A 3-element array containing the
+ * @returns {Array<number>} A 3-element array containing the
  * width, height, and depth of the bounding box, respectively. If
  * at least one of the minimum coordinates is greater than its
  * corresponding maximum coordinate, the array can contain
@@ -2927,12 +2950,12 @@ m[0] * m[7] * m[5];
   },
 /**
  * Finds the center of a 3D bounding box.
- * @param {Array<Number>} box An axis-aligned bounding
+ * @param {Array<number>} box An axis-aligned bounding
  * box, which is an array of six values.
  * The first three values are the smallest X, Y, and Z coordinates,
  * and the last three values are the largest X, Y, and Z
  * coordinates.
- * @returns {Array<Number>} A 3-element array containing the
+ * @returns {Array<number>} A 3-element array containing the
  * X, Y, and Z coordinates, respectively, of the bounding box's
  * center.
  */
@@ -2949,12 +2972,12 @@ m[0] * m[7] * m[5];
  * 4-element arrays representing the six clipping planes of the
  * view frustum. In order, they are the left, right, top,
  * bottom, near, and far clipping planes.
- * @param {Array<Number>} box An axis-aligned bounding
+ * @param {Array<number>} box An axis-aligned bounding
  * box in world space, which is an array of six values.
  * The first three values are the smallest X, Y, and Z coordinates,
  * and the last three values are the largest X, Y, and Z
  * coordinates.
- * @returns {Boolean} <code>true</code> if the box
+ * @returns {boolean} <code>true</code> if the box
  * may be partially or totally
  * inside the frustum; <code>false</code> if the box is
  * definitely outside the frustum, or if the box is empty
@@ -3161,7 +3184,7 @@ m[0] * m[7] * m[5];
  * in world space.
  * @param {Number} z Z coordinate of a point
  * in world space.
- * @returns {Boolean} true if the point is inside;
+ * @returns {boolean} true if the point is inside;
  * otherwise false;
  */
   "frustumHasPoint":function(frustum, x, y, z) {
@@ -3180,11 +3203,11 @@ m[0] * m[7] * m[5];
  * it <i>roughly</i> differs from linear RGB in having an exponent
  * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
  * by a surface of the given color.
- * @param {Array<Number>} lin A three- or four-element vector giving
+ * @param {Array<number>} lin A three- or four-element vector giving
  * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
  * is either the fourth element in the case of a four-element vector, or 1.0
  * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
- * @returns {Array<Number>} lin A four-element vector giving
+ * @returns {Array<number>} lin A four-element vector giving
  * the red, green, blue, and alpha components, in that order, of the given color
  * in the sRGB color space. The alpha component will be as specified
  * in the "lin" parameter.
@@ -3204,11 +3227,11 @@ m[0] * m[7] * m[5];
  * it <i>roughly</i> differs from linear RGB in having an exponent
  * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
  * by a surface of the given color.
- * @param {Array<Number>} srgb A three- or four-element vector giving
+ * @param {Array<number>} srgb A three- or four-element vector giving
  * the red, green, and blue components, in that order, of an sRGB color. The alpha component
  * is either the fourth element in the case of a four-element vector, or 1.0
  * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
- * @returns {Array<Number>} lin A three-element vector giving
+ * @returns {Array<number>} lin A three-element vector giving
  * the red, green, and blue components, in that order, of the given color
  * in linear RGB.The alpha component will be as specified
  * in the "srgb" parameter.
@@ -3228,9 +3251,9 @@ m[0] * m[7] * m[5];
  * It's equal to the sum of the products of
  * their components (for example, <b>a</b>'s X times <b>b</b>'s X).
  * @function
- * @param {Array<Number>} a The first quaternion.
- * @param {Array<Number>} b The second quaternion.
- * @returns {Number} Return value.
+ * @param {Array<number>} a The first quaternion.
+ * @param {Array<number>} b The second quaternion.
+ * @returns {number} Return value.
  * @method
  * @static
  * @see {@link H3DU.Math.vec4dot}
@@ -3245,8 +3268,8 @@ H3DU.Math.quatDot = H3DU.Math.vec4dot;
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
  * confused with a vector's "norm", another name for its length.)
  * @function
- * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} The parameter "quat".
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ * @returns {Array<number>} The parameter "quat".
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
@@ -3262,8 +3285,8 @@ H3DU.Math.quatNormalizeInPlace = H3DU.Math.vec4normalizeInPlace;
  * ("Norm", as used in this method's name, means "normalize"; this is not to be
  * confused with a vector's "norm", another name for its length.)
  * @function
- * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} The normalized quaternion.
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ * @returns {Array<number>} The normalized quaternion.
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  * @method
  * @static
@@ -3275,8 +3298,8 @@ H3DU.Math.quatNormalize = H3DU.Math.vec4normalize;
  * It's the same as the square root of the sum of the squares
  * of its components.
  * @function
- * @param {Array<Number>} quat The quaternion.
- * @returns {Number} Return value.
+ * @param {Array<number>} quat The quaternion.
+ * @returns {number} Return value.
  * @method
  * @static
  * @see {@link H3DU.Math.vec4length}
@@ -3286,9 +3309,9 @@ H3DU.Math.quatLength = H3DU.Math.vec4length;
  * Multiplies each element of a quaternion by a factor
  * and stores the result in that quaternion.
  * @function
- * @param {Array<Number>} a A quaternion.
+ * @param {Array<number>} a A quaternion.
  * @param {Number} scalar A factor to multiply.
- * @returns {Array<Number>} The parameter "a".
+ * @returns {Array<number>} The parameter "a".
  * @method
  * @static
  * @see {@link H3DU.Math.vec4scaleInPlace}
@@ -3298,9 +3321,9 @@ H3DU.Math.quatScaleInPlace = H3DU.Math.vec4scaleInPlace;
  * Multiplies each element of a quaternion by a factor
  * and returns the result as a new quaternion.
  * @function
- * @param {Array<Number>} a A quaternion.
+ * @param {Array<number>} a A quaternion.
  * @param {Number} scalar A factor to multiply.
- * @returns {Array<Number>} The resulting quaternion.
+ * @returns {Array<number>} The resulting quaternion.
  * @method
  * @static
  * @see {@link H3DU.Math.vec4scaleInPlace}
@@ -3309,7 +3332,7 @@ H3DU.Math.quatScale = H3DU.Math.vec4scale;
 /**
  * Returns a copy of a quaternion.
  * @function
- * @returns {Array<Number>} Return value.
+ * @returns {Array<number>} Return value.
  * @method
  * @static
  * @see {@link H3DU.Math.vec4copy}
@@ -3476,8 +3499,8 @@ H3DU.Math.RollYawPitch = 5;
  * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
  * Returns a new quaternion; same as the quatInverse method.
  * @deprecated Use {@link H3DU.Math.quatInvert} instead.
- * @param {Array<Number>} quat A quaternion, containing four elements.
- * @returns {Array<Number>} Return value.
+ * @param {Array<number>} quat A quaternion, containing four elements.
+ * @returns {Array<number>} Return value.
  * @method
  * @static
  */
@@ -3487,8 +3510,8 @@ H3DU.Math.quatInverse = H3DU.Math.quatInvert;
  * @deprecated Use {@link H3DU.Math.vec3normalize} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} vec Vector to normalize.
- * @returns {Array<Number>} The normalized vector.
+ * @param {Array<number>} vec Vector to normalize.
+ * @returns {Array<number>} The normalized vector.
  */
 H3DU.Math.vec3norm = H3DU.Math.vec3normalize;
 /**
@@ -3496,8 +3519,8 @@ H3DU.Math.vec3norm = H3DU.Math.vec3normalize;
  * @deprecated Use {@link H3DU.Math.vec4normalize} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} vec Vector to normalize.
- * @returns {Array<Number>} The normalized vector.
+ * @param {Array<number>} vec Vector to normalize.
+ * @returns {Array<number>} The normalized vector.
  */
 H3DU.Math.vec4norm = H3DU.Math.vec4normalize;
 /**
@@ -3505,8 +3528,8 @@ H3DU.Math.vec4norm = H3DU.Math.vec4normalize;
  * @deprecated Use {@link H3DU.Math.quatNormalize} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} quat Quaternion to normalize.
- * @returns {Array<Number>} The normalized quaternion.
+ * @param {Array<number>} quat Quaternion to normalize.
+ * @returns {Array<number>} The normalized quaternion.
  */
 H3DU.Math.quatNorm = H3DU.Math.quatNormalize;
 /**
@@ -3514,8 +3537,8 @@ H3DU.Math.quatNorm = H3DU.Math.quatNormalize;
  * @deprecated Use {@link H3DU.Math.vec3normalizeInPlace} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} vec Vector to normalize in place.
- * @returns {Array<Number>} The parameter "vec"
+ * @param {Array<number>} vec Vector to normalize in place.
+ * @returns {Array<number>} The parameter "vec"
  */
 H3DU.Math.vec3normInPlace = H3DU.Math.vec3normalizeInPlace;
 /**
@@ -3523,8 +3546,8 @@ H3DU.Math.vec3normInPlace = H3DU.Math.vec3normalizeInPlace;
  * @deprecated Use {@link H3DU.Math.vec4normalizeInPlace} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} vec Vector to normalize in place.
- * @returns {Array<Number>} The parameter "vec"
+ * @param {Array<number>} vec Vector to normalize in place.
+ * @returns {Array<number>} The parameter "vec"
  */
 H3DU.Math.vec4normInPlace = H3DU.Math.vec4normalizeInPlace;
 /**
@@ -3532,8 +3555,8 @@ H3DU.Math.vec4normInPlace = H3DU.Math.vec4normalizeInPlace;
  * @deprecated Use {@link H3DU.Math.quatNormalizeInPlace} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} quat Quaternion to normalize in place.
- * @returns {Array<Number>} The parameter "quat"
+ * @param {Array<number>} quat Quaternion to normalize in place.
+ * @returns {Array<number>} The parameter "quat"
  */
 H3DU.Math.quatNormInPlace = H3DU.Math.quatNormalizeInPlace;
 /**
@@ -3541,8 +3564,8 @@ H3DU.Math.quatNormInPlace = H3DU.Math.quatNormalizeInPlace;
  * @deprecated Use {@link H3DU.Math.planeNormalizeInPlace} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} plane Plane to normalize in place.
- * @returns {Array<Number>} The parameter "plane"
+ * @param {Array<number>} plane Plane to normalize in place.
+ * @returns {Array<number>} The parameter "plane"
  */
 H3DU.Math.planeNormInPlace = H3DU.Math.planeNormalizeInPlace;
 /**
@@ -3550,7 +3573,7 @@ H3DU.Math.planeNormInPlace = H3DU.Math.planeNormalizeInPlace;
  * @deprecated Use {@link H3DU.Math.planeNormalize} instead.
  * The name of this method may be confused with a vector's "norm", another name for its length.
  * @function
- * @param {Array<Number>} plane Plane to normalize.
- * @returns {Array<Number>} The normalized plane.
+ * @param {Array<number>} plane Plane to normalize.
+ * @returns {Array<number>} The normalized plane.
  */
 H3DU.Math.planeNorm = H3DU.Math.planeNormalize;

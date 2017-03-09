@@ -365,7 +365,7 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
  * a raster effect to a texture.
  * @deprecated Use {@link H3DU.ShaderInfo.makeEffectFragment} instead.
  * @param {String} functionCode See H3DU.ShaderProgram.makeEffect().
- * @returns {String} The source text of the resulting fragment shader.
+ * @returns {string} The source text of the resulting fragment shader.
  */
 H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
   "use strict";
@@ -432,7 +432,7 @@ H3DU.ShaderProgram.getEdgeDetectEffect = function() {
  * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
  * at the start of the return value enables the lighting model.
  * @deprecated Use {@link H3DU.ShaderInfo.getDefaultVertex} instead.
- * @returns {String} The resulting shader text.
+ * @returns {string} The resulting shader text.
  */
 H3DU.ShaderProgram.getDefaultVertex = function() {
   "use strict";
@@ -446,7 +446,7 @@ H3DU.ShaderProgram.getDefaultVertex = function() {
  * at the start of the return value enables specular highlights (as long
  * as SHADING is also enabled).
  * @deprecated Use {@link H3DU.ShaderInfo.getDefaultFragment} instead.
- * @returns {String} The resulting shader text.
+ * @returns {string} The resulting shader text.
  */
 H3DU.ShaderProgram.getDefaultFragment = function() {
   "use strict";

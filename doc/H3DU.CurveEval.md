@@ -29,7 +29,7 @@ Specifies a parametric curve function for generating color values.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. </ul>
+    An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.
 
 #### Return Value
 
@@ -45,13 +45,13 @@ function.
 
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
     A geometric mesh where the vertices will be generated.
-* `mode` (Type: Number) (optional)<br>
+* `mode` (Type: number) (optional)<br>
     If this value is H3DU.Mesh.LINES, or is null or omitted, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.
-* `n` (Type: Number) (optional)<br>
+* `n` (Type: number) (optional)<br>
     Number of subdivisions of the curve to be drawn. Default is 24.
-* `u1` (Type: Number) (optional)<br>
+* `u1` (Type: number) (optional)<br>
     Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.md">curve evaluator object</a>, or 0 if not given.
-* `u2` (Type: Number) (optional)<br>
+* `u2` (Type: number) (optional)<br>
     Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.md">curve evaluator object</a>, or 1 if not given.
 
 #### Return Value
@@ -85,7 +85,7 @@ Specifies a parametric curve function for generating normals.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. </ul>
+    An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.
 
 #### Return Value
 
@@ -99,7 +99,7 @@ Specifies a parametric curve function for generating texture coordinates.
 #### Parameters
 
 * `evaluator` (Type: Object)<br>
-    An object that must contain a function named <code>evaluate</code>, giving one or two values as a result. </ul>
+    An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 1- or 2-element array.
 
 #### Return Value
 

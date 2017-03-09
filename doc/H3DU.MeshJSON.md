@@ -50,4 +50,4 @@ Converts a mesh to JSON format.
 
 #### Return Value
 
-A JSON string describing the mesh. (Type: String)
+A JSON string describing the mesh. (Type: string)

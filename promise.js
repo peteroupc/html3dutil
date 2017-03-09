@@ -117,7 +117,6 @@
  * Creates a promise that resolves or is rejected when one of those promises
  * resolves or is rejected.
  * @param {Array<Promise>} all An array of promises.
- * @returns {Promise} A promise that is resolved when all promises have resolved.
  * @returns {Promise} A promise that resolves or is rejected according to
  * the first promise that resolves or is rejected. It will receive the
  * value associated with that promise.
@@ -134,8 +133,8 @@
   /**
    * Creates a promise that calls a function depending on whether
    * this promise resolves or is rejected.
-   * @param {function} onFulfilled To be called once this promise gets fulfilled
-   * @param {function} [onRejected] To be called once this promise gets rejected
+   * @param {Function} onFulfilled To be called once this promise gets fulfilled
+   * @param {Function} [onRejected] To be called once this promise gets rejected
    * @returns {Promise} A promise.
    * @instance
    * @memberof Promise#
@@ -263,7 +262,7 @@
   /**
    * Creates a promise that calls a function if
    * this promise is rejected.
-   * @param {function} onRejected To be called once this promise gets rejected
+   * @param {Function} onRejected To be called once this promise gets rejected
    * @returns {Promise} A promise.
    * @instance
    * @memberof Promise#

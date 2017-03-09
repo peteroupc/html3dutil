@@ -195,7 +195,7 @@
  * This flag will be reset if a moveTo command,
  * closePath command, or another path segment
  * is added to the path.
- * @returns {Boolean} Return value.
+ * @returns {boolean} Return value.
  * @instance
  * @memberof! H3DU.GraphicsPath#
  */
@@ -528,7 +528,7 @@
 /**
  * Returns this path in the form of a string in SVG path format.
  * See {@link H3DU.GraphicsPath.fromString}.
- * @returns {String} A string describing the path in the SVG path
+ * @returns {string} A string describing the path in the SVG path
  * format.
  * @instance
  * @memberof! H3DU.GraphicsPath#
@@ -620,8 +620,8 @@
 
 /**
  * Finds the approximate length of this path.
- * @param {Number} [flatness] No longer used by this method.
- * @returns {Number} Approximate length of this path
+ * @param {number} [flatness] No longer used by this method.
+ * @returns {number} Approximate length of this path
  * in units.
  * @instance
  * @memberof! H3DU.GraphicsPath#
@@ -639,7 +639,7 @@
 /**
  * Gets an array of line segments approximating
  * the path.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
@@ -672,7 +672,7 @@
 /**
  * Creates a path in which curves and arcs are decomposed
  * to line segments.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
@@ -836,7 +836,7 @@
 /**
  * Calculates an axis-aligned bounding box that tightly
  * fits this graphics path.
- * @returns {Array<Number>} An array of four numbers
+ * @returns {Array<number>} An array of four numbers
  * describing the bounding box. The first two are
  * the lowest X and Y coordinates, and the last two are
  * the highest X and Y coordinates. If the path is empty,
@@ -1361,7 +1361,7 @@
 /**
  * Gets a [curve evaluator object]{@link H3DU.Curve} for
  * the curves described by this path. The return value doesn't track changes to the path.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments for the purpose of
  * calculating their length, the
  * segments will be close to the true path of the curve by this
@@ -1470,7 +1470,7 @@
  * Gets an array of points evenly spaced across the length
  * of the path.
  * @param {Number} numPoints Number of points to return.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments for the purpose of
  * calculating their length, the
  * segments will be close to the true path of the curve by this
@@ -1556,7 +1556,7 @@
   };
 /**
  * Gets the current point stored in this path.
- * @returns {Array<Number>} A two-element array giving the X and Y coordinates of the current point.
+ * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
  * @instance
  * @memberof! H3DU.GraphicsPath#
  */
@@ -2138,7 +2138,7 @@
  * Returns a modified version of this path that is transformed
  * according to the given affine transformation (a transformation
  * that keeps straight lines straight and parallel lines parallel).
- * @param {Array<Number>} trans An array of six numbers
+ * @param {Array<number>} trans An array of six numbers
  * describing a 2-dimensional affine transformation. For each
  * point in the current path, its new X coordinate is `trans[0] * X +
  * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
@@ -2815,7 +2815,7 @@
  * The path can contain holes. In this case, subpaths
  * whose winding order (counterclockwise or clockwise)
  * differs from the first subpath's winding order can be holes.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.

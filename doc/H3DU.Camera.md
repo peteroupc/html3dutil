@@ -72,7 +72,7 @@ Finds the distance from the camera's position to the reference point.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Camera_getPosition'></a>
 ### H3DU.Camera#getPosition()
@@ -82,7 +82,7 @@ Gets the position of the camera.
 #### Return Value
 
 An array of three numbers giving
-the X, Y, and Z coordinates of the camera's position, respectively. (Type: Array.&lt;Number>)
+the X, Y, and Z coordinates of the camera's position, respectively. (Type: Array.&lt;number>)
 
  <a name='H3DU.Camera_getVectorFromCenter'></a>
 ### H3DU.Camera#getVectorFromCenter()
@@ -94,7 +94,7 @@ point to the camera's position.
 
 The return value as a unit
 vector (a <a href="H3DU.Math.md#H3DU.Math.vec3normalize">"normalized" vector</a> with a length of 1).
-Returns (0,0,0) if the reference point is the same as the camera's position. (Type: Array.&lt;Number>)
+Returns (0,0,0) if the reference point is the same as the camera's position. (Type: Array.&lt;number>)
 
  <a name='H3DU.Camera_moveAngleHorizontal'></a>
 ### H3DU.Camera#moveAngleHorizontal(angleDegrees)
@@ -259,9 +259,9 @@ Sets the position of the camera.
 
 * `cx` (Type: Number)<br>
     The camera's new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, "cy" and "cz" can be omitted.
-* `cy` (Type: Number) (optional)<br>
+* `cy` (Type: number) (optional)<br>
     The camera's new Y coordinate.
-* `cz` (Type: Number) (optional)<br>
+* `cz` (Type: number) (optional)<br>
     The camera's new Z coordinate.
 
 #### Return Value

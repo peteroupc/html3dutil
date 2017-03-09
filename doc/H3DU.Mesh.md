@@ -41,11 +41,11 @@ or at that point, those methods may be deprecated.</li></ul>
 
 #### Parameters
 
-* `vertices` (Type: Array.&lt;Number>) (optional)<br>
+* `vertices` (Type: Array.&lt;number>) (optional)<br>
     An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.
-* `indices` (Type: Array.&lt;Number>) (optional)<br>
+* `indices` (Type: Array.&lt;number>) (optional)<br>
     An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.
-* `format` (Type: Number) (optional)<br>
+* `format` (Type: number) (optional)<br>
     A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul> If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can't be set. May be null or omitted, in which case "format" is set to 0.
 
 ### Members
@@ -313,7 +313,7 @@ that fits all vertices in the mesh. The first three numbers
 are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
--Inf, -Inf]. (Type: Array.&lt;Number>)
+-Inf, -Inf]. (Type: Array.&lt;number>)
 
  <a name='H3DU.Mesh_getVertex'></a>
 ### H3DU.Mesh#getVertex(index)
@@ -331,7 +331,7 @@ index in this mesh.
 A 3-element array giving
 the X, Y, and Z coordinates, respectively, of the vertex
 position, or null if the index is less than 0 or
-equals the number of vertices in this mesh or greater. (Type: Array.&lt;Number>)
+equals the number of vertices in this mesh or greater. (Type: Array.&lt;number>)
 
  <a name='H3DU.Mesh_getVertexNormal'></a>
 ### H3DU.Mesh#getVertexNormal(index)
@@ -351,7 +351,7 @@ the X, Y, and Z coordinates, respectively, of the vertex
 normal, or null if the index is less than 0 or
 equals the number of vertices in this mesh or greater.
 Returns (0,0,0) if the given vertex exists but doesn't define
-a normal. (Type: Array.&lt;Number>)
+a normal. (Type: Array.&lt;number>)
 
  <a name='H3DU.Mesh_merge'></a>
 ### H3DU.Mesh#merge(other)
@@ -443,7 +443,7 @@ or points) composed by all shapes in this mesh.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Mesh_recalcNormals'></a>
 ### H3DU.Mesh#recalcNormals(flat, inward)
@@ -663,7 +663,7 @@ added after calling this method without calling mode() first.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;Number>)<br>
+* `matrix` (Type: Array.&lt;number>)<br>
     A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
 
 #### Return Value
@@ -715,4 +715,4 @@ Gets the number of vertices included in this mesh.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)

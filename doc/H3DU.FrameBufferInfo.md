@@ -29,7 +29,7 @@ Gets the height to use for the frame buffer.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.FrameBufferInfo_getWidth'></a>
 ### H3DU.FrameBufferInfo#getWidth()
@@ -38,7 +38,7 @@ Gets the width to use for the frame buffer.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.FrameBufferInfo_resize'></a>
 ### H3DU.FrameBufferInfo#resize(width, height)

@@ -60,7 +60,7 @@ H3DU.Shape._meshBufferWarning = false;
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Shape.prototype.vertexCount = function() {
@@ -70,7 +70,7 @@ H3DU.Shape.prototype.vertexCount = function() {
 /**
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this scene.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Shape.prototype.primitiveCount = function() {
@@ -90,7 +90,7 @@ H3DU.Shape.prototype.setVisible = function(value) {
 };
 /**
  * Gets whether this shape will be drawn on rendering.
- * @returns {Boolean} True if this shape will be visible; otherwise, false.
+ * @returns {boolean} True if this shape will be visible; otherwise, false.
  * @instance
  */
 H3DU.Shape.prototype.getVisible = function() {
@@ -109,7 +109,7 @@ H3DU.Shape.prototype.getVisible = function() {
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {Number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} [a] Alpha color component (0-1).
+ * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Shape} This object.
@@ -176,7 +176,7 @@ H3DU.Shape.prototype._ensureMaterial = function() {
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {Number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} [a] Alpha color component (0-1).
+ * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Shape} This object.
@@ -253,7 +253,7 @@ H3DU.Shape.prototype.getMaterial = function() {
  * The bounding box is not guaranteed to be the
  * tightest, and the box will be transformed to world space
  * using this object's transform.
- * @returns {Array<Number>} An array of six numbers describing an
+ * @returns {Array<number>} An array of six numbers describing an
  * axis-aligned bounding box
  * that fits all vertices in the shape. The first three numbers
  * are the smallest-valued X, Y, and Z coordinates, and the
@@ -374,7 +374,7 @@ H3DU.Shape.prototype.setPosition = function(x, y, z) {
 /**
  * Sets this object's rotation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link H3DU.Transform#setQuaternion}.
- * @param {Array<Number>} quat A four-element array describing the rotation.
+ * @param {Array<number>} quat A four-element array describing the rotation.
  * @returns {H3DU.Shape} This object.
  * @instance
  */
@@ -386,7 +386,7 @@ H3DU.Shape.prototype.setQuaternion = function(quat) {
 /**
  * Gets the transformation matrix used by this shape.
  * See {@link H3DU.Transform#getMatrix}.
- * @returns {Array<Number>} The current transformation matrix.
+ * @returns {Array<number>} The current transformation matrix.
  * @instance
  */
 H3DU.Shape.prototype.getMatrix = function() {

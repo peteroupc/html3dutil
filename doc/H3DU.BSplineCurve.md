@@ -5,22 +5,23 @@
  <a name='H3DU.BSplineCurve'></a>
 ### H3DU.BSplineCurve(controlPoints, knots, [bits])
 
+**Augments:** <a href="H3DU.Curve.md">H3DU.Curve</a>
+
 A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
 
 <b>B&eacute;zier Curves</b>
+
 A B&eacute;zier curve is defined by a series of control points, where
 the first and last control points define the end points of the curve, and
 the remaining control points define the curve's shape, though they don't
 necessarily cross the curve.
 
-**Augments:** <a href="H3DU.Curve.md">H3DU.Curve</a>
-
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point's length represents the size of all the control points.
-* `knots` (Type: Array.&lt;Number>)<br>
+* `knots` (Type: Array.&lt;number>)<br>
     Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i>B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.<br> If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve, in which the first and last control points match the curve's end points.
 
 * `bits` (Type: Boolean) (optional)<br>
@@ -127,7 +128,7 @@ Combination of WEIGHTED_BIT and DIVIDE_BIT.
 ### H3DU.BSplineCurve#accel(u)
 
 Finds an approximate acceleration vector at the given U coordinate of this curve.
-This method calls the evaluator's <code>accel</code>
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
 
@@ -141,14 +142,14 @@ The <b>acceleration</b> of a curve is a vector which is the second derivative of
 #### Return Value
 
 An array describing an acceleration vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineCurve_arcLength'></a>
 ### H3DU.BSplineCurve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
 curve and the point at the given U coordinate of this curve.
-This method calls the evaluator's <code>arcLength</code>
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
 
 The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
@@ -160,7 +161,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;Number>)
+The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineCurve.clamped'></a>
 ### (static) H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])
@@ -174,9 +175,9 @@ and to the line between the next-to-last and last control points.
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
     Array of control points as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
-* `degree` (Type: Number) (optional)<br>
+* `degree` (Type: number) (optional)<br>
     Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
-* `bits` (Type: Number) (optional)<br>
+* `bits` (Type: number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 
 #### Return Value
@@ -205,7 +206,7 @@ and to the line between the next-to-last and last control points.
 
 A clamped uniform knot vector.
 The first knot will be 0 and the last knot will be 1.
-(This is a change in version 2.0.) (Type: Array.&lt;Number>)
+(This is a change in version 2.0.) (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineCurve_endPoints'></a>
 ### H3DU.BSplineCurve#endPoints()
@@ -215,7 +216,7 @@ Returns the starting and coordinates of this curve.
 #### Return Value
 
 A two-element array containing
-the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;Number>)
+the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineCurve_evaluate'></a>
 ### H3DU.BSplineCurve#evaluate(u)
@@ -232,7 +233,7 @@ in a B-spline curve.
 
 An array of the result of
 the evaluation. Its length will be equal to the
-length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
 #### Example
 
@@ -251,7 +252,7 @@ Creates a B-spline curve from the control points of a B&eacute;zier curve.
 
 * `cp` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point's length represents the size of all the control points. </ul>
-* `bits` (Type: Number) (optional)<br>
+* `bits` (Type: number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 
 #### Return Value
@@ -271,7 +272,7 @@ To use this method, you must include the script "extras/spline.js". Example:
 
 * `curve` (Type: Array.&lt;Array.&lt;Number>>)<br>
     An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.
-* `tension` (Type: Number) (optional)<br>
+* `tension` (Type: number) (optional)<br>
     A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).
 
 #### Return Value
@@ -312,12 +313,12 @@ An object described in the constructor to <a href="H3DU.BSplineCurve.md">H3DU.BS
 ### H3DU.BSplineCurve#normal(u)
 
 Finds an approximate principal normal vector at the given U coordinate of this curve.
-This method calls the evaluator's <code>normal</code>
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
 The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
 vector divided by that derivative's length. The normal returned by this method
-<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with H3DU.Surface#gradient.)
+<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with <a href="H3DU.Surface.md#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)
 
 #### Parameters
 
@@ -327,7 +328,7 @@ vector divided by that derivative's length. The normal returned by this method
 #### Return Value
 
 An array describing a normal vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineCurve_split'></a>
 ### H3DU.BSplineCurve#split(u)
@@ -357,9 +358,9 @@ Creates a B-spline curve with uniform knots.
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Number>>)<br>
     Array of control points as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
-* `degree` (Type: Number) (optional)<br>
+* `degree` (Type: number) (optional)<br>
     Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
-* `bits` (Type: Number) (optional)<br>
+* `bits` (Type: number) (optional)<br>
     Bits as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 
 #### Return Value
@@ -385,7 +386,7 @@ passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H
 
 A uniform knot vector. The first
 knot will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: Array.&lt;Number>)
+versions.) (Type: Array.&lt;number>)
 
  <a name='H3DU.BSplineCurve_velocity'></a>
 ### H3DU.BSplineCurve#velocity(u)
@@ -402,4 +403,4 @@ this curve at the given point.
 
 An array giving the velocity vector.
 It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number>)
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)

@@ -56,7 +56,7 @@ H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
  * Each point, except the first and the last, will be tangent to the line that connects the
  * points adjacent to it. The spline starts at the second control point and ends
  * at the next-to-last control point. The array must have at least four control points.
- * @param {Number} [tension] A tension parameter ranging from 0 to 1. Closer to 1
+ * @param {number} [tension] A tension parameter ranging from 0 to 1. Closer to 1
  * means closer to a straight line. If null or omitted, this value is 0.5 (indicating what
  * is commonly called a <i>Catmull-Rom spline</i>).
  * @returns {H3DU.BSplineCurve} A array of cubic B-spline curves describing the

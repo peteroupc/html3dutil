@@ -14,15 +14,15 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
 
-* `params` (Type: Array.&lt;Number>) (optional)<br>
+* `params` (Type: Array.&lt;number>) (optional)<br>
     An object as described in <a href="H3DU.Material.md#H3DU.Material_setParams">H3DU.Material#setParams</a>. <i>Using this parameter as a <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the ambient color is deprecated since version 2.0.</i>
-* `diffuse` (Type: Array.&lt;Number>) (optional)<br>
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo"). <i>This parameter is deprecated.</i>
-* `specular` (Type: Array.&lt;Number>) (optional)<br>
+* `specular` (Type: Array.&lt;number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the specular highlight reflection. <i>This parameter is deprecated.</i>
-* `shininess` (Type: Array.&lt;Number>) (optional)<br>
+* `shininess` (Type: Array.&lt;number>) (optional)<br>
     Specular highlight exponent of this material. <i>This parameter is deprecated.</i>
-* `emission` (Type: Array.&lt;Number>) (optional)<br>
+* `emission` (Type: Array.&lt;number>) (optional)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the additive color emitted by an object. <i>This parameter is deprecated.</i>
 
 ### Members
@@ -220,7 +220,7 @@ object from an RGBA color.
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: Number) (optional)<br>
+* `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
 
 #### Return Value

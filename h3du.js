@@ -192,7 +192,7 @@ var H3DU = {
  * Creates a 3D rendering context from an HTML canvas element.
  * @param {HTMLCanvasElement} canvasElement An HTML
  * canvas element.
- * @param {function} err A function to call if an error occurs in creating
+ * @param {Function} err A function to call if an error occurs in creating
  * the context. The function takes one parameter consisting of a human-
  * readable error message.  If "err" is null, window.alert() will be used instead.
  * @returns {WebGLRenderingContext} A 3D rendering context, or null
@@ -219,7 +219,7 @@ var H3DU = {
 /**
  * Returns whether the given object is a 3D rendering context.
  * @param {Object} context The object to check.
- * @returns {Boolean} Return value.
+ * @returns {boolean} Return value.
  */
   "is3DContext":function(context) {
     "use strict";
@@ -414,7 +414,7 @@ var H3DU = {
  * <code>requestAnimationFrame()</code> callback method.
  * @param {Number} intervalInMs The length of the interval
  * (animation cycle), in milliseconds.
- * @returns {Number} A value in the range [0, 1), where closer
+ * @returns {number} A value in the range [0, 1), where closer
  * to 0 means "timeInMs" lies
  * closer to the start, and closer to 1 means closer
  * to the end of the interval. If an initial time wasn't set, returns 0.
@@ -448,7 +448,7 @@ H3DU.getTimePosition = function(timer, timeInMs, intervalInMs) {
  * This could be the parameter received in a
  * <code>requestAnimationFrame()</code> callback method.
  * </code>.
- * @returns {Number} The number of frame-length intervals relative to
+ * @returns {number} The number of frame-length intervals relative to
  * the last known time held in the parameter "timer".
  * The number can include fractional frames. If an
  * initial time or last known time wasn't set, returns 0.
@@ -933,13 +933,14 @@ H3DU.newFrames = function(timer, timeInMs) {
         for (var i = 0; i < ColorValidator.nc.length; i += 2) {
           ncm[ColorValidator.nc[i]] = ColorValidator.nc[i + 1];
         }
-        ncm.grey = ncm.gray;
-        ncm.darkgrey = ncm.darkgray;
-        ncm.darkslategrey = ncm.darkslategray;
-        ncm.dimgrey = ncm.dimgray;
-        ncm.lightgrey = ncm.lightgray;
-        ncm.lightslategrey = ncm.lightslategray;
-        ncm.slategrey = ncm.slategray;
+        var altnames = ["grey", "gray", "darkgrey", "darkgray",
+          "darkslategrey", "darkslategray", "dimgrey", "dimgray",
+          "lightgrey", "lightgray",
+          "lightslategrey", "lightslategray",
+          "slategrey", "slategray"];
+        for (i = 0; i < altnames.length; i += 2) {
+          ncm[altnames[i]] = ncm[altnames[i + 1]];
+        }
         ColorValidator.namedColorMap = ncm;
       }
       return ColorValidator.namedColorMap;
@@ -1007,10 +1008,10 @@ H3DU.newFrames = function(timer, timeInMs) {
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {Number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} [a] Alpha color component (0-1).
+ * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
- * @returns {Array<Number>} The color as a 4-element array; if the color is
+ * @returns {Array<number>} The color as a 4-element array; if the color is
  * invalid, returns [0,0,0,0], or transparent black. Numbers less
  * than 0 are clamped to 0, and numbers greater than 1 are
  * clamped to 1.

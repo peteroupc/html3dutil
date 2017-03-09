@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
  <a name='H3DU.Curve'></a>
-### H3DU.Curve()
+### H3DU.Curve(curve)
 
 A curve evaluator object for a parametric curve.
 
@@ -17,6 +17,14 @@ dimensions, a curve function has the following form:
 
 where x(u) returns an X coordinate, y(u) a Y coordinate,
 and z(u) returns a Z coordinate.
+
+Specialized curves should <a href="tutorial-subclass.md">subclass</a> this class and implement
+the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
+
+#### Parameters
+
+* `curve` (Type: Object)<br>
+    A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
 
 ### Methods
 
@@ -32,7 +40,7 @@ curve and the point at the given U coordinate of this curve.
 ### H3DU.Curve#accel(u)
 
 Finds an approximate acceleration vector at the given U coordinate of this curve.
-This method calls the evaluator's <code>accel</code>
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
 
@@ -46,14 +54,14 @@ The <b>acceleration</b> of a curve is a vector which is the second derivative of
 #### Return Value
 
 An array describing an acceleration vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
  <a name='H3DU.Curve_arcLength'></a>
 ### H3DU.Curve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
 curve and the point at the given U coordinate of this curve.
-This method calls the evaluator's <code>arcLength</code>
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
 
 The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
@@ -65,7 +73,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;Number>)
+The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;number>)
 
  <a name='H3DU.Curve_endPoints'></a>
 ### H3DU.Curve#endPoints()
@@ -92,18 +100,18 @@ Finds the position of this curve at the given U coordinate.
 #### Return Value
 
 An array describing a position. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
  <a name='H3DU.Curve_normal'></a>
 ### H3DU.Curve#normal(u)
 
 Finds an approximate principal normal vector at the given U coordinate of this curve.
-This method calls the evaluator's <code>normal</code>
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
 The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
 vector divided by that derivative's length. The normal returned by this method
-<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with H3DU.Surface#gradient.)
+<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with <a href="H3DU.Surface.md#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)
 
 #### Parameters
 
@@ -113,13 +121,13 @@ vector divided by that derivative's length. The normal returned by this method
 #### Return Value
 
 An array describing a normal vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
  <a name='H3DU.Curve_velocity'></a>
 ### H3DU.Curve#velocity(u)
 
 Finds an approximate velocity vector at the given U coordinate of this curve.
-This method calls the evaluator's <code>velocity</code>
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).
 
@@ -133,4 +141,4 @@ The <b>velocity</b> of a curve is a vector which is the derivative of the curve'
 #### Return Value
 
 An array describing a velocity vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number>)
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)

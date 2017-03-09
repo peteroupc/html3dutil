@@ -9,13 +9,6 @@
 /* global H3DU */
 (function(global) {
   "use strict";
-  function zeros(count) {
-    var ret = [];
-    for(var i = 0; i < count; i++) {
-      ret.push(0);
-    }
-    return ret;
-  }
   function linear(points, elementsPerValue, t) {
     var ret = [];
     var p0 = points[0];
@@ -23,13 +16,6 @@
     for(var i = 0; i < elementsPerValue; i++) {
       var pp0 = p0[i];
       ret[i] = pp0 + (p1[i] - pp0) * t;
-    }
-    return ret;
-  }
-  function subtract(p1, p0, elementsPerValue) {
-    var ret = [];
-    for(var i = 0; i < elementsPerValue; i++) {
-      ret[i] = p1[i] - p0[i];
     }
     return ret;
   }
@@ -84,21 +70,22 @@
  * to create a B&eacute;zier curve.
  * @memberof H3DU
  * @param {Array<Array<Number>>} cp An array of control points as specified in {@link H3DU.BSplineCurve.fromBezierCurve}.
- * @param {Number} [u1] No longer used since version 2.0. The starting and ending
+ * @param {number} [u1] No longer used since version 2.0. The starting and ending
  * points will be (0, 0). (This parameter was the starting point for the
  * purpose of interpolation.)
- * @param {Number} [u2] No longer used since version 2.0. The starting and ending
+ * @param {number} [u2] No longer used since version 2.0. The starting and ending
  * points will be (0, 0). (This parameter was the ending point for the
  * purpose of interpolation.)
  */
-  H3DU.BezierCurve = function(cp) {
+  H3DU.BezierCurve = function(cp, u1, u2) {
+    if(typeof u1 !== "undefined" && u1 !== null || typeof u2 !== "undefined" && u2 !== null)console.warn("Unused parameters u1 and/or u2 given");
     this.curve = H3DU.BSplineCurve.clamped(cp, cp.length - 1, 0);
   };
-
-  H3DU.BezierCurve.prototype=Object.assign(Object.create(H3DU.Curve.prototype),H3DU.BezierCurve.prototype);
+  H3DU.BezierCurve.prototype = Object.create(H3DU.Curve.prototype);
+  H3DU.BezierCurve.prototype.constructor = H3DU.BezierCurve;
 /**
  * Returns the starting and ending U coordinates of this curve.
- * @returns {Array<Number>} A two-element array. The first and second
+ * @returns {Array<number>} A two-element array. The first and second
  * elements are the starting and ending U coordinates, respectively, of the curve.
  * @instance
  */
@@ -110,7 +97,7 @@
  * in a B&eacute;zier curve.
  * @param {Number} u Point on the curve to evaluate (generally within the range
  * given in the constructor).
- * @returns {Array<Number>} An array of the result of
+ * @returns {Array<number>} An array of the result of
  * the evaluation. It will have as many elements as a control point, as specified in the constructor.
  * @example
  * // Generate 11 points forming the B&eacute;zier curve.
@@ -132,22 +119,24 @@
  * @memberof H3DU
  * @param {Array<Array<Number>>} cp An array of control point
  * arrays as specified in {@link H3DU.BSplineSurface.fromBezierSurface}.
- * @param {Number} [u1] No longer used since version 2.0. The starting and ending
+ * @param {number} [u1] No longer used since version 2.0. The starting and ending
  * points will be (0, 0). (This parameter was the starting point for the
  * purpose of interpolation along the U axis.)
- * @param {Number} [u2] No longer used since version 2.0. The starting and ending
+ * @param {number} [u2] No longer used since version 2.0. The starting and ending
  * points will be (0, 0). (This parameter was the ending point for the
  * purpose of interpolation along the U axis.)
- * @param {Number} [v1] No longer used since version 2.0. The starting and ending
+ * @param {number} [v1] No longer used since version 2.0. The starting and ending
  * points will be (0, 0). (This parameter was the starting point for the
  * purpose of interpolation along the V axis.)
- * @param {Number} [v2] No longer used since version 2.0. The starting and ending
+ * @param {number} [v2] No longer used since version 2.0. The starting and ending
  * points will be (0, 0). (This parameter was the ending point for the
  * purpose of interpolation along the V axis.)
  */
   H3DU.BezierSurface = function(cp) {
     this.surface = H3DU.BSplineSurface.clamped(cp, cp[0].length - 1, cp.length - 1, 0);
   };
+  H3DU.BezierSurface.prototype = Object.create(H3DU.Surface.prototype);
+  H3DU.BezierSurface.prototype.constructor = H3DU.BezierSurface;
 
 /**
  * Evaluates the surface function based on a point
@@ -155,7 +144,7 @@
  * @param {Number} u U coordinate of the surface to evaluate (generally within the range
  * given in the constructor).
  * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} An array of the result of
+ * @returns {Array<number>} An array of the result of
  * the evaluation. It will have as many elements as a control point, as specified in the constructor.
  * @instance
  */
@@ -164,7 +153,7 @@
   };
 /**
  * Returns the starting and ending U and V coordinates of this surface.
- * @returns {Array<Number>} A four-element array. The first and second
+ * @returns {Array<number>} A four-element array. The first and second
  * elements are the starting and ending U coordinates, respectively, of the surface, and the third
  * and fourth elements are its starting and ending V coordinates.
  * @instance
@@ -187,7 +176,7 @@
  * control point is an array with the same length as the other control points.
  * It is assumed that the first control point's length represents the size of all the control
  * points.
- * @param {Array<Number>} knots Knot vector of the curve.
+ * @param {Array<number>} knots Knot vector of the curve.
  * Its size must be at least 2 plus the number of control
  * points and not more than twice the number of control points.<br>
  * The length of this parameter minus 1, minus the number
@@ -252,6 +241,8 @@
     this.buffer = [];
     this.controlPoints = controlPoints;
   };
+  H3DU.BSplineCurve.prototype = Object.create(H3DU.Curve.prototype);
+  H3DU.BSplineCurve.prototype.constructor = H3DU.BSplineCurve;
 
 /**
  * Indicates whether the last coordinate of each control point is a
@@ -409,7 +400,7 @@
  * NOTE: Since version 2.0, this parameter is no longer scaled according
  * to the curve's knot vector. To get the curve's extents, call this object's
  * <code>endPoints</code> method.
- * @returns {Array<Number>} An array of the result of
+ * @returns {Array<number>} An array of the result of
  * the evaluation. Its length will be equal to the
  * length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor.
  * @example
@@ -632,7 +623,7 @@
 
 /**
  * Returns the starting and coordinates of this curve.
- * @returns {Array<Number>} A two-element array containing
+ * @returns {Array<number>} A two-element array containing
  * the starting and ending U coordinates, respectively, of the curve.
  * @instance
  */
@@ -656,7 +647,7 @@
  * Finds the velocity (derivative) of
  * this curve at the given point.
  * @param {Number} u Point on the curve to evaluate.
- * @returns {Array<Number>} An array giving the velocity vector.
+ * @returns {Array<number>} An array giving the velocity vector.
  * It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
  * @instance
@@ -667,10 +658,10 @@
       var cp = this.controlPoints;
       switch(cp.length) {
       case 1:
-        ret = zeros(cp[0].length);
+        ret = H3DU._MathInternal.vecZeros(cp[0].length);
         break;
       case 2:
-        ret = subtract(cp[1], cp[0], cp[0].length);
+        ret = H3DU._MathInternal.vecSub(cp[1], cp[0]);
         break;
       case 3:
         ret = bezierQuadraticDerivative(cp, cp[0].length, u);
@@ -757,9 +748,9 @@
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Array<Number>} knotsU Knot vector of the curve, along the U axis.
+ * @param {Array<number>} knotsU Knot vector of the curve, along the U axis.
  * For more information, see {@link H3DU.BSplineCurve}.
- * @param {Array<Number>} knotsV Knot vector of the curve, along the V axis.
+ * @param {Array<number>} knotsV Knot vector of the curve, along the V axis.
  * @param {Boolean} [bits] Bits for defining input
  * and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
  * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
@@ -799,6 +790,8 @@
     this.bufferV = [];
     this.controlPoints = cpoints;
   };
+  H3DU.BSplineSurface.prototype = Object.create(H3DU.Surface.prototype);
+  H3DU.BSplineSurface.prototype.constructor = H3DU.BSplineSurface;
 /**
  * Creates a B-spline curve with uniform knots, except that
  * the curve will start and end at the first and last control points and will
@@ -806,10 +799,10 @@
  * and to the line between the next-to-last and last control points.
  * @param {Array<Array<Number>>} controlPoints Array of
  * control points as specified in the {@link H3DU.BSplineCurve} constructor.
- * @param {Number} [degree] Degree of the B-spline
+ * @param {number} [degree] Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
  * If null or omitted, the default is 3.
- * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
+ * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
  * @returns {H3DU.BSplineCurve} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
@@ -830,7 +823,7 @@
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
+ * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
  * @returns {H3DU.BSplineCurve} Return value.
  */
   H3DU.BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
@@ -841,10 +834,10 @@
    * Creates a B-spline curve with uniform knots.
    * @param {Array<Array<Number>>} controlPoints Array of
    * control points as specified in the {@link H3DU.BSplineCurve} constructor.
-   * @param {Number} [degree] Degree of the B-spline
+   * @param {number} [degree] Degree of the B-spline
    * curve. For example, 3 means a degree-3 (cubic) curve.
    * If null or omitted, the default is 3.
-   * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
+   * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
    * @returns {H3DU.BSplineCurve} Return value. The first
    * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
    * versions.)
@@ -859,13 +852,13 @@
  * the surface's edges lie on the edges of the control point array.
  * @param {Array<Array<Array<Number>>>} controlPoints Array of
  * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
- * @param {Number} [degreeU] Degree of the B-spline
+ * @param {number} [degreeU] Degree of the B-spline
  * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
  * If null or omitted, the default is 3.
- * @param {Number} [degreeV] Degree of the B-spline
+ * @param {number} [degreeV] Degree of the B-spline
  * surface along the V axis
  * If null or omitted, the default is 3.
- * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
+ * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
  * @returns {H3DU.BSplineSurface} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
@@ -879,13 +872,13 @@
  * Creates a B-spline surface with uniform knots.
  * @param {Array<Array<Array<Number>>>} controlPoints Array of
  * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
- * @param {Number} [degreeU] Degree of the B-spline
+ * @param {number} [degreeU] Degree of the B-spline
  * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
  * If null or omitted, the default is 3.
- * @param {Number} [degreeV] Degree of the B-spline
+ * @param {number} [degreeV] Degree of the B-spline
  * surface along the V axis
  * If null or omitted, the default is 3.
- * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
+ * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
  * @returns {H3DU.BSplineSurface} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
@@ -902,7 +895,7 @@
  * @param {Number} degree Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
  * If null or omitted, the default is 3.
- * @returns {Array<Number>} A uniform knot vector. The first
+ * @returns {Array<number>} A uniform knot vector. The first
  * knot will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
  */
@@ -930,7 +923,7 @@
  * @param {Number} degree Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
  * If null or omitted, the default is 3.
- * @returns {Array<Number>} A clamped uniform knot vector.
+ * @returns {Array<number>} A clamped uniform knot vector.
  * The first knot will be 0 and the last knot will be 1.
  * (This is a change in version 2.0.)
  */
@@ -964,7 +957,7 @@
  * To get the surface's extents, call this object's
  * <code>endPoints</code> method.
  * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} An array of the result of
+ * @returns {Array<number>} An array of the result of
  * the evaluation. It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
  * @instance
@@ -1008,7 +1001,7 @@
  * given point on the surface.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} An array giving the tangent vector.
+ * @returns {Array<number>} An array giving the tangent vector.
  * It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
  * @instance
@@ -1050,7 +1043,7 @@
  * given point on the surface.
  * @param {Number} u U coordinate of the surface to evaluate.
  * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} An array giving the bitangent vector.
+ * @returns {Array<number>} An array giving the bitangent vector.
  * It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
  * @instance
@@ -1111,7 +1104,7 @@
    * surface along the U axis.
    * <li>The number of elements in the first control point represents the number of elements in all the control points.
    * </ul>
-   * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
+   * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
    * @returns {H3DU.BSplineSurface} Return value.
    */
   H3DU.BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
@@ -1174,9 +1167,8 @@
 /**
  * Specifies a parametric curve function for generating normals.
  * @deprecated Use the "vertex" method instead.
- * @param {Object} evaluator An object that must contain a function
- * named <code>evaluate</code>, giving 3 values as a result.
- * </ul>
+ * @param {Object} evaluator An object that must contain a method
+ * named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.
  * @returns {H3DU.CurveEval} This object.
  * @instance
  */
@@ -1186,9 +1178,8 @@
   };
 /**
  * Specifies a parametric curve function for generating color values.
- * @param {Object} evaluator An object that must contain a function
- * named <code>evaluate</code>, giving 3 values as a result.
- * </ul>
+ * @param {Object} evaluator An object that must contain a method
+ * named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.
  * @returns {H3DU.CurveEval} This object.
  * @instance
  */
@@ -1198,9 +1189,8 @@
   };
 /**
  * Specifies a parametric curve function for generating texture coordinates.
- * @param {Object} evaluator An object that must contain a function
- * named <code>evaluate</code>, giving one or two values as a result.
- * </ul>
+ * @param {Object} evaluator An object that must contain a method
+ * named <code>evaluate</code> that takes a single U coordinate and returns a 1- or 2-element array.
  * @returns {H3DU.CurveEval} This object.
  * @instance
  */
@@ -1286,16 +1276,16 @@
  * function.
  * @param {H3DU.Mesh} mesh A geometric mesh where the vertices will be
  * generated.
- * @param {Number} [mode] If this value is H3DU.Mesh.LINES, or is null
+ * @param {number} [mode] If this value is H3DU.Mesh.LINES, or is null
  * or omitted, generates
  * a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
- * @param {Number} [n] Number of subdivisions of the curve to be drawn.
+ * @param {number} [n] Number of subdivisions of the curve to be drawn.
  * Default is 24.
- * @param {Number} [u1] Starting point of the curve.
+ * @param {number} [u1] Starting point of the curve.
  * Default is the starting coordinate given by the [curve evaluator object]{@link H3DU.Curve}, or 0 if not given.
- * @param {Number} [u2] Ending point of the curve.
+ * @param {number} [u2] Ending point of the curve.
  * Default is the ending coordinate given by the [curve evaluator object]{@link H3DU.Curve}, or 1 if not given.
  * @returns {H3DU.CurveEval} This object.
  * @instance
@@ -1361,32 +1351,8 @@
   };
 /**
  * Specifies a surface evaluator object for generating the vertex positions of a parametric surface.
- * @param {Object} evaluator A <b>surface evaluator object</b>, which is an object that may contain the
- * following methods (except that <code>evaluate</code> is required):<ul>
- * <li><code>evaluate(u, v)</code> - Required. Takes a horizontal-axis coordinate (<code>u</code>),
- * generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1.
- * This method returns a vector of the result of the evaluation.
- * <li><code>endPoints()</code> - Optional. Returns a four-element array. The first and second
- * elements are the starting and ending U coordinates, respectively, of the surface, and the third
- * and fourth elements are its starting and ending V coordinates. If not given, the default end points are <code>[0, 1, 0, 1]</code>.
- * <li><a id="tangentvector"></a><code>tangent(u, v)</code> - Optional. Takes the same parameters as <code>evaluate</code>
- * and returns the tangent vector of the surface at the given coordinates. <br>
- * The <b>tangent vector</b> is the vector pointing in the direction of the U axis,
- * or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
- * The tangent vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * <li><a id="bitangentvector"></a><code>bitangent(u, v)</code> -
- * Optional. Takes the same parameters as <code>evaluate</code>
- * and returns the bitangent vector of the surface at the given coordinates.<br>
- * The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively,
- * the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>.  The bitangent vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * <li><code>gradient(u, v)</code> - Optional. Takes the same parameters as <code>evaluate</code>
- * and returns the gradient of the surface at the given coordinates.<br>
- * The <b>gradient</b> is a vector pointing up and away from the surface.
- * If the evaluator describes a regular surface (usually
- * a continuous, unbroken surface such as a sphere, disk, or open
- * cylinder), this can be the cross product of the tangent vector and bitangent vector,
- * in that order. The gradient returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * </ul>
+ * @param {H3DU.Surface|Object} evaluator An object described in {@link H3DU.Surface}.
+ * Can be null, in which case, disables generating vertex positions.
  * @returns {H3DU.SurfaceEval} This object.
  * @example <caption>The following example sets the vertex position and
  * normal generation
@@ -1394,7 +1360,7 @@
  * from the vector calculation method, that method is also given below. To
  * derive the normal calculation, first look at the vector function:<p>
  * <b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
- * Then, find the partial derivatives with respect to u and v:<p>
+ * Then, find the tangent and bitangent vectors:<p>
  * &#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
  * &#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
  * Next, take their cross product:<p>
@@ -1415,7 +1381,6 @@
  * @instance
  */
   H3DU.SurfaceEval.prototype.vertex = function(evaluator) {
-    // TODO: Document null behavior like CurveEval
     this.vertexSurface = evaluator;
     this.generateNormals = this.normalSurface || !!this.autoNormal ||
     typeof this.vertexSurface !== "undefined" && this.vertexSurface !== null &&
@@ -1426,9 +1391,8 @@
  * Specifies a parametric surface function for generating normals.
  * @deprecated Use the "vertex" method instead, specifying an object
  * that implements a method named "gradient".
- * @param {Object} evaluator An object that must contain a function
- * named <code>evaluate</code>, giving 3 values as a result. See {@link H3DU.SurfaceEval#vertex}.
- * </ul>
+ * @param {Object} evaluator An object that must contain a method
+ * named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 3-element array.
  * @returns {H3DU.SurfaceEval} This object.
  * @instance
  */
@@ -1441,9 +1405,8 @@
   };
 /**
  * Specifies a parametric surface function for generating color values.
- * @param {Object} evaluator An object that must contain a function
- * named <code>evaluate</code>, giving 3 values as a result. See {@link H3DU.SurfaceEval#vertex}.
- * </ul>
+ * @param {Object} evaluator An object that must contain a method
+ * named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 3-element array.
  * @returns {H3DU.SurfaceEval} This object.
  * @instance
  */
@@ -1453,9 +1416,8 @@
   };
 /**
  * Specifies a parametric surface function for generating texture coordinates.
- * @param {Object} evaluator An object that must contain a function
- * named <code>evaluate</code>, giving 2 values as a result. See {@link H3DU.SurfaceEval#vertex}.
- * </ul>
+ * @param {Object} evaluator An object that must contain a method
+ * named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 2-element array.
  * @returns {H3DU.SurfaceEval} This object.
  * @example <caption>The following example sets the surface
  * function to a linear evaluator. Thus, coordinates passed to the
@@ -1468,141 +1430,6 @@
   H3DU.SurfaceEval.prototype.texCoord = function(evaluator) {
     this.texCoordSurface = evaluator;
     return this;
-  };
-/** @ignore */
-  H3DU.SurfaceEval._EPSILON = 0.00001;
-/** @ignore */
-  H3DU.SurfaceEval._tangentHelper = function(e, u, v, sampleAtPoint) {
-    var du = H3DU.SurfaceEval._EPSILON;
-    var vector = e.evaluate(u + du, v);
-    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
-    // too abrupt, try the other direction
-      du = -du;
-      vector = e.evaluate(u + du, v);
-    }
-    H3DU.Math.vec3subInPlace(vector, sampleAtPoint);
-    H3DU.Math.vec3scaleInPlace(vector, 1.0 / du);
-    return vector;
-  };
-/** @ignore */
-  H3DU.SurfaceEval._bitangentHelper = function(e, u, v, sampleAtPoint) {
-    var du = H3DU.SurfaceEval._EPSILON;
-   // Find the partial derivatives of u and v
-    var vector = e.evaluate(u, v + du);
-    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
-    // too abrupt, try the other direction
-      du = -du;
-      vector = e.evaluate(u, v + du);
-    }
-    H3DU.Math.vec3subInPlace(vector, sampleAtPoint);
-    H3DU.Math.vec3scaleInPlace(vector, 1.0 / du);
-    return vector;
-  };
-
-/** @ignore */
-  H3DU.SurfaceEval._vecLength = function(vec) {
-    var dsq = 0;
-    for(var i = 0; i < vec.length; i++) {
-      dsq += vec[i] * vec[i];
-    }
-    return Math.sqrt(dsq);
-  };
-/**
- * Finds an approximate [gradient vector]{@link H3DU.SurfaceEval#vertex} for
- * the given surface evaluator
- * at the given U and V coordinates.<p>This method calls the evaluator's <code>gradient</code>
- * method if it implements it; otherwise, calls the evaluator's <code>bitangent</code> and <code>tangent</code> methods if it implements them; otherwise, does a numerical differentiation using the <code>evaluate</code> method.
- * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U coordinate of the surface to evaluate.
- * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} A gradient vector.
- */
-  H3DU.SurfaceEval.findGradient = function(e, u, v) {
-    if(typeof e.gradient !== "undefined" && e.gradient !== null) {
-      return e.gradient(u, v);
-    }
-    var tan, bitan;
-    if(typeof e.bitangent !== "undefined" && e.bitangent !== null && (typeof e.tangent !== "undefined" && e.tangent !== null)) {
-      bitan = e.bitangent(u, v);
-      tan = e.tangent(u, v);
-    } else {
-      var sample = e.evaluate(u, v);
-      bitan = H3DU.SurfaceEval._bitangentHelper(e, u, v, sample);
-      tan = H3DU.SurfaceEval._tangentHelper(e, u, v, sample);
-    }
-    if(H3DU.SurfaceEval._vecLength(bitan) === 0) {
-      return tan;
-    }
-    if(H3DU.SurfaceEval._vecLength(tan) !== 0) {
-      return H3DU.Math.vec3cross(tan, bitan);
-    } else {
-      return bitan;
-    }
-  };
-/**
- * Finds an approximate [tangent vector]{@link H3DU.SurfaceEval#vertex} for the given surface evaluator object
- * at the given U and V coordinates. This method calls the evaluator's <code>tangent</code>
- * method if it implements it; otherwise, does a numerical differentiation
- * with respect to the U axis using the <code>evaluate</code> method.
- * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U coordinate of the surface to evaluate.
- * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} A tangent vector .
- */
-  H3DU.SurfaceEval.findTangent = function(e, u, v) {
-    return typeof e.tangent !== "undefined" && e.tangent !== null ? e.tangent(u, v) :
-     H3DU.SurfaceEval._tangentHelper(e, u, v, e.evaluate(u, v));
-  };
-/**
- * Finds an approximate [bitangent vector]{@link H3DU.SurfaceEval#vertex} for the given surface evaluator object
- * at the given U and V coordinates. This method calls the evaluator's <code>bitangent</code>
- * method if it implements it; otherwise, does a numerical differentiation
- * with respect to the V axis using the <code>evaluate</code> method.
- * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @param {Number} u U coordinate of the surface to evaluate.
- * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} A bitangent vector .
- */
-  H3DU.SurfaceEval.findBitangent = function(e, u, v) {
-    return typeof e.bitangent !== "undefined" && e.bitangent !== null ? e.bitangent(u, v) :
-     H3DU.SurfaceEval._bitangentHelper(e, u, v, e.evaluate(u, v));
-  };
-/**
- * Wraps a surface evaluator object to one that implements all
- * methods defined in the documentation for {@link H3DU.SurfaceEval#vertex}.
- * @param {Object} evaluator The surface evaluator object to wrap.
- * @returns {Object} A wrapper for the given surface evaluator object.
- */
-  H3DU.SurfaceEval.wrapEvaluator = function(evaluator) {
-    return {
-      "evaluate":function(u, v) {
-        return evaluator.evaluate(u, v);
-      },
-      "bitangent":function(u, v) {
-        return H3DU.SurfaceEval.findBitangent(evaluator, u, v);
-      },
-      "tangent":function(u, v) {
-        return H3DU.SurfaceEval.findTangent(evaluator, u, v);
-      },
-      "gradient":function(u, v) {
-        return H3DU.SurfaceEval.findGradient(evaluator, u, v);
-      },
-      "endPoints":function() {
-        return H3DU.SurfaceEval.findEndPoints(evaluator);
-      }
-    };
-  };
-
-/**
- * Finds the end points of the surface described by the given [surface evaluator object]{@link H3DU.SurfaceEval#vertex}.
- * This method calls the evaluator's <code>endPoints</code>
- * method if it implements it; otherwise, returns <code>[0, 1]</code>
- * @param {Object} e An object described in {@link H3DU.SurfaceEval#vertex}.
- * @returns {Array<Number>} A four-element array giving the surface's end points.
- */
-  H3DU.SurfaceEval.findEndPoints = function(e) {
-    if(typeof e !== "undefined" && e !== null && (typeof e.endPoints !== "undefined" && e.endPoints !== null))return e.endPoints();
-    return [0, 1, 0, 1];
   };
 /** @ignore */
   H3DU._OLD_VALUES_SIZE = 8;
@@ -1693,8 +1520,7 @@
       buffer[index + 1] = vertex[1];
       buffer[index + 2] = vertex[2];
       if(this.autoNormal) {
-        normal = H3DU.Math.vec3normalize(H3DU.SurfaceEval.findGradient(
-            this.vertexSurface, u, v));
+        normal = this.vertexSurface.normal(u, v);
         buffer[index + 3] = normal[0];
         buffer[index + 4] = normal[1];
         buffer[index + 5] = normal[2];
@@ -1724,23 +1550,23 @@
  * will be generated. When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {Number} [mode] If this value is H3DU.Mesh.TRIANGLES, or is null
+ * @param {number} [mode] If this value is H3DU.Mesh.TRIANGLES, or is null
  * or omitted, generates a series of triangles defining the surface. If
  * this value is H3DU.Mesh.LINES, generates
  * a series of lines defining the surface. If this value is H3DU.Mesh.POINTS,
  * generates a series of points along the surface. For any other value,
  * this method has no effect.
- * @param {Number} [un] Number of subdivisions along the U axis.
+ * @param {number} [un] Number of subdivisions along the U axis.
  * Default is 24.
- * @param {Number} [vn] Number of subdivisions along the V axis.
+ * @param {number} [vn] Number of subdivisions along the V axis.
  * Default is 24.
- * @param {Number} [u1] Starting U coordinate of the surface to evaluate.
+ * @param {number} [u1] Starting U coordinate of the surface to evaluate.
  * Default is the starting U coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 0 if not given.
- * @param {Number} [u2] Ending U coordinate of the surface to evaluate.
+ * @param {number} [u2] Ending U coordinate of the surface to evaluate.
  * Default is the ending U coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 1 if not given.
- * @param {Number} [v1] Starting V coordinate of the surface to evaluate.
+ * @param {number} [v1] Starting V coordinate of the surface to evaluate.
  * Default is the starting V coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 0 if not given.
- * @param {Number} [v2] Ending V coordinate of the surface to evaluate.
+ * @param {number} [v2] Ending V coordinate of the surface to evaluate.
  * Default is the ending V coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 1 if not given.
  * @returns {H3DU.SurfaceEval} This object.
  * @instance
@@ -1753,12 +1579,12 @@
     if(typeof mode === "undefined" || mode === null)mode = H3DU.Mesh.TRIANGLES;
     var endPoints = null;
     if(typeof v1 === "undefined" && typeof v2 === "undefined") {
-      if(!endPoints)endPoints = H3DU.SurfaceEval.findEndPoints(this.vertexSurface);
+      if(!endPoints)endPoints = typeof this.vertexSurface !== "undefined" && this.vertexSurface !== null ? this.vertexSurface.endPoints() : [0, 1];
       v1 = endPoints[2];
       v2 = endPoints[3];
     }
     if(typeof u1 === "undefined" && typeof u2 === "undefined") {
-      if(!endPoints)endPoints = H3DU.SurfaceEval.findEndPoints(this.vertexSurface);
+      if(!endPoints)endPoints =  typeof this.vertexSurface !== "undefined" && this.vertexSurface !== null ? this.vertexSurface.endPoints() : [0, 1];
       u1 = endPoints[0];
       u2 = endPoints[1];
     }

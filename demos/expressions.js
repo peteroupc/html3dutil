@@ -109,7 +109,7 @@ var Operator = function(name) {
 };
 /**
  * Converts this expression to a string.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Operator.prototype.toString = function() {
@@ -159,7 +159,7 @@ var Expression = function() {
 /**
  * Determines whether the object is an operation, variable, or constant.
  * @param {Object} x The object to check.
- * @returns {Boolean} True if the object is an operation, variable, or constant; otherwise, false.
+ * @returns {boolean} True if the object is an operation, variable, or constant; otherwise, false.
  */
 Expression.isExpr = function(x) {
   "use strict";
@@ -295,7 +295,7 @@ Expression.simplifyNodes = function(nodes) {
 };
 /**
  * Converts this expression to a string.
- * @returns {String} This expresion converted to a string.
+ * @returns {string} This expresion converted to a string.
  * @instance
  */
 Expression.prototype.toString = function() {
@@ -305,7 +305,7 @@ Expression.prototype.toString = function() {
 
 /**
  * Gets the number of operands in this operation.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 Operation.prototype.length = function() {
@@ -325,7 +325,7 @@ Operation.prototype.get = function(index) {
 /**
  * Returns whether this operation is of the given type.
  * @param {String} op An operation type such as "plus" or "pow".
- * @returns {Boolean} True if this operation is of the given type; otherwise, false.
+ * @returns {boolean} True if this operation is of the given type; otherwise, false.
  * @instance
  */
 Operation.prototype.isOperation = function(op) {
@@ -335,7 +335,7 @@ Operation.prototype.isOperation = function(op) {
 /**
  * Returns whether this object is equal to another.
  * @param {Object} x Another object.
- * @returns {Boolean} True if both objects are operations and have the same properties.
+ * @returns {boolean} True if both objects are operations and have the same properties.
  * @instance
  */
 Operation.prototype.equals = function(x) {
@@ -533,7 +533,7 @@ Operation.prototype.degen = function() {
 };
 /**
  * Gets the value of this constant.
- * @returns {String} The value of this constant, or null if this expression isn't a constant.
+ * @returns {string} The value of this constant, or null if this expression isn't a constant.
  * @instance
  */
 Operation.prototype.constantValue = function() {
@@ -714,7 +714,7 @@ Operation.prototype.divide = function(x) {
 };
 /**
  * Converts this expression to a string that JavaScript can evaluate.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Operation.prototype.toJSString = function() {
@@ -775,7 +775,7 @@ Operation.prototype.toJSString = function() {
 };
 /**
  * Converts this expression to a string.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Operation.prototype.toString = function() {
@@ -826,7 +826,7 @@ Operation.prototype.toString = function() {
 
 /**
  * Returns whether this variable is an operation.
- * @returns {Boolean} Always false.
+ * @returns {boolean} Always false.
  * @instance
  */
 Variable.prototype.isOperation = function() {
@@ -844,7 +844,7 @@ Variable.prototype.copy = function() {
 };
 /**
  * Gets the value of this variable.
- * @returns {String} Null, since variables are not constants.
+ * @returns {string} Null, since variables are not constants.
  * @instance
  */
 Variable.prototype.constantValue = function() {
@@ -854,7 +854,7 @@ Variable.prototype.constantValue = function() {
 /**
  * Returns whether this object is equal to another.
  * @param {Object} x Another object.
- * @returns {Boolean} True if both objects are variables and have the same name and sign.
+ * @returns {boolean} True if both objects are variables and have the same name and sign.
  * @instance
  */
 Variable.prototype.equals = function(x) {
@@ -870,7 +870,7 @@ Variable.prototype.equals = function(x) {
 };
 /**
  * Converts this expression to a string that JavaScript can evaluate.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Variable.prototype.toJSString = function() {
@@ -879,7 +879,7 @@ Variable.prototype.toJSString = function() {
 };
 /**
  * Converts this expression to a string.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Variable.prototype.toString = function() {
@@ -984,7 +984,7 @@ Constant.prototype.copy = function() {
 };
 /**
  * Returns whether this constant is an operation.
- * @returns {Boolean} Always false.
+ * @returns {boolean} Always false.
  * @instance
  */
 Constant.prototype.isOperation = function() {
@@ -994,7 +994,7 @@ Constant.prototype.isOperation = function() {
 /**
  * Returns whether this object is equal to another.
  * @param {Object} x Another object.
- * @returns {Boolean} True if both objects are constants and have the same value.
+ * @returns {boolean} True if both objects are constants and have the same value.
  * @instance
  */
 Constant.prototype.equals = function(x) {
@@ -1007,7 +1007,7 @@ Constant.prototype.equals = function(x) {
 };
 /**
  * Gets the value of this constant.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Constant.prototype.constantValue = function() {
@@ -1021,7 +1021,7 @@ Constant.prototype.degen = function() {
 };
 /**
  * Converts this expression to a string that JavaScript can evaluate.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Constant.prototype.toJSString = function() {
@@ -1034,7 +1034,7 @@ Constant.prototype.toJSString = function() {
 };
 /**
  * Converts this expression to a string.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 Constant.prototype.toString = function() {

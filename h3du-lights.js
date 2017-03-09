@@ -76,7 +76,7 @@ H3DU.Lights._createNewLight = function(index) {
 };
 /**
  * Gets the number of lights defined in this object.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Lights.prototype.getCount = function() {
@@ -127,11 +127,11 @@ H3DU.Lights.prototype.setParams = function(index, params) {
  * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @param {Array<Number>} direction A 3-element array giving the X, Y, and Z world space
+ * @param {Array<number>} direction A 3-element array giving the X, Y, and Z world space
  * components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector's direction from the origin (0, 0, 0).
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
+ * @param {Array<number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
+ * @param {Array<number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the specular highlight color will
  * remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
@@ -152,10 +152,10 @@ H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, 
  * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @param {Array<Number>} position A 3-element array giving the X, Y, and Z world space
+ * @param {Array<number>} position A 3-element array giving the X, Y, and Z world space
  * coordinates, respectively, of the light's position.
- * @param {Array<Number>} [diffuse] Diffuse color, as described in {@link H3DU.Lights.setDirectionalLight}.
- * @param {Array<Number>} [specular] Specular color, as described in {@link H3DU.Lights.setDirectionalLight}.
+ * @param {Array<number>} [diffuse] Diffuse color, as described in {@link H3DU.Lights.setDirectionalLight}.
+ * @param {Array<number>} [specular] Specular color, as described in {@link H3DU.Lights.setDirectionalLight}.
  * @returns {H3DU.Lights} This object.
  * @instance
  */
@@ -178,7 +178,7 @@ H3DU.Lights.prototype.setPointLight = function(index, position, diffuse, specula
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {Number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} [a] Alpha color component (0-1).
+ * @param {number} [a] Alpha color component (0-1).
  * Currently not used.
  * @returns {H3DU.Scene3D} This object.
  * @instance

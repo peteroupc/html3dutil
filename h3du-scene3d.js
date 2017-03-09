@@ -393,7 +393,7 @@ H3DU.Scene3D.prototype.setUseDevicePixelRatio = function(value) {
 };
  /**
   * Gets the color used when clearing the screen each frame.
-  * @returns {Array<Number>} An array of four numbers, from 0 through
+  * @returns {Array<number>} An array of four numbers, from 0 through
   * 1, specifying the red, green, blue, and alpha components of the color.
   * @instance
   */
@@ -422,7 +422,7 @@ H3DU.Scene3D.prototype.useProgram = function() {
  * Will be rounded up.
  * @param {Number} height Height of the scene, in pixels.
  * Will be rounded up.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.setDimensions = function(width, height) {
@@ -445,7 +445,7 @@ H3DU.Scene3D.prototype.setDimensions = function(width, height) {
  * Gets the viewport width for this scene.
  * Note that if auto-resizing is enabled, this value may change
  * after each call to the render() method.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.getWidth = function() {
@@ -456,7 +456,7 @@ H3DU.Scene3D.prototype.getWidth = function() {
  * Gets the viewport height for this scene.
  * Note that if auto-resizing is enabled, this value may change
  * after each call to the render() method.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.getHeight = function() {
@@ -468,7 +468,7 @@ H3DU.Scene3D.prototype.getHeight = function() {
  * divided by getHeight()).
  * Note that if auto-resizing is enabled, this value may change
  * after each call to the render() method.
- * @returns {Number} Aspect ratio, or 1 if height is 0.
+ * @returns {number} Aspect ratio, or 1 if height is 0.
  * @instance
  */
 H3DU.Scene3D.prototype.getAspect = function() {
@@ -479,7 +479,7 @@ H3DU.Scene3D.prototype.getAspect = function() {
 };
 /**
  * Gets the width for this scene as actually displayed on the screen.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.getClientWidth = function() {
@@ -488,7 +488,7 @@ H3DU.Scene3D.prototype.getClientWidth = function() {
 };
 /**
  * Gets the height for this scene as actually displayed on the screen.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.getClientHeight = function() {
@@ -498,7 +498,7 @@ H3DU.Scene3D.prototype.getClientHeight = function() {
 /**
  * Gets the ratio of width to height for this scene,
  * as actually displayed on the screen.
- * @returns {Number} Aspect ratio, or 1 if height is 0.
+ * @returns {number} Aspect ratio, or 1 if height is 0.
  * @instance
  */
 H3DU.Scene3D.prototype.getClientAspect = function() {
@@ -520,7 +520,7 @@ H3DU.Scene3D.prototype.createBuffer = function() {
 /**
  * Gets the current projection matrix for this scene.
  * @deprecated Use {@link H3DU.Batch3D} instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @returns {Array<Number>} Return value.
+ * @returns {Array<number>} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.getProjectionMatrix = function() {
@@ -534,7 +534,7 @@ H3DU.Scene3D.prototype.getProjectionMatrix = function() {
 /**
  * Gets the current view matrix for this scene.
  * @deprecated Use {@link H3DU.Batch3D} instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @returns {Array<Number>} Return value.
+ * @returns {Array<number>} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.getViewMatrix = function() {
@@ -597,7 +597,7 @@ H3DU.Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
  * plane. A positive value means the plane is in front of the viewer.
  * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
- * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
+ * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height). If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
  * @instance
@@ -623,7 +623,7 @@ H3DU.Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near,
  * @param {Number} bottom Bottommost coordinate of the view rectangle.
  * @param {Number} top Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
- * @param {Number} [aspect] Desired aspect ratio of the viewport (ratio
+ * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height). If null or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
  * @instance
@@ -742,7 +742,7 @@ H3DU.Scene3D.prototype.dispose = function() {
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {Number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} [a] Alpha color component (0-1).
+ * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Scene3D} This object.
@@ -849,7 +849,7 @@ H3DU.Scene3D.prototype.clearDepth = function() {
  * Gets the number of vertices composed by
  * all shapes in this scene.
  * @deprecated Use the vertexCount method of {@link H3DU.Batch3D} objects instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.vertexCount = function() {
@@ -864,7 +864,7 @@ H3DU.Scene3D.prototype.vertexCount = function() {
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this scene.
  * @deprecated Use the <code>primitiveCount</code> method of {@link H3DU.Batch3D} objects instead. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Scene3D.prototype.primitiveCount = function() {
@@ -880,7 +880,7 @@ H3DU.Scene3D.prototype.primitiveCount = function() {
  * matrix can also be set using the {@link H3DU.Scene3D#setFrustum}, {@link H3DU.Scene3D#setOrtho},
  * {@link H3DU.Scene3D#setOrtho2D}, and {@link H3DU.Scene3D#setPerspective} methods.
  * @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @param {Array<Number>} matrix A 16-element matrix (4x4).
+ * @param {Array<number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
  * @instance
  */
@@ -897,7 +897,7 @@ H3DU.Scene3D.prototype.setProjectionMatrix = function(matrix) {
  * Sets this scene's view matrix. The view matrix can also
  * be set using the {@link H3DU.Scene3D#setLookAt} method.
  * @deprecated Instead of this method, use {@link H3DU.Batch3D#setViewMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @param {Array<Number>} matrix A 16-element matrix (4x4).
+ * @param {Array<number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
  * @instance
  */
@@ -915,12 +915,12 @@ H3DU.Scene3D.prototype.setViewMatrix = function(matrix) {
  * This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
  * (<code>center</code>).
  * @deprecated Instead of this method, use {@link H3DU.Batch3D#setLookAt}. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
- * @param {Array<Number>} eye A 3-element vector specifying
+ * @param {Array<number>} eye A 3-element vector specifying
  * the camera position in world space.
- * @param {Array<Number>} [center] A 3-element vector specifying
+ * @param {Array<number>} [center] A 3-element vector specifying
  * the point in world space that the camera is looking at. May be null or omitted,
  * in which case the default is the coordinates (0,0,0).
- * @param {Array<Number>} [up] A 3-element vector specifying
+ * @param {Array<number>} [up] A 3-element vector specifying
  * the direction from the center of the camera to its top. This parameter may
  * be null or omitted, in which case the default is the vector (0, 1, 0),
  * the vector that results when the camera is held upright. This
@@ -1020,12 +1020,12 @@ H3DU.Scene3D.prototype.getLights = function() {
  * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on. Will be created
  * if the light doesn't exist.
- * @param {Array<Number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
+ * @param {Array<number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively. May be null, in which case the default
  * is (0, 0, 1).
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
+ * @param {Array<number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
+ * @param {Array<number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Scene3D} This object.
@@ -1070,7 +1070,7 @@ H3DU.Scene3D.prototype.setLightParams = function(index, params) {
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {Number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} [a] Alpha color component (0-1).
+ * @param {number} [a] Alpha color component (0-1).
  * Currently not used.
  * @returns {H3DU.Scene3D} This object.
  * @instance
@@ -1090,10 +1090,10 @@ H3DU.Scene3D.prototype.setAmbient = function(r, g, b, a) {
  * @deprecated Use the LightSource method setPointLight instead and the {@link H3DU.Batch3D} method getLights. For compatibility, existing code that doesn't use {@link H3DU.Batch3D} can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.
  * @param {Number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
- * @param {Array<Number>} position Light position. (See {@link H3DU.LightSource#position}.)
- * @param {Array<Number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
+ * @param {Array<number>} position Light position. (See {@link H3DU.LightSource#position}.)
+ * @param {Array<number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
  * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
- * @param {Array<Number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
+ * @param {Array<number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
  * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Scene3D} This object.

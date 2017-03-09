@@ -333,12 +333,14 @@ is positive (resp. negative) and the coordinate system is...
 #### Cross product (`vec3cross`) and normals
 
 * Given a triangle formed by points A, B, and C, in that order, the [cross product](<a href="H3DU.Math.md#H3DU.Math.vec3cross">H3DU.Math.vec3cross</a>)
-of the vector (A minus C) with (B minus C), in that order, is a _normal_ of that triangle (a vector that's perpendicular to the triangle's surface).
-* By extension, given a triangle formed by point A, point B, and point (0,0,0), in that order, the cross product of A
-with B, in that order, is a normal of that triangle.
+of the vector (A minus C) with (B minus C), in that order, is a _normal_ of that triangle
+(a vector that's perpendicular to the triangle's surface).
+* By extension, given a triangle formed by point A, point B, and point (0,0,0), in that order,
+the cross product of A with B, in that order, is a normal of that triangle.
 
 In either case, while this particular normal points toward the viewer, the triangle's vertices
-run in a counterclockwise path for right-handed coordinate systems, or a clockwise path for left-handed systems. (In general, there are two possible choices for normals, which each
+run in a counterclockwise path for right-handed coordinate systems, or a clockwise path
+for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)
 
 <a id=Winding_and_face_classification></a>

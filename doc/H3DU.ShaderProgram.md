@@ -100,7 +100,7 @@ as SHADING is also enabled).
 
 #### Return Value
 
-The resulting shader text. (Type: String)
+The resulting shader text. (Type: string)
 
  <a name='H3DU.ShaderProgram.getDefaultVertex'></a>
 ### (static) H3DU.ShaderProgram.getDefaultVertex()
@@ -112,7 +112,7 @@ at the start of the return value enables the lighting model.
 
 #### Return Value
 
-The resulting shader text. (Type: String)
+The resulting shader text. (Type: string)
 
  <a name='H3DU.ShaderProgram.getEdgeDetectEffect'></a>
 ### (static) H3DU.ShaderProgram.getEdgeDetectEffect([context])
@@ -213,7 +213,7 @@ a raster effect to a texture.
 
 #### Return Value
 
-The source text of the resulting fragment shader. (Type: String)
+The source text of the resulting fragment shader. (Type: string)
 
  <a name='H3DU.ShaderProgram_setUniforms'></a>
 ### H3DU.ShaderProgram#setUniforms(uniforms)

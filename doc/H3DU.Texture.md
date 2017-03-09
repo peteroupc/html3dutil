@@ -65,7 +65,7 @@ Gets this texture's known height.
 #### Return Value
 
 This texture's height in pixels.
-Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
+Will be 0 if the texture's image data wasn't loaded yet. (Type: number)
 
  <a name='H3DU.Texture_getName'></a>
 ### H3DU.Texture#getName()
@@ -74,7 +74,7 @@ Gets the name of this texture.
 
 #### Return Value
 
-Return value. (Type: String)
+Return value. (Type: string)
 
  <a name='H3DU.Texture_getWidth'></a>
 ### H3DU.Texture#getWidth()
@@ -84,7 +84,7 @@ Gets this texture's known width.
 #### Return Value
 
 This texture's width in pixels.
-Will be 0 if the texture's image data wasn't loaded yet. (Type: Number)
+Will be 0 if the texture's image data wasn't loaded yet. (Type: number)
 
  <a name='H3DU.Texture.loadTexture'></a>
 ### (static) H3DU.Texture.loadTexture(name, [textureCache])

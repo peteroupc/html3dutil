@@ -89,7 +89,7 @@ Gets the text of a basic vertex shader.
 
 #### Return Value
 
-The resulting shader text. (Type: String)
+The resulting shader text. (Type: string)
 
  <a name='H3DU.ShaderInfo.getDefaultFragment'></a>
 ### (static) H3DU.ShaderInfo.getDefaultFragment()
@@ -98,7 +98,7 @@ Gets the text of the default fragment shader.
 
 #### Return Value
 
-The resulting shader text. (Type: String)
+The resulting shader text. (Type: string)
 
  <a name='H3DU.ShaderInfo.getDefaultVertex'></a>
 ### (static) H3DU.ShaderInfo.getDefaultVertex()
@@ -108,7 +108,7 @@ at the start of the return value enables the lighting model.
 
 #### Return Value
 
-The resulting shader text. (Type: String)
+The resulting shader text. (Type: string)
 
  <a name='H3DU.ShaderInfo_getFragmentShader'></a>
 ### H3DU.ShaderInfo#getFragmentShader()
@@ -117,7 +117,7 @@ Gets the text of the fragment shader stored in this object.
 
 #### Return Value
 
-return value. (Type: String)
+return value. (Type: string)
 
  <a name='H3DU.ShaderInfo_getVertexShader'></a>
 ### H3DU.ShaderInfo#getVertexShader()
@@ -126,7 +126,7 @@ Gets the text of the vertex shader stored in this object.
 
 #### Return Value
 
-return value. (Type: String)
+return value. (Type: string)
 
  <a name='H3DU.ShaderInfo.makeCopyEffect'></a>
 ### (static) H3DU.ShaderInfo.makeCopyEffect()
@@ -179,7 +179,7 @@ a raster effect to a texture.
 
 #### Return Value
 
-The source text of the resulting fragment shader. (Type: String)
+The source text of the resulting fragment shader. (Type: string)
 
  <a name='H3DU.ShaderInfo.makeInvertEffect'></a>
 ### (static) H3DU.ShaderInfo.makeInvertEffect()

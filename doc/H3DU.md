@@ -171,7 +171,7 @@ This method may be called any number of times each frame.
 A value in the range [0, 1), where closer
 to 0 means "timeInMs" lies
 closer to the start, and closer to 1 means closer
-to the end of the interval. If an initial time wasn't set, returns 0. (Type: Number)
+to the end of the interval. If an initial time wasn't set, returns 0. (Type: number)
 
 #### Example
 
@@ -196,7 +196,7 @@ Returns whether the given object is a 3D rendering context.
 
 #### Return Value
 
-Return value. (Type: Boolean)
+Return value. (Type: boolean)
 
  <a name='H3DU.loadFileFromUrl'></a>
 ### (static) H3DU.loadFileFromUrl(url, responseType)
@@ -297,7 +297,7 @@ This method should be called only once each frame.
 The number of frame-length intervals relative to
 the last known time held in the parameter "timer".
 The number can include fractional frames. If an
-initial time or last known time wasn't set, returns 0. (Type: Number)
+initial time or last known time wasn't set, returns 0. (Type: number)
 
  <a name='H3DU.renderLoop'></a>
 ### (static) H3DU.renderLoop(func)
@@ -365,7 +365,7 @@ For more information, see the "<a href="tutorial-colors.md">Color Strings</a>" t
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: Number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: Number) (optional)<br>
+* `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
 
 #### Return Value
@@ -373,4 +373,4 @@ For more information, see the "<a href="tutorial-colors.md">Color Strings</a>" t
 The color as a 4-element array; if the color is
 invalid, returns [0,0,0,0], or transparent black. Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
-clamped to 1. (Type: Array.&lt;Number>)
+clamped to 1. (Type: Array.&lt;number>)

@@ -104,7 +104,7 @@ that fits all vertices in the shape group. The first three numbers
 are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
--Inf, -Inf]. (Type: Array.&lt;Number>)
+-Inf, -Inf]. (Type: Array.&lt;number>)
 
  <a name='H3DU.ShapeGroup_getMatrix'></a>
 ### H3DU.ShapeGroup#getMatrix()
@@ -148,7 +148,7 @@ Gets whether this shape group will be drawn on rendering.
 
 #### Return Value
 
-value True if this shape group will be visible; otherwise, false. (Type: Boolean)
+value True if this shape group will be visible; otherwise, false. (Type: boolean)
 
  <a name='H3DU.ShapeGroup_primitiveCount'></a>
 ### H3DU.ShapeGroup#primitiveCount()
@@ -158,7 +158,7 @@ and points) composed by all shapes in this shape group.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.ShapeGroup_removeShape'></a>
 ### H3DU.ShapeGroup#removeShape(shape)
@@ -220,7 +220,7 @@ rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;Number>)<br>
+* `quat` (Type: Array.&lt;number>)<br>
     A four-element array describing the rotation.
 
 #### Return Value
@@ -332,7 +332,7 @@ are direct children of this shape group.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.ShapeGroup_vertexCount'></a>
 ### H3DU.ShapeGroup#vertexCount()
@@ -341,4 +341,4 @@ Gets the number of vertices composed by all shapes in this shape group.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)

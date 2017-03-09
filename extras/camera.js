@@ -211,8 +211,8 @@ H3DU.InputTracker.prototype.dispose = function() {
 /**
  * Gets whether a key is pressed, as detected by this
  * input tracker.
- * @returns {Number} key Key code of the key to check.
- * @returns {Boolean} True if the key is currently pressed; otherwise, false.
+ * @returns {number} key Key code of the key to check.
+ * @returns {boolean} True if the key is currently pressed; otherwise, false.
  * @instance
  */
 H3DU.InputTracker.prototype.getKey = function(key) {
@@ -599,7 +599,7 @@ H3DU.Camera.prototype.setDistance = function(dist) {
 
 /**
  * Finds the distance from the camera's position to the reference point.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.Camera.prototype.getDistance = function() {
@@ -738,8 +738,8 @@ H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
  * @param {Number} cx The camera's new X coordinate,
  * or a 3-element vector containing the X, Y, and Z coordinates.
  * In the latter case, "cy" and "cz" can be omitted.
- * @param {Number} [cy] The camera's new Y coordinate.
- * @param {Number} [cz] The camera's new Z coordinate.
+ * @param {number} [cy] The camera's new Y coordinate.
+ * @param {number} [cz] The camera's new Z coordinate.
  * @returns {H3DU.Camera} This object.
  * @instance
  */
@@ -783,7 +783,7 @@ H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
 
 /**
  * Gets the position of the camera.
- * @returns {Array<Number>} An array of three numbers giving
+ * @returns {Array<number>} An array of three numbers giving
  * the X, Y, and Z coordinates of the camera's position, respectively.
  * @instance
  */
@@ -882,7 +882,7 @@ H3DU.Camera.prototype.moveVertical = function(dist) {
 /**
  * Gets the 3-element vector that points from the reference
  * point to the camera's position.
- * @returns {Array<Number>} The return value as a unit
+ * @returns {Array<number>} The return value as a unit
  * vector (a ["normalized" vector]{@link H3DU.Math.vec3normalize} with a length of 1).
  * Returns (0,0,0) if the reference point is the same as the camera's position.
  * @instance

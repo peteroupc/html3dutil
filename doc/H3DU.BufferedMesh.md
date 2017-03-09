@@ -34,7 +34,7 @@ Deletes the vertex and index buffers associated with this object.
 
 #### Return Value
 
-Return value. (Type: Object)
+This method doesn't return a value. (Type: void)
 
  <a name='H3DU.BufferedMesh_draw'></a>
 ### H3DU.BufferedMesh#draw(program)
@@ -52,7 +52,7 @@ according to the data in its buffers.
 
 #### Return Value
 
-Return value. (Type: Object)
+This method doesn't return a value. (Type: void)
 
  <a name='H3DU.BufferedMesh_getContext'></a>
 ### H3DU.BufferedMesh#getContext()
@@ -73,7 +73,7 @@ and points) composed by all shapes in this mesh.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.BufferedMesh_vertexCount'></a>
 ### H3DU.BufferedMesh#vertexCount()
@@ -82,4 +82,4 @@ Gets the number of vertices composed by all shapes in this mesh.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)

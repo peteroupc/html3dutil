@@ -14,11 +14,11 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 * `params` (Type: Object | Array.&lt;Number>) (optional)<br>
     An object as described in "setParams". <i>Using this parameter as described in the "position" property is deprecated since version 2.0.</i>
-* `ambient` (Type: Array.&lt;Number>) (optional)<br>
+* `ambient` (Type: Array.&lt;number>) (optional)<br>
     See "ambient" property. <i>This parameter is deprecated.</i>
-* `diffuse` (Type: Array.&lt;Number>) (optional)<br>
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>
     See "diffuse" property. <i>This parameter is deprecated.</i>
-* `specular` (Type: Array.&lt;Number>) (optional)<br>
+* `specular` (Type: Array.&lt;number>) (optional)<br>
     See "specular" property. <i>This parameter is deprecated.</i>
 
 ### Members

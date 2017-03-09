@@ -40,7 +40,7 @@ H3DU.MeshJSON._resolvePath = function(path, name) {
  * Converts a mesh to JSON format.
  * @param {H3DU.Mesh} mesh A mesh object, as used
  * in the Public Domain HTML 3D Library.
- * @returns {String} A JSON string describing the mesh.
+ * @returns {string} A JSON string describing the mesh.
  */
 H3DU.MeshJSON.toJSON = function(mesh) {
   "use strict";

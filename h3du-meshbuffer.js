@@ -196,7 +196,7 @@ H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
 /**
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this mesh.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.MeshBuffer.prototype.primitiveCount = function() {
@@ -260,7 +260,7 @@ H3DU.MeshBuffer.prototype.getPositions = function() {
 /**
  * Finds the tightest
  * bounding box that holds all vertices in the mesh buffer.
- * @returns {Array<Number>} An array of six numbers describing the tightest
+ * @returns {Array<number>} An array of six numbers describing the tightest
  * axis-aligned bounding box
  * that fits all vertices in the mesh. The first three numbers
  * are the smallest-valued X, Y, and Z coordinates, and the
@@ -305,7 +305,7 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
 };
 /**
  * Gets the type of primitive stored in this mesh buffer.
- * @returns {Number} Either {@link H3DU.Mesh.TRIANGLES},
+ * @returns {number} Either {@link H3DU.Mesh.TRIANGLES},
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  * @instance
  */
@@ -335,7 +335,7 @@ H3DU.MeshBuffer.prototype.getFormat = function() {
 };
 /**
  * Gets the number of vertices in this mesh buffer
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.MeshBuffer.prototype.vertexCount = function() {

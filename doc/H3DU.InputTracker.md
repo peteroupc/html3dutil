@@ -263,7 +263,7 @@ input tracker.
 
 #### Return Value
 
-key Key code of the key to check. (Type: Number)
+key Key code of the key to check. (Type: number)
 
  <a name='H3DU.InputTracker_mousePos'></a>
 ### H3DU.InputTracker#mousePos()

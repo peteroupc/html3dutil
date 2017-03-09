@@ -44,7 +44,7 @@ last three are the largest-valued X, Y, and Z coordinates.
 This calculation uses the attribute with the semantic POSITION
 and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
-[Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;Number>)
+[Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;number>)
 
  <a name='H3DU.MeshBuffer_getPositions'></a>
 ### H3DU.MeshBuffer#getPositions()
@@ -68,7 +68,7 @@ and points) composed by all shapes in this mesh.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.MeshBuffer_primitiveType'></a>
 ### H3DU.MeshBuffer#primitiveType()
@@ -78,7 +78,7 @@ Gets the type of primitive stored in this mesh buffer.
 #### Return Value
 
 Either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
-<a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: Number)
+<a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: number)
 
  <a name='H3DU.MeshBuffer_setAttribute'></a>
 ### H3DU.MeshBuffer#setAttribute(semantic, semanticIndex, buffer, startIndex, countPerVertex, stride)
@@ -146,4 +146,4 @@ Gets the number of vertices in this mesh buffer
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)

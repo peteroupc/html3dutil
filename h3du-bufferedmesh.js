@@ -161,7 +161,7 @@ H3DU.BufferedMesh.prototype.getFormat = function() {
 /**
  * Deletes the vertex and index buffers associated with this object.
  * @instance
- * @returns {Object} Return value.
+ * @returns {void} This method doesn't return a value.
  */
 H3DU.BufferedMesh.prototype.dispose = function() {
   "use strict";
@@ -250,7 +250,7 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
  * the IDs from for attributes named "position", "normal",
  * "colorAttr", and "uv", and the "useColorAttr" uniform.
  * @instance
- * @returns {Object} Return value.
+ * @returns {void} This method doesn't return a value.
  */
 H3DU.BufferedMesh.prototype.draw = function(program) {
   "use strict";
@@ -278,7 +278,7 @@ H3DU.BufferedMesh.prototype.draw = function(program) {
 };
 /**
  * Gets the number of vertices composed by all shapes in this mesh.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.BufferedMesh.prototype.vertexCount = function() {
@@ -288,7 +288,7 @@ H3DU.BufferedMesh.prototype.vertexCount = function() {
 /**
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this mesh.
- * @returns {Number} Return value.
+ * @returns {number} Return value.
  * @instance
  */
 H3DU.BufferedMesh.prototype.primitiveCount = function() {

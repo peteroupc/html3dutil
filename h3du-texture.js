@@ -34,7 +34,7 @@ H3DU.Texture = function(name) {
 };
 /**
  * Gets this texture's known width.
- * @returns {Number} This texture's width in pixels.
+ * @returns {number} This texture's width in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
  * @instance
  */
@@ -44,7 +44,7 @@ H3DU.Texture.prototype.getWidth = function() {
 };
 /**
  * Gets this texture's known height.
- * @returns {Number} This texture's height in pixels.
+ * @returns {number} This texture's height in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
  * @instance
  */
@@ -302,12 +302,12 @@ H3DU.Texture.prototype.dispose = function() {
 
 /**
  * Gets the name of this texture.
- * @returns {String} Return value.
+ * @returns {string} Return value.
  * @instance
  */
 H3DU.Texture.prototype.getName = function() {
   "use strict";
-  return name;
+  return this.name;
 };
 /** @ignore */
 H3DU.Texture._texOrString = function(tex) {
@@ -346,7 +346,7 @@ H3DU.CubeMap = function(textures) {
 };
 /**
  * Gets this texture's known width.
- * @returns {Number} This texture's width in pixels.
+ * @returns {number} This texture's width in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
  * @instance
  */
@@ -356,7 +356,7 @@ H3DU.CubeMap.prototype.getWidth = function() {
 };
 /**
  * Gets this texture's known height.
- * @returns {Number} This texture's height in pixels.
+ * @returns {number} This texture's height in pixels.
  * Will be 0 if the texture's image data wasn't loaded yet.
  * @instance
  */

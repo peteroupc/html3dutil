@@ -92,7 +92,7 @@ Gets the current projection matrix for this batch of shapes.
 #### Return Value
 
 A 4x4 matrix used as the current
-projection matrix. (Type: Array.&lt;Number>)
+projection matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Batch3D_getProjectionViewMatrix'></a>
 ### H3DU.Batch3D#getProjectionViewMatrix()
@@ -103,7 +103,7 @@ view matrix for this batch of shapes.
 #### Return Value
 
 A 4x4 matrix used as the current
-projection-view matrix. (Type: Array.&lt;Number>)
+projection-view matrix. (Type: Array.&lt;number>)
 
  <a name='H3DU.Batch3D_getShape'></a>
 ### H3DU.Batch3D#getShape(index)
@@ -128,7 +128,7 @@ Gets the current view matrix for this batch of shapes.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Number>)
+Return value. (Type: Array.&lt;number>)
 
  <a name='H3DU.Batch3D_ortho2DAspect'></a>
 ### H3DU.Batch3D#ortho2DAspect(l, r, b, t)
@@ -221,7 +221,7 @@ and points) composed by all shapes in this batch of shapes.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Batch3D_removeShape'></a>
 ### H3DU.Batch3D#removeShape(shape)
@@ -246,11 +246,11 @@ This method takes a camera's position (<code>eye</code>), and the point the came
 
 #### Parameters
 
-* `eye` (Type: Array.&lt;Number>)<br>
+* `eye` (Type: Array.&lt;number>)<br>
     A 3-element vector specifying the camera position in world space.
-* `center` (Type: Array.&lt;Number>) (optional)<br>
+* `center` (Type: Array.&lt;number>) (optional)<br>
     A 3-element vector specifying the point in world space that the camera is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).
-* `up` (Type: Array.&lt;Number>) (optional)<br>
+* `up` (Type: Array.&lt;number>) (optional)<br>
     A 3-element vector specifying the direction from the center of the camera to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the camera is held upright. This vector must not point in the same or opposite direction as the camera's view direction. (For best results, rotate the vector (0, 1, 0) so it points perpendicular to the camera's view direction.)
 
 #### Return Value
@@ -264,7 +264,7 @@ Sets the projection matrix for this batch.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 16-element matrix (4x4).
 
 #### Return Value
@@ -285,7 +285,7 @@ Sets a shape or shape group at the given index in this batch.
 
 #### Return Value
 
-{H3DU.Batch
+This object. (Type: H3DU.Batch)
 
  <a name='H3DU.Batch3D_setViewMatrix'></a>
 ### H3DU.Batch3D#setViewMatrix(mat)
@@ -294,7 +294,7 @@ Sets the current view matrix for this batch of shapes.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;Number>)<br>
+* `mat` (Type: Array.&lt;number>)<br>
     A 4x4 matrix to use as the view matrix.
 
 #### Return Value
@@ -309,7 +309,7 @@ are direct children of this batch.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)
 
  <a name='H3DU.Batch3D_vertexCount'></a>
 ### H3DU.Batch3D#vertexCount()
@@ -319,4 +319,4 @@ all shapes in this batch of shapes.
 
 #### Return Value
 
-Return value. (Type: Number)
+Return value. (Type: number)

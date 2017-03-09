@@ -1,3 +1,4 @@
+/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -16,81 +17,174 @@
  * <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
  * where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
  * and z(u, v) returns a Z coordinate.<p>
- * Specialized curves should subclass this class and implement
- * the methods mentioned in the "curve" parameter below.
+ * Specialized surfaces should [subclass]{@tutorial subclass} this class and implement
+ * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
  * @class
  * @memberof H3DU
- * @params {Object} curve A <b>surface evaluator object</b>, which is an object that
+ * @param {Object} surface A <b>surface evaluator object</b>, which is an object that
  * must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>,
  * <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code>
  * methods, as described in the corresponding methods of this class.
  */
 H3DU.Surface = function(surface) {
   "use strict";
-  this.surface = (typeof surface==="undefined" ? null : (surface));
+  this.surface = typeof surface === "undefined" ? null : surface;
+};
+/** @ignore */
+H3DU.Surface._EPSILON = 0.00001;
+
+/**
+ * Finds an approximate tangent vector of this surface at the given U and V coordinates.
+ * The implementation in {@link H3DU.Surface} calls the evaluator's <code>tangent</code>
+ * method if it implements it; otherwise, does a numerical differentiation
+ * with respect to the U axis using the <code>evaluate</code> method.<p>
+ * The <b>tangent vector</b> is the vector pointing in the direction of the U axis,
+ * or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
+ * The tangent vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * @param {Number} u U coordinate of a point on the surface.
+ * @param {Number} v V coordinate of a point on the surface.
+ * @returns {Array<number>} An array describing a tangent vector. It should have at least as many
+ * elements as the number of dimensions of the underlying surface.
+ * @instance
+ */
+H3DU.Surface.prototype.tangent = function(u, v) {
+  "use strict";
+  if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.tangent !== "undefined" && this.surface.tangent !== null)) {
+    return this.surface.tangent(u, v);
+  } else {
+    var du = H3DU.Curve._EPSILON;
+    var vector = this.evaluate(u + du, v);
+    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vector = this.evaluate(u + du, v);
+    }
+    return H3DU._MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
+  }
 };
 /**
- * TODO: Not documented yet.
- * @param {*} u
- * @param {*} v
- * @returns {*} Return value.
+ * Finds an approximate bitangent vector of this surface at the given U and V coordinates.<p>
+ * The implementation in {@link H3DU.Surface} calls the evaluator's <code>bitangent</code>
+ * method if it implements it; otherwise, does a numerical differentiation
+ * with respect to the V axis using the <code>evaluate</code> method.<p>
+ * The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively,
+ * the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>.  The bitangent vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * @param {Number} u U coordinate of a point on the surface.
+ * @param {Number} v V coordinate of a point on the surface.
+ * @returns {Array<number>} An array describing a bitangent vector. It should have at least as many
+ * elements as the number of dimensions of the underlying surface.
  * @instance
  */
-H3DU.Surface.prototype.tangent=function(u,v){
-	if((typeof this.surface!=="undefined" && this.surface!==null) && (typeof this.surface.tangent!=="undefined" && this.surface.tangent!==null)){
-		return this.surface.tangent(u,v)
-	} else {
-	}
-}
+H3DU.Surface.prototype.bitangent = function(u, v) {
+  "use strict";
+  if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.bitangent !== "undefined" && this.surface.bitangent !== null)) {
+    return this.surface.bitangent(u, v);
+  } else {
+    var du = H3DU.Curve._EPSILON;
+    var vector = this.evaluate(u, v + du);
+    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vector = this.evaluate(u, v + du);
+    }
+    return H3DU._MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
+  }
+};
+
 /**
- * TODO: Not documented yet.
- * @param {*} u
- * @param {*} v
- * @returns {*} Return value.
+ * Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
+ * The <b>normal vector</b> is the same as the gradient vector, but "normalized" to a unit vector.
+ * @param {Number} u U coordinate of a point on the surface.
+ * @param {Number} v V coordinate of a point on the surface.
+ * @returns {Array<number>} An array describing a normal vector. It should have at least as many
+ * elements as the number of dimensions of the underlying surface.
  * @instance
  */
-H3DU.Surface.prototype.bitangent=function(u,v){
-	if((typeof this.surface!=="undefined" && this.surface!==null) && (typeof this.surface.bitangent!=="undefined" && this.surface.bitangent!==null)){
-		return this.surface.bitangent(u,v)
-	} else {
-	}
-}
+H3DU.Surface.prototype.normal = function(u, v) {
+  "use strict";
+  return H3DU._MathInternal.vecNormalizeInPlace(this.gradient(u, v));
+};
+
 /**
- * TODO: Not documented yet.
- * @param {*} u
- * @param {*} v
- * @returns {*} Return value.
+ * Finds an approximate gradient vector of this surface at the given U and V coordinates.<p>
+ * The implementation in {@link H3DU.Surface} calls the evaluator's <code>gradient</code>
+ * method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
+ * (however, this approach is generally only meaningful for a three-dimensional surface).<p>
+ * The <b>gradient</b> is a vector pointing up and away from the surface.
+ * If the evaluator describes a regular three-dimensional surface (usually
+ * a continuous, unbroken surface such as a sphere, an open
+ * cylinder, or a disk rotated in three dimensions), this can be the cross product
+ * of the [tangent vector]{@link H3DU.Surface#tangent}
+ * and [bitangent vector]{@link H3DU.Surface#bitangent},
+ * in that order. The gradient returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * @param {Number} u U coordinate of a point on the surface.
+ * @param {Number} v V coordinate of a point on the surface.
+ * @returns {Array<number>} An array describing a gradient vector. It should have at least as many
+ * elements as the number of dimensions of the underlying surface.
  * @instance
  */
-H3DU.Surface.prototype.gradient=function(u,v){
-	if((typeof this.surface!=="undefined" && this.surface!==null) && (typeof this.surface.gradient!=="undefined" && this.surface.gradient!==null)){
-		return this.surface.gradient(u,v)
-	} else {
-	}
-}
+H3DU.Surface.prototype.gradient = function(u, v) {
+  "use strict";
+  if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.gradient !== "undefined" && this.surface.gradient !== null)) {
+    return this.surface.gradient(u, v);
+  } else {
+    var tan = this.tangent(u, v);
+    var bitan = this.bitangent(u, v);
+    if(H3DU._MathInternal.vecLength(bitan) === 0) {
+      return tan;
+    }
+    if(H3DU._MathInternal.vecLength(tan) !== 0) {
+      if(tan.length !== 3 || bitan.length !== 3) {
+        var dims = tan.length;
+        var ret = H3DU._MathInternal.vecZeros(dims);
+        tan = [tan[0] || 0, tan[1] || 0, tan[2] || 0];
+        bitan = [bitan[0] || 0, bitan[1] || 0, bitan[2] || 0];
+        var cr = H3DU.Math.vec3cross(tan, bitan);
+        ret[0] = cr[0];
+        ret[1] = cr[1];
+        ret[2] = cr[2];
+        return ret.slice(0, dims);
+      } else {
+        return H3DU.Math.vec3cross(tan, bitan);
+      }
+    } else {
+      return bitan;
+    }
+
+  }
+};
 /**
- * TODO: Not documented yet.
- * @param {*} u
- * @param {*} v
- * @returns {*} Return value.
+ * Finds the position of this surface at the given U and V coordinates.
+ * @param {Number} u U coordinate of a point on the surface.
+ * @param {Number} v V coordinate of a point on the surface.
+ * @returns {Array<number>} An array describing a position. It should have at least as many
+ * elements as the number of dimensions of the underlying surface.
  * @instance
  */
-H3DU.Surface.prototype.evaluate=function(u,v){
-	if((typeof this.evaluate!=="undefined" && this.evaluate!==null) && (typeof this.surface.evaluate!=="undefined" && this.surface.evaluate!==null)){
-		return this.surface.evaluate(u,v)
-	} else {
-		return [0,0,0]
-	}
-}
+H3DU.Surface.prototype.evaluate = function(u, v) {
+  "use strict";
+  if(typeof this.evaluate !== "undefined" && this.evaluate !== null && (typeof this.surface.evaluate !== "undefined" && this.surface.evaluate !== null)) {
+    return this.surface.evaluate(u, v);
+  } else {
+    return [0, 0, 0];
+  }
+};
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Returns the starting and ending U and V coordinates of this surface.
+ * This method calls the evaluator's <code>endPoints</code>
+ * method if it implements it; otherwise, returns <code>[0, 1, 0, 1]</code>
+ * @returns A four-element array. The first and second
+ * elements are the starting and ending U coordinates, respectively, of the surface, and the third
+ * and fourth elements are its starting and ending V coordinates.
+ * Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn't implement an <code>endPoints</code>
+ * method.
  * @instance
  */
-H3DU.Surface.prototype.endPoints=function(){
-	if((typeof this.evaluate!=="undefined" && this.evaluate!==null) && (typeof this.surface.endPoints!=="undefined" && this.surface.endPoints!==null)){
-		return this.surface.endPoints()
-	} else {
-		return [0,1]
-	}
-}
+H3DU.Surface.prototype.endPoints = function() {
+  "use strict";
+  if(typeof this.evaluate !== "undefined" && this.evaluate !== null && (typeof this.surface.endPoints !== "undefined" && this.surface.endPoints !== null)) {
+    return this.surface.endPoints();
+  } else {
+    return [0, 1, 0, 1];
+  }
+};
