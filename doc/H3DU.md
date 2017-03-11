@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-<a id='H3DU'></a>
+ <a name='H3DU'></a>
 ### H3DU
 
 The Public Domain HTML 3D Library contains classes and utility
@@ -75,7 +75,7 @@ Creates a 3D rendering context from an HTML canvas element.
 
 A 3D rendering context, or null
 if an error occurred in creating the context. Returns null if "canvasElement"
-is null or not an HTML canvas element. (Type: WebGLRenderingContext)
+is null or not an HTML canvas element. (Type: Object)
 
  <a name='H3DU.get3DOr2DContext'></a>
 ### (static) H3DU.get3DOr2DContext(canvasElement)
@@ -92,7 +92,7 @@ falling back to a 2D context if that fails.
 
 A 3D or 2D rendering context, or null
 if an error occurred in creating the context. Returns null if "canvasElement"
-is null or not an HTML canvas element. (Type: WebGLRenderingContext)
+is null or not an HTML canvas element. (Type: Object)
 
  <a name='H3DU.getPromiseResults'></a>
 ### (static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])
@@ -161,9 +161,9 @@ This method may be called any number of times each frame.
 
 * `timer` (Type: Object)<br>
     An object that will hold two properties:<ul> <li>"time" - initial time value, in milliseconds. <li>"lastTime" - last known time value, in milliseconds. Will be set to the value given in "timeInMs" before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.
-* `timeInMs` (Type: Number)<br>
+* `timeInMs` (Type: number)<br>
     A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.
-* `intervalInMs` (Type: Number)<br>
+* `intervalInMs` (Type: number)<br>
     The length of the interval (animation cycle), in milliseconds.
 
 #### Return Value
@@ -182,7 +182,7 @@ The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
 <code>requestAnimationFrame()</code> callback method.
 
-    var angle = 360 * H3DU.getTimePosition(timer, time, 5000);
+    var angle = 360 * export var getTimePosition(timer, time, 5000);
 
  <a name='H3DU.is3DContext'></a>
 ### (static) H3DU.is3DContext(context)
@@ -199,15 +199,15 @@ Returns whether the given object is a 3D rendering context.
 Return value. (Type: boolean)
 
  <a name='H3DU.loadFileFromUrl'></a>
-### (static) H3DU.loadFileFromUrl(url, responseType)
+### (static) H3DU.loadFileFromUrl(url, [responseType])
 
 Loads a file from a URL asynchronously, using XMLHttpRequest.
 
 #### Parameters
 
-* `url` (Type: String)<br>
+* `url` (Type: string)<br>
     URL of the file to load.
-* `responseType` (Type: string | null)<br>
+* `responseType` (Type: string) (optional)<br>
     Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null or omitted, the default is "text".
 
 #### Return Value
@@ -233,7 +233,7 @@ shaders it uses.
 
 #### Parameters
 
-* `url` (Type: String)<br>
+* `url` (Type: string)<br>
     URL of the glTF file to load.
 
 #### Return Value
@@ -269,7 +269,7 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `url` (Type: String)<br>
+* `url` (Type: string)<br>
     The URL to load.
 
 #### Return Value
@@ -289,7 +289,7 @@ This method should be called only once each frame.
 
 * `timer` (Type: Object)<br>
     An object described in <a href="H3DU.md#H3DU.getTimePosition">H3DU.getTimePosition</a>.
-* `timeInMs` (Type: Number)<br>
+* `timeInMs` (Type: number)<br>
     A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.
 
 #### Return Value
@@ -314,7 +314,7 @@ or a "polyfill" method.
 
 #### Return Value
 
-Return value. (Type: Object)
+This function doesn't return a value. (Type: void)
 
  <a name='H3DU.toGLColor'></a>
 ### (static) H3DU.toGLColor(r, g, b, [a])
@@ -359,11 +359,11 @@ For more information, see the "<a href="tutorial-colors.md">Color Strings</a>" t
 
 #### Parameters
 
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.

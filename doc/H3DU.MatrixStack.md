@@ -62,17 +62,17 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `l` (Type: Number)<br>
+* `l` (Type: number)<br>
     X coordinate of the point where the left clipping plane meets the near clipping plane.
-* `r` (Type: Number)<br>
+* `r` (Type: number)<br>
     X coordinate of the point where the right clipping plane meets the near clipping plane.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
-* `t` (Type: Number)<br>
+* `t` (Type: number)<br>
     Y coordinate of the point where the top clipping plane meets the near clipping plane.
-* `n` (Type: Number)<br>
+* `n` (Type: number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
-* `f` (Type: Number)<br>
+* `f` (Type: number)<br>
     The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
 #### Return Value
@@ -135,23 +135,23 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `ex` (Type: Number)<br>
+* `ex` (Type: number)<br>
     X coordinate of the camera position in world space.
-* `ey` (Type: Number)<br>
+* `ey` (Type: number)<br>
     Y coordinate of the camera position.
-* `ez` (Type: Number)<br>
+* `ez` (Type: number)<br>
     Z coordinate of the camera position.
-* `cx` (Type: Number)<br>
+* `cx` (Type: number)<br>
     X coordinate of the position in world space that the camera is looking at.
-* `cy` (Type: Number)<br>
+* `cy` (Type: number)<br>
     Y coordinate of the position looked at.
-* `cz` (Type: Number)<br>
+* `cz` (Type: number)<br>
     Z coordinate of the position looked at.
-* `ux` (Type: Number)<br>
+* `ux` (Type: number)<br>
     X coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera's view direction.
-* `uy` (Type: Number)<br>
+* `uy` (Type: number)<br>
     Y coordinate of the up vector.
-* `uz` (Type: Number)<br>
+* `uz` (Type: number)<br>
     Z coordinate of the up vector.
 
 #### Return Value
@@ -209,17 +209,17 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `l` (Type: Number)<br>
+* `l` (Type: number)<br>
     Leftmost coordinate of the 3D view.
-* `r` (Type: Number)<br>
+* `r` (Type: number)<br>
     Rightmost coordinate of the 3D view. (Note that r can be greater than l or vice versa.)
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Bottommost coordinate of the 3D view.
-* `t` (Type: Number)<br>
+* `t` (Type: number)<br>
     Topmost coordinate of the 3D view. (Note that t can be greater than b or vice versa.)
-* `n` (Type: Number)<br>
+* `n` (Type: number)<br>
     Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
-* `f` (Type: Number)<br>
+* `f` (Type: number)<br>
     Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer.
 
 #### Return Value
@@ -235,13 +235,13 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `l` (Type: Number)<br>
+* `l` (Type: number)<br>
     Leftmost coordinate of the 2D view.
-* `r` (Type: Number)<br>
+* `r` (Type: number)<br>
     Rightmost coordinate of the 2D view. (Note that r can be greater than l or vice versa.)
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Bottommost coordinate of the 2D view.
-* `t` (Type: Number)<br>
+* `t` (Type: number)<br>
     Topmost coordinate of the 2D view. (Note that t can be greater than b or vice versa.)
 
 #### Return Value
@@ -258,13 +258,13 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `fov` (Type: Number)<br>
+* `fov` (Type: number)<br>
     Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zoom can be implemented by multiplying field of view by an additional factor.)
-* `aspect` (Type: Number)<br>
+* `aspect` (Type: number)<br>
     The ratio of width to height of the viewport, usually the scene's aspect ratio.
-* `n` (Type: Number)<br>
+* `n` (Type: number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
-* `f` (Type: Number)<br>
+* `f` (Type: number)<br>
     The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
 #### Return Value
@@ -279,13 +279,13 @@ a matrix that transforms the view to a portion of the viewport.
 
 #### Parameters
 
-* `wx` (Type: Number)<br>
+* `wx` (Type: number)<br>
     X coordinate of the center of the desired viewport portion.
-* `wy` (Type: Number)<br>
+* `wy` (Type: number)<br>
     Y coordinate of the center of the desired viewport portion.
-* `ww` (Type: Number)<br>
+* `ww` (Type: number)<br>
     Width of the desired viewport portion.
-* `wh` (Type: Number)<br>
+* `wh` (Type: number)<br>
     Height of the desired viewport portion.
 * `vp` (Type: Array.&lt;number>)<br>
     A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.
@@ -322,13 +322,13 @@ Modifies the matrix at the top of this stack by multiplying it by a rotation tra
 
 #### Parameters
 
-* `angle` (Type: Number)<br>
+* `angle` (Type: number)<br>
     The desired angle to rotate in degrees. If the axis of rotation points toward the viewer, the angle's value is increasing in a counterclockwise direction.
-* `x` (Type: Number)<br>
+* `x` (Type: number)<br>
     X-component of the axis of rotation.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y-component of the axis of rotation.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z-component of the axis of rotation.
 
 #### Return Value
@@ -343,11 +343,11 @@ scaling transformation.
 
 #### Parameters
 
-* `x` (Type: Number)<br>
+* `x` (Type: number)<br>
     Scale factor along the X axis.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Scale factor along the Y axis.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Scale factor along the Z axis.
 
 #### Return Value
@@ -362,11 +362,11 @@ translation transformation.
 
 #### Parameters
 
-* `x` (Type: Number)<br>
+* `x` (Type: number)<br>
     Translation along the X axis.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Translation along the Y axis.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Translation along the Z axis.
 
 #### Return Value

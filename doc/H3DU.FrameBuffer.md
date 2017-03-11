@@ -19,11 +19,11 @@ bound to the WebGL context will remain unchanged.
 
 #### Parameters
 
-* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
+* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>
     WebGL context to associate with this buffer, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
-* `width` (Type: Number)<br>
+* `width` (Type: number)<br>
     Width, in pixels, of the frame buffer. Fractional values are rounded up.
-* `height` (Type: Number)<br>
+* `height` (Type: number)<br>
     Height, in pixels, of the frame buffer. Fractional values are rounded up.
 
 ### Members
@@ -86,9 +86,9 @@ if either differs from the current width or height.
 
 #### Parameters
 
-* `width` (Type: Number)<br>
+* `width` (Type: number)<br>
     New width, in pixels, of the frame buffer. Fractional values are rounded up.
-* `height` (Type: Number)<br>
+* `height` (Type: number)<br>
     New height, in pixels, of the frame buffer. Fractional values are rounded up.
 
 #### Return Value

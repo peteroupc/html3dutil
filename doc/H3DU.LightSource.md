@@ -12,7 +12,7 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
 
-* `params` (Type: Object | Array.&lt;Number>) (optional)<br>
+* `params` (Type: Object | Array.&lt;number>) (optional)<br>
     An object as described in "setParams". <i>Using this parameter as described in the "position" property is deprecated since version 2.0.</i>
 * `ambient` (Type: Array.&lt;number>) (optional)<br>
     See "ambient" property. <i>This parameter is deprecated.</i>
@@ -108,4 +108,4 @@ Sets parameters for this material object.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Material.md">H3DU.Material</a>)
+This object. (Type: <a href="H3DU.LightSource.md">H3DU.LightSource</a>)

@@ -26,11 +26,11 @@ the HTML 3D Library. Example:
 
 * `batch` (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)<br>
     A 3D batch to associate with this camera object. <i>Using a <a href="H3DU.Scene3D.md">H3DU.Scene3D</a> here is deprecated.</i>
-* `fov` (Type: Number)<br>
+* `fov` (Type: number)<br>
     Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.
-* `nearZ` (Type: Number)<br>
+* `nearZ` (Type: number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. See <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. This should be slightly greater than 0.
-* `farZ` (Type: Number)<br>
+* `farZ` (Type: number)<br>
     The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.
 * `canvas` (Type: HTMLCanvasElement) (optional)<br>
     A canvas to associate with this camera object. <i>This argument is deprecated.</i>
@@ -104,7 +104,7 @@ the same reference point at the same distance.
 
 #### Parameters
 
-* `angleDegrees` (Type: Number)<br>
+* `angleDegrees` (Type: number)<br>
     The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.
 
 #### Return Value
@@ -119,7 +119,7 @@ the same reference point at the same distance.
 
 #### Parameters
 
-* `angleDegrees` (Type: Number)<br>
+* `angleDegrees` (Type: number)<br>
     The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.
 
 #### Return Value
@@ -135,7 +135,7 @@ Moves the camera horizontally relative to the camera's up vector.
 
 #### Parameters
 
-* `dist` (Type: Number)<br>
+* `dist` (Type: number)<br>
     Distance to move the camera.
 
 #### Return Value
@@ -151,7 +151,7 @@ Moves the camera toward or away from the camera's up vector.
 
 #### Parameters
 
-* `dist` (Type: Number)<br>
+* `dist` (Type: number)<br>
     Distance to move the camera.
 
 #### Return Value
@@ -166,7 +166,7 @@ to the reference point.
 
 #### Parameters
 
-* `dist` (Type: Number)<br>
+* `dist` (Type: number)<br>
     The distance to move. Positive values mean forward, and negative distances mean back.
 
 #### Return Value
@@ -180,7 +180,7 @@ Moves the camera forward the given distance.
 
 #### Parameters
 
-* `dist` (Type: Number)<br>
+* `dist` (Type: number)<br>
     The distance to move. Positive values mean forward, and negative distances mean back.
 
 #### Return Value
@@ -194,7 +194,7 @@ Moves the camera horizontally relative to the camera's up vector.
 
 #### Parameters
 
-* `dist` (Type: Number)<br>
+* `dist` (Type: number)<br>
     Distance to move the camera.
 
 #### Return Value
@@ -210,11 +210,11 @@ Sets the position of the camera.
 
 #### Parameters
 
-* `cx` (Type: Number)<br>
+* `cx` (Type: number)<br>
     The camera's new X coordinate.
-* `cy` (Type: Number)<br>
+* `cy` (Type: number)<br>
     The camera's new Y coordinate.
-* `cz` (Type: Number)<br>
+* `cz` (Type: number)<br>
     The camera's new Z coordinate.
 
 #### Return Value
@@ -228,7 +228,7 @@ Moves the camera toward or away from the camera's up vector.
 
 #### Parameters
 
-* `dist` (Type: Number)<br>
+* `dist` (Type: number)<br>
     Distance to move the camera.
 
 #### Return Value
@@ -243,7 +243,7 @@ point without changing its orientation.
 
 #### Parameters
 
-* `dist` (Type: Number)<br>
+* `dist` (Type: number)<br>
     Positive number giving the distance. If this is less than the near plane distance, the distance will be equal to the near plane distance. Does nothing if the distance is 0 or less.
 
 #### Return Value
@@ -257,7 +257,7 @@ Sets the position of the camera.
 
 #### Parameters
 
-* `cx` (Type: Number)<br>
+* `cx` (Type: number)<br>
     The camera's new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, "cy" and "cz" can be omitted.
 * `cy` (Type: number) (optional)<br>
     The camera's new Y coordinate.
@@ -276,7 +276,7 @@ the same distance from a reference point.
 
 #### Parameters
 
-* `angleDegrees` (Type: Number)<br>
+* `angleDegrees` (Type: number)<br>
     The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera rightward, and negative values leftward. If the coordinate-system is left-handed, vice versa.
 
 #### Return Value
@@ -291,7 +291,7 @@ the same distance from a reference point.
 
 #### Parameters
 
-* `angleDegrees` (Type: Number)<br>
+* `angleDegrees` (Type: number)<br>
     The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.
 
 #### Return Value
@@ -308,7 +308,7 @@ the same reference point at the same distance.
 
 #### Parameters
 
-* `angleDegrees` (Type: Number)<br>
+* `angleDegrees` (Type: number)<br>
     The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.
 
 #### Return Value
@@ -325,7 +325,7 @@ the same reference point at the same distance.
 
 #### Parameters
 
-* `angleDegrees` (Type: Number)<br>
+* `angleDegrees` (Type: number)<br>
     The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.
 
 #### Return Value

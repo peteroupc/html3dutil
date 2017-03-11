@@ -16,20 +16,33 @@
 // /////////////////////
 
 /** @ignore */
-H3DU._MaterialBinder = function(mshade) {
+var _isPowerOfTwo = function(a) {
+  "use strict";
+  if(Math.floor(a) !== a || a <= 0)return false;
+  while(a > 1 && (a & 1) === 0) {
+    a >>= 1;
+  }
+  return a === 1;
+};
+
+/**
+ * @ignore
+ * @constructor
+ */
+var _MaterialBinder = function(mshade) {
   "use strict";
   this.mshade = mshade;
 };
 /** @ignore */
-H3DU._MaterialBinder._textureSizeZeroZero = [0, 0];
+_MaterialBinder._textureSizeZeroZero = [0, 0];
 /** @ignore */
-H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
+_MaterialBinder.prototype.bind = function(program, context, loader) {
   "use strict";
   if(!this.mshade)return this;
   var mat = this.mshade;
   var diffuse = typeof mat.albedo !== "undefined" && mat.albedo !== null ? mat.albedo : mat.diffuse;
   var uniforms = {
-    "textureSize":H3DU._MaterialBinder._textureSizeZeroZero,
+    "textureSize":_MaterialBinder._textureSizeZeroZero,
     "md":diffuse.length === 4 ? diffuse :
     [diffuse[0], diffuse[1], diffuse[2],
       diffuse.length < 4 ? 1.0 : diffuse[3]]
@@ -66,7 +79,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
       var textureSizeName = typeof textures[i][2] === "undefined" ? null : textures[i][2];
       var tex = textures[i][0];
       var texInfo = tex instanceof H3DU.Texture ? tex._toInfo() : tex;
-      H3DU._MaterialBinder.bindTexture(
+      _MaterialBinder.bindTexture(
           tex, texInfo, context, program,
           sampler++, loader, textures[i][1], textureSizeName);
     }
@@ -76,7 +89,7 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
       if(Object.prototype.hasOwnProperty.call(mat.shader.uniformValues, k)) {
         var v = mat.shader.uniformValues[k];
         if(typeof v !== "undefined" && v !== null && v instanceof H3DU.TextureInfo) {
-          H3DU._MaterialBinder.bindTexture(
+          _MaterialBinder.bindTexture(
     v, v, context, program,
           sampler++, loader, k, null);
         }
@@ -87,20 +100,23 @@ H3DU._MaterialBinder.prototype.bind = function(program, context, loader) {
 
 // ////////////////////////
 
-/** @ignore */
-H3DU._LoadedTexture = function(texture, textureInfo, context) {
+/**
+ * @ignore
+ * @constructor
+ */
+function _LoadedTexture(texture, textureInfo, context) {
   "use strict";
   this._init(texture, textureInfo, context);
 };
 /** @ignore */
-H3DU._LoadedTexture.textureFilters = function(context, texture, textureInfo, target) {
+_LoadedTexture.textureFilters = function(context, texture, textureInfo, target) {
   "use strict";
   context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
   // generate mipmaps for power-of-two textures
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null && context instanceof WebGL2RenderingContext ||
-     H3DU._isPowerOfTwo(texture.getWidth()) &&
-      H3DU._isPowerOfTwo(texture.getHeight())) {
+     _isPowerOfTwo(texture.getWidth()) &&
+      _isPowerOfTwo(texture.getHeight())) {
     context.generateMipmap(target);
   } else {
     // WebGL 1 non-power-of-two texture
@@ -121,10 +137,10 @@ H3DU._LoadedTexture.textureFilters = function(context, texture, textureInfo, tar
 };
 
 /** @ignore */
-H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
+_LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   "use strict";
   if(!texture.image)throw new Error();
-  context = H3DU._toContext(context);
+  context = context && context.getContext ? context.getContext() : context;
   this.context = context;
   this.loadedTexture = context.createTexture();
   context.activeTexture(context.TEXTURE0);
@@ -145,13 +161,16 @@ H3DU._LoadedTexture.prototype._init = function(texture, textureInfo, context) {
      textureInfo.internalFormat, texture.getWidth(), texture.getHeight(), 0,
      textureInfo.format, context.UNSIGNED_BYTE, texture.image);
   }
-  H3DU._LoadedTexture.textureFilters(context, texture, textureInfo, target);
+  _LoadedTexture.textureFilters(context, texture, textureInfo, target);
 };
 
-/** @ignore */
-H3DU._LoadedCubeMap = function(textureImage, context) {
+/**
+ * @ignore
+ * @constructor
+ */
+function _LoadedCubeMap(textureImage, context) {
   "use strict";
-  context = H3DU._toContext(context);
+  context = context && context.getContext ? context.getContext() : context;
   this.context = context;
   this.loadedTexture = context.createTexture();
   context.activeTexture(context.TEXTURE0);
@@ -172,11 +191,11 @@ H3DU._LoadedCubeMap = function(textureImage, context) {
      context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
     }
   }
-  H3DU._LoadedTexture.textureFilters(context, textureImage, new H3DU.TextureInfo(), target);
+  _LoadedTexture.textureFilters(context, textureImage, new H3DU.TextureInfo(), target);
 };
 
 /** @ignore */
-H3DU._LoadedTexture.prototype.dispose = function() {
+_LoadedTexture.prototype.dispose = function() {
   "use strict";
   if(this.loadedTexture && this.context) {
     this.context.deleteTexture(this.loadedTexture);
@@ -185,7 +204,7 @@ H3DU._LoadedTexture.prototype.dispose = function() {
   this.loadedTexture = null;
 };
 /** @ignore */
-H3DU._LoadedCubeMap.prototype.dispose = function() {
+_LoadedCubeMap.prototype.dispose = function() {
   "use strict";
   if(this.loadedTexture && this.context) {
     this.context.deleteTexture(this.loadedTexture);
@@ -196,7 +215,7 @@ H3DU._LoadedCubeMap.prototype.dispose = function() {
 // ///////////////////////////////
 
 /** @ignore */
-H3DU._MaterialBinder.bindTexture = function(
+_MaterialBinder.bindTexture = function(
   texture, textureInfo, context, program,
   textureUnit, loader, uniformName, sizeUniform) {
   "use strict";
@@ -278,8 +297,8 @@ H3DU._MaterialBinder.bindTexture = function(
       context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
       if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null && context instanceof WebGL2RenderingContext ||
-     H3DU._isPowerOfTwo(texture.getWidth()) &&
-      H3DU._isPowerOfTwo(texture.getHeight())) {
+     _isPowerOfTwo(texture.getWidth()) &&
+      _isPowerOfTwo(texture.getHeight())) {
         context.texParameteri(target,
            context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
         context.texParameteri(target,
@@ -308,16 +327,19 @@ H3DU._MaterialBinder.bindTexture = function(
 
 // ////////////////////////
 
-/** @ignore */
-H3DU._LightsBinder = function(lights) {
+/**
+ * @ignore
+ * @constructor
+ */
+function _LightsBinder(lights) {
   "use strict";
   this.lights = lights;
 };
-H3DU._LightsBinder.emptyW1 = [0, 0, 0, 1];
-H3DU._LightsBinder.emptyW0 = [0, 0, 0, 0];
-H3DU._LightsBinder.emptyAtten = [1, 0, 0, 0];
+_LightsBinder.emptyW1 = [0, 0, 0, 1];
+_LightsBinder.emptyW0 = [0, 0, 0, 0];
+_LightsBinder.emptyAtten = [1, 0, 0, 0];
 /** @ignore */
-H3DU._LightsBinder.prototype.bind = function(program, viewMatrix) {
+_LightsBinder.prototype.bind = function(program, viewMatrix) {
   "use strict";
   var ltname;
   var lightsObject = this.lights;
@@ -341,13 +363,14 @@ H3DU._LightsBinder.prototype.bind = function(program, viewMatrix) {
  // Set empty values for undefined lights up to MAX_LIGHTS
   for(i = lightsObject.lights.length; i < H3DU.Lights.MAX_LIGHTS; i++) {
     ltname = "lights[" + i + "]";
-    uniforms[ltname + ".diffuse"] = H3DU._LightsBinder.emptyW1;
-    uniforms[ltname + ".specular"] = H3DU._LightsBinder.emptyW1;
-    uniforms[ltname + ".position"] = H3DU._LightsBinder.emptyW0;
-    uniforms[ltname + ".radius"] = H3DU._LightsBinder.emptyW0;
+    uniforms[ltname + ".diffuse"] = _LightsBinder.emptyW1;
+    uniforms[ltname + ".specular"] = _LightsBinder.emptyW1;
+    uniforms[ltname + ".position"] = _LightsBinder.emptyW0;
+    uniforms[ltname + ".radius"] = _LightsBinder.emptyW0;
   }
   program.setUniforms(uniforms);
   return this;
 };
 
 // /////////////////////
+export { _LoadedTexture, _LoadedCubeMap, _LightsBinder, _MaterialBinder };

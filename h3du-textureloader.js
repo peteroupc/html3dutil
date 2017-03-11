@@ -7,27 +7,30 @@
  http://peteroupc.github.io/
 */
 /* global H3DU, Promise */
+
+import { _LoadedCubeMap, _LoadedTexture } from './h3du-binders';
+import { FrameBufferLoader } from './h3du-framebuffer';
+
 /**
  * An object that caches loaded textures and uploads them
  * to WebGL contexts.
- * @class
+ * @constructor
  * @memberof H3DU
  */
-H3DU.TextureLoader = function() {
+export var TextureLoader = function() {
   "use strict";
   this.loadedTextures = [];
   this.textureImages = {};
   this.maxAnisotropy = [];
-  this.fbLoader = new H3DU.FrameBufferLoader();
+  this.fbLoader = new FrameBufferLoader();
 };
 /**
  * Gets an already loaded texture by name from this texture loader.
- * @param {String} name The name of the texture, usually its file name.
- * @returns {Texture} The texture with the given name, or null
+ * @param {string} name The name of the texture, usually its file name.
+ * @returns {H3DU.Texture} The texture with the given name, or null
  * if it doesn't exist.
- * @instance
  */
-H3DU.TextureLoader.prototype.getTexture = function(name) {
+TextureLoader.prototype.getTexture = function(name) {
   "use strict";
   var tex = this.textureImages[name] || null;
   if(tex && tex.loadStatus !== 2) {
@@ -48,14 +51,13 @@ H3DU.TextureLoader.prototype.getTexture = function(name) {
  * the JavaScript DOM's Image class.
  * @returns {Promise<H3DU.Texture>} A promise that resolves when the texture
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
- * @instance
  */
-H3DU.TextureLoader.prototype.loadTexture = function(texture) {
+TextureLoader.prototype.loadTexture = function(texture) {
   "use strict";
   return H3DU.Texture.loadTexture(texture, this.textureImages);
 };
 /** @ignore */
-H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
+TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var ma = this.maxAnisotropy;
@@ -96,9 +98,8 @@ H3DU.TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @instance
  */
-H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, reject) {
+TextureLoader.prototype.loadTexturesAll = function(textures, resolve, reject) {
   "use strict";
   var promises = [];
   for(var i = 0; i < textures.length; i++) {
@@ -111,16 +112,15 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
  * uploads its texture data to a WebGL context.
  * @param {String|H3DU.TextureInfo|H3DU.Texture} texture An object described in
  * {@link H3DU.TextureLoader.loadTexture}.
- * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|Object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.
  * @returns {Promise<H3DU.Texture>} A promise that resolves when
  * the texture is loaded successfully (the result will be an H3DU.Texture object)
  * and is rejected when an error occurs.
- * @instance
  */
-H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
+TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var that = this;
@@ -134,7 +134,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
  * Loads one or more textures by their URL and uploads their data to a WebGL context.
  * @param {Array<String|H3DU.TextureInfo|H3DU.Texture>} textures An array of objects described in
  * {@link H3DU.TextureLoader.loadTexture}.
- * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|Object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.
@@ -146,9 +146,8 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @instance
  */
-H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context, resolve, reject) {
+TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context, resolve, reject) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var promises = [];
@@ -159,7 +158,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
 };
 
 /** @ignore */
-H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo, context) {
+TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   var lt = this.loadedTextures;
@@ -169,8 +168,8 @@ H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo
     }
   }
   var loadedTex = texture instanceof H3DU.CubeMap ?
-     new H3DU._LoadedCubeMap(texture, context) :
-     new H3DU._LoadedTexture(texture, textureInfo, context);
+     new _LoadedCubeMap(texture, context) :
+     new _LoadedTexture(texture, textureInfo, context);
   lt.push([texture, context, loadedTex]);
   return loadedTex;
 };
@@ -188,9 +187,8 @@ H3DU.TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo
  * all textures used by the cube map are loaded successfully
  * (the result will be an H3DU.CubeMap object)
  * and is rejected when an error occurs.
- * @instance
  */
-H3DU.TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, reject) {
+TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, reject) {
   "use strict";
   var cubemap = texturesOrCubeMap;
   if(!(texturesOrCubeMap instanceof H3DU.CubeMap)) {
@@ -203,19 +201,19 @@ H3DU.TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, 
 };
 
 /** @ignore */
-H3DU.TextureLoader.prototype.mapFrameBuffer = function(info, context) {
+TextureLoader.prototype.mapFrameBuffer = function(info, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   return this.fbLoader.mapFrameBuffer(info, context);
 };
 /** @ignore */
-H3DU.TextureLoader.prototype.bindFrameBuffer = function(info, context, textureUnit) {
+TextureLoader.prototype.bindFrameBuffer = function(info, context, textureUnit) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   return this.fbLoader.bind(info, context, textureUnit);
 };
 /** @ignore */
-H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
+TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   this.fbLoader.unbind(info, context);
@@ -223,9 +221,8 @@ H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
 /**
  * Disposes all resources used by this texture loader.
  * @returns {void} This method doesn't return a value.
- * @instance
  */
-H3DU.TextureLoader.prototype.dispose = function() {
+TextureLoader.prototype.dispose = function() {
   "use strict";
   for(var tex in this.textureImages) {
     if(Object.prototype.hasOwnProperty.call(this.textureImages, tex)) {

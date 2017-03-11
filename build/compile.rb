@@ -19,9 +19,9 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
   formatting=(false) ? "--formatting PRETTY_PRINT" : ""
   opt=(advanced) ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS"
   cmd="java -jar #{ffq($compilerJar)} #{formatting} "+
-    # " --warning_level=VERBOSE --jscomp_off=globalThis "+
+     " --warning_level=VERBOSE --jscomp_off=globalThis --jscomp_off=deprecated "+
      " --generate_exports "+
-     #" --externs extern.js"+
+     " --externs extern.js"+
      " --language_in ECMASCRIPT6 --language_out ECMASCRIPT3 "+
      "--compilation_level #{opt} #{inputs} "+
      (useSourceMap ? "--create_source_map #{ffq(sourceMap)} " : "")+
@@ -49,12 +49,14 @@ Dir.chdir(".."){
  files=%w( promise.js h3du.js h3du-curve.js h3du-surface.js )
  files|=Dir.glob("h3du-*.js")
  filesToCompile=files|(%w( oldnames.js ))
- normalizeAndCompile(filesToCompile,"h3du_min.js",false,ARGV.include?("--sourcemap"))
+ smap=ARGV.include?("--sourcemap") ? " -m ./h3du_all.js.map" : ""
+ `rollup --format=umd --output=h3du_all.js --name=H3DU #{smap} -- h3du.js`
+ normalizeAndCompile(["h3du_all.js"],"h3du_min.js",false,ARGV.include?("--sourcemap"))
  generateSvg("doc/websafe.svg")
  generateColorNameSvg("doc/colornames.svg")
- filesForDoc=files|Dir.glob("extras/*.js")
+ filesForDoc=["h3du_all.js"]|Dir.glob("extras/*.js")
  filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
- `jsdoc -u tutorials -t build -R README.md -d doc #{filesForDoc}`
+ puts `jsdoc -u tutorials -t build -R README.md -d doc #{filesForDoc}`
  svgs=%w( doc/websafe.svg doc/colornames.svg).each{|s|
   `svgo -i #{ffq(s)} -o #{ffq(s)}`
  }

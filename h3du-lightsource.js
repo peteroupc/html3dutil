@@ -12,15 +12,15 @@
  * Specifies parameters for light sources.<p>
  * NOTE: The default shader program assumes that all colors specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
- * @class
+ * @constructor
  * @memberof H3DU
- * @param {Object|Array<Number>} [params] An object as described in "setParams". <i>Using this parameter
+ * @param {Object|Array<number>} [params] An object as described in "setParams". <i>Using this parameter
  * as described in the "position" property is deprecated since version 2.0.</i>
  * @param {Array<number>} [ambient] See "ambient" property. <i>This parameter is deprecated.</i>
  * @param {Array<number>} [diffuse] See "diffuse" property. <i>This parameter is deprecated.</i>
  * @param {Array<number>} [specular] See "specular" property. <i>This parameter is deprecated.</i>
  */
-H3DU.LightSource = function(params, ambient, diffuse, specular) {
+export var LightSource = function(params, ambient, diffuse, specular) {
   "use strict";
  /**
   * A 4-element vector giving an additional color to multiply with the ambient
@@ -94,10 +94,9 @@ H3DU.LightSource = function(params, ambient, diffuse, specular) {
  * with distance.
  * </ul>
  * If a value is null or undefined, it is ignored.
- * @returns {H3DU.Material} This object.
- * @instance
+ * @returns {H3DU.LightSource} This object.
  */
-H3DU.LightSource.prototype.setParams = function(params) {
+LightSource.prototype.setParams = function(params) {
   "use strict";
   if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);

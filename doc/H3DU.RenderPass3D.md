@@ -82,7 +82,7 @@ Default Value: `null`
 Use the dimensions of the given framebuffer rather than those
 of the scene rendering it.
 
-Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>
+Type: boolean
 
 Default Value: `false`
 

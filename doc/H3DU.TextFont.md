@@ -71,7 +71,7 @@ used to represent the font.
 
 #### Parameters
 
-* `fontFileName` (Type: String)<br>
+* `fontFileName` (Type: string)<br>
     The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
 
 #### Return Value
@@ -105,7 +105,7 @@ used by that font.
 
 #### Parameters
 
-* `fontFileName` (Type: String)<br>
+* `fontFileName` (Type: string)<br>
     The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
 * `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
     Texture loader object to use when loading the textures.
@@ -131,7 +131,7 @@ needed to draw text with this font.
 
 #### Parameters
 
-* `str` (Type: String)<br>
+* `str` (Type: string)<br>
     The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
 * `params` (Type: Object)<br>
     An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>x</code> - X coordinate of the top left corner of the text. If null or omitted, uses 0. For the text to show upright, the coordinate system should have the X axis pointing right and the Y axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - Y coordinate of the top left corner of the text. If null or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be "left", "center", or "right" (all strings). </ul>
@@ -150,7 +150,7 @@ drawn using this font.
 
 #### Parameters
 
-* `str` (Type: String)<br>
+* `str` (Type: string)<br>
     The text string to measure. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
 * `params` (Type: Object)<br>
     An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>.
@@ -174,7 +174,7 @@ than the right and bottom coordinates, respectively).
 
 #### Parameters
 
-* `str` (Type: String)<br>
+* `str` (Type: string)<br>
     The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
 * `params` (Type: Object)<br>
     An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul>

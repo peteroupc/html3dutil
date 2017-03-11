@@ -12,7 +12,7 @@
  * Creates an array of B-spline curves from the control points of a Hermite spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
- * @param {Array<Array<Number>>} curve An array of control points,
+ * @param {Array<Array<number>>} curve An array of control points,
  * each with the same number of values, that describe a Hermite spline.
  * Each pair of control points takes up two elements of the array and consists
  * of the coordinates of that point followed by the tangent vector (derivative) at that point.
@@ -51,7 +51,7 @@ H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
  * Creates an array of B-spline curves from the control points of a cardinal spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
- * @param {Array<Array<Number>>} curve An array of control points,
+ * @param {Array<Array<number>>} curve An array of control points,
  * each with the same number of values, that describe a cardinal spline.
  * Each point, except the first and the last, will be tangent to the line that connects the
  * points adjacent to it. The spline starts at the second control point and ends

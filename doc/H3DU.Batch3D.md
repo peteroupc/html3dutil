@@ -9,6 +9,8 @@ A `Batch3D` represents a so-called "scene graph". It holds
 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
 position, and light sources to illuminate the 3D scene.
 
+#### Parameters
+
 ### Methods
 
 * [addShape](#H3DU.Batch3D_addShape)<br>Adds a 3D shape to this batch of shapes, at the end of the list
@@ -113,7 +115,7 @@ in this batch at the given index.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Integer index, starting from 0, of the shape or shape group to set.
 
 #### Return Value
@@ -145,13 +147,13 @@ or squishing it.
 
 #### Parameters
 
-* `l` (Type: Number)<br>
+* `l` (Type: number)<br>
     Leftmost coordinate of the view rectangle.
-* `r` (Type: Number)<br>
+* `r` (Type: number)<br>
     Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Bottommost coordinate of the view rectangle.
-* `t` (Type: Number)<br>
+* `t` (Type: number)<br>
     Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)
 
 #### Return Value
@@ -174,17 +176,17 @@ or squishing it.
 
 #### Parameters
 
-* `l` (Type: Number)<br>
+* `l` (Type: number)<br>
     Leftmost coordinate of the view rectangle.
-* `r` (Type: Number)<br>
+* `r` (Type: number)<br>
     Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Bottommost coordinate of the view rectangle.
-* `t` (Type: Number)<br>
+* `t` (Type: number)<br>
     Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)
-* `e` (Type: Number)<br>
+* `e` (Type: number)<br>
     Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
-* `f` (Type: Number)<br>
+* `f` (Type: number)<br>
     Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.
 
 #### Return Value
@@ -202,11 +204,11 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 
 #### Parameters
 
-* `fov` (Type: Number)<br>
+* `fov` (Type: number)<br>
     Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
-* `near` (Type: Number)<br>
+* `near` (Type: number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
-* `far` (Type: Number)<br>
+* `far` (Type: number)<br>
     The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
 #### Return Value
@@ -278,14 +280,14 @@ Sets a shape or shape group at the given index in this batch.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Integer index, starting from 0, to set the shape or shape group at.
 * `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
     Shape object to set at the given index.
 
 #### Return Value
 
-This object. (Type: H3DU.Batch)
+This object. (Type: <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)
 
  <a name='H3DU.Batch3D_setViewMatrix'></a>
 ### H3DU.Batch3D#setViewMatrix(mat)

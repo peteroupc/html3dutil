@@ -19,11 +19,11 @@
  * For best results, any textures to be used in WebGL should have
  * width and height each equal to a power of 2, such as 2, 4, 8, 16,
  * and 32.
- * @class
+ * @constructor
  * @memberof H3DU
  * @param {Object} [params] An object as described in {@link H3DU.TextureInfo.setParams}.
  */
-H3DU.TextureInfo = function(params) {
+export var TextureInfo = function(params) {
   "use strict";
   this.uri = "";
   this.topDown = false;
@@ -35,7 +35,7 @@ H3DU.TextureInfo = function(params) {
   this.minFilter = 9987; // NOTE: Different from glTF default of 9986
   this.wrapS = 10497;
   this.wrapT = 10497;
-  this.setParams(params);
+  this.setParams(typeof params==="undefined" ? null : (params));
 };
 
 /**
@@ -43,9 +43,8 @@ H3DU.TextureInfo = function(params) {
  * object.
  * @param {H3DU.TextureInfo} [other] Texture information object to copy.
  * @returns {H3DU.TextureInfo} This object.
- * @instance
  */
-H3DU.TextureInfo.prototype.copyFrom = function(other) {
+TextureInfo.prototype.copyFrom = function(other) {
   "use strict";
   if(typeof other !== "undefined" && other !== null) {
     this.uri = typeof other.uri === "undefined" || other.uri === null ? "" : other.uri;
@@ -82,9 +81,8 @@ H3DU.TextureInfo.prototype.copyFrom = function(other) {
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
  * unless otherwise noted.
  * @returns {H3DU.TextureInfo} This object.
- * @instance
  */
-H3DU.TextureInfo.prototype.setParams = function(params) {
+TextureInfo.prototype.setParams = function(params) {
   "use strict";
   if(typeof params !== "undefined" && params !== null) {
     if(typeof params.uri !== "undefined" && params.uri !== null) {
@@ -121,7 +119,7 @@ H3DU.TextureInfo.prototype.setParams = function(params) {
   return this;
 };
 /** @ignore */
-H3DU.TextureInfo._texInfoOrString = function(tex) {
+TextureInfo._texInfoOrString = function(tex) {
   "use strict";
   return typeof tex === "string" ? new H3DU.TextureInfo({"uri":tex}) : tex;
 };

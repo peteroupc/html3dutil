@@ -22,34 +22,34 @@
  * in vertex buffer objects) and uniforms (variables not specific to a vertex).<p>
  * If compiling or linking the shader program fails, a diagnostic
  * log is output to the JavaScript console.
- * @class
+ * @constructor
  * @memberof H3DU
  * @deprecated This class is likely to become a private class.
  * Use the {@link H3DU.ShaderInfo} class instead, which is not coupled to WebGL
  * contexts.
- * @param {WebGLRenderingContext|WebGL2RenderingContext|object} context
+ * @param {WebGLRenderingContext|WebGL2RenderingContext|Object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
  * implements a no-argument <code>getContext</code> method
  * that returns a WebGL context.
- * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
+ * @param {string} [vertexShader] Source text of a vertex shader, in OpenGL
  * ES Shading Language (GLSL). If null, a default
  * vertex shader is used instead.
- * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
+ * @param {string} [fragmentShader] Source text of a fragment shader in GLSL.
  * If null, a default fragment shader is used instead.
  */
-H3DU.ShaderProgram = function(context, vertexShader, fragmentShader) {
+export var ShaderProgram = function(context, vertexShader, fragmentShader) {
   "use strict";
   this._init(context, new H3DU.ShaderInfo(vertexShader, fragmentShader));
 };
 /** @ignore */
-H3DU.ShaderProgram._fromShaderInfo = function(context, shader) {
+ShaderProgram._fromShaderInfo = function(context, shader) {
   "use strict";
   var ret = new H3DU.ShaderProgram(null);
   ret._init(context, shader);
   return ret;
 };
 /** @ignore */
-H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
+ShaderProgram.prototype._init = function(context, shaderInfo) {
   "use strict";
   if(!context)return;
   context = context.getContext ? context.getContext() : context;
@@ -107,7 +107,7 @@ H3DU.ShaderProgram.prototype._init = function(context, shaderInfo) {
   }
 };
 /** @ignore */
-H3DU.ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index) {
+ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index) {
   "use strict";
   for(var key in this.attributeSemantics) {
     if(Object.prototype.hasOwnProperty.call(this.attributeSemantics, key)) {
@@ -119,7 +119,7 @@ H3DU.ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index)
   }
 };
 /** @ignore */
-H3DU.ShaderProgram.prototype._disableOthers = function(names) {
+ShaderProgram.prototype._disableOthers = function(names) {
   "use strict";
   var a = {};
   for(var i = 0; i < names.length; i++) {
@@ -134,9 +134,9 @@ H3DU.ShaderProgram.prototype._disableOthers = function(names) {
 };
 /** Disposes resources from this shader program.
  * @returns {void} This method doesn't return a value.
- * @instance
+ * @suppress {deprecated}
  */
-H3DU.ShaderProgram.prototype.dispose = function() {
+ShaderProgram.prototype.dispose = function() {
   "use strict";
   if(this.program) {
     this.context.deleteProgram(this.program);
@@ -149,7 +149,7 @@ H3DU.ShaderProgram.prototype.dispose = function() {
   this.attributeSemantics = {};
 };
 /** @ignore */
-H3DU.ShaderProgram.prototype.setSemantic = function(name, sem, index) {
+ShaderProgram.prototype.setSemantic = function(name, sem, index) {
   "use strict";
   var an = this.attributeSemantics[name];
   var semIndex = H3DU.MeshBuffer._resolveSemantic(name, index);
@@ -165,14 +165,13 @@ H3DU.ShaderProgram.prototype.setSemantic = function(name, sem, index) {
 /**
  * Gets the WebGL context associated with this shader program object.
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
- * @instance
  */
-H3DU.ShaderProgram.prototype.getContext = function() {
+ShaderProgram.prototype.getContext = function() {
   "use strict";
   return this.context;
 };
 /** @ignore */
-H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
+ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
   "use strict";
   var uniform = this.get(i);
   if(typeof uniform === "undefined" || uniform === null)return;
@@ -205,7 +204,7 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
  * (Although the location may change each time the shader program
  * is linked, that normally only happens upon construction
  * in the case of H3DU.ShaderInfo.)
- * @param {String} name The name of an attribute or uniform defined in either the
+ * @param {string} name The name of an attribute or uniform defined in either the
  * vertex or fragment shader of this shader program. If the uniform or attribute
  * is an array, each element in the array is named as in these examples:
  * "unif[0]", "unif[1]". If it's a struct, each member in the struct is named as in these examples:
@@ -214,9 +213,8 @@ H3DU.ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
  * "unif[0].member2".
  * @returns {number|WebGLUniformLocation|null} The location of the uniform or attribute
  * name, or null if it doesn't exist.
- * @instance
  */
-H3DU.ShaderProgram.prototype.get = function(name) {
+ShaderProgram.prototype.get = function(name) {
   "use strict";
   var ret = this.actives[name];
   return typeof ret === "undefined" || ret === null ? null : ret;
@@ -225,13 +223,12 @@ H3DU.ShaderProgram.prototype.get = function(name) {
  * Gets the value of the given uniform in this program. This method
  * may be called at any time, even if this program is not currently the
  * active program in the WebGL context.
- * @param {String} name The name of a uniform defined in either the
+ * @param {string} name The name of a uniform defined in either the
  * vertex or fragment shader of this shader program. See get().
- * @returns {Number|Array<Number>} The uniform's value, or null if it doesn't exist or if
+ * @returns {Number|Array<number>} The uniform's value, or null if it doesn't exist or if
  * an attribute is named, not a uniform.
- * @instance
  */
-H3DU.ShaderProgram.prototype.getUniform = function(name) {
+ShaderProgram.prototype.getUniform = function(name) {
   "use strict";
   var loc = typeof name === "string" ? this.get(name) : name;
  // If "loc" is a number that means it's an attribute, not a uniform;
@@ -248,7 +245,7 @@ H3DU.ShaderProgram.prototype.getUniform = function(name) {
 };
 
 /** @ignore */
-H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
+ShaderProgram.prototype._setSavedUniforms = function() {
   "use strict";
   var i;
   var uniformsLength = 0;
@@ -267,9 +264,8 @@ H3DU.ShaderProgram.prototype._setSavedUniforms = function() {
  * the WebGL context when the "setUniforms" method
  * was called), sets their values now.
  * @returns {H3DU.ShaderProgram} This object.
- * @instance
  */
-H3DU.ShaderProgram.prototype.use = function() {
+ShaderProgram.prototype.use = function() {
   "use strict";
   this.context.useProgram(this.prog);
   if(this._setSavedUniforms() > 0) {
@@ -278,7 +274,7 @@ H3DU.ShaderProgram.prototype.use = function() {
   return this;
 };
 /** @ignore */
-H3DU.ShaderProgram.prototype._update = function() {
+ShaderProgram.prototype._update = function() {
   "use strict";
   H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
    this.uniformValues, this.savedUniforms);
@@ -300,9 +296,8 @@ H3DU.ShaderProgram.prototype._update = function() {
  * 9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
  * respectively, or a Number if the uniform is a "float" or "int".
  * @returns {H3DU.ShaderProgram} This object.
- * @instance
  */
-H3DU.ShaderProgram.prototype.setUniforms = function(uniforms) {
+ShaderProgram.prototype.setUniforms = function(uniforms) {
   "use strict";
 
   H3DU.ShaderInfo._setUniformsInternal(uniforms, this.uniformValues,
@@ -317,7 +312,7 @@ H3DU.ShaderProgram.prototype.setUniforms = function(uniforms) {
 };
 
 /** @ignore */
-H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentShader) {
+ShaderProgram._compileShaders = function(context, vertexShader, fragmentShader) {
   "use strict";
   function compileShader(context, kind, text) {
     var shader = context.createShader(kind);
@@ -364,10 +359,10 @@ H3DU.ShaderProgram._compileShaders = function(context, vertexShader, fragmentSha
  * Generates source code for a fragment shader for applying
  * a raster effect to a texture.
  * @deprecated Use {@link H3DU.ShaderInfo.makeEffectFragment} instead.
- * @param {String} functionCode See H3DU.ShaderProgram.makeEffect().
+ * @param {string} functionCode See H3DU.ShaderProgram.makeEffect().
  * @returns {string} The source text of the resulting fragment shader.
  */
-H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
+ShaderProgram.makeEffectFragment = function(functionCode) {
   "use strict";
   return H3DU.ShaderInfo.makeEffectFragment(functionCode);
 };
@@ -376,7 +371,7 @@ H3DU.ShaderProgram.makeEffectFragment = function(functionCode) {
  * @deprecated Use {@link H3DU.ShaderInfo.makeCopyEffect} instead.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderProgram.makeCopyEffect = function() {
+ShaderProgram.makeCopyEffect = function() {
   "use strict";
   return H3DU.ShaderInfo.makeCopyEffect();
 };
@@ -386,7 +381,7 @@ H3DU.ShaderProgram.makeCopyEffect = function() {
  * a raster effect (postprocessing effect) to a texture.
  * @deprecated Use {@link H3DU.ShaderInfo.makeEffect} instead.
  * @param {Object} context No longer used; ignored.
- * @param {String} functionCode A string giving shader code
+ * @param {string} functionCode A string giving shader code
  * in OpenGL ES Shading Language (GLSL) that must contain
  * a function with the following signature:
  * <pre>
@@ -400,8 +395,9 @@ H3DU.ShaderProgram.makeCopyEffect = function() {
  * constants, functions, and so on (but not another "main" function).
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
+ShaderProgram.makeEffect = function(context, functionCode) {
   "use strict";
+  if(typeof context!=="undefined" && context!==null) { console.warn("Unused parameter context is defined"); };
   return H3DU.ShaderInfo.makeEffect(functionCode);
 };
 /**
@@ -410,8 +406,9 @@ H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
  * @param {Object} [context] No longer used; ignored.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderProgram.getInvertEffect = function() {
+ShaderProgram.getInvertEffect = function(context) {
   "use strict";
+if(typeof context!=="undefined" && context!==null) { console.warn("Unused parameter context is defined"); };
   return H3DU.ShaderInfo.makeInvertEffect();
 };
 /**
@@ -421,10 +418,11 @@ H3DU.ShaderProgram.getInvertEffect = function() {
  * @param {Object} [context] No longer used; ignored.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderProgram.getEdgeDetectEffect = function() {
+ShaderProgram.getEdgeDetectEffect = function(context) {
   "use strict";
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
+if(typeof context!=="undefined" && context!==null) { console.warn("Unused parameter context is defined"); };
   return H3DU.ShaderInfo.makeEdgeDetectEffect();
 };
 
@@ -434,7 +432,7 @@ H3DU.ShaderProgram.getEdgeDetectEffect = function() {
  * @deprecated Use {@link H3DU.ShaderInfo.getDefaultVertex} instead.
  * @returns {string} The resulting shader text.
  */
-H3DU.ShaderProgram.getDefaultVertex = function() {
+ShaderProgram.getDefaultVertex = function() {
   "use strict";
   return H3DU.ShaderInfo.getDefaultVertex();
 };
@@ -448,7 +446,7 @@ H3DU.ShaderProgram.getDefaultVertex = function() {
  * @deprecated Use {@link H3DU.ShaderInfo.getDefaultFragment} instead.
  * @returns {string} The resulting shader text.
  */
-H3DU.ShaderProgram.getDefaultFragment = function() {
+ShaderProgram.getDefaultFragment = function() {
   "use strict";
   return H3DU.ShaderInfo.getDefaultFragment();
 };

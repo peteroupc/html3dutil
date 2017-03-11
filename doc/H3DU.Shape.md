@@ -16,7 +16,7 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>
+* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> | <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a>)<br>
     A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.md">H3DU.Mesh</a> objects, the <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a> created will use the mesh in its current state and won't track future changes. <i>Using <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i>
 
 ### Methods
@@ -148,11 +148,11 @@ precedence over the color given in this method.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
@@ -183,16 +183,16 @@ position. See <a href="H3DU.Transform.md#H3DU.Transform_setPosition">H3DU.Transf
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;Number>)<br>
+* `x` (Type: number | Array.&lt;number>)<br>
     X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y coordinate.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z coordinate.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
  <a name='H3DU.Shape_setQuaternion'></a>
 ### H3DU.Shape#setQuaternion(quat)
@@ -217,16 +217,16 @@ size. See <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#set
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;Number>)<br>
+* `x` (Type: number | Array.&lt;number>)<br>
     Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Scaling factor for this object's height.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Scaling factor for this object's depth.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
+This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 
  <a name='H3DU.Shape_setShader'></a>
 ### H3DU.Shape#setShader(shader)
@@ -266,11 +266,11 @@ diffuse parameters to the given color.
 
 * `name` (Type: String | <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)<br>
     <a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.

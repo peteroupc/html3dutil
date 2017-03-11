@@ -121,7 +121,8 @@ Doc.typeToName = function(type) {
 };
 Doc.toHash = function(type) {
   "use strict";
-  return type.replace(/[^a-zA-Z0-9_\.$\u0080-\uffff]/g, "_");
+  var t=type.replace(/^module\:/g,"");
+  return t.replace(/[^a-zA-Z0-9_\.$\u0080-\uffff]/g, "_");
 };
 Doc.outputDir = path.normalize(env.opts.destination);
 function DocCollection() {
@@ -139,21 +140,21 @@ function DocCollection() {
   };
   this.addMethod = function(parent, name, entry, longname) {
     if(!parent) {
-      console.log("tried to add method" + [parent, name, longname]);
+      console.log("tried to add method " + [parent, name, longname]);
       return;
     }
     this.get(parent).methods[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addEvent = function(parent, name, entry, longname) {
     if(!parent) {
-      console.log("tried to add member" + [parent, name, longname]);
+      console.log("tried to add event " + [parent, name, longname]);
       return;
     }
     this.get(parent).events[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addMember = function(parent, name, entry, longname) {
     if(!parent) {
-      console.log("tried to add member" + [parent, name, longname]);
+      console.log("tried to add member " + [parent, name, longname]);
       return;
     }
     this.get(parent).members[name] = [entry, Doc.toHash(longname), longname];
@@ -316,18 +317,15 @@ function fillCollection(docCollection, nodes, parentlong) {
   nodes.forEach(function (node) {
     var i;
     var entry;
-    if(!parentlong && !node.undocumented && !node.ignore) {
-      // if(node.kind === "class")
-      //   console.log(node)
-      if(node.longname.indexOf("._") >= 0) {
-        console.log(node);
-      }
-    }
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
+ //   if(node.kind=="class") {
+//      console.log(node)
+    //}
+    //if(parentlong && node.kind=="function")console.log([node.longname,node.memberof,parentlong])
     if(node.memberof !== parentlong)return;
-    if (node.kind === "function" || node.kind === "event" || node.kind === "class") {
+    if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind==="namespace") {
       var paramnames = [];
       if(node.params) {
         var p = node.params;
@@ -346,14 +344,17 @@ function fillCollection(docCollection, nodes, parentlong) {
           elname = helper.htmlsafe(node.name);
         }
       }
-      if(node.kind === "class") {
+      if(node.kind === "class" || node.kind==="namespace") {
         entry += "# " + elname + "\n\n";
         entry += "[Back to documentation index.](index.md)\n\n";
       }
       var attribs = helper.getAttribs(node);
       var attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
       entry += " <a name='" + Doc.toHash(node.longname) + "'></a>\n";
-      entry += "### " + attribstr + elname + "(" + paramnames.join(", ") + ")";
+      entry += "### " + attribstr + elname;
+      if(node.kind!=="namespace") {
+        entry+="(" + paramnames.join(", ") + ")";
+      }
       if(node.kind === "event") {
         entry += " (event)";
       }
@@ -423,7 +424,7 @@ function fillCollection(docCollection, nodes, parentlong) {
       }
       if(node.kind === "function") {
         docCollection.addMethod(parentlong, node.name, entry, node.longname);
-      } else if(node.kind === "class") {
+      } else if(node.kind === "class" || node.kind==="namespace") {
         docCollection.addConstructor(node.longname, entry);
         fillCollection(docCollection, nodes, node.longname);
       } else {

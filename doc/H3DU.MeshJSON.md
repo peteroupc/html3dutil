@@ -29,7 +29,7 @@ Loads a mesh from JSON format.
 
 #### Parameters
 
-* `url` (Type: String)<br>
+* `url` (Type: string)<br>
     URL to a JSON mesh object, as used in the Public Domain HTML 3D Library.
 
 #### Return Value

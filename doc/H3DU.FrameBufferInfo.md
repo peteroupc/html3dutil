@@ -11,9 +11,9 @@ size to use as the depth buffer.
 
 #### Parameters
 
-* `width` (Type: Number)<br>
+* `width` (Type: number)<br>
     Width to use for the frame buffer. Throws an error if this value is less than 0. The width will be set to this value rounded up.
-* `height` (Type: Number)<br>
+* `height` (Type: number)<br>
     Height to use for the frame buffer. Throws an error if this value is less than 0. The height will be set to this value rounded up.
 
 ### Methods
@@ -47,9 +47,9 @@ Changes the width and height of this frame buffer information object.
 
 #### Parameters
 
-* `width` (Type: Number)<br>
+* `width` (Type: number)<br>
     New width to use for the frame buffer. Throws an error if this value is less than 0. The width will be set to this value rounded up.
-* `height` (Type: Number)<br>
+* `height` (Type: number)<br>
     New height to use for the frame buffer. Throws an error if this value is less than 0. The height will be set to this value rounded up.
 
 #### Return Value

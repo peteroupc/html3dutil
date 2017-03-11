@@ -13,11 +13,15 @@
  * When constructed, the list of light sources will be empty.<p>
  * NOTE: The default shader program assumes that all colors specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
- * @class
+ * @constructor
  * @memberof H3DU
  */
-H3DU.Lights = function() {
+export var Lights = function() {
   "use strict";
+  this._init();
+}
+/** @ignore */
+Lights.prototype._init=function() {
   this.lights = [];
  /**
   * Ambient color for the scene. This is the color of the light
@@ -42,9 +46,8 @@ H3DU.Lights = function() {
  * light sources: one light source with its default
  * values, and the default value for <code>sceneAmbient</code>.
  * @returns {H3DU.Lights} This object.
- * @instance
  */
-H3DU.Lights.prototype.setBasic = function() {
+Lights.prototype.setBasic = function() {
   "use strict";
   var ls = new H3DU.LightSource().setParams({
     "ambient":[0, 0, 0, 1],
@@ -63,9 +66,9 @@ H3DU.Lights.prototype.setBasic = function() {
  * @const
  * @default
  */
-H3DU.Lights.MAX_LIGHTS = 3;
+Lights.MAX_LIGHTS = 3;
 /** @ignore */
-H3DU.Lights._createNewLight = function(index) {
+Lights._createNewLight = function(index) {
   "use strict";
   var ret = new H3DU.LightSource();
   if(index !== 0) {
@@ -77,22 +80,20 @@ H3DU.Lights._createNewLight = function(index) {
 /**
  * Gets the number of lights defined in this object.
  * @returns {number} Return value.
- * @instance
  */
-H3DU.Lights.prototype.getCount = function() {
+Lights.prototype.getCount = function() {
   "use strict";
   return this.lights.length;
 };
 
 /**
  * Gets information about the light source at the given index.
- * @param {Number} index Zero-based index of the light to set. The first
+ * @param {number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @returns {LightSource} The corresponding light source object.
- * @instance
+ * @returns {H3DU.LightSource} The corresponding light source object.
  */
-H3DU.Lights.prototype.getLight = function(index) {
+Lights.prototype.getLight = function(index) {
   "use strict";
   var oldLength = this.lights.length;
   if(!this.lights[index])this.lights[index] = H3DU.Lights._createNewLight(index);
@@ -109,14 +110,13 @@ H3DU.Lights.prototype.getLight = function(index) {
 };
 /**
  * Sets parameters for the light source at the given index.
- * @param {Number} index Zero-based index of the light to set. The first
+ * @param {number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @param {Object} params An object as described in {@link H3DU.LightSource.setParams}.
  * @returns {H3DU.Lights} This object.
- * @instance
  */
-H3DU.Lights.prototype.setParams = function(index, params) {
+Lights.prototype.setParams = function(index, params) {
   "use strict";
   this.getLight(index).setParams(params);
   return this;
@@ -124,7 +124,7 @@ H3DU.Lights.prototype.setParams = function(index, params) {
 
 /**
  * Sets a directional light.
- * @param {Number} index Zero-based index of the light to set. The first
+ * @param {number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @param {Array<number>} direction A 3-element array giving the X, Y, and Z world space
@@ -136,9 +136,8 @@ H3DU.Lights.prototype.setParams = function(index, params) {
  * If null or omitted, the specular highlight color will
  * remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Lights} This object.
- * @instance
  */
-H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, specular) {
+Lights.prototype.setDirectionalLight = function(index, direction, diffuse, specular) {
   "use strict";
   var ret = this.setParams(index, {"position":[direction[0], direction[1], direction[2], 0]});
   if(typeof diffuse !== "undefined" && diffuse !== null)
@@ -149,7 +148,7 @@ H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, 
 };
 /**
  * Sets a point light.
- * @param {Number} index Zero-based index of the light to set. The first
+ * @param {number} index Zero-based index of the light to set. The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @param {Array<number>} position A 3-element array giving the X, Y, and Z world space
@@ -157,9 +156,8 @@ H3DU.Lights.prototype.setDirectionalLight = function(index, direction, diffuse, 
  * @param {Array<number>} [diffuse] Diffuse color, as described in {@link H3DU.Lights.setDirectionalLight}.
  * @param {Array<number>} [specular] Specular color, as described in {@link H3DU.Lights.setDirectionalLight}.
  * @returns {H3DU.Lights} This object.
- * @instance
  */
-H3DU.Lights.prototype.setPointLight = function(index, position, diffuse, specular) {
+Lights.prototype.setPointLight = function(index, position, diffuse, specular) {
   "use strict";
   var ret = this.setParams(index, {"position":[position[0], position[1], position[2], 1]});
   if(typeof diffuse !== "undefined" && diffuse !== null)
@@ -171,19 +169,18 @@ H3DU.Lights.prototype.setPointLight = function(index, position, diffuse, specula
 
 /**
  * Sets the color of the scene's ambient light.
- * @param {Array<Number>|number|string} r Array of three or
+ * @param {Array<number>|number|string} r Array of three or
  * four color components; or the red color component (0-1); or a string
  * specifying an [HTML or CSS color]{@link H3DU.toGLColor}.
- * @param {Number} g Green color component (0-1).
+ * @param {number} g Green color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} b Blue color component (0-1).
+ * @param {number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {number} [a] Alpha color component (0-1).
  * Currently not used.
- * @returns {H3DU.Scene3D} This object.
- * @instance
+ * @returns {H3DU.Lights} This object.
  */
-H3DU.Lights.prototype.setAmbient = function(r, g, b, a) {
+Lights.prototype.setAmbient = function(r, g, b, a) {
   "use strict";
   this.sceneAmbient = H3DU.toGLColor(r, g, b, a);
   return this;

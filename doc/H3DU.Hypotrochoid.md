@@ -36,11 +36,11 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `outerRadius` (Type: Number)<br>
+* `outerRadius` (Type: number)<br>
     Radius of the circle whose position is fixed.
-* `innerRadius` (Type: Number)<br>
+* `innerRadius` (Type: number)<br>
     Radius of the rolling circle. A hypocycloid results when distFromInnerCenter=innerRadius.
-* `distFromInnerCenter` (Type: Number)<br>
+* `distFromInnerCenter` (Type: number)<br>
     Distance from the center of the rolling circle to the drawing pen.
 * `rotationDegrees` (Type: number) (optional)<br>
     Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
@@ -71,7 +71,7 @@ The <b>acceleration</b> of a curve is a vector which is the second derivative of
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -87,7 +87,7 @@ curve and the point at the given U coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -114,7 +114,7 @@ Finds the coordinates of a point on the curve from the given U coordinate.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate.
 
 #### Return Value
@@ -135,7 +135,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -151,9 +151,9 @@ form of hypotrochoid.
 
 #### Parameters
 
-* `n` (Type: Number)<br>
+* `n` (Type: number)<br>
     Parameter that determines the petal form of the rose. For example, the rose is symmetrical if this number is even.
-* `distFromInnerCenter` (Type: Number)<br>
+* `distFromInnerCenter` (Type: number)<br>
     Distance from the center of the rolling circle to the drawing pen.
 * `rotationDegrees` (Type: number) (optional)<br>
     Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
@@ -170,7 +170,7 @@ fits the given radius.
 
 #### Parameters
 
-* `radius` (Type: Number)<br>
+* `radius` (Type: number)<br>
     Desired radius of the curve.
 
 #### Return Value
@@ -189,7 +189,7 @@ The <b>velocity</b> of a curve is a vector which is the derivative of the curve'
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value

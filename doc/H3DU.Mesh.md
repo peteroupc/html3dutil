@@ -251,11 +251,11 @@ not automatically be normalized to unit length.
 
 #### Parameters
 
-* `x` (Type: Number)<br>
+* `x` (Type: number)<br>
     X coordinate of the bitangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
@@ -273,11 +273,11 @@ that mode. Only the red, green, and blue components will be used.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 
 #### Return Value
@@ -323,7 +323,7 @@ index in this mesh.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Zero-based index of the vertex to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
 
 #### Return Value
@@ -341,7 +341,7 @@ index in this mesh.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Zero-based index of the vertex normal to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
 
 #### Return Value
@@ -395,7 +395,7 @@ in future versions.
 
 #### Parameters
 
-* `m` (Type: Number)<br>
+* `m` (Type: number)<br>
     A primitive type. One of the following: H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP, H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP. Throws an error if the primitive type is incompatible with the current primitive type (for example, a triangle type with LINE_STRIP).
 
 #### Return Value
@@ -414,11 +414,11 @@ not automatically be normalized to unit length.
 
 #### Parameters
 
-* `x` (Type: Number)<br>
+* `x` (Type: number)<br>
     X coordinate of the normal. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y coordinate of the normal. If "x" is an array, this parameter may be omitted.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z coordinate of the normal. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
@@ -534,11 +534,11 @@ Only the color's red, green, and blue components will be used.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
 
 #### Return Value
@@ -554,13 +554,13 @@ equals the number of vertices in this mesh or greater.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
-* `x` (Type: number | Array.&lt;Number>)<br>
+* `x` (Type: number | Array.&lt;number>)<br>
     X coordinate of the vertex position. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex position.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y coordinate of the vertex position. May be null or omitted if "x" is an array.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z coordinate of the vertex position. May be null or omitted if "x" is an array.
 
 #### Return Value
@@ -576,13 +576,13 @@ equals the number of vertices in this mesh or greater.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
-* `x` (Type: number | Array.&lt;Number>)<br>
+* `x` (Type: number | Array.&lt;number>)<br>
     X coordinate of the vertex normal. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex normal.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y coordinate of the vertex normal. May be null or omitted if "x" is an array.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z coordinate of the vertex normal. May be null or omitted if "x" is an array.
 
 #### Return Value
@@ -601,11 +601,11 @@ not automatically be normalized to unit length.
 
 #### Parameters
 
-* `x` (Type: Number)<br>
+* `x` (Type: number)<br>
     X coordinate of the tangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
@@ -628,9 +628,9 @@ right corner (by default).
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     X coordinate of the texture, from 0-1. If "v" are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     Y coordinate of the texture, from 0-1. If "u" is an array, this parameter can be omitted.
 
 #### Return Value
@@ -678,9 +678,9 @@ be treated as 0.
 
 #### Parameters
 
-* `x` (Type: Array.&lt;Number> | number)<br>
+* `x` (Type: Array.&lt;number> | number)<br>
     The X coordinate. If "y" is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     The Y coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
@@ -697,11 +697,11 @@ and texture coordinates if they have been defined.
 
 #### Parameters
 
-* `x` (Type: Array.&lt;Number> | number)<br>
+* `x` (Type: Array.&lt;number> | number)<br>
     The X coordinate. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     The Y coordinate. If "x" is an array, this parameter may be omitted.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     The Z coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value

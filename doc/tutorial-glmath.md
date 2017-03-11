@@ -15,9 +15,9 @@ Here is an overview of these data types.
 ## Vectors
 
 A vector is a line segment pointing in a certain _direction_ in space and
-having a certain _length_.  In addition to a direction, a vector can
-describe a position (by pointing to that position from
-a certain starting point), or a color.
+having a certain _length_ and an unspecified starting point.
+A particular vector can instead be treated as describing a position
+(by pointing to that position from a certain starting point), or a color.
 
 In `H3DU.Math`, vectors are stored in arrays of numbers (usually
 three or four numbers), and functions dealing with vectors begin
@@ -151,10 +151,13 @@ Here are examples of an axis of rotation.
 * The Z axis of rotation (side-by-side sway) is (0, 0, 1).
 
 While the axis of rotation points toward the viewer, if the angle's value
-is positive (resp. negative) and the [coordinate system](#Coordinate_Systems) is...
+is positive and the [coordinate system](#Coordinate_Systems) is...
 
-* ...right handed, then the angle runs counterclockwise (resp. clockwise).
-* ...left handed, then the angle runs clockwise (resp. counterclockwise).
+* ...right handed, then the angle runs counterclockwise.
+* ...left handed, then the angle runs clockwise.
+
+While the axis of rotation points toward the viewer, if the angle's value
+is negative, then the angle runs in the opposite direction.
 
 Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
 describe the same axis of rotation.
@@ -292,6 +295,13 @@ right-handed), if the X axis points in the thumb's
 direction and the Y axis points in the index finger's direction, the Z axis will
 point in the direction the other three fingers point.
 
+As used here, the Z axis is the <a href="H3DU.Math.md#H3DU.Math.vec3cross">cross product</a>
+of two perpendicular axes, namely the X axis and the Y axis, in that order.
+Which of the X, Y, or Z axes is the right, up, or forward axis is essentially
+arbitrary; for example, some conventions may have the Z axis, rather than Y,
+be the up axis.  Therefore, these three axes are defined here to avoid
+confusion.
+
 <a id=Differences_in_Behavior></a>
 ### Differences in Behavior
 
@@ -299,7 +309,7 @@ point in the direction the other three fingers point.
 #### Projection and view matrices
 
 The difference between a left-handed and right-handed coordinate system
-lies in how 3D points are transformed, mainly due to the projection and view
+affects how 3D points are transformed, mainly in the projection and view
 matrices.
 
 The following methods return **projection matrices** for a right-handed coordinate system.
@@ -324,21 +334,26 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 #### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
 
 While the [axis of rotation](#Axis_of_Rotation) points toward the viewer, if the angle's value
-is positive (resp. negative) and the coordinate system is...
+is positive and the [coordinate system](#Coordinate_Systems) is...
 
-* ...right handed, then the angle runs counterclockwise (resp. clockwise).
-* ...left handed, then the angle runs clockwise (resp. counterclockwise).
+* ...right handed, then the angle runs counterclockwise.
+* ...left handed, then the angle runs clockwise.
+
+While the axis of rotation points toward the viewer, if the angle's value
+is negative, then the angle runs in the opposite direction.
 
 <a id=Cross_product_vec3cross_and_normals></a>
 #### Cross product (`vec3cross`) and normals
 
-* Given a triangle formed by points A, B, and C, in that order, the [cross product](<a href="H3DU.Math.md#H3DU.Math.vec3cross">H3DU.Math.vec3cross</a>)
-of the vector (A minus C) with (B minus C), in that order, is a _normal_ of that triangle
-(a vector that's perpendicular to the triangle's surface).
-* By extension, given a triangle formed by point A, point B, and point (0,0,0), in that order,
-the cross product of A with B, in that order, is a normal of that triangle.
+Given a triangle formed by...
 
-In either case, while this particular normal points toward the viewer, the triangle's vertices
+* points (A minus C), (B minus C), and C, in that order, or
+* points A, B, and (0, 0, 0), in that order,
+
+the <a href="H3DU.Math.md#H3DU.Math.vec3cross">cross product</a> of the first point with the second,
+in that order, is a _normal_ of that triangle (a vector that's perpendicular to the triangle's surface).
+
+While this particular normal points toward the viewer, the triangle's vertices
 run in a counterclockwise path for right-handed coordinate systems, or a clockwise path
 for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)
@@ -359,10 +374,12 @@ To find a triangle's winding, do the following calculation (X1, X2, X3 and Y1, Y
 
     (X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
 
-If the result is positive (resp. negative), and the window space X axis points right and the Y axis points...
+If the result is positive, and the window space X axis points right and the Y axis points...
 
 * ...up (which is the case in WebGL), then the triangle
- has counterclockwise (resp. clockwise) winding.
-* ...down, then the triangle has clockwise (resp. counterclockwise) winding.
+ has counterclockwise winding.
+* ...down, then the triangle has clockwise winding.
+
+If the result is negative, then the triangle has the opposite winding.
 
 [Back to documentation index.](index.md)

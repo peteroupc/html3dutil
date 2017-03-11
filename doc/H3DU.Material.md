@@ -84,7 +84,7 @@ See also <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#
 more closely to that in the metallic workflow rather than the specular
 workflow.
 
-Type: Array.&lt;Number>
+Type: Array.&lt;number>
 
 Default Value: `"[0.8,0.8,0.8,1]"`
 
@@ -94,7 +94,7 @@ Default Value: `"[0.8,0.8,0.8,1]"`
 Additive color emitted by objects with this material.
 See <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_emission">H3DU.PbrMaterial#emission</a>.
 
-Type: Array.&lt;Number>
+Type: Array.&lt;number>
 
 Default Value: `"[0,0,0]"`
 
@@ -143,7 +143,7 @@ but can be colored if the material represents an uncoated metal of some sort.
 See also <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_specular">H3DU.PbrMaterial#specular</a>.
 NOTE: Before version 2.0, this value's default was (0,0,0).
 
-Type: Array.&lt;Number>
+Type: Array.&lt;number>
 
 Default Value: `"[0.2,0.2,0.2]"`
 
@@ -214,11 +214,11 @@ object from an RGBA color.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.

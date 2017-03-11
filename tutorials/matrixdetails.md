@@ -522,12 +522,12 @@ In all the transformations described above, the last row in the transformation m
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the `H3DU.Math` library.
 
-Transformations that don't necessarily preserve straightness and parallelism of lines are
-called _projective transformations_.  An NxN matrix which has one more row and one more column
-than the number of dimensions, can describe projective transformations.  For example,
-a 4x4 matrix can describe 3D projective transformations in the form of linear transformations
-on homogeneous coordinates (see ["Why a 4x4 Matrix?"](#Why_a_4x4_Matrix)).  For a
-3D projective transformation, the last row in the matrix is not necessarily (0, 0, 0, 1).
+Transformations that don't necessarily parallelism of lines are called _projective transformations_.
+An NxN matrix can describe projective transformations if it has one more row and one more column
+than the number of dimensions.  For example, a 4x4 matrix can describe 3D projective transformations
+in the form of linear transformations on homogeneous coordinates (see
+["Why a 4x4 Matrix?"](#Why_a_4x4_Matrix)).  For a 3D projective transformation, the last row
+in the matrix is not necessarily (0, 0, 0, 1).
 
 One example of a projective transformation is found in a _perspective projection_ matrix,
 as returned by {@link H3DU.Math.mat4perspective} or {@link H3DU.Math.mat4frustum}. When
@@ -536,7 +536,7 @@ it to the negative Z coordinate in _eye space_, or more specifically, as follows
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
 
-For more on perspective projections, see [_The "Camera" and Geometric Transforms_]{@tutorial camera}).
+For more on perspective projections, see [_The "Camera" and Geometric Transforms_]{@tutorial camera}.
 
 Related functions:
 

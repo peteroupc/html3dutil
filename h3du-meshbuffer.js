@@ -10,13 +10,13 @@
 
 /**
  * A geometric mesh in the form of buffer objects.
- * @class
+ * @constructor
  * @memberof H3DU
  * @param {H3DU.Mesh} mesh A geometric mesh object.
  * A series of default attributes will be set based on that mesh's
  * data.
  */
-H3DU.MeshBuffer = function(mesh) {
+export var MeshBuffer = function(mesh) {
   "use strict";
   var vertices = new Float32Array(mesh.vertices);
   if(mesh.vertices.length >= 65536 || mesh.indices.length >= 65536) {
@@ -57,11 +57,10 @@ H3DU.MeshBuffer = function(mesh) {
 /**
  * Sets the array of vertex indices used by this mesh buffer.
  * @param {Uint16Array|Uint32Array|Uint8Array} indices Array of vertex indices.
- * @param {Number} byteSize Size, in bytes, of each index. Must be 1, 2, or 4.
+ * @param {number} byteSize Size, in bytes, of each index. Must be 1, 2, or 4.
  * @returns {H3DU.MeshBuffer} This object.
- * @instance
  */
-H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
+MeshBuffer.prototype.setIndices = function(indices, byteSize) {
   "use strict";
   if(byteSize !== 1 && byteSize !== 2 && byteSize !== 4)
     throw new Error();
@@ -71,12 +70,11 @@ H3DU.MeshBuffer.prototype.setIndices = function(indices, byteSize) {
 };
 /**
  * Sets the type of graphics primitives stored in this mesh buffer.
- * @param {Number} primType The primitive type, either {@link H3DU.Mesh.TRIANGLES},
+ * @param {number} primType The primitive type, either {@link H3DU.Mesh.TRIANGLES},
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  * @returns {H3DU.MeshBuffer} This object.
- * @instance
  */
-H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {
+MeshBuffer.prototype.setPrimitiveType = function(primType) {
   "use strict";
   if(primType === H3DU.Mesh.TRIANGLES) {
     this.format = 0;
@@ -94,27 +92,26 @@ H3DU.MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * existing attribute's information). An attribute
  * gives information about the per-vertex data used and
  * stored in a vertex buffer.
- * @param {Number|String} semantic An attribute semantic, such
+ * @param {Number|string} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
- * @param {Number} semanticIndex The set index of the attribute
+ * @param {number} index The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
- * This is ignored if "semantic" is a string.
+ * This is ignored if "name" is a string.
  * @param {Float32Array|Array} buffer The buffer where
  * the per-vertex data is stored.
- * @param {Number} startIndex The index into the array
+ * @param {number} startIndex The index into the array
  * (starting from 0) where the first per-vertex
  * item starts.
- * @param {Number} countPerVertex The number of elements in each
+ * @param {number} countPerVertex The number of elements in each
  * per-vertex item. For example, if each vertex is a 3-element
  * vector, this value is 3.
- * @param {Number} stride The number of elements from the start of
+ * @param {number} stride The number of elements from the start of
  * one per-vertex item to the start of the next.
  * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
  * semantic is unsupported.
- * @instance
  */
-H3DU.MeshBuffer.prototype.setAttribute = function(
+MeshBuffer.prototype.setAttribute = function(
   name, index, buffer, startIndex, countPerVertex, stride
 ) {
   "use strict";
@@ -145,7 +142,7 @@ H3DU.MeshBuffer.prototype.setAttribute = function(
   return this;
 };
 /** @ignore */
-H3DU.MeshBuffer._resolveSemantic = function(name, index) {
+MeshBuffer._resolveSemantic = function(name, index) {
   "use strict";
   if(typeof name === "number") {
     return [name, index | 0];
@@ -175,13 +172,13 @@ H3DU.MeshBuffer._resolveSemantic = function(name, index) {
 };
 
 /** @ignore */
-H3DU.MeshBuffer.prototype._getAttributes = function() {
+MeshBuffer.prototype._getAttributes = function() {
   "use strict";
   return this.attributes;
 };
 
 /** @ignore */
-H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
+MeshBuffer.prototype._getAttribute = function(name, index) {
   "use strict";
   var idx = typeof index === "undefined" || index === null ? 0 : index;
   for(var i = 0; i < this.attributes.length; i++) {
@@ -197,9 +194,8 @@ H3DU.MeshBuffer.prototype._getAttribute = function(name, index) {
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this mesh.
  * @returns {number} Return value.
- * @instance
  */
-H3DU.MeshBuffer.prototype.primitiveCount = function() {
+MeshBuffer.prototype.primitiveCount = function() {
   "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
     return Math.floor(this.indices.length / 2);
@@ -210,14 +206,13 @@ H3DU.MeshBuffer.prototype.primitiveCount = function() {
 /**
  * Gets an array of vertex positions held by this mesh buffer,
  * arranged by primitive
- * @returns {Array<Array<Number>>} An array of primitives,
+ * @returns {Array<Array<number>>} An array of primitives,
  * each of which holds the vertices that make up that primitive.
  * If this mesh holds triangles, each primitive will contain three
  * vertices; if lines, two; and if points, one. Each vertex is a 3-element
  * array containing that vertex's X, Y, and Z coordinates, in that order.
- * @instance
  */
-H3DU.MeshBuffer.prototype.getPositions = function() {
+MeshBuffer.prototype.getPositions = function() {
   "use strict";
   var count = 3;
   var primtype = this.primitiveType();
@@ -227,7 +222,7 @@ H3DU.MeshBuffer.prototype.getPositions = function() {
   if(primtype === H3DU.Mesh.POINTS) {
     count = 1;
   }
-  var posattr = this._getAttribute(H3DU.Semantic.POSITION);
+  var posattr = this._getAttribute(H3DU.Semantic.POSITION,0);
   if(!posattr || posattr[3] < 3) {
     return [];
   }
@@ -269,15 +264,14 @@ H3DU.MeshBuffer.prototype.getPositions = function() {
  * and set index 0. If there is no such attribute,
  * or no vertices are defined in this buffer, returns the array
  * [Inf, Inf, Inf, -Inf, -Inf, -Inf].
- * @instance
  */
-H3DU.MeshBuffer.prototype.getBounds = function() {
+MeshBuffer.prototype.getBounds = function() {
   "use strict";
   if(!this._bounds) {
     var empty = true;
     var inf = Number.POSITIVE_INFINITY;
     var ret = [inf, inf, inf, -inf, -inf, -inf];
-    var posattr = this._getAttribute(H3DU.Semantic.POSITION);
+    var posattr = this._getAttribute(H3DU.Semantic.POSITION,0);
     if(!posattr || posattr[3] < 3)return ret;
     var stride = posattr[4];
     var v = posattr[2];
@@ -307,9 +301,8 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
  * Gets the type of primitive stored in this mesh buffer.
  * @returns {number} Either {@link H3DU.Mesh.TRIANGLES},
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
- * @instance
  */
-H3DU.MeshBuffer.prototype.primitiveType = function() {
+MeshBuffer.prototype.primitiveType = function() {
   "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
     return H3DU.Mesh.LINES;
@@ -317,7 +310,7 @@ H3DU.MeshBuffer.prototype.primitiveType = function() {
     return H3DU.Mesh.POINTS;
   return H3DU.Mesh.TRIANGLES;
 };
-H3DU.MeshBuffer._wellKnownAttributes = {
+MeshBuffer._wellKnownAttributes = {
   "POSITION":0,
   "TEXCOORD":2,
   "TEXCOORD_0":2,
@@ -329,16 +322,15 @@ H3DU.MeshBuffer._wellKnownAttributes = {
 };
 
 /** @ignore */
-H3DU.MeshBuffer.prototype.getFormat = function() {
+MeshBuffer.prototype.getFormat = function() {
   "use strict";
   return this.format;
 };
 /**
  * Gets the number of vertices in this mesh buffer
  * @returns {number} Return value.
- * @instance
  */
-H3DU.MeshBuffer.prototype.vertexCount = function() {
+MeshBuffer.prototype.vertexCount = function() {
   "use strict";
   return this.indices.length;
 };

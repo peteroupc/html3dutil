@@ -54,9 +54,9 @@ Generates a point on the extruded tube from the given u and V coordinates.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate. This will run the length of the curve.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     V coordinate. This will sweep around the extruded tube.
 
 #### Return Value

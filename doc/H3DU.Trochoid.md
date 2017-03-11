@@ -28,9 +28,9 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `radius` (Type: Number)<br>
+* `radius` (Type: number)<br>
     Radius of the rolling circle.
-* `distFromCenter` (Type: Number)<br>
+* `distFromCenter` (Type: number)<br>
     Distance from the center of the rolling circle to the drawing pen.
 
 ### Methods
@@ -55,7 +55,7 @@ The <b>acceleration</b> of a curve is a vector which is the second derivative of
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -75,12 +75,12 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;number>)
+The approximate arc length of this curve at the given U coordinate. (Type: number)
 
  <a name='H3DU.Trochoid_endPoints'></a>
 ### H3DU.Trochoid#endPoints()
@@ -93,7 +93,7 @@ starts at 0 and ends at &pi;\*2.
 
 An array containing the two
 endpoints of the curve. The first number is the start of the curve,
-and the second number is the end of the curve. \* @instance (Type: Array.&lt;number>)
+and the second number is the end of the curve. \* (Type: Array.&lt;number>)
 
  <a name='H3DU.Trochoid_evaluate'></a>
 ### H3DU.Trochoid#evaluate(u)
@@ -102,7 +102,7 @@ Generates a point on the curve from the given U coordinate.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate.
 
 #### Return Value
@@ -123,7 +123,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -138,7 +138,7 @@ Finds the velocity (derivative) of this curve at the given point.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     Point on the curve to evaluate.
 
 #### Return Value

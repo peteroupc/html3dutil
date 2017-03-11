@@ -38,9 +38,9 @@ with this object by default:<ul>
 
 #### Parameters
 
-* `vertexShader` (Type: String) (optional)<br>
+* `vertexShader` (Type: string) (optional)<br>
     Source text of a vertex shader, in OpenGL ES Shading Language (GLSL). If null, a default vertex shader is used instead.
-* `fragmentShader` (Type: String) (optional)<br>
+* `fragmentShader` (Type: string) (optional)<br>
     Source text of a fragment shader in GLSL. If null, a default fragment shader is used instead.
 
 ### Methods
@@ -155,7 +155,7 @@ a raster effect (postprocessing effect) to a texture.
 
 #### Parameters
 
-* `functionCode` (Type: String)<br>
+* `functionCode` (Type: string)<br>
     A string giving shader code in OpenGL ES Shading Language (GLSL) that must contain a function with the following signature:
 
     vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
@@ -174,7 +174,7 @@ a raster effect to a texture.
 
 #### Parameters
 
-* `functionCode` (Type: String)<br>
+* `functionCode` (Type: string)<br>
     See <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a>.
 
 #### Return Value
@@ -197,11 +197,11 @@ Sets the semantic for a vertex attribute.
 
 #### Parameters
 
-* `name` (Type: String)<br>
+* `name` (Type: string)<br>
     Name of the attribute.
 * `semantic` (Type: Number | String)<br>
     An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
-* `semanticIndex` (Type: Number)<br>
+* `semanticIndex` (Type: number)<br>
     The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 
 #### Return Value
@@ -216,9 +216,9 @@ Sets a semantic for the given named uniform.
 
 #### Parameters
 
-* `u` (Type: String)<br>
+* `u` (Type: string)<br>
     The name of the uniform.
-* `sem` (Type: Number)<br>
+* `sem` (Type: number)<br>
     A uniform semantic given in <a href="H3DU.Semantic.md">H3DU.Semantic</a>.
 
 #### Return Value

@@ -124,7 +124,7 @@ in this shape group at the given index.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Integer index, starting from 0, of the shape or shape group to set.
 
 #### Return Value
@@ -199,16 +199,16 @@ rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;Number>)<br>
+* `x` (Type: number | Array.&lt;number>)<br>
     X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Y coordinate.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Z coordinate.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
+This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
  <a name='H3DU.ShapeGroup_setQuaternion'></a>
 ### H3DU.ShapeGroup#setQuaternion(quat)
@@ -225,7 +225,7 @@ rather than the transform for each shape in the group.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
  <a name='H3DU.ShapeGroup_setScale'></a>
 ### H3DU.ShapeGroup#setScale(x, y, z)
@@ -237,16 +237,16 @@ rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;Number>)<br>
+* `x` (Type: number | Array.&lt;number>)<br>
     Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Scaling factor for this object's height.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Scaling factor for this object's depth.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
+This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
  <a name='H3DU.ShapeGroup_setShader'></a>
 ### H3DU.ShapeGroup#setShader(material)
@@ -269,7 +269,7 @@ Sets a shape or shape group at the given index in this shape group.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Integer index, starting from 0, to set the shape or shape group at.
 * `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
     Shape object to set at the given index.

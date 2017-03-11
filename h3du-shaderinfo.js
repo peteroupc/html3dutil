@@ -35,15 +35,15 @@
  * <li><code>world</code> - World matrix.</li>
  * <li><code>inverseView</code> - Inverse view matrix.</li>
  * </ul>
- * @class
+ * @constructor
  * @memberof H3DU
- * @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
+ * @param {string} [vertexShader] Source text of a vertex shader, in OpenGL
  * ES Shading Language (GLSL). If null, a default
  * vertex shader is used instead.
- * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
+ * @param {string} [fragmentShader] Source text of a fragment shader in GLSL.
  * If null, a default fragment shader is used instead.
  */
-H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
+export var ShaderInfo = function(vertexShader, fragmentShader) {
   "use strict";
   if(typeof vertexShader === "undefined" || vertexShader === null) {
     vertexShader = H3DU.ShaderInfo.getDefaultVertex();
@@ -70,12 +70,11 @@ H3DU.ShaderInfo = function(vertexShader, fragmentShader) {
 };
 /**
  * Sets a semantic for the given named uniform.
- * @param {String} u The name of the uniform.
- * @param {Number} sem A uniform semantic given in {@link H3DU.Semantic}.
+ * @param {string} u The name of the uniform.
+ * @param {number} sem A uniform semantic given in {@link H3DU.Semantic}.
  * @returns {H3DU.ShaderInfo} This object.
- * @instance
  */
-H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
+ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
   "use strict";
   this.uniformSemantics[u] = sem;
   return this;
@@ -84,18 +83,16 @@ H3DU.ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
 /**
  * Gets the text of the vertex shader stored in this object.
  * @returns {string} return value.
- * @instance
  */
-H3DU.ShaderInfo.prototype.getVertexShader = function() {
+ShaderInfo.prototype.getVertexShader = function() {
   "use strict";
   return this.vertexShader;
 };
 /**
  * Gets the text of the fragment shader stored in this object.
  * @returns {string} return value.
- * @instance
  */
-H3DU.ShaderInfo.prototype.getFragmentShader = function() {
+ShaderInfo.prototype.getFragmentShader = function() {
   "use strict";
   return this.fragmentShader;
 };
@@ -103,31 +100,29 @@ H3DU.ShaderInfo.prototype.getFragmentShader = function() {
 /**
  * Has no effect. A method introduced for compatibility reasons.
  * @deprecated
- * @instance
  */
-H3DU.ShaderInfo.prototype.dispose = function() {
+ShaderInfo.prototype.dispose = function() {
   "use strict";
 };
 
 /**
  * Sets the semantic for a vertex attribute.
- * @param {String} name Name of the attribute.
+ * @param {string} name Name of the attribute.
  * @param {Number|String} semantic An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
- * @param {Number} semanticIndex The set index of the attribute
+ * @param {number} semanticIndex The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "semantic" is a string.
  * @returns {H3DU.ShaderInfo} This object. Throws an error if the given
  * semantic is unsupported.
- * @instance
  */
-H3DU.ShaderInfo.prototype.setSemantic = function(name, sem, index) {
+ShaderInfo.prototype.setSemantic = function(name, semantic, semanticIndex) {
   "use strict";
   var an = this.attributeSemantics[name];
-  var semIndex = H3DU.MeshBuffer._resolveSemantic(sem, index);
+  var semIndex = H3DU.MeshBuffer._resolveSemantic(semantic, semanticIndex);
   if(!semIndex) {
-    throw new Error("Can't resolve " + [name, sem, index]);
+    throw new Error("Can't resolve " + [name, semantic, semanticIndex]);
   }
   if(an) {
     an[0] = semIndex[0];
@@ -142,9 +137,8 @@ H3DU.ShaderInfo.prototype.setSemantic = function(name, sem, index) {
  * Returns a new shader info object with the information in this object
  * copied to that object.
  * @returns {H3DU.ShaderInfo} Return value.
- * @instance
  */
-H3DU.ShaderInfo.prototype.copy = function() {
+ShaderInfo.prototype.copy = function() {
   "use strict";
   var sp = new H3DU.ShaderInfo(this.vertexShader, this.fragmentShader);
   sp.setUniforms(this.uniformValues);
@@ -176,15 +170,14 @@ H3DU.ShaderInfo.prototype.copy = function() {
  * 9-, or 16-element array if the uniform is a "vec3", "vec4", "mat3", or "mat4",
  * respectively, or a Number if the uniform is a "float" or "int".
  * @returns {H3DU.ShaderInfo} This object.
- * @instance
  */
-H3DU.ShaderInfo.prototype.setUniforms = function(uniforms) {
+ShaderInfo.prototype.setUniforms = function(uniforms) {
   "use strict";
   H3DU.ShaderInfo._setUniformsInternal(uniforms, this.uniformValues, null);
   return this;
 };
 /** @ignore */
-H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, changedUniforms) {
+ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, changedUniforms) {
   "use strict";
   var v = uniforms[i];
   var uv = uniformValues[i];
@@ -249,7 +242,7 @@ H3DU.ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, chang
 };
 
 /** @ignore */
-H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
+ShaderInfo._copyIfDifferent = function(src, dst, len) {
   "use strict";
   for(var i = 0; i < len; i++) {
     if(src[i] !== dst[i]) {
@@ -265,7 +258,7 @@ H3DU.ShaderInfo._copyIfDifferent = function(src, dst, len) {
 };
 
 /** @ignore */
-H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUniforms) {
+ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUniforms) {
   "use strict";
   var i;
   var keys = Object.keys(uniforms);
@@ -275,7 +268,7 @@ H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, change
   }
 };
 /** @ignore */
-H3DU.ShaderInfo.fragmentShaderHeader = function() {
+ShaderInfo.fragmentShaderHeader = function() {
   "use strict";
   return "" +
 "#ifdef GL_ES\n" +
@@ -290,10 +283,10 @@ H3DU.ShaderInfo.fragmentShaderHeader = function() {
 /**
  * Generates source code for a fragment shader for applying
  * a raster effect to a texture.
- * @param {String} functionCode See {@link H3DU.ShaderInfo.makeEffect}.
+ * @param {string} functionCode See {@link H3DU.ShaderInfo.makeEffect}.
  * @returns {string} The source text of the resulting fragment shader.
  */
-H3DU.ShaderInfo.makeEffectFragment = function(functionCode) {
+ShaderInfo.makeEffectFragment = function(functionCode) {
   "use strict";
   var shader = H3DU.ShaderInfo.fragmentShaderHeader();
   shader += "" +
@@ -313,7 +306,7 @@ H3DU.ShaderInfo.makeEffectFragment = function(functionCode) {
  * Generates source code for a shader program that copies the colors of a texture.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderInfo.makeCopyEffect = function() {
+ShaderInfo.makeCopyEffect = function() {
   "use strict";
   var shader = H3DU.ShaderInfo.fragmentShaderHeader();
   shader += "" +
@@ -330,7 +323,7 @@ H3DU.ShaderInfo.makeCopyEffect = function() {
 /**
  * Generates source code for a shader program for applying
  * a raster effect (postprocessing effect) to a texture.
- * @param {String} functionCode A string giving shader code
+ * @param {string} functionCode A string giving shader code
  * in OpenGL ES Shading Language (GLSL) that must contain
  * a function with the following signature:
  * <pre>
@@ -344,7 +337,7 @@ H3DU.ShaderInfo.makeCopyEffect = function() {
  * constants, functions, and so on (but not another "main" function).
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderInfo.makeEffect = function(functionCode) {
+ShaderInfo.makeEffect = function(functionCode) {
   "use strict";
   return new H3DU.ShaderInfo(
    H3DU.ShaderInfo.getBasicVertex(),
@@ -354,7 +347,7 @@ H3DU.ShaderInfo.makeEffect = function(functionCode) {
  * Generates source code for a shader program that inverts the colors of a texture.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderInfo.makeInvertEffect = function() {
+ShaderInfo.makeInvertEffect = function() {
   "use strict";
   return H3DU.ShaderInfo.makeEffect(
 [
@@ -368,11 +361,10 @@ H3DU.ShaderInfo.makeInvertEffect = function() {
  * the source texture's edges.
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
-H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
+ShaderInfo.makeEdgeDetectEffect = function() {
   "use strict";
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
-
   return H3DU.ShaderInfo.makeEffect(
 ["float luma(vec3 color) {",
   " return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
@@ -405,7 +397,7 @@ H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
  * Gets the text of a basic vertex shader.
  * @returns {string} The resulting shader text.
  */
-H3DU.ShaderInfo.getBasicVertex = function() {
+ShaderInfo.getBasicVertex = function() {
   "use strict";
   var shader = [
     "attribute vec3 position;\n",
@@ -433,7 +425,7 @@ H3DU.ShaderInfo.getBasicVertex = function() {
  * at the start of the return value enables the lighting model.
  * @returns {string} The resulting shader text.
  */
-H3DU.ShaderInfo.getDefaultVertex = function() {
+ShaderInfo.getDefaultVertex = function() {
   "use strict";
   var shader = [
     "attribute vec3 position;",
@@ -483,7 +475,7 @@ H3DU.ShaderInfo.getDefaultVertex = function() {
  * Gets the text of the default fragment shader.
  * @returns {string} The resulting shader text.
  */
-H3DU.ShaderInfo.getDefaultFragment = function() {
+ShaderInfo.getDefaultFragment = function() {
   "use strict";
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [

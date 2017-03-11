@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global define, exports */
+
 /* eslint no-extend-native: "off", callback-return: "off" */
 // Notes by Peter O.:
 // 2016-12-14: This is a polyfill for Promises, and it's only used
@@ -16,35 +16,22 @@
 // to communicate the callback's return value properly.
 // 2015-03-09: This file was taken
 // from https://github.com/ondras/promise/.
-(function (root, factory) {
-  "use strict";
-  if (typeof define === "function" && define.amd) {
-    define(["exports"], factory);
-  } else if (typeof exports === "object") {
-    factory(exports);
-  } else {
-    factory(root);
-  }
-}(this, function (exports) {
-  "use strict";
-  if (exports.Promise) {
-    return;
-  }
-
-  /**
-   * A promise holds a value to be resolved in the future.<p>
-   * This class is a "polyfill" for the standard <code>Promise</code>
-   * class; it is only used when the running JavaScript environment
-   * doesn't support or include a <code>Promise</code> class
-   * on its own.
-   * @class
-   * @alias Promise
-   * @param {Function} [resolver] Function that takes
-   * two arguments: the first is a function to call when
-   * resolving the promise, and the second is a function
-   * to call when rejecting the promise.
-   */
+if ((typeof window!=="undefined" && window!==null) && !(typeof window.Promise!=="undefined" && window.Promise!==null)) {
+ /**
+  * A promise holds a value to be resolved in the future.<p>
+  * This class is a "polyfill" for the standard <code>Promise</code>
+  * class; it is only used when the running JavaScript environment
+  * doesn't support or include a <code>Promise</code> class
+  * on its own.
+  * @constructor
+  * @alias Promise
+  * @param {Function} [resolver] Function that takes
+  * two arguments: the first is a function to call when
+  * resolving the promise, and the second is a function
+  * to call when rejecting the promise.
+  */
   var Promise = function(resolver) {
+"use strict";
     this._state = 0; /* 0 = pending, 1 = fulfilled, 2 = rejected */
     this._value = null; /* fulfillment / rejection value */
     this._timeout = null;
@@ -69,6 +56,7 @@
    * @method
    */
   Promise.resolve = function(value) {
+"use strict";
     return new this(function(resolve) {
       resolve(value);
     });
@@ -76,12 +64,13 @@
 
   /**
    * Returns a promise that is rejected.
-   * @param {Object} value The value associated with the promise.
+   * @param {Object} reason The value associated with the promise.
    * @returns {Promise} A promise that is rejected and takes the given value
    * as its argument.
    * @method
    */
   Promise.reject = function(reason) {
+"use strict";
     return new this(function(resolve, reject) {
       reject(reason);
     });
@@ -94,6 +83,7 @@
    * @method
    */
   Promise.all = Promise.when = function(all) {
+"use strict";
     return new this(function(resolve, reject) {
       var counter = 0;
       var results = [];
@@ -123,6 +113,7 @@
  * @method
  */
   Promise.race = function(all) {
+"use strict";
     return new this(function(resolve, reject) {
       all.forEach(function(promise) {
         promise.then(resolve, reject);
@@ -133,17 +124,18 @@
   /**
    * Creates a promise that calls a function depending on whether
    * this promise resolves or is rejected.
+   * @suppress {checkTypes}
    * @param {Function} onFulfilled To be called once this promise gets fulfilled
    * @param {Function} [onRejected] To be called once this promise gets rejected
    * @returns {Promise} A promise.
-   * @instance
    * @memberof Promise#
    */
   Promise.prototype.then = function(onFulfilled, onRejected) {
+"use strict";
     this._cb.fulfilled.push(onFulfilled);
     this._cb.rejected.push(onRejected);
 
-    var thenPromise = new Promise();
+    var thenPromise = new Promise(null);
 
     this._thenPromises.push(thenPromise);
 
@@ -156,6 +148,7 @@
   };
   /** @ignore */
   Promise.prototype.fulfill = function(value) {
+"use strict";
     if (this._state !== 0) {
       return this;
     }
@@ -171,6 +164,7 @@
   };
   /** @ignore */
   Promise.prototype.reject = function(value) {
+"use strict";
     if (this._state !== 0) {
       return this;
     }
@@ -186,6 +180,7 @@
   };
   /** @ignore */
   Promise.prototype.resolve = function(x) {
+"use strict";
     /* 2.3.1. If promise and x refer to the same object, reject promise with a TypeError as the reason. */
     if (x === this) {
       this.reject(new TypeError("Promise resolved by its own instance"));
@@ -250,6 +245,7 @@
   };
   /** @ignore */
   Promise.prototype.chain = function(promise) {
+"use strict";
     var resolve = function(value) {
       promise.resolve(value);
     };
@@ -264,14 +260,15 @@
    * this promise is rejected.
    * @param {Function} onRejected To be called once this promise gets rejected
    * @returns {Promise} A promise.
-   * @instance
    * @memberof Promise#
    */
   Promise.prototype.catch = function(onRejected) {
+"use strict";
     return this.then(null, onRejected);
   };
 /** @ignore */
   Promise.prototype._schedule = function() {
+"use strict";
     if (this._timeout) {
       return;
     } /* resolution already scheduled */
@@ -279,6 +276,7 @@
   };
 /** @ignore */
   Promise.prototype._processQueue = function() {
+"use strict";
     this._timeout = null;
 
     while (this._thenPromises.length) {
@@ -289,6 +287,7 @@
   };
 /** @ignore */
   Promise.prototype._executeCallback = function(cb) {
+"use strict";
     var thenPromise = this._thenPromises.shift();
 
     if (typeof cb !== "function") {
@@ -314,12 +313,19 @@
   };
 /** @ignore */
   Promise.prototype._invokeResolver = function(resolver) {
+"use strict";
     try {
       resolver(this.resolve.bind(this), this.reject.bind(this));
     } catch (e) {
       this.reject(e);
     }
   };
-
-  exports.Promise = Promise;
-}));
+  if(typeof window!=="undefined" && window!==null) {
+    /** @suppress {checkTypes}
+     * @ignore */function promfunc() {
+"use strict";
+    window.Promise = (Promise);
+    }
+    promfunc();
+  }
+}

@@ -7,14 +7,15 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+import {_LightsBinder,_MaterialBinder} from './h3du-binders'
 /**
  * A `Batch3D` represents a so-called "scene graph". It holds
  * 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
  * position, and light sources to illuminate the 3D scene.
- * @class
+ * @constructor
  * @memberof H3DU
  */
-H3DU.Batch3D = function() {
+function Batch3D() {
   "use strict";
   this._projectionMatrix = H3DU.Math.mat4identity();
   this._viewMatrix = H3DU.Math.mat4identity();
@@ -26,7 +27,7 @@ H3DU.Batch3D = function() {
   this.shapes = [];
 };
 /** @ignore */
-H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
+Batch3D._PerspectiveView = function(batch, fov, near, far) {
   "use strict";
   this.fov = fov;
   this.near = near;
@@ -45,7 +46,7 @@ H3DU.Batch3D._PerspectiveView = function(batch, fov, near, far) {
   this.update(1.0, 1.0);
 };
 /** @ignore */
-H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
+Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   "use strict";
   this.a = a;
   this.b = b;
@@ -66,9 +67,18 @@ H3DU.Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   };
   this.update(1.0, 1.0);
 };
-
 /** @ignore */
-H3DU.Batch3D._setupMatrices = function(
+Batch3D._isIdentityExceptTranslate=function(mat) {
+  "use strict";
+  return (
+    mat[0] === 1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
+    mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
+    mat[8] === 0 && mat[9] === 0 && mat[10] === 1 && mat[11] === 0 &&
+    mat[15] === 1
+  );
+};
+/** @ignore */
+Batch3D._setupMatrices = function(
   program,
   projMatrix,
   viewMatrix,
@@ -93,7 +103,7 @@ H3DU.Batch3D._setupMatrices = function(
       case H3DU.Semantic.MODELVIEWPROJECTION:
       case H3DU.Semantic.MODELVIEWINVERSETRANSPOSE:
         if(!viewWorld) {
-          if(H3DU._isIdentityExceptTranslate(viewMatrix)) {
+          if(H3DU.Batch3D._isIdentityExceptTranslate(viewMatrix)) {
     // view matrix is just a translation matrix, so that getting the model-view
     // matrix amounts to simply adding the view's position
             viewWorld = worldMatrix.slice(0, 16);
@@ -123,7 +133,7 @@ H3DU.Batch3D._setupMatrices = function(
   program.setUniforms(uniforms);
 };
 /** @ignore */
-H3DU.Batch3D._isSameMatrix = function(a, b) {
+Batch3D._isSameMatrix = function(a, b) {
   "use strict";
   return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] &&
    a[3] === b[3] && a[4] === b[4] && a[5] === b[5] &&
@@ -136,9 +146,8 @@ H3DU.Batch3D._isSameMatrix = function(a, b) {
  * Sets the projection matrix for this batch.
  * @param {Array<number>} mat A 16-element matrix (4x4).
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
+Batch3D.prototype.setProjectionMatrix = function(mat) {
   "use strict";
   if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix, mat)) {
     this._projectionMatrix = mat.slice(0, 16);
@@ -151,13 +160,12 @@ H3DU.Batch3D.prototype.setProjectionMatrix = function(mat) {
  * to the scene's aspect ratio each time this batch is rendered.<p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link H3DU.Math.mat4perspective}.
- * @param {Number} fov Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
- * @param {Number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
- * @param {Number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
+ * @param {number} fov Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+ * @param {number} near The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
+ * @param {number} far The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
+Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
   "use strict";
   this._projectionUpdater = new H3DU.Batch3D._PerspectiveView(this, fov, near, far);
   return this;
@@ -179,9 +187,8 @@ H3DU.Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
  * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
  * so it points perpendicular to the camera's view direction.)
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
+Batch3D.prototype.setLookAt = function(eye, center, up) {
   "use strict";
   return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
 };
@@ -194,22 +201,21 @@ H3DU.Batch3D.prototype.setLookAt = function(eye, center, up) {
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
- * @param {Number} l Leftmost coordinate of the view rectangle.
- * @param {Number} r Rightmost coordinate of the view rectangle.
+ * @param {number} l Leftmost coordinate of the view rectangle.
+ * @param {number} r Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
- * @param {Number} b Bottommost coordinate of the view rectangle.
- * @param {Number} t Topmost coordinate of the view rectangle.
+ * @param {number} b Bottommost coordinate of the view rectangle.
+ * @param {number} t Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
- * @param {Number} e Distance from the camera to the near clipping
+ * @param {number} e Distance from the camera to the near clipping
  * plane. A positive value means the plane is in front of the viewer.
- * @param {Number} f Distance from the camera to the far clipping
+ * @param {number} f Distance from the camera to the far clipping
  * plane. A positive value means the plane is in front of the viewer.
  * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
+Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
   "use strict";
   this._projectionUpdater = new H3DU.Batch3D._OrthoView(this, l, r, b, t, e, f);
   return this;
@@ -222,22 +228,21 @@ H3DU.Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
- * @param {Number} l Leftmost coordinate of the view rectangle.
- * @param {Number} r Rightmost coordinate of the view rectangle.
+ * @param {number} l Leftmost coordinate of the view rectangle.
+ * @param {number} r Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
- * @param {Number} b Bottommost coordinate of the view rectangle.
- * @param {Number} t Topmost coordinate of the view rectangle.
+ * @param {number} b Bottommost coordinate of the view rectangle.
+ * @param {number} t Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
+Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
   "use strict";
   return this.orthoAspect(l, r, b, t, -1, 1);
 };
 
 /** @ignore */
-H3DU.Batch3D.prototype._useShader = function(shader) {
+Batch3D.prototype._useShader = function(shader) {
   "use strict";
   // NOTE: This method is here for compatibility only
   // (see Scene3D#useFilter).
@@ -249,9 +254,8 @@ H3DU.Batch3D.prototype._useShader = function(shader) {
  * Sets the current view matrix for this batch of shapes.
  * @param {Array<number>} mat A 4x4 matrix to use as the view matrix.
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.setViewMatrix = function(mat) {
+Batch3D.prototype.setViewMatrix = function(mat) {
   "use strict";
   if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix, mat)) {
     this._viewMatrix = mat.slice(0, 16);
@@ -263,9 +267,8 @@ H3DU.Batch3D.prototype.setViewMatrix = function(mat) {
  * Gets the current projection matrix for this batch of shapes.
  * @returns {Array<number>} A 4x4 matrix used as the current
  * projection matrix.
- * @instance
  */
-H3DU.Batch3D.prototype.getProjectionMatrix = function() {
+Batch3D.prototype.getProjectionMatrix = function() {
   "use strict";
   return this._projectionMatrix.slice(0, 16);
 };
@@ -275,9 +278,8 @@ H3DU.Batch3D.prototype.getProjectionMatrix = function() {
  * view matrix for this batch of shapes.
  * @returns {Array<number>} A 4x4 matrix used as the current
  * projection-view matrix.
- * @instance
  */
-H3DU.Batch3D.prototype.getProjectionViewMatrix = function() {
+Batch3D.prototype.getProjectionViewMatrix = function() {
   "use strict";
   return H3DU.Math.mat4multiply(
         this.getProjectionMatrix(), this.getViewMatrix());
@@ -286,14 +288,13 @@ H3DU.Batch3D.prototype.getProjectionViewMatrix = function() {
 /**
  * Gets the current view matrix for this batch of shapes.
  * @returns {Array<number>} Return value.
- * @instance
  */
-H3DU.Batch3D.prototype.getViewMatrix = function() {
+Batch3D.prototype.getViewMatrix = function() {
   "use strict";
   return this._viewMatrix.slice(0, 16);
 };
 /** @ignore */
-H3DU.Batch3D.prototype._getFrustum = function() {
+Batch3D.prototype._getFrustum = function() {
   "use strict";
   if(typeof this._frustum === "undefined" || this._frustum === null) {
     var projView = H3DU.Math.mat4multiply(this._projectionMatrix, this._viewMatrix);
@@ -304,9 +305,8 @@ H3DU.Batch3D.prototype._getFrustum = function() {
 /**
  * Gets the light sources used by this batch.
  * @returns {H3DU.Lights} Return value.
- * @instance
  */
-H3DU.Batch3D.prototype.getLights = function() {
+Batch3D.prototype.getLights = function() {
   "use strict";
   return this.lights;
 };
@@ -319,9 +319,8 @@ H3DU.Batch3D.prototype.getLights = function() {
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
  * Throws an error if null.
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.addShape = function(shape) {
+Batch3D.prototype.addShape = function(shape) {
   "use strict";
   if(!shape)throw new Error();
   shape.parent = null;
@@ -332,32 +331,29 @@ H3DU.Batch3D.prototype.addShape = function(shape) {
  * Returns the number of shapes and/or shape groups that
  * are direct children of this batch.
  * @returns {number} Return value.
- * @instance
  */
-H3DU.Batch3D.prototype.shapeCount = function() {
+Batch3D.prototype.shapeCount = function() {
   "use strict";
   return this.shapes.length;
 };
 /**
  * Gets the shape or shape group located
  * in this batch at the given index.
- * @param {Number} index Integer index, starting from 0, of the shape or shape group to set.
+ * @param {number} index Integer index, starting from 0, of the shape or shape group to set.
  * @returns {H3DU.Shape|H3DU.ShapeGroup} The shape or shape group located
  * in this batch at the given index, or null if none is found there.
- * @instance
  */
-H3DU.Batch3D.prototype.getShape = function(index) {
+Batch3D.prototype.getShape = function(index) {
   "use strict";
   return typeof this.shapes[index] === "undefined" ? null : this.shapes[index];
 };
 /**
  * Sets a shape or shape group at the given index in this batch.
- * @param {Number} index Integer index, starting from 0, to set the shape or shape group at.
+ * @param {number} index Integer index, starting from 0, to set the shape or shape group at.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape Shape object to set at the given index.
- * @returns {H3DU.Batch} This object.
- * @instance
+ * @returns {H3DU.Batch3D} This object.
  */
-H3DU.Batch3D.prototype.setShape = function(index, shape) {
+Batch3D.prototype.setShape = function(index, shape) {
   "use strict";
   this.shapes[index] = shape;
   return this;
@@ -367,9 +363,8 @@ H3DU.Batch3D.prototype.setShape = function(index, shape) {
  * Gets the number of vertices composed by
  * all shapes in this batch of shapes.
  * @returns {number} Return value.
- * @instance
  */
-H3DU.Batch3D.prototype.vertexCount = function() {
+Batch3D.prototype.vertexCount = function() {
   "use strict";
   var c = 0;
   for(var i = 0; i < this.shapes.length; i++) {
@@ -381,9 +376,8 @@ H3DU.Batch3D.prototype.vertexCount = function() {
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this batch of shapes.
  * @returns {number} Return value.
- * @instance
  */
-H3DU.Batch3D.prototype.primitiveCount = function() {
+Batch3D.prototype.primitiveCount = function() {
   "use strict";
   var c = 0;
   for(var i = 0; i < this.shapes.length; i++) {
@@ -396,9 +390,8 @@ H3DU.Batch3D.prototype.primitiveCount = function() {
  * Removes all instances of a 3D shape from this batch of shapes.
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
  * @returns {H3DU.Batch3D} This object.
- * @instance
  */
-H3DU.Batch3D.prototype.removeShape = function(shape) {
+Batch3D.prototype.removeShape = function(shape) {
   "use strict";
   for(var i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
@@ -410,7 +403,7 @@ H3DU.Batch3D.prototype.removeShape = function(shape) {
 };
 
 /** @ignore */
-H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
+Batch3D.prototype._renderShape = function(shape, renderContext) {
   "use strict";
   if(shape.constructor === H3DU.ShapeGroup) {
     if(!shape.visible)return;
@@ -439,7 +432,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
     if(typeof prog !== "undefined" && prog !== null) {
       if(renderContext.prog !== prog) {
         prog.use();
-        new H3DU._LightsBinder(this.lights).bind(prog, this._viewMatrix);
+        new _LightsBinder(this.lights).bind(prog, this._viewMatrix);
         renderContext.prog = prog;
       }
       H3DU.Batch3D._setupMatrices(prog,
@@ -455,7 +448,7 @@ H3DU.Batch3D.prototype._renderShape = function(shape, renderContext) {
 };
 
 /** @ignore */
-H3DU.Batch3D.prototype.resize = function(width, height) {
+Batch3D.prototype.resize = function(width, height) {
   "use strict";
   if(this._projectionUpdater) {
     this._projectionUpdater.update(width, height);
@@ -463,7 +456,7 @@ H3DU.Batch3D.prototype.resize = function(width, height) {
 };
 
 /** @ignore */
-H3DU.Batch3D.prototype.render = function(scene, pass) {
+Batch3D.prototype.render = function(scene, pass) {
   "use strict";
   var rc = {};
   rc.scene = scene;
@@ -487,7 +480,7 @@ H3DU.Batch3D.prototype.render = function(scene, pass) {
  * the shader to use when rendering the contents of the frame buffer
  * @returns {H3DU.Batch3D} The created batch.
  */
-H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
+Batch3D.forFilter = function(scene, fbo, shader) {
   "use strict";
   if(typeof shader === "undefined" || shader === null) {
     shader = H3DU.ShaderProgram.makeCopyEffect(scene);
@@ -507,14 +500,15 @@ H3DU.Batch3D.forFilter = function(scene, fbo, shader) {
   return ret;
 };
 /** @ignore */
-H3DU.Batch3D._getMaterialBinder = function(material) {
+Batch3D._getMaterialBinder = function(material) {
   "use strict";
   if(material && material instanceof H3DU.Material) {
-    return new H3DU._MaterialBinder(material);
+    return new _MaterialBinder(material);
   }
   if(material && material instanceof H3DU.PbrMaterial) {
-    return new H3DU._MaterialBinder(material);
+    return new _MaterialBinder(material);
   }
  // Return an empty binding object
   return {};
 };
+export { Batch3D };

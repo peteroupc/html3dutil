@@ -16,7 +16,7 @@
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/meshjson.js">&lt;/script></pre>
- * @class
+ * @constructor
  */
 H3DU.MeshJSON = {};
 
@@ -247,7 +247,7 @@ H3DU.MeshJSON._Model = function(mesh) {
 };
 /**
  * Loads a mesh from JSON format.
- * @param {String} url URL to a JSON mesh object, as used
+ * @param {string} url URL to a JSON mesh object, as used
  * in the Public Domain HTML 3D Library.
  * @returns {Promise} A promise that, when resolved, exposes an object
  * that implements a property named <code>toShape</code>, which is
@@ -374,7 +374,7 @@ H3DU.MeshJSON.loadJSON = function(url) {
 /* exported MeshJSON */
 /**
  * Alias for the {@link H3DU.MeshJSON} class.
- * @class
+ * @constructor
  * @alias MeshJSON
  * @deprecated Use {@link H3DU.MeshJSON} instead.
  */

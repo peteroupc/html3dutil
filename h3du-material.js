@@ -13,7 +13,7 @@
  * as well as a texture image to apply on that object's surface.<p>
  * NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
- * @class
+ * @constructor
  * @memberof H3DU
  * @param {Array<number>} [params] An object as described in {@link H3DU.Material#setParams}.
  * <i>Using this parameter as a [color vector or string]{@link H3DU.toGLColor} giving the ambient color is deprecated
@@ -27,7 +27,7 @@
  * @param {Array<number>} [emission] A [color vector or string]{@link H3DU.toGLColor} giving the additive color emitted by an object.
  * <i>This parameter is deprecated.</i>
  */
-H3DU.Material = function(params, diffuse, specular, shininess, emission) {
+function Material(params, diffuse, specular, shininess, emission) {
   "use strict";
  /** Specular highlight exponent of this material.
   * The greater the number, the more concentrated the specular
@@ -62,7 +62,7 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   * See also {@link H3DU.PbrMaterial#albedo}; this property corresponds
   * more closely to that in the metallic workflow rather than the specular
   * workflow.
-  * @type {Array<Number>}
+  * @type {Array<number>}
   * @default
   */
   this.diffuse = [0.8, 0.8, 0.8, 1.0];
@@ -72,14 +72,14 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
   * but can be colored if the material represents an uncoated metal of some sort.
   * See also {@link H3DU.PbrMaterial#specular}.
   * NOTE: Before version 2.0, this value's default was (0,0,0).
-  * @type {Array<Number>}
+  * @type {Array<number>}
   * @default
   */
   this.specular = [0.2, 0.2, 0.2];
  /**
   * Additive color emitted by objects with this material.
   * See {@link H3DU.PbrMaterial#emission}.
-  * @type {Array<Number>}
+  * @type {Array<number>}
   * @default
   */
   this.emission = [0, 0, 0]; // LATER: Support 4-component emissions (to support basic shading with alpha properly)
@@ -137,9 +137,8 @@ H3DU.Material = function(params, diffuse, specular, shininess, emission) {
  * maps and shader info, if any, won't be cloned, but rather, a reference
  * to the same object will be used.
  * @returns {H3DU.Material} A copy of this object.
- * @instance
  */
-H3DU.Material.prototype.copy = function() {
+Material.prototype.copy = function() {
   "use strict";
   return new H3DU.Material().setParams({
     "ambient":this.ambient,
@@ -159,7 +158,7 @@ H3DU.Material.prototype.copy = function() {
  * color without shading.
  * @returns {H3DU.Material} A new material with the given emission color.
  */
-H3DU.Material.fromBasic = function(color) {
+Material.fromBasic = function(color) {
   "use strict";
   return new H3DU.Material({
     "shininess":1.0,
@@ -179,7 +178,7 @@ H3DU.Material.fromBasic = function(color) {
  * texture without shading.
  * @returns {H3DU.Material} A new material with the given emission texture.
  */
-H3DU.Material.fromBasicTexture = function(texture) {
+Material.fromBasicTexture = function(texture) {
   "use strict";
   return new H3DU.Material({
     "shininess":1.0,
@@ -222,9 +221,8 @@ H3DU.Material.fromBasicTexture = function(texture) {
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
  * unless otherwise noted.
  * @returns {H3DU.Material} This object.
- * @instance
  */
-H3DU.Material.prototype.setParams = function(params) {
+Material.prototype.setParams = function(params) {
   "use strict";
   if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);
@@ -264,18 +262,18 @@ H3DU.Material.prototype.setParams = function(params) {
 };
 /** Convenience method that returns an {@link H3DU.Material}
  * object from an RGBA color.
- * @param {Array<Number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
+ * @param {Array<number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
  * or the red color component (0-1).
- * @param {Number} g Green color component (0-1).
+ * @param {number} g Green color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {Number} b Blue color component (0-1).
+ * @param {number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Material} The resulting material object.
  */
-H3DU.Material.fromColor = function(r, g, b, a) {
+Material.fromColor = function(r, g, b, a) {
   "use strict";
   var color = H3DU.toGLColor(r, g, b, a);
   return new H3DU.Material(color, color);
@@ -290,7 +288,9 @@ H3DU.Material.fromColor = function(r, g, b, a) {
  * will not load that image yet.
  * @returns {H3DU.Material} The resulting material object.
  */
-H3DU.Material.fromTexture = function(texture) {
+Material.fromTexture = function(texture) {
   "use strict";
   return new H3DU.Material({"texture":texture});
 };
+
+export { Material };

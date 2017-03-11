@@ -9,17 +9,19 @@
 /* global H3DU */
 // NOTE: RenderPass3D is independent of
 // any WebGL context or the WebGL API.
+
 /**
  * Describes a batch (a scene graph of 3D objects) and options for
  * rendering that batch.
- * @class H3DU.RenderPass3D
+ * @constructor
+ * @memberof H3DU
  * @param {H3DU.Batch3D} batch The batch to render using
  * the options described by this object.
  * @param {Object} [parameters] An object whose keys have
  * the possibilities given in {@link H3DU.RenderParams#setParams}, and whose values are those
  * allowed for each key.
  */
-H3DU.RenderPass3D = function(batch, parameters) {
+function RenderPass3D(batch, parameters) {
   "use strict";
  /** The batch to render.
   * @type {H3DU.Batch3D}
@@ -49,11 +51,11 @@ H3DU.RenderPass3D = function(batch, parameters) {
   this.shader = null;
  /** Use the dimensions of the given framebuffer rather than those
   * of the scene rendering it.
-  * @type {H3DU.ShaderInfo}
+  * @type {boolean}
   * @default
   */
   this.useFrameBufferSize = false;
-  this.setParams(parameters);
+  this.setParams(typeof parameters==="undefined" ? null : (parameters));
 };
 /**
  * Sets parameters for this render pass object.
@@ -71,11 +73,10 @@ H3DU.RenderPass3D = function(batch, parameters) {
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.
  * @returns {H3DU.RenderPass3D} This object.
- * @instance
  */
-H3DU.RenderPass3D.prototype.setParams = function(parameters) {
+RenderPass3D.prototype.setParams = function(parameters) {
   "use strict";
-  if(!parameters)return;
+  if(!parameters)return this;
   if(typeof parameters.clearColor !== "undefined") {
     this.clearColor = parameters.clearColor;
   }
@@ -99,3 +100,5 @@ H3DU.RenderPass3D.prototype.setParams = function(parameters) {
   }
   return this;
 };
+
+export { RenderPass3D };

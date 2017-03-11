@@ -57,13 +57,13 @@ the first promise that resolves or is rejected. It will receive the
 value associated with that promise. (Type: <a href="Promise.md">Promise</a>)
 
  <a name='Promise.reject'></a>
-### (static) Promise.reject(value)
+### (static) Promise.reject(reason)
 
 Returns a promise that is rejected.
 
 #### Parameters
 
-* `value` (Type: Object)<br>
+* `reason` (Type: Object)<br>
     The value associated with the promise.
 
 #### Return Value

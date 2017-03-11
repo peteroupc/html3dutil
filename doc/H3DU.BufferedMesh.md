@@ -15,7 +15,7 @@ A geometric mesh in the form of buffer objects.
 
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a> | <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>
     A geometric mesh object. Cannot be null.
-* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
+* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>
     A WebGL context to create a buffer from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context. (Note that this constructor uses a WebGL context rather than a shader program because buffer objects are not specific to shader programs.)
 
 ### Methods

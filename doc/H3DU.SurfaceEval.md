@@ -10,6 +10,8 @@ vertex attributes of a surface.
 
 See the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a> tutorial for more information.
 
+#### Parameters
+
 ### Methods
 
 * [color](#H3DU.SurfaceEval_color)<br>Specifies a parametric surface function for generating color values.
@@ -50,9 +52,9 @@ in a parametric surface.
 
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
     H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of the surface to evaluate.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     V coordinate of the surface to evaluate.
 
 #### Return Value

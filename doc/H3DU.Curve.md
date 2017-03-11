@@ -48,7 +48,7 @@ The <b>acceleration</b> of a curve is a vector which is the second derivative of
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -68,12 +68,12 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;number>)
+The approximate arc length of this curve at the given U coordinate. (Type: number)
 
  <a name='H3DU.Curve_endPoints'></a>
 ### H3DU.Curve#endPoints()
@@ -94,7 +94,7 @@ Finds the position of this curve at the given U coordinate.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -115,7 +115,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -135,7 +135,7 @@ The <b>velocity</b> of a curve is a vector which is the derivative of the curve'
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value

@@ -68,7 +68,7 @@ in a parametric curve.
 
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
     H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     Point of the curve to evaluate.
 
 #### Return Value
@@ -144,6 +144,6 @@ defined for curve evaluator objects can be implemented.
     return u;
     },
     "endPoints":function(u) {
-    return [0,H3DU.Math.PiTimes2]
+    return [0,Math.PiTimes2]
     }
     });

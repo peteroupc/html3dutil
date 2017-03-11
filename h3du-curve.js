@@ -7,6 +7,9 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+import { _MathInternal } from './h3du-mathinternal';
+
 /**
  * A curve evaluator object for a parametric curve.<p>
  * A parametric curve is a curve whose points are based on a
@@ -19,11 +22,11 @@
  * and z(u) returns a Z coordinate.<p>
  * Specialized curves should [subclass]{@tutorial subclass} this class and implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
- * @class
+ * @constructor
  * @memberof H3DU
  * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
  */
-H3DU.Curve = function(curve) {
+function Curve(curve) {
   "use strict";
   this.curve = curve;
 };
@@ -33,9 +36,8 @@ H3DU.Curve = function(curve) {
  * the curve, and the second is its ending coordinate.
  * Returns <code>[0, 1]</code> if the evaluator doesn't implement an <code>endPoints</code>
  * method.
- * @instance
  */
-H3DU.Curve.prototype.endPoints = function() {
+Curve.prototype.endPoints = function() {
   "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.endPoints !== "undefined" && this.curve.endPoints !== null) {
     return this.curve.endPoints();
@@ -44,15 +46,14 @@ H3DU.Curve.prototype.endPoints = function() {
   }
 };
 /** @ignore */
-H3DU.Curve._EPSILON = 0.00001;
+Curve._EPSILON = 0.00001;
 /**
  * Finds the position of this curve at the given U coordinate.
- * @param {Number} u U coordinate of a point on the curve.
+ * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a position. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
- * @instance
  */
-H3DU.Curve.prototype.evaluate = function(u) {
+Curve.prototype.evaluate = function(u) {
   "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.evaluate !== "undefined" && this.curve.evaluate !== null) {
     return this.curve.evaluate(u);
@@ -66,24 +67,23 @@ H3DU.Curve.prototype.evaluate = function(u) {
  * method if it implements it; otherwise, does a numerical differentiation using
  * the position (from the <code>evaluate</code> method).<p>
  * The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * @param {Number} u U coordinate of a point on the curve.
+ * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a velocity vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
- * @instance
  */
-H3DU.Curve.prototype.velocity = function(u) {
+Curve.prototype.velocity = function(u) {
   "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.velocity !== "undefined" && this.curve.velocity !== null) {
     return this.curve.velocity(u);
   } else {
-    var du = H3DU.Curve._EPSILON;
+    var du = Curve._EPSILON;
     var vector = this.evaluate(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
       vector = this.evaluate(u + du);
     }
-    return H3DU._MathInternal.vecSubScaleInPlace(vector, this.evaluate(u), 1.0 / du);
+    return _MathInternal.vecSubScaleInPlace(vector, this.evaluate(u), 1.0 / du);
   }
 };
 /**
@@ -92,24 +92,23 @@ H3DU.Curve.prototype.velocity = function(u) {
  * method if it implements it; otherwise, does a numerical differentiation using
  * the velocity vector.<p>
  * The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * @param {Number} u U coordinate of a point on the curve.
+ * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing an acceleration vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
- * @instance
  */
-H3DU.Curve.prototype.accel = function(u) {
+Curve.prototype.accel = function(u) {
   "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.accel !== "undefined" && this.curve.accel !== null) {
     return this.curve.accel(u);
   } else {
-    var du = H3DU.Curve._EPSILON;
+    var du = Curve._EPSILON;
     var vector = this.velocity(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
       vector = this.velocity(u + du);
     }
-    return H3DU._MathInternal.vecSubScaleInPlace(vector, this.velocity(u), 1.0 / du);
+    return _MathInternal.vecSubScaleInPlace(vector, this.velocity(u), 1.0 / du);
   }
 };
 /**
@@ -119,30 +118,29 @@ H3DU.Curve.prototype.accel = function(u) {
  * The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
  * vector divided by that derivative's length. The normal returned by this method
  * <i>should</i> be "normalized" to a [unit vector]{@tutorial glmath}. (Compare with {@link H3DU.Surface#gradient}.)
- * @param {Number} u U coordinate of a point on the curve.
+ * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a normal vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
- * @instance
  */
-H3DU.Curve.prototype.normal = function(u) {
+Curve.prototype.normal = function(u) {
   "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.normal !== "undefined" && this.curve.normal !== null) {
     return this.curve.normal(u);
   } else {
-    var du = H3DU.Curve._EPSILON;
-    var vector = H3DU._MathInternal.vecNormalizeInPlace(this.velocity(u + du));
+    var du = Curve._EPSILON;
+    var vector = _MathInternal.vecNormalizeInPlace(this.velocity(u + du));
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
-      vector = H3DU._MathInternal.vecNormalizeInPlace(this.velocity(u + du));
+      vector = _MathInternal.vecNormalizeInPlace(this.velocity(u + du));
     }
-    var tangent = H3DU._MathInternal.vecNormalizeInPlace(this.velocity(u));
-    H3DU._MathInternal.vecSubInPlace(vector, tangent);
-    return H3DU._MathInternal.vecNormalizeInPlace(vector);
+    var tangent = _MathInternal.vecNormalizeInPlace(this.velocity(u));
+    _MathInternal.vecSubInPlace(vector, tangent);
+    return _MathInternal.vecNormalizeInPlace(vector);
   }
 };
 
-H3DU.Curve._legendreGauss24 = [
+Curve._legendreGauss24 = [
   0.12793819534675216, 0.06405689286260563,
   0.1258374563468283, 0.1911188674736163,
   0.12167047292780339, 0.3150426796961634,
@@ -162,11 +160,10 @@ H3DU.Curve._legendreGauss24 = [
  * The implementation in {@link H3DU.Curve} calls the evaluator's <code>arcLength</code>
  * method if it implements it; otherwise, calculates a numerical integral using the velocity vector.<p>
  * The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
- * @param {Number} u U coordinate of a point on the curve.
- * @returns {Array<number>} The approximate arc length of this curve at the given U coordinate.
- * @instance
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {number} The approximate arc length of this curve at the given U coordinate.
  */
-H3DU.Curve.prototype.arcLength = function(u) {
+Curve.prototype.arcLength = function(u) {
   "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.arcLength !== "undefined" && this.curve.arcLength !== null) {
     return this.curve.arcLength(u);
@@ -184,10 +181,12 @@ H3DU.Curve.prototype.arcLength = function(u) {
       var weight = lg[i];
       var abscissa = lg[i + 1];
       var x = this.velocity(bm * abscissa + bp);
-      ret += weight * H3DU._MathInternal.vecLength(x);
+      ret += weight * _MathInternal.vecLength(x);
       x = this.velocity(-bm * abscissa + bp);
-      ret += weight * H3DU._MathInternal.vecLength(x);
+      ret += weight * _MathInternal.vecLength(x);
     }
     return ret * bm * dir;
   }
 };
+
+export { Curve };

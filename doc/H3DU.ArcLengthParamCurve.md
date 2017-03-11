@@ -56,7 +56,7 @@ The <b>acceleration</b> of a curve is a vector which is the second derivative of
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -72,7 +72,7 @@ curve and the point at the given U coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -99,7 +99,7 @@ from the start of the curve.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     Distance to the point from the start of the curve.
 
 #### Return Value
@@ -119,7 +119,7 @@ than for this one, even though both vectors generally point in the same directio
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     Distance to the point from the start of the curve.
 
 #### Return Value
@@ -164,7 +164,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value
@@ -184,7 +184,7 @@ The <b>velocity</b> of a curve is a vector which is the derivative of the curve'
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the curve.
 
 #### Return Value

@@ -27,11 +27,11 @@ log is output to the JavaScript console.
 
 #### Parameters
 
-* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
+* `context` (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>
     A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
-* `vertexShader` (Type: String) (optional)<br>
+* `vertexShader` (Type: string) (optional)<br>
     Source text of a vertex shader, in OpenGL ES Shading Language (GLSL). If null, a default vertex shader is used instead.
-* `fragmentShader` (Type: String) (optional)<br>
+* `fragmentShader` (Type: string) (optional)<br>
     Source text of a fragment shader in GLSL. If null, a default fragment shader is used instead.
 
 ### Methods
@@ -70,7 +70,7 @@ in the case of H3DU.ShaderInfo.)
 
 #### Parameters
 
-* `name` (Type: String)<br>
+* `name` (Type: string)<br>
     The name of an attribute or uniform defined in either the vertex or fragment shader of this shader program. If the uniform or attribute is an array, each element in the array is named as in these examples: "unif[0]", "unif[1]". If it's a struct, each member in the struct is named as in these examples: "unif.member1", "unif.member2". If it's an array of struct, each member is named as in these examples: "unif[0].member1", "unif[0].member2".
 
 #### Return Value
@@ -156,13 +156,13 @@ active program in the WebGL context.
 
 #### Parameters
 
-* `name` (Type: String)<br>
+* `name` (Type: string)<br>
     The name of a uniform defined in either the vertex or fragment shader of this shader program. See get().
 
 #### Return Value
 
 The uniform's value, or null if it doesn't exist or if
-an attribute is named, not a uniform. (Type: Number | Array.&lt;Number>)
+an attribute is named, not a uniform. (Type: Number | Array.&lt;number>)
 
  <a name='H3DU.ShaderProgram.makeCopyEffect'></a>
 ### (static) H3DU.ShaderProgram.makeCopyEffect()
@@ -187,7 +187,7 @@ a raster effect (postprocessing effect) to a texture.
 
 * `context` (Type: Object)<br>
     No longer used; ignored.
-* `functionCode` (Type: String)<br>
+* `functionCode` (Type: string)<br>
     A string giving shader code in OpenGL ES Shading Language (GLSL) that must contain a function with the following signature:
 
     vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
@@ -208,7 +208,7 @@ a raster effect to a texture.
 
 #### Parameters
 
-* `functionCode` (Type: String)<br>
+* `functionCode` (Type: string)<br>
     See H3DU.ShaderProgram.makeEffect().
 
 #### Return Value

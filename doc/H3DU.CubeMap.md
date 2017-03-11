@@ -3,13 +3,13 @@
 [Back to documentation index.](index.md)
 
  <a name='H3DU.CubeMap'></a>
-### H3DU.CubeMap(name)
+### H3DU.CubeMap(textures)
 
 A cube map, or a set of six textures forming the sides of a cube.
 
 #### Parameters
 
-* `name` (Type: Array.&lt;(String|Texture|TextureInfo)>)<br>
+* `textures` (Type: Array.&lt;(String|Texture|TextureInfo)>)<br>
     An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six texture are, in order, the texture seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.
 
 ### Methods
@@ -36,12 +36,13 @@ Gets a texture used by this cube map.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Texture index to get.
 
 #### Return Value
 
-The texture with the given index. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
+The texture with the given index,
+or null if the index is out of range. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
 
  <a name='H3DU.CubeMap_getWidth'></a>
 ### H3DU.CubeMap#getWidth()
@@ -60,7 +61,7 @@ Sets a texture used by this cube map.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Texture index to set, from 0 through 5.
 * `texture` (Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | String)<br>
     An <a href="H3DU.Texture.md">H3DU.Texture</a> object, a texture information object, or a string with the URL of the texture data.

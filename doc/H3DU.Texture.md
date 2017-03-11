@@ -16,7 +16,7 @@ and 32.
 
 #### Parameters
 
-* `name` (Type: String)<br>
+* `name` (Type: string)<br>
     URL of the texture data. Based on the URL, the texture may be loaded via the JavaScript DOM's Image class. However, this constructor will not load that image yet.
 
 ### Methods
@@ -37,7 +37,7 @@ Disposes resources used by this texture.
 
 #### Return Value
 
-Return value. (Type: Object)
+This method doesn't return a value. (Type: void)
 
  <a name='H3DU.Texture.fromUint8Array'></a>
 ### (static) H3DU.Texture.fromUint8Array(array, width, height)
@@ -87,13 +87,13 @@ This texture's width in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: number)
 
  <a name='H3DU.Texture.loadTexture'></a>
-### (static) H3DU.Texture.loadTexture(name, [textureCache])
+### (static) H3DU.Texture.loadTexture(info, [textureCache])
 
 Loads a texture by its URL.
 
 #### Parameters
 
-* `name` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.Texture.md">H3DU.Texture</a>)<br>
+* `info` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.Texture.md">H3DU.Texture</a>)<br>
     An <a href="H3DU.Texture.md">H3DU.Texture</a> object, an <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM's Image class.
 * `textureCache` (Type: Object) (optional)<br>
     An object whose keys are the names of textures already loaded. This will help avoid loading the same texture more than once.

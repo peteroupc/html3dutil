@@ -44,7 +44,7 @@ used by the texture atlas.
 
 #### Parameters
 
-* `atlasFileName` (Type: String)<br>
+* `atlasFileName` (Type: string)<br>
     The URL of the texture atlas to load.
 
 #### Return Value
@@ -78,7 +78,7 @@ it uses.
 
 #### Parameters
 
-* `atlasFileName` (Type: String)<br>
+* `atlasFileName` (Type: string)<br>
     The URL of the texture atlas to load.
 * `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
     Texture loader object to use when loading the textures.

@@ -117,11 +117,11 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `x` (Type: Array.&lt;Number> | number)<br>
+* `x` (Type: Array.&lt;number> | number)<br>
     Number to add to the X coordinate, If "y" and "z" are null or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Number to add to the Y coordinate. If "x" is an array, this parameter may be omitted.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Number to add to the Z coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
@@ -143,13 +143,13 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `angle` (Type: Array.&lt;Number> | number)<br>
+* `angle` (Type: Array.&lt;number> | number)<br>
     The desired angle to rotate in degrees. See <a href="H3DU.Transform.md#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a>.
-* `v` (Type: Array.&lt;Number> | number)<br>
+* `v` (Type: Array.&lt;number> | number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number)<br>
     Y-component of the point lying on the axis of rotation.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number)<br>
     Z-component of the point lying on the axis of rotation.
 
 #### Return Value
@@ -197,13 +197,13 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `angle` (Type: Array.&lt;Number> | number)<br>
+* `angle` (Type: Array.&lt;number> | number)<br>
     The desired angle to rotate in degrees. See <a href="H3DU.Transform.md#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a>.
-* `v` (Type: Array.&lt;Number> | number)<br>
+* `v` (Type: Array.&lt;number> | number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number)<br>
     Y-component of the point lying on the axis of rotation.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number)<br>
     Z-component of the point lying on the axis of rotation.
 
 #### Return Value
@@ -217,7 +217,7 @@ Resets this transform to the untransformed state.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
  <a name='H3DU.Transform_resetTransform'></a>
 ### H3DU.Transform#resetTransform()
@@ -258,13 +258,13 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `angle` (Type: Array.&lt;Number> | number)<br>
+* `angle` (Type: Array.&lt;number> | number)<br>
     The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
-* `v` (Type: Array.&lt;Number> | number)<br>
+* `v` (Type: Array.&lt;number> | number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number)<br>
     Y-component of the point lying on the axis of rotation.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number)<br>
     Z-component of the point lying on the axis of rotation.
 
 #### Return Value
@@ -280,11 +280,11 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `x` (Type: Array.&lt;Number> | number)<br>
+* `x` (Type: Array.&lt;number> | number)<br>
     The X coordinate. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     The Y coordinate. If "x" is an array, this parameter may be omitted.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     The Z coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
@@ -326,13 +326,13 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `angle` (Type: Array.&lt;Number> | number)<br>
+* `angle` (Type: Array.&lt;number> | number)<br>
     The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.
-* `v` (Type: Array.&lt;Number> | number)<br>
+* `v` (Type: Array.&lt;number> | number)<br>
     X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.
-* `vy` (Type: Number)<br>
+* `vy` (Type: number)<br>
     Y-component of the point lying on the axis of rotation.
-* `vz` (Type: Number)<br>
+* `vz` (Type: number)<br>
     Z-component of the point lying on the axis of rotation.
 
 #### Return Value
@@ -348,11 +348,11 @@ and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transfor
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;Number>)<br>
+* `x` (Type: number | Array.&lt;number>)<br>
     Scaling factor for this transform's width. If "y" and "z" are null or omitted, this is instead a 3-element array giving the scaling factors for width, height, and depth, respectively, or a single number giving the scaling factor for all three dimensions.
-* `y` (Type: Number)<br>
+* `y` (Type: number)<br>
     Scaling factor for this transform's height.
-* `z` (Type: Number)<br>
+* `z` (Type: number)<br>
     Scaling factor for this transform's depth.
 
 #### Return Value

@@ -10,7 +10,7 @@ An object that holds a rendering context for rendering
 
 #### Parameters
 
-* `canvasOrContext` (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
+* `canvasOrContext` (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>
     A WebGL context to associate with this scene, or an HTML canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.
 
 ### Members
@@ -189,7 +189,7 @@ when rendering this scene.
 
 #### Parameters
 
-* `value` (Type: Number)<br>
+* `value` (Type: number)<br>
     If this is <a href="H3DU.Scene3D.md#H3DU.Scene3D.BACK">H3DU.Scene3D.BACK</a>, <a href="H3DU.Scene3D.md#H3DU.Scene3D.FRONT">H3DU.Scene3D.FRONT</a>, or <a href="H3DU.Scene3D.md#H3DU.Scene3D.FRONT_AND_BACK">H3DU.Scene3D.FRONT_AND_BACK</a>, enables face culling of the specified faces. For any other value, disables face culling. By default, face culling is disabled.
 
 #### Return Value
@@ -203,7 +203,7 @@ Disposes all resources used by this object.
 
 #### Return Value
 
-Return value. (Type: Object)
+This method doesn't return a value. (Type: void)
 
  <a name='H3DU.Scene3D_frontFace'></a>
 ### H3DU.Scene3D#frontFace(value)
@@ -212,7 +212,7 @@ Specifies the winding of front faces.
 
 #### Parameters
 
-* `value` (Type: Number)<br>
+* `value` (Type: number)<br>
     If this is <a href="H3DU.Scene3D.md#H3DU.Scene3D.CW">H3DU.Scene3D.CW</a>, clockwise triangles are front-facing. For any other value, counterclockwise triangles are front-facing, which is the default behavior. If using a left-handed coordinate system, set this value to <a href="H3DU.Scene3D.md#H3DU.Scene3D.CW">H3DU.Scene3D.CW</a>.
 
 #### Return Value
@@ -239,7 +239,7 @@ when the render() method is called.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
+Return value. (Type: boolean)
 
  <a name='H3DU.Scene3D_getCanvas'></a>
 ### H3DU.Scene3D#getCanvas()
@@ -373,7 +373,8 @@ to a texture buffer object.
 A promise that is resolved when
 the image is loaded successfully and uploaded
 to a texture buffer (the result will be an H3DU.Texture
-object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>)
+object), and is rejected when an error occurs.
+Returns null if the object is neither an <a href="H3DU.Texture.md">H3DU.Texture</a> nor a string. (Type: <a href="Promise.md">Promise</a>)
 
  <a name='H3DU.Scene3D_loadAndMapTextures'></a>
 ### H3DU.Scene3D#loadAndMapTextures(textureFiles, [resolve], [reject])
@@ -386,7 +387,7 @@ to a texture buffer object.
 
 #### Parameters
 
-* `textureFiles` (Type: Array.&lt;String>)<br>
+* `textureFiles` (Type: Array.&lt;string>)<br>
     A list of URLs of the image to load.
 * `resolve` (Type: function) (optional)<br>
     Called for each URL that is loaded successfully and uploaded to a texture buffer (the argument will be an H3DU.Texture object.)
@@ -411,7 +412,7 @@ Loads a texture from an image URL.
 
 #### Parameters
 
-* `name` (Type: String)<br>
+* `name` (Type: string)<br>
     URL of the image to load.
 
 #### Return Value
@@ -495,11 +496,11 @@ Sets the color of the scene's ambient light.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.md#H3DU.toGLColor">HTML or CSS color</a>.
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>
     Alpha color component (0-1). Currently not used.
@@ -531,11 +532,11 @@ This color is black by default.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;Number> | number | string)<br>
+* `r` (Type: Array.&lt;number> | number | string)<br>
     Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.md#H3DU.toGLColor">HTML or CSS color</a>.
-* `g` (Type: Number)<br>
+* `g` (Type: number)<br>
     Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: Number)<br>
+* `b` (Type: number)<br>
     Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>
     Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
@@ -551,14 +552,14 @@ Sets the viewport width and height for this scene.
 
 #### Parameters
 
-* `width` (Type: Number)<br>
+* `width` (Type: number)<br>
     Width of the scene, in pixels. Will be rounded up.
-* `height` (Type: Number)<br>
+* `height` (Type: number)<br>
     Height of the scene, in pixels. Will be rounded up.
 
 #### Return Value
 
-Return value. (Type: number)
+This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 
  <a name='H3DU.Scene3D_setDirectionalLight'></a>
 ### H3DU.Scene3D#setDirectionalLight(index, position, [diffuse], [specular])
@@ -569,7 +570,7 @@ Sets a light source in this scene to a directional light.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn't exist.
 * `position` (Type: Array.&lt;number>)<br>
     A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).
@@ -595,17 +596,17 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 
 #### Parameters
 
-* `left` (Type: Number)<br>
+* `left` (Type: number)<br>
     X coordinate of the point where the left clipping plane meets the near clipping plane.
-* `right` (Type: Number)<br>
+* `right` (Type: number)<br>
     X coordinate of the point where the right clipping plane meets the near clipping plane.
-* `bottom` (Type: Number)<br>
+* `bottom` (Type: number)<br>
     Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
-* `top` (Type: Number)<br>
+* `top` (Type: number)<br>
     Y coordinate of the point where the top clipping plane meets the near clipping plane.
-* `near` (Type: Number)<br>
+* `near` (Type: number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
-* `far` (Type: Number)<br>
+* `far` (Type: number)<br>
     The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
 #### Return Value
@@ -621,7 +622,7 @@ Sets parameters for a light in this scene.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn't exist.
 * `params` (Type: Object)<br>
     An object as described in H3DU.LightSource.setParams.
@@ -663,17 +664,17 @@ plane and the top to the bottom.
 
 #### Parameters
 
-* `left` (Type: Number)<br>
+* `left` (Type: number)<br>
     Leftmost coordinate of the 3D view.
-* `right` (Type: Number)<br>
+* `right` (Type: number)<br>
     Rightmost coordinate of the 3D view. (Note that right can be greater than left or vice versa.)
-* `bottom` (Type: Number)<br>
+* `bottom` (Type: number)<br>
     Bottommost coordinate of the 3D view.
-* `top` (Type: Number)<br>
+* `top` (Type: number)<br>
     Topmost coordinate of the 3D view. (Note that top can be greater than bottom or vice versa.)
-* `near` (Type: Number)<br>
+* `near` (Type: number)<br>
     Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
-* `far` (Type: Number)<br>
+* `far` (Type: number)<br>
     Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.
 
 #### Return Value
@@ -690,13 +691,13 @@ The near and far clipping planes will be set to -1 and 1, respectively.
 
 #### Parameters
 
-* `left` (Type: Number)<br>
+* `left` (Type: number)<br>
     Leftmost coordinate of the 2D view.
-* `right` (Type: Number)<br>
+* `right` (Type: number)<br>
     Rightmost coordinate of the 2D view. (Note that right can be greater than left or vice versa.)
-* `bottom` (Type: Number)<br>
+* `bottom` (Type: number)<br>
     Bottommost coordinate of the 2D view.
-* `top` (Type: Number)<br>
+* `top` (Type: number)<br>
     Topmost coordinate of the 2D view. (Note that top can be greater than bottom or vice versa.)
 
 #### Return Value
@@ -718,13 +719,13 @@ or squishing it.
 
 #### Parameters
 
-* `left` (Type: Number)<br>
+* `left` (Type: number)<br>
     Leftmost coordinate of the view rectangle.
-* `right` (Type: Number)<br>
+* `right` (Type: number)<br>
     Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)
-* `bottom` (Type: Number)<br>
+* `bottom` (Type: number)<br>
     Bottommost coordinate of the view rectangle.
-* `top` (Type: Number)<br>
+* `top` (Type: number)<br>
     Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)
 * `aspect` (Type: number) (optional)<br>
     Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene's aspect ratio instead.
@@ -749,17 +750,17 @@ or squishing it.
 
 #### Parameters
 
-* `left` (Type: Number)<br>
+* `left` (Type: number)<br>
     Leftmost coordinate of the view rectangle.
-* `right` (Type: Number)<br>
+* `right` (Type: number)<br>
     Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)
-* `bottom` (Type: Number)<br>
+* `bottom` (Type: number)<br>
     Bottommost coordinate of the view rectangle.
-* `top` (Type: Number)<br>
+* `top` (Type: number)<br>
     Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)
-* `near` (Type: Number)<br>
+* `near` (Type: number)<br>
     Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
-* `far` (Type: Number)<br>
+* `far` (Type: number)<br>
     Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.
 * `aspect` (Type: number) (optional)<br>
     Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene's aspect ratio instead.
@@ -780,13 +781,13 @@ see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</
 
 #### Parameters
 
-* `fov` (Type: Number)<br>
+* `fov` (Type: number)<br>
     Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
-* `aspect` (Type: Number)<br>
+* `aspect` (Type: number)<br>
     The ratio of width to height of the viewport, usually the scene's aspect ratio (getAspect() or getClientAspect()).
-* `near` (Type: Number)<br>
+* `near` (Type: number)<br>
     The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.
-* `far` (Type: Number)<br>
+* `far` (Type: number)<br>
     The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
 #### Return Value
@@ -808,7 +809,7 @@ Sets a light source in this scene to a point light.
 
 #### Parameters
 
-* `index` (Type: Number)<br>
+* `index` (Type: number)<br>
     Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on.
 * `position` (Type: Array.&lt;number>)<br>
     Light position. (See <a href="H3DU.LightSource.md#H3DU.LightSource_position">H3DU.LightSource#position</a>.)

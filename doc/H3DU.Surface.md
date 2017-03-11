@@ -49,9 +49,9 @@ the partial derivative of the <code>evaluate</code> method with respect to <code
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the surface.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     V coordinate of a point on the surface.
 
 #### Return Value
@@ -81,9 +81,9 @@ Finds the position of this surface at the given U and V coordinates.
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the surface.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     V coordinate of a point on the surface.
 
 #### Return Value
@@ -110,9 +110,9 @@ in that order. The gradient returned by this method <i>should not</i> be "normal
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the surface.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     V coordinate of a point on the surface.
 
 #### Return Value
@@ -128,9 +128,9 @@ The <b>normal vector</b> is the same as the gradient vector, but "normalized" to
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the surface.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     V coordinate of a point on the surface.
 
 #### Return Value
@@ -152,9 +152,9 @@ The tangent vector returned by this method <i>should not</i> be "normalized" to 
 
 #### Parameters
 
-* `u` (Type: Number)<br>
+* `u` (Type: number)<br>
     U coordinate of a point on the surface.
-* `v` (Type: Number)<br>
+* `v` (Type: number)<br>
     V coordinate of a point on the surface.
 
 #### Return Value

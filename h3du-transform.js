@@ -10,10 +10,10 @@
 /**
  * A class offering a convenient way to set a transformation
  * from one coordinate system to another.
- * @class
+ * @constructor
  * @memberof H3DU
  */
-H3DU.Transform = function() {
+export var Transform = function() {
   "use strict";
   /** @ignore */
   this.scale = [1, 1, 1];
@@ -35,9 +35,8 @@ H3DU.Transform = function() {
    * height, and depth, respectively.
    * For each component, 1 means no scaling.
    * @returns {Array<number>} Return value.
-   * @instance
    */
-H3DU.Transform.prototype.getScale = function() {
+Transform.prototype.getScale = function() {
   "use strict";
   if(this.complexMatrix) {
     return [this.matrix[0], this.matrix[5], this.matrix[10]];
@@ -49,9 +48,8 @@ H3DU.Transform.prototype.getScale = function() {
    * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
    * of an object relative to its original position.
    * @returns {Array<number>} Return value.
-   * @instance
    */
-H3DU.Transform.prototype.getPosition = function() {
+Transform.prototype.getPosition = function() {
   "use strict";
   if(this.complexMatrix) {
     return [this.matrix[12], this.matrix[13], this.matrix[14]];
@@ -62,9 +60,8 @@ H3DU.Transform.prototype.getPosition = function() {
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
    * @returns {Array<number>} Return value.
-   * @instance
    */
-H3DU.Transform.prototype.getQuaternion = function() {
+Transform.prototype.getQuaternion = function() {
   "use strict";
   if(this.complexMatrix) {
     return H3DU.Math.quatNormalizeInPlace(
@@ -75,10 +72,9 @@ H3DU.Transform.prototype.getQuaternion = function() {
 };
 /**
  * Resets this transform to the untransformed state.
- * @returns {H3DU.Shape} This object.
- * @instance
+ * @returns {H3DU.Transform} This object.
  */
-H3DU.Transform.prototype.reset = function() {
+Transform.prototype.reset = function() {
   "use strict";
   this.matrix = H3DU.Math.mat4identity();
   this.position = [0, 0, 0];
@@ -96,9 +92,8 @@ H3DU.Transform.prototype.reset = function() {
  * @param {Array<number>} value A 4x4 matrix.
  * This method will copy the value of this parameter.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.setMatrix = function(value) {
+Transform.prototype.setMatrix = function(value) {
   "use strict";
   this._matrixDirty = false;
   this.complexMatrix = true;
@@ -118,9 +113,8 @@ H3DU.Transform.prototype.setMatrix = function(value) {
 /**
  * Returns whether this transform is the identity transform.
  * @returns {boolean} Return value.
- * @instance
  */
-H3DU.Transform.prototype.isIdentity = function() {
+Transform.prototype.isIdentity = function() {
   "use strict";
   if(this._matrixDirty) {
     if(this.complexMatrix) {
@@ -138,9 +132,8 @@ H3DU.Transform.prototype.isIdentity = function() {
  * Resets this transform to the untransformed state.
  * @deprecated Use the "reset" method instead.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.resetTransform = function() {
+Transform.prototype.resetTransform = function() {
   "use strict";
   return this.reset();
 };
@@ -148,17 +141,16 @@ H3DU.Transform.prototype.resetTransform = function() {
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @param {number|Array<Number>} x Scaling factor for this transform's width.
+ * @param {number|Array<number>} x Scaling factor for this transform's width.
  *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the scaling factors
  * for width, height, and depth, respectively, or a single number
  * giving the scaling factor for all three dimensions.
- * @param {Number} y Scaling factor for this transform's height.
- * @param {Number} z Scaling factor for this transform's depth.
+ * @param {number} y Scaling factor for this transform's height.
+ * @param {number} z Scaling factor for this transform's depth.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.setScale = function(x, y, z) {
+Transform.prototype.setScale = function(x, y, z) {
   "use strict";
   if(this.complexMatrix)return this;
   if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
@@ -180,18 +172,17 @@ H3DU.Transform.prototype.setScale = function(x, y, z) {
  * Sets the relative position of an object from its original
  * position. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @param {Array<Number>|number} x The X coordinate.
+ * @param {Array<number>|number} x The X coordinate.
  *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {Number} y The Y coordinate.
+ * @param {number} y The Y coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {Number} z The Z coordinate.
+ * @param {number} z The Z coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.setPosition = function(x, y, z) {
+Transform.prototype.setPosition = function(x, y, z) {
   "use strict";
   if(this.complexMatrix)return this;
   if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
@@ -214,18 +205,17 @@ H3DU.Transform.prototype.setPosition = function(x, y, z) {
  * Moves the relative position of an object from its original
  * position. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @param {Array<Number>|number} x Number to add to the X coordinate,
+ * @param {Array<number>|number} x Number to add to the X coordinate,
  *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number
  * to add to all three coordinates.
- * @param {Number} y Number to add to the Y coordinate.
+ * @param {number} y Number to add to the Y coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {Number} z Number to add to the Z coordinate.
+ * @param {number} z Number to add to the Z coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.movePosition = function(x, y, z) {
+Transform.prototype.movePosition = function(x, y, z) {
   "use strict";
   if(this.complexMatrix)return this;
   if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
@@ -266,9 +256,8 @@ H3DU.Transform.prototype.movePosition = function(x, y, z) {
  * // Set an object's rotation to 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
- * @instance
  */
-H3DU.Transform.prototype.setQuaternion = function(quat) {
+Transform.prototype.setQuaternion = function(quat) {
   "use strict";
   if(this.complexMatrix)return this;
   this.rotation = quat.slice(0, 4);
@@ -280,7 +269,7 @@ H3DU.Transform.prototype.setQuaternion = function(quat) {
  * Sets this transform's rotation in the form of an angle and an axis of
  * rotation. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @param {Array<Number>|number} angle The desired angle
+ * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -288,18 +277,17 @@ H3DU.Transform.prototype.setQuaternion = function(quat) {
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {Number} vy Y-component of the point lying on the axis
+ * @param {number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {Number} vz Z-component of the point lying on the axis
+ * @param {number} vz Z-component of the point lying on the axis
  * of rotation.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.setRotation = function(angle, v, vy, vz) {
+Transform.prototype.setRotation = function(angle, v, vy, vz) {
   "use strict";
   return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
 };
@@ -309,7 +297,7 @@ H3DU.Transform.prototype.setRotation = function(angle, v, vy, vz) {
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
  * @deprecated Use {@link H3DU.Transform#setRotation} instead.
  * This method's name is inaccurate because orientations are not rotations.
- * @param {Array<Number>|number} angle The desired angle
+ * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -317,18 +305,17 @@ H3DU.Transform.prototype.setRotation = function(angle, v, vy, vz) {
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {Number} vy Y-component of the point lying on the axis
+ * @param {number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {Number} vz Z-component of the point lying on the axis
+ * @param {number} vz Z-component of the point lying on the axis
  * of rotation.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.setOrientation = function(angle, v, vy, vz) {
+Transform.prototype.setOrientation = function(angle, v, vy, vz) {
   "use strict";
   return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
 };
@@ -351,9 +338,8 @@ H3DU.Transform.prototype.setOrientation = function(angle, v, vy, vz) {
  * // Combine an object's rotation with 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
- * @instance
  */
-H3DU.Transform.prototype.multQuaternion = function(quat) {
+Transform.prototype.multQuaternion = function(quat) {
   "use strict";
   if(this.complexMatrix)return this;
   this.rotation = H3DU.Math.quatNormalizeInPlace(
@@ -368,20 +354,19 @@ H3DU.Transform.prototype.multQuaternion = function(quat) {
  * same effect as the new rotation followed by the existing rotation.
  * Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @param {Array<Number>|number} angle The desired angle
+ * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees. See {@link H3DU.Transform#setRotation}.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {Number} vy Y-component of the point lying on the axis
+ * @param {number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {Number} vz Z-component of the point lying on the axis
+ * @param {number} vz Z-component of the point lying on the axis
  * of rotation.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.multRotation = function(angle, v, vy, vz) {
+Transform.prototype.multRotation = function(angle, v, vy, vz) {
   "use strict";
   return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
 };
@@ -394,20 +379,19 @@ H3DU.Transform.prototype.multRotation = function(angle, v, vy, vz) {
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
  * @deprecated Use {@link H3DU.Transform#multRotation} instead.
  * This method's name is inaccurate because orientations are not rotations.
- * @param {Array<Number>|number} angle The desired angle
+ * @param {Array<number>|number} angle The desired angle
  * to rotate in degrees. See {@link H3DU.Transform#setRotation}.
- * @param {Array<Number>|number} v X-component of the point lying on the axis
+ * @param {Array<number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {Number} vy Y-component of the point lying on the axis
+ * @param {number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {Number} vz Z-component of the point lying on the axis
+ * @param {number} vz Z-component of the point lying on the axis
  * of rotation.
  * @returns {H3DU.Transform} This object.
- * @instance
  */
-H3DU.Transform.prototype.multOrientation = function(angle, v, vy, vz) {
+Transform.prototype.multOrientation = function(angle, v, vy, vz) {
   "use strict";
   return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
 };
@@ -421,9 +405,8 @@ H3DU.Transform.prototype.multOrientation = function(angle, v, vy, vz) {
  * multiplied in that order, otherwise.
  * </ul>
  * @returns {Array<number>} Return value.
- * @instance
  */
-H3DU.Transform.prototype.getMatrix = function() {
+Transform.prototype.getMatrix = function() {
   "use strict";
   if(this._matrixDirty) {
     this._matrixDirty = false;
@@ -468,9 +451,8 @@ H3DU.Transform.prototype.getMatrix = function() {
  * will have its own version of the rotation, scale,
  * position, and matrix data.
  * @returns {H3DU.Transform} A copy of this transform.
- * @instance
  */
-H3DU.Transform.prototype.copy = function() {
+Transform.prototype.copy = function() {
   "use strict";
   var ret = new H3DU.Transform();
   ret.scale = this.scale.slice(0, this.scale.length);

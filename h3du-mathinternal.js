@@ -8,7 +8,7 @@
  http://peteroupc.github.io/
 */
 /** @ignore */
-H3DU._MathInternal = {
+export var _MathInternal = {
   "vecZeros":function(count) {
     "use strict";
     var vec = [];

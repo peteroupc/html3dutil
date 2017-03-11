@@ -56,7 +56,7 @@ Loads a material (MTL) file asynchronously.
 
 #### Parameters
 
-* `url` (Type: String)<br>
+* `url` (Type: string)<br>
     The URL to load the material data file.
 
 #### Return Value
@@ -80,7 +80,7 @@ material file, if available) asynchronously.
 
 #### Parameters
 
-* `url` (Type: String)<br>
+* `url` (Type: string)<br>
     The URL to load.
 
 #### Return Value
@@ -99,7 +99,7 @@ asynchronously.
 
 #### Parameters
 
-* `url` (Type: String)<br>
+* `url` (Type: string)<br>
     The URL to load.
 * `textureLoader` (Type: TextureLoader)<br>
     An object to load textures with.
@@ -131,7 +131,7 @@ shape will have the corresponding material, if it uses one.
 
 #### Parameters
 
-* `name` (Type: String)<br>
+* `name` (Type: string)<br>
     Name from the OBJ file of the portion of the model to use.
 
 #### Return Value

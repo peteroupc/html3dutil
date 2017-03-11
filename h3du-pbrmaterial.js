@@ -15,10 +15,10 @@
  * specular, and emission maps, specified in this object are in
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @param {Object} [params] An object described in {@link H3DU.PbrMaterial.setParams}.
- * @class
+ * @constructor
  * @memberof H3DU
  */
-H3DU.PbrMaterial = function(params) {
+function PbrMaterial(params) {
   // LATER: Support ambient occlusion maps.
   "use strict";
 /**
@@ -42,7 +42,7 @@ H3DU.PbrMaterial = function(params) {
  * (0-1). If this element is omitted, the default is 1.<p>
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used rather than this property to set the color defined here.<p>
- * @type {Array<Number>}
+ * @type {Array<number>}
  * @default
  */
   this.albedo = [0.8, 0.8, 0.8, 1.0];
@@ -60,7 +60,7 @@ H3DU.PbrMaterial = function(params) {
    * the surface is a metal. Values in between
    * 0 and 1 are rather rare and generally appear in transitions between metals and nonmetals.
    * This value is only used in the <b>metallic workflow</b>.
-   * @type {Number}
+   * @type {number}
    * @default
    */
   this.metalness = 0;
@@ -82,7 +82,7 @@ H3DU.PbrMaterial = function(params) {
    * by this material. The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>,
    * which equals 1 minus roughness. To make this property equivalent to glossiness
    * or smoothness, set the <code>invertRoughness</code> property to <code>true</code>.
-   * @type {Number}
+   * @type {number}
    * @default
    */
   this.roughness = 0.35;
@@ -114,7 +114,7 @@ H3DU.PbrMaterial = function(params) {
   * (0.15, 0.15, 0.15) to (0.32, 0.32, 0.32) in sRGB. For most metals,
   * this is a very light version of the surface's color.<p>
   * This value is only used in the <b>specular workflow</b>.
-  * @type {Array<Number>}
+  * @type {Array<number>}
   * @default
   */
   this.specular = [0.2, 0.2, 0.2];
@@ -141,7 +141,7 @@ H3DU.PbrMaterial = function(params) {
  * uses <code>albedo</code> to set the
  * surface's color for nonmetals and <code>specular</code> to set the
  * surface's specular reflectivity.
- * @type {Number}
+ * @type {number}
  * @default
  */
   this.workflow = H3DU.PbrMaterial.Metallic;
@@ -186,7 +186,7 @@ H3DU.PbrMaterial = function(params) {
   * components.
   * For each of the three color components, positive values add to that component,
   * while negative values subtract from it. (0,0,0), the default, means no additive color.
-  * @type {Array<Number>}
+  * @type {Array<number>}
   * @default
   */
   this.emission = [0, 0, 0];
@@ -205,7 +205,7 @@ H3DU.PbrMaterial = function(params) {
    * If true, the roughness property is treated as a "glossiness" property,
    * or 1 minus roughness, and the roughness map is treated as a "glossiness"
    * map, or an inverted roughness map.
-   * @type {Boolean}
+   * @type {boolean}
    * @default
    */
   this.invertRoughness = false;
@@ -214,8 +214,18 @@ H3DU.PbrMaterial = function(params) {
     this.setParams(params);
   }
 };
-H3DU.PbrMaterial.Specular = 0;
-H3DU.PbrMaterial.Metallic = 1;
+/**
+ * Specular workflow.
+ * @const
+ * @default
+ */
+PbrMaterial.Specular = 0;
+/**
+ * Metallic workflow.
+ * @const
+ * @default
+ */
+PbrMaterial.Metallic = 1;
 /**
  * Sets parameters for this material object.
  * @param {Object} params An object whose keys have
@@ -245,15 +255,12 @@ H3DU.PbrMaterial.Metallic = 1;
  * <li><code>emissionMap</code> - Emission texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#emissionMap}). Can be null.
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. Can be null.
- * <li><code>environmentMap</code> - {@link H3DU.CubeMap} object of an environment
- * map texture (see {@link H3DU.PbrMaterial#environmentMap}). Can be null.
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored
  * unless otherwise noted.
  * @returns {H3DU.PbrMaterial} This object.
- * @instance
  */
-H3DU.PbrMaterial.prototype.setParams = function(params) {
+PbrMaterial.prototype.setParams = function(params) {
   "use strict";
   if(typeof params.diffuse !== "undefined" && params.diffuse !== null) {
     this.albedo = H3DU.toGLColor(params.diffuse);
@@ -318,12 +325,11 @@ H3DU.PbrMaterial.prototype.setParams = function(params) {
  * maps and shader info, if any, won't be cloned, but rather, a reference
  * to the same object will be used.
  * @returns {H3DU.PbrMaterial} A copy of this object.
- * @instance
  */
-H3DU.PbrMaterial.prototype.copy = function() {
+PbrMaterial.prototype.copy = function() {
   "use strict";
   return new H3DU.PbrMaterial({
-    "environmentMap":this.environmentMap,
+  //  "environmentMap":this.environmentMap,
     "metalness":this.metalness,
     "metalnessMap":this.metalnessMap,
     "roughness":this.roughness,
@@ -338,3 +344,5 @@ H3DU.PbrMaterial.prototype.copy = function() {
     "shader":this.shader
   });
 };
+
+export { PbrMaterial };
