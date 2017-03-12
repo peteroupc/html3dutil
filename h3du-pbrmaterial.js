@@ -20,7 +20,7 @@
  */
 function PbrMaterial(params) {
   // LATER: Support ambient occlusion maps.
-  "use strict";
+
 /**
  * Albedo (or base color) of this material.<p>
  * This value is a 3- or 4-element array giving the red, green, blue, and
@@ -213,7 +213,7 @@ function PbrMaterial(params) {
   if(typeof params !== "undefined" && params !== null) {
     this.setParams(params);
   }
-};
+}
 /**
  * Specular workflow.
  * @const
@@ -261,10 +261,9 @@ PbrMaterial.Metallic = 1;
  * @returns {H3DU.PbrMaterial} This object.
  */
 PbrMaterial.prototype.setParams = function(params) {
-  "use strict";
   if(typeof params.diffuse !== "undefined" && params.diffuse !== null) {
     this.albedo = H3DU.toGLColor(params.diffuse);
-    if(this.albedo.length > 4)this.albedo = this.diffuse.slice(0, 4);
+    if(this.albedo.length > 4)this.albedo = this.albedo.slice(0, 4);
   }
   if(typeof params.albedo !== "undefined" && params.albedo !== null) {
     this.albedo = H3DU.toGLColor(params.albedo);
@@ -327,7 +326,6 @@ PbrMaterial.prototype.setParams = function(params) {
  * @returns {H3DU.PbrMaterial} A copy of this object.
  */
 PbrMaterial.prototype.copy = function() {
-  "use strict";
   return new H3DU.PbrMaterial({
   //  "environmentMap":this.environmentMap,
     "metalness":this.metalness,
@@ -345,4 +343,4 @@ PbrMaterial.prototype.copy = function() {
   });
 };
 
-export { PbrMaterial };
+export {PbrMaterial};

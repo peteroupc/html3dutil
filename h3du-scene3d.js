@@ -7,8 +7,6 @@
  http://peteroupc.github.io/
 */
 /* global H3DU, console */
-
-window.H3DU.Scene3D=function() {};
 /**
  * An object that holds a rendering context for rendering
  * 3D objects.
@@ -21,11 +19,6 @@ window.H3DU.Scene3D=function() {};
  * that returns a WebGL context.
  */
 export var Scene3D = function(canvasOrContext) {
-  "use strict";
-  this._init(canvasOrContext);
-}
-/** @ignore */
-Scene3D.prototype._init=function(canvasOrContext) {
   var context = canvasOrContext;
   if(typeof canvasOrContext.getContext === "function") {
   // This might be a canvas, so create a WebGL context.
@@ -79,7 +72,6 @@ Scene3D.prototype._init=function(canvasOrContext) {
  * @returns {Object} Return value.
  */
 Scene3D.prototype.getCanvas = function() {
-  "use strict";
   return this.context ? this.context.canvas : null;
 };
 
@@ -116,7 +108,6 @@ Scene3D.EMISSION_MAP_ENABLED = 1 << 14 | 0;
 
 /** @ignore */
 Scene3D._flagsForShape = function(shape) {
-  "use strict";
   var flags = 0;
   var material = shape.material;
   if(typeof material !== "undefined" && material !== null && material instanceof H3DU.Material) {
@@ -153,19 +144,17 @@ Scene3D._flagsForShape = function(shape) {
     }
   }
   var buffer = shape.getMeshBuffer();
-  if(buffer && !!buffer._getAttribute(H3DU.Semantic.COLOR,0)) {
+  if(buffer && !!buffer._getAttribute(H3DU.Semantic.COLOR, 0)) {
     flags |= H3DU.Scene3D.COLORATTR_ENABLED;
   }
   return flags;
 };
 /** @ignore */
 Scene3D.ProgramCache = function() {
-  "use strict";
   this._programs = [];
   this._customPrograms = [];
 };
 Scene3D.ProgramCache.prototype.dispose = function() {
-  "use strict";
   var i, p;
   for(i = 0; i < this._customPrograms.length; i++) {
     p = this._customPrograms[i];
@@ -180,7 +169,6 @@ Scene3D.ProgramCache.prototype.dispose = function() {
 };
 /** @ignore */
 Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
-  "use strict";
   if(!context)throw new Error();
   if(!H3DU.is3DContext(context))return null;
   if(info instanceof H3DU.ShaderProgram) {
@@ -200,7 +188,6 @@ Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
 };
 /** @ignore */
 Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
-  "use strict";
   if(!context)throw new Error();
   if(!H3DU.is3DContext(context))return null;
   var pf = this._programs[flags];
@@ -254,7 +241,6 @@ Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  */
 Scene3D.prototype.getContext = function() {
-  "use strict";
   return this.context;
 };
 /** No face culling.
@@ -295,7 +281,6 @@ Scene3D.CW = 1;
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.cullFace = function(value) {
-  "use strict";
   if(value === H3DU.Scene3D.BACK ||
    value === H3DU.Scene3D.FRONT ||
    value === H3DU.Scene3D.FRONT_AND_BACK) {
@@ -307,7 +292,6 @@ Scene3D.prototype.cullFace = function(value) {
 };
 /** @ignore */
 Scene3D.prototype._setFace = function() {
-  "use strict";
   if(!this._is3d)return;
   if(this._cullFace === H3DU.Scene3D.BACK) {
     this.context.enable(this.context.CULL_FACE);
@@ -338,7 +322,6 @@ Scene3D.prototype._setFace = function() {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.frontFace = function(value) {
-  "use strict";
   if(value === H3DU.Scene3D.CW) {
     this._frontFace = value;
   } else {
@@ -354,7 +337,6 @@ Scene3D.prototype.frontFace = function(value) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setAutoResize = function(value) {
-  "use strict";
   this.autoResize = !!value;
   return this;
 };
@@ -365,7 +347,6 @@ Scene3D.prototype.setAutoResize = function(value) {
  * @returns {boolean} Return value.
  */
 Scene3D.prototype.getAutoResize = function() {
-  "use strict";
   return !!this.autoResize;
 };
 
@@ -380,7 +361,6 @@ Scene3D.prototype.getAutoResize = function() {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setUseDevicePixelRatio = function(value) {
-  "use strict";
   var oldvalue = !!this.useDevicePixelRatio;
   this.useDevicePixelRatio = !!value;
   this._pixelRatio = this.useDevicePixelRatio && window.devicePixelRatio ?
@@ -396,7 +376,6 @@ Scene3D.prototype.setUseDevicePixelRatio = function(value) {
   * 1, specifying the red, green, blue, and alpha components of the color.
   */
 Scene3D.prototype.getClearColor = function() {
-  "use strict";
   return this.clearColor.slice(0, 4);
 };
 /**
@@ -409,8 +388,9 @@ Scene3D.prototype.getClearColor = function() {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.useProgram = function(program) {
-  "use strict";
-  if(typeof program!=="undefined" && program!==null) { console.warn("Unused parameter program is defined"); };
+  if(typeof program !== "undefined" && program !== null) {
+    console.warn("Unused parameter program is defined");
+  }
   console.warn("The 'useProgram' method is obsolete.  Instead of this method, " +
    "use the 'setShader' program of individual shapes to set the shader programs they use.");
   return this;
@@ -424,7 +404,6 @@ Scene3D.prototype.useProgram = function(program) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setDimensions = function(width, height) {
-  "use strict";
   if(width < 0 || height < 0)throw new Error("width or height negative");
   this.width = Math.ceil(width);
   this.height = Math.ceil(height);
@@ -447,7 +426,6 @@ Scene3D.prototype.setDimensions = function(width, height) {
  * @returns {number} Return value.
  */
 Scene3D.prototype.getWidth = function() {
-  "use strict";
   return this.width;
 };
 /**
@@ -457,7 +435,6 @@ Scene3D.prototype.getWidth = function() {
  * @returns {number} Return value.
  */
 Scene3D.prototype.getHeight = function() {
-  "use strict";
   return this.height;
 };
 /**
@@ -468,7 +445,6 @@ Scene3D.prototype.getHeight = function() {
  * @returns {number} Aspect ratio, or 1 if height is 0.
  */
 Scene3D.prototype.getAspect = function() {
-  "use strict";
   var ch = this.getHeight();
   if(ch <= 0)return 1;
   return this.getWidth() / ch;
@@ -478,7 +454,6 @@ Scene3D.prototype.getAspect = function() {
  * @returns {number} Return value.
  */
 Scene3D.prototype.getClientWidth = function() {
-  "use strict";
   return this.context.canvas.clientWidth;
 };
 /**
@@ -486,7 +461,6 @@ Scene3D.prototype.getClientWidth = function() {
  * @returns {number} Return value.
  */
 Scene3D.prototype.getClientHeight = function() {
-  "use strict";
   return this.context.canvas.clientHeight;
 };
 /**
@@ -495,7 +469,6 @@ Scene3D.prototype.getClientHeight = function() {
  * @returns {number} Aspect ratio, or 1 if height is 0.
  */
 Scene3D.prototype.getClientAspect = function() {
-  "use strict";
   var ch = this.getClientHeight();
   if(ch <= 0)return 1;
   return this.getClientWidth() / ch;
@@ -505,7 +478,6 @@ Scene3D.prototype.getClientAspect = function() {
  * @returns {H3DU.FrameBuffer} A buffer with the same size as this scene.
  */
 Scene3D.prototype.createBuffer = function() {
-  "use strict";
   return new H3DU.FrameBuffer(this.context,
    this.getWidth(), this.getHeight());
 };
@@ -515,7 +487,6 @@ Scene3D.prototype.createBuffer = function() {
  * @returns {Array<number>} Return value.
  */
 Scene3D.prototype.getProjectionMatrix = function() {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -528,7 +499,6 @@ Scene3D.prototype.getProjectionMatrix = function() {
  * @returns {Array<number>} Return value.
  */
 Scene3D.prototype.getViewMatrix = function() {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -560,7 +530,6 @@ Scene3D.prototype.getViewMatrix = function() {
  * scene.setPerspective(45,scene.getClientAspect(),0.1,100);
  */
 Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
-  "use strict";
   return this.setProjectionMatrix(H3DU.Math.mat4perspective(fov,
    aspect, near, far));
 };
@@ -591,7 +560,6 @@ Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near, far, aspect) {
-  "use strict";
   if(typeof aspect === "undefined" || aspect === null)aspect = this.getClientAspect();
   if(aspect === 0)aspect = 1;
   return this.setProjectionMatrix(H3DU.Math.mat4orthoAspect(
@@ -616,7 +584,6 @@ Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near, far,
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, aspect) {
-  "use strict";
   return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
 };
 
@@ -644,7 +611,6 @@ Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, aspect) 
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far) {
-  "use strict";
   return this.setProjectionMatrix(H3DU.Math.mat4frustum(
    left, right, top, bottom, near, far));
 };
@@ -668,7 +634,6 @@ Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho = function(left, right, bottom, top, near, far) {
-  "use strict";
   return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, near, far));
 };
@@ -685,13 +650,11 @@ Scene3D.prototype.setOrtho = function(left, right, bottom, top, near, far) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho2D = function(left, right, bottom, top) {
-  "use strict";
   return this.setProjectionMatrix(H3DU.Math.mat4ortho(
    left, right, bottom, top, -1, 1));
 };
 /** @ignore */
 Scene3D.prototype._setClearColor = function() {
-  "use strict";
   if(this._is3d) {
     this.context.clearColor(this.clearColor[0], this.clearColor[1],
      this.clearColor[2], this.clearColor[3]);
@@ -703,7 +666,6 @@ Scene3D.prototype._setClearColor = function() {
  * @returns {void} This method doesn't return a value.
  */
 Scene3D.prototype.dispose = function() {
-  "use strict";
   this.context = null;
   if(this._programs)
     this._programs.dispose();
@@ -731,7 +693,6 @@ Scene3D.prototype.dispose = function() {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setClearColor = function(r, g, b, a) {
-  "use strict";
   this.clearColor = H3DU.toGLColor(r, g, b, a);
   return this._setClearColor();
 };
@@ -745,7 +706,6 @@ Scene3D.prototype.setClearColor = function(r, g, b, a) {
  * object), and is rejected when an error occurs.
  */
 Scene3D.prototype.loadTexture = function(name) {
-  "use strict";
   return this._textureLoader.loadTexture(name);
 };
 /**
@@ -763,7 +723,6 @@ Scene3D.prototype.loadTexture = function(name) {
  * Returns null if the object is neither an {@link H3DU.Texture} nor a string.
  */
 Scene3D.prototype.loadAndMapTexture = function(texture) {
-  "use strict";
   if(texture.constructor === H3DU.Texture) {
     return this._textureLoader.loadAndMapTexture(texture.name, this.context);
   } else if(typeof texture === "string") {
@@ -790,7 +749,6 @@ Scene3D.prototype.loadAndMapTexture = function(texture) {
  * See {@link H3DU.getPromiseResults}.
  */
 Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reject) {
-  "use strict";
   var promises = [];
 
   for(var i = 0; i < textureFiles.length; i++) {
@@ -805,7 +763,6 @@ Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reject) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.clear = function() {
-  "use strict";
   if(this._is3d) {
     this.context.clear(
      this.context.COLOR_BUFFER_BIT |
@@ -819,7 +776,6 @@ Scene3D.prototype.clear = function() {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.clearDepth = function() {
-  "use strict";
   if(this._is3d) {
     this.context.clear(this.context.DEPTH_BUFFER_BIT);
   }
@@ -832,7 +788,6 @@ Scene3D.prototype.clearDepth = function() {
  * @returns {number} Return value.
  */
 Scene3D.prototype.vertexCount = function() {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -846,7 +801,6 @@ Scene3D.prototype.vertexCount = function() {
  * @returns {number} Return value.
  */
 Scene3D.prototype.primitiveCount = function() {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -862,7 +816,6 @@ Scene3D.prototype.primitiveCount = function() {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setProjectionMatrix = function(matrix) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -878,7 +831,6 @@ Scene3D.prototype.setProjectionMatrix = function(matrix) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setViewMatrix = function(matrix) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -906,7 +858,6 @@ Scene3D.prototype.setViewMatrix = function(matrix) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setLookAt = function(eye, center, up) {
-  "use strict";
   return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
 };
 /**
@@ -920,7 +871,6 @@ Scene3D.prototype.setLookAt = function(eye, center, up) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.addShape = function(shape) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -939,7 +889,6 @@ Scene3D.prototype.addShape = function(shape) {
  * @returns {H3DU.Shape} The generated shape object.
  */
 Scene3D.prototype.makeShape = function(mesh) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -956,7 +905,6 @@ Scene3D.prototype.makeShape = function(mesh) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.removeShape = function(shape) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -978,7 +926,6 @@ Scene3D.prototype.removeShape = function(shape) {
  * @returns {H3DU.Lights} The light sources used in this scene.
  */
 Scene3D.prototype.getLights = function() {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -1002,7 +949,6 @@ Scene3D.prototype.getLights = function() {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight = function(index, position, diffuse, specular) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -1020,7 +966,6 @@ Scene3D.prototype.setDirectionalLight = function(index, position, diffuse, specu
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setLightParams = function(index, params) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -1044,7 +989,6 @@ Scene3D.prototype.setLightParams = function(index, params) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient = function(r, g, b, a) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -1067,7 +1011,6 @@ Scene3D.prototype.setAmbient = function(r, g, b, a) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight = function(index, position, diffuse, specular) {
-  "use strict";
   if(this._errors)throw new Error();
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
@@ -1077,7 +1020,6 @@ Scene3D.prototype.setPointLight = function(index, position, diffuse, specular) {
 };
 /** @ignore */
 Scene3D.prototype._clearForPass = function(pass) {
-  "use strict";
   var flags = 0;
   if(pass.clearColor)flags |= this.context.COLOR_BUFFER_BIT;
   if(pass.clearDepth)flags |= this.context.DEPTH_BUFFER_BIT;
@@ -1098,7 +1040,6 @@ Scene3D.prototype._clearForPass = function(pass) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.render = function(renderPasses) {
-  "use strict";
   if(renderPasses instanceof H3DU.Batch3D) {
     return this.render([new H3DU.RenderPass3D(renderPasses)]);
   }
@@ -1171,7 +1112,6 @@ Scene3D.prototype.render = function(renderPasses) {
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.useFilter = function(filterProgram) {
-  "use strict";
   if(this._renderedOutsideScene) {
     throw new Error("A non-default scene has been rendered, so this method is disabled.");
   }

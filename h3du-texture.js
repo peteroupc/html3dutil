@@ -23,7 +23,6 @@
  * class. However, this constructor will not load that image yet.
  */
 export var Texture = function(name) {
-  "use strict";
   this.image = null;
   // 0 = not loaded; 1 = loading; 2 = loaded; -1 = error
   this.loadStatus = 0;
@@ -38,7 +37,6 @@ export var Texture = function(name) {
  * Will be 0 if the texture's image data wasn't loaded yet.
  */
 Texture.prototype.getWidth = function() {
-  "use strict";
   return this.width;
 };
 /**
@@ -47,12 +45,10 @@ Texture.prototype.getWidth = function() {
  * Will be 0 if the texture's image data wasn't loaded yet.
  */
 Texture.prototype.getHeight = function() {
-  "use strict";
   return this.height;
 };
 /** @ignore */
 Texture.prototype._toInfo = function() {
-  "use strict";
   return new H3DU.TextureInfo({
     "uri":this.name,
     "wrapS":this.clamp ? 33071 : 10497,
@@ -77,7 +73,6 @@ Texture.prototype._toInfo = function() {
  * @returns {H3DU.Texture} This object.
  */
 Texture.prototype.setClamp = function(clamp) {
-  "use strict";
   this.clamp = !!clamp;
   return this;
 };
@@ -98,7 +93,7 @@ Texture.prototype.setClamp = function(clamp) {
  */
 Texture.loadTexture = function(info, textureCache) {
  // Get cached texture
-  "use strict";
+
   var texImage;
   var name;
   if(!(typeof info !== "undefined" && info !== null)) {
@@ -133,12 +128,11 @@ Texture.loadTexture = function(info, textureCache) {
  * with the pixels arranged in left-to-right rows from top to bottom.
  * Each pixel takes 4 bytes, where the bytes are the red, green, blue,
  * and alpha components, in that order.
- * @param {Uint8Array} width Width, in pixels, of the texture.
- * @param {Uint8Array} height Height, in pixels, of the texture.
+ * @param {number} width Width, in pixels, of the texture.
+ * @param {number} height Height, in pixels, of the texture.
  * @returns {H3DU.Texture} The new H3DU.Texture object.
  */
 Texture.fromUint8Array = function(array, width, height) {
-  "use strict";
   if(width < 0)throw new Error("width less than 0");
   if(height < 0)throw new Error("height less than 0");
   if(array.length < width * height * 4)throw new Error("array too short for texture");
@@ -152,7 +146,6 @@ Texture.fromUint8Array = function(array, width, height) {
 
 /** @ignore */
 Texture.loadTga = function(name) {
-  "use strict";
   return H3DU.loadFileFromUrl(name, "arraybuffer")
  .then(function(buf) {
    var view = new DataView(buf.data);
@@ -222,7 +215,6 @@ Texture.loadTga = function(name) {
 
 /** @ignore */
 Texture.prototype.loadImage = function() {
-  "use strict";
   if(typeof this.image !== "undefined" && this.image !== null) {
   // already loaded
     return Promise.resolve(this);
@@ -249,7 +241,7 @@ Texture.prototype.loadImage = function() {
   }
   return new Promise(function(resolve, reject) {
     var image = new Image();
-    image.onload = function(e) {
+    image.addEventListener("load", function(e) {
       var target = e.target;
       that.image = target;
       that.width = target.width;
@@ -259,7 +251,7 @@ Texture.prototype.loadImage = function() {
       image.onload = null;
       image.onerror = null;
       resolve(that);
-    };
+    });
     image.onerror = function(e) {
       that.loadStatus = -1;
    // console.log("error: "+thisName)
@@ -279,7 +271,6 @@ Texture.prototype.loadImage = function() {
  * @returns {void} This method doesn't return a value.
  */
 Texture.prototype.dispose = function() {
-  "use strict";
   this.width = 0;
   this.height = 0;
   this.name = "";
@@ -301,17 +292,14 @@ Texture.prototype.dispose = function() {
  * @returns {string} Return value.
  */
 Texture.prototype.getName = function() {
-  "use strict";
   return this.name;
 };
 /** @ignore */
 Texture._texOrString = function(tex) {
-  "use strict";
   return typeof tex === "string" ? new H3DU.Texture(tex) : tex;
 };
 /** @ignore */
 Texture._texOrInfoOrString = function(tex) {
-  "use strict";
   if(typeof tex === "undefined" || tex === null)return null;
   if(typeof tex === "string")return new H3DU.Texture(tex);
   if(tex instanceof H3DU.TextureInfo)return new H3DU.TextureInfo(tex.uri);
@@ -332,7 +320,6 @@ Texture._texOrInfoOrString = function(tex) {
  * @memberof H3DU
  */
 export var CubeMap = function(textures) {
-  "use strict";
   this.textures = [];
   this.loadStatus = 0;
   for(var i = 0; i < 6; i++) {
@@ -345,7 +332,6 @@ export var CubeMap = function(textures) {
  * Will be 0 if the texture's image data wasn't loaded yet.
  */
 CubeMap.prototype.getWidth = function() {
-  "use strict";
   return this.textures[0].getWidth();
 };
 /**
@@ -354,7 +340,6 @@ CubeMap.prototype.getWidth = function() {
  * Will be 0 if the texture's image data wasn't loaded yet.
  */
 CubeMap.prototype.getHeight = function() {
-  "use strict";
   return this.textures[0].getHeight();
 };
 /**
@@ -366,7 +351,6 @@ CubeMap.prototype.getHeight = function() {
  * @returns {H3DU.CubeMap} This object.
  */
 CubeMap.prototype.setTexture = function(index, texture) {
-  "use strict";
   if(index < 0 || index >= 6)return this;
   this.textures[index] = H3DU.Texture._texOrInfoOrString(texture);
   return this;
@@ -378,13 +362,11 @@ CubeMap.prototype.setTexture = function(index, texture) {
  * or null if the index is out of range.
  */
 CubeMap.prototype.getTexture = function(index) {
-  "use strict";
   if(index < 0 || index >= 6)return null;
   return this.textures[index];
 };
 /** @ignore */
 CubeMap.prototype.loadImage = function() {
-  "use strict";
   var i;
   if(this.loadStatus === 2) {
     for(i = 0; i < 6; i++) {

@@ -35,7 +35,7 @@ export var Meshes = {};
  */
 Meshes.createBox = function(xSize, ySize, zSize, inward) {
  // Position X, Y, Z, normal NX, NY, NZ, texture U, V
-  "use strict";
+
   xSize *= 0.5;
   ySize *= 0.5;
   zSize *= 0.5;
@@ -123,7 +123,6 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
-  "use strict";
   var mesh = new H3DU.Mesh();
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(typeof stacks === "undefined" || stacks === null)stacks = 1;
@@ -236,7 +235,6 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createLathe = function(points, slices, flat, inside) {
-  "use strict";
  // NOTE: Y coordinate should not be the same from one point to the next
   var mesh = new H3DU.Mesh();
   if(points.length < 4)throw new Error("too few points");
@@ -330,7 +328,6 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
-  "use strict";
   var cylinder = H3DU.Meshes.createCylinder(baseRad, topRad, height, slices, stacks, flat, inside);
   var base = H3DU.Meshes.createDisk(0, baseRad, slices, 2, !inside).reverseWinding();
   var top = H3DU.Meshes.createDisk(0, topRad, slices, 2, inside);
@@ -363,7 +360,6 @@ Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, 
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createDisk = function(inner, outer, slices, loops, inward) {
-  "use strict";
   return H3DU.Meshes.createPartialDisk(inner, outer, slices, loops, 0, 360, inward);
 };
 
@@ -393,7 +389,6 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, inward) {
-  "use strict";
   var mesh = new H3DU.Mesh();
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(typeof loops === "undefined" || loops === null)loops = 1;
@@ -512,7 +507,6 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward) {
-  "use strict";
   var mesh = new H3DU.Mesh();
   if(typeof crosswise === "undefined" || crosswise === null)crosswise = 16;
   if(typeof lengthwise === "undefined" || lengthwise === null)lengthwise = 16;
@@ -611,7 +605,6 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
-  "use strict";
   var mesh = new H3DU.Mesh();
   if(typeof width === "undefined" || width === null)width = 1;
   if(typeof height === "undefined" || height === null)height = 1;
@@ -684,7 +677,6 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
-  "use strict";
   return H3DU.Meshes._createCapsule(radius, 0, slices, stacks, 1, flat, inside);
 };
 
@@ -725,7 +717,6 @@ Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  * @returns {H3DU.Mesh} The generated mesh.
  */
 Meshes.createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
-  "use strict";
   if(typeof stacks === "undefined" || stacks === null)stacks = 8;
   if(stacks < 1)throw new Error("too few stacks");
   return H3DU.Meshes._createCapsule(radius, length, slices, stacks * 2, middleStacks, flat, inside);
@@ -733,7 +724,6 @@ Meshes.createCapsule = function(radius, length, slices, stacks, middleStacks, fl
 
 /** @ignore */
 Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
-  "use strict";
   var mesh = new H3DU.Mesh();
   if(typeof slices === "undefined" || slices === null)slices = 16;
   if(typeof stacks === "undefined" || stacks === null)stacks = 16;
@@ -927,7 +917,6 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
      * @returns {H3DU.Mesh} The generated mesh.
      */
 Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
-  "use strict";
   var mesh = new H3DU.Mesh();
   if(points < 2 || firstRadius < 0 || secondRadius < 0)return mesh;
   if(firstRadius <= 0 && secondRadius <= 0)return mesh;

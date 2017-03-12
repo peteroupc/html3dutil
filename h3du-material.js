@@ -28,7 +28,6 @@
  * <i>This parameter is deprecated.</i>
  */
 function Material(params, diffuse, specular, shininess, emission) {
-  "use strict";
  /** Specular highlight exponent of this material.
   * The greater the number, the more concentrated the specular
   * highlights are (and the smoother the material behaves).
@@ -130,7 +129,7 @@ function Material(params, diffuse, specular, shininess, emission) {
   } else if(typeof params !== "undefined" && params !== null) {
     this.setParams(params);
   }
-};
+}
 /**
  * Clones this object's parameters to a new H3DU.Material
  * object and returns that object. The material's texture
@@ -139,7 +138,6 @@ function Material(params, diffuse, specular, shininess, emission) {
  * @returns {H3DU.Material} A copy of this object.
  */
 Material.prototype.copy = function() {
-  "use strict";
   return new H3DU.Material().setParams({
     "ambient":this.ambient,
     "diffuse":this.diffuse,
@@ -159,7 +157,6 @@ Material.prototype.copy = function() {
  * @returns {H3DU.Material} A new material with the given emission color.
  */
 Material.fromBasic = function(color) {
-  "use strict";
   return new H3DU.Material({
     "shininess":1.0,
     "specular":[0, 0, 0],
@@ -179,7 +176,6 @@ Material.fromBasic = function(color) {
  * @returns {H3DU.Material} A new material with the given emission texture.
  */
 Material.fromBasicTexture = function(texture) {
-  "use strict";
   return new H3DU.Material({
     "shininess":1.0,
     "specular":[0, 0, 0],
@@ -223,7 +219,6 @@ Material.fromBasicTexture = function(texture) {
  * @returns {H3DU.Material} This object.
  */
 Material.prototype.setParams = function(params) {
-  "use strict";
   if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);
     if(this.ambient.length > 3)this.ambient = this.ambient.slice(0, 3);
@@ -274,7 +269,6 @@ Material.prototype.setParams = function(params) {
  * @returns {H3DU.Material} The resulting material object.
  */
 Material.fromColor = function(r, g, b, a) {
-  "use strict";
   var color = H3DU.toGLColor(r, g, b, a);
   return new H3DU.Material(color, color);
 };
@@ -289,8 +283,7 @@ Material.fromColor = function(r, g, b, a) {
  * @returns {H3DU.Material} The resulting material object.
  */
 Material.fromTexture = function(texture) {
-  "use strict";
   return new H3DU.Material({"texture":texture});
 };
 
-export { Material };
+export {Material};

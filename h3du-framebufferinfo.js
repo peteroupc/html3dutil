@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+
 /**
  * Describes a frame buffer. In the HTML 3D Library,
  * each frame buffer consists of a texture of a given size and a <i>renderbuffer</i> of the same
@@ -21,11 +21,10 @@
  * @memberof H3DU
  */
 function FrameBufferInfo(width, height) {
-  "use strict";
   if(width < 0 || height < 0)throw new Error("width or height negative");
   this.width = Math.ceil(width);
   this.height = Math.ceil(height);
-};
+}
 /**
  * Changes the width and height of this frame buffer information object.
  * @param {number} width New width to use for the frame buffer.
@@ -37,7 +36,6 @@ function FrameBufferInfo(width, height) {
  * @returns {H3DU.FrameBufferInfo} This object.
  */
 FrameBufferInfo.prototype.resize = function(width, height) {
-  "use strict";
   if(width < 0 || height < 0)throw new Error("width or height negative");
   width = Math.ceil(width);
   height = Math.ceil(height);
@@ -50,7 +48,6 @@ FrameBufferInfo.prototype.resize = function(width, height) {
  * @returns {number} Return value.
  */
 FrameBufferInfo.prototype.getWidth = function() {
-  "use strict";
   return this.width;
 };
 /**
@@ -58,8 +55,7 @@ FrameBufferInfo.prototype.getWidth = function() {
  * @returns {number} Return value.
  */
 FrameBufferInfo.prototype.getHeight = function() {
-  "use strict";
   return this.height;
 };
 
-export { FrameBufferInfo };
+export {FrameBufferInfo};

@@ -27,7 +27,6 @@
  * buffer objects are not specific to shader programs.)
  */
 var BufferedMesh = function(mesh, context) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   if(mesh instanceof H3DU.MeshBuffer) {
     this._bounds = mesh._bounds;
@@ -38,7 +37,6 @@ var BufferedMesh = function(mesh, context) {
 };
 /** @ignore */
 BufferedMesh.prototype._getArrayObjectExt = function(context) {
-  "use strict";
   if(typeof this.arrayObjectExt === "undefined" || this.arrayObjectExt === null) {
     this.arrayObjectExt = context.getExtension("OES_vertex_array_object");
     this.arrayObjectExtContext = context;
@@ -56,10 +54,9 @@ BufferedMesh.prototype._getArrayObjectExt = function(context) {
  * @suppress {missingProperties}
  */
 BufferedMesh.prototype._createVertexArray = function(context) {
-  "use strict";
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
   context instanceof WebGL2RenderingContext) {
-     (context).createVertexArray();
+    context.createVertexArray();
   } else if(context instanceof WebGLRenderingContext) {
     var ao = this._getArrayObjectExt(context);
     return typeof ao === "undefined" || ao === null ? null : ao.createVertexArrayOES();
@@ -70,10 +67,9 @@ BufferedMesh.prototype._createVertexArray = function(context) {
  * @suppress {missingProperties}
  */
 BufferedMesh.prototype._deleteVertexArray = function(context, va) {
-  "use strict";
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
   context instanceof WebGL2RenderingContext) {
-     (context).deleteVertexArray(va);
+    context.deleteVertexArray(va);
   } else if(context instanceof WebGLRenderingContext) {
     var ao = this._getArrayObjectExt(context);
     if(typeof ao !== "undefined" && ao !== null) {
@@ -86,10 +82,9 @@ BufferedMesh.prototype._deleteVertexArray = function(context, va) {
  * @suppress {missingProperties}
  */
 BufferedMesh.prototype._bindVertexArray = function(context, va) {
-  "use strict";
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null &&
   context instanceof WebGL2RenderingContext) {
-    (context).bindVertexArray(va);
+    context.bindVertexArray(va);
   } else if(context instanceof WebGLRenderingContext) {
     var ao = this._getArrayObjectExt(context);
     if(typeof ao !== "undefined" && ao !== null) {
@@ -102,7 +97,6 @@ BufferedMesh.prototype._bindVertexArray = function(context, va) {
  * @suppress {missingProperties}
  */
 BufferedMesh.prototype._initialize = function(mesh, context) {
-  "use strict";
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   var smb = mesh instanceof H3DU.MeshBuffer ? mesh :
    new H3DU.MeshBuffer(mesh);
@@ -146,16 +140,10 @@ BufferedMesh.prototype._initialize = function(mesh, context) {
 };
 /** @ignore */
 BufferedMesh.prototype._toMeshBuffer = function() {
-  "use strict";
   return this.smb;
 };
 /** @ignore */
-BufferedMesh.prototype._getVaoExtension = function() {
-  "use strict";
-};
-/** @ignore */
 BufferedMesh.prototype._getBounds = function() {
-  "use strict";
   return this._bounds;
 };
 /**
@@ -164,12 +152,10 @@ BufferedMesh.prototype._getBounds = function() {
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  */
 BufferedMesh.prototype.getContext = function() {
-  "use strict";
   return this.context;
 };
 /** @ignore */
 BufferedMesh.prototype.getFormat = function() {
-  "use strict";
   return this.smb.format;
 };
 
@@ -178,7 +164,6 @@ BufferedMesh.prototype.getFormat = function() {
  * @returns {void} This method doesn't return a value.
  */
 BufferedMesh.prototype.dispose = function() {
-  "use strict";
   if(typeof this.vertsMap !== "undefined" && this.vertsMap !== null) {
     var verts = this.vertsMap.values();
     for(var i = 0; i < verts.length; i++) {
@@ -202,7 +187,6 @@ BufferedMesh.prototype.dispose = function() {
 
 /** @ignore */
 BufferedMesh.prototype._getAttribLocations = function(program) {
-  "use strict";
   if(this._lastKnownProgram !== program) {
     this._lastKnownProgram = program;
     var attrs = this.smb._getAttributes();
@@ -228,7 +212,6 @@ BufferedMesh.prototype._getAttribLocations = function(program) {
 
 /** @ignore */
 BufferedMesh.prototype._prepareDraw = function(program, context) {
-  "use strict";
   var rebind = this._getAttribLocations(program);
   if(this.vao) {
     this._bindVertexArray(context, this.vao);
@@ -266,7 +249,6 @@ BufferedMesh.prototype._prepareDraw = function(program, context) {
  * @returns {void} This method doesn't return a value.
  */
 BufferedMesh.prototype.draw = function(program) {
-  "use strict";
   // Binding phase
   var context = program.getContext();
   if(typeof this.vertsMap === "undefined" || this.vertsMap === null) {
@@ -294,7 +276,6 @@ BufferedMesh.prototype.draw = function(program) {
  * @returns {number} Return value.
  */
 BufferedMesh.prototype.vertexCount = function() {
-  "use strict";
   return this.smb.indices.length;
 };
 /**
@@ -303,18 +284,16 @@ BufferedMesh.prototype.vertexCount = function() {
  * @returns {number} Return value.
  */
 BufferedMesh.prototype.primitiveCount = function() {
-  "use strict";
   return this.smb.primitiveCount();
 };
 
-/** @ignore */
+/** @ignore
+ * @constructor */
 BufferedMesh._Map = function() {
-  "use strict";
   this.map = [];
 };
 /** @ignore */
 BufferedMesh._Map.prototype.get = function(o) {
-  "use strict";
   for(var i = 0; i < this.map.length; i++) {
     if(this.map[i][0] === o)return this.map[i][1];
   }
@@ -322,7 +301,6 @@ BufferedMesh._Map.prototype.get = function(o) {
 };
 /** @ignore */
 BufferedMesh._Map.prototype.put = function(k, v) {
-  "use strict";
   for(var i = 0; i < this.map.length; i++) {
     if(this.map[i][0] === k) {
       this.map[i][1] = v;
@@ -333,7 +311,6 @@ BufferedMesh._Map.prototype.put = function(k, v) {
 };
 /** @ignore */
 BufferedMesh._Map.prototype.values = function() {
-  "use strict";
   var ret = [];
   for(var i = 0; i < this.map.length; i++) {
     ret.push(this.map[i][1]);
@@ -341,14 +318,13 @@ BufferedMesh._Map.prototype.values = function() {
   return ret;
 };
 
-/** @ignore */
+/** @ignore
+ * @constructor */
 BufferedMesh._MeshLoader = function() {
-  "use strict";
   this.meshes = [];
 };
 /** @ignore */
 BufferedMesh._MeshLoader.prototype.draw = function(meshBuffer, prog) {
-  "use strict";
   if(!(meshBuffer instanceof H3DU.MeshBuffer)) {
     throw new Error("Expected H3DU.MeshBuffer");
   }
@@ -366,11 +342,10 @@ BufferedMesh._MeshLoader.prototype.draw = function(meshBuffer, prog) {
 };
 /** @ignore */
 BufferedMesh._MeshLoader.prototype.dispose = function() {
-  "use strict";
   for(var i = 0; i < this.meshes.length; i++) {
     this.meshes[i][2].dispose();
   }
   this.meshes = [];
 };
 
-export { BufferedMesh };
+export {BufferedMesh};

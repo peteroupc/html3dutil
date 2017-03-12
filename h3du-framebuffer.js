@@ -13,12 +13,10 @@
  * @constructor
  */
 function FrameBufferLoader() {
-  "use strict";
   this._frameBuffers = [];
-};
+}
 /** @ignore */
 FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
-  "use strict";
   var fb;
   for(var i = 0; i < this._frameBuffers.length; i++) {
     fb = this._frameBuffers[i];
@@ -41,7 +39,6 @@ FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
 };
 /** @ignore */
 FrameBufferLoader.prototype.dispose = function() {
-  "use strict";
   for(var i = 0; i < this._frameBuffers.length; i++) {
     this._frameBuffers[i][2].dispose();
   }
@@ -49,7 +46,6 @@ FrameBufferLoader.prototype.dispose = function() {
 };
 /** @ignore */
 FrameBufferLoader.prototype.bind = function(info, context, textureUnit) {
-  "use strict";
   if(typeof info !== "undefined" && info !== null) {
     var fc = this.mapFrameBuffer(info, context);
     // console.log("binding frame buffer to unit "+textureUnit)
@@ -68,7 +64,6 @@ FrameBufferLoader.prototype.bind = function(info, context, textureUnit) {
 };
 /** @ignore */
 FrameBufferLoader.prototype.unbind = function(info, context) {
-  "use strict";
   if(typeof info !== "undefined" && info !== null) {
     // console.log("unbinding frame buffer")
     context.framebufferTexture2D(
@@ -103,7 +98,6 @@ FrameBufferLoader.prototype.unbind = function(info, context) {
  * Fractional values are rounded up.
  */
 export var FrameBuffer = function(context, width, height) {
-  "use strict";
   if(width < 0 || height < 0)throw new Error("width or height negative");
   context = context.getContext ? context.getContext() : context;
   this.context = context;
@@ -115,7 +109,6 @@ export var FrameBuffer = function(context, width, height) {
 };
 /** @ignore */
 FrameBuffer.prototype._init = function(context, width, height) {
-  "use strict";
   this.buffer = context.createFramebuffer();
  // create color texture
   this.colorTexture = context.createTexture();
@@ -168,7 +161,6 @@ FrameBuffer.prototype._init = function(context, width, height) {
  * @returns {H3DU.FrameBuffer} This object.
  */
 FrameBuffer.prototype.resize = function(width, height) {
-  "use strict";
   width = Math.ceil(width);
   height = Math.ceil(height);
   if(width !== this.width || height !== this.height) {
@@ -180,12 +172,10 @@ FrameBuffer.prototype.resize = function(width, height) {
 
 /** @ignore */
 FrameBuffer.prototype.getWidth = function() {
-  "use strict";
   return this.width;
 };
 /** @ignore */
 FrameBuffer.prototype.getHeight = function() {
-  "use strict";
   return this.height;
 };
 
@@ -194,7 +184,6 @@ FrameBuffer.prototype.getHeight = function() {
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  */
 FrameBuffer.prototype.getContext = function() {
-  "use strict";
   return this.context;
 };
 /**
@@ -203,7 +192,6 @@ FrameBuffer.prototype.getContext = function() {
  * @returns {H3DU.FrameBuffer} This object.
  */
 FrameBuffer.prototype.bind = function() {
-  "use strict";
   console.log("FrameBuffer bind method has no effect.");
   return this;
 };
@@ -212,7 +200,6 @@ FrameBuffer.prototype.bind = function() {
  * @returns {void} This method doesn't return a value.*
  */
 FrameBuffer.prototype.unbind = function() {
-  "use strict";
   console.log("FrameBuffer unbind method has no effect.");
 };
 /**
@@ -220,7 +207,6 @@ FrameBuffer.prototype.unbind = function() {
  * @returns {void} This method doesn't return a value.*
  */
 FrameBuffer.prototype.dispose = function() {
-  "use strict";
   if(typeof this.buffer !== "undefined" && this.buffer !== null) {
     var oldBuffer = this.context.getParameter(
     this.context.FRAMEBUFFER_BINDING);
@@ -240,4 +226,4 @@ FrameBuffer.prototype.dispose = function() {
   this.colorTexture = null;
 };
 
-export { FrameBufferLoader };
+export {FrameBufferLoader};

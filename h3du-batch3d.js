@@ -7,7 +7,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-import {_LightsBinder,_MaterialBinder} from './h3du-binders'
+import {_LightsBinder, _MaterialBinder} from "./h3du-binders";
 /**
  * A `Batch3D` represents a so-called "scene graph". It holds
  * 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
@@ -16,7 +16,6 @@ import {_LightsBinder,_MaterialBinder} from './h3du-binders'
  * @memberof H3DU
  */
 function Batch3D() {
-  "use strict";
   this._projectionMatrix = H3DU.Math.mat4identity();
   this._viewMatrix = H3DU.Math.mat4identity();
   this.lights = new H3DU.Lights();
@@ -25,10 +24,11 @@ function Batch3D() {
   this._frustum = null;
   /** @ignore */
   this.shapes = [];
-};
-/** @ignore */
+}
+/** @ignore
+ * @private
+ * @constructor */
 Batch3D._PerspectiveView = function(batch, fov, near, far) {
-  "use strict";
   this.fov = fov;
   this.near = near;
   this.far = far;
@@ -45,9 +45,10 @@ Batch3D._PerspectiveView = function(batch, fov, near, far) {
   };
   this.update(1.0, 1.0);
 };
-/** @ignore */
+/** @ignore
+ * @private
+ * @constructor */
 Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
-  "use strict";
   this.a = a;
   this.b = b;
   this.c = c;
@@ -68,8 +69,7 @@ Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   this.update(1.0, 1.0);
 };
 /** @ignore */
-Batch3D._isIdentityExceptTranslate=function(mat) {
-  "use strict";
+Batch3D._isIdentityExceptTranslate = function(mat) {
   return (
     mat[0] === 1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
     mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
@@ -83,7 +83,6 @@ Batch3D._setupMatrices = function(
   projMatrix,
   viewMatrix,
   worldMatrix) {
-  "use strict";
   var uniforms = {};
   var viewWorld = null;
   for(var k in program.uniformSemantics)
@@ -134,7 +133,6 @@ Batch3D._setupMatrices = function(
 };
 /** @ignore */
 Batch3D._isSameMatrix = function(a, b) {
-  "use strict";
   return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] &&
    a[3] === b[3] && a[4] === b[4] && a[5] === b[5] &&
    a[6] === b[6] && a[7] === b[7] && a[8] === b[8] &&
@@ -148,7 +146,6 @@ Batch3D._isSameMatrix = function(a, b) {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.setProjectionMatrix = function(mat) {
-  "use strict";
   if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix, mat)) {
     this._projectionMatrix = mat.slice(0, 16);
     this._frustum = null;
@@ -166,7 +163,6 @@ Batch3D.prototype.setProjectionMatrix = function(mat) {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
-  "use strict";
   this._projectionUpdater = new H3DU.Batch3D._PerspectiveView(this, fov, near, far);
   return this;
 };
@@ -189,7 +185,6 @@ Batch3D.prototype.perspectiveAspect = function(fov, near, far) {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.setLookAt = function(eye, center, up) {
-  "use strict";
   return this.setViewMatrix(H3DU.Math.mat4lookat(eye, center, up));
 };
 /**
@@ -216,7 +211,6 @@ Batch3D.prototype.setLookAt = function(eye, center, up) {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
-  "use strict";
   this._projectionUpdater = new H3DU.Batch3D._OrthoView(this, l, r, b, t, e, f);
   return this;
 };
@@ -237,13 +231,11 @@ Batch3D.prototype.orthoAspect = function(l, r, b, t, e, f) {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.ortho2DAspect = function(l, r, b, t) {
-  "use strict";
   return this.orthoAspect(l, r, b, t, -1, 1);
 };
 
 /** @ignore */
 Batch3D.prototype._useShader = function(shader) {
-  "use strict";
   // NOTE: This method is here for compatibility only
   // (see Scene3D#useFilter).
   this._globalShader = shader;
@@ -256,7 +248,6 @@ Batch3D.prototype._useShader = function(shader) {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.setViewMatrix = function(mat) {
-  "use strict";
   if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix, mat)) {
     this._viewMatrix = mat.slice(0, 16);
     this._frustum = null;
@@ -269,7 +260,6 @@ Batch3D.prototype.setViewMatrix = function(mat) {
  * projection matrix.
  */
 Batch3D.prototype.getProjectionMatrix = function() {
-  "use strict";
   return this._projectionMatrix.slice(0, 16);
 };
 
@@ -280,7 +270,6 @@ Batch3D.prototype.getProjectionMatrix = function() {
  * projection-view matrix.
  */
 Batch3D.prototype.getProjectionViewMatrix = function() {
-  "use strict";
   return H3DU.Math.mat4multiply(
         this.getProjectionMatrix(), this.getViewMatrix());
 };
@@ -290,12 +279,10 @@ Batch3D.prototype.getProjectionViewMatrix = function() {
  * @returns {Array<number>} Return value.
  */
 Batch3D.prototype.getViewMatrix = function() {
-  "use strict";
   return this._viewMatrix.slice(0, 16);
 };
 /** @ignore */
 Batch3D.prototype._getFrustum = function() {
-  "use strict";
   if(typeof this._frustum === "undefined" || this._frustum === null) {
     var projView = H3DU.Math.mat4multiply(this._projectionMatrix, this._viewMatrix);
     this._frustum = H3DU.Math.mat4toFrustumPlanes(projView);
@@ -307,7 +294,6 @@ Batch3D.prototype._getFrustum = function() {
  * @returns {H3DU.Lights} Return value.
  */
 Batch3D.prototype.getLights = function() {
-  "use strict";
   return this.lights;
 };
 
@@ -321,7 +307,6 @@ Batch3D.prototype.getLights = function() {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.addShape = function(shape) {
-  "use strict";
   if(!shape)throw new Error();
   shape.parent = null;
   this.shapes.push(shape);
@@ -333,7 +318,6 @@ Batch3D.prototype.addShape = function(shape) {
  * @returns {number} Return value.
  */
 Batch3D.prototype.shapeCount = function() {
-  "use strict";
   return this.shapes.length;
 };
 /**
@@ -344,7 +328,6 @@ Batch3D.prototype.shapeCount = function() {
  * in this batch at the given index, or null if none is found there.
  */
 Batch3D.prototype.getShape = function(index) {
-  "use strict";
   return typeof this.shapes[index] === "undefined" ? null : this.shapes[index];
 };
 /**
@@ -354,7 +337,6 @@ Batch3D.prototype.getShape = function(index) {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.setShape = function(index, shape) {
-  "use strict";
   this.shapes[index] = shape;
   return this;
 };
@@ -365,7 +347,6 @@ Batch3D.prototype.setShape = function(index, shape) {
  * @returns {number} Return value.
  */
 Batch3D.prototype.vertexCount = function() {
-  "use strict";
   var c = 0;
   for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
@@ -378,7 +359,6 @@ Batch3D.prototype.vertexCount = function() {
  * @returns {number} Return value.
  */
 Batch3D.prototype.primitiveCount = function() {
-  "use strict";
   var c = 0;
   for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
@@ -392,7 +372,6 @@ Batch3D.prototype.primitiveCount = function() {
  * @returns {H3DU.Batch3D} This object.
  */
 Batch3D.prototype.removeShape = function(shape) {
-  "use strict";
   for(var i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
@@ -404,7 +383,6 @@ Batch3D.prototype.removeShape = function(shape) {
 
 /** @ignore */
 Batch3D.prototype._renderShape = function(shape, renderContext) {
-  "use strict";
   if(shape.constructor === H3DU.ShapeGroup) {
     if(!shape.visible)return;
     for(var i = 0; i < shape.shapes.length; i++) {
@@ -449,7 +427,6 @@ Batch3D.prototype._renderShape = function(shape, renderContext) {
 
 /** @ignore */
 Batch3D.prototype.resize = function(width, height) {
-  "use strict";
   if(this._projectionUpdater) {
     this._projectionUpdater.update(width, height);
   }
@@ -457,7 +434,6 @@ Batch3D.prototype.resize = function(width, height) {
 
 /** @ignore */
 Batch3D.prototype.render = function(scene, pass) {
-  "use strict";
   var rc = {};
   rc.scene = scene;
   rc.context = scene.getContext();
@@ -481,7 +457,6 @@ Batch3D.prototype.render = function(scene, pass) {
  * @returns {H3DU.Batch3D} The created batch.
  */
 Batch3D.forFilter = function(scene, fbo, shader) {
-  "use strict";
   if(typeof shader === "undefined" || shader === null) {
     shader = H3DU.ShaderProgram.makeCopyEffect(scene);
   }
@@ -501,7 +476,6 @@ Batch3D.forFilter = function(scene, fbo, shader) {
 };
 /** @ignore */
 Batch3D._getMaterialBinder = function(material) {
-  "use strict";
   if(material && material instanceof H3DU.Material) {
     return new _MaterialBinder(material);
   }
@@ -511,4 +485,4 @@ Batch3D._getMaterialBinder = function(material) {
  // Return an empty binding object
   return {};
 };
-export { Batch3D };
+export {Batch3D};

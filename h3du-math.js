@@ -7,8 +7,6 @@
  http://peteroupc.github.io/
 */
 
-/* global H3DU */
-
 /**
  * A collection of math functions for working
  * with vectors, matrices, quaternions, and other
@@ -72,7 +70,6 @@ var HMath = {
  * // the shortest angle betw0] ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
  */
   "vec3cross":function(a, b) {
-    "use strict";
     return [a[1] * b[2] - a[2] * b[1],
       a[2] * b[0] - a[0] * b[2],
       a[0] * b[1] - a[1] * b[0]];
@@ -124,7 +121,6 @@ var HMath = {
  * }
  */
   "vec3dot":function(a, b) {
-    "use strict";
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
   },
 /**
@@ -157,8 +153,7 @@ var HMath = {
  * @returns {number} A number giving the triple product.
  */
   "vec3triple":function(a, b, c) {
-    "use strict";
-    return HMath.vec3dot(a,HMath.vec3cross(b, c));
+    return HMath.vec3dot(a, HMath.vec3cross(b, c));
   },
 /**
  * Adds two 3-element vectors and returns a new
@@ -171,7 +166,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3add":function(a, b) {
-    "use strict";
     return [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
   },
 /**
@@ -184,7 +178,6 @@ var HMath = {
  * This is the vector <i>to <code>a</code> from <code>b</code></i>.
  */
   "vec3sub":function(a, b) {
-    "use strict";
     return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
   },
 /**
@@ -199,7 +192,7 @@ var HMath = {
  */
   "vec3addInPlace":function(a, b) {
 // Use variables in case a and b are the same
-    "use strict";
+
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];
@@ -219,7 +212,7 @@ var HMath = {
  */
   "vec3subInPlace":function(a, b) {
 // Use variables in case a and b are the same
-    "use strict";
+
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];
@@ -239,7 +232,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4add":function(a, b) {
-    "use strict";
     return [a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]];
   },
 /**
@@ -252,7 +244,6 @@ var HMath = {
  * This is the vector <i>to <code>a</code> from <code>b</code></i>.
  */
   "vec4sub":function(a, b) {
-    "use strict";
     return [a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]];
   },
 /**
@@ -268,7 +259,7 @@ var HMath = {
  */
   "vec4addInPlace":function(a, b) {
 // Use variables in case a and b are the same
-    "use strict";
+
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];
@@ -289,7 +280,7 @@ var HMath = {
  */
   "vec4subInPlace":function(a, b) {
 // Use variables in case a and b are the same
-    "use strict";
+
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];
@@ -308,7 +299,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3abs":function(a) {
-    "use strict";
     return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2])];
   },
 /**
@@ -318,7 +308,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4abs":function(a) {
-    "use strict";
     return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2]), Math.abs(a[3])];
   },
 /**
@@ -328,7 +317,6 @@ var HMath = {
  * @returns {Array<number>} The vector "a".
  */
   "vec3absInPlace":function(a) {
-    "use strict";
     a[0] = Math.abs(a[0]);
     a[1] = Math.abs(a[1]);
     a[2] = Math.abs(a[2]);
@@ -341,7 +329,6 @@ var HMath = {
  * @returns {Array<number>} The vector "a".
  */
   "vec4absInPlace":function(a) {
-    "use strict";
     a[0] = Math.abs(a[0]);
     a[1] = Math.abs(a[1]);
     a[2] = Math.abs(a[2]);
@@ -357,7 +344,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3negate":function(a) {
-    "use strict";
     return [-a[0], -a[1], -a[2]];
   },
 /**
@@ -369,7 +355,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4negate":function(a) {
-    "use strict";
     return [-a[0], -a[1], -a[2], -a[3]];
   },
 /**
@@ -381,7 +366,6 @@ var HMath = {
  * @returns {Array<number>} The parameter "a".
  */
   "vec3negateInPlace":function(a) {
-    "use strict";
     a[0] = -a[0];
     a[1] = -a[1];
     a[2] = -a[2];
@@ -396,7 +380,6 @@ var HMath = {
  * @returns {Array<number>} The parameter "a".
  */
   "vec4negateInPlace":function(a) {
-    "use strict";
     a[0] = -a[0];
     a[1] = -a[1];
     a[2] = -a[2];
@@ -411,7 +394,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 3-element vector.
  */
   "vec3mul":function(a, b) {
-    "use strict";
     return [a[0] * b[0], a[1] * b[1], a[2] * b[2]];
   },
 /**
@@ -423,7 +405,7 @@ var HMath = {
  */
   "vec3mulInPlace":function(a, b) {
 // Use variables in case a and b are the same
-    "use strict";
+
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];
@@ -442,7 +424,6 @@ var HMath = {
  * @returns {Array<number>} The parameter "a".
  */
   "vec3scaleInPlace":function(a, scalar) {
-    "use strict";
     a[0] *= scalar;
     a[1] *= scalar;
     a[2] *= scalar;
@@ -458,7 +439,6 @@ var HMath = {
  * @returns {Array<number>} The parameter "a".
  */
   "vec3scale":function(a, scalar) {
-    "use strict";
     return HMath.vec3scaleInPlace([a[0], a[1], a[2]], scalar);
   },
 /**
@@ -517,7 +497,6 @@ var HMath = {
  * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
  */
   "vec3lerp":function(v1, v2, factor) {
-    "use strict";
     return [
       v1[0] + (v2[0] - v1[0]) * factor,
       v1[1] + (v2[1] - v1[1]) * factor,
@@ -533,7 +512,6 @@ var HMath = {
  * vector.  Returns (0,0,0) if "vec" is (0,0,0).
  */
   "vec3perp":function(vec) {
-    "use strict";
     var absx = Math.abs(vec[0]);
     var absy = Math.abs(vec[1]);
     var absz = Math.abs(vec[2]);
@@ -572,7 +550,6 @@ var HMath = {
  * length is 0 or extremely close to 0.
  */
   "vec3proj":function(vec, refVec) {
-    "use strict";
     var lensq = HMath.vec3dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return HMath.vec3scale(refVec,
@@ -596,7 +573,6 @@ var HMath = {
  * length is 0 or extremely close to 0.
  */
   "vec4proj":function(vec, refVec) {
-    "use strict";
     var lensq = HMath.vec4dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return HMath.vec4scale(refVec,
@@ -613,7 +589,6 @@ var HMath = {
  * as "incident" but is reflected away from the surface.
  */
   "vec3reflect":function(incident, normal) {
-    "use strict";
     return HMath.vec3sub(incident,
      HMath.vec3scale(normal, 2 * HMath.vec3dot(normal, incident)));
   },
@@ -656,7 +631,6 @@ var HMath = {
  * coordinates, in that order.
  */
   "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
-    "use strict";
     if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
    // Transform the vector and do a perspective divide
     var vec = HMath.mat4projectVec3(matrix, vector);
@@ -701,7 +675,6 @@ var HMath = {
  * of the unprojected point, in that order.
  */
   "vec3fromWindowPoint":function(vector, matrix, viewport, yUp) {
-    "use strict";
     var halfWidth = viewport[2] * 0.5;
     var halfHeight = viewport[3] * 0.5;
     var x = 0;
@@ -724,7 +697,6 @@ var HMath = {
  * @returns {number} Return value.
  */
   "vec4dot":function(a, b) {
-    "use strict";
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
   },
 /**
@@ -737,7 +709,6 @@ var HMath = {
  * @returns {Array<number>} The parameter "a".
  */
   "vec4scaleInPlace":function(a, scalar) {
-    "use strict";
     a[0] *= scalar;
     a[1] *= scalar;
     a[2] *= scalar;
@@ -754,7 +725,6 @@ var HMath = {
  * @returns {Array<number>} The resulting 4-element vector.
  */
   "vec4scale":function(a, scalar) {
-    "use strict";
     return [a[0] * scalar, a[1] * scalar, a[2] * scalar, a[3] * scalar];
   },
 /**
@@ -773,7 +743,6 @@ var HMath = {
  * @returns {Array<number>} The interpolated vector.
  */
   "vec4lerp":function(v1, v2, factor) {
-    "use strict";
     return [
       v1[0] + (v2[0] - v1[0]) * factor,
       v1[1] + (v2[1] - v1[1]) * factor,
@@ -792,7 +761,6 @@ var HMath = {
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec3normalizeInPlace":function(vec) {
-    "use strict";
     var x = vec[0];
     var y = vec[1];
     var z = vec[2];
@@ -813,7 +781,6 @@ var HMath = {
  * @returns {number} The distance between the two vectors.
  */
   "vec3dist":function(vecFrom, vecTo) {
-    "use strict";
     return HMath.vec3length(HMath.vec3sub(vecFrom, vecTo));
   },
 /**
@@ -827,7 +794,6 @@ var HMath = {
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec4normalizeInPlace":function(vec) {
-    "use strict";
     var x = vec[0];
     var y = vec[1];
     var z = vec[2];
@@ -865,7 +831,6 @@ var HMath = {
  * endPt=H3DU.Math.vec3add(startPt,deltaNorm);
  */
   "vec3normalize":function(vec) {
-    "use strict";
     return HMath.vec3normalizeInPlace([vec[0], vec[1], vec[2]]);
   },
 /**
@@ -879,7 +844,6 @@ var HMath = {
  * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "vec4normalize":function(vec) {
-    "use strict";
     return HMath.vec4normalizeInPlace([vec[0], vec[1], vec[2], vec[3]]);
   },
 /**
@@ -895,7 +859,6 @@ var HMath = {
  * @param {Array<number>} a A 3-element vector.
  * @returns {number} Return value. */
   "vec3length":function(a) {
-    "use strict";
     var dx = a[0];
     var dy = a[1];
     var dz = a[2];
@@ -909,7 +872,6 @@ var HMath = {
  * @param {number} max Highest possible value. Should not be less than "min".
  * @returns {Array<number>} The resulting vector. */
   "vec3clamp":function(a, min, max) {
-    "use strict";
     return HMath.vec3clampInPlace(HMath.vec3copy(a), min, max);
   },
 /**
@@ -919,7 +881,6 @@ var HMath = {
  * @param {number} max Highest possible value. Should not be less than "min".
  * @returns {Array<number>} The resulting vector. */
   "vec4clamp":function(a, min, max) {
-    "use strict";
     return HMath.vec4clampInPlace(HMath.vec4copy(a), min, max);
   },
 /**
@@ -930,7 +891,6 @@ var HMath = {
  * @param {number} max Highest possible value. Should not be less than "min".
  * @returns {Array<number>} The resulting vector. */
   "vec3clampInPlace":function(a, min, max) {
-    "use strict";
     var x = Math.min(max, Math.max(min, a[0]));
     var y = Math.min(max, Math.max(min, a[1]));
     var z = Math.min(max, Math.max(min, a[2]));
@@ -947,7 +907,6 @@ var HMath = {
  * @param {number} max Highest possible value. Should not be less than "min".
  * @returns {Array<number>} The resulting vector. */
   "vec4clampInPlace":function(a, min, max) {
-    "use strict";
     var x = Math.min(max, Math.max(min, a[0]));
     var y = Math.min(max, Math.max(min, a[1]));
     var z = Math.min(max, Math.max(min, a[2]));
@@ -970,7 +929,6 @@ var HMath = {
  * @param {Array<number>} a A 4-element vector.
  * @returns {number} Return value. */
   "vec4length":function(a) {
-    "use strict";
     var dx = a[0];
     var dy = a[1];
     var dz = a[2];
@@ -982,7 +940,6 @@ var HMath = {
  * vectors unchanged when they are transformed with this matrix).
  * @returns {Array<number>} Return value. */
   "mat3identity":function() {
-    "use strict";
     return [1, 0, 0, 0, 1, 0, 0, 0, 1];
   },
 
@@ -991,14 +948,12 @@ var HMath = {
  * vectors unchanged when they are transformed with this matrix).
  * @returns {Array<number>} Return value. */
   "mat4identity":function() {
-    "use strict";
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   },
 /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
  * @returns {Array<number>} Return value.
  */
   "quatIdentity":function() {
-    "use strict";
     return [0, 0, 0, 1];
   },
 /**
@@ -1006,7 +961,6 @@ var HMath = {
  * @param {Array<number>} mat A 4x4 matrix.
  * @returns {Array<number>} Return value. */
   "mat4copy":function(mat) {
-    "use strict";
     return [mat[0], mat[1], mat[2], mat[3],
       mat[4], mat[5], mat[6], mat[7],
       mat[8], mat[9], mat[10], mat[11],
@@ -1017,7 +971,6 @@ var HMath = {
  * @param {Array<number>} mat A 3x3atrix.
  * @returns {Array<number>} Return value. */
   "mat3copy":function(mat) {
-    "use strict";
     return [mat[0], mat[1], mat[2], mat[3],
       mat[4], mat[5], mat[6], mat[7],
       mat[8]];
@@ -1027,7 +980,6 @@ var HMath = {
  * @param {Array<number>} vec A 3-element vector.
  * @returns {Array<number>} Return value. */
   "vec3copy":function(vec) {
-    "use strict";
     return [vec[0], vec[1], vec[2]];
   },
 /**
@@ -1035,7 +987,6 @@ var HMath = {
  * @param {Array<number>} vec A 4-element vector.
  * @returns {Array<number>} Return value. */
   "vec4copy":function(vec) {
-    "use strict";
     return [vec[0], vec[1], vec[2], vec[3]];
   },
 /**
@@ -1048,7 +999,6 @@ var HMath = {
  * @returns {Array<number>} The parameter "dst"
  */
   "vec3assign":function(dst, src) {
-    "use strict";
     dst[0] = src[0];
     dst[1] = src[1];
     dst[2] = src[2];
@@ -1064,7 +1014,6 @@ var HMath = {
  * @returns {Array<number>} The parameter "dst".
  */
   "vec4assign":function(dst, src) {
-    "use strict";
     dst[0] = src[0];
     dst[1] = src[1];
     dst[2] = src[2];
@@ -1076,7 +1025,6 @@ var HMath = {
  * @param {Array<number>} mat A 4x4 matrix.
  * @returns {boolean} Return value. */
   "mat4isIdentity":function(mat) {
-    "use strict";
     return (
     mat[0] === 1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
     mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
@@ -1091,7 +1039,6 @@ var HMath = {
  * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
  */
   "mat3invert":function(m) {
-    "use strict";
     var ret = [];
     var t4 = m[4] * m[8] - m[5] * m[7];
     var t5 = m[5] * m[6] - m[3] * m[8];
@@ -1117,7 +1064,6 @@ var HMath = {
  * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
  */
   "mat4invert":function(m) {
-    "use strict";
     var tvar0 = m[0] * m[10];
     var tvar1 = m[0] * m[11];
     var tvar2 = m[0] * m[5];
@@ -1200,7 +1146,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<number>} quat A quaternion, containing four elements.
  * @returns {Array<number>} Return value. */
   "quatConjugate":function(quat) {
-    "use strict";
     return [-quat[0], -quat[1], -quat[2], quat[3]];
   },
 /**
@@ -1210,7 +1155,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @see {@link H3DU.Math.quatConjugate}
  */
   "quatInvert":function(quat) {
-    "use strict";
     var lsq = 1.0 / HMath.quatDot(quat, quat);
     return HMath.vec4scaleInPlace(
   HMath.quatConjugate(quat), lsq);
@@ -1221,7 +1165,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {boolean} Return value.
  */
   "quatIsIdentity":function(quat) {
-    "use strict";
     return quat[0] === 0 && quat[1] === 0 && quat[2] === 0 && quat[3] === 1;
   },
 /**
@@ -1231,7 +1174,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The generated 4x4 matrix.
  */
   "quatToMat4":function(quat) {
-    "use strict";
     var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
     tx = 2.0 * quat[0];
     ty = 2.0 * quat[1];
@@ -1263,7 +1205,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * of rotation will be a unit vector.
  */
   "quatToAxisAngle":function(a) {
-    "use strict";
     var w = a[3];
     var d = 1.0 - w * w;
     if(d > 0) {
@@ -1286,7 +1227,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * will be a unit vector.
  */
   "quatFromVectors":function(vec1, vec2) {
-    "use strict";
     var ret = HMath.vec3cross(vec1, vec2);
     if(HMath.vec3dot(ret, ret) < 1e-9) {
       // The vectors are parallel or close to parallel; there are two possible cases
@@ -1328,7 +1268,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * and its fourth element (W) is the cosine of half of "angle".
  */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
-    "use strict";
     var v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
@@ -1380,7 +1319,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The generated quaternion.
  */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
-    "use strict";
     var rollRad, pitchRad, yawRad;
     if(typeof mode === "undefined" || mode === null)mode = HMath.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
@@ -1435,7 +1373,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
  */
   "quatToTaitBryan":function(a, mode) {
-    "use strict";
     var c0 = a[3];
     var c1, c2, c3;
     var e = 1;
@@ -1511,7 +1448,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * which will be a unit vector.
  */
   "quatNlerp":function(q1, q2, factor) {
-    "use strict";
     var t1 = 1.0 - factor;
     var t2 = q1[0] * t1;
     var t3 = q1[1] * t1;
@@ -1551,7 +1487,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * for additional background
  */
   "quatSlerp":function(q1, q2, factor) {
-    "use strict";
     var cosval = HMath.quatDot(q1, q2);
     var qd = q2;
     if(cosval < 0) {
@@ -1607,7 +1542,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The resulting quaternion.
  */
   "quatRotate":function(quat, angle, v, vy, vz) {
-    "use strict";
     return HMath.quatMultiply(quat,
     HMath.quatFromAxisAngle(angle, v, vy, vz));
   },
@@ -1624,7 +1558,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * be returned instead.
  */
   "quatTransform":function(q, v) {
-    "use strict";
     var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
     var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
     var t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
@@ -1647,7 +1580,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The resulting quaternion.
  */
   "quatFromMat4":function(m) {
-    "use strict";
     var ret = [];
     var xy = m[1];
     var xz = m[2];
@@ -1698,7 +1630,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The resulting 3x3 matrix.
  */
   "mat4toMat3":function(m4) {
-    "use strict";
     return [
       m4[0], m4[1], m4[2],
       m4[4], m4[5], m4[6],
@@ -1712,7 +1643,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4transpose":function(m4) {
-    "use strict";
     return HMath.mat4transposeInPlace(HMath.mat4copy(m4));
   },
 /**
@@ -1723,7 +1653,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The parameter "mat".
  */
   "mat4transposeInPlace":function(mat) {
-    "use strict";
     var tmp = mat[1]; mat[1] = mat[4]; mat[4] = tmp;
     tmp = mat[2]; mat[2] = mat[8]; mat[8] = tmp;
     tmp = mat[3]; mat[3] = mat[12]; mat[12] = tmp;
@@ -1739,7 +1668,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The resulting 3x3 matrix.
  */
   "mat3transpose":function(m3) {
-    "use strict";
     return HMath.mat3transposeInPlace(HMath.mat3copy(m3));
   },
 /**
@@ -1750,7 +1678,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The parameter "mat".
  */
   "mat3transposeInPlace":function(mat) {
-    "use strict";
     var tmp = mat[1]; mat[1] = mat[3]; mat[3] = tmp;
     tmp = mat[2]; mat[2] = mat[6]; mat[6] = tmp;
     tmp = mat[5]; mat[5] = mat[7]; mat[7] = tmp;
@@ -1771,7 +1698,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * can't be inverted, returns the identity 3x3 matrix.
  */
   "mat4inverseTranspose3":function(m4) {
-    "use strict";
     if(m4[1] === 0 && m4[2] === 0 && m4[4] === 0 &&
    m4[6] === 0 && m4[8] === 0 && m4[9] === 0) {
       if(m4[0] === 1 && m4[5] === 1 && m4[10] === 1) {
@@ -1821,7 +1747,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4scale":function(mat, v3, v3y, v3z) {
-    "use strict";
     var scaleX, scaleY, scaleZ;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       scaleX = v3;
@@ -1851,7 +1776,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4scaled":function(v3, v3y, v3z) {
-    "use strict";
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       return [v3, 0, 0, 0, 0, v3y, 0, 0, 0, 0, v3z, 0, 0, 0, 0, 1];
     } else {
@@ -1880,7 +1804,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The transformed vector.
  */
   "mat4transform":function(mat, v, vy, vz, vw) {
-    "use strict";
     var x, y, z, w;
     if(typeof vy !== "undefined" && typeof vz !== "undefined" &&
       typeof vw !== "undefined") {
@@ -1920,7 +1843,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The transformed 3-element vector.
  */
   "mat4transformVec3":function(mat, v, vy, vz) {
-    "use strict";
     var x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
@@ -1967,7 +1889,6 @@ m[0] * m[7] * m[5];
  * the transformed vector's X, Y, and Z coordinates.
  */
   "mat4projectVec3":function(mat, v, vy, vz) {
-    "use strict";
     var x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
@@ -2004,7 +1925,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The transformed vector.
  */
   "mat3transform":function(mat, v, vy, vz) {
-    "use strict";
     var x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
@@ -2030,7 +1950,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4translated":function(v3, v3y, v3z) {
-    "use strict";
     var x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
@@ -2055,7 +1974,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4translate":function(mat, v3, v3y, v3z) {
-    "use strict";
     var x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
@@ -2110,7 +2028,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4perspective":function(fovY, aspectRatio, near, far) {
-    "use strict";
     var fov = (fovY >= 0 && fovY < 360 ? fovY : fovY % 360 + (fovY < 0 ? 360 : 0)) * HMath.PiDividedBy360;
     var f = 1 / Math.tan(fov);
     var nmf = near - far;
@@ -2162,7 +2079,6 @@ m[0] * m[7] * m[5];
  * var matrix=HMath.mat4lookat(viewerPos,lookingAt,upVector);
  */
   "mat4lookat":function(viewerPos, lookingAt, up) {
-    "use strict";
     if(typeof up === "undefined" || up === null)up = [0, 1, 0];
     if(typeof lookingAt === "undefined" || lookingAt === null)lookingAt = [0, 0, 0];
     var f = HMath.vec3sub(lookingAt, viewerPos);
@@ -2216,7 +2132,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4ortho":function(l, r, b, t, n, f) {
-    "use strict";
     var width = 1 / (r - l);
     var height = 1 / (t - b);
     var depth = 1 / (f - n);
@@ -2259,7 +2174,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4perspectiveHorizontal":function(fovX, aspectRatio, near, far) {
-    "use strict";
     var fov = (fovX >= 0 && fovX < 360 ? fovX : fovX % 360 + (fovX < 0 ? 360 : 0)) * HMath.PiDividedBy360;
     var fovY = HMath.Num360DividedByPi * Math.atan2(Math.tan(fov), aspectRatio);
     return HMath.mat4perspective(fovY, aspectRatio, near, far);
@@ -2280,7 +2194,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4ortho2d":function(l, r, b, t) {
-    "use strict";
     return HMath.mat4ortho(l, r, b, t, -1, 1);
   },
 /**
@@ -2306,7 +2219,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4ortho2dAspect":function(l, r, b, t, aspect) {
-    "use strict";
     return HMath.mat4orthoAspect(l, r, b, t, -1, 1, aspect);
   },
 /**
@@ -2338,7 +2250,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4orthoAspect":function(l, r, b, t, n, f, aspect) {
-    "use strict";
     var newDim;
     var boxAspect = Math.abs((r - l) / (t - b));
     aspect /= boxAspect;
@@ -2405,7 +2316,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4frustum":function(l, r, b, t, near, far) {
-    "use strict";
     var dn = 2 * near;
     var onedx = 1 / (r - l);
     var onedy = 1 / (t - b);
@@ -2430,7 +2340,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The same parameter as "mat".
  */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
-    "use strict";
     var x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
@@ -2475,7 +2384,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4multiply":function(a, b) {
-    "use strict";
     var dst = [];
     for(var i = 0; i < 16; i += 4) {
       for(var j = 0; j < 4; j++) {
@@ -2507,7 +2415,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 3x3 matrix.
  */
   "mat3multiply":function(a, b) {
-    "use strict";
     var ret = [];
     ret[0] = b[0] * a[0] + b[1] * a[3] + b[2] * a[6];
     ret[1] = b[0] * a[1] + b[1] * a[4] + b[2] * a[7];
@@ -2539,7 +2446,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting quaternion.
  */
   "quatMultiply":function(a, b) {
-    "use strict";
     return [
       a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
       a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
@@ -2570,7 +2476,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4rotate":function(mat, angle, v, vy, vz) {
-    "use strict";
     var v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
@@ -2665,7 +2570,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4rotated":function(angle, v, vy, vz) {
-    "use strict";
     var v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
@@ -2768,7 +2672,6 @@ m[0] * m[7] * m[5];
  * @returns {Array<number>} The parameter "plane".
  */
   "planeNormalizeInPlace":function(plane) {
-    "use strict";
     var x = plane[0];
     var y = plane[1];
     var z = plane[2];
@@ -2799,7 +2702,6 @@ m[0] * m[7] * m[5];
  * Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
  */
   "planeNormalize":function(plane) {
-    "use strict";
     return HMath.planeNormalizeInPlace(HMath.vec4copy(plane));
   },
 /**
@@ -2821,7 +2723,6 @@ m[0] * m[7] * m[5];
  * will be normalized (see {@link H3DU.Math.planeNormalizeInPlace}).
  */
   "mat4toFrustumPlanes":function(matrix) {
-    "use strict";
     var frustum = [[], [], [], [], [], []];
  // Left clipping plane
     frustum[0] = HMath.planeNormalizeInPlace([
@@ -2887,7 +2788,6 @@ m[0] * m[7] * m[5];
  * inside the frustum; <code>false</code> otherwise.
  */
   "frustumHasSphere":function(frustum, x, y, z, radius) {
-    "use strict";
     if(radius < 0)throw new Error("radius is negative");
     for(var i = 0; i < 6; i++) {
       var plane = frustum[i];
@@ -2911,7 +2811,6 @@ m[0] * m[7] * m[5];
  * corresponding maximum coordinate; otherwise, <code>false</code>.
  */
   "boxIsEmpty":function(box) {
-    "use strict";
     return box[0] > box[3] || box[1] > box[4] || box[2] > box[5];
   },
 /**
@@ -2929,7 +2828,6 @@ m[0] * m[7] * m[5];
  * negative values.
  */
   "boxDimensions":function(box) {
-    "use strict";
     return [box[3] - box[0], box[4] - box[1], box[5] - box[2]];
   },
 /**
@@ -2944,7 +2842,6 @@ m[0] * m[7] * m[5];
  * center.
  */
   "boxCenter":function(box) {
-    "use strict";
     return [box[0] + (box[3] - box[0]) * 0.5,
       box[1] + (box[4] - box[1]) * 0.5,
       box[2] + (box[5] - box[2]) * 0.5];
@@ -2968,7 +2865,6 @@ m[0] * m[7] * m[5];
  * (see "boxIsEmpty").
  */
   "frustumHasBox":function(frustum, box) {
-    "use strict";
     if(HMath.boxIsEmpty(box)) {
       return false;
     }
@@ -3010,7 +2906,6 @@ m[0] * m[7] * m[5];
   },
 /** @ignore */
   "_frustumPoints":function(frustum) {
-    "use strict";
     var p0 = frustum[0];
     var p1 = frustum[1];
     var p2 = frustum[2];
@@ -3172,7 +3067,6 @@ m[0] * m[7] * m[5];
  * otherwise false;
  */
   "frustumHasPoint":function(frustum, x, y, z) {
-    "use strict";
     for(var i = 0; i < 6; i++) {
       var d = frustum[i][0] * x + frustum[i][1] * y +
      frustum[i][2] * z + frustum[i][3];
@@ -3197,7 +3091,6 @@ m[0] * m[7] * m[5];
  * in the "lin" parameter.
  */
   "colorTosRGB":function(lin) {
-    "use strict";
     return [
       lin[0] <= 0.00304 ? 12.92 * lin[0] : Math.pow(lin[0], 0.41666666667) * 1.0556 - 0.0556,
       lin[1] <= 0.00304 ? 12.92 * lin[1] : Math.pow(lin[1], 0.41666666667) * 1.0556 - 0.0556,
@@ -3221,7 +3114,6 @@ m[0] * m[7] * m[5];
  * in the "srgb" parameter.
  */
   "colorToLinear":function(srgb) {
-    "use strict";
     return [
       srgb[0] <= 0.03928 ? 0.077399381 * srgb[0] : Math.pow((0.0556 + srgb[0]) * 0.947328534, 2.4),
       srgb[1] <= 0.03928 ? 0.077399381 * srgb[1] : Math.pow((0.0556 + srgb[1]) * 0.947328534, 2.4),
@@ -3558,4 +3450,4 @@ HMath.planeNormInPlace = HMath.planeNormalizeInPlace;
  * @returns {Array<number>} The normalized plane.
  */
 HMath.planeNorm = HMath.planeNormalize;
-export { HMath };
+export {HMath};

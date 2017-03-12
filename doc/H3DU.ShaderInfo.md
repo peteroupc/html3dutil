@@ -80,7 +80,7 @@ Return value. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 
 <b>Deprecated: Yes</b>
 
-Has no effect. A method introduced for compatibility reasons.
+This method was introduced for compatibility reasons.
 
  <a name='H3DU.ShaderInfo.getBasicVertex'></a>
 ### (static) H3DU.ShaderInfo.getBasicVertex()

@@ -8,7 +8,7 @@
  http://peteroupc.github.io/
 */
 
-import { _MathInternal } from './h3du-mathinternal';
+import {_MathInternal} from "./h3du-mathinternal";
 
 /**
  * A curve evaluator object for a parametric curve.<p>
@@ -27,9 +27,8 @@ import { _MathInternal } from './h3du-mathinternal';
  * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
  */
 function Curve(curve) {
-  "use strict";
   this.curve = curve;
-};
+}
 /**
  * Returns the starting and ending U coordinates of this curve.
  * @returns A two-element array. The first element is the starting coordinate of
@@ -38,7 +37,6 @@ function Curve(curve) {
  * method.
  */
 Curve.prototype.endPoints = function() {
-  "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.endPoints !== "undefined" && this.curve.endPoints !== null) {
     return this.curve.endPoints();
   } else {
@@ -54,7 +52,6 @@ Curve._EPSILON = 0.00001;
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.evaluate = function(u) {
-  "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.evaluate !== "undefined" && this.curve.evaluate !== null) {
     return this.curve.evaluate(u);
   } else {
@@ -72,7 +69,6 @@ Curve.prototype.evaluate = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.velocity = function(u) {
-  "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.velocity !== "undefined" && this.curve.velocity !== null) {
     return this.curve.velocity(u);
   } else {
@@ -97,7 +93,6 @@ Curve.prototype.velocity = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.accel = function(u) {
-  "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.accel !== "undefined" && this.curve.accel !== null) {
     return this.curve.accel(u);
   } else {
@@ -123,7 +118,6 @@ Curve.prototype.accel = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.normal = function(u) {
-  "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.normal !== "undefined" && this.curve.normal !== null) {
     return this.curve.normal(u);
   } else {
@@ -164,7 +158,6 @@ Curve._legendreGauss24 = [
  * @returns {number} The approximate arc length of this curve at the given U coordinate.
  */
 Curve.prototype.arcLength = function(u) {
-  "use strict";
   if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.arcLength !== "undefined" && this.curve.arcLength !== null) {
     return this.curve.arcLength(u);
   } else {
@@ -189,4 +182,4 @@ Curve.prototype.arcLength = function(u) {
   }
 };
 
-export { Curve };
+export {Curve};

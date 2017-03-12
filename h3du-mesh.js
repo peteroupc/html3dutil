@@ -59,7 +59,6 @@
  * May be null or omitted, in which case "format" is set to 0.
  */
 export var Mesh = function(vertices, indices, format) {
-  "use strict";
   this._initialize(vertices, indices, format);
   this._elementsDefined = 0;
   this.currentMode = -1;
@@ -71,7 +70,6 @@ export var Mesh = function(vertices, indices, format) {
 };
 /** @ignore */
 Mesh._primitiveType = function(mode) {
-  "use strict";
   if(mode === H3DU.Mesh.LINES || mode === H3DU.Mesh.LINE_STRIP)
     return H3DU.Mesh.LINES;
   else if(mode === H3DU.Mesh.POINTS)
@@ -81,7 +79,6 @@ Mesh._primitiveType = function(mode) {
 };
 /** @ignore */
 Mesh._isCompatibleMode = function(oldMode, newMode) {
-  "use strict";
   if(oldMode === newMode)return true;
   if(H3DU.Mesh._primitiveType(oldMode) === H3DU.Mesh._primitiveType(newMode))
     return true;
@@ -89,7 +86,6 @@ Mesh._isCompatibleMode = function(oldMode, newMode) {
 };
 /** @ignore */
 Mesh._recalcNormalsStart = function(vertices, uniqueVertices, faces, stride, offset, flat) {
-  "use strict";
   for(var i = 0; i < vertices.length; i += stride) {
     vertices[i + offset] = 0.0;
     vertices[i + offset + 1] = 0.0;
@@ -105,7 +101,6 @@ Mesh._recalcNormalsStart = function(vertices, uniqueVertices, faces, stride, off
 };
 /** @ignore */
 Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, stride, offset, flat) {
-  "use strict";
   var len;
   var dupverts = [];
   var dupvertcount = 0;
@@ -172,7 +167,6 @@ Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, stride, of
 
 /** @ignore */
 Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inward) {
-  "use strict";
   var normDir = inward ? -1 : 1;
   var uniqueVertices = {};
   var len;
@@ -230,7 +224,6 @@ Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inward) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.mode = function(m) {
-  "use strict";
   if(m < 0)throw new Error("invalid mode");
   if(this.currentMode === -1) {
     var format = 0;
@@ -266,7 +259,6 @@ Mesh.prototype.mode = function(m) {
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  */
 Mesh.prototype.merge = function(other) {
-  "use strict";
   if(!H3DU.Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
     throw new Error("Meshes have incompatible types");
   }
@@ -322,7 +314,6 @@ Mesh.prototype.merge = function(other) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.normal3 = function(x, y, z) {
-  "use strict";
   if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
     this.normal[0] = x;
     this.normal[1] = y;
@@ -354,7 +345,6 @@ Mesh.prototype.normal3 = function(x, y, z) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.tangent3 = function(x, y, z) {
-  "use strict";
   if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
     this.tangent[0] = x;
     this.tangent[1] = y;
@@ -386,7 +376,6 @@ Mesh.prototype.tangent3 = function(x, y, z) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.bitangent3 = function(x, y, z) {
-  "use strict";
   if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
     this.bitangent[0] = x;
     this.bitangent[1] = y;
@@ -415,7 +404,6 @@ Mesh.prototype.bitangent3 = function(x, y, z) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.color3 = function(r, g, b) {
-  "use strict";
   if(typeof r === "string") {
     var c = H3DU.toGLColor(r);
     this.color[0] = c[0];
@@ -453,7 +441,6 @@ Mesh.prototype.color3 = function(r, g, b) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.texCoord2 = function(u, v) {
-  "use strict";
 // LATER: Support 3D texture coordinates
   if(typeof u === "number" && typeof v === "number") {
     this.texCoord[0] = u;
@@ -481,14 +468,13 @@ Mesh.prototype.texCoord2 = function(u, v) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.vertex3 = function(x, y, z) {
-  "use strict";
   if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null) && (typeof z === "undefined" || z === null)) {
     if(typeof x !== "number")
-      this._vertex3(x[0], x[1], x[2], this);
+      this._vertex3(x[0], x[1], x[2]);
     else
-    this._vertex3(x, x, x, this);
+    this._vertex3(x, x, x);
   } else {
-    this._vertex3(x, y, z, this);
+    this._vertex3(x, y, z);
   }
   return this;
 };
@@ -504,7 +490,6 @@ Mesh.prototype.vertex3 = function(x, y, z) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.vertex2 = function(x, y) {
-  "use strict";
   if(typeof x !== "undefined" && x !== null && (typeof y === "undefined" || y === null)) {
     if(typeof x !== "number")
       return this.vertex3(x[0], x[1], 0.0);
@@ -527,7 +512,6 @@ Mesh.prototype.vertex2 = function(x, y) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.setColor3 = function(r, g, b) {
-  "use strict";
   var rr = r;
   var gg = g;
   var bb = b;
@@ -555,7 +539,6 @@ Mesh.prototype.setColor3 = function(r, g, b) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.normalizeNormals = function() {
-  "use strict";
   var i;
   var stride = this.getStride();
   var vertices = this.vertices;
@@ -597,7 +580,6 @@ Mesh.prototype.normalizeNormals = function() {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.setVertex = function(index, x, y, z) {
-  "use strict";
   if(index < 0)return this;
   if(typeof y === "undefined" && typeof z === "undefined") {
     y = x[1];
@@ -633,7 +615,6 @@ Mesh.prototype.setVertex = function(index, x, y, z) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.setVertexNormal = function(index, x, y, z) {
-  "use strict";
   if(index < 0)return this;
 
   if(typeof y === "undefined" && typeof z === "undefined") {
@@ -667,7 +648,6 @@ Mesh.prototype.setVertexNormal = function(index, x, y, z) {
  * equals the number of vertices in this mesh or greater.
  */
 Mesh.prototype.getVertex = function(index) {
-  "use strict";
   if(index < 0)return null;
   var c = this.vertexCount();
   if(index < c) {
@@ -693,7 +673,6 @@ Mesh.prototype.getVertex = function(index) {
  * a normal.
  */
 Mesh.prototype.getVertexNormal = function(index) {
-  "use strict";
   var c = this.vertexCount();
   if(index < c) {
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
@@ -706,7 +685,6 @@ Mesh.prototype.getVertexNormal = function(index) {
 
 /** @ignore */
 Mesh.prototype._initialize = function(vertices, faces, format) {
-  "use strict";
   this.vertices = vertices || [];
   this.indices = faces || [];
   this.startIndex = 0;
@@ -921,7 +899,6 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
 
 /** @ignore */
 Mesh.prototype._makeRedundant = function() {
-  "use strict";
   var existingIndices = [];
   var stride = this.getStride();
   var originalIndicesLength = this.indices.length;
@@ -946,7 +923,6 @@ Mesh.prototype._makeRedundant = function() {
  * @returns {number} Return value.
  */
 Mesh.prototype.primitiveCount = function() {
-  "use strict";
   if((this.attributeBits & H3DU.Mesh.LINES_BIT) !== 0)
     return Math.floor(this.indices.length / 2);
   if((this.attributeBits & H3DU.Mesh.POINTS_BIT) !== 0)
@@ -955,7 +931,6 @@ Mesh.prototype.primitiveCount = function() {
 };
   // Adds a line only if it doesn't exist
 Mesh._addLine = function(lineIndices, existingLines, f1, f2) {
-  "use strict";
    // Ensure ordering of the indices
   if(f1 < f2) {
     var tmp = f1; f1 = f2; f2 = tmp;
@@ -981,7 +956,6 @@ Mesh._addLine = function(lineIndices, existingLines, f1, f2) {
  * to lines.
  */
 Mesh.prototype.toWireFrame = function() {
-  "use strict";
   // LATER: Implement and favor MeshBuffer version of this method
   if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
    // Not a triangle mesh
@@ -1003,7 +977,6 @@ Mesh.prototype.toWireFrame = function() {
 
 /** @ignore */
 Mesh._isIdentityInUpperLeft = function(m) {
-  "use strict";
   return m[0] === 1 && m[1] === 0 && m[2] === 0 &&
     m[4] === 0 && m[5] === 1 && m[6] === 0 &&
     m[8] === 0 && m[9] === 0 && m[10] === 1;
@@ -1021,7 +994,6 @@ Mesh._isIdentityInUpperLeft = function(m) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.transform = function(matrix) {
-  "use strict";
   var stride = this.getStride();
   var v = this.vertices;
   var isNonTranslation = !H3DU.Mesh._isIdentityInUpperLeft(matrix);
@@ -1072,7 +1044,6 @@ Mesh.prototype.transform = function(matrix) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.enumPrimitives = function(func) {
-  "use strict";
   // LATER: Implement and favor MeshBuffer version of this method
   var prim = this.primitiveType();
   var normals = H3DU.Mesh._normalOffset(this.attributeBits);
@@ -1115,7 +1086,7 @@ Mesh.prototype.enumPrimitives = function(func) {
  */
 Mesh.prototype.getBoundingBox = function() {
   // LATER: Implement and favor MeshBuffer version of this method
-  "use strict";
+
   var empty = true;
   var inf = Number.POSITIVE_INFINITY;
   var ret = [inf, inf, inf, -inf, -inf, -inf];
@@ -1141,7 +1112,6 @@ Mesh.prototype.getBoundingBox = function() {
 };
 /** @ignore */
 Mesh._findTangentAndBitangent = function(vertices, v1, v2, v3, uvOffset) {
-  "use strict";
   var t1 = vertices[v2] - vertices[v1];
   var t2 = vertices[v2 + 1] - vertices[v1 + 1];
   var t3 = vertices[v2 + 2] - vertices[v1 + 2];
@@ -1169,7 +1139,6 @@ Mesh._findTangentAndBitangent = function(vertices, v1, v2, v3, uvOffset) {
 };
 /** @ignore */
 Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset, normalOffset, tangentOffset) {
-  "use strict";
  // NOTE: no need to specify bitangent offset, since tangent
  // and bitangent will always be contiguous (this method will
  // always be called after the recalcTangents method ensures
@@ -1231,7 +1200,6 @@ Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset, nor
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.recalcTangents = function() {
-  "use strict";
   if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
     return this;
   }
@@ -1270,7 +1238,6 @@ Mesh.prototype.recalcTangents = function() {
  * );
  */
 Mesh.prototype.reverseNormals = function() {
-  "use strict";
   // LATER: Implement and favor MeshBuffer version of this method
   var i;
   var stride = this.getStride();
@@ -1306,7 +1273,6 @@ Mesh.prototype.reverseNormals = function() {
  * );
  */
 Mesh.prototype.reverseWinding = function() {
-  "use strict";
   // LATER: Implement and favor MeshBuffer version of this method
   if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
    // Not a triangle mesh
@@ -1338,7 +1304,6 @@ Mesh.prototype.reverseWinding = function() {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.recalcNormals = function(flat, inward) {
-  "use strict";
   var primtype = this.primitiveType();
   if(primtype !== H3DU.Mesh.LINES && primtype !== H3DU.Mesh.POINTS) {
     var haveOtherAttributes = (this.attributeBits & (H3DU.Mesh.ATTRIBUTES_BITS & ~H3DU.Mesh.NORMALS_BIT)) !== 0;
@@ -1357,7 +1322,6 @@ Mesh.prototype.recalcNormals = function(flat, inward) {
 };
 /** @ignore */
 Mesh._getStride = function(format) {
-  "use strict";
   var s = [3, 6, 6, 9, 5, 8, 8, 11][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
   if((format & H3DU.Mesh.TANGENTS_BIT) !== 0)s += 3;
   if((format & H3DU.Mesh.BITANGENTS_BIT) !== 0)s += 3;
@@ -1365,12 +1329,10 @@ Mesh._getStride = function(format) {
 };
 /** @ignore */
 Mesh._normalOffset = function(format) {
-  "use strict";
   return [-1, 3, -1, 3, -1, 3, -1, 3][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
 };
 /** @ignore */
 Mesh._tangentOffset = function(format) {
-  "use strict";
   var x = 3;
   if((format & H3DU.Mesh.TANGENTS_BIT) === 0)return -1;
   if((format & H3DU.Mesh.NORMALS_BIT) !== 0)x += 3;
@@ -1380,7 +1342,6 @@ Mesh._tangentOffset = function(format) {
 };
 /** @ignore */
 Mesh._bitangentOffset = function(format) {
-  "use strict";
   var x = 3;
   if((format & H3DU.Mesh.BITANGENTS_BIT) === 0)return -1;
   if((format & H3DU.Mesh.NORMALS_BIT) !== 0)x += 3;
@@ -1391,12 +1352,10 @@ Mesh._bitangentOffset = function(format) {
 };
 /** @ignore */
 Mesh._colorOffset = function(format) {
-  "use strict";
   return [-1, -1, 3, 6, -1, -1, 3, 6][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
 };
 /** @ignore */
 Mesh._texCoordOffset = function(format) {
-  "use strict";
   return [-1, -1, -1, -1, 3, 6, 6, 9][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
 };
 /** @ignore */

@@ -1,10 +1,5 @@
 # Documentation Index
 
-* &lt;anonymous>~FrameBufferLoader
-* &lt;anonymous>~_LightsBinder
-* &lt;anonymous>~_LoadedCubeMap
-* &lt;anonymous>~_LoadedTexture
-* &lt;anonymous>~_MaterialBinder
 * <a href="Camera.md">Camera</a><br><b>Deprecated: Use <a href="H3DU.Camera.md">H3DU.Camera</a> instead.</b>
 * <a href="CurveTube.md">CurveTube</a><br><b>Deprecated: Use <a href="H3DU.CurveTube.md">H3DU.CurveTube</a> instead.</b>
 * <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a> instead.</b>

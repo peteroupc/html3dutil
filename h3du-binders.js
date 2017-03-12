@@ -17,7 +17,6 @@
 
 /** @ignore */
 var _isPowerOfTwo = function(a) {
-  "use strict";
   if(Math.floor(a) !== a || a <= 0)return false;
   while(a > 1 && (a & 1) === 0) {
     a >>= 1;
@@ -30,14 +29,12 @@ var _isPowerOfTwo = function(a) {
  * @constructor
  */
 var _MaterialBinder = function(mshade) {
-  "use strict";
   this.mshade = mshade;
 };
 /** @ignore */
 _MaterialBinder._textureSizeZeroZero = [0, 0];
 /** @ignore */
 _MaterialBinder.prototype.bind = function(program, context, loader) {
-  "use strict";
   if(!this.mshade)return this;
   var mat = this.mshade;
   var diffuse = typeof mat.albedo !== "undefined" && mat.albedo !== null ? mat.albedo : mat.diffuse;
@@ -105,12 +102,10 @@ _MaterialBinder.prototype.bind = function(program, context, loader) {
  * @constructor
  */
 function _LoadedTexture(texture, textureInfo, context) {
-  "use strict";
   this._init(texture, textureInfo, context);
-};
+}
 /** @ignore */
 _LoadedTexture.textureFilters = function(context, texture, textureInfo, target) {
-  "use strict";
   context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
   // generate mipmaps for power-of-two textures
@@ -138,7 +133,6 @@ _LoadedTexture.textureFilters = function(context, texture, textureInfo, target) 
 
 /** @ignore */
 _LoadedTexture.prototype._init = function(texture, textureInfo, context) {
-  "use strict";
   if(!texture.image)throw new Error();
   context = context && context.getContext ? context.getContext() : context;
   this.context = context;
@@ -169,7 +163,6 @@ _LoadedTexture.prototype._init = function(texture, textureInfo, context) {
  * @constructor
  */
 function _LoadedCubeMap(textureImage, context) {
-  "use strict";
   context = context && context.getContext ? context.getContext() : context;
   this.context = context;
   this.loadedTexture = context.createTexture();
@@ -192,11 +185,10 @@ function _LoadedCubeMap(textureImage, context) {
     }
   }
   _LoadedTexture.textureFilters(context, textureImage, new H3DU.TextureInfo(), target);
-};
+}
 
 /** @ignore */
 _LoadedTexture.prototype.dispose = function() {
-  "use strict";
   if(this.loadedTexture && this.context) {
     this.context.deleteTexture(this.loadedTexture);
   }
@@ -205,7 +197,6 @@ _LoadedTexture.prototype.dispose = function() {
 };
 /** @ignore */
 _LoadedCubeMap.prototype.dispose = function() {
-  "use strict";
   if(this.loadedTexture && this.context) {
     this.context.deleteTexture(this.loadedTexture);
   }
@@ -218,7 +209,6 @@ _LoadedCubeMap.prototype.dispose = function() {
 _MaterialBinder.bindTexture = function(
   texture, textureInfo, context, program,
   textureUnit, loader, uniformName, sizeUniform) {
-  "use strict";
   if(!(typeof textureInfo !== "undefined" && textureInfo !== null))throw new Error();
   if(typeof texture === "undefined" || texture === null) {
     if(context) {
@@ -332,15 +322,13 @@ _MaterialBinder.bindTexture = function(
  * @constructor
  */
 function _LightsBinder(lights) {
-  "use strict";
   this.lights = lights;
-};
+}
 _LightsBinder.emptyW1 = [0, 0, 0, 1];
 _LightsBinder.emptyW0 = [0, 0, 0, 0];
 _LightsBinder.emptyAtten = [1, 0, 0, 0];
 /** @ignore */
 _LightsBinder.prototype.bind = function(program, viewMatrix) {
-  "use strict";
   var ltname;
   var lightsObject = this.lights;
   if(!lightsObject)return this;
@@ -373,4 +361,4 @@ _LightsBinder.prototype.bind = function(program, viewMatrix) {
 };
 
 // /////////////////////
-export { _LoadedTexture, _LoadedCubeMap, _LightsBinder, _MaterialBinder };
+export {_LoadedTexture, _LoadedCubeMap, _LightsBinder, _MaterialBinder};

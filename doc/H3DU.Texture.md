@@ -48,9 +48,9 @@ Creates a texture from a byte array specifying the texture data.
 
 * `array` (Type: Uint8Array)<br>
     A byte array containing the texture data, with the pixels arranged in left-to-right rows from top to bottom. Each pixel takes 4 bytes, where the bytes are the red, green, blue, and alpha components, in that order.
-* `width` (Type: Uint8Array)<br>
+* `width` (Type: number)<br>
     Width, in pixels, of the texture.
-* `height` (Type: Uint8Array)<br>
+* `height` (Type: number)<br>
     Height, in pixels, of the texture.
 
 #### Return Value

@@ -57,7 +57,7 @@ it to an existing HTML element.
 
 #### Return Value
 
-The resulting canvas element. (Type: HTMLCanvasElement)
+The resulting canvas element. (Type: Element)
 
  <a name='H3DU.get3DContext'></a>
 ### (static) H3DU.get3DContext(canvasElement, err)

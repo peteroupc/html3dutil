@@ -522,7 +522,7 @@ In all the transformations described above, the last row in the transformation m
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the `H3DU.Math` library.
 
-Transformations that don't necessarily parallelism of lines are called _projective transformations_.
+Transformations that don't necessarily preserve parallelism of lines are called _projective transformations_.
 An NxN matrix can describe projective transformations if it has one more row and one more column
 than the number of dimensions.  For example, a 4x4 matrix can describe 3D projective transformations
 in the form of linear transformations on homogeneous coordinates (see

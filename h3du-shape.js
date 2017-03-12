@@ -25,7 +25,6 @@
  * is deprecated.</i>
  */
 export var Shape = function(mesh) {
-  "use strict";
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   if(mesh instanceof H3DU.Mesh) {
     this.meshBuffer = new H3DU.MeshBuffer(mesh);
@@ -51,7 +50,6 @@ export var Shape = function(mesh) {
  * @returns {H3DU.MeshBuffer} Return value.
  */
 Shape.prototype.getMeshBuffer = function() {
-  "use strict";
   return this.meshBuffer;
 };
 /** @ignore */
@@ -62,7 +60,6 @@ Shape._meshBufferWarning = false;
  * @returns {number} Return value.
  */
 Shape.prototype.vertexCount = function() {
-  "use strict";
   return this.meshBuffer ? this.meshBuffer.vertexCount() : 0;
 };
 /**
@@ -71,7 +68,6 @@ Shape.prototype.vertexCount = function() {
  * @returns {number} Return value.
  */
 Shape.prototype.primitiveCount = function() {
-  "use strict";
   return this.meshBuffer ? this.meshBuffer.primitiveCount() : 0;
 };
 /**
@@ -80,7 +76,6 @@ Shape.prototype.primitiveCount = function() {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setVisible = function(value) {
-  "use strict";
   this.visible = !!value;
   return this;
 };
@@ -89,7 +84,6 @@ Shape.prototype.setVisible = function(value) {
  * @returns {boolean} True if this shape will be visible; otherwise, false.
  */
 Shape.prototype.getVisible = function() {
-  "use strict";
   return this.visible;
 };
 /**
@@ -110,7 +104,6 @@ Shape.prototype.getVisible = function() {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setColor = function(r, g, b, a) {
-  "use strict";
   var c = H3DU.toGLColor(r, g, b, a);
   this._ensureMaterial().setParams({
     "ambient":c,
@@ -130,7 +123,6 @@ Shape.prototype.setColor = function(r, g, b, a) {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setTexture = function(name) {
-  "use strict";
   this._ensureMaterial().setParams({"texture":name});
   return this;
 };
@@ -142,13 +134,11 @@ Shape.prototype.setTexture = function(name) {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setShader = function(shader) {
-  "use strict";
   this._ensureMaterial().setParams({"shader":shader});
   return this;
 };
 /** @ignore */
 Shape.prototype._ensureMaterial = function() {
-  "use strict";
   if(typeof this.material === "undefined" || this.material === null) {
     this.material = new H3DU.PbrMaterial();
   }
@@ -174,7 +164,6 @@ Shape.prototype._ensureMaterial = function() {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
-  "use strict";
   var c = H3DU.toGLColor(r, g, b, a);
   this._ensureMaterial().setParams({
     "texture":name,
@@ -190,7 +179,6 @@ Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setMaterial = function(material) {
-  "use strict";
   if(typeof material === "undefined" || material === null) {
     throw new Error();
   }
@@ -209,7 +197,6 @@ Shape.prototype.setMaterial = function(material) {
  * @returns {H3DU.Shape} A copy of this object.
  */
 Shape.prototype.copy = function() {
-  "use strict";
   var ret = new H3DU.Shape(this.meshBuffer);
   ret.visible = this.visible;
   ret.parent = null;
@@ -223,7 +210,6 @@ Shape.prototype.copy = function() {
  * @returns {H3DU.Transform} Return value.
  */
 Shape.prototype.getTransform = function() {
-  "use strict";
   return this.transform;
 };
 /**
@@ -232,7 +218,6 @@ Shape.prototype.getTransform = function() {
  * @returns {H3DU.Material|H3DU.PbrMaterial} Return value.
  */
 Shape.prototype.getMaterial = function() {
-  "use strict";
   return this.material;
 };
 /**
@@ -249,7 +234,6 @@ Shape.prototype.getMaterial = function() {
  * -Inf, -Inf].
  */
 Shape.prototype.getBounds = function() {
-  "use strict";
   if(!this.meshBuffer) {
     var inf = Number.POSITIVE_INFINITY;
     return [inf, inf, inf, -inf, -inf, -inf];
@@ -310,7 +294,6 @@ Shape.prototype.getBounds = function() {
 };
 /** @ignore */
 Shape.prototype.isCulled = function(frustum) {
-  "use strict";
   if(!this.meshBuffer || !this.visible)return true;
   return !H3DU.Math.frustumHasBox(frustum, this.getBounds());
 };
@@ -322,7 +305,6 @@ Shape.prototype.isCulled = function(frustum) {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setTransform = function(transform) {
-  "use strict";
   this.transform = transform.copy();
   return this;
 };
@@ -336,7 +318,6 @@ Shape.prototype.setTransform = function(transform) {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setScale = function(x, y, z) {
-  "use strict";
   this.getTransform().setScale(x, y, z);
   return this;
 };
@@ -350,7 +331,6 @@ Shape.prototype.setScale = function(x, y, z) {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setPosition = function(x, y, z) {
-  "use strict";
   this.getTransform().setPosition(x, y, z);
   return this;
 };
@@ -361,7 +341,6 @@ Shape.prototype.setPosition = function(x, y, z) {
  * @returns {H3DU.Shape} This object.
  */
 Shape.prototype.setQuaternion = function(quat) {
-  "use strict";
   this.getTransform().setQuaternion(quat);
   return this;
 };
@@ -371,7 +350,6 @@ Shape.prototype.setQuaternion = function(quat) {
  * @returns {Array<number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix = function() {
-  "use strict";
   var xform = this.getTransform();
   var thisIdentity = xform.isIdentity();
   var mat;

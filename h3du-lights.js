@@ -17,11 +17,10 @@
  * @memberof H3DU
  */
 export var Lights = function() {
-  "use strict";
   this._init();
-}
+};
 /** @ignore */
-Lights.prototype._init=function() {
+Lights.prototype._init = function() {
   this.lights = [];
  /**
   * Ambient color for the scene. This is the color of the light
@@ -48,7 +47,6 @@ Lights.prototype._init=function() {
  * @returns {H3DU.Lights} This object.
  */
 Lights.prototype.setBasic = function() {
-  "use strict";
   var ls = new H3DU.LightSource().setParams({
     "ambient":[0, 0, 0, 1],
     "position":[0, 0, 1, 0],
@@ -69,7 +67,6 @@ Lights.prototype.setBasic = function() {
 Lights.MAX_LIGHTS = 3;
 /** @ignore */
 Lights._createNewLight = function(index) {
-  "use strict";
   var ret = new H3DU.LightSource();
   if(index !== 0) {
     ret.diffuse = [0, 0, 0, 0];
@@ -82,7 +79,6 @@ Lights._createNewLight = function(index) {
  * @returns {number} Return value.
  */
 Lights.prototype.getCount = function() {
-  "use strict";
   return this.lights.length;
 };
 
@@ -94,7 +90,6 @@ Lights.prototype.getCount = function() {
  * @returns {H3DU.LightSource} The corresponding light source object.
  */
 Lights.prototype.getLight = function(index) {
-  "use strict";
   var oldLength = this.lights.length;
   if(!this.lights[index])this.lights[index] = H3DU.Lights._createNewLight(index);
   if(this.lights.length - oldLength >= 2) {
@@ -117,7 +112,6 @@ Lights.prototype.getLight = function(index) {
  * @returns {H3DU.Lights} This object.
  */
 Lights.prototype.setParams = function(index, params) {
-  "use strict";
   this.getLight(index).setParams(params);
   return this;
 };
@@ -138,7 +132,6 @@ Lights.prototype.setParams = function(index, params) {
  * @returns {H3DU.Lights} This object.
  */
 Lights.prototype.setDirectionalLight = function(index, direction, diffuse, specular) {
-  "use strict";
   var ret = this.setParams(index, {"position":[direction[0], direction[1], direction[2], 0]});
   if(typeof diffuse !== "undefined" && diffuse !== null)
     ret = ret.setParams(index, {"diffuse":diffuse});
@@ -158,7 +151,6 @@ Lights.prototype.setDirectionalLight = function(index, direction, diffuse, specu
  * @returns {H3DU.Lights} This object.
  */
 Lights.prototype.setPointLight = function(index, position, diffuse, specular) {
-  "use strict";
   var ret = this.setParams(index, {"position":[position[0], position[1], position[2], 1]});
   if(typeof diffuse !== "undefined" && diffuse !== null)
     ret = ret.setParams(index, {"diffuse":diffuse});
@@ -181,7 +173,6 @@ Lights.prototype.setPointLight = function(index, position, diffuse, specular) {
  * @returns {H3DU.Lights} This object.
  */
 Lights.prototype.setAmbient = function(r, g, b, a) {
-  "use strict";
   this.sceneAmbient = H3DU.toGLColor(r, g, b, a);
   return this;
 };

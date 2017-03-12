@@ -8,7 +8,7 @@
  http://peteroupc.github.io/
 */
 
-import { _MathInternal } from './h3du-mathinternal';
+import {_MathInternal} from "./h3du-mathinternal";
 
 /**
  * A surface evaluator object for a parametric surface.<p>
@@ -30,7 +30,6 @@ import { _MathInternal } from './h3du-mathinternal';
  * methods, as described in the corresponding methods of this class.
  */
 export var Surface = function(surface) {
-  "use strict";
   this.surface = typeof surface === "undefined" ? null : surface;
 };
 /** @ignore */
@@ -50,7 +49,6 @@ Surface._EPSILON = 0.00001;
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.tangent = function(u, v) {
-  "use strict";
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.tangent !== "undefined" && this.surface.tangent !== null)) {
     return this.surface.tangent(u, v);
   } else {
@@ -77,7 +75,6 @@ Surface.prototype.tangent = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.bitangent = function(u, v) {
-  "use strict";
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.bitangent !== "undefined" && this.surface.bitangent !== null)) {
     return this.surface.bitangent(u, v);
   } else {
@@ -101,7 +98,6 @@ Surface.prototype.bitangent = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.normal = function(u, v) {
-  "use strict";
   return _MathInternal.vecNormalizeInPlace(this.gradient(u, v));
 };
 
@@ -123,7 +119,6 @@ Surface.prototype.normal = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.gradient = function(u, v) {
-  "use strict";
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.gradient !== "undefined" && this.surface.gradient !== null)) {
     return this.surface.gradient(u, v);
   } else {
@@ -160,7 +155,6 @@ Surface.prototype.gradient = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.evaluate = function(u, v) {
-  "use strict";
   if(typeof this.evaluate !== "undefined" && this.evaluate !== null && (typeof this.surface.evaluate !== "undefined" && this.surface.evaluate !== null)) {
     return this.surface.evaluate(u, v);
   } else {
@@ -178,7 +172,6 @@ Surface.prototype.evaluate = function(u, v) {
  * method.
  */
 Surface.prototype.endPoints = function() {
-  "use strict";
   if(typeof this.evaluate !== "undefined" && this.evaluate !== null && (typeof this.surface.endPoints !== "undefined" && this.surface.endPoints !== null)) {
     return this.surface.endPoints();
   } else {

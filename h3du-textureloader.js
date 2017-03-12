@@ -8,8 +8,8 @@
 */
 /* global H3DU, Promise */
 
-import { _LoadedCubeMap, _LoadedTexture } from './h3du-binders';
-import { FrameBufferLoader } from './h3du-framebuffer';
+import {_LoadedCubeMap, _LoadedTexture} from "./h3du-binders";
+import {FrameBufferLoader} from "./h3du-framebuffer";
 
 /**
  * An object that caches loaded textures and uploads them
@@ -18,7 +18,6 @@ import { FrameBufferLoader } from './h3du-framebuffer';
  * @memberof H3DU
  */
 export var TextureLoader = function() {
-  "use strict";
   this.loadedTextures = [];
   this.textureImages = {};
   this.maxAnisotropy = [];
@@ -31,7 +30,6 @@ export var TextureLoader = function() {
  * if it doesn't exist.
  */
 TextureLoader.prototype.getTexture = function(name) {
-  "use strict";
   var tex = this.textureImages[name] || null;
   if(tex && tex.loadStatus !== 2) {
     this.textureImages[name] = null;
@@ -53,12 +51,10 @@ TextureLoader.prototype.getTexture = function(name) {
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
  */
 TextureLoader.prototype.loadTexture = function(texture) {
-  "use strict";
   return H3DU.Texture.loadTexture(texture, this.textureImages);
 };
 /** @ignore */
 TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   var ma = this.maxAnisotropy;
   for(var i = 0; i < ma.length; i++) {
@@ -100,7 +96,6 @@ TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
  * {@link H3DU.Texture} object.
  */
 TextureLoader.prototype.loadTexturesAll = function(textures, resolve, reject) {
-  "use strict";
   var promises = [];
   for(var i = 0; i < textures.length; i++) {
     promises.push(this.loadTexture(textures[i]));
@@ -121,7 +116,6 @@ TextureLoader.prototype.loadTexturesAll = function(textures, resolve, reject) {
  * and is rejected when an error occurs.
  */
 TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   var that = this;
   return this.loadTexture(texture).then(function(tex) {
@@ -148,7 +142,6 @@ TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
  * {@link H3DU.Texture} object.
  */
 TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context, resolve, reject) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   var promises = [];
   for(var i = 0; i < textures.length; i++) {
@@ -159,7 +152,6 @@ TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context, reso
 
 /** @ignore */
 TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo, context) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   var lt = this.loadedTextures;
   for(var i = 0; i < lt.length; i++) {
@@ -189,7 +181,6 @@ TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo, con
  * and is rejected when an error occurs.
  */
 TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, reject) {
-  "use strict";
   var cubemap = texturesOrCubeMap;
   if(!(texturesOrCubeMap instanceof H3DU.CubeMap)) {
     cubemap = new H3DU.CubeMap(texturesOrCubeMap);
@@ -202,19 +193,16 @@ TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, rejec
 
 /** @ignore */
 TextureLoader.prototype.mapFrameBuffer = function(info, context) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   return this.fbLoader.mapFrameBuffer(info, context);
 };
 /** @ignore */
 TextureLoader.prototype.bindFrameBuffer = function(info, context, textureUnit) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   return this.fbLoader.bind(info, context, textureUnit);
 };
 /** @ignore */
 TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
-  "use strict";
   context = context.getContext ? context.getContext() : context;
   this.fbLoader.unbind(info, context);
 };
@@ -223,7 +211,6 @@ TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
  * @returns {void} This method doesn't return a value.
  */
 TextureLoader.prototype.dispose = function() {
-  "use strict";
   for(var tex in this.textureImages) {
     if(Object.prototype.hasOwnProperty.call(this.textureImages, tex)) {
       this.textureImages[tex].dispose();

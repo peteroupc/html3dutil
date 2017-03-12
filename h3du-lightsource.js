@@ -21,7 +21,6 @@
  * @param {Array<number>} [specular] See "specular" property. <i>This parameter is deprecated.</i>
  */
 export var LightSource = function(params, ambient, diffuse, specular) {
-  "use strict";
  /**
   * A 4-element vector giving an additional color to multiply with the ambient
   * color of each object, in the red, green,
@@ -97,7 +96,6 @@ export var LightSource = function(params, ambient, diffuse, specular) {
  * @returns {H3DU.LightSource} This object.
  */
 LightSource.prototype.setParams = function(params) {
-  "use strict";
   if(typeof params.ambient !== "undefined" && params.ambient !== null) {
     this.ambient = H3DU.toGLColor(params.ambient);
     this.ambient = this.ambient.slice(0, 4);

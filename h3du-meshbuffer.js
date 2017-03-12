@@ -17,7 +17,6 @@
  * data.
  */
 export var MeshBuffer = function(mesh) {
-  "use strict";
   var vertices = new Float32Array(mesh.vertices);
   if(mesh.vertices.length >= 65536 || mesh.indices.length >= 65536) {
     this.indexBufferSize = 4;
@@ -61,7 +60,6 @@ export var MeshBuffer = function(mesh) {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setIndices = function(indices, byteSize) {
-  "use strict";
   if(byteSize !== 1 && byteSize !== 2 && byteSize !== 4)
     throw new Error();
   this.indexBufferSize = byteSize;
@@ -75,7 +73,6 @@ MeshBuffer.prototype.setIndices = function(indices, byteSize) {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setPrimitiveType = function(primType) {
-  "use strict";
   if(primType === H3DU.Mesh.TRIANGLES) {
     this.format = 0;
   } else if(primType === H3DU.Mesh.LINES) {
@@ -114,7 +111,6 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
 MeshBuffer.prototype.setAttribute = function(
   name, index, buffer, startIndex, countPerVertex, stride
 ) {
-  "use strict";
   if(buffer.constructor === Array) {
     buffer = new Float32Array(buffer);
   }
@@ -143,7 +139,6 @@ MeshBuffer.prototype.setAttribute = function(
 };
 /** @ignore */
 MeshBuffer._resolveSemantic = function(name, index) {
-  "use strict";
   if(typeof name === "number") {
     return [name, index | 0];
   } else {
@@ -173,13 +168,11 @@ MeshBuffer._resolveSemantic = function(name, index) {
 
 /** @ignore */
 MeshBuffer.prototype._getAttributes = function() {
-  "use strict";
   return this.attributes;
 };
 
 /** @ignore */
 MeshBuffer.prototype._getAttribute = function(name, index) {
-  "use strict";
   var idx = typeof index === "undefined" || index === null ? 0 : index;
   for(var i = 0; i < this.attributes.length; i++) {
     if(this.attributes[i][0] === name &&
@@ -196,7 +189,6 @@ MeshBuffer.prototype._getAttribute = function(name, index) {
  * @returns {number} Return value.
  */
 MeshBuffer.prototype.primitiveCount = function() {
-  "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
     return Math.floor(this.indices.length / 2);
   if((this.format & H3DU.Mesh.POINTS_BIT) !== 0)
@@ -213,7 +205,6 @@ MeshBuffer.prototype.primitiveCount = function() {
  * array containing that vertex's X, Y, and Z coordinates, in that order.
  */
 MeshBuffer.prototype.getPositions = function() {
-  "use strict";
   var count = 3;
   var primtype = this.primitiveType();
   if(primtype === H3DU.Mesh.LINES) {
@@ -222,7 +213,7 @@ MeshBuffer.prototype.getPositions = function() {
   if(primtype === H3DU.Mesh.POINTS) {
     count = 1;
   }
-  var posattr = this._getAttribute(H3DU.Semantic.POSITION,0);
+  var posattr = this._getAttribute(H3DU.Semantic.POSITION, 0);
   if(!posattr || posattr[3] < 3) {
     return [];
   }
@@ -266,12 +257,11 @@ MeshBuffer.prototype.getPositions = function() {
  * [Inf, Inf, Inf, -Inf, -Inf, -Inf].
  */
 MeshBuffer.prototype.getBounds = function() {
-  "use strict";
   if(!this._bounds) {
     var empty = true;
     var inf = Number.POSITIVE_INFINITY;
     var ret = [inf, inf, inf, -inf, -inf, -inf];
-    var posattr = this._getAttribute(H3DU.Semantic.POSITION,0);
+    var posattr = this._getAttribute(H3DU.Semantic.POSITION, 0);
     if(!posattr || posattr[3] < 3)return ret;
     var stride = posattr[4];
     var v = posattr[2];
@@ -303,7 +293,6 @@ MeshBuffer.prototype.getBounds = function() {
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  */
 MeshBuffer.prototype.primitiveType = function() {
-  "use strict";
   if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
     return H3DU.Mesh.LINES;
   if((this.format & H3DU.Mesh.POINTS_BIT) !== 0)
@@ -323,7 +312,6 @@ MeshBuffer._wellKnownAttributes = {
 
 /** @ignore */
 MeshBuffer.prototype.getFormat = function() {
-  "use strict";
   return this.format;
 };
 /**
@@ -331,6 +319,5 @@ MeshBuffer.prototype.getFormat = function() {
  * @returns {number} Return value.
  */
 MeshBuffer.prototype.vertexCount = function() {
-  "use strict";
   return this.indices.length;
 };

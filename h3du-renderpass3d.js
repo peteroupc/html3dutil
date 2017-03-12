@@ -22,7 +22,6 @@
  * allowed for each key.
  */
 function RenderPass3D(batch, parameters) {
-  "use strict";
  /** The batch to render.
   * @type {H3DU.Batch3D}
   */
@@ -55,8 +54,8 @@ function RenderPass3D(batch, parameters) {
   * @default
   */
   this.useFrameBufferSize = false;
-  this.setParams(typeof parameters==="undefined" ? null : (parameters));
-};
+  this.setParams(typeof parameters === "undefined" ? null : parameters);
+}
 /**
  * Sets parameters for this render pass object.
  * @param {Object} parameters An object whose keys have
@@ -75,7 +74,6 @@ function RenderPass3D(batch, parameters) {
  * @returns {H3DU.RenderPass3D} This object.
  */
 RenderPass3D.prototype.setParams = function(parameters) {
-  "use strict";
   if(!parameters)return this;
   if(typeof parameters.clearColor !== "undefined") {
     this.clearColor = parameters.clearColor;
@@ -101,4 +99,4 @@ RenderPass3D.prototype.setParams = function(parameters) {
   return this;
 };
 
-export { RenderPass3D };
+export {RenderPass3D};

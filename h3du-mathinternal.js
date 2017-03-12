@@ -1,4 +1,3 @@
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -10,7 +9,6 @@
 /** @ignore */
 export var _MathInternal = {
   "vecZeros":function(count) {
-    "use strict";
     var vec = [];
     for(var i = 0; i < count; i++) {
       vec[i] = 0;
@@ -18,7 +16,6 @@ export var _MathInternal = {
     return vec;
   },
   "vecSub":function(vec, subVec) {
-    "use strict";
     var ret = [];
     for(var i = 0; i < vec.length; i++) {
       ret[i] = vec[i] - subVec[i];
@@ -26,14 +23,12 @@ export var _MathInternal = {
     return ret;
   },
   "vecSubInPlace":function(vec, subVec) {
-    "use strict";
     for(var i = 0; i < vec.length; i++) {
       vec[i] -= subVec[i];
     }
     return vec;
   },
   "vecScale":function(vec, scalar) {
-    "use strict";
     var ret = [];
     for(var i = 0; i < vec.length; i++) {
       ret[i] = vec[i] * scalar;
@@ -41,14 +36,12 @@ export var _MathInternal = {
     return ret;
   },
   "vecSubScaleInPlace":function(vec, subVec, scaleNum) {
-    "use strict";
     for(var i = 0; i < vec.length; i++) {
       vec[i] = (vec[i] - subVec[i]) * scaleNum;
     }
     return vec;
   },
   "vecNormalizeInPlace":function(vec) {
-    "use strict";
     var len = 0;
     for(var i = 0; i < vec.length; i++) {
       len += vec[i] * vec[i];
@@ -62,7 +55,6 @@ export var _MathInternal = {
     return vec;
   },
   "vecLength":function(vec) {
-    "use strict";
     var dsq = 0;
     for(var i = 0; i < vec.length; i++) {
       dsq += vec[i] * vec[i];

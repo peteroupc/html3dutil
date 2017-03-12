@@ -24,7 +24,6 @@
  * @param {Object} [params] An object as described in {@link H3DU.TextureInfo.setParams}.
  */
 export var TextureInfo = function(params) {
-  "use strict";
   this.uri = "";
   this.topDown = false;
   this.format = 6408;
@@ -35,7 +34,7 @@ export var TextureInfo = function(params) {
   this.minFilter = 9987; // NOTE: Different from glTF default of 9986
   this.wrapS = 10497;
   this.wrapT = 10497;
-  this.setParams(typeof params==="undefined" ? null : (params));
+  this.setParams(typeof params === "undefined" ? null : params);
 };
 
 /**
@@ -45,7 +44,6 @@ export var TextureInfo = function(params) {
  * @returns {H3DU.TextureInfo} This object.
  */
 TextureInfo.prototype.copyFrom = function(other) {
-  "use strict";
   if(typeof other !== "undefined" && other !== null) {
     this.uri = typeof other.uri === "undefined" || other.uri === null ? "" : other.uri;
     this.format = typeof other.format === "undefined" || other.format === null ? 6408 : other.format;
@@ -83,7 +81,6 @@ TextureInfo.prototype.copyFrom = function(other) {
  * @returns {H3DU.TextureInfo} This object.
  */
 TextureInfo.prototype.setParams = function(params) {
-  "use strict";
   if(typeof params !== "undefined" && params !== null) {
     if(typeof params.uri !== "undefined" && params.uri !== null) {
       this.uri = params.uri;
@@ -120,6 +117,5 @@ TextureInfo.prototype.setParams = function(params) {
 };
 /** @ignore */
 TextureInfo._texInfoOrString = function(tex) {
-  "use strict";
   return typeof tex === "string" ? new H3DU.TextureInfo({"uri":tex}) : tex;
 };

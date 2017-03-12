@@ -15,11 +15,10 @@
  * @memberof H3DU
  */
 export var ShapeGroup = function() {
-  "use strict";
   this._init();
-}
+};
 /** @ignore */
-ShapeGroup.prototype._init=function() {
+ShapeGroup.prototype._init = function() {
  /** List of shapes contained in this group.
   * This property should only be used to access properties
   * and call methods on each shape, and not to add, remove
@@ -40,7 +39,6 @@ ShapeGroup.prototype._init=function() {
  * @returns {number} Return value.
  */
 ShapeGroup.prototype.shapeCount = function() {
-  "use strict";
   return this.shapes.length;
 };
 /**
@@ -51,7 +49,6 @@ ShapeGroup.prototype.shapeCount = function() {
  * in this shape group at the given index, or null if none is found there.
  */
 ShapeGroup.prototype.getShape = function(index) {
-  "use strict";
   return typeof this.shapes[index] === "undefined" ? null : this.shapes[index];
 };
 /**
@@ -61,7 +58,6 @@ ShapeGroup.prototype.getShape = function(index) {
  * @returns {H3DU.ShapeGroup} This object.
  */
 ShapeGroup.prototype.setShape = function(index, shape) {
-  "use strict";
   this.shapes[index] = shape;
   return this;
 };
@@ -76,7 +72,6 @@ ShapeGroup.prototype.setShape = function(index, shape) {
  * @returns {H3DU.ShapeGroup} A copy of this shape group.
  */
 ShapeGroup.prototype.copy = function() {
-  "use strict";
   var ret = new H3DU.ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
@@ -95,7 +90,6 @@ ShapeGroup.prototype.copy = function() {
  * @returns {H3DU.ShapeGroup} This object.
  */
 ShapeGroup.prototype.addShape = function(shape) {
-  "use strict";
   if(!shape)throw new Error();
   shape.parent = this;
   this.shapes.push(shape);
@@ -107,7 +101,6 @@ ShapeGroup.prototype.addShape = function(shape) {
  * @returns {H3DU.ShapeGroup} This object.
  */
 ShapeGroup.prototype.setVisible = function(value) {
-  "use strict";
   this.visible = !!value;
   return this;
 };
@@ -116,7 +109,6 @@ ShapeGroup.prototype.setVisible = function(value) {
  * @returns {boolean} value True if this shape group will be visible; otherwise, false.
  */
 ShapeGroup.prototype.getVisible = function() {
-  "use strict";
   return this.visible;
 };
 /**
@@ -124,7 +116,6 @@ ShapeGroup.prototype.getVisible = function() {
  * @returns {H3DU.Transform} Return value.
  */
 ShapeGroup.prototype.getTransform = function() {
-  "use strict";
   return this.transform;
 };
 /**
@@ -133,7 +124,6 @@ ShapeGroup.prototype.getTransform = function() {
  * @returns {H3DU.Transform} A 4x4 matrix.
  */
 ShapeGroup.prototype.getMatrix = function() {
-  "use strict";
   var xform = this.getTransform();
   var thisIdentity = xform.isIdentity();
   var mat;
@@ -162,7 +152,6 @@ ShapeGroup.prototype.getMatrix = function() {
  * @returns {Object} Return value.
  */
 ShapeGroup.prototype.setTransform = function(transform) {
-  "use strict";
   this.transform = transform.copy();
   return this;
 };
@@ -172,7 +161,6 @@ ShapeGroup.prototype.setTransform = function(transform) {
  * @returns {Object} Return value.
  */
 ShapeGroup.prototype.setMaterial = function(material) {
-  "use strict";
   for(var i = 0; i < this.shapes.length; i++) {
     this.shapes[i].setMaterial(material);
   }
@@ -193,7 +181,6 @@ ShapeGroup.prototype.setMaterial = function(material) {
  * @returns {Object} Return value.
  */
 ShapeGroup.prototype.setTexture = function(material) {
-  "use strict";
   for(var i = 0; i < this.shapes.length; i++) {
     this.shapes[i].setTexture(material);
   }
@@ -207,7 +194,6 @@ ShapeGroup.prototype.setTexture = function(material) {
  * @returns {Object} Return value.
  */
 ShapeGroup.prototype.setShader = function(material) {
-  "use strict";
   for(var i = 0; i < this.shapes.length; i++) {
     this.shapes[i].setShader(material);
   }
@@ -219,7 +205,6 @@ ShapeGroup.prototype.setShader = function(material) {
  * @returns {H3DU.ShapeGroup} This object.
  */
 ShapeGroup.prototype.removeShape = function(shape) {
-  "use strict";
   for(var i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
@@ -241,7 +226,6 @@ ShapeGroup.prototype.removeShape = function(shape) {
  * -Inf, -Inf].
  */
 ShapeGroup.prototype.getBounds = function() {
-  "use strict";
   var inf = Number.POSITIVE_INFINITY;
   var ret = [inf, inf, inf, -inf, -inf, -inf];
   var first = true;
@@ -275,7 +259,6 @@ ShapeGroup.prototype.getBounds = function() {
  * @returns {number} Return value.
  */
 ShapeGroup.prototype.vertexCount = function() {
-  "use strict";
   var c = 0;
   for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
@@ -288,7 +271,6 @@ ShapeGroup.prototype.vertexCount = function() {
  * @returns {number} Return value.
  */
 ShapeGroup.prototype.primitiveCount = function() {
-  "use strict";
   var c = 0;
   for(var i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
@@ -308,7 +290,6 @@ ShapeGroup.prototype.primitiveCount = function() {
  * @returns {H3DU.ShapeGroup} This object.
  */
 ShapeGroup.prototype.setPosition = function(x, y, z) {
-  "use strict";
   this.transform.setPosition(x, y, z);
   return this;
 };
@@ -321,7 +302,6 @@ ShapeGroup.prototype.setPosition = function(x, y, z) {
  * @returns {H3DU.ShapeGroup} This object.
  */
 ShapeGroup.prototype.setQuaternion = function(quat) {
-  "use strict";
   this.transform.setQuaternion(quat);
   return this;
 };
@@ -337,7 +317,6 @@ ShapeGroup.prototype.setQuaternion = function(quat) {
  * @returns {H3DU.ShapeGroup} This object.
  */
 ShapeGroup.prototype.setScale = function(x, y, z) {
-  "use strict";
   this.transform.setScale(x, y, z);
   return this;
 };

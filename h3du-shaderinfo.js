@@ -44,7 +44,6 @@
  * If null, a default fragment shader is used instead.
  */
 export var ShaderInfo = function(vertexShader, fragmentShader) {
-  "use strict";
   if(typeof vertexShader === "undefined" || vertexShader === null) {
     vertexShader = H3DU.ShaderInfo.getDefaultVertex();
   }
@@ -53,6 +52,7 @@ export var ShaderInfo = function(vertexShader, fragmentShader) {
   }
   this.vertexShader = vertexShader;
   this.fragmentShader = fragmentShader;
+  this.disposeCalled = false;
   this.uniformValues = {};
   this.attributeSemantics = {};
   this.attributeSemantics.position = new Uint32Array([H3DU.Semantic.POSITION, 0]);
@@ -75,7 +75,6 @@ export var ShaderInfo = function(vertexShader, fragmentShader) {
  * @returns {H3DU.ShaderInfo} This object.
  */
 ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
-  "use strict";
   this.uniformSemantics[u] = sem;
   return this;
 };
@@ -85,7 +84,6 @@ ShaderInfo.prototype.setUniformSemantic = function(u, sem) {
  * @returns {string} return value.
  */
 ShaderInfo.prototype.getVertexShader = function() {
-  "use strict";
   return this.vertexShader;
 };
 /**
@@ -93,16 +91,15 @@ ShaderInfo.prototype.getVertexShader = function() {
  * @returns {string} return value.
  */
 ShaderInfo.prototype.getFragmentShader = function() {
-  "use strict";
   return this.fragmentShader;
 };
 
 /**
- * Has no effect. A method introduced for compatibility reasons.
+ * This method was introduced for compatibility reasons.
  * @deprecated
  */
 ShaderInfo.prototype.dispose = function() {
-  "use strict";
+  this.disposeCalled = true;
 };
 
 /**
@@ -118,7 +115,6 @@ ShaderInfo.prototype.dispose = function() {
  * semantic is unsupported.
  */
 ShaderInfo.prototype.setSemantic = function(name, semantic, semanticIndex) {
-  "use strict";
   var an = this.attributeSemantics[name];
   var semIndex = H3DU.MeshBuffer._resolveSemantic(semantic, semanticIndex);
   if(!semIndex) {
@@ -139,7 +135,6 @@ ShaderInfo.prototype.setSemantic = function(name, semantic, semanticIndex) {
  * @returns {H3DU.ShaderInfo} Return value.
  */
 ShaderInfo.prototype.copy = function() {
-  "use strict";
   var sp = new H3DU.ShaderInfo(this.vertexShader, this.fragmentShader);
   sp.setUniforms(this.uniformValues);
   for(var k in this.attributeSemantics)
@@ -172,13 +167,11 @@ ShaderInfo.prototype.copy = function() {
  * @returns {H3DU.ShaderInfo} This object.
  */
 ShaderInfo.prototype.setUniforms = function(uniforms) {
-  "use strict";
   H3DU.ShaderInfo._setUniformsInternal(uniforms, this.uniformValues, null);
   return this;
 };
 /** @ignore */
 ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, changedUniforms) {
-  "use strict";
   var v = uniforms[i];
   var uv = uniformValues[i];
   if(typeof v === "number") {
@@ -243,7 +236,6 @@ ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, changedUni
 
 /** @ignore */
 ShaderInfo._copyIfDifferent = function(src, dst, len) {
-  "use strict";
   for(var i = 0; i < len; i++) {
     if(src[i] !== dst[i]) {
    // Arrays are different
@@ -259,7 +251,6 @@ ShaderInfo._copyIfDifferent = function(src, dst, len) {
 
 /** @ignore */
 ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUniforms) {
-  "use strict";
   var i;
   var keys = Object.keys(uniforms);
   for(var ki = 0; ki < keys.length; ki++) {
@@ -269,7 +260,6 @@ ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUnif
 };
 /** @ignore */
 ShaderInfo.fragmentShaderHeader = function() {
-  "use strict";
   return "" +
 "#ifdef GL_ES\n" +
 "#ifndef GL_FRAGMENT_PRECISION_HIGH\n" +
@@ -287,7 +277,6 @@ ShaderInfo.fragmentShaderHeader = function() {
  * @returns {string} The source text of the resulting fragment shader.
  */
 ShaderInfo.makeEffectFragment = function(functionCode) {
-  "use strict";
   var shader = H3DU.ShaderInfo.fragmentShaderHeader();
   shader += "" +
 "uniform sampler2D sampler;\n" + // texture sampler
@@ -307,7 +296,6 @@ ShaderInfo.makeEffectFragment = function(functionCode) {
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderInfo.makeCopyEffect = function() {
-  "use strict";
   var shader = H3DU.ShaderInfo.fragmentShaderHeader();
   shader += "" +
 "uniform sampler2D sampler;\n" + // texture sampler
@@ -338,7 +326,6 @@ ShaderInfo.makeCopyEffect = function() {
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderInfo.makeEffect = function(functionCode) {
-  "use strict";
   return new H3DU.ShaderInfo(
    H3DU.ShaderInfo.getBasicVertex(),
    H3DU.ShaderInfo.makeEffectFragment(functionCode));
@@ -348,7 +335,6 @@ ShaderInfo.makeEffect = function(functionCode) {
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderInfo.makeInvertEffect = function() {
-  "use strict";
   return H3DU.ShaderInfo.makeEffect(
 [
   "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
@@ -362,7 +348,6 @@ ShaderInfo.makeInvertEffect = function() {
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderInfo.makeEdgeDetectEffect = function() {
-  "use strict";
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
   return H3DU.ShaderInfo.makeEffect(
@@ -398,7 +383,6 @@ ShaderInfo.makeEdgeDetectEffect = function() {
  * @returns {string} The resulting shader text.
  */
 ShaderInfo.getBasicVertex = function() {
-  "use strict";
   var shader = [
     "attribute vec3 position;\n",
     "attribute vec2 uv;\n",
@@ -426,7 +410,6 @@ ShaderInfo.getBasicVertex = function() {
  * @returns {string} The resulting shader text.
  */
 ShaderInfo.getDefaultVertex = function() {
-  "use strict";
   var shader = [
     "attribute vec3 position;",
     "attribute vec3 normal;",
@@ -476,7 +459,6 @@ ShaderInfo.getDefaultVertex = function() {
  * @returns {string} The resulting shader text.
  */
 ShaderInfo.getDefaultFragment = function() {
-  "use strict";
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [
     "#define ONE_DIV_PI 0.318309886",

@@ -38,19 +38,16 @@
  * If null, a default fragment shader is used instead.
  */
 export var ShaderProgram = function(context, vertexShader, fragmentShader) {
-  "use strict";
   this._init(context, new H3DU.ShaderInfo(vertexShader, fragmentShader));
 };
 /** @ignore */
 ShaderProgram._fromShaderInfo = function(context, shader) {
-  "use strict";
   var ret = new H3DU.ShaderProgram(null);
   ret._init(context, shader);
   return ret;
 };
 /** @ignore */
 ShaderProgram.prototype._init = function(context, shaderInfo) {
-  "use strict";
   if(!context)return;
   context = context.getContext ? context.getContext() : context;
   this.CURRENT_PROGRAM = 35725;
@@ -108,7 +105,6 @@ ShaderProgram.prototype._init = function(context, shaderInfo) {
 };
 /** @ignore */
 ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index) {
-  "use strict";
   for(var key in this.attributeSemantics) {
     if(Object.prototype.hasOwnProperty.call(this.attributeSemantics, key)) {
       var v = this.attributeSemantics[key];
@@ -120,7 +116,6 @@ ShaderProgram.prototype._addNamesWithSemantic = function(array, sem, index) {
 };
 /** @ignore */
 ShaderProgram.prototype._disableOthers = function(names) {
-  "use strict";
   var a = {};
   for(var i = 0; i < names.length; i++) {
     a[names[i]] = true;
@@ -137,7 +132,6 @@ ShaderProgram.prototype._disableOthers = function(names) {
  * @suppress {deprecated}
  */
 ShaderProgram.prototype.dispose = function() {
-  "use strict";
   if(this.program) {
     this.context.deleteProgram(this.program);
   }
@@ -150,7 +144,6 @@ ShaderProgram.prototype.dispose = function() {
 };
 /** @ignore */
 ShaderProgram.prototype.setSemantic = function(name, sem, index) {
-  "use strict";
   var an = this.attributeSemantics[name];
   var semIndex = H3DU.MeshBuffer._resolveSemantic(name, index);
   if(an) {
@@ -167,12 +160,10 @@ ShaderProgram.prototype.setSemantic = function(name, sem, index) {
  * @returns {WebGLRenderingContext|WebGL2RenderingContext} Return value.
  */
 ShaderProgram.prototype.getContext = function() {
-  "use strict";
   return this.context;
 };
 /** @ignore */
 ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
-  "use strict";
   var uniform = this.get(i);
   if(typeof uniform === "undefined" || uniform === null)return;
   var uv = uniforms[i];
@@ -215,7 +206,6 @@ ShaderProgram.prototype._setUniformInternal = function(uniforms, i) {
  * name, or null if it doesn't exist.
  */
 ShaderProgram.prototype.get = function(name) {
-  "use strict";
   var ret = this.actives[name];
   return typeof ret === "undefined" || ret === null ? null : ret;
 };
@@ -229,7 +219,6 @@ ShaderProgram.prototype.get = function(name) {
  * an attribute is named, not a uniform.
  */
 ShaderProgram.prototype.getUniform = function(name) {
-  "use strict";
   var loc = typeof name === "string" ? this.get(name) : name;
  // If "loc" is a number that means it's an attribute, not a uniform;
  // we expect WebGLUniformLocation
@@ -246,7 +235,6 @@ ShaderProgram.prototype.getUniform = function(name) {
 
 /** @ignore */
 ShaderProgram.prototype._setSavedUniforms = function() {
-  "use strict";
   var i;
   var uniformsLength = 0;
   var keys = Object.keys(this.savedUniforms);
@@ -266,7 +254,6 @@ ShaderProgram.prototype._setSavedUniforms = function() {
  * @returns {H3DU.ShaderProgram} This object.
  */
 ShaderProgram.prototype.use = function() {
-  "use strict";
   this.context.useProgram(this.prog);
   if(this._setSavedUniforms() > 0) {
     this.savedUniforms = {};
@@ -275,7 +262,6 @@ ShaderProgram.prototype.use = function() {
 };
 /** @ignore */
 ShaderProgram.prototype._update = function() {
-  "use strict";
   H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
    this.uniformValues, this.savedUniforms);
   return this;
@@ -298,8 +284,6 @@ ShaderProgram.prototype._update = function() {
  * @returns {H3DU.ShaderProgram} This object.
  */
 ShaderProgram.prototype.setUniforms = function(uniforms) {
-  "use strict";
-
   H3DU.ShaderInfo._setUniformsInternal(uniforms, this.uniformValues,
    this.savedUniforms);
   if(this.context.getParameter(
@@ -313,7 +297,6 @@ ShaderProgram.prototype.setUniforms = function(uniforms) {
 
 /** @ignore */
 ShaderProgram._compileShaders = function(context, vertexShader, fragmentShader) {
-  "use strict";
   function compileShader(context, kind, text) {
     var shader = context.createShader(kind);
     context.shaderSource(shader, text);
@@ -363,7 +346,6 @@ ShaderProgram._compileShaders = function(context, vertexShader, fragmentShader) 
  * @returns {string} The source text of the resulting fragment shader.
  */
 ShaderProgram.makeEffectFragment = function(functionCode) {
-  "use strict";
   return H3DU.ShaderInfo.makeEffectFragment(functionCode);
 };
 /**
@@ -372,7 +354,6 @@ ShaderProgram.makeEffectFragment = function(functionCode) {
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderProgram.makeCopyEffect = function() {
-  "use strict";
   return H3DU.ShaderInfo.makeCopyEffect();
 };
 
@@ -396,8 +377,9 @@ ShaderProgram.makeCopyEffect = function() {
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderProgram.makeEffect = function(context, functionCode) {
-  "use strict";
-  if(typeof context!=="undefined" && context!==null) { console.warn("Unused parameter context is defined"); };
+  if(typeof context !== "undefined" && context !== null) {
+    console.warn("Unused parameter context is defined");
+  }
   return H3DU.ShaderInfo.makeEffect(functionCode);
 };
 /**
@@ -407,8 +389,9 @@ ShaderProgram.makeEffect = function(context, functionCode) {
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderProgram.getInvertEffect = function(context) {
-  "use strict";
-if(typeof context!=="undefined" && context!==null) { console.warn("Unused parameter context is defined"); };
+  if(typeof context !== "undefined" && context !== null) {
+    console.warn("Unused parameter context is defined");
+  }
   return H3DU.ShaderInfo.makeInvertEffect();
 };
 /**
@@ -419,10 +402,11 @@ if(typeof context!=="undefined" && context!==null) { console.warn("Unused parame
  * @returns {H3DU.ShaderInfo} The resulting shader program.
  */
 ShaderProgram.getEdgeDetectEffect = function(context) {
-  "use strict";
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
-if(typeof context!=="undefined" && context!==null) { console.warn("Unused parameter context is defined"); };
+  if(typeof context !== "undefined" && context !== null) {
+    console.warn("Unused parameter context is defined");
+  }
   return H3DU.ShaderInfo.makeEdgeDetectEffect();
 };
 
@@ -433,7 +417,6 @@ if(typeof context!=="undefined" && context!==null) { console.warn("Unused parame
  * @returns {string} The resulting shader text.
  */
 ShaderProgram.getDefaultVertex = function() {
-  "use strict";
   return H3DU.ShaderInfo.getDefaultVertex();
 };
 
@@ -447,6 +430,5 @@ ShaderProgram.getDefaultVertex = function() {
  * @returns {string} The resulting shader text.
  */
 ShaderProgram.getDefaultFragment = function() {
-  "use strict";
   return H3DU.ShaderInfo.getDefaultFragment();
 };

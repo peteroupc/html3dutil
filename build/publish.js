@@ -5,7 +5,6 @@ var fs = require("jsdoc/fs");
 var helper = require("jsdoc/util/templateHelper");
 
 function normalizeLines(x) {
-  "use strict";
   if(!x)return x;
   x = x.replace(/[ \t]+(?=[\r\n]|$)/g, "");
   x = x.replace(/\r*\n(\r*\n)+/g, "\n\n");
@@ -16,7 +15,6 @@ function normalizeLines(x) {
 }
 
 function normtags(x) {
-  "use strict";
    // Replace P tags with two line breaks
   x = helper.resolveLinks(x);
   x = x.replace(/<p>/g, "\n\n");
@@ -32,15 +30,12 @@ function normtags(x) {
   return x;
 }
 function normspace(x) {
-  "use strict";
   return normtags(x.replace(/[ \t]+/g, " "));
 }
 function normspacebreak(x) {
-  "use strict";
   return normtags(x.replace(/\s+/g, " "));
 }
 function normexample(x) {
-  "use strict";
   var io = x.indexOf("</caption>");
   if(io >= 0) {
     var xs = x.substr(0, io + 10);
@@ -52,17 +47,14 @@ function normexample(x) {
   }
 }
 function jsval(x) {
-  "use strict";
   var str = JSON.stringify(x);
   return helper.htmlsafe("`" + str + "`");
 }
 function jsname(x) {
-  "use strict";
   return helper.htmlsafe("`" + x + "`");
 }
 
 function Doc(name) {
-  "use strict";
   this.methods = {};
   this.events = {};
   this.members = {};
@@ -116,17 +108,14 @@ function Doc(name) {
   this.entry = "";
 }
 Doc.typeToName = function(type) {
-  "use strict";
   return Doc.toHash(type) + ".md";
 };
 Doc.toHash = function(type) {
-  "use strict";
-  var t=type.replace(/^module\:/g,"");
+  var t = type.replace(/^module\:/g, "");
   return t.replace(/[^a-zA-Z0-9_\.$\u0080-\uffff]/g, "_");
 };
 Doc.outputDir = path.normalize(env.opts.destination);
 function DocCollection() {
-  "use strict";
   this.docs = {};
   this.typeNames = {};
   this.tutorials = {"children":[]};
@@ -215,7 +204,6 @@ function DocCollection() {
 }
 
 function typeval(x) {
-  "use strict";
   if(!x.names) {
     return "????";
   }
@@ -233,7 +221,6 @@ function typeval(x) {
 }
 
 function augmentsval(x) {
-  "use strict";
   var xn = [];
   for(var i = 0; i < x.length; i++) {
     var tname = x[i];
@@ -244,9 +231,9 @@ function augmentsval(x) {
 }
 
 function typeNames(nodes) {
-  "use strict";
   var names = {};
   nodes.forEach(function (node) {
+    if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.kind === "constant")return;
     if(node.kind === "package")return;
@@ -260,9 +247,9 @@ function typeNames(nodes) {
 }
 
 function descriptions(nodes) {
-  "use strict";
   var descriptions = {};
   nodes.forEach(function (node) {
+    if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private") {
       return;
@@ -292,7 +279,6 @@ function descriptions(nodes) {
 }
 
 function registerLinks(docCollection, nodes) {
-  "use strict";
   nodes.forEach(function(node) {
     if(node.undocumented === true) {
       return;
@@ -313,19 +299,15 @@ function registerLinks(docCollection, nodes) {
 }
 
 function fillCollection(docCollection, nodes, parentlong) {
-  "use strict";
   nodes.forEach(function (node) {
     var i;
     var entry;
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
- //   if(node.kind=="class") {
-//      console.log(node)
-    //}
-    //if(parentlong && node.kind=="function")console.log([node.longname,node.memberof,parentlong])
+    // if(parentlong && node.kind=="function")console.log([node.longname,node.memberof,parentlong])
     if(node.memberof !== parentlong)return;
-    if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind==="namespace") {
+    if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind === "namespace") {
       var paramnames = [];
       if(node.params) {
         var p = node.params;
@@ -344,7 +326,7 @@ function fillCollection(docCollection, nodes, parentlong) {
           elname = helper.htmlsafe(node.name);
         }
       }
-      if(node.kind === "class" || node.kind==="namespace") {
+      if(node.kind === "class" || node.kind === "namespace") {
         entry += "# " + elname + "\n\n";
         entry += "[Back to documentation index.](index.md)\n\n";
       }
@@ -352,8 +334,8 @@ function fillCollection(docCollection, nodes, parentlong) {
       var attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
       entry += " <a name='" + Doc.toHash(node.longname) + "'></a>\n";
       entry += "### " + attribstr + elname;
-      if(node.kind!=="namespace") {
-        entry+="(" + paramnames.join(", ") + ")";
+      if(node.kind !== "namespace") {
+        entry += "(" + paramnames.join(", ") + ")";
       }
       if(node.kind === "event") {
         entry += " (event)";
@@ -424,7 +406,7 @@ function fillCollection(docCollection, nodes, parentlong) {
       }
       if(node.kind === "function") {
         docCollection.addMethod(parentlong, node.name, entry, node.longname);
-      } else if(node.kind === "class" || node.kind==="namespace") {
+      } else if(node.kind === "class" || node.kind === "namespace") {
         docCollection.addConstructor(node.longname, entry);
         fillCollection(docCollection, nodes, node.longname);
       } else {
@@ -484,7 +466,6 @@ function fillCollection(docCollection, nodes, parentlong) {
   });
 }
 exports.publish = function(input, o, t) {
-  "use strict";
   helper.fileExtension = ".md";
   helper.setTutorials(t);
   var inputget = input().get();
