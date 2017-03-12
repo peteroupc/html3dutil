@@ -46,17 +46,21 @@ end
 require './generate-websafe-svg'
 
 Dir.chdir(".."){
- files=%w( promise.js h3du.js h3du-curve.js h3du-surface.js )
+ files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
  filesToCompile=files|(%w( oldnames.js ))
- smap=ARGV.include?("--sourcemap") ? " -m ./h3du_all.js.map" : ""
- `rollup --format=umd --output=h3du_all.js --name=H3DU #{smap} -- h3du.js`
- normalizeAndCompile(["h3du_all.js"],"h3du_min.js",false,ARGV.include?("--sourcemap"))
- generateSvg("doc/websafe.svg")
- generateColorNameSvg("doc/colornames.svg")
- filesForDoc=["h3du_all.js"]|Dir.glob("extras/*.js")
- filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
- puts `jsdoc -u tutorials -t build -R README.md -d doc #{filesForDoc}`
+ tmppath("h3du_all.js"){|p|
+  utf8write(`rollup --format=umd --name=H3DU ./h3du.js`,p)
+  normalizeAndCompile([p],"./h3du_min.js",false,ARGV.include?("--sourcemap"))
+  generateSvg("doc/websafe.svg")
+  generateColorNameSvg("doc/colornames.svg")
+  filesForDoc=[p]|Dir.glob("extras/*.js")
+  filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
+  FileUtils.mkdir_p("doc")
+  FileUtils.mkdir_p("dochtml")
+  puts `jsdoc -u tutorials -t build -R README.md -d ./doc #{filesForDoc}`
+  puts `jsdoc -u tutorials -t build -R README.md -d ./dochtml #{filesForDoc} -q f=html`
+ }
  svgs=%w( doc/websafe.svg doc/colornames.svg).each{|s|
   `svgo -i #{ffq(s)} -o #{ffq(s)}`
  }

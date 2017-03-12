@@ -492,9 +492,9 @@ var ColorValidator = function() {
 
   constructor.parseComma = function(str, index, endIndex) {
     var indexStart = index;
-    index = ColorValidator.skipWhite(str, index, endIndex);
+    index = constructor.skipWhite(str, index, endIndex);
     if (index < endIndex && str.charCodeAt(index) === 44) {
-      return ColorValidator.skipWhite(str, index + 1, endIndex);
+      return constructor.skipWhite(str, index + 1, endIndex);
     } else {
       return indexStart;
     }
@@ -502,7 +502,7 @@ var ColorValidator = function() {
 
   constructor.parseEndparen = function(str, index, endIndex) {
     var indexStart = index;
-    index = ColorValidator.skipWhite(str, index, endIndex);
+    index = constructor.skipWhite(str, index, endIndex);
     if (index < endIndex && str.charCodeAt(index) === 41) {
       return index + 1;
     } else {
@@ -514,25 +514,25 @@ var ColorValidator = function() {
     var indexStart, indexTemp, tx2;
     indexStart = index;
     indexTemp = index;
-    if ((tx2 = ColorValidator.parseHue(str, index, endIndex, ret, 0)) === index) {
+    if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
       return indexStart;
     }
     index = tx2;
-    if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 1)) === index) {
+    if ((tx2 = constructor.sepPct(str, index, endIndex, ret, 1)) === index) {
       return indexStart;
     }
     index = tx2;
-    if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 2)) === index) {
+    if ((tx2 = constructor.sepPct(str, index, endIndex, ret, 2)) === index) {
       return indexStart;
     }
     index = tx2;
-    tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+    tx2 = constructor.parseEndparen(str, index, endIndex);
     if (tx2 === index) {
       return indexStart;
     } else {
       index = tx2;
     }
-    var rgb = ColorValidator.hlsToRgb(ret[0], ret[2], ret[1]);
+    var rgb = constructor.hlsToRgb(ret[0], ret[2], ret[1]);
     ret[0] = rgb[0];
     ret[1] = rgb[1];
     ret[2] = rgb[2];
@@ -541,48 +541,48 @@ var ColorValidator = function() {
     return indexTemp;
   };
   constructor.pct = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = ColorValidator.parseNumber(str, index, endIndex);
+    var tx2 = constructor.parseNumber(str, index, endIndex);
     if (tx2 !== index) {
       if (tx2 >= endIndex || str.charAt(tx2) !== 37)
         return index;
-      ret[retIndex] = ColorValidator.stringToPercent(str, index, tx2) * 255.0 / 100.0;
+      ret[retIndex] = constructor.stringToPercent(str, index, tx2) * 255.0 / 100.0;
       return tx2 + 1;
     }
     return tx2;
   };
   constructor.parseByte = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = ColorValidator.parseInteger(str, index, endIndex, true);
+    var tx2 = constructor.parseInteger(str, index, endIndex, true);
     if (tx2 !== index) {
-      ret[retIndex] = ColorValidator.stringToByte(str, index, tx2);
+      ret[retIndex] = constructor.stringToByte(str, index, tx2);
     }
     return tx2;
   };
   constructor.parseHue = function(str, index, endIndex, ret, retIndex) {
     var start = index;
-    index = ColorValidator.skipWhite(str, index, endIndex);
-    var tx2 = ColorValidator.parseNumber(str, index, endIndex);
+    index = constructor.skipWhite(str, index, endIndex);
+    var tx2 = constructor.parseNumber(str, index, endIndex);
     if (tx2 !== index) {
-      ret[retIndex] = ColorValidator.stringToHue(str, index, tx2);
+      ret[retIndex] = constructor.stringToHue(str, index, tx2);
       return tx2;
     } else {
       return start;
     }
   };
   constructor.sepByte = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = ColorValidator.parseComma(str, index, endIndex);
-    return tx2 !== index ? ColorValidator.parseByte(str, tx2, endIndex, ret, retIndex) : tx2;
+    var tx2 = constructor.parseComma(str, index, endIndex);
+    return tx2 !== index ? constructor.parseByte(str, tx2, endIndex, ret, retIndex) : tx2;
   };
   constructor.sepPct = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = ColorValidator.parseComma(str, index, endIndex);
-    return tx2 !== index ? ColorValidator.pct(str, tx2, endIndex, ret, retIndex) : tx2;
+    var tx2 = constructor.parseComma(str, index, endIndex);
+    return tx2 !== index ? constructor.pct(str, tx2, endIndex, ret, retIndex) : tx2;
   };
   constructor.sepAlpha = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = ColorValidator.parseComma(str, index, endIndex);
+    var tx2 = constructor.parseComma(str, index, endIndex);
     if (tx2 !== index) {
       index = tx2;
-      tx2 = ColorValidator.parseNumber(str, index, endIndex);
+      tx2 = constructor.parseNumber(str, index, endIndex);
       if (tx2 !== index) {
-        ret[retIndex] = ColorValidator.stringToAlpha(str, index, tx2);
+        ret[retIndex] = constructor.stringToAlpha(str, index, tx2);
       }
     }
     return tx2;
@@ -592,27 +592,27 @@ var ColorValidator = function() {
     var indexStart, indexTemp, tx2;
     indexStart = index;
     indexTemp = index;
-    if ((tx2 = ColorValidator.parseHue(str, index, endIndex, ret, 0)) === index) {
+    if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
       return indexStart;
     }
     index = tx2;
-    if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 1)) === index) {
+    if ((tx2 = constructor.sepPct(str, index, endIndex, ret, 1)) === index) {
       return indexStart;
     }
     index = tx2;
-    if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 2)) === index) {
+    if ((tx2 = constructor.sepPct(str, index, endIndex, ret, 2)) === index) {
       return indexStart;
     }
     index = tx2;
-    if ((tx2 = ColorValidator.sepAlpha(str, index, endIndex, ret, 3)) === index) {
+    if ((tx2 = constructor.sepAlpha(str, index, endIndex, ret, 3)) === index) {
       return indexStart;
     }
     index = tx2;
-    var rgb = ColorValidator.hlsToRgb(ret[0], ret[2], ret[1]);
+    var rgb = constructor.hlsToRgb(ret[0], ret[2], ret[1]);
     ret[0] = rgb[0];
     ret[1] = rgb[1];
     ret[2] = rgb[2];
-    tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+    tx2 = constructor.parseEndparen(str, index, endIndex);
     if (tx2 === index) {
       return indexStart;
     } else {
@@ -625,25 +625,25 @@ var ColorValidator = function() {
   constructor.rgba = function(str, index, endIndex, result) {
     var indexStart, tx2;
     indexStart = index;
-    index = ColorValidator.skipWhite(str, index, endIndex);
+    index = constructor.skipWhite(str, index, endIndex);
     var st = index;
     var continuing = true;
-    if ((tx2 = ColorValidator.pct(str, index, endIndex, result, 0)) === index) {
+    if ((tx2 = constructor.pct(str, index, endIndex, result, 0)) === index) {
       continuing = false;
     } else {
       index = tx2;
     }
-    if (continuing && (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 1)) === index) {
+    if (continuing && (tx2 = constructor.sepPct(str, index, endIndex, result, 1)) === index) {
       continuing = false;
     } else {
       index = tx2;
     }
-    if (continuing && (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 2)) === index) {
+    if (continuing && (tx2 = constructor.sepPct(str, index, endIndex, result, 2)) === index) {
       continuing = false;
     } else {
       index = tx2;
     }
-    if (continuing && (tx2 = ColorValidator.sepAlpha(str, index, endIndex, result, 3)) === index) {
+    if (continuing && (tx2 = constructor.sepAlpha(str, index, endIndex, result, 3)) === index) {
       continuing = false;
     } else {
       index = tx2;
@@ -651,22 +651,22 @@ var ColorValidator = function() {
     if (!continuing) {
       index = st;
       continuing = true;
-      if ((tx2 = ColorValidator.parseByte(str, index, endIndex, result, 0)) === index) {
+      if ((tx2 = constructor.parseByte(str, index, endIndex, result, 0)) === index) {
         continuing = false;
       } else {
         index = tx2;
       }
-      if (continuing && (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 1)) === index) {
+      if (continuing && (tx2 = constructor.sepByte(str, index, endIndex, result, 1)) === index) {
         continuing = false;
       } else {
         index = tx2;
       }
-      if (continuing && (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 2)) === index) {
+      if (continuing && (tx2 = constructor.sepByte(str, index, endIndex, result, 2)) === index) {
         continuing = false;
       } else {
         index = tx2;
       }
-      if (continuing && (tx2 = ColorValidator.sepAlpha(str, index, endIndex, result, 3)) === index) {
+      if (continuing && (tx2 = constructor.sepAlpha(str, index, endIndex, result, 3)) === index) {
         continuing = false;
       } else {
         index = tx2;
@@ -675,27 +675,27 @@ var ColorValidator = function() {
     if (!continuing) {
       return indexStart;
     }
-    tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+    tx2 = constructor.parseEndparen(str, index, endIndex);
     index = tx2 === index ? indexStart : tx2;
     return index;
   };
   constructor.rgb = function(str, index, endIndex, result) {
     var indexStart, tx2;
     indexStart = index;
-    index = ColorValidator.skipWhite(str, index, endIndex);
+    index = constructor.skipWhite(str, index, endIndex);
     var st = index;
     var continuing = true;
-    if ((tx2 = ColorValidator.pct(str, index, endIndex, result, 0)) === index) {
+    if ((tx2 = constructor.pct(str, index, endIndex, result, 0)) === index) {
       continuing = false;
     } else {
       index = tx2;
     }
-    if (continuing && (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 1)) === index) {
+    if (continuing && (tx2 = constructor.sepPct(str, index, endIndex, result, 1)) === index) {
       continuing = false;
     } else {
       index = tx2;
     }
-    if (continuing && (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 2)) === index) {
+    if (continuing && (tx2 = constructor.sepPct(str, index, endIndex, result, 2)) === index) {
       continuing = false;
     } else {
       index = tx2;
@@ -703,17 +703,17 @@ var ColorValidator = function() {
     if (!continuing) {
       index = st;
       continuing = true;
-      if ((tx2 = ColorValidator.parseByte(str, index, endIndex, result, 0)) === index) {
+      if ((tx2 = constructor.parseByte(str, index, endIndex, result, 0)) === index) {
         continuing = false;
       } else {
         index = tx2;
       }
-      if (continuing && (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 1)) === index) {
+      if (continuing && (tx2 = constructor.sepByte(str, index, endIndex, result, 1)) === index) {
         continuing = false;
       } else {
         index = tx2;
       }
-      if (continuing && (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 2)) === index) {
+      if (continuing && (tx2 = constructor.sepByte(str, index, endIndex, result, 2)) === index) {
         continuing = false;
       } else {
         index = tx2;
@@ -723,7 +723,7 @@ var ColorValidator = function() {
       return indexStart;
     }
     result[3] = 255.0;
-    tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+    tx2 = constructor.parseEndparen(str, index, endIndex);
     if (tx2 === index) {
       return indexStart;
     } else {
@@ -735,19 +735,19 @@ var ColorValidator = function() {
     return parseFloat(str2);
   };
   constructor.stringToPercent = function(str, index, endIndex) {
-    var num = ColorValidator.stringToNumber(str, index, endIndex);
+    var num = constructor.stringToNumber(str, index, endIndex);
     return Number.isNaN(num) ? -1 : num < 0 ? 0 : num > 100 ? 100 : num;
   };
   constructor.stringToAlpha = function(str, index, endIndex) {
-    var num = ColorValidator.stringToNumber(str, index, endIndex);
+    var num = constructor.stringToNumber(str, index, endIndex);
     return num < 0 ? 0 : num > 1.0 ? 255 : num * 255.0;
   };
   constructor.stringToHue = function(str, index, endIndex) {
-    var num = ColorValidator.stringToNumber(str, index, endIndex);
+    var num = constructor.stringToNumber(str, index, endIndex);
     return Number.isNaN(num) || num === Number.POSITIVE_INFINITY || num === Number.NEGATIVE_INFINITY ? 0 : (num % 360 + 360) % 360;
   };
   constructor.stringToByte = function(str, index, endIndex) {
-    var num = ColorValidator.stringToNumber(str, index, endIndex);
+    var num = constructor.stringToNumber(str, index, endIndex);
     return num < 0 ? 0 : num > 255 ? 255 : num;
   };
 
@@ -768,13 +768,13 @@ var ColorValidator = function() {
     var indexStart = index;
     var tmp = index;
     var tmp2 = 0;
-    if ((tmp = ColorValidator.parseInteger(str, index, endIndex, true)) !== indexStart) {
+    if ((tmp = constructor.parseInteger(str, index, endIndex, true)) !== indexStart) {
       index = tmp;
       if (index < endIndex && str.charCodeAt(index) === 46) {
         ++index;
-        if ((tmp = ColorValidator.parseInteger(str, index, endIndex, false)) !== index) {
+        if ((tmp = constructor.parseInteger(str, index, endIndex, false)) !== index) {
           if(index < endIndex && (str.charCodeAt(index) === 0x45 || str.charCodeAt(index) === 0x65) &&
-            (tmp2 = ColorValidator.parseInteger(str, index + 1, endIndex, true)) !== index + 1) {
+            (tmp2 = constructor.parseInteger(str, index + 1, endIndex, true)) !== index + 1) {
             return tmp2;
           }
           return tmp;
@@ -789,9 +789,9 @@ var ColorValidator = function() {
       }
       if (index < endIndex && str.charCodeAt(index) === 46) {
         ++index;
-        if ((tmp = ColorValidator.parseInteger(str, index, endIndex, false)) !== index) {
+        if ((tmp = constructor.parseInteger(str, index, endIndex, false)) !== index) {
           if(index < endIndex && (str.charCodeAt(index) === 0x45 || str.charCodeAt(index) === 0x65) &&
-            (tmp2 = ColorValidator.parseInteger(str, index + 1, endIndex, true)) !== index + 1) {
+            (tmp2 = constructor.parseInteger(str, index + 1, endIndex, true)) !== index + 1) {
             return tmp2;
           }
           return tmp;
@@ -861,7 +861,7 @@ var ColorValidator = function() {
       return false;
     }
     for (var i = index; i < str.length; ++i) {
-      var hex = ColorValidator.dehexchar(str.charCodeAt(i));
+      var hex = constructor.dehexchar(str.charCodeAt(i));
       if (hex < 0) {
         return false;
       }
@@ -900,26 +900,26 @@ var ColorValidator = function() {
     }
     var ret = [0, 0, 0, 0];
     if (x.charAt(0) === "#") {
-      if (ColorValidator.rgbHex(x, ret, true)) {
+      if (constructor.rgbHex(x, ret, true)) {
         return ret;
       }
     }
     if (x.length > 4 && x.substring(0, 4) === "rgb(") {
-      return ColorValidator.rgb(x, 4, x.length, ret) === x.length ? ret : null;
+      return constructor.rgb(x, 4, x.length, ret) === x.length ? ret : null;
     }
     if (x.length > 5 && x.substring(0, 5) === "rgba(") {
-      return ColorValidator.rgba(x, 5, x.length, ret) === x.length ? ret : null;
+      return constructor.rgba(x, 5, x.length, ret) === x.length ? ret : null;
     }
     if (x.length > 4 && x.substring(0, 4) === "hsl(") {
-      return ColorValidator.hsl(x, 4, x.length, ret) === x.length ? ret : null;
+      return constructor.hsl(x, 4, x.length, ret) === x.length ? ret : null;
     }
     if (x.length > 5 && x.substring(0, 5) === "hsla(") {
-      return ColorValidator.hsla(x, 5, x.length, ret) === x.length ? ret : null;
+      return constructor.hsla(x, 5, x.length, ret) === x.length ? ret : null;
     }
-    var colors = ColorValidator.colorToRgbaSetUpNamedColors();
+    var colors = constructor.colorToRgbaSetUpNamedColors();
     if (typeof colors[x] !== "undefined" && colors[x] !== null) {
       var colorValue = colors[x];
-      ColorValidator.rgbHex(colorValue, ret, false);
+      constructor.rgbHex(colorValue, ret, false);
       return ret;
     }
     return null;
@@ -930,10 +930,10 @@ var ColorValidator = function() {
   constructor.nc = ["aliceblue", "f0f8ff", "antiquewhite", "faebd7", "aqua", "00ffff", "aquamarine", "7fffd4", "azure", "f0ffff", "beige", "f5f5dc", "bisque", "ffe4c4", "black", "000000", "blanchedalmond", "ffebcd", "blue", "0000ff", "blueviolet", "8a2be2", "brown", "a52a2a", "burlywood", "deb887", "cadetblue", "5f9ea0", "chartreuse", "7fff00", "chocolate", "d2691e", "coral", "ff7f50", "cornflowerblue", "6495ed", "cornsilk", "fff8dc", "crimson", "dc143c", "cyan", "00ffff", "darkblue", "00008b", "darkcyan", "008b8b", "darkgoldenrod", "b8860b", "darkgray", "a9a9a9", "darkgreen", "006400", "darkkhaki", "bdb76b", "darkmagenta", "8b008b", "darkolivegreen", "556b2f", "darkorange", "ff8c00", "darkorchid", "9932cc", "darkred", "8b0000", "darksalmon", "e9967a", "darkseagreen", "8fbc8f", "darkslateblue", "483d8b", "darkslategray", "2f4f4f", "darkturquoise", "00ced1", "darkviolet", "9400d3", "deeppink", "ff1493", "deepskyblue", "00bfff", "dimgray", "696969", "dodgerblue", "1e90ff", "firebrick", "b22222", "floralwhite", "fffaf0", "forestgreen", "228b22", "fuchsia", "ff00ff", "gainsboro", "dcdcdc", "ghostwhite", "f8f8ff", "gold", "ffd700", "goldenrod", "daa520", "gray", "808080", "green", "008000", "greenyellow", "adff2f", "honeydew", "f0fff0", "hotpink", "ff69b4", "indianred", "cd5c5c", "indigo", "4b0082", "ivory", "fffff0", "khaki", "f0e68c", "lavender", "e6e6fa", "lavenderblush", "fff0f5", "lawngreen", "7cfc00", "lemonchiffon", "fffacd", "lightblue", "add8e6", "lightcoral", "f08080", "lightcyan", "e0ffff", "lightgoldenrodyellow", "fafad2", "lightgray", "d3d3d3", "lightgreen", "90ee90", "lightpink", "ffb6c1", "lightsalmon", "ffa07a", "lightseagreen", "20b2aa", "lightskyblue", "87cefa", "lightslategray", "778899", "lightsteelblue", "b0c4de", "lightyellow", "ffffe0", "lime", "00ff00", "limegreen", "32cd32", "linen", "faf0e6", "magenta", "ff00ff", "maroon", "800000", "mediumaquamarine", "66cdaa", "mediumblue", "0000cd", "mediumorchid", "ba55d3", "mediumpurple", "9370d8", "mediumseagreen", "3cb371", "mediumslateblue", "7b68ee", "mediumspringgreen", "00fa9a", "mediumturquoise", "48d1cc", "mediumvioletred", "c71585", "midnightblue", "191970", "mintcream", "f5fffa", "mistyrose", "ffe4e1", "moccasin", "ffe4b5", "navajowhite", "ffdead", "navy", "000080", "oldlace", "fdf5e6", "olive", "808000", "olivedrab", "6b8e23", "orange", "ffa500", "orangered", "ff4500", "orchid", "da70d6", "palegoldenrod", "eee8aa", "palegreen", "98fb98", "paleturquoise", "afeeee", "palevioletred", "d87093", "papayawhip", "ffefd5", "peachpuff", "ffdab9", "peru", "cd853f", "pink", "ffc0cb", "plum", "dda0dd", "powderblue", "b0e0e6", "purple", "800080", "rebeccapurple", "663399", "red", "ff0000", "rosybrown", "bc8f8f", "royalblue", "4169e1", "saddlebrown", "8b4513", "salmon", "fa8072", "sandybrown", "f4a460", "seagreen", "2e8b57", "seashell", "fff5ee", "sienna", "a0522d", "silver", "c0c0c0", "skyblue", "87ceeb", "slateblue", "6a5acd", "slategray", "708090", "snow", "fffafa", "springgreen", "00ff7f", "steelblue", "4682b4", "tan", "d2b48c", "teal", "008080", "thistle", "d8bfd8", "tomato", "ff6347", "turquoise", "40e0d0", "violet", "ee82ee", "wheat", "f5deb3", "white", "ffffff", "whitesmoke", "f5f5f5", "yellow", "ffff00", "yellowgreen", "9acd32"];
 
   constructor.colorToRgbaSetUpNamedColors = function() {
-    if (typeof ColorValidator.namedColorMap === "undefined" || ColorValidator.namedColorMap === null) {
+    if (typeof constructor.namedColorMap === "undefined" || constructor.namedColorMap === null) {
       var ncm = {};
-      for (var i = 0; i < ColorValidator.nc.length; i += 2) {
-        ncm[ColorValidator.nc[i]] = ColorValidator.nc[i + 1];
+      for (var i = 0; i < constructor.nc.length; i += 2) {
+        ncm[constructor.nc[i]] = constructor.nc[i + 1];
       }
       var altnames = ["grey", "gray", "darkgrey", "darkgray",
         "darkslategrey", "darkslategray", "dimgrey", "dimgray",
@@ -943,9 +943,9 @@ var ColorValidator = function() {
       for (i = 0; i < altnames.length; i += 2) {
         ncm[altnames[i]] = ncm[altnames[i + 1]];
       }
-      ColorValidator.namedColorMap = ncm;
+      constructor.namedColorMap = ncm;
     }
-    return ColorValidator.namedColorMap;
+    return constructor.namedColorMap;
   };
 }(ColorValidator));
 

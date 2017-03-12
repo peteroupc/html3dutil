@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU.Surface'></a>
+<a name='H3DU.Surface'></a>
 ### H3DU.Surface(surface)
 
 A surface evaluator object for a parametric surface.
@@ -23,8 +23,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 #### Parameters
 
-* `surface` (Type: Object)<br>
-    A <b>surface evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code> methods, as described in the corresponding methods of this class.
+* `surface` (Type: Object)<br>A <b>surface evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code> methods, as described in the corresponding methods of this class.
 
 ### Methods
 
@@ -35,7 +34,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 * [normal](#H3DU.Surface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
 * [tangent](#H3DU.Surface_tangent)<br>Finds an approximate tangent vector of this surface at the given U and V coordinates.
 
- <a name='H3DU.Surface_bitangent'></a>
+<a name='H3DU.Surface_bitangent'></a>
 ### H3DU.Surface#bitangent(u, v)
 
 Finds an approximate bitangent vector of this surface at the given U and V coordinates.
@@ -49,17 +48,15 @@ the partial derivative of the <code>evaluate</code> method with respect to <code
 
 #### Parameters
 
-* `u` (Type: number)<br>
-    U coordinate of a point on the surface.
-* `v` (Type: number)<br>
-    V coordinate of a point on the surface.
+* `u` (Type: number)<br>U coordinate of a point on the surface.
+* `v` (Type: number)<br>V coordinate of a point on the surface.
 
 #### Return Value
 
 An array describing a bitangent vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
- <a name='H3DU.Surface_endPoints'></a>
+<a name='H3DU.Surface_endPoints'></a>
 ### H3DU.Surface#endPoints()
 
 Returns the starting and ending U and V coordinates of this surface.
@@ -74,24 +71,22 @@ and fourth elements are its starting and ending V coordinates.
 Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn't implement an <code>endPoints</code>
 method.
 
- <a name='H3DU.Surface_evaluate'></a>
+<a name='H3DU.Surface_evaluate'></a>
 ### H3DU.Surface#evaluate(u, v)
 
 Finds the position of this surface at the given U and V coordinates.
 
 #### Parameters
 
-* `u` (Type: number)<br>
-    U coordinate of a point on the surface.
-* `v` (Type: number)<br>
-    V coordinate of a point on the surface.
+* `u` (Type: number)<br>U coordinate of a point on the surface.
+* `v` (Type: number)<br>V coordinate of a point on the surface.
 
 #### Return Value
 
 An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
- <a name='H3DU.Surface_gradient'></a>
+<a name='H3DU.Surface_gradient'></a>
 ### H3DU.Surface#gradient(u, v)
 
 Finds an approximate gradient vector of this surface at the given U and V coordinates.
@@ -110,17 +105,15 @@ in that order. The gradient returned by this method <i>should not</i> be "normal
 
 #### Parameters
 
-* `u` (Type: number)<br>
-    U coordinate of a point on the surface.
-* `v` (Type: number)<br>
-    V coordinate of a point on the surface.
+* `u` (Type: number)<br>U coordinate of a point on the surface.
+* `v` (Type: number)<br>V coordinate of a point on the surface.
 
 #### Return Value
 
 An array describing a gradient vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
- <a name='H3DU.Surface_normal'></a>
+<a name='H3DU.Surface_normal'></a>
 ### H3DU.Surface#normal(u, v)
 
 Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
@@ -128,17 +121,15 @@ The <b>normal vector</b> is the same as the gradient vector, but "normalized" to
 
 #### Parameters
 
-* `u` (Type: number)<br>
-    U coordinate of a point on the surface.
-* `v` (Type: number)<br>
-    V coordinate of a point on the surface.
+* `u` (Type: number)<br>U coordinate of a point on the surface.
+* `v` (Type: number)<br>V coordinate of a point on the surface.
 
 #### Return Value
 
 An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
- <a name='H3DU.Surface_tangent'></a>
+<a name='H3DU.Surface_tangent'></a>
 ### H3DU.Surface#tangent(u, v)
 
 Finds an approximate tangent vector of this surface at the given U and V coordinates.
@@ -152,12 +143,12 @@ The tangent vector returned by this method <i>should not</i> be "normalized" to 
 
 #### Parameters
 
-* `u` (Type: number)<br>
-    U coordinate of a point on the surface.
-* `v` (Type: number)<br>
-    V coordinate of a point on the surface.
+* `u` (Type: number)<br>U coordinate of a point on the surface.
+* `v` (Type: number)<br>V coordinate of a point on the surface.
 
 #### Return Value
 
 An array describing a tangent vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
+
+[Back to documentation index.](index.md)

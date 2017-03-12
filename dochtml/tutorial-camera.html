@@ -1,0 +1,220 @@
+<html><head><title>The "Camera" and Geometric Transforms</title></head><body><h1> The "Camera" and Geometric Transforms</h1><p><a href='index.html'>Back to documentation index.</a></p><p><a id=Introduction></a></p>
+<h2>Introduction</h2><p>This page describes conventions for specifying projection and
+view transforms in 3D graphics, especially when using my
+<a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>,
+and explains how the GL pipeline transforms vertices to help
+it draw triangles, lines, and other graphics primitives.</p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
+<p><a id=Contents></a></p>
+<h2>Contents</h2><p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#The_Camera_and_Geometric_Transforms">The &quot;Camera&quot; and Geometric Transforms</a><br>&nbsp;&nbsp;<a href="#Overview_of_Transformations">Overview of Transformations</a><br><a href="#Projection_Transform">Projection Transform</a><br>&nbsp;&nbsp;<a href="#Perspective_Projection">Perspective Projection</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Demo">Demo</a><br>&nbsp;&nbsp;<a href="#Orthographic_Projection">Orthographic Projection</a><br>&nbsp;&nbsp;<a href="#Other_Projections">Other Projections</a><br><a href="#View_Transform">View Transform</a><br><a href="#Vertex_Coordinates_in_the_Graphics_System">Vertex Coordinates in the Graphics System</a><br><a href="#Other_Pages">Other Pages</a><br></p>
+<h2>The &quot;Camera&quot; and Geometric Transforms</h2><p>The <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><code>Batch3D</code></a> class
+of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;.
+If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and
+lens, and the view transform is like setting its position and orientation. <code>Batch3D</code>
+has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are
+<a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.perspective"><code>perspective()</code></a>
+and <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.setLookAt"><code>setLookAt()</code></a>,
+which are shown in the example below.</p>
+<pre class="prettyprint source"><code>// Set the perspective view. Camera has a 45-degree field of view
+// and will see objects from 0.1 to 100 units away.
+batch3d.perspective(45,scene.getClientAspect(),0.1,100);
+// Move the camera back 40 units.
+batch3d.setLookAt([0,0,40]);
+// Move the camera back 30 units instead, and turn it so it
+// points at (0, 2, 0), that is, up 2 units.
+batch3d.setLookAt([0,0,30], [0,2,0]);</code></pre><p><a id=Overview_of_Transformations></a></p>
+<h3>Overview of Transformations</h3><p>The HTML 3D library uses the following transformations:</p>
+<ul>
+<li>A <em>world matrix</em> transforms an object's own coordinates to <em>world space</em>,
+the coordinate system shared by every object in the scene. The world matrix
+is not discussed in this page.</li>
+<li>A <em>view matrix</em> transforms coordinates in world space to <em>eye space</em>.</li>
+<li>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</li>
+</ul>
+<p>As <a href="#Vertex Coordinates in the Graphics System">explained later</a> on this page,
+however, these transformations and matrices are
+merely for the convenience of the library; all the graphics pipeline expects is the clip
+space coordinates of the things it draws. The pipeline uses those coordinates
+and their transformed <em>window coordinates</em> when rendering things on the screen.</p>
+<p><a id=Projection_Transform></a></p>
+<h2>Projection Transform</h2><p>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</p>
+<p>Two commonly used projections in 3D graphics are the perspective projection and
+orthographic projection, described below.</p>
+<p><a id=Perspective_Projection></a></p>
+<h3>Perspective Projection</h3><p>A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects
+look bigger than more distant objects with the same size, making the
+projection similar to how our eyes see the world.</p>
+<p><img src="persp1.png" alt="Two rows of spheres, and a drawing of a perspective view volume."></p>
+<p><img src="persp2.png" alt="Two rows of spheres, and a side drawing of a perspective view volume."></p>
+<p>The 3D scene is contained in a so-called <em>view volume</em>, and only objects contained in the
+view volume will be visible. The lines above show what a perspective view
+volume looks like. Some of the spheres drawn would not be visible within this view volume,
+and others would be.</p>
+<p>The view volume is bounded on all six sides by six <em>clipping planes</em>:</p>
+<ul>
+<li>The near and far clipping planes are placed a certain distance from the camera. For example, if
+the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume
+will hold only objects between 3 and 5 units from the camera. (Strictly speaking, a near clipping
+plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)</li>
+<li>The left, right, top, and bottom clipping planes form the other four sides of the volume.</li>
+</ul>
+<p>Note further that:</p>
+<ul>
+<li>The angle separating the top and bottom clipping planes is the projection's <em>field of view</em>. This angle is
+similar to the aperture of a camera. The greater the vertical field of view, the greater
+the vertical visibility range.</li>
+<li>In a perspective projection, the view volume will resemble a &quot;pyramid&quot; with the top chopped off (a <em>frustum</em>). The
+near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.</li>
+</ul>
+<p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>.
+However, this is not the whole story, since in general, nearly all lines that are parallel in world space
+will generally not appear parallel in a perspective projection, so additional math is needed to
+achieve the perspective effect. This will be <a href="#Vertex Coordinates in the Graphics System">explained later</a>.</p>
+<p>The following methods define a perspective projection.</p>
+<p><strong><a href="H3DU.Math.html#H3DU.Math.html"><code>H3DU.Math.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
+<p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
+projection given a field of view and an aspect ratio,
+and sets the scene's projection matrix accordingly. The resulting matrix can be passed
+to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class.</p>
+<ul>
+<li><code>fov</code> - Vertical field of view, in degrees.</li>
+<li><code>aspect</code> - Aspect ratio of the scene. You should usually use <code>scene3d.getClientAspect()</code>.</li>
+<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
+</ul>
+<p><strong><a href="H3DU.Batch3D.html#H3DU.Batch3D_perspectiveAspect"><code>batch3d.perspectiveAspect(fov near, far)</code></a></strong></p>
+<p>This method of the <code>H3DU.Batch3D</code> class sets the projection matrix to a perspective
+projection. The <code>fov</code>, <code>near</code>, and <code>far</code> parameters are the same as for <code>mat4perspective</code>,
+and the aspect ratio used to calculate the projection matrix adapts automatically to the <code>H3DU.Scene3D</code> in which
+the <code>Batch3D</code> is rendered.</p>
+<p><strong><a href="http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4frustum"><code>H3DU.Math.mat4frustum(left, right, bottom, top, near, far)</code></a></strong></p>
+<p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
+projection matrix based on the location of the six clipping planes that
+bound the view volume. Their positions are chosen so that the result is a perspective projection.
+The resulting matrix can be passed to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class.</p>
+<ul>
+<li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Location of the left, right, bottom, and top clipping planes in terms
+of where they meet the near clipping plane.</li>
+<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
+</ul>
+<p><a id=Demo></a></p>
+<h4>Demo</h4><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html">perspective.html</a> - Demonstrates a perspective projection.</li>
+</ul>
+<p><a id=Orthographic_Projection></a></p>
+<h3>Orthographic Projection</h3><p>An orthographic projection is one in which the left and right clipping planes are parallel to each other,
+and the top and bottom clipping planes are parallel to each other. This results in the near and far clipping
+planes having the same size, unlike in a perspective projection, and
+objects with the same size not varying in size with their distance from the &quot;camera&quot;.</p>
+<p>The following methods define an orthographic projection.</p>
+<p><strong><code>H3DU.Math.mat4ortho(left, right, bottom, top, near, far)</code></strong></p>
+<p>This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection.
+  The resulting matrix can be passed
+to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class.</p>
+<ul>
+<li><code>left</code> - Leftmost coordinate of the 3D view.</li>
+<li><code>right</code> - Rightmost coordinate of the 3D view.</li>
+<li><code>bottom</code> - Topmost coordinate of the 3D view.</li>
+<li><code>top</code> - Bottommost coordinate of the 3D view.</li>
+<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes. Either value
+can be negative.</li>
+</ul>
+<p><strong><code>H3DU.Math.mat4ortho2d(left, right, bottom, top)</code></strong></p>
+<p>This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.
+  The resulting matrix can be passed
+to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class. The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes a Z coordinate of 0 especially appropriate for this projection.</p>
+<ul>
+<li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Same as in <code>mat4ortho</code>.</li>
+</ul>
+<p><strong><code>H3DU.Math.mat4orthoAspect(left, right, bottom, top, near, far, aspect)</code></strong></p>
+<p>This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection,
+such that the resulting view isn't stretched
+or squished in case the view volume's aspect ratio and the scene's aspect ratio are different.
+  The resulting matrix can be passed
+to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class.</p>
+<ul>
+<li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code>, <code>near</code>, <code>far</code> - Same as in <code>setOrtho</code>.</li>
+<li><code>aspect</code> - Aspect ratio of the viewport. May be omitted, in which case the scene's
+aspect ratio (<code>scene.getClientAspect()</code>) is used.</li>
+</ul>
+<p><strong><code>batch3d.orthoAspect(left, right, bottom, top, near, far)</code></strong></p>
+<p>This method of the <code>H3DU.Batch3D</code> class sets the projection matrix to an orthographic
+projection like in <code>mat4orthoAspect</code>. The aspect ratio used when calculating the matrix
+adapts automatically to the <code>H3DU.Scene3D</code> in which
+the <code>Batch3D</code> is rendered, and the method's six parameters are the same as in <code>mat4orthoAspect</code>.</p>
+<p><a id=Other_Projections></a></p>
+<h3>Other Projections</h3><p>There are other kinds of possible projections, such as oblique projections
+or isometric projections. For these
+and other projections, you can specify a custom projection matrix using the
+<a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.setProjectionMatrix"><code>setProjectionMatrix()</code></a>
+method.</p>
+<p><strong><code>batch3d.setProjectionMatrix(matrix)</code></strong></p>
+<p>This method allows you to set the projection matrix to an arbitrary <a href="tutorial-glmath.html">4x4 matrix</a>.</p>
+<ul>
+<li><code>matrix</code> - The 4x4 matrix to use.</li>
+</ul>
+<p><a id=View_Transform></a></p>
+<h2>View Transform</h2><p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to coordinates in <em>eye space</em>
+(also called <em>camera space</em> or <em>view space</em>), in which the &quot;camera&quot; is located at the center of the coordinate system: (0, 0, 0).
+A view matrix essentially rotates the camera and moves it to a given position in world space. Specifically:</p>
+<ul>
+<li>The camera is rotated to point at a certain object or location on the scene. This is represented by
+the <code>lookingAt</code> parameter in the <code>setLookAt()</code> method, below.</li>
+<li>The camera is placed somewhere on the scene. This is represented by
+the <code>eye</code> parameter in the <code>setLookAt()</code> method.  It also represents the &quot;eye position&quot; in the perspective
+projection, above.</li>
+<li>The camera rolls itself, possibly turning it sideways or upside down. This is guided by
+the <code>up</code> parameter in the <code>setLookAt()</code> method. Turning the camera upside down, for example, will swap
+the placement of the top and bottom clipping planes, thus inverting the view of the scene.</li>
+</ul>
+<p>The <code>setLookAt()</code> and <code>setViewMatrix()</code> methods are described below.</p>
+<p><strong><code>batch3d.setLookAt(eye, lookingAt, up)</code></strong></p>
+<p>This method allows you to set a view matrix based on the camera's position and view.</p>
+<ul>
+<li><code>eye</code> - Array of three elements (X, Y, Z) giving the position of the camera in world space.</li>
+<li><code>lookingAt</code> - Array of three elements (X, Y, Z) giving the position the camera is looking at in world space.
+This is optional. The default is [0, 0, 0].</li>
+<li><code>up</code> - Array of three elements (X, Y, Z) giving the vector from the center of the camera to the top.
+This is optional. The default is [0, 1, 0].</li>
+</ul>
+<p><strong><code>batch3d.setViewMatrix(matrix)</code></strong></p>
+<p>This method allows you to set the view matrix to an arbitrary <a href="tutorial-glmath.html">4x4 matrix</a>.</p>
+<ul>
+<li><code>matrix</code> - The 4x4 matrix to use.</li>
+</ul>
+<p><a id=Vertex_Coordinates_in_the_Graphics_System></a></p>
+<h2>Vertex Coordinates in the Graphics System</h2><p>The concepts of <em>eye space</em>, <em>camera space</em>, and <em>world space</em>, as well as
+the use of matrices related to them, such as <em>projection</em>, <em>view</em>, <em>model-view</em>,
+and <em>world</em> matrices, are merely conventions,
+which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.</p>
+<p>When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point,
+all it really expects is the location of that primitive's vertices in <em>clip space</em>. A
+so-called <em>vertex shader</em> communicates those locations to the graphics pipeline using
+the input it's given. Although the vertex shader can use projection, view, and world
+matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to,
+and can use a different paradigm for this purpose. For example, the vertex shader can
+be passed vertex coordinates that are already in clip space and just output those coordinates
+without transforming them.</p>
+<p>As the name suggests, clip space coordinates are used for clipping primitives to the
+screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
+X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
+perspective matrix returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, for example,
+transforms W to the negative Z coordinate in eye space, that is, it will increase with
+the distance to the coordinates from the &quot;eye&quot; or &quot;camera&quot;.</p>
+<p>To take perspective into account, the clip space X, Y, and Z coordinates are
+divided by the clip space W, and then converted to <em>window coordinates</em>,
+which roughly correspond to screen pixels. The window coordinates
+will have the same range as the current <em>viewport</em>. A viewport is a rectangle
+whose size and position are generally expressed in pixels; to set the viewport's
+size, call the <a href="H3DU.Scene3D.html#H3DU.Scene3D_setDimensions"><code>setDimensions</code> method of <code>Scene3D</code></a>.</p>
+<p>For the perspective matrix returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective"><code>mat4perspective</code></a>, dividing
+the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
+higher and higher (and farther and farther from the &quot;eye&quot; or &quot;camera&quot;),
+the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
+is the <em>perspective</em> effect mentioned earlier: objects will appear smaller and smaller
+as they are more and more distant from the &quot;camera&quot;.</p>
+<p><a id=Other_Pages></a></p>
+<h2>Other Pages</h2><p>The following pages of mine on CodeProject also discuss this library:</p>
+<ul>
+<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a></li>
+</ul><p><a href='index.html'>Back to documentation index.</a></p></body></html>

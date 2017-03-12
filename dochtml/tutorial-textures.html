@@ -1,0 +1,51 @@
+<html><head><title>Texture Examples</title></head><body><h1> Texture Examples</h1><p><a href='index.html'>Back to documentation index.</a></p><p><a id=Contents></a></p>
+<h2>Contents</h2><p><a href="#Contents">Contents</a><br><a href="#Texture_Loaders">Texture Loaders</a><br><a href="#Sample_Code_for_Loading_Textures">Sample Code for Loading Textures</a><br>&nbsp;&nbsp;<a href="#Loading_a_single_texture">Loading a single texture</a><br>&nbsp;&nbsp;<a href="#Loading_multiple_textures">Loading multiple textures</a><br>&nbsp;&nbsp;<a href="#Demos">Demos</a><br></p>
+<h2>Texture Loaders</h2><p>A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL contexts.</p>
+<p><a id=Sample_Code_for_Loading_Textures></a></p>
+<h2>Sample Code for Loading Textures</h2><p><a id=Loading_a_single_texture></a></p>
+<h3>Loading a single texture</h3><p>The <code>loadAndMapTexture</code> method of <code>TextureLoader</code> returns a promise, which will receive either
+the texture loaded or an error. Loading a texture often happens asynchronously, so code that
+follows the <code>loadAndMapTexture</code> call (and its corresponding <code>then</code> calls) will generally run without
+waiting for the texture to finish loading.</p>
+<p>In the sample code below, the variable <code>textureURL</code> is the URL of the texture to load.</p>
+<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
+  loader.loadAndMapTexture(textureURL, scene).then(function(tex){
+    // texture is loaded, the Texture object is in the &quot;tex&quot; parameter
+    // Now create a sphere
+    var mesh=H3DU.Meshes.createSphere(1);
+    // Make a shape using the texture
+    var shape=new H3DU.Shape(mesh).setTexture(texture);
+  }, function(error){
+    // an error occurred
+  });</code></pre><p><a id=Loading_multiple_textures></a></p>
+<h3>Loading multiple textures</h3><p>If you need to load multiple textures, the <code>loadAndMapTexturesAll</code> method
+is much more convenient than <code>loadAndMapTexture</code> and also loads textures asynchronously.</p>
+<p>In the sample code below, The variables <code>textureURL1</code> and <code>textureURL2</code> are URL textures.</p>
+<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
+  loader.loadAndMapTexturesAll([
+   textureURL1,
+   textureURL2
+  ], scene).then(function(res){
+      // All the textures have loaded successfully,
+      // read the textures from the array (they will
+      // appear in the same order given in the
+      // loadAndMapTexturesAll method).
+      for(var i=0;i&lt;res.length;i++){
+        var texture=res[i];
+        // deal with the texture (a Texture object)
+      }
+  }, function(res){
+   // Some or all of the textures failed to load
+   if(res.failures.length>0){
+     // We have some failing textures
+   }
+   if(res.successes.length>0){
+     // We have some succeeding textures
+   }
+  });</code></pre><p><a id=Demos></a></p>
+<h3>Demos</h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/textured.html">textured.html</a> - Demonstrates loading textures
+and applying them to 3D shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/gradient.html">gradient.html</a> - Demonstrates generating a custom
+texture -- a linear gradient from one color to another.</li>
+</ul><p><a href='index.html'>Back to documentation index.</a></p></body></html>

@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU.Mesh'></a>
+<a name='H3DU.Mesh'></a>
 ### H3DU.Mesh([vertices], [indices], [format])
 
 Specifies the triangles, lines, or points that make up a geometric shape.
@@ -41,12 +41,9 @@ or at that point, those methods may be deprecated.</li></ul>
 
 #### Parameters
 
-* `vertices` (Type: Array.&lt;number>) (optional)<br>
-    An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.
-* `indices` (Type: Array.&lt;number>) (optional)<br>
-    An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.
-* `format` (Type: number) (optional)<br>
-    A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul> If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can't be set. May be null or omitted, in which case "format" is set to 0.
+* `vertices` (Type: Array.&lt;number>) (optional)<br>An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.
+* `indices` (Type: Array.&lt;number>) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.
+* `format` (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul> If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can't be set. May be null or omitted, in which case "format" is set to 0.
 
 ### Members
 
@@ -112,27 +109,27 @@ in this mesh.
 * [vertex3](#H3DU.Mesh_vertex3)<br>Adds a new vertex to this mesh.
 * [vertexCount](#H3DU.Mesh_vertexCount)<br>Gets the number of vertices included in this mesh.
 
-<a id='H3DU.Mesh.BITANGENTS_BIT'></a>
+<a name='H3DU.Mesh.BITANGENTS_BIT'></a>
 ### H3DU.Mesh.BITANGENTS_BIT (constant)
 
 The mesh contains bitangent vectors for each vertex.
 
 Default Value: `16`
 
-<a id='H3DU.Mesh.COLORS_BIT'></a>
+<a name='H3DU.Mesh.COLORS_BIT'></a>
 ### H3DU.Mesh.COLORS_BIT (constant)
 
 The mesh contains colors for each vertex.
 
 Default Value: `2`
 
-<a id='H3DU.Mesh.LINES'></a>
+<a name='H3DU.Mesh.LINES'></a>
 ### H3DU.Mesh.LINES (constant)
 
 Primitive mode for rendering line segments, made up
 of 2 vertices each.
 
-<a id='H3DU.Mesh.LINES_BIT'></a>
+<a name='H3DU.Mesh.LINES_BIT'></a>
 ### H3DU.Mesh.LINES_BIT (constant)
 
 The mesh consists of lines (2 vertices per line) instead
@@ -140,7 +137,7 @@ of triangles (3 vertices per line).
 
 Default Value: `256`
 
-<a id='H3DU.Mesh.LINE_STRIP'></a>
+<a name='H3DU.Mesh.LINE_STRIP'></a>
 ### H3DU.Mesh.LINE_STRIP (constant)
 
 Primitive mode for rendering connected line segments.
@@ -149,14 +146,14 @@ line is made up of the last vertex and 1 new vertex.
 
 Default Value: `3`
 
-<a id='H3DU.Mesh.NORMALS_BIT'></a>
+<a name='H3DU.Mesh.NORMALS_BIT'></a>
 ### H3DU.Mesh.NORMALS_BIT (constant)
 
 The mesh contains normals for each vertex.
 
 Default Value: `1`
 
-<a id='H3DU.Mesh.POINTS'></a>
+<a name='H3DU.Mesh.POINTS'></a>
 ### H3DU.Mesh.POINTS (constant)
 
 Primitive mode for rendering points, made up
@@ -164,14 +161,14 @@ of 1 vertex each.
 
 Default Value: `0`
 
-<a id='H3DU.Mesh.POINTS_BIT'></a>
+<a name='H3DU.Mesh.POINTS_BIT'></a>
 ### H3DU.Mesh.POINTS_BIT (constant)
 
 The mesh consists of points (1 vertex per line).
 
 Default Value: `512`
 
-<a id='H3DU.Mesh.QUADS'></a>
+<a name='H3DU.Mesh.QUADS'></a>
 ### H3DU.Mesh.QUADS (constant)
 
 Primitive mode for rendering quadrilaterals, made up
@@ -182,7 +179,7 @@ vertices, in that order.
 
 Default Value: `7`
 
-<a id='H3DU.Mesh.QUAD_STRIP'></a>
+<a name='H3DU.Mesh.QUAD_STRIP'></a>
 ### H3DU.Mesh.QUAD_STRIP (constant)
 
 Primitive mode for rendering a strip of quadrilaterals (quads).
@@ -195,21 +192,21 @@ vertices, in that order.
 
 Default Value: `8`
 
-<a id='H3DU.Mesh.TANGENTS_BIT'></a>
+<a name='H3DU.Mesh.TANGENTS_BIT'></a>
 ### H3DU.Mesh.TANGENTS_BIT (constant)
 
 The mesh contains tangent vectors for each vertex.
 
 Default Value: `8`
 
-<a id='H3DU.Mesh.TEXCOORDS_BIT'></a>
+<a name='H3DU.Mesh.TEXCOORDS_BIT'></a>
 ### H3DU.Mesh.TEXCOORDS_BIT (constant)
 
 The mesh contains texture coordinates for each vertex.
 
 Default Value: `4`
 
-<a id='H3DU.Mesh.TRIANGLES'></a>
+<a name='H3DU.Mesh.TRIANGLES'></a>
 ### H3DU.Mesh.TRIANGLES (constant)
 
 Primitive mode for rendering triangles, made up
@@ -217,7 +214,7 @@ of 3 vertices each.
 
 Default Value: `4`
 
-<a id='H3DU.Mesh.TRIANGLE_FAN'></a>
+<a name='H3DU.Mesh.TRIANGLE_FAN'></a>
 ### H3DU.Mesh.TRIANGLE_FAN (constant)
 
 Primitive mode for rendering a triangle fan. The first 3
@@ -227,7 +224,7 @@ the previous vertex, and 1 new vertex.
 
 Default Value: `6`
 
-<a id='H3DU.Mesh.TRIANGLE_STRIP'></a>
+<a name='H3DU.Mesh.TRIANGLE_STRIP'></a>
 ### H3DU.Mesh.TRIANGLE_STRIP (constant)
 
 Primitive mode for rendering a triangle strip. The first 3
@@ -239,7 +236,7 @@ vertices are swapped when generating that triangle.
 
 Default Value: `5`
 
- <a name='H3DU.Mesh_bitangent3'></a>
+<a name='H3DU.Mesh_bitangent3'></a>
 ### H3DU.Mesh#bitangent3(x, y, z)
 
 Sets the current bitangent vector for this mesh. Future vertex positions
@@ -251,18 +248,15 @@ not automatically be normalized to unit length.
 
 #### Parameters
 
-* `x` (Type: number)<br>
-    X coordinate of the bitangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: number)<br>
-    Y coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
-* `z` (Type: number)<br>
-    Z coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
+* `x` (Type: number)<br>X coordinate of the bitangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+* `y` (Type: number)<br>Y coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
+* `z` (Type: number)<br>Z coordinate of the bitangent vector. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_color3'></a>
+<a name='H3DU.Mesh_color3'></a>
 ### H3DU.Mesh#color3(r, g, b)
 
 Sets the current color for this mesh. Future vertex positions
@@ -273,18 +267,15 @@ that mode. Only the red, green, and blue components will be used.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number> | number | string)<br>
-    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: number)<br>
-    Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: number)<br>
-    Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
+* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a>, or the red color component (0-1).
+* `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
+* `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_enumPrimitives'></a>
+<a name='H3DU.Mesh_enumPrimitives'></a>
 ### H3DU.Mesh#enumPrimitives(func)
 
 Enumerates the primitives (lines, triangles, and points) included
@@ -292,14 +283,13 @@ in this mesh.
 
 #### Parameters
 
-* `func` (Type: function)<br>
-    A function that will be called for each primitive in the mesh. The function takes a single parameter, consisting of an array of one, two, or three vertex objects. A point will have one vertex, a line two vertices and a triangle three. Each vertex object may have these properties:<ul> <li>"position": A 3-element array of the vertex's position. Always present. <li>"normal": A 3-element array of the vertex's normal. May be absent. <li>"color": An at least 3-element array of the vertex's color. Each component generally ranges from 0 to 1. May be absent. <li>"uv": A 2-element array of the vertex's texture coordinates (the first element is U, the second is V). Each component generally ranges from 0 to 1. May be absent. </ul>
+* `func` (Type: function)<br>A function that will be called for each primitive in the mesh. The function takes a single parameter, consisting of an array of one, two, or three vertex objects. A point will have one vertex, a line two vertices and a triangle three. Each vertex object may have these properties:<ul> <li>"position": A 3-element array of the vertex's position. Always present. <li>"normal": A 3-element array of the vertex's normal. May be absent. <li>"color": An at least 3-element array of the vertex's color. Each component generally ranges from 0 to 1. May be absent. <li>"uv": A 2-element array of the vertex's texture coordinates (the first element is U, the second is V). Each component generally ranges from 0 to 1. May be absent. </ul>
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_getBoundingBox'></a>
+<a name='H3DU.Mesh_getBoundingBox'></a>
 ### H3DU.Mesh#getBoundingBox()
 
 Finds the tightest axis-aligned
@@ -315,7 +305,7 @@ last three are the largest-valued X, Y, and Z coordinates.
 If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;number>)
 
- <a name='H3DU.Mesh_getVertex'></a>
+<a name='H3DU.Mesh_getVertex'></a>
 ### H3DU.Mesh#getVertex(index)
 
 Gets the position of the vertex with the given
@@ -323,8 +313,7 @@ index in this mesh.
 
 #### Parameters
 
-* `index` (Type: number)<br>
-    Zero-based index of the vertex to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
+* `index` (Type: number)<br>Zero-based index of the vertex to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
 
 #### Return Value
 
@@ -333,7 +322,7 @@ the X, Y, and Z coordinates, respectively, of the vertex
 position, or null if the index is less than 0 or
 equals the number of vertices in this mesh or greater. (Type: Array.&lt;number>)
 
- <a name='H3DU.Mesh_getVertexNormal'></a>
+<a name='H3DU.Mesh_getVertexNormal'></a>
 ### H3DU.Mesh#getVertexNormal(index)
 
 Gets the normal of the vertex with the given
@@ -341,8 +330,7 @@ index in this mesh.
 
 #### Parameters
 
-* `index` (Type: number)<br>
-    Zero-based index of the vertex normal to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
+* `index` (Type: number)<br>Zero-based index of the vertex normal to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
 
 #### Return Value
 
@@ -353,20 +341,19 @@ equals the number of vertices in this mesh or greater.
 Returns (0,0,0) if the given vertex exists but doesn't define
 a normal. (Type: Array.&lt;number>)
 
- <a name='H3DU.Mesh_merge'></a>
+<a name='H3DU.Mesh_merge'></a>
 ### H3DU.Mesh#merge(other)
 
 Merges the vertices from another mesh into this one.
 The vertices from the other mesh will be copied into this one,
 and the other mesh's indices copied or adapted.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.md#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.md#H3DU.md">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices.
 
 #### Parameters
 
-* `other` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>
-    A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is incompatible with the the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
+* `other` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is incompatible with the the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
 
 #### Return Value
 
@@ -377,7 +364,7 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
     // Use the following idiom to make a copy of a geometric mesh:
     var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
 
- <a name='H3DU.Mesh_mode'></a>
+<a name='H3DU.Mesh_mode'></a>
 ### H3DU.Mesh#mode(m)
 
 Changes the primitive mode for this mesh.
@@ -395,14 +382,13 @@ in future versions.
 
 #### Parameters
 
-* `m` (Type: number)<br>
-    A primitive type. One of the following: H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP, H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP. Throws an error if the primitive type is incompatible with the current primitive type (for example, a triangle type with LINE_STRIP).
+* `m` (Type: number)<br>A primitive type. One of the following: H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP, H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP. Throws an error if the primitive type is incompatible with the current primitive type (for example, a triangle type with LINE_STRIP).
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_normal3'></a>
+<a name='H3DU.Mesh_normal3'></a>
 ### H3DU.Mesh#normal3(x, y, z)
 
 Sets the current normal for this mesh. Future vertex positions
@@ -414,18 +400,15 @@ not automatically be normalized to unit length.
 
 #### Parameters
 
-* `x` (Type: number)<br>
-    X coordinate of the normal. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: number)<br>
-    Y coordinate of the normal. If "x" is an array, this parameter may be omitted.
-* `z` (Type: number)<br>
-    Z coordinate of the normal. If "x" is an array, this parameter may be omitted.
+* `x` (Type: number)<br>X coordinate of the normal. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+* `y` (Type: number)<br>Y coordinate of the normal. If "x" is an array, this parameter may be omitted.
+* `z` (Type: number)<br>Z coordinate of the normal. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_normalizeNormals'></a>
+<a name='H3DU.Mesh_normalizeNormals'></a>
 ### H3DU.Mesh#normalizeNormals()
 
 Modifies this mesh by normalizing the normals it defines
@@ -435,7 +418,7 @@ to unit length.
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_primitiveCount'></a>
+<a name='H3DU.Mesh_primitiveCount'></a>
 ### H3DU.Mesh#primitiveCount()
 
 Gets the number of primitives (triangles, lines,
@@ -445,7 +428,7 @@ or points) composed by all shapes in this mesh.
 
 Return value. (Type: number)
 
- <a name='H3DU.Mesh_recalcNormals'></a>
+<a name='H3DU.Mesh_recalcNormals'></a>
 ### H3DU.Mesh#recalcNormals(flat, inward)
 
 Recalculates the normal vectors for triangles
@@ -457,16 +440,14 @@ be normalized to have a length of 1 (unless the normal is (0,0,0)).
 
 #### Parameters
 
-* `flat` (Type: Boolean)<br>
-    If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.
-* `inward` (Type: Boolean)<br>
-    If true, the generated normals will point inward; otherwise, outward.
+* `flat` (Type: Boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.
+* `inward` (Type: Boolean)<br>If true, the generated normals will point inward; otherwise, outward.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_recalcTangents'></a>
+<a name='H3DU.Mesh_recalcTangents'></a>
 ### H3DU.Mesh#recalcTangents()
 
 Recalculates the tangent and bitangent vectors for triangles
@@ -479,7 +460,7 @@ includes normals and texture coordinates.
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_reverseNormals'></a>
+<a name='H3DU.Mesh_reverseNormals'></a>
 ### H3DU.Mesh#reverseNormals()
 
 Modifies this mesh by reversing the sign of normals it defines.
@@ -501,7 +482,7 @@ recommended only if face culling is enabled.
     new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
     );
 
- <a name='H3DU.Mesh_reverseWinding'></a>
+<a name='H3DU.Mesh_reverseWinding'></a>
 ### H3DU.Mesh#reverseWinding()
 
 Reverses the winding order of the triangles in this mesh
@@ -525,7 +506,7 @@ recommended only if face culling is enabled.
     new H3DU.Mesh().merge(originalMesh).reverseWinding()
     );
 
- <a name='H3DU.Mesh_setColor3'></a>
+<a name='H3DU.Mesh_setColor3'></a>
 ### H3DU.Mesh#setColor3(r, g, b)
 
 Sets all the vertices in this mesh to the given color.
@@ -534,18 +515,15 @@ Only the color's red, green, and blue components will be used.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number> | number | string)<br>
-    A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: number)<br>
-    Green component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
-* `b` (Type: number)<br>
-    Blue component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
+* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a>, or the red color component (0-1).
+* `g` (Type: number)<br>Green component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
+* `b` (Type: number)<br>Blue component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_setVertex'></a>
+<a name='H3DU.Mesh_setVertex'></a>
 ### H3DU.Mesh#setVertex(index, x, y, z)
 
 Sets the X, Y, and Z coordinates of the vertex with the
@@ -554,20 +532,16 @@ equals the number of vertices in this mesh or greater.
 
 #### Parameters
 
-* `index` (Type: number)<br>
-    Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
-* `x` (Type: number | Array.&lt;number>)<br>
-    X coordinate of the vertex position. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex position.
-* `y` (Type: number)<br>
-    Y coordinate of the vertex position. May be null or omitted if "x" is an array.
-* `z` (Type: number)<br>
-    Z coordinate of the vertex position. May be null or omitted if "x" is an array.
+* `index` (Type: number)<br>Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
+* `x` (Type: number | Array.&lt;number>)<br>X coordinate of the vertex position. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex position.
+* `y` (Type: number)<br>Y coordinate of the vertex position. May be null or omitted if "x" is an array.
+* `z` (Type: number)<br>Z coordinate of the vertex position. May be null or omitted if "x" is an array.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_setVertexNormal'></a>
+<a name='H3DU.Mesh_setVertexNormal'></a>
 ### H3DU.Mesh#setVertexNormal(index, x, y, z)
 
 Sets the normal associated with the vertex with the
@@ -576,20 +550,16 @@ equals the number of vertices in this mesh or greater.
 
 #### Parameters
 
-* `index` (Type: number)<br>
-    Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
-* `x` (Type: number | Array.&lt;number>)<br>
-    X coordinate of the vertex normal. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex normal.
-* `y` (Type: number)<br>
-    Y coordinate of the vertex normal. May be null or omitted if "x" is an array.
-* `z` (Type: number)<br>
-    Z coordinate of the vertex normal. May be null or omitted if "x" is an array.
+* `index` (Type: number)<br>Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.
+* `x` (Type: number | Array.&lt;number>)<br>X coordinate of the vertex normal. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex normal.
+* `y` (Type: number)<br>Y coordinate of the vertex normal. May be null or omitted if "x" is an array.
+* `z` (Type: number)<br>Z coordinate of the vertex normal. May be null or omitted if "x" is an array.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_tangent3'></a>
+<a name='H3DU.Mesh_tangent3'></a>
 ### H3DU.Mesh#tangent3(x, y, z)
 
 Sets the current tangent vector for this mesh. Future vertex positions
@@ -601,18 +571,15 @@ not automatically be normalized to unit length.
 
 #### Parameters
 
-* `x` (Type: number)<br>
-    X coordinate of the tangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: number)<br>
-    Y coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
-* `z` (Type: number)<br>
-    Z coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
+* `x` (Type: number)<br>X coordinate of the tangent vector. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+* `y` (Type: number)<br>Y coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
+* `z` (Type: number)<br>Z coordinate of the tangent vector. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_texCoord2'></a>
+<a name='H3DU.Mesh_texCoord2'></a>
 ### H3DU.Mesh#texCoord2(u, v)
 
 Sets the current texture coordinates for this mesh. Future vertex positions
@@ -628,16 +595,14 @@ right corner (by default).
 
 #### Parameters
 
-* `u` (Type: number)<br>
-    X coordinate of the texture, from 0-1. If "v" are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.
-* `v` (Type: number)<br>
-    Y coordinate of the texture, from 0-1. If "u" is an array, this parameter can be omitted.
+* `u` (Type: number)<br>X coordinate of the texture, from 0-1. If "v" are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.
+* `v` (Type: number)<br>Y coordinate of the texture, from 0-1. If "u" is an array, this parameter can be omitted.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_toWireFrame'></a>
+<a name='H3DU.Mesh_toWireFrame'></a>
 ### H3DU.Mesh#toWireFrame()
 
 Converts this mesh to a new mesh with triangles converted
@@ -651,26 +616,25 @@ unchanged.
 A new mesh with triangles converted
 to lines. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_transform'></a>
+<a name='H3DU.Mesh_transform'></a>
 ### H3DU.Mesh#transform(matrix)
 
 Transforms the positions and normals of all the vertices currently
 in this mesh. The matrix won't affect vertices added afterwards.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.md#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.md#H3DU.md">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices. Future vertices should not be
 added after calling this method without calling mode() first.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number>)<br>
-    A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
+* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_vertex2'></a>
+<a name='H3DU.Mesh_vertex2'></a>
 ### H3DU.Mesh#vertex2(x, y)
 
 Adds a new vertex to this mesh. The Z coordinate will
@@ -678,16 +642,14 @@ be treated as 0.
 
 #### Parameters
 
-* `x` (Type: Array.&lt;number> | number)<br>
-    The X coordinate. If "y" is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: number)<br>
-    The Y coordinate. If "x" is an array, this parameter may be omitted.
+* `x` (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+* `y` (Type: number)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_vertex3'></a>
+<a name='H3DU.Mesh_vertex3'></a>
 ### H3DU.Mesh#vertex3(x, y, z)
 
 Adds a new vertex to this mesh. If appropriate, adds an
@@ -697,18 +659,15 @@ and texture coordinates if they have been defined.
 
 #### Parameters
 
-* `x` (Type: Array.&lt;number> | number)<br>
-    The X coordinate. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: number)<br>
-    The Y coordinate. If "x" is an array, this parameter may be omitted.
-* `z` (Type: number)<br>
-    The Z coordinate. If "x" is an array, this parameter may be omitted.
+* `x` (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+* `y` (Type: number)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.
+* `z` (Type: number)<br>The Z coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
- <a name='H3DU.Mesh_vertexCount'></a>
+<a name='H3DU.Mesh_vertexCount'></a>
 ### H3DU.Mesh#vertexCount()
 
 Gets the number of vertices included in this mesh.
@@ -716,3 +675,5 @@ Gets the number of vertices included in this mesh.
 #### Return Value
 
 Return value. (Type: number)
+
+[Back to documentation index.](index.md)

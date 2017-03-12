@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU.TextureAtlas'></a>
+<a name='H3DU.TextureAtlas'></a>
 ### H3DU.TextureAtlas()
 
 A texture atlas specifies the location and size of images within a single
@@ -15,7 +15,7 @@ texture atlas can specify where those portions are found.
 This implementation supports the ".atlas" format.
 
 NOTE: The constructor should not be called directly by applications.
-Use the <a href="H3DU.TextureAtlas.md#H3DU.TextureAtlas.load">H3DU.TextureAtlas.load</a> method to get an H3DU.TextureAtlas object.
+Use the <a href="H3DU.TextureAtlas.md#H3DU.TextureAtlas.md">H3DU.TextureAtlas.load</a> method to get an H3DU.TextureAtlas object.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -35,7 +35,7 @@ the HTML 3D Library. Example:
 it uses.
 * [makeSprites](#H3DU.TextureAtlas_makeSprites)<br>Makes a shape group used to display one or more sprites.
 
- <a name='H3DU.TextureAtlas.load'></a>
+<a name='H3DU.TextureAtlas.load'></a>
 ### (static) H3DU.TextureAtlas.load(atlasFileName)
 
 Loads a texture atlas definition from a file.
@@ -44,8 +44,7 @@ used by the texture atlas.
 
 #### Parameters
 
-* `atlasFileName` (Type: string)<br>
-    The URL of the texture atlas to load.
+* `atlasFileName` (Type: string)<br>The URL of the texture atlas to load.
 
 #### Return Value
 
@@ -53,24 +52,23 @@ A promise that is resolved
 when the texture atlas data is loaded successfully (the result will be
 an H3DU.TextureAtlas object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>>)
 
- <a name='H3DU.TextureAtlas_loadTextures'></a>
+<a name='H3DU.TextureAtlas_loadTextures'></a>
 ### H3DU.TextureAtlas#loadTextures(textureLoader)
 
 Loads the texture files used by this texture atlas.
 
 #### Parameters
 
-* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
-    Texture loader object to use when loading the textures.
+* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.
 
 #### Return Value
 
 A promise as described in
-<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
+<a href="H3DU.md#H3DU.md">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>>)
 
- <a name='H3DU.TextureAtlas.loadWithTextures'></a>
+<a name='H3DU.TextureAtlas.loadWithTextures'></a>
 ### (static) H3DU.TextureAtlas.loadWithTextures(atlasFileName, textureLoader)
 
 Loads a texture atlas definition from a file along with the textures
@@ -78,10 +76,8 @@ it uses.
 
 #### Parameters
 
-* `atlasFileName` (Type: string)<br>
-    The URL of the texture atlas to load.
-* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>
-    Texture loader object to use when loading the textures.
+* `atlasFileName` (Type: string)<br>The URL of the texture atlas to load.
+* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.
 
 #### Return Value
 
@@ -96,7 +92,7 @@ following keys:<ul>
 in the order in which they are declared in the font data file.
 </ul> (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.TextureAtlas_makeSprites'></a>
+<a name='H3DU.TextureAtlas_makeSprites'></a>
 ### H3DU.TextureAtlas#makeSprites(sprites)
 
 Makes a shape group used to display one or more sprites.
@@ -109,9 +105,10 @@ should be scaled so that one unit equals one pixel.
 
 #### Parameters
 
-* `sprites` (Type: Array.&lt;Object>)<br>
-    An array of objects whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>name</code> - Name of the sprite, as listed in this texture atlas. <li><code>index</code> - If a sprite has multiple versions, use this index parameter to distinguish them. Index can't be less than 0. If a sprite doesn't have multiple versions, this value is not required. <li><code>x</code> - X coordinate of the sprite. <li><code>y</code> - Y coordinate of the sprite. </ul>
+* `sprites` (Type: Array.&lt;Object>)<br>An array of objects whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>name</code> - Name of the sprite, as listed in this texture atlas. <li><code>index</code> - If a sprite has multiple versions, use this index parameter to distinguish them. Index can't be less than 0. If a sprite doesn't have multiple versions, this value is not required. <li><code>x</code> - X coordinate of the sprite. <li><code>y</code> - Y coordinate of the sprite. </ul>
 
 #### Return Value
 
 The generated group of shapes. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+
+[Back to documentation index.](index.md)

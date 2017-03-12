@@ -1,0 +1,7 @@
+<html><head><title>Subclassing</title></head><body><h1> Subclassing</h1><p><a href='index.html'>Back to documentation index.</a></p><p><a id=Subclasses></a></p>
+<h2>Subclasses</h2><p>Some classes in the HTML 3D Library inherit the methods of others.  These classes
+are called subclasses.  To make a class a subclass of another, place the following code
+after the subclass's constructor:</p>
+<pre class="prettyprint source"><code>  SUBCLASS.prototype = Object.create(BASECLASS.prototype);
+  SUBCLASS.prototype.constructor = SUBCLASS;</code></pre><p>where <code>SUBCLASS</code> is the name of the subclass, and BASECLASS is the name
+of the class whose methods the subclass will inherit.</p><p><a href='index.html'>Back to documentation index.</a></p></body></html>

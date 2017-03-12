@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU'></a>
+<a name='H3DU'></a>
 ### H3DU
 
 The Public Domain HTML 3D Library contains classes and utility
@@ -40,7 +40,7 @@ using <code>window.requestAnimationFrame</code>
 or a "polyfill" method.
 * [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
 
- <a name='H3DU.createCanvasElement'></a>
+<a name='H3DU.createCanvasElement'></a>
 ### (static) H3DU.createCanvasElement(parent, width, height)
 
 Creates an HTML canvas element, optionally appending
@@ -48,28 +48,23 @@ it to an existing HTML element.
 
 #### Parameters
 
-* `parent` (Type: HTMLElement | null)<br>
-    If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.
-* `width` (Type: number | null)<br>
-    Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can't be a negative number.
-* `height` (Type: number | null)<br>
-    Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can't be a negative number.
+* `parent` (Type: HTMLElement | null)<br>If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.
+* `width` (Type: number | null)<br>Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can't be a negative number.
+* `height` (Type: number | null)<br>Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can't be a negative number.
 
 #### Return Value
 
 The resulting canvas element. (Type: Element)
 
- <a name='H3DU.get3DContext'></a>
+<a name='H3DU.get3DContext'></a>
 ### (static) H3DU.get3DContext(canvasElement, err)
 
 Creates a 3D rendering context from an HTML canvas element.
 
 #### Parameters
 
-* `canvasElement` (Type: HTMLCanvasElement)<br>
-    An HTML canvas element.
-* `err` (Type: function)<br>
-    A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If "err" is null, window.alert() will be used instead.
+* `canvasElement` (Type: HTMLCanvasElement)<br>An HTML canvas element.
+* `err` (Type: function)<br>A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If "err" is null, window.alert() will be used instead.
 
 #### Return Value
 
@@ -77,7 +72,7 @@ A 3D rendering context, or null
 if an error occurred in creating the context. Returns null if "canvasElement"
 is null or not an HTML canvas element. (Type: Object)
 
- <a name='H3DU.get3DOr2DContext'></a>
+<a name='H3DU.get3DOr2DContext'></a>
 ### (static) H3DU.get3DOr2DContext(canvasElement)
 
 Creates a 3D rendering context from an HTML canvas element,
@@ -85,8 +80,7 @@ falling back to a 2D context if that fails.
 
 #### Parameters
 
-* `canvasElement` (Type: HTMLCanvasElement)<br>
-    An HTML canvas element.
+* `canvasElement` (Type: HTMLCanvasElement)<br>An HTML canvas element.
 
 #### Return Value
 
@@ -94,7 +88,7 @@ A 3D or 2D rendering context, or null
 if an error occurred in creating the context. Returns null if "canvasElement"
 is null or not an HTML canvas element. (Type: Object)
 
- <a name='H3DU.getPromiseResults'></a>
+<a name='H3DU.getPromiseResults'></a>
 ### (static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])
 
 Utility function that returns a promise that
@@ -103,12 +97,9 @@ its work.
 
 #### Parameters
 
-* `promises` (Type: Array.&lt;<a href="Promise.md">Promise</a>>)<br>
-    an array containing promise objects
-* `progressResolve` (Type: function) (optional)<br>
-    A function called as each individual promise is resolved.
-* `progressReject` (Type: function) (optional)<br>
-    A function called as each individual promise is rejected.
+* `promises` (Type: Array.&lt;<a href="Promise.md">Promise</a>>)<br>an array containing promise objects
+* `progressResolve` (Type: function) (optional)<br>A function called as each individual promise is resolved.
+* `progressReject` (Type: function) (optional)<br>A function called as each individual promise is rejected.
 
 #### Return Value
 
@@ -124,7 +115,7 @@ promises that failed, in the order in which those promises were listed.
 promise, in the order in which the promises were listed.
 True means success, and false means failure.</ul> (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.getPromiseResultsAll'></a>
+<a name='H3DU.getPromiseResultsAll'></a>
 ### (static) H3DU.getPromiseResultsAll(promises, [progressResolve], [progressReject])
 
 Utility function that returns a promise that
@@ -133,12 +124,9 @@ its work.
 
 #### Parameters
 
-* `promises` (Type: Array.&lt;<a href="Promise.md">Promise</a>>)<br>
-    an array containing promise objects
-* `progressResolve` (Type: function) (optional)<br>
-    a function called as each individual promise is resolved; optional
-* `progressReject` (Type: function) (optional)<br>
-    a function called as each individual promise is rejected; optional
+* `promises` (Type: Array.&lt;<a href="Promise.md">Promise</a>>)<br>an array containing promise objects
+* `progressResolve` (Type: function) (optional)<br>a function called as each individual promise is resolved; optional
+* `progressReject` (Type: function) (optional)<br>a function called as each individual promise is rejected; optional
 
 #### Return Value
 
@@ -147,9 +135,9 @@ all of the promises are each resolved; the result will
 be an array of results from those promises,
 in the order in which those promises were listed.
 Will be rejected if any of the promises is rejected; the result
-will be an object as specified in <a href="H3DU.md#H3DU.getPromiseResults">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.md">Promise</a>)
+will be an object as specified in <a href="H3DU.md#H3DU.md">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.getTimePosition'></a>
+<a name='H3DU.getTimePosition'></a>
 ### (static) H3DU.getTimePosition(timer, timeInMs, intervalInMs)
 
 Gets the position of a time value within an interval.
@@ -159,12 +147,9 @@ This method may be called any number of times each frame.
 
 #### Parameters
 
-* `timer` (Type: Object)<br>
-    An object that will hold two properties:<ul> <li>"time" - initial time value, in milliseconds. <li>"lastTime" - last known time value, in milliseconds. Will be set to the value given in "timeInMs" before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.
-* `timeInMs` (Type: number)<br>
-    A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.
-* `intervalInMs` (Type: number)<br>
-    The length of the interval (animation cycle), in milliseconds.
+* `timer` (Type: Object)<br>An object that will hold two properties:<ul> <li>"time" - initial time value, in milliseconds. <li>"lastTime" - last known time value, in milliseconds. Will be set to the value given in "timeInMs" before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.
+* `timeInMs` (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.
+* `intervalInMs` (Type: number)<br>The length of the interval (animation cycle), in milliseconds.
 
 #### Return Value
 
@@ -184,31 +169,28 @@ value in milliseconds, such as the parameter of a
 
     var angle = 360 * export var getTimePosition(timer, time, 5000);
 
- <a name='H3DU.is3DContext'></a>
+<a name='H3DU.is3DContext'></a>
 ### (static) H3DU.is3DContext(context)
 
 Returns whether the given object is a 3D rendering context.
 
 #### Parameters
 
-* `context` (Type: Object)<br>
-    The object to check.
+* `context` (Type: Object)<br>The object to check.
 
 #### Return Value
 
 Return value. (Type: boolean)
 
- <a name='H3DU.loadFileFromUrl'></a>
+<a name='H3DU.loadFileFromUrl'></a>
 ### (static) H3DU.loadFileFromUrl(url, [responseType])
 
 Loads a file from a URL asynchronously, using XMLHttpRequest.
 
 #### Parameters
 
-* `url` (Type: string)<br>
-    URL of the file to load.
-* `responseType` (Type: string) (optional)<br>
-    Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null or omitted, the default is "text".
+* `url` (Type: string)<br>URL of the file to load.
+* `responseType` (Type: string) (optional)<br>Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null or omitted, the default is "text".
 
 #### Return Value
 
@@ -225,16 +207,25 @@ the parameter's "data" property will be:<ul>
 from JSON.
 <li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.loadGltfFromUrl'></a>
+<a name='H3DU.loadGltfFromUrl'></a>
 ### (static) H3DU.loadGltfFromUrl(url)
 
 Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.
 
+This method is considered a supplementary method to the
+Public Domain HTML 3D Library and is not considered part of that
+library.
+
+To use this class, you must include the script "extras/gltf.js"; the
+class is not included in the "h3du_min.js" file which makes up
+the HTML 3D Library. Example:
+
+    <script type="text/javascript" src="extras/gltf.js"></script>
+
 #### Parameters
 
-* `url` (Type: string)<br>
-    URL of the glTF file to load.
+* `url` (Type: string)<br>URL of the glTF file to load.
 
 #### Return Value
 
@@ -252,7 +243,7 @@ if the glTF data describes an animation; this method updates the state of the
 </ul>If an error occurs in loading the glTF data or any of the buffers and shaders
 it uses, the promise will be rejected. (Type: <a href="Promise.md">Promise</a>.&lt;Object>)
 
- <a name='H3DU.loadStlFromUrl'></a>
+<a name='H3DU.loadStlFromUrl'></a>
 ### (static) H3DU.loadStlFromUrl(url)
 
 Loads a .STL file asynchronously.
@@ -269,8 +260,7 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `url` (Type: string)<br>
-    The URL to load.
+* `url` (Type: string)<br>The URL to load.
 
 #### Return Value
 
@@ -278,7 +268,7 @@ A promise that resolves when the
 .STL file is loaded successfully (the result will be an <a href="H3DU.Mesh.md">H3DU.Mesh</a> object),
 and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.newFrames'></a>
+<a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)
 
 Returns the number of frame-length intervals that occurred since
@@ -287,10 +277,8 @@ This method should be called only once each frame.
 
 #### Parameters
 
-* `timer` (Type: Object)<br>
-    An object described in <a href="H3DU.md#H3DU.getTimePosition">H3DU.getTimePosition</a>.
-* `timeInMs` (Type: number)<br>
-    A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.
+* `timer` (Type: Object)<br>An object described in <a href="H3DU.md#H3DU.md">H3DU.getTimePosition</a>.
+* `timeInMs` (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.
 
 #### Return Value
 
@@ -299,7 +287,7 @@ the last known time held in the parameter "timer".
 The number can include fractional frames. If an
 initial time or last known time wasn't set, returns 0. (Type: number)
 
- <a name='H3DU.renderLoop'></a>
+<a name='H3DU.renderLoop'></a>
 ### (static) H3DU.renderLoop(func)
 
 This method will call a function once before returning,
@@ -309,14 +297,13 @@ or a "polyfill" method.
 
 #### Parameters
 
-* `func` (Type: function)<br>
-    The function to call. The function takes one parameter, "time", which is the number of milliseconds since the page was loaded.
+* `func` (Type: function)<br>The function to call. The function takes one parameter, "time", which is the number of milliseconds since the page was loaded.
 
 #### Return Value
 
 This function doesn't return a value. (Type: void)
 
- <a name='H3DU.toGLColor'></a>
+<a name='H3DU.toGLColor'></a>
 ### (static) H3DU.toGLColor(r, g, b, [a])
 
 Creates a 4-element array representing a color. Each element
@@ -359,14 +346,10 @@ For more information, see the "<a href="tutorial-colors.md">Color Strings</a>" t
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number> | number | string)<br>
-    One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.
-* `g` (Type: number)<br>
-    Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: number)<br>
-    Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: number) (optional)<br>
-    Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
+* `r` (Type: Array.&lt;number> | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.
+* `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
+* `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
+* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
 
 #### Return Value
 
@@ -374,3 +357,5 @@ The color as a 4-element array; if the color is
 invalid, returns [0,0,0,0], or transparent black. Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
 clamped to 1. (Type: Array.&lt;number>)
+
+[Back to documentation index.](index.md)

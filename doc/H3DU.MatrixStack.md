@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU.MatrixStack'></a>
+<a name='H3DU.MatrixStack'></a>
 ### H3DU.MatrixStack()
 
 H3DU.MatrixStack is a class that implements a stack
@@ -53,7 +53,7 @@ scaling transformation.
 * [translate](#H3DU.MatrixStack_translate)<br>Modifies the matrix at the top of this stack by multiplying it by a
 translation transformation.
 
- <a name='H3DU.MatrixStack_frustum'></a>
+<a name='H3DU.MatrixStack_frustum'></a>
 ### H3DU.MatrixStack#frustum(l, r, b, t, n, f)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -62,24 +62,18 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `l` (Type: number)<br>
-    X coordinate of the point where the left clipping plane meets the near clipping plane.
-* `r` (Type: number)<br>
-    X coordinate of the point where the right clipping plane meets the near clipping plane.
-* `b` (Type: number)<br>
-    Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
-* `t` (Type: number)<br>
-    Y coordinate of the point where the top clipping plane meets the near clipping plane.
-* `n` (Type: number)<br>
-    The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
-* `f` (Type: number)<br>
-    The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
+* `l` (Type: number)<br>X coordinate of the point where the left clipping plane meets the near clipping plane.
+* `r` (Type: number)<br>X coordinate of the point where the right clipping plane meets the near clipping plane.
+* `b` (Type: number)<br>Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
+* `t` (Type: number)<br>Y coordinate of the point where the top clipping plane meets the near clipping plane.
+* `n` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
+* `f` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_get'></a>
+<a name='H3DU.MatrixStack_get'></a>
 ### H3DU.MatrixStack#get()
 
 Gets a copy of the matrix at the top of this stack.
@@ -88,7 +82,7 @@ Gets a copy of the matrix at the top of this stack.
 
 . (Type: Array.&lt;number>)
 
- <a name='H3DU.MatrixStack_loadIdentity'></a>
+<a name='H3DU.MatrixStack_loadIdentity'></a>
 ### H3DU.MatrixStack#loadIdentity()
 
 Modifies the matrix at the top of this stack by replacing it with the identity matrix.
@@ -97,21 +91,20 @@ Modifies the matrix at the top of this stack by replacing it with the identity m
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_loadMatrix'></a>
+<a name='H3DU.MatrixStack_loadMatrix'></a>
 ### H3DU.MatrixStack#loadMatrix(mat)
 
 Modifies the matrix at the top of this stack by replacing it with the given matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>
-    A matrix to replace the top of the stack with.
+* `mat` (Type: Array.&lt;number>)<br>A matrix to replace the top of the stack with.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_loadTransposeMatrix'></a>
+<a name='H3DU.MatrixStack_loadTransposeMatrix'></a>
 ### H3DU.MatrixStack#loadTransposeMatrix(mat)
 
 Modifies the matrix at the top of this stack by replacing it with the
@@ -119,14 +112,13 @@ transpose of the given matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>
-    A matrix whose transpose will replace the top of the stack.
+* `mat` (Type: Array.&lt;number>)<br>A matrix whose transpose will replace the top of the stack.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_lookAt'></a>
+<a name='H3DU.MatrixStack_lookAt'></a>
 ### H3DU.MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -135,30 +127,21 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `ex` (Type: number)<br>
-    X coordinate of the camera position in world space.
-* `ey` (Type: number)<br>
-    Y coordinate of the camera position.
-* `ez` (Type: number)<br>
-    Z coordinate of the camera position.
-* `cx` (Type: number)<br>
-    X coordinate of the position in world space that the camera is looking at.
-* `cy` (Type: number)<br>
-    Y coordinate of the position looked at.
-* `cz` (Type: number)<br>
-    Z coordinate of the position looked at.
-* `ux` (Type: number)<br>
-    X coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera's view direction.
-* `uy` (Type: number)<br>
-    Y coordinate of the up vector.
-* `uz` (Type: number)<br>
-    Z coordinate of the up vector.
+* `ex` (Type: number)<br>X coordinate of the camera position in world space.
+* `ey` (Type: number)<br>Y coordinate of the camera position.
+* `ez` (Type: number)<br>Z coordinate of the camera position.
+* `cx` (Type: number)<br>X coordinate of the position in world space that the camera is looking at.
+* `cy` (Type: number)<br>Y coordinate of the position looked at.
+* `cz` (Type: number)<br>Z coordinate of the position looked at.
+* `ux` (Type: number)<br>X coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera's view direction.
+* `uy` (Type: number)<br>Y coordinate of the up vector.
+* `uz` (Type: number)<br>Z coordinate of the up vector.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_multMatrix'></a>
+<a name='H3DU.MatrixStack_multMatrix'></a>
 ### H3DU.MatrixStack#multMatrix(mat)
 
 Modifies the matrix at the top of this stack by multiplying it by another matrix.
@@ -170,14 +153,13 @@ the effect of scaling then translation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>
-    A matrix to multiply the current one by.
+* `mat` (Type: Array.&lt;number>)<br>A matrix to multiply the current one by.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_multTransposeMatrix'></a>
+<a name='H3DU.MatrixStack_multTransposeMatrix'></a>
 ### H3DU.MatrixStack#multTransposeMatrix(mat)
 
 Modifies the matrix at the top of this stack by multiplying it by the transpose of
@@ -190,14 +172,13 @@ the effect of translation then scaling.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>
-    A matrix whose transpose the current matrix will be multiplied by.
+* `mat` (Type: Array.&lt;number>)<br>A matrix whose transpose the current matrix will be multiplied by.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_ortho'></a>
+<a name='H3DU.MatrixStack_ortho'></a>
 ### H3DU.MatrixStack#ortho(l, r, b, t, n, f)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -209,24 +190,18 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `l` (Type: number)<br>
-    Leftmost coordinate of the 3D view.
-* `r` (Type: number)<br>
-    Rightmost coordinate of the 3D view. (Note that r can be greater than l or vice versa.)
-* `b` (Type: number)<br>
-    Bottommost coordinate of the 3D view.
-* `t` (Type: number)<br>
-    Topmost coordinate of the 3D view. (Note that t can be greater than b or vice versa.)
-* `n` (Type: number)<br>
-    Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
-* `f` (Type: number)<br>
-    Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer.
+* `l` (Type: number)<br>Leftmost coordinate of the 3D view.
+* `r` (Type: number)<br>Rightmost coordinate of the 3D view. (Note that r can be greater than l or vice versa.)
+* `b` (Type: number)<br>Bottommost coordinate of the 3D view.
+* `t` (Type: number)<br>Topmost coordinate of the 3D view. (Note that t can be greater than b or vice versa.)
+* `n` (Type: number)<br>Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
+* `f` (Type: number)<br>Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_ortho2d'></a>
+<a name='H3DU.MatrixStack_ortho2d'></a>
 ### H3DU.MatrixStack#ortho2d(l, r, b, t)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -235,20 +210,16 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `l` (Type: number)<br>
-    Leftmost coordinate of the 2D view.
-* `r` (Type: number)<br>
-    Rightmost coordinate of the 2D view. (Note that r can be greater than l or vice versa.)
-* `b` (Type: number)<br>
-    Bottommost coordinate of the 2D view.
-* `t` (Type: number)<br>
-    Topmost coordinate of the 2D view. (Note that t can be greater than b or vice versa.)
+* `l` (Type: number)<br>Leftmost coordinate of the 2D view.
+* `r` (Type: number)<br>Rightmost coordinate of the 2D view. (Note that r can be greater than l or vice versa.)
+* `b` (Type: number)<br>Bottommost coordinate of the 2D view.
+* `t` (Type: number)<br>Topmost coordinate of the 2D view. (Note that t can be greater than b or vice versa.)
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_perspective'></a>
+<a name='H3DU.MatrixStack_perspective'></a>
 ### H3DU.MatrixStack#perspective(fov, aspect, n, f)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -258,20 +229,16 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `fov` (Type: number)<br>
-    Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zoom can be implemented by multiplying field of view by an additional factor.)
-* `aspect` (Type: number)<br>
-    The ratio of width to height of the viewport, usually the scene's aspect ratio.
-* `n` (Type: number)<br>
-    The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
-* `f` (Type: number)<br>
-    The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
+* `fov` (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zoom can be implemented by multiplying field of view by an additional factor.)
+* `aspect` (Type: number)<br>The ratio of width to height of the viewport, usually the scene's aspect ratio.
+* `n` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
+* `f` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_pickMatrix'></a>
+<a name='H3DU.MatrixStack_pickMatrix'></a>
 ### H3DU.MatrixStack#pickMatrix(wx, wy, ww, wh, vp)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -279,22 +246,17 @@ a matrix that transforms the view to a portion of the viewport.
 
 #### Parameters
 
-* `wx` (Type: number)<br>
-    X coordinate of the center of the desired viewport portion.
-* `wy` (Type: number)<br>
-    Y coordinate of the center of the desired viewport portion.
-* `ww` (Type: number)<br>
-    Width of the desired viewport portion.
-* `wh` (Type: number)<br>
-    Height of the desired viewport portion.
-* `vp` (Type: Array.&lt;number>)<br>
-    A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.
+* `wx` (Type: number)<br>X coordinate of the center of the desired viewport portion.
+* `wy` (Type: number)<br>Y coordinate of the center of the desired viewport portion.
+* `ww` (Type: number)<br>Width of the desired viewport portion.
+* `wh` (Type: number)<br>Height of the desired viewport portion.
+* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_popMatrix'></a>
+<a name='H3DU.MatrixStack_popMatrix'></a>
 ### H3DU.MatrixStack#popMatrix()
 
 Removes the matrix at the top of this stack, making
@@ -305,7 +267,7 @@ effect if the stack has only one matrix.
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_pushMatrix'></a>
+<a name='H3DU.MatrixStack_pushMatrix'></a>
 ### H3DU.MatrixStack#pushMatrix()
 
 Makes a copy of the matrix at the top of this stack
@@ -315,27 +277,23 @@ and puts the copy on top of the stack.
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_rotate'></a>
+<a name='H3DU.MatrixStack_rotate'></a>
 ### H3DU.MatrixStack#rotate(angle, x, y, z)
 
 Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
 
 #### Parameters
 
-* `angle` (Type: number)<br>
-    The desired angle to rotate in degrees. If the axis of rotation points toward the viewer, the angle's value is increasing in a counterclockwise direction.
-* `x` (Type: number)<br>
-    X-component of the axis of rotation.
-* `y` (Type: number)<br>
-    Y-component of the axis of rotation.
-* `z` (Type: number)<br>
-    Z-component of the axis of rotation.
+* `angle` (Type: number)<br>The desired angle to rotate in degrees. If the axis of rotation points toward the viewer, the angle's value is increasing in a counterclockwise direction.
+* `x` (Type: number)<br>X-component of the axis of rotation.
+* `y` (Type: number)<br>Y-component of the axis of rotation.
+* `z` (Type: number)<br>Z-component of the axis of rotation.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_scale'></a>
+<a name='H3DU.MatrixStack_scale'></a>
 ### H3DU.MatrixStack#scale(x, y, z)
 
 Modifies the matrix at the top of this stack by multiplying it by a
@@ -343,18 +301,15 @@ scaling transformation.
 
 #### Parameters
 
-* `x` (Type: number)<br>
-    Scale factor along the X axis.
-* `y` (Type: number)<br>
-    Scale factor along the Y axis.
-* `z` (Type: number)<br>
-    Scale factor along the Z axis.
+* `x` (Type: number)<br>Scale factor along the X axis.
+* `y` (Type: number)<br>Scale factor along the Y axis.
+* `z` (Type: number)<br>Scale factor along the Z axis.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 
- <a name='H3DU.MatrixStack_translate'></a>
+<a name='H3DU.MatrixStack_translate'></a>
 ### H3DU.MatrixStack#translate(x, y, z)
 
 Modifies the matrix at the top of this stack by multiplying it by a
@@ -362,13 +317,12 @@ translation transformation.
 
 #### Parameters
 
-* `x` (Type: number)<br>
-    Translation along the X axis.
-* `y` (Type: number)<br>
-    Translation along the Y axis.
-* `z` (Type: number)<br>
-    Translation along the Z axis.
+* `x` (Type: number)<br>Translation along the X axis.
+* `y` (Type: number)<br>Translation along the Y axis.
+* `z` (Type: number)<br>Translation along the Z axis.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
+
+[Back to documentation index.](index.md)

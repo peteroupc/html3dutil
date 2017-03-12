@@ -28,8 +28,8 @@ To build, you will need a Java runtime environment, Ruby, and a JavaScript envir
 that supports `npm`.
 
 * Put `compiler.jar` (the JAR file for the Closure Compiler) in the `build` directory.
-* Install [JSDoc](https://github.com/jsdoc3/jsdoc) via `npm`.
-* Run the Ruby script `build.js`. This will generate the documentation and compile
+* Install [JSDoc](https://github.com/jsdoc3/jsdoc) and `rollup` via `npm`.
+* Run `npm run build`. This will generate the documentation and compile
 the library's source code into a single file called `h3du_min.js`.
 
 Overview and Demos

@@ -38,7 +38,7 @@ var HMath = {
  * of the sine of the shortest angle between A and B.
  * <li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
  * to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
- * </ul>
+ * </ul></ul>
  * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
  * follows:<br>
  * <b>c</b>.x = <b>a</b>.y &#x2a; <b>b</b>.z - <b>a</b>.z &#x2a; <b>b</b>.y<br>

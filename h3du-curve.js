@@ -1,4 +1,3 @@
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -169,7 +168,7 @@ Curve.prototype.arcLength = function(u) {
     var bm = (mx - mn) * 0.5;
     var bp = (mx + mn) * 0.5;
     var ret = 0;
-    var lg = H3DU.Curve._legendreGauss24;
+    var lg = Curve._legendreGauss24;
     for(var i = 0; i < lg.length; i += 2) {
       var weight = lg[i];
       var abscissa = lg[i + 1];

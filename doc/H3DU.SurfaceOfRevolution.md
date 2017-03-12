@@ -2,10 +2,10 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU.SurfaceOfRevolution'></a>
+<a name='H3DU.SurfaceOfRevolution'></a>
 ### H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
-A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
+A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.
 
@@ -21,26 +21,22 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `curve` (Type: Object)<br>
-    A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
+* `curve` (Type: Object)<br>A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
 
  If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must restrict the curve definition to no more than half of the curve.
-* `minval` (Type: number)<br>
-    Smallest V coordinate.
-* `maxval` (Type: number)<br>
-    Largest V coordinate. If _minval_ is greater than _maxval_, both values will be swapped.
-* `axis` (Type: Array.&lt;number>) (optional)<br>
-    Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
+* `minval` (Type: number)<br>Smallest V coordinate.
+* `maxval` (Type: number)<br>Largest V coordinate. If _minval_ is greater than _maxval_, both values will be swapped.
+* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 ### Methods
 
 * [endPoints](#H3DU.SurfaceOfRevolution_endPoints)<br>TODO: Not documented yet.
 * [evaluate](#H3DU.SurfaceOfRevolution_evaluate)<br>Finds the coordinates of the given point of this surface.
-* [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
+* [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
-* [torus](#H3DU.SurfaceOfRevolution.torus)<br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
+* [torus](#H3DU.SurfaceOfRevolution.torus)<br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
- <a name='H3DU.SurfaceOfRevolution_endPoints'></a>
+<a name='H3DU.SurfaceOfRevolution_endPoints'></a>
 ### H3DU.SurfaceOfRevolution#endPoints()
 
 TODO: Not documented yet.
@@ -49,27 +45,25 @@ TODO: Not documented yet.
 
 Return value. (Type: *)
 
- <a name='H3DU.SurfaceOfRevolution_evaluate'></a>
+<a name='H3DU.SurfaceOfRevolution_evaluate'></a>
 ### H3DU.SurfaceOfRevolution#evaluate(u, v)
 
 Finds the coordinates of the given point of this surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>
-    U coordinate of the surface to evaluate.
-* `v` (Type: number)<br>
-    V coordinate of the surface to evaluate.
+* `u` (Type: number)<br>U coordinate of the surface to evaluate.
+* `v` (Type: number)<br>V coordinate of the surface to evaluate.
 
 #### Return Value
 
 An array containing the coordinates
 of the position at the given point. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;number>)
 
- <a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
+<a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
 ### (static) H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
 
-Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
+Creates a <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 The resulting surface will have a circular cross section
 along its length.
@@ -79,14 +73,10 @@ bases of these surfaces won't be generated).
 
 #### Parameters
 
-* `func` (Type: function)<br>
-    Function whose graph will be rotated about the axis of rotation, as specified in the "axis" parameter. The function takes a number as a single parameter and returns a number. The return value is effectively the radius of each part of the surface from beginning to end.
-* `minval` (Type: number)<br>
-    Smallest parameter of the function. This is a number of units from the origin along the axis of rotation.
-* `maxval` (Type: number)<br>
-    Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If _minval_ is greater than _maxval_, both values will be swapped.
-* `axis` (Type: Array.&lt;number>) (optional)<br>
-    Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
+* `func` (Type: function)<br>Function whose graph will be rotated about the axis of rotation, as specified in the "axis" parameter. The function takes a number as a single parameter and returns a number. The return value is effectively the radius of each part of the surface from beginning to end.
+* `minval` (Type: number)<br>Smallest parameter of the function. This is a number of units from the origin along the axis of rotation.
+* `maxval` (Type: number)<br>Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If _minval_ is greater than _maxval_, both values will be swapped.
+* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value
 
@@ -118,22 +108,20 @@ which runs from 5 to 10 units, and with a radius of 2 units.
     "use strict"; return 2; }, // use a constant radius
     5, 10);
 
- <a name='H3DU.SurfaceOfRevolution.torus'></a>
+<a name='H3DU.SurfaceOfRevolution.torus'></a>
 ### (static) H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])
 
-A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
+A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
 #### Parameters
 
-* `outerRadius` (Type: number)<br>
-    Radius from the center to the innermost part of the torus.
-* `innerRadius` (Type: number)<br>
-    Radius from the inner edge to the innermost part of the torus.
-* `curve` (Type: Object) (optional)<br>
-    A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section with a radius of 1.
-* `axis` (Type: Array.&lt;number>) (optional)<br>
-    Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
+* `outerRadius` (Type: number)<br>Radius from the center to the innermost part of the torus.
+* `innerRadius` (Type: number)<br>Radius from the inner edge to the innermost part of the torus.
+* `curve` (Type: Object) (optional)<br>A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section with a radius of 1.
+* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value
 
 Return value. (Type: <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a>)
+
+[Back to documentation index.](index.md)

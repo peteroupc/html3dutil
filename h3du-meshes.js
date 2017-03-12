@@ -9,7 +9,7 @@
 /* global H3DU */
 /**
  * Contains methods that create meshes
- * of various geometric shapes.<p>
+ * of various geometric shapes and solids.<p>
  * Note that wherever a method in this class describes how texture
  * coordinates are generated, it is assumed that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right

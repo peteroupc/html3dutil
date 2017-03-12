@@ -1,0 +1,16 @@
+<html><head><title>Promise</title></head><body><h1> Promise</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='Promise'></a>
+<h3> Promise([resolver])</h3>A promise holds a value to be resolved in the future.<p>
+This class is a "polyfill" for the standard <code>Promise</code>
+class; it is only used when the running JavaScript environment
+doesn't support or include a <code>Promise</code> class
+on its own.<h4> Parameters</h4><ul><li><code>resolver</code> (Type: function) (optional)<br>Function that takes two arguments: the first is a function to call when resolving the promise, and the second is a function to call when rejecting the promise.</ul><h3> Methods</h3><ul><li><a href='#Promise.all'>all</a><br>Wait for all these promises to complete.<li><a href='#Promise.race'>race</a><br>Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.<li><a href='#Promise.reject'>reject</a><br>Returns a promise that is rejected.<li><a href='#Promise.resolve'>resolve</a><br>Returns a promise that resolves.</ul><a name='Promise.all'></a>
+<h3> (static) Promise.all(all)</h3>Wait for all these promises to complete. One failed => this fails too.<h4> Parameters</h4><ul><li><code>all</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>>)<br>An array of promises.</ul><h4> Return Value</h4>A promise that is resolved when all promises have resolved. (Type: <a href="Promise.html">Promise</a>)<a name='Promise.race'></a>
+<h3> (static) Promise.race(all)</h3>Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.<h4> Parameters</h4><ul><li><code>all</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>>)<br>An array of promises.</ul><h4> Return Value</h4>A promise that resolves or is rejected according to
+the first promise that resolves or is rejected. It will receive the
+value associated with that promise. (Type: <a href="Promise.html">Promise</a>)<a name='Promise.reject'></a>
+<h3> (static) Promise.reject(reason)</h3>Returns a promise that is rejected.<h4> Parameters</h4><ul><li><code>reason</code> (Type: Object)<br>The value associated with the promise.</ul><h4> Return Value</h4>A promise that is rejected and takes the given value
+as its argument. (Type: <a href="Promise.html">Promise</a>)<a name='Promise.resolve'></a>
+<h3> (static) Promise.resolve(value)</h3>Returns a promise that resolves.<h4> Parameters</h4><ul><li><code>value</code> (Type: Object)<br>The value associated with the promise.</ul><h4> Return Value</h4>A promise that resolves and takes the given value
+as its argument. (Type: <a href="Promise.html">Promise</a>)<p><a href='index.html'>Back to documentation index.</a></p></body></html>

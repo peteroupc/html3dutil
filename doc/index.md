@@ -13,11 +13,11 @@ as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 wraps another curve evaluator object and remaps its U coordinates
 to an <i>arc length parameterization</i>.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
-* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
+* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a B-spline (basis spline) surface.
 * <a href="H3DU.Batch3D.md">H3DU.Batch3D</a><br>A `Batch3D` represents a so-called "scene graph".
-* <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+* <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.md">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b>
-* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
+* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.md">H3DU.BSplineSurface.fromBezierSurface</a>
 to create a B&eacute;zier surface.</b>
 * <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
 Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
@@ -28,7 +28,7 @@ view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.
-* <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.
+* <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.
@@ -55,7 +55,7 @@ of 4x4 transformation matrices.
 * <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
 * <a href="H3DU.MeshJSON.md">H3DU.MeshJSON</a><br>JSON exporter of graphics meshes.
 * <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
-of various geometric shapes.
+of various geometric shapes and solids.
 * <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
 * <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a><br>A material for physically-based rendering.
 * <a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for
@@ -75,7 +75,7 @@ and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating
 vertex attributes of a surface.
-* <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
+* <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.
 * <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
@@ -107,23 +107,23 @@ from one coordinate system to another.
 
 ## Tutorials
 
-* <a href="tutorial-camera.md">The "Camera" and Geometric Transforms</a>
-* <a href="tutorial-colors.md">Color Strings</a>
-* <a href="tutorial-filters.md">Graphics Filters</a>
-* <a href="tutorial-glmath.md">H3DU's Math Functions</a>
-* <a href="tutorial-history.md">Older Version History</a>
-* <a href="tutorial-matrixdetails.md">Matrix Details</a>
-* <a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a>
-* <a href="tutorial-overview.md">Library Overview</a>
-* <a href="tutorial-paths.md">2-Dimensional Graphics Paths</a>
-* <a href="tutorial-shapes.md">Creating Shapes</a>
-* <a href="tutorial-subclass.md">Subclassing</a>
-* <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a>
-* <a href="tutorial-textures.md">Texture Examples</a>
+* [The "Camera" and Geometric Transforms](tutorial-camera.md)
+* [Color Strings](tutorial-colors.md)
+* [Graphics Filters](tutorial-filters.md)
+* [H3DU's Math Functions](tutorial-glmath.md)
+* [Older Version History](tutorial-history.md)
+* [Matrix Details](tutorial-matrixdetails.md)
+* [Examples of Creating Meshes on the Fly](tutorial-meshexamples.md)
+* [Library Overview](tutorial-overview.md)
+* [2-Dimensional Graphics Paths](tutorial-paths.md)
+* [Creating Shapes](tutorial-shapes.md)
+* [Subclassing](tutorial-subclass.md)
+* [Parametric Curves and Parametric Surfaces](tutorial-surfaces.md)
+* [Texture Examples](tutorial-textures.md)
 
 ## Read Me
 
-<h1>HTML 3D Utility Library</h1><p><strong>Download source code: <a href="https://github.com/peteroupc/html3dutil/archive/master.zip">ZIP file</a></strong></p>
+<h1>HTML 3D Utility Library</h1><p><strong>Download source code: <a href="https://github.com/peteroupc/html3dutil/archive/master.md">ZIP file</a></strong></p>
 <p>If you like this software, consider donating to me at this link: <a href="http://peteroupc.github.io/">http://peteroupc.github.io/</a></p>
 <hr>
 <p>A public domain JavaScript library for easing the development of HTML 3D applications.</p>
@@ -136,8 +136,8 @@ as follows:</p>
 that supports <code>npm</code>.</p>
 <ul>
 <li>Put <code>compiler.jar</code> (the JAR file for the Closure Compiler) in the <code>build</code> directory.</li>
-<li>Install <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> via <code>npm</code>.</li>
-<li>Run the Ruby script <code>build.js</code>. This will generate the documentation and compile
+<li>Install <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> and <code>rollup</code> via <code>npm</code>.</li>
+<li>Run <code>npm run build</code>. This will generate the documentation and compile
 the library's source code into a single file called <code>h3du_min.js</code>.</li>
 </ul>
 <h2>Overview and Demos</h2><p>For a list of demos, as well as detailed instructions on using this library and a summary of the library's features, visit:</p>

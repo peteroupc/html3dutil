@@ -127,7 +127,7 @@ Every 3D scene is made up of "meshes", or the triangles, lines, and points that 
 
 Here are some other built-in mesh methods. This page doesn&#39;t explain all the
 features or parameters in the `Meshes` class; for that, see the
-<a href="http://peteroupc.github.io/html3dutil/H3DU.Meshes.html">Meshes API documentation</a>.
+<a href="http://peteroupc.github.io/html3dutil/H3DU.Meshes.md">Meshes API documentation</a>.
 
   * <dfn>`H3DU.Meshes.createSphere(radius)`</dfn>
   <br>Creates a sphere with the given `radius`.

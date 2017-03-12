@@ -206,7 +206,7 @@ The following sections describe different kinds of matrix transformations in mor
 
 Related functions:
 
-* <a href="H3DU.Math.md#H3DU.Math.mat4transform">H3DU.Math.mat4transform()</a> -
+* <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4transform()</a> -
  Transforms a 4-element vector with a 4x4 matrix
 * <a href="H3DU.Math.md#H3DU.Math.mat3transform">H3DU.Math.mat3transform()</a> -
  Transforms a 3-element vector with a 3x3 matrix

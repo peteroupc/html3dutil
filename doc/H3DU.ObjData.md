@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU.ObjData'></a>
+<a name='H3DU.ObjData'></a>
 ### H3DU.ObjData()
 
 WaveFront OBJ format.
@@ -35,7 +35,7 @@ in this OBJ file.
 * [toShapeFromName](#H3DU.ObjData_toShapeFromName)<br>Creates one or more <a href="H3DU.Shape.md">H3DU.Shape</a> objects from the named portion
 of the data in this OBJ file.
 
-<a id='H3DU.ObjData_mtllib'></a>
+<a name='H3DU.ObjData_mtllib'></a>
 ### H3DU.ObjData#mtllib
 
 <b>Deprecated: This property is not meant to be public.</b>
@@ -44,20 +44,19 @@ An array of meshes. Two or more meshes may have
 the same name (the "name" property in each mesh). The "data"
 property holds data for each mesh.
 
-<a id='H3DU.ObjData_url'></a>
+<a name='H3DU.ObjData_url'></a>
 ### H3DU.ObjData#url
 
 URL of the OBJ file.
 
- <a name='H3DU.ObjData.loadMtlFromUrl'></a>
+<a name='H3DU.ObjData.loadMtlFromUrl'></a>
 ### (static) H3DU.ObjData.loadMtlFromUrl(url)
 
 Loads a material (MTL) file asynchronously.
 
 #### Parameters
 
-* `url` (Type: string)<br>
-    The URL to load the material data file.
+* `url` (Type: string)<br>The URL to load the material data file.
 
 #### Return Value
 
@@ -72,7 +71,7 @@ Returns the material as <a href="H3DU.Material.md">H3DU.Material</a>, or null if
 </li>
 </ul> (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.ObjData.loadObjFromUrl'></a>
+<a name='H3DU.ObjData.loadObjFromUrl'></a>
 ### (static) H3DU.ObjData.loadObjFromUrl(url)
 
 Loads a WaveFront OBJ file (along with its associated MTL, or
@@ -80,8 +79,7 @@ material file, if available) asynchronously.
 
 #### Parameters
 
-* `url` (Type: string)<br>
-    The URL to load.
+* `url` (Type: string)<br>The URL to load.
 
 #### Return Value
 
@@ -90,7 +88,7 @@ the OBJ file is loaded successfully, whether or not its associated
 MTL is also loaded successfully (the result is an H3DU.ObjData object),
 and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.ObjData.loadObjFromUrlWithTextures'></a>
+<a name='H3DU.ObjData.loadObjFromUrlWithTextures'></a>
 ### (static) H3DU.ObjData.loadObjFromUrlWithTextures(url, textureLoader)
 
 Loads a WaveFront OBJ file (along with its associated MTL, or
@@ -99,10 +97,8 @@ asynchronously.
 
 #### Parameters
 
-* `url` (Type: string)<br>
-    The URL to load.
-* `textureLoader` (Type: TextureLoader)<br>
-    An object to load textures with.
+* `url` (Type: string)<br>The URL to load.
+* `textureLoader` (Type: TextureLoader)<br>An object to load textures with.
 
 #### Return Value
 
@@ -112,7 +108,7 @@ MTL is also loaded successfully (the result is an H3DU.ObjData object),
 and is rejected when an error occurs when loading the OBJ file or any of
 its textures. (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.ObjData_toShape'></a>
+<a name='H3DU.ObjData_toShape'></a>
 ### H3DU.ObjData#toShape()
 
 Creates one or more 3D shapes from the data
@@ -122,7 +118,7 @@ in this OBJ file.
 
 Group of shapes. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
- <a name='H3DU.ObjData_toShapeFromName'></a>
+<a name='H3DU.ObjData_toShapeFromName'></a>
 ### H3DU.ObjData#toShapeFromName(name)
 
 Creates one or more <a href="H3DU.Shape.md">H3DU.Shape</a> objects from the named portion
@@ -131,10 +127,11 @@ shape will have the corresponding material, if it uses one.
 
 #### Parameters
 
-* `name` (Type: string)<br>
-    Name from the OBJ file of the portion of the model to use.
+* `name` (Type: string)<br>Name from the OBJ file of the portion of the model to use.
 
 #### Return Value
 
 Group of shapes. The group
 will be empty if no shapes with the given name exist. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+
+[Back to documentation index.](index.md)

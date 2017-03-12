@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
- <a name='H3DU.Texture'></a>
+<a name='H3DU.Texture'></a>
 ### H3DU.Texture(name)
 
 Specifies a texture, which can serve as image data applied to
@@ -16,8 +16,7 @@ and 32.
 
 #### Parameters
 
-* `name` (Type: string)<br>
-    URL of the texture data. Based on the URL, the texture may be loaded via the JavaScript DOM's Image class. However, this constructor will not load that image yet.
+* `name` (Type: string)<br>URL of the texture data. Based on the URL, the texture may be loaded via the JavaScript DOM's Image class. However, this constructor will not load that image yet.
 
 ### Methods
 
@@ -30,7 +29,7 @@ and 32.
 * [setClamp](#H3DU.Texture_setClamp)<br><b>Deprecated: Use the TextureInfo class's "wrapS" and
 "wrapT" parameters instead.</b>
 
- <a name='H3DU.Texture_dispose'></a>
+<a name='H3DU.Texture_dispose'></a>
 ### H3DU.Texture#dispose()
 
 Disposes resources used by this texture.
@@ -39,25 +38,22 @@ Disposes resources used by this texture.
 
 This method doesn't return a value. (Type: void)
 
- <a name='H3DU.Texture.fromUint8Array'></a>
+<a name='H3DU.Texture.fromUint8Array'></a>
 ### (static) H3DU.Texture.fromUint8Array(array, width, height)
 
 Creates a texture from a byte array specifying the texture data.
 
 #### Parameters
 
-* `array` (Type: Uint8Array)<br>
-    A byte array containing the texture data, with the pixels arranged in left-to-right rows from top to bottom. Each pixel takes 4 bytes, where the bytes are the red, green, blue, and alpha components, in that order.
-* `width` (Type: number)<br>
-    Width, in pixels, of the texture.
-* `height` (Type: number)<br>
-    Height, in pixels, of the texture.
+* `array` (Type: Uint8Array)<br>A byte array containing the texture data, with the pixels arranged in left-to-right rows from top to bottom. Each pixel takes 4 bytes, where the bytes are the red, green, blue, and alpha components, in that order.
+* `width` (Type: number)<br>Width, in pixels, of the texture.
+* `height` (Type: number)<br>Height, in pixels, of the texture.
 
 #### Return Value
 
 The new H3DU.Texture object. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
 
- <a name='H3DU.Texture_getHeight'></a>
+<a name='H3DU.Texture_getHeight'></a>
 ### H3DU.Texture#getHeight()
 
 Gets this texture's known height.
@@ -67,7 +63,7 @@ Gets this texture's known height.
 This texture's height in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: number)
 
- <a name='H3DU.Texture_getName'></a>
+<a name='H3DU.Texture_getName'></a>
 ### H3DU.Texture#getName()
 
 Gets the name of this texture.
@@ -76,7 +72,7 @@ Gets the name of this texture.
 
 Return value. (Type: string)
 
- <a name='H3DU.Texture_getWidth'></a>
+<a name='H3DU.Texture_getWidth'></a>
 ### H3DU.Texture#getWidth()
 
 Gets this texture's known width.
@@ -86,24 +82,22 @@ Gets this texture's known width.
 This texture's width in pixels.
 Will be 0 if the texture's image data wasn't loaded yet. (Type: number)
 
- <a name='H3DU.Texture.loadTexture'></a>
+<a name='H3DU.Texture.loadTexture'></a>
 ### (static) H3DU.Texture.loadTexture(info, [textureCache])
 
 Loads a texture by its URL.
 
 #### Parameters
 
-* `info` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.Texture.md">H3DU.Texture</a>)<br>
-    An <a href="H3DU.Texture.md">H3DU.Texture</a> object, an <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM's Image class.
-* `textureCache` (Type: Object) (optional)<br>
-    An object whose keys are the names of textures already loaded. This will help avoid loading the same texture more than once.
+* `info` (Type: String | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.Texture.md">H3DU.Texture</a>)<br>An <a href="H3DU.Texture.md">H3DU.Texture</a> object, an <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM's Image class.
+* `textureCache` (Type: Object) (optional)<br>An object whose keys are the names of textures already loaded. This will help avoid loading the same texture more than once.
 
 #### Return Value
 
 A promise that resolves when the texture
 is fully loaded. If it resolves, the result will be an H3DU.Texture object. (Type: <a href="Promise.md">Promise</a>)
 
- <a name='H3DU.Texture_setClamp'></a>
+<a name='H3DU.Texture_setClamp'></a>
 ### H3DU.Texture#setClamp(clamp)
 
 <b>Deprecated: Use the TextureInfo class's "wrapS" and
@@ -118,9 +112,10 @@ always clamped.
 
 #### Parameters
 
-* `clamp` (Type: Boolean)<br>
-    If true, the texture's texture coordinates will be clamped to the range [0, 1]. If false, the fractional parts of the texture coordinates' be used as the coordinates (causing wraparound). The default is false.
+* `clamp` (Type: Boolean)<br>If true, the texture's texture coordinates will be clamped to the range [0, 1]. If false, the fractional parts of the texture coordinates' be used as the coordinates (causing wraparound). The default is false.
 
 #### Return Value
 
 This object. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
+
+[Back to documentation index.](index.md)
