@@ -155,12 +155,6 @@ HtmlWriter.prototype.listText = function(list) {
 /** @ignore */
 HtmlWriter.prototype.normtags = function(x) {
   x = resolveLinks(x);
-  x = x.replace(/<pre>\s*([\s\S]+?)<\/pre>/g, function(a, b) {
-    var unescaped = b.replace(/\&lt;/g, "<");
-    unescaped = unescaped.replace(/\&gt;/g, ">");
-    unescaped = unescaped.replace(/\&amp;/g, "&");
-    return "<pre>" + unescaped + "</pre>";
-  });
   return x;
 };
 /** @ignore */
@@ -191,10 +185,7 @@ HtmlWriter.prototype.linkText = function(url, text) {
 HtmlWriter.prototype.fromMarkdown = function(text) {
   var parser = markdown.getParser();
   if(!parser) {
-    var unescaped = text.replace(/\&lt;/g, "<");
-    unescaped = unescaped.replace(/\&gt;/g, ">");
-    unescaped = unescaped.replace(/\&amp;/g, "&");
-    return "<pre>" + unescaped + "</pre>";
+    return "<pre>" + helper.htmlsafe(text) + "</pre>";
   }
   return parser(text);
 };
@@ -487,9 +478,11 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
-    if(typeof parentlong === "undefined" || parentlong === null) {
-      if(typeof node.memberof !== "undefined" && node.memberof !== null)return;
-    } else if(node.memberof !== parentlong)return;
+    if(typeof parentlong === "undefined" || parentlong === null){
+	    if((typeof node.memberof !== "undefined" && node.memberof !== null))return
+    } else {
+	    if(node.memberof!==parentlong)return
+    }
     if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind === "namespace") {
       var paramnames = [];
       if(node.params) {

@@ -58,7 +58,8 @@ angle does a 360-degree turn in 5 seconds (5000 milliseconds).
 The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
 <code>requestAnimationFrame()</code> callback method.
-</p><pre>var angle = 360 * export var getTimePosition(timer, time, 5000);</pre><a name='H3DU.is3DContext'></a>
+</p><pre>
+var angle = 360 * export var getTimePosition(timer, time, 5000);</pre><a name='H3DU.is3DContext'></a>
 <h3> (static) H3DU.is3DContext(context)</h3>Returns whether the given object is a 3D rendering context.<h4> Parameters</h4><ul><li><code>context</code> (Type: Object)<br>The object to check.</ul><h4> Return Value</h4>Return value. (Type: boolean)<a name='H3DU.loadFileFromUrl'></a>
 <h3> (static) H3DU.loadFileFromUrl(url, [responseType])</h3>Loads a file from a URL asynchronously, using XMLHttpRequest.<h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>URL of the file to load.<li><code>responseType</code> (Type: string) (optional)<br>Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null or omitted, the default is "text".</ul><h4> Return Value</h4>A promise that resolves when the data
 file is loaded successfully (the result will be an object with
@@ -79,7 +80,8 @@ Public Domain HTML 3D Library and is not considered part of that
 library. <p>
 To use this class, you must include the script "extras/gltf.js"; the
 class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:<pre><script type="text/javascript" src="extras/gltf.js"></script></pre><h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>URL of the glTF file to load.</ul><h4> Return Value</h4>A promise; when it resolves, the result will
+the HTML 3D Library. Example:<pre>
+&lt;script type="text/javascript" src="extras/gltf.js">&lt;/script></pre><h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>URL of the glTF file to load.</ul><h4> Return Value</h4>A promise; when it resolves, the result will
 be an object that implements the following methods:<ul>
 <li><code>getShape()</code> - Gets an <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> object described
 by the glTF data.
@@ -98,7 +100,8 @@ Public Domain HTML 3D Library and is not considered part of that
 library. <p>
 To use this method, you must include the script "extras/stl.js"; the
 class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:<pre><script type="text/javascript" src="extras/stl.js"></script></pre><h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>The URL to load.</ul><h4> Return Value</h4>A promise that resolves when the
+the HTML 3D Library. Example:<pre>
+&lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre><h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>The URL to load.</ul><h4> Return Value</h4>A promise that resolves when the
 .STL file is loaded successfully (the result will be an <a href="H3DU.Mesh.html">H3DU.Mesh</a> object),
 and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.html">Promise</a>)<a name='H3DU.newFrames'></a>
 <h3> (static) H3DU.newFrames(timer, timeInMs)</h3>Returns the number of frame-length intervals that occurred since

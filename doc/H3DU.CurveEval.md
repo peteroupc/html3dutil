@@ -108,33 +108,4 @@ Specifies a curve evaluator object for generating the vertex positions of a para
 
 This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
-#### Example
-
-The following function sets a circle as the curve
-to use for generating vertex positions. It demonstrates how all methods
-defined for curve evaluator objects can be implemented.
-
-    curveEval.vertex({"evaluate":function(u) {
-    "use strict";
-    return [Math.cos(u),Math.sin(u),0]
-    },
-    "velocity":function(u) {
-    return [-Math.sin(u),Math.cos(u),0]
-    },
-    "accel":function(u) {
-    return [-Math.cos(u),-Math.sin(u),0]
-    },
-    "normal":function(u) {
-    // NOTE: The velocity vector will already be a
-    // unit vector, so we use the accel vector instead
-    return H3DU.Math.vec3normalize(this.accel(u));
-    },
-    "arcLength":function(u) {
-    return u;
-    },
-    "endPoints":function(u) {
-    return [0,Math.PiTimes2]
-    }
-    });
-
 [Back to documentation index.](index.md)

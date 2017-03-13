@@ -40,6 +40,7 @@ from the start of the curve.
 * [getCoordinate](#H3DU.ArcLengthParamCurve_getCoordinate)<br>Finds the U coordinate for the point on the curve which is the given distance away
 from the start of the curve.
 * [getPoints](#H3DU.ArcLengthParamCurve_getPoints)<br>TODO: Not documented yet.
+* [jerk](#H3DU.ArcLengthParamCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.ArcLengthParamCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [velocity](#H3DU.ArcLengthParamCurve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
 
@@ -145,6 +146,25 @@ TODO: Not documented yet.
 #### Return Value
 
 Return value. (Type: *)
+
+<a name='H3DU.ArcLengthParamCurve_jerk'></a>
+### H3DU.ArcLengthParamCurve#jerk(u)
+
+Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.
+
+The <b>jerk</b> of a curve is a vector which is the third derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a jerk vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='H3DU.ArcLengthParamCurve_normal'></a>
 ### H3DU.ArcLengthParamCurve#normal(u)

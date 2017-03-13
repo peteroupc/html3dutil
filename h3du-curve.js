@@ -23,7 +23,34 @@ import {_MathInternal} from "./h3du-mathinternal";
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
  * @constructor
  * @memberof H3DU
- * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
+ * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
+ * @example <caption>The following function defines a parametric circle curve. It demonstrates how all methods
+ * defined for curve evaluator objects can be implemented.</caption>
+ * var circle=new Curve({"evaluate":function(u) {
+ * "use strict";
+ * return [Math.cos(u),Math.sin(u),0]
+ * },
+ * "velocity":function(u) {
+ * return [-Math.sin(u),Math.cos(u),0]
+ * },
+ * "accel":function(u) {
+ * return [-Math.cos(u),-Math.sin(u),0]
+ * },
+ * "jerk":function(u) {
+ * return [Math.sin(u),-Math.cos(u),0]
+ * },
+ * "normal":function(u) {
+ * // NOTE: The velocity vector will already be a
+ * // unit vector, so we use the accel vector instead
+ * return H3DU.Math.vec3normalize(this.accel(u));
+ * },
+ * "arcLength":function(u) {
+ * return u;
+ * },
+ * "endPoints":function(u) {
+ * return [0,Math.PiTimes2]
+ * }
+ * });
  */
 function Curve(curve) {
   this.curve = curve;
@@ -103,6 +130,30 @@ Curve.prototype.accel = function(u) {
       vector = this.velocity(u + du);
     }
     return _MathInternal.vecSubScaleInPlace(vector, this.velocity(u), 1.0 / du);
+  }
+};
+/**
+ * Finds an approximate jerk vector at the given U coordinate of this curve.
+ * The implementation in {@link H3DU.Curve} calls the evaluator's <code>jerk</code>
+ * method if it implements it; otherwise, does a numerical differentiation using
+ * the acceleration vector.<p>
+ * The <b>jerk</b> of a curve is a vector which is the third derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {Array<number>} An array describing a jerk vector. It should have at least as many
+ * elements as the number of dimensions of the underlying curve.
+ */
+Curve.prototype.jerk = function(u) {
+  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.jerk !== "undefined" && this.curve.jerk !== null) {
+    return this.curve.jerk(u);
+  } else {
+    var du = Curve._EPSILON;
+    var vector = this.accel(u + du);
+    if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
+    // too abrupt, try the other direction
+      du = -du;
+      vector = this.accel(u + du);
+    }
+    return _MathInternal.vecSubScaleInPlace(vector, this.accel(u), 1.0 / du);
   }
 };
 /**

@@ -25,7 +25,8 @@ By default, normals won't be generated automatically.<h4> Parameters</h4><ul><li
 <h3> H3DU.SurfaceEval#texCoord(evaluator)</h3>Specifies a parametric surface function for generating texture coordinates.<h4> Parameters</h4><ul><li><code>evaluator</code> (Type: Object)<br>An object that must contain a method named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 2-element array.</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)<h4> Example</h4><p>The following example sets the surface
 function to a linear evaluator. Thus, coordinates passed to the
 evalOne and evalSurface methods will be interpolated as direct
-texture coordinates.</p><pre>surface.texCoord({"evaluate":function(u,v) {
+texture coordinates.</p><pre>
+surface.texCoord({"evaluate":function(u,v) {
 "use strict"; return [u,v] }});</pre><a name='H3DU.SurfaceEval_vertex'></a>
 <h3> H3DU.SurfaceEval#vertex(evaluator)</h3>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.<h4> Parameters</h4><ul><li><code>evaluator</code> (Type: <a href="H3DU.Surface.html">H3DU.Surface</a> | Object)<br>An object described in <a href="H3DU.Surface.html">H3DU.Surface</a>. Can be null, in which case, disables generating vertex positions.</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)<h4> Example</h4><p>The following example sets the vertex position and
 normal generation
@@ -39,7 +40,8 @@ Then, find the tangent and bitangent vectors:<p>
 Next, take their cross product:<p>
 <b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
 The result is the gradient, which will be normal to the surface.
-</p><pre>surfaceEval.vertex({"evaluate":function(u,v) {
+</p><pre>
+surfaceEval.vertex({"evaluate":function(u,v) {
 "use strict";
 return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
 },

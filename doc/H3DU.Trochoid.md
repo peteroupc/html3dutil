@@ -38,6 +38,7 @@ the HTML 3D Library. Example:
 curve and the point at the given U coordinate of this curve.
 * [endPoints](#H3DU.Trochoid_endPoints)<br>Gets the endpoints of this curve.
 * [evaluate](#H3DU.Trochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
+* [jerk](#H3DU.Trochoid_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.Trochoid_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [velocity](#H3DU.Trochoid_velocity)<br>Finds the velocity (derivative) of this curve at the given point.
 
@@ -104,6 +105,25 @@ Generates a point on the curve from the given U coordinate.
 
 A 3-element array specifying a 3D point.
 Only the X and Y coordinates will be other than 0. (Type: Array.&lt;number>)
+
+<a name='H3DU.Trochoid_jerk'></a>
+### H3DU.Trochoid#jerk(u)
+
+Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.
+
+The <b>jerk</b> of a curve is a vector which is the third derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a jerk vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='H3DU.Trochoid_normal'></a>
 ### H3DU.Trochoid#normal(u)

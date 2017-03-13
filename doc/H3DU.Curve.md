@@ -23,7 +23,38 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 #### Parameters
 
-* `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
+* `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
+
+#### Example
+
+The following function defines a parametric circle curve. It demonstrates how all methods
+defined for curve evaluator objects can be implemented.
+
+    var circle=new Curve({"evaluate":function(u) {
+    "use strict";
+    return [Math.cos(u),Math.sin(u),0]
+    },
+    "velocity":function(u) {
+    return [-Math.sin(u),Math.cos(u),0]
+    },
+    "accel":function(u) {
+    return [-Math.cos(u),-Math.sin(u),0]
+    },
+    "jerk":function(u) {
+    return [Math.sin(u),-Math.cos(u),0]
+    },
+    "normal":function(u) {
+    // NOTE: The velocity vector will already be a
+    // unit vector, so we use the accel vector instead
+    return H3DU.Math.vec3normalize(this.accel(u));
+    },
+    "arcLength":function(u) {
+    return u;
+    },
+    "endPoints":function(u) {
+    return [0,Math.PiTimes2]
+    }
+    });
 
 ### Methods
 
@@ -32,6 +63,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 curve and the point at the given U coordinate of this curve.
 * [endPoints](#H3DU.Curve_endPoints)<br>Returns the starting and ending U coordinates of this curve.
 * [evaluate](#H3DU.Curve_evaluate)<br>Finds the position of this curve at the given U coordinate.
+* [jerk](#H3DU.Curve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.Curve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [velocity](#H3DU.Curve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
 
@@ -96,6 +128,25 @@ Finds the position of this curve at the given U coordinate.
 #### Return Value
 
 An array describing a position. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
+
+<a name='H3DU.Curve_jerk'></a>
+### H3DU.Curve#jerk(u)
+
+Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.
+
+The <b>jerk</b> of a curve is a vector which is the third derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a jerk vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='H3DU.Curve_normal'></a>
