@@ -29,7 +29,7 @@ for describing 3D rotations).
 in the form of an angle and an axis of
 rotation.
 * [reset](#H3DU.Transform_reset)<br>Resets this transform to the untransformed state.
-* [resetTransform](#H3DU.Transform_resetTransform)<br><b>Deprecated: Use the "reset" method instead.</b>
+* [resetTransform](#H3DU.Transform_resetTransform)<br>**Deprecated: Use the "reset" method instead.**
 * [setMatrix](#H3DU.Transform_setMatrix)<br>Sets this transform's transformation matrix.
 * [setOrientation](#H3DU.Transform_setOrientation)<br><b>Deprecated: Use <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setRotation</a> instead.
 This method's name is inaccurate because orientations are not rotations.</b>
@@ -210,7 +210,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 <a name='H3DU.Transform_resetTransform'></a>
 ### H3DU.Transform#resetTransform()
 
-<b>Deprecated: Use the "reset" method instead.</b>
+**Deprecated: Use the "reset" method instead.**
 
 Resets this transform to the untransformed state.
 

@@ -24,6 +24,7 @@ import {_MathInternal} from "./h3du-mathinternal";
  * @constructor
  * @memberof H3DU
  * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
+ * @param {Object} curveParam TODO: Not documented yet.
  * @example <caption>The following function defines a parametric circle curve. It demonstrates how all methods
  * defined for curve evaluator objects can be implemented.</caption>
  * var circle=new Curve({"evaluate":function(u) {
@@ -52,8 +53,9 @@ import {_MathInternal} from "./h3du-mathinternal";
  * }
  * });
  */
-function Curve(curve) {
+function Curve(curve, curveParam) {
   this.curve = curve;
+  this.curveParam = curveParam;
 }
 /**
  * Returns the starting and ending U coordinates of this curve.
@@ -63,12 +65,23 @@ function Curve(curve) {
  * method.
  */
 Curve.prototype.endPoints = function() {
-  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.endPoints !== "undefined" && this.curve.endPoints !== null) {
+  if(typeof this.curveParam !== "undefined" && this.curveParam !== null) {
+    return this.curveParam.endPoints();
+  }
+  if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.endPoints !== "undefined" && this.curve.endPoints !== null) {
     return this.curve.endPoints();
   } else {
     return [0, 1];
   }
 };
+/** @ignore */
+Curve.prototype._getCoord = function(u) {
+  if(typeof this.curveParam !== "undefined" && this.curveParam !== null) {
+    return this.curveParam.getCoordinate(u);
+  }
+  return u;
+};
+
 /** @ignore */
 Curve._EPSILON = 0.00001;
 /**
@@ -78,8 +91,8 @@ Curve._EPSILON = 0.00001;
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.evaluate = function(u) {
-  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.evaluate !== "undefined" && this.curve.evaluate !== null) {
-    return this.curve.evaluate(u);
+  if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.evaluate !== "undefined" && this.curve.evaluate !== null) {
+    return this.curve.evaluate(this._getCoord(u));
   } else {
     return [0, 0, 0];
   }
@@ -95,8 +108,8 @@ Curve.prototype.evaluate = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.velocity = function(u) {
-  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.velocity !== "undefined" && this.curve.velocity !== null) {
-    return this.curve.velocity(u);
+  if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.velocity !== "undefined" && this.curve.velocity !== null) {
+    return this.curve.velocity(this._getCoord(u));
   } else {
     var du = Curve._EPSILON;
     var vector = this.evaluate(u + du);
@@ -113,14 +126,14 @@ Curve.prototype.velocity = function(u) {
  * The implementation in {@link H3DU.Curve} calls the evaluator's <code>accel</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the velocity vector.<p>
- * The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
  * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing an acceleration vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.accel = function(u) {
-  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.accel !== "undefined" && this.curve.accel !== null) {
-    return this.curve.accel(u);
+  if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.accel !== "undefined" && this.curve.accel !== null) {
+    return this.curve.accel(this._getCoord(u));
   } else {
     var du = Curve._EPSILON;
     var vector = this.velocity(u + du);
@@ -137,14 +150,14 @@ Curve.prototype.accel = function(u) {
  * The implementation in {@link H3DU.Curve} calls the evaluator's <code>jerk</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the acceleration vector.<p>
- * The <b>jerk</b> of a curve is a vector which is the third derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
  * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a jerk vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.jerk = function(u) {
-  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.jerk !== "undefined" && this.curve.jerk !== null) {
-    return this.curve.jerk(u);
+  if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.jerk !== "undefined" && this.curve.jerk !== null) {
+    return this.curve.jerk(this._getCoord(u));
   } else {
     var du = Curve._EPSILON;
     var vector = this.accel(u + du);
@@ -168,20 +181,39 @@ Curve.prototype.jerk = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.normal = function(u) {
-  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.normal !== "undefined" && this.curve.normal !== null) {
-    return this.curve.normal(u);
+  if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.normal !== "undefined" && this.curve.normal !== null) {
+    return this.curve.normal(this._getCoord(u));
   } else {
     var du = Curve._EPSILON;
-    var vector = _MathInternal.vecNormalizeInPlace(this.velocity(u + du));
+    var vector = this.tangent(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
-      vector = _MathInternal.vecNormalizeInPlace(this.velocity(u + du));
+      vector = this.tangent(u + du);
     }
-    var tangent = _MathInternal.vecNormalizeInPlace(this.velocity(u));
-    _MathInternal.vecSubInPlace(vector, tangent);
+    vector = _MathInternal.vecSubInPlace(vector, this.tangent(u));
     return _MathInternal.vecNormalizeInPlace(vector);
   }
+};
+
+/**
+ * Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+ * The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {Array<number>} An array describing a normal vector. It should have at least as many
+ * elements as the number of dimensions of the underlying curve.
+ */
+Curve.prototype.tangent = function(u) {
+  return _MathInternal.vecNormalizeInPlace(this.velocity(u));
+};
+
+/**
+ * Convenience method for getting the total length of this curve.
+ * @returns {number} The distance from the start of the curve to its end.
+ */
+Curve.prototype.getLength = function() {
+  var ep = this.endPoints();
+  return this.arcLength(ep[1]);
 };
 
 Curve._legendreGauss24 = [
@@ -208,8 +240,11 @@ Curve._legendreGauss24 = [
  * @returns {number} The approximate arc length of this curve at the given U coordinate.
  */
 Curve.prototype.arcLength = function(u) {
-  if((typeof this.curve !== "undefined" && this.curve !== null) && typeof this.curve.arcLength !== "undefined" && this.curve.arcLength !== null) {
-    return this.curve.arcLength(u);
+  if(typeof this.curveParam !== "undefined" && this.curveParam !== null && this.curveParam instanceof Curve._ArcLengthParam) {
+    return u;
+  }
+  if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.arcLength !== "undefined" && this.curve.arcLength !== null) {
+    return this.curve.arcLength(this._getCoord(u));
   } else {
     var ep = this.endPoints();
     if(u === ep[0])return 0;
@@ -230,6 +265,229 @@ Curve.prototype.arcLength = function(u) {
     }
     return ret * bm * dir;
   }
+};
+
+/**
+ * Gets an array of positions on the curve at fixed intervals
+ * of U coordinates. Note that these positions will not generally be
+ * evenly spaced along the curve unless the curve uses
+ * an arc-length parameterization.
+ * @param {number} count Number of positions to generate. Throws
+ * an error if this number is 0. If this value is 1, returns an array containing
+ * the starting point of this curve.
+ * @returns {Array<Array<number>>} An array of curve positions. The first
+ * element will be the start of the curve.  If "count" is 2 or greater, the last element
+ * will be the end of the curve.
+ */
+Curve.prototype.getPoints = function(count) {
+  if(count === 0)return [];
+  if(count < 0)throw new Error();
+  var ep = this.endPoints();
+  var ret = [this.evaluate(ep[0])];
+  for(var i = 1; i < count; i++) {
+  // var u=ep[0]+(ep[1]-ep[0])*(i/(count - 1));
+    ret.push(this.evaluate(ep));
+  }
+  return ret;
+};
+/** @ignore
+ * @constructor */
+Curve._ChangeEnds = function(u1, u2) {
+  this.u1 = u1;
+  this.u2 = u2;
+  this.getCoordinate = function(u) {
+    return u;
+  };
+  this.endPoints = function() {
+    return [this.u1, this.u2];
+  };
+};
+/** @ignore
+ * @constructor */
+Curve._FitRange = function(curve, ep1, ep2) {
+  this.newEp1 = ep1;
+  this.newEp2 = ep2;
+  this.invNewEpDelta = 1.0 / (ep2 - ep1);
+  var ep = curve.endPoints();
+  this.origEp1 = ep[0];
+  this.origEp2 = ep[1];
+  this.getCoordinate = function(u) {
+    var uNorm = (u - this.newEp1) * this.invNewEpDelta;
+    return this.origEp1 + (this.origEp2 - this.origEp1) * uNorm;
+  };
+  this.endPoints = function() {
+    return [ep1, ep2];
+  };
+};
+/** @ignore */
+Curve._ArcLengthParam = function(curve) {
+  this.curve = curve;
+  this.ep = this.curve.endPoints();
+  this.segments = [];
+  var lastT = this.ep[0];
+  var lastS = 0;
+  for(var i = 1; i <= 50; i++) {
+    var t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / 50);
+    var s = this.curve.arcLength(t);
+    this.segments.push([lastS, s, lastT, t]);
+    lastT = t;
+    lastS = s;
+  }
+  this.length = this.segments[this.segments.length - 1][1];
+  this._vecLength = function(vec) {
+    var ret = 0;
+    for(var i = 0; i < vec.length; i++) {
+      ret += vec[i] * vec[i];
+    }
+    return Math.sqrt(ret);
+  };
+ // solve arcLength(t)-s = 0 numerically
+  this._solveArcLength = function(s, guess, minValue, maxExclusive) {
+    var ret = guess;
+    for(var i = 0; i < 10; i++) {
+      var val = this.curve.arcLength(ret) - s;
+      if(Math.abs(val) < 1e-10 && ret >= minValue &&
+       ret < maxExclusive) {
+       // already accurate enough
+        break;
+      }
+     // NOTE: Arc length is an integral of the speed,
+     // so the derivative of arc length will be the speed;
+     // this doesn't change even though we subtracted "s"
+     // from the arc length above, since an antiderivative
+     // plus any constant (s is a constant here because the
+     // integral is with respect to time, not speed)
+     // is another antiderivative of the same function.
+      var deriv = this._vecLength(this.curve.velocity(ret));
+      if(deriv === 0) {
+       // won't converge anymore
+        break;
+      }
+      var solutionDiff = val / deriv;
+      var r = ret - solutionDiff;
+      if(solutionDiff === 0) {
+       // won't converge anymore
+        break;
+      }
+      if(minValue !== Number.NEGATIVE_INFINITY &&
+      maxExclusive !== Number.POSITIVE_INFINITY) {
+        if(val < 0) {
+          minValue = Math.max(minValue, ret);
+          ret = r;
+          if(r >= maxExclusive) {
+            ret = minValue + (maxExclusive - minValue) * 0.5;
+          }
+        } else if(val > 0) {
+          maxExclusive = Math.min(maxExclusive, ret);
+          ret = r;
+          if(r <= minValue) {
+            ret = minValue + (maxExclusive - minValue) * 0.5;
+          }
+        }
+      } else {
+        ret = r;
+      }
+    }
+    return ret;
+  };
+};
+Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
+  // NOTE: (Note that velocity and acceleration depend on parameterization; for
+  // example, the length of the velocity vector may differ for the underlying curve object
+  // than for this one, even though both vectors generally point in the same direction.)
+  var ep, guess;
+  if(s > this.length) {
+    ep = this.curve.endPoints();
+    guess = ep[0] + (ep[1] - ep[0]) * (s / this.length);
+    return this._solveArcLength(s, guess, ep[0],
+        Number.POSITIVE_INFINITY);
+  } else if(s < 0) {
+    ep = this.curve.endPoints();
+    guess = ep[0] + (ep[1] - ep[0]) * (s / this.length);
+    return this._solveArcLength(s, guess,
+        Number.NEGATIVE_INFINITY, 0);
+  } else if(s === this.length) {
+    ep = this.curve.endPoints();
+    return ep[1];
+  } else if(s === 0) {
+    ep = this.curve.endPoints();
+    return ep[0];
+  }
+  var startPt = 0;
+  var endPt = this.segments.length;
+  var k = 0;
+  while(startPt < endPt) {
+    k += 1;
+    if(k > 20)throw new Error();
+    var middle = startPt + ((endPt - startPt) / 2 | 0);
+    var m = this.segments[middle];
+    if(s === m[0]) {
+      return m[2];
+    } else if(s === m[1]) {
+      return m[3];
+    } else if(s > m[0] && s < m[1]) {
+      var r = (s - m[0]) / (m[1] - m[0]);
+      var u = m[2] + (m[3] - m[2]) * r;
+      if(m[1] - m[0] >= 1e-10) {
+        return this._solveArcLength(s, u, m[2], m[3]);
+      }
+      return u;
+    } else if(s < m[0]) {
+      endPt = middle;
+    } else {
+      startPt = middle + 1;
+    }
+  }
+  throw new Error("Internal error");
+};
+Curve._ArcLengthParam.prototype.endPoints = function() {
+  return [0, this.length];
+};
+/**
+ * Creates a curve evaluator object for a curve that is generated using
+ * the same formula as this one (and uses the same U coordinates),
+ * but has a different set of end points.
+ * For example, this method can be used to shrink the path of a curve
+ * from [0, &pi] to [0, &pi/8], so that the curve runs 1/8 of its former path.
+ * @param {number} ep1 New start point of the curve.
+ * @param {number} ep2 New end point of the curve.
+ * @returns {H3DU.Curve} Return value.
+ */
+Curve.prototype.changeEnds = function(ep1, ep2) {
+  return new Curve(this, new Curve._ChangeEnds(ep1, ep2));
+};
+
+/**
+ * Creates a curve evaluator object for a curve that follows the same
+ * path as this one but has its U coordinates remapped to fit the given range.
+ * For example, this method can be used to shrink the range of U coordinates
+ * from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
+ * Here, -&pi; now maps to 0, and &pi; now maps to 1.
+ * @param {number} ep1 New value to use as the start point of the curve.
+ * @param {number} ep2 New value to use as the end point of the curve.
+ * @returns {H3DU.Curve} Return value.
+ */
+Curve.prototype.fitRange = function(ep1, ep2) {
+  return new Curve(this, new Curve._FitRange(this, ep1, ep2));
+};
+/**
+ * Creates a curve evaluator object for a curve that follows the same
+ * path as this one but has its U coordinates remapped to
+ * an <i>arc length parameterization</i>. Arc length
+ * parameterization allows for moving along a curve's path at a uniform
+ * speed and for generating points which are spaced evenly along that
+ * path -- both features are more difficult with most other kinds
+ * of curve parameterization.<p>
+ * The <i>end points</i> of the curve (obtained by calling the <code>endPoints</code>
+ * method) will be (0, N), where N is the distance to the end of the curve from its
+ * start.<p>
+ * When converting to an arc length parameterization, the curve
+ * should be continuous and have a speed greater than 0 at every
+ * point on the curve.
+ * @returns {H3DU.Curve} Return value.
+ */
+Curve.prototype.toArcLengthParam = function() {
+  return new Curve(this, new Curve._ArcLengthParam(this));
 };
 
 export {Curve};

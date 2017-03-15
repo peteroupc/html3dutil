@@ -17,7 +17,7 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 function.
 * [evalOne](#H3DU.CurveEval_evalOne)<br>Generates vertex positions and attributes based on a point
 in a parametric curve.
-* [normal](#H3DU.CurveEval_normal)<br><b>Deprecated: Use the "vertex" method instead.</b>
+* [normal](#H3DU.CurveEval_normal)<br>**Deprecated: Use the "vertex" method instead.**
 * [texCoord](#H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
 * [vertex](#H3DU.CurveEval_vertex)<br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
 
@@ -70,7 +70,7 @@ This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 <a name='H3DU.CurveEval_normal'></a>
 ### H3DU.CurveEval#normal(evaluator)
 
-<b>Deprecated: Use the "vertex" method instead.</b>
+**Deprecated: Use the "vertex" method instead.**
 
 Specifies a parametric curve function for generating normals.
 

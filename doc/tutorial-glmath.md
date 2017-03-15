@@ -17,7 +17,7 @@ Here is an overview of these data types.
 A vector is a line segment pointing in a certain _direction_ in space and
 having a certain _length_ and an unspecified starting point.
 A particular vector can instead be treated as describing a position
-(by pointing to that position from a certain starting point), or a color.
+(by pointing to that position from an _origin_ (0,0,0)), or a color.
 
 In `H3DU.Math`, vectors are stored in arrays of numbers (usually
 three or four numbers), and functions dealing with vectors begin

@@ -26,8 +26,8 @@ and 32.
 * [getName](#H3DU.Texture_getName)<br>Gets the name of this texture.
 * [getWidth](#H3DU.Texture_getWidth)<br>Gets this texture's known width.
 * [loadTexture](#H3DU.Texture.loadTexture)<br>Loads a texture by its URL.
-* [setClamp](#H3DU.Texture_setClamp)<br><b>Deprecated: Use the TextureInfo class's "wrapS" and
-"wrapT" parameters instead.</b>
+* [setClamp](#H3DU.Texture_setClamp)<br>**Deprecated: Use the TextureInfo class's "wrapS" and
+"wrapT" parameters instead.**
 
 <a name='H3DU.Texture_dispose'></a>
 ### H3DU.Texture#dispose()
@@ -100,8 +100,8 @@ is fully loaded. If it resolves, the result will be an H3DU.Texture object. (Typ
 <a name='H3DU.Texture_setClamp'></a>
 ### H3DU.Texture#setClamp(clamp)
 
-<b>Deprecated: Use the TextureInfo class's "wrapS" and
-"wrapT" parameters instead.</b>
+**Deprecated: Use the TextureInfo class's "wrapS" and
+"wrapT" parameters instead.**
 
 Sets the wrapping behavior of texture coordinates that
 fall out of range when using this texture. This setting

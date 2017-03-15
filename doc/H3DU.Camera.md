@@ -40,13 +40,13 @@ point to the camera's position.
 the same reference point at the same distance.
 * [moveAngleVertical](#H3DU.Camera_moveAngleVertical)<br>Moves the camera upward or downward so that it faces
 the same reference point at the same distance.
-* [moveCenterHorizontal](#H3DU.Camera_moveCenterHorizontal)<br><b>Deprecated: Use "moveHorizontal" instead.</b>
-* [moveCenterVertical](#H3DU.Camera_moveCenterVertical)<br><b>Deprecated: Use "moveVertical" instead.</b>
+* [moveCenterHorizontal](#H3DU.Camera_moveCenterHorizontal)<br>**Deprecated: Use "moveHorizontal" instead.**
+* [moveCenterVertical](#H3DU.Camera_moveCenterVertical)<br>**Deprecated: Use "moveVertical" instead.**
 * [moveClose](#H3DU.Camera_moveClose)<br>Moves the camera the given distance, but not too close
 to the reference point.
 * [moveForward](#H3DU.Camera_moveForward)<br>Moves the camera forward the given distance.
 * [moveHorizontal](#H3DU.Camera_moveHorizontal)<br>Moves the camera horizontally relative to the camera's up vector.
-* [movePosition](#H3DU.Camera_movePosition)<br><b>Deprecated: Renamed to "setPosition".</b>
+* [movePosition](#H3DU.Camera_movePosition)<br>**Deprecated: Renamed to "setPosition".**
 * [moveVertical](#H3DU.Camera_moveVertical)<br>Moves the camera toward or away from the camera's up vector.
 * [setDistance](#H3DU.Camera_setDistance)<br>Moves the camera a given distance from the reference
 point without changing its orientation.
@@ -55,8 +55,8 @@ point without changing its orientation.
 the same distance from a reference point.
 * [turnAngleVertical](#H3DU.Camera_turnAngleVertical)<br>Turns the camera upward or downward so that it faces
 the same distance from a reference point.
-* [turnHorizontal](#H3DU.Camera_turnHorizontal)<br><b>Deprecated: Renamed to "moveAngleHorizontal".</b>
-* [turnVertical](#H3DU.Camera_turnVertical)<br><b>Deprecated: Renamed to "moveAngleVertical".</b>
+* [turnHorizontal](#H3DU.Camera_turnHorizontal)<br>**Deprecated: Renamed to "moveAngleHorizontal".**
+* [turnVertical](#H3DU.Camera_turnVertical)<br>**Deprecated: Renamed to "moveAngleVertical".**
 * [update](#H3DU.Camera_update)<br>Updates information about this camera based
 on the state of an input tracker.
 
@@ -122,7 +122,7 @@ This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 <a name='H3DU.Camera_moveCenterHorizontal'></a>
 ### H3DU.Camera#moveCenterHorizontal(dist)
 
-<b>Deprecated: Use "moveHorizontal" instead.</b>
+**Deprecated: Use "moveHorizontal" instead.**
 
 Moves the camera horizontally relative to the camera's up vector.
 
@@ -137,7 +137,7 @@ This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 <a name='H3DU.Camera_moveCenterVertical'></a>
 ### H3DU.Camera#moveCenterVertical(dist)
 
-<b>Deprecated: Use "moveVertical" instead.</b>
+**Deprecated: Use "moveVertical" instead.**
 
 Moves the camera toward or away from the camera's up vector.
 
@@ -192,7 +192,7 @@ This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 <a name='H3DU.Camera_movePosition'></a>
 ### H3DU.Camera#movePosition(cx, cy, cz)
 
-<b>Deprecated: Renamed to "setPosition".</b>
+**Deprecated: Renamed to "setPosition".**
 
 Sets the position of the camera.
 
@@ -279,7 +279,7 @@ This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 <a name='H3DU.Camera_turnHorizontal'></a>
 ### H3DU.Camera#turnHorizontal(angleDegrees)
 
-<b>Deprecated: Renamed to "moveAngleHorizontal".</b>
+**Deprecated: Renamed to "moveAngleHorizontal".**
 
 Moves the camera to the left or right so that it faces
 the same reference point at the same distance.
@@ -295,7 +295,7 @@ This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 <a name='H3DU.Camera_turnVertical'></a>
 ### H3DU.Camera#turnVertical(angleDegrees)
 
-<b>Deprecated: Renamed to "moveAngleVertical".</b>
+**Deprecated: Renamed to "moveAngleVertical".**
 
 Moves the camera upward or downward so that it faces
 the same reference point at the same distance.

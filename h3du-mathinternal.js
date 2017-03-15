@@ -48,8 +48,9 @@ export var _MathInternal = {
     }
     len = Math.sqrt(len);
     if(len !== 0) {
+      var invlen = 1.0 / len;
       for(i = 0; i < vec.length; i++) {
-        len += vec[i] * vec[i];
+        vec[i] *= invlen;
       }
     }
     return vec;

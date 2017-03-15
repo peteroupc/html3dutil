@@ -5,9 +5,9 @@
 <a name='H3DU.FrameBuffer'></a>
 ### H3DU.FrameBuffer(context, width, height)
 
-<b>Deprecated: This class is likely to become a private class.
+**Deprecated: This class is likely to become a private class.
 Use the FrameBufferInfo class instead, which is not coupled to WebGL
-contexts.</b>
+contexts.**
 
 Represents an off-screen frame buffer.
 

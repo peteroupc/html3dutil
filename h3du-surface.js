@@ -155,7 +155,7 @@ Surface.prototype.gradient = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.evaluate = function(u, v) {
-  if(typeof this.evaluate !== "undefined" && this.evaluate !== null && (typeof this.surface.evaluate !== "undefined" && this.surface.evaluate !== null)) {
+  if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.evaluate !== "undefined" && this.surface.evaluate !== null)) {
     return this.surface.evaluate(u, v);
   } else {
     return [0, 0, 0];
@@ -172,7 +172,7 @@ Surface.prototype.evaluate = function(u, v) {
  * method.
  */
 Surface.prototype.endPoints = function() {
-  if(typeof this.evaluate !== "undefined" && this.evaluate !== null && (typeof this.surface.endPoints !== "undefined" && this.surface.endPoints !== null)) {
+  if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.endPoints !== "undefined" && this.surface.endPoints !== null)) {
     return this.surface.endPoints();
   } else {
     return [0, 1, 0, 1];

@@ -19,12 +19,12 @@ See the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces
 in a parametric surface.
 * [evalSurface](#H3DU.SurfaceEval_evalSurface)<br>Generates the vertex positions and attributes of a parametric
 surface.
-* [normal](#H3DU.SurfaceEval_normal)<br><b>Deprecated: Use the "vertex" method instead, specifying an object
-that implements a method named "gradient".</b>
-* [setAutoNormal](#H3DU.SurfaceEval_setAutoNormal)<br><b>Deprecated: In the future, this class may always generate
+* [normal](#H3DU.SurfaceEval_normal)<br>**Deprecated: Use the "vertex" method instead, specifying an object
+that implements a method named "gradient".**
+* [setAutoNormal](#H3DU.SurfaceEval_setAutoNormal)<br>**Deprecated: In the future, this class may always generate
 normals, rendering this method unnecessary. You should use the "vertex"
 method, specifying an object that implements a method named
-"gradient".</b>
+"gradient".**
 * [texCoord](#H3DU.SurfaceEval_texCoord)<br>Specifies a parametric surface function for generating texture coordinates.
 * [vertex](#H3DU.SurfaceEval_vertex)<br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.
 
@@ -81,8 +81,8 @@ This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
 <a name='H3DU.SurfaceEval_normal'></a>
 ### H3DU.SurfaceEval#normal(evaluator)
 
-<b>Deprecated: Use the "vertex" method instead, specifying an object
-that implements a method named "gradient".</b>
+**Deprecated: Use the "vertex" method instead, specifying an object
+that implements a method named "gradient".**
 
 Specifies a parametric surface function for generating normals.
 
@@ -97,10 +97,10 @@ This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
 <a name='H3DU.SurfaceEval_setAutoNormal'></a>
 ### H3DU.SurfaceEval#setAutoNormal(value)
 
-<b>Deprecated: In the future, this class may always generate
+**Deprecated: In the future, this class may always generate
 normals, rendering this method unnecessary. You should use the "vertex"
 method, specifying an object that implements a method named
-"gradient".</b>
+"gradient".**
 
 Sets whether this object will automatically generate
 normals rather than use the parametric evaluator

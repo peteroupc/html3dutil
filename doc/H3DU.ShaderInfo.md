@@ -45,7 +45,7 @@ with this object by default:<ul>
 
 * [copy](#H3DU.ShaderInfo_copy)<br>Returns a new shader info object with the information in this object
 copied to that object.
-* [dispose](#H3DU.ShaderInfo_dispose)<br><b>Deprecated: Yes</b>
+* [dispose](#H3DU.ShaderInfo_dispose)<br>**Deprecated: Yes**
 * [getBasicVertex](#H3DU.ShaderInfo.getBasicVertex)<br>Gets the text of a basic vertex shader.
 * [getDefaultFragment](#H3DU.ShaderInfo.getDefaultFragment)<br>Gets the text of the default fragment shader.
 * [getDefaultVertex](#H3DU.ShaderInfo.getDefaultVertex)<br>Gets the text of the default vertex shader.
@@ -76,7 +76,7 @@ Return value. (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)
 <a name='H3DU.ShaderInfo_dispose'></a>
 ### H3DU.ShaderInfo#dispose()
 
-<b>Deprecated: Yes</b>
+**Deprecated: Yes**
 
 This method was introduced for compatibility reasons.
 

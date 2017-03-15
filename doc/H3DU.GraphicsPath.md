@@ -229,43 +229,22 @@ the curves described by this path. The return value doesn't track changes to the
 
 #### Parameters
 
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1. This is only used to make the arc-length parameterization more accurate if the path contains curves or arcs.
+* `flatness` (Type: number) (optional)<br>This parameter is no longer used.
 
 #### Return Value
 
-An object that implements
-the following methods:<ul>
-<li><code>getCurves()</code> - Returns a list of curves described
-by this path. The list will contain one object for each disconnected
+A <a href="H3DU.Curve.md">curve evaluator object</a> that implements
+the following additional method:<ul>
+<li><code>getCurves()</code> - Returns a list of <a href="H3DU.Curve.md">curve evaluator objects</a>
+described by this path. The list will contain one curve evaluator object for each disconnected
 portion of the path. For example, if the path contains one polygon, the list will contain
-one curve object. And if the path is empty, the list will be empty too.
-
-Each object will have the following methods:<ul>
-<li><code>getLength()</code> - Returns the approximate total length of the curve,
-in units.
-<li><code>evaluate(u)</code> - Takes one parameter, "u", which
-ranges from 0 to 1, depending on how far the point is from the start or
-the end of the path (similar to arc-length parameterization).
-The function returns a 3-element array containing
+one curve object. And if the path is empty, the list will be empty too. Each curve
+takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
+the end of the path (similar to arc-length parameterization). Each curve
+returns a 3-element array containing
 the X, Y, and Z coordinates of the point lying on the curve at the given
 "u" position (however, the z will always be 0 since paths can currently
 only be 2-dimensional).
-<li><code>tangent(u)</code> - Takes one parameter, "u", with the same meaning
-as for the <code>evaluate</code> method, and returns a 3-element array containing the
-the X, Y, and Z components of the
-tangent vector (which will generally be a <a href="tutorial-glmath.md">unit vector</a>) at the given point on the curve
-(the z will always be 0 since paths can currently
-only be 2-dimensional).
-</ul>
-<li><code>getLength()</code> - Returns the approximate total length of the path,
-in units.
-<li><code>tangent(u)</code> - Has the same effect as the <code>tangent</code>
-method for each curve, but applies to the path as a whole.
-<li><code>evaluate(u)</code> - Has the same effect as the <code>evaluate</code>
-method for each curve, but applies to the path as a whole.
-Note that calling this <code>evaluate</code> method is only
-recommended when drawing the path as a set of points, not lines, since
-the path may contain several disconnected parts.
 </ul> (Type: Object)
 
 <a name='H3DU.GraphicsPath_GraphicsPath_getLines'></a>
@@ -340,7 +319,7 @@ Does a linear interpolation between two graphics paths.
 * `other` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>The second graphics path.
 * `t` (Type: number)<br>An interpolation factor, generally ranging from 0 through 1. Closer to 0 means closer to this path, and closer to 1 means closer to "other". If the input paths contain arc segments that differ in the large arc and sweep flags, the flags from the first path's arc are used if "t" is less than 0.5; and the flags from the second path's arc are used otherwise.
 
-For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns A value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
+For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns a value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
 
 #### Return Value
 

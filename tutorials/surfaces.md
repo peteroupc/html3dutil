@@ -9,7 +9,7 @@ public-domain [HTML 3D Library](http://peteroupc.github.io/html3dutil).
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[What Is a Parametric Surface?](#What_Is_a_Parametric_Surface)<br>&nbsp;&nbsp;[Why two variables?](#Why_two_variables)<br>[Parametric Surfaces in the HTML 3D Library](#Parametric_Surfaces_in_the_HTML_3D_Library)<br>[Chaining Surface Functions](#Chaining_Surface_Functions)<br>[Parametric Curves](#Parametric_Curves)<br>&nbsp;&nbsp;[Generating Parametric Curves](#Generating_Parametric_Curves)<br>[Curve Evaluators in the HTML 3D Library](#Curve_Evaluators_in_the_HTML_3D_Library)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Creating Your Own Curves and Surfaces](#Creating_Your_Own_Curves_and_Surfaces)<br>[Other Pages](#Other_Pages)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[What Is a Parametric Surface?](#What_Is_a_Parametric_Surface)<br>&nbsp;&nbsp;[Why two variables?](#Why_two_variables)<br>[Parametric Surfaces in the HTML 3D Library](#Parametric_Surfaces_in_the_HTML_3D_Library)<br>[Chaining Surface Functions](#Chaining_Surface_Functions)<br>[Parametric Curves](#Parametric_Curves)<br>&nbsp;&nbsp;[Generating Parametric Curves](#Generating_Parametric_Curves)<br>[Curve and Surface Evaluators in the HTML 3D Library](#Curve_and_Surface_Evaluators_in_the_HTML_3D_Library)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Creating Your Own Curves and Surfaces](#Creating_Your_Own_Curves_and_Surfaces)<br>[Other Pages](#Other_Pages)<br>
 
 ## What Is a Parametric Surface?
 
@@ -53,7 +53,7 @@ function "warps" this grid into a three-dimensional surface.
 
 The HTML 3D Library supports parametric surfaces using a class named
 [`SurfaceEval`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html). It helps
-generate verteX coordinates, texture coordinates, normals, and colors using a parametric surface
+generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, `makeMesh`, generates a parametric surface mesh
 that was used to produce the pictures on this page. A function similar to the `makeMesh` function
 presented here is included in the demos that come with the HTML 3D Library.
@@ -251,8 +251,8 @@ the circle example above.
        // Evaluate the curve, using 100 lines
       .evalCurve(mesh,H3DU.Mesh.LINES,100);
 
-<a id=Curve_Evaluators_in_the_HTML_3D_Library></a>
-## Curve Evaluators in the HTML 3D Library
+<a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a>
+## Curve and Surface Evaluators in the HTML 3D Library
 
 The HTML 3D Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an `evaluate`
@@ -260,16 +260,17 @@ method that returns 3D points lying on the curve or surface.
 
 General-purpose curves include:
 
-* **B&eacute;zier curves.** These are curves defined by two endpoints, and one
-or more _control points_, which control the shape of the curve but don't
-necessarily lie on the curve. B&eacute;zier curves are created using the
- {@link H3DU.BezierCurve} class.
-* **B-Spline curves.** These are more general curves than B&eacute;zier
-curves, where here, every point can be a control point, including the end points.
-B-Spline curves include **NURBS** curves (nonuniform and rational B-Spline curves,
+* **B-spline curves.** These curves consist of control points (which control
+the shape of the curve but don't necessarily lie on the curve), and a
+_knot vector_, which controls the behavior of the control points. B-spline
+curves include **NURBS** curves (nonuniform and rational B-spline curves,
 with weights and non-uniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
  {@link H3DU.BSplineCurve} class.
+* **B&eacute;zier curves.** These are curves in which the first and last
+control point are the curve's endpoints. B&eacute;zier curves are a subset of B-spline
+curves and are created using the {@link H3DU.BSplineCurve.fromBezierCurve}
+method.
 
 Special curves include the following. All of these classes are supplemental
 extras.

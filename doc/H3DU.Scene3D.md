@@ -54,13 +54,13 @@ H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [getProjectionMatrix](#H3DU.Scene3D_getProjectionMatrix)<br><b>Deprecated: Use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [getViewMatrix](#H3DU.Scene3D_getViewMatrix)<br><b>Deprecated: Use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [getWidth](#H3DU.Scene3D_getWidth)<br>Gets the viewport width for this scene.
-* [loadAndMapTexture](#H3DU.Scene3D_loadAndMapTexture)<br><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b>
-* [loadAndMapTextures](#H3DU.Scene3D_loadAndMapTextures)<br><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b>
-* [loadTexture](#H3DU.Scene3D_loadTexture)<br><b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
-loadTexturesAll instead.</b>
-* [makeShape](#H3DU.Scene3D_makeShape)<br><b>Deprecated: Use the H3DU.Shape constructor instead.</b>
+* [loadAndMapTexture](#H3DU.Scene3D_loadAndMapTexture)<br>**Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.**
+* [loadAndMapTextures](#H3DU.Scene3D_loadAndMapTextures)<br>**Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.**
+* [loadTexture](#H3DU.Scene3D_loadTexture)<br>**Deprecated: Use the H3DU.TextureLoader method loadTexture or
+loadTexturesAll instead.**
+* [makeShape](#H3DU.Scene3D_makeShape)<br>**Deprecated: Use the H3DU.Shape constructor instead.**
 * [primitiveCount](#H3DU.Scene3D_primitiveCount)<br><b>Deprecated: Use the <code>primitiveCount</code> method of <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 * [removeShape](#H3DU.Scene3D_removeShape)<br><b>Deprecated: Use the removeShape method of individual <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> instances
 instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom
@@ -90,8 +90,8 @@ the viewport's dimensions.
 for rendering filter effects from a frame buffer, or use the H3DU.Batch3D.useShader
 method. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method
 until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
-* [useProgram](#H3DU.Scene3D_useProgram)<br><b>Deprecated: Instead of this method, use the "setShader" program of individual shapes
-to set the shader programs they use.</b>
+* [useProgram](#H3DU.Scene3D_useProgram)<br>**Deprecated: Instead of this method, use the "setShader" program of individual shapes
+to set the shader programs they use.**
 * [vertexCount](#H3DU.Scene3D_vertexCount)<br><b>Deprecated: Use the vertexCount method of <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn't use <a href="H3DU.Batch3D.md">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b>
 
 <a name='H3DU.Scene3D.BACK'></a>
@@ -353,8 +353,8 @@ Return value. (Type: number)
 <a name='H3DU.Scene3D_loadAndMapTexture'></a>
 ### H3DU.Scene3D#loadAndMapTexture(texture)
 
-<b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b>
+**Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.**
 
 Loads a texture from an image URL and uploads it
 to a texture buffer object.
@@ -374,8 +374,8 @@ Returns null if the object is neither an <a href="H3DU.Texture.md">H3DU.Texture<
 <a name='H3DU.Scene3D_loadAndMapTextures'></a>
 ### H3DU.Scene3D#loadAndMapTextures(textureFiles, [resolve], [reject])
 
-<b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b>
+**Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.**
 
 Loads one or more textures from an image URL and uploads each of them
 to a texture buffer object.
@@ -397,8 +397,8 @@ See <a href="H3DU.md#H3DU.md">H3DU.getPromiseResults</a>. (Type: <a href="Promis
 <a name='H3DU.Scene3D_loadTexture'></a>
 ### H3DU.Scene3D#loadTexture(name)
 
-<b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
-loadTexturesAll instead.</b>
+**Deprecated: Use the H3DU.TextureLoader method loadTexture or
+loadTexturesAll instead.**
 
 Loads a texture from an image URL.
 
@@ -415,7 +415,7 @@ object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promi
 <a name='H3DU.Scene3D_makeShape'></a>
 ### H3DU.Scene3D#makeShape(mesh)
 
-<b>Deprecated: Use the H3DU.Shape constructor instead.</b>
+**Deprecated: Use the H3DU.Shape constructor instead.**
 
 Creates a buffer from a geometric mesh and
 returns a shape object.
@@ -827,8 +827,8 @@ This object. (Type: <a href="H3DU.Scene3D.md">H3DU.Scene3D</a>)
 <a name='H3DU.Scene3D_useProgram'></a>
 ### H3DU.Scene3D#useProgram(program)
 
-<b>Deprecated: Instead of this method, use the "setShader" program of individual shapes
-to set the shader programs they use.</b>
+**Deprecated: Instead of this method, use the "setShader" program of individual shapes
+to set the shader programs they use.**
 
 Has no effect. (In previous versions, this method changed
 the active shader program for this scene

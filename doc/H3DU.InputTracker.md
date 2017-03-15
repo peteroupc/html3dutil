@@ -45,7 +45,7 @@ the HTML 3D Library. Example:
 * [TAB](#H3DU.InputTracker.TAB)<br>Key code for the tab key.
 * [UP](#H3DU.InputTracker.UP)<br>Key code for the up arrow key.
 * [ZERO](#H3DU.InputTracker.ZERO)<br>Key code for the 0 key.
-* [deltaXY](#H3DU.InputTracker_deltaXY)<br><b>Deprecated: Yes</b>
+* [deltaXY](#H3DU.InputTracker_deltaXY)<br>**Deprecated: Yes**
 * [leftButton](#H3DU.InputTracker_leftButton)<br>True if the left mouse button was detected as being down.
 * [middleButton](#H3DU.InputTracker_middleButton)<br>True if the middle mouse button was detected as being down.
 * [rightButton](#H3DU.InputTracker_rightButton)<br>True if the right mouse button was detected as being down.
@@ -58,9 +58,9 @@ input tracker.
 * [mousePos](#H3DU.InputTracker_mousePos)<br>Returns the current mouse position, delta
 mouse position, and delta mouse wheel
 position (see the "update" method).
-* [mousewheel](#H3DU.InputTracker_mousewheel)<br><b>Deprecated: Will be removed in the future. Use the
+* [mousewheel](#H3DU.InputTracker_mousewheel)<br>**Deprecated: Will be removed in the future. Use the
 mousePos method to find out whether the user
-has rotated the mouse wheel.</b>
+has rotated the mouse wheel.**
 * [update](#H3DU.InputTracker_update)<br>Retrieves the current position of the mouse within
 the page's client area, as detected by the input
 tracker and calculates the "delta mouse position",
@@ -220,7 +220,7 @@ Default Value: `48`
 <a name='H3DU.InputTracker_deltaXY'></a>
 ### H3DU.InputTracker#deltaXY
 
-<b>Deprecated: Yes</b>
+**Deprecated: Yes**
 
 An alias for <a href="H3DU.InputTracker.md#H3DU.md">H3DU.InputTracker#mousePos</a>.
 
@@ -288,9 +288,9 @@ will be 0. (Type: Object)
 <a name='H3DU.InputTracker_mousewheel'></a>
 ### H3DU.InputTracker#mousewheel(func)
 
-<b>Deprecated: Will be removed in the future. Use the
+**Deprecated: Will be removed in the future. Use the
 mousePos method to find out whether the user
-has rotated the mouse wheel.</b>
+has rotated the mouse wheel.**
 
 Sets a function to handle mouse wheel events.
 

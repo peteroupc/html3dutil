@@ -1,5 +1,5 @@
 <html><head><title>H3DU.BSplineCurve</title></head><body><h1> H3DU.BSplineCurve</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.BSplineCurve'></a>
-<h3> H3DU.BSplineCurve(controlPoints, knots, [bits])</h3><p><b>Augments:</b> Curve</p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
+<h3> H3DU.BSplineCurve(controlPoints, knots, [bits])</h3><p><b>Augments:</b> <a href="H3DU.Curve.html">H3DU.Curve</a></p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
 B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
 <p><b>B&eacute;zier Curves</b><p>
 A B&eacute;zier curve is defined by a series of control points, where
@@ -13,7 +13,10 @@ coordinates or in homogeneous coordinates.</b><li><a href='#H3DU.BSplineCurve.WE
 in the future. Instead of using this bit, supply control points in homogeneous
 coordinates (where each other coordinate is premultiplied by the last)
 and use <code>DIVIDE_BIT</code> to convert the
-results to conventional coordinates.</b><li><a href='#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'>WEIGHTED_DIVIDE_BITS</a><br><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></ul><h3> Methods</h3><ul><li><a href='#H3DU.BSplineCurve.clamped'>clamped</a><br>Creates a B-spline curve with uniform knots, except that
+results to conventional coordinates.</b><li><a href='#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'>WEIGHTED_DIVIDE_BITS</a><br><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></ul><h3> Methods</h3><ul><li><a href='#H3DU.BSplineCurve_accel'>accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.<li><a href='#H3DU.BSplineCurve_arcLength'>arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.<li><a href='#H3DU.BSplineCurve_changeEnds'>changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.<li><a href='#H3DU.BSplineCurve.clamped'>clamped</a><br>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.<li><a href='#H3DU.BSplineCurve.clampedKnots'>clampedKnots</a><br>Generates a knot vector with uniform knots, to be
@@ -21,8 +24,12 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.<li><a href='#H3DU.BSplineCurve_endPoints'>endPoints</a><br>Returns the starting and coordinates of this curve.<li><a href='#H3DU.BSplineCurve_evaluate'>evaluate</a><br>Evaluates the curve function based on a point
-in a B-spline curve.<li><a href='#H3DU.BSplineCurve.fromBezierCurve'>fromBezierCurve</a><br>Creates a B-spline curve from the control points of a B&eacute;zier curve.<li><a href='#H3DU.BSplineCurve.fromCardinalSpline'>fromCardinalSpline</a><br>Creates an array of B-spline curves from the control points of a cardinal spline.<li><a href='#H3DU.BSplineCurve.fromHermiteSpline'>fromHermiteSpline</a><br>Creates an array of B-spline curves from the control points of a Hermite spline.<li><a href='#H3DU.BSplineCurve_getPoints'>getPoints</a><br>Gets a reference to the array of control points used
-in this curve object.<li><a href='#H3DU.BSplineCurve_split'>split</a><br>Splits this B-spline curve into two at the given point.<li><a href='#H3DU.BSplineCurve.uniform'>uniform</a><br>Creates a B-spline curve with uniform knots.<li><a href='#H3DU.BSplineCurve.uniformKnots'>uniformKnots</a><br>Generates a knot vector with uniform knots, to be
+in a B-spline curve.<li><a href='#H3DU.BSplineCurve_fitRange'>fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.<li><a href='#H3DU.BSplineCurve.fromBezierCurve'>fromBezierCurve</a><br>Creates a B-spline curve from the control points of a B&eacute;zier curve.<li><a href='#H3DU.BSplineCurve_getControlPoints'>getControlPoints</a><br>Gets a reference to the array of control points used
+in this curve object.<li><a href='#H3DU.BSplineCurve_getLength'>getLength</a><br>Convenience method for getting the total length of this curve.<li><a href='#H3DU.BSplineCurve_getPoints'>getPoints</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.<li><a href='#H3DU.BSplineCurve_jerk'>jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.<li><a href='#H3DU.BSplineCurve_normal'>normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.<li><a href='#H3DU.BSplineCurve_split'>split</a><br>Splits this B-spline curve into two at the given point.<li><a href='#H3DU.BSplineCurve_tangent'>tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.<li><a href='#H3DU.BSplineCurve_toArcLengthParam'>toArcLengthParam</a><br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>.<li><a href='#H3DU.BSplineCurve.uniform'>uniform</a><br>Creates a B-spline curve with uniform knots.<li><a href='#H3DU.BSplineCurve.uniformKnots'>uniformKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.<li><a href='#H3DU.BSplineCurve_velocity'>velocity</a><br>Finds the velocity (derivative) of
 this curve at the given point.</ul><a name='H3DU.BSplineCurve.DIVIDE_BIT'></a>
 <h3> H3DU.BSplineCurve.DIVIDE_BIT (constant)
@@ -63,7 +70,23 @@ method will be in homogeneous coordinates.
 
 </h3><p><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></p>Combination of WEIGHTED_BIT and DIVIDE_BIT.
 
-<a name='H3DU.BSplineCurve.clamped'></a>
+<a name='H3DU.BSplineCurve_accel'></a>
+<h3> H3DU.BSplineCurve#accel(u)</h3>Finds an approximate acceleration vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.<p>
+The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.html">unit vector</a>.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.BSplineCurve_arcLength'></a>
+<h3> H3DU.BSplineCurve#arcLength(u)</h3>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>arcLength</code>
+method if it implements it; otherwise, calculates a numerical integral using the velocity vector.<p>
+The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>The approximate arc length of this curve at the given U coordinate. (Type: number)<a name='H3DU.BSplineCurve_changeEnds'></a>
+<h3> H3DU.BSplineCurve#changeEnds(ep1, ep2)</h3>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.
+For example, this method can be used to shrink the path of a curve
+from [0, &pi] to [0, &pi/8], so that the curve runs 1/8 of its former path.<h4> Parameters</h4><ul><li><code>ep1</code> (Type: number)<br>New start point of the curve.<li><code>ep2</code> (Type: number)<br>New end point of the curve.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.BSplineCurve.clamped'></a>
 <h3> (static) H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])</h3>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
@@ -86,24 +109,57 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
 var points=[];
 for(var i=0;i<=10;i++) {
 points.push(curve.evaluate(i/10.0));
-}</pre><a name='H3DU.BSplineCurve.fromBezierCurve'></a>
-<h3> (static) H3DU.BSplineCurve.fromBezierCurve(controlPoints, [bits])</h3>Creates a B-spline curve from the control points of a B&eacute;zier curve.<h4> Parameters</h4><ul><li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point's length represents the size of all the control points. </ul><li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)<a name='H3DU.BSplineCurve.fromCardinalSpline'></a>
-<h3> (static) H3DU.BSplineCurve.fromCardinalSpline(curve, [tension])</h3>Creates an array of B-spline curves from the control points of a cardinal spline.
-<p>To use this method, you must include the script "extras/spline.js". Example:<pre>
-&lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre><h4> Parameters</h4><ul><li><code>curve</code> (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.<li><code>tension</code> (Type: number) (optional)<br>A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).</ul><h4> Return Value</h4>A array of cubic B-spline curves describing the
-same path as the cardinal spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)<a name='H3DU.BSplineCurve.fromHermiteSpline'></a>
-<h3> (static) H3DU.BSplineCurve.fromHermiteSpline(curve)</h3>Creates an array of B-spline curves from the control points of a Hermite spline.
-<p>To use this method, you must include the script "extras/spline.js". Example:<pre>
-&lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre><h4> Parameters</h4><ul><li><code>curve</code> (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.</ul><h4> Return Value</h4>A array of cubic B-spline curves describing the
-same path as the Hermite spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)<a name='H3DU.BSplineCurve_getPoints'></a>
-<h3> H3DU.BSplineCurve#getPoints()</h3>Gets a reference to the array of control points used
-in this curve object.<h4> Return Value</h4>An object described in the constructor to <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number>>)<a name='H3DU.BSplineCurve_split'></a>
+}</pre><a name='H3DU.BSplineCurve_fitRange'></a>
+<h3> H3DU.BSplineCurve#fitRange(ep1, ep2)</h3>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of U coordinates
+from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
+Here, -&pi; now maps to 0, and &pi; now maps to 1.<h4> Parameters</h4><ul><li><code>ep1</code> (Type: number)<br>New value to use as the start point of the curve.<li><code>ep2</code> (Type: number)<br>New value to use as the end point of the curve.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.BSplineCurve.fromBezierCurve'></a>
+<h3> (static) H3DU.BSplineCurve.fromBezierCurve(controlPoints, [bits])</h3>Creates a B-spline curve from the control points of a B&eacute;zier curve.<h4> Parameters</h4><ul><li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point's length represents the size of all the control points. </ul><li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)<a name='H3DU.BSplineCurve_getControlPoints'></a>
+<h3> H3DU.BSplineCurve#getControlPoints()</h3>Gets a reference to the array of control points used
+in this curve object.<h4> Return Value</h4>An object described in the constructor to <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number>>)<a name='H3DU.BSplineCurve_getLength'></a>
+<h3> H3DU.BSplineCurve#getLength()</h3>Convenience method for getting the total length of this curve.<h4> Return Value</h4>The distance from the start of the curve to its end. (Type: number)<a name='H3DU.BSplineCurve_getPoints'></a>
+<h3> H3DU.BSplineCurve#getPoints(count)</h3>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization.<h4> Parameters</h4><ul><li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</ul><h4> Return Value</h4>An array of curve positions. The first
+element will be the start of the curve. If "count" is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>>)<a name='H3DU.BSplineCurve_jerk'></a>
+<h3> H3DU.BSplineCurve#jerk(u)</h3>Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.<p>
+The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.html">unit vector</a>.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a jerk vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.BSplineCurve_normal'></a>
+<h3> H3DU.BSplineCurve#normal(u)</h3>Finds an approximate principal normal vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.<p>
+The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
+vector divided by that derivative's length. The normal returned by this method
+<i>should</i> be "normalized" to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="H3DU.Surface.html#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.BSplineCurve_split'></a>
 <h3> H3DU.BSplineCurve#split(u)</h3>Splits this B-spline curve into two at the given point.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>Point on the curve where this curve will be split.</ul><h4> Return Value</h4>An array containing two B-spline curves: the
 first is the part of the curve before the given point, and the second
 is the part of the curve after the given point. The first element
 will be null if <code>u</code> is at or before the start of the curve.
 The second element
-will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>>)<a name='H3DU.BSplineCurve.uniform'></a>
+will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>>)<a name='H3DU.BSplineCurve_tangent'></a>
+<h3> H3DU.BSplineCurve#tangent(u)</h3>Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.BSplineCurve_toArcLengthParam'></a>
+<h3> H3DU.BSplineCurve#toArcLengthParam()</h3>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>. Arc length
+parameterization allows for moving along a curve's path at a uniform
+speed and for generating points which are spaced evenly along that
+path -- both features are more difficult with most other kinds
+of curve parameterization.<p>
+The <i>end points</i> of the curve (obtained by calling the <code>endPoints</code>
+method) will be (0, N), where N is the distance to the end of the curve from its
+start.<p>
+When converting to an arc length parameterization, the curve
+should be continuous and have a speed greater than 0 at every
+point on the curve.<h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.BSplineCurve.uniform'></a>
 <h3> (static) H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])</h3>Creates a B-spline curve with uniform knots.<h4> Parameters</h4><ul><li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number>>)<br>Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</ul><h4> Return Value</h4>Return value. The first
 knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)<a name='H3DU.BSplineCurve.uniformKnots'></a>

@@ -1,7 +1,6 @@
 # Documentation Index
 
 * <a href="Camera.md">Camera</a><br><b>Deprecated: Use <a href="H3DU.Camera.md">H3DU.Camera</a> instead.</b>
-* <a href="CurveTube.md">CurveTube</a><br><b>Deprecated: Use <a href="H3DU.CurveTube.md">H3DU.CurveTube</a> instead.</b>
 * <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a> instead.</b>
 * <a href="FrameCounter.md">FrameCounter</a><br><b>Deprecated: Use <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a> instead.</b>
 * <a href="FrameCounterDiv.md">FrameCounterDiv</a><br><b>Deprecated: Use <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a> instead.</b>
@@ -9,9 +8,6 @@
 * <a href="H3DU.md">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
-* <a href="H3DU.ArcLengthParamCurve.md">H3DU.ArcLengthParamCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> that
-wraps another curve evaluator object and remaps its U coordinates
-to an <i>arc length parameterization</i>.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a B-spline (basis spline) surface.
 * <a href="H3DU.Batch3D.md">H3DU.Batch3D</a><br>A `Batch3D` represents a so-called "scene graph".
@@ -28,12 +24,11 @@ view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.
-* <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
-* <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.
+* <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a><br>**Deprecated: This class is likely to become a private class.
 Use the FrameBufferInfo class instead, which is not coupled to WebGL
-contexts.</b>
+contexts.**
 * <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.
 * <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.
 * <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.
@@ -58,6 +53,8 @@ of 4x4 transformation matrices.
 of various geometric shapes and solids.
 * <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
 * <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a><br>A material for physically-based rendering.
+* <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve
+made up of one or more individual curves.
 * <a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for
 rendering that batch.
 * <a href="H3DU.Scene3D.md">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering
@@ -100,7 +97,7 @@ from one coordinate system to another.
 * <a href="MatrixStack.md">MatrixStack</a><br><b>Deprecated: Use <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a> instead.</b>
 * <a href="MeshJSON.md">MeshJSON</a><br><b>Deprecated: Use <a href="H3DU.MeshJSON.md">H3DU.MeshJSON</a> instead.</b>
 * <a href="ObjData.md">ObjData</a><br><b>Deprecated: Use <a href="H3DU.ObjData.md">H3DU.ObjData</a> instead.</b>
-* <a href="PrimitiveCounter.md">PrimitiveCounter</a><br><b>Deprecated: Will be removed in the future.</b>
+* <a href="PrimitiveCounter.md">PrimitiveCounter</a><br>**Deprecated: Will be removed in the future.**
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
 * <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br><b>Deprecated: Use <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a> instead.</b>
 * <a href="Trochoid.md">Trochoid</a><br><b>Deprecated: Use <a href="H3DU.Trochoid.md">H3DU.Trochoid</a> instead.</b>

@@ -286,8 +286,12 @@ Mesh.prototype.merge = function(other) {
   var i;
   var oldVertexLength = this.vertexCount();
   var oldIndexLength = this.indices.length;
-  this.vertices.push.apply(this.vertices, other.vertices);
-  this.indices.push.apply(this.indices, other.indices);
+  for(var elemIndex = 0; elemIndex < other.vertices.length; elemIndex++) {
+    var elem = other.vertices[elemIndex]; this.vertices.push(elem);
+  }
+  for(elemIndex = 0; elemIndex < other.indices.length; elemIndex++) {
+    elem = other.indices[elemIndex]; this.indices.push(elem);
+  }
   for(i = oldIndexLength; i < this.indices.length; i++) {
     this.indices[i] += oldVertexLength;
   }
