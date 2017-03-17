@@ -5,7 +5,7 @@
 <a name='H3DU.BezierCurve'></a>
 ### H3DU.BezierCurve(cp, [u1], [u2])
 
-<b>Augments:</b> Curve
+**Augments:** <a href="H3DU.Curve.md">H3DU.Curve</a>
 
 <b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.md">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b>
@@ -20,9 +20,82 @@ A <a href="H3DU.Curve.md">curve evaluator object</a> for a B&eacute;zier curve.
 
 ### Methods
 
+* [accel](#H3DU.BezierCurve_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.
+* [arcLength](#H3DU.BezierCurve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
+* [changeEnds](#H3DU.BezierCurve_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.
 * [endPoints](#H3DU.BezierCurve_endPoints)<br>Returns the starting and ending U coordinates of this curve.
 * [evaluate](#H3DU.BezierCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B&eacute;zier curve.
+* [fitRange](#H3DU.BezierCurve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.
+* [getLength](#H3DU.BezierCurve_getLength)<br>Convenience method for getting the total length of this curve.
+* [getPoints](#H3DU.BezierCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.
+* [jerk](#H3DU.BezierCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
+* [normal](#H3DU.BezierCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
+* [tangent](#H3DU.BezierCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+* [toArcLengthParam](#H3DU.BezierCurve_toArcLengthParam)<br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>.
+* [velocity](#H3DU.BezierCurve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
+
+<a name='H3DU.BezierCurve_accel'></a>
+### H3DU.BezierCurve#accel(u)
+
+Finds an approximate acceleration vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.
+
+The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
+
+<a name='H3DU.BezierCurve_arcLength'></a>
+### H3DU.BezierCurve#arcLength(u)
+
+Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>arcLength</code>
+method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
+
+The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+The approximate arc length of this curve at the given U coordinate. (Type: number)
+
+<a name='H3DU.BezierCurve_changeEnds'></a>
+### H3DU.BezierCurve#changeEnds(ep1, ep2)
+
+Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.
+For example, this method can be used to shrink the path of a curve
+from [0, &pi] to [0, &pi/8], so that the curve runs 1/8 of its former path.
+
+#### Parameters
+
+* `ep1` (Type: number)<br>New start point of the curve.
+* `ep2` (Type: number)<br>New end point of the curve.
+
+#### Return Value
+
+Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
 
 <a name='H3DU.BezierCurve_endPoints'></a>
 ### H3DU.BezierCurve#endPoints()
@@ -57,5 +130,146 @@ the evaluation. It will have as many elements as a control point, as specified i
     for(var i=0;i<=10;i++) {
     points.push(curve.evaluate(i/10.0));
     }
+
+<a name='H3DU.BezierCurve_fitRange'></a>
+### H3DU.BezierCurve#fitRange(ep1, ep2)
+
+Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of U coordinates
+from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
+Here, -&pi; now maps to 0, and &pi; now maps to 1.
+
+#### Parameters
+
+* `ep1` (Type: number)<br>New value to use as the start point of the curve.
+* `ep2` (Type: number)<br>New value to use as the end point of the curve.
+
+#### Return Value
+
+Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
+
+<a name='H3DU.BezierCurve_getLength'></a>
+### H3DU.BezierCurve#getLength()
+
+Convenience method for getting the total length of this curve.
+
+#### Return Value
+
+The distance from the start of the curve to its end. (Type: number)
+
+<a name='H3DU.BezierCurve_getPoints'></a>
+### H3DU.BezierCurve#getPoints(count)
+
+Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization.
+
+#### Parameters
+
+* `count` (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.
+
+#### Return Value
+
+An array of curve positions. The first
+element will be the start of the curve. If "count" is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>>)
+
+<a name='H3DU.BezierCurve_jerk'></a>
+### H3DU.BezierCurve#jerk(u)
+
+Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.
+
+The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a jerk vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
+
+<a name='H3DU.BezierCurve_normal'></a>
+### H3DU.BezierCurve#normal(u)
+
+Finds an approximate principal normal vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
+
+The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
+vector divided by that derivative's length. The normal returned by this method
+<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with <a href="H3DU.Surface.md#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
+
+<a name='H3DU.BezierCurve_tangent'></a>
+### H3DU.BezierCurve#tangent(u)
+
+Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
+
+<a name='H3DU.BezierCurve_toArcLengthParam'></a>
+### H3DU.BezierCurve#toArcLengthParam()
+
+Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>. Arc length
+parameterization allows for moving along a curve's path at a uniform
+speed and for generating points which are spaced evenly along that
+path -- both features are more difficult with most other kinds
+of curve parameterization.
+
+The <i>end points</i> of the curve (obtained by calling the <code>endPoints</code>
+method) will be (0, N), where N is the distance to the end of the curve from its
+start.
+
+When converting to an arc length parameterization, the curve
+should be continuous and have a speed greater than 0 at every
+point on the curve.
+
+#### Return Value
+
+Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
+
+<a name='H3DU.BezierCurve_velocity'></a>
+### H3DU.BezierCurve#velocity(u)
+
+Finds an approximate velocity vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>velocity</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the position (from the <code>evaluate</code> method).
+
+The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+
+#### Parameters
+
+* `u` (Type: number)<br>U coordinate of a point on the curve.
+
+#### Return Value
+
+An array describing a velocity vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 [Back to documentation index.](index.md)

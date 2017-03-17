@@ -30,7 +30,7 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [endPoints](#H3DU.SurfaceOfRevolution_endPoints)<br>TODO: Not documented yet.
+* [endPoints](#H3DU.SurfaceOfRevolution_endPoints)
 * [evaluate](#H3DU.SurfaceOfRevolution_evaluate)<br>Finds the coordinates of the given point of this surface.
 * [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
@@ -38,12 +38,6 @@ whose curve is the graph of a single-variable function.
 
 <a name='H3DU.SurfaceOfRevolution_endPoints'></a>
 ### H3DU.SurfaceOfRevolution#endPoints()
-
-TODO: Not documented yet.
-
-#### Return Value
-
-Return value. (Type: *)
 
 <a name='H3DU.SurfaceOfRevolution_evaluate'></a>
 ### H3DU.SurfaceOfRevolution#evaluate(u, v)

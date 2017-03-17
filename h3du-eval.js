@@ -74,7 +74,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * the remaining control points define the curve's shape, though they don't
  * necessarily cross the curve.<p>
  * @constructor
- * @augments Curve
+ * @augments H3DU.Curve
  * @memberof H3DU
  * @param {Array<Array<number>>} controlPoints An array of control points. Each
  * control point is an array with the same length as the other control points.
@@ -126,16 +126,16 @@ function BSplineCurve(controlPoints, knots, bits) {
   }
   if(cplen < cplenNeeded)throw new Error();
   this.fastBezier = false;
-  if(order === controlPoints.length && order <= 4) {
+  if(order === this.controlPoints.length && order <= 4) {
     this.fastBezier = true;
     for(var i = 0; i < order; i++) {
-      if(knots[0] !== 0) {
+      if(knots[i] !== 0) {
         this.fastBezier = false;
         break;
       }
     }
     for(i = order; this.fastBezier && i < knots.length; i++) {
-      if(knots[0] !== 1) {
+      if(knots[i] !== 1) {
         this.fastBezier = false;
         break;
       }
@@ -143,7 +143,6 @@ function BSplineCurve(controlPoints, knots, bits) {
   }
   this.knots = knots;
   this.buffer = [];
-  this.controlPoints = controlPoints;
 }
 BSplineCurve.prototype = Object.create(Curve.prototype);
 BSplineCurve.prototype.constructor = BSplineCurve;
@@ -539,8 +538,16 @@ BSplineCurve.prototype.endPoints = function() {
  * in this curve object.
  * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineCurve}.
  */
-BSplineCurve.prototype.getPoints = function() {
+BSplineCurve.prototype.getControlPoints = function() {
   return this.controlPoints;
+};
+/**
+ * Gets a reference to the array of knots used
+ * in this curve object.
+ * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineCurve}.
+ */
+BSplineCurve.prototype.getKnots = function() {
+  return this.knots;
 };
 
 /**
@@ -622,7 +629,7 @@ BSplineCurve._fromHomogen = function(cp) {
   var cplen = cp.length;
   var div = 1.0 / cp[cplen - 1];
   for(var i = 0; i < cplen - 1; i++) {
-    cp[i] /= div;
+    cp[i] *= div;
   }
   cp = cp.slice(0, cplen - 1);
   return cp;
@@ -635,6 +642,7 @@ BSplineCurve._fromHomogen = function(cp) {
  * the remaining control points define the surface's shape, though they don't
  * necessarily cross the surface.
  * @constructor
+ * @augments H3DU.Surface
  * @memberof H3DU
  * @param {Array<Array<Array<number>>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points. Each
@@ -891,8 +899,16 @@ BSplineSurface.prototype.evaluate = function(u, v) {
  * in this surface object.
  * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineCurve}.
  */
-BSplineSurface.getPoints = function() {
+BSplineSurface.prototype.getControlPoints = function() {
   return this.controlPoints;
+};
+/**
+ * Gets a reference to the array of knot vectors used
+ * in this curve object.
+ * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineSurface}.
+ */
+BSplineSurface.prototype.getKnots = function() {
+  return this.knots;
 };
 
 /**
@@ -1503,7 +1519,7 @@ SurfaceEval.prototype.evalSurface = function(mesh, mode, un, vn, u1, u2, v1, v2)
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a B&eacute;zier curve.<p>
  * @constructor
- * @augments Curve
+ * @augments H3DU.Curve
  * @deprecated Instead of this class, use {@link H3DU.BSplineCurve.fromBezierCurve}
  * to create a B&eacute;zier curve.
  * @memberof H3DU
@@ -1527,7 +1543,7 @@ BezierCurve.prototype.constructor = BezierCurve;
  * elements are the starting and ending U coordinates, respectively, of the curve.
  */
 BezierCurve.prototype.endPoints = function() {
-  return this.surface.endPoints();
+  return this.curve.endPoints();
 };
 /**
  * Evaluates the curve function based on a point
@@ -1552,6 +1568,7 @@ BezierCurve.prototype.evaluate = function(u) {
  * @deprecated Instead of this class, use {@link H3DU.BSplineSurface.fromBezierSurface}
  * to create a B&eacute;zier surface.
  * @constructor
+ * @augments H3DU.Surface
  * @memberof H3DU
  * @param {Array<Array<Array<number>>>} cp An array of control point
  * arrays as specified in {@link H3DU.BSplineSurface.fromBezierSurface}.

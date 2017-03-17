@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 /* eslint no-sync: "off" */
-/* global exports, require */
+/* global c, exports, require */
 var path = require("jsdoc/path");
 var fs = require("jsdoc/fs");
 var helper = require("jsdoc/util/templateHelper");
@@ -25,11 +25,11 @@ function normalizeLines(x) {
 
 function resolveLinks(x) {
   var ret = helper.resolveLinks(x);
-  ret = ret.replace(/href\s*=\s*\"([^\"\n>]+?)\.\w+\"/, function(a, b) {
-    return "href=\"" + b + helper.fileExtension + "\"";
+  ret = ret.replace(/href\s*=\s*\"([^\"\n>\#]+?)\.\w+(\"|\#)/, function(a, b) {
+    return "href=\"" + b + helper.fileExtension + c;
   });
-  ret = ret.replace(/href\s*=\s*\'([^\'\n>]+?)\.\w+\'/, function(a, b) {
-    return "href='" + b + helper.fileExtension + "'";
+  ret = ret.replace(/href\s*=\s*\'([^\'\n>\#]+?)\.\w+(\'|\#)/, function(a, b) {
+    return "href='" + b + helper.fileExtension + c;
   });
   return ret;
 }
@@ -75,6 +75,9 @@ TextWriter.prototype.heading = function(level, x) {
 };
 /** @ignore */
 TextWriter.prototype.bold = function(x) {
+  if(x.indexOf("<") < 0 && x.indexOf("*") < 0) {
+    return "**" + x + "**";
+  }
   return "<b>" + x + "</b>";
 };
 /** @ignore */
@@ -156,6 +159,10 @@ HtmlWriter.prototype.listText = function(list) {
 HtmlWriter.prototype.normtags = function(x) {
   x = resolveLinks(x);
   return x;
+};
+/** @ignore */
+HtmlWriter.prototype.bold = function(x) {
+  return "<b>" + x + "</b>";
 };
 /** @ignore */
 HtmlWriter.prototype.header = function(title) {
@@ -478,11 +485,9 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
-    if(typeof parentlong === "undefined" || parentlong === null){
-	    if((typeof node.memberof !== "undefined" && node.memberof !== null))return
-    } else {
-	    if(node.memberof!==parentlong)return
-    }
+    if(typeof parentlong === "undefined" || parentlong === null) {
+      if(typeof node.memberof !== "undefined" && node.memberof !== null)return;
+    } else if(node.memberof !== parentlong)return;
     if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind === "namespace") {
       var paramnames = [];
       if(node.params) {

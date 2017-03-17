@@ -24,7 +24,10 @@ a new vector with the result.<li><a href='#H3DU.Math.colorTosRGB'>colorTosRGB</a
 a new vector with the result.<li><a href='#H3DU.Math.frustumHasBox'>frustumHasBox</a><br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.<li><a href='#H3DU.Math.frustumHasPoint'>frustumHasPoint</a><br>Determines whether a point is
 outside or inside a view frustum.<li><a href='#H3DU.Math.frustumHasSphere'>frustumHasSphere</a><br>Determines whether a sphere is at least
-partially inside a view frustum.<li><a href='#H3DU.Math.mat3copy'>mat3copy</a><br>Returns a copy of a 3x3 matrix.<li><a href='#H3DU.Math.mat3identity'>mat3identity</a><br>Returns the identity 3x3 matrix (a matrix that keeps
+partially inside a view frustum.<li><a href='#H3DU.Math.interpCubicBezier'>interpCubicBezier</a><br>An interpolation timing function based on the path of a
+cubic B&eacute;zier
+curve with end points (0, 0) and (1, 1) and with two
+configurable control points.<li><a href='#H3DU.Math.mat3copy'>mat3copy</a><br>Returns a copy of a 3x3 matrix.<li><a href='#H3DU.Math.mat3identity'>mat3identity</a><br>Returns the identity 3x3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).<li><a href='#H3DU.Math.mat3invert'>mat3invert</a><br>Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.<li><a href='#H3DU.Math.mat3multiply'>mat3multiply</a><br>Multiplies two 3x3 matrices.<li><a href='#H3DU.Math.mat3transform'>mat3transform</a><br>Transforms a 3-element vector with a 3x3 matrix and returns
 the transformed vector.<li><a href='#H3DU.Math.mat3transpose'>mat3transpose</a><br>Returns the transpose of a 3x3 matrix.<li><a href='#H3DU.Math.mat3transposeInPlace'>mat3transposeInPlace</a><br>Transposes a 3x3 matrix in place without creating
 a new matrix.<li><a href='#H3DU.Math.mat4copy'>mat4copy</a><br>Returns a copy of a 4x4 matrix.<li><a href='#H3DU.Math.mat4frustum'>mat4frustum</a><br>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
@@ -295,7 +298,17 @@ otherwise false; (Type: boolean)<a name='H3DU.Math.frustumHasSphere'></a>
 <h3> (static) H3DU.Math.frustumHasSphere(frustum, x, y, z, radius)</h3>Determines whether a sphere is at least
 partially inside a view frustum.<h4> Parameters</h4><ul><li><code>frustum</code> (Type: Array.&lt;Array.&lt;number>>)<br>An array of six 4-element arrays representing the six clipping planes of the view frustum. In order, they are the left, right, top, bottom, near, and far clipping planes.<li><code>x</code> (Type: number)<br>X coordinate of the sphere's center in world space.<li><code>y</code> (Type: number)<br>Y coordinate of the sphere's center in world space.<li><code>z</code> (Type: number)<br>Z coordinate of the sphere's center in world space.<li><code>radius</code> (Type: number)<br>Radius of the sphere in world-space units.</ul><h4> Return Value</h4><code>true</code> if the sphere
 is partially or totally
-inside the frustum; <code>false</code> otherwise. (Type: boolean)<a name='H3DU.Math.mat3copy'></a>
+inside the frustum; <code>false</code> otherwise. (Type: boolean)<a name='H3DU.Math.interpCubicBezier'></a>
+<h3> (static) H3DU.Math.interpCubicBezier(a, b, c, d, t)</h3>An interpolation timing function based on the path of a
+cubic B&eacute;zier
+curve with end points (0, 0) and (1, 1) and with two
+configurable control points. The X coordinates of the
+curve indicate time, and the Y coordinates of the curve
+indicate how far the interpolation has reached.
+<p>To use this method, you must include the script "extras/interp.js". Example:<pre>
+&lt;script type="text/javascript" src="extras/interp.js">&lt;/script></pre><h4> Parameters</h4><ul><li><code>a</code> (Type: number)<br>X coordinate of the first control point of the curve. Should be within the range 0 through 1.<li><code>b</code> (Type: number)<br>Y coordinate of the first control point of the curve. Should be within the range 0 through 1, but may exceed this range.<li><code>c</code> (Type: number)<br>X coordinate of the second control point of the curve. Should be within the range 0 through 1.<li><code>d</code> (Type: number)<br>Y coordinate of the second control point of the curve. Should be within the range 0 through 1, but may exceed this range.<li><code>t</code> (Type: number)<br>Number ranging from 0 through 1 that indicates time.</ul><h4> Return Value</h4>Number ranging from 0 through 1 that indicates
+how far the interpolation has reached. Returns 0 if <code>t</code>
+is 0 or less, and 1 if <code>t</code> is 1 or greater. (Type: number)<a name='H3DU.Math.mat3copy'></a>
 <h3> (static) H3DU.Math.mat3copy(mat)</h3>Returns a copy of a 3x3 matrix.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>A 3x3atrix.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='H3DU.Math.mat3identity'></a>
 <h3> (static) H3DU.Math.mat3identity()</h3>Returns the identity 3x3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='H3DU.Math.mat3invert'></a>

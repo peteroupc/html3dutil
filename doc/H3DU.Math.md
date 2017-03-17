@@ -70,6 +70,10 @@ is at least partially inside a view frustum.
 outside or inside a view frustum.
 * [frustumHasSphere](#H3DU.Math.frustumHasSphere)<br>Determines whether a sphere is at least
 partially inside a view frustum.
+* [interpCubicBezier](#H3DU.Math.interpCubicBezier)<br>An interpolation timing function based on the path of a
+cubic B&eacute;zier
+curve with end points (0, 0) and (1, 1) and with two
+configurable control points.
 * [mat3copy](#H3DU.Math.mat3copy)<br>Returns a copy of a 3x3 matrix.
 * [mat3identity](#H3DU.Math.mat3identity)<br>Returns the identity 3x3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
@@ -584,6 +588,34 @@ partially inside a view frustum.
 <code>true</code> if the sphere
 is partially or totally
 inside the frustum; <code>false</code> otherwise. (Type: boolean)
+
+<a name='H3DU.Math.interpCubicBezier'></a>
+### (static) H3DU.Math.interpCubicBezier(a, b, c, d, t)
+
+An interpolation timing function based on the path of a
+cubic B&eacute;zier
+curve with end points (0, 0) and (1, 1) and with two
+configurable control points. The X coordinates of the
+curve indicate time, and the Y coordinates of the curve
+indicate how far the interpolation has reached.
+
+To use this method, you must include the script "extras/interp.js". Example:
+
+    <script type="text/javascript" src="extras/interp.js"></script>
+
+#### Parameters
+
+* `a` (Type: number)<br>X coordinate of the first control point of the curve. Should be within the range 0 through 1.
+* `b` (Type: number)<br>Y coordinate of the first control point of the curve. Should be within the range 0 through 1, but may exceed this range.
+* `c` (Type: number)<br>X coordinate of the second control point of the curve. Should be within the range 0 through 1.
+* `d` (Type: number)<br>Y coordinate of the second control point of the curve. Should be within the range 0 through 1, but may exceed this range.
+* `t` (Type: number)<br>Number ranging from 0 through 1 that indicates time.
+
+#### Return Value
+
+Number ranging from 0 through 1 that indicates
+how far the interpolation has reached. Returns 0 if <code>t</code>
+is 0 or less, and 1 if <code>t</code> is 1 or greater. (Type: number)
 
 <a name='H3DU.Math.mat3copy'></a>
 ### (static) H3DU.Math.mat3copy(mat)

@@ -19,8 +19,8 @@ A geometric mesh in the form of buffer objects.
 ### Methods
 
 * [dispose](#H3DU.BufferedMesh_dispose)<br>Deletes the vertex and index buffers associated with this object.
-* [draw](#H3DU.BufferedMesh_draw)<br><b>Deprecated: Yes</b>
-* [getContext](#H3DU.BufferedMesh_getContext)<br><b>Deprecated: Yes</b>
+* [draw](#H3DU.BufferedMesh_draw)<br>**Deprecated: Yes**
+* [getContext](#H3DU.BufferedMesh_getContext)<br>**Deprecated: Yes**
 * [primitiveCount](#H3DU.BufferedMesh_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
 * [vertexCount](#H3DU.BufferedMesh_vertexCount)<br>Gets the number of vertices composed by all shapes in this mesh.
@@ -37,7 +37,7 @@ This method doesn't return a value. (Type: void)
 <a name='H3DU.BufferedMesh_draw'></a>
 ### H3DU.BufferedMesh#draw(program)
 
-<b>Deprecated: Yes</b>
+**Deprecated: Yes**
 
 Binds the buffers in this object to attributes according
 to their data format, and draws the elements in this mesh
@@ -54,7 +54,7 @@ This method doesn't return a value. (Type: void)
 <a name='H3DU.BufferedMesh_getContext'></a>
 ### H3DU.BufferedMesh#getContext()
 
-<b>Deprecated: Yes</b>
+**Deprecated: Yes**
 
 Returns the WebGL context associated with this object.
 

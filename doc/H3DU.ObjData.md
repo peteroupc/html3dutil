@@ -19,7 +19,7 @@ the HTML 3D Library. Example:
 
 ### Members
 
-* [mtllib](#H3DU.ObjData_mtllib)<br><b>Deprecated: This property is not meant to be public.</b>
+* [mtllib](#H3DU.ObjData_mtllib)<br>**Deprecated: This property is not meant to be public.**
 * [url](#H3DU.ObjData_url)<br>URL of the OBJ file.
 
 ### Methods
@@ -38,7 +38,7 @@ of the data in this OBJ file.
 <a name='H3DU.ObjData_mtllib'></a>
 ### H3DU.ObjData#mtllib
 
-<b>Deprecated: This property is not meant to be public.</b>
+**Deprecated: This property is not meant to be public.**
 
 An array of meshes. Two or more meshes may have
 the same name (the "name" property in each mesh). The "data"

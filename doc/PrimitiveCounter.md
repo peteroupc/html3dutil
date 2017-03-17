@@ -5,19 +5,19 @@
 <a name='PrimitiveCounter'></a>
 ### PrimitiveCounter()
 
-<b>Deprecated: Will be removed in the future.</b>
+**Deprecated: Will be removed in the future.**
 
 This class used to manage an HTML element
 that displayed the number of primitives drawn.
 
 ### Methods
 
-* [update](#PrimitiveCounter_update)<br><b>Deprecated: Will be removed in the future.</b>
+* [update](#PrimitiveCounter_update)<br>**Deprecated: Will be removed in the future.**
 
 <a name='PrimitiveCounter_update'></a>
 ### PrimitiveCounter#update()
 
-<b>Deprecated: Will be removed in the future.</b>
+**Deprecated: Will be removed in the future.**
 
 This method used to update this object's state.
 

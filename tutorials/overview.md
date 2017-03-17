@@ -269,6 +269,7 @@ parametric curves, with a custom formula editor.
 implicit surfaces.
 * [demos/invoevo.html](https://peteroupc.github.io/html3dutil/demos/invoevo.html) - Demonstrates drawing certain custom curves.
 * [demos/drawingtoy.html](https://peteroupc.github.io/html3dutil/demos/drawingtoy.html) - Draws a design that's reminiscent of a popular drawing toy.
+* [demos/bsplinecircles.html](https://peteroupc.github.io/html3dutil/demos/bsplinecircles.html) - Demonstrates how circles and ellipses can be generated using the `BSplineCurve` class.
 
 <a id=Textures></a>
 ### Textures

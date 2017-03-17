@@ -15,6 +15,7 @@ export {Scene3D} from "./h3du-scene3d";
 export {Batch3D} from "./h3du-batch3d";
 export {Curve} from "./h3du-curve";
 export {Surface} from "./h3du-surface";
+export {PiecewiseCurve} from "./h3du-piecewisecurve";
 export {BezierCurve, BezierSurface,
     BSplineCurve, BSplineSurface, CurveEval, SurfaceEval} from "./h3du-eval";
 export {Shape} from "./h3du-shape";

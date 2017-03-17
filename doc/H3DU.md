@@ -265,8 +265,8 @@ the HTML 3D Library. Example:
 #### Return Value
 
 A promise that resolves when the
-.STL file is loaded successfully (the result will be an <a href="H3DU.Mesh.md">H3DU.Mesh</a> object),
-and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.md">Promise</a>)
+.STL file is loaded successfully (the result will be an <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> object),
+and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>>)
 
 <a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)

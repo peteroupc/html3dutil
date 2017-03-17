@@ -6,7 +6,7 @@ Functions dealing with matrices begin with &quot;mat&quot;.
 A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.</p>
 <p>This section contains detailed information on matrices.</p>
 <p><a id=Contents></a></p>
-<h2>Contents</h2><p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br>&nbsp;&nbsp;<a href="#A_Matrix_Transforms_Between_Coordinate_Systems">A Matrix Transforms Between Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Why_a_4x4_Matrix">Why a 4x4 Matrix?</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Projective_Transformations">Projective Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br><a href="#Rotation_Example">Rotation Example</a><br></p>
+<h2>Contents</h2><p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br>&nbsp;&nbsp;<a href="#A_Matrix_Transforms_Between_Coordinate_Systems">A Matrix Transforms Between Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Why_a_4x4_Matrix">Why a 4x4 Matrix?</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Projective_Transformations">Projective Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Inverting_a_General_NxN_Matrix">Inverting a General NxN Matrix</a><br><a href="#Rotation_Example">Rotation Example</a><br></p>
 <h2>Arrangement</h2><p>In mathematical publications,
 matrices are often notated in column-major order, in which each
 element of the matrix is placed in columns as opposed to rows, as in the following example:</p>
@@ -229,12 +229,10 @@ remains unchanged. Likewise for y and z.</p>
 <p>If <code>sx</code>, <code>sy</code>, or <code>sz</code> is -1, that coordinate is <em>reflected</em> along the corresponding axis.</p>
 <p>If <code>sx</code>, <code>sy</code>, and <code>sz</code> are all 1, we have an <em>identity matrix</em>, where the input vector
 is equal to the output vector.</p>
-<blockquote>
 <p>When the transformed X, Y, or Z axis has a length other than 1, the coordinate
 system will be scaled up or down along that axis.  The scalings given
 here will scale the lengths of the corresponding axes.  For example,
 if <code>sx</code> is 2, the X axis will be (2, 0, 0) and thus have a length of 2.</p>
-</blockquote>
 <p>Related functions:</p>
 <ul>
 <li><a href="H3DU.Math.html#H3DU.Math.mat4scaled">H3DU.Math.mat4scaled()</a> -
@@ -577,7 +575,7 @@ led me to this highly useful insight.</p>
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the <code>H3DU.Math</code> library.</p>
 <p>Transformations that don't necessarily preserve parallelism of lines are called <em>projective transformations</em>.
-An NxN matrix can describe projective transformations if it has one more row and one more column
+An NxN matrix can describe certain projective transformations if it has one more row and one more column
 than the number of dimensions.  For example, a 4x4 matrix can describe 3D projective transformations
 in the form of linear transformations on homogeneous coordinates (see
 <a href="#Why_a_4x4_Matrix">&quot;Why a 4x4 Matrix?&quot;</a>).  For a 3D projective transformation, the last row
@@ -612,14 +610,36 @@ the 3rd and 9th elements, and the 7th and 10th elements of the matrix (zero-base
 elements 1, 4, 2, 8, 6, and 9 respectively). The effect is like reversing the angle of the
 rotation to reset an object to its previous orientation.  In general, to invert an NxN
 rotation matrix, <em>transpose</em> that matrix (so that its rows become its columns and vice versa).</p>
-<p>Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all.  The formula for inverting a general matrix is too complicated to discuss here.</p>
-<p>Related functions:</p>
+<p><a id=Inverting_a_General_NxN_Matrix></a></p>
+<h4>Inverting a General NxN Matrix</h4><p>Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the <a href="H3DU.Math.html#H3DU.Math.mat4invert">H3DU.Math.mat4invert()</a> or <a href="H3DU.Math.html#H3DU.Math.mat3invert">H3DU.Math.mat3invert()</a> methods, respectively.</p>
+<p>To describe how inverting a matrix works, we will need to define some terms:</p>
 <ul>
-<li><a href="H3DU.Math.html#H3DU.Math.mat4invert">H3DU.Math.mat4invert()</a> -
-Inverts a 4x4 matrix</li>
-<li><a href="H3DU.Math.html#H3DU.Math.mat4invert">H3DU.Math.mat4invert()</a> -
-Inverts a 3x3 matrix</li>
+<li>A matrix cell's <em>row index</em> and <em>column index</em> tell where that cell appears in the matrix.  For example, a cell on the first row has row index 0 and a cell on the second column has column index 1.</li>
+<li>A matrix's <em>minor</em> at a given cell is a smaller matrix generated by eliminating the row and column where that cell appears.</li>
+<li>A matrix's <em>determinant</em> is its overall
+scaling factor. Only an NxN matrix with a determinant other
+than 0 can be inverted.  To find a matrix's determinant:<ol>
+<li>For each cell in the first row (or first column), find the determinant of the matrix's minor at that cell.</li>
+<li>Label the minors' determinants (A, B, C, D, ...), in that order.</li>
+<li>The matrix's determinant is (A - B + C - D + ...).</li>
+</ol>
+</li>
 </ul>
+<p>To invert an NxN matrix:</p>
+<ol>
+<li>Create a new NxN matrix.</li>
+<li>For each cell in the original matrix, find the determinant of
+its minor at that cell, and set the corresponding cell
+in the new matrix to that value.</li>
+<li>In the new matrix, reverse the sign of each cell whose row index
+plus column index is odd. (These cells will alternate in a checkerboard
+pattern in the matrix.)</li>
+<li>Transpose the new matrix (convert its rows to columns
+and vice versa).</li>
+<li>Find the original matrix's determinant and divide each
+cell in the new matrix by that value.</li>
+<li>The new matrix will be the inverted form of the original NxN matrix.</li>
+</ol>
 <p><a id=Rotation_Example></a></p>
 <h2>Rotation Example</h2><p>As an example, say we rotate 60 degrees about the X axis (<code>mat4rotated(60, 1, 0, 0)</code>,
 &theta; = 60&deg;).  First, we find the rotation formula for the X axis:</p>
