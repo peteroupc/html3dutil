@@ -1,7 +1,6 @@
 # Documentation Index
 
 * <a href="Camera.md">Camera</a><br><b>Deprecated: Use <a href="H3DU.Camera.md">H3DU.Camera</a> instead.</b>
-* <a href="CurveTube.md">CurveTube</a><br><b>Deprecated: Use <a href="H3DU.CurveTube.md">H3DU.CurveTube</a> instead.</b>
 * <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a> instead.</b>
 * <a href="FrameCounter.md">FrameCounter</a><br><b>Deprecated: Use <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a> instead.</b>
 * <a href="FrameCounterDiv.md">FrameCounterDiv</a><br><b>Deprecated: Use <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a> instead.</b>
@@ -25,7 +24,6 @@ view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.
-* <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a><br>**Deprecated: This class is likely to become a private class.
