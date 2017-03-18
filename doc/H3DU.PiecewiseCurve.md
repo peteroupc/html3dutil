@@ -10,6 +10,15 @@
 A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve
 made up of one or more individual curves.
 
+The combined curves U coordinates range from 0 to N,
+where N is the number of curves. In this way, the integer
+part of a U coordinate indicates the curve the coordinate
+refers to. For example, if there are four curves, coordinates
+from 0, but less than 1, belong to the first curve, and coordinates
+from 1, but less than 2, belong to the second curve. The U
+coordinate equal to N refers to the end of the last curve in
+the piecewise curve.
+
 #### Parameters
 
 * `curves` (Type: Array.&lt;Object>)<br>An array of curve evaluator objects, such as an instance of <a href="H3DU.Curve.md">H3DU.Curve</a> or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).
@@ -78,7 +87,14 @@ Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
-from [0, &pi] to [0, &pi/8], so that the curve runs 1/8 of its former path.
+from [0, &pi] to [0, &pi/8].
+
+Note, however, that in general, shrinking
+the range of a curve will not shrink the length of a curve
+in the same proportion, unless the curve's path runs at
+constant speed with respect to time. For example, shrinking the range of a curve
+from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
+long as the original curve.
 
 #### Parameters
 

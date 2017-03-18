@@ -75,7 +75,7 @@ Loads one or more textures by their URL and uploads their data to a WebGL contex
 #### Return Value
 
 A promise as described in
-<a href="H3DU.md#H3DU.md">H3DU.getPromiseResultsAll</a>. If the promise
+<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
@@ -128,7 +128,7 @@ stores their texture data.
 #### Return Value
 
 A promise as described in
-<a href="H3DU.md#H3DU.md">H3DU.getPromiseResultsAll</a>. If the promise
+<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 

@@ -46,7 +46,7 @@ the vector's direction).
 
 The following functions normalize vectors and find their length.
 
-* <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3norm</a> - Converts a 3-element vector to a unit vector.
+* <a href="H3DU.Math.md#H3DU.Math.vec3norm">H3DU.Math.vec3norm</a> - Converts a 3-element vector to a unit vector.
 * <a href="H3DU.Math.md#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a> - Converts a 4-element vector to a unit vector.
 * <a href="H3DU.Math.md#H3DU.Math.vec3length">H3DU.Math.vec3length</a> - Finds a 3-element vector's length.
 * <a href="H3DU.Math.md#H3DU.Math.vec4length">H3DU.Math.vec4length</a> - Finds a 4-element vector's length.

@@ -5,7 +5,7 @@
 <a name='H3DU.SurfaceOfRevolution'></a>
 ### H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
-A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution,
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.
 
@@ -32,9 +32,9 @@ the HTML 3D Library. Example:
 
 * [endPoints](#H3DU.SurfaceOfRevolution_endPoints)
 * [evaluate](#H3DU.SurfaceOfRevolution_evaluate)<br>Finds the coordinates of the given point of this surface.
-* [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution
+* [fromFunction](#H3DU.SurfaceOfRevolution.fromFunction)<br>Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
-* [torus](#H3DU.SurfaceOfRevolution.torus)<br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
+* [torus](#H3DU.SurfaceOfRevolution.torus)<br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
 <a name='H3DU.SurfaceOfRevolution_endPoints'></a>
 ### H3DU.SurfaceOfRevolution#endPoints()
@@ -57,7 +57,7 @@ of the position at the given point. It will have as many elements as a control p
 <a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
 ### (static) H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
 
-Creates a <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution
+Creates a <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 The resulting surface will have a circular cross section
 along its length.
@@ -105,7 +105,7 @@ which runs from 5 to 10 units, and with a radius of 2 units.
 <a name='H3DU.SurfaceOfRevolution.torus'></a>
 ### (static) H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])
 
-A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
 #### Parameters
 

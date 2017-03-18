@@ -171,7 +171,7 @@ a raster effect to a texture.
 
 #### Parameters
 
-* `functionCode` (Type: string)<br>See <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.md">H3DU.ShaderInfo.makeEffect</a>.
+* `functionCode` (Type: string)<br>See <a href="H3DU.ShaderInfo.md#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a>.
 
 #### Return Value
 
@@ -194,7 +194,7 @@ Sets the semantic for a vertex attribute.
 #### Parameters
 
 * `name` (Type: string)<br>Name of the attribute.
-* `semantic` (Type: Number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.md">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `semantic` (Type: Number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
 * `semanticIndex` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 
 #### Return Value

@@ -8,7 +8,7 @@
 Specifies parameters for light sources.
 
 NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.md#H3DU.Math.md">sRGB color space</a>.
+the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Default Value: `"[0,0,0,1]"`
 
 A 4-element vector giving an additional color to multiply with the diffuse
 or albedo color (base color) of each object, in the red, green,
-and blue components respectively. See also <a href="H3DU.PbrMaterial.md#H3DU.md">H3DU.PbrMaterial#albedo</a>.
+and blue components respectively. See also <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>.
 Each component ranges from 0 to 1.
 The default is (1,1,1,1), or white.
 
@@ -99,7 +99,7 @@ Sets parameters for this material object.
 
 #### Parameters
 
-* `params` (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU.LightSource.md#H3DU.md">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called "albedo"). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. <li><code>radius</code> - Radius of the light source. If 0, the light's intensity doesn't change with distance. </ul> If a value is null or undefined, it is ignored.
+* `params` (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU.LightSource.md#H3DU.LightSource_position">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called "albedo"). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. <li><code>radius</code> - Radius of the light source. If 0, the light's intensity doesn't change with distance. </ul> If a value is null or undefined, it is ignored.
 
 #### Return Value
 

@@ -91,7 +91,7 @@ Loads the texture files used by this font object.
 #### Return Value
 
 A promise as described in
-<a href="H3DU.md#H3DU.md">H3DU.getPromiseResultsAll</a>. If the promise
+<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
 
@@ -145,7 +145,7 @@ drawn using this font.
 #### Parameters
 
 * `str` (Type: string)<br>The text string to measure. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.md">H3DU.TextFont#makeTextMeshes</a>.
+* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>.
 
 #### Return Value
 
@@ -167,7 +167,7 @@ than the right and bottom coordinates, respectively).
 #### Parameters
 
 * `str` (Type: string)<br>The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.md">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul>
+* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul>
 
 #### Return Value
 

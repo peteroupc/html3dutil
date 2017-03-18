@@ -1,6 +1,14 @@
 <html><head><title>H3DU.PiecewiseCurve</title></head><body><h1> H3DU.PiecewiseCurve</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.PiecewiseCurve'></a>
 <h3> H3DU.PiecewiseCurve(curves)</h3><p><b>Augments:</b> <a href="H3DU.Curve.html">H3DU.Curve</a></p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve
-made up of one or more individual curves.<h4> Parameters</h4><ul><li><code>curves</code> (Type: Array.&lt;Object>)<br>An array of curve evaluator objects, such as an instance of <a href="H3DU.Curve.html">H3DU.Curve</a> or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</ul><h3> Methods</h3><ul><li><a href='#H3DU.PiecewiseCurve_accel'>accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.<li><a href='#H3DU.PiecewiseCurve_arcLength'>arcLength</a><br>TODO: Not documented yet.<li><a href='#H3DU.PiecewiseCurve_changeEnds'>changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
+made up of one or more individual curves.<p>
+The combined curves U coordinates range from 0 to N,
+where N is the number of curves. In this way, the integer
+part of a U coordinate indicates the curve the coordinate
+refers to. For example, if there are four curves, coordinates
+from 0, but less than 1, belong to the first curve, and coordinates
+from 1, but less than 2, belong to the second curve. The U
+coordinate equal to N refers to the end of the last curve in
+the piecewise curve.<h4> Parameters</h4><ul><li><code>curves</code> (Type: Array.&lt;Object>)<br>An array of curve evaluator objects, such as an instance of <a href="H3DU.Curve.html">H3DU.Curve</a> or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</ul><h3> Methods</h3><ul><li><a href='#H3DU.PiecewiseCurve_accel'>accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.<li><a href='#H3DU.PiecewiseCurve_arcLength'>arcLength</a><br>TODO: Not documented yet.<li><a href='#H3DU.PiecewiseCurve_changeEnds'>changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.<li><a href='#H3DU.PiecewiseCurve_endPoints'>endPoints</a><br>Returns the starting and ending U coordinates of this curve.<li><a href='#H3DU.PiecewiseCurve_evaluate'>evaluate</a><br>TODO: Not documented yet.<li><a href='#H3DU.PiecewiseCurve_fitRange'>fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to fit the given range.<li><a href='#H3DU.PiecewiseCurve.fromCardinalSpline'>fromCardinalSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a cardinal spline.<li><a href='#H3DU.PiecewiseCurve.fromHermiteSpline'>fromHermiteSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a Hermite spline.<li><a href='#H3DU.PiecewiseCurve_getCurves'>getCurves</a><br>Gets a reference to the curves that make up this piecewise curve.<li><a href='#H3DU.PiecewiseCurve_getLength'>getLength</a><br>Convenience method for getting the total length of this curve.<li><a href='#H3DU.PiecewiseCurve_getPoints'>getPoints</a><br>Gets an array of positions on the curve at fixed intervals
@@ -18,7 +26,13 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
-from [0, &pi] to [0, &pi/8], so that the curve runs 1/8 of its former path.<h4> Parameters</h4><ul><li><code>ep1</code> (Type: number)<br>New start point of the curve.<li><code>ep2</code> (Type: number)<br>New end point of the curve.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.PiecewiseCurve_endPoints'></a>
+from [0, &pi] to [0, &pi/8].<p>
+Note, however, that in general, shrinking
+the range of a curve will not shrink the length of a curve
+in the same proportion, unless the curve's path runs at
+constant speed with respect to time. For example, shrinking the range of a curve
+from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
+long as the original curve.<h4> Parameters</h4><ul><li><code>ep1</code> (Type: number)<br>New start point of the curve.<li><code>ep2</code> (Type: number)<br>New end point of the curve.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.PiecewiseCurve_endPoints'></a>
 <h3> H3DU.PiecewiseCurve#endPoints()</h3>Returns the starting and ending U coordinates of this curve.<h4> Return Value</h4>A two-element array. The first element is the starting coordinate of
 the curve, and the second is its ending coordinate.
 Returns <code>[0, n]</code>, where <code>n</code> is the number

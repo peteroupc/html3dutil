@@ -185,7 +185,7 @@ Uses a perspective projection for this batch. It will be adjusted
 to the scene's aspect ratio each time this batch is rendered.
 
 For considerations when choosing the "near" and "far" parameters,
-see <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4perspective</a>.
+see <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.
 
 #### Parameters
 

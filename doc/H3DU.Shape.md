@@ -92,7 +92,7 @@ Return value. (Type: <a href="H3DU.Material.md">H3DU.Material</a> | <a href="H3D
 ### H3DU.Shape#getMatrix()
 
 Gets the transformation matrix used by this shape.
-See <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#getMatrix</a>.
+See <a href="H3DU.Transform.md#H3DU.Transform_getMatrix">H3DU.Transform#getMatrix</a>.
 
 #### Return Value
 
@@ -147,7 +147,7 @@ precedence over the color given in this method.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a>, or the red color component (0-1).
+* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
@@ -173,11 +173,11 @@ This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 ### H3DU.Shape#setPosition(x, y, z)
 
 Sets the relative position of this shape from its original
-position. See <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setPosition</a>
+position. See <a href="H3DU.Transform.md#H3DU.Transform_setPosition">H3DU.Transform#setPosition</a>
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
 * `y` (Type: number)<br>Y coordinate.
 * `z` (Type: number)<br>Z coordinate.
 
@@ -203,11 +203,11 @@ This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
 ### H3DU.Shape#setScale(x, y, z)
 
 Sets the scale of this shape relative to its original
-size. See <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setScale</a>
+size. See <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
 * `y` (Type: number)<br>Scaling factor for this object's height.
 * `z` (Type: number)<br>Scaling factor for this object's depth.
 
@@ -250,7 +250,7 @@ diffuse parameters to the given color.
 #### Parameters
 
 * `name` (Type: String | <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)<br><a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
-* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a>, or the red color component (0-1).
+* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.

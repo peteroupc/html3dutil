@@ -222,7 +222,7 @@ Default Value: `48`
 
 **Deprecated: Yes**
 
-An alias for <a href="H3DU.InputTracker.md#H3DU.md">H3DU.InputTracker#mousePos</a>.
+An alias for <a href="H3DU.InputTracker.md#H3DU.InputTracker_mousePos">H3DU.InputTracker#mousePos</a>.
 
 <a name='H3DU.InputTracker_leftButton'></a>
 ### H3DU.InputTracker#leftButton

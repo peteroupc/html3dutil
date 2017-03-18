@@ -102,7 +102,7 @@ achieve the perspective effect. This will be [explained later](#Vertex Coordinat
 
 The following methods define a perspective projection.
 
-**<a href="H3DU.Math.md#H3DU.Math.md">`H3DU.Math.mat4perspective(fov, aspect, near, far)`</a>**
+**<a href="H3DU.Math.md#H3DU.Math.mat4perspective">`H3DU.Math.mat4perspective(fov, aspect, near, far)`</a>**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,

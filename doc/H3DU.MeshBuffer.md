@@ -76,7 +76,7 @@ Gets the type of primitive stored in this mesh buffer.
 
 #### Return Value
 
-Either <a href="H3DU.Mesh.md#H3DU.Mesh.md">H3DU.Mesh.TRIANGLES</a>,
+Either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
 <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: number)
 
 <a name='H3DU.MeshBuffer_setAttribute'></a>
@@ -90,7 +90,7 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.md">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `name` (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
 * `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.
 * `startIndex` (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.
@@ -123,7 +123,7 @@ Sets the type of graphics primitives stored in this mesh buffer.
 
 #### Parameters
 
-* `primType` (Type: number)<br>The primitive type, either <a href="H3DU.Mesh.md#H3DU.Mesh.md">H3DU.Mesh.TRIANGLES</a>, <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>.
+* `primType` (Type: number)<br>The primitive type, either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>.
 
 #### Return Value
 

@@ -319,7 +319,8 @@ Curve._FitRange = function(curve, ep1, ep2) {
     return [ep1, ep2];
   };
 };
-/** @ignore */
+/** @ignore
+ * @constructor */
 Curve._ArcLengthParam = function(curve) {
   this.curve = curve;
   this.ep = this.curve.endPoints();

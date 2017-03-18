@@ -39,21 +39,21 @@ degrees in a radian.
 of radians in a degree.
 * [PiTimes2](#H3DU.Math.PiTimes2)<br>Closest approximation to pi times 2, or a 360-degree turn in radians.
 * [PitchRollYaw](#H3DU.Math.PitchRollYaw)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalPitchRollYaw</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchRollYaw">H3DU.Math.GlobalPitchRollYaw</a> instead.</b>
 * [PitchYawRoll](#H3DU.Math.PitchYawRoll)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalPitchYawRoll</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchYawRoll">H3DU.Math.GlobalPitchYawRoll</a> instead.</b>
 * [RollPitchYaw](#H3DU.Math.RollPitchYaw)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalRollPitchYaw</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a> instead.</b>
 * [RollYawPitch](#H3DU.Math.RollYawPitch)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalRollYawPitch</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollYawPitch">H3DU.Math.GlobalRollYawPitch</a> instead.</b>
 * [ToDegrees](#H3DU.Math.ToDegrees)<br>Closest approximation to 180 divided by pi, or the number of
 degrees in a radian.
 * [ToRadians](#H3DU.Math.ToRadians)<br>Closest approximation to pi divided by 180, or the number
 of radians in a degree.
 * [YawPitchRoll](#H3DU.Math.YawPitchRoll)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalYawPitchRoll</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawPitchRoll">H3DU.Math.GlobalYawPitchRoll</a> instead.</b>
 * [YawRollPitch](#H3DU.Math.YawRollPitch)<br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalYawRollPitch</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a> instead.</b>
 
 ### Methods
 
@@ -130,9 +130,9 @@ an affine transformation matrix (without perspective) and returns the transforme
 * [mat4transpose](#H3DU.Math.mat4transpose)<br>Returns the transpose of a 4x4 matrix.
 * [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)<br>Transposes a 4x4 matrix in place without creating
 a new matrix.
-* [planeNorm](#H3DU.Math.planeNorm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.planeNormalize</a> instead.
+* [planeNorm](#H3DU.Math.planeNorm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
-* [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.planeNormalizeInPlace</a> instead.
+* [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 * [planeNormalize](#H3DU.Math.planeNormalize)<br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
 unless all the normal's components are 0, and returns a new plane with the result.
@@ -148,7 +148,7 @@ by the given rotation angle and around the given <a href="tutorial-glmath.md">ax
 * [quatFromVectors](#H3DU.Math.quatFromVectors)<br>Generates a quaternion describing a rotation between
 two 3-element vectors.
 * [quatIdentity](#H3DU.Math.quatIdentity)<br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).
-* [quatInverse](#H3DU.Math.quatInverse)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatInvert</a> instead.</b>
+* [quatInverse](#H3DU.Math.quatInverse)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatInvert">H3DU.Math.quatInvert</a> instead.</b>
 * [quatInvert](#H3DU.Math.quatInvert)<br>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a <a href="tutorial-glmath.md">unit vector</a>.
 * [quatIsIdentity](#H3DU.Math.quatIsIdentity)<br>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * [quatLength](#H3DU.Math.quatLength)<br>Returns the distance of this quaternion from the origin.
@@ -156,9 +156,9 @@ two 3-element vectors.
 * [quatNlerp](#H3DU.Math.quatNlerp)<br>Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a linear interpolation function, and converts
 it to a <a href="tutorial-glmath.md">unit vector</a>.
-* [quatNorm](#H3DU.Math.quatNorm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatNormalize</a> instead.
+* [quatNorm](#H3DU.Math.quatNorm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
-* [quatNormInPlace](#H3DU.Math.quatNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatNormalizeInPlace</a> instead.
+* [quatNormInPlace](#H3DU.Math.quatNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 * [quatNormalize](#H3DU.Math.quatNormalize)<br>Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>; returns a new quaternion.
 * [quatNormalizeInPlace](#H3DU.Math.quatNormalizeInPlace)<br>Converts a quaternion to a <a href="tutorial-glmath.md">unit vector</a>.
@@ -215,9 +215,9 @@ vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec3negateInPlace](#H3DU.Math.vec3negateInPlace)<br>Negates a 3-element vector in place, generally resulting in a vector with
 the same length but opposite direction.
-* [vec3norm](#H3DU.Math.vec3norm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3normalize</a> instead.
+* [vec3norm](#H3DU.Math.vec3norm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
-* [vec3normInPlace](#H3DU.Math.vec3normInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3normalizeInPlace</a> instead.
+* [vec3normInPlace](#H3DU.Math.vec3normInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalizeInPlace">H3DU.Math.vec3normalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 * [vec3normalize](#H3DU.Math.vec3normalize)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 * [vec3normalizeInPlace](#H3DU.Math.vec3normalizeInPlace)<br>Converts a 3-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
@@ -262,9 +262,9 @@ vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec4negateInPlace](#H3DU.Math.vec4negateInPlace)<br>Negates a 4-element vector in place, generally resulting in a vector with
 the same length but opposite direction.
-* [vec4norm](#H3DU.Math.vec4norm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalize</a> instead.
+* [vec4norm](#H3DU.Math.vec4norm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
-* [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalizeInPlace</a> instead.
+* [vec4normInPlace](#H3DU.Math.vec4normInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 * [vec4normalize](#H3DU.Math.vec4normalize)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>; returns a new vector.
 * [vec4normalizeInPlace](#H3DU.Math.vec4normalizeInPlace)<br>Converts a 4-element vector to a <a href="tutorial-glmath.md">unit vector</a>.
@@ -382,7 +382,7 @@ Default Value: `6.283185307179586`
 ### H3DU.Math.PitchRollYaw (constant)
 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalPitchRollYaw</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchRollYaw">H3DU.Math.GlobalPitchRollYaw</a> instead.</b>
 
 Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
 
@@ -390,7 +390,7 @@ Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each 
 ### H3DU.Math.PitchYawRoll (constant)
 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalPitchYawRoll</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalPitchYawRoll">H3DU.Math.GlobalPitchYawRoll</a> instead.</b>
 
 Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
 
@@ -398,7 +398,7 @@ Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each 
 ### H3DU.Math.RollPitchYaw (constant)
 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalRollPitchYaw</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollPitchYaw">H3DU.Math.GlobalRollPitchYaw</a> instead.</b>
 
 Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
 
@@ -406,7 +406,7 @@ Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each 
 ### H3DU.Math.RollYawPitch (constant)
 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalRollYawPitch</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalRollYawPitch">H3DU.Math.GlobalRollYawPitch</a> instead.</b>
 
 Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 
@@ -426,7 +426,7 @@ of radians in a degree. Multiply by this number to convert degrees to radians.
 ### H3DU.Math.YawPitchRoll (constant)
 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalYawPitchRoll</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawPitchRoll">H3DU.Math.GlobalYawPitchRoll</a> instead.</b>
 
 Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 
@@ -434,7 +434,7 @@ Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each 
 ### H3DU.Math.YawRollPitch (constant)
 
 <b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.GlobalYawRollPitch</a> instead.</b>
+Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a> instead.</b>
 
 Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
@@ -669,7 +669,7 @@ are converted to columns and vice versa.)
 
 The matrix multiplication is effectively done by breaking up matrix <code>b</code>
 into three 3-element vectors (the first 3 elements make up the first vector, and so on),
-<a href="H3DU.Math.md#H3DU.Math.md">transforming</a> each vector with
+<a href="H3DU.Math.md#H3DU.Math.mat3transform">transforming</a> each vector with
 matrix <code>a</code>, and putting the vectors back together into a new matrix.
 
 #### Parameters
@@ -895,7 +895,7 @@ are converted to columns and vice versa.)
 
 The matrix multiplication is effectively done by breaking up matrix <code>b</code>
 into four 4-element vectors (the first 4 elements make up the first vector, and so on),
-<a href="H3DU.Math.md#H3DU.Math.md">transforming</a> each vector with
+<a href="H3DU.Math.md#H3DU.Math.mat4transform">transforming</a> each vector with
 matrix <code>a</code>, and putting the vectors back together into a new matrix.
 
 #### Parameters
@@ -1074,7 +1074,7 @@ then returning that vector's new X, Y, and Z.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods' documentation.
+* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods' documentation.
 * `v` (Type: Array.&lt;number> | Number)<br>X coordinate of a 3D point to transform. If "vy" and "vz" are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: number) (optional)<br>Y coordinate.
 * `vz` (Type: number) (optional)<br>Z coordinate. To transform a 2D point, set Z to 0.
@@ -1195,7 +1195,7 @@ An array of six
 4-element arrays representing the six clipping planes of the
 view frustum. In order, they are the left, right, top,
 bottom, near, and far clipping planes. All six planes
-will be normalized (see <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.planeNormalizeInPlace</a>). (Type: Array.&lt;Array.&lt;number>>)
+will be normalized (see <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a>). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='H3DU.Math.mat4toMat3'></a>
 ### (static) H3DU.Math.mat4toMat3(m4)
@@ -1247,7 +1247,7 @@ were assumed to be (0, 0, 0, 1) instead of their actual values and as though the
 vector had a fourth element valued at 1.
 
 For most purposes, use
-the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4projectVec3</a> method instead, which supports
+the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead, which supports
 4x4 matrices that may be in a perspective
 projection (whose last row is not necessarily (0, 0, 0, 1)).
 
@@ -1325,10 +1325,10 @@ The parameter "mat". (Type: Array.&lt;number>)
 <a name='H3DU.Math.planeNorm'></a>
 ### (static) H3DU.Math.planeNorm(plane)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.planeNormalize</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.planeNormalize</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a>.
 
 #### Parameters
 
@@ -1341,10 +1341,10 @@ The normalized plane. (Type: Array.&lt;number>)
 <a name='H3DU.Math.planeNormInPlace'></a>
 ### (static) H3DU.Math.planeNormInPlace(plane)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.planeNormalizeInPlace</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.planeNormalizeInPlace</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a>.
 
 #### Parameters
 
@@ -1416,7 +1416,7 @@ Return value. (Type: Array.&lt;number>)
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4copy</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4copy">H3DU.Math.vec4copy</a>
 
 <a name='H3DU.Math.quatDot'></a>
 ### (static) H3DU.Math.quatDot(a, b)
@@ -1436,7 +1436,7 @@ Return value. (Type: number)
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4dot</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4dot">H3DU.Math.vec4dot</a>
 
 <a name='H3DU.Math.quatFromAxisAngle'></a>
 ### (static) H3DU.Math.quatFromAxisAngle(angle, v, vy, vz)
@@ -1522,7 +1522,7 @@ Return value. (Type: Array.&lt;number>)
 <a name='H3DU.Math.quatInverse'></a>
 ### (static) H3DU.Math.quatInverse(quat)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatInvert</a> instead.</b>
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatInvert">H3DU.Math.quatInvert</a> instead.</b>
 
 Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
 Returns a new quaternion; same as the quatInverse method.
@@ -1550,7 +1550,7 @@ Return value. (Type: Array.&lt;number>)
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatConjugate</a>
+<a href="H3DU.Math.md#H3DU.Math.quatConjugate">H3DU.Math.quatConjugate</a>
 
 <a name='H3DU.Math.quatIsIdentity'></a>
 ### (static) H3DU.Math.quatIsIdentity(quat)
@@ -1582,7 +1582,7 @@ Return value. (Type: number)
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4length</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4length">H3DU.Math.vec4length</a>
 
 <a name='H3DU.Math.quatMultiply'></a>
 ### (static) H3DU.Math.quatMultiply(a, b)
@@ -1640,10 +1640,10 @@ which will be a unit vector. (Type: Array.&lt;number>)
 <a name='H3DU.Math.quatNorm'></a>
 ### (static) H3DU.Math.quatNorm(quat)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatNormalize</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatNormalize</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.quatNormalize">H3DU.Math.quatNormalize</a>.
 
 #### Parameters
 
@@ -1656,10 +1656,10 @@ The normalized quaternion. (Type: Array.&lt;number>)
 <a name='H3DU.Math.quatNormInPlace'></a>
 ### (static) H3DU.Math.quatNormInPlace(quat)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatNormalizeInPlace</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.quatNormalizeInPlace</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">H3DU.Math.quatNormalizeInPlace</a>.
 
 #### Parameters
 
@@ -1689,7 +1689,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalize</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a>
 
 <a name='H3DU.Math.quatNormalizeInPlace'></a>
 ### (static) H3DU.Math.quatNormalizeInPlace(quat)
@@ -1711,7 +1711,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalizeInPlace</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a>
 
 <a name='H3DU.Math.quatRotate'></a>
 ### (static) H3DU.Math.quatRotate(quat, angle, v, vy, vz)
@@ -1755,7 +1755,7 @@ The resulting quaternion. (Type: Array.&lt;number>)
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4scaleInPlace</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
 
 <a name='H3DU.Math.quatScaleInPlace'></a>
 ### (static) H3DU.Math.quatScaleInPlace(a, scalar)
@@ -1774,7 +1774,7 @@ The parameter "a". (Type: Array.&lt;number>)
 
 #### See Also
 
-<a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4scaleInPlace</a>
+<a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a>
 
 <a name='H3DU.Math.quatSlerp'></a>
 ### (static) H3DU.Math.quatSlerp(q1, q2, factor)
@@ -1789,7 +1789,7 @@ how small the new angle will be relative to the original angle.)
 
 This method will generally interpolate at constant velocity; however,
 this method is commutative (the order in which the quaternions are given
-matters), unlike <a href="H3DU.Math.md#H3DU.Math.md">quatNlerp</a>, making it
+matters), unlike <a href="H3DU.Math.md#H3DU.Math.quatNlerp">quatNlerp</a>, making it
 unsuitable for blending multiple quaternion rotations,
 and this method is generally more computationally expensive
 than the <a href="H3DU.Math.md#H3DU.Math.quatNlerp">quatNlerp</a> method.
@@ -2157,9 +2157,9 @@ increase from front to back.
 #### Parameters
 
 * `vector` (Type: Array.&lt;number>)<br>A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4projectVec3</a> method.<br> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
-* `viewport` (Type: Boolean)<br>Has the same meaning as "viewport" in the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3toWindowPoint</a> method.
-* `yUp` (Type: Boolean) (optional)<br>Has the same meaning as "yUp" in the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3toWindowPoint</a> method.
+* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method.<br> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
+* `viewport` (Type: Boolean)<br>Has the same meaning as "viewport" in the <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> method.
+* `yUp` (Type: Boolean) (optional)<br>Has the same meaning as "yUp" in the <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> method.
 
 #### Return Value
 
@@ -2177,7 +2177,7 @@ of its components.
 Note that if vectors are merely sorted or compared by their lengths (and
 those lengths are not added or multiplied together or the like),
 it's faster to sort or compare them by the squares of their lengths (to find
-the square of a 3-element vector's length, call <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3dot</a>
+the square of a 3-element vector's length, call <a href="H3DU.Math.md#H3DU.Math.vec3dot">H3DU.Math.vec3dot</a>
 passing the same vector as both of its arguments).
 
 #### Parameters
@@ -2294,10 +2294,10 @@ The parameter "a". (Type: Array.&lt;number>)
 <a name='H3DU.Math.vec3norm'></a>
 ### (static) H3DU.Math.vec3norm(vec)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3normalize</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3normalize</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a>.
 
 #### Parameters
 
@@ -2310,10 +2310,10 @@ The normalized vector. (Type: Array.&lt;number>)
 <a name='H3DU.Math.vec3normInPlace'></a>
 ### (static) H3DU.Math.vec3normInPlace(vec)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3normalizeInPlace</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec3normalizeInPlace">H3DU.Math.vec3normalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3normalizeInPlace</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec3normalizeInPlace">H3DU.Math.vec3normalizeInPlace</a>.
 
 #### Parameters
 
@@ -2506,9 +2506,9 @@ using the given transformation matrix and viewport rectangle.
 #### Parameters
 
 * `vector` (Type: Array.&lt;number>)<br>A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>. <br>If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward instead of upward or vice versa.
+* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>. <br>If the matrix includes a projection transform returned by <a href="H3DU.Math.md#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.md">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward instead of upward or vice versa.
 * `viewport` (Type: Array.&lt;number>)<br>A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
-* `yUp` (Type: Boolean) (optional)<br>If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
+* `yUp` (Type: Boolean) (optional)<br>If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
 
 #### Return Value
 
@@ -2519,7 +2519,7 @@ coordinates, in that order. (Type: Array.&lt;number>)
 ### (static) H3DU.Math.vec3triple(a, b, c)
 
 Finds the scalar triple product of three vectors (A, B, and C). The triple
-product is the <a href="H3DU.Math.md#H3DU.Math.md">dot product</a> of both A and the
+product is the <a href="H3DU.Math.md#H3DU.Math.vec3dot">dot product</a> of both A and the
 <a href="H3DU.Math.md#H3DU.Math.vec3cross">cross product</a>
 of B and C. The following are properties of the scalar triple product
 (called triple product in what follows):<ul>
@@ -2679,7 +2679,7 @@ Return value. (Type: Array.&lt;number>)
 
 Finds the dot product of two 4-element vectors. It's the
 sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
-For properties of the dot product, see <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3dot</a>.
+For properties of the dot product, see <a href="H3DU.Math.md#H3DU.Math.vec3dot">H3DU.Math.vec3dot</a>.
 
 #### Parameters
 
@@ -2700,7 +2700,7 @@ of its components.
 
 Note that if vectors are merely sorted or compared by their lengths,
 it's faster to sort or compare them by the squares of their lengths (to find
-the square of a 4-element vector's length, call <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4dot</a>
+the square of a 4-element vector's length, call <a href="H3DU.Math.md#H3DU.Math.vec4dot">H3DU.Math.vec4dot</a>
 passing the same vector as both of its arguments).
 
 #### Parameters
@@ -2721,7 +2721,7 @@ returns a new vector.
 
 * `v1` (Type: Array.&lt;number>)<br>The first vector to interpolate. The interpolation will occur on each component of this vector and v2.
 * `v2` (Type: Array.&lt;number>)<br>The second vector to interpolate.
-* `factor` (Type: number)<br>A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns A value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
+* `factor` (Type: number)<br>A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns A value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
 
 #### Return Value
 
@@ -2762,10 +2762,10 @@ The parameter "a". (Type: Array.&lt;number>)
 <a name='H3DU.Math.vec4norm'></a>
 ### (static) H3DU.Math.vec4norm(vec)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalize</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalize</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a>.
 
 #### Parameters
 
@@ -2778,10 +2778,10 @@ The normalized vector. (Type: Array.&lt;number>)
 <a name='H3DU.Math.vec4normInPlace'></a>
 ### (static) H3DU.Math.vec4normInPlace(vec)
 
-<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalizeInPlace</a> instead.
+<b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 
-Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec4normalizeInPlace</a>.
+Deprecated alias for <a href="H3DU.Math.md#H3DU.Math.vec4normalizeInPlace">H3DU.Math.vec4normalizeInPlace</a>.
 
 #### Parameters
 

@@ -7,14 +7,14 @@
 
 **Augments:** <a href="H3DU.Curve.md">H3DU.Curve</a>
 
-<b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.md">H3DU.BSplineCurve.fromBezierCurve</a>
+<b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b>
 
 A <a href="H3DU.Curve.md">curve evaluator object</a> for a B&eacute;zier curve.
 
 #### Parameters
 
-* `cp` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points as specified in <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.md">H3DU.BSplineCurve.fromBezierCurve</a>.
+* `cp` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points as specified in <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>.
 * `u1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation.)
 * `u2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation.)
 
@@ -86,7 +86,14 @@ Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
-from [0, &pi] to [0, &pi/8], so that the curve runs 1/8 of its former path.
+from [0, &pi] to [0, &pi/8].
+
+Note, however, that in general, shrinking
+the range of a curve will not shrink the length of a curve
+in the same proportion, unless the curve's path runs at
+constant speed with respect to time. For example, shrinking the range of a curve
+from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
+long as the original curve.
 
 #### Parameters
 

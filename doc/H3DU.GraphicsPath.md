@@ -319,7 +319,7 @@ Does a linear interpolation between two graphics paths.
 * `other` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>The second graphics path.
 * `t` (Type: number)<br>An interpolation factor, generally ranging from 0 through 1. Closer to 0 means closer to this path, and closer to 1 means closer to "other". If the input paths contain arc segments that differ in the large arc and sweep flags, the flags from the first path's arc are used if "t" is less than 0.5; and the flags from the second path's arc are used otherwise.
 
-For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns a value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
+For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns a value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for <a href="H3DU.Math.md#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.
 
 #### Return Value
 

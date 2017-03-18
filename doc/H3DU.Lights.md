@@ -10,7 +10,7 @@ ambient color as well as data on one or more light sources.
 When constructed, the list of light sources will be empty.
 
 NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.md#H3DU.Math.md">sRGB color space</a>.
+the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 ### Members
 
@@ -88,7 +88,7 @@ Sets the color of the scene's ambient light.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number> | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.md#H3DU.md">HTML or CSS color</a>.
+* `r` (Type: Array.&lt;number> | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.md#H3DU.toGLColor">HTML or CSS color</a>.
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br>Alpha color component (0-1). Currently not used.
@@ -117,8 +117,8 @@ Sets a directional light.
 
 * `index` (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn't exist at that index, it will be created.
 * `direction` (Type: Array.&lt;number>)<br>A 3-element array giving the X, Y, and Z world space components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector's direction from the origin (0, 0, 0).
-* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
-* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 
 #### Return Value
 

@@ -5,7 +5,7 @@
 <a name='H3DU.CurveTube'></a>
 ### H3DU.CurveTube(func, [thickness], [sweptCurve])
 
-A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a tube extruded from a parametric curve.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that

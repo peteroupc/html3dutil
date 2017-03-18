@@ -267,7 +267,7 @@ that mode. Only the red, green, and blue components will be used.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a>, or the red color component (0-1).
+* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 
@@ -348,7 +348,7 @@ Merges the vertices from another mesh into this one.
 The vertices from the other mesh will be copied into this one,
 and the other mesh's indices copied or adapted.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.md#H3DU.md">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.md#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices.
 
 #### Parameters
@@ -515,7 +515,7 @@ Only the color's red, green, and blue components will be used.
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.md">color vector or string</a>, or the red color component (0-1).
+* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: number)<br>Green component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
 * `b` (Type: number)<br>Blue component of the color (0-1). May be null or omitted if a string is given as the "r" parameter.
 
@@ -622,13 +622,13 @@ to lines. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 Transforms the positions and normals of all the vertices currently
 in this mesh. The matrix won't affect vertices added afterwards.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.md#H3DU.md">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.md#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices. Future vertices should not be
 added after calling this method without calling mode() first.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.md">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
+* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
 
 #### Return Value
 

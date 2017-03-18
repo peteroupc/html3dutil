@@ -15,7 +15,7 @@ texture atlas can specify where those portions are found.
 This implementation supports the ".atlas" format.
 
 NOTE: The constructor should not be called directly by applications.
-Use the <a href="H3DU.TextureAtlas.md#H3DU.TextureAtlas.md">H3DU.TextureAtlas.load</a> method to get an H3DU.TextureAtlas object.
+Use the <a href="H3DU.TextureAtlas.md#H3DU.TextureAtlas.load">H3DU.TextureAtlas.load</a> method to get an H3DU.TextureAtlas object.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -64,7 +64,7 @@ Loads the texture files used by this texture atlas.
 #### Return Value
 
 A promise as described in
-<a href="H3DU.md#H3DU.md">H3DU.getPromiseResultsAll</a>. If the promise
+<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>>)
 

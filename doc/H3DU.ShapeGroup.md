@@ -11,7 +11,7 @@ other <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> objects.
 
 ### Members
 
-* [shapes](#H3DU.ShapeGroup_shapes)<br><b>Deprecated: Use the <a href="H3DU.ShapeGroup.md#H3DU.md">H3DU.ShapeGroup#shapeCount</a>,
+* [shapes](#H3DU.ShapeGroup_shapes)<br><b>Deprecated: Use the <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_shapeCount">H3DU.ShapeGroup#shapeCount</a>,
 <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_getShape">H3DU.ShapeGroup#getShape</a>, and
 <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_setShape">H3DU.ShapeGroup#setShape</a> methods instead.</b>
 
@@ -50,7 +50,7 @@ are direct children of this shape group.
 <a name='H3DU.ShapeGroup_shapes'></a>
 ### H3DU.ShapeGroup#shapes
 
-<b>Deprecated: Use the <a href="H3DU.ShapeGroup.md#H3DU.md">H3DU.ShapeGroup#shapeCount</a>,
+<b>Deprecated: Use the <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_shapeCount">H3DU.ShapeGroup#shapeCount</a>,
 <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_getShape">H3DU.ShapeGroup#getShape</a>, and
 <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_setShape">H3DU.ShapeGroup#setShape</a> methods instead.</b>
 
@@ -189,13 +189,13 @@ Return value. (Type: Object)
 
 Sets the relative position of the shapes in this group
 from their original position.
-See <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setPosition</a>
+See <a href="H3DU.Transform.md#H3DU.Transform_setPosition">H3DU.Transform#setPosition</a>
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
 * `y` (Type: number)<br>Y coordinate.
 * `z` (Type: number)<br>Z coordinate.
 
@@ -223,13 +223,13 @@ This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 ### H3DU.ShapeGroup#setScale(x, y, z)
 
 Sets the scale of this shape group relative to its original
-size. See <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setScale</a>.
+size. See <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.md">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
 * `y` (Type: number)<br>Scaling factor for this object's height.
 * `z` (Type: number)<br>Scaling factor for this object's depth.
 

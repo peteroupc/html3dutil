@@ -7,7 +7,7 @@
 
 **Augments:** <a href="H3DU.Surface.md">H3DU.Surface</a>
 
-A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a B-spline (basis spline) surface.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
 B-spline surfaces can also represent all B&eacute;zier surfaces (see <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>).
 A B&eacute;zier surface is defined by a series of control points, where
 the control points on each corner define the end points of the surface, and
@@ -23,7 +23,7 @@ necessarily cross the surface.
 
 ### Methods
 
-* [bitangent](#H3DU.BSplineSurface_bitangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.md">bitangent vector</a> at the
+* [bitangent](#H3DU.BSplineSurface_bitangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector</a> at the
 given point on the surface.
 * [clamped](#H3DU.BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.
@@ -37,14 +37,14 @@ in this surface object.
 in this curve object.
 * [gradient](#H3DU.BSplineSurface_gradient)<br>Finds an approximate gradient vector of this surface at the given U and V coordinates.
 * [normal](#H3DU.BSplineSurface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
-* [tangent](#H3DU.BSplineSurface_tangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.md">tangent vector</a> at the
+* [tangent](#H3DU.BSplineSurface_tangent)<br>Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the
 given point on the surface.
 * [uniform](#H3DU.BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
 
 <a name='H3DU.BSplineSurface_bitangent'></a>
 ### H3DU.BSplineSurface#bitangent(u, v)
 
-Finds the <a href="H3DU.SurfaceEval.md#H3DU.md">bitangent vector</a> at the
+Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">bitangent vector</a> at the
 given point on the surface.
 
 #### Parameters
@@ -189,7 +189,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <a name='H3DU.BSplineSurface_tangent'></a>
 ### H3DU.BSplineSurface#tangent(u, v)
 
-Finds the <a href="H3DU.SurfaceEval.md#H3DU.md">tangent vector</a> at the
+Finds the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">tangent vector</a> at the
 given point on the surface.
 
 #### Parameters

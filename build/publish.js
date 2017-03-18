@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 /* eslint no-sync: "off" */
-/* global c, exports, require */
+/* global exports, require */
 var path = require("jsdoc/path");
 var fs = require("jsdoc/fs");
 var helper = require("jsdoc/util/templateHelper");
@@ -25,10 +25,10 @@ function normalizeLines(x) {
 
 function resolveLinks(x) {
   var ret = helper.resolveLinks(x);
-  ret = ret.replace(/href\s*=\s*\"([^\"\n>\#]+?)\.\w+(\"|\#)/, function(a, b) {
+  ret = ret.replace(/href\s*=\s*\"([^\"\n>\#]+?)\.\w+(\"|\#)/, function(a, b, c) {
     return "href=\"" + b + helper.fileExtension + c;
   });
-  ret = ret.replace(/href\s*=\s*\'([^\'\n>\#]+?)\.\w+(\'|\#)/, function(a, b) {
+  ret = ret.replace(/href\s*=\s*\'([^\'\n>\#]+?)\.\w+(\'|\#)/, function(a, b, c) {
     return "href='" + b + helper.fileExtension + c;
   });
   return ret;

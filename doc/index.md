@@ -1,6 +1,7 @@
 # Documentation Index
 
 * <a href="Camera.md">Camera</a><br><b>Deprecated: Use <a href="H3DU.Camera.md">H3DU.Camera</a> instead.</b>
+* <a href="CurveTube.md">CurveTube</a><br><b>Deprecated: Use <a href="H3DU.CurveTube.md">H3DU.CurveTube</a> instead.</b>
 * <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a> instead.</b>
 * <a href="FrameCounter.md">FrameCounter</a><br><b>Deprecated: Use <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a> instead.</b>
 * <a href="FrameCounterDiv.md">FrameCounterDiv</a><br><b>Deprecated: Use <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a> instead.</b>
@@ -9,11 +10,11 @@
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
-* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a B-spline (basis spline) surface.
+* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
 * <a href="H3DU.Batch3D.md">H3DU.Batch3D</a><br>A `Batch3D` represents a so-called "scene graph".
-* <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.md">H3DU.BSplineCurve.fromBezierCurve</a>
+* <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b>
-* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.md">H3DU.BSplineSurface.fromBezierSurface</a>
+* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
 to create a B&eacute;zier surface.</b>
 * <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
 Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
@@ -24,6 +25,7 @@ view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.
+* <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a><br>**Deprecated: This class is likely to become a private class.
@@ -72,7 +74,7 @@ and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating
 vertex attributes of a surface.
-* <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a surface of revolution,
+* <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.
 * <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional

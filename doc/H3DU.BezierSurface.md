@@ -7,14 +7,14 @@
 
 **Augments:** <a href="H3DU.Surface.md">H3DU.Surface</a>
 
-<b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.md">H3DU.BSplineSurface.fromBezierSurface</a>
+<b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
 to create a B&eacute;zier surface.</b>
 
-A <a href="H3DU.SurfaceEval.md#H3DU.md">surface evaluator object</a> for a B&eacute;zier surface.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B&eacute;zier surface.
 
 #### Parameters
 
-* `cp` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays as specified in <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.md">H3DU.BSplineSurface.fromBezierSurface</a>.
+* `cp` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays as specified in <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>.
 * `u1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation along the U axis.)
 * `u2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation along the U axis.)
 * `v1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation along the V axis.)

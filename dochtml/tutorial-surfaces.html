@@ -36,9 +36,9 @@ function &quot;warps&quot; this grid into a three-dimensional surface.</p>
 <h2>Parametric Surfaces in the HTML 3D Library</h2><p>The HTML 3D Library supports parametric surfaces using a class named
 <a href="http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html"><code>SurfaceEval</code></a>. It helps
 generate vertex coordinates and other attributes using a parametric surface
-function. The following helper function, <code>makeMesh</code>, generates a parametric surface mesh
-that was used to produce the pictures on this page. A function similar to the <code>makeMesh</code> function
-presented here is included in the demos that come with the HTML 3D Library.</p>
+function. The following helper function, <code>makeMesh</code>, generates a parametric surface mesh.
+A function similar to the <code>makeMesh</code>
+function presented here is included in the demos that come with the HTML 3D Library.</p>
 <p>The comments explain how <code>makeMesh</code> works in detail.</p>
 <pre class="prettyprint source"><code>function makeMesh(func,resolution){
  // Default resolution is 50
@@ -90,7 +90,7 @@ V each range from 0 through 1.)</p>
      return [u*Math.cos(v),u*Math.sin(v),0];
   },
   // Declare the usual range of the coordinates
-  &quot;endpoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
+  &quot;endPoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
 }</code></pre><p><img src="surfaces3.png" alt="The parametric surface."></p>
 <p>Now here's the interesting part: This evaluator returns not a circle,
 but a <em>cone</em>, whose length runs along the negative Z axis:</p>
@@ -101,7 +101,7 @@ but a <em>cone</em>, whose length runs along the negative Z axis:</p>
      return [u*Math.cos(v),u*Math.sin(v),-u];
   },
   // Declare the usual range of the coordinates
-  &quot;endpoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
+  &quot;endPoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
 }</code></pre><p>The following shape was rotated to show the Z axis; the rotation isn't perfect.</p>
 <p><img src="surfaces4.png" alt="The parametric surface."></p>
 <p>Note that all three examples above use a value named <code>evaluator</code>. To generate
@@ -144,6 +144,9 @@ or the makeMesh class above.</p>
   // And return the new coordinates.
   return retval;
  }
+ this.endPoints=function(){
+  return this.evaluator.endPoints()
+ }
 }</code></pre><p>And here's an example of its use. We'll take the circle surface given above,
 and create a SurfaceShifter object that shifts the circle by 3 units horizontally
 and vertically (by default, the circle will be centered at the origin (0, 0, 0)).</p>
@@ -154,7 +157,8 @@ var evaluator = {
      v*=Math.PI*2;
      // Return circle coordinates.
      return [u*Math.cos(v),u*Math.sin(v),0];
-  }
+  },
+  &quot;endPoints&quot;:function() { return [0,Math.PI*2] }
 }
 // Create a shifter that results in the circle being moved 3 units
 // up and 3 units to the right
@@ -203,9 +207,11 @@ with weights and non-uniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
 <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> class.</li>
 <li><strong>B&eacute;zier curves.</strong> These are curves in which the first and last
-control point are the curve's endpoints. B&eacute;zier curves are a subset of B-spline
+control point are the curve's end points. B&eacute;zier curves are a subset of B-spline
 curves and are created using the <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 method.</li>
+<li><strong>Piecewise curves</strong> These are curves made up of one or more other curves.
+Piecewisec curves are created using the <a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a> class.</li>
 </ul>
 <p>Special curves include the following. All of these classes are supplemental
 extras.</p>
@@ -222,12 +228,13 @@ curve drawn by a circle rolling along a straight line.</li>
 <li><strong>B&eacute;zier surfaces.</strong> 3D surfaces where each grid line is a B&eacute;zier
 curve. B&eacute;zier surfaces are created using the <a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a> class.</li>
 <li><strong>B-Spline surfaces.</strong> 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> class.</li>
+curve. B-Spline surfaces are created using the <a href="H3DU.BSplineSurface.html#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
+method.</li>
 </ul>
 <p>Special surfaces include:</p>
 <ul>
 <li><strong>Tubes.</strong> 3D surfaces in the form of a &quot;thickened&quot; 3D curve.
-Tubes are created using the H3DU.CurveTube class,
+Tubes are created using the <a href="H3DU.CurveTube.html">H3DU.CurveTube</a> class,
 a supplemental extra in the HTML 3D library.</li>
 <li><strong>Surfaces of revolution.</strong> Surfaces generated by rotating a 2D curve.
 Surfaces of revolution are created using the <a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a> class,
@@ -248,6 +255,9 @@ a supplemental extra in the HTML 3D library.</li>
 <li><code>new MoebiusStrip()</code><br>Creates a M&ouml;bius strip.</li>
 </ul>
 <p>These are only some of the many possible kinds of parametric surfaces.</p>
+<ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/bsplinecircles.html">demos/bsplinecircles.html</a> - Demonstrates how circles and ellipses can be generated using the <code>BSplineCurve</code> class.</li>
+</ul>
 <p><a id=Creating_Your_Own_Curves_and_Surfaces></a></p>
 <h3>Creating Your Own Curves and Surfaces</h3><p>Two other demos include a formula editor allowing you to experiment with
 parametric curves and surfaces, and to export them to source code appropriate
