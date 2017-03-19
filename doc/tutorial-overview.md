@@ -23,7 +23,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 <a id=Contents></a>
 ## Contents
 
-[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Selecting Objects](#Selecting_Objects)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>[History](#History)<br>&nbsp;&nbsp;[Version 2.0.0-beta2](#Version_2_0_0_beta2)<br>&nbsp;&nbsp;[Version 2.0.0-beta1:](#Version_2_0_0_beta1)<br>
+[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Selecting Objects](#Selecting_Objects)<br>&nbsp;&nbsp;[Lights](#Lights)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Projections](#Projections)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>[History](#History)<br>&nbsp;&nbsp;[Version 2.0.0-beta2](#Version_2_0_0_beta2)<br>&nbsp;&nbsp;[Version 2.0.0-beta1:](#Version_2_0_0_beta1)<br>
 
 ## How to Use
 
@@ -320,10 +320,21 @@ of different sizes.
 * [demos/picking.html](https://peteroupc.github.io/html3dutil/demos/picking.html),  [demos/picking2.html](https://peteroupc.github.io/html3dutil/demos/picking2.html),
 [demos/picking3.html](https://peteroupc.github.io/html3dutil/demos/picking3.html) - These demos demonstrate how object picking can be implemented.
 
+<a id=Lights></a>
+### Lights
+
+* [demos/animation-light.html](https://peteroupc.github.io/html3dutil/demos/animation-light.html) - Much like _animation.html_, but illuminated using a point light.
+
 <a id=Text></a>
 ### Text
 
 * [demos/textwith3D.html](https://peteroupc.github.io/html3dutil/demos/textwith3d.html) - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.
+
+<a id=Projections></a>
+### Projections
+
+* [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
+* [demos/animation-isometric.html](https://peteroupc.github.io/html3dutil/demos/animation-isometric.html) - Much like _animation.html_, but demonstrates an isometric projection.
 
 <a id=Miscellaneous></a>
 ### Miscellaneous
@@ -336,7 +347,6 @@ illustrating a simple animation of 3D shapes.
 * [demos/quatlerp.html](https://peteroupc.github.io/html3dutil/demos/quatlerp.html) - Demonstrates
 the difference between <a href="H3DU.Math.md#H3DU.Math.quatNlerp">H3DU.Math.quatNlerp</a> and <a href="H3DU.Math.md#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a>,
 both functions for interpolating quaternion rotations.
-* [demos/perspective.html](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
 
 <a id=Example></a>
 ## Example

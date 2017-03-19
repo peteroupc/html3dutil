@@ -98,7 +98,7 @@ Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
-from [0, &pi] to [0, &pi/8].
+from [0, &pi;] to [0, &pi;/8].
 
 Note, however, that in general, shrinking
 the range of a curve will not shrink the length of a curve

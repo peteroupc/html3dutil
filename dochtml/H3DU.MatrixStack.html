@@ -12,8 +12,7 @@ the HTML 3D Library. Example:<pre>
 &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre><h3> Methods</h3><ul><li><a href='#H3DU.MatrixStack_frustum'>frustum</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.<li><a href='#H3DU.MatrixStack_get'>get</a><br>Gets a copy of the matrix at the top of this stack.<li><a href='#H3DU.MatrixStack_loadIdentity'>loadIdentity</a><br>Modifies the matrix at the top of this stack by replacing it with the identity matrix.<li><a href='#H3DU.MatrixStack_loadMatrix'>loadMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the given matrix.<li><a href='#H3DU.MatrixStack_loadTransposeMatrix'>loadTransposeMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the
 transpose of the given matrix.<li><a href='#H3DU.MatrixStack_lookAt'>lookAt</a><br>Modifies the matrix at the top of this stack by multiplying it by
-a matrix representing a camera view.<li><a href='#H3DU.MatrixStack_multMatrix'>multMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by another matrix.<li><a href='#H3DU.MatrixStack_multTransposeMatrix'>multTransposeMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by the transpose of
-another matrix.<li><a href='#H3DU.MatrixStack_ortho'>ortho</a><br>Modifies the matrix at the top of this stack by multiplying it by
+a matrix representing a camera view.<li><a href='#H3DU.MatrixStack_multMatrix'>multMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by another matrix.<li><a href='#H3DU.MatrixStack_multTransposeMatrix'>multTransposeMatrix</a><br><b>Deprecated: Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.</b><li><a href='#H3DU.MatrixStack_ortho'>ortho</a><br>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.<li><a href='#H3DU.MatrixStack_ortho2d'>ortho2d</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a 2D orthographic projection.<li><a href='#H3DU.MatrixStack_perspective'>perspective</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.<li><a href='#H3DU.MatrixStack_pickMatrix'>pickMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by
@@ -39,13 +38,8 @@ they describe happen in reverse order. For example, if the matrix
 at the top of the stack describes a translation and the matrix
 passed to this method describes a scaling, the multiplied matrix will describe
 the effect of scaling then translation.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>A matrix to multiply the current one by.</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)<a name='H3DU.MatrixStack_multTransposeMatrix'></a>
-<h3> H3DU.MatrixStack#multTransposeMatrix(mat)</h3>Modifies the matrix at the top of this stack by multiplying it by the transpose of
-another matrix.
-The matrices are multiplied such that the transformations
-they describe happen in the order given. For example, if the matrix
-at the top of the stack describes a translation and the matrix
-passed to this method describes a scaling, the multiplied matrix will describe
-the effect of translation then scaling.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>A matrix whose transpose the current matrix will be multiplied by.</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)<a name='H3DU.MatrixStack_ortho'></a>
+<h3> H3DU.MatrixStack#multTransposeMatrix(mat)</h3><p><b>Deprecated: Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.</b></p>Modifies the matrix at the top of this stack by multiplying it by the transpose of
+another matrix.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>A matrix whose transpose the current matrix will be multiplied by.</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)<a name='H3DU.MatrixStack_ortho'></a>
 <h3> H3DU.MatrixStack#ortho(l, r, b, t, n, f)</h3>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.
 In this projection, the left clipping plane is parallel to the right clipping

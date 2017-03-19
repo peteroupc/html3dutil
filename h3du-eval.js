@@ -309,7 +309,7 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
  * @example
  * // Generate 11 points forming the curve.
  * var points=[];
- * for(var i=0;i<=10;i++) {
+ * for(var i=0;i&lt;=10;i++) {
  * points.push(curve.evaluate(i/10.0));
  * }
  */

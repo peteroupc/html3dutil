@@ -33,8 +33,7 @@ transpose of the given matrix.
 * [lookAt](#H3DU.MatrixStack_lookAt)<br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a camera view.
 * [multMatrix](#H3DU.MatrixStack_multMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by another matrix.
-* [multTransposeMatrix](#H3DU.MatrixStack_multTransposeMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by the transpose of
-another matrix.
+* [multTransposeMatrix](#H3DU.MatrixStack_multTransposeMatrix)<br><b>Deprecated: Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.</b>
 * [ortho](#H3DU.MatrixStack_ortho)<br>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.
 * [ortho2d](#H3DU.MatrixStack_ortho2d)<br>Modifies the matrix at the top of this stack by multiplying it by
@@ -162,13 +161,10 @@ This object. (Type: <a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a>)
 <a name='H3DU.MatrixStack_multTransposeMatrix'></a>
 ### H3DU.MatrixStack#multTransposeMatrix(mat)
 
+<b>Deprecated: Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.</b>
+
 Modifies the matrix at the top of this stack by multiplying it by the transpose of
 another matrix.
-The matrices are multiplied such that the transformations
-they describe happen in the order given. For example, if the matrix
-at the top of the stack describes a translation and the matrix
-passed to this method describes a scaling, the multiplied matrix will describe
-the effect of translation then scaling.
 
 #### Parameters
 

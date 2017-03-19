@@ -87,7 +87,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
-from [0, &pi] to [0, &pi/8].<p>
+from [0, &pi;] to [0, &pi;/8].<p>
 Note, however, that in general, shrinking
 the range of a curve will not shrink the length of a curve
 in the same proportion, unless the curve's path runs at
@@ -114,7 +114,7 @@ in a B-spline curve.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br
 the evaluation. Its length will be equal to the
 length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)<h4> Example</h4><pre>// Generate 11 points forming the curve.
 var points=[];
-for(var i=0;i<=10;i++) {
+for(var i=0;i&lt;=10;i++) {
 points.push(curve.evaluate(i/10.0));
 }</pre><a name='H3DU.BSplineCurve_fitRange'></a>
 <h3> H3DU.BSplineCurve#fitRange(ep1, ep2)</h3>Creates a curve evaluator object for a curve that follows the same
