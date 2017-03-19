@@ -735,14 +735,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
  * 10, 12, and 14); the Z axis's direction will thus be from the point looked at to the "camera".<p>
+ * When used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}, set <code>lookingAt</code> to <code>[X, Y, Z]</code>,
+ * <code>viewerPos</code> to <code>[X+1,Y+1,Z+1]</code> (or <code>[X+1,Y+1,Z-1]</code> in a left-handed system),
+ * and <code>up</code> to <code>[0,1,0]</code>, to create an isometric view matrix. See the examples below.
  * @param {Array<number>} viewerPos A 3-element vector specifying
- * the "camera" position in world space.<br>
- * When used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}, set <code>viewerPos</code> to the following (and use the default for <code>lookingAt</code>)
- * to create the following view matrices:
- * <ul>
- * <li>Isometric projection: <code>[1,1,1]</code> (or <code>[1,1,-1]</code> in a left-handed system).
- * See the examples below.
- * </ul>
+ * the "camera" position in world space.
  * @param {Array<number>} [lookingAt] A 3-element vector specifying
  * the point in world space that the "camera" is looking at. May be null or omitted,
  * in which case the default is the coordinates (0,0,0).
@@ -841,13 +838,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera}.
  * In this projection, the left clipping plane is parallel to the right clipping
- * plane and the top to the bottom.
- * <p>The projection returned by this method only scales and/or shifts the view, so that
+ * plane and the top to the bottom.<p>
+ * The projection returned by this method only scales and/or shifts the view, so that
  * objects with the same size won't appear smaller as they get more distant from the  "camera".<p>
  * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
  * view volume (as is the case in WebGL) will range from -1 to 1.
  * For a matrix in which Z coordinates range from 0 to 1, divide the 11th and 15th elements
- * of the result (zero-based index 10 and 14) by 2, then add 0.5 to the 15th element.<p>
+ * of the result (zero-based indices 10 and 14) by 2, then add 0.5 to the 15th element.<p>
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * To adjust the result of this method for a left-handed system,
  * reverse the sign of the 9th, 10th, 11th, and 12th
@@ -888,7 +885,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * set to -1 and the far clipping plane set to 1.<p>
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning of coordinates
- * when using this matrix and on adjusting the return value for other conventions.
+ * when using this matrix and on adjusting the matrix for other conventions.
  * @param {number} l Leftmost coordinate of the orthographic view.
  * @param {number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.
@@ -912,8 +909,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.<p>
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * See [mat4orthoAspect()]{@link H3DU.Math.mat4orthoAspect} for information on the meaning
- * of coordinates when using this matrix and on adjusting the return value for other conventions.
+ * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning
+ * of coordinates when using this matrix and on adjusting the matrix for other conventions.
  * @param {number} l Leftmost coordinate of the view rectangle.
  * @param {number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.
@@ -935,14 +932,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
- * or squishing it.<p>
- * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
- * view volume (as is the case in WebGL) will range from -1 to 1.
- * For a matrix in which Z coordinates range from 0 to 1, divide the 11th and 15th elements
- * of the result (zero-based index 10 and 14) by 2, then add 0.5 to the 15th element.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}; see [mat4ortho()]{@link H3DU.Math.mat4ortho}.
+ * or squishing it.
  * <p>The projection returned by this method only scales and/or shifts the view, so that
  * objects with the same size won't appear smaller as they get more distant from the  "camera".
+ * <p>This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning of coordinates
+ * when using this matrix and on adjusting the matrix for other conventions.
  * @param {number} l Leftmost coordinate of the view rectangle.
  * @param {number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.

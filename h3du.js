@@ -17,7 +17,8 @@ export {Curve} from "./h3du-curve";
 export {Surface} from "./h3du-surface";
 export {PiecewiseCurve} from "./h3du-piecewisecurve";
 export {BezierCurve, BezierSurface,
-    BSplineCurve, BSplineSurface, CurveEval, SurfaceEval} from "./h3du-eval";
+    BSplineCurve, BSplineSurface} from "./h3du-bspline";
+export {CurveEval, SurfaceEval} from "./h3du-eval";
 export {Shape} from "./h3du-shape";
 export {ShapeGroup} from "./h3du-shapegroup";
 export {Texture, CubeMap} from "./h3du-texture";
