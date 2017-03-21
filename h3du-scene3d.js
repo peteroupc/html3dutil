@@ -1035,13 +1035,13 @@ Scene3D.prototype._clearForPass = function(pass) {
  * as {@link H3DU.renderLoop}.<p>
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
- * @param {Array<H3DU.RenderPass3D>|H3DU.Batch3D} renderPasses An array of scenes
+ * @param {Array<H3DU.RenderPass>|H3DU.Batch3D} renderPasses An array of scenes
  * to draw, or a single batch to render. Can currently be null.
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.render = function(renderPasses) {
   if(renderPasses instanceof H3DU.Batch3D) {
-    return this.render([new H3DU.RenderPass3D(renderPasses)]);
+    return this.render([new H3DU.RenderPass(renderPasses)]);
   }
   if(this.autoResize) {
     var c = this.context.canvas;

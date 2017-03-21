@@ -1,0 +1,41 @@
+<html><head><title>H3DU.RenderPass</title></head><body><h1> H3DU.RenderPass</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.RenderPass'></a>
+<h3> H3DU.RenderPass(batch, [parameters])</h3>Describes a batch (a scene graph of 3D objects) and options for
+rendering that batch.<h4> Parameters</h4><ul><li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>The batch to render using the options described by this object.<li><code>parameters</code> (Type: Object) (optional)<br>An object whose keys have the possibilities given in H3DU.RenderParams#setParams, and whose values are those allowed for each key.</ul><h3> Members</h3><ul><li><a href='#H3DU.RenderPass_batch'>batch</a><br>The batch to render.<li><a href='#H3DU.RenderPass_clearColor'>clearColor</a><br>Whether to clear the color buffer before rendering the batch.<li><a href='#H3DU.RenderPass_clearDepth'>clearDepth</a><br>Whether to clear the depth buffer before rendering the batch.<li><a href='#H3DU.RenderPass_clearStencil'>clearStencil</a><br>Whether to clear the stencil buffer before rendering the batch.<li><a href='#H3DU.RenderPass_frameBuffer'>frameBuffer</a><br>Framebuffer to render to.<li><a href='#H3DU.RenderPass_shader'>shader</a><br>Shader to use.<li><a href='#H3DU.RenderPass_useFrameBufferSize'>useFrameBufferSize</a><br>Use the dimensions of the given framebuffer rather than those
+of the scene rendering it.</ul><h3> Methods</h3><ul><li><a href='#H3DU.RenderPass_setParams'>setParams</a><br>Sets parameters for this render pass object.</ul><a name='H3DU.RenderPass_batch'></a>
+<h3> H3DU.RenderPass#batch
+
+</h3>The batch to render.
+
+<p>Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a></p><a name='H3DU.RenderPass_clearColor'></a>
+<h3> H3DU.RenderPass#clearColor
+
+</h3>Whether to clear the color buffer before rendering the batch.
+
+<p>Default Value: <code>true</code></p><a name='H3DU.RenderPass_clearDepth'></a>
+<h3> H3DU.RenderPass#clearDepth
+
+</h3>Whether to clear the depth buffer before rendering the batch.
+
+<p>Default Value: <code>true</code></p><a name='H3DU.RenderPass_clearStencil'></a>
+<h3> H3DU.RenderPass#clearStencil
+
+</h3>Whether to clear the stencil buffer before rendering the batch.
+
+<p>Default Value: <code>true</code></p><a name='H3DU.RenderPass_frameBuffer'></a>
+<h3> H3DU.RenderPass#frameBuffer
+
+</h3>Framebuffer to render to.
+
+<p>Type: <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></p><p>Default Value: <code>null</code></p><a name='H3DU.RenderPass_shader'></a>
+<h3> H3DU.RenderPass#shader
+
+</h3>Shader to use.
+
+<p>Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></p><p>Default Value: <code>null</code></p><a name='H3DU.RenderPass_useFrameBufferSize'></a>
+<h3> H3DU.RenderPass#useFrameBufferSize
+
+</h3>Use the dimensions of the given framebuffer rather than those
+of the scene rendering it.
+
+<p>Type: boolean</p><p>Default Value: <code>false</code></p><a name='H3DU.RenderPass_setParams'></a>
+<h3> H3DU.RenderPass#setParams(parameters)</h3>Sets parameters for this render pass object.<h4> Parameters</h4><ul><li><code>parameters</code> (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>subScene</code> - The batch to render. An <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> object. <li><code>clearColor</code> - Whether to clear the color buffer before rendering the batch. Either true or false. <li><code>clearDepth</code> - Whether to clear the depth buffer before rendering the batch. Either true or false. <li><code>clearStencil</code> - Whether to clear the stencil buffer before rendering the batch. Either true or false. <li><code>frameBuffer</code> - Framebuffer to render to. An <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> object. <li><code>shader</code> - Shader to use. An <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> object. <li><code>useFrameBufferSize</code> - Use the dimensions of the given framebuffer rather than those of the scene rendering it. </ul> Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.RenderPass.html">H3DU.RenderPass</a>)<p><a href='index.html'>Back to documentation index.</a></p></body></html>

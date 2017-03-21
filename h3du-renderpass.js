@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 /* global H3DU */
-// NOTE: RenderPass3D is independent of
+// NOTE: RenderPass is independent of
 // any WebGL context or the WebGL API.
 
 /**
@@ -21,7 +21,7 @@
  * the possibilities given in {@link H3DU.RenderParams#setParams}, and whose values are those
  * allowed for each key.
  */
-function RenderPass3D(batch, parameters) {
+function RenderPass(batch, parameters) {
  /** The batch to render.
   * @type {H3DU.Batch3D}
   */
@@ -71,9 +71,9 @@ function RenderPass3D(batch, parameters) {
  * of the scene rendering it.
  * </ul>
  * Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.
- * @returns {H3DU.RenderPass3D} This object.
+ * @returns {H3DU.RenderPass} This object.
  */
-RenderPass3D.prototype.setParams = function(parameters) {
+RenderPass.prototype.setParams = function(parameters) {
   if(!parameters)return this;
   if(typeof parameters.clearColor !== "undefined") {
     this.clearColor = parameters.clearColor;
@@ -99,4 +99,4 @@ RenderPass3D.prototype.setParams = function(parameters) {
   return this;
 };
 
-export {RenderPass3D};
+export {RenderPass};

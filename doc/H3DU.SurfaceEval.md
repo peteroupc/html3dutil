@@ -151,37 +151,4 @@ Specifies a surface evaluator object for generating the vertex positions of a pa
 
 This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
 
-#### Example
-
-The following example sets the vertex position and
-normal generation
-function for a parametric surface. To illustrate how the method is derived
-from the vector calculation method, that method is also given below. To
-derive the normal calculation, first look at the vector function:
-
-<b>F</b>(u, v) = (cos(u), sin(u), sin(u)\*cos(v))
-
-Then, find the tangent and bitangent vectors:
-
-&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)\*cos(v))<br>
-&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)\*sin(u))
-
-Next, take their cross product:
-
-<b>c</b>(u, v) = (-sin(v)\*cos(u)\*sin(u), -sin(v)\*sin(u)\*sin(u), 0)<br>
-
-The result is the gradient, which will be normal to the surface.
-
-    surfaceEval.vertex({"evaluate":function(u,v) {
-    "use strict";
-    return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
-    },
-    "gradient":function(u,v) {
-    "use strict";
-    return [
-    Math.cos(u)*-Math.sin(v)*Math.sin(u),
-    Math.sin(u)*-Math.sin(v)*Math.sin(u),
-    0];
-    }})
-
 [Back to documentation index.](index.md)

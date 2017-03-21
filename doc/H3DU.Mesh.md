@@ -19,10 +19,6 @@ Normal values are required for lighting to work properly.
 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
 right corner (by default).
 </ul>
-For bump mapping to work properly, a mesh needs to define
-normals, tangents, bitangents, and texture coordinates.
-
-See the "<a href="tutorial-shapes.md">Creating Shapes</a>" and "<a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a>" tutorials.
 
 Notes:<ul>
 <li>Previous versions of this class allowed meshes to contain more than one
@@ -451,9 +447,7 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 ### H3DU.Mesh#recalcTangents()
 
 Recalculates the tangent and bitangent vectors for triangles
-in this mesh. Tangent and bitangent vectors are required for
-normal mapping (bump mapping) to work.
-This method only has an effect if this mesh
+in this mesh. This method only has an effect if this mesh
 includes normals and texture coordinates.
 
 #### Return Value

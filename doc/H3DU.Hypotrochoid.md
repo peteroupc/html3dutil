@@ -62,7 +62,7 @@ of U coordinates.
 form of hypotrochoid.
 * [scaleTo](#H3DU.Hypotrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
-* [tangent](#H3DU.Hypotrochoid_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+* [tangent](#H3DU.Hypotrochoid_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
 * [toArcLengthParam](#H3DU.Hypotrochoid_toArcLengthParam)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>.
@@ -270,7 +270,7 @@ Return value. (Type: <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a>)
 <a name='H3DU.Hypotrochoid_tangent'></a>
 ### H3DU.Hypotrochoid#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters

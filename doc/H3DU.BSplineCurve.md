@@ -72,7 +72,7 @@ of U coordinates.
 * [jerk](#H3DU.BSplineCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.BSplineCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [split](#H3DU.BSplineCurve_split)<br>Splits this B-spline curve into two at the given point.
-* [tangent](#H3DU.BSplineCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+* [tangent](#H3DU.BSplineCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
 * [toArcLengthParam](#H3DU.BSplineCurve_toArcLengthParam)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>.
@@ -409,7 +409,7 @@ will be null if <code>u</code> is at or after the end of the curve. (Type: Array
 <a name='H3DU.BSplineCurve_tangent'></a>
 ### H3DU.BSplineCurve#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters

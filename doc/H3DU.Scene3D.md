@@ -469,7 +469,7 @@ buffer and depth buffer. This compatibility option may be dropped in the future.
 
 #### Parameters
 
-* `renderPasses` (Type: Array.&lt;<a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a>> | <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)<br>An array of scenes to draw, or a single batch to render. Can currently be null.
+* `renderPasses` (Type: Array.&lt;<a href="H3DU.RenderPass.md">H3DU.RenderPass</a>> | <a href="H3DU.Batch3D.md">H3DU.Batch3D</a>)<br>An array of scenes to draw, or a single batch to render. Can currently be null.
 
 #### Return Value
 

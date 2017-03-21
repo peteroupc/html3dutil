@@ -190,10 +190,10 @@ the range [-1, 1], where:
 <li>The pixel's red component is the vector's X component.
 <li>The pixel's green component is the vector's Y component.
 <li>The pixel's blue component is the vector's Z component.
-<li>An unchanged normal vector will have the value (0, 0, 1), which is usually
+<li>An unchanged normal vector is indicated by the value (0, 0, 1), which is usually
 the value (127, 127, 255) in most image formats.
 <li>The vector is normalized so its length is about equal to 1.
-<li>The vector is expressed in tangent space, where the Z axis points outward
+<li>The vector is expressed in <i>tangent space</i>, where the Z axis points outward
 and away from the surface's edges.
 </ul>
 Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
@@ -205,10 +205,8 @@ Any texture used for normal maps should not be in JPEG format or any other
 format that uses lossy compression, as compression artifacts can result in inaccurate
 normals in certain areas.
 
-For normal mapping to work, an object's mesh must include normals,
-tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
-object only has normals and texture coordinates, the <code>recalcTangents()</code>
-method can calculate the tangents and bitangents appropriate for normal mapping.
+For normal mapping to work, an object's mesh must include normals
+and texture coordinates.
 
 Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a>
 

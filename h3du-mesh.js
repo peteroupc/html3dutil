@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+/* global H3DU, normalOffset */
 /**
  * Specifies the triangles, lines, or points that make up a geometric shape.
  * Each vertex, that is, each point, each end of a line, and each corner
@@ -22,9 +22,6 @@
  * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
  * right corner (by default).
  * </ul>
- * For bump mapping to work properly, a mesh needs to define
- * normals, tangents, bitangents, and texture coordinates.<p>
- * See the "{@tutorial shapes}" and "{@tutorial meshexamples}" tutorials.
  * <p>Notes:<ul>
  * <li>Previous versions of this class allowed meshes to contain more than one
  * primitive type (triangles, lines, and points are the primitive types). This is
@@ -328,68 +325,6 @@ Mesh.prototype.normal3 = function(x, y, z) {
     this.normal[2] = x[2];
   }
   this._elementsDefined |= H3DU.Mesh.NORMALS_BIT;
-  return this;
-};
-
-/**
- * Sets the current tangent vector for this mesh. Future vertex positions
- * defined (with vertex3()) will have this normal. The new current
- * tangent will apply to future vertices even if the current mode
- * is TRIANGLE_FAN and some vertices were already given for
- * that mode. The tangent passed to this method will
- * not automatically be normalized to unit length.
- * @param {number} x X coordinate of the tangent vector.
- *   If "y" and "z" are null or omitted, this is instead
- * a 3-element array giving the X, Y, and Z coordinates, or a single number
- * giving the coordinate for all three dimensions.
- * @param {number} y Y coordinate of the tangent vector.
- * If "x" is an array, this parameter may be omitted.
- * @param {number} z Z coordinate of the tangent vector.
- * If "x" is an array, this parameter may be omitted.
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.tangent3 = function(x, y, z) {
-  if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
-    this.tangent[0] = x;
-    this.tangent[1] = y;
-    this.tangent[2] = z;
-  } else {
-    this.tangent[0] = x[0];
-    this.tangent[1] = x[1];
-    this.tangent[2] = x[2];
-  }
-  this._elementsDefined |= H3DU.Mesh.TANGENTS_BIT;
-  return this;
-};
-
-/**
- * Sets the current bitangent vector for this mesh. Future vertex positions
- * defined (with vertex3()) will have this bitangent. The new current
- * bitangent will apply to future vertices even if the current mode
- * is TRIANGLE_FAN and some vertices were already given for
- * that mode. The bitangent passed to this method will
- * not automatically be normalized to unit length.
- * @param {number} x X coordinate of the bitangent vector.
- *   If "y" and "z" are null or omitted, this is instead
- * a 3-element array giving the X, Y, and Z coordinates, or a single number
- * giving the coordinate for all three dimensions.
- * @param {number} y Y coordinate of the bitangent vector.
- * If "x" is an array, this parameter may be omitted.
- * @param {number} z Z coordinate of the bitangent vector.
- * If "x" is an array, this parameter may be omitted.
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.bitangent3 = function(x, y, z) {
-  if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
-    this.bitangent[0] = x;
-    this.bitangent[1] = y;
-    this.bitangent[2] = z;
-  } else {
-    this.bitangent[0] = x[0];
-    this.bitangent[1] = x[1];
-    this.bitangent[2] = x[2];
-  }
-  this._elementsDefined |= H3DU.Mesh.BITANGENTS_BIT;
   return this;
 };
 
@@ -1090,7 +1025,6 @@ Mesh.prototype.enumPrimitives = function(func) {
  */
 Mesh.prototype.getBoundingBox = function() {
   // LATER: Implement and favor MeshBuffer version of this method
-
   var empty = true;
   var inf = Number.POSITIVE_INFINITY;
   var ret = [inf, inf, inf, -inf, -inf, -inf];
@@ -1113,119 +1047,6 @@ Mesh.prototype.getBoundingBox = function() {
     }
   }
   return ret;
-};
-/** @ignore */
-Mesh._findTangentAndBitangent = function(vertices, v1, v2, v3, uvOffset) {
-  var t1 = vertices[v2] - vertices[v1];
-  var t2 = vertices[v2 + 1] - vertices[v1 + 1];
-  var t3 = vertices[v2 + 2] - vertices[v1 + 2];
-  var t4 = vertices[v3] - vertices[v1];
-  var t5 = vertices[v3 + 1] - vertices[v1 + 1];
-  var t6 = vertices[v3 + 2] - vertices[v1 + 2];
-  var t7 = vertices[v2 + uvOffset] - vertices[v1 + uvOffset];
-  var t8 = vertices[v2 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
-  var t9 = vertices[v3 + uvOffset] - vertices[v1 + uvOffset];
-  var t10 = vertices[v3 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
-  var t11 = t7 * t10 - t8 * t9;
-  if(t11 === 0) {
-    return [0, 0, 0, 0, 0, 0];
-  }
-  t11 = 1.0 / t11;
-  var t12 = -t8;
-  var t13 = -t9;
-  var t14 = (t10 * t1 + t12 * t4) * t11;
-  var t15 = (t10 * t2 + t12 * t5) * t11;
-  var t16 = (t10 * t3 + t12 * t6) * t11;
-  var t17 = (t13 * t1 + t7 * t4) * t11;
-  var t18 = (t13 * t2 + t7 * t5) * t11;
-  var t19 = (t13 * t3 + t7 * t6) * t11;
-  return [t14, t15, t16, t17, t18, t19];
-};
-/** @ignore */
-Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset, normalOffset, tangentOffset) {
- // NOTE: no need to specify bitangent offset, since tangent
- // and bitangent will always be contiguous (this method will
- // always be called after the recalcTangents method ensures
- // that both fields are present)
-  var vi = [0, 0, 0];
-  for(var i = 0; i < indices.length; i += 3) {
-    vi[0] = indices[i] * stride;
-    vi[1] = indices[i + 1] * stride;
-    vi[2] = indices[i + 2] * stride;
-    var ret = H3DU.Mesh._findTangentAndBitangent(vertices, vi[0], vi[1], vi[2], uvOffset);
-  // NOTE: It would be more mathematically correct to use the inverse
-  // of the matrix
-  // [ Ax Bx Nx ]
-  // [ Ay By Ny ]
-  // [ Az Bz Nz ]
-  // (where A and B are the tangent and bitangent and returned
-  // in _findTangentAndBitangent) as the tangent space
-  // transformation, that is, include three
-  // different vectors (tangent, bitangent, and modified normal).
-  // Instead we use the matrix
-  // [ AAx AAy AAz ]
-  // [ BBx BBy BBz ]
-  // [ Nx Ny Nz ]
-  // (where AA and BB are the orthonormalized versions of the tangent
-  // and bitangent) as the tangent space transform, in order to avoid
-  // the need to also specify a transformed normal due to matrix inversion.
-    for(var j = 0; j < 3; j++) {
-      var m = ret;
-      var vicur = vi[j];
-      var norm0 = vertices[vicur + normalOffset];
-      var norm1 = vertices[vicur + normalOffset + 1];
-      var norm2 = vertices[vicur + normalOffset + 2];
-      var t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
-      var tangent = H3DU.Math.vec3normalizeInPlace([
-        m[0] - t20 * norm0,
-        m[1] - t20 * norm1,
-        m[2] - t20 * norm2]);
-      var t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
-      var t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
-      var bitangent = H3DU.Math.vec3normalizeInPlace([
-        m[3] - t22 * norm0 - t23 * tangent[0],
-        m[4] - t22 * norm1 - t23 * tangent[1],
-        m[5] - t22 * norm2 - t23 * tangent[2]]);
-      vertices[vicur + tangentOffset] = tangent[0];
-      vertices[vicur + tangentOffset + 1] = tangent[1];
-      vertices[vicur + tangentOffset + 2] = tangent[2];
-      vertices[vicur + tangentOffset + 3] = bitangent[0];
-      vertices[vicur + tangentOffset + 4] = bitangent[1];
-      vertices[vicur + tangentOffset + 5] = bitangent[2];
-    }
-  }
-};
- /**
-  * Recalculates the tangent and bitangent vectors for triangles
-  * in this mesh. Tangent and bitangent vectors are required for
-  * normal mapping (bump mapping) to work.
-  * This method only has an effect if this mesh
-  * includes normals and texture coordinates.
-  * @returns {H3DU.Mesh} This object.
-  */
-Mesh.prototype.recalcTangents = function() {
-  if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
-    return this;
-  }
-  var tangentBits = H3DU.Mesh.TANGENTS_BIT | H3DU.Mesh.BITANGENTS_BIT;
-  var haveOtherAttributes = (this.attributeBits & (H3DU.Mesh.ATTRIBUTES_BITS & ~tangentBits)) !== 0;
-  var uvOffset = H3DU.Mesh._texCoordOffset(this.attributeBits);
-  var normalOffset = H3DU.Mesh._normalOffset(this.attributeBits);
-  if(uvOffset < 0 || normalOffset < 0) {
-   // can't generate tangents and bitangents
-   // without normals or texture coordinates.
-    return this;
-  }
-  this._rebuildVertices(tangentBits);
-  if(haveOtherAttributes) {
-    this._makeRedundant();
-  }
-  if(this.primitiveType() === H3DU.Mesh.TRIANGLES) {
-    var tangentOffset = H3DU.Mesh._tangentOffset(this.attributeBits);
-    H3DU.Mesh._recalcTangentsInternal(this.vertices, this.indices,
-     this.getStride(), uvOffset, normalOffset, tangentOffset);
-  }
-  return this;
 };
 /**
  * Modifies this mesh by reversing the sign of normals it defines.
@@ -1474,3 +1295,198 @@ Mesh.LINE_STRIP = 3;
  * @default
  */
 Mesh.POINTS = 0;
+
+// //////////////////////////////////////////////////////////////////////////
+
+// TODO: Deprecate tangent-related methods in Mesh class
+// LATER: Reimplement recalcTangents to make it more general-purpose
+
+/**
+ * Sets the current tangent vector for this mesh. Future vertex positions
+ * defined (with vertex3()) will have this normal. The new current
+ * tangent will apply to future vertices even if the current mode
+ * is TRIANGLE_FAN and some vertices were already given for
+ * that mode. The tangent passed to this method will
+ * not automatically be normalized to unit length.
+ * @param {number} x X coordinate of the tangent vector.
+ *   If "y" and "z" are null or omitted, this is instead
+ * a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
+ * @param {number} y Y coordinate of the tangent vector.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z Z coordinate of the tangent vector.
+ * If "x" is an array, this parameter may be omitted.
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.tangent3 = function(x, y, z) {
+  if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
+    this.tangent[0] = x;
+    this.tangent[1] = y;
+    this.tangent[2] = z;
+  } else {
+    this.tangent[0] = x[0];
+    this.tangent[1] = x[1];
+    this.tangent[2] = x[2];
+  }
+  this._elementsDefined |= H3DU.Mesh.TANGENTS_BIT;
+  return this;
+};
+
+/**
+ * Sets the current bitangent vector for this mesh. Future vertex positions
+ * defined (with vertex3()) will have this bitangent. The new current
+ * bitangent will apply to future vertices even if the current mode
+ * is TRIANGLE_FAN and some vertices were already given for
+ * that mode. The bitangent passed to this method will
+ * not automatically be normalized to unit length.
+ * @param {number} x X coordinate of the bitangent vector.
+ *   If "y" and "z" are null or omitted, this is instead
+ * a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
+ * @param {number} y Y coordinate of the bitangent vector.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z Z coordinate of the bitangent vector.
+ * If "x" is an array, this parameter may be omitted.
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.bitangent3 = function(x, y, z) {
+  if(typeof x === "number" && typeof y === "number" && typeof z === "number") {
+    this.bitangent[0] = x;
+    this.bitangent[1] = y;
+    this.bitangent[2] = z;
+  } else {
+    this.bitangent[0] = x[0];
+    this.bitangent[1] = x[1];
+    this.bitangent[2] = x[2];
+  }
+  this._elementsDefined |= H3DU.Mesh.BITANGENTS_BIT;
+  return this;
+};
+
+/** @ignore */
+Mesh._findTangentAndBitangent = function(vertices, v1, v2, v3, uvOffset) {
+  var t1 = vertices[v2] - vertices[v1];
+  var t2 = vertices[v2 + 1] - vertices[v1 + 1];
+  var t3 = vertices[v2 + 2] - vertices[v1 + 2];
+  var t4 = vertices[v3] - vertices[v1];
+  var t5 = vertices[v3 + 1] - vertices[v1 + 1];
+  var t6 = vertices[v3 + 2] - vertices[v1 + 2];
+  var t7 = vertices[v2 + uvOffset] - vertices[v1 + uvOffset];
+  var t8 = vertices[v2 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
+  var t9 = vertices[v3 + uvOffset] - vertices[v1 + uvOffset];
+  var t10 = vertices[v3 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
+  var t11 = t7 * t10 - t8 * t9;
+  if(t11 === 0) {
+    return [0, 0, 0, 0, 0, 0];
+  }
+  t11 = 1.0 / t11;
+  var t12 = -t8;
+  var t13 = -t9;
+  var t14 = (t10 * t1 + t12 * t4) * t11;
+  var t15 = (t10 * t2 + t12 * t5) * t11;
+  var t16 = (t10 * t3 + t12 * t6) * t11;
+  var t17 = (t13 * t1 + t7 * t4) * t11;
+  var t18 = (t13 * t2 + t7 * t5) * t11;
+  var t19 = (t13 * t3 + t7 * t6) * t11;
+  return [t14, t15, t16, t17, t18, t19];
+};
+/** @ignore */
+Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset) {
+ // NOTE: no need to specify bitangent offset, since tangent
+ // and bitangent will always be contiguous (this method will
+ // always be called after the recalcTangents method ensures
+ // that both fields are present)
+  var vi = [0, 0, 0];
+  var tangents = [];
+  for(var i = 0; i < indices.length; i += 3) {
+    vi[0] = indices[i] * stride;
+    vi[1] = indices[i + 1] * stride;
+    vi[2] = indices[i + 2] * stride;
+    var ret = H3DU.Mesh._findTangentAndBitangent(vertices, vi[0], vi[1], vi[2], uvOffset);
+  // NOTE: It would be more mathematically correct to use the inverse
+  // of the matrix
+  // [ Ax Bx Nx ]
+  // [ Ay By Ny ]
+  // [ Az Bz Nz ]
+  // (where A and B are the tangent and bitangent and returned
+  // in _findTangentAndBitangent) as the tangent space
+  // transformation, that is, include three
+  // different vectors (tangent, bitangent, and modified normal).
+  // Instead we use the matrix
+  // [ AAx AAy AAz ]
+  // [ BBx BBy BBz ]
+  // [ Nx Ny Nz ]
+  // (where AA and BB are the orthonormalized versions of the tangent
+  // and bitangent) as the tangent space transform, in order to avoid
+  // the need to also specify a transformed normal due to matrix inversion.
+    for(var j = 0; j < 3; j++) {
+      var m = ret;
+      var vicur = vi[j];
+      var norm0 = vertices[vicur + normalOffset];
+      var norm1 = vertices[vicur + normalOffset + 1];
+      var norm2 = vertices[vicur + normalOffset + 2];
+      var t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
+      var tangent = H3DU.Math.vec3normalizeInPlace([
+        m[0] - t20 * norm0,
+        m[1] - t20 * norm1,
+        m[2] - t20 * norm2]);
+      var t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
+      var t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
+      var bitangent = H3DU.Math.vec3normalizeInPlace([
+        m[3] - t22 * norm0 - t23 * tangent[0],
+        m[4] - t22 * norm1 - t23 * tangent[1],
+        m[5] - t22 * norm2 - t23 * tangent[2]]);
+      tangents[vicur] = tangent[0];
+      tangents[vicur + 1] = tangent[1];
+      tangents[vicur + 2] = tangent[2];
+      tangents[vicur + 3] = bitangent[0];
+      tangents[vicur + 4] = bitangent[1];
+      tangents[vicur + 5] = bitangent[2];
+    }
+  }
+  for(i = 0; i < tangents.length; i++) {
+    if(typeof tangents[i] === "undefined" || tangents[i] === null) {
+      tangents[i] = 0.0;
+    }
+  }
+  return tangents;
+};
+ /**
+  * Recalculates the tangent and bitangent vectors for triangles
+  * in this mesh. This method only has an effect if this mesh
+  * includes normals and texture coordinates.
+  * @returns {H3DU.Mesh} This object.
+  */
+Mesh.prototype.recalcTangents = function() {
+  if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
+    return this;
+  }
+  var tangentBits = H3DU.Mesh.TANGENTS_BIT | H3DU.Mesh.BITANGENTS_BIT;
+  var haveOtherAttributes = (this.attributeBits & (H3DU.Mesh.ATTRIBUTES_BITS & ~tangentBits)) !== 0;
+  var uvOffset = H3DU.Mesh._texCoordOffset(this.attributeBits);
+  var normalOffset = H3DU.Mesh._normalOffset(this.attributeBits);
+  if(uvOffset < 0 || normalOffset < 0) {
+   // can't generate tangents and bitangents
+   // without normals or texture coordinates.
+    return this;
+  }
+  this._rebuildVertices(tangentBits);
+  if(haveOtherAttributes) {
+    this._makeRedundant();
+  }
+  var stride = this.getStride();
+  var tangentOffset = H3DU.Mesh._tangentOffset(this.attributeBits);
+  var tangents = H3DU.Mesh._recalcTangentsInternal(this.vertices, this.indices,
+     stride, uvOffset, normalOffset, tangentOffset);
+  var j = 0;
+  for(var i = 0; i < tangents.length; i += 6) {
+    this.vertices[j * stride + tangentOffset] = tangents[i];
+    this.vertices[j * stride + tangentOffset + 1] = tangents[i + 1];
+    this.vertices[j * stride + tangentOffset + 2] = tangents[i + 2];
+    this.vertices[j * stride + tangentOffset + 3] = tangents[i + 3];
+    this.vertices[j * stride + tangentOffset + 4] = tangents[i + 4];
+    this.vertices[j * stride + tangentOffset + 5] = tangents[i + 5];
+    j++;
+  }
+  return this;
+};

@@ -99,10 +99,10 @@ back to the screen.
     var renders = [
       // The first batch renders the main batch's geometry to
       // the frame buffer info we just created.
-      new H3DU.RenderPass3D(batch,{"frameBuffer":fbo}),
+      new H3DU.RenderPass(batch,{"frameBuffer":fbo}),
       // The next batch renders the frame buffer's contents
       // back to the screen.
-      new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo))
+      new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo))
     ];
 
 And finally, pass the array of rendering passes to the `render` method each time
@@ -142,10 +142,10 @@ Here is sample code for using a graphics filter.
     // create an array of render passes
     var renders=[
       // The first pass renders to a frame buffer
-      new H3DU.RenderPass3D(subScene,{"frameBuffer":fbo}),
+      new H3DU.RenderPass(subScene,{"frameBuffer":fbo}),
       // The second pass renders the frame buffer to the main canvas,
       // using the given graphics filter
-      new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter))
+      new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo,currentFilter))
     ]
     // Then, each time the scene needs to be rendered, call
     // this method

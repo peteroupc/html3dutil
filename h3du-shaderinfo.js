@@ -261,6 +261,9 @@ ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, changedUnif
 /** @ignore */
 ShaderInfo.fragmentShaderHeader = function() {
   return "" +
+"#ifdef GL_OES_standard_derivatives\n" +
+"#extension GL_OES_standard_derivatives : enable\n" +
+"#endif\n" +
 "#ifdef GL_ES\n" +
 "#ifndef GL_FRAGMENT_PRECISION_HIGH\n" +
 "precision mediump float;\n" +
@@ -418,16 +421,11 @@ ShaderInfo.getDefaultVertex = function() {
     "attribute vec3 colorAttr;",
     "varying vec3 colorAttrVar;",
     "#endif",
-    "attribute vec3 tangent;",
-    "attribute vec3 bitangent;",
     "uniform mat4 projection;",
     "uniform mat4 modelViewMatrix;",
     "#ifdef SHADING",
     "uniform mat3 normalMatrix; /* internal */",
     "uniform mat4 world;",
-    "#ifdef NORMAL_MAP",
-    "varying mat3 tbnMatrixVar;",
-    "#endif",
     "varying vec4 viewPositionVar;",
     "varying vec3 transformedNormalVar;",
     "#endif",
@@ -444,10 +442,6 @@ ShaderInfo.getDefaultVertex = function() {
     "uvVar=uv;",
     "#ifdef SHADING",
     "transformedNormalVar=normalize(normalMatrix*normal);",
-    "#ifdef NORMAL_MAP",
-    "tbnMatrixVar=mat3(normalize(vec3(world*vec4(tangent,0.0))),",
-    "   normalize(bitangent),transformedNormalVar);",
-    "#endif",
     "viewPositionVar=modelViewMatrix*positionVec4;",
     "#endif",
     "}"].join("\n");
@@ -509,8 +503,9 @@ ShaderInfo.getDefaultFragment = function() {
     "#ifdef ENV_EQUIRECT", "uniform sampler2D envMap;", "#endif",
     "#ifdef EMISSION_MAP", "uniform sampler2D emissionMap;", "#endif",
     "uniform mat4 inverseView;",
-    "#ifdef NORMAL_MAP", "uniform sampler2D normalMap;", "#endif",
-    "#ifdef NORMAL_MAP", "varying mat3 tbnMatrixVar;", "#endif",
+    "#ifdef NORMAL_MAP",
+    "uniform sampler2D normalMap;",
+    "#endif",
     "#ifdef SPECULAR",
     "uniform vec3 ms;",
     "uniform float mshin;",
@@ -623,7 +618,30 @@ ShaderInfo.getDefaultFragment = function() {
     "#endif",
     "#ifdef SHADING",
     "#ifdef NORMAL_MAP",
-    "normal = normalize(tbnMatrixVar*(2.0*texture2D(normalMap,uvVar).rgb - vec3(1.0)));",
+    "vec3 pt,pb;",
+    "#ifdef GL_OES_standard_derivatives", "#define SUPPORTS_DERIVATIVES", "#endif",
+    "#ifdef GLSL_VERSION",
+    "#if GLSL_VERSION>=300", "#define SUPPORTS_DERIVATIVES", "#endif", "#endif",
+    "#ifdef SUPPORTS_DERIVATIVES",
+    // See <http://www.thetenthplanet.de/archives/1180>
+    "vec3 p1p,p2p;",
+    "p1p=cross(dFdy(viewPositionVar.xyz),transformedNormalVar);",
+    "p2p=cross(transformedNormalVar,dFdx(viewPositionVar.xyz));",
+    "vec2 u1=dFdx(uvVar);",
+    "vec2 u2=dFdy(uvVar);",
+    "pt=u1.x*p2p+u2.x*p1p;",
+    "pb=u1.y*p2p+u2.y*p1p;",
+    "float scale=1.0/sqrt(max(dot(pb,pb),dot(pt,pt)));",
+    "pt*=scale;", "pb*=scale;",
+    "#else",
+    "pt=cross(transformedNormalVar,vec3(1.0,0.0,0.0));",
+    "if(dot(pt,pt)<0.0001) {",
+    "   pt=cross(transformedNormalVar,vec3(0.0,1.0,0.0));",
+    "}",
+    "pb=(cross(pt,transformedNormalVar));",
+    "pt=(cross(transformedNormalVar,pb));",
+    "#endif",
+    "normal = normalize(mat3(pt,pb,transformedNormalVar)*(2.0*texture2D(normalMap,uvVar).rgb - vec3(1.0)));",
     "#else",
     "normal = normalize(transformedNormalVar);",
     "#endif",

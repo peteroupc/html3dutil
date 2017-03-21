@@ -36,7 +36,7 @@ path as this one but has its U coordinates remapped to fit the given range.
 of U coordinates.
 * [jerk](#H3DU.BezierCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.BezierCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
-* [tangent](#H3DU.BezierCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+* [tangent](#H3DU.BezierCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
 * [toArcLengthParam](#H3DU.BezierCurve_toArcLengthParam)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>.
@@ -225,7 +225,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='H3DU.BezierCurve_tangent'></a>
 ### H3DU.BezierCurve#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters

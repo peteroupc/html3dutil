@@ -25,6 +25,38 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 * `surface` (Type: Object)<br>A <b>surface evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code> methods, as described in the corresponding methods of this class.
 
+#### Example
+
+The following example creates a surface evaluator
+object for a parametric surface. To illustrate how the gradient method is derived
+from the vector calculation method, that method is also given below. To
+derive the normal calculation, first look at the vector function:
+
+<b>F</b>(u, v) = (cos(u), sin(u), sin(u)\*cos(v))
+
+Then, find the partial derivatives with respect to <i>u</i> and to <i>v</i>:
+
+&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)\*cos(v))<br>
+&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)\*sin(u))
+
+Next, take their cross product:
+
+<b>c</b>(u, v) = (-sin(v)\*cos(u)\*sin(u), -sin(v)\*sin(u)\*sin(u), 0)<br>
+
+The result is the gradient, which will be normal to the surface.
+
+    var surface=new H3DU.Surface({"evaluate":function(u,v) {
+    "use strict";
+    return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+    },
+    "gradient":function(u,v) {
+    "use strict";
+    return [
+    Math.cos(u)*-Math.sin(v)*Math.sin(u),
+    Math.sin(u)*-Math.sin(v)*Math.sin(u),
+    0];
+    }})
+
 ### Methods
 
 * [bitangent](#H3DU.Surface_bitangent)<br>Finds an approximate bitangent vector of this surface at the given U and V coordinates.

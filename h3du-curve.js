@@ -197,7 +197,7 @@ Curve.prototype.normal = function(u) {
 };
 
 /**
- * Convenience method for finding an approximate tangent vector of this curve at the given U and V coordinates.
+ * Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
  * The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
  * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a normal vector. It should have at least as many

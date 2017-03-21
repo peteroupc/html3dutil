@@ -221,30 +221,6 @@ SurfaceEval.prototype.setAutoNormal = function(value) {
  * @param {H3DU.Surface|Object} evaluator An object described in {@link H3DU.Surface}.
  * Can be null, in which case, disables generating vertex positions.
  * @returns {H3DU.SurfaceEval} This object.
- * @example <caption>The following example sets the vertex position and
- * normal generation
- * function for a parametric surface. To illustrate how the method is derived
- * from the vector calculation method, that method is also given below. To
- * derive the normal calculation, first look at the vector function:<p>
- * <b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
- * Then, find the tangent and bitangent vectors:<p>
- * &#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
- * &#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
- * Next, take their cross product:<p>
- * <b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
- * The result is the gradient, which will be normal to the surface.
- * </caption>
- * surfaceEval.vertex({"evaluate":function(u,v) {
- * "use strict";
- * return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
- * },
- * "gradient":function(u,v) {
- * "use strict";
- * return [
- * Math.cos(u)*-Math.sin(v)*Math.sin(u),
- * Math.sin(u)*-Math.sin(v)*Math.sin(u),
- * 0];
- * }})
  */
 SurfaceEval.prototype.vertex = function(evaluator) {
   this.vertexSurface = new Surface(evaluator);

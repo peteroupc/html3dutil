@@ -35,7 +35,7 @@ export {MeshBuffer} from "./h3du-meshbuffer";
 export {Semantic} from "./h3du-semantic";
 export {Lights} from "./h3du-lights";
 export {LightSource} from "./h3du-lightsource";
-export {RenderPass3D} from "./h3du-renderpass3d";
+export {RenderPass} from "./h3du-renderpass";
 // Deprecated classes
 export {ShaderProgram} from "./h3du-shaderprogram";
 export {BufferedMesh} from "./h3du-bufferedmesh";

@@ -278,6 +278,8 @@ implicit surfaces.
 and applying them to 3D shapes.
 * [demos/specular.html](https://peteroupc.github.io/html3dutil/demos/specular.html) - Demonstrates using
 textures as specular reflection maps.
+* [demos/normalmap.html](https://peteroupc.github.io/html3dutil/demos/normalmap.html) - Demonstrates using
+normal map textures.
 * [demos/gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
 * [demos/skysphere.html](https://peteroupc.github.io/html3dutil/demos/skysphere.html) - Demonstrates how to
@@ -344,7 +346,7 @@ illustrating a simple animation of 3D shapes.
 the difference between {@link H3DU.Math.quatNlerp} and {@link H3DU.Math.quatSlerp},
 both functions for interpolating quaternion rotations.
 * [demos/quatlerp.html](https://peteroupc.github.io/html3dutil/demos/quatlerp.html) - Shows how
-{@link H3DU.RenderPass3D} can be used to draw a two-dimensional background under three-dimensional
+{@link H3DU.RenderPass} can be used to draw a two-dimensional background under three-dimensional
 content.
 
 <a id=Example></a>
@@ -434,7 +436,7 @@ The changes in beta 2 from beta 1 include:
 - `Scene3D`, now {@link H3DU.Scene3D}, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new {@link H3DU.Batch3D} class. Scene3D's `render` method now takes an array of `Batch3D`s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
 - Alpha is disabled in WebGL contexts created with the {@link H3DU.get3DOr2DContext} method.
 - The `Scene3D` {@link H3DU.Scene3D#useProgram} method was deprecated and now does nothing.
-- New {@link H3DU.RenderPass3D} class holds information about how a batch of 3D models is to be rendered. It replaces the `Scene3D` {@link H3DU.Scene3D#useFilter} method, which now does nothing.
+- New {@link H3DU.RenderPass} class holds information about how a batch of 3D models is to be rendered. It replaces the `Scene3D` {@link H3DU.Scene3D#useFilter} method, which now does nothing.
 - New {@link H3DU.FrameBufferInfo} class holds information about a frame buffer; it replaces {@link H3DU.FrameBuffer}.
 - The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use {@link H3DU.MeshBuffer}, {@link H3DU.FrameBufferInfo}, and {@link H3DU.ShaderInfo}, respectively, which are not coupled to WebGL contexts.
 - Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.
