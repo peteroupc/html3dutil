@@ -44,13 +44,12 @@ export var MeshBuffer = function(mesh) {
   if(o >= 0) {
     this.attributes.push([H3DU.Semantic.TEXCOORD, o, vertices, 2, stride, 0]);
   }
-  o = H3DU.Mesh._tangentOffset(this.format);
-  if(o >= 0) {
-    this.attributes.push([H3DU.Semantic.TANGENT, o, vertices, 3, stride, 0]);
+  var tangents = new Float32Array(mesh.tangents);
+  if((this.format & H3DU.Mesh.TANGENTS_BIT) !== 0) {
+    this.attributes.push([H3DU.Semantic.TANGENT, 0, tangents, 3, stride, 0]);
   }
-  o = H3DU.Mesh._bitangentOffset(this.format);
-  if(o >= 0) {
-    this.attributes.push([H3DU.Semantic.BITANGENT, o, vertices, 3, stride, 0]);
+  if((this.format & H3DU.Mesh.BITANGENTS_BIT) !== 0) {
+    this.attributes.push([H3DU.Semantic.BITANGENT, 3, tangents, 3, stride, 0]);
   }
 };
 /**

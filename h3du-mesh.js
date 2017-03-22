@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, normalOffset */
+/* global H3DU */
 /**
  * Specifies the triangles, lines, or points that make up a geometric shape.
  * Each vertex, that is, each point, each end of a line, and each corner
@@ -47,11 +47,11 @@
  * If null or omitted, creates an initially empty mesh.
  * @param {number} [format] A set of bit flags depending on the kind of data
  * each vertex contains. Each vertex contains 3 elements plus:<ul>
- * <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus
- * <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus
- * <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul>
- * If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line
- * segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an
+ * <li> 3 more elements if Mesh.NORMALS_BIT is set, plus
+ * <li> 3 more elements if Mesh.COLORS_BIT is set, plus
+ * <li> 2 more elements if Mesh.TEXCOORDS_BIT is set.</ul>
+ * If Mesh.LINES_BIT is set, each vertex index specifies a point of a line
+ * segment. If Mesh.POINTS_BIT is set, each vertex index specifies an
  * individual point. Both bits can't be set.
  * May be null or omitted, in which case "format" is set to 0.
  */
@@ -67,17 +67,17 @@ export var Mesh = function(vertices, indices, format) {
 };
 /** @ignore */
 Mesh._primitiveType = function(mode) {
-  if(mode === H3DU.Mesh.LINES || mode === H3DU.Mesh.LINE_STRIP)
-    return H3DU.Mesh.LINES;
-  else if(mode === H3DU.Mesh.POINTS)
-    return H3DU.Mesh.POINTS;
+  if(mode === Mesh.LINES || mode === Mesh.LINE_STRIP)
+    return Mesh.LINES;
+  else if(mode === Mesh.POINTS)
+    return Mesh.POINTS;
   else
-  return H3DU.Mesh.TRIANGLES;
+  return Mesh.TRIANGLES;
 };
 /** @ignore */
 Mesh._isCompatibleMode = function(oldMode, newMode) {
   if(oldMode === newMode)return true;
-  if(H3DU.Mesh._primitiveType(oldMode) === H3DU.Mesh._primitiveType(newMode))
+  if(Mesh._primitiveType(oldMode) === Mesh._primitiveType(newMode))
     return true;
   return false;
 };
@@ -167,7 +167,7 @@ Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inward) {
   var normDir = inward ? -1 : 1;
   var uniqueVertices = {};
   var len;
-  H3DU.Mesh._recalcNormalsStart(vertices, uniqueVertices, faces, stride, offset, flat);
+  Mesh._recalcNormalsStart(vertices, uniqueVertices, faces, stride, offset, flat);
   for(var i = 0; i < faces.length; i += 3) {
     var v1 = faces[i] * stride;
     var v2 = faces[i + 1] * stride;
@@ -198,7 +198,7 @@ Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inward) {
       vertices[v3 + offset + 2] += z;
     }
   }
-  H3DU.Mesh._recalcNormalsFinish(vertices, uniqueVertices, faces, stride, offset, flat);
+  Mesh._recalcNormalsFinish(vertices, uniqueVertices, faces, stride, offset, flat);
 };
 
 /**
@@ -210,12 +210,12 @@ Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inward) {
  * An H3DU.Mesh object can contain primitives of different
  * types, such as triangles and lines. For example, it's allowed
  * to have a mesh with triangles, then call this method, say,
- * with <code>H3DU.Mesh.LINE_STRIP</code> to add line segments
+ * with <code>Mesh.LINE_STRIP</code> to add line segments
  * to that mesh. However, this functionality may be deprecated
  * in future versions.
  * @param {number} m A primitive type. One of the following:
- * H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP,
- * H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP.
+ * Mesh.TRIANGLES, Mesh.LINES, Mesh.LINE_STRIP, Mesh.TRIANGLE_STRIP,
+ * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.
  * Throws an error if the primitive type is incompatible with the
  * current primitive type (for example, a triangle type with LINE_STRIP).
  * @returns {H3DU.Mesh} This object.
@@ -224,14 +224,14 @@ Mesh.prototype.mode = function(m) {
   if(m < 0)throw new Error("invalid mode");
   if(this.currentMode === -1) {
     var format = 0;
-    var primtype = H3DU.Mesh._primitiveType(m);
-    if(primtype === H3DU.Mesh.LINES)
-      format |= H3DU.Mesh.LINES_BIT;
-    else if(primtype === H3DU.Mesh.POINTS)
-      format |= H3DU.Mesh.POINTS_BIT;
+    var primtype = Mesh._primitiveType(m);
+    if(primtype === Mesh.LINES)
+      format |= Mesh.LINES_BIT;
+    else if(primtype === Mesh.POINTS)
+      format |= Mesh.POINTS_BIT;
     this._initialize([], [], format);
     this.currentMode = m;
-  } else if( !H3DU.Mesh._isCompatibleMode(this.currentMode, m)) {
+  } else if( !Mesh._isCompatibleMode(this.currentMode, m)) {
     throw new Error("Storing a different primitive mode in this mesh is no longer supported");
   } else {
     this.newPrimitive();
@@ -256,11 +256,11 @@ Mesh.prototype.mode = function(m) {
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  */
 Mesh.prototype.merge = function(other) {
-  if(!H3DU.Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
+  if(!Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
     throw new Error("Meshes have incompatible types");
   }
-  var thisAttributes = this.attributeBits & H3DU.Mesh.ATTRIBUTES_BITS;
-  var otherAttributes = other.attributeBits & H3DU.Mesh.ATTRIBUTES_BITS;
+  var thisAttributes = this.attributeBits & Mesh.ATTRIBUTES_BITS;
+  var otherAttributes = other.attributeBits & Mesh.ATTRIBUTES_BITS;
   if(thisAttributes !== otherAttributes) {
     var newAttributes = thisAttributes | otherAttributes;
     // Meshes have different attribute sets, so this will
@@ -324,7 +324,7 @@ Mesh.prototype.normal3 = function(x, y, z) {
     this.normal[1] = x[1];
     this.normal[2] = x[2];
   }
-  this._elementsDefined |= H3DU.Mesh.NORMALS_BIT;
+  this._elementsDefined |= Mesh.NORMALS_BIT;
   return this;
 };
 
@@ -358,7 +358,7 @@ Mesh.prototype.color3 = function(r, g, b) {
     this.color[1] = r[1];
     this.color[2] = r[2];
   }
-  this._elementsDefined |= H3DU.Mesh.COLORS_BIT;
+  this._elementsDefined |= Mesh.COLORS_BIT;
   return this;
 };
  /**
@@ -388,7 +388,7 @@ Mesh.prototype.texCoord2 = function(u, v) {
     this.texCoord[0] = u[0];
     this.texCoord[1] = u[1];
   }
-  this._elementsDefined |= H3DU.Mesh.TEXCOORDS_BIT;
+  this._elementsDefined |= Mesh.TEXCOORDS_BIT;
   return this;
 };
  /**
@@ -461,9 +461,9 @@ Mesh.prototype.setColor3 = function(r, g, b) {
     bb = c[2];
   }
   // console.log([r,g,b,rr,gg,bb])
-  this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
+  this._rebuildVertices(Mesh.COLORS_BIT);
   var stride = this.getStride();
-  var colorOffset = H3DU.Mesh._colorOffset(this.attributeBits);
+  var colorOffset = Mesh._colorOffset(this.attributeBits);
   for(var i = colorOffset; i < this.vertices.length; i += stride) {
     this.vertices[i] = rr;
     this.vertices[i + 1] = gg;
@@ -481,7 +481,7 @@ Mesh.prototype.normalizeNormals = function() {
   var i;
   var stride = this.getStride();
   var vertices = this.vertices;
-  var normalOffset = H3DU.Mesh._normalOffset(
+  var normalOffset = Mesh._normalOffset(
      this.attributeBits);
   if(normalOffset < 0)return this;
   for(i = 0; i < vertices.length; i += stride) {
@@ -563,9 +563,9 @@ Mesh.prototype.setVertexNormal = function(index, x, y, z) {
   }
   var c = this.vertexCount();
   if(index < c) {
-    this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
+    this._rebuildVertices(Mesh.NORMALS_BIT);
     index *= this.getStride();
-    index += H3DU.Mesh._normalOffset(this.attributeBits);
+    index += Mesh._normalOffset(this.attributeBits);
     this.vertices[index] = x;
     this.vertices[index + 1] = y;
     this.vertices[index + 2] = z;
@@ -590,7 +590,7 @@ Mesh.prototype.getVertex = function(index) {
   if(index < 0)return null;
   var c = this.vertexCount();
   if(index < c) {
-    this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
+    this._rebuildVertices(Mesh.NORMALS_BIT);
     index *= this.getStride();
     return this.vertices.slice(index, index + 3);
   }
@@ -614,34 +614,38 @@ Mesh.prototype.getVertex = function(index) {
 Mesh.prototype.getVertexNormal = function(index) {
   var c = this.vertexCount();
   if(index < c) {
-    this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
+    this._rebuildVertices(Mesh.NORMALS_BIT);
     index *= this.getStride();
-    index += H3DU.Mesh._normalOffset(this.attributeBits);
+    index += Mesh._normalOffset(this.attributeBits);
     return this.vertices.slice(index, index + 3);
   }
   return null;
+};
+
+ /**
+  * Gets the number of vertices included in this mesh.
+  * @returns {number} Return value.
+  */
+Mesh.prototype.vertexCount = function() {
+  return this.vertices.length / this.getStride();
 };
 
 /** @ignore */
 Mesh.prototype._initialize = function(vertices, faces, format) {
   this.vertices = vertices || [];
   this.indices = faces || [];
+  this.tangents = [];
   this.startIndex = 0;
-  var prim = format & H3DU.Mesh.PRIMITIVES_BITS;
-  if(prim !== 0 && prim !== H3DU.Mesh.LINES_BIT && prim !== H3DU.Mesh.POINTS_BIT) {
+  var prim = format & Mesh.PRIMITIVES_BITS;
+  // TODO: Move tangents and bitangents to separate
+  // array if TANGENTS_BIT and/or BITANGENTS_BIT are set
+  if(prim !== 0 && prim !== Mesh.LINES_BIT && prim !== Mesh.POINTS_BIT) {
     throw new Error("invalid format");
   }
   this.attributeBits = typeof format === "undefined" || format === null ? 0 : format;
- /**
-  * Gets the number of vertices included in this mesh.
-  * @returns {number} Return value.
-  */
-  this.vertexCount = function() {
-    return this.vertices.length / this.getStride();
-  };
 /** @ignore */
   this.getStride = function() {
-    return H3DU.Mesh._getStride(this.attributeBits);
+    return Mesh._getStride(this.attributeBits);
   };
  /** @ignore */
   this.newPrimitive = function() {
@@ -649,29 +653,30 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
     return this;
   };
   this.primitiveType = function() {
-    var primitive = H3DU.Mesh.TRIANGLES;
-    if((this.attributeBits & H3DU.Mesh.LINES_BIT) !== 0)primitive = H3DU.Mesh.LINES;
-    if((this.attributeBits & H3DU.Mesh.POINTS_BIT) !== 0)primitive = H3DU.Mesh.POINTS;
+    var primitive = Mesh.TRIANGLES;
+    if((this.attributeBits & Mesh.LINES_BIT) !== 0)primitive = Mesh.LINES;
+    if((this.attributeBits & Mesh.POINTS_BIT) !== 0)primitive = Mesh.POINTS;
     return primitive;
   };
  /** @ignore */
   this._rebuildVertices = function(newAttributes) {
     var oldBits = this.attributeBits;
-    var newBits = oldBits | newAttributes & H3DU.Mesh.ATTRIBUTES_BITS;
+    var newBits = oldBits | newAttributes & Mesh.ATTRIBUTES_BITS;
     if(newBits === oldBits)return;
     var currentStride = this.getStride();
     var x, y, z;
   // Rebuild the list of vertices if a new kind of
   // attribute is added to the mesh
     var newVertices = [];
+    var newTangents = [];
     for(var i = 0; i < this.vertices.length; i += currentStride) {
       var vx = this.vertices[i];
       var vy = this.vertices[i + 1];
       var vz = this.vertices[i + 2];
       var s = i + 3;
       newVertices.push(vx, vy, vz);
-      if((newBits & H3DU.Mesh.NORMALS_BIT) !== 0) {
-        if((oldBits & H3DU.Mesh.NORMALS_BIT) !== 0) {
+      if((newBits & Mesh.NORMALS_BIT) !== 0) {
+        if((oldBits & Mesh.NORMALS_BIT) !== 0) {
           x = this.vertices[s];
           y = this.vertices[s + 1];
           z = this.vertices[s + 2];
@@ -681,8 +686,8 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
           newVertices.push(0, 0, 0);
         }
       }
-      if((newBits & H3DU.Mesh.COLORS_BIT) !== 0) {
-        if((oldBits & H3DU.Mesh.COLORS_BIT) === 0) {
+      if((newBits & Mesh.COLORS_BIT) !== 0) {
+        if((oldBits & Mesh.COLORS_BIT) === 0) {
           newVertices.push(0, 0, 0);
         } else {
           var r = this.vertices[s];
@@ -692,8 +697,8 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
           newVertices.push(r, g, b);
         }
       }
-      if((newBits & H3DU.Mesh.TEXCOORDS_BIT) !== 0) {
-        if((oldBits & H3DU.Mesh.TEXCOORDS_BIT) === 0) {
+      if((newBits & Mesh.TEXCOORDS_BIT) !== 0) {
+        if((oldBits & Mesh.TEXCOORDS_BIT) === 0) {
           newVertices.push(0, 0);
         } else {
           var u = this.vertices[s];
@@ -702,30 +707,23 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
           newVertices.push(u, v);
         }
       }
-      if((newBits & H3DU.Mesh.TANGENTS_BIT) !== 0) {
-        if((oldBits & H3DU.Mesh.TANGENTS_BIT) === 0) {
-          newVertices.push(0, 0, 0);
+      if((newBits & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) !== 0) {
+        if((oldBits & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) === 0) {
+          newTangents.push(0, 0, 0, 0, 0, 0);
         } else {
-          x = this.vertices[s];
-          y = this.vertices[s + 1];
-          z = this.vertices[s + 2];
-          s += 3;
-          newVertices.push(x, y, z);
-        }
-      }
-      if((newBits & H3DU.Mesh.BITANGENTS_BIT) !== 0) {
-        if((oldBits & H3DU.Mesh.BITANGENTS_BIT) === 0) {
-          newVertices.push(0, 0, 0);
-        } else {
-          x = this.vertices[s];
-          y = this.vertices[s + 1];
-          z = this.vertices[s + 2];
-          s += 3;
-          newVertices.push(x, y, z);
+          x = this.tangents[s];
+          y = this.tangents[s + 1];
+          z = this.tangents[s + 2];
+          newTangents.push(x, y, z);
+          x = this.tangents[s + 3];
+          y = this.tangents[s + 4];
+          z = this.tangents[s + 5];
+          newTangents.push(x, y, z);
         }
       }
     }
     this.vertices = newVertices;
+    this.tangents = newTangents;
     this.attributeBits = newBits;
   };
   this._setTriangle = function(vertexStartIndex, stride, i1, i2, i3) {
@@ -734,6 +732,12 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
     var v3 = i3 * stride;
     var triCount = 0;
     var tribits = 0;
+    if((this.attributeBits & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) !== 0) {
+      // Just set the indices, for convenience, if tangents and/or
+      // bitangents are included in this mesh (a deprecated feature)
+      this.indices.push(i1, i2, i3);
+      return;
+    }
     var v = this.vertices;
     for(var i = vertexStartIndex - stride;
      i >= 0 && triCount < 16 && tribits !== 7;
@@ -774,55 +778,53 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
     this._rebuildVertices(this._elementsDefined);
     var vertexStartIndex = this.vertices.length;
     this.vertices.push(x, y, z);
-    if((this.attributeBits & H3DU.Mesh.NORMALS_BIT) !== 0) {
+    if((this.attributeBits & Mesh.NORMALS_BIT) !== 0) {
       this.vertices.push(this.normal[0], this.normal[1], this.normal[2]);
     }
-    if((this.attributeBits & H3DU.Mesh.COLORS_BIT) !== 0) {
+    if((this.attributeBits & Mesh.COLORS_BIT) !== 0) {
       this.vertices.push(this.color[0], this.color[1], this.color[2]);
     }
-    if((this.attributeBits & H3DU.Mesh.TEXCOORDS_BIT) !== 0) {
+    if((this.attributeBits & Mesh.TEXCOORDS_BIT) !== 0) {
       this.vertices.push(this.texCoord[0], this.texCoord[1]);
     }
-    if((this.attributeBits & H3DU.Mesh.TANGENTS_BIT) !== 0) {
-      this.vertices.push(this.tangent[0], this.tangent[1], this.tangent[2]);
-    }
-    if((this.attributeBits & H3DU.Mesh.BITANGENTS_BIT) !== 0) {
-      this.vertices.push(this.bitangent[0], this.bitangent[1], this.bitangent[2]);
+    if((this.attributeBits & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) !== 0) {
+      this.tangents.push(this.tangent[0], this.tangent[1], this.tangent[2]);
+      this.tangents.push(this.bitangent[0], this.bitangent[1], this.bitangent[2]);
     }
     var stride = this.getStride();
     var index, firstIndex;
-    if(currentMode === H3DU.Mesh.QUAD_STRIP &&
+    if(currentMode === Mesh.QUAD_STRIP &&
      this.vertices.length - this.startIndex >= stride * 4 &&
      (this.vertices.length - this.startIndex) % (stride * 2) === 0) {
       index = this.vertices.length / stride - 4;
       this._setTriangle(vertexStartIndex, stride, index, index + 1, index + 2);
       this._setTriangle(vertexStartIndex, stride, index + 2, index + 1, index + 3);
-    } else if(currentMode === H3DU.Mesh.QUADS &&
+    } else if(currentMode === Mesh.QUADS &&
      (this.vertices.length - this.startIndex) % (stride * 4) === 0) {
       index = this.vertices.length / stride - 4;
       this._setTriangle(vertexStartIndex, stride, index, index + 1, index + 2);
       this._setTriangle(vertexStartIndex, stride, index, index + 2, index + 3);
-    } else if(currentMode === H3DU.Mesh.TRIANGLES &&
+    } else if(currentMode === Mesh.TRIANGLES &&
      (this.vertices.length - this.startIndex) % (stride * 3) === 0) {
       index = this.vertices.length / stride - 3;
       this._setTriangle(vertexStartIndex, stride, index, index + 1, index + 2);
-    } else if(currentMode === H3DU.Mesh.LINES &&
+    } else if(currentMode === Mesh.LINES &&
      (this.vertices.length - this.startIndex) % (stride * 2) === 0) {
       index = this.vertices.length / stride - 2;
       this.indices.push(index, index + 1);
-    } else if(currentMode === H3DU.Mesh.TRIANGLE_FAN &&
+    } else if(currentMode === Mesh.TRIANGLE_FAN &&
      this.vertices.length - this.startIndex >= stride * 3) {
       index = this.vertices.length / stride - 2;
       firstIndex = this.startIndex / stride;
       this._setTriangle(vertexStartIndex, stride, firstIndex, index, index + 1);
-    } else if(currentMode === H3DU.Mesh.LINE_STRIP &&
+    } else if(currentMode === Mesh.LINE_STRIP &&
      this.vertices.length - this.startIndex >= stride * 2) {
       index = this.vertices.length / stride - 2;
       this.indices.push(index, index + 1);
-    } else if(currentMode === H3DU.Mesh.POINTS) {
+    } else if(currentMode === Mesh.POINTS) {
       index = this.vertices.length / stride - 1;
       this.indices.push(index);
-    } else if(currentMode === H3DU.Mesh.TRIANGLE_STRIP &&
+    } else if(currentMode === Mesh.TRIANGLE_STRIP &&
      this.vertices.length - this.startIndex >= stride * 3) {
       index = this.vertices.length / stride - 3;
       firstIndex = this.startIndex / stride;
@@ -838,6 +840,7 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
 
 /** @ignore */
 Mesh.prototype._makeRedundant = function() {
+  // TODO: Make tangents property redundant
   var existingIndices = [];
   var stride = this.getStride();
   var originalIndicesLength = this.indices.length;
@@ -858,13 +861,13 @@ Mesh.prototype._makeRedundant = function() {
 };
 /**
  * Gets the number of primitives (triangles, lines,
- * or points) composed by all shapes in this mesh.
+ * or points) that this mesh contains.
  * @returns {number} Return value.
  */
 Mesh.prototype.primitiveCount = function() {
-  if((this.attributeBits & H3DU.Mesh.LINES_BIT) !== 0)
+  if((this.attributeBits & Mesh.LINES_BIT) !== 0)
     return Math.floor(this.indices.length / 2);
-  if((this.attributeBits & H3DU.Mesh.POINTS_BIT) !== 0)
+  if((this.attributeBits & Mesh.POINTS_BIT) !== 0)
     return this.indices.length;
   return Math.floor(this.indices.length / 3);
 };
@@ -896,7 +899,7 @@ Mesh._addLine = function(lineIndices, existingLines, f1, f2) {
  */
 Mesh.prototype.toWireFrame = function() {
   // LATER: Implement and favor MeshBuffer version of this method
-  if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
+  if((this.attributeBits & Mesh.PRIMITIVES_BITS) !== 0) {
    // Not a triangle mesh
     return this;
   }
@@ -906,12 +909,12 @@ Mesh.prototype.toWireFrame = function() {
     var f1 = this.indices[i];
     var f2 = this.indices[i + 1];
     var f3 = this.indices[i + 2];
-    H3DU.Mesh._addLine(lineIndices, existingLines, f1, f2);
-    H3DU.Mesh._addLine(lineIndices, existingLines, f2, f3);
-    H3DU.Mesh._addLine(lineIndices, existingLines, f3, f1);
+    Mesh._addLine(lineIndices, existingLines, f1, f2);
+    Mesh._addLine(lineIndices, existingLines, f2, f3);
+    Mesh._addLine(lineIndices, existingLines, f3, f1);
   }
   return new H3DU.Mesh(this.vertices, lineIndices,
-    this.attributeBits | H3DU.Mesh.LINES_BIT);
+    this.attributeBits | Mesh.LINES_BIT);
 };
 
 /** @ignore */
@@ -922,7 +925,8 @@ Mesh._isIdentityInUpperLeft = function(m) {
 };
  /**
   * Transforms the positions and normals of all the vertices currently
-  * in this mesh. The matrix won't affect vertices added afterwards.
+  * in this mesh. The matrix won't affect vertices added afterwards, and
+  * won't affect other attributes, including tangents and bitangents.
   * Also, resets the primitive
   * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
   * will not build upon previous vertices. Future vertices should not be
@@ -935,8 +939,8 @@ Mesh._isIdentityInUpperLeft = function(m) {
 Mesh.prototype.transform = function(matrix) {
   var stride = this.getStride();
   var v = this.vertices;
-  var isNonTranslation = !H3DU.Mesh._isIdentityInUpperLeft(matrix);
-  var normalOffset = H3DU.Mesh._normalOffset(this.attributeBits);
+  var isNonTranslation = !Mesh._isIdentityInUpperLeft(matrix);
+  var normalOffset = Mesh._normalOffset(this.attributeBits);
   var matrixForNormals = null;
   if(normalOffset >= 0 && isNonTranslation) {
     matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
@@ -985,14 +989,14 @@ Mesh.prototype.transform = function(matrix) {
 Mesh.prototype.enumPrimitives = function(func) {
   // LATER: Implement and favor MeshBuffer version of this method
   var prim = this.primitiveType();
-  var normals = H3DU.Mesh._normalOffset(this.attributeBits);
-  var colors = H3DU.Mesh._colorOffset(this.attributeBits);
-  var texcoords = H3DU.Mesh._texCoordOffset(this.attributeBits);
+  var normals = Mesh._normalOffset(this.attributeBits);
+  var colors = Mesh._colorOffset(this.attributeBits);
+  var texcoords = Mesh._texCoordOffset(this.attributeBits);
   var stride = this.getStride();
   var v = this.vertices;
   var primSize = 3;
-  if(prim === H3DU.Mesh.LINES)primSize = 2;
-  if(prim === H3DU.Mesh.POINTS)primSize = 1;
+  if(prim === Mesh.LINES)primSize = 2;
+  if(prim === Mesh.POINTS)primSize = 1;
   for(var j = 0; j < this.indices.length; j += primSize) {
     var p = [];
     for(var k = 0; k < primSize; k++) {
@@ -1024,7 +1028,7 @@ Mesh.prototype.enumPrimitives = function(func) {
  * -Inf, -Inf].
  */
 Mesh.prototype.getBoundingBox = function() {
-  // LATER: Implement and favor MeshBuffer version of this method
+  // LATER: Favor MeshBuffer version of this method
   var empty = true;
   var inf = Number.POSITIVE_INFINITY;
   var ret = [inf, inf, inf, -inf, -inf, -inf];
@@ -1067,7 +1071,7 @@ Mesh.prototype.reverseNormals = function() {
   var i;
   var stride = this.getStride();
   var vertices = this.vertices;
-  var normalOffset = H3DU.Mesh._normalOffset(
+  var normalOffset = Mesh._normalOffset(
      this.attributeBits);
   if(normalOffset < 0) return this;
   for(i = 0; i < vertices.length; i += stride) {
@@ -1099,7 +1103,7 @@ Mesh.prototype.reverseNormals = function() {
  */
 Mesh.prototype.reverseWinding = function() {
   // LATER: Implement and favor MeshBuffer version of this method
-  if((this.attributeBits & H3DU.Mesh.PRIMITIVES_BITS) !== 0) {
+  if((this.attributeBits & Mesh.PRIMITIVES_BITS) !== 0) {
    // Not a triangle mesh
     return this;
   }
@@ -1130,9 +1134,9 @@ Mesh.prototype.reverseWinding = function() {
  */
 Mesh.prototype.recalcNormals = function(flat, inward) {
   var primtype = this.primitiveType();
-  if(primtype !== H3DU.Mesh.LINES && primtype !== H3DU.Mesh.POINTS) {
-    var haveOtherAttributes = (this.attributeBits & (H3DU.Mesh.ATTRIBUTES_BITS & ~H3DU.Mesh.NORMALS_BIT)) !== 0;
-    this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
+  if(primtype !== Mesh.LINES && primtype !== Mesh.POINTS) {
+    var haveOtherAttributes = (this.attributeBits & (Mesh.ATTRIBUTES_BITS & ~Mesh.NORMALS_BIT)) !== 0;
+    this._rebuildVertices(Mesh.NORMALS_BIT);
   // No need to duplicate vertices if there are no other attributes
   // besides normals and non-flat shading is requested; the
   // recalculation will reinitialize normals to 0 and
@@ -1140,48 +1144,27 @@ Mesh.prototype.recalcNormals = function(flat, inward) {
     if(haveOtherAttributes || flat) {
       this._makeRedundant();
     }
-    H3DU.Mesh._recalcNormals(this.vertices, this.indices,
+    Mesh._recalcNormals(this.vertices, this.indices,
      this.getStride(), 3, flat, inward);
   }
   return this;
 };
 /** @ignore */
 Mesh._getStride = function(format) {
-  var s = [3, 6, 6, 9, 5, 8, 8, 11][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
-  if((format & H3DU.Mesh.TANGENTS_BIT) !== 0)s += 3;
-  if((format & H3DU.Mesh.BITANGENTS_BIT) !== 0)s += 3;
+  var s = [3, 6, 6, 9, 5, 8, 8, 11][format & (Mesh.NORMALS_BIT | Mesh.COLORS_BIT | Mesh.TEXCOORDS_BIT)];
   return s;
 };
 /** @ignore */
 Mesh._normalOffset = function(format) {
-  return [-1, 3, -1, 3, -1, 3, -1, 3][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
-};
-/** @ignore */
-Mesh._tangentOffset = function(format) {
-  var x = 3;
-  if((format & H3DU.Mesh.TANGENTS_BIT) === 0)return -1;
-  if((format & H3DU.Mesh.NORMALS_BIT) !== 0)x += 3;
-  if((format & H3DU.Mesh.COLORS_BIT) !== 0)x += 3;
-  if((format & H3DU.Mesh.TEXCOORDS_BIT) !== 0)x += 2;
-  return x;
-};
-/** @ignore */
-Mesh._bitangentOffset = function(format) {
-  var x = 3;
-  if((format & H3DU.Mesh.BITANGENTS_BIT) === 0)return -1;
-  if((format & H3DU.Mesh.NORMALS_BIT) !== 0)x += 3;
-  if((format & H3DU.Mesh.COLORS_BIT) !== 0)x += 3;
-  if((format & H3DU.Mesh.TEXCOORDS_BIT) !== 0)x += 2;
-  if((format & H3DU.Mesh.TANGENTS_BIT) !== 0)x += 3;
-  return x;
+  return [-1, 3, -1, 3, -1, 3, -1, 3][format & (Mesh.NORMALS_BIT | Mesh.COLORS_BIT | Mesh.TEXCOORDS_BIT)];
 };
 /** @ignore */
 Mesh._colorOffset = function(format) {
-  return [-1, -1, 3, 6, -1, -1, 3, 6][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
+  return [-1, -1, 3, 6, -1, -1, 3, 6][format & (Mesh.NORMALS_BIT | Mesh.COLORS_BIT | Mesh.TEXCOORDS_BIT)];
 };
 /** @ignore */
 Mesh._texCoordOffset = function(format) {
-  return [-1, -1, -1, -1, 3, 6, 6, 9][format & (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
+  return [-1, -1, -1, -1, 3, 6, 6, 9][format & (Mesh.NORMALS_BIT | Mesh.COLORS_BIT | Mesh.TEXCOORDS_BIT)];
 };
 /** @ignore */
 Mesh.ATTRIBUTES_BITS = 255;
@@ -1204,12 +1187,22 @@ Mesh.COLORS_BIT = 2;
 Mesh.TEXCOORDS_BIT = 4;
 /**
  * The mesh contains tangent vectors for each vertex.
+ * @deprecated Deprecated because the default shader no longer
+ * uses tangent and bitangent attributes for normal mapping. To define
+ * tangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
+ * and create a buffer attribute with the {@link H3DU.Semantics.TANGENT}
+ * semantic.
  * @const
  * @default
  */
 Mesh.TANGENTS_BIT = 8;
 /**
  * The mesh contains bitangent vectors for each vertex.
+ * @deprecated Deprecated because the default shader no longer
+ * uses tangent and bitangent attributes for normal mapping. To define
+ * bitangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
+ * and create a buffer attribute with the {@link H3DU.Semantics.BITANGENT}
+ * semantic.
  * @const
  * @default
  */
@@ -1298,7 +1291,6 @@ Mesh.POINTS = 0;
 
 // //////////////////////////////////////////////////////////////////////////
 
-// TODO: Deprecate tangent-related methods in Mesh class
 // LATER: Reimplement recalcTangents to make it more general-purpose
 
 /**
@@ -1308,6 +1300,11 @@ Mesh.POINTS = 0;
  * is TRIANGLE_FAN and some vertices were already given for
  * that mode. The tangent passed to this method will
  * not automatically be normalized to unit length.
+ * @deprecated Deprecated because the default shader no longer
+ * uses tangent and bitangent attributes for normal mapping. To define
+ * tangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
+ * and create a buffer attribute with the {@link H3DU.Semantics.TANGENT}
+ * semantic.
  * @param {number} x X coordinate of the tangent vector.
  *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
@@ -1328,7 +1325,7 @@ Mesh.prototype.tangent3 = function(x, y, z) {
     this.tangent[1] = x[1];
     this.tangent[2] = x[2];
   }
-  this._elementsDefined |= H3DU.Mesh.TANGENTS_BIT;
+  this._elementsDefined |= Mesh.TANGENTS_BIT;
   return this;
 };
 
@@ -1339,6 +1336,11 @@ Mesh.prototype.tangent3 = function(x, y, z) {
  * is TRIANGLE_FAN and some vertices were already given for
  * that mode. The bitangent passed to this method will
  * not automatically be normalized to unit length.
+ * @deprecated Deprecated because the default shader no longer
+ * uses tangent and bitangent attributes for normal mapping. To define
+ * bitangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
+ * and create a buffer attribute with the {@link H3DU.Semantics.BITANGENT}
+ * semantic.
  * @param {number} x X coordinate of the bitangent vector.
  *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
@@ -1359,7 +1361,7 @@ Mesh.prototype.bitangent3 = function(x, y, z) {
     this.bitangent[1] = x[1];
     this.bitangent[2] = x[2];
   }
-  this._elementsDefined |= H3DU.Mesh.BITANGENTS_BIT;
+  this._elementsDefined |= Mesh.BITANGENTS_BIT;
   return this;
 };
 
@@ -1391,7 +1393,7 @@ Mesh._findTangentAndBitangent = function(vertices, v1, v2, v3, uvOffset) {
   return [t14, t15, t16, t17, t18, t19];
 };
 /** @ignore */
-Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset) {
+Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset, normalOffset) {
  // NOTE: no need to specify bitangent offset, since tangent
  // and bitangent will always be contiguous (this method will
  // always be called after the recalcTangents method ensures
@@ -1402,7 +1404,7 @@ Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset) {
     vi[0] = indices[i] * stride;
     vi[1] = indices[i + 1] * stride;
     vi[2] = indices[i + 2] * stride;
-    var ret = H3DU.Mesh._findTangentAndBitangent(vertices, vi[0], vi[1], vi[2], uvOffset);
+    var ret = Mesh._findTangentAndBitangent(vertices, vi[0], vi[1], vi[2], uvOffset);
   // NOTE: It would be more mathematically correct to use the inverse
   // of the matrix
   // [ Ax Bx Nx ]
@@ -1455,16 +1457,19 @@ Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset) {
   * Recalculates the tangent and bitangent vectors for triangles
   * in this mesh. This method only has an effect if this mesh
   * includes normals and texture coordinates.
+  * @deprecated Deprecated because the default shader no longer
+  * uses tangent and bitangent attributes for normal mapping. This method
+  * may be reimplemented in the {@link H3DU.MeshBuffer} class in the future.
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.recalcTangents = function() {
-  if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
+  if(this.primitiveType() !== Mesh.TRIANGLES) {
     return this;
   }
-  var tangentBits = H3DU.Mesh.TANGENTS_BIT | H3DU.Mesh.BITANGENTS_BIT;
-  var haveOtherAttributes = (this.attributeBits & (H3DU.Mesh.ATTRIBUTES_BITS & ~tangentBits)) !== 0;
-  var uvOffset = H3DU.Mesh._texCoordOffset(this.attributeBits);
-  var normalOffset = H3DU.Mesh._normalOffset(this.attributeBits);
+  var tangentBits = Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT;
+  var haveOtherAttributes = (this.attributeBits & (Mesh.ATTRIBUTES_BITS & ~tangentBits)) !== 0;
+  var uvOffset = Mesh._texCoordOffset(this.attributeBits);
+  var normalOffset = Mesh._normalOffset(this.attributeBits);
   if(uvOffset < 0 || normalOffset < 0) {
    // can't generate tangents and bitangents
    // without normals or texture coordinates.
@@ -1475,18 +1480,7 @@ Mesh.prototype.recalcTangents = function() {
     this._makeRedundant();
   }
   var stride = this.getStride();
-  var tangentOffset = H3DU.Mesh._tangentOffset(this.attributeBits);
-  var tangents = H3DU.Mesh._recalcTangentsInternal(this.vertices, this.indices,
-     stride, uvOffset, normalOffset, tangentOffset);
-  var j = 0;
-  for(var i = 0; i < tangents.length; i += 6) {
-    this.vertices[j * stride + tangentOffset] = tangents[i];
-    this.vertices[j * stride + tangentOffset + 1] = tangents[i + 1];
-    this.vertices[j * stride + tangentOffset + 2] = tangents[i + 2];
-    this.vertices[j * stride + tangentOffset + 3] = tangents[i + 3];
-    this.vertices[j * stride + tangentOffset + 4] = tangents[i + 4];
-    this.vertices[j * stride + tangentOffset + 5] = tangents[i + 5];
-    j++;
-  }
+  this.tangents = Mesh._recalcTangentsInternal(this.vertices, this.indices,
+     stride, uvOffset, normalOffset);
   return this;
 };

@@ -692,6 +692,31 @@ testfunctions.push(function() {
 
 testfunctions.push(function() {
   "use strict";
+  for(var i = 0; i < 100; i++) {
+    var angle = Math.random() * 360 - 180;
+    var axis = H3DU.Math.vec3normalize([Math.random() * 2 - 1,
+      Math.random() * 2 - 1, Math.random() * 2 - 1]);
+    var q = H3DU.Math.quatFromAxisAngle(angle, axis[0], axis[1], axis[2]);
+    var aa = H3DU.Math.quatToAxisAngle(q);
+    var q2 = H3DU.Math.quatFromAxisAngle(aa[3], aa[0], aa[1], aa[2]);
+    ok(isApproxVec(q, q2), "angleaxis=" + [angle, axis]);
+  }
+});
+
+testfunctions.push(function() {
+  "use strict";
+  for(var i = 0; i < 100; i++) {
+    var x = Math.random() * 360 - 180;
+    var y = Math.random() * 360 - 180;
+    var z = Math.random() * 360 - 180;
+    var q = H3DU.Math.quatFromTaitBryan(x, y, z);
+    var aa = H3DU.Math.quatToTaitBryan(q);
+    var q2 = H3DU.Math.quatFromTaitBryan(aa[0], aa[1], aa[2]);
+    ok(isApproxVec(q, q2), "taitbryan=" + [x, y, z]);
+  }
+});
+testfunctions.push(function() {
+  "use strict";
   var pathtest = new H3DU.GraphicsPath()
 .moveTo(0.4713967368259978, 0.8819212643483549 )
 // top left

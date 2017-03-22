@@ -66,12 +66,29 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
 }
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a B-spline (basis spline) curve.
- * B-spline curves can also represent all B&eacute;zier curves (see {@link H3DU.BSplineCurve.fromBezierCurve}).
+ * A B-spline curve consists of one or more <i>control points</i>, which more or less follow the path
+ * of the curve, and a <i>knot vector</i>.
  * <p><b>B&eacute;zier Curves</b><p>
  * A B&eacute;zier curve is defined by a series of control points, where
  * the first and last control points define the end points of the curve, and
  * the remaining control points define the curve's shape, though they don't
- * necessarily cross the curve.<p>
+ * necessarily cross the curve. An important property of these curves is
+ * that the bounding box of the curve is contained within the bounding box
+ * of the control points.<p>
+ * B&eacute;zier curves are a subset of B-spline curves
+ * (see {@link H3DU.BSplineCurve.fromBezierCurve}).
+ * <p><b>Non-Uniform Curves</b><p>
+ * A non-uniform curve is one whose knot vector is not evenly spaced,
+ * that is, the difference between one knot and the next isn't the same.
+ * <p><b>Rational Curves</b><p>
+ * A rational curve is an N-dimensional curve with N plus one coordinates
+ * per control point (<i>homogeneous coordinates</i>). B-spline algorithms
+ * work the same way with homogeneous coordinates as with conventional
+ * coordinates, but if N-dimensional points are wanted, use the {@link H3DU.BSplineCurve.WEIGHTED_BIT}
+ * flag to divide each coordinate by the last to convert to N-dimensional points.<p>
+ * Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.
+ * <p><b>NURBS Curves</b><p>
+ * <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
  * @constructor
  * @augments H3DU.Curve
  * @memberof H3DU
@@ -92,16 +109,15 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * more than N+1 times at the beginning and end of the vector, or more than
  * N times elsewhere, where N is the curve's degree.
  * If the difference between one knot and the next isn't the same,
- * the curve is considered a <i>non-uniform</i>B-spline curve. Usually the first
+ * the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first
  * knot will be 0 or less and the last knot will be 1 or greater.<br>
  * If there are N times 2 knots with the first N knots equal to 0 and the rest
  * equal to 1, where N is the number of control points,
- * the control points describe a <i>B&eacute;zier</i> curve, in which the
- * first and last control points match the curve's end points.<p>
+ * the control points describe a <i>B&eacute;zier</i> curve.<p>
  * @param {number} [bits] Bits for defining input
- * and controlling output. Zero or more of BSplineCurve.WEIGHTED_BIT,
- * BSplineCurve.HOMOGENEOUS_BIT,
- * and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
+ * and controlling output. Zero or more of {@link H3DU.BSplineCurve.WEIGHTED_BIT},
+ * {@link H3DU.BSplineCurve.HOMOGENEOUS_BIT},
+ * and {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null or omitted, no bits are set.
  */
 function BSplineCurve(controlPoints, knots, bits) {
   if(controlPoints.length <= 0)throw new Error();
@@ -634,12 +650,9 @@ BSplineCurve._fromHomogen = function(cp) {
   return cp;
 };
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a B-spline (basis spline) surface.
- * B-spline surfaces can also represent all B&eacute;zier surfaces (see {@link H3DU.BSplineSurface.fromBezierSurface}).
- * A B&eacute;zier surface is defined by a series of control points, where
- * the control points on each corner define the end points of the surface, and
- * the remaining control points define the surface's shape, though they don't
- * necessarily cross the surface.
+ * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a B-spline (basis spline) surface,
+ * whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
+ * for {@link H3DU.BSplineCurve}.
  * @constructor
  * @augments H3DU.Surface
  * @memberof H3DU
@@ -658,9 +671,9 @@ BSplineCurve._fromHomogen = function(cp) {
  * For more information, see {@link H3DU.BSplineCurve}.
  * @param {Array<number>} knotsV Knot vector of the curve, along the V axis.
  * @param {number} [bits] Bits for defining input
- * and controlling output. Zero or more of BSplineCurve.WEIGHTED_BIT,
- * BSplineCurve.HOMOGENEOUS_BIT,
- * and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
+ * and controlling output. Zero or more of {@link H3DU.BSplineCurve.WEIGHTED_BIT},
+ * {@link H3DU.BSplineCurve.HOMOGENEOUS_BIT},
+ * and {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null or omitted, no bits are set.
  */
 function BSplineSurface(controlPoints, knotsU, knotsV, bits) {
   var cpoints = controlPoints;

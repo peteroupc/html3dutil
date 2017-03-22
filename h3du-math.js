@@ -735,11 +735,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
  * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
  * 10, 12, and 14); the Z axis's direction will thus be from the point looked at to the "camera".<p>
- * When used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}, set <code>lookingAt</code> to <code>[X, Y, Z]</code>,
- * <code>viewerPos</code> to <code>[X+1,Y+1,Z+1]</code> (or <code>[X+1,Y+1,Z-1]</code> in a left-handed system),
- * and <code>up</code> to <code>[0,1,0]</code>, to create an isometric view matrix. See the examples below.
  * @param {Array<number>} viewerPos A 3-element vector specifying
- * the "camera" position in world space.
+ * the "camera" position in world space.<br>
+ * When used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}, set this parameter to
+ * to the value of <code>lookingAt</code> plus a unit vector (for example, using {@link H3DU.Math.vec3add}) to form an
+ * <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is
+ * an <i>isometric projection</i>). See the examples below.
  * @param {Array<number>} [lookingAt] A 3-element vector specifying
  * the point in world space that the "camera" is looking at. May be null or omitted,
  * in which case the default is the coordinates (0,0,0).
@@ -765,20 +766,19 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * the bottom right.</caption>
  * // Assumes an orthographic projection matrix is used. Example:
  * // var projectionMatrix=H3DU.Math.mat4ortho(-10,10,-10,10,-50,50);
- * // 45 degrees will create an isometric projection.
- * var degrees45=45*H3DU.Math.ToRadians;
- * var matrix=HMath.mat4lookat(
  * // Camera will be at (1,1,1) -- actually (sqrt(1/3),sqrt(1/3),sqrt(1/3)) --
  * // and point toward [0,0,0]
- * [1,1,1]
- * );
+ * var lookPoint=[0,0,0];
+ * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
+ * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
+ * var matrix=HMath.mat4lookat(cameraPoint,lookPoint);
  * @example <caption>The following example is like the previous
  * example, but with the Z axis pointing up.</caption>
- * // Assumes an orthographic projection matrix is used. Example:
- * // var projectionMatrix=H3DU.Math.mat4ortho(-10,10,-10,10,-50,50);
- * var matrix=HMath.mat4lookat([1,1,1], [0,0,0],
- * [0,0,1] // Positive Z axis is the up vector
- * );
+ * var lookPoint=[0,0,0];
+ * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
+ * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
+ * // Positive Z axis is the up vector
+ * var matrix=HMath.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
  */
   "mat4lookat":function(viewerPos, lookingAt, up) {
     if(typeof up === "undefined" || up === null)up = [0, 1, 0];
@@ -836,6 +836,35 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return dst;
   },
 /**
+ * Returns a 4x4 view matrix representing an oblique projection,
+ * when used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}.<p>
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * To adjust the result of this method for a left-handed system,
+ * reverse the sign of the 9th and 10th elements of the result (zero-based indices 8 and 9).
+ * @param {number} alpha Controls how much the Z axis is stretched. In degrees. A value of 45
+ * (<code>arctan(1)</code>) indicates
+ * a cabinet projection, and a value of 63.435 (<code>arctan(2)</code>) indicates a cavalier projection.
+ * @param {number} phi Controls the apparent angle of the negative Z axis in relation to the
+ * positive X axis. In degrees. 0 means the negative Z axis appears to point in the same direction as
+ * the positive X axis, and 90, in the same direction as the positive Y axis.
+ * @returns {Array<number>} The resulting 4x4 matrix.
+ */
+  "mat4oblique":function(alpha, phi) {
+    var alphaAngle = (alpha >= 0 && alpha < 360 ? alpha : alpha % 360 + (alpha < 0 ? 360 : 0)) * HMath.PiDividedBy180;
+    var phiAngle = (phi >= 0 && phi < 360 ? phi : phi % 360 + (phi < 0 ? 360 : 0)) * HMath.PiDividedBy180;
+    var ca = Math.cos(alphaAngle);
+    var sa = (alphaAngle>=0 && alphaAngle<6.283185307179586) ? (alphaAngle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(alphaAngle);
+    var cp = Math.cos(phiAngle);
+    var sp = (phiAngle>=0 && phiAngle<6.283185307179586) ? (phiAngle<=3.141592653589793 ? Math.sqrt(1.0-cp*cp) : -Math.sqrt(1.0-cp*cp)) : Math.sin(phiAngle);
+    var cota = ca / sa;
+    return [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      -cp * cota, -sp * cota, 1, 0,
+      0, 0, 0, 1
+    ];
+  },
+/**
  * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera}.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
@@ -847,8 +876,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * of the result (zero-based indices 10 and 14) by 2, then add 0.5 to the 15th element.<p>
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * To adjust the result of this method for a left-handed system,
- * reverse the sign of the 9th, 10th, 11th, and 12th
- * elements of the result (zero-based indices 8, 9, 10, and 11).
+ * reverse the sign of the 11th element of the result (zero-based index 10).
  * @param {number} l Leftmost coordinate of the orthographic view.
  * @param {number} r Rightmost coordinate of the orthographic view.
  * ("l" is usually less than "r", so that X coordinates increase leftward.
@@ -1025,6 +1053,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4perspective":function(fovY, aspectRatio, near, far) {
+    // NOTE: Converts fovY to radians then divides it by 2
     var fov = (fovY >= 0 && fovY < 360 ? fovY : fovY % 360 + (fovY < 0 ? 360 : 0)) * HMath.PiDividedBy360;
     var f = 1 / Math.tan(fov);
     var nmf = near - far;
@@ -1073,7 +1102,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @returns {Array<number>} The resulting 4x4 matrix.
  */
   "mat4perspectiveHorizontal":function(fovX, aspectRatio, near, far) {
+    // NOTE: Converts fovX to radians then divides it by 2
     var fov = (fovX >= 0 && fovX < 360 ? fovX : fovX % 360 + (fovX < 0 ? 360 : 0)) * HMath.PiDividedBy360;
+    // NOTE: Converts to degrees then multiplies by 2
     var fovY = HMath.Num360DividedByPi * Math.atan2(Math.tan(fov), aspectRatio);
     return HMath.mat4perspective(fovY, aspectRatio, near, far);
   },

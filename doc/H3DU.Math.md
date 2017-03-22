@@ -97,6 +97,8 @@ the given 4x4 matrix.
 transforming world space coordinates to <i>eye space</i>
 (or <i>camera space</i>).
 * [mat4multiply](#H3DU.Math.mat4multiply)<br>Multiplies two 4x4 matrices.
+* [mat4oblique](#H3DU.Math.mat4oblique)<br>Returns a 4x4 view matrix representing an oblique projection,
+when used in conjunction with an <a href="H3DU.Math.md#H3DU.Math.mat4ortho">orthographic projection</a>.
 * [mat4ortho](#H3DU.Math.mat4ortho)<br>Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
 * [mat4ortho2d](#H3DU.Math.mat4ortho2d)<br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
 * [mat4ortho2dAspect](#H3DU.Math.mat4ortho2dAspect)<br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
@@ -906,13 +908,9 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14); the Z axis's direction will thus be from the point looked at to the "camera".
 
-When used in conjunction with an <a href="H3DU.Math.md#H3DU.Math.mat4ortho">orthographic projection</a>, set <code>lookingAt</code> to <code>[X, Y, Z]</code>,
-<code>viewerPos</code> to <code>[X+1,Y+1,Z+1]</code> (or <code>[X+1,Y+1,Z-1]</code> in a left-handed system),
-and <code>up</code> to <code>[0,1,0]</code>, to create an isometric view matrix. See the examples below.
-
 #### Parameters
 
-* `viewerPos` (Type: Array.&lt;number>)<br>A 3-element vector specifying the "camera" position in world space.
+* `viewerPos` (Type: Array.&lt;number>)<br>A 3-element vector specifying the "camera" position in world space.<br> When used in conjunction with an <a href="H3DU.Math.md#H3DU.Math.mat4ortho">orthographic projection</a>, set this parameter to to the value of <code>lookingAt</code> plus a unit vector (for example, using <a href="H3DU.Math.md#H3DU.Math.vec3add">H3DU.Math.vec3add</a>) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the examples below.
 * `lookingAt` (Type: Array.&lt;number>) (optional)<br>A 3-element vector specifying the point in world space that the "camera" is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).
 * `up` (Type: Array.&lt;number>) (optional)<br>A 3-element vector specifying the direction from the center of the "camera" to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the "camera" is held upright.<br> This vector must not be parallel to the view direction (the direction from "viewerPos" to "lookingAt"). (See the example for one way to ensure this.)<br>
 
@@ -939,22 +937,21 @@ the bottom right.
 
     // Assumes an orthographic projection matrix is used. Example:
     // var projectionMatrix=H3DU.Math.mat4ortho(-10,10,-10,10,-50,50);
-    // 45 degrees will create an isometric projection.
-    var degrees45=45*H3DU.Math.ToRadians;
-    var matrix=HMath.mat4lookat(
     // Camera will be at (1,1,1) -- actually (sqrt(1/3),sqrt(1/3),sqrt(1/3)) --
     // and point toward [0,0,0]
-    [1,1,1]
-    );
+    var lookPoint=[0,0,0];
+    var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
+    cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
+    var matrix=HMath.mat4lookat(cameraPoint,lookPoint);
 
 The following example is like the previous
 example, but with the Z axis pointing up.
 
-    // Assumes an orthographic projection matrix is used. Example:
-    // var projectionMatrix=H3DU.Math.mat4ortho(-10,10,-10,10,-50,50);
-    var matrix=HMath.mat4lookat([1,1,1], [0,0,0],
-    [0,0,1] // Positive Z axis is the up vector
-    );
+    var lookPoint=[0,0,0];
+    var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
+    cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
+    // Positive Z axis is the up vector
+    var matrix=HMath.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
 
 <a name='H3DU.Math.mat4multiply'></a>
 ### (static) H3DU.Math.mat4multiply(a, b)
@@ -980,6 +977,25 @@ matrix <code>a</code>, and putting the vectors back together into a new matrix.
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
+<a name='H3DU.Math.mat4oblique'></a>
+### (static) H3DU.Math.mat4oblique(alpha, phi)
+
+Returns a 4x4 view matrix representing an oblique projection,
+when used in conjunction with an <a href="H3DU.Math.md#H3DU.Math.mat4ortho">orthographic projection</a>.
+
+This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
+To adjust the result of this method for a left-handed system,
+reverse the sign of the 9th and 10th elements of the result (zero-based indices 8 and 9).
+
+#### Parameters
+
+* `alpha` (Type: number)<br>Controls how much the Z axis is stretched. In degrees. A value of 45 (<code>arctan(1)</code>) indicates a cabinet projection, and a value of 63.435 (<code>arctan(2)</code>) indicates a cavalier projection.
+* `phi` (Type: number)<br>Controls the apparent angle of the negative Z axis in relation to the positive X axis. In degrees. 0 means the negative Z axis appears to point in the same direction as the positive X axis, and 90, in the same direction as the positive Y axis.
+
+#### Return Value
+
+The resulting 4x4 matrix. (Type: Array.&lt;number>)
+
 <a name='H3DU.Math.mat4ortho'></a>
 ### (static) H3DU.Math.mat4ortho(l, r, b, t, n, f)
 
@@ -997,8 +1013,7 @@ of the result (zero-based indices 10 and 14) by 2, then add 0.5 to the 15th elem
 
 This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
-reverse the sign of the 9th, 10th, 11th, and 12th
-elements of the result (zero-based indices 8, 9, 10, and 11).
+reverse the sign of the 11th element of the result (zero-based index 10).
 
 #### Parameters
 

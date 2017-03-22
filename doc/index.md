@@ -10,7 +10,8 @@
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
-* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
+* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface,
+whose edges are made up of B-spline curves.
 * <a href="H3DU.Batch3D.md">H3DU.Batch3D</a><br>A `Batch3D` represents a so-called "scene graph".
 * <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b>

@@ -8,21 +8,46 @@
 **Augments:** <a href="H3DU.Curve.md">H3DU.Curve</a>
 
 A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
-B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
+A B-spline curve consists of one or more <i>control points</i>, which more or less follow the path
+of the curve, and a <i>knot vector</i>.
 
 <b>B&eacute;zier Curves</b>
 
 A B&eacute;zier curve is defined by a series of control points, where
 the first and last control points define the end points of the curve, and
 the remaining control points define the curve's shape, though they don't
-necessarily cross the curve.
+necessarily cross the curve. An important property of these curves is
+that the bounding box of the curve is contained within the bounding box
+of the control points.
+
+B&eacute;zier curves are a subset of B-spline curves
+(see <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
+
+<b>Non-Uniform Curves</b>
+
+A non-uniform curve is one whose knot vector is not evenly spaced,
+that is, the difference between one knot and the next isn't the same.
+
+<b>Rational Curves</b>
+
+A rational curve is an N-dimensional curve with N plus one coordinates
+per control point (<i>homogeneous coordinates</i>). B-spline algorithms
+work the same way with homogeneous coordinates as with conventional
+coordinates, but if N-dimensional points are wanted, use the <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>
+flag to divide each coordinate by the last to convert to N-dimensional points.
+
+Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.
+
+<b>NURBS Curves</b>
+
+<i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
 
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point's length represents the size of all the control points.
-* `knots` (Type: Array.&lt;number>)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i>B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.<br> If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve, in which the first and last control points match the curve's end points.
+* `knots` (Type: Array.&lt;number>)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.<br> If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve.
 
-* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.WEIGHTED_BIT, BSplineCurve.HOMOGENEOUS_BIT, and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
+* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null or omitted, no bits are set.
 
 ### Members
 

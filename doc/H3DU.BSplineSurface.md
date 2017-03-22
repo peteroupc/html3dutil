@@ -7,19 +7,16 @@
 
 **Augments:** <a href="H3DU.Surface.md">H3DU.Surface</a>
 
-A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
-B-spline surfaces can also represent all B&eacute;zier surfaces (see <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>).
-A B&eacute;zier surface is defined by a series of control points, where
-the control points on each corner define the end points of the surface, and
-the remaining control points define the surface's shape, though they don't
-necessarily cross the surface.
+A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface,
+whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
+for <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>.
 
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point's length represents the size of all the control points. </ul>
 * `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the U axis. For more information, see <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>.
 * `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the V axis.
-* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.WEIGHTED_BIT, BSplineCurve.HOMOGENEOUS_BIT, and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
+* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null or omitted, no bits are set.
 
 ### Methods
 

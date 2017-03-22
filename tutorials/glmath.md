@@ -306,25 +306,9 @@ confusion.
 
 The difference between a left-handed and right-handed coordinate system
 affects how 3D points are transformed, mainly in the projection and view
-matrices.
-
-The following methods return **projection matrices** for a right-handed coordinate system.
-To adjust the matrices for a left-handed system, reverse the sign of the 9th, 10th, 11th, and
-12th elements of the result (zero-based indices 8, 9, 10, and 11).
-
-* {@link H3DU.Math.mat4perspective},
-{@link H3DU.Math.mat4perspectiveHorizontal},
-{@link H3DU.Math.mat4frustum},
-{@link H3DU.Math.mat4ortho},
-{@link H3DU.Math.mat4ortho2d},
-{@link H3DU.Math.mat4orthoAspect},
-{@link H3DU.Math.mat4ortho2dAspect}.
-
-The {@link H3DU.Math.mat4lookat} method returns a **view matrix** for a right-handed
-coordinate system. To adjust the matrix for a left-handed system,
-reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
-13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
-10, 12, and 14).
+matrices.  The projection and view matrices returned by {@link H3DU.Math}
+matrix methods are designed for a right-handed coordinate system.  Their
+documentation describes how to adjust them for a left-handed coordinate system.
 
 <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a>
 #### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
