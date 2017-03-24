@@ -738,7 +738,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array<number>} viewerPos A 3-element vector specifying
  * the "camera" position in world space.<br>
  * When used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}, set this parameter to
- * to the value of <code>lookingAt</code> plus a unit vector (for example, using {@link H3DU.Math.vec3add}) to form an
+ * the value of <code>lookingAt</code> plus a [unit vector]{@tutorial glmath}
+ * (for example, using {@link H3DU.Math.vec3add}) to form an
  * <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is
  * an <i>isometric projection</i>). See the examples below.
  * @param {Array<number>} [lookingAt] A 3-element vector specifying
@@ -838,9 +839,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
 /**
  * Returns a 4x4 view matrix representing an oblique projection,
  * when used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * To adjust the result of this method for a left-handed system,
- * reverse the sign of the 9th and 10th elements of the result (zero-based indices 8 and 9).
+ * This method works the same way in right-handed and left-handed
+ * coordinate systems.
  * @param {number} alpha Controls how much the Z axis is stretched. In degrees. A value of 45
  * (<code>arctan(1)</code>) indicates
  * a cabinet projection, and a value of 63.435 (<code>arctan(2)</code>) indicates a cavalier projection.
@@ -853,9 +853,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var alphaAngle = (alpha >= 0 && alpha < 360 ? alpha : alpha % 360 + (alpha < 0 ? 360 : 0)) * HMath.PiDividedBy180;
     var phiAngle = (phi >= 0 && phi < 360 ? phi : phi % 360 + (phi < 0 ? 360 : 0)) * HMath.PiDividedBy180;
     var ca = Math.cos(alphaAngle);
-    var sa = (alphaAngle>=0 && alphaAngle<6.283185307179586) ? (alphaAngle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(alphaAngle);
+    var sa = alphaAngle >= 0 && alphaAngle < 6.283185307179586 ? alphaAngle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(alphaAngle);
     var cp = Math.cos(phiAngle);
-    var sp = (phiAngle>=0 && phiAngle<6.283185307179586) ? (phiAngle<=3.141592653589793 ? Math.sqrt(1.0-cp*cp) : -Math.sqrt(1.0-cp*cp)) : Math.sin(phiAngle);
+    var sp = phiAngle >= 0 && phiAngle < 6.283185307179586 ? phiAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cp * cp) : -Math.sqrt(1.0 - cp * cp) : Math.sin(phiAngle);
     var cota = ca / sa;
     return [
       1, 0, 0, 0,

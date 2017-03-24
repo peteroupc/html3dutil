@@ -345,7 +345,7 @@ illustrating a simple animation of 3D shapes.
 * [demos/quatlerp.html](https://peteroupc.github.io/html3dutil/demos/quatlerp.html) - Demonstrates
 the difference between {@link H3DU.Math.quatNlerp} and {@link H3DU.Math.quatSlerp},
 both functions for interpolating quaternion rotations.
-* [demos/quatlerp.html](https://peteroupc.github.io/html3dutil/demos/quatlerp.html) - Shows how
+* [demos/underlay.html](https://peteroupc.github.io/html3dutil/demos/underlay.html) - Shows how
 {@link H3DU.RenderPass} can be used to draw a two-dimensional background under three-dimensional
 content.
 

@@ -910,7 +910,7 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 #### Parameters
 
-* `viewerPos` (Type: Array.&lt;number>)<br>A 3-element vector specifying the "camera" position in world space.<br> When used in conjunction with an <a href="H3DU.Math.md#H3DU.Math.mat4ortho">orthographic projection</a>, set this parameter to to the value of <code>lookingAt</code> plus a unit vector (for example, using <a href="H3DU.Math.md#H3DU.Math.vec3add">H3DU.Math.vec3add</a>) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the examples below.
+* `viewerPos` (Type: Array.&lt;number>)<br>A 3-element vector specifying the "camera" position in world space.<br> When used in conjunction with an <a href="H3DU.Math.md#H3DU.Math.mat4ortho">orthographic projection</a>, set this parameter to the value of <code>lookingAt</code> plus a <a href="tutorial-glmath.md">unit vector</a> (for example, using <a href="H3DU.Math.md#H3DU.Math.vec3add">H3DU.Math.vec3add</a>) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the examples below.
 * `lookingAt` (Type: Array.&lt;number>) (optional)<br>A 3-element vector specifying the point in world space that the "camera" is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).
 * `up` (Type: Array.&lt;number>) (optional)<br>A 3-element vector specifying the direction from the center of the "camera" to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the "camera" is held upright.<br> This vector must not be parallel to the view direction (the direction from "viewerPos" to "lookingAt"). (See the example for one way to ensure this.)<br>
 
@@ -983,9 +983,8 @@ The resulting 4x4 matrix. (Type: Array.&lt;number>)
 Returns a 4x4 view matrix representing an oblique projection,
 when used in conjunction with an <a href="H3DU.Math.md#H3DU.Math.mat4ortho">orthographic projection</a>.
 
-This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
-To adjust the result of this method for a left-handed system,
-reverse the sign of the 9th and 10th elements of the result (zero-based indices 8 and 9).
+This method works the same way in right-handed and left-handed
+coordinate systems.
 
 #### Parameters
 

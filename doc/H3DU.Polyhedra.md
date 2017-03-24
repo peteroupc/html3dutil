@@ -6,7 +6,13 @@
 ### H3DU.Polyhedra()
 
 Contains helper methods for generating the five platonic solids
-and other H3DU.Polyhedra.
+and other polyhedra.
+
+To use this class, you must include the script "extras/polyhedra.js"; the
+class is not included in the "h3du_min.js" file which makes up
+the HTML 3D Library. Example:
+
+    <script type="text/javascript" src="extras/polyhedra.js"></script>
 
 ### Methods
 

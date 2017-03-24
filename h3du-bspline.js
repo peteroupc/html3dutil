@@ -84,9 +84,14 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * A rational curve is an N-dimensional curve with N plus one coordinates
  * per control point (<i>homogeneous coordinates</i>). B-spline algorithms
  * work the same way with homogeneous coordinates as with conventional
- * coordinates, but if N-dimensional points are wanted, use the {@link H3DU.BSplineCurve.WEIGHTED_BIT}
- * flag to divide each coordinate by the last to convert to N-dimensional points.<p>
- * Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.
+ * coordinates, but if N-dimensional points are wanted, use the {@link H3DU.BSplineCurve.DIVIDE_BIT}
+ * flag to divide each coordinate by the last (and omit the last coordinate)
+ * to convert to N-dimensional points.<p>
+ * Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.<p>
+ * Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
+ * N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
+ * for each control point. To convert such control points to homogeneous coordinates, multiply each
+ * conventional coordinate by its weight, then append the weight as the control point's last coordinate.
  * <p><b>NURBS Curves</b><p>
  * <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
  * @constructor

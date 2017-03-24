@@ -59,7 +59,7 @@ of various geometric shapes and solids.
 * <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve
 made up of one or more individual curves.
 * <a href="H3DU.Polyhedra.md">H3DU.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
-and other H3DU.Polyhedra.
+and other polyhedra.
 * <a href="H3DU.RenderPass.md">H3DU.RenderPass</a><br>Describes a batch (a scene graph of 3D objects) and options for
 rendering that batch.
 * <a href="H3DU.Scene3D.md">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering
