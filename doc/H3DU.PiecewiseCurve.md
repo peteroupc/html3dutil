@@ -34,8 +34,11 @@ but has a different set of end points.
 * [evaluate](#H3DU.PiecewiseCurve_evaluate)<br>TODO: Not documented yet.
 * [fitRange](#H3DU.PiecewiseCurve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to fit the given range.
-* [fromCardinalSpline](#H3DU.PiecewiseCurve.fromCardinalSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a cardinal spline.
+* [fromCatmullRomSpline](#H3DU.PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic Catmull-Rom spline.
 * [fromHermiteSpline](#H3DU.PiecewiseCurve.fromHermiteSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a Hermite spline.
+* [fromTCBSpline](#H3DU.PiecewiseCurve.fromTCBSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
+TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
 * [getCurves](#H3DU.PiecewiseCurve_getCurves)<br>Gets a reference to the curves that make up this piecewise curve.
 * [getLength](#H3DU.PiecewiseCurve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#H3DU.PiecewiseCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
@@ -148,10 +151,11 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.
 
 Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
 
-<a name='H3DU.PiecewiseCurve.fromCardinalSpline'></a>
-### (static) H3DU.PiecewiseCurve.fromCardinalSpline(curve, [tension])
+<a name='H3DU.PiecewiseCurve.fromCatmullRomSpline'></a>
+### (static) H3DU.PiecewiseCurve.fromCatmullRomSpline(curve, [param], [closed])
 
-Creates a piecewise curve made up of B-spline curves from the control points of a cardinal spline.
+Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic Catmull-Rom spline.
 
 To use this method, you must include the script "extras/spline.js". Example:
 
@@ -159,14 +163,13 @@ To use this method, you must include the script "extras/spline.js". Example:
 
 #### Parameters
 
-* `curve` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.
-* `tension` (Type: number) (optional)<br>A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).
+* `curve` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.
+* `param` (Type: number) (optional)<br>A value that describes the curve's parameterization. Ranges from 0 to 1. A value of 0 indicates a uniform parameterization, 0.5 indicates a centripetal parameterization, and 1 indicates a chordal parameterization. Default is 0.5.
+* `closed` (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.
 
 #### Return Value
 
-A piecewise curve made up
-of cubic B-spline curves describing the
-same path as the cardinal spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull-Rom spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
 
 <a name='H3DU.PiecewiseCurve.fromHermiteSpline'></a>
 ### (static) H3DU.PiecewiseCurve.fromHermiteSpline(curve)
@@ -185,6 +188,32 @@ To use this method, you must include the script "extras/spline.js". Example:
 
 A piecewise curve made up of cubic B-spline curves describing the
 same path as the Hermite spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+
+<a name='H3DU.PiecewiseCurve.fromTCBSpline'></a>
+### (static) H3DU.PiecewiseCurve.fromTCBSpline(curve, [tension], [continuity], [bias], [closed], [rigidEnds])
+
+Creates a piecewise curve made up of B-spline curves from the control points of a
+TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
+(If tension, continuity, and bias are all 0, the result is a Catmull-Rom spline
+in uniform parameterization.)
+
+To use this method, you must include the script "extras/spline.js". Example:
+
+    <script type="text/javascript" src="extras/spline.js"></script>
+
+#### Parameters
+
+* `curve` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.
+* `tension` (Type: number) (optional)<br>A parameter that adjusts the length of the starting and ending tangents of each curve segment. Ranges from -1 for double-length tangents to 1 for zero-length tangents. A value of 1 results in straight line segments. Default is 0.
+* `continuity` (Type: number) (optional)<br>A parameter that adjusts the direction of the starting and ending tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 to 1 result in tangents that are closer to perpendicular. A value of -1 results in straight line segments. Default is 0.
+* `bias` (Type: number) (optional)<br>A parameter that adjusts the influence of the starting and ending tangents of each curve segment. The greater this number, the greater the ending tangents influence the direction of the next curve segment i n comparison to the starting tangents. Ranges from -1 to 1. Default is 0.
+* `closed` (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.
+* `rigidEnds` (Type: number) (optional)<br>If true, the start and end of the piecewise curve will, by default, more rigidly follow the direction to the next or previous control point, respectively. This makes the curve compatible with GDI+ cardinal splines with 0 continuity, 0 bias, and tension equal to <code>-((T\*2)-1)</code>, where T is the GDI+ cardinal spline tension parameter. Default is false.
+
+#### Return Value
+
+A piecewise curve made up of cubic B-spline curves describing the
+same path as the TCB spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
 
 <a name='H3DU.PiecewiseCurve_getCurves'></a>
 ### H3DU.PiecewiseCurve#getCurves()
