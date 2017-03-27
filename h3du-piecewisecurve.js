@@ -12,7 +12,7 @@ import {Curve} from "./h3du-curve";
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a curve
  * made up of one or more individual curves.<p>
- * The combined curves U coordinates range from 0 to N,
+ * The combined curve's U coordinates range from 0 to N,
  * where N is the number of curves. In this way, the integer
  * part of a U coordinate indicates the curve the coordinate
  * refers to. For example, if there are four curves, coordinates

@@ -74,7 +74,10 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * the remaining control points define the curve's shape, though they don't
  * necessarily cross the curve. An important property of these curves is
  * that the bounding box of the curve is contained within the bounding box
- * of the control points.<p>
+ * of the control points. Another important property is that the starting direction
+ * is the same as the direction from the
+ * first to the second control point, and the ending direction is the same as the
+ * direction from the next-to-last to last control point.<p>
  * B&eacute;zier curves are a subset of B-spline curves
  * (see {@link H3DU.BSplineCurve.fromBezierCurve}).
  * <p><b>Non-Uniform Curves</b><p>

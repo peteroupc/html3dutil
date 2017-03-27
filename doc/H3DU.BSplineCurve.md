@@ -18,7 +18,10 @@ the first and last control points define the end points of the curve, and
 the remaining control points define the curve's shape, though they don't
 necessarily cross the curve. An important property of these curves is
 that the bounding box of the curve is contained within the bounding box
-of the control points.
+of the control points. Another important property is that the starting direction
+is the same as the direction from the
+first to the second control point, and the ending direction is the same as the
+direction from the next-to-last to last control point.
 
 B&eacute;zier curves are a subset of B-spline curves
 (see <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).

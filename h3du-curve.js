@@ -216,20 +216,52 @@ Curve.prototype.getLength = function() {
   return this.arcLength(ep[1]);
 };
 
-Curve._legendreGauss24 = [
-  0.12793819534675216, 0.06405689286260563,
-  0.1258374563468283, 0.1911188674736163,
-  0.12167047292780339, 0.3150426796961634,
-  0.1155056680537256, 0.4337935076260451,
-  0.10744427011596563, 0.5454214713888396,
-  0.09761865210411388, 0.6480936519369755,
-  0.08619016153195327, 0.7401241915785544,
-  0.0733464814110803, 0.820001985973903,
-  0.05929858491543678, 0.8864155270044011,
-  0.04427743881741981, 0.9382745520027328,
-  0.028531388628933663, 0.9747285559713095,
-  0.0123412297999872, 0.9951872199970213
+var gaussKronrodArray = [
+  0.99693392252959545, 0.00825771143316837, 0.00000000000000000,
+  0.98156063424671924, 0.02303608403898155, 0.04717533638651112,
+  0.95053779594312127, 0.03891523046929952, 0.00000000000000000,
+  0.90411725637047491, 0.05369701760775668, 0.10693932599531891,
+  0.84355812416115328, 0.06725090705083998, 0.00000000000000000,
+  0.76990267419430469, 0.07992027533360173, 0.16007832854334625,
+  0.68405989547005586, 0.09154946829504924, 0.00000000000000000,
+  0.58731795428661748, 0.10164973227906016, 0.20316742672306579,
+  0.48133945047815713, 0.11002260497764407, 0.00000000000000000,
+  0.36783149899818018, 0.11671205350175679, 0.23349253653835478,
+  0.24850574832046932, 0.12162630352394839, 0.00000000000000000,
+  0.12523340851146891, 0.12458416453615606, 0.24914704581340283,
+  0.00000000000000000, 0.12555689390547423, 0.00000000000000000
 ];
+function gaussKronrod(func, mn, mx, dir, depth) {
+  var bm = (mx - mn) * 0.5;
+  var bp = mn + bm;
+
+  var gauss = 0;
+  var kronrod = 0;
+  for(var i = 0; i < gaussKronrodArray.length; i += 3) {
+    var gaussWeight = gaussKronrodArray[i + 2];
+    var kronrodWeight = gaussKronrodArray[i + 1];
+    var abscissa = gaussKronrodArray[i];
+    var x = func(bm * abscissa + bp);
+    gauss += gaussWeight * x;
+    kronrod += kronrodWeight * x;
+    if(abscissa > 0) {
+      x = func(-bm * abscissa + bp);
+      gauss += gaussWeight * x;
+      kronrod += kronrodWeight * x;
+    }
+  }
+  gauss = gauss * bm * dir;
+  kronrod = kronrod * bm * dir;
+  if(Math.abs(gauss - kronrod) < 1e-6) {
+    return kronrod + (kronrod - gauss) / 8191.0;
+  } else if(depth >= 10) {
+    return kronrod + (kronrod - gauss) / 8191.0;
+  } else {
+    return gaussKronrod(func, mn, bp, dir, depth + 1) +
+         gaussKronrod(func, bp, mx, dir, depth + 1);
+  }
+}
+
 /**
  * Finds an approximate arc length (distance) between the start of this
  * curve and the point at the given U coordinate of this curve.
@@ -251,19 +283,10 @@ Curve.prototype.arcLength = function(u) {
     var mn = Math.min(u, ep[0]);
     var mx = Math.max(u, ep[0]);
     var dir = u >= ep[0] ? 1 : -1;
-    var bm = (mx - mn) * 0.5;
-    var bp = (mx + mn) * 0.5;
-    var ret = 0;
-    var lg = Curve._legendreGauss24;
-    for(var i = 0; i < lg.length; i += 2) {
-      var weight = lg[i];
-      var abscissa = lg[i + 1];
-      var x = this.velocity(bm * abscissa + bp);
-      ret += weight * _MathInternal.vecLength(x);
-      x = this.velocity(-bm * abscissa + bp);
-      ret += weight * _MathInternal.vecLength(x);
-    }
-    return ret * bm * dir;
+    var that = this;
+    return gaussKronrod(function(x) {
+      return _MathInternal.vecLength(that.velocity(x));
+    }, mn, mx, dir, 0);
   }
 };
 
