@@ -181,8 +181,11 @@ A piecewise curve made up of cubic B-spline curves describing the same path as t
 Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline. A Hermite spline is a collection of points that the curve will go through,
 together with the velocity vectors (derivatives or instantaneous rates of change) at
-those points. Hermite splines are useful for representing an approximate polynomial form
-of a function or curve whose derivative is known.
+those points.
+
+Hermite splines are useful for representing an approximate polynomial form
+of a function or curve whose derivative is known; however, Hermite splines are not
+guaranteed to preserve the increasing or decreasing nature of the function or curve.
 
 To use this method, you must include the script "extras/spline.js". Example:
 

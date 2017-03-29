@@ -234,7 +234,6 @@ var gaussKronrodArray = [
 function gaussKronrod(func, mn, mx, dir, depth) {
   var bm = (mx - mn) * 0.5;
   var bp = mn + bm;
-
   var gauss = 0;
   var kronrod = 0;
   for(var i = 0; i < gaussKronrodArray.length; i += 3) {
@@ -350,8 +349,10 @@ Curve._ArcLengthParam = function(curve) {
   this.segments = [];
   var lastT = this.ep[0];
   var lastS = 0;
-  for(var i = 1; i <= 50; i++) {
-    var t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / 50);
+  var totalLength = this.curve.getLength();
+  var segments = Math.min(Math.max(10, Math.ceil(totalLength * 18)), 50);
+  for(var i = 1; i <= segments; i++) {
+    var t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / segments);
     var s = this.curve.arcLength(t);
     this.segments.push([lastS, s, lastT, t]);
     lastT = t;

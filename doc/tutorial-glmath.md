@@ -46,8 +46,8 @@ the vector's direction).
 
 The following functions normalize vectors and find their length.
 
-* <a href="H3DU.Math.md#H3DU.Math.vec3norm">H3DU.Math.vec3norm</a> - Converts a 3-element vector to a unit vector.
-* <a href="H3DU.Math.md#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a> - Converts a 4-element vector to a unit vector.
+* <a href="H3DU.Math.md#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a> - Converts a 3-element vector to a unit vector.
+* <a href="H3DU.Math.md#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a> - Converts a 4-element vector to a unit vector.
 * <a href="H3DU.Math.md#H3DU.Math.vec3length">H3DU.Math.vec3length</a> - Finds a 3-element vector's length.
 * <a href="H3DU.Math.md#H3DU.Math.vec4length">H3DU.Math.vec4length</a> - Finds a 4-element vector's length.
 
@@ -195,8 +195,8 @@ For best results when using quaternions:
   (see ["Generating Quaternions"](#Generating_Quaternions)
   and <a href="H3DU.Math.md#H3DU.Math.quatMultiply">multiply</a> that quaternion by the current
   quaternion to get the object's new rotation.
-* Normalize the rotation quaternion (using <a href="H3DU.Math.md#H3DU.Math.quatNorm">`quatNorm()`</a>
- or <a href="H3DU.Math.md#H3DU.Math.quatNormInPlace">`quatNormInPlace()`</a>)
+* Normalize the rotation quaternion (using <a href="H3DU.Math.md#H3DU.Math.quatNormalize">`quatNormalize()`</a>
+ or <a href="H3DU.Math.md#H3DU.Math.quatNormalizeInPlace">`quatNormalizeInPlace()`</a>)
   every few frames. (Quaternions that describe a 3D rotation should be [unit vectors](#Unit_Vectors).)
 
 <a id=Multiplying_Quaternions></a>
@@ -258,7 +258,7 @@ negative if it points away from the origin.
 
 There is one method that deals with planes:
 
-* <a href="H3DU.Math.md#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace</a> - Converts the plane to a form in which
+* <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> - Converts the plane to a form in which
 its normal has a length of 1.
 
 <a id=Boxes></a>
@@ -283,16 +283,16 @@ Methods that deal with boxes include:
 There are two conventions of 3D coordinate systems, left-handed and
 right-handed:
 
-* In a _left-handed_ coordinate system, the Z axis points _away from
-the viewer_ whenever the X axis points to the right and the Y axis points up.
-* In a _right-handed_ coordinate system, the Z axis points _toward
-the viewer_ whenever the X axis points to the right and the Y axis points up.
+* In a _left-handed_ coordinate system, the positive Z axis points _away from
+the viewer_ whenever the positive X axis points to the right and the positive Y axis points up.
+* In a _right-handed_ coordinate system, the positive Z axis points _toward
+the viewer_ whenever the positive X axis points to the right and the positive Y axis points up.
 
 To show this more visually, point one hand's thumb to your right and
 its index finger up, and bend the other three fingers halfway down.  In a
 coordinate system named after that hand (left-handed or
-right-handed), if the X axis points in the thumb's
-direction and the Y axis points in the index finger's direction, the Z axis will
+right-handed), if the positive X axis points in the thumb's
+direction and the positive Y axis points in the index finger's direction, the Z axis will
 point in the direction the other three fingers point.
 
 As used here, the Z axis is the <a href="H3DU.Math.md#H3DU.Math.vec3cross">cross product</a>
@@ -358,7 +358,7 @@ To find a triangle's winding, do the following calculation (X1, X2, X3 and Y1, Y
 
     (X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
 
-If the result is positive, and the window space X axis points right and the Y axis points...
+If the result is positive, and the window space X axis points right and the positive Y axis points...
 
 * ...up (which is the case in WebGL), then the triangle
  has counterclockwise winding.

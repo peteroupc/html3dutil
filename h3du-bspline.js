@@ -66,8 +66,9 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
 }
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a B-spline (basis spline) curve.
- * A B-spline curve consists of one or more <i>control points</i>, which more or less follow the path
- * of the curve, and a <i>knot vector</i>.
+ * A B-spline curve is a parametric curve based on polynomial functions, one for each
+ * dimension of the curve. Each polynomial is generated using one or more <i>control points</i>, which more or less follow the path of the curve, and a <i>knot vector</i>, which determines, more
+ * or less, where each control point is spaced along the curve.
  * <p><b>B&eacute;zier Curves</b><p>
  * A B&eacute;zier curve is defined by a series of control points, where
  * the first and last control points define the end points of the curve, and
@@ -79,12 +80,18 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * first to the second control point, and the ending direction is the same as the
  * direction from the next-to-last to last control point.<p>
  * B&eacute;zier curves are a subset of B-spline curves
- * (see {@link H3DU.BSplineCurve.fromBezierCurve}).
+ * (see {@link H3DU.BSplineCurve.fromBezierCurve}).<p>
+ * Line segments (degree-1 curves with two control points) are
+ * subsets of B&eacute;zier curves.<p>
+ * A B&eacute;zier curve's knot vector consists of as many zeros as the number
+ * of control points, followed by that many ones. For example, a degree-3 (cubic
+ * curve) contains three control points and the following knot vector:
+ * <code>[0, 0, 0, 0, 1, 1, 1, 1]</code>.
  * <p><b>Non-Uniform Curves</b><p>
- * A non-uniform curve is one whose knot vector is not evenly spaced,
+ * A non-uniform B-spline curve is one whose knot vector is not evenly spaced,
  * that is, the difference between one knot and the next isn't the same.
  * <p><b>Rational Curves</b><p>
- * A rational curve is an N-dimensional curve with N plus one coordinates
+ * A rational B-spline curve is an N-dimensional curve with N plus one coordinates
  * per control point (<i>homogeneous coordinates</i>). B-spline algorithms
  * work the same way with homogeneous coordinates as with conventional
  * coordinates, but if N-dimensional points are wanted, use the {@link H3DU.BSplineCurve.DIVIDE_BIT}
@@ -97,6 +104,38 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * conventional coordinate by its weight, then append the weight as the control point's last coordinate.
  * <p><b>NURBS Curves</b><p>
  * <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
+ * <p><b>Polynomial Basis</b></p>
+ * <p>Any kind of polynomial curve can be converted to a different kind
+ * of polynomial curve, with the same degree and describing the same path,
+ * by transforming its control points. For example, a Hermite curve (another
+ * kind of polynomial curve) can be converted to the equivalent
+ * B-spline curve this way, or vice versa.
+ * <p>Each kind of polynomial curve (such as B-spline or B&eacute;zier) is
+ * associated with a <i>basis matrix</i>, which defines the polynomial
+ * coefficients for each control point in the curve. For a degree (N-1) curve,
+ * the matrix will be NxN.<p>
+ * Each "column" of a basis matrix is a polynomial equation
+ * containing the coefficients for each control point, and the columns are
+ * arranged from left to right. Each polynomial consists of coefficients, ranging from the
+ * highest order to the lowest, with respect to the parameter
+ * <code>t</code> and the corresponding control point. For example, the
+ * column <code>(3, 4, 2, 10)</code> describes the polynomial
+ * 3xt<sup>3</sup> + 4xt<sup>2</sup> + 2xt + 10x, where <code>x</code>
+ * is the input control point. The polynomials
+ * are added together to get the final coordinate of the curve at the
+ * given <code>t</code> value.<p>
+ * The following JavaScript code shows an example of a basis matrix -- the
+ * cubic B&eacute;zier basis matrix.<br>
+ * <code>var bezierBasisMatrix = [
+ * // For the purposes of the H3DU.Math matrix functions,
+ * // the polynomials are arranged "column-wise", like this:
+ * // P1, P2, P3, P4
+ * -1,3,-3,1,
+ * 3,-6,3,0,
+ * -3,3,0,0,
+ * 1,0,0,0]</code>
+ * <p>For code that converts a curve from one kind to
+ * another, see the example.
  * @constructor
  * @augments H3DU.Curve
  * @memberof H3DU
@@ -118,14 +157,47 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * N times elsewhere, where N is the curve's degree.
  * If the difference between one knot and the next isn't the same,
  * the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first
- * knot will be 0 or less and the last knot will be 1 or greater.<br>
- * If there are N times 2 knots with the first N knots equal to 0 and the rest
- * equal to 1, where N is the number of control points,
- * the control points describe a <i>B&eacute;zier</i> curve.<p>
+ * knot will be 0 or less and the last knot will be 1 or greater.
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link H3DU.BSplineCurve.WEIGHTED_BIT},
  * {@link H3DU.BSplineCurve.HOMOGENEOUS_BIT},
  * and {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null or omitted, no bits are set.
+ * @example <caption>The following code converts a cubic (degree-3)
+ * curve from one kind to another. The converted curve will generally
+ * have the same path as the original curve.</caption>
+ * // "srcBasis" is a 4x4 basis matrix for the source curve type;
+ * // the control points will initially be of this type of curve.
+ * // var srcBasis = [ .... ]; // To be supplied or filled in.
+ * // "dstBasis" is a 4x4 basis matrix for the destination curve type.
+ * // It's defined here as the Bezier basis matrix for this example
+ * var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
+ * // Step 1: Invert the destination basis matrix
+ * var invertedDest=H3DU.Math.mat4invert(destBasis)
+ * // Step 2: Multiply the inverted destination matrix by the source
+ * // matrix (in our example, the Hermite basis matrix).
+ * var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
+ * // Step 3: Convert the control points
+ * var newControlPoints=[[],[],[],[]]
+ * for(var i=0;i<4;i++) {
+ * var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
+ * controlPoints[3][i]]
+ * // Transform the control points using the result matrix
+ * cp=H3DU.Math.vec4transform(resultMatrix,cp)
+ * // Set the new coordinates
+ * newControlPoints[0][i]=cp[0]
+ * newControlPoints[1][i]=cp[1]
+ * newControlPoints[2][i]=cp[2]
+ * newControlPoints[3][i]=cp[3]
+ * }
+ * // Finally, generate a Bezier curve (which is a special case
+ * // of a B-spline curve)
+ * var curve=new BSplineCurve(
+ * newControlPoints,
+ * [0,0,0,0,1,1,1,1] // cubic Bezier knot vector
+ * );
+ * // Alternatively, the curve could be generated with the
+ * // fromBezierCurve method:
+ * // var curve=BSplineCurve.fromBezierCurve(newControlPoints);
  */
 function BSplineCurve(controlPoints, knots, bits) {
   if(controlPoints.length <= 0)throw new Error();
@@ -746,7 +818,7 @@ BSplineCurve.clamped = function(controlPoints, degree, bits) {
  * It is assumed that:<ul>
  * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
  * curve. For example, a degree-3 (cubic) curve
- * contains 4 control points. A degree of 1 results in a straight line segment.
+ * contains 4 control points. A degree of 1 (two control points) results in a straight line segment.
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
