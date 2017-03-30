@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+/* global H3DU, arrayStride */
 /**
  * Specifies the triangles, lines, or points that make up a geometric shape.
  * Each vertex, that is, each point, each end of a line, and each corner
@@ -16,8 +16,8 @@
  * and blue components, respectively.)
  * <li>A normal vector, which is a set of 3 values.
  * Normal values are required for lighting to work properly.
- * <li>A tangent vector, which is a set of 3 values.
- * <li>A bitangent vector, which is a set of 3 values.
+ * <li>A tangent vector, which is a set of 3 values. (This is deprecated.)
+ * <li>A bitangent vector, which is a set of 3 values. (This is deprecated.)
  * <li>Texture coordinates, which are a set of 2 values each ranging from 0 to
  * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
  * right corner (by default).
@@ -286,6 +286,9 @@ Mesh.prototype.merge = function(other) {
   for(var elemIndex = 0; elemIndex < other.vertices.length; elemIndex++) {
     var elem = other.vertices[elemIndex]; this.vertices.push(elem);
   }
+  for(elemIndex = 0; elemIndex < other.tangents.length; elemIndex++) {
+    elem = other.tangents[elemIndex]; this.tangents.push(elem);
+  }
   for(elemIndex = 0; elemIndex < other.indices.length; elemIndex++) {
     elem = other.indices[elemIndex]; this.indices.push(elem);
   }
@@ -473,8 +476,8 @@ Mesh.prototype.setColor3 = function(r, g, b) {
 };
 
 /**
- * Modifies this mesh by normalizing the normals it defines
- * to unit length.
+ * Modifies this mesh by converting the normals it defines
+ * to ["unit vectors"]{@link glmath} ("normalized" vectors with a length of 1).
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.normalizeNormals = function() {
@@ -629,20 +632,69 @@ Mesh.prototype.getVertexNormal = function(index) {
 Mesh.prototype.vertexCount = function() {
   return this.vertices.length / this.getStride();
 };
-
+/** @ignore */
+Mesh._initVertices = function(vertices, format) {
+  if((format & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) === 0) {
+    return vertices;
+  }
+  var stride = Mesh._getStride(format);
+  var arrayStride = stride;
+  if((format & Mesh.TANGENTS_BIT) !== 0) {
+    arrayStride += 3;
+  }
+  if((format & Mesh.BITANGENTS_BIT) !== 0) {
+    arrayStride += 3;
+  }
+  var ret = [];
+  for(var i = 0; i < vertices.length; i += arrayStride) {
+    for(var j = 0; j < stride; j++) {
+      ret.push(vertices[i + j]);
+    }
+  }
+  return ret;
+};
+/** @ignore */
+Mesh._initTangents = function(vertices, format) {
+  if((format & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) === 0) {
+    return [];
+  }
+  var stride = Mesh._getStride(format);
+  var ret = [];
+  for(var i = 0; i < vertices.length; i += arrayStride) {
+    var t1 = 0;
+    var t2 = 0;
+    var t3 = 0;
+    var t4 = 0;
+    var t5 = 0;
+    var t6 = 0;
+    var idx = i + stride;
+    if((format & Mesh.TANGENTS_BIT) !== 0) {
+      t1 = vertices[idx];
+      t2 = vertices[idx + 1];
+      t3 = vertices[idx + 2];
+      idx += 3;
+    }
+    if((format & Mesh.BITANGENTS_BIT) !== 0) {
+      t4 = vertices[idx];
+      t5 = vertices[idx + 1];
+      t6 = vertices[idx + 2];
+    }
+    ret.push(t1, t2, t3, t4, t5, t6);
+  }
+  return ret;
+};
 /** @ignore */
 Mesh.prototype._initialize = function(vertices, faces, format) {
-  this.vertices = vertices || [];
+  this.attributeBits = typeof format === "undefined" || format === null ? 0 : format;
+  var verts = vertices;
+  this.vertices = Mesh._initVertices(verts, this.attributeBits);
   this.indices = faces || [];
-  this.tangents = [];
+  this.tangents = Mesh._initTangents(verts, this.attributeBits);
   this.startIndex = 0;
   var prim = format & Mesh.PRIMITIVES_BITS;
-  // TODO: Move tangents and bitangents to separate
-  // array if TANGENTS_BIT and/or BITANGENTS_BIT are set
   if(prim !== 0 && prim !== Mesh.LINES_BIT && prim !== Mesh.POINTS_BIT) {
     throw new Error("invalid format");
   }
-  this.attributeBits = typeof format === "undefined" || format === null ? 0 : format;
 /** @ignore */
   this.getStride = function() {
     return Mesh._getStride(this.attributeBits);
@@ -840,7 +892,6 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
 
 /** @ignore */
 Mesh.prototype._makeRedundant = function() {
-  // TODO: Make tangents property redundant
   var existingIndices = [];
   var stride = this.getStride();
   var originalIndicesLength = this.indices.length;
@@ -852,6 +903,13 @@ Mesh.prototype._makeRedundant = function() {
       var newIndex = this.vertices.length / stride;
       for(var j = 0; j < stride; j++) {
         this.vertices.push(this.vertices[offset + j]);
+      }
+      if((this.attributeBits & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) !== 0) {
+  // Copy tangents and bitangents
+        offset = index * 6;
+        for(j = 0; j < 6; j++) {
+          this.tangents.push(this.tangents[offset + j]);
+        }
       }
       this.indices[i] = newIndex;
     }
@@ -1364,34 +1422,6 @@ Mesh.prototype.bitangent3 = function(x, y, z) {
   this._elementsDefined |= Mesh.BITANGENTS_BIT;
   return this;
 };
-
-/** @ignore */
-Mesh._findTangentAndBitangent = function(vertices, v1, v2, v3, uvOffset) {
-  var t1 = vertices[v2] - vertices[v1];
-  var t2 = vertices[v2 + 1] - vertices[v1 + 1];
-  var t3 = vertices[v2 + 2] - vertices[v1 + 2];
-  var t4 = vertices[v3] - vertices[v1];
-  var t5 = vertices[v3 + 1] - vertices[v1 + 1];
-  var t6 = vertices[v3 + 2] - vertices[v1 + 2];
-  var t7 = vertices[v2 + uvOffset] - vertices[v1 + uvOffset];
-  var t8 = vertices[v2 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
-  var t9 = vertices[v3 + uvOffset] - vertices[v1 + uvOffset];
-  var t10 = vertices[v3 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
-  var t11 = t7 * t10 - t8 * t9;
-  if(t11 === 0) {
-    return [0, 0, 0, 0, 0, 0];
-  }
-  t11 = 1.0 / t11;
-  var t12 = -t8;
-  var t13 = -t9;
-  var t14 = (t10 * t1 + t12 * t4) * t11;
-  var t15 = (t10 * t2 + t12 * t5) * t11;
-  var t16 = (t10 * t3 + t12 * t6) * t11;
-  var t17 = (t13 * t1 + t7 * t4) * t11;
-  var t18 = (t13 * t2 + t7 * t5) * t11;
-  var t19 = (t13 * t3 + t7 * t6) * t11;
-  return [t14, t15, t16, t17, t18, t19];
-};
 /** @ignore */
 Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset, normalOffset) {
  // NOTE: no need to specify bitangent offset, since tangent
@@ -1404,7 +1434,37 @@ Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset, nor
     vi[0] = indices[i] * stride;
     vi[1] = indices[i + 1] * stride;
     vi[2] = indices[i + 2] * stride;
-    var ret = Mesh._findTangentAndBitangent(vertices, vi[0], vi[1], vi[2], uvOffset);
+    var v1 = vi[0];
+    var v2 = vi[1];
+    var v3 = vi[2];
+    // Find the tangent and bitangent
+    var ret;
+    var t1 = vertices[v2] - vertices[v1];
+    var t2 = vertices[v2 + 1] - vertices[v1 + 1];
+    var t3 = vertices[v2 + 2] - vertices[v1 + 2];
+    var t4 = vertices[v3] - vertices[v1];
+    var t5 = vertices[v3 + 1] - vertices[v1 + 1];
+    var t6 = vertices[v3 + 2] - vertices[v1 + 2];
+    var t7 = vertices[v2 + uvOffset] - vertices[v1 + uvOffset];
+    var t8 = vertices[v2 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
+    var t9 = vertices[v3 + uvOffset] - vertices[v1 + uvOffset];
+    var t10 = vertices[v3 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
+    var t11 = t7 * t10 - t8 * t9;
+    if(t11 === 0) {
+    // Degenerate case
+      ret = [0, 0, 0, 0, 0, 0];
+    } else {
+      t11 = 1.0 / t11;
+      var t12 = -t8;
+      var t13 = -t9;
+      var t14 = (t10 * t1 + t12 * t4) * t11;
+      var t15 = (t10 * t2 + t12 * t5) * t11;
+      var t16 = (t10 * t3 + t12 * t6) * t11;
+      var t17 = (t13 * t1 + t7 * t4) * t11;
+      var t18 = (t13 * t2 + t7 * t5) * t11;
+      var t19 = (t13 * t3 + t7 * t6) * t11;
+      ret = [t14, t15, t16, t17, t18, t19];
+    }
   // NOTE: It would be more mathematically correct to use the inverse
   // of the matrix
   // [ Ax Bx Nx ]

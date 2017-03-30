@@ -7,8 +7,8 @@ of a triangle, can also specify the following attributes:
 and blue components, respectively.)
 <li>A normal vector, which is a set of 3 values.
 Normal values are required for lighting to work properly.
-<li>A tangent vector, which is a set of 3 values.
-<li>A bitangent vector, which is a set of 3 values.
+<li>A tangent vector, which is a set of 3 values. (This is deprecated.)
+<li>A bitangent vector, which is a set of 3 values. (This is deprecated.)
 <li>Texture coordinates, which are a set of 2 values each ranging from 0 to
 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
 right corner (by default).
@@ -46,8 +46,8 @@ semantic.</b><li><a href='#H3DU.Mesh_color3'>color3</a><br>Sets the current colo
 in this mesh.<li><a href='#H3DU.Mesh_getBoundingBox'>getBoundingBox</a><br>Finds the tightest axis-aligned
 bounding box that holds all vertices in the mesh.<li><a href='#H3DU.Mesh_getVertex'>getVertex</a><br>Gets the position of the vertex with the given
 index in this mesh.<li><a href='#H3DU.Mesh_getVertexNormal'>getVertexNormal</a><br>Gets the normal of the vertex with the given
-index in this mesh.<li><a href='#H3DU.Mesh_merge'>merge</a><br>Merges the vertices from another mesh into this one.<li><a href='#H3DU.Mesh_mode'>mode</a><br>Changes the primitive mode for this mesh.<li><a href='#H3DU.Mesh_normal3'>normal3</a><br>Sets the current normal for this mesh.<li><a href='#H3DU.Mesh_normalizeNormals'>normalizeNormals</a><br>Modifies this mesh by normalizing the normals it defines
-to unit length.<li><a href='#H3DU.Mesh_primitiveCount'>primitiveCount</a><br>Gets the number of primitives (triangles, lines,
+index in this mesh.<li><a href='#H3DU.Mesh_merge'>merge</a><br>Merges the vertices from another mesh into this one.<li><a href='#H3DU.Mesh_mode'>mode</a><br>Changes the primitive mode for this mesh.<li><a href='#H3DU.Mesh_normal3'>normal3</a><br>Sets the current normal for this mesh.<li><a href='#H3DU.Mesh_normalizeNormals'>normalizeNormals</a><br>Modifies this mesh by converting the normals it defines
+to "unit vectors" ("normalized" vectors with a length of 1).<li><a href='#H3DU.Mesh_primitiveCount'>primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.<li><a href='#H3DU.Mesh_recalcNormals'>recalcNormals</a><br>Recalculates the normal vectors for triangles
 in this mesh.<li><a href='#H3DU.Mesh_recalcTangents'>recalcTangents</a><br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. This method
@@ -229,8 +229,8 @@ normal will apply to future vertices even if the current mode
 is TRIANGLE_FAN and some vertices were already given for
 that mode. The normal passed to this method will
 not automatically be normalized to unit length.<h4> Parameters</h4><ul><li><code>x</code> (Type: number)<br>X coordinate of the normal. If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.<li><code>y</code> (Type: number)<br>Y coordinate of the normal. If "x" is an array, this parameter may be omitted.<li><code>z</code> (Type: number)<br>Z coordinate of the normal. If "x" is an array, this parameter may be omitted.</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<a name='H3DU.Mesh_normalizeNormals'></a>
-<h3> H3DU.Mesh#normalizeNormals()</h3>Modifies this mesh by normalizing the normals it defines
-to unit length.<h4> Return Value</h4>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<a name='H3DU.Mesh_primitiveCount'></a>
+<h3> H3DU.Mesh#normalizeNormals()</h3>Modifies this mesh by converting the normals it defines
+to "unit vectors" ("normalized" vectors with a length of 1).<h4> Return Value</h4>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<a name='H3DU.Mesh_primitiveCount'></a>
 <h3> H3DU.Mesh#primitiveCount()</h3>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.<h4> Return Value</h4>Return value. (Type: number)<a name='H3DU.Mesh_recalcNormals'></a>
 <h3> H3DU.Mesh#recalcNormals(flat, inward)</h3>Recalculates the normal vectors for triangles

@@ -13,7 +13,7 @@ import {_MathInternal} from "./h3du-mathinternal";
  * A curve evaluator object for a parametric curve.<p>
  * A parametric curve is a curve whose points are based on a
  * parametric curve function. A curve function takes a number
- * (U) and returns a point (in 1, 2, 3 or more dimensions, but
+ * (U) and returns a point (in 1 or more dimensions, but
  * usually 2 or 3) that lies on the curve. For example, in 3
  * dimensions, a curve function has the following form:<p>
  * <b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
@@ -24,7 +24,11 @@ import {_MathInternal} from "./h3du-mathinternal";
  * @constructor
  * @memberof H3DU
  * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
- * @param {Object} [curveParam] TODO: Not documented yet.
+ * @param {Object} [curveParam] An object for reparameterizing a curve object. It implements a method
+ * named <code>endPoints</code>, which has the same meaning as {@link H3DU.Curve#endPoints} and whose
+ * return value takes precedence over the given curve's <code>endPoints</code> method. It also implements
+ * a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization
+ * to a U coordinate in the new parameterization.
  * @example <caption>The following function defines a parametric circle curve. It demonstrates how all methods
  * defined for curve evaluator objects can be implemented.</caption>
  * var circle=new Curve({"evaluate":function(u) {
@@ -307,8 +311,8 @@ Curve.prototype.getPoints = function(count) {
   var ep = this.endPoints();
   var ret = [this.evaluate(ep[0])];
   for(var i = 1; i < count; i++) {
-  // var u=ep[0]+(ep[1]-ep[0])*(i/(count - 1));
-    ret.push(this.evaluate(ep));
+    var u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
+    ret.push(this.evaluate(u));
   }
   return ret;
 };
@@ -514,7 +518,8 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * start.<p>
  * When converting to an arc length parameterization, the curve
  * should be continuous and have a speed greater than 0 at every
- * point on the curve.
+ * point on the curve. The arc length parameterization used in
+ * this method is approximate.
  * @returns {H3DU.Curve} Return value.
  */
 Curve.prototype.toArcLengthParam = function() {

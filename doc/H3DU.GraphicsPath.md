@@ -156,16 +156,17 @@ This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 ### GraphicsPath#bezierCurveTo(x, y, x2, y2, x3, y3)
 
 Adds a cubic B&eacute;zier curve to this path starting
-at this path's current position.
+at this path's current position. The current position will be
+the curve's first control point.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the curve's first control point.
-* `y` (Type: number)<br>X coordinate of the curve's first control point.
-* `x2` (Type: number)<br>Y coordinate of the curve's second control point.
-* `y2` (Type: number)<br>Y coordinate of the curve's second control point.
-* `x3` (Type: number)<br>X coordinate of the curve's end point.
-* `y3` (Type: number)<br>Y coordinate of the curve's end point.
+* `x` (Type: number)<br>X coordinate of the curve's second control point.
+* `y` (Type: number)<br>X coordinate of the curve's second control point.
+* `x2` (Type: number)<br>Y coordinate of the curve's third control point.
+* `y2` (Type: number)<br>Y coordinate of the curve's third control point.
+* `x3` (Type: number)<br>X coordinate of the curve's end point (fourth control point).
+* `y3` (Type: number)<br>Y coordinate of the curve's end point (fourth control point).
 
 #### Return Value
 
@@ -416,14 +417,15 @@ in units. (Type: number)
 ### GraphicsPath#quadraticCurveTo(x, y, x2, y2)
 
 Adds a quadratic B&eacute;zier curve to this path starting
-at this path's current position.
+at this path's current position. The current position will be
+the curve's first control point.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the curve's control point.
-* `y` (Type: number)<br>Y coordinate of the curve's control point.
-* `x2` (Type: number)<br>X coordinate of the curve's end point.
-* `y2` (Type: number)<br>Y coordinate of the curve's end point.
+* `x` (Type: number)<br>X coordinate of the curve's second control point.
+* `y` (Type: number)<br>Y coordinate of the curve's second control point.
+* `x2` (Type: number)<br>X coordinate of the curve's end point (third control point).
+* `y2` (Type: number)<br>Y coordinate of the curve's end point (third control point).
 
 #### Return Value
 

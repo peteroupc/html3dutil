@@ -100,7 +100,8 @@ method) will be (0, N), where N is the distance to the end of the curve from its
 start.<p>
 When converting to an arc length parameterization, the curve
 should be continuous and have a speed greater than 0 at every
-point on the curve.<h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.Hypotrochoid_velocity'></a>
+point on the curve. The arc length parameterization used in
+this method is approximate.<h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.Hypotrochoid_velocity'></a>
 <h3> H3DU.Hypotrochoid#velocity(u)</h3>Finds an approximate velocity vector at the given U coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using

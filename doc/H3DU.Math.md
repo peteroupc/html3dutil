@@ -653,10 +653,10 @@ To use this method, you must include the script "extras/interp.js". Example:
 
 #### Parameters
 
-* `a` (Type: number)<br>X coordinate of the first control point of the curve. Should be within the range 0 through 1.
-* `b` (Type: number)<br>Y coordinate of the first control point of the curve. Should be within the range 0 through 1, but may exceed this range.
-* `c` (Type: number)<br>X coordinate of the second control point of the curve. Should be within the range 0 through 1.
-* `d` (Type: number)<br>Y coordinate of the second control point of the curve. Should be within the range 0 through 1, but may exceed this range.
+* `a` (Type: number)<br>X coordinate of the first configurable control point of the curve. Should be within the range 0 through 1.
+* `b` (Type: number)<br>Y coordinate of the first configurable control point of the curve. Should be within the range 0 through 1, but may exceed this range.
+* `c` (Type: number)<br>X coordinate of the second configurable control point of the curve. Should be within the range 0 through 1.
+* `d` (Type: number)<br>Y coordinate of the second configurable control point of the curve. Should be within the range 0 through 1, but may exceed this range.
 * `t` (Type: number)<br>Number ranging from 0 through 1 that indicates time.
 
 #### Return Value

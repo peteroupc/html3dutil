@@ -52,7 +52,7 @@ Finds the coordinates of the given point of this surface.
 #### Return Value
 
 An array containing the coordinates
-of the position at the given point. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;number>)
+of the position at the given point. It will have three elements. (Type: Array.&lt;number>)
 
 <a name='H3DU.SurfaceOfRevolution.fromFunction'></a>
 ### (static) H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])

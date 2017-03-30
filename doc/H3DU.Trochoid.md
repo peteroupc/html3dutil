@@ -259,7 +259,8 @@ start.
 
 When converting to an arc length parameterization, the curve
 should be continuous and have a speed greater than 0 at every
-point on the curve.
+point on the curve. The arc length parameterization used in
+this method is approximate.
 
 #### Return Value
 

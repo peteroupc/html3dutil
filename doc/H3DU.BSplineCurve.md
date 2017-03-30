@@ -31,8 +31,8 @@ Line segments (degree-1 curves with two control points) are
 subsets of B&eacute;zier curves.
 
 A B&eacute;zier curve's knot vector consists of as many zeros as the number
-of control points, followed by that many ones. For example, a degree-3 (cubic
-curve) contains three control points and the following knot vector:
+of control points, followed by that many ones. For example, a degree-3 (cubic)
+B&eacute;zier curve contains four control points and the following knot vector:
 <code>[0, 0, 0, 0, 1, 1, 1, 1]</code>.
 
 <b>Non-Uniform Curves</b>
@@ -86,14 +86,15 @@ given <code>t</code> value.
 
 The following JavaScript code shows an example of a basis matrix -- the
 cubic B&eacute;zier basis matrix.<br>
-<code>var bezierBasisMatrix = [
-// For the purposes of the H3DU.Math matrix functions,
-// the polynomials are arranged "column-wise", like this:
-// P1, P2, P3, P4
--1,3,-3,1,
-3,-6,3,0,
--3,3,0,0,
-1,0,0,0]</code>
+
+    var bezierBasisMatrix = [
+    // For the purposes of the H3DU.Math matrix functions,
+    // the polynomials are arranged "column-wise", like this:
+    // P1, P2, P3, P4
+    -1,3,-3,1,
+    3,-6,3,0,
+    -3,3,0,0,
+    1,0,0,0]
 
 For code that converts a curve from one kind to
 another, see the example.
@@ -121,9 +122,10 @@ have the same path as the original curve.
     // Step 2: Multiply the inverted destination matrix by the source
     // matrix (in our example, the Hermite basis matrix).
     var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
-    // Step 3: Convert the control points
+    // Step 3: Convert the control points one dimension
+    // at a time
     var newControlPoints=[[],[],[],[]]
-    for(var i=0;i<4;i++) {
+    for(var i=0;i<controlPoints[0].length;i++) {
     var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
     controlPoints[3][i]]
     // Transform the control points using the result matrix
@@ -558,7 +560,8 @@ start.
 
 When converting to an arc length parameterization, the curve
 should be continuous and have a speed greater than 0 at every
-point on the curve.
+point on the curve. The arc length parameterization used in
+this method is approximate.
 
 #### Return Value
 
