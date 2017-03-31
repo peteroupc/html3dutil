@@ -66,9 +66,14 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
 }
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a B-spline (basis spline) curve.
- * A B-spline curve is a parametric curve based on polynomial functions, one for each
- * dimension of the curve. Each polynomial is generated using one or more <i>control points</i>, which more or less follow the path of the curve, and a <i>knot vector</i>, which determines, more
- * or less, where each control point is spaced along the curve.
+ * A B-spline curve is a parametric curve based on polynomial functions.
+ * Each polynomial is generated using one or more
+ * <i>control points</i>, which more or less follow the path of the curve,
+ * and a <i>knot vector</i>, which determines, more or less, where each control
+ * point is spaced along the curve. This makes B-spline curves very powerful,
+ * since they can describe nearly all curves commonly used in computer
+ * graphics, including line segments, circles, ellipses, parabolas, and
+ * irregular smooth curves.
  * <p><b>B&eacute;zier Curves</b><p>
  * A B&eacute;zier curve is defined by a series of control points, where
  * the first and last control points define the end points of the curve, and
@@ -174,7 +179,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * // Step 1: Invert the destination basis matrix
  * var invertedDest=H3DU.Math.mat4invert(destBasis)
  * // Step 2: Multiply the inverted destination matrix by the source
- * // matrix (in our example, the Hermite basis matrix).
+ * // matrix
  * var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
  * // Step 3: Convert the control points one dimension
  * // at a time

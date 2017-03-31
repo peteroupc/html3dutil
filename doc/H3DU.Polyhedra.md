@@ -47,7 +47,7 @@ Generates a mesh of a regular dodecahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated solid. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Polyhedra.dodecahedronFaces'></a>
 ### (static) H3DU.Polyhedra.dodecahedronFaces()
@@ -90,7 +90,7 @@ Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated solid. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Polyhedra.hexahedronFaces'></a>
 ### (static) H3DU.Polyhedra.hexahedronFaces()
@@ -133,7 +133,7 @@ Generates a mesh of a regular icosahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated solid. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Polyhedra.icosahedronFaces'></a>
 ### (static) H3DU.Polyhedra.icosahedronFaces()
@@ -192,7 +192,7 @@ Generates a mesh of a regular octahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated solid. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Polyhedra.octahedronFaces'></a>
 ### (static) H3DU.Polyhedra.octahedronFaces()
@@ -220,7 +220,7 @@ Generates a mesh of a regular tetrahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated solid. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Polyhedra.tetrahedronFaces'></a>
 ### (static) H3DU.Polyhedra.tetrahedronFaces()

@@ -91,9 +91,10 @@ PiecewiseCurve.prototype._getCurveAndPoint = function(u) {
   return [uc, ep[0] + (ep[1] - ep[0]) * ut];
 };
 /**
- * TODO: Not documented yet.
- * @param {number} u
- * @returns {number} Return value.
+ * Finds an approximate arc length (distance) between the start of this
+ * curve and the point at the given U coordinate of this curve.
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {number} The approximate arc length of this curve at the given U coordinate.
  */
 PiecewiseCurve.prototype.arcLength = function(u) {
   if(u <= 0) {
@@ -104,18 +105,20 @@ PiecewiseCurve.prototype.arcLength = function(u) {
     this.curves[cp[0]].arcLength(cp[1]);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} u
- * @returns {*} Return value.
+ * Finds the position of this curve at the given U coordinate.
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {Array<number>} An array describing a position. It should have at least as many
+ * elements as the number of dimensions of the underlying curve.
  */
 PiecewiseCurve.prototype.evaluate = function(u) {
   var cp = this._getCurveAndPoint(u);
   return this.curves[cp[0]].evaluate(cp[1]);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} u
- * @returns {*} Return value.
+ * Finds an approximate velocity vector at the given U coordinate of this curve.
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {Array<number>} An array describing a velocity vector. It should have at least as many
+ * elements as the number of dimensions of the underlying curve.
  */
 PiecewiseCurve.prototype.velocity = function(u) {
   var cp = this._getCurveAndPoint(u);

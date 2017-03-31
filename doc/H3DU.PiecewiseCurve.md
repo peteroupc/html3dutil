@@ -26,12 +26,13 @@ the piecewise curve.
 ### Methods
 
 * [accel](#H3DU.PiecewiseCurve_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.
-* [arcLength](#H3DU.PiecewiseCurve_arcLength)<br>TODO: Not documented yet.
+* [arcLength](#H3DU.PiecewiseCurve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
 * [changeEnds](#H3DU.PiecewiseCurve_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.
 * [endPoints](#H3DU.PiecewiseCurve_endPoints)<br>Returns the starting and ending U coordinates of this curve.
-* [evaluate](#H3DU.PiecewiseCurve_evaluate)<br>TODO: Not documented yet.
+* [evaluate](#H3DU.PiecewiseCurve_evaluate)<br>Finds the position of this curve at the given U coordinate.
 * [fitRange](#H3DU.PiecewiseCurve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to fit the given range.
 * [fromCatmullRomSpline](#H3DU.PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
@@ -50,7 +51,7 @@ of U coordinates.
 * [toArcLengthParam](#H3DU.PiecewiseCurve_toArcLengthParam)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>.
-* [velocity](#H3DU.PiecewiseCurve_velocity)<br>TODO: Not documented yet.
+* [velocity](#H3DU.PiecewiseCurve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
 
 <a name='H3DU.PiecewiseCurve_accel'></a>
 ### H3DU.PiecewiseCurve#accel(u)
@@ -74,15 +75,16 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='H3DU.PiecewiseCurve_arcLength'></a>
 ### H3DU.PiecewiseCurve#arcLength(u)
 
-TODO: Not documented yet.
+Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)
+* `u` (Type: number)<br>U coordinate of a point on the curve.
 
 #### Return Value
 
-Return value. (Type: number)
+The approximate arc length of this curve at the given U coordinate. (Type: number)
 
 <a name='H3DU.PiecewiseCurve_changeEnds'></a>
 ### H3DU.PiecewiseCurve#changeEnds(ep1, ep2)
@@ -124,15 +126,16 @@ of curves that make up this piecewise curve.
 <a name='H3DU.PiecewiseCurve_evaluate'></a>
 ### H3DU.PiecewiseCurve#evaluate(u)
 
-TODO: Not documented yet.
+Finds the position of this curve at the given U coordinate.
 
 #### Parameters
 
-* `u` (Type: *)
+* `u` (Type: number)<br>U coordinate of a point on the curve.
 
 #### Return Value
 
-Return value. (Type: *)
+An array describing a position. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='H3DU.PiecewiseCurve_fitRange'></a>
 ### H3DU.PiecewiseCurve#fitRange(ep1, ep2)
@@ -343,14 +346,15 @@ Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
 <a name='H3DU.PiecewiseCurve_velocity'></a>
 ### H3DU.PiecewiseCurve#velocity(u)
 
-TODO: Not documented yet.
+Finds an approximate velocity vector at the given U coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: *)
+* `u` (Type: number)<br>U coordinate of a point on the curve.
 
 #### Return Value
 
-Return value. (Type: *)
+An array describing a velocity vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 [Back to documentation index.](index.md)

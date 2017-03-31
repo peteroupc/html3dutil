@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, arrayStride */
+/* global H3DU */
 /**
  * Specifies the triangles, lines, or points that make up a geometric shape.
  * Each vertex, that is, each point, each end of a line, and each corner
@@ -256,6 +256,10 @@ Mesh.prototype.mode = function(m) {
  * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  */
 Mesh.prototype.merge = function(other) {
+  if(other instanceof H3DU.MeshBuffer) {
+    // TODO
+    return this;
+  }
   if(!Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
     throw new Error("Meshes have incompatible types");
   }
@@ -659,6 +663,13 @@ Mesh._initTangents = function(vertices, format) {
     return [];
   }
   var stride = Mesh._getStride(format);
+  var arrayStride = stride;
+  if((format & Mesh.TANGENTS_BIT) !== 0) {
+    arrayStride += 3;
+  }
+  if((format & Mesh.BITANGENTS_BIT) !== 0) {
+    arrayStride += 3;
+  }
   var ret = [];
   for(var i = 0; i < vertices.length; i += arrayStride) {
     var t1 = 0;
@@ -686,7 +697,7 @@ Mesh._initTangents = function(vertices, format) {
 /** @ignore */
 Mesh.prototype._initialize = function(vertices, faces, format) {
   this.attributeBits = typeof format === "undefined" || format === null ? 0 : format;
-  var verts = vertices;
+  var verts = vertices || [];
   this.vertices = Mesh._initVertices(verts, this.attributeBits);
   this.indices = faces || [];
   this.tangents = Mesh._initTangents(verts, this.attributeBits);
