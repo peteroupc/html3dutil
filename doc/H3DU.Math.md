@@ -132,6 +132,7 @@ an affine transformation matrix (without perspective) and returns the transforme
 * [mat4transpose](#H3DU.Math.mat4transpose)<br>Returns the transpose of a 4x4 matrix.
 * [mat4transposeInPlace](#H3DU.Math.mat4transposeInPlace)<br>Transposes a 4x4 matrix in place without creating
 a new matrix.
+* [planeFromNormalAndPoint](#H3DU.Math.planeFromNormalAndPoint)<br>Creates a plane from a normal vector and a point on the plane.
 * [planeNorm](#H3DU.Math.planeNorm)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a> instead.
 The name of this method may be confused with a vector's "norm", another name for its length.</b>
 * [planeNormInPlace](#H3DU.Math.planeNormInPlace)<br><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> instead.
@@ -1431,6 +1432,20 @@ are converted to columns and vice versa.)
 #### Return Value
 
 The parameter "mat". (Type: Array.&lt;number>)
+
+<a name='H3DU.Math.planeFromNormalAndPoint'></a>
+### (static) H3DU.Math.planeFromNormalAndPoint(normal, point)
+
+Creates a plane from a normal vector and a point on the plane.
+
+#### Parameters
+
+* `normal` (Type: Array.&lt;number>)<br>A three-element array identifying the plane's normal vector.
+* `point` (Type: Array.&lt;number>)<br>A three-element array identifying a point on the plane.
+
+#### Return Value
+
+A four-element array describing the plane. (Type: Array.&lt;number>)
 
 <a name='H3DU.Math.planeNorm'></a>
 ### (static) H3DU.Math.planeNorm(plane)
@@ -3098,6 +3113,9 @@ with its sign reversed. Moving all three parameters to different positions, thou
 results in the same triple product.
 <li>The triple product's absolute value is the volume of a parallelepiped (skewed
 box) where three of its sides having a vertex in common are
+defined by A, B, and C, in any order.
+<li>The triple product's absolute value divided by 6 is the volume of a tetrahedron,
+where three of its sides having a vertex in common are
 defined by A, B, and C, in any order.
 <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
 <li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
