@@ -13,8 +13,10 @@ A geometric mesh in the form of buffer objects.
 
 ### Methods
 
+* [getAttribute](#H3DU.MeshBuffer_getAttribute)<br>TODO: Not documented yet.
 * [getBounds](#H3DU.MeshBuffer_getBounds)<br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
+* [getIndices](#H3DU.MeshBuffer_getIndices)<br>TODO: Not documented yet.
 * [getPositions](#H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive
 * [primitiveCount](#H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
@@ -25,7 +27,22 @@ mesh buffer (or sets an
 existing attribute's information).
 * [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the array of vertex indices used by this mesh buffer.
 * [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
+* [transform](#H3DU.MeshBuffer_transform)<br>TODO: Not documented yet.
 * [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
+
+<a name='H3DU.MeshBuffer_getAttribute'></a>
+### H3DU.MeshBuffer#getAttribute(name, index)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `name` (Type: *)
+* `index` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 <a name='H3DU.MeshBuffer_getBounds'></a>
 ### H3DU.MeshBuffer#getBounds()
@@ -45,6 +62,20 @@ and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
 [Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;number>)
 
+<a name='H3DU.MeshBuffer_getIndices'></a>
+### H3DU.MeshBuffer#getIndices(primitiveIndex, ret)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `primitiveIndex` (Type: *)
+* `ret` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
+
 <a name='H3DU.MeshBuffer_getPositions'></a>
 ### H3DU.MeshBuffer#getPositions()
 
@@ -56,7 +87,7 @@ arranged by primitive
 An array of primitives,
 each of which holds the vertices that make up that primitive.
 If this mesh holds triangles, each primitive will contain three
-vertices; if lines, two; and if points, one. Each vertex is a 3-element
+vertices; if lines, two; and if points, one. Each vertex is an at least 3-element
 array containing that vertex's X, Y, and Z coordinates, in that order. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='H3DU.MeshBuffer_primitiveCount'></a>
@@ -128,6 +159,19 @@ Sets the type of graphics primitives stored in this mesh buffer.
 #### Return Value
 
 This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+
+<a name='H3DU.MeshBuffer_transform'></a>
+### H3DU.MeshBuffer#transform(matrix)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `matrix` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 <a name='H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()

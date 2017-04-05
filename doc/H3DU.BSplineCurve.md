@@ -130,7 +130,7 @@ have the same path as the original curve.
     // Step 3: Convert the control points one dimension
     // at a time
     var newControlPoints=[[],[],[],[]]
-    for(var i=0;i<controlPoints[0].length;i++) {
+    for(var i=0;i < controlPoints[0].length;i++) {
     var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
     controlPoints[3][i]]
     // Transform the control points using the result matrix
@@ -428,6 +428,21 @@ Creates a B-spline curve from the control points of a B&eacute;zier curve.
 #### Return Value
 
 Return value. (Type: <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>)
+
+#### Example
+
+The following function generates a polygon curve using linear B&eacute;zier
+curves.
+
+    function polygonCurve(points) {
+    var curves=[]
+    for(var i=0;i < points.length;i++) {
+    var cp=points[i]
+    var np=(i==points.length-1) ? points[0] : points[i+1]
+    curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+    }
+    return new H3DU.PiecewiseCurve(curves)
+    }
 
 <a name='H3DU.BSplineCurve_getControlPoints'></a>
 ### H3DU.BSplineCurve#getControlPoints()

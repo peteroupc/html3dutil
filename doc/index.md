@@ -17,6 +17,7 @@ whose edges are made up of B-spline curves.
 to create a B&eacute;zier curve.</b>
 * <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
 to create a B&eacute;zier surface.</b>
+* <a href="H3DU.BufferHelper.md">H3DU.BufferHelper</a><br>A helper class for accessing and setting data in buffer attributes.
 * <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
 Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
 contexts.</b>

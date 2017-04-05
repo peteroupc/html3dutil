@@ -184,7 +184,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * // Step 3: Convert the control points one dimension
  * // at a time
  * var newControlPoints=[[],[],[],[]]
- * for(var i=0;i<controlPoints[0].length;i++) {
+ * for(var i=0;i &lt; controlPoints[0].length;i++) {
  * var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
  * controlPoints[3][i]]
  * // Transform the control points using the result matrix
@@ -830,6 +830,17 @@ BSplineCurve.clamped = function(controlPoints, degree, bits) {
  * </ul>
  * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
  * @returns {H3DU.BSplineCurve} Return value.
+ * @example <caption>The following function generates a polygon curve using linear B&eacute;zier
+ * curves.</caption>
+ * function polygonCurve(points) {
+ * var curves=[]
+ * for(var i=0;i &lt; points.length;i++) {
+ * var cp=points[i]
+ * var np=(i==points.length-1) ? points[0] : points[i+1]
+ * curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+ * }
+ * return new H3DU.PiecewiseCurve(curves)
+ * }
  */
 BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
   return BSplineCurve.clamped(controlPoints, controlPoints.length - 1, bits);

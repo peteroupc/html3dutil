@@ -82,8 +82,7 @@ semantic.</b>
 * [color3](#H3DU.Mesh_color3)<br>Sets the current color for this mesh.
 * [enumPrimitives](#H3DU.Mesh_enumPrimitives)<br>Enumerates the primitives (lines, triangles, and points) included
 in this mesh.
-* [getBoundingBox](#H3DU.Mesh_getBoundingBox)<br>Finds the tightest axis-aligned
-bounding box that holds all vertices in the mesh.
+* [getBoundingBox](#H3DU.Mesh_getBoundingBox)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).getBounds()</code> instead.</b>
 * [getVertex](#H3DU.Mesh_getVertex)<br>Gets the position of the vertex with the given
 index in this mesh.
 * [getVertexNormal](#H3DU.Mesh_getVertexNormal)<br>Gets the normal of the vertex with the given
@@ -322,6 +321,8 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 <a name='H3DU.Mesh_getBoundingBox'></a>
 ### H3DU.Mesh#getBoundingBox()
+
+<b>Deprecated: Use <code>new H3DU.MeshBuffer(this).getBounds()</code> instead.</b>
 
 Finds the tightest axis-aligned
 bounding box that holds all vertices in the mesh.

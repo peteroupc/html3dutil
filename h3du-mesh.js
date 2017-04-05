@@ -467,7 +467,6 @@ Mesh.prototype.setColor3 = function(r, g, b) {
     gg = c[1];
     bb = c[2];
   }
-  // console.log([r,g,b,rr,gg,bb])
   this._rebuildVertices(Mesh.COLORS_BIT);
   var stride = this.getStride();
   var colorOffset = Mesh._colorOffset(this.attributeBits);
@@ -639,6 +638,7 @@ Mesh.prototype.vertexCount = function() {
 /** @ignore */
 Mesh._initVertices = function(vertices, format) {
   if((format & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) === 0) {
+    // Simple case: no tangents or bitangents
     return vertices;
   }
   var stride = Mesh._getStride(format);
@@ -660,6 +660,7 @@ Mesh._initVertices = function(vertices, format) {
 /** @ignore */
 Mesh._initTangents = function(vertices, format) {
   if((format & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) === 0) {
+    // Simple case: no tangents or bitangents
     return [];
   }
   var stride = Mesh._getStride(format);
@@ -1006,12 +1007,13 @@ Mesh._isIdentityInUpperLeft = function(m) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.transform = function(matrix) {
+  // TODO: Implement and favor MeshBuffer version of this method
   var stride = this.getStride();
   var v = this.vertices;
-  var isNonTranslation = !Mesh._isIdentityInUpperLeft(matrix);
+  var isLinearIdentity = !Mesh._isIdentityInUpperLeft(matrix);
   var normalOffset = Mesh._normalOffset(this.attributeBits);
   var matrixForNormals = null;
-  if(normalOffset >= 0 && isNonTranslation) {
+  if(normalOffset >= 0 && isLinearIdentity) {
     matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
   }
   for(var i = 0; i < v.length; i += stride) {
@@ -1019,7 +1021,7 @@ Mesh.prototype.transform = function(matrix) {
     v[i] = xform[0];
     v[i + 1] = xform[1];
     v[i + 2] = xform[2];
-    if(normalOffset >= 0 && isNonTranslation) {
+    if(normalOffset >= 0 && isLinearIdentity) {
      // Transform and normalize the normals
      // (using a modified matrix) to ensure
      // they point in the correct direction
@@ -1088,6 +1090,7 @@ Mesh.prototype.enumPrimitives = function(func) {
 /**
  * Finds the tightest axis-aligned
  * bounding box that holds all vertices in the mesh.
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).getBounds()</code> instead.
  * @returns {Array<number>} An array of six numbers describing the tightest
  * axis-aligned bounding box
  * that fits all vertices in the mesh. The first three numbers
@@ -1097,29 +1100,7 @@ Mesh.prototype.enumPrimitives = function(func) {
  * -Inf, -Inf].
  */
 Mesh.prototype.getBoundingBox = function() {
-  // LATER: Favor MeshBuffer version of this method
-  var empty = true;
-  var inf = Number.POSITIVE_INFINITY;
-  var ret = [inf, inf, inf, -inf, -inf, -inf];
-  var stride = this.getStride();
-  var v = this.vertices;
-  for(var j = 0; j < this.indices.length; j++) {
-    var vi = this.indices[j] * stride;
-    if(empty) {
-      empty = false;
-      ret[0] = ret[3] = v[vi];
-      ret[1] = ret[4] = v[vi + 1];
-      ret[2] = ret[5] = v[vi + 2];
-    } else {
-      ret[0] = Math.min(ret[0], v[vi]);
-      ret[3] = Math.max(ret[3], v[vi]);
-      ret[1] = Math.min(ret[1], v[vi + 1]);
-      ret[4] = Math.max(ret[4], v[vi + 1]);
-      ret[2] = Math.min(ret[2], v[vi + 2]);
-      ret[5] = Math.max(ret[5], v[vi + 2]);
-    }
-  }
-  return ret;
+  return new H3DU.MeshBuffer(this).getBounds();
 };
 /**
  * Modifies this mesh by reversing the sign of normals it defines.
@@ -1202,6 +1183,7 @@ Mesh.prototype.reverseWinding = function() {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.recalcNormals = function(flat, inward) {
+  // LATER: Implement and favor MeshBuffer version of this method
   var primtype = this.primitiveType();
   if(primtype !== Mesh.LINES && primtype !== Mesh.POINTS) {
     var haveOtherAttributes = (this.attributeBits & (Mesh.ATTRIBUTES_BITS & ~Mesh.NORMALS_BIT)) !== 0;
