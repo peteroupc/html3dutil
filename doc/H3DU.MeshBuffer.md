@@ -19,16 +19,20 @@ bounding box that holds all vertices in the mesh buffer.
 * [getIndices](#H3DU.MeshBuffer_getIndices)<br>TODO: Not documented yet.
 * [getPositions](#H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive
+* [merge](#H3DU.MeshBuffer_merge)<br>TODO: Not documented yet.
 * [primitiveCount](#H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
 * [primitiveType](#H3DU.MeshBuffer_primitiveType)<br>Gets the type of primitive stored in this mesh buffer.
+* [reverseNormals](#H3DU.MeshBuffer_reverseNormals)<br>Modifies this mesh buffer by reversing the sign of normals it defines.
 * [setAttribute](#H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
 * [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the array of vertex indices used by this mesh buffer.
 * [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
-* [transform](#H3DU.MeshBuffer_transform)<br>TODO: Not documented yet.
+* [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
+in this mesh.
 * [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
+* [vertexIndices](#H3DU.MeshBuffer_vertexIndices)<br>TODO: Not documented yet.
 
 <a name='H3DU.MeshBuffer_getAttribute'></a>
 ### H3DU.MeshBuffer#getAttribute(name, index)
@@ -37,8 +41,8 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `name` (Type: *)
-* `index` (Type: *)
+* `name` (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 
 #### Return Value
 
@@ -63,14 +67,9 @@ or no vertices are defined in this buffer, returns the array
 [Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;number>)
 
 <a name='H3DU.MeshBuffer_getIndices'></a>
-### H3DU.MeshBuffer#getIndices(primitiveIndex, ret)
+### H3DU.MeshBuffer#getIndices()
 
 TODO: Not documented yet.
-
-#### Parameters
-
-* `primitiveIndex` (Type: *)
-* `ret` (Type: *)
 
 #### Return Value
 
@@ -89,6 +88,19 @@ each of which holds the vertices that make up that primitive.
 If this mesh holds triangles, each primitive will contain three
 vertices; if lines, two; and if points, one. Each vertex is an at least 3-element
 array containing that vertex's X, Y, and Z coordinates, in that order. (Type: Array.&lt;Array.&lt;number>>)
+
+<a name='H3DU.MeshBuffer_merge'></a>
+### H3DU.MeshBuffer#merge(other)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `other` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 <a name='H3DU.MeshBuffer_primitiveCount'></a>
 ### H3DU.MeshBuffer#primitiveCount()
@@ -109,6 +121,30 @@ Gets the type of primitive stored in this mesh buffer.
 
 Either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
 <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: number)
+
+<a name='H3DU.MeshBuffer_reverseNormals'></a>
+### H3DU.MeshBuffer#reverseNormals()
+
+Modifies this mesh buffer by reversing the sign of normals it defines.
+Has no effect if this mesh buffer doesn't define any normals.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+
+#### Example
+
+The following code generates a two-sided mesh, where
+the normals on each side face in the opposite direction.
+This is only useful when drawing open geometric shapes, such as open
+cylinders and two-dimensional planar shapes.
+Due to the z-fighting effect, drawing a two-sided mesh is
+recommended only if face culling is enabled.
+TODO: Implement reverseWinding.
+
+    var twoSidedMesh = originalMesh.merge(
+    new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
+    );
 
 <a name='H3DU.MeshBuffer_setAttribute'></a>
 ### H3DU.MeshBuffer#setAttribute(name, index, buffer, startIndex, countPerVertex, stride)
@@ -134,14 +170,13 @@ This object.Throws an error if the given
 semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.MeshBuffer_setIndices'></a>
-### H3DU.MeshBuffer#setIndices(indices, byteSize)
+### H3DU.MeshBuffer#setIndices(indices)
 
 Sets the array of vertex indices used by this mesh buffer.
 
 #### Parameters
 
 * `indices` (Type: Uint16Array | Uint32Array | Uint8Array)<br>Array of vertex indices.
-* `byteSize` (Type: number)<br>Size, in bytes, of each index. Must be 1, 2, or 4.
 
 #### Return Value
 
@@ -163,15 +198,16 @@ This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 <a name='H3DU.MeshBuffer_transform'></a>
 ### H3DU.MeshBuffer#transform(matrix)
 
-TODO: Not documented yet.
+Transforms the positions and normals of all the vertices currently
+in this mesh. The matrix won't affect other attributes, including tangents and bitangents.
 
 #### Parameters
 
-* `matrix` (Type: *)
+* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
 
 #### Return Value
 
-Return value. (Type: *)
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()
@@ -181,5 +217,19 @@ Gets the number of vertices in this mesh buffer
 #### Return Value
 
 Return value. (Type: number)
+
+<a name='H3DU.MeshBuffer_vertexIndices'></a>
+### H3DU.MeshBuffer#vertexIndices(primitiveIndex, ret)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `primitiveIndex` (Type: *)
+* `ret` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 [Back to documentation index.](index.md)

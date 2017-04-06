@@ -33,7 +33,7 @@
  * way to build mesh buffers. In the future, some of the functionality in this class
  * may be reimplemented in the MeshBuffer class and the corresponding methods
  * in this class may be rewritten by having them convert objects to a MeshBuffer and
- * call the new MeshBuffer method; this may affect performance. Afterward,
+ * call the new H3DU.MeshBuffer method; this may affect performance. Afterward,
  * or at that point, those methods may be deprecated.</li></ul>
  * @constructor
  * @memberof H3DU
@@ -246,62 +246,23 @@ Mesh.prototype.mode = function(m) {
  * Also, resets the primitive
  * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
  * will not build upon previous vertices.
+ * @deprecated Use <code>new H3DU.MeshBuffer(mesh).merge(other)</code> instead.
  * @param {H3DU.Mesh} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
  * Throws an error if this mesh's primitive type is incompatible with the
  * the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
  * @returns {H3DU.Mesh} This object.
- * @example
- * // Use the following idiom to make a copy of a geometric mesh:
- * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
  */
 Mesh.prototype.merge = function(other) {
-  if(other instanceof H3DU.MeshBuffer) {
-    // TODO
-    return this;
+  // TODO: Remove examples using this method
+  if(!(other instanceof H3DU.Mesh)) {
+    throw new Error();
   }
   if(!Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
     throw new Error("Meshes have incompatible types");
   }
-  var thisAttributes = this.attributeBits & Mesh.ATTRIBUTES_BITS;
-  var otherAttributes = other.attributeBits & Mesh.ATTRIBUTES_BITS;
-  if(thisAttributes !== otherAttributes) {
-    var newAttributes = thisAttributes | otherAttributes;
-    // Meshes have different attribute sets, so this will
-    // be slower
-    if(newAttributes === otherAttributes) {
-      // If the other's attributes are a subset, just
-      // rebuild the vertices of this mesh
-      this._rebuildVertices(newAttributes);
-    } else {
-      // Copy this mesh to get the correct set of attributes
-      // (this will be quite slow, relatively speaking, if the mesh
-      // is large)
-      var m = new H3DU.Mesh();
-      m.currentMode = other.currentMode;
-      m._rebuildVertices(otherAttributes);
-      m.merge(other);
-      other = m;
-    }
-  }
-  var i;
-  var oldVertexLength = this.vertexCount();
-  var oldIndexLength = this.indices.length;
-  for(var elemIndex = 0; elemIndex < other.vertices.length; elemIndex++) {
-    var elem = other.vertices[elemIndex]; this.vertices.push(elem);
-  }
-  for(elemIndex = 0; elemIndex < other.tangents.length; elemIndex++) {
-    elem = other.tangents[elemIndex]; this.tangents.push(elem);
-  }
-  for(elemIndex = 0; elemIndex < other.indices.length; elemIndex++) {
-    elem = other.indices[elemIndex]; this.indices.push(elem);
-  }
-  for(i = oldIndexLength; i < this.indices.length; i++) {
-    this.indices[i] += oldVertexLength;
-  }
-  // Reset the primitive
-  this.newPrimitive();
-  return this;
+  return this._carryOver(Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this)
+    .merge(new H3DU.MeshBuffer(other))));
 };
 
  /**
@@ -484,6 +445,7 @@ Mesh.prototype.setColor3 = function(r, g, b) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.normalizeNormals = function() {
+  // TODO: Reimplement this method in MeshBuffer
   var i;
   var stride = this.getStride();
   var vertices = this.vertices;
@@ -1001,40 +963,15 @@ Mesh._isIdentityInUpperLeft = function(m) {
   * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
   * will not build upon previous vertices. Future vertices should not be
   * added after calling this method without calling mode() first.
+  * @deprecated Use <code>new H3DU.MeshBuffer(this).transform()</code> instead.
   * @param {Array<number>} matrix A 4x4 matrix described in
   * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
   * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.transform = function(matrix) {
-  // TODO: Implement and favor MeshBuffer version of this method
-  var stride = this.getStride();
-  var v = this.vertices;
-  var isLinearIdentity = !Mesh._isIdentityInUpperLeft(matrix);
-  var normalOffset = Mesh._normalOffset(this.attributeBits);
-  var matrixForNormals = null;
-  if(normalOffset >= 0 && isLinearIdentity) {
-    matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
-  }
-  for(var i = 0; i < v.length; i += stride) {
-    var xform = H3DU.Math.mat4projectVec3(matrix, v[i], v[i + 1], v[i + 2]);
-    v[i] = xform[0];
-    v[i + 1] = xform[1];
-    v[i + 2] = xform[2];
-    if(normalOffset >= 0 && isLinearIdentity) {
-     // Transform and normalize the normals
-     // (using a modified matrix) to ensure
-     // they point in the correct direction
-      xform = H3DU.Math.mat3transform(matrixForNormals,
-      v[i + normalOffset], v[i + normalOffset + 1], v[i + normalOffset + 2]);
-      H3DU.Math.vec3normalizeInPlace(xform);
-      v[i + normalOffset] = xform[0];
-      v[i + normalOffset + 1] = xform[1];
-      v[i + normalOffset + 2] = xform[2];
-    }
-  }
-  this.newPrimitive();
-  return this;
+  return this._carryOver(
+  Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).transform(matrix)));
 };
 
 /**
@@ -1086,6 +1023,63 @@ Mesh.prototype.enumPrimitives = function(func) {
   }
   return this;
 };
+/** @ignore */
+Mesh.prototype._carryOver = function(mesh) {
+  this.vertices = mesh.vertices;
+  this.attributeBits = mesh.attributeBits;
+  this.indices = mesh.indices;
+  this.tangents = mesh.tangents;
+  this.newPrimitive();
+  return this;
+};
+
+/** @ignore */
+Mesh._getValue = function(helper, attr, attrIndex, value) {
+  if(attr) {
+    value[0] = 0;
+    value[1] = 0;
+    value[2] = 0;
+    helper.getVec(attr, attrIndex, value);
+    return true;
+  }
+  return false;
+};
+/** @ignore */
+Mesh._fromMeshBuffer = function(meshBuffer) {
+  var helper = new H3DU.BufferHelper();
+  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
+  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
+  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
+  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
+  var tanAttr = meshBuffer.getAttribute(H3DU.Semantic.TANGENT);
+  var bitanAttr = meshBuffer.getAttribute(H3DU.Semantic.BITANGENT);
+  var indices = meshBuffer.getIndices();
+  var scratch = [];
+  var mesh = new Mesh().mode(meshBuffer.primitiveType());
+  for(var i = 0; i < indices.length; i++) {
+    var index = indices[i];
+    if(Mesh._getValue(helper, normalAttr, index, scratch)) {
+      mesh.normal3(scratch);
+    }
+    if(Mesh._getValue(helper, colorAttr, index, scratch)) {
+      mesh.color3(scratch);
+    }
+    if(Mesh._getValue(helper, uvAttr, index, scratch)) {
+      mesh.texCoord2(scratch);
+    }
+    if(Mesh._getValue(helper, tanAttr, index, scratch)) {
+      mesh.tangent3(scratch);
+    }
+    if(Mesh._getValue(helper, bitanAttr, index, scratch)) {
+      mesh.bitangent3(scratch);
+    }
+    if(Mesh._getValue(helper, posAttr, index, scratch)) {
+      mesh.vertex3(scratch);
+    }
+  }
+  mesh.newPrimitive();
+  return mesh;
+};
 
 /**
  * Finds the tightest axis-aligned
@@ -1104,35 +1098,18 @@ Mesh.prototype.getBoundingBox = function() {
 };
 /**
  * Modifies this mesh by reversing the sign of normals it defines.
+ * If this mesh defines normals, also resets the primitive
+ * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
+ * will not build upon previous vertices.
  * @returns {H3DU.Mesh} This object.
- * @example <caption>
- * The following code generates a two-sided mesh, where
- * the normals on each side face in the opposite direction.
- * This is only useful when drawing open geometric shapes such as
- * those generated by H3DU.Meshes.createCylinder or H3DU.Meshes.createDisk.
- * Due to the z-fighting effect, drawing a two-sided mesh is
- * recommended only if face culling is enabled.</caption>
- * var twoSidedMesh = originalMesh.merge(
- * new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
- * );
  */
 Mesh.prototype.reverseNormals = function() {
   // LATER: Implement and favor MeshBuffer version of this method
-  var i;
-  var stride = this.getStride();
-  var vertices = this.vertices;
   var normalOffset = Mesh._normalOffset(
      this.attributeBits);
   if(normalOffset < 0) return this;
-  for(i = 0; i < vertices.length; i += stride) {
-    var x = vertices[i + normalOffset];
-    var y = vertices[i + normalOffset + 1];
-    var z = vertices[i + normalOffset + 2];
-    vertices[i + normalOffset] = -x;
-    vertices[i + normalOffset + 1] = -y;
-    vertices[i + normalOffset + 2] = -z;
-  }
-  return this;
+  return this._carryOver(
+   Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).reverseNormals()));
 };
 
 /**

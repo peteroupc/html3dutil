@@ -107,6 +107,7 @@ BufferedMesh.prototype._initialize = function(mesh, context) {
   this.vao = this._createVertexArray(this.context);
   var attribs = smb._getAttributes();
   for(var i = 0; i < attribs.length; i++) {
+        // TODO: Move attribute access to BufferHelper
     var vb = attribs[i][2];
     if(vb) {
       if(!this.vertsMap.get(vb)) {
@@ -194,6 +195,7 @@ BufferedMesh.prototype._getAttribLocations = function(program) {
     for(var i = 0; i < attrs.length; i++) {
       var arrLoc = [];
       var arrName = [];
+       // TODO: Move attribute access to BufferHelper
       program._addNamesWithSemantic(arrName, attrs[i][0], attrs[i][5]);
       for(var j = 0; j < arrName.length; j++) {
         var loc = program.get(arrName[j]);
@@ -226,6 +228,7 @@ BufferedMesh.prototype._prepareDraw = function(program, context) {
       for(var j = 0; j < this._attribLocations[i].length; j++) {
         var attrib = this._attribLocations[i][j];
         if(attrib >= 0) {
+       // TODO: Move attribute access to BufferHelper
           var vertBuffer = this.vertsMap.get(attrs[i][2]);
           context.bindBuffer(context.ARRAY_BUFFER, vertBuffer);
           context.enableVertexAttribArray(attrib);

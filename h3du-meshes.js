@@ -329,8 +329,8 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  */
 Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
   var cylinder = H3DU.Meshes.createCylinder(baseRad, topRad, height, slices, stacks, flat, inside);
-  var base = H3DU.Meshes.createDisk(0, baseRad, slices, 2, !inside).reverseWinding();
-  var top = H3DU.Meshes.createDisk(0, topRad, slices, 2, inside);
+  var base = H3DU.Meshes.createDisk(0.0, baseRad, slices, 2, !inside).reverseWinding();
+  var top = H3DU.Meshes.createDisk(0.0, topRad, slices, 2, inside);
  // move the top disk to the top of the cylinder
   top.transform(H3DU.Math.mat4translated(0, 0, height));
  // merge the base and the top

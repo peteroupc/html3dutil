@@ -144,8 +144,11 @@ Scene3D._flagsForShape = function(shape) {
     }
   }
   var buffer = shape.getMeshBuffer();
-  if(buffer && !!buffer.getAttribute(H3DU.Semantic.COLOR, 0)) {
-    flags |= H3DU.Scene3D.COLORATTR_ENABLED;
+  if(typeof buffer !== "undefined" && buffer !== null) {
+    var bufferAttr = buffer.getAttribute(H3DU.Semantic.COLOR);
+    if(typeof bufferAttr !== "undefined" && bufferAttr !== null) {
+      flags |= H3DU.Scene3D.COLORATTR_ENABLED;
+    }
   }
   return flags;
 };
