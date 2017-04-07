@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, WebGL2RenderingContext */
+/* global H3DU, Uint32Array, Uint8Array, WebGL2RenderingContext */
 
 /**
  * A geometric mesh in the form of buffer objects.
@@ -128,9 +128,9 @@ BufferedMesh.prototype._initialize = function(mesh, context) {
   context.bufferData(context.ELEMENT_ARRAY_BUFFER,
     smb.indices, context.STATIC_DRAW);
   var type = context.UNSIGNED_SHORT;
-  if(smb.indexBufferSize === 4) {
+  if(smb.indices instanceof Uint32Array) {
     type = context.UNSIGNED_INT;
-  } else if(smb.indexBufferSize === 1) {
+  } else if(smb.indices instanceof Uint8Array) {
     type = context.UNSIGNED_BYTE;
   }
   this.type = type;
@@ -154,10 +154,6 @@ BufferedMesh.prototype._getBounds = function() {
  */
 BufferedMesh.prototype.getContext = function() {
   return this.context;
-};
-/** @ignore */
-BufferedMesh.prototype.getFormat = function() {
-  return this.smb.format;
 };
 
 /**
@@ -263,10 +259,10 @@ BufferedMesh.prototype.draw = function(program) {
   this._prepareDraw(program, context);
   // Drawing phase
   var primitive = context.TRIANGLES;
-  if((this.smb.format & H3DU.Mesh.LINES_BIT) !== 0) {
+  if(this.smb.primitiveType() === H3DU.Mesh.LINES) {
     primitive = context.LINES;
   }
-  if((this.smb.format & H3DU.Mesh.POINTS_BIT) !== 0) {
+  if(this.smb.primitiveType() === H3DU.Mesh.POINTS) {
     primitive = context.POINTS;
   }
   context.drawElements(primitive,

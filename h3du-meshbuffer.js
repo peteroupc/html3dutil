@@ -26,6 +26,26 @@ BufferHelper.prototype.count = function(a) {
 };
 /**
  * TODO: Not documented yet.
+ * @param {*} a
+ * @returns {*} Return value.
+ */
+BufferHelper.prototype.countPerElement = function(a) {
+  return a === null ? 0 : a[3];
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} semantic
+ * @param {*} index
+ * @param {*} count
+ * @param {*} countPerElement
+ * @returns {*} Return value.
+ */
+BufferHelper.prototype.makeBlank = function(semantic, index, count, countPerElement) {
+  var els = new Float32Array(new ArrayBuffer(count * countPerElement * 4));
+  return [semantic, 0, els, countPerElement, countPerElement, index];
+};
+/**
+ * TODO: Not documented yet.
  * @param {*} numIndices
  * @returns {*} Return value.
  */
@@ -96,7 +116,6 @@ BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
   // Different semantic indices
   if(attr1[5] !== attr2[5])return null;
   var elementsPerValue = Math.max(attr1[3], attr2[3]);
-  var minElements = Math.min(attr1[3], attr2[3]);
   var elements = (indices1.length + indices2.length) * elementsPerValue;
   var els = new Float32Array(new ArrayBuffer(elements * 4));
   var newAttribute = [attr1[0], 0, els, elementsPerValue, elementsPerValue, attr1[5]];
@@ -261,50 +280,54 @@ BufferHelper.prototype.setVec = function(a, index, vec) {
  * A geometric mesh in the form of buffer objects.
  * @constructor
  * @memberof H3DU
- * @param {H3DU.Mesh} mesh A geometric mesh object.
+ * @param {H3DU.Mesh} [mesh] A geometric mesh object.
  * A series of default attributes will be set based on that mesh's
- * data.
+ * data. If null or omitted, an empty mesh buffer will be generated.
  */
 export var MeshBuffer = function(mesh) {
-  // TODO: Make "mesh" optional, creating an empty mesh buffer
-  var vertices = new Float32Array(mesh.vertices);
-  if(mesh.vertices.length >= 65536 || mesh.indices.length >= 65536) {
-    this.indexBufferSize = 4;
-    this.indices = new Uint32Array(mesh.indices);
-  } else if(mesh.vertices.length <= 256 && mesh.indices.length <= 256) {
-    this.indexBufferSize = 1;
-    this.indices = new Uint8Array(mesh.indices);
+  if(typeof mesh !== "undefined" && mesh !== null) {
+    var vertices = new Float32Array(mesh.vertices);
+    if(mesh.vertices.length >= 65536 || mesh.indices.length >= 65536) {
+      this.indices = new Uint32Array(mesh.indices);
+    } else if(mesh.vertices.length <= 256 && mesh.indices.length <= 256) {
+      this.indices = new Uint8Array(mesh.indices);
+    } else {
+      this.indices = new Uint16Array(mesh.indices);
+    }
+    this.format = mesh.primitiveType();
+    var stride = H3DU.Mesh._getStride(mesh.attributeBits);
+    this.attributes = [];
+    this.setAttribute(H3DU.Semantic.POSITION, 0, vertices, 0, 3, stride);
+    var o = H3DU.Mesh._normalOffset(mesh.attributeBits);
+    if(o >= 0) {
+      this.setAttribute(H3DU.Semantic.NORMAL, 0, vertices, o, 3, stride);
+    }
+    o = H3DU.Mesh._colorOffset(mesh.attributeBits);
+    if(o >= 0) {
+      this.setAttribute(H3DU.Semantic.COLOR, 0, vertices, o, 3, stride);
+    }
+    o = H3DU.Mesh._texCoordOffset(mesh.attributeBits);
+    if(o >= 0) {
+      this.setAttribute(H3DU.Semantic.TEXCOORD, 0, vertices, o, 2, stride);
+    }
+    var tangents = new Float32Array(mesh.tangents);
+    if((mesh.attributeBits & H3DU.Mesh.TANGENTS_BIT) !== 0) {
+      this.setAttribute(H3DU.Semantic.TANGENT, 0, tangents, 0, 3, 3);
+    }
+    if((mesh.attributeBits & H3DU.Mesh.BITANGENTS_BIT) !== 0) {
+      this.setAttribute(H3DU.Semantic.BITANGENT, 0, tangents, 3, 3, 3);
+    }
+    this._bounds = null;
   } else {
-    this.indexBufferSize = 2;
-    this.indices = new Uint16Array(mesh.indices);
-  }
-  this.format = mesh.attributeBits;
-  var stride = H3DU.Mesh._getStride(this.format);
-  this.attributes = [];
-  this.setAttribute(H3DU.Semantic.POSITION, 0, vertices, 0, 3, stride);
-  var o = H3DU.Mesh._normalOffset(this.format);
-  if(o >= 0) {
-    this.setAttribute(H3DU.Semantic.NORMAL, 0, vertices, o, 3, stride);
-  }
-  o = H3DU.Mesh._colorOffset(this.format);
-  if(o >= 0) {
-    this.setAttribute(H3DU.Semantic.COLOR, 0, vertices, o, 3, stride);
-  }
-  o = H3DU.Mesh._texCoordOffset(this.format);
-  if(o >= 0) {
-    this.setAttribute(H3DU.Semantic.TEXCOORD, 0, vertices, o, 2, stride);
-  }
-  var tangents = new Float32Array(mesh.tangents);
-  if((this.format & H3DU.Mesh.TANGENTS_BIT) !== 0) {
-    this.setAttribute(H3DU.Semantic.TANGENT, 0, tangents, 0, 3, 3);
-  }
-  if((this.format & H3DU.Mesh.BITANGENTS_BIT) !== 0) {
-    this.setAttribute(H3DU.Semantic.BITANGENT, 0, tangents, 3, 3, 3);
+    this.format = H3DU.Mesh.TRIANGLES;
+    this.attributes = [];
+    this._bounds = null;
+    this.indices = new Uint8Array([]);
   }
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Gets the array of vertex indices used by this mesh buffer.
+ * @returns {Uint16Array|Uint32Array|Uint8Array} Return value.
  */
 MeshBuffer.prototype.getIndices = function() {
   return this.indices;
@@ -316,13 +339,6 @@ MeshBuffer.prototype.getIndices = function() {
  */
 MeshBuffer.prototype.setIndices = function(indices) {
   this.indices = indices;
-  if(indices instanceof Uint8Array) {
-    this.indexBufferSize = 1;
-  } else if(indices instanceof Uint16Array) {
-    this.indexBufferSize = 2;
-  } else {
-    this.indexBufferSize = 4;
-  }
   return this;
 };
 /**
@@ -332,13 +348,7 @@ MeshBuffer.prototype.setIndices = function(indices) {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setPrimitiveType = function(primType) {
-  if(primType === H3DU.Mesh.TRIANGLES) {
-    this.format = 0;
-  } else if(primType === H3DU.Mesh.LINES) {
-    this.format = H3DU.Mesh.LINES_BIT;
-  } else if(primType === H3DU.Mesh.POINTS) {
-    this.format = H3DU.Mesh.POINTS_BIT;
-  }
+  this.format = primType;
   return this;
 };
 
@@ -450,15 +460,21 @@ MeshBuffer.prototype.getAttribute = function(name, index) {
   return null;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} primitiveIndex
- * @param {*} ret
- * @returns {*} Return value.
+ * Gets the vertex indices of a given primitive (triangle, line,
+ * or point) in this mesh buffer.
+ * @param {number} primitiveIndex The index (counting from 0)
+ * of the primitive whose indices will be retrieved.
+ * @param {Array<number>} ret An array where the vertex indices for
+ * the given primitive will be stored. If this mesh buffer stores
+ * triangles, three indices will be stored; if lines, two; and if
+ * points, one.
+ * @returns {Array<number>} The parameter "ret".
  */
 MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
   var count = 3;
-  if((this.format & H3DU.Mesh.LINES_BIT) !== 0)count = 2;
-  if((this.format & H3DU.Mesh.POINTS_BIT) !== 0)count = 1;
+  var prim = this.primitiveType();
+  if(prim === H3DU.Mesh.LINES)count = 2;
+  if(prim === H3DU.Mesh.POINTS)count = 1;
   var i = primitiveIndex * count;
   ret[0] = this.indices[i];
   if(count >= 2)ret[1] = this.indices[i + 1];
@@ -472,9 +488,9 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * @returns {number} Return value.
  */
 MeshBuffer.prototype.primitiveCount = function() {
-  if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
+  if(this.format === H3DU.Mesh.LINES)
     return Math.floor(this.indices.length / 2);
-  if((this.format & H3DU.Mesh.POINTS_BIT) !== 0)
+  if(this.format === H3DU.Mesh.POINTS)
     return this.indices.length;
   return Math.floor(this.indices.length / 3);
 };
@@ -541,26 +557,306 @@ MeshBuffer.prototype.reverseNormals = function() {
   }
   return this;
 };
+
+/** @ignore */
+MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) {
+  var normDir = inward ? -1 : 1;
+  var uniqueVertices = {};
+  var dupverts = [];
+  var dupvertcount = 0;
+  var i;
+  var helper = new BufferHelper();
+  var count = Math.min(helper.count(positions), helper.count(normals));
+  var v1 = [0, 0, 0];
+  var v2 = [0, 0, 0];
+  var v3 = [0, 0, 0];
+  var normal = [0, 0, 0];
+  for(i = 0; i < count; i++) {
+     // Set normal to 0
+    helper.setVec(normals, i, v1);
+    if(!flat) {
+     // If non-flat shading is requested, find all vertices with
+     // duplicate vertex positions
+      var uv = helper.getVec(positions, i, []);
+      if(uniqueVertices[uv])uniqueVertices[uv].push(i);
+      else uniqueVertices[uv] = [i];
+    }
+  }
+  for(i = 0; i < indices.length; i += 3) {
+    v1 = helper.getVec(positions, indices[i], v1);
+    v2 = helper.getVec(positions, indices[i + 1], v2);
+    v3 = helper.getVec(positions, indices[i + 2], v3);
+    var n1 = H3DU.Math.vec3sub(v1, v3);
+    var n2 = H3DU.Math.vec3sub(v2, v3);
+    // cross multiply n1 and n2
+    var n1xn2 = H3DU.Math.vec3cross(n1, n2);
+    H3DU.Math.vec3normalizeInPlace(n1xn2);
+    H3DU.Math.vec3scaleInPlace(n1xn2, normDir);
+    // add normalized normal to each vertex of the face
+    helper.getVec(normals, indices[i], v1);
+    helper.getVec(normals, indices[i + 1], v2);
+    helper.getVec(normals, indices[i + 2], v3);
+    H3DU.Math.vec3addInPlace(v1, n1xn2);
+    H3DU.Math.vec3addInPlace(v2, n1xn2);
+    H3DU.Math.vec3addInPlace(v3, n1xn2);
+    helper.setVec(normals, indices[i], v1);
+    helper.setVec(normals, indices[i + 1], v2);
+    helper.setVec(normals, indices[i + 2], v3);
+  }
+  if(!flat) {
+   // If non-flat shading is requested, make sure
+   // that every vertex with the same position has the
+   // same normal
+    for(var key in uniqueVertices) {
+      if(Object.prototype.hasOwnProperty.call(uniqueVertices, key)) {
+        var v = uniqueVertices[key];
+        if(v && v.constructor === Array && v.length >= 2) {
+          var v0 = v[0];
+          helper.getVec(normals, v0, normal);
+          var avg = [normal[0], normal[1], normal[2]];
+          dupverts[0] = normal[0];
+          dupverts[1] = normal[1];
+          dupverts[2] = normal[2];
+          dupvertcount = 3;
+          for(i = 1; i < v.length; i++) {
+            var dupfound = false;
+            helper.getVec(positions, v[i], normal);
+            var nx = normal[0];
+            var ny = normal[1];
+            var nz = normal[2];
+            for(var j = 0; j < dupvertcount; j += 3) {
+              if(nx === dupverts[j] && ny === dupverts[j + 1] && nz === dupverts[j + 2]) {
+                dupfound = true;
+                break;
+              }
+            }
+            if(!dupfound) {
+              dupverts[dupvertcount++] = nx;
+              dupverts[dupvertcount++] = ny;
+              dupverts[dupvertcount++] = nz;
+              H3DU.Math.vec3addInPlace(avg, normal);
+            }
+          }
+          for(i = 0; i < v.length; i++) {
+            helper.setVec(normals, v[i], avg);
+          }
+        }
+      }
+    }
+  }
+  // Normalize each normal of the vertex
+  count = helper.count(normals);
+  for(i = 0; i < count; i++) {
+    helper.getVec(normals, i, normal);
+    H3DU.Math.vec3normalize(normal);
+    helper.setVec(normals, i, normal);
+  }
+};
+
+/** @ignore */
+MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tangents, bitangents, indices) {
+  var helper = new BufferHelper();
+  var v1 = [0, 0, 0];
+  var v2 = [0, 0, 0];
+  var v3 = [0, 0, 0];
+  tangents = [];
+  for(var i = 0; i < indices.length; i += 3) {
+    v1 = helper.getVec(positions, indices[i], v1);
+    v2 = helper.getVec(positions, indices[i + 1], v2);
+    v3 = helper.getVec(positions, indices[i + 2], v3);
+    // Find the tangent and bitangent
+    var ret;
+    var t1 = v2[0] - v1[0];
+    var t2 = v2[1] - v1[1];
+    var t3 = v2[2] - v1[2];
+    var t4 = v3[0] - v1[0];
+    var t5 = v3[1] - v1[1];
+    var t6 = v3[2] - v1[2];
+    v1 = helper.getVec(texCoords, indices[i], v1);
+    v2 = helper.getVec(texCoords, indices[i + 1], v2);
+    v3 = helper.getVec(texCoords, indices[i + 2], v3);
+    var t7 = v2[0] - v1[0];
+    var t8 = v2[1] - v1[1];
+    var t9 = v3[0] - v1[0];
+    var t10 = v3[1] - v1[1];
+    var t11 = t7 * t10 - t8 * t9;
+    if(t11 === 0) {
+    // Degenerate case
+      ret = [0, 0, 0, 0, 0, 0];
+    } else {
+      t11 = 1.0 / t11;
+      var t12 = -t8;
+      var t13 = -t9;
+      var t14 = (t10 * t1 + t12 * t4) * t11;
+      var t15 = (t10 * t2 + t12 * t5) * t11;
+      var t16 = (t10 * t3 + t12 * t6) * t11;
+      var t17 = (t13 * t1 + t7 * t4) * t11;
+      var t18 = (t13 * t2 + t7 * t5) * t11;
+      var t19 = (t13 * t3 + t7 * t6) * t11;
+      ret = [t14, t15, t16, t17, t18, t19];
+    }
+  // NOTE: It would be more mathematically correct to use the inverse
+  // of the matrix
+  // [ Ax Bx Nx ]
+  // [ Ay By Ny ]
+  // [ Az Bz Nz ]
+  // (where A and B are the tangent and bitangent and returned
+  // in _findTangentAndBitangent) as the tangent space
+  // transformation, that is, include three
+  // different vectors (tangent, bitangent, and modified normal).
+  // Instead we use the matrix
+  // [ AAx AAy AAz ]
+  // [ BBx BBy BBz ]
+  // [ Nx Ny Nz ]
+  // (where AA and BB are the orthonormalized versions of the tangent
+  // and bitangent) as the tangent space transform, in order to avoid
+  // the need to also specify a transformed normal due to matrix inversion.
+    for(var j = 0; j < 3; j++) {
+      var m = ret;
+      v1 = helper.getVec(normals, indices[i + j], v1);
+      var norm0 = v1[0];
+      var norm1 = v1[1];
+      var norm2 = v1[2];
+      var t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
+      var tangent = H3DU.Math.vec3normalizeInPlace([
+        m[0] - t20 * norm0,
+        m[1] - t20 * norm1,
+        m[2] - t20 * norm2]);
+      var t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
+      var t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
+      var bitangent = H3DU.Math.vec3normalizeInPlace([
+        m[3] - t22 * norm0 - t23 * tangent[0],
+        m[4] - t22 * norm1 - t23 * tangent[1],
+        m[5] - t22 * norm2 - t23 * tangent[2]]);
+      helper.setVec(tangents, indices[i + j], tangent);
+      helper.setVec(bitangents, indices[i + j], bitangent);
+    }
+  }
+};
+
+/** @ignore */
+MeshBuffer.prototype._makeRedundant = function(helper) {
+  var newAttributes = [];
+  for(var i = 0; i < this.attributes.length; i++) {
+    newAttributes.push(helper.makeRedundant(this.attributes[i], this.indices));
+  }
+  this.attributes = newAttributes;
+  this.setIndices(helper.makeIndices(this.indices.length));
+};
+/** @ignore */
+MeshBuffer.prototype._threeEl = function(helper, sem, count) {
+  var attr = this.getAttribute(sem);
+  if(!attr) {
+    attr = helper.makeBlank(sem, 0, count, 3);
+    this.attributes.push(attr);
+  } else if(helper.countPerElement(attr) < 3) {
+    var newattr = helper.makeBlank(sem, 0, count, 3);
+    var vec = [0, 0, 0];
+    for(var i = 0; i < count; i++) {
+      helper.getVec(attr, i, vec);
+      helper.setVec(newattr, i, vec);
+    }
+    attr = newattr;
+    this.attributes.push(attr);
+  }
+  return attr;
+};
+
+/**
+ * Recalculates the normal vectors for triangles
+ * in this mesh. For this to properly affect shading, each triangle in
+ * the mesh must have its vertices defined in
+ * counterclockwise order (if the triangle is being rendered
+ * in a right-handed coordinate system). Each normal calculated will
+ * be normalized to have a length of 1 (unless the normal is (0,0,0)).
+ * Will have an effect only if the position vector is at least 3 elements
+ * long. If the normal vector exists, but is not at least 3 elements long,
+ * this method will have no effect.
+ * @param {Boolean} flat If true, each triangle in the mesh
+ * will have the same normal, which usually leads to a flat
+ * appearance. If false, each unique vertex in the mesh
+ * will have its own normal, which usually leads to a smooth
+ * appearance.
+ * @param {Boolean} inward If true, the generated normals
+ * will point inward; otherwise, outward.
+ * @returns {H3DU.Mesh} This object.
+ */
+MeshBuffer.prototype.recalcNormals = function(flat, inward) {
+  var primtype = this.primitiveType();
+  if(primtype === H3DU.Mesh.TRIANGLES) {
+    var helper = new BufferHelper();
+    var positions = this.getAttribute(H3DU.Semantic.POSITION);
+    if(helper.countPerElement(positions) < 3) {
+      return this;
+    }
+    this._makeRedundant(helper);
+    positions = this.getAttribute(H3DU.Semantic.POSITION);
+    var normals = this._threeEl(helper, H3DU.Semantic.NORMAL, helper.count(positions));
+    MeshBuffer._recalcNormals(positions, normals, this.indices, flat, inward);
+  }
+  return this;
+};
+/** @ignore */
+MeshBuffer.prototype._recalcTangents = function() {
+  var primtype = this.primitiveType();
+  if(primtype === H3DU.Mesh.TRIANGLES) {
+    var helper = new BufferHelper();
+    var positions = this.getAttribute(H3DU.Semantic.POSITION);
+    var normals = this.getAttribute(H3DU.Semantic.NORMAL);
+    var texCoords = this.getAttribute(H3DU.Semantic.TEXCOORD);
+    if(helper.countPerElement(positions) < 3 || helper.countPerElement(normals) < 3 ||
+      helper.countPerElement(texCoords) < 3) {
+      return this;
+    }
+    this._makeRedundant(helper);
+    positions = this.getAttribute(H3DU.Semantic.POSITION);
+    normals = this.getAttribute(H3DU.Semantic.NORMAL);
+    texCoords = this.getAttribute(H3DU.Semantic.TEXCOORD);
+    var tangents = this._threeEl(helper, H3DU.Semantic.TANGENT, helper.count(positions));
+    var bitangents = this._threeEl(helper, H3DU.Semantic.BITANGENT, helper.count(positions));
+    MeshBuffer._recalcTangentsInternal(positions, normals, texCoords,
+      tangents, bitangents, this.indices);
+  }
+  return this;
+};
+
 /**
  * TODO: Not documented yet.
  * @param {*} other
  * @returns {*} Return value.
+ * @example
+ * var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
  */
 MeshBuffer.prototype.merge = function(other) {
-// TODO: Make the following example work:
-// * @example
-// * // Use the following idiom to make a copy of a geometric mesh:
-// * var copiedMesh = new H3DU.Mesh().merge(meshToCopy);
+  var helper = new H3DU.BufferHelper();
+  var newAttributes = [];
   if(!other)throw new Error();
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
     return this;
+  } else if(this.indices.length === 0) {
+    var empty = true;
+    for(var i = 0; i < this.attributes.length; i++) {
+      empty = empty && helper.count(this.attributes[i]) === 0;
+    }
+    if(empty) {
+  // If this object is empty, copy the attributes and
+  // indices from the other object
+      for(i = 0; i < other.attributes.length; i++) {
+        newAttributes.push(helper.copy(other.attributes[i]));
+      }
+      this._bounds = null;
+      this.format = other.format;
+      this.attributes = newAttributes;
+      // NOTE: Copies the index buffer
+      this.setIndices(other.indices.slice(0, other.indices.length));
+      return this;
+    }
   }
-  // TODO: Copy all attributes if no attributes or indices
-  // are given on this object
-  var newAttributes = [];
-  var helper = new H3DU.BufferHelper();
-  for(var i = 0; i < this.attributes.length; i++) {
+  if(this.format !== other.format) {
+    throw new Error();
+  }
+  for(i = 0; i < this.attributes.length; i++) {
     var existingAttribute = null;
     var newAttribute = null;
     var attr = this.attributes[i];
@@ -610,6 +906,7 @@ MeshBuffer.prototype.merge = function(other) {
  * @param {Array<number>} matrix A 4x4 matrix described in
  * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
  * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
+ * (Normals need to be transformed specially because they describe directions, not points.)
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.transform = function(matrix) {
@@ -706,11 +1003,7 @@ MeshBuffer.prototype.getBounds = function() {
  * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  */
 MeshBuffer.prototype.primitiveType = function() {
-  if((this.format & H3DU.Mesh.LINES_BIT) !== 0)
-    return H3DU.Mesh.LINES;
-  if((this.format & H3DU.Mesh.POINTS_BIT) !== 0)
-    return H3DU.Mesh.POINTS;
-  return H3DU.Mesh.TRIANGLES;
+  return this.format;
 };
 MeshBuffer._wellKnownAttributes = {
   "POSITION":0,

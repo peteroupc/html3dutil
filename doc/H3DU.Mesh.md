@@ -94,8 +94,7 @@ index in this mesh.
 to "unit vectors" ("normalized" vectors with a length of 1).
 * [primitiveCount](#H3DU.Mesh_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.
-* [recalcNormals](#H3DU.Mesh_recalcNormals)<br>Recalculates the normal vectors for triangles
-in this mesh.
+* [recalcNormals](#H3DU.Mesh_recalcNormals)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.</b>
 * [recalcTangents](#H3DU.Mesh_recalcTangents)<br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. This method
 may be reimplemented in the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class in the future.</b>
@@ -459,6 +458,8 @@ Return value. (Type: number)
 <a name='H3DU.Mesh_recalcNormals'></a>
 ### H3DU.Mesh#recalcNormals(flat, inward)
 
+<b>Deprecated: Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.</b>
+
 Recalculates the normal vectors for triangles
 in this mesh. For this to properly affect shading, each triangle in
 the mesh must have its vertices defined in
@@ -657,7 +658,7 @@ added after calling this method without calling mode() first.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).
+* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)
 
 #### Return Value
 

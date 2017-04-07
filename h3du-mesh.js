@@ -81,125 +81,6 @@ Mesh._isCompatibleMode = function(oldMode, newMode) {
     return true;
   return false;
 };
-/** @ignore */
-Mesh._recalcNormalsStart = function(vertices, uniqueVertices, faces, stride, offset, flat) {
-  for(var i = 0; i < vertices.length; i += stride) {
-    vertices[i + offset] = 0.0;
-    vertices[i + offset + 1] = 0.0;
-    vertices[i + offset + 2] = 0.0;
-    if(!flat) {
-     // If non-flat shading is requested, find all vertices with
-     // duplicate vertex positions
-      var uv = [vertices[i], vertices[i + 1], vertices[i + 2]];
-      if(uniqueVertices[uv])uniqueVertices[uv].push(i + offset);
-      else uniqueVertices[uv] = [i + offset];
-    }
-  }
-};
-/** @ignore */
-Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, stride, offset, flat) {
-  var len;
-  var dupverts = [];
-  var dupvertcount = 0;
-  var i;
-  if(!flat) {
-   // If non-flat shading is requested, make sure
-   // that every vertex with the same position has the
-   // same normal
-    for(var key in uniqueVertices) {
-      if(Object.prototype.hasOwnProperty.call(uniqueVertices, key)) {
-        var v = uniqueVertices[key];
-        if(v && v.constructor === Array && v.length >= 2) {
-          var v0 = v[0];
-          var avgx = vertices[v0];
-          var avgy = vertices[v0 + 1];
-          var avgz = vertices[v0 + 2];
-          dupverts[0] = avgx;
-          dupverts[1] = avgy;
-          dupverts[2] = avgz;
-          dupvertcount = 3;
-          for(i = 1; i < v.length; i++) {
-            var dupfound = false;
-            var nx = vertices[v[i]];
-            var ny = vertices[v[i] + 1];
-            var nz = vertices[v[i] + 2];
-            for(var j = 0; j < dupvertcount; j += 3) {
-              if(nx === dupverts[j] && ny === dupverts[j + 1] && nz === dupverts[j + 2]) {
-                dupfound = true;
-                break;
-              }
-            }
-            if(!dupfound) {
-              dupverts[dupvertcount++] = nx;
-              dupverts[dupvertcount++] = ny;
-              dupverts[dupvertcount++] = nz;
-              avgx += nx;
-              avgy += ny;
-              avgz += nz;
-            }
-          }
-          for(i = 0; i < v.length; i++) {
-            vertices[v[i]] = avgx;
-            vertices[v[i] + 1] = avgy;
-            vertices[v[i] + 2] = avgz;
-          }
-        }
-      }
-    }
-  }
-  // Normalize each normal of the vertex
-  for(i = 0; i < vertices.length; i += stride) {
-    var x = vertices[i + offset];
-    var y = vertices[i + offset + 1];
-    var z = vertices[i + offset + 2];
-    len = Math.sqrt(x * x + y * y + z * z);
-    if(len) {
-      len = 1.0 / len;
-      vertices[i + offset] = x * len;
-      vertices[i + offset + 1] = y * len;
-      vertices[i + offset + 2] = z * len;
-    }
-  }
-};
-
-/** @ignore */
-Mesh._recalcNormals = function(vertices, faces, stride, offset, flat, inward) {
-  var normDir = inward ? -1 : 1;
-  var uniqueVertices = {};
-  var len;
-  Mesh._recalcNormalsStart(vertices, uniqueVertices, faces, stride, offset, flat);
-  for(var i = 0; i < faces.length; i += 3) {
-    var v1 = faces[i] * stride;
-    var v2 = faces[i + 1] * stride;
-    var v3 = faces[i + 2] * stride;
-    var n1 = [vertices[v1] - vertices[v3], vertices[v1 + 1] - vertices[v3 + 1], vertices[v1 + 2] - vertices[v3 + 2]];
-    var n2 = [vertices[v2] - vertices[v3], vertices[v2 + 1] - vertices[v3 + 1], vertices[v2 + 2] - vertices[v3 + 2]];
-    // cross multiply n1 and n2
-    var x = n1[1] * n2[2] - n1[2] * n2[1];
-    var y = n1[2] * n2[0] - n1[0] * n2[2];
-    var z = n1[0] * n2[1] - n1[1] * n2[0];
-    // normalize xyz vector
-    len = Math.sqrt(x * x + y * y + z * z);
-    if(len !== 0) {
-      len = 1.0 / len;
-      len *= normDir;
-      x *= len;
-      y *= len;
-      z *= len;
-      // add normalized normal to each vertex of the face
-      vertices[v1 + offset] += x;
-      vertices[v1 + offset + 1] += y;
-      vertices[v1 + offset + 2] += z;
-      vertices[v2 + offset] += x;
-      vertices[v2 + offset + 1] += y;
-      vertices[v2 + offset + 2] += z;
-      vertices[v3 + offset] += x;
-      vertices[v3 + offset + 1] += y;
-      vertices[v3 + offset + 2] += z;
-    }
-  }
-  Mesh._recalcNormalsFinish(vertices, uniqueVertices, faces, stride, offset, flat);
-};
 
 /**
  * Changes the primitive mode for this mesh.
@@ -864,33 +745,6 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
   };
 };
 
-/** @ignore */
-Mesh.prototype._makeRedundant = function() {
-  var existingIndices = [];
-  var stride = this.getStride();
-  var originalIndicesLength = this.indices.length;
-  for(var i = 0; i < originalIndicesLength; i++) {
-    var index = this.indices[i];
-    if(existingIndices[index]) {
-     // Index already exists, so duplicate
-      var offset = index * stride;
-      var newIndex = this.vertices.length / stride;
-      for(var j = 0; j < stride; j++) {
-        this.vertices.push(this.vertices[offset + j]);
-      }
-      if((this.attributeBits & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) !== 0) {
-  // Copy tangents and bitangents
-        offset = index * 6;
-        for(j = 0; j < 6; j++) {
-          this.tangents.push(this.tangents[offset + j]);
-        }
-      }
-      this.indices[i] = newIndex;
-    }
-    existingIndices[index] = true;
-  }
-  return this;
-};
 /**
  * Gets the number of primitives (triangles, lines,
  * or points) that this mesh contains.
@@ -967,6 +821,7 @@ Mesh._isIdentityInUpperLeft = function(m) {
   * @param {Array<number>} matrix A 4x4 matrix described in
   * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
   * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
+  * (Normals need to be transformed specially because they describe directions, not points.)
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.transform = function(matrix) {
@@ -1150,6 +1005,7 @@ Mesh.prototype.reverseWinding = function() {
  * counterclockwise order (if the triangle is being rendered
  * in a right-handed coordinate system). Each normal calculated will
  * be normalized to have a length of 1 (unless the normal is (0,0,0)).
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.
  * @param {Boolean} flat If true, each triangle in the mesh
  * will have the same normal, which usually leads to a flat
  * appearance. If false, each unique vertex in the mesh
@@ -1160,20 +1016,10 @@ Mesh.prototype.reverseWinding = function() {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.recalcNormals = function(flat, inward) {
-  // LATER: Implement and favor MeshBuffer version of this method
   var primtype = this.primitiveType();
-  if(primtype !== Mesh.LINES && primtype !== Mesh.POINTS) {
-    var haveOtherAttributes = (this.attributeBits & (Mesh.ATTRIBUTES_BITS & ~Mesh.NORMALS_BIT)) !== 0;
-    this._rebuildVertices(Mesh.NORMALS_BIT);
-  // No need to duplicate vertices if there are no other attributes
-  // besides normals and non-flat shading is requested; the
-  // recalculation will reinitialize normals to 0 and
-  // add the calculated normals to vertices as they are implicated
-    if(haveOtherAttributes || flat) {
-      this._makeRedundant();
-    }
-    Mesh._recalcNormals(this.vertices, this.indices,
-     this.getStride(), 3, flat, inward);
+  if(primtype === Mesh.TRIANGLES) {
+    return this._carryOver(
+      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).recalcNormals(flat, inward)));
   }
   return this;
 };
@@ -1319,8 +1165,6 @@ Mesh.POINTS = 0;
 
 // //////////////////////////////////////////////////////////////////////////
 
-// LATER: Reimplement recalcTangents to make it more general-purpose
-
 /**
  * Sets the current tangent vector for this mesh. Future vertex positions
  * defined (with vertex3()) will have this normal. The new current
@@ -1392,97 +1236,6 @@ Mesh.prototype.bitangent3 = function(x, y, z) {
   this._elementsDefined |= Mesh.BITANGENTS_BIT;
   return this;
 };
-/** @ignore */
-Mesh._recalcTangentsInternal = function(vertices, indices, stride, uvOffset, normalOffset) {
- // NOTE: no need to specify bitangent offset, since tangent
- // and bitangent will always be contiguous (this method will
- // always be called after the recalcTangents method ensures
- // that both fields are present)
-  var vi = [0, 0, 0];
-  var tangents = [];
-  for(var i = 0; i < indices.length; i += 3) {
-    vi[0] = indices[i] * stride;
-    vi[1] = indices[i + 1] * stride;
-    vi[2] = indices[i + 2] * stride;
-    var v1 = vi[0];
-    var v2 = vi[1];
-    var v3 = vi[2];
-    // Find the tangent and bitangent
-    var ret;
-    var t1 = vertices[v2] - vertices[v1];
-    var t2 = vertices[v2 + 1] - vertices[v1 + 1];
-    var t3 = vertices[v2 + 2] - vertices[v1 + 2];
-    var t4 = vertices[v3] - vertices[v1];
-    var t5 = vertices[v3 + 1] - vertices[v1 + 1];
-    var t6 = vertices[v3 + 2] - vertices[v1 + 2];
-    var t7 = vertices[v2 + uvOffset] - vertices[v1 + uvOffset];
-    var t8 = vertices[v2 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
-    var t9 = vertices[v3 + uvOffset] - vertices[v1 + uvOffset];
-    var t10 = vertices[v3 + uvOffset + 1] - vertices[v1 + uvOffset + 1];
-    var t11 = t7 * t10 - t8 * t9;
-    if(t11 === 0) {
-    // Degenerate case
-      ret = [0, 0, 0, 0, 0, 0];
-    } else {
-      t11 = 1.0 / t11;
-      var t12 = -t8;
-      var t13 = -t9;
-      var t14 = (t10 * t1 + t12 * t4) * t11;
-      var t15 = (t10 * t2 + t12 * t5) * t11;
-      var t16 = (t10 * t3 + t12 * t6) * t11;
-      var t17 = (t13 * t1 + t7 * t4) * t11;
-      var t18 = (t13 * t2 + t7 * t5) * t11;
-      var t19 = (t13 * t3 + t7 * t6) * t11;
-      ret = [t14, t15, t16, t17, t18, t19];
-    }
-  // NOTE: It would be more mathematically correct to use the inverse
-  // of the matrix
-  // [ Ax Bx Nx ]
-  // [ Ay By Ny ]
-  // [ Az Bz Nz ]
-  // (where A and B are the tangent and bitangent and returned
-  // in _findTangentAndBitangent) as the tangent space
-  // transformation, that is, include three
-  // different vectors (tangent, bitangent, and modified normal).
-  // Instead we use the matrix
-  // [ AAx AAy AAz ]
-  // [ BBx BBy BBz ]
-  // [ Nx Ny Nz ]
-  // (where AA and BB are the orthonormalized versions of the tangent
-  // and bitangent) as the tangent space transform, in order to avoid
-  // the need to also specify a transformed normal due to matrix inversion.
-    for(var j = 0; j < 3; j++) {
-      var m = ret;
-      var vicur = vi[j];
-      var norm0 = vertices[vicur + normalOffset];
-      var norm1 = vertices[vicur + normalOffset + 1];
-      var norm2 = vertices[vicur + normalOffset + 2];
-      var t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
-      var tangent = H3DU.Math.vec3normalizeInPlace([
-        m[0] - t20 * norm0,
-        m[1] - t20 * norm1,
-        m[2] - t20 * norm2]);
-      var t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
-      var t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
-      var bitangent = H3DU.Math.vec3normalizeInPlace([
-        m[3] - t22 * norm0 - t23 * tangent[0],
-        m[4] - t22 * norm1 - t23 * tangent[1],
-        m[5] - t22 * norm2 - t23 * tangent[2]]);
-      tangents[vicur] = tangent[0];
-      tangents[vicur + 1] = tangent[1];
-      tangents[vicur + 2] = tangent[2];
-      tangents[vicur + 3] = bitangent[0];
-      tangents[vicur + 4] = bitangent[1];
-      tangents[vicur + 5] = bitangent[2];
-    }
-  }
-  for(i = 0; i < tangents.length; i++) {
-    if(typeof tangents[i] === "undefined" || tangents[i] === null) {
-      tangents[i] = 0.0;
-    }
-  }
-  return tangents;
-};
  /**
   * Recalculates the tangent and bitangent vectors for triangles
   * in this mesh. This method only has an effect if this mesh
@@ -1496,21 +1249,6 @@ Mesh.prototype.recalcTangents = function() {
   if(this.primitiveType() !== Mesh.TRIANGLES) {
     return this;
   }
-  var tangentBits = Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT;
-  var haveOtherAttributes = (this.attributeBits & (Mesh.ATTRIBUTES_BITS & ~tangentBits)) !== 0;
-  var uvOffset = Mesh._texCoordOffset(this.attributeBits);
-  var normalOffset = Mesh._normalOffset(this.attributeBits);
-  if(uvOffset < 0 || normalOffset < 0) {
-   // can't generate tangents and bitangents
-   // without normals or texture coordinates.
-    return this;
-  }
-  this._rebuildVertices(tangentBits);
-  if(haveOtherAttributes) {
-    this._makeRedundant();
-  }
-  var stride = this.getStride();
-  this.tangents = Mesh._recalcTangentsInternal(this.vertices, this.indices,
-     stride, uvOffset, normalOffset);
-  return this;
+  return this._carryOver(
+    Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this)._recalcTangents()));
 };
