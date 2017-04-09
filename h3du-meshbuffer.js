@@ -9,15 +9,20 @@
 /* global ArrayBuffer, Float32Array, H3DU, Uint16Array, Uint32Array, Uint8Array */
 
 /**
- * A helper class for accessing and setting data in buffer attributes.
+ * A helper class for accessing and setting data in buffer attributes.<p>
+ * A vertex attribute is made up of <i>values</i>, one for each vertex, each of which
+ * is made up of one or more <i>elements</i>, which are numbers such as X coordinates
+ * or red components. Each value has the same number of elements.
  * @constructor
  * @memberof H3DU
  */
-export var BufferHelper = function() {};
+export var BufferHelper = function() {
+ // Has no properties to initialize.
+};
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @returns {*} Return value.
+ * Gets the number of values defined for a vertex attribute.
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * @returns {number} The number of values defined in the attribute object's buffer.
  */
 BufferHelper.prototype.count = function(a) {
   var olen = a[2].length - a[1];
@@ -25,24 +30,29 @@ BufferHelper.prototype.count = function(a) {
   return odiv + (olen % a[4] >= a[3] ? 1 : 0);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @returns {*} Return value.
+ * Gets the number of elements (numbers) that each value of a vertex attribute uses.
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * Can be null.
+ * @returns {number} The number of elements per value of the vertex attribute, or 0 if "a" is null.
  */
-BufferHelper.prototype.countPerElement = function(a) {
+BufferHelper.prototype.countPerValue = function(a) {
   return a === null ? 0 : a[3];
 };
 /**
- * TODO: Not documented yet.
- * @param {*} semantic
- * @param {*} index
- * @param {*} count
- * @param {*} countPerElement
- * @returns {*} Return value.
+ * Creates an object describing information about a vertex attribute.
+ * @param {number} name An attribute semantic, such
+ * as {@link H3DU.Semantic.POSITION}.
+ * @param {number} index The set index of the attribute
+ * for the given semantic.
+ * 0 is the first index of the attribute, 1 is the second, and so on.
+ * @param {number} count Number of values. Each value describes the attribute's value
+ * for the corresponding vertex.
+ * @param {number} countPerValue Number of elements (numbers) for each value.
+ * @returns {Array<Object>} Return value.
  */
-BufferHelper.prototype.makeBlank = function(semantic, index, count, countPerElement) {
-  var els = new Float32Array(new ArrayBuffer(count * countPerElement * 4));
-  return [semantic, 0, els, countPerElement, countPerElement, index];
+BufferHelper.prototype.makeBlank = function(semantic, index, count, countPerValue) {
+  var els = new Float32Array(new ArrayBuffer(count * countPerValue * 4));
+  return [semantic, 0, els, countPerValue, countPerValue, index];
 };
 /**
  * TODO: Not documented yet.
@@ -63,17 +73,14 @@ BufferHelper.prototype.makeIndices = function(numIndices) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} attr
+ * @param {Array<Object>} attr An object describing information about a vertex attribute.
  * @param {*} indices1
  * @param {*} indices2
- * @param {*} attrIsSecond
+ * @param {Array<Object>} attr An object describing information about a vertex attribute.IsSecond
  * @returns {*} Return value.
  */
 BufferHelper.prototype.mergeBlank = function(attr, indices1, indices2, attrIsSecond) {
-  var elementsPerValue = attr[3];
-  var elements = (indices1.length + indices2.length) * elementsPerValue;
-  var els = new Float32Array(new ArrayBuffer(elements * 4));
-  var newAttribute = [attr[0], 0, els, elementsPerValue, elementsPerValue, attr[5]];
+  var newAttribute = this.makeBlank(attr[0], attr[5], indices1.length + indices2.length, attr[3]);
   var value = [];
   var startIndex = attrIsSecond ? indices1.length : 0;
   var attrIndices = attrIsSecond ? indices2 : indices1;
@@ -86,15 +93,12 @@ BufferHelper.prototype.mergeBlank = function(attr, indices1, indices2, attrIsSec
 };
 /**
  * TODO: Not documented yet.
- * @param {*} attr
+ * @param {Array<Object>} attr An object describing information about a vertex attribute.
  * @returns {*} Return value.
  */
 BufferHelper.prototype.copy = function(attr) {
-  var elementsPerValue = attr[3];
   var c = this.count(attr);
-  var elements = c * elementsPerValue;
-  var els = new Float32Array(new ArrayBuffer(elements * 4));
-  var newAttribute = [attr[0], 0, els, elementsPerValue, elementsPerValue, attr[5]];
+  var newAttribute = this.makeBlank(attr[0], attr[5], c, attr[3]);
   var value = [];
   for(var i = 0; i < c; i++) {
     this.getVec(attr, i, value);
@@ -104,11 +108,12 @@ BufferHelper.prototype.copy = function(attr) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} attr1
+ * @param {Array<Object>} attr1 An object describing information about the first vertex attribute.
  * @param {*} indices1
- * @param {*} attr2
+ * @param {Array<Object>} attr2 An object describing information about the second vertex attribute.
  * @param {*} indices2
- * @returns {*} Return value.
+ * @returns {*} The merged attribute. Returns null if the two objects have different semantics
+ * or semantic indices.
  */
 BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
   // Different semantics
@@ -140,7 +145,7 @@ BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} a
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
  * @param {*} indices
  * @returns {*} Return value.
  */
@@ -157,9 +162,9 @@ BufferHelper.prototype.makeRedundant = function(a, indices) {
   return newAttribute;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @param {*} index
+ * Gets the first element of the attribute value with the given vertex index.
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * @param {number} index Vertex index of the value whose first element will be retrieved.
  * @returns {*} Return value.
  */
 BufferHelper.prototype.get = function(a, index) {
@@ -167,10 +172,10 @@ BufferHelper.prototype.get = function(a, index) {
   return a[2][o];
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @param {number} index
- * @param {*} value
+ * Sets the first element of the attribute value with the given vertex index.
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * @param {number} index Vertex index of the value whose first element will be set.
+ * @param {number} value The number to set the first element to.
  * @returns {H3DU.BufferHelper} This object.
  */
 BufferHelper.prototype.set = function(a, index, value) {
@@ -180,7 +185,7 @@ BufferHelper.prototype.set = function(a, index, value) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} a
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
  * @param {number} index
  * @param {number} v1
  * @param {number} v2
@@ -194,7 +199,7 @@ BufferHelper.prototype.set2 = function(a, index, v1, v2) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} a
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
  * @param {number} index
  * @param {number} v1
  * @param {number} v2
@@ -210,8 +215,8 @@ BufferHelper.prototype.set3 = function(a, index, v1, v2, v3) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} a
- * @param {*} index
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * @param {n} index
  * @param {*} element
  * @param {*} value
  * @returns {*} Return value.
@@ -223,7 +228,7 @@ BufferHelper.prototype.setElement = function(a, index, element, value) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} a
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
  * @param {number} index
  * @param {*} element
  * @returns {*} Return value.
@@ -234,11 +239,11 @@ BufferHelper.prototype.getElement = function(a, index, element) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} a
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
  * @param {number} index
  * @param {*} element
  * @param {*} value
- * @returns {*} Return value.
+ * @returns {BufferHelper} This object.
  */
 BufferHelper.prototype.setElement = function(a, index, element, value) {
   var o = a[1] + index * a[4] + element;
@@ -246,11 +251,11 @@ BufferHelper.prototype.setElement = function(a, index, element, value) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
+ * Gets the elements of a vertex attribute value.
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
  * @param {number} index
  * @param {*} vec
- * @returns {*} Return value.
+ * @returns {Array<number>} The parameter "vec".
  */
 BufferHelper.prototype.getVec = function(a, index, vec) {
   var o = a[1] + index * a[4];
@@ -261,11 +266,11 @@ BufferHelper.prototype.getVec = function(a, index, vec) {
   return vec;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
+ * Sets the elements of a vertex attribute value.
+ * @param {Array<Object>} a An object describing information about a vertex attribute.
  * @param {number} index
  * @param {*} vec
- * @returns {*} Return value.
+ * @returns {BufferHelper} This object.
  */
 BufferHelper.prototype.setVec = function(a, index, vec) {
   var o = a[1] + index * a[4];
@@ -358,7 +363,7 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * existing attribute's information). An attribute
  * gives information about the per-vertex data used and
  * stored in a vertex buffer.
- * @param {Number|string} name An attribute semantic, such
+ * @param {number|string} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * @param {number} index The set index of the attribute
  * for the given semantic.
@@ -441,13 +446,14 @@ MeshBuffer.prototype._getAttributes = function() {
 };
 /**
  * TODO: Not documented yet.
- * @param {Number|string} name An attribute semantic, such
+ * @param {number|string} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * @param {number} index The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string.
- * @returns {*} Return value.
+ * @returns {Array<Object>} An object describing the vertex attribute, or null
+ * of the attribute doesn't exist.
  */
 MeshBuffer.prototype.getAttribute = function(name, index) {
   var idx = typeof index === "undefined" || index === null ? 0 : index;
@@ -700,9 +706,8 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
   // [ Ax Bx Nx ]
   // [ Ay By Ny ]
   // [ Az Bz Nz ]
-  // (where A and B are the tangent and bitangent and returned
-  // in _findTangentAndBitangent) as the tangent space
-  // transformation, that is, include three
+  // (where A and B are the tangent and bitangent in the "ret" variable above)
+  // as the tangent space transformation, that is, include three
   // different vectors (tangent, bitangent, and modified normal).
   // Instead we use the matrix
   // [ AAx AAy AAz ]
@@ -749,7 +754,7 @@ MeshBuffer.prototype._threeEl = function(helper, sem, count) {
   if(!attr) {
     attr = helper.makeBlank(sem, 0, count, 3);
     this.attributes.push(attr);
-  } else if(helper.countPerElement(attr) < 3) {
+  } else if(helper.countPerValue(attr) < 3) {
     var newattr = helper.makeBlank(sem, 0, count, 3);
     var vec = [0, 0, 0];
     for(var i = 0; i < count; i++) {
@@ -786,7 +791,7 @@ MeshBuffer.prototype.recalcNormals = function(flat, inward) {
   if(primtype === H3DU.Mesh.TRIANGLES) {
     var helper = new BufferHelper();
     var positions = this.getAttribute(H3DU.Semantic.POSITION);
-    if(helper.countPerElement(positions) < 3) {
+    if(helper.countPerValue(positions) < 3) {
       return this;
     }
     this._makeRedundant(helper);
@@ -798,14 +803,13 @@ MeshBuffer.prototype.recalcNormals = function(flat, inward) {
 };
 /** @ignore */
 MeshBuffer.prototype._recalcTangents = function() {
-  var primtype = this.primitiveType();
-  if(primtype === H3DU.Mesh.TRIANGLES) {
+  if(this.primitiveType() === H3DU.Mesh.TRIANGLES) {
     var helper = new BufferHelper();
     var positions = this.getAttribute(H3DU.Semantic.POSITION);
     var normals = this.getAttribute(H3DU.Semantic.NORMAL);
     var texCoords = this.getAttribute(H3DU.Semantic.TEXCOORD);
-    if(helper.countPerElement(positions) < 3 || helper.countPerElement(normals) < 3 ||
-      helper.countPerElement(texCoords) < 3) {
+    if(helper.countPerValue(positions) < 3 || helper.countPerValue(normals) < 3 ||
+      helper.countPerValue(texCoords) < 2) {
       return this;
     }
     this._makeRedundant(helper);
@@ -821,9 +825,14 @@ MeshBuffer.prototype._recalcTangents = function() {
 };
 
 /**
- * TODO: Not documented yet.
- * @param {*} other
- * @returns {*} Return value.
+ * Merges the vertices from another mesh into this one.
+ * The vertices from the other mesh will be copied into this one,
+ * and the other mesh's indices copied or adapted.
+ * @param {H3DU.MeshBuffer} other A mesh to merge into this one. The mesh
+ * given in this parameter will remain unchanged.
+ * Throws an error if this mesh's primitive type is not the same as
+ * the other mesh's primitive type
+ * @returns {H3DU.MeshBuffer} This object.
  * @example
  * var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
  */
@@ -854,6 +863,7 @@ MeshBuffer.prototype.merge = function(other) {
     }
   }
   if(this.format !== other.format) {
+    // Primitive types are different
     throw new Error();
   }
   for(i = 0; i < this.attributes.length; i++) {
@@ -910,7 +920,6 @@ MeshBuffer.prototype.merge = function(other) {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.transform = function(matrix) {
-  // TODO: Implement and favor MeshBuffer version of this method
   var helper = new H3DU.BufferHelper();
   var positionAttribute = this.getAttribute(H3DU.Semantic.POSITION);
   var normalAttribute = this.getAttribute(H3DU.Semantic.NORMAL);
@@ -933,7 +942,7 @@ MeshBuffer.prototype.transform = function(matrix) {
     var xform = H3DU.Math.mat4projectVec3(matrix,
   position[0], position[1], position[2]);
     helper.setVec(positionAttribute, i, xform);
-    if(normalAttribute && isLinearIdentity) {
+    if(normalAttribute && isLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
      // Transform and normalize the normals
      // (using a modified matrix) to ensure
      // they point in the correct direction
@@ -1016,12 +1025,10 @@ MeshBuffer._wellKnownAttributes = {
   "BITANGENT":7
 };
 
-/** @ignore */
-MeshBuffer.prototype.getFormat = function() {
-  return this.format;
-};
 /**
- * Gets the number of vertices in this mesh buffer
+ * Gets the number of vertices in this mesh buffer, that
+ * is, the number of vertex indices in its index buffer (some of which
+ * may be duplicates).
  * @returns {number} Return value.
  */
 MeshBuffer.prototype.vertexCount = function() {

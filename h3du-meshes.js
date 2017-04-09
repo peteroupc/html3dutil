@@ -35,7 +35,6 @@ export var Meshes = {};
  */
 Meshes.createBox = function(xSize, ySize, zSize, inward) {
  // Position X, Y, Z, normal NX, NY, NZ, texture U, V
-
   xSize *= 0.5;
   ySize *= 0.5;
   zSize *= 0.5;

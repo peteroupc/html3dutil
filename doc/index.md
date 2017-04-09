@@ -25,6 +25,8 @@ contexts.</b>
 view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.CubeMap.md">H3DU.CubeMap</a><br>A cube map, or a set of six textures forming the sides of a cube.
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
+* <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
+vertex attributes for a curve.
 * <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.
 * <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.
@@ -76,6 +78,8 @@ material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.
 * <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
+* <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
+vertex attributes for a surface.
 * <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating
 vertex attributes of a surface.
 * <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,

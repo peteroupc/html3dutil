@@ -12,6 +12,7 @@ to uniforms and vertex attributes.
 
 * [BITANGENT](#H3DU.Semantic.BITANGENT)<br>Attribute semantic for a bitangent vector.
 * [COLOR](#H3DU.Semantic.COLOR)<br>Attribute semantic for a color.
+* [CUSTOM](#H3DU.Semantic.CUSTOM)<br>Attribute semantic for custom attributes.
 * [JOINT](#H3DU.Semantic.JOINT)<br>Attribute semantic for a skinning joint.
 * [MODEL](#H3DU.Semantic.MODEL)<br>Uniform semantic for a model matrix.
 * [MODELVIEW](#H3DU.Semantic.MODELVIEW)<br>Uniform semantic for a model-view matrix.
@@ -35,6 +36,11 @@ Attribute semantic for a bitangent vector.
 ### H3DU.Semantic.COLOR (constant)
 
 Attribute semantic for a color.
+
+<a name='H3DU.Semantic.CUSTOM'></a>
+### H3DU.Semantic.CUSTOM (constant)
+
+Attribute semantic for custom attributes.
 
 <a name='H3DU.Semantic.JOINT'></a>
 ### H3DU.Semantic.JOINT (constant)

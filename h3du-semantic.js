@@ -53,6 +53,11 @@ Semantic.TANGENT = 6;
  * @static
  */
 Semantic.BITANGENT = 7;
+/** Attribute semantic for custom attributes.
+ * @const
+ * @static
+ */
+Semantic.CUSTOM = 8;
 /** Uniform semantic for a model matrix.
  * @const
  */

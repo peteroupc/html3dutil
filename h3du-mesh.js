@@ -137,7 +137,11 @@ Mesh.prototype.mode = function(m) {
 Mesh.prototype.merge = function(other) {
   // TODO: Remove examples using this method
   if(!(other instanceof H3DU.Mesh)) {
-    throw new Error();
+    // TODO: Temporary code; should throw error
+    // instead when reverseWinding is implemented
+    // in MeshBuffer class
+    other = Mesh._fromMeshBuffer(other);
+    // throw new Error();
   }
   if(!Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
     throw new Error("Meshes have incompatible types");

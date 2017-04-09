@@ -250,7 +250,7 @@ Use code like the following to generate a mesh describing a parametric
 curve. It assumes that `evaluator` is a parametric curve object, just like
 the circle example above.
 
-      var mesh=new Mesh();
+      var mesh=new H3DU.Mesh();
       // set the color
       mesh.color3("black");
       // Create a curve evaluator

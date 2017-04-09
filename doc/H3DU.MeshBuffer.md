@@ -19,7 +19,7 @@ bounding box that holds all vertices in the mesh buffer.
 * [getIndices](#H3DU.MeshBuffer_getIndices)<br>Gets the array of vertex indices used by this mesh buffer.
 * [getPositions](#H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive
-* [merge](#H3DU.MeshBuffer_merge)<br>TODO: Not documented yet.
+* [merge](#H3DU.MeshBuffer_merge)<br>Merges the vertices from another mesh into this one.
 * [primitiveCount](#H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
 * [primitiveType](#H3DU.MeshBuffer_primitiveType)<br>Gets the type of primitive stored in this mesh buffer.
@@ -33,7 +33,9 @@ existing attribute's information).
 * [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
 * [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
 in this mesh.
-* [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer
+* [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer, that
+is, the number of vertex indices in its index buffer (some of which
+may be duplicates).
 * [vertexIndices](#H3DU.MeshBuffer_vertexIndices)<br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.
 
@@ -44,12 +46,13 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `name` (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `name` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
 * `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 
 #### Return Value
 
-Return value. (Type: *)
+An object describing the vertex attribute, or null
+of the attribute doesn't exist. (Type: Array.&lt;Object>)
 
 <a name='H3DU.MeshBuffer_getBounds'></a>
 ### H3DU.MeshBuffer#getBounds()
@@ -95,15 +98,17 @@ array containing that vertex's X, Y, and Z coordinates, in that order. (Type: Ar
 <a name='H3DU.MeshBuffer_merge'></a>
 ### H3DU.MeshBuffer#merge(other)
 
-TODO: Not documented yet.
+Merges the vertices from another mesh into this one.
+The vertices from the other mesh will be copied into this one,
+and the other mesh's indices copied or adapted.
 
 #### Parameters
 
-* `other` (Type: *)
+* `other` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is not the same as the other mesh's primitive type
 
 #### Return Value
 
-Return value. (Type: *)
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 #### Example
 
@@ -186,7 +191,7 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `name` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
 * `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.
 * `startIndex` (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.
@@ -241,7 +246,9 @@ This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 <a name='H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()
 
-Gets the number of vertices in this mesh buffer
+Gets the number of vertices in this mesh buffer, that
+is, the number of vertex indices in its index buffer (some of which
+may be duplicates).
 
 #### Return Value
 

@@ -263,9 +263,9 @@ _MaterialBinder.bindTexture = function(
     program.setUniforms(uniforms);
     context.activeTexture(context.TEXTURE0 + textureUnit);
     if(isFrameBuffer) {
+      // TODO: support Textureinfo in frame buffers
       context.bindTexture(context.TEXTURE_2D,
          texture.colorTexture);
-      // TODO: support Textureinfo in frame buffers
       if(texture.colorTexture) {
         context.texParameteri(context.TEXTURE_2D,
          context.TEXTURE_MAG_FILTER, context.LINEAR);
