@@ -48,7 +48,7 @@ BufferHelper.prototype.countPerValue = function(a) {
  * @param {number} count Number of values. Each value describes the attribute's value
  * for the corresponding vertex.
  * @param {number} countPerValue Number of elements (numbers) for each value.
- * @returns {Array<Object>} Return value.
+ * @returns {Array<Object>} A new vertex attribute with blank values.
  */
 BufferHelper.prototype.makeBlank = function(semantic, index, count, countPerValue) {
   var els = new Float32Array(new ArrayBuffer(count * countPerValue * 4));
@@ -76,7 +76,7 @@ BufferHelper.prototype.makeIndices = function(numIndices) {
  * @param {Array<Object>} attr An object describing information about a vertex attribute.
  * @param {*} indices1
  * @param {*} indices2
- * @param {Array<Object>} attr An object describing information about a vertex attribute.IsSecond
+ * @param {*} attrIsSecond
  * @returns {*} Return value.
  */
 BufferHelper.prototype.mergeBlank = function(attr, indices1, indices2, attrIsSecond) {

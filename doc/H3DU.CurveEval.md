@@ -5,6 +5,8 @@
 <a name='H3DU.CurveEval'></a>
 ### H3DU.CurveEval()
 
+<b>Deprecated: Use <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a> instead.</b>
+
 An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.
 
@@ -17,7 +19,7 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 function.
 * [evalOne](#H3DU.CurveEval_evalOne)<br>Generates vertex positions and attributes based on a point
 in a parametric curve.
-* [normal](#H3DU.CurveEval_normal)<br>**Deprecated: Use the "vertex" method instead.**
+* [normal](#H3DU.CurveEval_normal)<br>Specifies a parametric curve function for generating normals.
 * [texCoord](#H3DU.CurveEval_texCoord)<br>Specifies a parametric curve function for generating texture coordinates.
 * [vertex](#H3DU.CurveEval_vertex)<br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.
 
@@ -43,7 +45,7 @@ function.
 #### Parameters
 
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>A geometric mesh where the vertices will be generated.
-* `mode` (Type: number) (optional)<br>If this value is H3DU.Mesh.LINES, or is null or omitted, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.
+* `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or is null or omitted, generates a series of lines defining the curve. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the curve. For any other value, this method has no effect.
 * `n` (Type: number) (optional)<br>Number of subdivisions of the curve to be drawn. Default is 24.
 * `u1` (Type: number) (optional)<br>Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.md">curve evaluator object</a>, or 0 if not given.
 * `u2` (Type: number) (optional)<br>Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.md">curve evaluator object</a>, or 1 if not given.
@@ -69,8 +71,6 @@ This object. (Type: <a href="H3DU.CurveEval.md">H3DU.CurveEval</a>)
 
 <a name='H3DU.CurveEval_normal'></a>
 ### H3DU.CurveEval#normal(evaluator)
-
-**Deprecated: Use the "vertex" method instead.**
 
 Specifies a parametric curve function for generating normals.
 

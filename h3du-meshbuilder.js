@@ -175,7 +175,7 @@ CurveBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
   for(var i = 0; i < this.attributes.length; i++) {
-    this.attributes[i][4] = [];
+    this.attributes[i][3] = [];
   }
   return this;
 };
@@ -230,7 +230,7 @@ SurfaceBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
   for(var i = 0; i < this.attributes.length; i++) {
-    this.attributes[i][4] = [];
+    this.attributes[i][3] = [];
   }
   return this;
 };
@@ -245,7 +245,7 @@ SurfaceBuilder.prototype.toMeshBuffer = function() {
  * TODO: Not documented yet.
  * @param {*} surface
  * @param {*} size
- * @returns {*} Return value.
+ * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.position = function(surface, size) {
   return this.attribute(surface, Semantic.POSITION, 0, size);
@@ -254,7 +254,7 @@ SurfaceBuilder.prototype.position = function(surface, size) {
  * TODO: Not documented yet.
  * @param {*} surface
  * @param {*} size
- * @returns {*} Return value.
+ * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.texCoord = function(surface, size) {
   return this.attribute(surface, Semantic.TEXCOORD, 0, typeof size === "undefined" || size === null ? 2 : size);
@@ -263,7 +263,7 @@ SurfaceBuilder.prototype.texCoord = function(surface, size) {
  * TODO: Not documented yet.
  * @param {*} surface
  * @param {*} size
- * @returns {*} Return value.
+ * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionNormal = function(surface, size) {
   var norm = typeof surface !== "undefined" && surface !== null ? new CurveBuilder._NormalSurface(surface) : null;
@@ -276,7 +276,7 @@ SurfaceBuilder.prototype.positionNormal = function(surface, size) {
  * @param {*} semantic
  * @param {*} semanticIndex
  * @param {*} size
- * @returns {*} Return value.
+ * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, size) {
   CurveBuilder._setAttribute(this.attributes, this.vertexCount,
@@ -295,7 +295,7 @@ SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, 
  * @param {*} u2
  * @param {*} v1
  * @param {*} v2
- * @returns {*} Return value.
+ * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2) {
   // TODO: Incorporate texture coordinates.
@@ -306,11 +306,18 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
 };
 /**
  * TODO: Not documented yet.
- * @param {*} mode
- * @param {*} n
- * @param {*} u1
- * @param {*} u2
- * @returns {*} Return value.
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null
+ * or omitted, generates
+ * a series of lines defining the curve. If this value is {@link H3DU.Mesh.POINTS},
+ * generates a series of points along the curve. For any other value,
+ * this method has no effect.
+ * @param {number} [n] Number of subdivisions of the curve to be drawn.
+ * Default is 24.
+ * @param {number} [u1] Starting point of the curve.
+ * Default is the starting coordinate given by the [curve evaluator object]{@link H3DU.Curve}, or 0 if not given.
+ * @param {number} [u2] Ending point of the curve.
+ * Default is the ending coordinate given by the [curve evaluator object]{@link H3DU.Curve}, or 1 if not given.
+ * @returns {H3DU.CurveBuilder} This object.
  */
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   n = typeof n === "undefined" || n === null ? 24 : n;
@@ -322,14 +329,14 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   }
   var uv = (u2 - u1) / n;
   var firstIndex = this.vertexCount;
-  if(mode === Mesh.POINTS) {
-    for(var i = 0; i < n; i++) {
-      this.indices.push(firstIndex + i);
-    }
-    this.vertexCount += n + 1;
-  } else if(mode === Mesh.LINES) {
+  if(mode === Mesh.LINES || (typeof mode === "undefined" || mode === null)) {
     for(i = 0; i < n; i++) {
       this.indices.push(firstIndex + i, firstIndex + i + 1);
+    }
+    this.vertexCount += n + 1;
+  } else if(mode === Mesh.POINTS) {
+    for(var i = 0; i < n; i++) {
+      this.indices.push(firstIndex + i);
     }
     this.vertexCount += n + 1;
   } else {
@@ -356,14 +363,25 @@ SurfaceBuilder.prototype._evalOne = function(u, v) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} mode
- * @param {*} un
- * @param {*} vn
- * @param {*} u1
- * @param {*} u2
- * @param {*} v1
- * @param {*} v2
- * @returns {*} Return value.
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null
+ * or omitted, generates a series of triangles defining the surface. If
+ * this value is {@link H3DU.Mesh.LINES}, generates
+ * a series of lines defining the surface. If this value is {@link H3DU.Mesh.POINTS},
+ * generates a series of points along the surface. For any other value,
+ * this method has no effect.
+ * @param {number} [un] Number of subdivisions along the U axis.
+ * Default is 24.
+ * @param {number} [vn] Number of subdivisions along the V axis.
+ * Default is 24.
+ * @param {number} [u1] Starting U coordinate of the surface to evaluate.
+ * Default is the starting U coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 0 if not given.
+ * @param {number} [u2] Ending U coordinate of the surface to evaluate.
+ * Default is the ending U coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 1 if not given.
+ * @param {number} [v1] Starting V coordinate of the surface to evaluate.
+ * Default is the starting V coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 0 if not given.
+ * @param {number} [v2] Ending V coordinate of the surface to evaluate.
+ * Default is the ending V coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 1 if not given.
+ * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   un = typeof un === "undefined" || un === null ? 24 : un;
@@ -380,7 +398,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   var u, v, i, j;
   var du = (u2 - u1) / un;
   var dv = (v2 - v1) / vn;
-  if(mode === Mesh.TRIANGLES) {
+  if(mode === Mesh.TRIANGLES || (typeof mode === "undefined" || mode === null)) {
     for(i = 0; i < vn; i++) {
       var vertex = this.vertexCount;
       for(j = 0; j < un; j++) {

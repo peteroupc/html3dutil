@@ -19,7 +19,6 @@ export {CurveBuilder, SurfaceBuilder} from "./h3du-meshbuilder";
 export {PiecewiseCurve} from "./h3du-piecewisecurve";
 export {BezierCurve, BezierSurface,
     BSplineCurve, BSplineSurface} from "./h3du-bspline";
-export {CurveEval, SurfaceEval} from "./h3du-eval";
 export {Shape} from "./h3du-shape";
 export {ShapeGroup} from "./h3du-shapegroup";
 export {Texture, CubeMap} from "./h3du-texture";
@@ -38,6 +37,7 @@ export {Lights} from "./h3du-lights";
 export {LightSource} from "./h3du-lightsource";
 export {RenderPass} from "./h3du-renderpass";
 // Deprecated classes
+export {CurveEval, SurfaceEval} from "./h3du-eval";
 export {ShaderProgram} from "./h3du-shaderprogram";
 export {BufferedMesh} from "./h3du-bufferedmesh";
 export {FrameBuffer} from "./h3du-framebuffer";

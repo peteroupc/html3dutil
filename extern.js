@@ -19,6 +19,8 @@ var H3DU, define, exports, module;
 /** @typedef {Curve} */H3DU.Curve;
 /** @typedef {CurveEval} */H3DU.CurveEval;
 /** @typedef {SurfaceEval} */H3DU.SurfaceEval;
+/** @typedef {CurveBuilder} */H3DU.CurveBuilder;
+/** @typedef {SurfaceBuilder} */H3DU.SurfaceBuilder;
 /** @typedef {RenderPass} */H3DU.RenderPass;
 /** @typedef {BufferHelper} */H3DU.BufferHelper;
 /** @typedef {BSplineCurve} */H3DU.BSplineCurve;

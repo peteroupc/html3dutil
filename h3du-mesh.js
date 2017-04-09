@@ -157,13 +157,13 @@ Mesh.prototype.merge = function(other) {
   * is TRIANGLE_FAN and some vertices were already given for
   * that mode. The normal passed to this method will
   * not automatically be normalized to unit length.
-  * @param {number} x X coordinate of the normal.
+  * @param {Array<number>|number} x X coordinate of the normal.
   *   If "y" and "z" are null or omitted, this is instead
   * a 3-element array giving the X, Y, and Z coordinates, or a single number
   * giving the coordinate for all three dimensions.
-  * @param {number} y Y coordinate of the normal.
+  * @param {number} [y] Y coordinate of the normal.
   * If "x" is an array, this parameter may be omitted.
-  * @param {number} z Z coordinate of the normal.
+  * @param {number} [z] Z coordinate of the normal.
   * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
   */
@@ -189,9 +189,9 @@ Mesh.prototype.normal3 = function(x, y, z) {
   * that mode. Only the red, green, and blue components will be used.
   * @param {Array<number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
   * or the red color component (0-1).
-  * @param {number} g Green color component (0-1).
+  * @param {number} [g] Green color component (0-1).
   * May be null or omitted if a string or array is given as the "r" parameter.
-  * @param {number} b Blue color component (0-1).
+  * @param {number} [b] Blue color component (0-1).
   * May be null or omitted if a string or array is given as the "r" parameter.
   * @returns {H3DU.Mesh} This object.
   */
@@ -224,11 +224,11 @@ Mesh.prototype.color3 = function(r, g, b) {
   * H3DU.Texture coordinates are a set of 2 values each ranging from 0 to
   * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
   * right corner (by default).
-  * @param {number} u X coordinate of the texture, from 0-1.
+  * @param {Array<number>|number} u X coordinate of the texture, from 0-1.
   *   If "v" are null or omitted, this is instead
-  * a 3-element array giving the X and Y coordinates, or a single number
+  * a 2-element array giving the X and Y coordinates, or a single number
   * giving the coordinate for all three dimensions.
-  * @param {number} v Y coordinate of the texture, from 0-1.
+  * @param {number} [v] Y coordinate of the texture, from 0-1.
   * If "u" is an array, this parameter can be omitted.
   * @returns {H3DU.Mesh} This object.
   */
@@ -253,9 +253,9 @@ Mesh.prototype.texCoord2 = function(u, v) {
   *   If "y" and "z" are null or omitted, this is instead
   * a 3-element array giving the X, Y, and Z coordinates, or a single number
   * giving the coordinate for all three dimensions.
-  * @param {number} y The Y coordinate.
+  * @param {number} [y] The Y coordinate.
   * If "x" is an array, this parameter may be omitted.
-  * @param {number} z The Z coordinate.
+  * @param {number} [z] The Z coordinate.
   * If "x" is an array, this parameter may be omitted.
   * @returns {H3DU.Mesh} This object.
   */
@@ -904,7 +904,7 @@ Mesh._getValue = function(helper, attr, attrIndex, value) {
   return false;
 };
 /** @ignore */
-Mesh._fromMeshBuffer = function(meshBuffer) {
+Mesh._fromMeshBuffer = function(meshBuffer, srcMesh) {
   var helper = new H3DU.BufferHelper();
   var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
   var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
@@ -914,7 +914,8 @@ Mesh._fromMeshBuffer = function(meshBuffer) {
   var bitanAttr = meshBuffer.getAttribute(H3DU.Semantic.BITANGENT);
   var indices = meshBuffer.getIndices();
   var scratch = [];
-  var mesh = new Mesh().mode(meshBuffer.primitiveType());
+  var srcMeshValue = typeof srcMesh === "undefined" || srcMesh === null ? new Mesh() : srcMesh;
+  var mesh = srcMeshValue.mode(meshBuffer.primitiveType());
   for(var i = 0; i < indices.length; i++) {
     var index = indices[i];
     if(Mesh._getValue(helper, normalAttr, index, scratch)) {
@@ -1181,13 +1182,13 @@ Mesh.POINTS = 0;
  * tangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
  * and create a buffer attribute with the {@link H3DU.Semantics.TANGENT}
  * semantic.
- * @param {number} x X coordinate of the tangent vector.
+ * @param {Array<number>|number} x X coordinate of the tangent vector.
  *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} y Y coordinate of the tangent vector.
+ * @param {number} [y] Y coordinate of the tangent vector.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z Z coordinate of the tangent vector.
+ * @param {number} [z] Z coordinate of the tangent vector.
  * If "x" is an array, this parameter may be omitted.
  * @returns {H3DU.Mesh} This object.
  */
@@ -1217,13 +1218,13 @@ Mesh.prototype.tangent3 = function(x, y, z) {
  * bitangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
  * and create a buffer attribute with the {@link H3DU.Semantics.BITANGENT}
  * semantic.
- * @param {number} x X coordinate of the bitangent vector.
+ * @param {Array<number>|number} x X coordinate of the bitangent vector.
  *   If "y" and "z" are null or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} y Y coordinate of the bitangent vector.
+ * @param {number} [y] Y coordinate of the bitangent vector.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z Z coordinate of the bitangent vector.
+ * @param {number} [z] Z coordinate of the bitangent vector.
  * If "x" is an array, this parameter may be omitted.
  * @returns {H3DU.Mesh} This object.
  */

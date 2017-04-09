@@ -5,6 +5,8 @@
 <a name='H3DU.SurfaceEval'></a>
 ### H3DU.SurfaceEval()
 
+<b>Deprecated: Use <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a> instead.</b>
+
 An evaluator of parametric functions for generating
 vertex attributes of a surface.
 
@@ -19,12 +21,10 @@ See the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces
 in a parametric surface.
 * [evalSurface](#H3DU.SurfaceEval_evalSurface)<br>Generates the vertex positions and attributes of a parametric
 surface.
-* [normal](#H3DU.SurfaceEval_normal)<br>**Deprecated: Use the "vertex" method instead, specifying an object
-that implements a method named "gradient".**
-* [setAutoNormal](#H3DU.SurfaceEval_setAutoNormal)<br>**Deprecated: In the future, this class may always generate
-normals, rendering this method unnecessary. You should use the "vertex"
-method, specifying an object that implements a method named
-"gradient".**
+* [normal](#H3DU.SurfaceEval_normal)<br>Specifies a parametric surface function for generating normals.
+* [setAutoNormal](#H3DU.SurfaceEval_setAutoNormal)<br>Sets whether this object will automatically generate
+normals rather than use the parametric evaluator
+specified for normal generation, if any.
 * [texCoord](#H3DU.SurfaceEval_texCoord)<br>Specifies a parametric surface function for generating texture coordinates.
 * [vertex](#H3DU.SurfaceEval_vertex)<br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.
 
@@ -65,8 +65,8 @@ surface.
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.
-* `mode` (Type: number) (optional)<br>If this value is H3DU.Mesh.TRIANGLES, or is null or omitted, generates a series of triangles defining the surface. If this value is H3DU.Mesh.LINES, generates a series of lines defining the surface. If this value is H3DU.Mesh.POINTS, generates a series of points along the surface. For any other value, this method has no effect.
+* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>The mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.
+* `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, or is null or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.
 * `un` (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.
 * `vn` (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.
 * `u1` (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.
@@ -81,9 +81,6 @@ This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
 <a name='H3DU.SurfaceEval_normal'></a>
 ### H3DU.SurfaceEval#normal(evaluator)
 
-**Deprecated: Use the "vertex" method instead, specifying an object
-that implements a method named "gradient".**
-
 Specifies a parametric surface function for generating normals.
 
 #### Parameters
@@ -96,11 +93,6 @@ This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
 
 <a name='H3DU.SurfaceEval_setAutoNormal'></a>
 ### H3DU.SurfaceEval#setAutoNormal(value)
-
-**Deprecated: In the future, this class may always generate
-normals, rendering this method unnecessary. You should use the "vertex"
-method, specifying an object that implements a method named
-"gradient".**
 
 Sets whether this object will automatically generate
 normals rather than use the parametric evaluator

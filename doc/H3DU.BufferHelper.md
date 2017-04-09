@@ -127,7 +127,7 @@ Creates an object describing information about a vertex attribute.
 
 #### Return Value
 
-Return value. (Type: Array.&lt;Object>)
+A new vertex attribute with blank values. (Type: Array.&lt;Object>)
 
 <a name='H3DU.BufferHelper_makeIndices'></a>
 ### H3DU.BufferHelper#makeIndices(numIndices)
@@ -174,7 +174,7 @@ The merged attribute. Returns null if the two objects have different semantics
 or semantic indices. (Type: *)
 
 <a name='H3DU.BufferHelper_mergeBlank'></a>
-### H3DU.BufferHelper#mergeBlank(attr, indices1, indices2, attr)
+### H3DU.BufferHelper#mergeBlank(attr, indices1, indices2, attrIsSecond)
 
 TODO: Not documented yet.
 
@@ -183,7 +183,7 @@ TODO: Not documented yet.
 * `attr` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
 * `indices1` (Type: *)
 * `indices2` (Type: *)
-* `attr` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.IsSecond
+* `attrIsSecond` (Type: *)
 
 #### Return Value
 

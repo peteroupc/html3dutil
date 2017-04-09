@@ -27,8 +27,7 @@ view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
 vertex attributes for a curve.
-* <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
-vertex positions and colors of a curve.
+* <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br><b>Deprecated: Use <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a> instead.</b>
 * <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
@@ -80,8 +79,7 @@ and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
 vertex attributes for a surface.
-* <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating
-vertex attributes of a surface.
+* <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br><b>Deprecated: Use <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a> instead.</b>
 * <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.
