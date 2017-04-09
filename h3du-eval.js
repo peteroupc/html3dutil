@@ -8,10 +8,7 @@
 */
 /* global H3DU */
 
-import {Curve} from "./h3du-curve";
 import {CurveBuilder, SurfaceBuilder} from "./h3du-meshbuilder";
-import {Surface} from "./h3du-surface";
-import {Mesh} from "./h3du-mesh";
 
 /**
  * An evaluator of curve evaluator objects for generating
@@ -77,7 +74,7 @@ CurveEval.prototype.texCoord = function(evaluator) {
 CurveEval.prototype.evalOne = function() {
   // TODO
   throw new Error();
-  return this;
+ // return this;
 };
 
 /**
@@ -171,12 +168,6 @@ SurfaceEval.prototype.color = function(evaluator) {
  * @param {Object} evaluator An object that must contain a method
  * named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 2-element array.
  * @returns {H3DU.SurfaceEval} This object.
- * @example <caption>The following example sets the surface
- * function to a linear evaluator. Thus, coordinates passed to the
- * evalOne and evalSurface methods will be interpolated as direct
- * texture coordinates.</caption>
- * surface.texCoord({"evaluate":function(u,v) {
- * "use strict"; return [u,v] }});
  */
 SurfaceEval.prototype.texCoord = function(evaluator) {
   this.builder.attribute(evaluator, H3DU.Semantic.TEXCOORD);
@@ -196,7 +187,7 @@ SurfaceEval.prototype.texCoord = function(evaluator) {
 SurfaceEval.prototype.evalOne = function() {
   // TODO
   throw new Error();
-  return this;
+ // return this;
 };
 
 /**

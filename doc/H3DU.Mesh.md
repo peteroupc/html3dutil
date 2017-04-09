@@ -98,7 +98,7 @@ or points) that this mesh contains.
 * [recalcTangents](#H3DU.Mesh_recalcTangents)<br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. This method
 may be reimplemented in the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class in the future.</b>
-* [reverseNormals](#H3DU.Mesh_reverseNormals)<br>Modifies this mesh by reversing the sign of normals it defines.
+* [reverseNormals](#H3DU.Mesh_reverseNormals)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.</b>
 * [reverseWinding](#H3DU.Mesh_reverseWinding)<br>Reverses the winding order of the triangles in this mesh
 by swapping the second and third vertex indices of each one.
 * [setColor3](#H3DU.Mesh_setColor3)<br>Sets all the vertices in this mesh to the given color.
@@ -493,6 +493,8 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 <a name='H3DU.Mesh_reverseNormals'></a>
 ### H3DU.Mesh#reverseNormals()
+
+<b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.</b>
 
 Modifies this mesh by reversing the sign of normals it defines.
 If this mesh defines normals, also resets the primitive

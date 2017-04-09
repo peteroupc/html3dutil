@@ -49,7 +49,7 @@ index in this mesh.<li><a href='#H3DU.Mesh_merge'>merge</a><br><b>Deprecated: Us
 to "unit vectors" ("normalized" vectors with a length of 1).<li><a href='#H3DU.Mesh_primitiveCount'>primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.<li><a href='#H3DU.Mesh_recalcNormals'>recalcNormals</a><br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.</b><li><a href='#H3DU.Mesh_recalcTangents'>recalcTangents</a><br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. This method
-may be reimplemented in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class in the future.</b><li><a href='#H3DU.Mesh_reverseNormals'>reverseNormals</a><br>Modifies this mesh by reversing the sign of normals it defines.<li><a href='#H3DU.Mesh_reverseWinding'>reverseWinding</a><br>Reverses the winding order of the triangles in this mesh
+may be reimplemented in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class in the future.</b><li><a href='#H3DU.Mesh_reverseNormals'>reverseNormals</a><br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.</b><li><a href='#H3DU.Mesh_reverseWinding'>reverseWinding</a><br>Reverses the winding order of the triangles in this mesh
 by swapping the second and third vertex indices of each one.<li><a href='#H3DU.Mesh_setColor3'>setColor3</a><br>Sets all the vertices in this mesh to the given color.<li><a href='#H3DU.Mesh_setVertex'>setVertex</a><br>Sets the X, Y, and Z coordinates of the vertex with the
 given index.<li><a href='#H3DU.Mesh_setVertexNormal'>setVertexNormal</a><br>Sets the normal associated with the vertex with the
 given index.<li><a href='#H3DU.Mesh_tangent3'>tangent3</a><br><b>Deprecated: Deprecated because the default shader no longer
@@ -240,7 +240,7 @@ uses tangent and bitangent attributes for normal mapping. This method
 may be reimplemented in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class in the future.</b></p>Recalculates the tangent and bitangent vectors for triangles
 in this mesh. This method only has an effect if this mesh
 includes normals and texture coordinates.<h4> Return Value</h4>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<a name='H3DU.Mesh_reverseNormals'></a>
-<h3> H3DU.Mesh#reverseNormals()</h3>Modifies this mesh by reversing the sign of normals it defines.
+<h3> H3DU.Mesh#reverseNormals()</h3><p><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.</b></p>Modifies this mesh by reversing the sign of normals it defines.
 If this mesh defines normals, also resets the primitive
 mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices.<h4> Return Value</h4>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<a name='H3DU.Mesh_reverseWinding'></a>

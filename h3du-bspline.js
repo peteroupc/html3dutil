@@ -736,7 +736,7 @@ BSplineCurve._fromHomogen = function(cp) {
   return cp;
 };
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a B-spline (basis spline) surface,
+ * A [surface evaluator object]{@link H3DU.Surface} for a B-spline (basis spline) surface,
  * whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
  * for {@link H3DU.BSplineCurve}.
  * @constructor
@@ -1021,7 +1021,7 @@ BSplineSurface.prototype.getKnots = function() {
 };
 
 /**
- * Finds the [tangent vector]{@link H3DU.SurfaceEval#vertex} at the
+ * Finds the [tangent vector]{@link H3DU.Surface} at the
  * given point on the surface.
  * @param {number} u U coordinate of the surface to evaluate.
  * @param {number} v V coordinate of the surface to evaluate.
@@ -1062,7 +1062,7 @@ BSplineSurface.prototype.tangent = function(u, v) {
   return ret;
 };
 /**
- * Finds the [bitangent vector]{@link H3DU.SurfaceEval#vertex} at the
+ * Finds the [bitangent vector]{@link H3DU.Surface} at the
  * given point on the surface.
  * @param {number} u U coordinate of the surface to evaluate.
  * @param {number} v V coordinate of the surface to evaluate.
@@ -1182,7 +1182,7 @@ BezierCurve.prototype.evaluate = function(u) {
   return this.curve.evaluate(u);
 };
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a B&eacute;zier surface.<p>
+ * A [surface evaluator object]{@link H3DU.Surface} for a B&eacute;zier surface.<p>
  * @deprecated Instead of this class, use {@link H3DU.BSplineSurface.fromBezierSurface}
  * to create a B&eacute;zier surface.
  * @constructor

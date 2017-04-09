@@ -120,16 +120,6 @@ Specifies a parametric surface function for generating texture coordinates.
 
 This object. (Type: <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a>)
 
-#### Example
-
-The following example sets the surface
-function to a linear evaluator. Thus, coordinates passed to the
-evalOne and evalSurface methods will be interpolated as direct
-texture coordinates.
-
-    surface.texCoord({"evaluate":function(u,v) {
-    "use strict"; return [u,v] }});
-
 <a name='H3DU.SurfaceEval_vertex'></a>
 ### H3DU.SurfaceEval#vertex(evaluator)
 

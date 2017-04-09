@@ -29,7 +29,7 @@ in this mesh.
 * [setAttribute](#H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
-* [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the array of vertex indices used by this mesh buffer.
+* [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the vertex indices used by this mesh buffer.
 * [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
 * [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
 in this mesh.
@@ -206,11 +206,11 @@ semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>
 <a name='H3DU.MeshBuffer_setIndices'></a>
 ### H3DU.MeshBuffer#setIndices(indices)
 
-Sets the array of vertex indices used by this mesh buffer.
+Sets the vertex indices used by this mesh buffer.
 
 #### Parameters
 
-* `indices` (Type: Uint16Array | Uint32Array | Uint8Array)<br>Array of vertex indices.
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array)<br>Array of vertex indices that the mesh buffer will use.
 
 #### Return Value
 

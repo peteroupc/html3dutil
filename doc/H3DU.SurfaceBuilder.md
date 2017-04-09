@@ -38,6 +38,16 @@ TODO: Not documented yet.
 
 This object. (Type: <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a>)
 
+#### Example
+
+The following example sets the surface
+function for texture coordinates to a linear evaluator. Thus, coordinates passed to the
+evalSurface method will be interpolated as direct
+texture coordinates.
+
+    surface.attribute({"evaluate":function(u,v) {
+    "use strict"; return [u,v] }},H3DU.Semantic.TEXCOORD);
+
 <a name='H3DU.SurfaceBuilder_clearVertices'></a>
 ### H3DU.SurfaceBuilder#clearVertices()
 
@@ -57,10 +67,10 @@ TODO: Not documented yet.
 * `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, or is null or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.
 * `un` (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.
 * `vn` (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.
-* `u1` (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.
-* `u2` (Type: number) (optional)<br>Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 1 if not given.
-* `v1` (Type: number) (optional)<br>Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.
-* `v2` (Type: number) (optional)<br>Ending V coordinate of the surface to evaluate. Default is the ending V coordinate given by the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 1 if not given.
+* `u1` (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 0 if not given.
+* `u2` (Type: number) (optional)<br>Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 1 if not given.
+* `v1` (Type: number) (optional)<br>Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 0 if not given.
+* `v2` (Type: number) (optional)<br>Ending V coordinate of the surface to evaluate. Default is the ending V coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 1 if not given.
 
 #### Return Value
 

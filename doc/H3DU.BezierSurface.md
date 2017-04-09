@@ -10,7 +10,7 @@
 <b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
 to create a B&eacute;zier surface.</b>
 
-A <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B&eacute;zier surface.
+A <a href="H3DU.Surface.md">surface evaluator object</a> for a B&eacute;zier surface.
 
 #### Parameters
 

@@ -171,6 +171,10 @@ CurveBuilder._NormalSurface = function(surface) {
 
 // ------ End common internals
 
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ */
 CurveBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
@@ -277,6 +281,12 @@ SurfaceBuilder.prototype.positionNormal = function(surface, size) {
  * @param {*} semanticIndex
  * @param {*} size
  * @returns {H3DU.SurfaceBuilder} This object.
+ * @example <caption>The following example sets the surface
+ * function for texture coordinates to a linear evaluator. Thus, coordinates passed to the
+ * evalSurface method will be interpolated as direct
+ * texture coordinates.</caption>
+ * surface.attribute({"evaluate":function(u,v) {
+ * "use strict"; return [u,v] }},H3DU.Semantic.TEXCOORD);
  */
 SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, size) {
   CurveBuilder._setAttribute(this.attributes, this.vertexCount,
@@ -320,13 +330,14 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  * @returns {H3DU.CurveBuilder} This object.
  */
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
-  n = typeof n === "undefined" || n === null ? 24 : n;
+  n = typeof n === "undefined" || n === null ? 24 : Math.ceil(n);
   if(n <= 0)throw new Error();
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null)) {
     var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
     u1 = ep[0];
     u2 = ep[1];
   }
+  var i;
   var uv = (u2 - u1) / n;
   var firstIndex = this.vertexCount;
   if(mode === Mesh.LINES || (typeof mode === "undefined" || mode === null)) {
@@ -335,7 +346,7 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
     }
     this.vertexCount += n + 1;
   } else if(mode === Mesh.POINTS) {
-    for(var i = 0; i < n; i++) {
+    for(i = 0; i < n; i++) {
       this.indices.push(firstIndex + i);
     }
     this.vertexCount += n + 1;
@@ -374,18 +385,18 @@ SurfaceBuilder.prototype._evalOne = function(u, v) {
  * @param {number} [vn] Number of subdivisions along the V axis.
  * Default is 24.
  * @param {number} [u1] Starting U coordinate of the surface to evaluate.
- * Default is the starting U coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 0 if not given.
+ * Default is the starting U coordinate given by the [surface evaluator object]{@link H3DU.Surface}, or 0 if not given.
  * @param {number} [u2] Ending U coordinate of the surface to evaluate.
- * Default is the ending U coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 1 if not given.
+ * Default is the ending U coordinate given by the [surface evaluator object]{@link H3DU.Surface}, or 1 if not given.
  * @param {number} [v1] Starting V coordinate of the surface to evaluate.
- * Default is the starting V coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 0 if not given.
+ * Default is the starting V coordinate given by the [surface evaluator object]{@link H3DU.Surface}, or 0 if not given.
  * @param {number} [v2] Ending V coordinate of the surface to evaluate.
- * Default is the ending V coordinate given by the [surface evaluator object]{@link H3DU.SurfaceEval#vertex}, or 1 if not given.
+ * Default is the ending V coordinate given by the [surface evaluator object]{@link H3DU.Surface}, or 1 if not given.
  * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
-  un = typeof un === "undefined" || un === null ? 24 : un;
-  vn = typeof vn === "undefined" || vn === null ? 24 : vn;
+  un = typeof un === "undefined" || un === null ? 24 : Math.ceil(un);
+  vn = typeof vn === "undefined" || vn === null ? 24 : Math.ceil(vn);
   if(un <= 0)throw new Error();
   if(vn <= 0)throw new Error();
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null) || (typeof v1 === "undefined" || v1 === null) || (typeof v2 === "undefined" || v2 === null)) {

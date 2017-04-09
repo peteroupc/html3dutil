@@ -550,6 +550,9 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
   this.indices = faces || [];
   this.tangents = Mesh._initTangents(verts, this.attributeBits);
   this.startIndex = 0;
+  this.primitiveData = [0, 0, 0, 0];
+  this.primitiveIndex = 0;
+  this.primitiveOdd = false;
   var prim = format & Mesh.PRIMITIVES_BITS;
   if(prim !== 0 && prim !== Mesh.LINES_BIT && prim !== Mesh.POINTS_BIT) {
     throw new Error("invalid format");
@@ -560,7 +563,8 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
   };
  /** @ignore */
   this.newPrimitive = function() {
-    this.startIndex = this.vertices.length;
+    this.primitiveIndex = 0;
+    this.primitiveOdd = false;
     return this;
   };
   this.primitiveType = function() {
@@ -638,50 +642,8 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
     this.attributeBits = newBits;
   };
   this._setTriangle = function(vertexStartIndex, stride, i1, i2, i3) {
-    var v1 = i1 * stride;
-    var v2 = i2 * stride;
-    var v3 = i3 * stride;
-    var triCount = 0;
-    var tribits = 0;
-    if((this.attributeBits & (Mesh.TANGENTS_BIT | Mesh.BITANGENTS_BIT)) !== 0) {
-      // Just set the indices, for convenience, if tangents and/or
-      // bitangents are included in this mesh (a deprecated feature)
-      this.indices.push(i1, i2, i3);
-      return;
-    }
-    var v = this.vertices;
-    for(var i = vertexStartIndex - stride;
-     i >= 0 && triCount < 16 && tribits !== 7;
-     i -= stride, triCount++) {
-      var found = 7;
-      for(var j = 0; j < stride && found !== 0; j++) {
-        if((found & 1) !== 0 && v[v1 + j] !== v[i + j]) {
-          found &= ~1;
-        }
-        if((found & 2) !== 0 && v[v2 + j] !== v[i + j]) {
-          found &= ~2;
-        }
-        if((found & 4) !== 0 && v[v3 + j] !== v[i + j]) {
-          found &= ~4;
-        }
-      }
-      if((found & 1) !== 0) {
-        i1 = i / stride; v1 = i1 * stride; tribits |= 1; break;
-      }
-      if((found & 2) !== 0) {
-        i2 = i / stride; v2 = i2 * stride; tribits |= 2; break;
-      }
-      if((found & 4) !== 0) {
-        i3 = i / stride; v3 = i3 * stride; tribits |= 4; break;
-      }
-    }
-    if(
-    !(v[v1] === v[v2] && v[v1 + 1] === v[v2 + 1] && v[v1 + 2] === v[v2 + 2]) &&
-    !(v[v1] === v[v3] && v[v1 + 1] === v[v3 + 1] && v[v1 + 2] === v[v3 + 2]) &&
-    !(v[v2] === v[v3] && v[v2 + 1] === v[v3 + 1] && v[v2 + 2] === v[v3 + 2])) {
-    // avoid identical vertex positions
-      this.indices.push(i1, i2, i3);
-    }
+    this.indices.push(i1, i2, i3);
+
   };
   this._vertex3 = function(x, y, z) {
     var currentMode = this.currentMode;
@@ -703,48 +665,57 @@ Mesh.prototype._initialize = function(vertices, faces, format) {
       this.tangents.push(this.bitangent[0], this.bitangent[1], this.bitangent[2]);
     }
     var stride = this.getStride();
-    var index, firstIndex;
-    if(currentMode === Mesh.QUAD_STRIP &&
-     this.vertices.length - this.startIndex >= stride * 4 &&
-     (this.vertices.length - this.startIndex) % (stride * 2) === 0) {
-      index = this.vertices.length / stride - 4;
-      this._setTriangle(vertexStartIndex, stride, index, index + 1, index + 2);
-      this._setTriangle(vertexStartIndex, stride, index + 2, index + 1, index + 3);
-    } else if(currentMode === Mesh.QUADS &&
-     (this.vertices.length - this.startIndex) % (stride * 4) === 0) {
-      index = this.vertices.length / stride - 4;
-      this._setTriangle(vertexStartIndex, stride, index, index + 1, index + 2);
-      this._setTriangle(vertexStartIndex, stride, index, index + 2, index + 3);
-    } else if(currentMode === Mesh.TRIANGLES &&
-     (this.vertices.length - this.startIndex) % (stride * 3) === 0) {
-      index = this.vertices.length / stride - 3;
-      this._setTriangle(vertexStartIndex, stride, index, index + 1, index + 2);
-    } else if(currentMode === Mesh.LINES &&
-     (this.vertices.length - this.startIndex) % (stride * 2) === 0) {
-      index = this.vertices.length / stride - 2;
-      this.indices.push(index, index + 1);
-    } else if(currentMode === Mesh.TRIANGLE_FAN &&
-     this.vertices.length - this.startIndex >= stride * 3) {
-      index = this.vertices.length / stride - 2;
-      firstIndex = this.startIndex / stride;
-      this._setTriangle(vertexStartIndex, stride, firstIndex, index, index + 1);
-    } else if(currentMode === Mesh.LINE_STRIP &&
-     this.vertices.length - this.startIndex >= stride * 2) {
-      index = this.vertices.length / stride - 2;
-      this.indices.push(index, index + 1);
+    var vertexIndex = vertexStartIndex / stride;
+    if(Math.floor(vertexIndex) !== vertexIndex)throw new Error();
+    this.primitiveData[this.primitiveIndex] = vertexIndex;
+    this.primitiveIndex++;
+
+    if(currentMode === Mesh.QUAD_STRIP && this.primitiveIndex >= 4) {
+      this._setTriangle(vertexStartIndex, stride, this.primitiveData[0],
+       this.primitiveData[1], this.primitiveData[2]);
+      this._setTriangle(vertexStartIndex, stride, this.primitiveData[2],
+       this.primitiveData[1], this.primitiveData[3]);
+      this.primitiveData[0] = this.primitiveData[2];
+      this.primitiveData[1] = this.primitiveData[3];
+      this.primitiveIndex -= 2;
+    } else if(currentMode === Mesh.QUADS && this.primitiveIndex >= 4) {
+      this._setTriangle(vertexStartIndex, stride, this.primitiveData[0],
+       this.primitiveData[1], this.primitiveData[2]);
+      this._setTriangle(vertexStartIndex, stride, this.primitiveData[0],
+       this.primitiveData[2], this.primitiveData[3]);
+      this.primitiveIndex -= 4;
+    } else if(currentMode === Mesh.TRIANGLES && this.primitiveIndex >= 3) {
+      this._setTriangle(vertexStartIndex, stride, this.primitiveData[0],
+       this.primitiveData[1], this.primitiveData[2]);
+      this.primitiveIndex -= 3;
+    } else if(currentMode === Mesh.LINES && this.primitiveIndex >= 2) {
+      this.indices.push(this.primitiveData[0], this.primitiveData[1]);
+      this.primitiveIndex -= 2;
+    } else if(currentMode === Mesh.TRIANGLE_FAN && this.primitiveIndex >= 3) {
+      this._setTriangle(vertexStartIndex, stride, this.primitiveData[0],
+       this.primitiveData[1], this.primitiveData[2]);
+      this.primitiveData[1] = this.primitiveData[2];
+      this.primitiveIndex -= 1;
+    } else if(currentMode === Mesh.LINE_STRIP && this.primitiveIndex >= 2) {
+      this.indices.push(this.primitiveData[0], this.primitiveData[1]);
+      this.primitiveData[0] = this.primitiveData[1];
+      this.primitiveIndex--;
     } else if(currentMode === Mesh.POINTS) {
-      index = this.vertices.length / stride - 1;
-      this.indices.push(index);
-    } else if(currentMode === Mesh.TRIANGLE_STRIP &&
-     this.vertices.length - this.startIndex >= stride * 3) {
-      index = this.vertices.length / stride - 3;
-      firstIndex = this.startIndex / stride;
-      if((index - firstIndex & 1) === 0) {
-        this._setTriangle(vertexStartIndex, stride, index, index + 1, index + 2);
+      this.indices.push(this.primitiveData[0]);
+      this.primitiveIndex--;
+    } else if(currentMode === Mesh.TRIANGLE_STRIP && this.primitiveIndex >= 3) {
+      if(this.primitiveOdd) {
+        this._setTriangle(vertexStartIndex, stride, this.primitiveData[1],
+         this.primitiveData[0], this.primitiveData[2]);
       } else {
-        this._setTriangle(vertexStartIndex, stride, index + 1, index, index + 2);
+        this._setTriangle(vertexStartIndex, stride, this.primitiveData[0],
+       this.primitiveData[1], this.primitiveData[2]);
       }
+      this.primitiveData[0] = this.primitiveData[1];
+      this.primitiveData[1] = this.primitiveData[2];
+      this.primitiveIndex--;
     }
+    this.primitiveOdd = !this.primitiveOdd;
     return this;
   };
 };
@@ -961,6 +932,7 @@ Mesh.prototype.getBoundingBox = function() {
  * If this mesh defines normals, also resets the primitive
  * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
  * will not build upon previous vertices.
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.reverseNormals = function() {

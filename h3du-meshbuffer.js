@@ -338,12 +338,26 @@ MeshBuffer.prototype.getIndices = function() {
   return this.indices;
 };
 /**
- * Sets the array of vertex indices used by this mesh buffer.
- * @param {Uint16Array|Uint32Array|Uint8Array} indices Array of vertex indices.
+ * Sets the vertex indices used by this mesh buffer.
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array} indices Array of vertex indices
+ * that the mesh buffer will use.
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setIndices = function(indices) {
-  this.indices = indices;
+  if(indices instanceof Array) {
+    var index = 0;
+    for(var i = indices.length - 1; i >= 0; i--) {
+      index = Math.max(index, indices[i]);
+      if(index >= 65536)break;
+    }
+    if(index >= 65536) {
+      this.indices = new Uint32Array(indices);
+    } else {
+      this.indices = new Uint16Array(indices);
+    }
+  } else {
+    this.indices = indices;
+  }
   return this;
 };
 /**
@@ -930,7 +944,7 @@ MeshBuffer.prototype.transform = function(matrix) {
     matrix[2] === 0 && matrix[4] === 0 && matrix[5] === 1 &&
     matrix[6] === 0 && matrix[8] === 0 && matrix[9] === 0 && matrix[10] === 1);
   var matrixForNormals = null;
-  if(normalAttribute >= 0 && isLinearIdentity) {
+  if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isLinearIdentity) {
     matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
   }
   var count = helper.count(positionAttribute);

@@ -13,6 +13,7 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 ### Methods
 
 * [attribute](#H3DU.CurveBuilder_attribute)<br>TODO: Not documented yet.
+* [clearVertices](#H3DU.CurveBuilder_clearVertices)<br>TODO: Not documented yet.
 * [curveToBuffer](#H3DU.CurveBuilder.curveToBuffer)<br>TODO: Not documented yet.
 * [evalCurve](#H3DU.CurveBuilder_evalCurve)<br>TODO: Not documented yet.
 * [position](#H3DU.CurveBuilder_position)<br>TODO: Not documented yet.
@@ -29,6 +30,15 @@ TODO: Not documented yet.
 * `semantic` (Type: *)
 * `semanticIndex` (Type: *)
 * `size` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
+
+<a name='H3DU.CurveBuilder_clearVertices'></a>
+### H3DU.CurveBuilder#clearVertices()
+
+TODO: Not documented yet.
 
 #### Return Value
 
