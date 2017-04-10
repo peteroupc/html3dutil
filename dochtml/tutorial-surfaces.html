@@ -34,42 +34,38 @@ surface can be a seen as a &quot;warped&quot; version of a rectangular grid. The
 function &quot;warps&quot; this grid into a three-dimensional surface.</p>
 <p><a id=Parametric_Surfaces_in_the_HTML_3D_Library></a></p>
 <h2>Parametric Surfaces in the HTML 3D Library</h2><p>The HTML 3D Library supports parametric surfaces using a class named
-<a href="http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html"><code>SurfaceEval</code></a>. It helps
+<a href="http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html"><code>SurfaceBuilder</code></a>. It helps
 generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, <code>makeMesh</code>, generates a parametric surface mesh.
 A function similar to the <code>makeMesh</code>
 function presented here is included in the demos that come with the HTML 3D Library.</p>
 <p>The comments explain how <code>makeMesh</code> works in detail.</p>
-<pre class="prettyprint source"><code>function makeMesh(func,resolution){
- // Default resolution is 50
- if(resolution==null)resolution=50
-  // create a new mesh
-  var mesh=new H3DU.Mesh();
-  // define a color gradient evaluator for
-  // demonstration purposes. Instead of X, Y, and Z,
-  // generate a Red/Green/Blue color based on
-  // the same parameters U and V as the surface
-  // function for 3D points.
-  var colorGradient={
-   &quot;evaluate&quot;:function(u,v){ return [1-u,v,u]; }
-  }
- // generate the parametric surface.
- new H3DU.SurfaceEval()
-  .vertex(func)
-// Specify the color gradient evaluator defined above
-  .color(colorGradient)
-// Generate normals for the parametric surface,
-// which is required for lighting to work correctly
-  .setAutoNormal(true)
-// Evaluate the surface and generate a triangle
-// mesh, using resolution+1 different U coordinates,
-//and resolution+1 different V coordinates.
-// Instead of H3DU.Mesh.TRIANGLES, we could use
-// H3DU.Mesh.LINES to create a wireframe mesh,
-// or H3DU.Mesh.POINTS to create a point mesh.
-  .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,resolution);
-// Surface generated, return the mesh
-return mesh;
+<pre class="prettyprint source"><code>function makeMesh(func,resolutionU, resolutionV){
+   &quot;use strict&quot;;
+   if(typeof resolutionV === &quot;undefined&quot; || resolutionV === null)resolutionV = resolutionU;
+   if(typeof resolutionU === &quot;undefined&quot; || resolutionU === null)resolutionU = 50;
+   if(typeof resolutionV === &quot;undefined&quot; || resolutionV === null)resolutionV = 50;
+      // define a color gradient evaluator for
+      // demonstration purposes. Instead of X, Y, and Z,
+      // generate a Red/Green/Blue color based on
+      // the same parameters U and V as the surface
+      // function for 3D points.
+   var colorGradient = {
+     &quot;evaluate&quot;:function(u, v) {
+       return [1 - u, v, u];
+     }
+   };
+   return new H3DU.SurfaceBuilder()
+      .positionNormal(func)
+      .attribute(colorGradient, H3DU.Semantic.COLOR)
+     // Evaluate the surface and generate a triangle
+     // mesh, using resolution+1 different U coordinates,
+     // and resolution+1 different V coordinates.
+     // Instead of H3DU.Mesh.TRIANGLES, we could use
+     // H3DU.Mesh.LINES to create a wireframe mesh,
+     // or H3DU.Mesh.POINTS to create a point mesh.
+      .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
+      .toMeshBuffer();
 }</code></pre><p>In the HTML 3D Library, surface evaluator objects define a method, <code>evaluate</code>,
 which returns a 3D point given a U parameter and a V parameter. (By default, U and
 V each range from 0 through 1.)</p>
@@ -123,8 +119,8 @@ to transform the surface's points to new positions.</p>
 <p>As an example, we'll define a new evaluator that shifts the position
 of a parametric surface. It takes an existing surface evaluator and the X, Y, and
 Z of how many units to shift the surface. Note that this class includes its
-own <code>evaluate</code> method, allowing itself to be passed to the <code>H3DU.SurfaceEval</code> class
-or the makeMesh class above.</p>
+own <code>evaluate</code> method, allowing itself to be passed to the <code>H3DU.SurfaceBuilder</code> class's method
+or the makeMesh method above.</p>
 <pre class="prettyprint source"><code>function SurfaceShifter(evaluator, x, y, z) {
  // Shift the surface by X units.
  this.x = x;
@@ -181,19 +177,19 @@ function, since it only uses the variable <em>u</em>, not <em>v</em>.</p>
 parametric curve evaluator, as can any surface in which the <em>v</em> parameter is
 kept to the same value, such as 0, 1, or any other constant number.</p>
 <p><a id=Generating_Parametric_Curves></a></p>
-<h3>Generating Parametric Curves</h3><p>The HTML 3D Library's <code>H3DU.CurveEval</code> class generates vertices for
+<h3>Generating Parametric Curves</h3><p>The HTML 3D Library's <code>H3DU.CurveBuilder</code> class generates vertices for
 a parametric curve.</p>
 <p>Use code like the following to generate a mesh describing a parametric
 curve. It assumes that <code>evaluator</code> is a parametric curve object, just like
 the circle example above.</p>
-<pre class="prettyprint source"><code>  var mesh=new H3DU.Mesh();
-  // set the color
-  mesh.color3(&quot;black&quot;);
-  // Create a curve evaluator
-  var ev=new H3DU.CurveEval()
-  .vertex(evaluator)
-   // Evaluate the curve, using 100 lines
-  .evalCurve(mesh,H3DU.Mesh.LINES,100);</code></pre><p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
+<pre class="prettyprint source"><code>  // Create a curve evaluator
+  var ev=new H3DU.CurveBuilder()
+  .position(evaluator)
+   // Evaluate the curve, using 99 lines (100 points). Alternatively,
+   // H3DU.Mesh.POINTS can be used.
+  .evalCurve(H3DU.Mesh.LINES,100);
+  // Create a mesh describing the curve
+  var mesh=ev.toMeshBuffer()</code></pre><p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
 <h2>Curve and Surface Evaluators in the HTML 3D Library</h2><p>The HTML 3D Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an <code>evaluate</code>
 method that returns 3D points lying on the curve or surface.</p>
@@ -226,10 +222,9 @@ curve drawn by a circle rolling along a straight line.</li>
 <p>General-purpose surfaces include:</p>
 <ul>
 <li><strong>B&eacute;zier surfaces.</strong> 3D surfaces where each grid line is a B&eacute;zier
-curve. B&eacute;zier surfaces are created using the <a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a> class.</li>
+curve. B&eacute;zier surfaces are created using the <a href="H3DU.BSplineSurface.html#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a> method.</li>
 <li><strong>B-Spline surfaces.</strong> 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the <a href="H3DU.BSplineSurface.html#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
-method.</li>
+curve. B-Spline surfaces are created using the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> class.</li>
 </ul>
 <p>Special surfaces include:</p>
 <ul>

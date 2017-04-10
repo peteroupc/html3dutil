@@ -132,7 +132,7 @@ To use this method, you must include the script "extras/convex.js". Example:
 
 #### Return Value
 
-The generated convex hull. (Type: Mesh)
+The generated convex hull. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createCylinder'></a>
 ### (static) H3DU.Meshes.createCylinder(baseRad, topRad, height, [slices], [stacks], [flat], [inside])

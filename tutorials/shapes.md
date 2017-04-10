@@ -306,13 +306,21 @@ To attach a mesh to a 3D scene:
         shape.setColor("red"); // set the color to a CSS color
         shape.setColor("#338845"); // set the color to an HTML color
         shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
-        // set material parameters: ambient, diffuse,
-        // specular, shininess (NOTE: if the mesh defines its own colors they
+        // set material parameters (NOTE: if the mesh defines its own colors they
         // will override diffuse reflection given below)
-        shape.setMaterial(new H3DU.Material("blue","blue","white",30));
+        shape.setMaterial(new H3DU.Material({
+     "ambient":"blue",
+     "diffuse":"blue",
+     "specular":"white",
+     "shininess":30}));
         // set material parameters: ambient, diffuse,
         // specular, shininess, emission
-        shape.setMaterial(new H3DU.Material("lime","lime","white",30,[0.2,0.2,0.2]));
+        shape.setMaterial(new H3DU.Material({
+     "ambient":"lime",
+     "diffuse":"lime",
+     "specular":"white",
+     "emission":[0.2,0.2,0.2],
+     "shininess":30}));
         // set a texture; this requires the mesh to have texture
         // coordinates assigned to each vertex
         shape.setTexture("texture.png");

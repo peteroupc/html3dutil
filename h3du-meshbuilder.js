@@ -315,7 +315,7 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
      .evalSurface(mode, un, vn, u1, u2, vn, v2).toMeshBuffer();
 };
 /**
- * TODO: Not documented yet.
+ * Generates the vertex attributes of the parametric curves.
  * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null
  * or omitted, generates
  * a series of lines defining the curve. If this value is {@link H3DU.Mesh.POINTS},
@@ -373,7 +373,7 @@ SurfaceBuilder.prototype._evalOne = function(u, v) {
   }
 };
 /**
- * TODO: Not documented yet.
+ * Generates the vertex attributes of the parametric surfaces.
  * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null
  * or omitted, generates a series of triangles defining the surface. If
  * this value is {@link H3DU.Mesh.LINES}, generates

@@ -20,10 +20,13 @@ or red components. Each value has the same number of elements.
 * [getElement](#H3DU.BufferHelper_getElement)<br>TODO: Not documented yet.
 * [getVec](#H3DU.BufferHelper_getVec)<br>Gets the elements of a vertex attribute value.
 * [makeBlank](#H3DU.BufferHelper_makeBlank)<br>Creates an object describing information about a vertex attribute.
-* [makeIndices](#H3DU.BufferHelper_makeIndices)<br>TODO: Not documented yet.
+* [makeIndices](#H3DU.BufferHelper_makeIndices)<br>Generates an array of increasing vertex indices
 * [makeRedundant](#H3DU.BufferHelper_makeRedundant)<br>TODO: Not documented yet.
-* [merge](#H3DU.BufferHelper_merge)<br>TODO: Not documented yet.
-* [mergeBlank](#H3DU.BufferHelper_mergeBlank)<br>TODO: Not documented yet.
+* [merge](#H3DU.BufferHelper_merge)<br>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.
+* [mergeBlank](#H3DU.BufferHelper_mergeBlank)<br>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute, where one of the input attributes is assumed to consist
+of all-zero values.
 * [set](#H3DU.BufferHelper_set)<br>Sets the first element of the attribute value with the given vertex index.
 * [set2](#H3DU.BufferHelper_set2)<br>TODO: Not documented yet.
 * [set3](#H3DU.BufferHelper_set3)<br>TODO: Not documented yet.
@@ -41,7 +44,8 @@ TODO: Not documented yet.
 
 #### Return Value
 
-Return value. (Type: *)
+A copy of the attribute. Returns null if the two objects have different semantics
+or semantic indices. (Type: Array.&lt;Object>)
 
 <a name='H3DU.BufferHelper_count'></a>
 ### H3DU.BufferHelper#count(a)
@@ -77,7 +81,7 @@ Gets the first element of the attribute value with the given vertex index.
 #### Parameters
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `index` (Type: number)<br>Vertex index of the value whose first element will be retrieved.
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 
 #### Return Value
 
@@ -106,7 +110,7 @@ Gets the elements of a vertex attribute value.
 #### Parameters
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `index` (Type: number)
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `vec` (Type: *)
 
 #### Return Value
@@ -117,6 +121,7 @@ The parameter "vec". (Type: Array.&lt;number>)
 ### H3DU.BufferHelper#makeBlank(name, index, count, countPerValue)
 
 Creates an object describing information about a vertex attribute.
+Each value in the attribute will be initialized to all zeros.
 
 #### Parameters
 
@@ -132,15 +137,15 @@ A new vertex attribute with blank values. (Type: Array.&lt;Object>)
 <a name='H3DU.BufferHelper_makeIndices'></a>
 ### H3DU.BufferHelper#makeIndices(numIndices)
 
-TODO: Not documented yet.
+Generates an array of increasing vertex indices
 
 #### Parameters
 
-* `numIndices` (Type: *)
+* `numIndices` (Type: number)<br>The number of vertex indices to generate. The array will range from 0 to the number of vertex indices minus 1.
 
 #### Return Value
 
-Return value. (Type: *)
+An array of vertex indices. (Type: Uint16Array | Uint32Array)
 
 <a name='H3DU.BufferHelper_makeRedundant'></a>
 ### H3DU.BufferHelper#makeRedundant(a, indices)
@@ -159,7 +164,9 @@ Return value. (Type: *)
 <a name='H3DU.BufferHelper_merge'></a>
 ### H3DU.BufferHelper#merge(attr1, indices1, attr2, indices2)
 
-TODO: Not documented yet.
+Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute. The two attributes must have the same semantic and semantic
+index, for example, semantic POSITION and semantic index 0.
 
 #### Parameters
 
@@ -170,24 +177,28 @@ TODO: Not documented yet.
 
 #### Return Value
 
-The merged attribute. Returns null if the two objects have different semantics
-or semantic indices. (Type: *)
+The merged attribute, where the vertices from the first vertex
+attribute come before those from the second. Returns null if the two objects have different semantics
+or semantic indices. (Type: Array.&lt;Object>)
 
 <a name='H3DU.BufferHelper_mergeBlank'></a>
 ### H3DU.BufferHelper#mergeBlank(attr, indices1, indices2, attrIsSecond)
 
-TODO: Not documented yet.
+Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute, where one of the input attributes is assumed to consist
+of all-zero values.
 
 #### Parameters
 
 * `attr` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `indices1` (Type: *)
-* `indices2` (Type: *)
+* `indices1` (Type: Array.&lt;number> | Uint8Array | Uint16Array | Uint32Array)<br>An array of vertex indices to vertices that will appear first in the merged attribute. The vertex indices are those of the first vertex attribute.
+* `indices2` (Type: Array.&lt;number> | Uint8Array | Uint16Array | Uint32Array)<br>An array of vertex indices to vertices that will appear second in the merged attribute. The vertex indices are those of the first vertex attribute.
 * `attrIsSecond` (Type: *)
 
 #### Return Value
 
-Return value. (Type: *)
+The merged attribute, where the vertices from the first vertex
+attribute come before those from the second. (Type: Array.&lt;Object>)
 
 <a name='H3DU.BufferHelper_set'></a>
 ### H3DU.BufferHelper#set(a, index, value)
@@ -197,7 +208,7 @@ Sets the first element of the attribute value with the given vertex index.
 #### Parameters
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `index` (Type: number)<br>Vertex index of the value whose first element will be set.
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `value` (Type: number)<br>The number to set the first element to.
 
 #### Return Value
@@ -212,7 +223,7 @@ TODO: Not documented yet.
 #### Parameters
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `index` (Type: number)
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `v1` (Type: number)
 * `v2` (Type: number)
 
@@ -228,7 +239,7 @@ TODO: Not documented yet.
 #### Parameters
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `index` (Type: number)
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `v1` (Type: number)
 * `v2` (Type: number)
 * `v3` (Type: number)
@@ -245,7 +256,7 @@ TODO: Not documented yet.
 #### Parameters
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `index` (Type: number)
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `element` (Type: *)
 * `value` (Type: *)
 
@@ -261,7 +272,7 @@ Sets the elements of a vertex attribute value.
 #### Parameters
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
-* `index` (Type: number)
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `vec` (Type: *)
 
 #### Return Value

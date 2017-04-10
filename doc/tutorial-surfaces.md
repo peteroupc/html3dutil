@@ -56,7 +56,7 @@ function "warps" this grid into a three-dimensional surface.
 ## Parametric Surfaces in the HTML 3D Library
 
 The HTML 3D Library supports parametric surfaces using a class named
-[`SurfaceEval`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html). It helps
+[`SurfaceBuilder`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html). It helps
 generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, `makeMesh`, generates a parametric surface mesh.
 A function similar to the `makeMesh`
@@ -64,36 +64,32 @@ function presented here is included in the demos that come with the HTML 3D Libr
 
 The comments explain how `makeMesh` works in detail.
 
-    function makeMesh(func,resolution){
-     // Default resolution is 50
-     if(resolution==null)resolution=50
-      // create a new mesh
-      var mesh=new H3DU.Mesh();
-      // define a color gradient evaluator for
-      // demonstration purposes. Instead of X, Y, and Z,
-      // generate a Red/Green/Blue color based on
-      // the same parameters U and V as the surface
-      // function for 3D points.
-      var colorGradient={
-       "evaluate":function(u,v){ return [1-u,v,u]; }
-      }
-     // generate the parametric surface.
-     new H3DU.SurfaceEval()
-      .vertex(func)
-    // Specify the color gradient evaluator defined above
-      .color(colorGradient)
-    // Generate normals for the parametric surface,
-    // which is required for lighting to work correctly
-      .setAutoNormal(true)
-    // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U coordinates,
-    //and resolution+1 different V coordinates.
-    // Instead of H3DU.Mesh.TRIANGLES, we could use
-    // H3DU.Mesh.LINES to create a wireframe mesh,
-    // or H3DU.Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,resolution);
-    // Surface generated, return the mesh
-    return mesh;
+    function makeMesh(func,resolutionU, resolutionV){
+       "use strict";
+       if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = resolutionU;
+       if(typeof resolutionU === "undefined" || resolutionU === null)resolutionU = 50;
+       if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = 50;
+          // define a color gradient evaluator for
+          // demonstration purposes. Instead of X, Y, and Z,
+          // generate a Red/Green/Blue color based on
+          // the same parameters U and V as the surface
+          // function for 3D points.
+       var colorGradient = {
+         "evaluate":function(u, v) {
+           return [1 - u, v, u];
+         }
+       };
+       return new H3DU.SurfaceBuilder()
+          .positionNormal(func)
+          .attribute(colorGradient, H3DU.Semantic.COLOR)
+         // Evaluate the surface and generate a triangle
+         // mesh, using resolution+1 different U coordinates,
+         // and resolution+1 different V coordinates.
+         // Instead of H3DU.Mesh.TRIANGLES, we could use
+         // H3DU.Mesh.LINES to create a wireframe mesh,
+         // or H3DU.Mesh.POINTS to create a point mesh.
+          .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
+          .toMeshBuffer();
     }
 
 In the HTML 3D Library, surface evaluator objects define a method, `evaluate`,
@@ -171,8 +167,8 @@ to transform the surface's points to new positions.
 As an example, we'll define a new evaluator that shifts the position
 of a parametric surface. It takes an existing surface evaluator and the X, Y, and
 Z of how many units to shift the surface. Note that this class includes its
-own `evaluate` method, allowing itself to be passed to the `H3DU.SurfaceEval` class
-or the makeMesh class above.
+own `evaluate` method, allowing itself to be passed to the `H3DU.SurfaceBuilder` class's method
+or the makeMesh method above.
 
     function SurfaceShifter(evaluator, x, y, z) {
      // Shift the surface by X units.
@@ -243,21 +239,21 @@ kept to the same value, such as 0, 1, or any other constant number.
 <a id=Generating_Parametric_Curves></a>
 ### Generating Parametric Curves
 
-The HTML 3D Library's `H3DU.CurveEval` class generates vertices for
+The HTML 3D Library's `H3DU.CurveBuilder` class generates vertices for
 a parametric curve.
 
 Use code like the following to generate a mesh describing a parametric
 curve. It assumes that `evaluator` is a parametric curve object, just like
 the circle example above.
 
-      var mesh=new H3DU.Mesh();
-      // set the color
-      mesh.color3("black");
       // Create a curve evaluator
-      var ev=new H3DU.CurveEval()
-      .vertex(evaluator)
-       // Evaluate the curve, using 100 lines
-      .evalCurve(mesh,H3DU.Mesh.LINES,100);
+      var ev=new H3DU.CurveBuilder()
+      .position(evaluator)
+       // Evaluate the curve, using 99 lines (100 points). Alternatively,
+       // H3DU.Mesh.POINTS can be used.
+      .evalCurve(H3DU.Mesh.LINES,100);
+      // Create a mesh describing the curve
+      var mesh=ev.toMeshBuffer()
 
 <a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a>
 ## Curve and Surface Evaluators in the HTML 3D Library
@@ -295,10 +291,9 @@ curve drawn by a circle rolling along a straight line.
 General-purpose surfaces include:
 
 * **B&eacute;zier surfaces.** 3D surfaces where each grid line is a B&eacute;zier
-curve. B&eacute;zier surfaces are created using the <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a> class.
+curve. B&eacute;zier surfaces are created using the <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a> method.
 * **B-Spline surfaces.** 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
-method.
+curve. B-Spline surfaces are created using the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> class.
 
 Special surfaces include:
 

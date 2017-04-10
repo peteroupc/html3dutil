@@ -6,6 +6,10 @@
 ### H3DU.MeshBuffer([mesh])
 
 A geometric mesh in the form of buffer objects.
+A mesh buffer is made up of one or more buffer attributes,
+and an array of vertex indices. Each buffer attribute contains
+the values of one attribute of the mesh, such as positions,
+vertex normals, and texture coordinates.
 
 #### Parameters
 
@@ -13,12 +17,12 @@ A geometric mesh in the form of buffer objects.
 
 ### Methods
 
-* [getAttribute](#H3DU.MeshBuffer_getAttribute)<br>TODO: Not documented yet.
+* [getAttribute](#H3DU.MeshBuffer_getAttribute)<br>Gets a vertex attribute included in this mesh buffer.
 * [getBounds](#H3DU.MeshBuffer_getBounds)<br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
 * [getIndices](#H3DU.MeshBuffer_getIndices)<br>Gets the array of vertex indices used by this mesh buffer.
 * [getPositions](#H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
-arranged by primitive
+arranged by primitive.
 * [merge](#H3DU.MeshBuffer_merge)<br>Merges the vertices from another mesh into this one.
 * [primitiveCount](#H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
@@ -26,6 +30,8 @@ and points) composed by all shapes in this mesh.
 * [recalcNormals](#H3DU.MeshBuffer_recalcNormals)<br>Recalculates the normal vectors for triangles
 in this mesh.
 * [reverseNormals](#H3DU.MeshBuffer_reverseNormals)<br>Modifies this mesh buffer by reversing the sign of normals it defines.
+* [reverseWinding](#H3DU.MeshBuffer_reverseWinding)<br>Reverses the winding order of the triangles in this mesh buffer
+by swapping the second and third vertex indices of each one.
 * [setAttribute](#H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
@@ -40,14 +46,14 @@ may be duplicates).
 or point) in this mesh buffer.
 
 <a name='H3DU.MeshBuffer_getAttribute'></a>
-### H3DU.MeshBuffer#getAttribute(name, index)
+### H3DU.MeshBuffer#getAttribute(name, [semanticIndex])
 
-TODO: Not documented yet.
+Gets a vertex attribute included in this mesh buffer.
 
 #### Parameters
 
 * `name` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
-* `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
+* `semanticIndex` (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, te default value is 0.
 
 #### Return Value
 
@@ -59,6 +65,8 @@ of the attribute doesn't exist. (Type: Array.&lt;Object>)
 
 Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
+Only positions with attribute semantic <code>POSITION</code> are
+used in the bounding box calculation.
 
 #### Return Value
 
@@ -85,7 +93,8 @@ Return value. (Type: Uint16Array | Uint32Array | Uint8Array)
 ### H3DU.MeshBuffer#getPositions()
 
 Gets an array of vertex positions held by this mesh buffer,
-arranged by primitive
+arranged by primitive.
+Only values with the attribute semantic <code>POSITION_0</code> are returned.
 
 #### Return Value
 
@@ -142,9 +151,12 @@ in this mesh. For this to properly affect shading, each triangle in
 the mesh must have its vertices defined in
 counterclockwise order (if the triangle is being rendered
 in a right-handed coordinate system). Each normal calculated will
-be normalized to have a length of 1 (unless the normal is (0,0,0)).
-Will have an effect only if the position vector is at least 3 elements
-long. If the normal vector exists, but is not at least 3 elements long,
+be normalized to have a length of 1 (unless the normal is (0,0,0)),
+and will be stored in an attribute with semantic <code>NORMAL_0</code>.
+Will have an effect only if the buffer includes an attribute with
+semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
+long. If the buffer includes an attribute with semantic <code>NORMAL_0</code>,
+but its values are each not at least 3 elements long,
 this method will have no effect.
 
 #### Parameters
@@ -161,6 +173,8 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 Modifies this mesh buffer by reversing the sign of normals it defines.
 Has no effect if this mesh buffer doesn't define any normals.
+All attributes with the semantic <code>NORMAL</code>,
+regardless of semantic index, are affected.
 
 #### Return Value
 
@@ -174,14 +188,38 @@ This is only useful when drawing open geometric shapes, such as open
 cylinders and two-dimensional planar shapes.
 Due to the z-fighting effect, drawing a two-sided mesh is
 recommended only if face culling is enabled.
-TODO: Implement reverseWinding.
 
     var twoSidedMesh = originalMesh.merge(
-    new H3DU.Mesh().merge(originalMesh).reverseWinding().reverseNormals()
+    new H3DU.MeshBuffer().merge(originalMesh).reverseWinding().reverseNormals()
+    );
+
+<a name='H3DU.MeshBuffer_reverseWinding'></a>
+### H3DU.MeshBuffer#reverseWinding()
+
+Reverses the winding order of the triangles in this mesh buffer
+by swapping the second and third vertex indices of each one.
+Has an effect only if this mesh buffer consists of triangles.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+
+#### Example
+
+The following code generates a mesh that survives face culling,
+since the same triangles occur on each side of the mesh, but
+with different winding orders. This is useful when enabling
+This is only useful when drawing open geometric shapes, such as open
+cylinders and two-dimensional planar shapes.
+Due to the z-fighting effect, drawing this kind of mesh is
+recommended only if face culling is enabled.
+
+    var frontBackMesh = originalMesh.merge(
+    new H3DU.MeshBuffer().merge(originalMesh).reverseWinding()
     );
 
 <a name='H3DU.MeshBuffer_setAttribute'></a>
-### H3DU.MeshBuffer#setAttribute(name, index, buffer, startIndex, countPerVertex, stride)
+### H3DU.MeshBuffer#setAttribute(name, index, buffer, startIndex, countPerVertex, [stride])
 
 Adds information about a buffer attribute to this
 mesh buffer (or sets an
@@ -196,7 +234,7 @@ stored in a vertex buffer.
 * `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.
 * `startIndex` (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.
 * `countPerVertex` (Type: number)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3.
-* `stride` (Type: number)<br>The number of elements from the start of one per-vertex item to the start of the next.
+* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null or omitted, this value is the same as "countPerVertex".
 
 #### Return Value
 
@@ -233,7 +271,9 @@ This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 ### H3DU.MeshBuffer#transform(matrix)
 
 Transforms the positions and normals of all the vertices currently
-in this mesh. The matrix won't affect other attributes, including tangents and bitangents.
+in this mesh. Only values with the attribute semantic <code>POSITION_0</code>
+or <code>NORMAL_0</code> will be affected by this method; values of
+other attributes will be unaffected.
 
 #### Parameters
 

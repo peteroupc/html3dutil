@@ -15,7 +15,7 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 * [attribute](#H3DU.CurveBuilder_attribute)<br>TODO: Not documented yet.
 * [clearVertices](#H3DU.CurveBuilder_clearVertices)<br>TODO: Not documented yet.
 * [curveToBuffer](#H3DU.CurveBuilder.curveToBuffer)<br>TODO: Not documented yet.
-* [evalCurve](#H3DU.CurveBuilder_evalCurve)<br>TODO: Not documented yet.
+* [evalCurve](#H3DU.CurveBuilder_evalCurve)<br>Generates the vertex attributes of the parametric curves.
 * [position](#H3DU.CurveBuilder_position)<br>TODO: Not documented yet.
 * [toMeshBuffer](#H3DU.CurveBuilder_toMeshBuffer)<br>TODO: Not documented yet.
 
@@ -64,7 +64,7 @@ Return value. (Type: *)
 <a name='H3DU.CurveBuilder_evalCurve'></a>
 ### H3DU.CurveBuilder#evalCurve([mode], [n], [u1], [u2])
 
-TODO: Not documented yet.
+Generates the vertex attributes of the parametric curves.
 
 #### Parameters
 

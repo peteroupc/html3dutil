@@ -14,7 +14,7 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 
 * [attribute](#H3DU.SurfaceBuilder_attribute)<br>TODO: Not documented yet.
 * [clearVertices](#H3DU.SurfaceBuilder_clearVertices)<br>TODO: Not documented yet.
-* [evalSurface](#H3DU.SurfaceBuilder_evalSurface)<br>TODO: Not documented yet.
+* [evalSurface](#H3DU.SurfaceBuilder_evalSurface)<br>Generates the vertex attributes of the parametric surfaces.
 * [position](#H3DU.SurfaceBuilder_position)<br>TODO: Not documented yet.
 * [positionNormal](#H3DU.SurfaceBuilder_positionNormal)<br>TODO: Not documented yet.
 * [surfaceToBuffer](#H3DU.SurfaceBuilder.surfaceToBuffer)<br>Convenience method for creating a mesh buffer from a parametric
@@ -60,7 +60,7 @@ Return value. (Type: *)
 <a name='H3DU.SurfaceBuilder_evalSurface'></a>
 ### H3DU.SurfaceBuilder#evalSurface([mode], [un], [vn], [u1], [u2], [v1], [v2])
 
-TODO: Not documented yet.
+Generates the vertex attributes of the parametric surfaces.
 
 #### Parameters
 

@@ -61,12 +61,10 @@ This is an overview of most of the JavaScript classes available in this library:
 * [`H3DU.ShaderInfo`](https://peteroupc.github.io/html3dutil/H3DU.ShaderInfo.html) - Represents a GLSL shader program
 * [`H3DU.Shape`](https://peteroupc.github.io/html3dutil/H3DU.Shape.html) - Represents an instance of a 3D shape with its own transform and appearance
 * [`H3DU.ShapeGroup`](https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html) - Represents a group of 3D shapes
-* [`H3DU.BezierCurve`](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html),
- [`H3DU.BezierSurface`](https://peteroupc.github.io/html3dutil/H3DU.BezierSurface.html),
- [`H3DU.BSplineCurve`](https://peteroupc.github.io/html3dutil/H3DU.BSplineCurve.html),
+*  [`H3DU.BSplineCurve`](https://peteroupc.github.io/html3dutil/H3DU.BSplineCurve.html),
  [`H3DU.BSplineSurface`](https://peteroupc.github.io/html3dutil/H3DU.BSplineSurface.html),
- [`H3DU.CurveEval`](https://peteroupc.github.io/html3dutil/H3DU.CurveEval.html),
- [`H3DU.SurfaceEval`](https://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html) - Supports generating parametric curves and surfaces
+ [`H3DU.CurveBuilder`](https://peteroupc.github.io/html3dutil/H3DU.CurveBuilder.html),
+ [`H3DU.SurfaceBuilder`](https://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html) - Supports generating parametric curves and surfaces
 
 The following classes concern themselves with the HTML 3D canvas context:
 
