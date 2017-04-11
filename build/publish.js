@@ -166,7 +166,7 @@ HtmlWriter.prototype.bold = function(x) {
 };
 /** @ignore */
 HtmlWriter.prototype.header = function(title) {
-  return "<html><head><title>" + title + "</title></head><body>";
+  return "<!DOCTYPE html><html><head><meta charset=utf-8><title>" + title + "</title></head><body>";
 };
 /** @ignore */
 HtmlWriter.prototype.footer = function() {

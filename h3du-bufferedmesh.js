@@ -106,9 +106,9 @@ BufferedMesh.prototype._initialize = function(mesh, context) {
   if(typeof this.indices === "undefined" || this.indices === null)throw new Error("can't create face buffer");
   this.vao = this._createVertexArray(this.context);
   var attribs = smb._getAttributes();
+  var helper = new H3DU.BufferHelper();
   for(var i = 0; i < attribs.length; i++) {
-        // TODO: Move attribute access to BufferHelper
-    var vb = attribs[i][2];
+    var vb = helper.getBuffer(attribs[i]);
     if(vb) {
       if(!this.vertsMap.get(vb)) {
        // Vertex array not seen yet, create a buffer object

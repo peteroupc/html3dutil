@@ -1,10 +1,11 @@
-<html><head><title>H3DU.BSplineCurve</title></head><body><h1> H3DU.BSplineCurve</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.BSplineCurve'></a>
+<!DOCTYPE html><html><head><meta charset=utf-8><title>H3DU.BSplineCurve</title></head><body><h1> H3DU.BSplineCurve</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.BSplineCurve'></a>
 <h3> H3DU.BSplineCurve(controlPoints, knots, [bits])</h3><p><b>Augments:</b> <a href="H3DU.Curve.html">H3DU.Curve</a></p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
 A B-spline curve is a parametric curve based on polynomial functions.
 Each polynomial is generated using one or more
 <i>control points</i>, which more or less follow the path of the curve,
 and a <i>knot vector</i>, which determines, more or less, where each control
-point is spaced along the curve. This makes B-spline curves very powerful,
+point is spaced along the curve. Together with rational B-spline curves (see
+below), this makes B-spline curves very powerful,
 since they can describe nearly all curves commonly used in computer
 graphics, including line segments, circles, ellipses, parabolas, and
 irregular smooth curves.
@@ -20,8 +21,7 @@ first to the second control point, and the ending direction is the same as the
 direction from the next-to-last to last control point.<p>
 B&eacute;zier curves are a subset of B-spline curves
 (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).<p>
-Line segments (degree-1 curves with two control points) are
-subsets of B&eacute;zier curves.<p>
+Line segments are degree-1 B&eacute;zier curves with two control points.<p>
 A B&eacute;zier curve's knot vector consists of as many zeros as the number
 of control points, followed by that many ones. For example, a degree-3 (cubic)
 B&eacute;zier curve contains four control points and the following knot vector:
@@ -45,7 +45,7 @@ conventional coordinate by its weight, then append the weight as the control poi
 <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
 <p><b>Polynomial Basis</b></p>
 <p>Any kind of polynomial curve can be converted to a different kind
-of polynomial curve, with the same degree and describing the same path,
+of polynomial curve, having the same degree and describing the same path,
 by transforming its control points. For example, a Hermite curve (another
 kind of polynomial curve) can be converted to the equivalent
 B-spline curve this way, or vice versa.

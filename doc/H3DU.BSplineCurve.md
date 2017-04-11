@@ -12,7 +12,8 @@ A B-spline curve is a parametric curve based on polynomial functions.
 Each polynomial is generated using one or more
 <i>control points</i>, which more or less follow the path of the curve,
 and a <i>knot vector</i>, which determines, more or less, where each control
-point is spaced along the curve. This makes B-spline curves very powerful,
+point is spaced along the curve. Together with rational B-spline curves (see
+below), this makes B-spline curves very powerful,
 since they can describe nearly all curves commonly used in computer
 graphics, including line segments, circles, ellipses, parabolas, and
 irregular smooth curves.
@@ -32,8 +33,7 @@ direction from the next-to-last to last control point.
 B&eacute;zier curves are a subset of B-spline curves
 (see <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
 
-Line segments (degree-1 curves with two control points) are
-subsets of B&eacute;zier curves.
+Line segments are degree-1 B&eacute;zier curves with two control points.
 
 A B&eacute;zier curve's knot vector consists of as many zeros as the number
 of control points, followed by that many ones. For example, a degree-3 (cubic)
@@ -68,7 +68,7 @@ conventional coordinate by its weight, then append the weight as the control poi
 <b>Polynomial Basis</b>
 
 Any kind of polynomial curve can be converted to a different kind
-of polynomial curve, with the same degree and describing the same path,
+of polynomial curve, having the same degree and describing the same path,
 by transforming its control points. For example, a Hermite curve (another
 kind of polynomial curve) can be converted to the equivalent
 B-spline curve this way, or vice versa.

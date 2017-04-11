@@ -134,7 +134,7 @@ needed to draw text with this font.
 
 An array of meshes representing the text.
 There is one mesh for each texture page of the font. If none of the
-text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;Mesh>)
+text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;<a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>>)
 
 <a name='H3DU.TextFont_measure'></a>
 ### H3DU.TextFont#measure(str, params)

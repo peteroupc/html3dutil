@@ -44,7 +44,7 @@ Converts a mesh to JSON format.
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>A mesh object, as used in the Public Domain HTML 3D Library.
+* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a> | <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>A mesh object or mesh buffer object, as used in the Public Domain HTML 3D Library.
 
 #### Return Value
 

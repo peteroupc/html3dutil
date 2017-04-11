@@ -15,8 +15,8 @@ A <a href="H3DU.Curve.md">curve evaluator object</a> for a B&eacute;zier curve.
 #### Parameters
 
 * `cp` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points as specified in <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>.
-* `u1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation.)
-* `u2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation.)
+* `u1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the starting point for the purpose of interpolation.)
+* `u2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the ending point for the purpose of interpolation.)
 
 ### Methods
 

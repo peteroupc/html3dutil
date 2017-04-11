@@ -49,7 +49,7 @@ is used on each face of the box.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createCapsule'></a>
 ### (static) H3DU.Meshes.createCapsule([radius], [length], [slices], [stacks], [middleStacks], [flat], [inside])
@@ -81,7 +81,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createClosedCylinder'></a>
 ### (static) H3DU.Meshes.createClosedCylinder(baseRad, topRad, height, slices, stacks, [flat], [inside])
@@ -112,7 +112,16 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+
+#### Example
+
+The following method creates a cone that's closed at its base.
+<img src="mesh1.png">
+
+    function createClosedCone(radius,height,slices) {
+    return H3DU.Meshes.createClosedCylinder(radius,0,height,slices,1);
+    }
 
 <a name='H3DU.Meshes.createConvexHull'></a>
 ### (static) H3DU.Meshes.createConvexHull(points, [flat], [inside])
@@ -175,7 +184,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createDisk'></a>
 ### (static) H3DU.Meshes.createDisk(inner, outer, [slices], [loops], [inward])
@@ -197,7 +206,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createLathe'></a>
 ### (static) H3DU.Meshes.createLathe(points, [slices], [flat], [inside])
@@ -221,7 +230,7 @@ Y to positive X axis.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createPartialDisk'></a>
 ### (static) H3DU.Meshes.createPartialDisk(inner, outer, [slices], [loops], [start], [sweep], [inward])
@@ -242,7 +251,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createPlane'></a>
 ### (static) H3DU.Meshes.createPlane([width], [height], [widthDiv], [heightDiv], [inward])
@@ -264,7 +273,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createPointedStar'></a>
 ### (static) H3DU.Meshes.createPointedStar(points, firstRadius, secondRadius, [inward])
@@ -281,7 +290,7 @@ Will also generate texture coordinates.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createSphere'></a>
 ### (static) H3DU.Meshes.createSphere([radius], [slices], [stacks], [flat], [inside])
@@ -317,7 +326,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.Meshes.createTorus'></a>
 ### (static) H3DU.Meshes.createTorus(inner, outer, [lengthwise], [crosswise], [flat], [inward])
@@ -337,6 +346,6 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+The generated mesh. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 [Back to documentation index.](index.md)

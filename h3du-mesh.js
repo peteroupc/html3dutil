@@ -135,13 +135,8 @@ Mesh.prototype.mode = function(m) {
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.merge = function(other) {
-  // TODO: Remove examples using this method
   if(!(other instanceof H3DU.Mesh)) {
-    // TODO: Temporary code; should throw error
-    // instead when reverseWinding is implemented
-    // in MeshBuffer class
-    other = Mesh._fromMeshBuffer(other);
-    // throw new Error();
+    throw new Error();
   }
   if(!Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
     throw new Error("Meshes have incompatible types");
@@ -295,6 +290,7 @@ Mesh.prototype.vertex2 = function(x, y) {
   * Sets all the vertices in this mesh to the given color.
   * This method doesn't change this mesh's current color.
   * Only the color's red, green, and blue components will be used.
+  * @deprecated Use <code>new H3DU.MeshBuffer(this).setColor(r)</code> instead.
   * @param {Array<number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
   * or the red color component (0-1).
   * @param {number} g Green component of the color (0-1).
@@ -304,52 +300,30 @@ Mesh.prototype.vertex2 = function(x, y) {
   * @returns {H3DU.Mesh} This object.
   */
 Mesh.prototype.setColor3 = function(r, g, b) {
-  var rr = r;
-  var gg = g;
-  var bb = b;
+  var offset = Mesh._colorOffset(
+     this.attributeBits);
+  if(offset < 0)return this;
   if(typeof r === "string") {
-    var c = H3DU.toGLColor(r);
-    rr = c[0];
-    gg = c[1];
-    bb = c[2];
+    return this._carryOver(
+      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).setColor(r), null));
+  } else {
+    return this._carryOver(
+      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).setColor([r, g, b]), null));
   }
-  this._rebuildVertices(Mesh.COLORS_BIT);
-  var stride = this.getStride();
-  var colorOffset = Mesh._colorOffset(this.attributeBits);
-  for(var i = colorOffset; i < this.vertices.length; i += stride) {
-    this.vertices[i] = rr;
-    this.vertices[i + 1] = gg;
-    this.vertices[i + 2] = bb;
-  }
-  return this;
 };
 
 /**
  * Modifies this mesh by converting the normals it defines
  * to ["unit vectors"]{@link glmath} ("normalized" vectors with a length of 1).
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.normalizeNormals = function() {
-  // TODO: Reimplement this method in MeshBuffer
-  var i;
-  var stride = this.getStride();
-  var vertices = this.vertices;
   var normalOffset = Mesh._normalOffset(
      this.attributeBits);
-  if(normalOffset < 0)return this;
-  for(i = 0; i < vertices.length; i += stride) {
-    var x = vertices[i + normalOffset];
-    var y = vertices[i + normalOffset + 1];
-    var z = vertices[i + normalOffset + 2];
-    var len = Math.sqrt(x * x + y * y + z * z);
-    if(len !== 0) {
-      len = 1.0 / len;
-      vertices[i + normalOffset] *= len;
-      vertices[i + normalOffset + 1] *= len;
-      vertices[i + normalOffset + 2] *= len;
-    }
-  }
-  return this;
+  if(normalOffset < 0) return this;
+  return this._carryOver(
+   Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).normalizeNormals(), null));
 };
 
 /**
@@ -875,6 +849,32 @@ Mesh._getValue = function(helper, attr, attrIndex, value) {
   return false;
 };
 /** @ignore */
+Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
+  var helper = new H3DU.BufferHelper();
+  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
+  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
+  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
+  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
+  var scratch = [];
+  var c = srcMesh.color.slice(0, 3);
+  var n = srcMesh.normal.slice(0, 3);
+  var t = srcMesh.texCoord.slice(0, 2);
+  if(Mesh._getValue(helper, normalAttr, 0, scratch)) {
+    srcMesh.normal3(scratch);
+  }
+  if(Mesh._getValue(helper, colorAttr, 0, scratch)) {
+    srcMesh.color3(scratch);
+  }
+  if(Mesh._getValue(helper, uvAttr, 0, scratch)) {
+    srcMesh.texCoord2(scratch);
+  }
+  if(Mesh._getValue(helper, posAttr, 0, scratch)) {
+    srcMesh.vertex3(scratch);
+  }
+  srcMesh.color3(c).normal3(n).texCoord2(t);
+};
+
+/** @ignore */
 Mesh._fromMeshBuffer = function(meshBuffer, srcMesh) {
   var helper = new H3DU.BufferHelper();
   var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
@@ -946,6 +946,7 @@ Mesh.prototype.reverseNormals = function() {
 /**
  * Reverses the winding order of the triangles in this mesh
  * by swapping the second and third vertex indices of each one.
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseWinding()</code> instead.
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.reverseWinding = function() {

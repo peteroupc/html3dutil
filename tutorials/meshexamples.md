@@ -3,7 +3,7 @@ This page contains source code for creating various kinds of 3D models on the fl
 <a id=Contents></a>
 ## Contents
 
-[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Cone](#Cone)<br>[Floor](#Floor)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>[Miscellaneous](#Miscellaneous)<br>
+[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Floor](#Floor)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>[Miscellaneous](#Miscellaneous)<br>
 
 ## 3D Line
 
@@ -23,17 +23,6 @@ This method creates a thin line-like 3D object.
       matrix[13]=midPoint[1]
       matrix[14]=midPoint[2]
       return line.transform(matrix);
-    }
-
-<a id=Cone></a>
-## Cone
-
-This method creates a cone that's closed at its base.
-
-![Image of a cone](mesh1.png)
-
-    function createClosedCone(radius,height,slices){
-      return H3DU.Meshes.createClosedCylinder(radius,0,height,slices,1);
     }
 
 <a id=Floor></a>
@@ -71,7 +60,7 @@ This method creates a flat tiled floor.
          .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
       }
      }
-     return mesh
+     return new H3DU.MeshBuffer(mesh)
     }
 
 <a id=Striped_Disk></a>
@@ -89,7 +78,7 @@ This method creates a ring or disk striped in two colors.
     function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
      if(sectionCount==null)sectionCount=4
      var firstColor=true
-     var ret=new H3DU.Mesh()
+     var ret=new H3DU.MeshBuffer()
      var sweep=360.0/sections;
      for(var i=0;i<sections;i++){
       var angle=360.0*(i*1.0/sections);
@@ -133,7 +122,7 @@ This method creates a washer-shaped 3D model.
        .vertex3(tri[2],tri[3],z)
        .vertex3(tri[4],tri[5],z)
      }
-     return mesh
+     return new H3DU.MeshBuffer(mesh)
     }
 
     function setBoxSizeAndBounds(shape,box){

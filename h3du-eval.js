@@ -71,10 +71,10 @@ CurveEval.prototype.texCoord = function(evaluator) {
  * @param {number} u Point of the curve to evaluate.
  * @returns {H3DU.CurveEval} This object.
  */
-CurveEval.prototype.evalOne = function() {
-  // TODO
-  throw new Error();
- // return this;
+CurveEval.prototype.evalOne = function(mesh, u) {
+  this.builder.clearVertices().evalCurve(H3DU.Mesh.POINTS, 1, u, u);
+  H3DU.Mesh._fromMeshBufferOne(this.builder.toMeshBuffer(), mesh);
+  return this;
 };
 
 /**
@@ -99,7 +99,7 @@ CurveEval.prototype.evalCurve = function(mesh, mode, n, u1, u2) {
   if(!mesh)throw new Error();
   var c = mesh.color.slice(0, 3);
   var nm = mesh.normal.slice(0, 3);
-  var tc = mesh.texCoord.slice(0, 3);
+  var tc = mesh.texCoord.slice(0, 2);
   this.builder.clearVertices().evalCurve(mode, n, u1, u2);
   H3DU.Mesh._fromMeshBuffer(this.builder.toMeshBuffer(), mesh);
   mesh.color3(c).normal3(nm).texCoord2(tc);
@@ -129,7 +129,6 @@ function SurfaceEval() {
  * @returns {H3DU.SurfaceEval} This object.
  */
 SurfaceEval.prototype.setAutoNormal = function(value) {
-     // TODO: Provide a different mechanism for choosing which attributes to generate
   this.autoNormal = !!value;
   return this;
 };
@@ -160,7 +159,7 @@ SurfaceEval.prototype.normal = function(evaluator) {
  * @returns {H3DU.SurfaceEval} This object.
  */
 SurfaceEval.prototype.color = function(evaluator) {
-  this.builder.attribute(evaluator, H3DU.Semantic.COLOR);
+  this.builder.attribute(evaluator, H3DU.Semantic.COLOR, 0, 3);
   return this;
 };
 /**
@@ -170,7 +169,7 @@ SurfaceEval.prototype.color = function(evaluator) {
  * @returns {H3DU.SurfaceEval} This object.
  */
 SurfaceEval.prototype.texCoord = function(evaluator) {
-  this.builder.attribute(evaluator, H3DU.Semantic.TEXCOORD);
+  this.builder.attribute(evaluator, H3DU.Semantic.TEXCOORD, 0, 2);
   return this;
 };
 /**
@@ -184,10 +183,10 @@ SurfaceEval.prototype.texCoord = function(evaluator) {
  * @param {number} v V coordinate of the surface to evaluate.
  * @returns {H3DU.SurfaceEval} This object.
  */
-SurfaceEval.prototype.evalOne = function() {
-  // TODO
-  throw new Error();
- // return this;
+SurfaceEval.prototype.evalOne = function(mesh, u, v) {
+  this.builder.clearVertices().evalCurve(H3DU.Mesh.POINTS, 1, 1, u, u, v, v);
+  H3DU.Mesh._fromMeshBufferOne(this.builder.toMeshBuffer(), mesh);
+  return this;
 };
 
 /**
@@ -226,7 +225,7 @@ SurfaceEval.prototype.evalSurface = function(mesh, mode, un, vn, u1, u2, v1, v2)
   }
   var c = mesh.color.slice(0, 3);
   var nm = mesh.normal.slice(0, 3);
-  var tc = mesh.texCoord.slice(0, 3);
+  var tc = mesh.texCoord.slice(0, 2);
   this.builder.clearVertices().evalSurface(mode, un, vn, u1, u2, v1, v2);
   H3DU.Mesh._fromMeshBuffer(this.builder.toMeshBuffer(), mesh);
   mesh.color3(c).normal3(nm).texCoord2(tc);

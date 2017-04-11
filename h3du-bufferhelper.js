@@ -1,4 +1,4 @@
-/* global ArrayBuffer, Float32Array, Uint16Array, Uint32Array */
+/* global ArrayBuffer, Float32Array, H3DU, Uint16Array, Uint32Array */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -9,15 +9,38 @@
 */
 
 /**
- * A helper class for accessing and setting data in buffer attributes.<p>
- * A vertex attribute is made up of <i>values</i>, one for each vertex, each of which
- * is made up of one or more <i>elements</i>, which are numbers such as X coordinates
- * or red components. Each value has the same number of elements.
+ * A helper class for accessing and setting data in vertex attributes.<p>
+ * A vertex attribute holds a <i>buffer</i> of arbitrary size.<p>
+ * A vertex attribute object includes the following:<ul>
+ * <li>A semantic, such as {@link H3DU.Semantic.POSITION}, which describes
+ * the kind of data each value holds.
+ * <li>A semantic index, which distinguishes attributes with the same semantic
+ * in the same mesh buffer object.
+ * <li>A <i>buffer</i> of arbitrary size. This buffer
+ * is made up of <i>values</i>, one for each vertex, and each value
+ * is made up of one or more <i>elements</i>, which are numbers such
+ * as X coordinates or red components, depending on the attribute's semantic.
+ * Each value has the same number of elements.
+ * <li>An offset, which identifies the index, starting from 0, of the first value
+ * of the attribute within the given buffer.
+ * <li>A count of the number of elements each value has. For example, 3-dimensional
+ * positions will have 3 elements, one for each coordinate.
+ * <li>A stride, which gives the number of elements from the start of one
+ * value to the start of the next.  A "packed" buffer will have a stride
+ * equal to the number of elements per value.</ul>
  * @constructor
  * @memberof H3DU
  */
 export var BufferHelper = function() {
  // Has no properties to initialize.
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} a
+ * @returns {*} Return value.
+ */
+BufferHelper.prototype.getBuffer = function(a) {
+  return typeof a === "undefined" || a === null ? null : a[2];
 };
 /**
  * Gets the number of values defined for a vertex attribute.
@@ -33,27 +56,37 @@ BufferHelper.prototype.count = function(a) {
  * Gets the number of elements (numbers) that each value of a vertex attribute uses.
  * @param {Array<Object>} a An object describing information about a vertex attribute.
  * Can be null.
- * @returns {number} The number of elements per value of the vertex attribute, or 0 if "a" is null.
+ * @returns {number} The number of elements per value of the vertex attribute, or 0 if "a" is null,
+ * undefined, or omitted.
  */
 BufferHelper.prototype.countPerValue = function(a) {
-  return a === null ? 0 : a[3] * 1.0;
+  return typeof a === "undefined" || a === null ? 0 : a[3] * 1.0;
 };
 /**
  * Creates an object describing information about a vertex attribute.
  * Each value in the attribute will be initialized to all zeros.
- * @param {number} name An attribute semantic, such
- * as {@link H3DU.Semantic.POSITION}.
- * @param {number} index The set index of the attribute
+ * @param {number|String} semantic An attribute semantic, such
+ * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
+ * Throws an error if this value is a string and the string is invalid.
+ * @param {number} semanticIndex The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
+ * This is ignored if "semantic" is a string.
  * @param {number} count Number of values. Each value describes the attribute's value
  * for the corresponding vertex.
  * @param {number} countPerValue Number of elements (numbers) for each value.
  * @returns {Array<Object>} A new vertex attribute with blank values.
  */
 BufferHelper.prototype.makeBlank = function(semantic, index, count, countPerValue) {
-  var els = new Float32Array(new ArrayBuffer(count * countPerValue * 4));
-  return [semantic, 0, els, countPerValue, countPerValue, index];
+  if(typeof semantic === "number") {
+    var els = new Float32Array(new ArrayBuffer(count * countPerValue * 4));
+    return [semantic, index, els, countPerValue, countPerValue, index];
+  } else {
+    var sem = this.resolveSemantic(semantic, index);
+    if(typeof sem === "undefined" || sem === null)throw new Error();
+    els = new Float32Array(new ArrayBuffer(count * countPerValue * 4));
+    return [sem[0], sem[1], els, countPerValue, countPerValue, index];
+  }
 };
 /**
  * Generates an array of increasing vertex indices
@@ -97,10 +130,9 @@ BufferHelper.prototype.mergeBlank = function(attr, indices1, indices2, attrIsSec
   return newAttribute;
 };
 /**
- * TODO: Not documented yet.
+ * Copies the values of a vertex attribute into a new vertex attribute object.
  * @param {Array<Object>} attr An object describing information about a vertex attribute.
- * @returns {Array<Object>} A copy of the attribute. Returns null if the two objects have different semantics
- * or semantic indices.
+ * @returns {Array<Object>} A copy of the vertex attribute object.
  */
 BufferHelper.prototype.copy = function(attr) {
   var c = this.count(attr);
@@ -277,7 +309,9 @@ BufferHelper.prototype.setElement = function(a, index, element, value) {
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
- * @param {*} vec
+ * @param {Array<number>} vec An array whose elements will be set to those
+ * of the value at the given index. The number of elements copied to this
+ * array is the attribute's count per value (see {@link H3DU.BufferHelper.countPerValue}).
  * @returns {Array<number>} The parameter "vec".
  */
 BufferHelper.prototype.getVec = function(a, index, vec) {
@@ -294,14 +328,70 @@ BufferHelper.prototype.getVec = function(a, index, vec) {
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
- * @param {*} vec
+ * @param {Array<number>} vec An array containing the elements
+ * to copy to the value at the given index. The number of elements copied is this
+ * array's length or the attribute's count per value (see {@link H3DU.BufferHelper.countPerValue}),
+ * whichever is less.
  * @returns {BufferHelper} This object.
  */
 BufferHelper.prototype.setVec = function(a, index, vec) {
   var o = a[1] + index * a[4];
   var buffer = a[2];
-  for(var i = 0; i < a[3]; i++) {
+  var alen = Math.min(vec.length, a[3]);
+  for(var i = 0; i < alen; i++) {
     buffer[o + i] = vec[i];
   }
   return this;
+};
+/**
+ * TODO: Not documented yet.
+ * @param {number|String} name An attribute semantic, such
+ * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
+ * Throws an error if this value is a string and the string is invalid.
+ * @param {number} index The set index of the attribute
+ * for the given semantic.
+ * 0 is the first index of the attribute, 1 is the second, and so on.
+ * This is ignored if "name" is a string.
+ * @returns {Array<number>} A two-element array consisting
+ * of the semantic and semantic index, respectively, described in
+ * the "name" and "index" parameters.  Returns null if "name" is a string,
+ * but doesn't describe a valid semantic.
+ */
+BufferHelper.prototype.resolveSemantic = function(name, index) {
+  if(typeof name === "number") {
+    return [name, index | 0];
+  } else {
+    var wka = BufferHelper._wellKnownAttributes[name];
+    if(typeof wka === "undefined" || wka === null) {
+      var io = name.indexOf(name);
+      if(io < 0) {
+        return null;
+      }
+      wka = H3DU.MeshBuffer._wellKnownAttributes[name.substr(0, io)];
+      if(typeof wka === "undefined" || wka === null) {
+        return null;
+      }
+      var number = name.substr(io + 1);
+      if(number.length <= 5 && (/^\d$/).test(number)) {
+  // Only allow 5-digit-or-less numbers; more than
+        // that is unreasonable
+        return new Uint32Array([wka, parseInt(number, 10)]);
+      } else {
+        return null;
+      }
+    } else {
+      return new Uint32Array([wka, 0]);
+    }
+  }
+};
+
+BufferHelper._wellKnownAttributes = {
+  "POSITION":0,
+  "TEXCOORD":2,
+  "TEXCOORD_0":2,
+  "NORMAL":1,
+  "JOINT":4,
+  "WEIGHT":5,
+  "TANGENT":6,
+  "BITANGENT":7
 };

@@ -9,6 +9,7 @@
 /* global Float32Array, H3DU, Uint16Array, Uint32Array, Uint8Array */
 
 import {BufferHelper} from "./h3du-bufferhelper.js";
+import {_MathInternal} from "./h3du-mathinternal.js";
 
 /**
  * A geometric mesh in the form of buffer objects.
@@ -24,6 +25,7 @@ import {BufferHelper} from "./h3du-bufferhelper.js";
  */
 export var MeshBuffer = function(mesh) {
   if(typeof mesh !== "undefined" && mesh !== null) {
+    if(!(mesh instanceof H3DU.Mesh))throw new Error();
     var vertices = new Float32Array(mesh.vertices);
     if(mesh.vertices.length >= 65536 || mesh.indices.length >= 65536) {
       this.indices = new Uint32Array(mesh.indices);
@@ -110,8 +112,9 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * existing attribute's information). An attribute
  * gives information about the per-vertex data used and
  * stored in a vertex buffer.
- * @param {number|string} name An attribute semantic, such
+ * @param {number|String} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
+ * Throws an error if this value is a string and the string is invalid.
  * @param {number} index The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
@@ -139,7 +142,8 @@ MeshBuffer.prototype.setAttribute = function(
   var semanticIndex = 0;
   var semantic = 0;
   var strideValue = typeof stride === "undefined" || stride === null ? countPerVertex : stride;
-  var sem = H3DU.MeshBuffer._resolveSemantic(name, index);
+  var helper = new BufferHelper();
+  var sem = helper.resolveSemantic(name, index);
   if(typeof sem === "undefined" || sem === null) {
     console.warn("Unsupported attribute semantic: " + name);
     return this;
@@ -160,34 +164,6 @@ MeshBuffer.prototype.setAttribute = function(
   }
   return this;
 };
-/** @ignore */
-MeshBuffer._resolveSemantic = function(name, index) {
-  if(typeof name === "number") {
-    return [name, index | 0];
-  } else {
-    var wka = H3DU.MeshBuffer._wellKnownAttributes[name];
-    if(typeof wka === "undefined" || wka === null) {
-      var io = name.indexOf(name);
-      if(io < 0) {
-        return null;
-      }
-      wka = H3DU.MeshBuffer._wellKnownAttributes[name.substr(0, io)];
-      if(typeof wka === "undefined" || wka === null) {
-        return null;
-      }
-      var number = name.substr(io + 1);
-      if(number.length <= 5 && (/^\d$/).test(number)) {
-  // Only allow 5-digit-or-less numbers; more than
-        // that is unreasonable
-        return new Uint32Array([wka, parseInt(number, 10)]);
-      } else {
-        return null;
-      }
-    } else {
-      return new Uint32Array([wka, 0]);
-    }
-  }
-};
 
 /** @ignore */
 MeshBuffer.prototype._getAttributes = function() {
@@ -195,14 +171,15 @@ MeshBuffer.prototype._getAttributes = function() {
 };
 /**
  * Gets a vertex attribute included in this mesh buffer.
- * @param {number|string} name An attribute semantic, such
+ * @param {number|String} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
- * @param {number} [semanticIndex] The set index of the attribute
+ * Throws an error if this value is a string and the string is invalid.
+ * @param {number} semanticIndex The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
- * This is ignored if "name" is a string. Otherwise, if null or omitted, te default value is 0.
- * @returns {Array<Object>} An object describing the vertex attribute, or null
- * of the attribute doesn't exist.
+ * This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
+ * @returns {Array<Object>} A [vertex attribute object]{@link H3DU.BufferHelper}, or null
+ * if the attribute doesn't exist.
  */
 MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
   var idx = typeof semanticIndex === "undefined" || semanticIndex === null ? 0 : semanticIndex;
@@ -278,6 +255,33 @@ MeshBuffer.prototype.getPositions = function() {
   }
   return ret;
 };
+
+/**
+ * Modifies this mesh buffer by converting the normals it defines to [unit vectors]{@tutorial glmath}
+ * ("normalized" vectors with a length of 1).
+ * Has no effect if this mesh buffer doesn't define any normals.
+ * All attributes with the semantic <code>NORMAL</code>,
+ * regardless of semantic index, are affected.
+ * @returns {H3DU.MeshBuffer} This object.
+ */
+MeshBuffer.prototype.normalizeNormals = function() {
+  var helper = new H3DU.BufferHelper();
+  for(var i = 0; i < this.attributes.length; i++) {
+    var attr = this.attributes[i];
+    if(attr[0] !== H3DU.Semantic.NORMAL) {
+      continue;
+    }
+    var value = [];
+    var count = helper.count(attr);
+    for(var j = 0; j < count; j++) {
+      helper.getVec(attr, j, value);
+      _MathInternal.vecNormalizeInPlace(value);
+      helper.setVec(attr, j, value);
+    }
+  }
+  return this;
+};
+
 /**
  * Modifies this mesh buffer by reversing the sign of normals it defines.
  * Has no effect if this mesh buffer doesn't define any normals.
@@ -299,7 +303,8 @@ MeshBuffer.prototype.reverseNormals = function() {
   var helper = new H3DU.BufferHelper();
   for(var i = 0; i < this.attributes.length; i++) {
     var attr = this.attributes[i];
-    if(attr[1] !== H3DU.Semantic.NORMAL) {
+    // TODO: Use BufferHelper
+    if(attr[0] !== H3DU.Semantic.NORMAL) {
       continue;
     }
     var value = [];
@@ -314,6 +319,36 @@ MeshBuffer.prototype.reverseNormals = function() {
   }
   return this;
 };
+/**
+ * TODO: Not documented yet.
+ * @param {*} color
+ * @returns {*} Return value.
+ */
+MeshBuffer.prototype.setColor = function(color) {
+  var helper = new H3DU.BufferHelper();
+  var colorValue = H3DU.toGLColor(color);
+  var haveColor = false;
+  var maxcount = 0;
+  for(var i = 0; i < this.attributes.length; i++) {
+    var attr = this.attributes[i];
+    var count = helper.count(attr);
+    maxcount = Math.max(count, maxcount);
+    // TODO: Use BufferHelper
+    if(attr[0] !== H3DU.Semantic.COLOR) {
+      continue;
+    }
+    haveColor = true;
+    for(var j = 0; j < count; j++) {
+      helper.setVec(attr, j, colorValue);
+    }
+  }
+  if(!haveColor) {
+    this._threeEl(helper, H3DU.Semantic.COLOR, maxcount);
+    return this.setColor(colorValue);
+  }
+  return this;
+};
+
 /**
  * Reverses the winding order of the triangles in this mesh buffer
  * by swapping the second and third vertex indices of each one.
@@ -799,17 +834,6 @@ MeshBuffer.prototype.getBounds = function() {
 MeshBuffer.prototype.primitiveType = function() {
   return this.format;
 };
-MeshBuffer._wellKnownAttributes = {
-  "POSITION":0,
-  "TEXCOORD":2,
-  "TEXCOORD_0":2,
-  "NORMAL":1,
-  "JOINT":4,
-  "WEIGHT":5,
-  "TANGENT":6,
-  "BITANGENT":7
-};
-
 /**
  * Gets the number of vertices in this mesh buffer, that
  * is, the number of vertex indices in its index buffer (some of which

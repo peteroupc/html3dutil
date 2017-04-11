@@ -24,6 +24,8 @@ bounding box that holds all vertices in the mesh buffer.
 * [getPositions](#H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive.
 * [merge](#H3DU.MeshBuffer_merge)<br>Merges the vertices from another mesh into this one.
+* [normalizeNormals](#H3DU.MeshBuffer_normalizeNormals)<br>Modifies this mesh buffer by converting the normals it defines to <a href="tutorial-glmath.md">unit vectors</a>
+("normalized" vectors with a length of 1).
 * [primitiveCount](#H3DU.MeshBuffer_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.
 * [primitiveType](#H3DU.MeshBuffer_primitiveType)<br>Gets the type of primitive stored in this mesh buffer.
@@ -35,6 +37,7 @@ by swapping the second and third vertex indices of each one.
 * [setAttribute](#H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
+* [setColor](#H3DU.MeshBuffer_setColor)<br>TODO: Not documented yet.
 * [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the vertex indices used by this mesh buffer.
 * [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
 * [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
@@ -46,19 +49,19 @@ may be duplicates).
 or point) in this mesh buffer.
 
 <a name='H3DU.MeshBuffer_getAttribute'></a>
-### H3DU.MeshBuffer#getAttribute(name, [semanticIndex])
+### H3DU.MeshBuffer#getAttribute(name, semanticIndex)
 
 Gets a vertex attribute included in this mesh buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
-* `semanticIndex` (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, te default value is 0.
+* `name` (Type: number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `semanticIndex` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
 
 #### Return Value
 
-An object describing the vertex attribute, or null
-of the attribute doesn't exist. (Type: Array.&lt;Object>)
+A <a href="H3DU.BufferHelper.md">vertex attribute object</a>, or null
+if the attribute doesn't exist. (Type: Array.&lt;Object>)
 
 <a name='H3DU.MeshBuffer_getBounds'></a>
 ### H3DU.MeshBuffer#getBounds()
@@ -122,6 +125,19 @@ This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 #### Example
 
     var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
+
+<a name='H3DU.MeshBuffer_normalizeNormals'></a>
+### H3DU.MeshBuffer#normalizeNormals()
+
+Modifies this mesh buffer by converting the normals it defines to <a href="tutorial-glmath.md">unit vectors</a>
+("normalized" vectors with a length of 1).
+Has no effect if this mesh buffer doesn't define any normals.
+All attributes with the semantic <code>NORMAL</code>,
+regardless of semantic index, are affected.
+
+#### Return Value
+
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.MeshBuffer_primitiveCount'></a>
 ### H3DU.MeshBuffer#primitiveCount()
@@ -229,7 +245,7 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0".
+* `name` (Type: number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
 * `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.
 * `startIndex` (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.
@@ -240,6 +256,19 @@ stored in a vertex buffer.
 
 This object.Throws an error if the given
 semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+
+<a name='H3DU.MeshBuffer_setColor'></a>
+### H3DU.MeshBuffer#setColor(color)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `color` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 <a name='H3DU.MeshBuffer_setIndices'></a>
 ### H3DU.MeshBuffer#setIndices(indices)

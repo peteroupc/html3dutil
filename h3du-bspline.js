@@ -70,7 +70,8 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * Each polynomial is generated using one or more
  * <i>control points</i>, which more or less follow the path of the curve,
  * and a <i>knot vector</i>, which determines, more or less, where each control
- * point is spaced along the curve. This makes B-spline curves very powerful,
+ * point is spaced along the curve. Together with rational B-spline curves (see
+ * below), this makes B-spline curves very powerful,
  * since they can describe nearly all curves commonly used in computer
  * graphics, including line segments, circles, ellipses, parabolas, and
  * irregular smooth curves.
@@ -86,8 +87,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * direction from the next-to-last to last control point.<p>
  * B&eacute;zier curves are a subset of B-spline curves
  * (see {@link H3DU.BSplineCurve.fromBezierCurve}).<p>
- * Line segments (degree-1 curves with two control points) are
- * subsets of B&eacute;zier curves.<p>
+ * Line segments are degree-1 B&eacute;zier curves with two control points.<p>
  * A B&eacute;zier curve's knot vector consists of as many zeros as the number
  * of control points, followed by that many ones. For example, a degree-3 (cubic)
  * B&eacute;zier curve contains four control points and the following knot vector:
@@ -111,7 +111,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
  * <p><b>Polynomial Basis</b></p>
  * <p>Any kind of polynomial curve can be converted to a different kind
- * of polynomial curve, with the same degree and describing the same path,
+ * of polynomial curve, having the same degree and describing the same path,
  * by transforming its control points. For example, a Hermite curve (another
  * kind of polynomial curve) can be converted to the equivalent
  * B-spline curve this way, or vice versa.
@@ -1143,10 +1143,10 @@ BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
  * @memberof H3DU
  * @param {Array<Array<number>>} cp An array of control points as specified in {@link H3DU.BSplineCurve.fromBezierCurve}.
  * @param {number} [u1] No longer used since version 2.0. The starting and ending
- * points will be (0, 0). (This parameter was the starting point for the
+ * points will be (0, 1). (This parameter was the starting point for the
  * purpose of interpolation.)
  * @param {number} [u2] No longer used since version 2.0. The starting and ending
- * points will be (0, 0). (This parameter was the ending point for the
+ * points will be (0, 1). (This parameter was the ending point for the
  * purpose of interpolation.)
  */
 function BezierCurve(cp, u1, u2) {
@@ -1191,16 +1191,16 @@ BezierCurve.prototype.evaluate = function(u) {
  * @param {Array<Array<Array<number>>>} cp An array of control point
  * arrays as specified in {@link H3DU.BSplineSurface.fromBezierSurface}.
  * @param {number} [u1] No longer used since version 2.0. The starting and ending
- * points will be (0, 0). (This parameter was the starting point for the
+ * points will be (0, 1). (This parameter was the starting point for the
  * purpose of interpolation along the U axis.)
  * @param {number} [u2] No longer used since version 2.0. The starting and ending
- * points will be (0, 0). (This parameter was the ending point for the
+ * points will be (0, 1). (This parameter was the ending point for the
  * purpose of interpolation along the U axis.)
  * @param {number} [v1] No longer used since version 2.0. The starting and ending
- * points will be (0, 0). (This parameter was the starting point for the
+ * points will be (0, 1). (This parameter was the starting point for the
  * purpose of interpolation along the V axis.)
  * @param {number} [v2] No longer used since version 2.0. The starting and ending
- * points will be (0, 0). (This parameter was the ending point for the
+ * points will be (0, 1). (This parameter was the ending point for the
  * purpose of interpolation along the V axis.)
  */
 function BezierSurface(cp, u1, u2, v1, v2) {

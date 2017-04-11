@@ -90,8 +90,7 @@ index in this mesh.
 * [merge](#H3DU.Mesh_merge)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(mesh).merge(other)</code> instead.</b>
 * [mode](#H3DU.Mesh_mode)<br>Changes the primitive mode for this mesh.
 * [normal3](#H3DU.Mesh_normal3)<br>Sets the current normal for this mesh.
-* [normalizeNormals](#H3DU.Mesh_normalizeNormals)<br>Modifies this mesh by converting the normals it defines
-to "unit vectors" ("normalized" vectors with a length of 1).
+* [normalizeNormals](#H3DU.Mesh_normalizeNormals)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.</b>
 * [primitiveCount](#H3DU.Mesh_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.
 * [recalcNormals](#H3DU.Mesh_recalcNormals)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.</b>
@@ -99,9 +98,8 @@ or points) that this mesh contains.
 uses tangent and bitangent attributes for normal mapping. This method
 may be reimplemented in the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class in the future.</b>
 * [reverseNormals](#H3DU.Mesh_reverseNormals)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.</b>
-* [reverseWinding](#H3DU.Mesh_reverseWinding)<br>Reverses the winding order of the triangles in this mesh
-by swapping the second and third vertex indices of each one.
-* [setColor3](#H3DU.Mesh_setColor3)<br>Sets all the vertices in this mesh to the given color.
+* [reverseWinding](#H3DU.Mesh_reverseWinding)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseWinding()</code> instead.</b>
+* [setColor3](#H3DU.Mesh_setColor3)<br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).setColor(r)</code> instead.</b>
 * [setVertex](#H3DU.Mesh_setVertex)<br>Sets the X, Y, and Z coordinates of the vertex with the
 given index.
 * [setVertexNormal](#H3DU.Mesh_setVertexNormal)<br>Sets the normal associated with the vertex with the
@@ -438,6 +436,8 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 <a name='H3DU.Mesh_normalizeNormals'></a>
 ### H3DU.Mesh#normalizeNormals()
 
+<b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.</b>
+
 Modifies this mesh by converting the normals it defines
 to "unit vectors" ("normalized" vectors with a length of 1).
 
@@ -508,6 +508,8 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 <a name='H3DU.Mesh_reverseWinding'></a>
 ### H3DU.Mesh#reverseWinding()
 
+<b>Deprecated: Use <code>new H3DU.MeshBuffer(this).reverseWinding()</code> instead.</b>
+
 Reverses the winding order of the triangles in this mesh
 by swapping the second and third vertex indices of each one.
 
@@ -517,6 +519,8 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 <a name='H3DU.Mesh_setColor3'></a>
 ### H3DU.Mesh#setColor3(r, g, b)
+
+<b>Deprecated: Use <code>new H3DU.MeshBuffer(this).setColor(r)</code> instead.</b>
 
 Sets all the vertices in this mesh to the given color.
 This method doesn't change this mesh's current color.

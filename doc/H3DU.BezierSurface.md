@@ -15,10 +15,10 @@ A <a href="H3DU.Surface.md">surface evaluator object</a> for a B&eacute;zier sur
 #### Parameters
 
 * `cp` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays as specified in <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>.
-* `u1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation along the U axis.)
-* `u2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation along the U axis.)
-* `v1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation along the V axis.)
-* `v2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation along the V axis.)
+* `u1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the starting point for the purpose of interpolation along the U axis.)
+* `u2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the ending point for the purpose of interpolation along the U axis.)
+* `v1` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the starting point for the purpose of interpolation along the V axis.)
+* `v2` (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the ending point for the purpose of interpolation along the V axis.)
 
 ### Methods
 

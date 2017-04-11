@@ -5,18 +5,35 @@
 <a name='H3DU.BufferHelper'></a>
 ### H3DU.BufferHelper()
 
-A helper class for accessing and setting data in buffer attributes.
+A helper class for accessing and setting data in vertex attributes.
 
-A vertex attribute is made up of <i>values</i>, one for each vertex, each of which
-is made up of one or more <i>elements</i>, which are numbers such as X coordinates
-or red components. Each value has the same number of elements.
+A vertex attribute holds a <i>buffer</i> of arbitrary size.
+
+A vertex attribute object includes the following:<ul>
+<li>A semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, which describes
+the kind of data each value holds.
+<li>A semantic index, which distinguishes attributes with the same semantic
+in the same mesh buffer object.
+<li>A <i>buffer</i> of arbitrary size. This buffer
+is made up of <i>values</i>, one for each vertex, and each value
+is made up of one or more <i>elements</i>, which are numbers such
+as X coordinates or red components, depending on the attribute's semantic.
+Each value has the same number of elements.
+<li>An offset, which identifies the index, starting from 0, of the first value
+of the attribute within the given buffer.
+<li>A count of the number of elements each value has. For example, 3-dimensional
+positions will have 3 elements, one for each coordinate.
+<li>A stride, which gives the number of elements from the start of one
+value to the start of the next. A "packed" buffer will have a stride
+equal to the number of elements per value.</ul>
 
 ### Methods
 
-* [copy](#H3DU.BufferHelper_copy)<br>TODO: Not documented yet.
+* [copy](#H3DU.BufferHelper_copy)<br>Copies the values of a vertex attribute into a new vertex attribute object.
 * [count](#H3DU.BufferHelper_count)<br>Gets the number of values defined for a vertex attribute.
 * [countPerValue](#H3DU.BufferHelper_countPerValue)<br>Gets the number of elements (numbers) that each value of a vertex attribute uses.
 * [get](#H3DU.BufferHelper_get)<br>Gets the first element of the attribute value with the given vertex index.
+* [getBuffer](#H3DU.BufferHelper_getBuffer)<br>TODO: Not documented yet.
 * [getElement](#H3DU.BufferHelper_getElement)<br>TODO: Not documented yet.
 * [getVec](#H3DU.BufferHelper_getVec)<br>Gets the elements of a vertex attribute value.
 * [makeBlank](#H3DU.BufferHelper_makeBlank)<br>Creates an object describing information about a vertex attribute.
@@ -27,6 +44,7 @@ combined vertex attribute.
 * [mergeBlank](#H3DU.BufferHelper_mergeBlank)<br>Merges two vertex attributes, whose vertices can be indexed differently, into one
 combined vertex attribute, where one of the input attributes is assumed to consist
 of all-zero values.
+* [resolveSemantic](#H3DU.BufferHelper_resolveSemantic)<br>TODO: Not documented yet.
 * [set](#H3DU.BufferHelper_set)<br>Sets the first element of the attribute value with the given vertex index.
 * [set2](#H3DU.BufferHelper_set2)<br>TODO: Not documented yet.
 * [set3](#H3DU.BufferHelper_set3)<br>TODO: Not documented yet.
@@ -36,7 +54,7 @@ of all-zero values.
 <a name='H3DU.BufferHelper_copy'></a>
 ### H3DU.BufferHelper#copy(attr)
 
-TODO: Not documented yet.
+Copies the values of a vertex attribute into a new vertex attribute object.
 
 #### Parameters
 
@@ -44,8 +62,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
-A copy of the attribute. Returns null if the two objects have different semantics
-or semantic indices. (Type: Array.&lt;Object>)
+A copy of the vertex attribute object. (Type: Array.&lt;Object>)
 
 <a name='H3DU.BufferHelper_count'></a>
 ### H3DU.BufferHelper#count(a)
@@ -71,7 +88,8 @@ Gets the number of elements (numbers) that each value of a vertex attribute uses
 
 #### Return Value
 
-The number of elements per value of the vertex attribute, or 0 if "a" is null. (Type: number)
+The number of elements per value of the vertex attribute, or 0 if "a" is null,
+undefined, or omitted. (Type: number)
 
 <a name='H3DU.BufferHelper_get'></a>
 ### H3DU.BufferHelper#get(a, index)
@@ -82,6 +100,19 @@ Gets the first element of the attribute value with the given vertex index.
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
+
+#### Return Value
+
+Return value. (Type: *)
+
+<a name='H3DU.BufferHelper_getBuffer'></a>
+### H3DU.BufferHelper#getBuffer(a)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `a` (Type: *)
 
 #### Return Value
 
@@ -111,22 +142,22 @@ Gets the elements of a vertex attribute value.
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: *)
+* `vec` (Type: Array.&lt;number>)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute's count per value (see H3DU.BufferHelper.countPerValue).
 
 #### Return Value
 
 The parameter "vec". (Type: Array.&lt;number>)
 
 <a name='H3DU.BufferHelper_makeBlank'></a>
-### H3DU.BufferHelper#makeBlank(name, index, count, countPerValue)
+### H3DU.BufferHelper#makeBlank(semantic, semanticIndex, count, countPerValue)
 
 Creates an object describing information about a vertex attribute.
 Each value in the attribute will be initialized to all zeros.
 
 #### Parameters
 
-* `name` (Type: number)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>.
-* `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on.
+* `semantic` (Type: number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `semanticIndex` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "semantic" is a string.
 * `count` (Type: number)<br>Number of values. Each value describes the attribute's value for the corresponding vertex.
 * `countPerValue` (Type: number)<br>Number of elements (numbers) for each value.
 
@@ -199,6 +230,23 @@ of all-zero values.
 
 The merged attribute, where the vertices from the first vertex
 attribute come before those from the second. (Type: Array.&lt;Object>)
+
+<a name='H3DU.BufferHelper_resolveSemantic'></a>
+### H3DU.BufferHelper#resolveSemantic(name, index)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `name` (Type: number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
+
+#### Return Value
+
+A two-element array consisting
+of the semantic and semantic index, respectively, described in
+the "name" and "index" parameters. Returns null if "name" is a string,
+but doesn't describe a valid semantic. (Type: Array.&lt;number>)
 
 <a name='H3DU.BufferHelper_set'></a>
 ### H3DU.BufferHelper#set(a, index, value)
@@ -273,7 +321,7 @@ Sets the elements of a vertex attribute value.
 
 * `a` (Type: Array.&lt;Object>)<br>An object describing information about a vertex attribute.
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: *)
+* `vec` (Type: Array.&lt;number>)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array's length or the attribute's count per value (see H3DU.BufferHelper.countPerValue), whichever is less.
 
 #### Return Value
 
