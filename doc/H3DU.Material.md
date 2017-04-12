@@ -212,7 +212,7 @@ object from an RGBA color.
 * `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
+* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.
 
 #### Return Value
 

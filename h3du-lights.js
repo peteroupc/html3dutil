@@ -124,10 +124,10 @@ Lights.prototype.setParams = function(index, params) {
  * @param {Array<number>} direction A 3-element array giving the X, Y, and Z world space
  * components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector's direction from the origin (0, 0, 0).
  * @param {Array<number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
- * If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+ * If null, undefined, or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
  * @param {Array<number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
- * If null or omitted, the specular highlight color will
+ * If null, undefined, or omitted, the specular highlight color will
  * remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Lights} This object.
  */

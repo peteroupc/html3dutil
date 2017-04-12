@@ -26,7 +26,7 @@ the HTML 3D Library. Example:
  If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must restrict the curve definition to no more than half of the curve.
 * `minval` (Type: number)<br>Smallest V coordinate.
 * `maxval` (Type: number)<br>Largest V coordinate. If _minval_ is greater than _maxval_, both values will be swapped.
-* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
+* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 ### Methods
 
@@ -70,7 +70,7 @@ bases of these surfaces won't be generated).
 * `func` (Type: function)<br>Function whose graph will be rotated about the axis of rotation, as specified in the "axis" parameter. The function takes a number as a single parameter and returns a number. The return value is effectively the radius of each part of the surface from beginning to end.
 * `minval` (Type: number)<br>Smallest parameter of the function. This is a number of units from the origin along the axis of rotation.
 * `maxval` (Type: number)<br>Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If _minval_ is greater than _maxval_, both values will be swapped.
-* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
+* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value
 
@@ -111,8 +111,8 @@ A <a href="H3DU.Surface.md">surface evaluator object</a> for a torus, a special 
 
 * `outerRadius` (Type: number)<br>Radius from the center to the innermost part of the torus.
 * `innerRadius` (Type: number)<br>Radius from the inner edge to the innermost part of the torus.
-* `curve` (Type: Object) (optional)<br>A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section with a radius of 1.
-* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
+* `curve` (Type: Object) (optional)<br>A <a href="H3DU.Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null, undefined, or omitted, uses a circular cross section with a radius of 1.
+* `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, which the torus will pass through. If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value
 

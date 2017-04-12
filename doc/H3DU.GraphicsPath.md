@@ -192,7 +192,7 @@ apply to this method.
 #### Parameters
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
@@ -256,7 +256,7 @@ the path.
 
 #### Parameters
 
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
@@ -274,7 +274,7 @@ of the path.
 #### Parameters
 
 * `numPoints` (Type: number)<br>Number of points to return.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
@@ -300,7 +300,7 @@ differs from the first subpath's winding order can be holes.
 
 #### Parameters
 
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
@@ -336,7 +336,7 @@ apply to this method.
 #### Parameters
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
@@ -476,7 +476,7 @@ to line segments.
 
 #### Parameters
 
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
@@ -534,7 +534,7 @@ this is in addition to "extras/path.js". Example:
 #### Parameters
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
@@ -550,7 +550,7 @@ apply to this method.
 #### Parameters
 
 * `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 

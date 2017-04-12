@@ -6,14 +6,15 @@
 ### H3DU.MeshBuffer([mesh])
 
 A geometric mesh in the form of buffer objects.
-A mesh buffer is made up of one or more buffer attributes,
-and an array of vertex indices. Each buffer attribute contains
+A mesh buffer is made up of one or more <a href="H3DU.BufferHelper.md">vertex attribute objects</a>,
+and an array of vertex indices. Each vertex attribute object contains
 the values of one attribute of the mesh, such as positions,
-vertex normals, and texture coordinates.
+vertex normals, and texture coordinates. A mesh buffer
+can store vertices that make up triangles, line segments, or points.
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>) (optional)<br>A geometric mesh object. A series of default attributes will be set based on that mesh's data. If null or omitted, an empty mesh buffer will be generated.
+* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>) (optional)<br>A geometric mesh object. A series of default attributes will be set based on that mesh's data. If null, undefined, or omitted, an empty mesh buffer will be generated.
 
 ### Methods
 
@@ -37,7 +38,9 @@ by swapping the second and third vertex indices of each one.
 * [setAttribute](#H3DU.MeshBuffer_setAttribute)<br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute's information).
-* [setColor](#H3DU.MeshBuffer_setColor)<br>TODO: Not documented yet.
+* [setColor](#H3DU.MeshBuffer_setColor)<br>Sets all the vertices in this mesh to the given color, by
+assigning each value with the attribute semantic <code>COLOR</code>
+to the given color.
 * [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the vertex indices used by this mesh buffer.
 * [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
 * [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
@@ -47,16 +50,17 @@ is, the number of vertex indices in its index buffer (some of which
 may be duplicates).
 * [vertexIndices](#H3DU.MeshBuffer_vertexIndices)<br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.
+* [wireFrame](#H3DU.MeshBuffer_wireFrame)<br>TODO: Not documented yet.
 
 <a name='H3DU.MeshBuffer_getAttribute'></a>
-### H3DU.MeshBuffer#getAttribute(name, semanticIndex)
+### H3DU.MeshBuffer#getAttribute(name, [semanticIndex])
 
 Gets a vertex attribute included in this mesh buffer.
 
 #### Parameters
 
-* `name` (Type: number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
-* `semanticIndex` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
+* `name` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `semanticIndex` (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
 
 #### Return Value
 
@@ -171,9 +175,8 @@ be normalized to have a length of 1 (unless the normal is (0,0,0)),
 and will be stored in an attribute with semantic <code>NORMAL_0</code>.
 Will have an effect only if the buffer includes an attribute with
 semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
-long. If the buffer includes an attribute with semantic <code>NORMAL_0</code>,
-but its values are each not at least 3 elements long,
-this method will have no effect.
+long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
+ensures its values are each at least 3 elements long.
 
 #### Parameters
 
@@ -245,12 +248,12 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `name` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
 * `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.
 * `startIndex` (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.
 * `countPerVertex` (Type: number)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3.
-* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null or omitted, this value is the same as "countPerVertex".
+* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as "countPerVertex".
 
 #### Return Value
 
@@ -260,15 +263,24 @@ semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>
 <a name='H3DU.MeshBuffer_setColor'></a>
 ### H3DU.MeshBuffer#setColor(color)
 
-TODO: Not documented yet.
+Sets all the vertices in this mesh to the given color, by
+assigning each value with the attribute semantic <code>COLOR</code>
+to the given color. (If the attribute's count per value
+is less than 4, each such value will be set to as many elements of the converted 4-element
+color as possible.) If an attribute with the semantic <code>COLOR</code>
+doesn't exist, an attribute with the semantic <code>COLOR_0</code> and a count per
+value of 3 is created.
+
+All attributes with the semantic <code>COLOR</code>,
+regardless of semantic index, are affected by this method.
 
 #### Parameters
 
-* `color` (Type: *)
+* `color` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> identifying the color to set. This will be converted to a 4-element color.
 
 #### Return Value
 
-Return value. (Type: *)
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.MeshBuffer_setIndices'></a>
 ### H3DU.MeshBuffer#setIndices(indices)
@@ -337,5 +349,14 @@ or point) in this mesh buffer.
 #### Return Value
 
 The parameter "ret". (Type: Array.&lt;number>)
+
+<a name='H3DU.MeshBuffer_wireFrame'></a>
+### H3DU.MeshBuffer#wireFrame()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+Return value. (Type: *)
 
 [Back to documentation index.](index.md)

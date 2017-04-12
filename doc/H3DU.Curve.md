@@ -23,7 +23,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 #### Parameters
 
-* `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.
+* `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
 * `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as <a href="H3DU.Curve.md#H3DU.Curve_endPoints">H3DU.Curve#endPoints</a> and whose return value takes precedence over the given curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization to a U coordinate in the new parameterization.
 
 #### Example

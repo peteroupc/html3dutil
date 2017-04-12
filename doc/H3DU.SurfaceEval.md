@@ -66,7 +66,7 @@ surface.
 #### Parameters
 
 * `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>The mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.
-* `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, or is null or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.
+* `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, or is null, undefined, or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.
 * `un` (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.
 * `vn` (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.
 * `u1` (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.SurfaceEval.md#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.

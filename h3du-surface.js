@@ -25,9 +25,9 @@ import {_MathInternal} from "./h3du-mathinternal";
  * @constructor
  * @memberof H3DU
  * @param {Object} surface A <b>surface evaluator object</b>, which is an object that
- * must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>,
+ * must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>,
  * <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code>
- * methods, as described in the corresponding methods of this class.
+ * method, as described in the corresponding methods of this class.
  * @example <caption>The following example creates a surface evaluator
  * object for a parametric surface. To illustrate how the gradient method is derived
  * from the vector calculation method, that method is also given below. To

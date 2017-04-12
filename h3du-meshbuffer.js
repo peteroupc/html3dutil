@@ -13,15 +13,16 @@ import {_MathInternal} from "./h3du-mathinternal.js";
 
 /**
  * A geometric mesh in the form of buffer objects.
- * A mesh buffer is made up of one or more buffer attributes,
- * and an array of vertex indices. Each buffer attribute contains
+ * A mesh buffer is made up of one or more [vertex attribute objects]{@link H3DU.BufferHelper},
+ * and an array of vertex indices. Each vertex attribute object contains
  * the values of one attribute of the mesh, such as positions,
- * vertex normals, and texture coordinates.
+ * vertex normals, and texture coordinates. A mesh buffer
+ * can store vertices that make up triangles, line segments, or points.
  * @constructor
  * @memberof H3DU
  * @param {H3DU.Mesh} [mesh] A geometric mesh object.
  * A series of default attributes will be set based on that mesh's
- * data. If null or omitted, an empty mesh buffer will be generated.
+ * data. If null, undefined, or omitted, an empty mesh buffer will be generated.
  */
 export var MeshBuffer = function(mesh) {
   if(typeof mesh !== "undefined" && mesh !== null) {
@@ -112,7 +113,7 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * existing attribute's information). An attribute
  * gives information about the per-vertex data used and
  * stored in a vertex buffer.
- * @param {number|String} name An attribute semantic, such
+ * @param {number|string} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
  * @param {number} index The set index of the attribute
@@ -128,7 +129,7 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * per-vertex item. For example, if each vertex is a 3-element
  * vector, this value is 3.
  * @param {number} [stride] The number of elements from the start of
- * one per-vertex item to the start of the next. If null or omitted,
+ * one per-vertex item to the start of the next. If null, undefined, or omitted,
  * this value is the same as "countPerVertex".
  * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
  * semantic is unsupported.
@@ -171,10 +172,10 @@ MeshBuffer.prototype._getAttributes = function() {
 };
 /**
  * Gets a vertex attribute included in this mesh buffer.
- * @param {number|String} name An attribute semantic, such
+ * @param {number|string} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
- * @param {number} semanticIndex The set index of the attribute
+ * @param {number} [semanticIndex] The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
@@ -320,19 +321,26 @@ MeshBuffer.prototype.reverseNormals = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} color
- * @returns {*} Return value.
+ * Sets all the vertices in this mesh to the given color, by
+ * assigning each value with the attribute semantic <code>COLOR</code>
+ * to the given color. (If the attribute's [count per value]{@link H3DU.BufferHelper.countPerValue}
+ * is less than 4, each such value will be set to as many elements of the converted 4-element
+ * color as possible.) If an attribute with the semantic <code>COLOR</code>
+ * doesn't exist, an attribute with the semantic <code>COLOR_0</code> and a count per
+ * value of 3 is created.<p>
+ * All attributes with the semantic <code>COLOR</code>,
+ * regardless of semantic index, are affected by this method.
+ * @param {Array<number>|number|string} color A [color vector or string]{@link H3DU.toGLColor}
+ * identifying the color to set. This will be converted to a 4-element color.
+ * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setColor = function(color) {
   var helper = new H3DU.BufferHelper();
   var colorValue = H3DU.toGLColor(color);
   var haveColor = false;
-  var maxcount = 0;
   for(var i = 0; i < this.attributes.length; i++) {
     var attr = this.attributes[i];
     var count = helper.count(attr);
-    maxcount = Math.max(count, maxcount);
     // TODO: Use BufferHelper
     if(attr[0] !== H3DU.Semantic.COLOR) {
       continue;
@@ -343,7 +351,7 @@ MeshBuffer.prototype.setColor = function(color) {
     }
   }
   if(!haveColor) {
-    this._threeEl(helper, H3DU.Semantic.COLOR, maxcount);
+    this._ensureAttribute(H3DU.Semantic.COLOR, 0, 3);
     return this.setColor(colorValue);
   }
   return this;
@@ -553,31 +561,37 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
 };
 
 /** @ignore */
-MeshBuffer.prototype._makeRedundant = function(helper) {
+MeshBuffer.prototype._makeRedundant = function() {
   var newAttributes = [];
+  var helper = new BufferHelper();
   for(var i = 0; i < this.attributes.length; i++) {
-    newAttributes.push(helper.makeRedundant(this.attributes[i], this.indices));
+    newAttributes.push(helper.merge(this.attributes[i], this.indices, null, []));
   }
   this.attributes = newAttributes;
   this.setIndices(helper.makeIndices(this.indices.length));
 };
 /** @ignore */
-MeshBuffer.prototype._threeEl = function(helper, sem, count) {
-  var attr = this.getAttribute(sem);
-  if(!attr) {
-    attr = helper.makeBlank(sem, 0, count, 3);
-    this.attributes.push(attr);
-  } else if(helper.countPerValue(attr) < 3) {
-    var newattr = helper.makeBlank(sem, 0, count, 3);
-    var vec = [0, 0, 0];
+MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, countPerValue) {
+  var helper = new BufferHelper();
+  var attr = this.getAttribute(semantic, semanticIndex);
+  var count = this.attributes.length === 0 ? 0 : helper.count(this.attributes[0]);
+  if(attr && helper.countPerValue(attr) >= countPerValue)
+    return attr;
+  var cv = helper.countPerValue(attr);
+  var newattr = helper.makeBlank(semantic, semanticIndex, count, countPerValue);
+  if(cv > 0) {
+    var vec = _MathInternal.vecZeros(countPerValue);
     for(var i = 0; i < count; i++) {
       helper.getVec(attr, i, vec);
       helper.setVec(newattr, i, vec);
     }
-    attr = newattr;
-    this.attributes.push(attr);
   }
-  return attr;
+  this.attributes.push(newattr);
+  return newattr;
+};
+/** @ignore */
+MeshBuffer.prototype._countPerValue = function(sem) {
+  return new BufferHelper().countPerValue(this.getAttribute(sem));
 };
 
 /**
@@ -590,9 +604,8 @@ MeshBuffer.prototype._threeEl = function(helper, sem, count) {
  * and will be stored in an attribute with semantic <code>NORMAL_0</code>.
  * Will have an effect only if the buffer includes an attribute with
  * semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
- * long. If the buffer includes an attribute with semantic <code>NORMAL_0</code>,
- * but its values are each not at least 3 elements long,
- * this method will have no effect.
+ * long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
+ * ensures its values are each at least 3 elements long.
  * @param {Boolean} flat If true, each triangle in the mesh
  * will have the same normal, which usually leads to a flat
  * appearance. If false, each unique vertex in the mesh
@@ -605,14 +618,12 @@ MeshBuffer.prototype._threeEl = function(helper, sem, count) {
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
   var primtype = this.primitiveType();
   if(primtype === H3DU.Mesh.TRIANGLES) {
-    var helper = new BufferHelper();
-    var positions = this.getAttribute(H3DU.Semantic.POSITION);
-    if(helper.countPerValue(positions) < 3) {
+    if(this._countPerValue(H3DU.Semantic.POSITION) < 3) {
       return this;
     }
-    this._makeRedundant(helper);
-    positions = this.getAttribute(H3DU.Semantic.POSITION);
-    var normals = this._threeEl(helper, H3DU.Semantic.NORMAL, helper.count(positions));
+    this._makeRedundant();
+    var positions = this.getAttribute(H3DU.Semantic.POSITION);
+    var normals = this._ensureAttribute(H3DU.Semantic.NORMAL, 0, 3);
     MeshBuffer._recalcNormals(positions, normals, this.indices, flat, inward);
   }
   return this;
@@ -620,20 +631,17 @@ MeshBuffer.prototype.recalcNormals = function(flat, inward) {
 /** @ignore */
 MeshBuffer.prototype._recalcTangents = function() {
   if(this.primitiveType() === H3DU.Mesh.TRIANGLES) {
-    var helper = new BufferHelper();
+    if(this._countPerValue(H3DU.Semantic.POSITION) < 3 ||
+  this._countPerValue(H3DU.Semantic.NORMAL) < 3 ||
+        this._countPerValue(H3DU.Semantic.TEXCOORD) < 2) {
+      return this;
+    }
+    this._makeRedundant();
     var positions = this.getAttribute(H3DU.Semantic.POSITION);
     var normals = this.getAttribute(H3DU.Semantic.NORMAL);
     var texCoords = this.getAttribute(H3DU.Semantic.TEXCOORD);
-    if(helper.countPerValue(positions) < 3 || helper.countPerValue(normals) < 3 ||
-      helper.countPerValue(texCoords) < 2) {
-      return this;
-    }
-    this._makeRedundant(helper);
-    positions = this.getAttribute(H3DU.Semantic.POSITION);
-    normals = this.getAttribute(H3DU.Semantic.NORMAL);
-    texCoords = this.getAttribute(H3DU.Semantic.TEXCOORD);
-    var tangents = this._threeEl(helper, H3DU.Semantic.TANGENT, helper.count(positions));
-    var bitangents = this._threeEl(helper, H3DU.Semantic.BITANGENT, helper.count(positions));
+    var tangents = this._ensureAttribute(H3DU.Semantic.TANGENT, 0, 3);
+    var bitangents = this._ensureAttribute(H3DU.Semantic.BITANGENT, 0, 3);
     MeshBuffer._recalcTangentsInternal(positions, normals, texCoords,
       tangents, bitangents, this.indices);
   }
@@ -688,17 +696,12 @@ MeshBuffer.prototype.merge = function(other) {
     var attr = this.attributes[i];
     for(var j = 0; j < other.attributes.length; j++) {
       var oattr = other.attributes[j];
-       // TODO: Move attribute access to BufferHelper
-      if(oattr[0] === attr[0] && oattr[5] === attr[5]) {
+      if(helper.sameSemantic(oattr, attr)) {
         existingAttribute = oattr;
         break;
       }
     }
-    if(existingAttribute) {
-      newAttribute = helper.merge(attr, this.indices, existingAttribute, other.indices);
-    } else {
-      newAttribute = helper.mergeBlank(attr, this.indices, other.indices, false);
-    }
+    newAttribute = helper.merge(attr, this.indices, existingAttribute, other.indices);
     if(!newAttribute)throw new Error();
     newAttributes.push(newAttribute);
   }
@@ -707,14 +710,13 @@ MeshBuffer.prototype.merge = function(other) {
     oattr = other.attributes[i];
     for(j = 0; j < this.attributes.length; j++) {
       attr = this.attributes[j];
-       // TODO: Move attribute access to BufferHelper
-      if(oattr[0] === attr[0] && oattr[5] === attr[5]) {
+      if(helper.sameSemantic(oattr, attr)) {
         existingAttribute = attr;
         break;
       }
     }
     if(typeof existingAttribute === "undefined" || existingAttribute === null) {
-      newAttribute = helper.mergeBlank(oattr, this.indices, other.indices, true);
+      newAttribute = helper.merge(null, this.indices, oattr, other.indices, true);
       if(!newAttribute)throw new Error();
       newAttributes.push(newAttribute);
     }
@@ -740,10 +742,10 @@ MeshBuffer.prototype.merge = function(other) {
 MeshBuffer.prototype.transform = function(matrix) {
   var helper = new H3DU.BufferHelper();
   var positionAttribute = this.getAttribute(H3DU.Semantic.POSITION);
-  var normalAttribute = this.getAttribute(H3DU.Semantic.NORMAL);
   if(!positionAttribute) {
     return this;
   }
+  var normalAttribute = this.getAttribute(H3DU.Semantic.NORMAL);
   var isLinearIdentity = !(matrix[0] === 1 && matrix[1] === 0 &&
     matrix[2] === 0 && matrix[4] === 0 && matrix[5] === 1 &&
     matrix[6] === 0 && matrix[8] === 0 && matrix[9] === 0 && matrix[10] === 1);
@@ -773,6 +775,46 @@ MeshBuffer.prototype.transform = function(matrix) {
   }
   this._bounds = null;
   return this;
+};
+  // Adds a line only if it doesn't exist
+MeshBuffer._addLine = function(lineIndices, existingLines, f1, f2) {
+   // Ensure ordering of the indices
+  if(f1 < f2) {
+    var tmp = f1; f1 = f2; f2 = tmp;
+  }
+  var e = existingLines[f1];
+  if(e) {
+    if(e.indexOf(f2) < 0) {
+      e.push(f2);
+      lineIndices.push(f1, f2);
+    }
+  } else {
+    existingLines[f1] = [f2];
+    lineIndices.push(f1, f2);
+  }
+};
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ */
+MeshBuffer.prototype.wireFrame = function() {
+  // LATER: Implement and favor MeshBuffer version of this method
+  if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
+   // Not a triangle mesh
+    return this;
+  }
+  var lineIndices = [];
+  var existingLines = {};
+  for(var i = 0; i < this.indices.length; i += 3) {
+    var f1 = this.indices[i];
+    var f2 = this.indices[i + 1];
+    var f3 = this.indices[i + 2];
+    MeshBuffer._addLine(lineIndices, existingLines, f1, f2);
+    MeshBuffer._addLine(lineIndices, existingLines, f2, f3);
+    MeshBuffer._addLine(lineIndices, existingLines, f3, f1);
+  }
+  return this.setIndices(lineIndices)
+    .setPrimitiveType(H3DU.Mesh.LINES);
 };
 /**
  * Finds the tightest

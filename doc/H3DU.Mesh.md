@@ -38,8 +38,8 @@ or at that point, those methods may be deprecated.</li></ul>
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number>) (optional)<br>An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.
-* `indices` (Type: Array.&lt;number>) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.
-* `format` (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if Mesh.NORMALS_BIT is set, plus <li> 3 more elements if Mesh.COLORS_BIT is set, plus <li> 2 more elements if Mesh.TEXCOORDS_BIT is set.</ul> If Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can't be set. May be null or omitted, in which case "format" is set to 0.
+* `indices` (Type: Array.&lt;number>) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null, undefined, or omitted, creates an initially empty mesh.
+* `format` (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if Mesh.NORMALS_BIT is set, plus <li> 3 more elements if Mesh.COLORS_BIT is set, plus <li> 2 more elements if Mesh.TEXCOORDS_BIT is set, plus <li> 3 more elements if Mesh.TANGENTS_BIT is set (deprecated), plus <li> 3 more elements if Mesh.BITANGENTS_BIT is set (deprecated). </ul> If Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can't be set. May be null or omitted, in which case "format" is set to 0.
 
 ### Members
 
@@ -664,7 +664,7 @@ be treated as 0.
 
 #### Parameters
 
-* `x` (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
+* `x` (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" is null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
 * `y` (Type: number)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value

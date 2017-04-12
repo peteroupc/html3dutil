@@ -16,7 +16,7 @@ to uniforms and vertex attributes.
 * [JOINT](#H3DU.Semantic.JOINT)<br>Attribute semantic for a skinning joint.
 * [MODEL](#H3DU.Semantic.MODEL)<br>Uniform semantic for a model matrix.
 * [MODELVIEW](#H3DU.Semantic.MODELVIEW)<br>Uniform semantic for a model-view matrix.
-* [MODELVIEWINVERSETRANSPOSE](#H3DU.Semantic.MODELVIEWINVERSETRANSPOSE)<br>Uniform semantic for the inverse of the 3x3 transpose of the model view matrix.
+* [MODELVIEWINVERSETRANSPOSE](#H3DU.Semantic.MODELVIEWINVERSETRANSPOSE)<br>Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
 * [MODELVIEWPROJECTION](#H3DU.Semantic.MODELVIEWPROJECTION)<br>Uniform semantic for a model-view-projection matrix.
 * [NORMAL](#H3DU.Semantic.NORMAL)<br>Attribute semantic for a vertex normal.
 * [POSITION](#H3DU.Semantic.POSITION)<br>Attribute semantic for a vertex position.
@@ -60,7 +60,7 @@ Uniform semantic for a model-view matrix.
 <a name='H3DU.Semantic.MODELVIEWINVERSETRANSPOSE'></a>
 ### H3DU.Semantic.MODELVIEWINVERSETRANSPOSE (constant)
 
-Uniform semantic for the inverse of the 3x3 transpose of the model view matrix.
+Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
 
 <a name='H3DU.Semantic.MODELVIEWPROJECTION'></a>
 ### H3DU.Semantic.MODELVIEWPROJECTION (constant)

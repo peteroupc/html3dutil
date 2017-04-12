@@ -16,7 +16,7 @@ for <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>.
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point's length represents the size of all the control points. </ul>
 * `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the U axis. For more information, see <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>.
 * `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the V axis.
-* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null or omitted, no bits are set.
+* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.
 
 ### Methods
 
@@ -64,8 +64,8 @@ the surface's edges lie on the edges of the control point array.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
-* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
-* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null or omitted, the default is 3.
+* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
+* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
 
 #### Return Value
@@ -208,8 +208,8 @@ Creates a B-spline surface with uniform knots.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
-* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
-* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null or omitted, the default is 3.
+* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
+* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a> constructor.
 
 #### Return Value

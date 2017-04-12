@@ -117,8 +117,8 @@ Sets a directional light.
 
 * `index` (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn't exist at that index, it will be created.
 * `direction` (Type: Array.&lt;number>)<br>A 3-element array giving the X, Y, and Z world space components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector's direction from the origin (0, 0, 0).
-* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
-* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null, undefined, or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null, undefined, or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 
 #### Return Value
 

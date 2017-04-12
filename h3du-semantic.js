@@ -78,7 +78,7 @@ Semantic.MODELVIEW = 104;
  * @const
  */
 Semantic.MODELVIEWPROJECTION = 105;
-/** Uniform semantic for the inverse of the 3x3 transpose of the model view matrix.
+/** Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
  * @const
  */
 Semantic.MODELVIEWINVERSETRANSPOSE = 106;

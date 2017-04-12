@@ -264,7 +264,7 @@ Material.prototype.setParams = function(params) {
  * @param {number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {number} [a] Alpha color component (0-1).
- * If the "r" parameter is given and this parameter is null or omitted,
+ * If the "r" parameter is given and this parameter is null, undefined, or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Material} The resulting material object.
  */

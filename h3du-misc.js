@@ -347,7 +347,7 @@ export var getPromiseResultsAll = function(promises,
  * @param {string} url URL of the file to load.
  * @param {string} [responseType] Expected data type of
  * the file.  Can be "json", "xml", "text", or "arraybuffer".
- * If null or omitted, the default is "text".
+ * If null, undefined, or omitted, the default is "text".
  * @returns {Promise} A promise that resolves when the data
  * file is loaded successfully (the result will be an object with
  * two properties: "url", the URL of the file, and "data", the
@@ -1010,7 +1010,7 @@ var clampRgba = function(x) {
  * @param {number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {number} [a] Alpha color component (0-1).
- * If the "r" parameter is given and this parameter is null or omitted,
+ * If the "r" parameter is given and this parameter is null, undefined, or omitted,
  * this value is treated as 1.0.
  * @returns {Array<number>} The color as a 4-element array; if the color is
  * invalid, returns [0,0,0,0], or transparent black. Numbers less

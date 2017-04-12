@@ -1858,7 +1858,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
  * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
- * and {@link H3DU.Math.GlobalYawRollPitch}. If null or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
+ * and {@link H3DU.Math.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
  * The constants starting with <code>Global</code>
  * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
  * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,
@@ -2154,7 +2154,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
- * and {@link H3DU.Math.GlobalYawRollPitch}. If null or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
+ * and {@link H3DU.Math.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
  * The constants starting with <code>Global</code>
  * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
  * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,

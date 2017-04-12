@@ -190,7 +190,7 @@ Loads a file from a URL asynchronously, using XMLHttpRequest.
 #### Parameters
 
 * `url` (Type: string)<br>URL of the file to load.
-* `responseType` (Type: string) (optional)<br>Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null or omitted, the default is "text".
+* `responseType` (Type: string) (optional)<br>Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null, undefined, or omitted, the default is "text".
 
 #### Return Value
 
@@ -349,7 +349,7 @@ For more information, see the "<a href="tutorial-colors.md">Color Strings</a>" t
 * `r` (Type: Array.&lt;number> | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
+* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.
 
 #### Return Value
 

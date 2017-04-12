@@ -40,7 +40,7 @@ cubic Catmull-Rom spline.
 * [fromHermiteSpline](#H3DU.PiecewiseCurve.fromHermiteSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline.
 * [fromTCBSpline](#H3DU.PiecewiseCurve.fromTCBSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
-TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
 * [getCurves](#H3DU.PiecewiseCurve_getCurves)<br>Gets a reference to the curves that make up this piecewise curve.
 * [getLength](#H3DU.PiecewiseCurve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#H3DU.PiecewiseCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
@@ -207,8 +207,8 @@ same path as the Hermite spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.Pi
 ### (static) H3DU.PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])
 
 Creates a piecewise curve made up of B-spline curves from the control points of a
-TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
-(If tension, continuity, and bias are all 0, the result is a Catmull-Rom spline
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
+(If tension, continuity, and bias are all 0, the result is a cubic Catmull-Rom spline
 in uniform parameterization.)
 
 To use this method, you must include the script "extras/spline.js". Example:
@@ -220,7 +220,7 @@ To use this method, you must include the script "extras/spline.js". Example:
 * `spline` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.
 * `tension` (Type: number) (optional)<br>A parameter that adjusts the length of the starting and ending tangents of each curve segment. Ranges from -1 for double-length tangents to 1 for zero-length tangents. A value of 1 results in straight line segments. Default is 0.
 * `continuity` (Type: number) (optional)<br>A parameter that adjusts the direction of the starting and ending tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 or closer to 1 result in tangents that are closer to perpendicular. A value of -1 results in straight line segments. Default is 0.
-* `bias` (Type: number) (optional)<br>A parameter that adjusts the influence of the starting and ending tangents of each curve segment. The greater this number, the greater the ending tangents influence the direction of the next curve segment i n comparison to the starting tangents. Ranges from -1 to 1. Default is 0.
+* `bias` (Type: number) (optional)<br>A parameter that adjusts the influence of the starting and ending tangents of each curve segment. The greater this number, the greater the ending tangents influence the direction of the next curve segment in comparison to the starting tangents. Ranges from -1 to 1. Default is 0.
 * `closed` (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.
 * `rigidEnds` (Type: number) (optional)<br>If true, the start and end of the piecewise curve will, by default, more rigidly follow the direction to the next or previous control point, respectively. This makes the curve compatible with GDI+ cardinal splines with 0 continuity, 0 bias, and tension equal to <code>-((T\*2)-1)</code>, where T is the GDI+ cardinal spline tension parameter. Default is false.
 

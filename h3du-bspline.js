@@ -166,7 +166,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link H3DU.BSplineCurve.WEIGHTED_BIT},
  * {@link H3DU.BSplineCurve.HOMOGENEOUS_BIT},
- * and {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null or omitted, no bits are set.
+ * and {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>The following code converts a cubic (degree-3)
  * curve from one kind to another. The converted curve will generally
  * have the same path as the original curve.</caption>
@@ -759,7 +759,7 @@ BSplineCurve._fromHomogen = function(cp) {
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link H3DU.BSplineCurve.WEIGHTED_BIT},
  * {@link H3DU.BSplineCurve.HOMOGENEOUS_BIT},
- * and {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null or omitted, no bits are set.
+ * and {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  */
 function BSplineSurface(controlPoints, knotsU, knotsV, bits) {
   var cpoints = controlPoints;
@@ -806,7 +806,7 @@ BSplineSurface.prototype.constructor = BSplineSurface;
  * control points as specified in the {@link H3DU.BSplineCurve} constructor.
  * @param {number} [degree] Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
- * If null or omitted, the default is 3.
+ * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
  * @returns {H3DU.BSplineCurve} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
@@ -852,7 +852,7 @@ BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
    * control points as specified in the {@link H3DU.BSplineCurve} constructor.
    * @param {number} [degree] Degree of the B-spline
    * curve. For example, 3 means a degree-3 (cubic) curve.
-   * If null or omitted, the default is 3.
+   * If null, undefined, or omitted, the default is 3.
    * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
    * @returns {H3DU.BSplineCurve} Return value. The first
    * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
@@ -870,10 +870,10 @@ BSplineCurve.uniform = function(controlPoints, degree, bits) {
  * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
  * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
- * If null or omitted, the default is 3.
+ * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
  * surface along the V axis
- * If null or omitted, the default is 3.
+ * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
  * @returns {H3DU.BSplineSurface} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
@@ -890,10 +890,10 @@ BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
  * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
  * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
- * If null or omitted, the default is 3.
+ * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
  * surface along the V axis
- * If null or omitted, the default is 3.
+ * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
  * @returns {H3DU.BSplineSurface} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
@@ -911,7 +911,7 @@ BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
  * or an array of control points.
  * @param {number} [degree] Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
- * If null or omitted, the default is 3.
+ * If null, undefined, or omitted, the default is 3.
  * @returns {Array<number>} A uniform knot vector. The first
  * knot will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
@@ -940,7 +940,7 @@ BSplineCurve.uniformKnots = function(controlPoints, degree) {
  * or an array of control points.
  * @param {number} [degree] Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
- * If null or omitted, the default is 3.
+ * If null, undefined, or omitted, the default is 3.
  * @returns {Array<number>} A clamped uniform knot vector.
  * The first knot will be 0 and the last knot will be 1.
  * (This is a change in version 2.0.)

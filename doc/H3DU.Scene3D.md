@@ -518,7 +518,7 @@ This color is black by default.
 * `r` (Type: Array.&lt;number> | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.md#H3DU.toGLColor">HTML or CSS color</a>.
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null or omitted, this value is treated as 1.0.
+* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.
 
 #### Return Value
 
@@ -549,8 +549,8 @@ Sets a light source in this scene to a directional light.
 
 * `index` (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn't exist.
 * `position` (Type: Array.&lt;number>)<br>A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).
-* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
-* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null, undefined, or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null, undefined, or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 
 #### Return Value
 
@@ -675,7 +675,7 @@ or squishing it.
 * `right` (Type: number)<br>Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)
 * `bottom` (Type: number)<br>Bottommost coordinate of the view rectangle.
 * `top` (Type: number)<br>Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)
-* `aspect` (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene's aspect ratio instead.
+* `aspect` (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null, undefined, or omitted, uses this scene's aspect ratio instead.
 
 #### Return Value
 
@@ -703,7 +703,7 @@ or squishing it.
 * `top` (Type: number)<br>Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)
 * `near` (Type: number)<br>Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
 * `far` (Type: number)<br>Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.
-* `aspect` (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene's aspect ratio instead.
+* `aspect` (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null, undefined, or omitted, uses this scene's aspect ratio instead.
 
 #### Return Value
 
@@ -747,8 +747,8 @@ Sets a light source in this scene to a point light.
 
 * `index` (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on.
 * `position` (Type: Array.&lt;number>)<br>Light position. (See <a href="H3DU.LightSource.md#H3DU.LightSource_position">H3DU.LightSource#position</a>.)
-* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
-* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+* `diffuse` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null, undefined, or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+* `specular` (Type: Array.&lt;number>) (optional)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null, undefined, or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 
 #### Return Value
 

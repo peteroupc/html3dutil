@@ -82,8 +82,7 @@ CurveEval.prototype.evalOne = function(mesh, u) {
  * function.
  * @param {H3DU.Mesh} mesh A geometric mesh where the vertices will be
  * generated.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null
- * or omitted, generates
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null, undefined, or omitted, generates
  * a series of lines defining the curve. If this value is {@link H3DU.Mesh.POINTS},
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
@@ -196,8 +195,7 @@ SurfaceEval.prototype.evalOne = function(mesh, u, v) {
  * will be generated. When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null
- * or omitted, generates a series of triangles defining the surface. If
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
  * this value is {@link H3DU.Mesh.LINES}, generates
  * a series of lines defining the surface. If this value is {@link H3DU.Mesh.POINTS},
  * generates a series of points along the surface. For any other value,

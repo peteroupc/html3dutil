@@ -44,12 +44,15 @@
  * @param {Array<number>} [indices] An array of vertex indices. Each trio of
  * indices specifies a separate triangle, or each pair of indices specifies
  * a line segment.
- * If null or omitted, creates an initially empty mesh.
+ * If null, undefined, or omitted, creates an initially empty mesh.
  * @param {number} [format] A set of bit flags depending on the kind of data
  * each vertex contains. Each vertex contains 3 elements plus:<ul>
  * <li> 3 more elements if Mesh.NORMALS_BIT is set, plus
  * <li> 3 more elements if Mesh.COLORS_BIT is set, plus
- * <li> 2 more elements if Mesh.TEXCOORDS_BIT is set.</ul>
+ * <li> 2 more elements if Mesh.TEXCOORDS_BIT is set, plus
+ * <li> 3 more elements if Mesh.TANGENTS_BIT is set (deprecated), plus
+ * <li> 3 more elements if Mesh.BITANGENTS_BIT is set (deprecated).
+ * </ul>
  * If Mesh.LINES_BIT is set, each vertex index specifies a point of a line
  * segment. If Mesh.POINTS_BIT is set, each vertex index specifies an
  * individual point. Both bits can't be set.
@@ -66,7 +69,7 @@ export var Mesh = function(vertices, indices, format) {
   this.texCoord = [0, 0];
 };
 /** @ignore */
-Mesh._primitiveType = function(mode) {
+Mesh._modeToPrimitiveType = function(mode) {
   if(mode === Mesh.LINES || mode === Mesh.LINE_STRIP)
     return Mesh.LINES;
   else if(mode === Mesh.POINTS)
@@ -76,10 +79,7 @@ Mesh._primitiveType = function(mode) {
 };
 /** @ignore */
 Mesh._isCompatibleMode = function(oldMode, newMode) {
-  if(oldMode === newMode)return true;
-  if(Mesh._primitiveType(oldMode) === Mesh._primitiveType(newMode))
-    return true;
-  return false;
+  return Mesh._modeToPrimitiveType(oldMode) === Mesh._modeToPrimitiveType(newMode);
 };
 
 /**
@@ -105,7 +105,7 @@ Mesh.prototype.mode = function(m) {
   if(m < 0)throw new Error("invalid mode");
   if(this.currentMode === -1) {
     var format = 0;
-    var primtype = Mesh._primitiveType(m);
+    var primtype = Mesh._modeToPrimitiveType(m);
     if(primtype === Mesh.LINES)
       format |= Mesh.LINES_BIT;
     else if(primtype === Mesh.POINTS)
@@ -119,30 +119,6 @@ Mesh.prototype.mode = function(m) {
     this.currentMode = m;
   }
   return this;
-};
-/**
- * Merges the vertices from another mesh into this one.
- * The vertices from the other mesh will be copied into this one,
- * and the other mesh's indices copied or adapted.
- * Also, resets the primitive
- * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
- * will not build upon previous vertices.
- * @deprecated Use <code>new H3DU.MeshBuffer(mesh).merge(other)</code> instead.
- * @param {H3DU.Mesh} other A mesh to merge into this one. The mesh
- * given in this parameter will remain unchanged.
- * Throws an error if this mesh's primitive type is incompatible with the
- * the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.merge = function(other) {
-  if(!(other instanceof H3DU.Mesh)) {
-    throw new Error();
-  }
-  if(!Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
-    throw new Error("Meshes have incompatible types");
-  }
-  return this._carryOver(Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this)
-    .merge(new H3DU.MeshBuffer(other)), null));
 };
 
  /**
@@ -269,7 +245,7 @@ Mesh.prototype.vertex3 = function(x, y, z) {
   * Adds a new vertex to this mesh. The Z coordinate will
   * be treated as 0.
   * @param {Array<number>|number} x The X coordinate.
-  * If "y" is null or omitted, this is instead
+  * If "y" is null, undefined, or omitted, this is instead
   * a 3-element array giving the X, Y, and Z coordinates, or a single number
   * giving the coordinate for all three dimensions.
   * @param {number} y The Y coordinate.
@@ -285,45 +261,6 @@ Mesh.prototype.vertex2 = function(x, y) {
   } else {
     return this.vertex3(x, y, 0.0);
   }
-};
- /**
-  * Sets all the vertices in this mesh to the given color.
-  * This method doesn't change this mesh's current color.
-  * Only the color's red, green, and blue components will be used.
-  * @deprecated Use <code>new H3DU.MeshBuffer(this).setColor(r)</code> instead.
-  * @param {Array<number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
-  * or the red color component (0-1).
-  * @param {number} g Green component of the color (0-1).
-  * May be null or omitted if a string is given as the "r" parameter.
-  * @param {number} b Blue component of the color (0-1).
-  * May be null or omitted if a string is given as the "r" parameter.
-  * @returns {H3DU.Mesh} This object.
-  */
-Mesh.prototype.setColor3 = function(r, g, b) {
-  var offset = Mesh._colorOffset(
-     this.attributeBits);
-  if(offset < 0)return this;
-  if(typeof r === "string") {
-    return this._carryOver(
-      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).setColor(r), null));
-  } else {
-    return this._carryOver(
-      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).setColor([r, g, b]), null));
-  }
-};
-
-/**
- * Modifies this mesh by converting the normals it defines
- * to ["unit vectors"]{@link glmath} ("normalized" vectors with a length of 1).
- * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.normalizeNormals = function() {
-  var normalOffset = Mesh._normalOffset(
-     this.attributeBits);
-  if(normalOffset < 0) return this;
-  return this._carryOver(
-   Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).normalizeNormals(), null));
 };
 
 /**
@@ -752,32 +689,6 @@ Mesh.prototype.toWireFrame = function() {
     this.attributeBits | Mesh.LINES_BIT);
 };
 
-/** @ignore */
-Mesh._isIdentityInUpperLeft = function(m) {
-  return m[0] === 1 && m[1] === 0 && m[2] === 0 &&
-    m[4] === 0 && m[5] === 1 && m[6] === 0 &&
-    m[8] === 0 && m[9] === 0 && m[10] === 1;
-};
- /**
-  * Transforms the positions and normals of all the vertices currently
-  * in this mesh. The matrix won't affect vertices added afterwards, and
-  * won't affect other attributes, including tangents and bitangents.
-  * Also, resets the primitive
-  * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
-  * will not build upon previous vertices. Future vertices should not be
-  * added after calling this method without calling mode() first.
-  * @deprecated Use <code>new H3DU.MeshBuffer(this).transform()</code> instead.
-  * @param {Array<number>} matrix A 4x4 matrix described in
-  * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
-  * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
-  * (Normals need to be transformed specially because they describe directions, not points.)
-  * @returns {H3DU.Mesh} This object.
-  */
-Mesh.prototype.transform = function(matrix) {
-  return this._carryOver(
-  Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).transform(matrix), null));
-};
-
 /**
  * Enumerates the primitives (lines, triangles, and points) included
  * in this mesh.
@@ -837,157 +748,6 @@ Mesh.prototype._carryOver = function(mesh) {
   return this;
 };
 
-/** @ignore */
-Mesh._getValue = function(helper, attr, attrIndex, value) {
-  if(attr) {
-    value[0] = 0;
-    value[1] = 0;
-    value[2] = 0;
-    helper.getVec(attr, attrIndex, value);
-    return true;
-  }
-  return false;
-};
-/** @ignore */
-Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
-  var helper = new H3DU.BufferHelper();
-  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
-  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
-  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
-  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
-  var scratch = [];
-  var c = srcMesh.color.slice(0, 3);
-  var n = srcMesh.normal.slice(0, 3);
-  var t = srcMesh.texCoord.slice(0, 2);
-  if(Mesh._getValue(helper, normalAttr, 0, scratch)) {
-    srcMesh.normal3(scratch);
-  }
-  if(Mesh._getValue(helper, colorAttr, 0, scratch)) {
-    srcMesh.color3(scratch);
-  }
-  if(Mesh._getValue(helper, uvAttr, 0, scratch)) {
-    srcMesh.texCoord2(scratch);
-  }
-  if(Mesh._getValue(helper, posAttr, 0, scratch)) {
-    srcMesh.vertex3(scratch);
-  }
-  srcMesh.color3(c).normal3(n).texCoord2(t);
-};
-
-/** @ignore */
-Mesh._fromMeshBuffer = function(meshBuffer, srcMesh) {
-  var helper = new H3DU.BufferHelper();
-  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
-  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
-  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
-  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
-  var tanAttr = meshBuffer.getAttribute(H3DU.Semantic.TANGENT);
-  var bitanAttr = meshBuffer.getAttribute(H3DU.Semantic.BITANGENT);
-  var indices = meshBuffer.getIndices();
-  var scratch = [];
-  var srcMeshValue = typeof srcMesh === "undefined" || srcMesh === null ? new Mesh() : srcMesh;
-  var mesh = srcMeshValue.mode(meshBuffer.primitiveType());
-  for(var i = 0; i < indices.length; i++) {
-    var index = indices[i];
-    if(Mesh._getValue(helper, normalAttr, index, scratch)) {
-      mesh.normal3(scratch);
-    }
-    if(Mesh._getValue(helper, colorAttr, index, scratch)) {
-      mesh.color3(scratch);
-    }
-    if(Mesh._getValue(helper, uvAttr, index, scratch)) {
-      mesh.texCoord2(scratch);
-    }
-    if(Mesh._getValue(helper, tanAttr, index, scratch)) {
-      mesh.tangent3(scratch);
-    }
-    if(Mesh._getValue(helper, bitanAttr, index, scratch)) {
-      mesh.bitangent3(scratch);
-    }
-    if(Mesh._getValue(helper, posAttr, index, scratch)) {
-      mesh.vertex3(scratch);
-    }
-  }
-  mesh.newPrimitive();
-  return mesh;
-};
-
-/**
- * Finds the tightest axis-aligned
- * bounding box that holds all vertices in the mesh.
- * @deprecated Use <code>new H3DU.MeshBuffer(this).getBounds()</code> instead.
- * @returns {Array<number>} An array of six numbers describing the tightest
- * axis-aligned bounding box
- * that fits all vertices in the mesh. The first three numbers
- * are the smallest-valued X, Y, and Z coordinates, and the
- * last three are the largest-valued X, Y, and Z coordinates.
- * If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
- * -Inf, -Inf].
- */
-Mesh.prototype.getBoundingBox = function() {
-  return new H3DU.MeshBuffer(this).getBounds();
-};
-/**
- * Modifies this mesh by reversing the sign of normals it defines.
- * If this mesh defines normals, also resets the primitive
- * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
- * will not build upon previous vertices.
- * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.reverseNormals = function() {
-  var normalOffset = Mesh._normalOffset(
-     this.attributeBits);
-  if(normalOffset < 0) return this;
-  return this._carryOver(
-   Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).reverseNormals(), null));
-};
-
-/**
- * Reverses the winding order of the triangles in this mesh
- * by swapping the second and third vertex indices of each one.
- * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseWinding()</code> instead.
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.reverseWinding = function() {
-  if((this.attributeBits & Mesh.PRIMITIVES_BITS) !== 0) {
-   // Not a triangle mesh
-    return this;
-  }
-  for(var i = 0; i < this.indices.length; i += 3) {
-    var f2 = this.indices[i + 1];
-    var f3 = this.indices[i + 2];
-    this.indices[i + 2] = f2;
-    this.indices[i + 1] = f3;
-  }
-  return this;
-};
-
-/**
- * Recalculates the normal vectors for triangles
- * in this mesh. For this to properly affect shading, each triangle in
- * the mesh must have its vertices defined in
- * counterclockwise order (if the triangle is being rendered
- * in a right-handed coordinate system). Each normal calculated will
- * be normalized to have a length of 1 (unless the normal is (0,0,0)).
- * @deprecated Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.
- * @param {Boolean} flat If true, each triangle in the mesh
- * will have the same normal, which usually leads to a flat
- * appearance. If false, each unique vertex in the mesh
- * will have its own normal, which usually leads to a smooth
- * appearance.
- * @param {Boolean} inward If true, the generated normals
- * will point inward; otherwise, outward.
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.recalcNormals = function(flat, inward) {
-  var primtype = this.primitiveType();
-  if(primtype === Mesh.TRIANGLES) {
-    return this._carryOver(
-      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).recalcNormals(flat, inward), null));
-  }
-  return this;
-};
 /** @ignore */
 Mesh._getStride = function(format) {
   var s = [3, 6, 6, 9, 5, 8, 8, 11][format & (Mesh.NORMALS_BIT | Mesh.COLORS_BIT | Mesh.TEXCOORDS_BIT)];
@@ -1129,6 +889,239 @@ Mesh.LINE_STRIP = 3;
 Mesh.POINTS = 0;
 
 // //////////////////////////////////////////////////////////////////////////
+
+/** @ignore */
+Mesh._getValue = function(helper, attr, attrIndex, value) {
+  if(attr) {
+    value[0] = 0;
+    value[1] = 0;
+    value[2] = 0;
+    helper.getVec(attr, attrIndex, value);
+    return true;
+  }
+  return false;
+};
+/** @ignore */
+Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
+  var helper = new H3DU.BufferHelper();
+  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
+  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
+  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
+  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
+  var scratch = [];
+  var c = srcMesh.color.slice(0, 3);
+  var n = srcMesh.normal.slice(0, 3);
+  var t = srcMesh.texCoord.slice(0, 2);
+  if(Mesh._getValue(helper, normalAttr, 0, scratch)) {
+    srcMesh.normal3(scratch);
+  }
+  if(Mesh._getValue(helper, colorAttr, 0, scratch)) {
+    srcMesh.color3(scratch);
+  }
+  if(Mesh._getValue(helper, uvAttr, 0, scratch)) {
+    srcMesh.texCoord2(scratch);
+  }
+  if(Mesh._getValue(helper, posAttr, 0, scratch)) {
+    srcMesh.vertex3(scratch);
+  }
+  srcMesh.color3(c).normal3(n).texCoord2(t);
+};
+
+/** @ignore */
+Mesh._fromMeshBuffer = function(meshBuffer, srcMesh) {
+  var helper = new H3DU.BufferHelper();
+  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
+  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
+  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
+  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
+  var tanAttr = meshBuffer.getAttribute(H3DU.Semantic.TANGENT);
+  var bitanAttr = meshBuffer.getAttribute(H3DU.Semantic.BITANGENT);
+  var indices = meshBuffer.getIndices();
+  var scratch = [];
+  var srcMeshValue = typeof srcMesh === "undefined" || srcMesh === null ? new Mesh() : srcMesh;
+  var mesh = srcMeshValue.mode(meshBuffer.primitiveType());
+  for(var i = 0; i < indices.length; i++) {
+    var index = indices[i];
+    if(Mesh._getValue(helper, normalAttr, index, scratch)) {
+      mesh.normal3(scratch);
+    }
+    if(Mesh._getValue(helper, colorAttr, index, scratch)) {
+      mesh.color3(scratch);
+    }
+    if(Mesh._getValue(helper, uvAttr, index, scratch)) {
+      mesh.texCoord2(scratch);
+    }
+    if(Mesh._getValue(helper, tanAttr, index, scratch)) {
+      mesh.tangent3(scratch);
+    }
+    if(Mesh._getValue(helper, bitanAttr, index, scratch)) {
+      mesh.bitangent3(scratch);
+    }
+    if(Mesh._getValue(helper, posAttr, index, scratch)) {
+      mesh.vertex3(scratch);
+    }
+  }
+  mesh.newPrimitive();
+  return mesh;
+};
+ /**
+  * Transforms the positions and normals of all the vertices currently
+  * in this mesh. The matrix won't affect vertices added afterwards, and
+  * won't affect other attributes, including tangents and bitangents.
+  * Also, resets the primitive
+  * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
+  * will not build upon previous vertices. Future vertices should not be
+  * added after calling this method without calling mode() first.
+  * @deprecated Use <code>new H3DU.MeshBuffer(this).transform()</code> instead.
+  * @param {Array<number>} matrix A 4x4 matrix described in
+  * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
+  * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
+  * (Normals need to be transformed specially because they describe directions, not points.)
+  * @returns {H3DU.Mesh} This object.
+  */
+Mesh.prototype.transform = function(matrix) {
+  return this._carryOver(
+  Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).transform(matrix), null));
+};
+/**
+ * Finds the tightest axis-aligned
+ * bounding box that holds all vertices in the mesh.
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).getBounds()</code> instead.
+ * @returns {Array<number>} An array of six numbers describing the tightest
+ * axis-aligned bounding box
+ * that fits all vertices in the mesh. The first three numbers
+ * are the smallest-valued X, Y, and Z coordinates, and the
+ * last three are the largest-valued X, Y, and Z coordinates.
+ * If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
+ * -Inf, -Inf].
+ */
+Mesh.prototype.getBoundingBox = function() {
+  return new H3DU.MeshBuffer(this).getBounds();
+};
+/**
+ * Modifies this mesh by reversing the sign of normals it defines.
+ * If this mesh defines normals, also resets the primitive
+ * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
+ * will not build upon previous vertices.
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.reverseNormals = function() {
+  var normalOffset = Mesh._normalOffset(
+     this.attributeBits);
+  if(normalOffset < 0) return this;
+  return this._carryOver(
+   Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).reverseNormals(), null));
+};
+
+/**
+ * Reverses the winding order of the triangles in this mesh
+ * by swapping the second and third vertex indices of each one.
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseWinding()</code> instead.
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.reverseWinding = function() {
+  if((this.attributeBits & Mesh.PRIMITIVES_BITS) !== 0) {
+   // Not a triangle mesh
+    return this;
+  }
+  for(var i = 0; i < this.indices.length; i += 3) {
+    var f2 = this.indices[i + 1];
+    var f3 = this.indices[i + 2];
+    this.indices[i + 2] = f2;
+    this.indices[i + 1] = f3;
+  }
+  return this;
+};
+
+/**
+ * Recalculates the normal vectors for triangles
+ * in this mesh. For this to properly affect shading, each triangle in
+ * the mesh must have its vertices defined in
+ * counterclockwise order (if the triangle is being rendered
+ * in a right-handed coordinate system). Each normal calculated will
+ * be normalized to have a length of 1 (unless the normal is (0,0,0)).
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.
+ * @param {Boolean} flat If true, each triangle in the mesh
+ * will have the same normal, which usually leads to a flat
+ * appearance. If false, each unique vertex in the mesh
+ * will have its own normal, which usually leads to a smooth
+ * appearance.
+ * @param {Boolean} inward If true, the generated normals
+ * will point inward; otherwise, outward.
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.recalcNormals = function(flat, inward) {
+  var primtype = this.primitiveType();
+  if(primtype === Mesh.TRIANGLES) {
+    return this._carryOver(
+      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).recalcNormals(flat, inward), null));
+  }
+  return this;
+};
+/**
+ * Merges the vertices from another mesh into this one.
+ * The vertices from the other mesh will be copied into this one,
+ * and the other mesh's indices copied or adapted.
+ * Also, resets the primitive
+ * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
+ * will not build upon previous vertices.
+ * @deprecated Use <code>new H3DU.MeshBuffer(mesh).merge(other)</code> instead.
+ * @param {H3DU.Mesh} other A mesh to merge into this one. The mesh
+ * given in this parameter will remain unchanged.
+ * Throws an error if this mesh's primitive type is incompatible with the
+ * the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.merge = function(other) {
+  if(!(other instanceof H3DU.Mesh)) {
+    throw new Error();
+  }
+  if(!Mesh._isCompatibleMode(this.currentMode, other.currentMode)) {
+    throw new Error("Meshes have incompatible types");
+  }
+  return this._carryOver(Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this)
+    .merge(new H3DU.MeshBuffer(other)), null));
+};
+ /**
+  * Sets all the vertices in this mesh to the given color.
+  * This method doesn't change this mesh's current color.
+  * Only the color's red, green, and blue components will be used.
+  * @deprecated Use <code>new H3DU.MeshBuffer(this).setColor(r)</code> instead.
+  * @param {Array<number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
+  * or the red color component (0-1).
+  * @param {number} g Green component of the color (0-1).
+  * May be null or omitted if a string is given as the "r" parameter.
+  * @param {number} b Blue component of the color (0-1).
+  * May be null or omitted if a string is given as the "r" parameter.
+  * @returns {H3DU.Mesh} This object.
+  */
+Mesh.prototype.setColor3 = function(r, g, b) {
+  var offset = Mesh._colorOffset(
+     this.attributeBits);
+  if(offset < 0)return this;
+  if(typeof r === "string") {
+    return this._carryOver(
+      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).setColor(r), null));
+  } else {
+    return this._carryOver(
+      Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).setColor([r, g, b]), null));
+  }
+};
+
+/**
+ * Modifies this mesh by converting the normals it defines
+ * to ["unit vectors"]{@link glmath} ("normalized" vectors with a length of 1).
+ * @deprecated Use <code>new H3DU.MeshBuffer(this).reverseNormals()</code> instead.
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.normalizeNormals = function() {
+  var normalOffset = Mesh._normalOffset(
+     this.attributeBits);
+  if(normalOffset < 0) return this;
+  return this._carryOver(
+   Mesh._fromMeshBuffer(new H3DU.MeshBuffer(this).normalizeNormals(), null));
+};
 
 /**
  * Sets the current tangent vector for this mesh. Future vertex positions

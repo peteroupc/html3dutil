@@ -559,7 +559,7 @@ Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
  * (Note that near can be greater than far or vice versa.) The absolute difference
  * between near and far should be as small as the application can accept.
  * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
- * of width to height). If null or omitted, uses this scene's aspect ratio instead.
+ * of width to height). If null, undefined, or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near, far, aspect) {
@@ -583,7 +583,7 @@ Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near, far,
  * @param {number} top Topmost coordinate of the view rectangle.
  * (Note that top can be greater than bottom or vice versa.)
  * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
- * of width to height). If null or omitted, uses this scene's aspect ratio instead.
+ * of width to height). If null, undefined, or omitted, uses this scene's aspect ratio instead.
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, aspect) {
@@ -691,7 +691,7 @@ Scene3D.prototype.dispose = function() {
  * @param {number} b Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {number} [a] Alpha color component (0-1).
- * If the "r" parameter is given and this parameter is null or omitted,
+ * If the "r" parameter is given and this parameter is null, undefined, or omitted,
  * this value is treated as 1.0.
  * @returns {H3DU.Scene3D} This object.
  */
@@ -945,10 +945,10 @@ Scene3D.prototype.getLights = function() {
  * axes, respectively. May be null, in which case the default
  * is (0, 0, 1).
  * @param {Array<number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
- * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+ * If null, undefined, or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
  * @param {Array<number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
- * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+ * If null, undefined, or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight = function(index, position, diffuse, specular) {
@@ -1007,10 +1007,10 @@ Scene3D.prototype.setAmbient = function(r, g, b, a) {
  * light has index 0, the second has index 1, and so on.
  * @param {Array<number>} position Light position. (See {@link H3DU.LightSource#position}.)
  * @param {Array<number>} [diffuse] A [color vector or string]{@link H3DU.toGLColor} giving the diffuse color of the light.
- * If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+ * If null, undefined, or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
  * @param {Array<number>} [specular] A [color vector or string]{@link H3DU.toGLColor} giving the color of specular highlights caused by
  * the light.
- * If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+ * If null, undefined, or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
  * @returns {H3DU.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight = function(index, position, diffuse, specular) {

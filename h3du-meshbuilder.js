@@ -177,7 +177,7 @@ CurveBuilder._NormalSurface = function(surface) {
 /**
  * Clears the arrays of attribute values (such as positions and normals)
  * and vertex indices generated so far. The attributes themselves will remain.
- * @returns {*} Return value.
+ * @returns {H3DU.CurveBuilder} This object.
  */
 CurveBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
@@ -188,33 +188,41 @@ CurveBuilder.prototype.clearVertices = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Generates a mesh buffer containing the vertex attributes
+ * generated so far. The mesh buffer's primitive type will equal the
+ * last type passed to the "mode" parameter in the {@link H3DU.CurveBuilder.curveEval} method.
+ * @returns {H3DU.MeshBuffer} The generated mesh buffer.
  */
 CurveBuilder.prototype.toMeshBuffer = function() {
   return CurveBuilder._toMeshBuffer(this.attributes, this.indices, this.mode);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} curve
- * @param {*} size
- * @returns {*} Return value.
+ * Sets the parametric curve used to generate vertex positions.
+ * @param {Object} curve A [curve evaluator object]{@link H3DU.Curve} that
+ * describes the parametric curve used to generate positions.
+ * @param {number} [size] The number of elements in each position value. For
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
+ * is 3.
+ * @returns {H3DU.CurveBuilder} This object.
  */
 CurveBuilder.prototype.position = function(curve, size) {
   return this.attribute(curve, Semantic.POSITION, 0, size);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} curve
- * @param {number|String} semantic An attribute semantic, such
+ * Sets the parametric curve used to generate vertex attribute values.
+ * @param {Object} curve A [curve evaluator object]{@link H3DU.Curve} that
+ * describes the parametric curve used to generate attribute.
+ * @param {number|string} semantic An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
  * @param {number} semanticIndex The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string.
- * @param {*} size
- * @returns {*} Return value.
+ * @param {number} [size] The number of elements in each position value. For
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
+ * is 3.
+ * @returns {H3DU.CurveBuilder} This object.
  */
 CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size) {
   CurveBuilder._setAttribute(this.attributes, this.vertexCount,
@@ -222,10 +230,12 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} curve
- * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null
- * or omitted, generates
+ * Convenience method for creating a mesh buffer from a parametric
+ * curve. The mesh buffer will contain positions and vertex normals that
+ * cover the given surface.
+ * @param {Object} curve A [curve evaluator object]{@link H3DU.Curve} that
+ * describes the parametric curve used to generate positions.
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null, undefined, or omitted, generates
  * a series of lines defining the curve. If this value is {@link H3DU.Mesh.POINTS},
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
@@ -235,7 +245,7 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
  * Default is the starting coordinate given by the [curve evaluator object]{@link H3DU.Curve}, or 0 if not given.
  * @param {number} [u2] Ending point of the curve.
  * Default is the ending coordinate given by the [curve evaluator object]{@link H3DU.Curve}, or 1 if not given.
- * @returns {*} Return value.
+ * @returns {H3DU.MeshBuffer} The generated mesh buffer.
  */
 CurveBuilder.curveToBuffer = function(curve, mode, n, u1, u2) {
   return new CurveBuilder()
@@ -256,8 +266,10 @@ SurfaceBuilder.prototype.clearVertices = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Generates a mesh buffer containing the vertex attributes
+ * generated so far. The mesh buffer's primitive type will equal the
+ * last type passed to the "mode" parameter in the {@link H3DU.SurfaceBuilder.surfaceEval} method.
+ * @returns {H3DU.MeshBuffer} The generated mesh buffer.
  */
 SurfaceBuilder.prototype.toMeshBuffer = function() {
   return CurveBuilder._toMeshBuffer(this.attributes, this.indices, this.mode);
@@ -266,9 +278,9 @@ SurfaceBuilder.prototype.toMeshBuffer = function() {
  * TODO: Not documented yet.
  * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
- * generated by the position values.
- * @param {number} [size] The number of elements in each value of the attribute. For
- * example, if the attribute is 3-dimensional, this parameter is 3. If null or omitted, the default
+ * used to generate position values.
+ * @param {number} [size] The number of elements in each position value. For
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3.
  * @returns {H3DU.SurfaceBuilder} This object.
  */
@@ -276,12 +288,12 @@ SurfaceBuilder.prototype.position = function(surface, size) {
   return this.attribute(surface, Semantic.POSITION, 0, size);
 };
 /**
- * TODO: Not documented yet.
+ * Sets the parametric surface used to generate texture coordinates.
  * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
- * generated by the texture coordinates.
+ * used to generate texture coordinates.
  * @param {number} [size] The number of elements in each value of the attribute. For
- * example, if the attribute is 3-dimensional, this parameter is 3. If null or omitted, the default
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 2.
  * @returns {H3DU.SurfaceBuilder} This object.
  */
@@ -289,12 +301,12 @@ SurfaceBuilder.prototype.texCoord = function(surface, size) {
   return this.attribute(surface, Semantic.TEXCOORD, 0, typeof size === "undefined" || size === null ? 2 : size);
 };
 /**
- * TODO: Not documented yet.
+ * Sets the parametric surface used to generate vertex positions and normals.
  * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
- * generated by the positions.
+ * used to generate positions.
  * @param {number} [size] The number of elements in each position and normal. For
- * example, if the attribute is 3-dimensional, this parameter is 3. If null or omitted, the default
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3.
  * @returns {H3DU.SurfaceBuilder} This object.
  */
@@ -304,18 +316,67 @@ SurfaceBuilder.prototype.positionNormal = function(surface, size) {
         .attribute(norm, Semantic.NORMAL, 0, size);
 };
 /**
- * TODO: Not documented yet.
+ * @constructor
+ * @ignore */
+SurfaceBuilder._TexCoord = function(s) {
+  var ep = new Surface(s).endPoints();
+  this.u1 = ep[0];
+  this.v1 = ep[2];
+  this.uinv = ep[0] === ep[1] ? 0 : 1 / (ep[1] - ep[0]);
+  this.vinv = ep[2] === ep[3] ? 0 : 1 / (ep[3] - ep[2]);
+  this.evaluate = function(u, v) {
+    return [(u - this.u1) * this.uinv, (v - this.v1) * this.vinv];
+  };
+};
+/**
+ * Sets the parametric surface used to generate vertex positions, and
+ * sets a surface evaluator that generates texture coordinates ranging
+ * from (0,1) along the U and V axes of the surface.
  * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
- * generated by the attribute's values.
- * @param {number|String} semantic An attribute semantic, such
+ * used to generate positions.
+ * @param {number} [size] The number of elements in each position. For
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
+ * is 3. The texture coordinates will be 2-dimensional.
+ * @returns {H3DU.SurfaceBuilder} This object.
+ */
+SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
+  var tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
+  return this.attribute(surface, Semantic.POSITION, 0, size)
+        .attribute(tc, Semantic.TEXCOORD, 0, 2);
+};
+
+/**
+ * Sets the parametric surface used to generate vertex positions and normals, and
+ * sets a surface evaluator that generates texture coordinates ranging
+ * from (0,1) along the U and V axes of the surface.
+ * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
+ * describes the parametric surface
+ * used to generate positions.
+ * @param {number} [size] The number of elements in each position and normal. For
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
+ * is 3. The texture coordinates will be 2-dimensional.
+ * @returns {H3DU.SurfaceBuilder} This object.
+ */
+SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
+  return this.positionNormal(surface, size).positionTexCoord(surface, size);
+};
+
+/**
+ * Sets the parametric surface used to generate vertex attribute values.
+ * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
+ * describes the parametric surface
+ * used to generate attribute's values.
+ * @param {number|string} semantic An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
  * @param {number} [semanticIndex] The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string.
- * @param {*} [size]
+ * @param {number} [size] The number of elements in each position and normal. For
+ * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
+ * is 3.
  * @returns {H3DU.SurfaceBuilder} This object.
  * @example <caption>The following example sets the surface
  * function for texture coordinates to a linear evaluator. Thus, coordinates passed to the
@@ -329,12 +390,15 @@ SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, 
      surface, semantic, semanticIndex, size);
   return this;
 };
+
 /**
  * Convenience method for creating a mesh buffer from a parametric
- * surface. The mesh buffer will contain positions and vertex normals that
- * cover the given surface.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null
- * or omitted, generates a series of triangles defining the surface. If
+ * surface. The mesh buffer will contain positions, vertex normals, and
+ * texture coordinates that cover the given surface.
+ * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
+ * describes the parametric surface
+ * used to generate positions.
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
  * this value is {@link H3DU.Mesh.LINES}, generates
  * a series of lines defining the surface. If this value is {@link H3DU.Mesh.POINTS},
  * generates a series of points along the surface. For any other value,
@@ -351,19 +415,16 @@ SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, 
  * Default is the starting V coordinate given by the [surface evaluator object]{@link H3DU.Surface}, or 0 if not given.
  * @param {number} [v2] Ending V coordinate of the surface to evaluate.
  * Default is the ending V coordinate given by the [surface evaluator object]{@link H3DU.Surface}, or 1 if not given.
- * @returns {H3DU.SurfaceBuilder} This object.
+ * @returns {H3DU.MeshBuffer} The generated mesh buffer.
  */
 SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2) {
-  // TODO: Incorporate texture coordinates.
-  // TODO: Consider adding "positionNormalUV" method to SurfaceBuilder
   return new SurfaceBuilder()
-     .positionNormal(surface, 3)
+     .positionNormalTexCoord(surface, 3)
      .evalSurface(mode, un, vn, u1, u2, vn, v2).toMeshBuffer();
 };
 /**
  * Generates the vertex attributes of the parametric curves.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null
- * or omitted, generates
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null, undefined, or omitted, generates
  * a series of lines defining the curve. If this value is {@link H3DU.Mesh.POINTS},
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
@@ -420,8 +481,7 @@ SurfaceBuilder.prototype._evalOne = function(u, v) {
 };
 /**
  * Generates the vertex attributes of the parametric surfaces.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null
- * or omitted, generates a series of triangles defining the surface. If
+ * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
  * this value is {@link H3DU.Mesh.LINES}, generates
  * a series of lines defining the surface. If this value is {@link H3DU.Mesh.POINTS},
  * generates a series of points along the surface. For any other value,

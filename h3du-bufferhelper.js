@@ -8,17 +8,18 @@
  http://peteroupc.github.io/
 */
 
+import {_MathInternal} from "./h3du-mathinternal";
+
 /**
  * A helper class for accessing and setting data in vertex attributes.<p>
- * A vertex attribute holds a <i>buffer</i> of arbitrary size.<p>
- * A vertex attribute object includes the following:<ul>
+ * A <b>vertex attribute object</b> includes the following:<ul>
  * <li>A semantic, such as {@link H3DU.Semantic.POSITION}, which describes
  * the kind of data each value holds.
  * <li>A semantic index, which distinguishes attributes with the same semantic
  * in the same mesh buffer object.
  * <li>A <i>buffer</i> of arbitrary size. This buffer
  * is made up of <i>values</i>, one for each vertex, and each value
- * is made up of one or more <i>elements</i>, which are numbers such
+ * is takes up one or more <i>elements</i> in the buffer, which are numbers such
  * as X coordinates or red components, depending on the attribute's semantic.
  * Each value has the same number of elements.
  * <li>An offset, which identifies the index, starting from 0, of the first value
@@ -35,16 +36,17 @@ export var BufferHelper = function() {
  // Has no properties to initialize.
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @returns {*} Return value.
+ * Gets a reference to the buffer used in the given vertex attribute object.
+ * @param {Array<Object>} a A [vertex attribute object]{@link H3DU.BufferHelper}.
+ * @returns {Float32Array} A reference to the buffer used in the vertex attribute
+ * object, or null if "a" is null, undefined, or omitted.
  */
 BufferHelper.prototype.getBuffer = function(a) {
   return typeof a === "undefined" || a === null ? null : a[2];
 };
 /**
  * Gets the number of values defined for a vertex attribute.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * @param {Array<Object>} a A [vertex attribute object]{@link H3DU.BufferHelper}.
  * @returns {number} The number of values defined in the attribute object's buffer.
  */
 BufferHelper.prototype.count = function(a) {
@@ -54,7 +56,7 @@ BufferHelper.prototype.count = function(a) {
 };
 /**
  * Gets the number of elements (numbers) that each value of a vertex attribute uses.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * @param {Array<Object>} a A [vertex attribute object]{@link H3DU.BufferHelper}.
  * Can be null.
  * @returns {number} The number of elements per value of the vertex attribute, or 0 if "a" is null,
  * undefined, or omitted.
@@ -63,9 +65,9 @@ BufferHelper.prototype.countPerValue = function(a) {
   return typeof a === "undefined" || a === null ? 0 : a[3] * 1.0;
 };
 /**
- * Creates an object describing information about a vertex attribute.
+ * Creates a [vertex attribute object]{@link H3DU.BufferHelper}.
  * Each value in the attribute will be initialized to all zeros.
- * @param {number|String} semantic An attribute semantic, such
+ * @param {number|string} semantic An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
  * @param {number} semanticIndex The set index of the attribute
@@ -77,15 +79,15 @@ BufferHelper.prototype.countPerValue = function(a) {
  * @param {number} countPerValue Number of elements (numbers) for each value.
  * @returns {Array<Object>} A new vertex attribute with blank values.
  */
-BufferHelper.prototype.makeBlank = function(semantic, index, count, countPerValue) {
+BufferHelper.prototype.makeBlank = function(semantic, semanticIndex, count, countPerValue) {
   if(typeof semantic === "number") {
     var els = new Float32Array(new ArrayBuffer(count * countPerValue * 4));
-    return [semantic, index, els, countPerValue, countPerValue, index];
+    return [semantic, semanticIndex, els, countPerValue, countPerValue, semanticIndex];
   } else {
-    var sem = this.resolveSemantic(semantic, index);
+    var sem = this.resolveSemantic(semantic, semanticIndex);
     if(typeof sem === "undefined" || sem === null)throw new Error();
     els = new Float32Array(new ArrayBuffer(count * countPerValue * 4));
-    return [sem[0], sem[1], els, countPerValue, countPerValue, index];
+    return [sem[0], 0, els, countPerValue, countPerValue, sem[1]];
   }
 };
 /**
@@ -107,31 +109,8 @@ BufferHelper.prototype.makeIndices = function(numIndices) {
   return array;
 };
 /**
- * Merges two vertex attributes, whose vertices can be indexed differently, into one
- * combined vertex attribute, where one of the input attributes is assumed to consist
- * of all-zero values.
- * @param {Array<Object>} attr An object describing information about a vertex attribute.
- * @param {Array<number>|Uint8Array|Uint16Array|Uint32Array} indices1 An array of vertex indices to vertices that will appear first in the merged attribute. The vertex indices are those of the first vertex attribute.
- * @param {Array<number>|Uint8Array|Uint16Array|Uint32Array} indices2 An array of vertex indices to vertices that will appear second in the merged attribute. The vertex indices are those of the first vertex attribute.
- * @param {*} attrIsSecond
- * @returns {Array<Object>} The merged attribute, where the vertices from the first vertex
- * attribute come before those from the second.
- */
-BufferHelper.prototype.mergeBlank = function(attr, indices1, indices2, attrIsSecond) {
-  var newAttribute = this.makeBlank(attr[0], attr[5], indices1.length + indices2.length, attr[3]);
-  var value = [];
-  var startIndex = attrIsSecond ? indices1.length : 0;
-  var attrIndices = attrIsSecond ? indices2 : indices1;
-  for(var i = 0; i < attrIndices.length; i++) {
-    var index = attrIndices[i];
-    this.getVec(attr, index, value);
-    this.setVec(newAttribute, startIndex + i, value);
-  }
-  return newAttribute;
-};
-/**
  * Copies the values of a vertex attribute into a new vertex attribute object.
- * @param {Array<Object>} attr An object describing information about a vertex attribute.
+ * @param {Array<Object>} attr A [vertex attribute object]{@link H3DU.BufferHelper}.
  * @returns {Array<Object>} A copy of the vertex attribute object.
  */
 BufferHelper.prototype.copy = function(attr) {
@@ -145,66 +124,65 @@ BufferHelper.prototype.copy = function(attr) {
   return newAttribute;
 };
 /**
+ * TODO: Not documented yet.
+ * @param {*} a1
+ * @param {*} a2
+ * @returns {*} Return value.
+ */
+BufferHelper.prototype.sameSemantic = function(a1, a2) {
+  return a1[0] === a2[0] && a1[5] === a2[5];
+};
+/**
  * Merges two vertex attributes, whose vertices can be indexed differently, into one
  * combined vertex attribute. The two attributes must have the same semantic and semantic
  * index, for example, semantic POSITION and semantic index 0.
- * @param {Array<Object>} attr1 An object describing information about the first vertex attribute.
- * @param {*} indices1
- * @param {Array<Object>} attr2 An object describing information about the second vertex attribute.
- * @param {*} indices2
+ * @param {Array<Object>} attr1 A [vertex attribute object]{@link H3DU.BufferHelper} for the first vertex attribute.
+ * Can be null, in which case it is assumed that the attribute contains as many values
+ * as indices and all the values are zeros.
+ * @param {Array<number>|Uint16Array|Uint8Array|Uint32Array} indices1 An array of vertex indices
+ * associated with the first vertex attribute.
+ * @param {Array<Object>} attr2 A [vertex attribute object]{@link H3DU.BufferHelper} for the second vertex attribute.
+ * Can be null, in which case it is assumed that the attribute contains as many values as indices
+ * and all the values are zeros.
+ * @param {Array<number>|Uint16Array|Uint8Array|Uint32Array} indices2 An array of vertex indices
+ * associated with the second vertex attribute.
  * @returns {Array<Object>} The merged attribute, where the vertices from the first vertex
- * attribute come before those from the second. Returns null if the two objects have different semantics
+ * attribute come before those from the second. The merged attribute will have as many
+ * values as the sum of the lengths of "indices1" and "indices2".
+ * Returns null if the two objects have different semantics
  * or semantic indices.
  */
 BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
-  // Different semantics
-  if(attr1[0] !== attr2[0])return null;
-  // Different semantic indices
-  if(attr1[5] !== attr2[5])return null;
-  var elementsPerValue = Math.max(attr1[3], attr2[3]);
-  var elements = (indices1.length + indices2.length) * elementsPerValue;
-  var els = new Float32Array(new ArrayBuffer(elements * 4));
-  var newAttribute = [attr1[0], 0, els, elementsPerValue, elementsPerValue, attr1[5]];
-  var value = [];
-  for(var i = 0; i < indices1.length; i++) {
-    var index = indices1[i];
-    this.getVec(attr1, index, value);
-    for(var j = attr1[3]; j < elementsPerValue; j++) {
-      value[j] = 0;
-    }
-    this.setVec(newAttribute, i, value);
+  var countPerValue1 = this.countPerValue(attr1);
+  var countPerValue2 = this.countPerValue(attr2);
+  if(typeof attr1 !== "undefined" && attr1 !== null && (typeof attr2 !== "undefined" && attr2 !== null)) {
+      // Different semantics
+    if(!this.sameSemantic(attr1, attr2))return null;
   }
-  for(i = 0; i < indices2.length; i++) {
-    index = indices2[i];
-    this.getVec(attr2, index, value);
-    for(j = attr2[3]; j < elementsPerValue; j++) {
-      value[j] = 0;
+  var i;
+  var elementsPerValue = Math.max(countPerValue1, countPerValue2);
+  var newAttribute = this.makeBlank(attr1[0], attr1[5],
+    indices1.length + indices2.length, elementsPerValue);
+  var value = _MathInternal.vecZeros(elementsPerValue);
+  if(typeof attr1 !== "undefined" && attr1 !== null) {
+    for(i = 0; i < indices1.length; i++) {
+      this.getVec(attr1, indices1[i], value);
+      this.setVec(newAttribute, i, value);
     }
-    this.setVec(newAttribute, indices1.length + i, value);
   }
-  return newAttribute;
-};
-/**
- * TODO: Not documented yet.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
- * @param {*} indices
- * @returns {*} Return value.
- */
-BufferHelper.prototype.makeRedundant = function(a, indices) {
-  var elements = a[3] * indices.length;
-  var els = new Float32Array(new ArrayBuffer(elements * 4));
-  var newAttribute = [a[0], 0, els, a[3], a[3], a[5]];
-  var value = [];
-  for(var i = 0; i < indices.length; i++) {
-    var index = indices[i];
-    this.getVec(a, index, value);
-    this.setVec(newAttribute, i, value);
+  if(typeof attr2 !== "undefined" && attr2 !== null) {
+    for(i = 0; i < indices2.length; i++) {
+      this.getVec(attr2, indices2[i], value);
+      this.setVec(newAttribute, indices1.length + i, value);
+    }
   }
   return newAttribute;
 };
 /**
  * Gets the first element of the attribute value with the given vertex index.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * <p>Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when accessing the attribute's buffer.
+ * @param {Array<Object>} a A [vertex attribute object]{@link H3DU.BufferHelper}.
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
@@ -216,7 +194,9 @@ BufferHelper.prototype.get = function(a, index) {
 };
 /**
  * Sets the first element of the attribute value with the given vertex index.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * <p>Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when writing to the attribute's buffer.
+ * @param {Array<Object>} a A [vertex attribute object]{@link H3DU.BufferHelper}.
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
@@ -229,83 +209,10 @@ BufferHelper.prototype.set = function(a, index, value) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @param {number} v1
- * @param {number} v2
- * @returns {H3DU.BufferHelper} This object.
- */
-BufferHelper.prototype.set2 = function(a, index, v1, v2) {
-  var o = a[1] + index * a[4];
-  a[2][o] = v1;
-  a[2][o + 1] = v2;
-  return this;
-};
-/**
- * TODO: Not documented yet.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @param {number} v1
- * @param {number} v2
- * @param {number} v3
- * @returns {H3DU.BufferHelper} This object.
- */
-BufferHelper.prototype.set3 = function(a, index, v1, v2, v3) {
-  var o = a[1] + index * a[4];
-  a[2][o] = v1;
-  a[2][o + 1] = v2;
-  a[2][o + 2] = v3;
-  return this;
-};
-/**
- * TODO: Not documented yet.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @param {*} element
- * @param {*} value
- * @returns {*} Return value.
- */
-BufferHelper.prototype.setElement = function(a, index, element, value) {
-  var o = a[1] + index * a[4] + element;
-  a[2][o] = value;
-  return this;
-};
-/**
- * TODO: Not documented yet.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
- * @param {number} index
- * @param {*} element
- * @returns {*} Return value.
- */
-BufferHelper.prototype.getElement = function(a, index, element) {
-  var o = a[1] + index * a[4] + element;
-  return a[2][o];
-};
-/**
- * TODO: Not documented yet.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @param {*} element
- * @param {*} value
- * @returns {BufferHelper} This object.
- */
-BufferHelper.prototype.setElement = function(a, index, element, value) {
-  var o = a[1] + index * a[4] + element;
-  a[2][o] = value;
-  return this;
-};
-/**
- * Gets the elements of a vertex attribute value.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * Gets the elements of a vertex attribute value.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when accessing the attribute's buffer.
+ * @param {Array<Object>} a A [vertex attribute object]{@link H3DU.BufferHelper}.
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
@@ -323,8 +230,11 @@ BufferHelper.prototype.getVec = function(a, index, vec) {
   return vec;
 };
 /**
- * Sets the elements of a vertex attribute value.
- * @param {Array<Object>} a An object describing information about a vertex attribute.
+ * Sets the elements of a vertex attribute value.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when writing to the attribute's buffer, except
+ * where noted otherwise.
+ * @param {Array<Object>} a A [vertex attribute object]{@link H3DU.BufferHelper}.
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
@@ -344,14 +254,17 @@ BufferHelper.prototype.setVec = function(a, index, vec) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {number|String} name An attribute semantic, such
+ * Resolves an attribute semantic and semantic index, which
+ * may optionally be given as a string instead, into two numbers giving
+ * the semantic and index.
+ * @param {number|string} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
- * @param {number} index The set index of the attribute
+ * @param {number} [index] The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
- * This is ignored if "name" is a string.
+ * This is ignored if "name" is a string. Otherwise, if this value is null, undefined, or omitted,
+ * the default is 0.
  * @returns {Array<number>} A two-element array consisting
  * of the semantic and semantic index, respectively, described in
  * the "name" and "index" parameters.  Returns null if "name" is a string,
@@ -375,12 +288,12 @@ BufferHelper.prototype.resolveSemantic = function(name, index) {
       if(number.length <= 5 && (/^\d$/).test(number)) {
   // Only allow 5-digit-or-less numbers; more than
         // that is unreasonable
-        return new Uint32Array([wka, parseInt(number, 10)]);
+        return [wka, parseInt(number, 10)];
       } else {
         return null;
       }
     } else {
-      return new Uint32Array([wka, 0]);
+      return [wka, 0];
     }
   }
 };

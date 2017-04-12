@@ -108,7 +108,7 @@ another, see the example.
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point's length represents the size of all the control points.
 * `knots` (Type: Array.&lt;number>)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.
-* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null or omitted, no bits are set.
+* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.
 
 #### Example
 
@@ -334,7 +334,7 @@ and to the line between the next-to-last and last control points.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;number>>)<br>Array of control points as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
-* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
+* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 
 #### Return Value
@@ -355,7 +355,7 @@ and to the line between the next-to-last and last control points.
 #### Parameters
 
 * `controlPoints` (Type: number | Object)<br>Number of control points the curve will have, or an array of control points.
-* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
+* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
 
 #### Return Value
 
@@ -595,7 +595,7 @@ Creates a B-spline curve with uniform knots.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;number>>)<br>Array of control points as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
-* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
+* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> constructor.
 
 #### Return Value
@@ -613,7 +613,7 @@ passed to the <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a> or <a href="H
 #### Parameters
 
 * `controlPoints` (Type: number | Object)<br>Number of control points the curve will have, or an array of control points.
-* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.
+* `degree` (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
 
 #### Return Value
 

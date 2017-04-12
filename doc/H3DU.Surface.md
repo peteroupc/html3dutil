@@ -23,7 +23,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 #### Parameters
 
-* `surface` (Type: Object)<br>A <b>surface evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code> methods, as described in the corresponding methods of this class.
+* `surface` (Type: Object)<br>A <b>surface evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code> method, as described in the corresponding methods of this class.
 
 #### Example
 

@@ -20,7 +20,7 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `element` (Type: HTMLElement | HTMLDocument)<br>The HTML document or element to track keyboard and mouse events for. If null or omitted, uses the calling application's HTML document.
+* `element` (Type: HTMLElement | HTMLDocument)<br>The HTML document or element to track keyboard and mouse events for. If null, undefined, or omitted, uses the calling application's HTML document.
 
 ### Members
 
