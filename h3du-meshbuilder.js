@@ -277,7 +277,7 @@ SurfaceBuilder.prototype.toMeshBuffer = function() {
   return CurveBuilder._toMeshBuffer(this.attributes, this.indices, this.mode);
 };
 /**
- * TODO: Not documented yet.
+ * Sets the parametric surface used to generate vertex positions.
  * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
  * used to generate position values.

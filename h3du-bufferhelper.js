@@ -12,28 +12,41 @@ import {_MathInternal} from "./h3du-mathinternal";
 
 /**
  * A <b>vertex attribute object</b>.
- * @param {Float32Array} buffer TODO: Not documented yet.
- * @param {number} offset Throws an error if less than 0. TODO: Not documented yet.
- * @param {number} countPerValue Throws an error if 0 or less. TODO: Not documented yet.
- * @param {number} [stride] If null, undefined, or omitted, has the same value as "countPerValue".
- * Throws an error if 0 or less. TODO: Not documented yet.
+ * @constructor
+ * @memberof H3DU
+ * @param {Float32Array} buffer A buffer to store vertex attribute data; see
+ * {@link H3DU.BufferAccessor#buffer}.
+ * @param {number} offset Offset to the first value; see
+ * {@link H3DU.BufferAccessor#offset}. Throws an error if less than 0.
+ * @param {number} countPerValue Number of elements per value; see
+ * {@link H3DU.BufferAccessor#countPerValue}. Throws an error if 0 or less.
+ * @param {number} [stride] Number of elements from the start of one
+ * value to the start of the next; see
+ * {@link H3DU.BufferAccessor#stride}. If null, undefined, or
+ * omitted, has the same value as "countPerValue".
+ * Throws an error if 0 or less.
  */
 export var BufferAccessor = function(buffer, offset, countPerValue, stride) {
   if(typeof stride === "undefined" || stride === null)stride = countPerValue;
   if(offset < 0 || countPerValue <= 0 || stride <= 0)throw new Error();
-  if(isNaN(countPerValue) || countPerValue === null)throw new Error();
-  if(isNaN(stride) || stride === null)throw new Error();
   /**
    * A <i>buffer</i> of arbitrary size. This buffer
    * is made up of <i>values</i>, one for each vertex, and each value
    * is takes up one or more <i>elements</i> in the buffer, which are numbers such
    * as X coordinates or red components, depending on the attribute's semantic.
-   * Each value has the same number of elements.
+   * Each value has the same number of elements. An example of a <i>value</i>
+   * is (10, 20, 5), which can take up three consecutive <i>elements</i>
+   * in a <code>Float32Array</code> buffer such as the one given in this
+   * property.
    * @type {Float32Array} */
   this.buffer = buffer;
   /**
    * An offset, which identifies the index, starting from 0, of the first value
-   * of the attribute within the buffer.
+   * of the attribute within the buffer. The offset counts the number of
+   * elements in the buffer to the first value. For example, if this value is 6,
+   * then the first element of the first value in the buffer is found at
+   * <code>acc.buffer[acc.offset]</code> (assuming the buffer is
+   * more than 6 elements long).
    * @type {number} */
   this.offset = offset;
   /**
@@ -44,12 +57,12 @@ export var BufferAccessor = function(buffer, offset, countPerValue, stride) {
   /**
    * A stride, which gives the number of elements from the start of one
    * value to the start of the next.  A "packed" buffer will have a stride
-   * equal to the [count per value]{@link H3DU.BufferAccessor.countPerValue}.
+   * equal to the [count per value]{@link H3DU.BufferAccessor#countPerValue}.
    * @type {number} */
   this.stride = stride;
 };
 /**
- * Gets the number of values defined for this accessor.
+ * Gets the number of [values]{@link H3DU.BufferAccessor#buffer} defined for this accessor.
  * @returns {number} The number of values defined in this accessor's buffer.
  */
 BufferAccessor.prototype.count = function() {
@@ -58,10 +71,11 @@ BufferAccessor.prototype.count = function() {
   return odiv + (olen % this.stride >= this.countPerValue ? 1 : 0);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} count
- * @param {*} countPerValue
- * @returns {*} Return value.
+ * Generates a vertex attribute buffer, with each value set to all zeros.
+ * @param {number} count The number of [values]{@link H3DU.BufferAccessor#buffer}
+ * the buffer will hold. For example, (10, 20, 5) is a 3-element value.
+ * @param {number} countPerValue The number of elements each value will take in the buffer.
+ * @returns {H3DU.BufferAccessor} A blank vertex attribute buffer.
  */
 BufferAccessor.makeBlank = function(count, countPerValue) {
   return new BufferAccessor(
@@ -97,8 +111,8 @@ BufferHelper.prototype.makeIndices = function(numIndices) {
 };
 /**
  * Copies the values of a vertex attribute into a new vertex attribute object.
- * @param {Array<Object>} attr A vertex buffer accessor.
- * @returns {Array<Object>} A copy of the vertex attribute object.
+ * @param {H3DU.BufferAccessor} attr A vertex buffer accessor.
+ * @returns {H3DU.BufferAccessor} A copy of the vertex attribute object.
  */
 BufferHelper.prototype.copy = function(attr) {
   var c = attr.count();
@@ -157,9 +171,10 @@ BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
- * @returns {*} Return value.
+ * @returns {number} The first element of the given attribute value.
  */
 BufferHelper.prototype.get = function(a, index) {
+  // TODO: Consider moving this and other get/set methods to BufferAccessor
   var o = a.offset + index * a.stride;
   return a.buffer[o];
 };
@@ -189,7 +204,7 @@ BufferHelper.prototype.set = function(a, index, value) {
  * value, 1 identifies the second, and so on.
  * @param {Array<number>} vec An array whose elements will be set to those
  * of the value at the given index. The number of elements copied to this
- * array is the attribute's count per value (see {@link H3DU.BufferHelper.countPerValue}).
+ * array is the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}).
  * @returns {Array<number>} The parameter "vec".
  */
 BufferHelper.prototype.getVec = function(a, index, vec) {
@@ -211,7 +226,7 @@ BufferHelper.prototype.getVec = function(a, index, vec) {
  * value, 1 identifies the second, and so on.
  * @param {Array<number>} vec An array containing the elements
  * to copy to the value at the given index. The number of elements copied is this
- * array's length or the attribute's count per value (see {@link H3DU.BufferHelper.countPerValue}),
+ * array's length or the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}),
  * whichever is less.
  * @returns {BufferHelper} This object.
  */

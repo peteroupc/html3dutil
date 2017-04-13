@@ -17,54 +17,16 @@ import {_MathInternal} from "./h3du-mathinternal.js";
  * and an array of vertex indices. Each vertex attribute object contains
  * the values of one attribute of the mesh, such as positions,
  * vertex normals, and texture coordinates. A mesh buffer
- * can store vertices that make up triangles, line segments, or points.
+ * can store vertices that make up triangles, line segments, or points.<p>
+ * This constructor creates an empty mesh buffer.
  * @constructor
  * @memberof H3DU
- * @param {H3DU.Mesh} [mesh] A geometric mesh object.
- * A series of default attributes will be set based on that mesh's
- * data. If null, undefined, or omitted, an empty mesh buffer will be generated.
  */
-export var MeshBuffer = function(mesh) {
-  if(typeof mesh !== "undefined" && mesh !== null) {
-    if(!(mesh instanceof H3DU.Mesh))throw new Error();
-    var vertices = new Float32Array(mesh.vertices);
-    if(mesh.vertices.length >= 65536 || mesh.indices.length >= 65536) {
-      this.indices = new Uint32Array(mesh.indices);
-    } else if(mesh.vertices.length <= 256 && mesh.indices.length <= 256) {
-      this.indices = new Uint8Array(mesh.indices);
-    } else {
-      this.indices = new Uint16Array(mesh.indices);
-    }
-    this.format = mesh.primitiveType();
-    var stride = H3DU.Mesh._getStride(mesh.attributeBits);
-    this.attributes = [];
-    this.setAttribute(H3DU.Semantic.POSITION, 0, vertices, 0, 3, stride);
-    var o = H3DU.Mesh._normalOffset(mesh.attributeBits);
-    if(o >= 0) {
-      this.setAttribute(H3DU.Semantic.NORMAL, 0, vertices, o, 3, stride);
-    }
-    o = H3DU.Mesh._colorOffset(mesh.attributeBits);
-    if(o >= 0) {
-      this.setAttribute(H3DU.Semantic.COLOR, 0, vertices, o, 3, stride);
-    }
-    o = H3DU.Mesh._texCoordOffset(mesh.attributeBits);
-    if(o >= 0) {
-      this.setAttribute(H3DU.Semantic.TEXCOORD, 0, vertices, o, 2, stride);
-    }
-    var tangents = new Float32Array(mesh.tangents);
-    if((mesh.attributeBits & H3DU.Mesh.TANGENTS_BIT) !== 0) {
-      this.setAttribute(H3DU.Semantic.TANGENT, 0, tangents, 0, 3, 3);
-    }
-    if((mesh.attributeBits & H3DU.Mesh.BITANGENTS_BIT) !== 0) {
-      this.setAttribute(H3DU.Semantic.BITANGENT, 0, tangents, 3, 3, 3);
-    }
-    this._bounds = null;
-  } else {
-    this.format = H3DU.Mesh.TRIANGLES;
-    this.attributes = [];
-    this._bounds = null;
-    this.indices = new Uint8Array([]);
-  }
+export var MeshBuffer = function() {
+  this.format = H3DU.Mesh.TRIANGLES;
+  this.attributes = [];
+  this._bounds = null;
+  this.indices = new Uint8Array([]);
 };
 /**
  * Gets the array of vertex indices used by this mesh buffer.
@@ -137,8 +99,11 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
 MeshBuffer.prototype.setAttribute = function(
   name, index, buffer, startIndex, countPerVertex, stride
 ) {
-  if(buffer.constructor === Array) {
-    buffer = new Float32Array(buffer);
+  var bufferArray;
+  if(buffer instanceof Array) {
+    bufferArray = new Float32Array(buffer);
+  } else {
+    bufferArray = buffer;
   }
   var semanticIndex = 0;
   var semantic = 0;
@@ -159,7 +124,7 @@ MeshBuffer.prototype.setAttribute = function(
     attr[2].stride = strideValue;
   } else {
     this.attributes.push([semantic, semanticIndex,
-      new BufferAccessor(buffer, startIndex, countPerVertex, strideValue)]);
+      new BufferAccessor(bufferArray, startIndex, countPerVertex, strideValue)]);
   }
   if(name === "position") {
     this._bounds = null;
@@ -485,7 +450,6 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
   var v1 = [0, 0, 0];
   var v2 = [0, 0, 0];
   var v3 = [0, 0, 0];
-  tangents = [];
   for(var i = 0; i < indices.length; i += 3) {
     v1 = helper.getVec(positions, indices[i], v1);
     v2 = helper.getVec(positions, indices[i + 1], v2);
@@ -614,7 +578,7 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  * appearance.
  * @param {Boolean} inward If true, the generated normals
  * will point inward; otherwise, outward.
- * @returns {H3DU.Mesh} This object.
+ * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
   var primtype = this.primitiveType();
@@ -799,12 +763,25 @@ MeshBuffer._addLine = function(lineIndices, existingLines, f1, f2) {
     lineIndices.push(f1, f2);
   }
 };
+
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Creates a new mesh with triangles converted
+ * to line segments.
+ * @deprecated Included here for compatibility with {@link H3DU.Mesh}.
+ * Use {@link H3DU.MeshBuffer.wireFrame} instead.
+ * @returns {H3DU.MeshBuffer} A new mesh with triangles converted
+ * to lines.
+ */
+MeshBuffer.prototype.toWireFrame = function() {
+  return new MeshBuffer().merge(this).wireFrame();
+};
+
+/**
+ * Converts the triangles in this mesh to line segments.
+ * Has no effect if this mesh doesn't use triangles as primitives.
+ * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.wireFrame = function() {
-  // LATER: Implement and favor MeshBuffer version of this method
   if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
    // Not a triangle mesh
     return this;

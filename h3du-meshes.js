@@ -209,7 +209,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
       }
     }
   }
-  mesh = new H3DU.MeshBuffer(mesh);
+  mesh = mesh.toMeshBuffer();
   return flat ? mesh.recalcNormals(flat, inside) : mesh;
 };
 /**
@@ -299,7 +299,7 @@ Meshes.createLathe = function(points, slices, flat, inside) {
       mesh.vertex3(x * radiusEnd, y * radiusEnd, zEndHeight);
     }
   }
-  mesh = new H3DU.MeshBuffer(mesh);
+  mesh = mesh.toMeshBuffer();
   return mesh.recalcNormals(flat, inside);
 };
 
@@ -495,7 +495,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
       }
     }
   }
-  mesh = new H3DU.MeshBuffer(mesh);
+  mesh = mesh.toMeshBuffer();
   return mesh;
 };
 
@@ -592,7 +592,7 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
       mesh.vertex3(x, y, z);
     }
   }
-  mesh = new H3DU.MeshBuffer(mesh);
+  mesh = mesh.toMeshBuffer();
   return flat ? mesh.recalcNormals(flat, inward) : mesh;
 };
 
@@ -652,7 +652,7 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
       mesh.vertex3(x, y, 0);
     }
   }
-  mesh = new H3DU.MeshBuffer(mesh);
+  mesh = mesh.toMeshBuffer();
   return mesh;
 };
 
@@ -910,7 +910,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       }
     }
   }
-  mesh = new H3DU.MeshBuffer(mesh);
+  mesh = mesh.toMeshBuffer();
   return flat ? mesh.recalcNormals(flat, inside) : mesh.normalizeNormals();
 };
 
@@ -964,5 +964,5 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   mesh.texCoord2(0.5 * (1 + startX * recipRadius),
         0.5 * (1 + startY * recipRadius))
        .vertex2(startX, startY);
-  return new H3DU.MeshBuffer(mesh);
+  return mesh.toMeshBuffer();
 };

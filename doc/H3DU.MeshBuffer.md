@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.MeshBuffer'></a>
-### H3DU.MeshBuffer([mesh])
+### H3DU.MeshBuffer()
 
 A geometric mesh in the form of buffer objects.
 A mesh buffer is made up of one or more <a href="H3DU.BufferHelper.md">vertex attribute objects</a>,
@@ -12,9 +12,7 @@ the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.
 
-#### Parameters
-
-* `mesh` (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>) (optional)<br>A geometric mesh object. A series of default attributes will be set based on that mesh's data. If null, undefined, or omitted, an empty mesh buffer will be generated.
+This constructor creates an empty mesh buffer.
 
 ### Methods
 
@@ -43,6 +41,8 @@ assigning each value with the attribute semantic <code>COLOR</code>
 to the given color.
 * [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the vertex indices used by this mesh buffer.
 * [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
+* [toWireFrame](#H3DU.MeshBuffer_toWireFrame)<br><b>Deprecated: Included here for compatibility with <a href="H3DU.Mesh.md">H3DU.Mesh</a>.
+Use H3DU.MeshBuffer.wireFrame instead.</b>
 * [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
 in this mesh.
 * [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer, that
@@ -50,7 +50,7 @@ is, the number of vertex indices in its index buffer (some of which
 may be duplicates).
 * [vertexIndices](#H3DU.MeshBuffer_vertexIndices)<br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.
-* [wireFrame](#H3DU.MeshBuffer_wireFrame)<br>TODO: Not documented yet.
+* [wireFrame](#H3DU.MeshBuffer_wireFrame)<br>Converts the triangles in this mesh to line segments.
 
 <a name='H3DU.MeshBuffer_getAttribute'></a>
 ### H3DU.MeshBuffer#getAttribute(name, [semanticIndex])
@@ -65,7 +65,7 @@ Gets a vertex attribute included in this mesh buffer.
 #### Return Value
 
 A vertex buffer accessor, or null
-if the attribute doesn't exist. (Type: H3DU.BufferAccessor)
+if the attribute doesn't exist. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
 
 <a name='H3DU.MeshBuffer_getBounds'></a>
 ### H3DU.MeshBuffer#getBounds()
@@ -185,7 +185,7 @@ ensures its values are each at least 3 elements long.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.MeshBuffer_reverseNormals'></a>
 ### H3DU.MeshBuffer#reverseNormals()
@@ -308,6 +308,20 @@ Sets the type of graphics primitives stored in this mesh buffer.
 
 This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
+<a name='H3DU.MeshBuffer_toWireFrame'></a>
+### H3DU.MeshBuffer#toWireFrame()
+
+<b>Deprecated: Included here for compatibility with <a href="H3DU.Mesh.md">H3DU.Mesh</a>.
+Use H3DU.MeshBuffer.wireFrame instead.</b>
+
+Creates a new mesh with triangles converted
+to line segments.
+
+#### Return Value
+
+A new mesh with triangles converted
+to lines. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+
 <a name='H3DU.MeshBuffer_transform'></a>
 ### H3DU.MeshBuffer#transform(matrix)
 
@@ -353,10 +367,11 @@ The parameter "ret". (Type: Array.&lt;number>)
 <a name='H3DU.MeshBuffer_wireFrame'></a>
 ### H3DU.MeshBuffer#wireFrame()
 
-TODO: Not documented yet.
+Converts the triangles in this mesh to line segments.
+Has no effect if this mesh doesn't use triangles as primitives.
 
 #### Return Value
 
-Return value. (Type: *)
+This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 [Back to documentation index.](index.md)

@@ -17,7 +17,7 @@
  * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
  * @constructor
  * @memberof H3DU
- * @param {H3DU.MeshBuffer|H3DU.BufferedMesh} mesh A mesh in the form of a buffer object.
+ * @param {H3DU.MeshBuffer|H3DU.Mesh|H3DU.BufferedMesh} mesh A mesh in the form of a buffer object.
  * Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.PbrMaterial}
  * created will use the mesh in its current state and won't
  * track future changes. <i>Using {@link H3DU.BufferedMesh} objects as the
@@ -27,7 +27,7 @@
 export var Shape = function(mesh) {
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   if(mesh instanceof H3DU.Mesh) {
-    this.meshBuffer = new H3DU.MeshBuffer(mesh);
+    this.meshBuffer = mesh.toMeshBuffer();
   } else if(mesh instanceof H3DU.BufferedMesh) {
     if(!H3DU.Shape._meshBufferWarning) {
       console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.");

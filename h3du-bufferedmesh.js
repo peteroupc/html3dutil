@@ -99,7 +99,7 @@ BufferedMesh.prototype._bindVertexArray = function(context, va) {
 BufferedMesh.prototype._initialize = function(mesh, context) {
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   var smb = mesh instanceof H3DU.MeshBuffer ? mesh :
-   new H3DU.MeshBuffer(mesh);
+   mesh.toMeshBuffer();
   this.smb = smb;
   this.vertsMap = new H3DU.BufferedMesh._Map();
   this.indices = context.createBuffer();

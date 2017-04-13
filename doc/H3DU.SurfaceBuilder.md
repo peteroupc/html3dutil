@@ -16,7 +16,7 @@ For more information, see the <a href="tutorial-surfaces.md">Parametric Curves a
 * [clearVertices](#H3DU.SurfaceBuilder_clearVertices)<br>Clears the arrays of attribute values (such as positions and normals)
 and vertex indices generated so far.
 * [evalSurface](#H3DU.SurfaceBuilder_evalSurface)<br>Generates the vertex attributes of the parametric surfaces.
-* [position](#H3DU.SurfaceBuilder_position)<br>TODO: Not documented yet.
+* [position](#H3DU.SurfaceBuilder_position)<br>Sets the parametric surface used to generate vertex positions.
 * [positionNormal](#H3DU.SurfaceBuilder_positionNormal)<br>Sets the parametric surface used to generate vertex positions and normals.
 * [positionNormalTexCoord](#H3DU.SurfaceBuilder_positionNormalTexCoord)<br>Sets the parametric surface used to generate vertex positions and normals, and
 sets a surface evaluator that generates texture coordinates ranging
@@ -88,7 +88,7 @@ This object. (Type: <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a>)
 <a name='H3DU.SurfaceBuilder_position'></a>
 ### H3DU.SurfaceBuilder#position(surface, [size])
 
-TODO: Not documented yet.
+Sets the parametric surface used to generate vertex positions.
 
 #### Parameters
 

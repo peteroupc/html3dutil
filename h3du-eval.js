@@ -183,7 +183,7 @@ SurfaceEval.prototype.texCoord = function(evaluator) {
  * @returns {H3DU.SurfaceEval} This object.
  */
 SurfaceEval.prototype.evalOne = function(mesh, u, v) {
-  this.builder.clearVertices().evalCurve(H3DU.Mesh.POINTS, 1, 1, u, u, v, v);
+  this.builder.clearVertices().evalSurface(H3DU.Mesh.POINTS, 1, 1, u, u, v, v);
   H3DU.Mesh._fromMeshBufferOne(this.builder.toMeshBuffer(), mesh);
   return this;
 };

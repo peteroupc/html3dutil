@@ -28,11 +28,11 @@ Copies the values of a vertex attribute into a new vertex attribute object.
 
 #### Parameters
 
-* `attr` (Type: Array.&lt;Object>)<br>A vertex buffer accessor.
+* `attr` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
 
 #### Return Value
 
-A copy of the vertex attribute object. (Type: Array.&lt;Object>)
+A copy of the vertex attribute object. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
 
 <a name='H3DU.BufferHelper_get'></a>
 ### H3DU.BufferHelper#get(a, index)
@@ -44,12 +44,12 @@ checking naturally done when accessing the attribute's buffer.
 
 #### Parameters
 
-* `a` (Type: H3DU.BufferAccessor)<br>A vertex buffer accessor.
+* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 
 #### Return Value
 
-Return value. (Type: *)
+The first element of the given attribute value. (Type: number)
 
 <a name='H3DU.BufferHelper_getVec'></a>
 ### H3DU.BufferHelper#getVec(a, index, vec)
@@ -61,9 +61,9 @@ checking naturally done when accessing the attribute's buffer.
 
 #### Parameters
 
-* `a` (Type: H3DU.BufferAccessor)<br>A vertex buffer accessor.
+* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: Array.&lt;number>)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute's count per value (see H3DU.BufferHelper.countPerValue).
+* `vec` (Type: Array.&lt;number>)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute's count per value (see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>).
 
 #### Return Value
 
@@ -90,16 +90,16 @@ combined vertex attribute.
 
 #### Parameters
 
-* `attr1` (Type: H3DU.BufferAccessor)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as indices and all the values are zeros.
+* `attr1` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as indices and all the values are zeros.
 * `indices1` (Type: Array.&lt;number> | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the first vertex attribute.
-* `attr2` (Type: H3DU.BufferAccessor)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as indices and all the values are zeros.
+* `attr2` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as indices and all the values are zeros.
 * `indices2` (Type: Array.&lt;number> | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the second vertex attribute.
 
 #### Return Value
 
 The merged attribute, where the vertices from the first vertex
 attribute come before those from the second. The merged attribute will have as many
-values as the sum of the lengths of "indices1" and "indices2". (Type: H3DU.BufferAccessor)
+values as the sum of the lengths of "indices1" and "indices2". (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
 
 <a name='H3DU.BufferHelper_resolveSemantic'></a>
 ### H3DU.BufferHelper#resolveSemantic(name, [index])
@@ -130,7 +130,7 @@ checking naturally done when writing to the attribute's buffer.
 
 #### Parameters
 
-* `a` (Type: H3DU.BufferAccessor)<br>A vertex buffer accessor.
+* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `value` (Type: number)<br>The number to set the first element to.
 
@@ -149,9 +149,9 @@ where noted otherwise.
 
 #### Parameters
 
-* `a` (Type: H3DU.BufferAccessor)<br>A vertex buffer accessor.
+* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: Array.&lt;number>)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array's length or the attribute's count per value (see H3DU.BufferHelper.countPerValue), whichever is less.
+* `vec` (Type: Array.&lt;number>)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array's length or the attribute's count per value (see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>), whichever is less.
 
 #### Return Value
 
