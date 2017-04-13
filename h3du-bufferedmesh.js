@@ -106,9 +106,8 @@ BufferedMesh.prototype._initialize = function(mesh, context) {
   if(typeof this.indices === "undefined" || this.indices === null)throw new Error("can't create face buffer");
   this.vao = this._createVertexArray(this.context);
   var attribs = smb._getAttributes();
-  var helper = new H3DU.BufferHelper();
   for(var i = 0; i < attribs.length; i++) {
-    var vb = helper.getBuffer(attribs[i]);
+    var vb = attribs[i][2].buffer;
     if(vb) {
       if(!this.vertsMap.get(vb)) {
        // Vertex array not seen yet, create a buffer object
@@ -191,8 +190,7 @@ BufferedMesh.prototype._getAttribLocations = function(program) {
     for(var i = 0; i < attrs.length; i++) {
       var arrLoc = [];
       var arrName = [];
-       // TODO: Move attribute access to BufferHelper
-      program._addNamesWithSemantic(arrName, attrs[i][0], attrs[i][5]);
+      program._addNamesWithSemantic(arrName, attrs[i][0], attrs[i][1]);
       for(var j = 0; j < arrName.length; j++) {
         var loc = program.get(arrName[j]);
         if(typeof loc === "undefined" || loc === null) {
@@ -224,12 +222,11 @@ BufferedMesh.prototype._prepareDraw = function(program, context) {
       for(var j = 0; j < this._attribLocations[i].length; j++) {
         var attrib = this._attribLocations[i][j];
         if(attrib >= 0) {
-       // TODO: Move attribute access to BufferHelper
-          var vertBuffer = this.vertsMap.get(attrs[i][2]);
+          var vertBuffer = this.vertsMap.get(attrs[i][2].buffer);
           context.bindBuffer(context.ARRAY_BUFFER, vertBuffer);
           context.enableVertexAttribArray(attrib);
-          context.vertexAttribPointer(attrib, attrs[i][3],
-         context.FLOAT, false, attrs[i][4] * 4, attrs[i][1] * 4);
+          context.vertexAttribPointer(attrib, attrs[i][2].countPerValue,
+         context.FLOAT, false, attrs[i][2].stride * 4, attrs[i][2].offset * 4);
           attrNamesEnabled.push(this._attribNames[i][j]);
         }
       }

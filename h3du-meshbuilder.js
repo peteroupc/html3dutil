@@ -133,10 +133,12 @@ CurveBuilder._setAttribute = function(
    attributes, vertexCount, curve, semantic, semanticIndex, size
 ) {
   var sizeValue = typeof size === "undefined" || size === null ? 3 : size;
-  // var semanticIndexValue = typeof semanticIndex === "undefined" || semanticIndex === null ? 0 : semanticIndex;
+  var semanticIndexValue = typeof semanticIndex === "undefined" || semanticIndex === null ?
+    0 : semanticIndex;
   var iscurve = typeof curve !== "undefined" && curve !== null;
   if(size <= 0)throw new Error("Invalid attribute size");
-  var sem = new BufferHelper().resolveSemantic(semantic, semanticIndex);
+  var sem = new BufferHelper().resolveSemantic(semantic,
+    semanticIndexValue);
   if(typeof sem === "undefined" || sem === null)throw new Error();
   for(var i = 0; i < attributes.length; i++) {
     var a = attributes[i];
@@ -202,7 +204,7 @@ CurveBuilder.prototype.toMeshBuffer = function() {
  * describes the parametric curve used to generate positions.
  * @param {number} [size] The number of elements in each position value. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
- * is 3.
+ * is 3. Throws an error if this value is 0 or less.
  * @returns {H3DU.CurveBuilder} This object.
  */
 CurveBuilder.prototype.position = function(curve, size) {
@@ -218,10 +220,10 @@ CurveBuilder.prototype.position = function(curve, size) {
  * @param {number} semanticIndex The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
- * This is ignored if "name" is a string.
+ * This is ignored if "name" is a string. If null or undefined, this value is 0.
  * @param {number} [size] The number of elements in each position value. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
- * is 3.
+ * is 3. Throws an error if this value is 0 or less.
  * @returns {H3DU.CurveBuilder} This object.
  */
 CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size) {
@@ -281,7 +283,7 @@ SurfaceBuilder.prototype.toMeshBuffer = function() {
  * used to generate position values.
  * @param {number} [size] The number of elements in each position value. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
- * is 3.
+ * is 3. Throws an error if this value is 0 or less.
  * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.position = function(surface, size) {
@@ -307,7 +309,7 @@ SurfaceBuilder.prototype.texCoord = function(surface, size) {
  * used to generate positions.
  * @param {number} [size] The number of elements in each position and normal. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
- * is 3.
+ * is 3. Throws an error if this value is 0 or less.
  * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionNormal = function(surface, size) {
@@ -337,7 +339,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * used to generate positions.
  * @param {number} [size] The number of elements in each position. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
- * is 3. The texture coordinates will be 2-dimensional.
+ * is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
  * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
@@ -373,10 +375,10 @@ SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
  * @param {number} [semanticIndex] The set index of the attribute
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
- * This is ignored if "name" is a string.
+ * This is ignored if "name" is a string. If null or undefined, this value is 0.
  * @param {number} [size] The number of elements in each position and normal. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
- * is 3.
+ * is 3. Throws an error if this value is 0 or less.
  * @returns {H3DU.SurfaceBuilder} This object.
  * @example <caption>The following example sets the surface
  * function for texture coordinates to a linear evaluator. Thus, coordinates passed to the

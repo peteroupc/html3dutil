@@ -8,7 +8,7 @@
 */
 /* global Float32Array, H3DU, Uint16Array, Uint32Array, Uint8Array */
 
-import {BufferHelper} from "./h3du-bufferhelper.js";
+import {BufferAccessor, BufferHelper} from "./h3du-bufferhelper.js";
 import {_MathInternal} from "./h3du-mathinternal.js";
 
 /**
@@ -127,10 +127,10 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * item starts.
  * @param {number} countPerVertex The number of elements in each
  * per-vertex item. For example, if each vertex is a 3-element
- * vector, this value is 3.
+ * vector, this value is 3. Throws an error if this value is 0 or less.
  * @param {number} [stride] The number of elements from the start of
  * one per-vertex item to the start of the next. If null, undefined, or omitted,
- * this value is the same as "countPerVertex".
+ * this value is the same as "countPerVertex". Throws an error if this value is 0 or less.
  * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
  * semantic is unsupported.
  */
@@ -143,6 +143,7 @@ MeshBuffer.prototype.setAttribute = function(
   var semanticIndex = 0;
   var semantic = 0;
   var strideValue = typeof stride === "undefined" || stride === null ? countPerVertex : stride;
+  if(countPerVertex <= 0 || strideValue <= 0)throw new Error();
   var helper = new BufferHelper();
   var sem = helper.resolveSemantic(name, index);
   if(typeof sem === "undefined" || sem === null) {
@@ -153,12 +154,12 @@ MeshBuffer.prototype.setAttribute = function(
   semanticIndex = sem[1];
   var attr = this.getAttribute(semantic, semanticIndex);
   if(attr) {
-    attr[1] = startIndex;
-    attr[2] = buffer;
-    attr[3] = countPerVertex;
-    attr[4] = strideValue;
+    attr[2].buffer = buffer;
+    attr[2].countPerValue = countPerVertex;
+    attr[2].stride = strideValue;
   } else {
-    this.attributes.push([semantic, startIndex, buffer, countPerVertex, strideValue, semanticIndex]);
+    this.attributes.push([semantic, semanticIndex,
+      new BufferAccessor(buffer, startIndex, countPerVertex, strideValue)]);
   }
   if(name === "position") {
     this._bounds = null;
@@ -179,15 +180,15 @@ MeshBuffer.prototype._getAttributes = function() {
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
- * @returns {Array<Object>} A [vertex attribute object]{@link H3DU.BufferHelper}, or null
+ * @returns {H3DU.BufferAccessor} A vertex buffer accessor, or null
  * if the attribute doesn't exist.
  */
 MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
   var idx = typeof semanticIndex === "undefined" || semanticIndex === null ? 0 : semanticIndex;
   for(var i = 0; i < this.attributes.length; i++) {
     if(this.attributes[i][0] === name &&
-    this.attributes[i][5] === idx) {
-      return this.attributes[i];
+    this.attributes[i][1] === idx) {
+      return this.attributes[i][2];
     }
   }
   return null;
@@ -273,11 +274,11 @@ MeshBuffer.prototype.normalizeNormals = function() {
       continue;
     }
     var value = [];
-    var count = helper.count(attr);
+    var count = attr[2].count();
     for(var j = 0; j < count; j++) {
-      helper.getVec(attr, j, value);
+      helper.getVec(attr[2], j, value);
       _MathInternal.vecNormalizeInPlace(value);
-      helper.setVec(attr, j, value);
+      helper.setVec(attr[2], j, value);
     }
   }
   return this;
@@ -304,12 +305,11 @@ MeshBuffer.prototype.reverseNormals = function() {
   var helper = new H3DU.BufferHelper();
   for(var i = 0; i < this.attributes.length; i++) {
     var attr = this.attributes[i];
-    // TODO: Use BufferHelper
     if(attr[0] !== H3DU.Semantic.NORMAL) {
       continue;
     }
     var value = [];
-    var count = helper.count(attr);
+    var count = attr[2].count();
     for(var j = 0; j < count; j++) {
       helper.getVec(attr, j, value);
       for(var k = 0; k < value.length; k++) {
@@ -340,14 +340,13 @@ MeshBuffer.prototype.setColor = function(color) {
   var haveColor = false;
   for(var i = 0; i < this.attributes.length; i++) {
     var attr = this.attributes[i];
-    var count = helper.count(attr);
-    // TODO: Use BufferHelper
+    var count = attr[2].count();
     if(attr[0] !== H3DU.Semantic.COLOR) {
       continue;
     }
     haveColor = true;
     for(var j = 0; j < count; j++) {
-      helper.setVec(attr, j, colorValue);
+      helper.setVec(attr[2], j, colorValue);
     }
   }
   if(!haveColor) {
@@ -392,8 +391,9 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
   var dupverts = [];
   var dupvertcount = 0;
   var i;
+  var normalsCount = normals.count();
   var helper = new BufferHelper();
-  var count = Math.min(helper.count(positions), helper.count(normals));
+  var count = Math.min(positions.count(), normalsCount);
   var v1 = [0, 0, 0];
   var v2 = [0, 0, 0];
   var v3 = [0, 0, 0];
@@ -472,8 +472,7 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
     }
   }
   // Normalize each normal of the vertex
-  count = helper.count(normals);
-  for(i = 0; i < count; i++) {
+  for(i = 0; i < normalsCount; i++) {
     helper.getVec(normals, i, normal);
     H3DU.Math.vec3normalize(normal);
     helper.setVec(normals, i, normal);
@@ -565,33 +564,35 @@ MeshBuffer.prototype._makeRedundant = function() {
   var newAttributes = [];
   var helper = new BufferHelper();
   for(var i = 0; i < this.attributes.length; i++) {
-    newAttributes.push(helper.merge(this.attributes[i], this.indices, null, []));
+    var a = this.attributes[i];
+    newAttributes.push([a[0], a[1], helper.merge(a[2], this.indices, null, [])]);
   }
   this.attributes = newAttributes;
   this.setIndices(helper.makeIndices(this.indices.length));
 };
 /** @ignore */
-MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, countPerValue) {
+MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desiredCount) {
   var helper = new BufferHelper();
   var attr = this.getAttribute(semantic, semanticIndex);
-  var count = this.attributes.length === 0 ? 0 : helper.count(this.attributes[0]);
-  if(attr && helper.countPerValue(attr) >= countPerValue)
+  var vertexCount = this.attributes.length === 0 ? 0 : this.attributes[0][2].count();
+  var attrCount = typeof attr !== "undefined" && attr !== null ? attr.countPerValue : 0;
+  if(attr && attrCount >= desiredCount)
     return attr;
-  var cv = helper.countPerValue(attr);
-  var newattr = helper.makeBlank(semantic, semanticIndex, count, countPerValue);
-  if(cv > 0) {
-    var vec = _MathInternal.vecZeros(countPerValue);
-    for(var i = 0; i < count; i++) {
+  var newattr = BufferAccessor.makeBlank(vertexCount, desiredCount);
+  if(attrCount > 0) {
+    var vec = _MathInternal.vecZeros(desiredCount);
+    for(var i = 0; i < vertexCount; i++) {
       helper.getVec(attr, i, vec);
       helper.setVec(newattr, i, vec);
     }
   }
-  this.attributes.push(newattr);
+  this.attributes.push([semantic, semanticIndex, newattr]);
   return newattr;
 };
 /** @ignore */
 MeshBuffer.prototype._countPerValue = function(sem) {
-  return new BufferHelper().countPerValue(this.getAttribute(sem));
+  var a = this.getAttribute(sem);
+  return typeof a !== "undefined" && a !== null ? a.countPerValue : 0;
 };
 
 /**
@@ -663,6 +664,7 @@ MeshBuffer.prototype._recalcTangents = function() {
 MeshBuffer.prototype.merge = function(other) {
   var helper = new H3DU.BufferHelper();
   var newAttributes = [];
+  var attr;
   if(!other)throw new Error();
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
@@ -670,13 +672,15 @@ MeshBuffer.prototype.merge = function(other) {
   } else if(this.indices.length === 0) {
     var empty = true;
     for(var i = 0; i < this.attributes.length; i++) {
-      empty = empty && helper.count(this.attributes[i]) === 0;
+      attr = this.attributes[i][2];
+      empty = empty && (typeof attr === "undefined" || attr === null || attr.count() === 0);
     }
     if(empty) {
   // If this object is empty, copy the attributes and
   // indices from the other object
       for(i = 0; i < other.attributes.length; i++) {
-        newAttributes.push(helper.copy(other.attributes[i]));
+        var o = other.attributes[i];
+        newAttributes.push([o[0], o[1], helper.copy(o[2])]);
       }
       this._bounds = null;
       this.format = other.format;
@@ -693,32 +697,34 @@ MeshBuffer.prototype.merge = function(other) {
   for(i = 0; i < this.attributes.length; i++) {
     var existingAttribute = null;
     var newAttribute = null;
-    var attr = this.attributes[i];
+    attr = this.attributes[i];
+    var sem = attr[0];
+    var semIndex = attr[1];
     for(var j = 0; j < other.attributes.length; j++) {
       var oattr = other.attributes[j];
-      if(helper.sameSemantic(oattr, attr)) {
-        existingAttribute = oattr;
+      if(oattr[0] === sem && oattr[1] === semIndex) {
+        existingAttribute = oattr[2];
         break;
       }
     }
-    newAttribute = helper.merge(attr, this.indices, existingAttribute, other.indices);
+    newAttribute = helper.merge(attr[2], this.indices, existingAttribute, other.indices);
     if(!newAttribute)throw new Error();
-    newAttributes.push(newAttribute);
+    newAttributes.push([sem, semIndex, newAttribute]);
   }
   for(i = 0; i < other.attributes.length; i++) {
     existingAttribute = null;
     oattr = other.attributes[i];
     for(j = 0; j < this.attributes.length; j++) {
       attr = this.attributes[j];
-      if(helper.sameSemantic(oattr, attr)) {
+      if(oattr[0] === attr[0] && oattr[1] === attr[1]) {
         existingAttribute = attr;
         break;
       }
     }
     if(typeof existingAttribute === "undefined" || existingAttribute === null) {
-      newAttribute = helper.merge(null, this.indices, oattr, other.indices, true);
+      newAttribute = helper.merge(null, this.indices, oattr[2], other.indices, true);
       if(!newAttribute)throw new Error();
-      newAttributes.push(newAttribute);
+      newAttributes.push([oattr[0], oattr[1], newAttribute]);
     }
   }
   var newIndices = helper.makeIndices(this.indices.length + other.indices.length);
@@ -753,8 +759,8 @@ MeshBuffer.prototype.transform = function(matrix) {
   if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isLinearIdentity) {
     matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
   }
-  var count = helper.count(positionAttribute);
-  if(normalAttribute)count = Math.min(count, helper.count(normalAttribute));
+  var count = positionAttribute.count();
+  if(normalAttribute)count = Math.min(count, normalAttribute.count());
   var position = [0, 0, 0];
   var normal = [0, 0, 0];
   for(var i = 0; i < count; i++) {

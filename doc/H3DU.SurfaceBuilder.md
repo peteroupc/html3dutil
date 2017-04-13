@@ -39,8 +39,8 @@ Sets the parametric surface used to generate vertex attribute values.
 
 * `surface` (Type: Object)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate attribute's values.
 * `semantic` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
-* `semanticIndex` (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
-* `size` (Type: number) (optional)<br>The number of elements in each position and normal. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3.
+* `semanticIndex` (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. If null or undefined, this value is 0.
+* `size` (Type: number) (optional)<br>The number of elements in each position and normal. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.
 
 #### Return Value
 
@@ -93,7 +93,7 @@ TODO: Not documented yet.
 #### Parameters
 
 * `surface` (Type: Object)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate position values.
-* `size` (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3.
+* `size` (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.
 
 #### Return Value
 
@@ -107,7 +107,7 @@ Sets the parametric surface used to generate vertex positions and normals.
 #### Parameters
 
 * `surface` (Type: Object)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate positions.
-* `size` (Type: number) (optional)<br>The number of elements in each position and normal. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3.
+* `size` (Type: number) (optional)<br>The number of elements in each position and normal. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.
 
 #### Return Value
 
@@ -139,7 +139,7 @@ from (0,1) along the U and V axes of the surface.
 #### Parameters
 
 * `surface` (Type: Object)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate positions.
-* `size` (Type: number) (optional)<br>The number of elements in each position. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional.
+* `size` (Type: number) (optional)<br>The number of elements in each position. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
 
 #### Return Value
 

@@ -31,7 +31,7 @@ export {Material} from "./h3du-material";
 export {PbrMaterial} from "./h3du-pbrmaterial";
 export {Mesh} from "./h3du-mesh";
 export {Meshes} from "./h3du-meshes";
-export {BufferHelper} from "./h3du-bufferhelper";
+export {BufferAccessor, BufferHelper} from "./h3du-bufferhelper";
 export {MeshBuffer} from "./h3du-meshbuffer";
 export {Semantic} from "./h3du-semantic";
 export {Lights} from "./h3du-lights";

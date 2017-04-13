@@ -64,8 +64,8 @@ Gets a vertex attribute included in this mesh buffer.
 
 #### Return Value
 
-A <a href="H3DU.BufferHelper.md">vertex attribute object</a>, or null
-if the attribute doesn't exist. (Type: Array.&lt;Object>)
+A vertex buffer accessor, or null
+if the attribute doesn't exist. (Type: H3DU.BufferAccessor)
 
 <a name='H3DU.MeshBuffer_getBounds'></a>
 ### H3DU.MeshBuffer#getBounds()
@@ -252,8 +252,8 @@ stored in a vertex buffer.
 * `index` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.
 * `startIndex` (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.
-* `countPerVertex` (Type: number)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3.
-* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as "countPerVertex".
+* `countPerVertex` (Type: number)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less.
+* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as "countPerVertex". Throws an error if this value is 0 or less.
 
 #### Return Value
 

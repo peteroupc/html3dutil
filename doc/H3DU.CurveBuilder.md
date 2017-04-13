@@ -31,8 +31,8 @@ Sets the parametric curve used to generate vertex attribute values.
 
 * `curve` (Type: Object)<br>A <a href="H3DU.Curve.md">curve evaluator object</a> that describes the parametric curve used to generate attribute.
 * `semantic` (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.md#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
-* `semanticIndex` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
-* `size` (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3.
+* `semanticIndex` (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. If null or undefined, this value is 0.
+* `size` (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.
 
 #### Return Value
 
@@ -91,7 +91,7 @@ Sets the parametric curve used to generate vertex positions.
 #### Parameters
 
 * `curve` (Type: Object)<br>A <a href="H3DU.Curve.md">curve evaluator object</a> that describes the parametric curve used to generate positions.
-* `size` (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3.
+* `size` (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.
 
 #### Return Value
 
