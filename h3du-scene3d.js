@@ -236,6 +236,8 @@ Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
     defines += "#define ENV_EQUIRECT\n";
   if((flags & H3DU.Scene3D.EMISSION_MAP_ENABLED) !== 0)
     defines += "#define EMISSION_MAP\n";
+  if((flags & H3DU.Scene3D.OCCLUSION_MAP_ENABLED) !== 0)
+    defines += "#define OCCLUSION_MAP\n";
   if((flags & H3DU.Scene3D.SPECULAR_MAP_ENABLED) !== 0)
     defines += "#define SPECULAR_MAP\n#define SPECULAR\n";
   var prog = new H3DU.ShaderProgram(context,

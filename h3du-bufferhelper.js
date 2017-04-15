@@ -71,6 +71,73 @@ BufferAccessor.prototype.count = function() {
   return odiv + (olen % this.stride >= this.countPerValue ? 1 : 0);
 };
 /**
+ * Gets the first element of the attribute value with the given vertex index.
+ * @param {number} index A numeric index, starting from 0, that identifies
+ * a value stored in the attribute's buffer. For example, 0 identifies the first
+ * value, 1 identifies the second, and so on.
+ * @returns {number} The first element of the given attribute value.
+ */
+BufferAccessor.prototype.get = function( index) {
+  var o = this.offset + index * this.stride;
+  return this.buffer[o];
+};
+/**
+ * Sets the first element of the attribute value with the given vertex index.
+ * @param {number} index A numeric index, starting from 0, that identifies
+ * a value stored in the attribute's buffer. For example, 0 identifies the first
+ * value, 1 identifies the second, and so on.
+ * @param {number} value The number to set the first element to.
+ * @returns {H3DU.BufferAccessor} This object.
+ */
+BufferAccessor.prototype.set = function(index, value) {
+  var o = this.offset + index * this.stride;
+  this.buffer[o] = value;
+  return this;
+};
+/**
+ * Gets the elements of a vertex attribute value.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when accessing the attribute's buffer.
+ * @param {number} index A numeric index, starting from 0, that identifies
+ * a value stored in the attribute's buffer. For example, 0 identifies the first
+ * value, 1 identifies the second, and so on.
+ * @param {Array<number>} vec An array whose elements will be set to those
+ * of the value at the given index. The number of elements copied to this
+ * array is the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}).
+ * @returns {Array<number>} The parameter "vec".
+ */
+BufferAccessor.prototype.getVec = function(index, vec) {
+  var o = this.offset + index * this.stride;
+  var buffer = this.buffer;
+  for(var i = 0; i < this.countPerValue; i++) {
+    vec[i] = buffer[o + i];
+  }
+  return vec;
+};
+/**
+ * Sets the elements of a vertex attribute value.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when writing to the attribute's buffer, except
+ * where noted otherwise.
+ * @param {number} index A numeric index, starting from 0, that identifies
+ * a value stored in the attribute's buffer. For example, 0 identifies the first
+ * value, 1 identifies the second, and so on.
+ * @param {Array<number>} vec An array containing the elements
+ * to copy to the value at the given index. The number of elements copied is this
+ * array's length or the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}),
+ * whichever is less.
+ * @returns {H3DU.BufferAccessor} This object.
+ */
+BufferAccessor.prototype.setVec = function(index, vec) {
+  var o = this.offset + index * this.stride;
+  var buffer = this.buffer;
+  var alen = Math.min(vec.length, this.countPerValue);
+  for(var i = 0; i < alen; i++) {
+    buffer[o + i] = vec[i];
+  }
+  return this;
+};
+/**
  * Generates a vertex attribute buffer, with each value set to all zeros.
  * @param {number} count The number of [values]{@link H3DU.BufferAccessor#buffer}
  * the buffer will hold. For example, (10, 20, 5) is a 3-element value.
@@ -119,8 +186,8 @@ BufferHelper.prototype.copy = function(attr) {
   var newAttribute = BufferAccessor.makeBlank(c, attr.countPerValue);
   var value = [];
   for(var i = 0; i < c; i++) {
-    this.getVec(attr, i, value);
-    this.setVec(newAttribute, i, value);
+    attr.getVec(i, value);
+    newAttribute.setVec( i, value);
   }
   return newAttribute;
 };
@@ -151,93 +218,17 @@ BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
   var value = _MathInternal.vecZeros(elementsPerValue);
   if(typeof attr1 !== "undefined" && attr1 !== null) {
     for(i = 0; i < indices1.length; i++) {
-      this.getVec(attr1, indices1[i], value);
-      this.setVec(newAttribute, i, value);
+      if(attr1)attr1.getVec(indices1[i], value);
+      newAttribute.setVec(i, value);
     }
   }
   if(typeof attr2 !== "undefined" && attr2 !== null) {
     for(i = 0; i < indices2.length; i++) {
-      this.getVec(attr2, indices2[i], value);
-      this.setVec(newAttribute, indices1.length + i, value);
+      if(attr2)attr2.getVec(indices2[i], value);
+      newAttribute.setVec(indices1.length + i, value);
     }
   }
   return newAttribute;
-};
-/**
- * Gets the first element of the attribute value with the given vertex index.
- * <p>Note that currently, this method does no bounds checking beyond the
- * checking naturally done when accessing the attribute's buffer.
- * @param {H3DU.BufferAccessor} a A vertex buffer accessor.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @returns {number} The first element of the given attribute value.
- */
-BufferHelper.prototype.get = function(a, index) {
-  // TODO: Consider moving this and other get/set methods to BufferAccessor
-  var o = a.offset + index * a.stride;
-  return a.buffer[o];
-};
-/**
- * Sets the first element of the attribute value with the given vertex index.
- * <p>Note that currently, this method does no bounds checking beyond the
- * checking naturally done when writing to the attribute's buffer.
- * @param {H3DU.BufferAccessor} a A vertex buffer accessor.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @param {number} value The number to set the first element to.
- * @returns {H3DU.BufferHelper} This object.
- */
-BufferHelper.prototype.set = function(a, index, value) {
-  var o = a.offset + index * a.stride;
-  a.buffer[o] = value;
-  return this;
-};
-/**
- * Gets the elements of a vertex attribute value.<p>
- * Note that currently, this method does no bounds checking beyond the
- * checking naturally done when accessing the attribute's buffer.
- * @param {H3DU.BufferAccessor} a A vertex buffer accessor.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @param {Array<number>} vec An array whose elements will be set to those
- * of the value at the given index. The number of elements copied to this
- * array is the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}).
- * @returns {Array<number>} The parameter "vec".
- */
-BufferHelper.prototype.getVec = function(a, index, vec) {
-  var o = a.offset + index * a.stride;
-  var buffer = a.buffer;
-  for(var i = 0; i < a.countPerValue; i++) {
-    vec[i] = buffer[o + i];
-  }
-  return vec;
-};
-/**
- * Sets the elements of a vertex attribute value.<p>
- * Note that currently, this method does no bounds checking beyond the
- * checking naturally done when writing to the attribute's buffer, except
- * where noted otherwise.
- * @param {H3DU.BufferAccessor} a A vertex buffer accessor.
- * @param {number} index A numeric index, starting from 0, that identifies
- * a value stored in the attribute's buffer. For example, 0 identifies the first
- * value, 1 identifies the second, and so on.
- * @param {Array<number>} vec An array containing the elements
- * to copy to the value at the given index. The number of elements copied is this
- * array's length or the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}),
- * whichever is less.
- * @returns {BufferHelper} This object.
- */
-BufferHelper.prototype.setVec = function(a, index, vec) {
-  var o = a.offset + index * a.stride;
-  var buffer = a.buffer;
-  var alen = Math.min(vec.length, a.countPerValue);
-  for(var i = 0; i < alen; i++) {
-    buffer[o + i] = vec[i];
-  }
-  return this;
 };
 /**
  * Resolves an attribute semantic and semantic index, which

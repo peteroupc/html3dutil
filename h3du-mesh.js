@@ -678,65 +678,6 @@ Mesh.prototype.toMeshBuffer = function() {
   return mb;
 };
 
-/**
- * Enumerates the primitives (lines, triangles, and points) included
- * in this mesh.
- * @param {Function} func A function that will be called
- * for each primitive in the mesh. The function takes a single
- * parameter, consisting of an array of one, two, or three vertex
- * objects. A point will have one vertex, a line two vertices and
- * a triangle three. Each vertex object may have these properties:<ul>
- * <li>"position": A 3-element array of the vertex's position.
- * Always present.
- * <li>"normal": A 3-element array of the vertex's normal.
- * May be absent.
- * <li>"color": An at least 3-element array of the vertex's color.
- * Each component generally ranges from 0 to 1. May be absent.
- * <li>"uv": A 2-element array of the vertex's texture coordinates
- * (the first element is U, the second is V).
- * Each component generally ranges from 0 to 1. May be absent.
- * </ul>
- * @returns {H3DU.Mesh} This object.
- */
-Mesh.prototype.enumPrimitives = function(func) {
-  // LATER: Implement and favor MeshBuffer version of this method
-  var prim = this.primitiveType();
-  var normals = Mesh._normalOffset(this.attributeBits);
-  var colors = Mesh._colorOffset(this.attributeBits);
-  var texcoords = Mesh._texCoordOffset(this.attributeBits);
-  var stride = this.getStride();
-  var v = this.vertices;
-  var primSize = 3;
-  if(prim === Mesh.LINES)primSize = 2;
-  if(prim === Mesh.POINTS)primSize = 1;
-  for(var j = 0; j < this.indices.length; j += primSize) {
-    var p = [];
-    for(var k = 0; k < primSize; k++) {
-      var vi = this.indices[j + k] * stride;
-      var info = {};
-      info.position = [v[vi], v[vi + 1], v[vi + 2]];
-      if(normals >= 0)
-        info.normal = [v[vi + normals], v[vi + normals + 1], v[vi + normals + 2]];
-      if(colors >= 0)
-        info.color = [v[vi + colors], v[vi + colors + 1], v[vi + colors + 2]];
-      if(texcoords >= 0)
-        info.uv = [v[vi + texcoords], v[vi + texcoords + 1]];
-      p.push(info);
-    }
-    func(p);
-  }
-  return this;
-};
-/** @ignore */
-Mesh.prototype._carryOver = function(mesh) {
-  this.vertices = mesh.vertices;
-  this.attributeBits = mesh.attributeBits;
-  this.indices = mesh.indices;
-  this.tangents = mesh.tangents;
-  this.newPrimitive();
-  return this;
-};
-
 /** @ignore */
 Mesh._getStride = function(format) {
   var s = [3, 6, 6, 9, 5, 8, 8, 11][format & (Mesh.NORMALS_BIT | Mesh.COLORS_BIT | Mesh.TEXCOORDS_BIT)];
@@ -880,6 +821,66 @@ Mesh.POINTS = 0;
 // //////////////////////////////////////////////////////////////////////////
 
 /**
+ * Enumerates the primitives (lines, triangles, and points) included
+ * in this mesh.
+ * @deprecated For a replacement of this method,
+ * see the example given in {@link H3DU.MeshBuffer#getAttribute}.
+ * @param {Function} func A function that will be called
+ * for each primitive in the mesh. The function takes a single
+ * parameter, consisting of an array of one, two, or three vertex
+ * objects. A point will have one vertex, a line two vertices and
+ * a triangle three. Each vertex object may have these properties:<ul>
+ * <li>"position": A 3-element array of the vertex's position.
+ * Always present.
+ * <li>"normal": A 3-element array of the vertex's normal.
+ * May be absent.
+ * <li>"color": An at least 3-element array of the vertex's color.
+ * Each component generally ranges from 0 to 1. May be absent.
+ * <li>"uv": A 2-element array of the vertex's texture coordinates
+ * (the first element is U, the second is V).
+ * Each component generally ranges from 0 to 1. May be absent.
+ * </ul>
+ * @returns {H3DU.Mesh} This object.
+ */
+Mesh.prototype.enumPrimitives = function(func) {
+  var prim = this.primitiveType();
+  var normals = Mesh._normalOffset(this.attributeBits);
+  var colors = Mesh._colorOffset(this.attributeBits);
+  var texcoords = Mesh._texCoordOffset(this.attributeBits);
+  var stride = this.getStride();
+  var v = this.vertices;
+  var primSize = 3;
+  if(prim === Mesh.LINES)primSize = 2;
+  if(prim === Mesh.POINTS)primSize = 1;
+  for(var j = 0; j < this.indices.length; j += primSize) {
+    var p = [];
+    for(var k = 0; k < primSize; k++) {
+      var vi = this.indices[j + k] * stride;
+      var info = {};
+      info.position = [v[vi], v[vi + 1], v[vi + 2]];
+      if(normals >= 0)
+        info.normal = [v[vi + normals], v[vi + normals + 1], v[vi + normals + 2]];
+      if(colors >= 0)
+        info.color = [v[vi + colors], v[vi + colors + 1], v[vi + colors + 2]];
+      if(texcoords >= 0)
+        info.uv = [v[vi + texcoords], v[vi + texcoords + 1]];
+      p.push(info);
+    }
+    func(p);
+  }
+  return this;
+};
+/** @ignore */
+Mesh.prototype._carryOver = function(mesh) {
+  this.vertices = mesh.vertices;
+  this.attributeBits = mesh.attributeBits;
+  this.indices = mesh.indices;
+  this.tangents = mesh.tangents;
+  this.newPrimitive();
+  return this;
+};
+
+/**
  * Converts this mesh to a new mesh with triangles converted
  * to line segments. If the mesh consists
  * of points or line segments, it will remain
@@ -904,7 +905,7 @@ Mesh._getValue = function(helper, attr, attrIndex, value) {
     value[0] = 0;
     value[1] = 0;
     value[2] = 0;
-    helper.getVec(attr, attrIndex, value);
+    attr.getVec(attrIndex, value);
     return true;
   }
   return false;

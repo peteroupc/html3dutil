@@ -80,8 +80,8 @@ bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuff
 and create a buffer attribute with the H3DU.Semantics.BITANGENT
 semantic.</b>
 * [color3](#H3DU.Mesh_color3)<br>Sets the current color for this mesh.
-* [enumPrimitives](#H3DU.Mesh_enumPrimitives)<br>Enumerates the primitives (lines, triangles, and points) included
-in this mesh.
+* [enumPrimitives](#H3DU.Mesh_enumPrimitives)<br><b>Deprecated: For a replacement of this method,
+see the example given in <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_getAttribute">H3DU.MeshBuffer#getAttribute</a>.</b>
 * [getBoundingBox](#H3DU.Mesh_getBoundingBox)<br><b>Deprecated: Use <code>(this).toMeshBuffer().getBounds()</code> instead.</b>
 * [getVertex](#H3DU.Mesh_getVertex)<br>Gets the position of the vertex with the given
 index in this mesh.
@@ -305,6 +305,9 @@ This object. (Type: <a href="H3DU.Mesh.md">H3DU.Mesh</a>)
 
 <a name='H3DU.Mesh_enumPrimitives'></a>
 ### H3DU.Mesh#enumPrimitives(func)
+
+<b>Deprecated: For a replacement of this method,
+see the example given in <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_getAttribute">H3DU.MeshBuffer#getAttribute</a>.</b>
 
 Enumerates the primitives (lines, triangles, and points) included
 in this mesh.

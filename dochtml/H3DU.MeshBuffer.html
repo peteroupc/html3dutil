@@ -22,7 +22,36 @@ is, the number of vertex indices in its index buffer (some of which
 may be duplicates).<li><a href='#H3DU.MeshBuffer_vertexIndices'>vertexIndices</a><br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.<li><a href='#H3DU.MeshBuffer_wireFrame'>wireFrame</a><br>Converts the triangles in this mesh to line segments.</ul><a name='H3DU.MeshBuffer_getAttribute'></a>
 <h3> H3DU.MeshBuffer#getAttribute(name, [semanticIndex])</h3>Gets a vertex attribute included in this mesh buffer.<h4> Parameters</h4><ul><li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.<li><code>semanticIndex</code> (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.</ul><h4> Return Value</h4>A vertex buffer accessor, or null
-if the attribute doesn't exist. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<a name='H3DU.MeshBuffer_getBounds'></a>
+if the attribute doesn't exist. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<h4> Example</h4><p>The following function gets the positions,
+normals, texture coordinates, and colors of each primitive
+(line, text, or point) in the mesh buffer. A point will have one
+vertex per primitive, a line two vertices and a triangle three.
+The attributes, if present, will be stored in the "position",
+"normal", "uv", and "color" properties of each vertex.</p><pre>
+function getPrimitives(mesh) {
+var p=mesh.getAttribute("POSITION")
+var n=mesh.getAttribute("NORMAL")
+var t=mesh.getAttribute("TEXCOORD_0")
+var c=mesh.getAttribute("COLOR")
+var ind=mesh.getIndices()
+var primSize = 3;
+if(mesh.primitiveType() === Mesh.LINES)primSize = 2;
+if(mesh.primitiveType() === Mesh.POINTS)primSize = 1;
+var ret=[]
+for(var i=0;i<ind.length;i+=primSize) {
+var prim=[]
+var index=ind[i]
+for(var j=0;j<primSize;j++) {
+var info={}
+if(p)info.position=p.getVec(index,[])
+if(n)info.normal=n.getVec(index,[])
+if(t)info.uv=t.getVec(index,[])
+if(c)info.color=c.getVec(index,[])
+}
+ret.push(prim)
+}
+return ret
+}</pre><a name='H3DU.MeshBuffer_getBounds'></a>
 <h3> H3DU.MeshBuffer#getBounds()</h3>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
 Only positions with attribute semantic <code>POSITION</code> are

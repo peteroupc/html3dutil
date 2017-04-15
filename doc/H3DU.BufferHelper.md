@@ -10,16 +10,12 @@ A helper class for accessing and setting data in vertex attributes.
 ### Methods
 
 * [copy](#H3DU.BufferHelper_copy)<br>Copies the values of a vertex attribute into a new vertex attribute object.
-* [get](#H3DU.BufferHelper_get)<br>Gets the first element of the attribute value with the given vertex index.
-* [getVec](#H3DU.BufferHelper_getVec)<br>Gets the elements of a vertex attribute value.
 * [makeIndices](#H3DU.BufferHelper_makeIndices)<br>Generates an array of increasing vertex indices
 * [merge](#H3DU.BufferHelper_merge)<br>Merges two vertex attributes, whose vertices can be indexed differently, into one
 combined vertex attribute.
 * [resolveSemantic](#H3DU.BufferHelper_resolveSemantic)<br>Resolves an attribute semantic and semantic index, which
 may optionally be given as a string instead, into two numbers giving
 the semantic and index.
-* [set](#H3DU.BufferHelper_set)<br>Sets the first element of the attribute value with the given vertex index.
-* [setVec](#H3DU.BufferHelper_setVec)<br>Sets the elements of a vertex attribute value.
 
 <a name='H3DU.BufferHelper_copy'></a>
 ### H3DU.BufferHelper#copy(attr)
@@ -33,41 +29,6 @@ Copies the values of a vertex attribute into a new vertex attribute object.
 #### Return Value
 
 A copy of the vertex attribute object. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
-
-<a name='H3DU.BufferHelper_get'></a>
-### H3DU.BufferHelper#get(a, index)
-
-Gets the first element of the attribute value with the given vertex index.
-
-Note that currently, this method does no bounds checking beyond the
-checking naturally done when accessing the attribute's buffer.
-
-#### Parameters
-
-* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
-* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-
-#### Return Value
-
-The first element of the given attribute value. (Type: number)
-
-<a name='H3DU.BufferHelper_getVec'></a>
-### H3DU.BufferHelper#getVec(a, index, vec)
-
-Gets the elements of a vertex attribute value.
-
-Note that currently, this method does no bounds checking beyond the
-checking naturally done when accessing the attribute's buffer.
-
-#### Parameters
-
-* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
-* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: Array.&lt;number>)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute's count per value (see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>).
-
-#### Return Value
-
-The parameter "vec". (Type: Array.&lt;number>)
 
 <a name='H3DU.BufferHelper_makeIndices'></a>
 ### H3DU.BufferHelper#makeIndices(numIndices)
@@ -119,42 +80,5 @@ A two-element array consisting
 of the semantic and semantic index, respectively, described in
 the "name" and "index" parameters. Returns null if "name" is a string,
 but doesn't describe a valid semantic. (Type: Array.&lt;number>)
-
-<a name='H3DU.BufferHelper_set'></a>
-### H3DU.BufferHelper#set(a, index, value)
-
-Sets the first element of the attribute value with the given vertex index.
-
-Note that currently, this method does no bounds checking beyond the
-checking naturally done when writing to the attribute's buffer.
-
-#### Parameters
-
-* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
-* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `value` (Type: number)<br>The number to set the first element to.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.BufferHelper.md">H3DU.BufferHelper</a>)
-
-<a name='H3DU.BufferHelper_setVec'></a>
-### H3DU.BufferHelper#setVec(a, index, vec)
-
-Sets the elements of a vertex attribute value.
-
-Note that currently, this method does no bounds checking beyond the
-checking naturally done when writing to the attribute's buffer, except
-where noted otherwise.
-
-#### Parameters
-
-* `a` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.
-* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: Array.&lt;number>)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array's length or the attribute's count per value (see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>), whichever is less.
-
-#### Return Value
-
-This object. (Type: BufferHelper)
 
 [Back to documentation index.](index.md)

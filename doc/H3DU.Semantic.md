@@ -36,6 +36,7 @@ Attribute semantic for a bitangent vector.
 ### H3DU.Semantic.COLOR (constant)
 
 Attribute semantic for a color.
+The default shader uses 3-component colors.
 
 <a name='H3DU.Semantic.CUSTOM'></a>
 ### H3DU.Semantic.CUSTOM (constant)

@@ -67,6 +67,40 @@ Gets a vertex attribute included in this mesh buffer.
 A vertex buffer accessor, or null
 if the attribute doesn't exist. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
 
+#### Example
+
+The following function gets the positions,
+normals, texture coordinates, and colors of each primitive
+(line, text, or point) in the mesh buffer. A point will have one
+vertex per primitive, a line two vertices and a triangle three.
+The attributes, if present, will be stored in the "position",
+"normal", "uv", and "color" properties of each vertex.
+
+    function getPrimitives(mesh) {
+    var p=mesh.getAttribute("POSITION")
+    var n=mesh.getAttribute("NORMAL")
+    var t=mesh.getAttribute("TEXCOORD_0")
+    var c=mesh.getAttribute("COLOR")
+    var ind=mesh.getIndices()
+    var primSize = 3;
+    if(mesh.primitiveType() === Mesh.LINES)primSize = 2;
+    if(mesh.primitiveType() === Mesh.POINTS)primSize = 1;
+    var ret=[]
+    for(var i=0;i<ind.length;i+=primSize) {
+    var prim=[]
+    var index=ind[i]
+    for(var j=0;j<primSize;j++) {
+    var info={}
+    if(p)info.position=p.getVec(index,[])
+    if(n)info.normal=n.getVec(index,[])
+    if(t)info.uv=t.getVec(index,[])
+    if(c)info.color=c.getVec(index,[])
+    }
+    ret.push(prim)
+    }
+    return ret
+    }
+
 <a name='H3DU.MeshBuffer_getBounds'></a>
 ### H3DU.MeshBuffer#getBounds()
 

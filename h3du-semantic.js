@@ -39,6 +39,7 @@ Semantic.NORMAL = 1;
  */
 Semantic.TEXCOORD = 2;
  /** Attribute semantic for a color.
+  * The default shader uses 3-component colors.
   * @const
   * @static
   */
