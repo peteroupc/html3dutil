@@ -690,10 +690,10 @@ ShaderInfo.getDefaultFragment = function() {
 // Convert Blinn-Phong shininess to roughness
 // See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
     "#ifndef ROUGHNESS", "#ifdef SPECULAR", "rough=clamp(sqrt(2.0/(2.0+mshin)),0.0,1.0);", "#endif", "#endif",
-    "#ifdef ROUGHNESS_MAP", "rough=texture2D(roughnessMap,uvVar).r;", "#endif",
+    "#ifdef ROUGHNESS_MAP", "rough=texture2D(roughnessMap,uvVar).g;", "#endif",
     "#ifdef INVERT_ROUGHNESS", "rough=1.0-rough;", "#endif",
     "#ifdef METALNESS", "metal=metalness;", "#endif",
-    "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).r;", "#endif",
+    "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).b;", "#endif",
     "#endif", // PHYSICAL_BASED
     ""].join("\n") + "\n";
   for(i = 0; i < H3DU.Lights.MAX_LIGHTS; i++) {

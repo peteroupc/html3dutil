@@ -14,16 +14,26 @@
  */
 export var Semantic = {};
 /** Attribute semantic for a vertex position.
+ * The default shader uses 3-dimensional positions.
  * @const
  * @static
  */
 Semantic.POSITION = 0;
 /** Attribute semantic for a vertex normal.
+ * The default shader uses 3-dimensional normals.
  * @const
  * @static
  */
 Semantic.NORMAL = 1;
-/** Attribute semantic for a texture coordinate.
+/** Attribute semantic for a texture coordinate.<p>
+ * Note that the default shader supports only 2-dimensional
+ * texture coordinates. For such texturing tasks as mapping
+ * a square to a trapezoid, 3-dimensional texture coordinates
+ * are useful to ensure the texturing is perspective-correct.
+ * In this case, the 3-D texture coordinates are converted
+ * to 2-D by dividing the X and Y components by the Z component.
+ * In a fragment shader, this can look like the following
+ * code: <code>texCoord.xy/texCoord.z</code>.
  * @const
  * @static
  */

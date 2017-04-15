@@ -41,7 +41,7 @@ Gets an already loaded texture by name from this texture loader.
 #### Return Value
 
 The texture with the given name, or null
-if it doesn't exist. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
+if it isn't fully loaded or doesn't exist. (Type: <a href="H3DU.Texture.md">H3DU.Texture</a>)
 
 <a name='H3DU.TextureLoader_loadAndMapTexture'></a>
 ### H3DU.TextureLoader#loadAndMapTexture(texture, context)

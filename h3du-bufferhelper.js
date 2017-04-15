@@ -291,6 +291,8 @@ BufferHelper._wellKnownAttributes = {
   "NORMAL":1,
   "JOINT":4,
   "WEIGHT":5,
+  "JOINTS":4,
+  "WEIGHTS":5,
   "TANGENT":6,
   "BITANGENT":7
 };

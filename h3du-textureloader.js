@@ -27,12 +27,11 @@ export var TextureLoader = function() {
  * Gets an already loaded texture by name from this texture loader.
  * @param {string} name The name of the texture, usually its file name.
  * @returns {H3DU.Texture} The texture with the given name, or null
- * if it doesn't exist.
+ * if it isn't fully loaded or doesn't exist.
  */
 TextureLoader.prototype.getTexture = function(name) {
   var tex = this.textureImages[name] || null;
   if(tex && tex.loadStatus !== 2) {
-    this.textureImages[name] = null;
     return null;
   }
   return this.textureImages[name] || null;

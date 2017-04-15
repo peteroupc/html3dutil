@@ -71,11 +71,13 @@ Uniform semantic for a model-view-projection matrix.
 ### H3DU.Semantic.NORMAL (constant)
 
 Attribute semantic for a vertex normal.
+The default shader uses 3-dimensional normals.
 
 <a name='H3DU.Semantic.POSITION'></a>
 ### H3DU.Semantic.POSITION (constant)
 
 Attribute semantic for a vertex position.
+The default shader uses 3-dimensional positions.
 
 <a name='H3DU.Semantic.PROJECTION'></a>
 ### H3DU.Semantic.PROJECTION (constant)
@@ -91,6 +93,15 @@ Attribute semantic for a tangent vector.
 ### H3DU.Semantic.TEXCOORD (constant)
 
 Attribute semantic for a texture coordinate.
+
+Note that the default shader supports only 2-dimensional
+texture coordinates. For such texturing tasks as mapping
+a square to a trapezoid, 3-dimensional texture coordinates
+are useful to ensure the texturing is perspective-correct.
+In this case, the 3-D texture coordinates are converted
+to 2-D by dividing the X and Y components by the Z component.
+In a fragment shader, this can look like the following
+code: <code>texCoord.xy/texCoord.z</code>.
 
 <a name='H3DU.Semantic.VIEW'></a>
 ### H3DU.Semantic.VIEW (constant)

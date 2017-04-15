@@ -66,8 +66,8 @@ function PbrMaterial(params) {
   this.metalness = 0;
   /**
    * A texture indicating the metalness of each part of the texture,
-   * as specified in the texture's red channel.
-   * Each pixel value in the red channel (which ranges from 0-255 in most image
+   * as specified in the texture's blue channel.
+   * Each pixel value in the blue channel (which ranges from 0-255 in most image
    * formats) is scaled to the range [0, 1].<p>
    * This value is only used in the <b>metallic workflow</b>.
    * Any texture used for this map should not be in JPEG format or any other
@@ -88,8 +88,8 @@ function PbrMaterial(params) {
   this.roughness = 0.35;
   /**
    * A texture indicating the roughness of each part of the texture,
-   * as specified in the texture's red channel.
-   * Each pixel value in the red channel (which ranges from 0-255 in most image
+   * as specified in the texture's green channel.
+   * Each pixel value in the green channel (which ranges from 0-255 in most image
    * formats) is scaled to the range [0, 1].<p>
    * The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>;
    * to treat the texture as a glossiness or smoothness map, set the

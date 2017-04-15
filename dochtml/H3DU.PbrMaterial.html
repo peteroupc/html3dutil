@@ -8,9 +8,9 @@ the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.<h4> Par
 in the red, green, blue, and alpha channels.<li><a href='#H3DU.PbrMaterial_emission'>emission</a><br>Additive color emitted by objects with this material.<li><a href='#H3DU.PbrMaterial_emissionMap'>emissionMap</a><br>Emission map texture.<li><a href='#H3DU.PbrMaterial_invertRoughness'>invertRoughness</a><br>If true, the roughness property is treated as a "glossiness" property,
 or 1 minus roughness, and the roughness map is treated as a "glossiness"
 map, or an inverted roughness map.<li><a href='#H3DU.PbrMaterial_metalness'>metalness</a><br>A value indicating whether objects described by this material are metals.<li><a href='#H3DU.PbrMaterial_metalnessMap'>metalnessMap</a><br>A texture indicating the metalness of each part of the texture,
-as specified in the texture's red channel.<li><a href='#H3DU.PbrMaterial_normalMap'>normalMap</a><br>Normal map (bump map) texture.<li><a href='#H3DU.PbrMaterial_roughness'>roughness</a><br>Describes the roughness of the surface described
+as specified in the texture's blue channel.<li><a href='#H3DU.PbrMaterial_normalMap'>normalMap</a><br>Normal map (bump map) texture.<li><a href='#H3DU.PbrMaterial_roughness'>roughness</a><br>Describes the roughness of the surface described
 by this material.<li><a href='#H3DU.PbrMaterial_roughnessMap'>roughnessMap</a><br>A texture indicating the roughness of each part of the texture,
-as specified in the texture's red channel.<li><a href='#H3DU.PbrMaterial_shader'>shader</a><br>Shader program to use when rendering objects with this material.<li><a href='#H3DU.PbrMaterial_specular'>specular</a><br>Specular reflectivity of this material.<li><a href='#H3DU.PbrMaterial_specularMap'>specularMap</a><br>A texture where each pixel identifies the "specular" property of that
+as specified in the texture's green channel.<li><a href='#H3DU.PbrMaterial_shader'>shader</a><br>Shader program to use when rendering objects with this material.<li><a href='#H3DU.PbrMaterial_specular'>specular</a><br>Specular reflectivity of this material.<li><a href='#H3DU.PbrMaterial_specularMap'>specularMap</a><br>A texture where each pixel identifies the "specular" property of that
 part of the texture, as specified in the texture's red, green, and blue channels
 (in the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>).<li><a href='#H3DU.PbrMaterial_workflow'>workflow</a><br>Specifies which workflow to use when interpreting values for this
 material.</ul><h3> Methods</h3><ul><li><a href='#H3DU.PbrMaterial_copy'>copy</a><br>Clones this object's parameters to a new <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>
@@ -91,8 +91,8 @@ This value is only used in the <b>metallic workflow</b>.
 <h3> H3DU.PbrMaterial#metalnessMap
 
 </h3>A texture indicating the metalness of each part of the texture,
-as specified in the texture's red channel.
-Each pixel value in the red channel (which ranges from 0-255 in most image
+as specified in the texture's blue channel.
+Each pixel value in the blue channel (which ranges from 0-255 in most image
 formats) is scaled to the range [0, 1].<p>
 This value is only used in the <b>metallic workflow</b>.
 Any texture used for this map should not be in JPEG format or any other
@@ -141,8 +141,8 @@ or smoothness, set the <code>invertRoughness</code> property to <code>true</code
 <h3> H3DU.PbrMaterial#roughnessMap
 
 </h3>A texture indicating the roughness of each part of the texture,
-as specified in the texture's red channel.
-Each pixel value in the red channel (which ranges from 0-255 in most image
+as specified in the texture's green channel.
+Each pixel value in the green channel (which ranges from 0-255 in most image
 formats) is scaled to the range [0, 1].<p>
 The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>;
 to treat the texture as a glossiness or smoothness map, set the

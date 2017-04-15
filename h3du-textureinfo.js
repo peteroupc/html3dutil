@@ -31,7 +31,7 @@ export var TextureInfo = function(params) {
   this.target = 3553;
   this.type = 5121;
   this.magFilter = 9729;
-  this.minFilter = 9987; // NOTE: Different from glTF default of 9986
+  this.minFilter = 9987; // NOTE: Different from glTF 1.0 default of 9986
   this.wrapS = 10497;
   this.wrapT = 10497;
   this.setParams(typeof params === "undefined" ? null : params);

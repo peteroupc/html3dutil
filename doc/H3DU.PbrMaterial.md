@@ -31,12 +31,12 @@ or 1 minus roughness, and the roughness map is treated as a "glossiness"
 map, or an inverted roughness map.
 * [metalness](#H3DU.PbrMaterial_metalness)<br>A value indicating whether objects described by this material are metals.
 * [metalnessMap](#H3DU.PbrMaterial_metalnessMap)<br>A texture indicating the metalness of each part of the texture,
-as specified in the texture's red channel.
+as specified in the texture's blue channel.
 * [normalMap](#H3DU.PbrMaterial_normalMap)<br>Normal map (bump map) texture.
 * [roughness](#H3DU.PbrMaterial_roughness)<br>Describes the roughness of the surface described
 by this material.
 * [roughnessMap](#H3DU.PbrMaterial_roughnessMap)<br>A texture indicating the roughness of each part of the texture,
-as specified in the texture's red channel.
+as specified in the texture's green channel.
 * [shader](#H3DU.PbrMaterial_shader)<br>Shader program to use when rendering objects with this material.
 * [specular](#H3DU.PbrMaterial_specular)<br>Specular reflectivity of this material.
 * [specularMap](#H3DU.PbrMaterial_specularMap)<br>A texture where each pixel identifies the "specular" property of that
@@ -163,8 +163,8 @@ Default Value: `0`
 ### H3DU.PbrMaterial#metalnessMap
 
 A texture indicating the metalness of each part of the texture,
-as specified in the texture's red channel.
-Each pixel value in the red channel (which ranges from 0-255 in most image
+as specified in the texture's blue channel.
+Each pixel value in the blue channel (which ranges from 0-255 in most image
 formats) is scaled to the range [0, 1].
 
 This value is only used in the <b>metallic workflow</b>.
@@ -228,8 +228,8 @@ Default Value: `0.35`
 ### H3DU.PbrMaterial#roughnessMap
 
 A texture indicating the roughness of each part of the texture,
-as specified in the texture's red channel.
-Each pixel value in the red channel (which ranges from 0-255 in most image
+as specified in the texture's green channel.
+Each pixel value in the green channel (which ranges from 0-255 in most image
 formats) is scaled to the range [0, 1].
 
 The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>;

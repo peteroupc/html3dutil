@@ -93,7 +93,6 @@ Texture.prototype.setClamp = function(clamp) {
  */
 Texture.loadTexture = function(info, textureCache) {
  // Get cached texture
-
   var texImage;
   var name;
   if(!(typeof info !== "undefined" && info !== null)) {
@@ -101,13 +100,24 @@ Texture.loadTexture = function(info, textureCache) {
   }
   if(info instanceof H3DU.Texture) {
     name = info.name;
-    texImage = info;
   } else {
     name = info instanceof H3DU.TextureInfo ? info.uri : info;
-    if(textureCache && textureCache[name] && name && name.length > 0) {
+  }
+  if(textureCache && textureCache[name] && name && name.length > 0) {
+    if(textureCache[name].loadStatus === 2) {
+  // Already loaded
       return Promise.resolve(textureCache[name]);
+    } else {
+  // Already present in the cache
+      texImage = textureCache[name];
     }
-    texImage = new H3DU.Texture(name);
+  } else {
+      // New texture not yet cached
+    if(info instanceof H3DU.Texture) {
+      texImage = info;
+    } else {
+      texImage = new H3DU.Texture(name);
+    }
   }
   if(textureCache && name && name.length > 0) {
     textureCache[name] = texImage;
@@ -220,8 +230,17 @@ Texture.prototype.loadImage = function() {
     return Promise.resolve(this);
   }
   var that = this;
+  if(this.loadStatus === 1) {
+    // Already loading
+    return new Promise(function(res) {
+      setTimeout(function() {
+        res(that.loadImage());
+      }, 5);
+    });
+  }
   var thisName = this.name;
   that.loadStatus = 1;
+  // console.log("loading: "+this.name)
  // Use the TGA image loader if it has the TGA file
  // extension
   if((/\.tga$/i).test(thisName)) {
@@ -247,7 +266,7 @@ Texture.prototype.loadImage = function() {
       that.width = target.width;
       that.height = target.height;
       that.loadStatus = 2;
-   // console.log("loaded: "+thisName)
+      // console.log("loaded: "+thisName)
       image.onload = null;
       image.onerror = null;
       resolve(that);
