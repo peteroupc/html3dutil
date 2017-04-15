@@ -113,6 +113,12 @@ function Material(params, diffuse, specular, shininess, emission) {
   * @default
   */
   this.emissionMap = null; // LATER: Support 4-component emissions (to support basic shading with alpha properly)
+  /**
+   * Ambient occlusion map texture.
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
+   * @default
+   */
+  this.occlusionMap = null;
  /**
   * Shader program to use when rendering objects with this material.
   * @default
@@ -147,6 +153,8 @@ Material.prototype.copy = function() {
     "texture":this.texture,
     "specularMap":this.specularMap,
     "normalMap":this.normalMap,
+    "emissionMap":this.emissionMap,
+    "occlusionMap":this.occlusionMap,
     "shader":this.shader
   });
 };
@@ -166,7 +174,8 @@ Material.fromBasic = function(color) {
     "specularMap":null,
     "normalMap":null,
     "emission":color,
-    "emissionMap":null
+    "emissionMap":null,
+    "occlusionMap":null
   });
 };
 /**
@@ -209,6 +218,7 @@ Material.fromBasicTexture = function(texture) {
  * to use. Can be null.
  * <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#specularMap}). Can be null.
  * <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#normalMap}). Can be null.
+ * <li><code>occlusionMap</code> - Ambient occlusion map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#occlusionMap}). Can be null.
  * <li><code>emissionMap</code> - Emission map texture, taking the same types as the "texture" parameter (see {@link H3DU.Material#emissionMap}). Can be null.
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. <i>Using {@link H3DU.ShaderProgram} objects in
@@ -243,6 +253,9 @@ Material.prototype.setParams = function(params) {
   }
   if(typeof params.specularMap !== "undefined") {
     this.specularMap = H3DU.TextureInfo._texInfoOrString(params.specularMap);
+  }
+  if(typeof params.occlusionMap !== "undefined") {
+    this.specularMap = H3DU.TextureInfo._texInfoOrString(params.occlusionMap);
   }
   if(typeof params.normalMap !== "undefined") {
     this.normalMap = H3DU.TextureInfo._texInfoOrString(params.normalMap);

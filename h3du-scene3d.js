@@ -105,6 +105,8 @@ Scene3D.ENV_MAP_ENABLED = 1 << 12 | 0;
 Scene3D.ENV_EQUIRECT_ENABLED = 1 << 13 | 0;
 /** @ignore */
 Scene3D.EMISSION_MAP_ENABLED = 1 << 14 | 0;
+/** @ignore */
+Scene3D.OCCLUSION_MAP_ENABLED = 1 << 15 | 0;
 
 /** @ignore */
 Scene3D._flagsForShape = function(shape) {
@@ -118,6 +120,7 @@ Scene3D._flagsForShape = function(shape) {
     flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
     flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
     flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
+    flags |= material.occlusionMap ? H3DU.Scene3D.OCCLUSION_MAP_ENABLED : 0;
     flags |= material.emissionMap ? H3DU.Scene3D.EMISSION_MAP_ENABLED : 0;
   }
   if(typeof material !== "undefined" && material !== null && material instanceof H3DU.PbrMaterial) {
@@ -130,6 +133,7 @@ Scene3D._flagsForShape = function(shape) {
       flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
     }
     flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
+    flags |= material.occlusionMap ? H3DU.Scene3D.OCCLUSION_MAP_ENABLED : 0;
     flags |= material.emissionMap ? H3DU.Scene3D.EMISSION_MAP_ENABLED : 0;
     flags |= material.albedoMap ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
     flags |= material.invertRoughness === true ? H3DU.Scene3D.INVERT_ROUGHNESS_ENABLED : 0;

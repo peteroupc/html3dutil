@@ -19,8 +19,6 @@
  * @memberof H3DU
  */
 function PbrMaterial(params) {
-  // LATER: Support ambient occlusion maps.
-
 /**
  * Albedo (or base color) of this material.<p>
  * This value is a 3- or 4-element array giving the red, green, blue, and
@@ -194,6 +192,12 @@ function PbrMaterial(params) {
    * @default
    */
   this.emissionMap = null;
+  /**
+   * Ambient occlusion map texture.
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
+   * @default
+   */
+  this.occlusionMap = null;
  /**
   * Shader program to use when rendering objects with this material.
   * @default
@@ -251,6 +255,7 @@ PbrMaterial.Metallic = 1;
  * <li><code>metalnessMap</code> - Metalness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#metalnessMap}). Can be null.
  * <li><code>roughnessMap</code> - Roughness texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#roughnessMap}). Can be null.
  * <li><code>emissionMap</code> - Emission texture, taking the same types as for "albedoMap" (see {@link H3DU.PbrMaterial#emissionMap}). Can be null.
+ * <li><code>occlusionMap</code> - Ambient occlusion map texture, taking the same types as the "texture" parameter (see {@link H3DU.PbrMaterial#occlusionMap}). Can be null.
  * <li><code>shader</code> - {@link H3DU.ShaderInfo} object for a WebGL shader program
  * to use when rendering objects with this material. Can be null.
  * </ul>
@@ -287,19 +292,17 @@ PbrMaterial.prototype.setParams = function(params) {
   if(typeof params.normalMap !== "undefined") {
     this.normalMap = H3DU.TextureInfo._texInfoOrString(params.normalMap);
   }
+  if(typeof params.emissionMap !== "undefined") {
+    this.emissionMap = H3DU.TextureInfo._texInfoOrString(params.emissionMap);
+  }
   if(typeof params.metalnessMap !== "undefined") {
     this.metalnessMap = H3DU.TextureInfo._texInfoOrString(params.metalnessMap);
   }
+  if(typeof params.occlusionMap !== "undefined") {
+    this.occlusionMap = H3DU.TextureInfo._texInfoOrString(params.occlusionMap);
+  }
   if(typeof params.roughnessMap !== "undefined") {
     this.roughnessMap = H3DU.TextureInfo._texInfoOrString(params.roughnessMap);
-  }
-  /*
-  if(typeof params.environmentMap !== "undefined") {
-    this.environmentMap = H3DU.TextureInfo._texInfoOrString(params.environmentMap);
-  }
-  */
-  if(typeof params.emissionMap !== "undefined") {
-    this.emissionMap = H3DU.TextureInfo._texInfoOrString(params.emissionMap);
   }
   if(typeof params.metalness !== "undefined" && params.metalness !== null) {
     this.metalness = params.metalness;
@@ -335,6 +338,8 @@ PbrMaterial.prototype.copy = function() {
     "specular":this.specular,
     "emission":this.emission,
     "albedoMap":this.albedoMap,
+    "emissionMap":this.emissionMap,
+    "occlusionMap":this.occlusionMap,
     "specularMap":this.specularMap,
     "normalMap":this.normalMap,
     "shader":this.shader
