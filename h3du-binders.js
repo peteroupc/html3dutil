@@ -68,6 +68,7 @@ _MaterialBinder.prototype.bind = function(program, context, loader) {
   textures.push([typeof mat.specularMap === "undefined" ? null : mat.specularMap, "specularMap"]);
   textures.push([typeof mat.normalMap === "undefined" ? null : mat.normalMap, "normalMap"]);
   textures.push([typeof mat.metalnessMap === "undefined" ? null : mat.metalnessMap, "metalnessMap"]);
+  textures.push([typeof mat.occlusionMap === "undefined" ? null : mat.occlusionMap, "occlusionMap"]);
   textures.push([typeof mat.roughnessMap === "undefined" ? null : mat.roughnessMap, "roughnessMap"]);
   textures.push([typeof mat.environmentMap === "undefined" ? null : mat.environmentMap, "envMap"]);
   textures.push([typeof mat.emissionMap === "undefined" ? null : mat.emissionMap, "emissionMap"]);

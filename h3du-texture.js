@@ -111,13 +111,12 @@ Texture.loadTexture = function(info, textureCache) {
   // Already present in the cache
       texImage = textureCache[name];
     }
+  } else if(info instanceof H3DU.Texture) {
+      // New texture not yet cached
+    texImage = info;
   } else {
       // New texture not yet cached
-    if(info instanceof H3DU.Texture) {
-      texImage = info;
-    } else {
-      texImage = new H3DU.Texture(name);
-    }
+    texImage = new H3DU.Texture(name);
   }
   if(textureCache && name && name.length > 0) {
     textureCache[name] = texImage;

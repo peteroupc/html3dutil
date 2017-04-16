@@ -1,4 +1,4 @@
-/* global ArrayBuffer, Float32Array, H3DU, Uint16Array, Uint32Array */
+/* global ArrayBuffer, Float32Array, Uint16Array, Uint32Array */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -138,6 +138,20 @@ BufferAccessor.prototype.setVec = function(index, vec) {
   return this;
 };
 /**
+ * Copies the values of this accessor into a new vertex attribute object.
+ * @returns {H3DU.BufferAccessor} A copy of the vertex attribute object.
+ */
+BufferAccessor.prototype.copy = function() {
+  var c = this.count();
+  var newAttribute = BufferAccessor.makeBlank(c, this.countPerValue);
+  var value = [];
+  for(var i = 0; i < c; i++) {
+    this.getVec(i, value);
+    newAttribute.setVec( i, value);
+  }
+  return newAttribute;
+};
+/**
  * Generates a vertex attribute buffer, with each value set to all zeros.
  * @param {number} count The number of [values]{@link H3DU.BufferAccessor#buffer}
  * the buffer will hold. For example, (10, 20, 5) is a 3-element value.
@@ -177,21 +191,6 @@ BufferHelper.prototype.makeIndices = function(numIndices) {
   return array;
 };
 /**
- * Copies the values of a vertex attribute into a new vertex attribute object.
- * @param {H3DU.BufferAccessor} attr A vertex buffer accessor.
- * @returns {H3DU.BufferAccessor} A copy of the vertex attribute object.
- */
-BufferHelper.prototype.copy = function(attr) {
-  var c = attr.count();
-  var newAttribute = BufferAccessor.makeBlank(c, attr.countPerValue);
-  var value = [];
-  for(var i = 0; i < c; i++) {
-    attr.getVec(i, value);
-    newAttribute.setVec( i, value);
-  }
-  return newAttribute;
-};
-/**
  * Merges two vertex attributes, whose vertices can be indexed differently, into one
  * combined vertex attribute.
  * @param {H3DU.BufferAccessor} attr1 A vertex buffer accessor for the first vertex attribute.
@@ -213,15 +212,18 @@ BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
   var countPerValue2 = typeof attr2 === "undefined" || attr2 === null ? 0 : attr2.countPerValue;
   var i;
   var elementsPerValue = Math.max(countPerValue1, countPerValue2);
+  // NOTE: Buffer returned by makeBlank will be all zeros
   var newAttribute = BufferAccessor.makeBlank(
     indices1.length + indices2.length, elementsPerValue);
   var value = _MathInternal.vecZeros(elementsPerValue);
+  // NOTE: If undefined or null, first part of buffer will remain all zeros
   if(typeof attr1 !== "undefined" && attr1 !== null) {
     for(i = 0; i < indices1.length; i++) {
       if(attr1)attr1.getVec(indices1[i], value);
       newAttribute.setVec(i, value);
     }
   }
+  // NOTE: If undefined or null, second part of buffer will remain all zeros
   if(typeof attr2 !== "undefined" && attr2 !== null) {
     for(i = 0; i < indices2.length; i++) {
       if(attr2)attr2.getVec(indices2[i], value);
@@ -229,61 +231,4 @@ BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
     }
   }
   return newAttribute;
-};
-/**
- * Resolves an attribute semantic and semantic index, which
- * may optionally be given as a string instead, into two numbers giving
- * the semantic and index.
- * @param {number|string} name An attribute semantic, such
- * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
- * Throws an error if this value is a string and the string is invalid.
- * @param {number} [index] The set index of the attribute
- * for the given semantic.
- * 0 is the first index of the attribute, 1 is the second, and so on.
- * This is ignored if "name" is a string. Otherwise, if this value is null, undefined, or omitted,
- * the default is 0.
- * @returns {Array<number>} A two-element array consisting
- * of the semantic and semantic index, respectively, described in
- * the "name" and "index" parameters.  Returns null if "name" is a string,
- * but doesn't describe a valid semantic.
- */
-BufferHelper.prototype.resolveSemantic = function(name, index) {
-  if(typeof name === "number") {
-    return [name, index | 0];
-  } else {
-    var wka = BufferHelper._wellKnownAttributes[name];
-    if(typeof wka === "undefined" || wka === null) {
-      var io = name.indexOf(name);
-      if(io < 0) {
-        return null;
-      }
-      wka = H3DU.MeshBuffer._wellKnownAttributes[name.substr(0, io)];
-      if(typeof wka === "undefined" || wka === null) {
-        return null;
-      }
-      var number = name.substr(io + 1);
-      if(number.length <= 5 && (/^\d$/).test(number)) {
-  // Only allow 5-digit-or-less numbers; more than
-        // that is unreasonable
-        return [wka, parseInt(number, 10)];
-      } else {
-        return null;
-      }
-    } else {
-      return [wka, 0];
-    }
-  }
-};
-
-BufferHelper._wellKnownAttributes = {
-  "POSITION":0,
-  "TEXCOORD":2,
-  "TEXCOORD_0":2,
-  "NORMAL":1,
-  "JOINT":4,
-  "WEIGHT":5,
-  "JOINTS":4,
-  "WEIGHTS":5,
-  "TANGENT":6,
-  "BITANGENT":7
 };

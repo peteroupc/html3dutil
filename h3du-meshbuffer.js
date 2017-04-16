@@ -109,8 +109,8 @@ MeshBuffer.prototype.setAttribute = function(
   var semantic = 0;
   var strideValue = typeof stride === "undefined" || stride === null ? countPerVertex : stride;
   if(countPerVertex <= 0 || strideValue <= 0)throw new Error();
-  var helper = new BufferHelper();
-  var sem = helper.resolveSemantic(name, index);
+  // var helper = new BufferHelper();
+  var sem = MeshBuffer._resolveSemantic(name, index);
   if(typeof sem === "undefined" || sem === null) {
     console.warn("Unsupported attribute semantic: " + name);
     return this;
@@ -163,10 +163,10 @@ MeshBuffer.prototype._getAttributes = function() {
  * if(mesh.primitiveType() === Mesh.LINES)primSize = 2;
  * if(mesh.primitiveType() === Mesh.POINTS)primSize = 1;
  * var ret=[]
- * for(var i=0;i<ind.length;i+=primSize) {
+ * for(var i=0;i&lt;ind.length;i+=primSize) {
  * var prim=[]
  * var index=ind[i]
- * for(var j=0;j<primSize;j++) {
+ * for(var j=0;j&lt;primSize;j++) {
  * var info={}
  * if(p)info.position=p.getVec(index,[])
  * if(n)info.normal=n.getVec(index,[])
@@ -674,7 +674,7 @@ MeshBuffer.prototype.merge = function(other) {
   // indices from the other object
       for(i = 0; i < other.attributes.length; i++) {
         var o = other.attributes[i];
-        newAttributes.push([o[0], o[1], helper.copy(o[2])]);
+        newAttributes.push([o[0], o[1], o[2].copy()]);
       }
       this._bounds = null;
       this.format = other.format;
@@ -740,7 +740,6 @@ MeshBuffer.prototype.merge = function(other) {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.transform = function(matrix) {
-  // var helper = new H3DU.BufferHelper();
   var positionAttribute = this.getAttribute(H3DU.Semantic.POSITION);
   if(!positionAttribute) {
     return this;
@@ -853,7 +852,6 @@ MeshBuffer.prototype.getBounds = function() {
     if(!posattr)return ret;
     var indices = [];
     var vec = [0, 0, 0];
-  // var helper = new H3DU.BufferHelper();
     var primcount = this.primitiveCount();
     for(var j = 0; j < primcount; j++) {
       this.vertexIndices(j, indices);
@@ -897,4 +895,46 @@ MeshBuffer.prototype.primitiveType = function() {
  */
 MeshBuffer.prototype.vertexCount = function() {
   return this.indices.length;
+};
+
+/** @ignore */
+MeshBuffer._resolveSemantic = function(name, index) {
+  if(typeof name === "number") {
+    return [name, index | 0];
+  } else {
+    var wka = MeshBuffer._wellKnownAttributes[name];
+    if(typeof wka === "undefined" || wka === null) {
+      var io = name.indexOf(name);
+      if(io < 0) {
+        return null;
+      }
+      wka = MeshBuffer._wellKnownAttributes[name.substr(0, io)];
+      if(typeof wka === "undefined" || wka === null) {
+        return null;
+      }
+      var number = name.substr(io + 1);
+      if(number.length <= 5 && (/^\d$/).test(number)) {
+  // Only allow 5-digit-or-less numbers; more than
+        // that is unreasonable
+        return [wka, parseInt(number, 10)];
+      } else {
+        return null;
+      }
+    } else {
+      return [wka, 0];
+    }
+  }
+};
+
+MeshBuffer._wellKnownAttributes = {
+  "POSITION":0,
+  "TEXCOORD":2,
+  "TEXCOORD_0":2,
+  "NORMAL":1,
+  "JOINT":4,
+  "WEIGHT":5,
+  "JOINTS":4,
+  "WEIGHTS":5,
+  "TANGENT":6,
+  "BITANGENT":7
 };

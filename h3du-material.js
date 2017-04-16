@@ -64,7 +64,7 @@ function Material(params, diffuse, specular, shininess, emission) {
   * @type {Array<number>}
   * @default
   */
-  this.diffuse = [0.8, 0.8, 0.8, 1.0];
+  this.albedo = [1.0, 1.0, 1.0, 1.0];
  /**
   * Specular highlight reflection of this material.
   * This is usually a shade of gray (all three components are the same),
@@ -81,7 +81,7 @@ function Material(params, diffuse, specular, shininess, emission) {
   * @type {Array<number>}
   * @default
   */
-  this.emission = [0, 0, 0]; // LATER: Support 4-component emissions (to support basic shading with alpha properly)
+  this.emission = [0, 0, 0]; // NOTE: Should use only 3-component emissions
 /**
  * Texture for this material. Each color in the texture
  * sets the diffusion (also called "albedo")
@@ -108,13 +108,14 @@ function Material(params, diffuse, specular, shininess, emission) {
   */
   this.normalMap = null;
  /**
-  * Emission map texture.
+  * Emission map texture. See {@link H3DU.PbrMaterial#emissionMap}.
   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
   * @default
   */
-  this.emissionMap = null; // LATER: Support 4-component emissions (to support basic shading with alpha properly)
+  this.emissionMap = null;// NOTE: Should use only 3-component emissions
   /**
    * Ambient occlusion map texture.
+   * See {@link H3DU.PbrMaterial#occlusionMap}.
    * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */

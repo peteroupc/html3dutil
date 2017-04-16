@@ -38,10 +38,10 @@ var primSize = 3;
 if(mesh.primitiveType() === Mesh.LINES)primSize = 2;
 if(mesh.primitiveType() === Mesh.POINTS)primSize = 1;
 var ret=[]
-for(var i=0;i<ind.length;i+=primSize) {
+for(var i=0;i&lt;ind.length;i+=primSize) {
 var prim=[]
 var index=ind[i]
-for(var j=0;j<primSize;j++) {
+for(var j=0;j&lt;primSize;j++) {
 var info={}
 if(p)info.position=p.getVec(index,[])
 if(n)info.normal=n.getVec(index,[])

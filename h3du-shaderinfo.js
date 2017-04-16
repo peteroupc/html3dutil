@@ -651,7 +651,7 @@ ShaderInfo.getDefaultFragment = function() {
     "vec3 materialAmbient=tolinear(ma);", // ambient
     "vec3 materialDiffuse=tolinear(baseColor.rgb);",
     "vec3 materialEmission;",
-    "#ifdef EMISSION_MAP", "materialEmission=texture2D(emissionMap,uvVar).rgb;", "#else",
+    "#ifdef EMISSION_MAP", "materialEmission=me.rgb*texture2D(emissionMap,uvVar).rgb;", "#else",
     " materialEmission=me.rgb;", "#endif",
     " materialEmission=tolinear(materialEmission);",
     "float materialAlpha=baseColor.a;",
@@ -730,7 +730,6 @@ ShaderInfo.getDefaultFragment = function() {
   }
   shader += [
     " lightedColor+=materialEmission.rgb;",
-    // "#ifdef PHYSICAL_BASED"," lightedColor=tonemapHable(lightedColor);","#endif",
     " lightedColor=fromlinear(lightedColor);",
     " baseColor=vec4(lightedColor,materialAlpha);",
     "#endif",

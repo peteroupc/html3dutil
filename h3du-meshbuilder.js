@@ -8,7 +8,6 @@
  http://peteroupc.github.io/
 */
 
-import {BufferHelper} from "./h3du-bufferhelper.js";
 import {Mesh} from "./h3du-mesh";
 import {MeshBuffer} from "./h3du-meshbuffer";
 import {Semantic} from "./h3du-semantic";
@@ -137,7 +136,7 @@ CurveBuilder._setAttribute = function(
     0 : semanticIndex;
   var iscurve = typeof curve !== "undefined" && curve !== null;
   if(size <= 0)throw new Error("Invalid attribute size");
-  var sem = new BufferHelper().resolveSemantic(semantic,
+  var sem = MeshBuffer._resolveSemantic(semantic,
     semanticIndexValue);
   if(typeof sem === "undefined" || sem === null)throw new Error();
   for(var i = 0; i < attributes.length; i++) {
@@ -441,6 +440,7 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   n = typeof n === "undefined" || n === null ? 24 : Math.ceil(n);
   if(n <= 0)throw new Error();
+  if(typeof mode === "undefined" || mode === null)mode = Mesh.LINES;
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null)) {
     var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
     u1 = ep[0];
@@ -507,6 +507,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   vn = typeof vn === "undefined" || vn === null ? 24 : Math.ceil(vn);
   if(un <= 0)throw new Error();
   if(vn <= 0)throw new Error();
+  if(typeof mode === "undefined" || mode === null)mode = Mesh.TRIANGLES;
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null) || (typeof v1 === "undefined" || v1 === null) || (typeof v2 === "undefined" || v2 === null)) {
     var ep = CurveBuilder._defaultEndPointsSurface(this.attributes);
     u1 = ep[0];

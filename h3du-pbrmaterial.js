@@ -43,7 +43,7 @@ function PbrMaterial(params) {
  * @type {Array<number>}
  * @default
  */
-  this.albedo = [0.8, 0.8, 0.8, 1.0];
+  this.albedo = [1.0, 1.0, 1.0, 1.0];
   /**
    * A texture indicating the albedo (or base color) of each part of the texture,
    * in the red, green, blue, and alpha channels. In physically-based rendering, the albedo
@@ -185,15 +185,19 @@ function PbrMaterial(params) {
   * @type {Array<number>}
   * @default
   */
-  this.emission = [0, 0, 0];
+  this.emission = [0, 0, 0];// NOTE: Should use only 3-component emissions
   /**
-   * Emission map texture.
+   * A texture where each pixel identifies the emission of that
+   * part of the texture, as specified in the texture's red, green, and blue channel.
+   * If a texture is given, the emission found with this texture is multiplied by
+   * the value of the {@link H3DU.PbrMaterial#emission} property.
    * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */
-  this.emissionMap = null;
+  this.emissionMap = null;// NOTE: Should use only 3-component emissions
   /**
-   * Ambient occlusion map texture.
+   * A texture where each pixel identifies the ambient occlusion of that
+   * part of the texture, as specified in the texture's red channel.
    * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
    * @default
    */
