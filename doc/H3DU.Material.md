@@ -22,8 +22,8 @@ the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
 
 ### Members
 
-* [albedo](#H3DU.Material_albedo)<br>Diffusion color of this material (also called "albedo").
 * [ambient](#H3DU.Material_ambient)<br>Ambient color of this material.
+* [diffuse](#H3DU.Material_diffuse)<br>Diffusion color of this material (also called "albedo").
 * [emission](#H3DU.Material_emission)<br>Additive color emitted by objects with this material.
 * [emissionMap](#H3DU.Material_emissionMap)<br>Emission map texture.
 * [normalMap](#H3DU.Material_normalMap)<br>Normal map (bump map) texture.
@@ -45,20 +45,6 @@ object from an RGBA color.
 * [fromTexture](#H3DU.Material.fromTexture)<br>Convenience method that returns an <a href="H3DU.Material.md">H3DU.Material</a>
 object from a texture to apply to a 3D object's surface.
 * [setParams](#H3DU.Material_setParams)<br>Sets parameters for this material object.
-
-<a name='H3DU.Material_albedo'></a>
-### H3DU.Material#albedo
-
-Diffusion color of this material (also called "albedo").
-This is the generally perceived color of the material when
-specular highlights are absent on the material's surface.
-See also <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>; this property corresponds
-more closely to that in the metallic workflow rather than the specular
-workflow.
-
-Type: Array.&lt;number>
-
-Default Value: `"[1,1,1,1]"`
 
 <a name='H3DU.Material_ambient'></a>
 ### H3DU.Material#ambient
@@ -83,6 +69,20 @@ Setting ambient color and diffusion color to the same value usually defines an o
 color.
 
 Default Value: `"[0.2,0.2,0.2]"`
+
+<a name='H3DU.Material_diffuse'></a>
+### H3DU.Material#diffuse
+
+Diffusion color of this material (also called "albedo").
+This is the generally perceived color of the material when
+specular highlights are absent on the material's surface.
+See also <a href="H3DU.PbrMaterial.md#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>; this property corresponds
+more closely to that in the metallic workflow rather than the specular
+workflow.
+
+Type: Array.&lt;number>
+
+Default Value: `"[1,1,1,1]"`
 
 <a name='H3DU.Material_emission'></a>
 ### H3DU.Material#emission
@@ -250,7 +250,7 @@ Sets parameters for this material object.
 
 #### Parameters
 
-* `params` (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>ambient</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the ambient color. (See <a href="H3DU.Material.md#H3DU.Material_ambient">H3DU.Material#ambient</a>.) The default is (0.2, 0.2, 0.2). <li><code>diffuse</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo"). (See H3DU.Material#diffuse.) The default is (0.8, 0.8, 0.8). <li><code>specular</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the specular reflection. (See <a href="H3DU.Material.md#H3DU.Material_specular">H3DU.Material#specular</a>.) The default is (0,0,0), meaning no specular highlights. <li><code>shininess</code> - Specular reflection exponent. (See <a href="H3DU.Material.md#H3DU.Material_shininess">H3DU.Material#shininess</a>). Ranges from 0 through 128. The default is 0. <li><code>emission</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the additive color. (See <a href="H3DU.Material.md#H3DU.Material_emission">H3DU.Material#emission</a>.) If this is an array, its numbers can range from -1 to 1. The default is (0,0,0). <li><code>texture</code> - <a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a> object, ora string with the URL of the texture to use. Can be null. <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_specularMap">H3DU.Material#specularMap</a>). Can be null. <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_normalMap">H3DU.Material#normalMap</a>). Can be null. <li><code>occlusionMap</code> - Ambient occlusion map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_occlusionMap">H3DU.Material#occlusionMap</a>). Can be null. <li><code>emissionMap</code> - Emission map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_emissionMap">H3DU.Material#emissionMap</a>). Can be null. <li><code>shader</code> - <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> object for a WebGL shader program to use when rendering objects with this material. <i>Using <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a> objects in this parameter is deprecated.</i> </ul> Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored unless otherwise noted.
+* `params` (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>ambient</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the ambient color. (See <a href="H3DU.Material.md#H3DU.Material_ambient">H3DU.Material#ambient</a>.) The default is (0.2, 0.2, 0.2). <li><code>diffuse</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called "albedo"). (See <a href="H3DU.Material.md#H3DU.Material_diffuse">H3DU.Material#diffuse</a>.) The default is (0.8, 0.8, 0.8). <li><code>specular</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the specular reflection. (See <a href="H3DU.Material.md#H3DU.Material_specular">H3DU.Material#specular</a>.) The default is (0,0,0), meaning no specular highlights. <li><code>shininess</code> - Specular reflection exponent. (See <a href="H3DU.Material.md#H3DU.Material_shininess">H3DU.Material#shininess</a>). Ranges from 0 through 128. The default is 0. <li><code>emission</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the additive color. (See <a href="H3DU.Material.md#H3DU.Material_emission">H3DU.Material#emission</a>.) If this is an array, its numbers can range from -1 to 1. The default is (0,0,0). <li><code>texture</code> - <a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a> object, ora string with the URL of the texture to use. Can be null. <li><code>specularMap</code> - Specular map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_specularMap">H3DU.Material#specularMap</a>). Can be null. <li><code>normalMap</code> - Normal map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_normalMap">H3DU.Material#normalMap</a>). Can be null. <li><code>occlusionMap</code> - Ambient occlusion map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_occlusionMap">H3DU.Material#occlusionMap</a>). Can be null. <li><code>emissionMap</code> - Emission map texture, taking the same types as the "texture" parameter (see <a href="H3DU.Material.md#H3DU.Material_emissionMap">H3DU.Material#emissionMap</a>). Can be null. <li><code>shader</code> - <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> object for a WebGL shader program to use when rendering objects with this material. <i>Using <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a> objects in this parameter is deprecated.</i> </ul> Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored unless otherwise noted.
 
 #### Return Value
 

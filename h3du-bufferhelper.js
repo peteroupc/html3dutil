@@ -71,7 +71,9 @@ BufferAccessor.prototype.count = function() {
   return odiv + (olen % this.stride >= this.countPerValue ? 1 : 0);
 };
 /**
- * Gets the first element of the attribute value with the given vertex index.
+ * Gets the first element of the attribute value with the given vertex index.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when accessing the attribute's buffer.
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
@@ -82,7 +84,9 @@ BufferAccessor.prototype.get = function( index) {
   return this.buffer[o];
 };
 /**
- * Sets the first element of the attribute value with the given vertex index.
+ * Sets the first element of the attribute value with the given vertex index.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when writing to the attribute's buffer.
  * @param {number} index A numeric index, starting from 0, that identifies
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.

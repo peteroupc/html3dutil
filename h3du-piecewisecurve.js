@@ -28,6 +28,19 @@ import {Curve} from "./h3du-curve";
  * of its subclasses. The combined curve should be continuous
  * in that the curves that make it up should connect at their
  * end points (except the curve need not be closed).
+ * @example
+ * // Generates a piecewise polygon curve from an array of
+ * // vectors (arrays with the same number of elements) that
+ * // specify the points that make up the polygon.
+ * function polygonCurve(points) {
+ * var curves=[]
+ * for(var i=0;i<points.length;i++) {
+ * var cp=points[i]
+ * var np=(i==points.length-1) ? points[0] : points[i+1]
+ * curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+ * }
+ * return new H3DU.PiecewiseCurve(curves)
+ * }
  */
 var PiecewiseCurve = function(curves) {
   this.curves = [];

@@ -904,7 +904,7 @@ MeshBuffer._resolveSemantic = function(name, index) {
   } else {
     var wka = MeshBuffer._wellKnownAttributes[name];
     if(typeof wka === "undefined" || wka === null) {
-      var io = name.indexOf(name);
+      var io = name.indexOf("_");
       if(io < 0) {
         return null;
       }

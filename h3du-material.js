@@ -64,7 +64,7 @@ function Material(params, diffuse, specular, shininess, emission) {
   * @type {Array<number>}
   * @default
   */
-  this.albedo = [1.0, 1.0, 1.0, 1.0];
+  this.diffuse = [1.0, 1.0, 1.0, 1.0];
  /**
   * Specular highlight reflection of this material.
   * This is usually a shade of gray (all three components are the same),
