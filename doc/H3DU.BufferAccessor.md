@@ -30,6 +30,9 @@ value to the start of the next.
 * [get](#H3DU.BufferAccessor_get)<br>Gets the first element of the attribute value with the given vertex index.
 * [getVec](#H3DU.BufferAccessor_getVec)<br>Gets the elements of a vertex attribute value.
 * [makeBlank](#H3DU.BufferAccessor.makeBlank)<br>Generates a vertex attribute buffer, with each value set to all zeros.
+* [makeIndices](#H3DU.BufferAccessor.makeIndices)<br>Generates an array of increasing vertex indices.
+* [merge](#H3DU.BufferAccessor.merge)<br>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.
 * [set](#H3DU.BufferAccessor_set)<br>Sets the first element of the attribute value with the given vertex index.
 * [setVec](#H3DU.BufferAccessor_setVec)<br>Sets the elements of a vertex attribute value.
 
@@ -140,6 +143,38 @@ Generates a vertex attribute buffer, with each value set to all zeros.
 #### Return Value
 
 A blank vertex attribute buffer. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
+
+<a name='H3DU.BufferAccessor.makeIndices'></a>
+### (static) H3DU.BufferAccessor.makeIndices(numIndices)
+
+Generates an array of increasing vertex indices.
+
+#### Parameters
+
+* `numIndices` (Type: number)<br>The number of vertex indices to generate. The array will range from 0 to the number of vertex indices minus 1.
+
+#### Return Value
+
+An array of vertex indices. (Type: Uint16Array | Uint32Array)
+
+<a name='H3DU.BufferAccessor.merge'></a>
+### (static) H3DU.BufferAccessor.merge(attr1, indices1, attr2, indices2)
+
+Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.
+
+#### Parameters
+
+* `attr1` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of "indices1" and all the values are zeros.
+* `indices1` (Type: Array.&lt;number> | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the first vertex attribute.
+* `attr2` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of "indices2" and all the values are zeros.
+* `indices2` (Type: Array.&lt;number> | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the second vertex attribute.
+
+#### Return Value
+
+The merged attribute, where the vertices from the first vertex
+attribute come before those from the second. The merged attribute will have as many
+values as the sum of the lengths of "indices1" and "indices2". (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
 
 <a name='H3DU.BufferAccessor_set'></a>
 ### H3DU.BufferAccessor#set(index, value)

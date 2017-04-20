@@ -900,7 +900,7 @@ Mesh.prototype.toWireFrame = function() {
 };
 
 /** @ignore */
-Mesh._getValue = function(helper, attr, attrIndex, value) {
+Mesh._getValue = function(attr, attrIndex, value) {
   if(attr) {
     value[0] = 0;
     value[1] = 0;
@@ -912,7 +912,6 @@ Mesh._getValue = function(helper, attr, attrIndex, value) {
 };
 /** @ignore */
 Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
-  var helper = new H3DU.BufferHelper();
   var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
   var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
   var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
@@ -921,16 +920,16 @@ Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
   var c = srcMesh.color.slice(0, 3);
   var n = srcMesh.normal.slice(0, 3);
   var t = srcMesh.texCoord.slice(0, 2);
-  if(Mesh._getValue(helper, normalAttr, 0, scratch)) {
+  if(Mesh._getValue(normalAttr, 0, scratch)) {
     srcMesh.normal3(scratch);
   }
-  if(Mesh._getValue(helper, colorAttr, 0, scratch)) {
+  if(Mesh._getValue(colorAttr, 0, scratch)) {
     srcMesh.color3(scratch);
   }
-  if(Mesh._getValue(helper, uvAttr, 0, scratch)) {
+  if(Mesh._getValue(uvAttr, 0, scratch)) {
     srcMesh.texCoord2(scratch);
   }
-  if(Mesh._getValue(helper, posAttr, 0, scratch)) {
+  if(Mesh._getValue(posAttr, 0, scratch)) {
     srcMesh.vertex3(scratch);
   }
   srcMesh.color3(c).normal3(n).texCoord2(t);
@@ -938,7 +937,6 @@ Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
 
 /** @ignore */
 Mesh._fromMeshBuffer = function(meshBuffer, srcMesh) {
-  var helper = new H3DU.BufferHelper();
   var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
   var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
   var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
@@ -951,22 +949,22 @@ Mesh._fromMeshBuffer = function(meshBuffer, srcMesh) {
   var mesh = srcMeshValue.mode(meshBuffer.primitiveType());
   for(var i = 0; i < indices.length; i++) {
     var index = indices[i];
-    if(Mesh._getValue(helper, normalAttr, index, scratch)) {
+    if(Mesh._getValue(normalAttr, index, scratch)) {
       mesh.normal3(scratch);
     }
-    if(Mesh._getValue(helper, colorAttr, index, scratch)) {
+    if(Mesh._getValue(colorAttr, index, scratch)) {
       mesh.color3(scratch);
     }
-    if(Mesh._getValue(helper, uvAttr, index, scratch)) {
+    if(Mesh._getValue(uvAttr, index, scratch)) {
       mesh.texCoord2(scratch);
     }
-    if(Mesh._getValue(helper, tanAttr, index, scratch)) {
+    if(Mesh._getValue(tanAttr, index, scratch)) {
       mesh.tangent3(scratch);
     }
-    if(Mesh._getValue(helper, bitanAttr, index, scratch)) {
+    if(Mesh._getValue(bitanAttr, index, scratch)) {
       mesh.bitangent3(scratch);
     }
-    if(Mesh._getValue(helper, posAttr, index, scratch)) {
+    if(Mesh._getValue(posAttr, index, scratch)) {
       mesh.vertex3(scratch);
     }
   }

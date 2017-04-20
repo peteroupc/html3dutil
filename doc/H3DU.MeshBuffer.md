@@ -6,7 +6,7 @@
 ### H3DU.MeshBuffer()
 
 A geometric mesh in the form of buffer objects.
-A mesh buffer is made up of one or more <a href="H3DU.BufferHelper.md">vertex attribute objects</a>,
+A mesh buffer is made up of one or more <a href="H3DU.BufferAccessor.md">vertex attribute objects</a>,
 and an array of vertex indices. Each vertex attribute object contains
 the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
@@ -299,7 +299,7 @@ semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>
 
 Sets all the vertices in this mesh to the given color, by
 assigning each value with the attribute semantic <code>COLOR</code>
-to the given color. (If the attribute's count per value
+to the given color. (If the attribute's <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">count per value</a>
 is less than 4, each such value will be set to as many elements of the converted 4-element
 color as possible.) If an attribute with the semantic <code>COLOR</code>
 doesn't exist, an attribute with the semantic <code>COLOR_0</code> and a count per

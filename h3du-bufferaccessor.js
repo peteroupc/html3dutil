@@ -169,20 +169,12 @@ BufferAccessor.makeBlank = function(count, countPerValue) {
 };
 
 /**
- * A helper class for accessing and setting data in vertex attributes.<p>
- * @constructor
- * @memberof H3DU
- */
-export var BufferHelper = function() {
- // Has no properties to initialize.
-};
-/**
- * Generates an array of increasing vertex indices
+ * Generates an array of increasing vertex indices.
  * @param {number} numIndices The number of vertex indices to generate.
  * The array will range from 0 to the number of vertex indices minus 1.
  * @returns {Uint16Array|Uint32Array} An array of vertex indices.
  */
-BufferHelper.prototype.makeIndices = function(numIndices) {
+BufferAccessor.makeIndices = function(numIndices) {
   var array;
   if(numIndices < 65536) {
     array = new Uint16Array(new ArrayBuffer(numIndices * 2));
@@ -199,19 +191,19 @@ BufferHelper.prototype.makeIndices = function(numIndices) {
  * combined vertex attribute.
  * @param {H3DU.BufferAccessor} attr1 A vertex buffer accessor for the first vertex attribute.
  * Can be null, in which case it is assumed that the attribute contains as many values
- * as indices and all the values are zeros.
+ * as the length of "indices1" and all the values are zeros.
  * @param {Array<number>|Uint16Array|Uint8Array|Uint32Array} indices1 An array of vertex indices
  * associated with the first vertex attribute.
  * @param {H3DU.BufferAccessor} attr2 A vertex buffer accessor for the second vertex attribute.
- * Can be null, in which case it is assumed that the attribute contains as many values as indices
- * and all the values are zeros.
+ * Can be null, in which case it is assumed that the attribute contains as many values as the
+ * length of "indices2" and all the values are zeros.
  * @param {Array<number>|Uint16Array|Uint8Array|Uint32Array} indices2 An array of vertex indices
  * associated with the second vertex attribute.
  * @returns {H3DU.BufferAccessor} The merged attribute, where the vertices from the first vertex
  * attribute come before those from the second. The merged attribute will have as many
  * values as the sum of the lengths of "indices1" and "indices2".
  */
-BufferHelper.prototype.merge = function(attr1, indices1, attr2, indices2) {
+BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
   var countPerValue1 = typeof attr1 === "undefined" || attr1 === null ? 0 : attr1.countPerValue;
   var countPerValue2 = typeof attr2 === "undefined" || attr2 === null ? 0 : attr2.countPerValue;
   var i;

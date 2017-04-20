@@ -8,12 +8,12 @@
 */
 /* global Float32Array, H3DU, Uint16Array, Uint32Array, Uint8Array */
 
-import {BufferAccessor, BufferHelper} from "./h3du-bufferhelper.js";
+import {BufferAccessor} from "./h3du-bufferaccessor.js";
 import {_MathInternal} from "./h3du-mathinternal.js";
 
 /**
  * A geometric mesh in the form of buffer objects.
- * A mesh buffer is made up of one or more [vertex attribute objects]{@link H3DU.BufferHelper},
+ * A mesh buffer is made up of one or more [vertex attribute objects]{@link H3DU.BufferAccessor},
  * and an array of vertex indices. Each vertex attribute object contains
  * the values of one attribute of the mesh, such as positions,
  * vertex normals, and texture coordinates. A mesh buffer
@@ -99,6 +99,7 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
 MeshBuffer.prototype.setAttribute = function(
   name, index, buffer, startIndex, countPerVertex, stride
 ) {
+  // TODO: Consider also allowing BufferAccessors to be passed
   var bufferArray;
   if(buffer instanceof Array) {
     bufferArray = new Float32Array(buffer);
@@ -109,7 +110,6 @@ MeshBuffer.prototype.setAttribute = function(
   var semantic = 0;
   var strideValue = typeof stride === "undefined" || stride === null ? countPerVertex : stride;
   if(countPerVertex <= 0 || strideValue <= 0)throw new Error();
-  // var helper = new BufferHelper();
   var sem = MeshBuffer._resolveSemantic(name, index);
   if(typeof sem === "undefined" || sem === null) {
     console.warn("Unsupported attribute semantic: " + name);
@@ -234,7 +234,6 @@ MeshBuffer.prototype.primitiveCount = function() {
  * array containing that vertex's X, Y, and Z coordinates, in that order.
  */
 MeshBuffer.prototype.getPositions = function() {
-  // var helper = new H3DU.BufferHelper();
   var posattr = this.getAttribute(H3DU.Semantic.POSITION, 0);
   if(!posattr) {
     return [];
@@ -262,7 +261,6 @@ MeshBuffer.prototype.getPositions = function() {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.normalizeNormals = function() {
-  // var helper = new H3DU.BufferHelper();
   for(var i = 0; i < this.attributes.length; i++) {
     var attr = this.attributes[i];
     if(attr[0] !== H3DU.Semantic.NORMAL) {
@@ -297,7 +295,6 @@ MeshBuffer.prototype.normalizeNormals = function() {
  * );
  */
 MeshBuffer.prototype.reverseNormals = function() {
-  // var helper = new H3DU.BufferHelper();
   for(var i = 0; i < this.attributes.length; i++) {
     var attr = this.attributes[i];
     if(attr[0] !== H3DU.Semantic.NORMAL) {
@@ -318,7 +315,7 @@ MeshBuffer.prototype.reverseNormals = function() {
 /**
  * Sets all the vertices in this mesh to the given color, by
  * assigning each value with the attribute semantic <code>COLOR</code>
- * to the given color. (If the attribute's [count per value]{@link H3DU.BufferHelper.countPerValue}
+ * to the given color. (If the attribute's [count per value]{@link H3DU.BufferAccessor#countPerValue}
  * is less than 4, each such value will be set to as many elements of the converted 4-element
  * color as possible.) If an attribute with the semantic <code>COLOR</code>
  * doesn't exist, an attribute with the semantic <code>COLOR_0</code> and a count per
@@ -330,7 +327,6 @@ MeshBuffer.prototype.reverseNormals = function() {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setColor = function(color) {
-  // var helper = new H3DU.BufferHelper();
   var colorValue = H3DU.toGLColor(color);
   var haveColor = false;
   for(var i = 0; i < this.attributes.length; i++) {
@@ -387,7 +383,6 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
   var dupvertcount = 0;
   var i;
   var normalsCount = normals.count();
-  // var helper = new BufferHelper();
   var count = Math.min(positions.count(), normalsCount);
   var v1 = [0, 0, 0];
   var v2 = [0, 0, 0];
@@ -476,7 +471,6 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
 
 /** @ignore */
 MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tangents, bitangents, indices) {
-  // var helper = new BufferHelper();
   var v1 = [0, 0, 0];
   var v2 = [0, 0, 0];
   var v3 = [0, 0, 0];
@@ -556,17 +550,15 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
 /** @ignore */
 MeshBuffer.prototype._makeRedundant = function() {
   var newAttributes = [];
-  var helper = new BufferHelper();
   for(var i = 0; i < this.attributes.length; i++) {
     var a = this.attributes[i];
-    newAttributes.push([a[0], a[1], helper.merge(a[2], this.indices, null, [])]);
+    newAttributes.push([a[0], a[1], BufferAccessor.merge(a[2], this.indices, null, [])]);
   }
   this.attributes = newAttributes;
-  this.setIndices(helper.makeIndices(this.indices.length));
+  this.setIndices(BufferAccessor.makeIndices(this.indices.length));
 };
 /** @ignore */
 MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desiredCount) {
-  // var helper = new BufferHelper();
   var attr = this.getAttribute(semantic, semanticIndex);
   var vertexCount = this.attributes.length === 0 ? 0 : this.attributes[0][2].count();
   var attrCount = typeof attr !== "undefined" && attr !== null ? attr.countPerValue : 0;
@@ -656,7 +648,6 @@ MeshBuffer.prototype._recalcTangents = function() {
  * var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
  */
 MeshBuffer.prototype.merge = function(other) {
-  var helper = new H3DU.BufferHelper();
   var newAttributes = [];
   var attr;
   if(!other)throw new Error();
@@ -701,7 +692,7 @@ MeshBuffer.prototype.merge = function(other) {
         break;
       }
     }
-    newAttribute = helper.merge(attr[2], this.indices, existingAttribute, other.indices);
+    newAttribute = BufferAccessor.merge(attr[2], this.indices, existingAttribute, other.indices);
     if(!newAttribute)throw new Error();
     newAttributes.push([sem, semIndex, newAttribute]);
   }
@@ -716,12 +707,12 @@ MeshBuffer.prototype.merge = function(other) {
       }
     }
     if(typeof existingAttribute === "undefined" || existingAttribute === null) {
-      newAttribute = helper.merge(null, this.indices, oattr[2], other.indices, true);
+      newAttribute = BufferAccessor.merge(null, this.indices, oattr[2], other.indices, true);
       if(!newAttribute)throw new Error();
       newAttributes.push([oattr[0], oattr[1], newAttribute]);
     }
   }
-  var newIndices = helper.makeIndices(this.indices.length + other.indices.length);
+  var newIndices = BufferAccessor.makeIndices(this.indices.length + other.indices.length);
   this._bounds = null;
   this.attributes = newAttributes;
   this.setIndices(newIndices);
