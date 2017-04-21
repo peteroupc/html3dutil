@@ -16,18 +16,20 @@ import {_MathInternal} from "./h3du-mathinternal";
  * @memberof H3DU
  * @param {Float32Array} buffer A buffer to store vertex attribute data; see
  * {@link H3DU.BufferAccessor#buffer}.
- * @param {number} offset Offset to the first value; see
- * {@link H3DU.BufferAccessor#offset}. Throws an error if less than 0.
  * @param {number} countPerValue Number of elements per value; see
  * {@link H3DU.BufferAccessor#countPerValue}. Throws an error if 0 or less.
+ * @param {number} [offset] Offset to the first value; see
+ * {@link H3DU.BufferAccessor#offset}. If null, undefined, or
+ * omitted, the default is 0. Throws an error if less than 0.
  * @param {number} [stride] Number of elements from the start of one
  * value to the start of the next; see
  * {@link H3DU.BufferAccessor#stride}. If null, undefined, or
  * omitted, has the same value as "countPerValue".
  * Throws an error if 0 or less.
  */
-export var BufferAccessor = function(buffer, offset, countPerValue, stride) {
+export var BufferAccessor = function(buffer, countPerValue, offset, stride) {
   if(typeof stride === "undefined" || stride === null)stride = countPerValue;
+  if(typeof offset === "undefined" || offset === null)offset = 0;
   if(offset < 0 || countPerValue <= 0 || stride <= 0)throw new Error();
   /**
    * A <i>buffer</i> of arbitrary size. This buffer
@@ -164,8 +166,7 @@ BufferAccessor.prototype.copy = function() {
  */
 BufferAccessor.makeBlank = function(count, countPerValue) {
   return new BufferAccessor(
-    new Float32Array(new ArrayBuffer(count * countPerValue * 4)), 0,
-    countPerValue, countPerValue);
+    new Float32Array(new ArrayBuffer(count * countPerValue * 4)), countPerValue);
 };
 
 /**

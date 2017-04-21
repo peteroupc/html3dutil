@@ -20,7 +20,7 @@ This page will discuss:
 * Binding mesh buffers to shapes
 * Shape groups, or combinations of several shapes
 
-NOTE: This page will largely discuss the 2.0.0-beta1 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the library's <a href="tutorial-history.md">change history</a> for more information.)
+NOTE: This page will largely discuss the 2.0.0-beta3 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the library's <a href="tutorial-history.md">change history</a> for more information.)
 
 <a id=Contents></a>
 ## Contents

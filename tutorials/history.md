@@ -1,6 +1,39 @@
 <a id=Version_History></a>
 ## Version History
 
+Version 2.0.0-beta3:
+
+The changes in beta 3 from beta 2 include:
+
+- The main library files were converted to ECMAScript's import/export convention.  The `rollup` tool
+  is used to help generate the `h3du_min.js` file.
+- HTML documentation included in distribution.
+- "Norm" methods in H3DU.Math were renamed to use "Normalize" instead.
+- New `convex.js` in extras folder generates the convex hull of a set of points.
+- New `interp.js` in extras folder provides a cubic B&eacute;zier interpolation function.
+- New `spline.js` in extras folder generates piecewise interpolating curves.
+- New demos added, including demos showing how to generate procedural content using shaders.
+- Several methods in H3DU.GraphicsPath were reimplemented.
+- H3DU.BezierCurve and H3DU.BezierSpline are deprecated.
+- H3DU.CurveBuilder and H3DU.SurfaceBuilder classes were created; they replace now-deprecated
+  H3DU.CurveEval and H3DU.SurfaceEval classes.
+- H3DU.MeshBuffer contains many new methods; in exchange, many of the H3DU.Mesh
+  methods reimplemented in H3DU.MeshBuffer are deprecated.
+- H3DU.Mesh is considerably deemphasized in this version; that class should only be used
+  for building meshes, not storing them.
+- H3DU.Curve and H3DU.Surface were created; these classes represent parametric curves
+   and surfaces and offer methods for querying information at a given point on the curve or surface.
+   Made several class derive from either class, including H3DU.BSplineCurve, H3DU.BSplineSurface,
+   and new class H3DU.PiecewiseCurve.
+- H3DU.RenderPass3D renamed to H3DU.RenderPass.
+- Deleted fromBasic and fromBasicTexture methods from H3DU.PbrMaterial.
+- Added JOINTS and WEIGHTS constants to H3DU.Semantic.
+- Preliminary support for occlusion maps.
+- Default diffuse/albedo in Material and PbrMaterial is now (1,1,1,1).
+- New H3DU.BufferAccessor class represents a single vertex buffer.
+- Many methods outside H3DU.Mesh now return H3DU.MeshBuffer instead of H3DU.Mesh.
+- Bug fixes.
+
 Version 2.0.0-beta2:
 
 The changes in beta 2 from beta 1 include:

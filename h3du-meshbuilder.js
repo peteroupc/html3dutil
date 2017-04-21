@@ -1,4 +1,4 @@
-/* global Float32Array, Uint16Array, Uint32Array */
+/* global Uint16Array, Uint32Array */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -57,8 +57,7 @@ CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
   mb.setIndices(indexArray);
   for(i = 0; i < attributes.length; i++) {
     var a = attributes[i];
-    var buffer = new Float32Array(a[3]);
-    mb.setAttribute(a[0], a[1], buffer, 0, a[2], a[2]);
+    mb.setAttributeEx(a[0], a[1], a[3], a[2]);
   }
   return mb;
 };

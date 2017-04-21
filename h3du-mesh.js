@@ -9,6 +9,7 @@
 /* global Float32Array, H3DU */
 
 import {MeshBuffer} from "./h3du-meshbuffer";
+import {Semantic} from "./h3du-semantic";
 
 /**
  * Specifies the triangles, lines, or points that make up a geometric shape.
@@ -655,25 +656,25 @@ Mesh.prototype.toMeshBuffer = function() {
   mb.setPrimitiveType(this.primitiveType());
   var stride = Mesh._getStride(this.attributeBits);
   var vertices = new Float32Array(this.vertices);
-  mb.setAttribute(H3DU.Semantic.POSITION, 0, vertices, 0, 3, stride);
+  mb.setAttribute(Semantic.POSITION, vertices, 3, 0, stride);
   var o = Mesh._normalOffset(this.attributeBits);
   if(o >= 0) {
-    mb.setAttribute(H3DU.Semantic.NORMAL, 0, vertices, o, 3, stride);
+    mb.setAttribute(Semantic.NORMAL, vertices, 3, o, stride);
   }
   o = Mesh._colorOffset(this.attributeBits);
   if(o >= 0) {
-    mb.setAttribute(H3DU.Semantic.COLOR, 0, vertices, o, 3, stride);
+    mb.setAttribute(Semantic.COLOR, vertices, 3, o, stride);
   }
   o = Mesh._texCoordOffset(this.attributeBits);
   if(o >= 0) {
-    mb.setAttribute(H3DU.Semantic.TEXCOORD, 0, vertices, o, 2, stride);
+    mb.setAttribute(Semantic.TEXCOORD, vertices, 2, o, stride);
   }
   var tangents = new Float32Array(this.tangents);
   if((this.attributeBits & Mesh.TANGENTS_BIT) !== 0) {
-    mb.setAttribute(H3DU.Semantic.TANGENT, 0, tangents, 0, 3, 3);
+    mb.setAttribute(Semantic.TANGENT, tangents, 3, 0, 3);
   }
   if((this.attributeBits & Mesh.BITANGENTS_BIT) !== 0) {
-    mb.setAttribute(H3DU.Semantic.BITANGENT, 0, tangents, 3, 3, 3);
+    mb.setAttribute(Semantic.BITANGENT, tangents, 3, 3, 3);
   }
   return mb;
 };
@@ -719,7 +720,7 @@ Mesh.TEXCOORDS_BIT = 4;
  * @deprecated Deprecated because the default shader no longer
  * uses tangent and bitangent attributes for normal mapping. To define
  * tangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
- * and create a buffer attribute with the {@link H3DU.Semantics.TANGENT}
+ * and create a buffer attribute with the {@link H3DU.Semantic.TANGENT}
  * semantic.
  * @const
  * @default
@@ -730,7 +731,7 @@ Mesh.TANGENTS_BIT = 8;
  * @deprecated Deprecated because the default shader no longer
  * uses tangent and bitangent attributes for normal mapping. To define
  * bitangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
- * and create a buffer attribute with the {@link H3DU.Semantics.BITANGENT}
+ * and create a buffer attribute with the {@link H3DU.Semantic.BITANGENT}
  * semantic.
  * @const
  * @default
@@ -912,10 +913,10 @@ Mesh._getValue = function(attr, attrIndex, value) {
 };
 /** @ignore */
 Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
-  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
-  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
-  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
-  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
+  var posAttr = meshBuffer.getAttribute(Semantic.POSITION);
+  var normalAttr = meshBuffer.getAttribute(Semantic.NORMAL);
+  var colorAttr = meshBuffer.getAttribute(Semantic.COLOR);
+  var uvAttr = meshBuffer.getAttribute(Semantic.TEXCOORD);
   var scratch = [];
   var c = srcMesh.color.slice(0, 3);
   var n = srcMesh.normal.slice(0, 3);
@@ -937,12 +938,12 @@ Mesh._fromMeshBufferOne = function(meshBuffer, srcMesh) {
 
 /** @ignore */
 Mesh._fromMeshBuffer = function(meshBuffer, srcMesh) {
-  var posAttr = meshBuffer.getAttribute(H3DU.Semantic.POSITION);
-  var normalAttr = meshBuffer.getAttribute(H3DU.Semantic.NORMAL);
-  var colorAttr = meshBuffer.getAttribute(H3DU.Semantic.COLOR);
-  var uvAttr = meshBuffer.getAttribute(H3DU.Semantic.TEXCOORD);
-  var tanAttr = meshBuffer.getAttribute(H3DU.Semantic.TANGENT);
-  var bitanAttr = meshBuffer.getAttribute(H3DU.Semantic.BITANGENT);
+  var posAttr = meshBuffer.getAttribute(Semantic.POSITION);
+  var normalAttr = meshBuffer.getAttribute(Semantic.NORMAL);
+  var colorAttr = meshBuffer.getAttribute(Semantic.COLOR);
+  var uvAttr = meshBuffer.getAttribute(Semantic.TEXCOORD);
+  var tanAttr = meshBuffer.getAttribute(Semantic.TANGENT);
+  var bitanAttr = meshBuffer.getAttribute(Semantic.BITANGENT);
   var indices = meshBuffer.getIndices();
   var scratch = [];
   var srcMeshValue = typeof srcMesh === "undefined" || srcMesh === null ? new Mesh() : srcMesh;
@@ -1074,13 +1075,17 @@ Mesh.prototype.recalcNormals = function(flat, inward) {
  * mode (see {@link H3DU.Mesh#mode}) so that future vertices given
  * will not build upon previous vertices.
  * @deprecated Use <code>(mesh).toMeshBuffer().merge(other)</code> instead.
- * @param {H3DU.Mesh} other A mesh to merge into this one. The mesh
+ * @param {H3DU.Mesh|H3DU.MeshBuffer} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
  * Throws an error if this mesh's primitive type is incompatible with the
  * the other mesh's primitive type (for example, a triangle type with LINE_STRIP).
+ * <i>Passing a MeshBuffer to this method is for compatibility only.</i>
  * @returns {H3DU.Mesh} This object.
  */
 Mesh.prototype.merge = function(other) {
+  if(other instanceof H3DU.MeshBuffer) {
+    return this.merge(Mesh._fromMeshBuffer(other, null));
+  }
   if(!(other instanceof H3DU.Mesh)) {
     throw new Error();
   }
@@ -1140,7 +1145,7 @@ Mesh.prototype.normalizeNormals = function() {
  * @deprecated Deprecated because the default shader no longer
  * uses tangent and bitangent attributes for normal mapping. To define
  * tangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
- * and create a buffer attribute with the {@link H3DU.Semantics.TANGENT}
+ * and create a buffer attribute with the {@link H3DU.Semantic.TANGENT}
  * semantic.
  * @param {Array<number>|number} x X coordinate of the tangent vector.
  *   If "y" and "z" are null or omitted, this is instead
@@ -1176,7 +1181,7 @@ Mesh.prototype.tangent3 = function(x, y, z) {
  * @deprecated Deprecated because the default shader no longer
  * uses tangent and bitangent attributes for normal mapping. To define
  * bitangent vectors for a mesh, use the {@link H3DU.MeshBuffer} class
- * and create a buffer attribute with the {@link H3DU.Semantics.BITANGENT}
+ * and create a buffer attribute with the {@link H3DU.Semantic.BITANGENT}
  * semantic.
  * @param {Array<number>|number} x X coordinate of the bitangent vector.
  *   If "y" and "z" are null or omitted, this is instead

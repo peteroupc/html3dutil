@@ -78,29 +78,70 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * @param {number|string} name An attribute semantic, such
  * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
- * @param {number} index The set index of the attribute
- * for the given semantic.
- * 0 is the first index of the attribute, 1 is the second, and so on.
- * This is ignored if "name" is a string.
+ * If this isn't a string, the set index of the attribute will be 0 (see {@link H3DU.MeshBuffer#setAttributeEx}).
  * @param {Float32Array|Array} buffer The buffer where
- * the per-vertex data is stored.
- * @param {number} startIndex The index into the array
+ * the per-vertex data is stored. See {@link H3DU.MeshBuffer#setAttributeEx}.
+ * @param {number} countPerValue The number of elements in each
+ * per-vertex item. See {@link H3DU.MeshBuffer#setAttributeEx}.
+ * @param {number} [offset] The index into the array
  * (starting from 0) where the first per-vertex
- * item starts.
- * @param {number} countPerVertex The number of elements in each
- * per-vertex item. For example, if each vertex is a 3-element
- * vector, this value is 3. Throws an error if this value is 0 or less.
+ * item starts.See {@link H3DU.MeshBuffer#setAttributeEx}.
  * @param {number} [stride] The number of elements from the start of
- * one per-vertex item to the start of the next. If null, undefined, or omitted,
- * this value is the same as "countPerVertex". Throws an error if this value is 0 or less.
+ * one per-vertex item to the start of the next. See {@link H3DU.MeshBuffer#setAttributeEx}.
  * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
  * semantic is unsupported.
  */
 MeshBuffer.prototype.setAttribute = function(
-  name, index, buffer, startIndex, countPerVertex, stride
+  name, buffer, countPerValue, offset, stride
 ) {
-  // TODO: Consider also allowing BufferAccessors to be passed
+  return this.setAttributeEx(name, 0, buffer, countPerValue, offset, stride);
+};
+
+/**
+ * Adds information about a buffer attribute to this
+ * mesh buffer (or sets an
+ * existing attribute's information), taking a semantic index as
+ * an additional parameter. An attribute
+ * gives information about the per-vertex data used and
+ * stored in a vertex buffer.
+ * @param {number|string} name An attribute semantic, such
+ * as {@link H3DU.Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
+ * Throws an error if this value is a string and the string is invalid.
+ * @param {number} index The semantic index of the attribute
+ * for the given semantic.
+ * 0 is the first index of the attribute, 1 is the second, and so on.
+ * This is ignored if "name" is a string.
+ * @param {Float32Array|Array|BufferAccessor} buffer The buffer where
+ * the per-vertex data is stored.
+ * @param {number} [countPerValue] The number of elements in each
+ * per-vertex item. For example, if each vertex is a 3-element
+ * vector, this value is 3. Throws an error if this value is 0 or less.
+ * If "buffer" is a {@link H3DU.BufferAccessor}, the value of "countPerValue"
+ * is taken from that accessor and this parameter is ignored; this parameter
+ * is currently required otherwise.
+ * @param {number} [offset] The index into the array
+ * (starting from 0) where the first per-vertex
+ * item starts. If null, undefined, or
+ * omitted, the default is 0. Throws an error if less than 0.
+ * If "buffer" is a {@link H3DU.BufferAccessor}, the value of "offset"
+ * is taken from that accessor and this parameter is ignored.
+ * @param {number} [stride] The number of elements from the start of
+ * one per-vertex item to the start of the next. If null, undefined, or omitted,
+ * this value is the same as "countPerValue". Throws an error if this value is 0 or less.
+ * If "buffer" is a {@link H3DU.BufferAccessor}, the value of "stride"
+ * is taken from that accessor and this parameter is ignored.
+ * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
+ * semantic is unsupported.
+ */
+MeshBuffer.prototype.setAttributeEx = function(
+  name, index, buffer, countPerValue, offset, stride
+) {
   var bufferArray;
+  if(buffer instanceof BufferAccessor) {
+    if(buffer.buffer instanceof BufferAccessor)throw new Error();
+    return this.setAttributeEx(name, index, buffer.buffer,
+      buffer.countPerValue, buffer.offset, buffer.stride);
+  } else if(typeof countPerValue === "undefined" || countPerValue === null)throw new Error();
   if(buffer instanceof Array) {
     bufferArray = new Float32Array(buffer);
   } else {
@@ -108,8 +149,9 @@ MeshBuffer.prototype.setAttribute = function(
   }
   var semanticIndex = 0;
   var semantic = 0;
-  var strideValue = typeof stride === "undefined" || stride === null ? countPerVertex : stride;
-  if(countPerVertex <= 0 || strideValue <= 0)throw new Error();
+  var strideValue = typeof stride === "undefined" || stride === null ? countPerValue : stride;
+  var startIndex = typeof offset === "undefined" || offset === null ? 0 : offset;
+  if(countPerValue <= 0 || strideValue <= 0 || startIndex < 0)throw new Error();
   var sem = MeshBuffer._resolveSemantic(name, index);
   if(typeof sem === "undefined" || sem === null) {
     console.warn("Unsupported attribute semantic: " + name);
@@ -120,15 +162,14 @@ MeshBuffer.prototype.setAttribute = function(
   var attr = this.getAttribute(semantic, semanticIndex);
   if(attr) {
     attr[2].buffer = buffer;
-    attr[2].countPerValue = countPerVertex;
+    attr[2].offset = startIndex;
+    attr[2].countPerValue = countPerValue;
     attr[2].stride = strideValue;
   } else {
     this.attributes.push([semantic, semanticIndex,
-      new BufferAccessor(bufferArray, startIndex, countPerVertex, strideValue)]);
+      new BufferAccessor(bufferArray, countPerValue, startIndex, strideValue)]);
   }
-  if(name === "position") {
-    this._bounds = null;
-  }
+  this._bounds = null;
   return this;
 };
 
@@ -311,6 +352,15 @@ MeshBuffer.prototype.reverseNormals = function() {
     }
   }
   return this;
+};
+/**
+ * Alias for the {@link H3DU.MeshBuffer#setColor} method
+ * for compatibility.
+ * @deprecated Use {@link H3DU.MeshBuffer#setColor} instead.
+ */
+MeshBuffer.prototype.setColor3 = function(color) {
+  if(arguments.length === 3)return this.setColor([arguments[0], arguments[1], arguments[2]]);
+  return this.setColor(color);
 };
 /**
  * Sets all the vertices in this mesh to the given color, by
@@ -639,10 +689,11 @@ MeshBuffer.prototype._recalcTangents = function() {
  * Merges the vertices from another mesh into this one.
  * The vertices from the other mesh will be copied into this one,
  * and the other mesh's indices copied or adapted.
- * @param {H3DU.MeshBuffer} other A mesh to merge into this one. The mesh
+ * @param {H3DU.MeshBuffer|H3DU.Mesh} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
  * Throws an error if this mesh's primitive type is not the same as
- * the other mesh's primitive type
+ * the other mesh's primitive type. <i>Passing a Mesh to this method is for compatibility
+ * only and this feature may be dropped in the future.</i>
  * @returns {H3DU.MeshBuffer} This object.
  * @example
  * var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
@@ -651,6 +702,7 @@ MeshBuffer.prototype.merge = function(other) {
   var newAttributes = [];
   var attr;
   if(!other)throw new Error();
+  if(other instanceof H3DU.Mesh)return this.merge(other.toMeshBuffer());
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
     return this;
@@ -707,7 +759,7 @@ MeshBuffer.prototype.merge = function(other) {
       }
     }
     if(typeof existingAttribute === "undefined" || existingAttribute === null) {
-      newAttribute = BufferAccessor.merge(null, this.indices, oattr[2], other.indices, true);
+      newAttribute = BufferAccessor.merge(null, this.indices, oattr[2], other.indices);
       if(!newAttribute)throw new Error();
       newAttributes.push([oattr[0], oattr[1], newAttribute]);
     }

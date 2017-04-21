@@ -678,7 +678,7 @@ ShaderInfo.getDefaultFragment = function() {
     "#else",
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
     "#endif",
-    // TODO: Occlusion calculation may soon change
+    // LATER: Occlusion calculation may soon change
     "#ifdef OCCLUSION_MAP", "lightedColor*=texture2D(occlusionMap,uvVar).r;", "#endif",
     "#if defined(SPECULAR) || defined(SPECULAR_MAP)", "vec3 materialSpecular=vec3(0.0);", "#endif",
     "vec3 spectmp, lightFactor;",

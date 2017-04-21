@@ -28,7 +28,7 @@ call the new H3DU.MeshBuffer method; this may affect performance. Afterward,
 or at that point, those methods may be deprecated.</li></ul><h4> Parameters</h4><ul><li><code>vertices</code> (Type: Array.&lt;number>) (optional)<br>An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.<li><code>indices</code> (Type: Array.&lt;number>) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null, undefined, or omitted, creates an initially empty mesh.<li><code>format</code> (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if Mesh.NORMALS_BIT is set, plus <li> 3 more elements if Mesh.COLORS_BIT is set, plus <li> 2 more elements if Mesh.TEXCOORDS_BIT is set, plus <li> 3 more elements if Mesh.TANGENTS_BIT is set (deprecated), plus <li> 3 more elements if Mesh.BITANGENTS_BIT is set (deprecated). </ul> If Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can't be set. May be null or omitted, in which case "format" is set to 0.</ul><h3> Members</h3><ul><li><a href='#H3DU.Mesh.BITANGENTS_BIT'>BITANGENTS_BIT</a><br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.BITANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.BITANGENT">H3DU.Semantic.BITANGENT</a>
 semantic.</b><li><a href='#H3DU.Mesh.COLORS_BIT'>COLORS_BIT</a><br>The mesh contains colors for each vertex.<li><a href='#H3DU.Mesh.LINES'>LINES</a><br>Primitive mode for rendering line segments, made up
 of 2 vertices each.<li><a href='#H3DU.Mesh.LINES_BIT'>LINES_BIT</a><br>The mesh consists of lines (2 vertices per line) instead
 of triangles (3 vertices per line).<li><a href='#H3DU.Mesh.LINE_STRIP'>LINE_STRIP</a><br>Primitive mode for rendering connected line segments.<li><a href='#H3DU.Mesh.NORMALS_BIT'>NORMALS_BIT</a><br>The mesh contains normals for each vertex.<li><a href='#H3DU.Mesh.POINTS'>POINTS</a><br>Primitive mode for rendering points, made up
@@ -36,12 +36,12 @@ of 1 vertex each.<li><a href='#H3DU.Mesh.POINTS_BIT'>POINTS_BIT</a><br>The mesh 
 of 4 vertices each.<li><a href='#H3DU.Mesh.QUAD_STRIP'>QUAD_STRIP</a><br>Primitive mode for rendering a strip of quadrilaterals (quads).<li><a href='#H3DU.Mesh.TANGENTS_BIT'>TANGENTS_BIT</a><br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.TANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.TANGENT">H3DU.Semantic.TANGENT</a>
 semantic.</b><li><a href='#H3DU.Mesh.TEXCOORDS_BIT'>TEXCOORDS_BIT</a><br>The mesh contains texture coordinates for each vertex.<li><a href='#H3DU.Mesh.TRIANGLES'>TRIANGLES</a><br>Primitive mode for rendering triangles, made up
 of 3 vertices each.<li><a href='#H3DU.Mesh.TRIANGLE_FAN'>TRIANGLE_FAN</a><br>Primitive mode for rendering a triangle fan.<li><a href='#H3DU.Mesh.TRIANGLE_STRIP'>TRIANGLE_STRIP</a><br>Primitive mode for rendering a triangle strip.</ul><h3> Methods</h3><ul><li><a href='#H3DU.Mesh_bitangent3'>bitangent3</a><br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.BITANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.BITANGENT">H3DU.Semantic.BITANGENT</a>
 semantic.</b><li><a href='#H3DU.Mesh_color3'>color3</a><br>Sets the current color for this mesh.<li><a href='#H3DU.Mesh_enumPrimitives'>enumPrimitives</a><br><b>Deprecated: For a replacement of this method,
 see the example given in <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_getAttribute">H3DU.MeshBuffer#getAttribute</a>.</b><li><a href='#H3DU.Mesh_getBoundingBox'>getBoundingBox</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().getBounds()</code> instead.</b><li><a href='#H3DU.Mesh_getVertex'>getVertex</a><br>Gets the position of the vertex with the given
 index in this mesh.<li><a href='#H3DU.Mesh_getVertexNormal'>getVertexNormal</a><br>Gets the normal of the vertex with the given
@@ -54,7 +54,7 @@ given index.<li><a href='#H3DU.Mesh_setVertexNormal'>setVertexNormal</a><br>Sets
 given index.<li><a href='#H3DU.Mesh_tangent3'>tangent3</a><br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.TANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.TANGENT">H3DU.Semantic.TANGENT</a>
 semantic.</b><li><a href='#H3DU.Mesh_texCoord2'>texCoord2</a><br>Sets the current texture coordinates for this mesh.<li><a href='#H3DU.Mesh_toMeshBuffer'>toMeshBuffer</a><br>Generates a mesh buffer from the information in this mesh object.<li><a href='#H3DU.Mesh_toWireFrame'>toWireFrame</a><br><b>Deprecated: Use <code>mesh.toMeshBuffer().wireFrame()</code>
 instead.</b><li><a href='#H3DU.Mesh_transform'>transform</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().transform()</code> instead.</b><li><a href='#H3DU.Mesh_vertex2'>vertex2</a><br>Adds a new vertex to this mesh.<li><a href='#H3DU.Mesh_vertex3'>vertex3</a><br>Adds a new vertex to this mesh.<li><a href='#H3DU.Mesh_vertexCount'>vertexCount</a><br>Gets the number of vertices included in this mesh.</ul><a name='H3DU.Mesh.BITANGENTS_BIT'></a>
 <h3> H3DU.Mesh.BITANGENTS_BIT (constant)
@@ -62,7 +62,7 @@ instead.</b><li><a href='#H3DU.Mesh_transform'>transform</a><br><b>Deprecated: U
 </h3><p><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.BITANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.BITANGENT">H3DU.Semantic.BITANGENT</a>
 semantic.</b></p>The mesh contains bitangent vectors for each vertex.
 
 <p>Default Value: <code>16</code></p><a name='H3DU.Mesh.COLORS_BIT'></a>
@@ -131,7 +131,7 @@ vertices, in that order.
 </h3><p><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.TANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.TANGENT">H3DU.Semantic.TANGENT</a>
 semantic.</b></p>The mesh contains tangent vectors for each vertex.
 
 <p>Default Value: <code>8</code></p><a name='H3DU.Mesh.TEXCOORDS_BIT'></a>
@@ -167,7 +167,7 @@ vertices are swapped when generating that triangle.
 <h3> H3DU.Mesh#bitangent3(x, [y], [z])</h3><p><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.BITANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.BITANGENT">H3DU.Semantic.BITANGENT</a>
 semantic.</b></p>Sets the current bitangent vector for this mesh. Future vertex positions
 defined (with vertex3()) will have this bitangent. The new current
 bitangent will apply to future vertices even if the current mode
@@ -207,7 +207,7 @@ The vertices from the other mesh will be copied into this one,
 and the other mesh's indices copied or adapted.
 Also, resets the primitive
 mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
-will not build upon previous vertices.<h4> Parameters</h4><ul><li><code>other</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is incompatible with the the other mesh's primitive type (for example, a triangle type with LINE_STRIP).</ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<a name='H3DU.Mesh_mode'></a>
+will not build upon previous vertices.<h4> Parameters</h4><ul><li><code>other</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a> | <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is incompatible with the the other mesh's primitive type (for example, a triangle type with LINE_STRIP). <i>Passing a MeshBuffer to this method is for compatibility only.</i></ul><h4> Return Value</h4>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<a name='H3DU.Mesh_mode'></a>
 <h3> H3DU.Mesh#mode(m)</h3>Changes the primitive mode for this mesh.
 Future vertices will be drawn as primitives of the new type.
 The primitive type can be set to the same mode, in which
@@ -259,7 +259,7 @@ equals the number of vertices in this mesh or greater.<h4> Parameters</h4><ul><l
 <h3> H3DU.Mesh#tangent3(x, [y], [z])</h3><p><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
 tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
-and create a buffer attribute with the H3DU.Semantics.TANGENT
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.TANGENT">H3DU.Semantic.TANGENT</a>
 semantic.</b></p>Sets the current tangent vector for this mesh. Future vertex positions
 defined (with vertex3()) will have this normal. The new current
 tangent will apply to future vertices even if the current mode

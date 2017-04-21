@@ -462,8 +462,8 @@ Batch3D.forFilter = function(scene, fbo, shader) {
   }
   var ret = new H3DU.Batch3D();
   var mesh = new H3DU.MeshBuffer()
-    .setAttribute("POSITION", 0, [-1, 1, 0, -1, -1, 0, 1, 1, 0, 1, -1, 0], 0, 3)
-    .setAttribute("TEXCOORD", 0, [0, 1, 0, 0, 1, 1, 1, 0], 0, 2)
+    .setAttribute("POSITION", [-1, 1, 0, -1, -1, 0, 1, 1, 0, 1, -1, 0], 3)
+    .setAttribute("TEXCOORD", [0, 1, 0, 0, 1, 1, 1, 0], 2)
     .setIndices([0, 1, 2, 2, 1, 3]);
   var shape = new H3DU.Shape(mesh);
   shape.setTexture(fbo);

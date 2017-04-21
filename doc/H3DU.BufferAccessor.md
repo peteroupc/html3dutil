@@ -3,15 +3,15 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.BufferAccessor'></a>
-### H3DU.BufferAccessor(buffer, offset, countPerValue, [stride])
+### H3DU.BufferAccessor(buffer, countPerValue, [offset], [stride])
 
 A <b>vertex attribute object</b>.
 
 #### Parameters
 
 * `buffer` (Type: Float32Array)<br>A buffer to store vertex attribute data; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_buffer">H3DU.BufferAccessor#buffer</a>.
-* `offset` (Type: number)<br>Offset to the first value; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_offset">H3DU.BufferAccessor#offset</a>. Throws an error if less than 0.
 * `countPerValue` (Type: number)<br>Number of elements per value; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>. Throws an error if 0 or less.
+* `offset` (Type: number) (optional)<br>Offset to the first value; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_offset">H3DU.BufferAccessor#offset</a>. If null, undefined, or omitted, the default is 0. Throws an error if less than 0.
 * `stride` (Type: number) (optional)<br>Number of elements from the start of one value to the start of the next; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_stride">H3DU.BufferAccessor#stride</a>. If null, undefined, or omitted, has the same value as "countPerValue". Throws an error if 0 or less.
 
 ### Members

@@ -9,7 +9,7 @@ The library differs from many others because this one is in the public domain, s
 
 This page includes information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.
 
-NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta2 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the section "History" for more information.)
+NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta3 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the section "History" for more information.)
 
 <a id=Example></a>
 ## Example

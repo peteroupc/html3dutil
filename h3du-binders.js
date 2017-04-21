@@ -264,18 +264,17 @@ _MaterialBinder.bindTexture = function(
     program.setUniforms(uniforms);
     context.activeTexture(context.TEXTURE0 + textureUnit);
     if(isFrameBuffer) {
-      // TODO: support Textureinfo in frame buffers
       context.bindTexture(context.TEXTURE_2D,
          texture.colorTexture);
       if(texture.colorTexture) {
         context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_MAG_FILTER, context.LINEAR);
+           context.TEXTURE_MIN_FILTER, textureInfo.magFilter);
         context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_MIN_FILTER, context.LINEAR);
+           context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
         context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+          context.TEXTURE_WRAP_S, textureInfo.wrapS);
         context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+         context.TEXTURE_WRAP_T, textureInfo.wrapT);
       }
     } else {
       var target = texture instanceof H3DU.CubeMap ?

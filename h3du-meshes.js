@@ -75,9 +75,9 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
   var vertarray = new Float32Array(vertices);
   return new H3DU.MeshBuffer()
     .setIndices(indices)
-    .setAttribute(H3DU.Semantic.POSITION, 0, vertarray, 0, 3, 8)
-    .setAttribute(H3DU.Semantic.NORMAL, 0, vertarray, 3, 3, 8)
-    .setAttribute(H3DU.Semantic.TEXCOORD, 0, vertarray, 6, 2, 8);
+    .setAttribute(H3DU.Semantic.POSITION, vertarray, 3, 0, 8)
+    .setAttribute(H3DU.Semantic.NORMAL, vertarray, 3, 3, 8)
+    .setAttribute(H3DU.Semantic.TEXCOORD, vertarray, 2, 6, 8);
 };
 
 /**
