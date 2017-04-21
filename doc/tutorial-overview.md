@@ -23,7 +23,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 <a id=Contents></a>
 ## Contents
 
-[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Selecting Objects](#Selecting_Objects)<br>&nbsp;&nbsp;[Lights](#Lights)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Projections](#Projections)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>[History](#History)<br>&nbsp;&nbsp;[Version 2.0.0-beta2](#Version_2_0_0_beta2)<br>&nbsp;&nbsp;[Version 2.0.0-beta1:](#Version_2_0_0_beta1)<br>
+[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Selecting Objects](#Selecting_Objects)<br>&nbsp;&nbsp;[Lights](#Lights)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Projections](#Projections)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>[History](#History)<br>&nbsp;&nbsp;[Version 2.0.0-beta3](#Version_2_0_0_beta3)<br>&nbsp;&nbsp;[Version 2.0.0-beta2](#Version_2_0_0_beta2)<br>&nbsp;&nbsp;[Version 2.0.0-beta1:](#Version_2_0_0_beta1)<br>
 
 ## How to Use
 
@@ -398,6 +398,40 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
 
 <a id=History></a>
 ## History
+
+<a id=Version_2_0_0_beta3></a>
+### Version 2.0.0-beta3
+
+The changes in beta 3 from beta 2 include:
+
+- The main library files were converted to ECMAScript's import/export convention.  The `rollup` tool
+  is used to help generate the `h3du_min.js` file.
+- HTML documentation included in distribution.
+- "Norm" methods in H3DU.Math were renamed to use "Normalize" instead.
+- New `convex.js` in extras folder generates the convex hull of a set of points.
+- New `interp.js` in extras folder provides a cubic B&eacute;zier interpolation function.
+- New `spline.js` in extras folder generates piecewise interpolating curves.
+- New demos added, including demos showing how to generate procedural content using shaders.
+- Several methods in H3DU.GraphicsPath were reimplemented.
+- H3DU.BezierCurve and H3DU.BezierSpline are deprecated.
+- H3DU.CurveBuilder and H3DU.SurfaceBuilder classes were created; they replace now-deprecated
+  H3DU.CurveEval and H3DU.SurfaceEval classes.
+- H3DU.MeshBuffer contains many new methods; in exchange, many of the H3DU.Mesh
+  methods reimplemented in H3DU.MeshBuffer are deprecated.
+- H3DU.Mesh is considerably deemphasized in this version; that class should only be used
+  for building meshes, not storing them.
+- H3DU.Curve and H3DU.Surface were created; these classes represent parametric curves
+   and surfaces and offer methods for querying information at a given point on the curve or surface.
+   Made several class derive from either class, including H3DU.BSplineCurve, H3DU.BSplineSurface,
+   and new class H3DU.PiecewiseCurve.
+- H3DU.RenderPass3D renamed to H3DU.RenderPass.
+- Deleted fromBasic and fromBasicTexture methods from H3DU.PbrMaterial.
+- Added JOINTS and WEIGHTS constants to H3DU.Semantic.
+- Preliminary support for occlusion maps.
+- Default diffuse/albedo in Material and PbrMaterial is now (1,1,1,1).
+- New H3DU.BufferAccessor class represents a single vertex buffer.
+- Many methods outside H3DU.Mesh now return H3DU.MeshBuffer instead of H3DU.Mesh.
+- Bug fixes.
 
 <a id=Version_2_0_0_beta2></a>
 ### Version 2.0.0-beta2
