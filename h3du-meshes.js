@@ -24,7 +24,11 @@ export var Meshes = {};
  * will be centered at the origin.
  * See the "{@tutorial shapes}" tutorial.
  * Will create texture coordinates such that the same texture
- * is used on each face of the box.
+ * is used on each face of the box. The resulting mesh buffer
+ * will use 36 vertex indices divided into 12 triangles, with each
+ * face using two triangles. The faces will be ordered as follows:
+ * Negative X face, positive X face, negative Y face,
+ * positive Y face, negative Z face, positive Z face.
  * @param {number} xSize Width of the box.
  * @param {number} ySize Height of the box.
  * @param {number} zSize Depth of the box.
@@ -92,7 +96,7 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
  * texture and increase from the positive X to positive Y to negative X to negative
  * Y to positive X axis.<p>
  * The X, Y, and Z coordinates of a point on the cylinder are
- * <code>(R*cos(&lambda;+&pi;), R*sin(&lambda;+&pi;), H*&phi;)</code>,
+ * <code>(-R*cos(&lambda;), -R*sin(&lambda;), H*&phi;)</code>,
  * where &phi; = <code>(&pi;/2 + L)/&pi;</code>, L is the latitude in radians,
  * &lambda; is the longitude in radians, H = <code>height</code>,
  * R = <code>baseRad + (topRad - baseRad) * &phi;</code>,
@@ -664,9 +668,8 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
  * texture and increase from the positive X to positive Y to negative X to negative
  * Y to positive X axis.<p>
  * The X, Y, and Z coordinates of a point on the sphere are
- * <code>(R*sin(&phi;)*cos(&lambda;+&pi;), R*sin(&phi;)*sin(&lambda;+&pi;), R*cos(&phi;))</code>,
- * where &phi; = <code>&pi;/2 - L</code>, L is the latitude in radians,
- * &lambda; is the longitude in radians, R is the sphere's radius,
+ * <code>(-R*cos(&delta;)*cos(&lambda;), -R*cos(&delta;)*sin(&lambda;), R*sin(&delta;))</code>,
+ * where &delta; and &lambda; are the latitude and longitude, respectively, in radians, R is the sphere's radius,
  * and west and south latitudes and
  * longitudes are negative. (The formula for converting latitude
  * and longitude is mentioned here because their meaning depends on
@@ -794,10 +797,10 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
     zEnd.push(-cangle);
     var tex = origt;
     verticalTexCoords.push(tex);
-    var ts = cosStep * sangle + sinStep * cangle;
-    tc = cosStep * cangle - sinStep * sangle;
-    sangle = ts;
-    cangle = tc;
+    tsin = cosStep * sangle + sinStep * cangle;
+    tcos = cosStep * cangle - sinStep * sangle;
+    sangle = tsin;
+    cangle = tcos;
   }
   var slicesTimes2 = slices * 2;
   var lastZeCen = -1;

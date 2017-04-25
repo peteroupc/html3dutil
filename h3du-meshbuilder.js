@@ -472,14 +472,6 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   }
   return this;
 };
-/** @ignore */
-SurfaceBuilder.prototype._evalOne = function(u, v) {
-  for(var k = 0; k < this.attributes.length; k++) {
-    var a = this.attributes[k];
-    var value = typeof a[4] !== "undefined" && a[4] !== null ? a[4].evaluate(u, v) : [];
-    CurveBuilder._addValue(a, value);
-  }
-};
 /**
  * Generates the vertex attributes of the parametric surfaces.
  * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
@@ -514,57 +506,60 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
     v1 = ep[2];
     v2 = ep[3];
   }
+  if(mode !== Mesh.TRIANGLES && mode !== Mesh.LINES && mode !== Mesh.POINTS) {
+    return this;
+  }
   var u, v, i, j;
   var du = (u2 - u1) / un;
   var dv = (v2 - v1) / vn;
-  if(mode === Mesh.TRIANGLES || (typeof mode === "undefined" || mode === null)) {
-    for(i = 0; i < vn; i++) {
-      var vertex = this.vertexCount;
-      for(j = 0; j < un; j++) {
-        this.indices.push(vertex, vertex + 1, vertex + 2);
-        this.indices.push(vertex + 2, vertex + 1, vertex + 3);
-        vertex += 2;
-      }
-      this.vertexCount += (un + 1) * 2;
-      for(j = 0; j <= un; j++) {
-        u = j * du + u1;
-        this._evalOne(u, i * dv + v1);
-        this._evalOne(u, (i + 1) * dv + v1);
+  var numVertices = (vn + 1) * (un + 1);
+  var firstVertex = this.vertexCount;
+  this.vertexCount += numVertices;
+  for(i = 0; i <= vn; i++) {
+    for(j = 0; j <= un; j++) {
+      u = j * du + u1;
+      v = i * dv + v1;
+      for(var k = 0; k < this.attributes.length; k++) {
+        var a = this.attributes[k];
+        var value = typeof a[4] !== "undefined" && a[4] !== null ?
+    a[4].evaluate(u, v) : [];
+        CurveBuilder._addValue(a, value);
       }
     }
-    this.mode = mode;
+  }
+  this.mode = mode;
+  if(mode === Mesh.TRIANGLES) {
+    var unp1 = un + 1;
+    for(i = 0; i < un; i++) {
+      for(j = 0; j < vn; j++) {
+        var index0 = j * unp1 + i + firstVertex;
+        var index1 = index0 + unp1;
+        var index2 = index0 + 1;
+        var index3 = index1 + 1;
+        this.indices.push(index0, index1, index2);
+        this.indices.push(index2, index1, index3);
+      }
+    }
   } else if(mode === Mesh.POINTS) {
-    for(i = 0; i <= vn; i++) {
-      for(j = 0; j <= un; j++) {
-        u = j * du + u1;
-        v = i * dv + v1;
-        this._evalOne(u, v);
-        this.indices.push(this.vertexCount++);
-      }
+    var lastVertex = this.vertexCount;
+    for(i = firstVertex; i < lastVertex; i++) {
+      this.indices.push(i);
     }
-    this.mode = mode;
   } else if(mode === Mesh.LINES) {
-    for(i = 0; i <= vn; i++) {
-      for(j = 0; j <= un; j++) {
-        this._evalOne(j * du + u1, i * dv + v1);
-        if(j < vn) {
-          this.indices.push(this.vertexCount, this.vertexCount + 1);
-        }
-        this.vertexCount++;
-      }
-    }
+    unp1 = un + 1;
     for(i = 0; i <= un; i++) {
       for(j = 0; j <= vn; j++) {
-        u = i * du + u1;
-        v = j * dv + v1;
-        this._evalOne(i * du + u1, j * dv + v1);
+        index1 = j * unp1 + i + firstVertex;
         if(j < vn) {
-          this.indices.push(this.vertexCount, this.vertexCount + 1);
+          index2 = index1 + unp1;
+          this.indices.push(index1, index2);
         }
-        this.vertexCount++;
+        if(i < un) {
+          index2 = index1 + 1;
+          this.indices.push(index2, index1);
+        }
       }
     }
-    this.mode = mode;
   }
   return this;
 };
