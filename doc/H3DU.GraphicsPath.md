@@ -88,7 +88,7 @@ and dimensions.
 * [ellipseForBox](#H3DU.GraphicsPath_ellipseForBox)<br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
 and dimensions.
 * [line](#H3DU.GraphicsPath_line)<br>Adds a line segment to this path.
-* [polygon](#H3DU.GraphicsPath_polygon)<br>Adds path segments to this path that form a polygon or a connected line segment strand.
+* [polyline](#H3DU.GraphicsPath_polyline)<br>Adds path segments to this path that form a polygon or a connected line segment strand.
 * [regularPolygon](#H3DU.GraphicsPath_regularPolygon)<br>Adds path segments to this path that form a regular polygon.
 * [regularStar](#H3DU.GraphicsPath_regularStar)<br>Adds path segments to this path that form a regular N-pointed star.
 * [roundRect](#H3DU.GraphicsPath_roundRect)<br>Adds path segments to this path that form an axis-aligned rounded rectangle.
@@ -728,8 +728,8 @@ this is in addition to "extras/path.js". Example:
 
 This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
-<a name='H3DU.GraphicsPath_polygon'></a>
-### H3DU.GraphicsPath#polygon(pointCoords, closed)
+<a name='H3DU.GraphicsPath_polyline'></a>
+### H3DU.GraphicsPath#polyline(pointCoords, closed)
 
 Adds path segments to this path that form a polygon or a connected line segment strand.
 

@@ -74,8 +74,8 @@ Generates the vertex attributes of the parametric surfaces.
 #### Parameters
 
 * `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, or is null, undefined, or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.
-* `un` (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.
-* `vn` (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.
+* `un` (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
+* `vn` (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
 * `u1` (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 0 if not given.
 * `u2` (Type: number) (optional)<br>Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 1 if not given.
 * `v1` (Type: number) (optional)<br>Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 0 if not given.

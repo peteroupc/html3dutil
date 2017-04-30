@@ -429,7 +429,7 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
- * Default is 24.
+ * Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
  * @param {number} [u1] Starting point of the curve.
  * Default is the starting coordinate given by the [curve evaluator object]{@link H3DU.Curve}, or 0 if not given.
  * @param {number} [u2] Ending point of the curve.
@@ -438,7 +438,8 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  */
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   n = typeof n === "undefined" || n === null ? 24 : Math.ceil(n);
-  if(n <= 0)throw new Error();
+  if(n === 0)return this;
+  if(n < 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = Mesh.LINES;
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null)) {
     var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
@@ -480,9 +481,9 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
  * generates a series of points along the surface. For any other value,
  * this method has no effect.
  * @param {number} [un] Number of subdivisions along the U axis.
- * Default is 24.
+ * Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
  * @param {number} [vn] Number of subdivisions along the V axis.
- * Default is 24.
+ * Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
  * @param {number} [u1] Starting U coordinate of the surface to evaluate.
  * Default is the starting U coordinate given by the [surface evaluator object]{@link H3DU.Surface}, or 0 if not given.
  * @param {number} [u2] Ending U coordinate of the surface to evaluate.
@@ -496,6 +497,7 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
 SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   un = typeof un === "undefined" || un === null ? 24 : Math.ceil(un);
   vn = typeof vn === "undefined" || vn === null ? 24 : Math.ceil(vn);
+  if(un === 0 || vn === 0)return this;
   if(un <= 0)throw new Error();
   if(vn <= 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = Mesh.TRIANGLES;

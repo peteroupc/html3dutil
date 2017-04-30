@@ -680,24 +680,28 @@ ShaderInfo.getDefaultFragment = function() {
     "#endif",
     // LATER: Occlusion calculation may soon change
     "#ifdef OCCLUSION_MAP", "lightedColor*=texture2D(occlusionMap,uvVar).r;", "#endif",
-    "#if defined(SPECULAR) || defined(SPECULAR_MAP)", "vec3 materialSpecular=vec3(0.0);", "#endif",
+    "#if defined(SPECULAR) || defined(SPECULAR_MAP)", "vec3 materialSpecular;", "#endif",
     "vec3 spectmp, lightFactor;",
     "float rough = 0.0;",
     "float metal = 0.0;",
     // Specular reflection
+    "#ifdef SPECULAR_MAP", "materialSpecular=vec3(1.0);", "#endif",
     "#ifdef SPECULAR", "materialSpecular=tolinear(ms);", "#endif",
     // NOTE: Default shader no longer multiplies specular by the specular texture
-    "#ifdef SPECULAR_MAP", "materialSpecular=tolinear(texture2D(specularMap,uvVar).rgb);", "#endif",
+    "#ifdef SPECULAR_MAP", "materialSpecular*=tolinear(texture2D(specularMap,uvVar).rgb);", "#endif",
+    "#ifdef ROUGHNESS_MAP", "rough=1.0;", "#endif",
     "#ifdef PHYSICAL_BASED",
     "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
+    "#else",
 // Convert Blinn-Phong shininess to roughness
 // See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
-    "#ifndef ROUGHNESS", "#ifdef SPECULAR", "rough=clamp(sqrt(2.0/(2.0+mshin)),0.0,1.0);", "#endif", "#endif",
-    "#ifdef ROUGHNESS_MAP", "rough=texture2D(roughnessMap,uvVar).g;", "#endif",
+    "#ifdef SPECULAR", "rough=clamp(sqrt(2.0/(2.0+mshin)),0.0,1.0);", "#endif",
+    "#endif",
+    "#ifdef ROUGHNESS_MAP", "rough*=texture2D(roughnessMap,uvVar).g;", "#endif",
     "#ifdef INVERT_ROUGHNESS", "rough=1.0-rough;", "#endif",
+    "#ifdef METALNESS_MAP", "metal=1.0;", "#endif",
     "#ifdef METALNESS", "metal=metalness;", "#endif",
-    "#ifdef METALNESS_MAP", "metal=texture2D(metalnessMap,uvVar).b;", "#endif",
-    "#endif", // PHYSICAL_BASED
+    "#ifdef METALNESS_MAP", "metal*=texture2D(metalnessMap,uvVar).b;", "#endif",
     ""].join("\n") + "\n";
   for(i = 0; i < H3DU.Lights.MAX_LIGHTS; i++) {
     shader += [

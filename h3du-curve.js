@@ -362,7 +362,8 @@ Curve._ArcLengthParam = function(curve) {
     lastT = t;
     lastS = s;
   }
-  this.length = this.segments[this.segments.length - 1][1];
+  this.length = this.segments.length === 0 ? 0 :
+    this.segments[this.segments.length - 1][1];
   this._vecLength = function(vec) {
     var ret = 0;
     for(var i = 0; i < vec.length; i++) {
