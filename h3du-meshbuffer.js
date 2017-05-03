@@ -974,6 +974,7 @@ MeshBuffer._wellKnownAttributes = {
   "TEXCOORD":2,
   "TEXCOORD_0":2,
   "NORMAL":1,
+  "COLOR":3,
   "JOINT":4,
   "WEIGHT":5,
   "JOINTS":4,

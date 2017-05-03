@@ -14,6 +14,7 @@ to uniforms and vertex attributes.
 * [COLOR](#H3DU.Semantic.COLOR)<br>Attribute semantic for a color.
 * [CUSTOM](#H3DU.Semantic.CUSTOM)<br>Attribute semantic for custom attributes.
 * [JOINT](#H3DU.Semantic.JOINT)<br>Attribute semantic for a skinning joint.
+* [JOINTMATRIX](#H3DU.Semantic.JOINTMATRIX)<br>Uniform semantic for a joint matrix.
 * [MODEL](#H3DU.Semantic.MODEL)<br>Uniform semantic for a model matrix.
 * [MODELVIEW](#H3DU.Semantic.MODELVIEW)<br>Uniform semantic for a model-view matrix.
 * [MODELVIEWINVERSETRANSPOSE](#H3DU.Semantic.MODELVIEWINVERSETRANSPOSE)<br>Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
@@ -47,6 +48,11 @@ Attribute semantic for custom attributes.
 ### H3DU.Semantic.JOINT (constant)
 
 Attribute semantic for a skinning joint.
+
+<a name='H3DU.Semantic.JOINTMATRIX'></a>
+### H3DU.Semantic.JOINTMATRIX (constant)
+
+Uniform semantic for a joint matrix.
 
 <a name='H3DU.Semantic.MODEL'></a>
 ### H3DU.Semantic.MODEL (constant)

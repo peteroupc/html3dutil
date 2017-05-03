@@ -97,3 +97,7 @@ Semantic.MODELVIEWINVERSETRANSPOSE = 106;
  * @const
  */
 Semantic.VIEWINVERSE = 107;
+/** Uniform semantic for a joint matrix.
+ * @const
+ */
+Semantic.JOINTMATRIX = 108;
