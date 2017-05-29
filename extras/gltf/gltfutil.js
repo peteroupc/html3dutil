@@ -227,27 +227,32 @@ GltfUtil.addExtensionsExtras = function(property, retval) {
   return retval;
 };
   /** @ignore */
+GltfUtil.addExtensionsExtrasName = function(property, retval) {
+  retval.name = GltfUtil.parseString(property.name);
+  return GltfUtil.addExtensionsExtras(property, retval);
+};
+  /** @ignore */
 GltfUtil.parseStringDefault = function(value, defaultValue) {
   if(typeof value === "undefined")return defaultValue;
-  if(typeof value !== "string")throw new Error();
+  if(typeof value !== "string")throw new Error("parse error");
   return value;
 };
   /** @ignore */
 GltfUtil.parseString = function(value) {
   if(typeof value === "undefined")return "";
-  if(typeof value !== "string")throw new Error();
+  if(typeof value !== "string")throw new Error("parse error");
   return value;
 };
   /** @ignore */
 GltfUtil.parseArrayFixedLength = function(value, len, defvalue) {
   if(typeof value === "undefined")return defvalue;
-  if(!(value instanceof Array) || value.length !== len)throw new Error();
+  if(!(value instanceof Array) || value.length !== len)throw new Error("parse error");
   return value;
 };
   /** @ignore */
 GltfUtil.parseArrayMin1 = function(value) {
   if(typeof value === "undefined")return [];
-  if(!(value instanceof Array) || value.length === 0)throw new Error();
+  if(!(value instanceof Array) || value.length === 0)throw new Error("parse error");
   return value;
 };
 /**
@@ -258,7 +263,7 @@ GltfUtil.parseArrayMin1 = function(value) {
 GltfUtil.parseArrayUniqueMin1 = function(value) {
   if(typeof value === "undefined")return [];
   if(!(value instanceof Array) || value.length === 0 ||
-     !GltfUtil.hasUniqueItems(value))throw new Error();
+     !GltfUtil.hasUniqueItems(value))throw new Error("parse error");
   return value;
 };
 // Process a nonnegative integer value, returning -1
@@ -266,15 +271,43 @@ GltfUtil.parseArrayUniqueMin1 = function(value) {
 GltfUtil.parseNonnegativeInteger = function(value) {
   if(typeof value === "undefined")return -1;
   if(typeof value !== "number" || Math.floor(value) !== value || isNaN(value) ||
-     value === Number.POSITIVE_INFINITY || value < 0)throw new Error();
+     value === Number.POSITIVE_INFINITY || value < 0)throw new Error("parse error");
   return value;
 };
   /** @ignore */
 GltfUtil.parseNonnegativeNumber = function(value) {
   if(typeof value === "undefined")return -1;
   if(typeof value !== "number" || isNaN(value) ||
-     value === Number.POSITIVE_INFINITY || value < 0)throw new Error();
+     value === Number.POSITIVE_INFINITY || value < 0)throw new Error("parse error");
   return value;
+};
+  /** @ignore */
+GltfUtil.parseRangedNumber = function(value, mn, mx, defValue) {
+  if(typeof value === "undefined")return defValue;
+  if(typeof value !== "number" || isNaN(value) ||
+     value === Number.POSITIVE_INFINITY ||
+     value === Number.NEGATIVE_INFINITY || value < mn || value > mx)throw new Error("parse error");
+  return value;
+};
+  /** @ignore */
+GltfUtil.parseEnum = function(value, values, defValue) {
+  if(typeof value === "undefined")return defValue;
+  for(var i = 0; i < values.length; i++) {
+    if(values[i] === value)return value;
+  }
+  throw new Error("parse error");
+};
+  /** @ignore */
+GltfUtil.parseRangedInteger = function(value, mn, mx, defValue) {
+  var n = GltfUtil.parseRangedNumber(value, mn, mx, defValue);
+  if(Math.floor(n) !== n)throw new Error("parse error");
+  return n;
+};
+  /** @ignore */
+GltfUtil.parseBoolean = function(value, defValue) {
+  if(typeof value === "undefined")return defValue;
+  if(value === true || value === false)return value;
+  throw new Error("not a boolean");
 };
   /** @ignore */
 GltfUtil.parseNonnegativeNumberDefault = function(value, defValue) {

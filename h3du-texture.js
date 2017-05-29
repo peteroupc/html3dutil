@@ -265,6 +265,7 @@ Texture.prototype.loadImage = function() {
       that.width = target.width;
       that.height = target.height;
       that.loadStatus = 2;
+// TODO: Consider storing the byte array of the image if possible
       // console.log("loaded: "+thisName)
       image.onload = null;
       image.onerror = null;

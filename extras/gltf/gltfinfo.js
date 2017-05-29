@@ -7,7 +7,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-import {GltfArray, GltfUtil} from "./gltfutil";
+import {GltfUtil} from "./gltfutil";
 
 function GltfInfo() {
   this.animChannels = [];

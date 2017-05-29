@@ -1,4 +1,4 @@
-/* global GltfState2, H3DU */
+/* global GltfState2, H3DU, Promise */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -9,6 +9,7 @@
 */
 
 import {GltfState1} from "./gltf1";
+// import {GltfState2} from "./gltf2";
 // LATER: Convert batches/shape groups to glTF
 
 /**
@@ -43,6 +44,8 @@ H3DU.loadGltfFromUrl = function(url) {
     if(typeof gltf.asset !== "undefined" && gltf.asset !== null && (typeof gltf.asset.version !== "undefined" && gltf.asset.version !== null)) {
       if(gltf.asset.version === "2.0" && (typeof GltfState2 !== "undefined" && GltfState2 !== null)) {
         return GltfState2.readGltf(gltf, data.url);
+      } else if(gltf.asset.version === "1.1") {
+        return Promise.reject({"url":url});
       } else if(gltf.asset.version !== "1.0" && gltf.asset.version !== "1.0.1") {
         throw new Error("Not supported yet");
       }
