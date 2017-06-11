@@ -541,7 +541,11 @@ def forceCopy(s,d)
     end
   end
    if s!=d
-    FileUtils.cp(s,d) # rescue nil
+    if FileTest.directory?(s)
+  FileUtils.cp_r(s,d)
+    else
+        FileUtils.cp(s,d)
+    end
    end
    return FileTest.exist?(d)
 end

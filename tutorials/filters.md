@@ -10,8 +10,25 @@ It also describes several examples of graphics filters.
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Graphics Filters](#Graphics_Filters)<br>[Writing Graphics Filters](#Writing_Graphics_Filters)<br>[Using Graphics Filters](#Using_Graphics_Filters)<br>[Sample Code](#Sample_Code)<br>[Examples](#Examples)<br>&nbsp;&nbsp;[Grayscale](#Grayscale)<br>&nbsp;&nbsp;[Invert](#Invert)<br>&nbsp;&nbsp;[Red Tint](#Red_Tint)<br>&nbsp;&nbsp;[Mirror Filter](#Mirror_Filter)<br>&nbsp;&nbsp;[Matrix Filter](#Matrix_Filter)<br>&nbsp;&nbsp;[Color Matrix Filter](#Color_Matrix_Filter)<br>&nbsp;&nbsp;[Pixelate Filter](#Pixelate_Filter)<br>&nbsp;&nbsp;[Wave Filter](#Wave_Filter)<br>&nbsp;&nbsp;[Waterpaint Filter](#Waterpaint_Filter)<br>[Other Pages](#Other_Pages)<br>
+- [Introduction](#Introduction)
+- [Contents](#Contents)
+- [Graphics Filters](#Graphics_Filters)
+- [Writing Graphics Filters](#Writing_Graphics_Filters)
+- [Using Graphics Filters](#Using_Graphics_Filters)
+- [Sample Code](#Sample_Code)
+- [Examples](#Examples)
+    - [Grayscale](#Grayscale)
+    - [Invert](#Invert)
+    - [Red Tint](#Red_Tint)
+    - [Mirror Filter](#Mirror_Filter)
+    - [Matrix Filter](#Matrix_Filter)
+    - [Color Matrix Filter](#Color_Matrix_Filter)
+    - [Pixelate Filter](#Pixelate_Filter)
+    - [Wave Filter](#Wave_Filter)
+    - [Waterpaint Filter](#Waterpaint_Filter)
+- [Other Pages](#Other_Pages)
 
+<a id=Graphics_Filters></a>
 ## Graphics Filters
 
 In the HTML 3D Library, graphics filters are functions used to modify the appearance

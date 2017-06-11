@@ -19,8 +19,39 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 <a id=Contents></a>
 ## Contents
 
-[Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)<br>[Example](#Example)<br>[Contents](#Contents)<br>[How to Use](#How_to_Use)<br>&nbsp;&nbsp;[List of Classes](#List_of_Classes)<br>&nbsp;&nbsp;[`H3DU.Scene3D`](#H3DU_Scene3D)<br>&nbsp;&nbsp;[The "Camera"](#The_Camera)<br>&nbsp;&nbsp;[3D Models](#3D_Models)<br>&nbsp;&nbsp;[Shapes](#Shapes)<br>&nbsp;&nbsp;[The Render Loop](#The_Render_Loop)<br>[A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)<br>[Demos](#Demos)<br>&nbsp;&nbsp;[Simple Demos](#Simple_Demos)<br>&nbsp;&nbsp;[Materials](#Materials)<br>&nbsp;&nbsp;[Shapes and meshes](#Shapes_and_meshes)<br>&nbsp;&nbsp;[Paths](#Paths)<br>&nbsp;&nbsp;[Curves and Surfaces](#Curves_and_Surfaces)<br>&nbsp;&nbsp;[Textures](#Textures)<br>&nbsp;&nbsp;[Shaders](#Shaders)<br>&nbsp;&nbsp;[Particle Systems](#Particle_Systems)<br>&nbsp;&nbsp;[Loading 3D Models](#Loading_3D_Models)<br>&nbsp;&nbsp;[Selecting Objects](#Selecting_Objects)<br>&nbsp;&nbsp;[Lights](#Lights)<br>&nbsp;&nbsp;[Text](#Text)<br>&nbsp;&nbsp;[Projections](#Projections)<br>&nbsp;&nbsp;[Miscellaneous](#Miscellaneous)<br>[Example](#Example)<br>[History](#History)<br>&nbsp;&nbsp;[Version 2.0.0-beta3](#Version_2_0_0_beta3)<br>&nbsp;&nbsp;[Version 2.0.0-beta2](#Version_2_0_0_beta2)<br>&nbsp;&nbsp;[Version 2.0.0-beta1:](#Version_2_0_0_beta1)<br>
+- [Public-Domain HTML 3D Library](#Public_Domain_HTML_3D_Library)
+- [Example](#Example)
+- [Contents](#Contents)
+- [How to Use](#How_to_Use)
+    - [List of Classes](#List_of_Classes)
+    - [`H3DU.Scene3D`](#H3DU_Scene3D)
+    - [The "Camera"](#The_Camera)
+    - [3D Models](#3D_Models)
+    - [Shapes](#Shapes)
+    - [The Render Loop](#The_Render_Loop)
+- [A Skeleton for 3D Apps](#A_Skeleton_for_3D_Apps)
+- [Demos](#Demos)
+    - [Simple Demos](#Simple_Demos)
+    - [Materials](#Materials)
+    - [Shapes and meshes](#Shapes_and_meshes)
+    - [Paths](#Paths)
+    - [Curves and Surfaces](#Curves_and_Surfaces)
+    - [Textures](#Textures)
+    - [Shaders](#Shaders)
+    - [Particle Systems](#Particle_Systems)
+    - [Loading 3D Models](#Loading_3D_Models)
+    - [Selecting Objects](#Selecting_Objects)
+    - [Lights](#Lights)
+    - [Text](#Text)
+    - [Projections](#Projections)
+    - [Miscellaneous](#Miscellaneous)
+- [Example](#Example)
+- [History](#History)
+    - [Version 2.0.0-beta3](#Version_2_0_0_beta3)
+    - [Version 2.0.0-beta2](#Version_2_0_0_beta2)
+    - [Version 2.0.0-beta1:](#Version_2_0_0_beta1)
 
+<a id=How_to_Use></a>
 ## How to Use
 
 1. [**Download the HTML 3D library**](https://github.com/peteroupc/html3dutil/releases).

@@ -10,8 +10,33 @@ Here is an overview of these data types.
 <a id=Contents></a>
 ## Contents
 
-[Contents](#Contents)<br>[Vectors](#Vectors)<br>&nbsp;&nbsp;[Unit Vectors](#Unit_Vectors)<br>[Matrices](#Matrices)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Combining Transforms](#Combining_Transforms)<br>[Describing Rotations](#Describing_Rotations)<br>&nbsp;&nbsp;[Axis of Rotation](#Axis_of_Rotation)<br>&nbsp;&nbsp;[Quaternions](#Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Generating Quaternions](#Generating_Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Using Quaternions](#Using_Quaternions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Multiplying Quaternions](#Multiplying_Quaternions)<br>&nbsp;&nbsp;[Tait-Bryan angles](#Tait_Bryan_angles)<br>&nbsp;&nbsp;[4x4 Matrices](#4x4_Matrices)<br>[Planes](#Planes)<br>[Boxes](#Boxes)<br>[Coordinate Systems](#Coordinate_Systems)<br>&nbsp;&nbsp;[Differences in Behavior](#Differences_in_Behavior)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Projection and view matrices](#Projection_and_view_matrices)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Cross product (`vec3cross`) and normals](#Cross_product_vec3cross_and_normals)<br>&nbsp;&nbsp;[Winding and face classification](#Winding_and_face_classification)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Finding a triangle's winding](#Finding_a_triangle_s_winding)<br>
+- [Contents](#Contents)
+- [Vectors](#Vectors)
+    - [Unit Vectors](#Unit_Vectors)
+- [Matrices](#Matrices)
+    - [Translation](#Translation)
+    - [Scaling](#Scaling)
+    - [Rotation](#Rotation)
+    - [Combining Transforms](#Combining_Transforms)
+- [Describing Rotations](#Describing_Rotations)
+    - [Axis of Rotation](#Axis_of_Rotation)
+    - [Quaternions](#Quaternions)
+        - [Generating Quaternions](#Generating_Quaternions)
+        - [Using Quaternions](#Using_Quaternions)
+        - [Multiplying Quaternions](#Multiplying_Quaternions)
+    - [Tait-Bryan angles](#Tait_Bryan_angles)
+    - [4x4 Matrices](#4x4_Matrices)
+- [Planes](#Planes)
+- [Boxes](#Boxes)
+- [Coordinate Systems](#Coordinate_Systems)
+    - [Differences in Behavior](#Differences_in_Behavior)
+        - [Projection and view matrices](#Projection_and_view_matrices)
+        - [Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)
+        - [Cross product (`vec3cross`) and normals](#Cross_product_vec3cross_and_normals)
+    - [Winding and face classification](#Winding_and_face_classification)
+        - [Finding a triangle's winding](#Finding_a_triangle_s_winding)
 
+<a id=Vectors></a>
 ## Vectors
 
 A vector is a line segment pointing in a certain _direction_ in space and

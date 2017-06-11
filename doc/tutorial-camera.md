@@ -16,8 +16,20 @@ it draw triangles, lines, and other graphics primitives.
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[The "Camera" and Geometric Transforms](#The_Camera_and_Geometric_Transforms)<br>&nbsp;&nbsp;[Overview of Transformations](#Overview_of_Transformations)<br>[Projection Transform](#Projection_Transform)<br>&nbsp;&nbsp;[Perspective Projection](#Perspective_Projection)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Demo](#Demo)<br>&nbsp;&nbsp;[Orthographic Projection](#Orthographic_Projection)<br>&nbsp;&nbsp;[Other Projections](#Other_Projections)<br>[View Transform](#View_Transform)<br>[Vertex Coordinates in the Graphics System](#Vertex_Coordinates_in_the_Graphics_System)<br>[Other Pages](#Other_Pages)<br>
+- [Introduction](#Introduction)
+- [Contents](#Contents)
+- [The "Camera" and Geometric Transforms](#The_Camera_and_Geometric_Transforms)
+    - [Overview of Transformations](#Overview_of_Transformations)
+- [Projection Transform](#Projection_Transform)
+    - [Perspective Projection](#Perspective_Projection)
+        - [Demo](#Demo)
+    - [Orthographic Projection](#Orthographic_Projection)
+    - [Other Projections](#Other_Projections)
+- [View Transform](#View_Transform)
+- [Vertex Coordinates in the Graphics System](#Vertex_Coordinates_in_the_Graphics_System)
+- [Other Pages](#Other_Pages)
 
+<a id=The_Camera_and_Geometric_Transforms></a>
 ## The "Camera" and Geometric Transforms
 
 The [`Batch3D`](http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html) class

@@ -16,8 +16,22 @@ This section contains detailed information on matrices.
 <a id=Contents></a>
 ## Contents
 
-[Matrix Details](#Matrix_Details)<br>[Contents](#Contents)<br>[Arrangement](#Arrangement)<br>&nbsp;&nbsp;[A Matrix Transforms Between Coordinate Systems](#A_Matrix_Transforms_Between_Coordinate_Systems)<br>&nbsp;&nbsp;[Why a 4x4 Matrix?](#Why_a_4x4_Matrix)<br>[Transforming Points](#Transforming_Points)<br>&nbsp;&nbsp;[Scaling](#Scaling)<br>&nbsp;&nbsp;[Translation](#Translation)<br>&nbsp;&nbsp;[Rotation](#Rotation)<br>&nbsp;&nbsp;[Matrix Multiplication](#Matrix_Multiplication)<br>&nbsp;&nbsp;[Projective Transformations](#Projective_Transformations)<br>&nbsp;&nbsp;[Matrix Inversions](#Matrix_Inversions)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Inverting a General NxN Matrix](#Inverting_a_General_NxN_Matrix)<br>[Rotation Example](#Rotation_Example)<br>
+- [Matrix Details](#Matrix_Details)
+- [Contents](#Contents)
+- [Arrangement](#Arrangement)
+    - [A Matrix Transforms Between Coordinate Systems](#A_Matrix_Transforms_Between_Coordinate_Systems)
+    - [Why a 4x4 Matrix?](#Why_a_4x4_Matrix)
+- [Transforming Points](#Transforming_Points)
+    - [Scaling](#Scaling)
+    - [Translation](#Translation)
+    - [Rotation](#Rotation)
+    - [Matrix Multiplication](#Matrix_Multiplication)
+    - [Projective Transformations](#Projective_Transformations)
+    - [Matrix Inversions](#Matrix_Inversions)
+        - [Inverting a General NxN Matrix](#Inverting_a_General_NxN_Matrix)
+- [Rotation Example](#Rotation_Example)
 
+<a id=Arrangement></a>
 ## Arrangement
 
 In mathematical publications,

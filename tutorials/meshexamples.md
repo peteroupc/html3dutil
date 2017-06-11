@@ -3,8 +3,14 @@ This page contains source code for creating various kinds of 3D models on the fl
 <a id=Contents></a>
 ## Contents
 
-[Contents](#Contents)<br>[3D Line](#3D_Line)<br>[Floor](#Floor)<br>[Striped Disk](#Striped_Disk)<br>[Washer](#Washer)<br>[Miscellaneous](#Miscellaneous)<br>
+- [Contents](#Contents)
+- [3D Line](#3D_Line)
+- [Floor](#Floor)
+- [Striped Disk](#Striped_Disk)
+- [Washer](#Washer)
+- [Miscellaneous](#Miscellaneous)
 
+<a id=3D_Line></a>
 ## 3D Line
 
 This method creates a thin line-like 3D object.

@@ -21,8 +21,25 @@ NOTE: This page will largely discuss the 2.0.0-beta3 version of the HTML 3D libr
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Creating Shapes](#Creating_Shapes)<br>&nbsp;&nbsp;[Built-In Shapes](#Built_In_Shapes)<br>&nbsp;&nbsp;[Custom Shapes](#Custom_Shapes)<br>&nbsp;&nbsp;[The Mesh Constructor](#The_Mesh_Constructor)<br>&nbsp;&nbsp;[Vertex Methods](#Vertex_Methods)<br>&nbsp;&nbsp;[Texture Coordinates](#Texture_Coordinates)<br>&nbsp;&nbsp;[Building the Mesh](#Building_the_Mesh)<br>&nbsp;&nbsp;[Transforming the Mesh](#Transforming_the_Mesh)<br>&nbsp;&nbsp;[Normals](#Normals)<br>&nbsp;&nbsp;&nbsp;&nbsp;[What Are Normals?](#What_Are_Normals)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Normals on Built-in Shapes](#Normals_on_Built_in_Shapes)<br>&nbsp;&nbsp;&nbsp;&nbsp;[recalcNormals()](#recalcNormals)<br>[Binding Shapes](#Binding_Shapes)<br>[Shape Groups](#Shape_Groups)<br>[Other Pages](#Other_Pages)<br>
+- [Introduction](#Introduction)
+- [Contents](#Contents)
+- [Creating Shapes](#Creating_Shapes)
+    - [Built-In Shapes](#Built_In_Shapes)
+    - [Custom Shapes](#Custom_Shapes)
+    - [The Mesh Constructor](#The_Mesh_Constructor)
+    - [Vertex Methods](#Vertex_Methods)
+    - [Texture Coordinates](#Texture_Coordinates)
+    - [Building the Mesh](#Building_the_Mesh)
+    - [Transforming the Mesh](#Transforming_the_Mesh)
+    - [Normals](#Normals)
+        - [What Are Normals?](#What_Are_Normals)
+        - [Normals on Built-in Shapes](#Normals_on_Built_in_Shapes)
+        - [recalcNormals()](#recalcNormals)
+- [Binding Shapes](#Binding_Shapes)
+- [Shape Groups](#Shape_Groups)
+- [Other Pages](#Other_Pages)
 
+<a id=Creating_Shapes></a>
 ## Creating Shapes
 
 The HTML 3D library contains several methods for creating 3D shapes such

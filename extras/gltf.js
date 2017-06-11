@@ -1,3 +1,4 @@
+/* eslint strict: "off", no-unused-expressions: "off" */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
   typeof define === 'function' && define.amd ? define(factory) :

@@ -3,8 +3,22 @@ This page describes common identifiers and names for colors, as used in the HTML
 <a id=Contents></a>
 ## Contents
 
-[Contents](#Contents)<br>[What Colors Can I Use?](#What_Colors_Can_I_Use)<br>[What Do Some Colors Look Like?](#What_Do_Some_Colors_Look_Like)<br>[What Is the Syntax for HTML Colors?](#What_Is_the_Syntax_for_HTML_Colors)<br>&nbsp;&nbsp;[Shortened Notation](#Shortened_Notation)<br>[How Do I Make HTML Colors?](#How_Do_I_Make_HTML_Colors)<br>[What Are Some Common HTML Colors?](#What_Are_Some_Common_HTML_Colors)<br>[How Do I Darken an HTML Color?](#How_Do_I_Darken_an_HTML_Color)<br>[How Do I Lighten a HTML Color?](#How_Do_I_Lighten_a_HTML_Color)<br>[How Do I Desaturate an HTML Color?](#How_Do_I_Desaturate_an_HTML_Color)<br>[What Is an RGB Color?](#What_Is_an_RGB_Color)<br>[What Is an HSL Color?](#What_Is_an_HSL_Color)<br>&nbsp;&nbsp;[HSL Example](#HSL_Example)<br>[What Is an Alpha Component?](#What_Is_an_Alpha_Component)<br>
+- [Contents](#Contents)
+- [What Colors Can I Use?](#What_Colors_Can_I_Use)
+- [What Do Some Colors Look Like?](#What_Do_Some_Colors_Look_Like)
+- [What Is the Syntax for HTML Colors?](#What_Is_the_Syntax_for_HTML_Colors)
+    - [Shortened Notation](#Shortened_Notation)
+- [How Do I Make HTML Colors?](#How_Do_I_Make_HTML_Colors)
+- [What Are Some Common HTML Colors?](#What_Are_Some_Common_HTML_Colors)
+- [How Do I Darken an HTML Color?](#How_Do_I_Darken_an_HTML_Color)
+- [How Do I Lighten a HTML Color?](#How_Do_I_Lighten_a_HTML_Color)
+- [How Do I Desaturate an HTML Color?](#How_Do_I_Desaturate_an_HTML_Color)
+- [What Is an RGB Color?](#What_Is_an_RGB_Color)
+- [What Is an HSL Color?](#What_Is_an_HSL_Color)
+    - [HSL Example](#HSL_Example)
+- [What Is an Alpha Component?](#What_Is_an_Alpha_Component)
 
+<a id=What_Colors_Can_I_Use></a>
 ## What Colors Can I Use?
 
 You can use values like the following.

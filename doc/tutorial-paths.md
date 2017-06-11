@@ -13,8 +13,17 @@ Library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/ht
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Paths](#Paths)<br>[How to Use](#How_to_Use)<br>[Creating Paths](#Creating_Paths)<br>&nbsp;&nbsp;[SVG Path String](#SVG_Path_String)<br>&nbsp;&nbsp;[Building Paths](#Building_Paths)<br>[Path Segments](#Path_Segments)<br>[Methods](#Methods)<br>
+- [Introduction](#Introduction)
+- [Contents](#Contents)
+- [Paths](#Paths)
+- [How to Use](#How_to_Use)
+- [Creating Paths](#Creating_Paths)
+    - [SVG Path String](#SVG_Path_String)
+    - [Building Paths](#Building_Paths)
+- [Path Segments](#Path_Segments)
+- [Methods](#Methods)
 
+<a id=Paths></a>
 ## Paths
 
 A path is a collection of two-dimensional line segments and/or curves. Many paths describe
