@@ -45,7 +45,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
     - [Text](#Text)
     - [Projections](#Projections)
     - [Miscellaneous](#Miscellaneous)
-- [Example](#Example)
+- [Example](#Example_2)
 - [History](#History)
     - [Version 2.0.0-beta3](#Version_2_0_0_beta3)
     - [Version 2.0.0-beta2](#Version_2_0_0_beta2)
@@ -378,7 +378,7 @@ both functions for interpolating quaternion rotations.
 {@link H3DU.RenderPass} can be used to draw a two-dimensional background under three-dimensional
 content.
 
-<a id=Example></a>
+<a id=Example_2></a>
 ## Example
 
 The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the `<canvas>` element it uses on the page.
