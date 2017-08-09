@@ -55,8 +55,8 @@ ShaderProgram.prototype._init = function(context, shaderInfo) {
   this.shaderInfo = shaderInfo;
   this.context = context;
   this.prog = H3DU.ShaderProgram._compileShaders(context,
-   shaderInfo.vertexShader,
-   shaderInfo.fragmentShader);
+    shaderInfo.vertexShader,
+    shaderInfo.fragmentShader);
   this.uniformValues = {};
   this.actives = {};
   this.attributes = [];
@@ -220,11 +220,11 @@ ShaderProgram.prototype.get = function(name) {
  */
 ShaderProgram.prototype.getUniform = function(name) {
   var loc = typeof name === "string" ? this.get(name) : name;
- // If "loc" is a number that means it's an attribute, not a uniform;
- // we expect WebGLUniformLocation
+  // If "loc" is a number that means it's an attribute, not a uniform;
+  // we expect WebGLUniformLocation
   if(loc === null || typeof loc === "number")return null;
- // using a cache since context.getUniform can be slow with
- // repeated calls
+  // using a cache since context.getUniform can be slow with
+  // repeated calls
   var uv = this.uniformValues[name];
   if(typeof uv === "undefined" || uv === null) {
     return this.context.getUniform(this.program, loc);
@@ -263,7 +263,7 @@ ShaderProgram.prototype.use = function() {
 /** @ignore */
 ShaderProgram.prototype._update = function() {
   H3DU.ShaderInfo._setUniformsInternal(this.shaderInfo.uniformValues,
-   this.uniformValues, this.savedUniforms);
+    this.uniformValues, this.savedUniforms);
   return this;
 };
 /**
@@ -285,9 +285,9 @@ ShaderProgram.prototype._update = function() {
  */
 ShaderProgram.prototype.setUniforms = function(uniforms) {
   H3DU.ShaderInfo._setUniformsInternal(uniforms, this.uniformValues,
-   this.savedUniforms);
+    this.savedUniforms);
   if(this.context.getParameter(
-         this.CURRENT_PROGRAM) === this.prog) {
+    this.CURRENT_PROGRAM) === this.prog) {
     if(this._setSavedUniforms() > 0) {
       this.savedUniforms = {};
     }

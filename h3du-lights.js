@@ -22,22 +22,22 @@ export var Lights = function() {
 /** @ignore */
 Lights.prototype._init = function() {
   this.lights = [];
- /**
-  * Ambient color for the scene. This is the color of the light
-  * that shines on every part of every object equally and in
-  * every direction. In the absence of
-  * other lighting effects, all objects will be given this color.<p>
-  * <small>Ambient light is a simplified simulation of the
-  * real-world effect of light bouncing back and forth between
-  * many different objects in an area. One example of this
-  * phenomenon is sunlight reaching an indoor room without
-  * directly hitting it, such that the sunlight bounces off the walls
-  * and so illuminates most of the room pretty much uniformly.
-  * Ambient lights simulate this phenomenon.</small><p>
-  * NOTE: In the default shader program, this property is
-  * only used on objects that use {@link H3DU.Material}, not {@link H3DU.PbrMaterial}.
-  * @default
-  */
+  /**
+   * Ambient color for the scene. This is the color of the light
+   * that shines on every part of every object equally and in
+   * every direction. In the absence of
+   * other lighting effects, all objects will be given this color.<p>
+   * <small>Ambient light is a simplified simulation of the
+   * real-world effect of light bouncing back and forth between
+   * many different objects in an area. One example of this
+   * phenomenon is sunlight reaching an indoor room without
+   * directly hitting it, such that the sunlight bounces off the walls
+   * and so illuminates most of the room pretty much uniformly.
+   * Ambient lights simulate this phenomenon.</small><p>
+   * NOTE: In the default shader program, this property is
+   * only used on objects that use {@link H3DU.Material}, not {@link H3DU.PbrMaterial}.
+   * @default
+   */
   this.sceneAmbient = [0.2, 0.2, 0.2];
 };
 /**

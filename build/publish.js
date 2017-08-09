@@ -40,7 +40,7 @@ function TextWriter() {
 }
 /** @ignore */
 TextWriter.prototype.normtags = function(x) {
-   // Replace P tags with two line breaks
+  // Replace P tags with two line breaks
   x = resolveLinks(x);
   x = x.replace(/<p>/g, "\n\n");
   x = x.replace(/<\/p>/g, "");
@@ -222,7 +222,7 @@ function Doc(name) {
   this.name = name;
   this.getFileName = function(dir) {
     return path.join(dir,
-         Doc.typeToName(this.name));
+      Doc.typeToName(this.name));
   };
   this.getText = function(docs, writer) {
     var entry = writer.header(helper.htmlsafe(this.name)) +
@@ -266,7 +266,7 @@ function Doc(name) {
       entry += this.methods[keys[i]][0];
     }
     entry += writer.paragraph(writer.linkText("index" + helper.fileExtension,
-  "Back to documentation index."));
+      "Back to documentation index."));
     entry += writer.footer();
     return entry;
   };
@@ -327,10 +327,10 @@ function DocCollection() {
   };
   this.write = function(writer, dir) {
     var that = this;
-     // Write individual type files
+    // Write individual type files
     Object.keys(this.docs).forEach(function(doc) {
       fs.writeFileSync(that.docs[doc].getFileName(dir),
-         normalizeLines(that.docs[doc].getText(that, writer)), "utf8");
+        normalizeLines(that.docs[doc].getText(that, writer)), "utf8");
     });
     // Write index
     var indexStr = writer.header("Documentation") +
@@ -363,8 +363,8 @@ function DocCollection() {
     }
     indexStr += writer.footer();
     fs.writeFileSync(
-         path.join(dir, "index" + helper.fileExtension),
-         normalizeLines(indexStr), "utf8");
+      path.join(dir, "index" + helper.fileExtension),
+      normalizeLines(indexStr), "utf8");
     this.tutorials.children.forEach(function(tut) {
       var content = writer.header(helper.htmlsafe(tut.title)) +
         writer.heading(1, helper.htmlsafe(tut.title));
@@ -375,8 +375,8 @@ function DocCollection() {
       content += doclink;
       content += writer.footer();
       fs.writeFileSync(
-           path.join(dir, that.tutorialName(tut)),
-           normalizeLines(content), "utf8");
+        path.join(dir, that.tutorialName(tut)),
+        normalizeLines(content), "utf8");
     });
   };
 }
@@ -440,12 +440,12 @@ function descriptions(nodes, writer) {
       desc = writer.normspace(node.classdesc || "") + " ";
       desc += writer.normspace(node.description || "");
       desc = desc.replace(/<(p|br)[^>]*>/g, " ");
-   // We only need the first "sentence" of the description
+      // We only need the first "sentence" of the description
       desc = desc.replace(/\.\s+[\s\S]*$/, ".");
     } else {
       desc = writer.normspace(node.description || "");
       desc = desc.replace(/<(p|br)[^>]*>/g, " ");
-        // We only need the first "sentence" of the description
+      // We only need the first "sentence" of the description
       desc = desc.replace(/\.\s+[\s\S]*$/, ".");
     }
     desc = desc.replace(/^\s+/, "");
@@ -510,7 +510,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       if(node.kind === "class" || node.kind === "namespace") {
         entry += writer.heading(1, elname);
         entry += writer.paragraph(writer.linkText("index" + helper.fileExtension,
-           "Back to documentation index."));
+          "Back to documentation index."));
       }
       var attribs = helper.getAttribs(node);
       var attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
@@ -605,7 +605,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       if(node.kind === "namespace" || node.kind === "mixin") {
         entry += writer.heading(1, safelongname);
         entry += writer.paragraph(writer.linkText("index" + helper.fileExtension,
-           "Back to documentation index."));
+          "Back to documentation index."));
       }
       entry += writer.anchor(Doc.toHash(node.longname));
       heading = safelongname;

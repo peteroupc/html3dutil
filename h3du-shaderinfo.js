@@ -238,7 +238,7 @@ ShaderInfo._setUniformInternal = function(uniforms, uniformValues, i, changedUni
 ShaderInfo._copyIfDifferent = function(src, dst, len) {
   for(var i = 0; i < len; i++) {
     if(src[i] !== dst[i]) {
-   // Arrays are different
+      // Arrays are different
       dst[i] = src[i];
       for(var j = i + 1; j < len; j++) {
         dst[j] = src[j];
@@ -308,7 +308,7 @@ ShaderInfo.makeCopyEffect = function() {
 " gl_FragColor=texture2D(sampler,uvVar);\n" +
 "}";
   return new H3DU.ShaderInfo(
-   H3DU.ShaderInfo.getBasicVertex(), shader);
+    H3DU.ShaderInfo.getBasicVertex(), shader);
 };
 
 /**
@@ -330,8 +330,8 @@ ShaderInfo.makeCopyEffect = function() {
  */
 ShaderInfo.makeEffect = function(functionCode) {
   return new H3DU.ShaderInfo(
-   H3DU.ShaderInfo.getBasicVertex(),
-   H3DU.ShaderInfo.makeEffectFragment(functionCode));
+    H3DU.ShaderInfo.getBasicVertex(),
+    H3DU.ShaderInfo.makeEffectFragment(functionCode));
 };
 /**
  * Generates source code for a shader program that inverts the colors of a texture.
@@ -339,11 +339,11 @@ ShaderInfo.makeEffect = function(functionCode) {
  */
 ShaderInfo.makeInvertEffect = function() {
   return H3DU.ShaderInfo.makeEffect(
-[
-  "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
-  " vec4 color=texture2D(sampler,uvCoord);",
-  " vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;",
-  "}"].join("\n"));
+    [
+      "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+      " vec4 color=texture2D(sampler,uvCoord);",
+      " vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;",
+      "}"].join("\n"));
 };
 /**
  * Generates source code for a shader program that generates a two-color texture showing
@@ -354,31 +354,31 @@ ShaderInfo.makeEdgeDetectEffect = function() {
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
   return H3DU.ShaderInfo.makeEffect(
-["float luma(vec3 color) {",
-  " return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
-  "}",
-  "const vec4 edge_color=vec4(0.,0,0,1);",
-  "const vec4 back_color=vec4(1.,1,1,1);",
-  "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
-  "float dx = 1.0 / float(textureSize.x);",
-  "float dy = 1.0 / float(textureSize.y);",
-  "float s00 = luma(texture2D(sampler, uvCoord + vec2(-dx,dy)).rgb);",
-  "float s10 = luma(texture2D(sampler, uvCoord + vec2(-dx,0.0)).rgb);",
-  "float s20 = luma(texture2D(sampler, uvCoord + vec2(-dx,-dy)).rgb);",
-  "float s01 = luma(texture2D(sampler, uvCoord + vec2(0.0,dy)).rgb);",
-  "float s21 = luma(texture2D(sampler, uvCoord + vec2(0.0,-dy)).rgb);",
-  "float s02 = luma(texture2D(sampler, uvCoord + vec2(dx, dy)).rgb);",
-  "float s12 = luma(texture2D(sampler, uvCoord + vec2(dx, 0.0)).rgb);",
-  "float s22 = luma(texture2D(sampler, uvCoord + vec2(dx, -dy)).rgb);",
-  "float sx = s00 + 2.0 * s10 + s20 - (s02 + 2.0 * s12 + s22);",
-  "float sy = s00 + 2.0 * s01 + s02 - (s20 + 2.0 * s21 + s22);",
-  "float dist = sx * sx + sy * sy;",
-  "if(dist > 0.4) {",
-  "return edge_color;",
-  "} else {",
-  "return back_color;",
-  "}}"
-].join("\n"));
+    ["float luma(vec3 color) {",
+      " return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
+      "}",
+      "const vec4 edge_color=vec4(0.,0,0,1);",
+      "const vec4 back_color=vec4(1.,1,1,1);",
+      "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+      "float dx = 1.0 / float(textureSize.x);",
+      "float dy = 1.0 / float(textureSize.y);",
+      "float s00 = luma(texture2D(sampler, uvCoord + vec2(-dx,dy)).rgb);",
+      "float s10 = luma(texture2D(sampler, uvCoord + vec2(-dx,0.0)).rgb);",
+      "float s20 = luma(texture2D(sampler, uvCoord + vec2(-dx,-dy)).rgb);",
+      "float s01 = luma(texture2D(sampler, uvCoord + vec2(0.0,dy)).rgb);",
+      "float s21 = luma(texture2D(sampler, uvCoord + vec2(0.0,-dy)).rgb);",
+      "float s02 = luma(texture2D(sampler, uvCoord + vec2(dx, dy)).rgb);",
+      "float s12 = luma(texture2D(sampler, uvCoord + vec2(dx, 0.0)).rgb);",
+      "float s22 = luma(texture2D(sampler, uvCoord + vec2(dx, -dy)).rgb);",
+      "float sx = s00 + 2.0 * s10 + s20 - (s02 + 2.0 * s12 + s22);",
+      "float sy = s00 + 2.0 * s01 + s02 - (s20 + 2.0 * s21 + s22);",
+      "float dist = sx * sx + sy * sy;",
+      "if(dist > 0.4) {",
+      "return edge_color;",
+      "} else {",
+      "return back_color;",
+      "}}"
+    ].join("\n"));
 };
 
 /**
@@ -473,21 +473,21 @@ ShaderInfo.getDefaultFragment = function() {
     " bvec3 lt=lessThanEqual(c,vec3(0.00304));",
     " return mix(pow(c,vec3(0.41666666667))*1.0556-0.0556,12.92*c,vec3(lt));",
     "}",
- // if shading is disabled, this is solid color instead of material diffuse
+    // if shading is disabled, this is solid color instead of material diffuse
     "uniform vec4 md;",
     "#ifdef SHADING",
     "struct light {",
-// NOTE: These struct members must be aligned to
-// vec4 size; otherwise, Chrome may have issues retaining
-// the value of lights[i].specular, causing flickering.
-// ---
-// Source light direction/position, in camera/eye space
+    // NOTE: These struct members must be aligned to
+    // vec4 size; otherwise, Chrome may have issues retaining
+    // the value of lights[i].specular, causing flickering.
+    // ---
+    // Source light direction/position, in camera/eye space
     " vec4 position;",
-// Source light diffuse color
+    // Source light diffuse color
     " vec4 diffuse;",
-// Source light specular color
+    // Source light specular color
     "#ifdef SPECULAR", " vec4 specular;", "#endif",
-// Light radius
+    // Light radius
     " vec4 radius;",
     "};",
     "uniform vec3 sceneAmbient;",
@@ -531,8 +531,8 @@ ShaderInfo.getDefaultFragment = function() {
     "  if(lt.radius.x == 0.0) {",
     "    attenuation=1.0;", // Unlimited extent
     "  } else {",
-// See page 32-33 of
-// <http://www.frostbite.com/wp-content/uploads/2014/11/course_notes_moving_frostbite_to_pbr_v2.pdf>
+    // See page 32-33 of
+    // <http://www.frostbite.com/wp-content/uploads/2014/11/course_notes_moving_frostbite_to_pbr_v2.pdf>
     "   float radiusPow4=lt.radius.x;", // Radius is light's radius to power of 4
     "   float distPow4=dsSquared*dsSquared;",
     "   float attenDivisor=max(0.0001,dsSquared);",
@@ -543,10 +543,10 @@ ShaderInfo.getDefaultFragment = function() {
     " return vec4(sdir,attenuation);",
     "}",
     "#endif",
-// ////////////
+    // ////////////
     "#ifdef PHYSICAL_BASED",
-     // John Hable's tonemapping function, mentioned at
-     // at http://filmicgames.com/archives/75
+    // John Hable's tonemapping function, mentioned at
+    // at http://filmicgames.com/archives/75
     "#define HABLE_TONEMAP_WHITE 1.37906425",
     "vec3 tonemapHable(vec3 c) {",
     "  vec3 c2=c*2.0;",
@@ -588,7 +588,7 @@ ShaderInfo.getDefaultFragment = function() {
     " return diffuse*ONE_DIV_PI+ctnum*0.25/ctden;",
     "}",
     "#ifndef SPECULAR",
-   // NOTE: Color parameter is in linear RGB
+    // NOTE: Color parameter is in linear RGB
     "vec3 reflectance(vec3 color, vec3 lightDir, vec3 viewDir, vec3 n, float rough, float metal) {",
     " vec3 h=normalize(viewDir+lightDir);",
     " float dothl=saturate(dot(h,lightDir));",
@@ -603,7 +603,7 @@ ShaderInfo.getDefaultFragment = function() {
     "}",
     "#endif",
     "#endif",
-// ////////////
+    // ////////////
     "void main() {",
     " vec3 normal;",
     "#ifdef TEXTURE",
@@ -658,7 +658,7 @@ ShaderInfo.getDefaultFragment = function() {
     "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
     "vec3 viewDirection=normalize(tview.xyz/tview.w);",
     "vec3 environment=vec3(1.0);",
-/* LATER: Support environment maps
+    /* LATER: Support environment maps
     "#ifdef ENV_MAP",
     "vec3 eyepos=vec3(inverseView*vec4(viewPositionVar.xyz,1.0));",
     "vec3 refl=reflect(-eyepos,normal);",
@@ -693,8 +693,8 @@ ShaderInfo.getDefaultFragment = function() {
     "#ifdef PHYSICAL_BASED",
     "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
     "#else",
-// Convert Blinn-Phong shininess to roughness
-// See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
+    // Convert Blinn-Phong shininess to roughness
+    // See http://simonstechblog.blogspot.ca/2011/12/microfacet-brdf.html
     "#ifdef SPECULAR", "rough=clamp(sqrt(2.0/(2.0+mshin)),0.0,1.0);", "#endif",
     "#endif",
     "#ifdef ROUGHNESS_MAP", "rough*=texture2D(roughnessMap,uvVar).g;", "#endif",
@@ -707,9 +707,9 @@ ShaderInfo.getDefaultFragment = function() {
     shader += [
       "lightPowerVec=calcLightPower(lights[" + i + "],viewPositionVar);",
       "lightCosine=saturate(dot(normal,lightPowerVec.xyz));",
-// not exactly greater than 0 in order to avoid speckling or
-// flickering specular highlights if the surface normal is perpendicular to
-// the light's direction vector
+      // not exactly greater than 0 in order to avoid speckling or
+      // flickering specular highlights if the surface normal is perpendicular to
+      // the light's direction vector
       "spectmp = vec3(greaterThan(vec3(lightCosine),vec3(0.0001)));",
       "#ifdef PHYSICAL_BASED",
       "    lightFactor=spectmp*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
@@ -721,12 +721,12 @@ ShaderInfo.getDefaultFragment = function() {
       "         normalize(viewDirection),normal,rough,metal)*lightFactor;",
       "#endif",
       "#else",
-     // Lambert diffusion term
+      // Lambert diffusion term
       "    lightedColor+=spectmp*materialDiffuse*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
       "#ifdef SPECULAR",
       "    specular=saturate(dot(normalize(viewDirection+lightPowerVec.xyz),normal));",
       "    specular=pow(specular,mshin);",
-     // Blinn-Phong specular term
+      // Blinn-Phong specular term
       "    lightedColor+=spectmp*materialSpecular*specular*lightPowerVec.w*tolinear(lights[" + i + "].specular.xyz);",
       "#endif",
       "#endif",

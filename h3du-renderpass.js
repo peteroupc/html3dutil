@@ -22,37 +22,37 @@
  * allowed for each key.
  */
 function RenderPass(batch, parameters) {
- /** The batch to render.
-  * @type {H3DU.Batch3D}
-  */
+  /** The batch to render.
+   * @type {H3DU.Batch3D}
+   */
   this.batch = batch;
- /** Whether to clear the color buffer before rendering the batch.
-  * @default
-  */
+  /** Whether to clear the color buffer before rendering the batch.
+   * @default
+   */
   this.clearColor = true;
- /** Whether to clear the depth buffer before rendering the batch.
-  * @default
-  */
+  /** Whether to clear the depth buffer before rendering the batch.
+   * @default
+   */
   this.clearDepth = true;
- /** Whether to clear the stencil buffer before rendering the batch.
-  * @default
-  */
+  /** Whether to clear the stencil buffer before rendering the batch.
+   * @default
+   */
   this.clearStencil = true;
- /** Framebuffer to render to.
-  * @type {H3DU.FrameBufferInfo}
-  * @default
-  */
+  /** Framebuffer to render to.
+   * @type {H3DU.FrameBufferInfo}
+   * @default
+   */
   this.frameBuffer = null;
- /** Shader to use.
-  * @type {H3DU.ShaderInfo}
-  * @default
-  */
+  /** Shader to use.
+   * @type {H3DU.ShaderInfo}
+   * @default
+   */
   this.shader = null;
- /** Use the dimensions of the given framebuffer rather than those
-  * of the scene rendering it.
-  * @type {boolean}
-  * @default
-  */
+  /** Use the dimensions of the given framebuffer rather than those
+   * of the scene rendering it.
+   * @type {boolean}
+   * @default
+   */
   this.useFrameBufferSize = false;
   this.setParams(typeof parameters === "undefined" ? null : parameters);
 }

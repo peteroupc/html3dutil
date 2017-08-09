@@ -371,32 +371,32 @@ Curve._ArcLengthParam = function(curve) {
     }
     return Math.sqrt(ret);
   };
- // solve arcLength(t)-s = 0 numerically
+  // solve arcLength(t)-s = 0 numerically
   this._solveArcLength = function(s, guess, minValue, maxExclusive) {
     var ret = guess;
     for(var i = 0; i < 10; i++) {
       var val = this.curve.arcLength(ret) - s;
       if(Math.abs(val) < 1e-10 && ret >= minValue &&
        ret < maxExclusive) {
-       // already accurate enough
+        // already accurate enough
         break;
       }
-     // NOTE: Arc length is an integral of the speed,
-     // so the derivative of arc length will be the speed;
-     // this doesn't change even though we subtracted "s"
-     // from the arc length above, since an antiderivative
-     // plus any constant (s is a constant here because the
-     // integral is with respect to time, not speed)
-     // is another antiderivative of the same function.
+      // NOTE: Arc length is an integral of the speed,
+      // so the derivative of arc length will be the speed;
+      // this doesn't change even though we subtracted "s"
+      // from the arc length above, since an antiderivative
+      // plus any constant (s is a constant here because the
+      // integral is with respect to time, not speed)
+      // is another antiderivative of the same function.
       var deriv = this._vecLength(this.curve.velocity(ret));
       if(deriv === 0) {
-       // won't converge anymore
+        // won't converge anymore
         break;
       }
       var solutionDiff = val / deriv;
       var r = ret - solutionDiff;
       if(solutionDiff === 0) {
-       // won't converge anymore
+        // won't converge anymore
         break;
       }
       if(minValue !== Number.NEGATIVE_INFINITY &&
@@ -430,12 +430,12 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
     ep = this.curve.endPoints();
     guess = ep[0] + (ep[1] - ep[0]) * (s / this.length);
     return this._solveArcLength(s, guess, ep[0],
-        Number.POSITIVE_INFINITY);
+      Number.POSITIVE_INFINITY);
   } else if(s < 0) {
     ep = this.curve.endPoints();
     guess = ep[0] + (ep[1] - ep[0]) * (s / this.length);
     return this._solveArcLength(s, guess,
-        Number.NEGATIVE_INFINITY, 0);
+      Number.NEGATIVE_INFINITY, 0);
   } else if(s === this.length) {
     ep = this.curve.endPoints();
     return ep[1];

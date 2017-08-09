@@ -212,8 +212,8 @@ function BSplineCurve(controlPoints, knots, bits) {
   this.controlPoints = controlPoints;
   if((this.bits & BSplineCurve.WEIGHTED_BIT) !== 0 &&
    (this.bits & BSplineCurve.HOMOGENEOUS_BIT) === 0) {
-      // NOTE: WEIGHTED_BIT is deprecated; convert to homogeneous
-      // for compatibility
+    // NOTE: WEIGHTED_BIT is deprecated; convert to homogeneous
+    // for compatibility
     this.controlPoints = BSplineCurve._convertToHomogen(this.controlPoints);
   }
   var order = knots.length - this.controlPoints.length;
@@ -359,7 +359,7 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
     return;
   }
   if(multStart !== degree + 1 || multEnd !== degree + 1) {
-      // Not a clamped curve
+    // Not a clamped curve
     for(i = 0; i < numPoints; i++) {
       buffer[i] = BSplineCurve._nfunc(i, degree, t, kn);
     }
@@ -583,7 +583,7 @@ BSplineCurve.prototype.split = function(u) {
     for(i = index - degree; i <= index - mult; i++) {
       buffer.push(this.controlPoints[i]);
     }
-  // Start array of front points
+    // Start array of front points
     front = [];
     for(i = 0; i <= index - degree; i++) {
       front.push(this.controlPoints[i]);
@@ -609,7 +609,7 @@ BSplineCurve.prototype.split = function(u) {
         }
       }
     }
-  // Generate array of back points
+    // Generate array of back points
     backPoints.push(front[front.length - 1]);
     for(i = back.length - 1; i >= 0; i--) {
       backPoints.push(back[i]);
@@ -684,7 +684,7 @@ BSplineCurve.prototype.velocity = function(u) {
     var degree = this.knots.length - numPoints - 1;
     var elementsPerPoint = this.controlPoints[0].length;
     BSplineCurve._getFactors(this.knots, u, degree - 1, numPoints,
-     this.buffer);
+      this.buffer);
     var i, j;
     var coeffs = [];
     for(i = 0; i < numPoints; i++) {
@@ -709,7 +709,7 @@ BSplineCurve.prototype.velocity = function(u) {
   return ret;
 };
 
-  /** @ignore */
+/** @ignore */
 BSplineCurve._convertToHomogen = function(cp) {
   var ret = [];
   var cplen = cp[0].length;
@@ -766,8 +766,8 @@ function BSplineSurface(controlPoints, knotsU, knotsV, bits) {
   this.bits = bits || 0;
   if((this.bits & BSplineCurve.WEIGHTED_BIT) !== 0 &&
    (this.bits & BSplineCurve.HOMOGENEOUS_BIT) === 0) {
-      // NOTE: WEIGHTED_BIT is deprecated; convert to homogeneous
-      // for compatibility
+    // NOTE: WEIGHTED_BIT is deprecated; convert to homogeneous
+    // for compatibility
     cpoints = BSplineSurface._convertToHomogen(cpoints);
   }
   var vcplen = cpoints.length;
@@ -814,7 +814,7 @@ BSplineSurface.prototype.constructor = BSplineSurface;
  */
 BSplineCurve.clamped = function(controlPoints, degree, bits) {
   return new BSplineCurve(controlPoints,
-   BSplineCurve.clampedKnots(controlPoints.length, degree), bits);
+    BSplineCurve.clampedKnots(controlPoints.length, degree), bits);
 };
 
 /**
@@ -846,21 +846,21 @@ BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
   return BSplineCurve.clamped(controlPoints, controlPoints.length - 1, bits);
 };
 
-  /**
-   * Creates a B-spline curve with uniform knots.
-   * @param {Array<Array<number>>} controlPoints Array of
-   * control points as specified in the {@link H3DU.BSplineCurve} constructor.
-   * @param {number} [degree] Degree of the B-spline
-   * curve. For example, 3 means a degree-3 (cubic) curve.
-   * If null, undefined, or omitted, the default is 3.
-   * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
-   * @returns {H3DU.BSplineCurve} Return value. The first
-   * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
-   * versions.)
-   */
+/**
+ * Creates a B-spline curve with uniform knots.
+ * @param {Array<Array<number>>} controlPoints Array of
+ * control points as specified in the {@link H3DU.BSplineCurve} constructor.
+ * @param {number} [degree] Degree of the B-spline
+ * curve. For example, 3 means a degree-3 (cubic) curve.
+ * If null, undefined, or omitted, the default is 3.
+ * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
+ * @returns {H3DU.BSplineCurve} Return value. The first
+ * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+ * versions.)
+ */
 BSplineCurve.uniform = function(controlPoints, degree, bits) {
   return new BSplineCurve(controlPoints,
-   BSplineCurve.uniformKnots(controlPoints.length, degree), bits);
+    BSplineCurve.uniformKnots(controlPoints.length, degree), bits);
 };
 
 /**
@@ -881,8 +881,8 @@ BSplineCurve.uniform = function(controlPoints, degree, bits) {
  */
 BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
   return new BSplineSurface(controlPoints,
-   BSplineCurve.clampedKnots(controlPoints[0].length, degreeU),
-   BSplineCurve.clampedKnots(controlPoints.length, degreeV), bits);
+    BSplineCurve.clampedKnots(controlPoints[0].length, degreeU),
+    BSplineCurve.clampedKnots(controlPoints.length, degreeV), bits);
 };
 /**
  * Creates a B-spline surface with uniform knots.
@@ -901,8 +901,8 @@ BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
  */
 BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
   return new BSplineSurface(controlPoints,
-   BSplineCurve.uniformKnots(controlPoints[0].length, degreeU),
-   BSplineCurve.uniformKnots(controlPoints.length, degreeV), bits);
+    BSplineCurve.uniformKnots(controlPoints[0].length, degreeU),
+    BSplineCurve.uniformKnots(controlPoints.length, degreeV), bits);
 };
 /**
  * Generates a knot vector with uniform knots, to be
@@ -985,9 +985,9 @@ BSplineSurface.prototype.evaluate = function(u, v) {
   var bv = this.bufferV;
   var tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
-     this.bufferU);
+    this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
-     this.bufferV);
+    this.bufferV);
   var output = [];
   for(i = 0; i < elementsPerPoint; i++) {
     value = 0;
@@ -1034,9 +1034,9 @@ BSplineSurface.prototype.tangent = function(u, v) {
   var bv = this.bufferV;
   var tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU - 1, this.ucplen,
-     this.bufferU);
+    this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
-     this.bufferV);
+    this.bufferV);
   var ret = [];
   var coeffs = [];
   for(i = 0; i < this.ucplen; i++) {
@@ -1075,9 +1075,9 @@ BSplineSurface.prototype.bitangent = function(u, v) {
   var bu = this.bufferU;
   var tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
-     this.bufferU);
+    this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV - 1, this.vcplen,
-     this.bufferV);
+    this.bufferV);
   var ret = [];
   var coeffs = [];
   for(i = 0; i < this.vcplen; i++) {
@@ -1103,7 +1103,7 @@ BSplineSurface.prototype.bitangent = function(u, v) {
   return ret;
 };
 
-  /** @ignore */
+/** @ignore */
 BSplineSurface._convertToHomogen = function(cp) {
   var ret = [];
   for(var i = 0; i < cp.length; i++) {
@@ -1112,26 +1112,26 @@ BSplineSurface._convertToHomogen = function(cp) {
   return ret;
 };
 
-  /**
-   * Creates a B-spline surface from the control points of a B&eacute;zier surface.
-   * @param {Array<Array<Array<number>>>} controlPoints An array of control point
-   * arrays, which in turn contain a number of control points. Each
-   * control point is an array with the same length as the other control points.
-   * It is assumed that:<ul>
-   * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
-   * surface along the V axis. For example, a degree-3 (cubic) surface along the V axis
-   * contains 4 control points, one in each control point array. A degree of 1 on
-   * both the U and V axes results in a flat surface.
-   * <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
-   * surface along the U axis.
-   * <li>The number of elements in the first control point represents the number of elements in all the control points.
-   * </ul>
-   * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
-   * @returns {H3DU.BSplineSurface} Return value.
-   */
+/**
+ * Creates a B-spline surface from the control points of a B&eacute;zier surface.
+ * @param {Array<Array<Array<number>>>} controlPoints An array of control point
+ * arrays, which in turn contain a number of control points. Each
+ * control point is an array with the same length as the other control points.
+ * It is assumed that:<ul>
+ * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
+ * surface along the V axis. For example, a degree-3 (cubic) surface along the V axis
+ * contains 4 control points, one in each control point array. A degree of 1 on
+ * both the U and V axes results in a flat surface.
+ * <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
+ * surface along the U axis.
+ * <li>The number of elements in the first control point represents the number of elements in all the control points.
+ * </ul>
+ * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
+ * @returns {H3DU.BSplineSurface} Return value.
+ */
 BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
   return BSplineSurface.clamped(controlPoints, controlPoints[0].length - 1,
-       controlPoints.length - 1, bits);
+    controlPoints.length - 1, bits);
 };
 
 /**

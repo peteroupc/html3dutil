@@ -21,50 +21,50 @@
  * @param {Array<number>} [specular] See "specular" property. <i>This parameter is deprecated.</i>
  */
 export var LightSource = function(params, ambient, diffuse, specular) {
- /**
-  * A 4-element vector giving an additional color to multiply with the ambient
-  * color of each object, in the red, green,
-  * and blue components respectively.
-  * The default is (0,0,0,1), or black.<p>
-  * NOTE: This property is not used in the default shader program.
-  * @default
-  */
+  /**
+   * A 4-element vector giving an additional color to multiply with the ambient
+   * color of each object, in the red, green,
+   * and blue components respectively.
+   * The default is (0,0,0,1), or black.<p>
+   * NOTE: This property is not used in the default shader program.
+   * @default
+   */
   this.ambient = [0, 0, 0, 1.0];
- /**
-  * Light position. An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
-  * <li> If W is 0, then X, Y, and Z specify a vector in world space; the light will shine the brightest on surfaces that face the light in
-  * this vector's direction from the origin (0, 0, 0).
-  * <li> If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul>
-  * @default
-  */
+  /**
+   * Light position. An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
+   * <li> If W is 0, then X, Y, and Z specify a vector in world space; the light will shine the brightest on surfaces that face the light in
+   * this vector's direction from the origin (0, 0, 0).
+   * <li> If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul>
+   * @default
+   */
 
   this.position = [0, 0, 1, 0];
- /**
-  * A 4-element vector giving an additional color to multiply with the diffuse
-  * or albedo color (base color) of each object, in the red, green,
-  * and blue components respectively. See also {@link H3DU.PbrMaterial#albedo}.
-  * Each component ranges from 0 to 1.
-  * The default is (1,1,1,1), or white.
-  * @default
-  */
+  /**
+   * A 4-element vector giving an additional color to multiply with the diffuse
+   * or albedo color (base color) of each object, in the red, green,
+   * and blue components respectively. See also {@link H3DU.PbrMaterial#albedo}.
+   * Each component ranges from 0 to 1.
+   * The default is (1,1,1,1), or white.
+   * @default
+   */
   this.diffuse = [1, 1, 1, 1];
- /**
-  * A 3-element vector giving the color of the light when it causes a specular
-  * reflection, in the red, green,
-  * and blue components respectively. Each component ranges from 0 to 1.
-  * A specular reflection is a reflection in the opposite direction from the direction
-  * the light reaches the object in, like a mirror. Specular reflections can cause shiny
-  * highlights depending on the viewing angle.
-  * The default is (1,1,1), or white.<p>
-  * NOTE: <i>The default shader uses this only for {@link H3DU.Material}, not
-  * for {@link H3DU.PbrMaterial}.</i>
-  * @default
-  */
+  /**
+   * A 3-element vector giving the color of the light when it causes a specular
+   * reflection, in the red, green,
+   * and blue components respectively. Each component ranges from 0 to 1.
+   * A specular reflection is a reflection in the opposite direction from the direction
+   * the light reaches the object in, like a mirror. Specular reflections can cause shiny
+   * highlights depending on the viewing angle.
+   * The default is (1,1,1), or white.<p>
+   * NOTE: <i>The default shader uses this only for {@link H3DU.Material}, not
+   * for {@link H3DU.PbrMaterial}.</i>
+   * @default
+   */
   this.specular = [1, 1, 1];
- /**
-  * Radius of the light source. If 0, the light's intensity doesn't change
-  * with distance.
-  * @default */
+  /**
+   * Radius of the light source. If 0, the light's intensity doesn't change
+   * with distance.
+   * @default */
   this.radius = 0.0;
   if(params && params.constructor === Array) {
     this.setParams({

@@ -51,8 +51,8 @@ CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
   }
   var mb = new MeshBuffer();
   var indexArray = maxIndex < 65536 ?
-     new Uint16Array(indices) :
-     new Uint32Array(indices);
+    new Uint16Array(indices) :
+    new Uint32Array(indices);
   mb.setPrimitiveType(mode);
   mb.setIndices(indexArray);
   for(i = 0; i < attributes.length; i++) {
@@ -128,7 +128,7 @@ CurveBuilder._defaultEndPointsSurface = function(attributes) {
 };
 /** @ignore */
 CurveBuilder._setAttribute = function(
-   attributes, vertexCount, curve, semantic, semanticIndex, size
+  attributes, vertexCount, curve, semantic, semanticIndex, size
 ) {
   var sizeValue = typeof size === "undefined" || size === null ? 3 : size;
   var semanticIndexValue = typeof semanticIndex === "undefined" || semanticIndex === null ?
@@ -146,7 +146,7 @@ CurveBuilder._setAttribute = function(
         CurveBuilder._resize(a, sizeValue);
         return;
       } else {
-    // Remove the attribute
+        // Remove the attribute
         attributes.splice(i, 1);
         return;
       }
@@ -226,7 +226,7 @@ CurveBuilder.prototype.position = function(curve, size) {
  */
 CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size) {
   CurveBuilder._setAttribute(this.attributes, this.vertexCount,
-     curve, semantic, semanticIndex, size);
+    curve, semantic, semanticIndex, size);
   return this;
 };
 /**
@@ -249,8 +249,8 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
  */
 CurveBuilder.curveToBuffer = function(curve, mode, n, u1, u2) {
   return new CurveBuilder()
-     .position(curve, 3)
-     .evalCurve(mode, n, u1, u2).toMeshBuffer();
+    .position(curve, 3)
+    .evalCurve(mode, n, u1, u2).toMeshBuffer();
 };
 /**
  * Clears the arrays of attribute values (such as positions and normals)
@@ -313,7 +313,7 @@ SurfaceBuilder.prototype.texCoord = function(surface, size) {
 SurfaceBuilder.prototype.positionNormal = function(surface, size) {
   var norm = typeof surface !== "undefined" && surface !== null ? new CurveBuilder._NormalSurface(surface) : null;
   return this.attribute(surface, Semantic.POSITION, 0, size)
-        .attribute(norm, Semantic.NORMAL, 0, size);
+    .attribute(norm, Semantic.NORMAL, 0, size);
 };
 /**
  * @constructor
@@ -343,7 +343,7 @@ SurfaceBuilder._TexCoord = function(s) {
 SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
   var tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
   return this.attribute(surface, Semantic.POSITION, 0, size)
-        .attribute(tc, Semantic.TEXCOORD, 0, 2);
+    .attribute(tc, Semantic.TEXCOORD, 0, 2);
 };
 
 /**
@@ -387,7 +387,7 @@ SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
  */
 SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, size) {
   CurveBuilder._setAttribute(this.attributes, this.vertexCount,
-     surface, semantic, semanticIndex, size);
+    surface, semantic, semanticIndex, size);
   return this;
 };
 
@@ -419,8 +419,8 @@ SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, 
  */
 SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2) {
   return new SurfaceBuilder()
-     .positionNormalTexCoord(surface, 3)
-     .evalSurface(mode, un, vn, u1, u2, vn, v2).toMeshBuffer();
+    .positionNormalTexCoord(surface, 3)
+    .evalSurface(mode, un, vn, u1, u2, vn, v2).toMeshBuffer();
 };
 /**
  * Generates the vertex attributes of the parametric curves.
@@ -524,7 +524,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
       for(var k = 0; k < this.attributes.length; k++) {
         var a = this.attributes[k];
         var value = typeof a[4] !== "undefined" && a[4] !== null ?
-    a[4].evaluate(u, v) : [];
+          a[4].evaluate(u, v) : [];
         CurveBuilder._addValue(a, value);
       }
     }

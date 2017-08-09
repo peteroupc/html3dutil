@@ -34,13 +34,13 @@ Batch3D._PerspectiveView = function(batch, fov, near, far) {
   this.far = far;
   this.batch = batch;
   this.lastAspect = null;
-/** @ignore */
+  /** @ignore */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect && !isNaN(aspect)) {
       this.lastAspect = aspect;
       this.batch.setProjectionMatrix(
-     H3DU.Math.mat4perspective(this.fov, aspect, this.near, this.far));
+        H3DU.Math.mat4perspective(this.fov, aspect, this.near, this.far));
     }
   };
   this.update(1.0, 1.0);
@@ -57,13 +57,13 @@ Batch3D._OrthoView = function(batch, a, b, c, d, e, f) {
   this.f = f;
   this.batch = batch;
   this.lastAspect = null;
-/** @ignore */
+  /** @ignore */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect && !isNaN(aspect)) {
       this.lastAspect = aspect;
       this.batch.setProjectionMatrix(
-     H3DU.Math.mat4orthoAspect(this.a, this.b, this.c, this.d, this.e, this.f, aspect));
+        H3DU.Math.mat4orthoAspect(this.a, this.b, this.c, this.d, this.e, this.f, aspect));
     }
   };
   this.update(1.0, 1.0);
@@ -103,15 +103,15 @@ Batch3D._setupMatrices = function(
       case H3DU.Semantic.MODELVIEWINVERSETRANSPOSE:
         if(!viewWorld) {
           if(H3DU.Batch3D._isIdentityExceptTranslate(viewMatrix)) {
-    // view matrix is just a translation matrix, so that getting the model-view
-    // matrix amounts to simply adding the view's position
+            // view matrix is just a translation matrix, so that getting the model-view
+            // matrix amounts to simply adding the view's position
             viewWorld = worldMatrix.slice(0, 16);
             viewWorld[12] += viewMatrix[12];
             viewWorld[13] += viewMatrix[13];
             viewWorld[14] += viewMatrix[14];
           } else {
             viewWorld = H3DU.Math.mat4multiply(viewMatrix,
-     worldMatrix);
+              worldMatrix);
           }
         }
         if(v === H3DU.Semantic.MODELVIEW) {
@@ -271,7 +271,7 @@ Batch3D.prototype.getProjectionMatrix = function() {
  */
 Batch3D.prototype.getProjectionViewMatrix = function() {
   return H3DU.Math.mat4multiply(
-        this.getProjectionMatrix(), this.getViewMatrix());
+    this.getProjectionMatrix(), this.getViewMatrix());
 };
 
 /**
@@ -393,19 +393,19 @@ Batch3D.prototype._renderShape = function(shape, renderContext) {
     var flags = 0;
     if(typeof renderContext.shader !== "undefined" && renderContext.shader !== null) {
       prog = renderContext.scene._programs.getCustomProgram(
-         renderContext.shader, renderContext.context);
+        renderContext.shader, renderContext.context);
     } else if(typeof this._globalShader !== "undefined" && this._globalShader !== null) {
       prog = renderContext.scene._programs.getCustomProgram(
-         this._globalShader, renderContext.context);
+        this._globalShader, renderContext.context);
     } else if((shape.material instanceof H3DU.Material || shape.material instanceof H3DU.PbrMaterial) &&
      shape.material.shader !== null) {
       prog = renderContext.scene._programs.getCustomProgram(
-         shape.material.shader, renderContext.context);
+        shape.material.shader, renderContext.context);
     }
     flags = H3DU.Scene3D._flagsForShape(shape);
     if(typeof prog === "undefined" || prog === null) {
       prog = renderContext.scene._programs.getProgram(
-           flags, renderContext.context);
+        flags, renderContext.context);
     }
     if(typeof prog !== "undefined" && prog !== null) {
       if(renderContext.prog !== prog) {
@@ -414,12 +414,12 @@ Batch3D.prototype._renderShape = function(shape, renderContext) {
         renderContext.prog = prog;
       }
       H3DU.Batch3D._setupMatrices(prog,
-      this._projectionMatrix,
-      this._viewMatrix,
-      shape.getMatrix());
+        this._projectionMatrix,
+        this._viewMatrix,
+        shape.getMatrix());
       H3DU.Batch3D._getMaterialBinder(shape.material).bind(prog,
-      renderContext.context,
-      renderContext.scene._textureLoader);
+        renderContext.context,
+        renderContext.scene._textureLoader);
       renderContext.scene._meshLoader.draw(shape.meshBuffer, prog);
     }
   }
@@ -479,7 +479,7 @@ Batch3D._getMaterialBinder = function(material) {
   if(material && material instanceof H3DU.PbrMaterial) {
     return new _MaterialBinder(material);
   }
- // Return an empty binding object
+  // Return an empty binding object
   return {};
 };
 export {Batch3D};

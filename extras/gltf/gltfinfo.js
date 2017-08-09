@@ -28,21 +28,21 @@ GltfInfo.prototype.getShape = function() {
 GltfInfo._interpolate = function(node, s, e, t, path) {
   switch(path) {
   case 0: {
-      // translation
+    // translation
     node.getTransform().setPosition(
-         GltfUtil._lerp(s, e, t));
+      GltfUtil._lerp(s, e, t));
     break;
   }
   case 1: {
-      // scale
+    // scale
     node.getTransform().setScale(
-         GltfUtil._lerp(s, e, t));
+      GltfUtil._lerp(s, e, t));
     break;
   }
   case 2: {
-      // rotation
+    // rotation
     node.getTransform().setQuaternion(
-         GltfUtil._slerp(s, e, t));
+      GltfUtil._slerp(s, e, t));
     break;
   }
   default:
@@ -57,7 +57,7 @@ GltfInfo.prototype.update = function(time) {
       var node = ch.target;
       var maxInput = ch.sampler.input[ch.sampler.input.length - 1];
       var pos = H3DU.getTimePosition(this.timer, time,
-      this.maxEndTimeSecs * 1000.0);
+        this.maxEndTimeSecs * 1000.0);
       if(pos * this.maxEndTimeSecs > maxInput) {
         // Reached end of animation
         var last = ch.sampler.output[ch.sampler.output.length - 1];
@@ -68,12 +68,12 @@ GltfInfo.prototype.update = function(time) {
         for(var j = 0; j < inputLen; j++) {
           var s = ch.sampler.input[j] * invEnd;
           var e = ch.sampler.input[j + 1] * invEnd;
-      // LATER: Support STEP interpolation
+          // LATER: Support STEP interpolation
           if(pos >= s && pos <= e) {
             var fac = s === e ? 0.0 : (pos - s) / (e - s);
             GltfInfo._interpolate(node,
-      ch.sampler.output[j],
-            ch.sampler.output[j + 1], fac, ch.path);
+              ch.sampler.output[j],
+              ch.sampler.output[j + 1], fac, ch.path);
           }
         }
       }

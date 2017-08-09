@@ -97,7 +97,7 @@ GltfState1.prototype.readTexture = function(texture) {
   var source = texture.source;
   var format = typeof texture.format === "undefined" || texture.format === null ? 6408 : texture.format;
   var internalFormat = typeof texture.internalFormat === "undefined" || texture.internalFormat === null ?
-             format : texture.internalFormat;
+    format : texture.internalFormat;
   var target = typeof texture.target === "undefined" || texture.target === null ? 3553 : texture.target;
   var type = typeof texture.type === "undefined" || texture.type === null ? 5121 : texture.type;
   if(typeof this.gltf.samplers === "undefined" || this.gltf.samplers === null ||
@@ -148,7 +148,7 @@ GltfState1.prototype.getUniformValue = function(paramType, paramValue) {
 /** @ignore */
 GltfState1.prototype.readTechnique = function(techniqueName) {
   if(typeof this.techniques[techniqueName] !== "undefined" && this.techniques[techniqueName] !== null) {
-      // Technique was already read, return it
+    // Technique was already read, return it
     return this.techniques[techniqueName];
   }
   if(typeof this.gltf.techniques === "undefined" || this.gltf.techniques === null ||
@@ -188,7 +188,7 @@ GltfState1.prototype.readTechnique = function(techniqueName) {
         unif[uniformKey] = unifValue;
       }
       if(typeof param.semantic !== "undefined" && param.semantic !== null) {
-    // LATER: Semantic + param.node
+        // LATER: Semantic + param.node
         var sem = 0;
         if(param.semantic === "MODEL" && param.type === 35676) {
           sem = H3DU.Semantic.MODEL;
@@ -404,7 +404,7 @@ GltfState1.prototype.readMaterialValues = function(material, techInfo) {
   if(typeof material.values === "undefined" || material.values === null) {
     return shader;
   }
-    // We have parameter values, make a copy of this shader
+  // We have parameter values, make a copy of this shader
   shader = shader.copy();
   for(var materialKey in material.values || {})
     if(Object.prototype.hasOwnProperty.call( material.values, materialKey)) {
@@ -556,7 +556,7 @@ GltfState1.prototype.readNode = function(node, nodeName, parent) {
           }
           maxCount = Math.max(maxCount, array.valueCount);
           meshBuffer.setAttribute(attributeName, array.array,
-                      array.elementsPerValue, 0, array.elementStride());
+            array.elementsPerValue, 0, array.elementStride());
         }
       var indexArray = null;
 
@@ -584,13 +584,13 @@ GltfState1.prototype.readNode = function(node, nodeName, parent) {
         }
         indexArray = array.array;
       } else {
-     // Synthesize a list of indices
+        // Synthesize a list of indices
         var indexList = [];
         for(var k = 0; k < maxCount; k++) {
           indexList.push(k);
         }
         indexArray = maxCount - 1 < 65536 ? new Uint16Array(indexList) :
-            new Uint32Array(indexList);
+          new Uint32Array(indexList);
       }
       if(triangleFan)indexArray = GltfUtil.triangleFanToTriangles(indexArray);
       if(triangleStrip)indexArray = GltfUtil.triangleStripToTriangles(indexArray);
@@ -702,7 +702,7 @@ GltfState1.prototype.readScenes = function() {
     defaultScene = sceneKeys[0];
   }
   if(typeof defaultScene === "undefined" || defaultScene === null) {
-      // nothing to render
+    // nothing to render
     return this;
   }
   for(var sceneKey in scenes)
@@ -737,7 +737,7 @@ GltfState1.prototype.toGltf = function() {
     var input = ret.animChannels[i].sampler.input;
     ret.maxEndTimeSecs = Math.max(
       ret.maxEndTimeSecs,
-        input[input.length - 1]);
+      input[input.length - 1]);
   }
   return ret;
 };
@@ -776,14 +776,14 @@ GltfState1.readGltf = function(gltf, path) {
   var promiseNames = [];
   GltfState1.readBuffersAndShaders(gltf, path, promises, promiseKinds, promiseNames);
   return H3DU.getPromiseResultsAll(promises)
-   .then(function(promiseResults) {
-     var state = new GltfState1(gltf, path, promiseResults, promiseKinds, promiseNames);
-     var retState = state.readScenes();
-     if(!retState)return Promise.reject(state.error);
-     retState = state.readAnimations();
-     if(!retState)return Promise.reject(state.error);
-     return Promise.resolve(state.toGltf());
-   });
+    .then(function(promiseResults) {
+      var state = new GltfState1(gltf, path, promiseResults, promiseKinds, promiseNames);
+      var retState = state.readScenes();
+      if(!retState)return Promise.reject(state.error);
+      retState = state.readAnimations();
+      if(!retState)return Promise.reject(state.error);
+      return Promise.resolve(state.toGltf());
+    });
 };
 
 export {GltfState1};

@@ -54,10 +54,10 @@ GltfArray.prototype.toValueArray = function() {
     return ret;
   }
 };
-  /** @ignore
-   * @constructor */
+/** @ignore
+ * @constructor */
 var GltfUtil = function() {
-    // empty
+  // empty
 };
   /** @ignore */
 GltfUtil.arrayToView = function(arr, reference) {
@@ -69,7 +69,7 @@ GltfUtil.arrayToView = function(arr, reference) {
   }
   return new Uint16Array(arr);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.lineStripToLines = function(strip) {
   var ret = [];
   if(strip.length < 2) {
@@ -81,7 +81,7 @@ GltfUtil.lineStripToLines = function(strip) {
   }
   return GltfUtil.arrayToView(ret, strip);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.lineLoopToLines = function(strip) {
   var ret = [];
   if(strip.length < 2) {
@@ -136,14 +136,14 @@ GltfUtil._elementsPerValue = function(type) {
 };
 /** @ignore */
 GltfUtil._resolvePath = function(path, name) {
- // Return data URIs directly
+  // Return data URIs directly
   if(name.indexOf("data:") === 0) {
     return name;
   }
- // Relatively dumb for a relative path
- // resolver, but sufficient here, as it will
- // only be used with relative path
- // strings
+  // Relatively dumb for a relative path
+  // resolver, but sufficient here, as it will
+  // only be used with relative path
+  // strings
   var ret = path;
   var lastSlash = ret.lastIndexOf("/");
   if(lastSlash >= 0) {
@@ -187,7 +187,7 @@ GltfUtil._bytesPerElement = function(componentType) {
   if(componentType === 5126)return 4;
   return 0;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil._lerp = function(s, e, t) {
   if(s.length === 4 && e.length === 4) {
     return H3DU.Math.vec4lerp(s, e, t);
@@ -218,38 +218,38 @@ GltfUtil.hasUniqueItems = function(items) {
   }
   return true;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.addExtensionsExtras = function(property, retval) {
   retval.extras = typeof property.extras !== "undefined" && property.extras !== null ?
-  property.extras : {};
+    property.extras : {};
   retval.extensions = typeof property.extensions !== "undefined" && property.extensions !== null ?
     property.extensions : {};
   return retval;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.addExtensionsExtrasName = function(property, retval) {
   retval.name = GltfUtil.parseString(property.name);
   return GltfUtil.addExtensionsExtras(property, retval);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseStringDefault = function(value, defaultValue) {
   if(typeof value === "undefined")return defaultValue;
   if(typeof value !== "string")throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseString = function(value) {
   if(typeof value === "undefined")return "";
   if(typeof value !== "string")throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseArrayFixedLength = function(value, len, defvalue) {
   if(typeof value === "undefined")return defvalue;
   if(!(value instanceof Array) || value.length !== len)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseArrayMin1 = function(value) {
   if(typeof value === "undefined")return [];
   if(!(value instanceof Array) || value.length === 0)throw new Error("parse error");
@@ -274,14 +274,14 @@ GltfUtil.parseNonnegativeInteger = function(value) {
      value === Number.POSITIVE_INFINITY || value < 0)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseNonnegativeNumber = function(value) {
   if(typeof value === "undefined")return -1;
   if(typeof value !== "number" || isNaN(value) ||
      value === Number.POSITIVE_INFINITY || value < 0)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseRangedNumber = function(value, mn, mx, defValue) {
   if(typeof value === "undefined")return defValue;
   if(typeof value !== "number" || isNaN(value) ||
@@ -289,7 +289,7 @@ GltfUtil.parseRangedNumber = function(value, mn, mx, defValue) {
      value === Number.NEGATIVE_INFINITY || value < mn || value > mx)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseEnum = function(value, values, defValue) {
   if(typeof value === "undefined")return defValue;
   for(var i = 0; i < values.length; i++) {
@@ -297,26 +297,26 @@ GltfUtil.parseEnum = function(value, values, defValue) {
   }
   throw new Error("parse error");
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseRangedInteger = function(value, mn, mx, defValue) {
   var n = GltfUtil.parseRangedNumber(value, mn, mx, defValue);
   if(Math.floor(n) !== n)throw new Error("parse error");
   return n;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseBoolean = function(value, defValue) {
   if(typeof value === "undefined")return defValue;
   if(value === true || value === false)return value;
   throw new Error("not a boolean");
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseNonnegativeNumberDefault = function(value, defValue) {
   return typeof value === "undefined" ? defValue :
-     GltfUtil.parseNonnegativeNumber(value);
+    GltfUtil.parseNonnegativeNumber(value);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseNonnegativeIntegerDefault = function(value, defValue) {
   return typeof value === "undefined" ? defValue :
-     GltfUtil.parseNonnegativeInteger(value);
+    GltfUtil.parseNonnegativeInteger(value);
 };
 export {GltfArray, GltfUtil};

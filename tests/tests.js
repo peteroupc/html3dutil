@@ -110,15 +110,15 @@ function compareWithNumericalBitangentSurface(curve) {
   "use strict";
   var oldtan = curve.bitangent;
   if(!(typeof oldtan !== "undefined" && oldtan !== null)) {
-   // Skip this test if no bitangent method is defined
+    // Skip this test if no bitangent method is defined
     return;
   }
   for(var j = 0; j <= 100; j += 5) {
     for(var i = 0; i <= 100; i += 5) {
-  // Analytical tangent
+      // Analytical tangent
       var anatan = H3DU.SurfaceEval.findBitangent(curve, i / 100.0, j / 100.0);
       curve.bitangent = null;
-  // Numerical tangent
+      // Numerical tangent
       var numtan = H3DU.SurfaceEval.findBitangent(curve, i / 100.0, j / 100.0);
       valueDiff(numtan, anatan);
       curve.bitangent = oldtan;
@@ -132,10 +132,10 @@ function compareWithNumericalTangentSurface(curve) {
   var oldtan = curve.tangent;
   for(var j = 0; j <= 100; j += 5) {
     for(var i = 0; i <= 100; i += 5) {
-  // Analytical tangent
+      // Analytical tangent
       var anatan = H3DU.SurfaceEval.findTangent(curve, i / 100.0, j / 100.0);
       curve.tangent = null;
-  // Numerical tangent
+      // Numerical tangent
       var numtan = H3DU.SurfaceEval.findTangent(curve, i / 100.0, j / 100.0);
       valueDIff(numtan, anatan);
       curve.tangent = oldtan;
@@ -149,7 +149,7 @@ function compareWithNumericalCurveValues(curve) {
   // Analytical tangent
     var anatan = new H3DU.Curve(curve).velocity( i / 100.0);
     curve.tangent = null;
-  // Numerical tangent
+    // Numerical tangent
     var numtan = new H3DU.Curve(curve).velocity( i / 100.0);
     valueDiff(numtan, anatan);
     curve.tangent = oldtan;
@@ -411,8 +411,8 @@ function test() {
   is(H3DU.GraphicsPath._nextNumber("-.", [0]), null);
   var mesh = new H3DU.Mesh();
   mesh.mode(H3DU.Mesh.POINTS)
-  .vertex3(0, 1, 2)
-  .vertex3(1, 2, 3);
+    .vertex3(0, 1, 2)
+    .vertex3(1, 2, 3);
   ok(isApproxVec(mesh.getBoundingBox(), [0, 1, 2, 1, 2, 3]), "");
   mesh.vertex3(-1, -2, -3);
   ok(isApproxVec(mesh.getBoundingBox(), [-1, -2, -3, 1, 2, 3]), "");
@@ -564,7 +564,7 @@ testfunctions.push(function() {
 testfunctions.push(function() {
   "use strict";
   ok(isApproxVec(
-   H3DU.Math.quatToAxisAngle([-1, 0, 0, 0]), [-1, 0, 0, 180]));
+    H3DU.Math.quatToAxisAngle([-1, 0, 0, 0]), [-1, 0, 0, 180]));
 });
 
 testfunctions.push(function() {
@@ -605,15 +605,15 @@ testfunctions.push(function() {
 testfunctions.push(function() {
   "use strict";
   var curve = new H3DU.BezierCurve([
-  [24, 43.905643],
-  [2.3366679, 43.905643],
-  [3.8443565, 45.413332],
-  [3.8443565, 23.75]]);
+    [24, 43.905643],
+    [2.3366679, 43.905643],
+    [3.8443565, 45.413332],
+    [3.8443565, 23.75]]);
   var curve2 = H3DU.BSplineCurve.clamped([
-  [24, 43.905643],
-  [2.3366679, 43.905643],
-  [3.8443565, 45.413332],
-  [3.8443565, 23.75]], 3);
+    [24, 43.905643],
+    [2.3366679, 43.905643],
+    [3.8443565, 45.413332],
+    [3.8443565, 23.75]], 3);
   for(var i = 0; i <= 100; i++) {
     var a = curve.evaluate(i / 100.0);
     var b = curve2.evaluate(i / 100.0);
@@ -718,38 +718,38 @@ testfunctions.push(function() {
 testfunctions.push(function() {
   "use strict";
   var pathtest = new H3DU.GraphicsPath()
-.moveTo(0.4713967368259978, 0.8819212643483549 )
-// top left
-.lineTo(-1, 1 )
-// bottom middle
-.lineTo( 0.19134171618254492, 0.46193976625564337 )
-// downward curve
-.lineTo( 0.2356983684129989, 0.44096063217417747 )
-.lineTo( 0.27778511650980114, 0.4157348061512726 )
-.lineTo( 0.31719664208182274, 0.3865052266813685 )
-.lineTo( 0.3535533905932738, 0.35355339059327373 )
-.lineTo( 0.3865052266813685, 0.31719664208182274 )
-.lineTo( 0.4157348061512726, 0.2777851165098011 )
-.lineTo( 0.4409606321741775, 0.23569836841299877 )
-.lineTo( 0.46193976625564337, 0.19134171618254492 )
-.lineTo( 0.4784701678661044, 0.14514233862723122 )
-// top right
-.closePath();
+    .moveTo(0.4713967368259978, 0.8819212643483549 )
+    // top left
+    .lineTo(-1, 1 )
+    // bottom middle
+    .lineTo( 0.19134171618254492, 0.46193976625564337 )
+    // downward curve
+    .lineTo( 0.2356983684129989, 0.44096063217417747 )
+    .lineTo( 0.27778511650980114, 0.4157348061512726 )
+    .lineTo( 0.31719664208182274, 0.3865052266813685 )
+    .lineTo( 0.3535533905932738, 0.35355339059327373 )
+    .lineTo( 0.3865052266813685, 0.31719664208182274 )
+    .lineTo( 0.4157348061512726, 0.2777851165098011 )
+    .lineTo( 0.4409606321741775, 0.23569836841299877 )
+    .lineTo( 0.46193976625564337, 0.19134171618254492 )
+    .lineTo( 0.4784701678661044, 0.14514233862723122 )
+    // top right
+    .closePath();
   pathtest.getTriangles();
   pathtest = new H3DU.GraphicsPath().moveTo(-1, 1 )
-// bottom middle
-.lineTo( 0.19134171618254492, 0.46193976625564337 )
-// downward curve
-.lineTo( 0.2356983684129989, 0.44096063217417747 )
-.lineTo( 0.27778511650980114, 0.4157348061512726 )
-.lineTo( 0.31719664208182274, 0.3865052266813685 )
-.lineTo( 0.3535533905932738, 0.35355339059327373 )
-.lineTo( 0.3865052266813685, 0.31719664208182274 )
-.lineTo( 0.4157348061512726, 0.2777851165098011 )
-.lineTo( 0.4409606321741775, 0.23569836841299877 )
-.lineTo( 0.46193976625564337, 0.19134171618254492 )
-.lineTo( 0.4784701678661044, 0.14514233862723122 )
-// top right
-.closePath();
+    // bottom middle
+    .lineTo( 0.19134171618254492, 0.46193976625564337 )
+    // downward curve
+    .lineTo( 0.2356983684129989, 0.44096063217417747 )
+    .lineTo( 0.27778511650980114, 0.4157348061512726 )
+    .lineTo( 0.31719664208182274, 0.3865052266813685 )
+    .lineTo( 0.3535533905932738, 0.35355339059327373 )
+    .lineTo( 0.3865052266813685, 0.31719664208182274 )
+    .lineTo( 0.4157348061512726, 0.2777851165098011 )
+    .lineTo( 0.4409606321741775, 0.23569836841299877 )
+    .lineTo( 0.46193976625564337, 0.19134171618254492 )
+    .lineTo( 0.4784701678661044, 0.14514233862723122 )
+    // top right
+    .closePath();
   pathtest.getTriangles();
 });

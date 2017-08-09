@@ -33,17 +33,17 @@ export var Scene3D = function(canvasOrContext) {
   this._textureLoader = new H3DU.TextureLoader();
   this._meshLoader = new H3DU.BufferedMesh._MeshLoader();
   this._renderedOutsideScene = false;
- /** An array of shapes that are part of the scene.
-  * @deprecated Shapes should now be managed in {@link H3DU.Batch3D} objects,
-  * rather than through this class.
-  */
+  /** An array of shapes that are part of the scene.
+   * @deprecated Shapes should now be managed in {@link H3DU.Batch3D} objects,
+   * rather than through this class.
+   */
   this.shapes = [];
   this._errors = false;
   this._frontFace = H3DU.Scene3D.CCW;
   this._cullFace = H3DU.Scene3D.NONE;
   this.clearColor = [0, 0, 0, 1];
   this.fboFilter = null;
- // NOTE: Exists for compatibility only
+  // NOTE: Exists for compatibility only
   this._subScene = new H3DU.Batch3D();
   this._subScene.getLights().setBasic();
   this._programs = new H3DU.Scene3D.ProgramCache();
@@ -241,8 +241,8 @@ Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
   if((flags & H3DU.Scene3D.SPECULAR_MAP_ENABLED) !== 0)
     defines += "#define SPECULAR_MAP\n#define SPECULAR\n";
   var prog = new H3DU.ShaderProgram(context,
-   defines + H3DU.ShaderProgram.getDefaultVertex(),
-   defines + H3DU.ShaderProgram.getDefaultFragment());
+    defines + H3DU.ShaderProgram.getDefaultVertex(),
+    defines + H3DU.ShaderProgram.getDefaultFragment());
   this._programs[flags].push([context, prog]);
   return prog;
 };
@@ -373,17 +373,17 @@ Scene3D.prototype.setUseDevicePixelRatio = function(value) {
   var oldvalue = !!this.useDevicePixelRatio;
   this.useDevicePixelRatio = !!value;
   this._pixelRatio = this.useDevicePixelRatio && window.devicePixelRatio ?
-   window.devicePixelRatio : 1;
+    window.devicePixelRatio : 1;
   if(oldvalue !== this.useDevicePixelRatio) {
     this.setDimensions(this.width, this.height);
   }
   return this;
 };
- /**
-  * Gets the color used when clearing the screen each frame.
-  * @returns {Array<number>} An array of four numbers, from 0 through
-  * 1, specifying the red, green, blue, and alpha components of the color.
-  */
+/**
+ * Gets the color used when clearing the screen each frame.
+ * @returns {Array<number>} An array of four numbers, from 0 through
+ * 1, specifying the red, green, blue, and alpha components of the color.
+ */
 Scene3D.prototype.getClearColor = function() {
   return this.clearColor.slice(0, 4);
 };
@@ -420,7 +420,7 @@ Scene3D.prototype.setDimensions = function(width, height) {
   this.context.canvas.height = this.height * this._pixelRatio;
   if(this._is3d) {
     this.context.viewport(0, 0, this.width * this._pixelRatio,
-   this.height * this._pixelRatio);
+      this.height * this._pixelRatio);
   }
   if(typeof this.fbo !== "undefined" && this.fbo) {
     this.fbo.dispose();
@@ -488,7 +488,7 @@ Scene3D.prototype.getClientAspect = function() {
  */
 Scene3D.prototype.createBuffer = function() {
   return new H3DU.FrameBuffer(this.context,
-   this.getWidth(), this.getHeight());
+    this.getWidth(), this.getHeight());
 };
 /**
  * Gets the current projection matrix for this scene.
@@ -540,7 +540,7 @@ Scene3D.prototype.getViewMatrix = function() {
  */
 Scene3D.prototype.setPerspective = function(fov, aspect, near, far) {
   return this.setProjectionMatrix(H3DU.Math.mat4perspective(fov,
-   aspect, near, far));
+    aspect, near, far));
 };
 
 /**
@@ -572,7 +572,7 @@ Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near, far,
   if(typeof aspect === "undefined" || aspect === null)aspect = this.getClientAspect();
   if(aspect === 0)aspect = 1;
   return this.setProjectionMatrix(H3DU.Math.mat4orthoAspect(
-   left, right, bottom, top, near, far, aspect));
+    left, right, bottom, top, near, far, aspect));
 };
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
@@ -621,7 +621,7 @@ Scene3D.prototype.setOrtho2DAspect = function(left, right, bottom, top, aspect) 
  */
 Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far) {
   return this.setProjectionMatrix(H3DU.Math.mat4frustum(
-   left, right, top, bottom, near, far));
+    left, right, top, bottom, near, far));
 };
 /**
  * Sets this scene's projection matrix to an orthographic projection.
@@ -644,7 +644,7 @@ Scene3D.prototype.setFrustum = function(left, right, bottom, top, near, far) {
  */
 Scene3D.prototype.setOrtho = function(left, right, bottom, top, near, far) {
   return this.setProjectionMatrix(H3DU.Math.mat4ortho(
-   left, right, bottom, top, near, far));
+    left, right, bottom, top, near, far));
 };
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
@@ -660,13 +660,13 @@ Scene3D.prototype.setOrtho = function(left, right, bottom, top, near, far) {
  */
 Scene3D.prototype.setOrtho2D = function(left, right, bottom, top) {
   return this.setProjectionMatrix(H3DU.Math.mat4ortho(
-   left, right, bottom, top, -1, 1));
+    left, right, bottom, top, -1, 1));
 };
 /** @ignore */
 Scene3D.prototype._setClearColor = function() {
   if(this._is3d) {
     this.context.clearColor(this.clearColor[0], this.clearColor[1],
-     this.clearColor[2], this.clearColor[3]);
+      this.clearColor[2], this.clearColor[3]);
   }
   return this;
 };
@@ -774,7 +774,7 @@ Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reject) {
 Scene3D.prototype.clear = function() {
   if(this._is3d) {
     this.context.clear(
-     this.context.COLOR_BUFFER_BIT |
+      this.context.COLOR_BUFFER_BIT |
      this.context.DEPTH_BUFFER_BIT |
      this.context.STENCIL_BUFFER_BIT);
   }
@@ -1093,7 +1093,7 @@ Scene3D.prototype.render = function(renderPasses) {
           this.setDimensions(passWidth, passHeight);
         }
         this._textureLoader.bindFrameBuffer(
-             pass.frameBuffer, this.context, 0);
+          pass.frameBuffer, this.context, 0);
       }
       this._clearForPass(pass);
       renderPasses[i].batch.resize(passWidth, passHeight);

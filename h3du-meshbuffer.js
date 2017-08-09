@@ -439,11 +439,11 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
   var v3 = [0, 0, 0];
   var normal = [0, 0, 0];
   for(i = 0; i < count; i++) {
-     // Set normal to 0
+    // Set normal to 0
     normals.setVec(i, v1);
     if(!flat) {
-     // If non-flat shading is requested, find all vertices with
-     // duplicate vertex positions
+      // If non-flat shading is requested, find all vertices with
+      // duplicate vertex positions
       var uv = positions.getVec(i, []);
       if(uniqueVertices[uv])uniqueVertices[uv].push(i);
       else uniqueVertices[uv] = [i];
@@ -471,9 +471,9 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
     normals.setVec(indices[i + 2], v3);
   }
   if(!flat) {
-   // If non-flat shading is requested, make sure
-   // that every vertex with the same position has the
-   // same normal
+    // If non-flat shading is requested, make sure
+    // that every vertex with the same position has the
+    // same normal
     for(var key in uniqueVertices) {
       if(Object.prototype.hasOwnProperty.call(uniqueVertices, key)) {
         var v = uniqueVertices[key];
@@ -559,21 +559,21 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
       var t19 = (t13 * t3 + t7 * t6) * t11;
       ret = [t14, t15, t16, t17, t18, t19];
     }
-  // NOTE: It would be more mathematically correct to use the inverse
-  // of the matrix
-  // [ Ax Bx Nx ]
-  // [ Ay By Ny ]
-  // [ Az Bz Nz ]
-  // (where A and B are the tangent and bitangent in the "ret" variable above)
-  // as the tangent space transformation, that is, include three
-  // different vectors (tangent, bitangent, and modified normal).
-  // Instead we use the matrix
-  // [ AAx AAy AAz ]
-  // [ BBx BBy BBz ]
-  // [ Nx Ny Nz ]
-  // (where AA and BB are the orthonormalized versions of the tangent
-  // and bitangent) as the tangent space transform, in order to avoid
-  // the need to also specify a transformed normal due to matrix inversion.
+    // NOTE: It would be more mathematically correct to use the inverse
+    // of the matrix
+    // [ Ax Bx Nx ]
+    // [ Ay By Ny ]
+    // [ Az Bz Nz ]
+    // (where A and B are the tangent and bitangent in the "ret" variable above)
+    // as the tangent space transformation, that is, include three
+    // different vectors (tangent, bitangent, and modified normal).
+    // Instead we use the matrix
+    // [ AAx AAy AAz ]
+    // [ BBx BBy BBz ]
+    // [ Nx Ny Nz ]
+    // (where AA and BB are the orthonormalized versions of the tangent
+    // and bitangent) as the tangent space transform, in order to avoid
+    // the need to also specify a transformed normal due to matrix inversion.
     for(var j = 0; j < 3; j++) {
       var m = ret;
       v1 = normals.getVec(indices[i + j], v1);
@@ -713,8 +713,8 @@ MeshBuffer.prototype.merge = function(other) {
       empty = empty && (typeof attr === "undefined" || attr === null || attr.count() === 0);
     }
     if(empty) {
-  // If this object is empty, copy the attributes and
-  // indices from the other object
+      // If this object is empty, copy the attributes and
+      // indices from the other object
       for(i = 0; i < other.attributes.length; i++) {
         var o = other.attributes[i];
         newAttributes.push([o[0], o[1], o[2].copy()]);
@@ -802,12 +802,12 @@ MeshBuffer.prototype.transform = function(matrix) {
   for(var i = 0; i < count; i++) {
     positionAttribute.getVec(i, position);
     var xform = H3DU.Math.mat4projectVec3(matrix,
-  position[0], position[1], position[2]);
+      position[0], position[1], position[2]);
     positionAttribute.setVec(i, xform);
     if(normalAttribute && isLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
-     // Transform and normalize the normals
-     // (using a modified matrix) to ensure
-     // they point in the correct direction
+      // Transform and normalize the normals
+      // (using a modified matrix) to ensure
+      // they point in the correct direction
       normalAttribute.getVec(i, normal);
       xform = H3DU.Math.mat3transform(matrixForNormals,
         normal[0], normal[1], normal[2]);
@@ -818,9 +818,9 @@ MeshBuffer.prototype.transform = function(matrix) {
   this._bounds = null;
   return this;
 };
-  // Adds a line only if it doesn't exist
+// Adds a line only if it doesn't exist
 MeshBuffer._addLine = function(lineIndices, existingLines, f1, f2) {
-   // Ensure ordering of the indices
+  // Ensure ordering of the indices
   if(f1 < f2) {
     var tmp = f1; f1 = f2; f2 = tmp;
   }
@@ -855,7 +855,7 @@ MeshBuffer.prototype.toWireFrame = function() {
  */
 MeshBuffer.prototype.wireFrame = function() {
   if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
-   // Not a triangle mesh
+    // Not a triangle mesh
     return this;
   }
   var lineIndices = [];
@@ -957,7 +957,7 @@ MeshBuffer._resolveSemantic = function(name, index) {
       }
       var number = name.substr(io + 1);
       if(number.length <= 5 && (/^\d$/).test(number)) {
-  // Only allow 5-digit-or-less numbers; more than
+        // Only allow 5-digit-or-less numbers; more than
         // that is unreasonable
         return [wka, parseInt(number, 10)];
       } else {

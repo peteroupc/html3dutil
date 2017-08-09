@@ -13,50 +13,50 @@
     H3DU = {};
   }
   H3DU._StlData = {};
-/**
- * Loads a .STL file asynchronously.
- * <p>This method is considered a supplementary method to the
- * Public Domain HTML 3D Library and is not considered part of that
- * library. <p>
- * To use this method, you must include the script "extras/stl.js"; the
- * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
- * @memberof H3DU
- * @param {string} url The URL to load.
- * @returns {Promise<H3DU.MeshBuffer>} A promise that resolves when the
- * .STL file is loaded successfully (the result will be an {@link H3DU.MeshBuffer} object),
- * and is rejected when an error occurs when loading the .STL file.
- */
+  /**
+   * Loads a .STL file asynchronously.
+   * <p>This method is considered a supplementary method to the
+   * Public Domain HTML 3D Library and is not considered part of that
+   * library. <p>
+   * To use this method, you must include the script "extras/stl.js"; the
+   * class is not included in the "h3du_min.js" file which makes up
+   * the HTML 3D Library. Example:<pre>
+   * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
+   * @memberof H3DU
+   * @param {string} url The URL to load.
+   * @returns {Promise<H3DU.MeshBuffer>} A promise that resolves when the
+   * .STL file is loaded successfully (the result will be an {@link H3DU.MeshBuffer} object),
+   * and is rejected when an error occurs when loading the .STL file.
+   */
   H3DU.loadStlFromUrl = function(url) {
     return H3DU.loadFileFromUrl(url).then(
-   function(e) {
-     var obj;
-     obj = H3DU._StlData._loadStl(e.data);
-     if(obj.error)return Promise.reject({
-       "url":e.url,
-       "error":obj.error
-     });
-     obj = obj.success;
-     obj.url = e.url;
-     // otherwise just return the object
-     return Promise.resolve(obj);
-   },
-   function(e) {
-     return Promise.reject(e);
-   });
+      function(e) {
+        var obj;
+        obj = H3DU._StlData._loadStl(e.data);
+        if(obj.error)return Promise.reject({
+          "url":e.url,
+          "error":obj.error
+        });
+        obj = obj.success;
+        obj.url = e.url;
+        // otherwise just return the object
+        return Promise.resolve(obj);
+      },
+      function(e) {
+        return Promise.reject(e);
+      });
   };
-/** @ignore */
+  /** @ignore */
   H3DU._StlData.INITIAL = 0;
-/** @ignore */
+  /** @ignore */
   H3DU._StlData.IN_SOLID = 1;
-/** @ignore */
+  /** @ignore */
   H3DU._StlData.IN_FACET = 2;
-/** @ignore */
+  /** @ignore */
   H3DU._StlData.IN_OUTER_LOOP = 3;
-/** @ignore */
+  /** @ignore */
   H3DU._StlData.AFTER_SOLID = 3;
-/** @ignore */
+  /** @ignore */
   H3DU._StlData._loadStl = function(str) {
     var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
     var facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +
@@ -75,11 +75,11 @@
 
     for(var i = 0; i < lines.length; i++) {
       var line = lines[i];
-  // skip empty lines
+      // skip empty lines
       if(line.length === 0 || (/^\s*$/).test(line))continue;
       var e = solid.exec(line);
       if(e && (state === H3DU._StlData.INITIAL || state === H3DU._StlData.AFTER_SOLID)) {
-    // 'e[1]' holds the name of the solid
+        // 'e[1]' holds the name of the solid
         state = H3DU._StlData.IN_SOLID;
         continue;
       }

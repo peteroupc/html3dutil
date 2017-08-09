@@ -246,7 +246,7 @@ Shape.prototype.getBounds = function() {
   } else if(matrix[1] === 0 && matrix[2] === 0 && matrix[3] === 0 &&
     matrix[4] === 0 && matrix[6] === 0 && matrix[7] === 0 && matrix[8] === 0 &&
     matrix[9] === 0 && matrix[11] === 0 && matrix[15] === 1) {
-      // just a scale and/or translate
+    // just a scale and/or translate
     var ret = [];
     var t2 = matrix[0];
     var t3 = matrix[12];
@@ -267,7 +267,7 @@ Shape.prototype.getBounds = function() {
       Math.max(ret[2], ret2[2])
     ];
   } else {
-   // rotation, shear, and/or non-affine transformation
+    // rotation, shear, and/or non-affine transformation
     var boxVertices = [
       H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]),
       H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[5]),

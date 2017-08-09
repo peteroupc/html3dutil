@@ -92,7 +92,7 @@ Texture.prototype.setClamp = function(clamp) {
  * is fully loaded. If it resolves, the result will be an H3DU.Texture object.
  */
 Texture.loadTexture = function(info, textureCache) {
- // Get cached texture
+  // Get cached texture
   var texImage;
   var name;
   if(!(typeof info !== "undefined" && info !== null)) {
@@ -105,30 +105,30 @@ Texture.loadTexture = function(info, textureCache) {
   }
   if(textureCache && textureCache[name] && name && name.length > 0) {
     if(textureCache[name].loadStatus === 2) {
-  // Already loaded
+      // Already loaded
       return Promise.resolve(textureCache[name]);
     } else {
-  // Already present in the cache
+      // Already present in the cache
       texImage = textureCache[name];
     }
   } else if(info instanceof H3DU.Texture) {
-      // New texture not yet cached
+    // New texture not yet cached
     texImage = info;
   } else {
-      // New texture not yet cached
+    // New texture not yet cached
     texImage = new H3DU.Texture(name);
   }
   if(textureCache && name && name.length > 0) {
     textureCache[name] = texImage;
   }
- // Load new texture
+  // Load new texture
   return texImage.loadImage().then(
-  function(result) {
-    return result;
-  },
-  function(name) {
-    return Promise.reject(name.name);
-  });
+    function(result) {
+      return result;
+    },
+    function(name) {
+      return Promise.reject(name.name);
+    });
 };
 
 /**
@@ -156,70 +156,70 @@ Texture.fromUint8Array = function(array, width, height) {
 /** @ignore */
 Texture.loadTga = function(name) {
   return H3DU.loadFileFromUrl(name, "arraybuffer")
- .then(function(buf) {
-   var view = new DataView(buf.data);
-  // NOTE: id is byte 0; cmaptype is byte 1
-   var imgtype = view.getUint8(2);
-   if(imgtype !== 2 && imgtype !== 3) {
-     return Promise.reject(new Error("unsupported image type"));
-   }
-   var xorg = view.getUint16(8, true);
-   var yorg = view.getUint16(10, true);
-   if(xorg !== 0 || yorg !== 0) {
-     return Promise.reject(new Error("unsupported origins"));
-   }
-   var width = view.getUint16(12, true);
-   var height = view.getUint16(14, true);
-   if(width === 0 || height === 0) {
-     return Promise.reject(new Error("invalid width or height"));
-   }
-   var pixelsize = view.getUint8(16);
-   if(!(pixelsize === 32 && imgtype === 2) &&
+    .then(function(buf) {
+      var view = new DataView(buf.data);
+      // NOTE: id is byte 0; cmaptype is byte 1
+      var imgtype = view.getUint8(2);
+      if(imgtype !== 2 && imgtype !== 3) {
+        return Promise.reject(new Error("unsupported image type"));
+      }
+      var xorg = view.getUint16(8, true);
+      var yorg = view.getUint16(10, true);
+      if(xorg !== 0 || yorg !== 0) {
+        return Promise.reject(new Error("unsupported origins"));
+      }
+      var width = view.getUint16(12, true);
+      var height = view.getUint16(14, true);
+      if(width === 0 || height === 0) {
+        return Promise.reject(new Error("invalid width or height"));
+      }
+      var pixelsize = view.getUint8(16);
+      if(!(pixelsize === 32 && imgtype === 2) &&
       !(pixelsize === 24 && imgtype === 2) &&
       !(pixelsize === 8 && imgtype === 3)) {
-     return Promise.reject(new Error("unsupported pixelsize"));
-   }
-   var size = width * height;
-   if(size > buf.data.length) {
-     return Promise.reject(new Error("size too big"));
-   }
-   var i;
-   var arr = new Uint8Array(size * 4);
-   var offset = 18;
-   var io = 0;
-   if(pixelsize === 32 && imgtype === 2) {
-     for(i = 0, io = 0; i < size; i++, io += 4) {
-       arr[io + 2] = view.getUint8(offset);
-       arr[io + 1] = view.getUint8(offset + 1);
-       arr[io] = view.getUint8(offset + 2);
-       arr[io + 3] = view.getUint8(offset + 3);
-       offset += 4;
-     }
-   } else if(pixelsize === 24 && imgtype === 2) {
-     for(i = 0, io = 0; i < size; i++, io += 4) {
-       arr[io + 2] = view.getUint8(offset);
-       arr[io + 1] = view.getUint8(offset + 1);
-       arr[io] = view.getUint8(offset + 2);
-       arr[io + 3] = 0xFF;
-       offset += 3;
-     }
-   } else if(pixelsize === 8 && imgtype === 3) {
-     for(i = 0, io = 0; i < size; i++, io += 4) {
-       var col = view.getUint8(offset);
-       arr[io] = col;
-       arr[io + 1] = col;
-       arr[io + 2] = col;
-       arr[io + 3] = 0xFF;
-       offset++;
-     }
-   }
-   buf.data = null;
-   return {
-     "width":width,
-     "height":height,
-     "image":arr
-   };
- });
+        return Promise.reject(new Error("unsupported pixelsize"));
+      }
+      var size = width * height;
+      if(size > buf.data.length) {
+        return Promise.reject(new Error("size too big"));
+      }
+      var i;
+      var arr = new Uint8Array(size * 4);
+      var offset = 18;
+      var io = 0;
+      if(pixelsize === 32 && imgtype === 2) {
+        for(i = 0, io = 0; i < size; i++, io += 4) {
+          arr[io + 2] = view.getUint8(offset);
+          arr[io + 1] = view.getUint8(offset + 1);
+          arr[io] = view.getUint8(offset + 2);
+          arr[io + 3] = view.getUint8(offset + 3);
+          offset += 4;
+        }
+      } else if(pixelsize === 24 && imgtype === 2) {
+        for(i = 0, io = 0; i < size; i++, io += 4) {
+          arr[io + 2] = view.getUint8(offset);
+          arr[io + 1] = view.getUint8(offset + 1);
+          arr[io] = view.getUint8(offset + 2);
+          arr[io + 3] = 0xFF;
+          offset += 3;
+        }
+      } else if(pixelsize === 8 && imgtype === 3) {
+        for(i = 0, io = 0; i < size; i++, io += 4) {
+          var col = view.getUint8(offset);
+          arr[io] = col;
+          arr[io + 1] = col;
+          arr[io + 2] = col;
+          arr[io + 3] = 0xFF;
+          offset++;
+        }
+      }
+      buf.data = null;
+      return {
+        "width":width,
+        "height":height,
+        "image":arr
+      };
+    });
 };
 
 /** @ignore */
@@ -240,8 +240,8 @@ Texture.prototype.loadImage = function() {
   var thisName = this.name;
   that.loadStatus = 1;
   // console.log("loading: "+this.name)
- // Use the TGA image loader if it has the TGA file
- // extension
+  // Use the TGA image loader if it has the TGA file
+  // extension
   if((/\.tga$/i).test(thisName)) {
     return H3DU.Texture.loadTga(thisName).then(function(e) {
       that.image = e.image;
@@ -265,7 +265,7 @@ Texture.prototype.loadImage = function() {
       that.width = target.width;
       that.height = target.height;
       that.loadStatus = 2;
-// TODO: Consider storing the byte array of the image if possible
+      // TODO: Consider storing the byte array of the image if possible
       // console.log("loaded: "+thisName)
       image.onload = null;
       image.onerror = null;
@@ -273,8 +273,8 @@ Texture.prototype.loadImage = function() {
     });
     image.onerror = function(e) {
       that.loadStatus = -1;
-   // console.log("error: "+thisName)
-   // console.log(e)
+      // console.log("error: "+thisName)
+      // console.log(e)
       image.onload = null;
       image.onerror = null;
       reject({

@@ -74,7 +74,7 @@ TextureLoader.prototype._setMaxAnisotropy = function(context, target) {
   } else {
     var cnst = ext.TEXTURE_MAX_ANISOTROPY_EXT;
     var ret = context.getParameter(
-    ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+      ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
     ma.push([context, ret, cnst]);
     context.texParameteri(target, cnst, ret);
     return ret;
@@ -159,8 +159,8 @@ TextureLoader.prototype._mapTextureWithInfo = function(texture, textureInfo, con
     }
   }
   var loadedTex = texture instanceof H3DU.CubeMap ?
-     new _LoadedCubeMap(texture, context) :
-     new _LoadedTexture(texture, textureInfo, context);
+    new _LoadedCubeMap(texture, context) :
+    new _LoadedTexture(texture, textureInfo, context);
   lt.push([texture, context, loadedTex]);
   return loadedTex;
 };
@@ -185,9 +185,9 @@ TextureLoader.prototype.loadCubeMap = function(texturesOrCubeMap, resolve, rejec
     cubemap = new H3DU.CubeMap(texturesOrCubeMap);
   }
   return H3DU.TextureLoader.prototype.loadTexturesAll(cubemap.textures, resolve, reject)
- .then(function() {
-   return Promise.resolve(cubemap);
- });
+    .then(function() {
+      return Promise.resolve(cubemap);
+    });
 };
 
 /** @ignore */

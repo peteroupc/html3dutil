@@ -38,16 +38,16 @@ Semantic.NORMAL = 1;
  * @static
  */
 Semantic.TEXCOORD = 2;
- /** Attribute semantic for a color.
-  * The default shader uses 3-component colors.
-  * @const
-  * @static
-  */
+/** Attribute semantic for a color.
+ * The default shader uses 3-component colors.
+ * @const
+ * @static
+ */
 Semantic.COLOR = 3;
-  /** Attribute semantic for a skinning joint.
-   * @const
-   * @static
-   */
+/** Attribute semantic for a skinning joint.
+ * @const
+ * @static
+ */
 Semantic.JOINT = 4;
 /** Attribute semantic for a skinning weight.
  * @const

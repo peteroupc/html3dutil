@@ -99,7 +99,7 @@ BufferedMesh.prototype._bindVertexArray = function(context, va) {
 BufferedMesh.prototype._initialize = function(mesh, context) {
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   var smb = mesh instanceof H3DU.MeshBuffer ? mesh :
-   mesh.toMeshBuffer();
+    mesh.toMeshBuffer();
   this.smb = smb;
   this.vertsMap = new H3DU.BufferedMesh._Map();
   this.indices = context.createBuffer();
@@ -110,15 +110,15 @@ BufferedMesh.prototype._initialize = function(mesh, context) {
     var vb = attribs[i][2].buffer;
     if(vb) {
       if(!this.vertsMap.get(vb)) {
-       // Vertex array not seen yet, create a buffer object
-       // and copy the array's data to that object
+        // Vertex array not seen yet, create a buffer object
+        // and copy the array's data to that object
         var vbuffer = context.createBuffer();
         if(typeof vbuffer === "undefined" || vbuffer === null) {
           throw new Error("can't create buffer");
         }
         context.bindBuffer(context.ARRAY_BUFFER, vbuffer);
         context.bufferData(context.ARRAY_BUFFER,
-       vb, context.STATIC_DRAW);
+          vb, context.STATIC_DRAW);
         this.vertsMap.put(vb, vbuffer);
       }
     }
@@ -226,7 +226,7 @@ BufferedMesh.prototype._prepareDraw = function(program, context) {
           context.bindBuffer(context.ARRAY_BUFFER, vertBuffer);
           context.enableVertexAttribArray(attrib);
           context.vertexAttribPointer(attrib, attrs[i][2].countPerValue,
-         context.FLOAT, false, attrs[i][2].stride * 4, attrs[i][2].offset * 4);
+            context.FLOAT, false, attrs[i][2].stride * 4, attrs[i][2].offset * 4);
           attrNamesEnabled.push(this._attribNames[i][j]);
         }
       }

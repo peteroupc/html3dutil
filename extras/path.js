@@ -161,7 +161,7 @@
 
   // --------------------------------------------------
 
-/** @ignore */
+  /** @ignore */
   function LineCurve(x1, y1, x2, y2) {
     this.x1 = x1;
     this.x2 = x2;
@@ -170,21 +170,21 @@
   }
   LineCurve.prototype = Object.create(H3DU.Curve.prototype);
   LineCurve.prototype.constructor = LineCurve;
-/** @ignore */
+  /** @ignore */
   LineCurve.prototype.evaluate = function(u) {
     return [
       this.x1 + (this.x2 - this.x1) * u,
       this.y1 + (this.y2 - this.y1) * u, 0
     ];
   };
-/** @ignore */
+  /** @ignore */
   LineCurve.prototype.velocity = function() {
     return [
       this.x2 - this.x1,
       this.y2 - this.y1, 0
     ];
   };
-/** @ignore */
+  /** @ignore */
   LineCurve.prototype.arcLength = function(u) {
     var x = this.x1 + (this.x2 - this.x1) * u;
     var y = this.y1 + (this.y2 - this.y1) * u;
@@ -195,7 +195,7 @@
     return ret;
   };
 
-/** @ignore */
+  /** @ignore */
   function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
     this.x1 = x1;
     this.x2 = x2;
@@ -214,7 +214,7 @@
   }
   ArcCurve.prototype = Object.create(H3DU.Curve.prototype);
   ArcCurve.prototype.constructor = ArcCurve;
-/** @ignore */
+  /** @ignore */
   ArcCurve.prototype.evaluate = function(t) {
     if(t === 0)return [this.x1, this.y1, 0];
     if(t === 1)return [this.x2, this.y2, 0];
@@ -225,7 +225,7 @@
       this.cr * ca * this.rx - this.sr * sa * this.rx + this.cx,
       this.sr * ca * this.rx + this.cr * sa * this.ry + this.cy, 0];
   };
-/** @ignore */
+  /** @ignore */
   ArcCurve.prototype.velocity = function(t) {
     var angle = this.theta + this.delta * t;
     var ca = Math.cos(angle);
@@ -237,7 +237,7 @@
       this.sr * caDeriv * this.rx + this.cr * saDeriv * this.ry, 0];
   };
 
-   // --------------------------------------------------
+  // --------------------------------------------------
   /**
    * Represents a two-dimensional path.
    * <p>This class is considered a supplementary class to the
@@ -259,26 +259,26 @@
     this.startPos = [0, 0];
     this.endPos = [0, 0];
   }
-/** @ignore */
+  /** @ignore */
   var Triangulate = {};
   GraphicsPath.CLOSE = 0;
   GraphicsPath.LINE = 1;
   GraphicsPath.QUAD = 2;
   GraphicsPath.CUBIC = 3;
   GraphicsPath.ARC = 4;
-/**
- * Returns whether the curve path is incomplete
- * because of an error in parsing the curve string.
- * This flag will be reset if a moveTo command,
- * closePath command, or another path segment
- * is added to the path.
- * @returns {boolean} Return value.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Returns whether the curve path is incomplete
+   * because of an error in parsing the curve string.
+   * This flag will be reset if a moveTo command,
+   * closePath command, or another path segment
+   * is added to the path.
+   * @returns {boolean} Return value.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.isIncomplete = function() {
     return this.incomplete;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._startPoint = function(a) {
     if(a[0] === GraphicsPath.CLOSE) {
       return [0, 0];
@@ -286,7 +286,7 @@
       return [a[1], a[2]];
     }
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._endPoint = function(a) {
     if(a[0] === GraphicsPath.CLOSE) {
       return [0, 0];
@@ -296,7 +296,7 @@
       return [a[a.length - 2], a[a.length - 1]];
     }
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._point = function(seg, t) {
     var a, b, x, y;
     if(seg[0] === GraphicsPath.CLOSE) {
@@ -349,16 +349,16 @@
       return [0, 0];
     }
   };
-    /** @ignore */
+  /** @ignore */
   GraphicsPath._segToCurve = function(seg, t) {
     if(seg[0] === GraphicsPath.LINE) {
       return new LineCurve(seg[1], seg[2], seg[3], seg[4]);
     } else if(seg[0] === GraphicsPath.QUAD) {
       return H3DU.BSplineCurve.fromBezierCurve([
-       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0]]);
+        [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0]]);
     } else if(seg[0] === GraphicsPath.CUBIC) {
       return H3DU.BSplineCurve.fromBezierCurve([
-       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
+        [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
     } else if(seg[0] === GraphicsPath.ARC) {
       if(t === 0)return [seg[1], seg[2]];
       if(t === 1)return [seg[8], seg[9]];
@@ -375,7 +375,7 @@
     }
   };
 
-/** @ignore */
+  /** @ignore */
   GraphicsPath._subdivide2 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, list, flatness, mode, depth) {
     var x1 = a1 + (a3 - a1) * tcut;
     var x2 = a3 + (a5 - a3) * tcut;
@@ -393,7 +393,7 @@
     GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._flattenCubic(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, list, flatness, mode, depth + 1);
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._subdivide3 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, tcut2, list, flatness, mode, depth) {
     var x1 = a1 + (a3 - a1) * tcut;
     var x2 = a3 + (a5 - a3) * tcut;
@@ -412,7 +412,7 @@
     GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._subdivide2(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, tcutx, list, flatness, mode, depth + 1);
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
     if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a3 - a5 - a5 + a7) +
@@ -429,7 +429,7 @@
       GraphicsPath._subdivide2(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, 0.5, list, flatness, mode, depth);
     }
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
     if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a2 - a4 - a4 + a6) <= flatness) {
@@ -453,7 +453,7 @@
       GraphicsPath._flattenQuad(xc, yc, x2, y2, a5, a6, tmid, t2, list, flatness, mode, depth + 1);
     }
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._flattenArc = function(a, t1, t2, list, flatness, mode, depth) {
     var rot = a[5];
     var crot = Math.cos(rot);
@@ -461,7 +461,7 @@
     var ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
     GraphicsPath._flattenArcInternal(ellipseInfo, a[1], a[2], a[8], a[9], a[12], a[13], t1, t2, list, flatness, mode, depth);
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1, theta2, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
     var thetaMid = (theta1 + theta2) * 0.5;
@@ -489,7 +489,7 @@
       GraphicsPath._flattenArcInternal(ellipseInfo, xmid, ymid, x2, y2, thetaMid, theta2, tmid, t2, list, flatness, mode, depth + 1);
     }
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath.prototype._start = function() {
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
@@ -497,7 +497,7 @@
     }
     return [0, 0];
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath.prototype._end = function() {
     for(var i = this.segments.length - 1; i >= 0; i--) {
       var s = this.segments[i];
@@ -506,13 +506,13 @@
     return [0, 0];
   };
 
-/**
- * Merges the path segments in another path onto this one.
- * @param {H3DU.GraphicsPath} path Another graphics path.
- * Can be null.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Merges the path segments in another path onto this one.
+   * @param {H3DU.GraphicsPath} path Another graphics path.
+   * Can be null.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.merge = function(path) {
     var oldpos = null;
     if(!path)return this;
@@ -540,20 +540,20 @@
           var delta = a[13] - a[12];
           var largeArc = Math.abs(delta) > Math.PI;
           this.arcSvgTo(a[3], a[4], a[5] * GraphicsPath._toDegrees,
-                largeArc, delta > 0, a[8], a[9]);
+            largeArc, delta > 0, a[8], a[9]);
         }
       }
     }
     return this;
   };
 
-/**
- * Returns this path in the form of a string in SVG path format.
- * See {@link H3DU.GraphicsPath.fromString}.
- * @returns {string} A string describing the path in the SVG path
- * format.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Returns this path in the form of a string in SVG path format.
+   * See {@link H3DU.GraphicsPath.fromString}.
+   * @returns {string} A string describing the path in the SVG path
+   * format.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.toString = function() {
     var oldpos = null;
     var ret = "";
@@ -587,13 +587,13 @@
     }
     return ret;
   };
-/**
- * Finds the approximate length of this path.
- * @param {number} [flatness] No longer used by this method.
- * @returns {number} Approximate length of this path
- * in units.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Finds the approximate length of this path.
+   * @param {number} [flatness] No longer used by this method.
+   * @returns {number} Approximate length of this path
+   * in units.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.pathLength = function(flatness) {
     if(this.segments.length === 0)return 0;
     if(typeof flatness !== "undefined" && flatness !== null) {
@@ -601,19 +601,19 @@
     }
     return this.getCurves().getLength();
   };
-/**
- * Gets an array of line segments approximating
- * the path.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {Array<Array<number>>} Array of line segments.
- * Each line segment is an array of four numbers: the X and
- * Y coordinates of the start point, respectively, then the X and
- * Y coordinates of the end point, respectively.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Gets an array of line segments approximating
+   * the path.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of line segments.
+   * Each line segment is an array of four numbers: the X and
+   * Y coordinates of the start point, respectively, then the X and
+   * Y coordinates of the end point, respectively.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getLines = function(flatness) {
     var ret = [];
     if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
@@ -621,10 +621,10 @@
       var s = this.segments[i];
       if(s[0] === GraphicsPath.QUAD) {
         GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-     s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
+          s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
       } else if(s[0] === GraphicsPath.CUBIC) {
         GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-     s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
+          s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
       } else if(s[0] === GraphicsPath.ARC) {
         GraphicsPath._flattenArc(s, 0.0, 1.0, ret, flatness * 2, 0);
       } else if(s[0] !== GraphicsPath.CLOSE) {
@@ -633,17 +633,17 @@
     }
     return ret;
   };
-/**
- * Creates a path in which curves and arcs are decomposed
- * to line segments.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {H3DU.GraphicsPath} A path consisting only of line
- * segments and close commands.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Creates a path in which curves and arcs are decomposed
+   * to line segments.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {H3DU.GraphicsPath} A path consisting only of line
+   * segments and close commands.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.toLinePath = function(flatness) {
     var ret = [];
     var path = new GraphicsPath();
@@ -665,13 +665,13 @@
       ret.splice(0, ret.length);
       if(s[0] === GraphicsPath.QUAD) {
         GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-     s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
+          s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
         for(j = 0; j < ret.length; j++) {
           path.lineTo(ret[j][2], ret[j][3]);
         }
       } else if(s[0] === GraphicsPath.CUBIC) {
         GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-     s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
+          s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
         for(j = 0; j < ret.length; j++) {
           path.lineTo(ret[j][2], ret[j][3]);
         }
@@ -714,15 +714,15 @@
       last = endpt;
       if(s[0] === GraphicsPath.QUAD) {
         path.quadraticCurveTo(s[3], s[4],
-     s[5], s[6]);
+          s[5], s[6]);
       } else if(s[0] === GraphicsPath.CUBIC) {
         path.bezierCurveTo(s[3], s[4],
-     s[5], s[6], s[7], s[8]);
+          s[5], s[6], s[7], s[8]);
       } else if(s[0] === GraphicsPath.ARC) {
         var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
         for(j = 0; j < curves.length; j++) {
           path.bezierCurveTo(curves[j][2], curves[j][3], curves[j][4],
-    curves[j][5], curves[j][6], curves[j][7]);
+            curves[j][5], curves[j][6], curves[j][7]);
         }
       } else if(s[0] === GraphicsPath.LINE) {
         path.lineTo(s[3], s[4]);
@@ -748,7 +748,7 @@
     ret[2] = Math.max(x, ret[2]);
     ret[3] = Math.max(y, ret[3]);
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
     var ca = Math.cos(angle);
     var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
@@ -759,7 +759,7 @@
     ret[2] = Math.max(px, ret[2]);
     ret[3] = Math.max(py, ret[3]);
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._normAngleRadians = function(angle) {
     var twopi = Math.PI * 2;
     var normAngle = angle;
@@ -771,7 +771,7 @@
     }
     return normAngle;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
     var twopi = Math.PI * 2;
     var diff = endAngle - startAngle;
@@ -793,16 +793,16 @@
       return normAngle >= normEnd || normAngle <= normStart;
     }
   };
-/**
- * Calculates an axis-aligned bounding box that tightly
- * fits this graphics path.
- * @returns {Array<number>} An array of four numbers
- * describing the bounding box. The first two are
- * the lowest X and Y coordinates, and the last two are
- * the highest X and Y coordinates. If the path is empty,
- * returns the array (Infinity, Infinity, -Infinity, -Infinity).
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Calculates an axis-aligned bounding box that tightly
+   * fits this graphics path.
+   * @returns {Array<number>} An array of four numbers
+   * describing the bounding box. The first two are
+   * the lowest X and Y coordinates, and the last two are
+   * the highest X and Y coordinates. If the path is empty,
+   * returns the array (Infinity, Infinity, -Infinity, -Infinity).
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getBounds = function() {
     var inf = Number.POSITIVE_INFINITY;
     var ret = [inf, inf, -inf, inf];
@@ -870,11 +870,11 @@
         var rot = s[5]; // Rotation in radians
         var cosp, sinp;
         if(Math.abs(delta - theta) >= Math.PI * 2) {
-    // This arc goes around the entire ellipse, giving
-    // it a much simpler formula for the bounding box
+          // This arc goes around the entire ellipse, giving
+          // it a much simpler formula for the bounding box
           var distx, disty;
           if(rx === ry) {
-       // The arc forms a circle
+            // The arc forms a circle
             distx = rx;
             disty = ry;
           } else {
@@ -915,12 +915,12 @@
     return ret;
   };
 
-/**
- * Returns a path that reverses the course of this path.
- * @returns {H3DU.GraphicsPath} A GraphicsPath
- * object with its path segments reversed.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Returns a path that reverses the course of this path.
+   * @returns {H3DU.GraphicsPath} A GraphicsPath
+   * object with its path segments reversed.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.reverse = function() {
     var lastptx = 0;
     var lastpty = 0;
@@ -984,7 +984,7 @@
         var reversedSweep = delta < 0;
         var largeArc = Math.abs(delta) > Math.PI;
         ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
-        largeArc, reversedSweep, s[1], s[2]);
+          largeArc, reversedSweep, s[1], s[2]);
       } else if(s[0] === GraphicsPath.LINE) {
         ret.lineTo(s[1], s[2]);
       }
@@ -993,7 +993,7 @@
       ret.closePath();
     return ret;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
     if(!nodegen) {
       curPath.push(x, y);
@@ -1004,7 +1004,7 @@
     }
   };
 
-/** @ignore */
+  /** @ignore */
   GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
     var tmp = [];
     var subpaths = [];
@@ -1030,13 +1030,13 @@
       }
       if(s[0] === GraphicsPath.QUAD) {
         GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-     s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0);
+          s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0);
         for(j = 0; j < tmp.length; j++) {
           GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
         }
       } else if(s[0] === GraphicsPath.CUBIC) {
         GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-     s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0);
+          s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0);
         for(j = 0; j < tmp.length; j++) {
           GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
         }
@@ -1052,10 +1052,10 @@
     return subpaths;
   };
 
-/** @ignore */
+  /** @ignore */
   GraphicsPath._CurveList = function(curves) {
     H3DU.Curve.apply(this,
-    [new H3DU.PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
+      [new H3DU.PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
     this.curves = curves;
   };
   GraphicsPath._CurveList.prototype = Object.create(H3DU.Curve.prototype);
@@ -1063,23 +1063,23 @@
   GraphicsPath._CurveList.prototype.getCurves = function() {
     return this.curves;
   };
-/**
- * Does a linear interpolation between two graphics paths.
- * @param {H3DU.GraphicsPath} other The second graphics path.
- * @param {number} t An interpolation factor, generally ranging from 0 through 1.
- * Closer to 0 means closer to this path, and closer to 1 means closer
- * to "other". If the input paths contain arc
- * segments that differ in the large arc and sweep flags, the flags from
- * the first path's arc are used if "t" is less than 0.5; and the flags from
- * the second path's arc are used otherwise.<p>For a nonlinear
- * interpolation, define a function that takes a value that usually ranges from 0 through 1
- * and generally returns a value that usually ranges from 0 through 1,
- * and pass the result of that function to this method.
- * See the documentation for {@link H3DU.Math.vec3lerp}
- * for examples of interpolation functions.
- * @returns {H3DU.GraphicsPath} The interpolated path.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Does a linear interpolation between two graphics paths.
+   * @param {H3DU.GraphicsPath} other The second graphics path.
+   * @param {number} t An interpolation factor, generally ranging from 0 through 1.
+   * Closer to 0 means closer to this path, and closer to 1 means closer
+   * to "other". If the input paths contain arc
+   * segments that differ in the large arc and sweep flags, the flags from
+   * the first path's arc are used if "t" is less than 0.5; and the flags from
+   * the second path's arc are used otherwise.<p>For a nonlinear
+   * interpolation, define a function that takes a value that usually ranges from 0 through 1
+   * and generally returns a value that usually ranges from 0 through 1,
+   * and pass the result of that function to this method.
+   * See the documentation for {@link H3DU.Math.vec3lerp}
+   * for examples of interpolation functions.
+   * @returns {H3DU.GraphicsPath} The interpolated path.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.interpolate = function(other, t) {
     if(!other || other.segments.length !== this.segments.length) {
       return null;
@@ -1168,7 +1168,7 @@
         var ey = segThis[9] + (segOther[9] - segThis[9]) * t;
         if(domove)ret.moveTo(sx, sy);
         ret.arcSvgTo(rx, ry, rot * GraphicsPath._toDegrees,
-         largeArc, sweep, ex, ey);
+          largeArc, sweep, ex, ey);
         break;
       }
       default:
@@ -1178,7 +1178,7 @@
     }
     return ret;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._addSegment = function(a, c) {
     if(a.length > 0 && c instanceof LineCurve) {
       if(c.x1 === c.x2 && c.y1 === c.y2) {
@@ -1239,7 +1239,7 @@
         GraphicsPath._addSegment(curPath, GraphicsPath._segToCurve(s));
       } else {
         GraphicsPath._addSegment(curPath,
-        new LineCurve(lastptx, lastpty, startptx, startpty));
+          new LineCurve(lastptx, lastpty, startptx, startpty));
         lastptx = startptx;
         lastpty = startpty;
       }
@@ -1250,23 +1250,23 @@
     return new GraphicsPath._CurveList(curves);
   };
 
-/**
- * Gets an array of points evenly spaced across the length
- * of the path.
- * @param {number} numPoints Number of points to return.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments for the purpose of
- * calculating their length, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {Array<Array<number>>} Array of points lying on
- * the path and evenly spaced across the length of the path,
- * starting and ending with the path's endPoints. Returns
- * an empty array if <i>numPoints</i> is less than 1. Returns
- * an array consisting of the start point if <i>numPoints</i>
- * is 1.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Gets an array of points evenly spaced across the length
+   * of the path.
+   * @param {number} numPoints Number of points to return.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments for the purpose of
+   * calculating their length, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of points lying on
+   * the path and evenly spaced across the length of the path,
+   * starting and ending with the path's endPoints. Returns
+   * an empty array if <i>numPoints</i> is less than 1. Returns
+   * an array consisting of the start point if <i>numPoints</i>
+   * is 1.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getPoints = function(numPoints, flatness) {
     if(numPoints < 1)return [];
     if(numPoints === 1) {
@@ -1284,12 +1284,12 @@
     }
     return points;
   };
-/**
- * Makes this path closed. Adds a line segment to the
- * path's start position, if necessary.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Makes this path closed. Adds a line segment to the
+   * path's start position, if necessary.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.closePath = function() {
     if(this.startPos[0] !== this.endPos[0] ||
    this.startPos[1] !== this.endPos[1]) {
@@ -1302,13 +1302,13 @@
     return this;
   };
 
-/**
- * Moves the current start position and end position to the given position.
- * @param {number} x X coordinate of the position.
- * @param {number} y Y coordinate of the position.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Moves the current start position and end position to the given position.
+   * @param {number} x X coordinate of the position.
+   * @param {number} y Y coordinate of the position.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.moveTo = function(x, y) {
     this.startPos[0] = x;
     this.startPos[1] = y;
@@ -1317,15 +1317,15 @@
     this.incomplete = false;
     return this;
   };
-/**
- * Adds a line segment to the path, starting
- * at the path's end position, then
- * sets the end position to the end of the segment.
- * @param {number} x X coordinate of the end of the line segment.
- * @param {number} y Y coordinate of the end of the line segment.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Adds a line segment to the path, starting
+   * at the path's end position, then
+   * sets the end position to the end of the segment.
+   * @param {number} x X coordinate of the end of the line segment.
+   * @param {number} y Y coordinate of the end of the line segment.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.lineTo = function(x, y) {
     this.segments.push([GraphicsPath.LINE,
       this.endPos[0], this.endPos[1], x, y]);
@@ -1334,16 +1334,16 @@
     this.incomplete = false;
     return this;
   };
-/**
- * Gets the current point stored in this path.
- * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Gets the current point stored in this path.
+   * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getCurrentPoint = function() {
     return [this.endPos[0], this.endPos[1]];
   };
 
-/** @ignore */
+  /** @ignore */
   GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
     var t1 = x1 - x0;
     var t2 = y1 - y0;
@@ -1357,28 +1357,28 @@
     var t6 = [x2 - t5[0], y2 - t5[1]];
     return t6[0] * t6[0] + t6[1] * t6[1] === 0;
   };
-/**
- * Adds path segments in the form of a circular arc to this path,
- * using the parameterization specified in the "arcTo" method of the
- * HTML Canvas 2D Context.
- * @param {number} x1 X coordinate of a point that, along with the
- * current end point, forms a tangent line. The point where the
- * circle touches this tangent line is the start point of the arc, and if the
- * point isn't the same as the current end point, this method adds
- * a line segment connecting the two points. (Note that the start point
- * of the arc is not necessarily the same as (x1, y1) or the current end point.)
- * @param {number} y1 Y coordinate of the point described under "x1".
- * @param {number} x2 X coordinate of a point that, along with the
- * point (x1, y1), forms a tangent line. The point where the
- * circle touches this tangent line is the end point of the arc. (Note that the
- * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
- * When this method returns, the current end point will be set to the end
- * point of the arc.
- * @param {number} y2 Y coordinate of the point described under "x2".
- * @param {number} radius Radius of the circle the arc forms a part of.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Adds path segments in the form of a circular arc to this path,
+   * using the parameterization specified in the "arcTo" method of the
+   * HTML Canvas 2D Context.
+   * @param {number} x1 X coordinate of a point that, along with the
+   * current end point, forms a tangent line. The point where the
+   * circle touches this tangent line is the start point of the arc, and if the
+   * point isn't the same as the current end point, this method adds
+   * a line segment connecting the two points. (Note that the start point
+   * of the arc is not necessarily the same as (x1, y1) or the current end point.)
+   * @param {number} y1 Y coordinate of the point described under "x1".
+   * @param {number} x2 X coordinate of a point that, along with the
+   * point (x1, y1), forms a tangent line. The point where the
+   * circle touches this tangent line is the end point of the arc. (Note that the
+   * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
+   * When this method returns, the current end point will be set to the end
+   * point of the arc.
+   * @param {number} y2 Y coordinate of the point described under "x2".
+   * @param {number} radius Radius of the circle the arc forms a part of.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
     if(radius < 0) {
       throw new Error("IndexSizeError");
@@ -1405,27 +1405,27 @@
     var sweep = cross < 0;
     return this.arcSvgTo(radius, radius, 0, false, sweep, endTangent[0], endTangent[1]);
   };
-/**
- * Adds path segments in the form of a circular arc to this path,
- * using the parameterization specified in the "arc" method of the
- * HTML Canvas 2D Context.
- * @param {number} x X coordinate of the center of the circle that the arc forms a part of.
- * @param {number} y Y coordinate of the circle's center.
- * @param {number} radius Radius of the circle.
- * @param {number} startAngle Starting angle of the arc, in radians.
- * 0 means the positive X axis, &pi;/2 means the positive Y axis,
- * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
- * @param {number} endAngle Ending angle of the arc, in radians.
- * @param {Boolean} ccw Whether the arc runs counterclockwise
- * (assuming the X axis points right and the Y axis points
- * down under the coordinate system).
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Adds path segments in the form of a circular arc to this path,
+   * using the parameterization specified in the "arc" method of the
+   * HTML Canvas 2D Context.
+   * @param {number} x X coordinate of the center of the circle that the arc forms a part of.
+   * @param {number} y Y coordinate of the circle's center.
+   * @param {number} radius Radius of the circle.
+   * @param {number} startAngle Starting angle of the arc, in radians.
+   * 0 means the positive X axis, &pi;/2 means the positive Y axis,
+   * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
+   * @param {number} endAngle Ending angle of the arc, in radians.
+   * @param {Boolean} ccw Whether the arc runs counterclockwise
+   * (assuming the X axis points right and the Y axis points
+   * down under the coordinate system).
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
     return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngle, ccw, drawLine) {
     if(radius < 0) {
       throw new Error("IndexSizeError");
@@ -1450,39 +1450,39 @@
     if(!ccw && endAngle - startAngle >= twopi ||
    ccw && startAngle - endAngle >= twopi) {
       return this
-     ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
-           ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
-           ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
+        ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
+        ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
+        ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
     } else {
       var delta = endAngle - startAngle;
       if(delta >= twopi || delta < 0) {
         var d = delta % twopi;
         if(d === 0 && delta !== 0) {
           return this
-     ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
-           ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
-           ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
+            ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
+            ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
+            ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
         }
         delta = d;
       }
       var largeArc = Math.abs(delta) > Math.PI ^ ccw ^ startAngle > endAngle;
       var sweep = delta > 0 ^ ccw ^ startAngle > endAngle;
       return this.lineTo(startX, startY)
-      .arcSvgTo(radius, radius, 0, largeArc, sweep, endX, endY);
+        .arcSvgTo(radius, radius, 0, largeArc, sweep, endX, endY);
     }
   };
 
-/**
- * Adds a quadratic B&eacute;zier curve to this path starting
- * at this path's current position. The current position will be
- * the curve's first control point.
- * @param {number} x X coordinate of the curve's second control point.
- * @param {number} y Y coordinate of the curve's second control point.
- * @param {number} x2 X coordinate of the curve's end point (third control point).
- * @param {number} y2 Y coordinate of the curve's end point (third control point).
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Adds a quadratic B&eacute;zier curve to this path starting
+   * at this path's current position. The current position will be
+   * the curve's first control point.
+   * @param {number} x X coordinate of the curve's second control point.
+   * @param {number} y Y coordinate of the curve's second control point.
+   * @param {number} x2 X coordinate of the curve's end point (third control point).
+   * @param {number} y2 Y coordinate of the curve's end point (third control point).
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
     this.segments.push([GraphicsPath.QUAD,
       this.endPos[0], this.endPos[1], x, y, x2, y2]);
@@ -1491,19 +1491,19 @@
     this.incomplete = false;
     return this;
   };
-/**
- * Adds a cubic B&eacute;zier curve to this path starting
- * at this path's current position. The current position will be
- * the curve's first control point.
- * @param {number} x X coordinate of the curve's second control point.
- * @param {number} y X coordinate of the curve's second control point.
- * @param {number} x2 Y coordinate of the curve's third control point.
- * @param {number} y2 Y coordinate of the curve's third control point.
- * @param {number} x3 X coordinate of the curve's end point (fourth control point).
- * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Adds a cubic B&eacute;zier curve to this path starting
+   * at this path's current position. The current position will be
+   * the curve's first control point.
+   * @param {number} x X coordinate of the curve's second control point.
+   * @param {number} y X coordinate of the curve's second control point.
+   * @param {number} x2 Y coordinate of the curve's third control point.
+   * @param {number} y2 Y coordinate of the curve's third control point.
+   * @param {number} x3 X coordinate of the curve's end point (fourth control point).
+   * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
     this.segments.push([GraphicsPath.CUBIC,
       this.endPos[0], this.endPos[1], x, y, x2, y2, x3, y3]);
@@ -1519,15 +1519,15 @@
     var denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
     dot /= denom;
     var sgn = a * d - b * c;
- // avoid NaN when dot is just slightly out of range
- // for acos
+    // avoid NaN when dot is just slightly out of range
+    // for acos
     if(dot < -1)dot = -1;
     else if(dot > 1)dot = 1;
     var ret = Math.acos(dot);
     if(sgn < 0)ret = -ret;
     return ret;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._arcSvgToCenterParam = function(a) {
     var x1 = a[1];
     var y1 = a[2];
@@ -1564,8 +1564,8 @@
     var nvecx = (-x1p - cxp) / rx;
     var nvecy = (-y1p - cyp) / ry;
     var cosTheta1 = vecx / Math.sqrt(vecx * vecx + vecy * vecy);
- // avoid NaN when cosTheta1 is just slightly out of range
- // for acos
+    // avoid NaN when cosTheta1 is just slightly out of range
+    // for acos
     if(cosTheta1 < -1)cosTheta1 = -1;
     else if(cosTheta1 > 1)cosTheta1 = 1;
     var theta1 = Math.acos(cosTheta1);
@@ -1582,7 +1582,7 @@
   };
   GraphicsPath._toRadians = Math.PI / 180;
   GraphicsPath._toDegrees = 180.0 / Math.PI;
-/** @ignore */
+  /** @ignore */
   GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) {
     var crot = Math.cos(rot);
     var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
@@ -1620,27 +1620,27 @@
     return ret;
   };
 
-/**
- * Adds path segments in the form of an elliptical arc to this path,
- * using the parameterization used by the SVG specification.
- * @param {number} rx X axis radius of the ellipse that the arc will
- * be formed from.
- * @param {number} ry Y axis radius of the ellipse that the arc will
- * be formed from.
- * @param {number} rot Rotation of the ellipse in degrees (clockwise
- * assuming the X axis points right and the Y axis points
- * down under the coordinate system).
- * @param {Boolean} largeArc In general, there are four possible solutions
- * for arcs given the start and end points, rotation, and x- and y-radii. If true,
- * chooses an arc solution with the larger arc length; if false, smaller.
- * @param {Boolean} sweep If true, the arc solution chosen will run
- * clockwise (assuming the X axis points right and the Y axis points
- * down under the coordinate system); if false, counterclockwise.
- * @param {number} x2 X coordinate of the arc's end point.
- * @param {number} y2 Y coordinate of the arc's end point.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Adds path segments in the form of an elliptical arc to this path,
+   * using the parameterization used by the SVG specification.
+   * @param {number} rx X axis radius of the ellipse that the arc will
+   * be formed from.
+   * @param {number} ry Y axis radius of the ellipse that the arc will
+   * be formed from.
+   * @param {number} rot Rotation of the ellipse in degrees (clockwise
+   * assuming the X axis points right and the Y axis points
+   * down under the coordinate system).
+   * @param {Boolean} largeArc In general, there are four possible solutions
+   * for arcs given the start and end points, rotation, and x- and y-radii. If true,
+   * chooses an arc solution with the larger arc length; if false, smaller.
+   * @param {Boolean} sweep If true, the arc solution chosen will run
+   * clockwise (assuming the X axis points right and the Y axis points
+   * down under the coordinate system); if false, counterclockwise.
+   * @param {number} x2 X coordinate of the arc's end point.
+   * @param {number} y2 Y coordinate of the arc's end point.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2) {
     if(rx === 0 || ry === 0) {
       return this.lineTo(x2, y2);
@@ -1682,7 +1682,7 @@
     this.incomplete = false;
     return this;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._nextAfterWs = function(str, index) {
     while(index[0] < str.length) {
       var c = str.charCodeAt(index[0]);
@@ -1693,7 +1693,7 @@
     }
     return -1;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._nextAfterSepReq = function(str, index) {
     var comma = false;
     var havesep = false;
@@ -1713,7 +1713,7 @@
     }
     return -1;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._nextAfterSep = function(str, index) {
     var comma = false;
     while(index[0] < str.length) {
@@ -1729,19 +1729,19 @@
     }
     return -1;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._peekNextNumber = function(str, index) {
     var oldindex = index[0];
     var ret = GraphicsPath._nextNumber(str, index, true) !== null;
     index[0] = oldindex;
     return ret;
   };
-/** @ignore */
+  /** @ignore */
   GraphicsPath._nextNumber = function(str, index, afterSep) {
     var oldindex = index[0];
     var c = afterSep ?
-   GraphicsPath._nextAfterSep(str, index) :
-   GraphicsPath._nextAfterWs(str, index);
+      GraphicsPath._nextAfterSep(str, index) :
+      GraphicsPath._nextAfterWs(str, index);
     var startIndex = index[0] - 1;
     var dot = false;
     var digit = false;
@@ -1777,7 +1777,7 @@
           return null;
         }
         index[0]--;
-   // console.log(str.substr(startIndex,index[0]-startIndex))
+        // console.log(str.substr(startIndex,index[0]-startIndex))
         ret = parseFloat(str.substr(startIndex, index[0] - startIndex));
         if(Number.isNaN(ret)) {
           index[0] = ret;
@@ -1813,7 +1813,7 @@
           }
           index[0]--;
           ret = parseFloat(str.substr(startIndex, index[0] - startIndex));
-    // console.log([str.substr(startIndex,index[0]-startIndex),ret])
+          // console.log([str.substr(startIndex,index[0]-startIndex),ret])
           if(Number.isNaN(ret)) {
             index[0] = oldindex;
             return null;
@@ -1832,7 +1832,7 @@
       return null;
     }
     ret = parseFloat(str.substr(startIndex, str.length - startIndex));
- // console.log([str.substr(startIndex,str.length-startIndex),ret])
+    // console.log([str.substr(startIndex,str.length-startIndex),ret])
     if(Number.isNaN(ret)) {
       index[0] = oldindex;
       return null;
@@ -1842,18 +1842,18 @@
     return ret;
   };
 
-/**
- * Returns a modified version of this path that is transformed
- * according to the given affine transformation (a transformation
- * that keeps straight lines straight and parallel lines parallel).
- * @param {Array<number>} trans An array of six numbers
- * describing a 2-dimensional affine transformation. For each
- * point in the current path, its new X coordinate is `trans[0] * X +
- * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
- * trans[3] * Y + trans[5]`.
- * @returns {H3DU.GraphicsPath} The transformed version of this path.
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Returns a modified version of this path that is transformed
+   * according to the given affine transformation (a transformation
+   * that keeps straight lines straight and parallel lines parallel).
+   * @param {Array<number>} trans An array of six numbers
+   * describing a 2-dimensional affine transformation. For each
+   * point in the current path, its new X coordinate is `trans[0] * X +
+   * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
+   * trans[3] * Y + trans[5]`.
+   * @returns {H3DU.GraphicsPath} The transformed version of this path.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.transform = function(trans) {
     var ret = new GraphicsPath();
     var a = trans[0];
@@ -1903,16 +1903,16 @@
           var largeArc = Math.abs(delta) > Math.PI;
           if(domove)ret.moveTo(s[1] + e, s[2] + f);
           ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
-         largeArc, delta > 0, s[8] + e, s[9] + f);
+            largeArc, delta > 0, s[8] + e, s[9] + f);
           break;
         }
         if(b === 0 && c === 0 && s[5] === 0) {
-    // any scale and ellipse rotation 0
+          // any scale and ellipse rotation 0
           delta = s[13] - s[12];
           largeArc = Math.abs(delta) > Math.PI;
           if(domove)ret.moveTo(a * s[1] + e, d * s[2] + f);
           ret.arcSvgTo(a * s[3], d * s[4], 0,
-         largeArc, delta > 0, a * s[8] + e, d * s[9] + f);
+            largeArc, delta > 0, a * s[8] + e, d * s[9] + f);
           break;
         }
         var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
@@ -1954,55 +1954,55 @@
   GraphicsPath.prototype.rect = function(x, y, w, h) {
     if(w < 0 || h < 0)return this;
     return this.moveTo(x, y)
-  .lineTo(x + w, y)
-  .lineTo(x + w, y + h)
-  .lineTo(x, y + h)
-  .closePath();
+      .lineTo(x + w, y)
+      .lineTo(x + w, y + h)
+      .lineTo(x, y + h)
+      .closePath();
   };
 
-/**
- * Creates a graphics path from a string whose format follows
- * the SVG specification.
- * @param {string} str A string, in the SVG path format, representing
- * a two-dimensional path. An SVG path consists of a number of
- * path segments, starting with a single letter, as follows:
- * <ul>
- * <li>M/m (x y) - Moves the current position to (x, y). Further
- * XY pairs specify line segments.
- * <li>L/l (x y) - Specifies line segments to the given XY points.
- * <li>H/h (x) - Specifies horizontal line segments to the given X points.
- * <li>V/v (y) - Specifies vertical line segments to the given Y points.
- * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
- * (see quadraticCurveTo).
- * <li>T/t (x y) - Specifies quadratic curves tangent to the previous
- * quadratic curve.
- * <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves
- * (see bezierCurveTo).
- * <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous
- * cubic curve.
- * <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo).
- * "largeArc" and "sweep" are flags, "0" for false and "1" for true.
- * "rot" is in degrees.
- * <li>Z/z - Closes the current path; similar to adding a line segment
- * to the first XY point given in the last M/m command.
- * </ul>
- * Lower-case letters mean any X and Y coordinates are relative
- * to the current position of the path. Each group of parameters
- * can be repeated in the same path segment. Each parameter after
- * the starting letter is separated by whitespace and/or a single comma,
- * and the starting letter can be separated by whitespace.
- * This separation can be left out as long as doing so doesn't
- * introduce ambiguity. All commands set the current point
- * to the end of the path segment (including Z/z, which adds a line
- * segment if needed).
- * @returns {H3DU.GraphicsPath} The resulting path. If an error
- * occurs while parsing the path, the path's "isIncomplete() method
- * will return <code>true</code>.
- * @example <caption>The following example creates a graphics path
- * from an SVG string describing a polyline.</caption>
- * var path=H3DU.GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
- * @memberof! H3DU.GraphicsPath
- */
+  /**
+   * Creates a graphics path from a string whose format follows
+   * the SVG specification.
+   * @param {string} str A string, in the SVG path format, representing
+   * a two-dimensional path. An SVG path consists of a number of
+   * path segments, starting with a single letter, as follows:
+   * <ul>
+   * <li>M/m (x y) - Moves the current position to (x, y). Further
+   * XY pairs specify line segments.
+   * <li>L/l (x y) - Specifies line segments to the given XY points.
+   * <li>H/h (x) - Specifies horizontal line segments to the given X points.
+   * <li>V/v (y) - Specifies vertical line segments to the given Y points.
+   * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
+   * (see quadraticCurveTo).
+   * <li>T/t (x y) - Specifies quadratic curves tangent to the previous
+   * quadratic curve.
+   * <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves
+   * (see bezierCurveTo).
+   * <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous
+   * cubic curve.
+   * <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo).
+   * "largeArc" and "sweep" are flags, "0" for false and "1" for true.
+   * "rot" is in degrees.
+   * <li>Z/z - Closes the current path; similar to adding a line segment
+   * to the first XY point given in the last M/m command.
+   * </ul>
+   * Lower-case letters mean any X and Y coordinates are relative
+   * to the current position of the path. Each group of parameters
+   * can be repeated in the same path segment. Each parameter after
+   * the starting letter is separated by whitespace and/or a single comma,
+   * and the starting letter can be separated by whitespace.
+   * This separation can be left out as long as doing so doesn't
+   * introduce ambiguity. All commands set the current point
+   * to the end of the path segment (including Z/z, which adds a line
+   * segment if needed).
+   * @returns {H3DU.GraphicsPath} The resulting path. If an error
+   * occurs while parsing the path, the path's "isIncomplete() method
+   * will return <code>true</code>.
+   * @example <caption>The following example creates a graphics path
+   * from an SVG string describing a polyline.</caption>
+   * var path=H3DU.GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+   * @memberof! H3DU.GraphicsPath
+   */
   GraphicsPath.fromString = function(str) {
     var index = [0];
     var started = false;
@@ -2011,15 +2011,15 @@
     var endx, endy;
     var sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
     while(!failed && index[0] < str.length) {
-  // console.log("////"+[index,str.substr(index[0],30)])
+      // console.log("////"+[index,str.substr(index[0],30)])
       var c = GraphicsPath._nextAfterWs(str, index);
       if(!started && c !== 0x4d && c !== 0x6d) {
-   // not a move-to command when path
-   // started
+        // not a move-to command when path
+        // started
         failed = true; break;
       }
-  // NOTE: Doesn't implement SVG2 meaning of Z
-  // command yet because it's not yet fully specified
+      // NOTE: Doesn't implement SVG2 meaning of Z
+      // command yet because it's not yet fully specified
       switch(c) {
       case 0x5a:case 0x7a:{ // 'Z', 'z'
         ret.closePath();
@@ -2038,7 +2038,7 @@
           if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
-     // console.log([x,y])
+          // console.log([x,y])
           if(sep)ret.lineTo(curx + x, cury + y);
           else ret.moveTo(curx + x, cury + y);
           sep = true;
@@ -2120,7 +2120,7 @@
             failed = true; break;
           }
           ret.bezierCurveTo(curx + x, cury + y, curx + x2, cury + y2,
-       curx + x3, cury + y3);
+            curx + x3, cury + y3);
           sep = true;
         }
         break;
@@ -2182,7 +2182,7 @@
             failed = true; break;
           }
           ret.arcSvgTo(x + curx, y + cury, rot, largeArc !== 0x30,
-       sweep !== 0x30, x2 + curx, y2 + cury);
+            sweep !== 0x30, x2 + curx, y2 + cury);
           sep = true;
         }
         break;
@@ -2208,13 +2208,13 @@
           if(typeof y2 === "undefined" || y2 === null) {
             failed = true; break;
           }
-    // second control point to use if previous segment is not a cubic
+          // second control point to use if previous segment is not a cubic
           xcp = ret.endPos[0];
           ycp = ret.endPos[1];
           endx = ret.endPos[0];
           endy = ret.endPos[1];
-    // NOTE: If previous segment is not a cubic, second control
-    // point is same as current point.
+          // NOTE: If previous segment is not a cubic, second control
+          // point is same as current point.
           if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.CUBIC) {
             xcp = ret.segments[ret.segments.length - 1][5];
@@ -2242,8 +2242,8 @@
           ycp = ret.endPos[1];
           endx = ret.endPos[0];
           endy = ret.endPos[1];
-    // NOTE: If previous segment is not a quad, first control
-    // point is same as current point.
+          // NOTE: If previous segment is not a quad, first control
+          // point is same as current point.
           if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.QUAD) {
             xcp = ret.segments[ret.segments.length - 1][3];
@@ -2270,9 +2270,9 @@
   var EPSILON = 1.1102230246251565e-16;
   var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 
-// orient2D and dependent functions were
-// Adapted by Peter O. from the HE_Mesh library
-// written by Frederik Vanhoutte.
+  // orient2D and dependent functions were
+  // Adapted by Peter O. from the HE_Mesh library
+  // written by Frederik Vanhoutte.
 
   function cmpDoubleDouble(a, b) {
     if(a[0] < b[0])return -1;
@@ -2390,7 +2390,7 @@
     var t6 = i2[1] - i1[1];
     var t7 = t5 * t3 + t6 * t4;
     var t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
-    t3 * t3 + t4 * t4);
+      t3 * t3 + t4 * t4);
     if (Math.sqrt(Math.abs(t8)) > 1e-9) {
       var p1 = orient2D(i2, i3, p);
       var p2 = orient2D(i2, i3, i1);
@@ -2406,12 +2406,12 @@
     }
   };
 
-/** @ignore */
+  /** @ignore */
   Triangulate._Contour = function(vertices) {
     this.vertexList = new LinkedList();
     var vertLength = vertices.length;
- // For convenience, eliminate the last
- // vertex if it matches the first vertex
+    // For convenience, eliminate the last
+    // vertex if it matches the first vertex
     if(vertLength >= 4 &&
     vertices[0] === vertices[vertLength - 2] &&
     vertices[1] === vertices[vertLength - 1]) {
@@ -2430,7 +2430,7 @@
       var x = vertices[i];
       var y = vertices[i + 1];
       if(i > 0 && x === lastX && y === lastY) {
-   // skip consecutive duplicate points
+        // skip consecutive duplicate points
         continue;
       }
       lastX = x;
@@ -2454,7 +2454,7 @@
     }
     this.maxXNode = maxXNode;
     this.bounds = bounds;
- // Find the prevailing winding of the polygon
+    // Find the prevailing winding of the polygon
     var ori = 0;
     var vert = this.vertexList.first();
     var firstVert = vert.data;
@@ -2490,7 +2490,7 @@
       }
       if(x <= xmax && y >= ymin && y <= ymax) {
         if(y1 === y2) {
-     // parallel to the ray
+          // parallel to the ray
           closeVertices.push([
             xmin, xmin === vert.data[0] ? vert : vn, true]);
         } else {
@@ -2511,18 +2511,18 @@
       vert = vert.next;
     }
     if(closeVertices.length === 0) {
-   // no visible vertices
+      // no visible vertices
       return null;
     } else if(closeVertices.length > 1) {
-   // sort by X coordinate
+      // sort by X coordinate
       closeVertices = closeVertices.sort(function(a, b) {
         if(a[0] === b[0])return 0;
         return a[0] < b[0] ? -1 : 1;
       });
     }
     if(closeVertices[0][2]) {
-   // closest vertex is already a vertex of
-   // the contour
+      // closest vertex is already a vertex of
+      // the contour
       return closeVertices[0][1];
     }
     vert = closeVertices[0][1];
@@ -2537,11 +2537,11 @@
         var iterNext = iterVert.next ? iterVert.next : firstVert;
         var orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
         if(orient !== 0 && orient !== this.vertexList.winding) {
-      // This is a reflex vertex
+          // This is a reflex vertex
           var pointIn = Triangulate._pointInTri(
-       triangle1, triangle2, nextVert.data, iterVert.data);
+            triangle1, triangle2, nextVert.data, iterVert.data);
           if(pointIn) {
-       // The reflex vertex is in the triangle
+            // The reflex vertex is in the triangle
             var t1 = iterVert.data[0] - triangle1[0];
             var t2 = iterVert.data[1] - triangle1[1];
             var distance = Math.sqrt(t1 * t1 + t2 * t2);
@@ -2555,10 +2555,10 @@
       iterVert = iterVert.next;
     }
     if(innerReflexes.length === 0) {
-   // vertex after the intersected vertex is visible
+      // vertex after the intersected vertex is visible
       return nextVert;
     }
-  // sort by angle, then by distance
+    // sort by angle, then by distance
     if(innerReflexes.length > 1) {
       innerReflexes = innerReflexes.sort(function(a, b) {
         if(a[0] === b[0]) {
@@ -2571,9 +2571,9 @@
     return innerReflexes[0][2];
   };
 
-// decomposePolygon and dependent functions were
-// Adapted by Peter O. from the HE_Mesh library
-// written by Frederik Vanhoutte.
+  // decomposePolygon and dependent functions were
+  // Adapted by Peter O. from the HE_Mesh library
+  // written by Frederik Vanhoutte.
 
   function getLineIntersectionInto2D(a1, a2, b1, b2, p) {
     var s1 = [a1[0] - a2[0], a1[1] - a2[1]];
@@ -2712,7 +2712,7 @@
           if (orient2D(jVertexNext, iVertexNext, iVertex) > 0 &&
               orient2D(jVertex, iVertexNext, iVertex) <= 0) {
             if (getLineIntersectionInto2D(iVertexNext, iVertex, jVertex, jVertexNext,
-                intersection)) {
+              intersection)) {
               if (orient2D(intersection, iVertexPrev, iVertex) > 0) {
                 px = iVertex[0];
                 py = iVertex[1];
@@ -2812,26 +2812,26 @@
     }
   }
 
-/**
- * Converts the subpaths in this path to triangles.
- * Treats each subpath as a polygon even if it isn't closed.
- * Each subpath should not contain self-intersections or
- * duplicate vertices, except duplicate vertices that appear
- * consecutively or at the start and end.<p>
- * The path can contain holes. In this case, subpaths
- * whose winding order (counterclockwise or clockwise)
- * differs from the first subpath's winding order can be holes.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {Array<Array<number>>} Array of six-element
- * arrays each describing a single triangle. For each six-element
- * array, the first two, next two, and last two numbers each
- * describe a vertex position of that triangle (X and Y coordinates
- * in that order).
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Converts the subpaths in this path to triangles.
+   * Treats each subpath as a polygon even if it isn't closed.
+   * Each subpath should not contain self-intersections or
+   * duplicate vertices, except duplicate vertices that appear
+   * consecutively or at the start and end.<p>
+   * The path can contain holes. In this case, subpaths
+   * whose winding order (counterclockwise or clockwise)
+   * differs from the first subpath's winding order can be holes.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of six-element
+   * arrays each describing a single triangle. For each six-element
+   * array, the first two, next two, and last two numbers each
+   * describe a vertex position of that triangle (X and Y coordinates
+   * in that order).
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getTriangles = function(flatness) {
     if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
     // NOTE: _getSubpaths doesn't add degenerate line segments
@@ -2843,8 +2843,8 @@
     var i, j;
     for(i = 0; i < subpaths.length; i++) {
       var contour = new Triangulate._Contour(subpaths[i]);
-  // NOTE: Ignores contours with winding 0
-  // (empty, zero area, sometimes self-intersecting)
+      // NOTE: Ignores contours with winding 0
+      // (empty, zero area, sometimes self-intersecting)
       if(contour.winding > 0) {
         if(firstOrient === 0)firstOrient = 1;
         contours1.push(contour);
@@ -2854,7 +2854,7 @@
       }
     }
     if(contours2.length === 0 || contours1.length === 0) {
-  // All the contours have the same winding order
+      // All the contours have the same winding order
       var c = contours2.length === 0 ? contours1 : contours2;
       for(i = 0; i < c.length; i++) {
         Triangulate._triangulate(c[i], tris);
@@ -2867,13 +2867,13 @@
         for(j = 0; j < c1.length; j++) {
           if(!c1[j])continue;
           var maxPoint = c2[i].maxXNode;
-    // Find out if the contour is inside another contour,
-    // and if so, connect its vertices to that contour
+          // Find out if the contour is inside another contour,
+          // and if so, connect its vertices to that contour
           var vp = c1[j].findVisiblePoint(
-      maxPoint.data[0], maxPoint.data[1]);
+            maxPoint.data[0], maxPoint.data[1]);
           if(vp) {
             c1[j].vertexCount += Triangulate._connectContours(
-       c2[i].vertexList, c1[j].vertexList, maxPoint, vp);
+              c2[i].vertexList, c1[j].vertexList, maxPoint, vp);
             c2[i] = null;
             break;
           }
@@ -2888,7 +2888,7 @@
     }
     return tris;
   };
-/** @ignore */
+  /** @ignore */
   Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
     var vpnode = dstNode;
     var c2node = maxPoint;
@@ -2909,16 +2909,16 @@
     count += 2;
     return count;
   };
-/** @ignore */
+  /** @ignore */
   Triangulate._triangulate = function(contour, tris) {
     var t1, tri;
     if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
-  // too few vertices, or the winding
-  // suggests a zero area or even a certain
-  // self-intersecting polygon
+      // too few vertices, or the winding
+      // suggests a zero area or even a certain
+      // self-intersecting polygon
       return;
     } else if(contour.vertexCount === 3) {
-  // just one triangle
+      // just one triangle
       t1 = contour.vertexList.first();
       tri = [];
       while(t1) {
@@ -2929,7 +2929,7 @@
       return;
     }
     var first = contour.vertexList.first();
-  // var last = contour.vertexList.last();
+    // var last = contour.vertexList.last();
     var vertices = [];
     var vert = first;
     while(vert) {
@@ -2941,12 +2941,12 @@
   if(typeof exports.H3DU !== "undefined" && exports.H3DU !== null) {
     exports.H3DU.GraphicsPath = GraphicsPath;
   }
-/* exported GraphicsPath */
-/**
- * Alias for the {@link H3DU.GraphicsPath} class.
- * @constructor
- * @alias GraphicsPath
- * @deprecated Use {@link H3DU.GraphicsPath} instead.
- */
+  /* exported GraphicsPath */
+  /**
+   * Alias for the {@link H3DU.GraphicsPath} class.
+   * @constructor
+   * @alias GraphicsPath
+   * @deprecated Use {@link H3DU.GraphicsPath} instead.
+   */
   exports.GraphicsPath = GraphicsPath;
 }));

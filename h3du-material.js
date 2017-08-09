@@ -28,90 +28,90 @@
  * <i>This parameter is deprecated.</i>
  */
 function Material(params, diffuse, specular, shininess, emission) {
- /** Specular highlight exponent of this material.
-  * The greater the number, the more concentrated the specular
-  * highlights are (and the smoother the material behaves).
-  * The lower the number, the more extended the highlights are (and the rougher the material behaves).
-  * Ranges from 0 through 128.
-  * @default
-  */
+  /** Specular highlight exponent of this material.
+   * The greater the number, the more concentrated the specular
+   * highlights are (and the smoother the material behaves).
+   * The lower the number, the more extended the highlights are (and the rougher the material behaves).
+   * Ranges from 0 through 128.
+   * @default
+   */
   this.shininess = 32;
- /** Ambient color of this material.<p>
-  * Ambient color indicates how much an object's color is affected by ambient
-  * lights, those that color pixels the same way regardless
-  * of direction or distance.
-  * Because every part of an object will be shaded the same way by ambient
-  * colors, an object with just ambient color will not look much like a 3D object.<p>
-  * (Ambient color simulates the effect of light being scattered multiple times
-  * from the same surface.)</p>
-  * This value is a 3-element array giving the red, green, and blue
-  * components of the ambient color; the final ambient color depends
-  * on the ambient color of the scene.
-  * (0,0,0) means no ambient color,
-  * and (1,1,1) means total ambient color.<p>
-  * Setting ambient color and diffusion color to the same value usually defines an object's
-  * color.<p>
-  * @default
-  */
+  /** Ambient color of this material.<p>
+   * Ambient color indicates how much an object's color is affected by ambient
+   * lights, those that color pixels the same way regardless
+   * of direction or distance.
+   * Because every part of an object will be shaded the same way by ambient
+   * colors, an object with just ambient color will not look much like a 3D object.<p>
+   * (Ambient color simulates the effect of light being scattered multiple times
+   * from the same surface.)</p>
+   * This value is a 3-element array giving the red, green, and blue
+   * components of the ambient color; the final ambient color depends
+   * on the ambient color of the scene.
+   * (0,0,0) means no ambient color,
+   * and (1,1,1) means total ambient color.<p>
+   * Setting ambient color and diffusion color to the same value usually defines an object's
+   * color.<p>
+   * @default
+   */
   this.ambient = [0.2, 0.2, 0.2];
- /**
-  * Diffusion color of this material (also called "albedo").
-  * This is the generally perceived color of the material when
-  * specular highlights are absent on the material's surface.
-  * See also {@link H3DU.PbrMaterial#albedo}; this property corresponds
-  * more closely to that in the metallic workflow rather than the specular
-  * workflow.
-  * @type {Array<number>}
-  * @default
-  */
+  /**
+   * Diffusion color of this material (also called "albedo").
+   * This is the generally perceived color of the material when
+   * specular highlights are absent on the material's surface.
+   * See also {@link H3DU.PbrMaterial#albedo}; this property corresponds
+   * more closely to that in the metallic workflow rather than the specular
+   * workflow.
+   * @type {Array<number>}
+   * @default
+   */
   this.diffuse = [1.0, 1.0, 1.0, 1.0];
- /**
-  * Specular highlight reflection of this material.
-  * This is usually a shade of gray (all three components are the same),
-  * but can be colored if the material represents an uncoated metal of some sort.
-  * See also {@link H3DU.PbrMaterial#specular}.
-  * NOTE: Before version 2.0, this value's default was (0,0,0).
-  * @type {Array<number>}
-  * @default
-  */
+  /**
+   * Specular highlight reflection of this material.
+   * This is usually a shade of gray (all three components are the same),
+   * but can be colored if the material represents an uncoated metal of some sort.
+   * See also {@link H3DU.PbrMaterial#specular}.
+   * NOTE: Before version 2.0, this value's default was (0,0,0).
+   * @type {Array<number>}
+   * @default
+   */
   this.specular = [0.2, 0.2, 0.2];
- /**
-  * Additive color emitted by objects with this material.
-  * See {@link H3DU.PbrMaterial#emission}.
-  * @type {Array<number>}
-  * @default
-  */
+  /**
+   * Additive color emitted by objects with this material.
+   * See {@link H3DU.PbrMaterial#emission}.
+   * @type {Array<number>}
+   * @default
+   */
   this.emission = [0, 0, 0]; // NOTE: Should use only 3-component emissions
-/**
- * Texture for this material. Each color in the texture
- * sets the diffusion (also called "albedo")
- * of each part of the material.
- * @default
- * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
- */
+  /**
+   * Texture for this material. Each color in the texture
+   * sets the diffusion (also called "albedo")
+   * of each part of the material.
+   * @default
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
+   */
   this.texture = null;
-/**
- * Specular map texture.
- * See {@link H3DU.PbrMaterial#specularMap}.
- * NOTE: If this property specifies a texture, this property will be used
- * for the specular reflection rather than the "specular" property. This behavior
- * is a change from versions earlier than 2.0, where this property, if present,
- * multiplied the value of the "specular" property.
- * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
- * @default
- */
+  /**
+   * Specular map texture.
+   * See {@link H3DU.PbrMaterial#specularMap}.
+   * NOTE: If this property specifies a texture, this property will be used
+   * for the specular reflection rather than the "specular" property. This behavior
+   * is a change from versions earlier than 2.0, where this property, if present,
+   * multiplied the value of the "specular" property.
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
+   * @default
+   */
   this.specularMap = null;
- /**
-  * Normal map (bump map) texture. See {@link H3DU.PbrMaterial#normalMap}.
-  * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
-  * @default
-  */
+  /**
+   * Normal map (bump map) texture. See {@link H3DU.PbrMaterial#normalMap}.
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
+   * @default
+   */
   this.normalMap = null;
- /**
-  * Emission map texture. See {@link H3DU.PbrMaterial#emissionMap}.
-  * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
-  * @default
-  */
+  /**
+   * Emission map texture. See {@link H3DU.PbrMaterial#emissionMap}.
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
+   * @default
+   */
   this.emissionMap = null;// NOTE: Should use only 3-component emissions
   /**
    * Ambient occlusion map texture.
@@ -120,10 +120,10 @@ function Material(params, diffuse, specular, shininess, emission) {
    * @default
    */
   this.occlusionMap = null;
- /**
-  * Shader program to use when rendering objects with this material.
-  * @default
-  */
+  /**
+   * Shader program to use when rendering objects with this material.
+   * @default
+   */
   this.shader = null;
   if(params && (params.constructor === Array || typeof params === "string")) {
     this.setParams({

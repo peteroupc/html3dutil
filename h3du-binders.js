@@ -53,12 +53,12 @@ _MaterialBinder.prototype.bind = function(program, context, loader) {
       uniforms.roughness = mat.roughness;
     if(typeof mat.ambient !== "undefined" && mat.ambient !== null) {
       uniforms.ma = mat.ambient.length === 3 ? mat.ambient :
-     [mat.ambient[0], mat.ambient[1], mat.ambient[2]];
+        [mat.ambient[0], mat.ambient[1], mat.ambient[2]];
     }
     uniforms.ms = mat.specular.length === 3 ? mat.specular :
-     [mat.specular[0], mat.specular[1], mat.specular[2]];
+      [mat.specular[0], mat.specular[1], mat.specular[2]];
     uniforms.me = mat.emission.length === 3 ? mat.emission :
-     [mat.emission[0], mat.emission[1], mat.emission[2]];
+      [mat.emission[0], mat.emission[1], mat.emission[2]];
   }
   program.setUniforms(uniforms);
   var sampler = 0;
@@ -78,8 +78,8 @@ _MaterialBinder.prototype.bind = function(program, context, loader) {
       var tex = textures[i][0];
       var texInfo = tex instanceof H3DU.Texture ? tex._toInfo() : tex;
       _MaterialBinder.bindTexture(
-          tex, texInfo, context, program,
-          sampler++, loader, textures[i][1], textureSizeName);
+        tex, texInfo, context, program,
+        sampler++, loader, textures[i][1], textureSizeName);
     }
   }
   if(typeof mat.shader !== "undefined" && mat.shader !== null) {
@@ -88,8 +88,8 @@ _MaterialBinder.prototype.bind = function(program, context, loader) {
         var v = mat.shader.uniformValues[k];
         if(typeof v !== "undefined" && v !== null && v instanceof H3DU.TextureInfo) {
           _MaterialBinder.bindTexture(
-    v, v, context, program,
-          sampler++, loader, k, null);
+            v, v, context, program,
+            sampler++, loader, k, null);
         }
       }
   }
@@ -108,7 +108,7 @@ function _LoadedTexture(texture, textureInfo, context) {
 /** @ignore */
 _LoadedTexture.textureFilters = function(context, texture, textureInfo, target) {
   context.texParameteri(target,
-        context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
+    context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
   // generate mipmaps for power-of-two textures
   if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null && context instanceof WebGL2RenderingContext ||
      _isPowerOfTwo(texture.getWidth()) &&
@@ -124,11 +124,11 @@ _LoadedTexture.textureFilters = function(context, texture, textureInfo, target) 
         filter === context.LINEAR_MIPMAP_LINEAR)
       filter = context.LINEAR;
     context.texParameteri(target,
-         context.TEXTURE_MIN_FILTER, filter);
+      context.TEXTURE_MIN_FILTER, filter);
     context.texParameteri(target,
-        context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+      context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
     context.texParameteri(target,
-        context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+      context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
   }
 };
 
@@ -144,7 +144,7 @@ _LoadedTexture.prototype._init = function(texture, textureInfo, context) {
   // top-down texture coordinates, no flipping is needed.
   // NOTE: Non-DOMElement recommends top-down.
   context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL,
-  textureInfo.topDown ? 0 : 1);
+    textureInfo.topDown ? 0 : 1);
   var target = textureInfo.target;
   context.bindTexture(target, this.loadedTexture);
   if("src" in texture.image) {
@@ -153,8 +153,8 @@ _LoadedTexture.prototype._init = function(texture, textureInfo, context) {
       texture.image);
   } else {
     context.texImage2D(target, 0,
-     textureInfo.internalFormat, texture.getWidth(), texture.getHeight(), 0,
-     textureInfo.format, context.UNSIGNED_BYTE, texture.image);
+      textureInfo.internalFormat, texture.getWidth(), texture.getHeight(), 0,
+      textureInfo.format, context.UNSIGNED_BYTE, texture.image);
   }
   _LoadedTexture.textureFilters(context, texture, textureInfo, target);
 };
@@ -177,12 +177,12 @@ function _LoadedCubeMap(textureImage, context) {
   for(var i = 0; i < 6; i++) {
     if("src" in textureImage.textures[i].image) {
       context.texImage2D(context.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
-      context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
-      textureImage.textures[i].image);
+        context.RGBA, context.RGBA, context.UNSIGNED_BYTE,
+        textureImage.textures[i].image);
     } else {
       context.texImage2D(context.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
-     context.RGBA, textureImage.getWidth(), textureImage.getHeight(), 0,
-     context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
+        context.RGBA, textureImage.getWidth(), textureImage.getHeight(), 0,
+        context.RGBA, context.UNSIGNED_BYTE, textureImage.image);
     }
   }
   _LoadedTexture.textureFilters(context, textureImage, new H3DU.TextureInfo(), target);
@@ -265,36 +265,36 @@ _MaterialBinder.bindTexture = function(
     context.activeTexture(context.TEXTURE0 + textureUnit);
     if(isFrameBuffer) {
       context.bindTexture(context.TEXTURE_2D,
-         texture.colorTexture);
+        texture.colorTexture);
       if(texture.colorTexture) {
         context.texParameteri(context.TEXTURE_2D,
-           context.TEXTURE_MIN_FILTER, textureInfo.magFilter);
+          context.TEXTURE_MIN_FILTER, textureInfo.magFilter);
         context.texParameteri(context.TEXTURE_2D,
-           context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
+          context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
         context.texParameteri(context.TEXTURE_2D,
           context.TEXTURE_WRAP_S, textureInfo.wrapS);
         context.texParameteri(context.TEXTURE_2D,
-         context.TEXTURE_WRAP_T, textureInfo.wrapT);
+          context.TEXTURE_WRAP_T, textureInfo.wrapT);
       }
     } else {
       var target = texture instanceof H3DU.CubeMap ?
-         context.TEXTURE_CUBE_MAP : textureInfo.target;
+        context.TEXTURE_CUBE_MAP : textureInfo.target;
       context.bindTexture(target,
         loadedTexture.loadedTexture);
-       // Set texture parameters
+      // Set texture parameters
       loader._setMaxAnisotropy(context, target);
-       // set magnification
+      // set magnification
       context.texParameteri(target,
         context.TEXTURE_MAG_FILTER, textureInfo.magFilter);
       if(typeof WebGL2RenderingContext !== "undefined" && WebGL2RenderingContext !== null && context instanceof WebGL2RenderingContext ||
      _isPowerOfTwo(texture.getWidth()) &&
       _isPowerOfTwo(texture.getHeight())) {
         context.texParameteri(target,
-           context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
+          context.TEXTURE_MIN_FILTER, textureInfo.minFilter);
         context.texParameteri(target,
           context.TEXTURE_WRAP_S, textureInfo.wrapS);
         context.texParameteri(target,
-         context.TEXTURE_WRAP_T, textureInfo.wrapT);
+          context.TEXTURE_WRAP_T, textureInfo.wrapT);
       } else {
         // WebGL 1 non-power-of-two texture
         var filter = textureInfo.minFilter;
@@ -305,11 +305,11 @@ _MaterialBinder.bindTexture = function(
         filter === context.LINEAR_MIPMAP_LINEAR)
           filter = context.LINEAR;
         context.texParameteri(target,
-         context.TEXTURE_MIN_FILTER, filter);
+          context.TEXTURE_MIN_FILTER, filter);
         context.texParameteri(target,
           context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
         context.texParameteri(target,
-         context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+          context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
       }
     }
   }
@@ -340,15 +340,15 @@ _LightsBinder.prototype.bind = function(program, viewMatrix) {
     var lt = lightsObject.lights[i];
     ltname = "lights[" + i + "]";
     uniforms[ltname + ".diffuse"] = lt.diffuse.length === 4 ?
-    lt.diffuse : [lt.diffuse[0], lt.diffuse[1], lt.diffuse[2], 1];
+      lt.diffuse : [lt.diffuse[0], lt.diffuse[1], lt.diffuse[2], 1];
     uniforms[ltname + ".specular"] = lt.specular.length === 4 ?
-    lt.specular : [lt.specular[0], lt.specular[1], lt.specular[2], 1];
+      lt.specular : [lt.specular[0], lt.specular[1], lt.specular[2], 1];
     var pos = H3DU.Math.mat4transform(viewMatrix, lightsObject.lights[i].position);
     uniforms[ltname + ".position"] = pos;
     uniforms[ltname + ".radius"] = [Math.max(0.0, lt.radius * lt.radius * lt.radius * lt.radius),
       0, 0, 0];
   }
- // Set empty values for undefined lights up to MAX_LIGHTS
+  // Set empty values for undefined lights up to MAX_LIGHTS
   for(i = lightsObject.lights.length; i < H3DU.Lights.MAX_LIGHTS; i++) {
     ltname = "lights[" + i + "]";
     uniforms[ltname + ".diffuse"] = _LightsBinder.emptyW1;

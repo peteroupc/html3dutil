@@ -22,8 +22,8 @@ FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
     fb = this._frameBuffers[i];
     if(fb[0] === info && fb[1] === context) {
       if(info.width !== fb[3] || info.height !== fb[4]) {
-  // Width and/or height given in frame buffer info
-  // have changed, rebuild frame buffer
+        // Width and/or height given in frame buffer info
+        // have changed, rebuild frame buffer
         fb[2].dispose();
         fb[2] = new H3DU.FrameBuffer(fb[1], info.width, info.height);
         fb[3] = info.width;
@@ -51,13 +51,13 @@ FrameBufferLoader.prototype.bind = function(info, context, textureUnit) {
     // console.log("binding frame buffer to unit "+textureUnit)
     context.activeTexture(context.TEXTURE0 + textureUnit);
     context.bindFramebuffer(
-    context.FRAMEBUFFER, fc.buffer);
+      context.FRAMEBUFFER, fc.buffer);
     context.framebufferTexture2D(
-   context.FRAMEBUFFER, context.COLOR_ATTACHMENT0,
-   context.TEXTURE_2D, fc.colorTexture, 0);
+      context.FRAMEBUFFER, context.COLOR_ATTACHMENT0,
+      context.TEXTURE_2D, fc.colorTexture, 0);
     context.framebufferRenderbuffer(
-   context.FRAMEBUFFER, context.DEPTH_ATTACHMENT,
-   context.RENDERBUFFER, fc.depthbuffer);
+      context.FRAMEBUFFER, context.DEPTH_ATTACHMENT,
+      context.RENDERBUFFER, fc.depthbuffer);
     return fc;
   }
   return null;
@@ -67,13 +67,13 @@ FrameBufferLoader.prototype.unbind = function(info, context) {
   if(typeof info !== "undefined" && info !== null) {
     // console.log("unbinding frame buffer")
     context.framebufferTexture2D(
-     context.FRAMEBUFFER, context.COLOR_ATTACHMENT0,
-     context.TEXTURE_2D, null, 0);
+      context.FRAMEBUFFER, context.COLOR_ATTACHMENT0,
+      context.TEXTURE_2D, null, 0);
     context.framebufferRenderbuffer(
-     context.FRAMEBUFFER, context.DEPTH_ATTACHMENT,
-     context.RENDERBUFFER, null);
+      context.FRAMEBUFFER, context.DEPTH_ATTACHMENT,
+      context.RENDERBUFFER, null);
     context.bindFramebuffer(
-     context.FRAMEBUFFER, null);
+      context.FRAMEBUFFER, null);
   }
 };
 /**
@@ -101,55 +101,55 @@ export var FrameBuffer = function(context, width, height) {
   if(width < 0 || height < 0)throw new Error("width or height negative");
   context = context.getContext ? context.getContext() : context;
   this.context = context;
- // give the framebuffer its own texture unit, since the
- // shader program may bind samplers to other texture
- // units, such as texture unit 0
+  // give the framebuffer its own texture unit, since the
+  // shader program may bind samplers to other texture
+  // units, such as texture unit 0
   this.textureUnit = 3;
   this._init(context, width, height);
 };
 /** @ignore */
 FrameBuffer.prototype._init = function(context, width, height) {
   this.buffer = context.createFramebuffer();
- // create color texture
+  // create color texture
   this.colorTexture = context.createTexture();
- /** The frame buffer's width.
-  * @readonly */
+  /** The frame buffer's width.
+   * @readonly */
   this.width = Math.ceil(width);
- /** The frame buffer's height.
-  * @readonly */
+  /** The frame buffer's height.
+   * @readonly */
   this.height = Math.ceil(height);
   this.context.activeTexture(this.context.TEXTURE0 + this.textureUnit);
   this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
- // In WebGL, texture coordinates start at the upper left corner rather than
- // the lower left as in OpenGL and OpenGL ES, so we use this method call
- // to reestablish the lower left corner.
+  // In WebGL, texture coordinates start at the upper left corner rather than
+  // the lower left as in OpenGL and OpenGL ES, so we use this method call
+  // to reestablish the lower left corner.
   this.context.pixelStorei(this.context.UNPACK_FLIP_Y_WEBGL, 1);
   this.context.texImage2D(this.context.TEXTURE_2D, 0,
-   this.context.RGBA, this.width, this.height, 0,
-   this.context.RGBA, this.context.UNSIGNED_BYTE, null);
- // set essential parameters now to eliminate warnings (will
- // be set again as the texture is bound)
+    this.context.RGBA, this.width, this.height, 0,
+    this.context.RGBA, this.context.UNSIGNED_BYTE, null);
+  // set essential parameters now to eliminate warnings (will
+  // be set again as the texture is bound)
   this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
+    this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
   this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
+    this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
   this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
+    this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
   this.context.texParameteri(this.context.TEXTURE_2D,
-   this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
- // create depth renderbuffer
+    this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
+  // create depth renderbuffer
   this.depthbuffer = this.context.createRenderbuffer();
   var oldBuffer = this.context.getParameter(
-   context.FRAMEBUFFER_BINDING);
+    context.FRAMEBUFFER_BINDING);
   this.context.bindFramebuffer(
-   context.FRAMEBUFFER, this.buffer);
+    context.FRAMEBUFFER, this.buffer);
   this.context.bindRenderbuffer(
-   context.RENDERBUFFER, this.depthbuffer);
+    context.RENDERBUFFER, this.depthbuffer);
   this.context.renderbufferStorage(
-   context.RENDERBUFFER, context.DEPTH_COMPONENT16,
-   this.width, this.height);
+    context.RENDERBUFFER, context.DEPTH_COMPONENT16,
+    this.width, this.height);
   this.context.bindFramebuffer(
-   context.FRAMEBUFFER, oldBuffer);
+    context.FRAMEBUFFER, oldBuffer);
 };
 /**
  * Resizes the frame buffer to a new width and height,
@@ -209,7 +209,7 @@ FrameBuffer.prototype.unbind = function() {
 FrameBuffer.prototype.dispose = function() {
   if(typeof this.buffer !== "undefined" && this.buffer !== null) {
     var oldBuffer = this.context.getParameter(
-    this.context.FRAMEBUFFER_BINDING);
+      this.context.FRAMEBUFFER_BINDING);
     if(oldBuffer === this.buffer) {
       this.unbind();
     }

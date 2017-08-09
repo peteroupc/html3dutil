@@ -25,7 +25,7 @@ var HMath = {
     var p3 = frustum[3];
     var p4 = frustum[4];
     var p5 = frustum[5];
-  // left-top-near, left-bottom-near, right-top-near, ..., right-bottom-far
+    // left-top-near, left-bottom-near, right-top-near, ..., right-bottom-far
     var ret = [];
     var t1 = p2[1] * p4[2];
     var t2 = p2[2] * p4[1];
@@ -163,71 +163,71 @@ var HMath = {
     ret[23] = (t109 * t59 + (t102 - t103) * t42 + (t65 - t66) * t86) * t110;
     return ret;
   },
-/**
- * Finds the center of a 3D bounding box.
- * @param {Array<number>} box An axis-aligned bounding
- * box, which is an array of six values.
- * The first three values are the smallest X, Y, and Z coordinates,
- * and the last three values are the largest X, Y, and Z
- * coordinates.
- * @returns {Array<number>} A 3-element array containing the
- * X, Y, and Z coordinates, respectively, of the bounding box's
- * center.
- */
+  /**
+   * Finds the center of a 3D bounding box.
+   * @param {Array<number>} box An axis-aligned bounding
+   * box, which is an array of six values.
+   * The first three values are the smallest X, Y, and Z coordinates,
+   * and the last three values are the largest X, Y, and Z
+   * coordinates.
+   * @returns {Array<number>} A 3-element array containing the
+   * X, Y, and Z coordinates, respectively, of the bounding box's
+   * center.
+   */
   "boxCenter":function(box) {
     return [box[0] + (box[3] - box[0]) * 0.5,
       box[1] + (box[4] - box[1]) * 0.5,
       box[2] + (box[5] - box[2]) * 0.5];
   },
-/**
- * Finds the dimensions of a 3D bounding box. This is done by subtracting
- * the first three values of the given array with its last three values.
- * @param {Array<number>} box An axis-aligned bounding
- * box, which is an array of six values.
- * The first three values are the smallest X, Y, and Z coordinates,
- * and the last three values are the largest X, Y, and Z
- * coordinates.
- * @returns {Array<number>} A 3-element array containing the
- * width, height, and depth of the bounding box, respectively. If
- * at least one of the minimum coordinates is greater than its
- * corresponding maximum coordinate, the array can contain
- * negative values.
- */
+  /**
+   * Finds the dimensions of a 3D bounding box. This is done by subtracting
+   * the first three values of the given array with its last three values.
+   * @param {Array<number>} box An axis-aligned bounding
+   * box, which is an array of six values.
+   * The first three values are the smallest X, Y, and Z coordinates,
+   * and the last three values are the largest X, Y, and Z
+   * coordinates.
+   * @returns {Array<number>} A 3-element array containing the
+   * width, height, and depth of the bounding box, respectively. If
+   * at least one of the minimum coordinates is greater than its
+   * corresponding maximum coordinate, the array can contain
+   * negative values.
+   */
   "boxDimensions":function(box) {
     return [box[3] - box[0], box[4] - box[1], box[5] - box[2]];
   },
-/**
- * Determines whether a 3D bounding box is empty.
- * This is determined if the minimum coordinate
- * is larger than the corresponding maximum coordinate.
- * @param {Array<number>} box An axis-aligned bounding
- * box, which is an array of six values.
- * The first three values are the smallest X, Y, and Z coordinates,
- * and the last three values are the largest X, Y, and Z
- * coordinates.
- * @returns {boolean} <code>true</code> if at least one
- * of the minimum coordinates is greater than its
- * corresponding maximum coordinate; otherwise, <code>false</code>.
- */
+  /**
+   * Determines whether a 3D bounding box is empty.
+   * This is determined if the minimum coordinate
+   * is larger than the corresponding maximum coordinate.
+   * @param {Array<number>} box An axis-aligned bounding
+   * box, which is an array of six values.
+   * The first three values are the smallest X, Y, and Z coordinates,
+   * and the last three values are the largest X, Y, and Z
+   * coordinates.
+   * @returns {boolean} <code>true</code> if at least one
+   * of the minimum coordinates is greater than its
+   * corresponding maximum coordinate; otherwise, <code>false</code>.
+   */
   "boxIsEmpty":function(box) {
     return box[0] > box[3] || box[1] > box[4] || box[2] > box[5];
   },
-/**
- * Converts a color in sRGB to the linear RGB color space, and returns
- * a new vector with the result.<p>
- * The sRGB color space is a nonlinear red-green-blue color space;
- * it <i>roughly</i> differs from linear RGB in having an exponent
- * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
- * by a surface of the given color.
- * @param {Array<number>} srgb A three- or four-element vector giving
- * the red, green, and blue components, in that order, of an sRGB color. The alpha component
- * is either the fourth element in the case of a four-element vector, or 1.0
- * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
- * @returns {Array<number>} A three-element vector giving
- * the red, green, and blue components, in that order, of the given color
- * in linear RGB. The alpha component will be as specified
- * in the "srgb" parameter.
- */
+  /**
+   * Converts a color in sRGB to the linear RGB color space, and returns
+   * a new vector with the result.<p>
+   * The sRGB color space is a nonlinear red-green-blue color space;
+   * it <i>roughly</i> differs from linear RGB in having an exponent
+   * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+   * by a surface of the given color.
+   * @param {Array<number>} srgb A three- or four-element vector giving
+   * the red, green, and blue components, in that order, of an sRGB color. The alpha component
+   * is either the fourth element in the case of a four-element vector, or 1.0
+   * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
+   * @returns {Array<number>} A three-element vector giving
+   * the red, green, and blue components, in that order, of the given color
+   * in linear RGB. The alpha component will be as specified
+   * in the "srgb" parameter.
+   */
   "colorToLinear":function(srgb) {
     return [
       srgb[0] <= 0.03928 ? 0.077399381 * srgb[0] : Math.pow((0.0556 + srgb[0]) * 0.947328534, 2.4),
@@ -235,22 +235,22 @@ var HMath = {
       srgb[2] <= 0.03928 ? 0.077399381 * srgb[2] : Math.pow((0.0556 + srgb[2]) * 0.947328534, 2.4),
       srgb.length <= 3 ? 1.0 : srgb[3]];
   },
-/**
- * Converts a color in linear RGB to the sRGB color space, and returns
- * a new vector with the result.<p>
- * The sRGB color space is a nonlinear red-green-blue color space;
- * it <i>roughly</i> differs from linear RGB in having an exponent
- * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
- * by a surface of the given color.
- * @param {Array<number>} lin A three- or four-element vector giving
- * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
- * is either the fourth element in the case of a four-element vector, or 1.0
- * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
- * @returns {Array<number>} lin A four-element vector giving
- * the red, green, blue, and alpha components, in that order, of the given color
- * in the sRGB color space. The alpha component will be as specified
- * in the "lin" parameter.
- */
+  /**
+   * Converts a color in linear RGB to the sRGB color space, and returns
+   * a new vector with the result.<p>
+   * The sRGB color space is a nonlinear red-green-blue color space;
+   * it <i>roughly</i> differs from linear RGB in having an exponent
+   * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+   * by a surface of the given color.
+   * @param {Array<number>} lin A three- or four-element vector giving
+   * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
+   * is either the fourth element in the case of a four-element vector, or 1.0
+   * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
+   * @returns {Array<number>} lin A four-element vector giving
+   * the red, green, blue, and alpha components, in that order, of the given color
+   * in the sRGB color space. The alpha component will be as specified
+   * in the "lin" parameter.
+   */
   "colorTosRGB":function(lin) {
     return [
       lin[0] <= 0.00304 ? 12.92 * lin[0] : Math.pow(lin[0], 0.41666666667) * 1.0556 - 0.0556,
@@ -258,24 +258,24 @@ var HMath = {
       lin[2] <= 0.00304 ? 12.92 * lin[2] : Math.pow(lin[2], 0.41666666667) * 1.0556 - 0.0556,
       lin.length <= 3 ? 1.0 : lin[3]];
   },
-/**
- * Determines whether an axis-aligned bounding box
- * is at least partially inside a view frustum.
- * @param {Array<Array<number>>} frustum An array of six
- * 4-element arrays representing the six clipping planes of the
- * view frustum. In order, they are the left, right, top,
- * bottom, near, and far clipping planes.
- * @param {Array<number>} box An axis-aligned bounding
- * box in world space, which is an array of six values.
- * The first three values are the smallest X, Y, and Z coordinates,
- * and the last three values are the largest X, Y, and Z
- * coordinates.
- * @returns {boolean} <code>true</code> if the box
- * may be partially or totally
- * inside the frustum; <code>false</code> if the box is
- * definitely outside the frustum, or if the box is empty
- * (see "boxIsEmpty").
- */
+  /**
+   * Determines whether an axis-aligned bounding box
+   * is at least partially inside a view frustum.
+   * @param {Array<Array<number>>} frustum An array of six
+   * 4-element arrays representing the six clipping planes of the
+   * view frustum. In order, they are the left, right, top,
+   * bottom, near, and far clipping planes.
+   * @param {Array<number>} box An axis-aligned bounding
+   * box in world space, which is an array of six values.
+   * The first three values are the smallest X, Y, and Z coordinates,
+   * and the last three values are the largest X, Y, and Z
+   * coordinates.
+   * @returns {boolean} <code>true</code> if the box
+   * may be partially or totally
+   * inside the frustum; <code>false</code> if the box is
+   * definitely outside the frustum, or if the box is empty
+   * (see "boxIsEmpty").
+   */
   "frustumHasBox":function(frustum, box) {
     if(HMath.boxIsEmpty(box)) {
       return false;
@@ -316,22 +316,22 @@ var HMath = {
     }
     return true;
   },
-/**
- * Determines whether a point is
- * outside or inside a view frustum.
- * @param {Array<Array<number>>} frustum An array of six
- * 4-element arrays representing the six clipping planes of the
- * view frustum. In order, they are the left, right, top,
- * bottom, near, and far clipping planes.
- * @param {number} x X coordinate of a point
- * in world space.
- * @param {number} y Y coordinate of a point
- * in world space.
- * @param {number} z Z coordinate of a point
- * in world space.
- * @returns {boolean} true if the point is inside;
- * otherwise false;
- */
+  /**
+   * Determines whether a point is
+   * outside or inside a view frustum.
+   * @param {Array<Array<number>>} frustum An array of six
+   * 4-element arrays representing the six clipping planes of the
+   * view frustum. In order, they are the left, right, top,
+   * bottom, near, and far clipping planes.
+   * @param {number} x X coordinate of a point
+   * in world space.
+   * @param {number} y Y coordinate of a point
+   * in world space.
+   * @param {number} z Z coordinate of a point
+   * in world space.
+   * @returns {boolean} true if the point is inside;
+   * otherwise false;
+   */
   "frustumHasPoint":function(frustum, x, y, z) {
     for(var i = 0; i < 6; i++) {
       var d = frustum[i][0] * x + frustum[i][1] * y +
@@ -340,25 +340,25 @@ var HMath = {
     }
     return true;
   },
-/**
- * Determines whether a sphere is at least
- * partially inside a view frustum.
- * @param {Array<Array<number>>} frustum An array of six
- * 4-element arrays representing the six clipping planes of the
- * view frustum. In order, they are the left, right, top,
- * bottom, near, and far clipping planes.
- * @param {number} x X coordinate of the sphere's center
- * in world space.
- * @param {number} y Y coordinate of the sphere's center
- * in world space.
- * @param {number} z Z coordinate of the sphere's center
- * in world space.
- * @param {number} radius Radius of the sphere
- * in world-space units.
- * @returns {boolean} <code>true</code> if the sphere
- * is partially or totally
- * inside the frustum; <code>false</code> otherwise.
- */
+  /**
+   * Determines whether a sphere is at least
+   * partially inside a view frustum.
+   * @param {Array<Array<number>>} frustum An array of six
+   * 4-element arrays representing the six clipping planes of the
+   * view frustum. In order, they are the left, right, top,
+   * bottom, near, and far clipping planes.
+   * @param {number} x X coordinate of the sphere's center
+   * in world space.
+   * @param {number} y Y coordinate of the sphere's center
+   * in world space.
+   * @param {number} z Z coordinate of the sphere's center
+   * in world space.
+   * @param {number} radius Radius of the sphere
+   * in world-space units.
+   * @returns {boolean} <code>true</code> if the sphere
+   * is partially or totally
+   * inside the frustum; <code>false</code> otherwise.
+   */
   "frustumHasSphere":function(frustum, x, y, z, radius) {
     if(radius < 0)throw new Error("radius is negative");
     for(var i = 0; i < 6; i++) {
@@ -369,36 +369,36 @@ var HMath = {
     }
     return true;
   },
-/**
- * Returns a copy of a 3x3 matrix.
- * @param {Array<number>} mat A 3x3atrix.
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns a copy of a 3x3 matrix.
+   * @param {Array<number>} mat A 3x3atrix.
+   * @returns {Array<number>} Return value. */
   "mat3copy":function(mat) {
     return [mat[0], mat[1], mat[2], mat[3],
       mat[4], mat[5], mat[6], mat[7],
       mat[8]];
   },
-/**
- * Returns the identity 3x3 matrix (a matrix that keeps
- * vectors unchanged when they are transformed with this matrix).
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns the identity 3x3 matrix (a matrix that keeps
+   * vectors unchanged when they are transformed with this matrix).
+   * @returns {Array<number>} Return value. */
   "mat3identity":function() {
     return [1, 0, 0, 0, 1, 0, 0, 0, 1];
   },
 
-/**
- * Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
- * @param {Array<number>} m A 3x3 matrix.
- * @returns {Array<number>} The resulting 3x3 matrix.
- * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
- */
+  /**
+   * Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
+   * @param {Array<number>} m A 3x3 matrix.
+   * @returns {Array<number>} The resulting 3x3 matrix.
+   * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
+   */
   "mat3invert":function(m) {
     var ret = [];
     var t4 = m[4] * m[8] - m[5] * m[7];
     var t5 = m[5] * m[6] - m[3] * m[8];
     var t6 = m[3] * m[7] - m[4] * m[6];
     var t7 = 1.0 / (
-    m[0] * t4 + m[1] * t5 + m[2] * t6);
+      m[0] * t4 + m[1] * t5 + m[2] * t6);
     if(t7 === 0)return HMath.mat3identity();
     ret[0] = t4 * t7;
     ret[1] = (m[2] * m[7] - m[1] * m[8]) * t7;
@@ -411,21 +411,21 @@ var HMath = {
     ret[8] = (m[0] * m[4] - m[1] * m[3]) * t7;
     return ret;
   },
-/**
- * Multiplies two 3x3 matrices. A new matrix is returned.
- * The matrices are multiplied such that the transformations
- * they describe happen in reverse order. For example, if the first
- * matrix (input matrix) describes a translation and the second
- * matrix describes a scaling, the multiplied matrix will describe
- * the effect of scaling then translation.
- * <p>The matrix multiplication is effectively done by breaking up matrix <code>b</code>
- * into three 3-element vectors (the first 3 elements make up the first vector, and so on),
- * [transforming]{@link H3DU.Math.mat3transform} each vector with
- * matrix <code>a</code>, and putting the vectors back together into a new matrix.
- * @param {Array<number>} a The first matrix.
- * @param {Array<number>} b The second matrix.
- * @returns {Array<number>} The resulting 3x3 matrix.
- */
+  /**
+   * Multiplies two 3x3 matrices. A new matrix is returned.
+   * The matrices are multiplied such that the transformations
+   * they describe happen in reverse order. For example, if the first
+   * matrix (input matrix) describes a translation and the second
+   * matrix describes a scaling, the multiplied matrix will describe
+   * the effect of scaling then translation.
+   * <p>The matrix multiplication is effectively done by breaking up matrix <code>b</code>
+   * into three 3-element vectors (the first 3 elements make up the first vector, and so on),
+   * [transforming]{@link H3DU.Math.mat3transform} each vector with
+   * matrix <code>a</code>, and putting the vectors back together into a new matrix.
+   * @param {Array<number>} a The first matrix.
+   * @param {Array<number>} b The second matrix.
+   * @returns {Array<number>} The resulting 3x3 matrix.
+   */
   "mat3multiply":function(a, b) {
     var ret = [];
     ret[0] = b[0] * a[0] + b[1] * a[3] + b[2] * a[6];
@@ -439,25 +439,25 @@ var HMath = {
     ret[8] = b[6] * a[2] + b[7] * a[5] + b[8] * a[8];
     return ret;
   },
-/**
- * Transforms a 3-element vector with a 3x3 matrix and returns
- * the transformed vector.<p>
- * Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
- * is effectively done by breaking up <code>mat</code> into three 3-element vectors
- * (the first 3 elements make up the first vector, and so on), multiplying
- * each vector in <code>mat</code> by the corresponding component in
- * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
- * get the transformed vector.
- * @param {Array<number>} mat A 3x3 matrix.
- * @param {Array<number>|Number} v X coordinate.
- * If "vy", and "vz" are omitted, this value can instead
- * be a 4-element array giving the X, Y, and Z coordinates.
- * @param {number} [vy] Y coordinate.
- * @param {number} [vz] Z coordinate. To transform a 2D
- * point, set Z to 1, and divide the result's X and Y by
- * the result's Z.
- * @returns {Array<number>} The transformed vector.
- */
+  /**
+   * Transforms a 3-element vector with a 3x3 matrix and returns
+   * the transformed vector.<p>
+   * Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
+   * is effectively done by breaking up <code>mat</code> into three 3-element vectors
+   * (the first 3 elements make up the first vector, and so on), multiplying
+   * each vector in <code>mat</code> by the corresponding component in
+   * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
+   * get the transformed vector.
+   * @param {Array<number>} mat A 3x3 matrix.
+   * @param {Array<number>|Number} v X coordinate.
+   * If "vy", and "vz" are omitted, this value can instead
+   * be a 4-element array giving the X, Y, and Z coordinates.
+   * @param {number} [vy] Y coordinate.
+   * @param {number} [vz] Z coordinate. To transform a 2D
+   * point, set Z to 1, and divide the result's X and Y by
+   * the result's Z.
+   * @returns {Array<number>} The transformed vector.
+   */
   "mat3transform":function(mat, v, vy, vz) {
     var x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
@@ -473,82 +473,82 @@ var HMath = {
       x * mat[1] + y * mat[4] + z * mat[7],
       x * mat[2] + y * mat[5] + z * mat[8]];
   },
-/**
- * Returns the transpose of a 3x3 matrix. (A transpose is a
- * matrix whose rows are converted to columns and vice versa.)
- * @param {Array<number>} m3 A 3x3 matrix.
- * @returns {Array<number>} The resulting 3x3 matrix.
- */
+  /**
+   * Returns the transpose of a 3x3 matrix. (A transpose is a
+   * matrix whose rows are converted to columns and vice versa.)
+   * @param {Array<number>} m3 A 3x3 matrix.
+   * @returns {Array<number>} The resulting 3x3 matrix.
+   */
   "mat3transpose":function(m3) {
     return HMath.mat3transposeInPlace(HMath.mat3copy(m3));
   },
-/**
- * Transposes a 3x3 matrix in place without creating
- * a new matrix. (A transpose is a matrix whose rows
- * are converted to columns and vice versa.)
- * @param {Array<number>} mat A 3x3 matrix.
- * @returns {Array<number>} The parameter "mat".
- */
+  /**
+   * Transposes a 3x3 matrix in place without creating
+   * a new matrix. (A transpose is a matrix whose rows
+   * are converted to columns and vice versa.)
+   * @param {Array<number>} mat A 3x3 matrix.
+   * @returns {Array<number>} The parameter "mat".
+   */
   "mat3transposeInPlace":function(mat) {
     var tmp = mat[1]; mat[1] = mat[3]; mat[3] = tmp;
     tmp = mat[2]; mat[2] = mat[6]; mat[6] = tmp;
     tmp = mat[5]; mat[5] = mat[7]; mat[7] = tmp;
     return mat;
   },
-/**
- * Returns a copy of a 4x4 matrix.
- * @param {Array<number>} mat A 4x4 matrix.
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns a copy of a 4x4 matrix.
+   * @param {Array<number>} mat A 4x4 matrix.
+   * @returns {Array<number>} Return value. */
   "mat4copy":function(mat) {
     return [mat[0], mat[1], mat[2], mat[3],
       mat[4], mat[5], mat[6], mat[7],
       mat[8], mat[9], mat[10], mat[11],
       mat[12], mat[13], mat[14], mat[15]];
   },
-/**
- * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera}
- * in the form of a view frustum, or the limits in the "camera"'s view.<p>
- * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
- * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
- * component of the transformed vertex). For a matrix in which Z coordinates
- * range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * To adjust the result of this method for a left-handed system,
- * reverse the sign of the 9th, 10th, 11th, and 12th
- * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {number} l X coordinate of the point in eye space where the left
- * clipping plane meets the near clipping plane.
- * @param {number} r X coordinate of the point in eye space where the right
- * clipping plane meets the near clipping plane.
- * ("l" is usually less than "r", so that X coordinates increase leftward.
- * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {number} b Y coordinate of the point in eye space where the bottom
- * clipping plane meets the near clipping plane.
- * @param {number} t Y coordinate of the point in eye space where the top
- * clipping plane meets the near clipping plane.
- * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
- * @param {number} near The distance, in eye space, from the "camera" to
- * the near clipping plane. Objects closer than this distance won't be
- * seen.<p>This value should be greater than 0, and should be set to the highest distance
- * from the "camera" that the application can afford to clip out for being too
- * close, for example, 0.5, 1, or higher.
- * @param {number} far The distance, in eye space, from the "camera" to
- * the far clipping plane. Objects beyond this distance will be too far
- * to be seen.<br>This value should be greater than 0 and should be set
- * so that the absolute ratio of "far" to "near" is as small as
- * the application can accept.
- * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
- * In the usual case that "far" is greater than "near", depth
- * buffer values will be more concentrated around the near
- * plane than around the far plane due to the perspective
- * projection.  The greater the ratio of "far" to "near", the more
- * concentrated the values will be around the near plane, and the
- * more likely two objects close to the far plane will have identical depth values.
- * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera}
+   * in the form of a view frustum, or the limits in the "camera"'s view.<p>
+   * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
+   * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
+   * component of the transformed vertex). For a matrix in which Z coordinates
+   * range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.<p>
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * To adjust the result of this method for a left-handed system,
+   * reverse the sign of the 9th, 10th, 11th, and 12th
+   * elements of the result (zero-based indices 8, 9, 10, and 11).
+   * @param {number} l X coordinate of the point in eye space where the left
+   * clipping plane meets the near clipping plane.
+   * @param {number} r X coordinate of the point in eye space where the right
+   * clipping plane meets the near clipping plane.
+   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * If "l" is greater than "r", X coordinates increase in the opposite direction.)
+   * @param {number} b Y coordinate of the point in eye space where the bottom
+   * clipping plane meets the near clipping plane.
+   * @param {number} t Y coordinate of the point in eye space where the top
+   * clipping plane meets the near clipping plane.
+   * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
+   * @param {number} near The distance, in eye space, from the "camera" to
+   * the near clipping plane. Objects closer than this distance won't be
+   * seen.<p>This value should be greater than 0, and should be set to the highest distance
+   * from the "camera" that the application can afford to clip out for being too
+   * close, for example, 0.5, 1, or higher.
+   * @param {number} far The distance, in eye space, from the "camera" to
+   * the far clipping plane. Objects beyond this distance will be too far
+   * to be seen.<br>This value should be greater than 0 and should be set
+   * so that the absolute ratio of "far" to "near" is as small as
+   * the application can accept.
+   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
+   * In the usual case that "far" is greater than "near", depth
+   * buffer values will be more concentrated around the near
+   * plane than around the far plane due to the perspective
+   * projection.  The greater the ratio of "far" to "near", the more
+   * concentrated the values will be around the near plane, and the
+   * more likely two objects close to the far plane will have identical depth values.
+   * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4frustum":function(l, r, b, t, near, far) {
     var dn = 2 * near;
     var onedx = 1 / (r - l);
@@ -560,38 +560,38 @@ var HMath = {
       (l + r) * onedx, (t + b) * onedy, -(far + near) * onedz, -1,
       0, 0, -(dn * far) * onedz, 0];
   },
-/**
- * Returns the identity 4x4 matrix (a matrix that keeps
- * vectors unchanged when they are transformed with this matrix).
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns the identity 4x4 matrix (a matrix that keeps
+   * vectors unchanged when they are transformed with this matrix).
+   * @returns {Array<number>} Return value. */
   "mat4identity":function() {
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   },
-/**
- * Returns the transposed result of the inverted 3x3 upper left corner of
- * the given 4x4 matrix.<p>
- * This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
- * for transforming surface normals in order to keep them perpendicular
- * to a surface transformed by the model-view matrix. Normals are then
- * transformed by this matrix and then converted to [unit vectors]{@tutorial glmath}. But if the
- * input matrix uses only rotations, translations, and/or uniform scaling
- * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
- * be used instead of the inverse-transpose matrix to transform the normals.
- * @param {Array<number>} m4 A 4x4 matrix.
- * @returns {Array<number>} The resulting 3x3 matrix. If the matrix
- * can't be inverted, returns the identity 3x3 matrix.
- */
+  /**
+   * Returns the transposed result of the inverted 3x3 upper left corner of
+   * the given 4x4 matrix.<p>
+   * This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
+   * for transforming surface normals in order to keep them perpendicular
+   * to a surface transformed by the model-view matrix. Normals are then
+   * transformed by this matrix and then converted to [unit vectors]{@tutorial glmath}. But if the
+   * input matrix uses only rotations, translations, and/or uniform scaling
+   * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
+   * be used instead of the inverse-transpose matrix to transform the normals.
+   * @param {Array<number>} m4 A 4x4 matrix.
+   * @returns {Array<number>} The resulting 3x3 matrix. If the matrix
+   * can't be inverted, returns the identity 3x3 matrix.
+   */
   "mat4inverseTranspose3":function(m4) {
     if(m4[1] === 0 && m4[2] === 0 && m4[4] === 0 &&
    m4[6] === 0 && m4[8] === 0 && m4[9] === 0) {
       if(m4[0] === 1 && m4[5] === 1 && m4[10] === 1) {
-  // upper 3x3 is identity
+        // upper 3x3 is identity
         return [1, 0, 0, 0, 1, 0, 0, 0, 1];
       } else if(m4[0] * m4[5] * m4[10] !== 0) {
-  // upper 3x3 is simple scaling
+        // upper 3x3 is simple scaling
         return [1 / m4[0], 0, 0, 0, 1 / m4[5], 0, 0, 0, 1 / m4[10]];
       } else {
-  // upper 3x3 is uninvertable scaling
+        // upper 3x3 is uninvertable scaling
         return [1, 0, 0, 0, 1, 0, 0, 0, 1];
       }
     }
@@ -618,12 +618,12 @@ m[0] * m[7] * m[5];
       (m[2] * m[3] - m[0] * m[5]) * det,
       (-m[1] * m[3] + m[0] * m[4]) * det];
   },
-/**
- * Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
- * @param {Array<number>} m A 4x4 matrix.
- * @returns {Array<number>} The resulting 4x4 matrix.
- * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
- */
+  /**
+   * Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
+   * @param {Array<number>} m A 4x4 matrix.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
+   */
   "mat4invert":function(m) {
     var tvar0 = m[0] * m[10];
     var tvar1 = m[0] * m[11];
@@ -702,85 +702,85 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return r;
   },
-/**
- * Returns whether a 4x4 matrix is the identity matrix.
- * @param {Array<number>} mat A 4x4 matrix.
- * @returns {boolean} Return value. */
+  /**
+   * Returns whether a 4x4 matrix is the identity matrix.
+   * @param {Array<number>} mat A 4x4 matrix.
+   * @returns {boolean} Return value. */
   "mat4isIdentity":function(mat) {
     return (
-    mat[0] === 1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
+      mat[0] === 1 && mat[1] === 0 && mat[2] === 0 && mat[3] === 0 &&
     mat[4] === 0 && mat[5] === 1 && mat[6] === 0 && mat[7] === 0 &&
     mat[8] === 0 && mat[9] === 0 && mat[10] === 1 && mat[11] === 0 &&
     mat[12] === 0 && mat[13] === 0 && mat[14] === 0 && mat[15] === 1
     );
   },
-/**
- * Returns a 4x4 matrix that represents a camera view,
- * transforming world space coordinates to <i>eye space</i>
- * (or <i>camera space</i>). This essentially rotates a "camera"
- * and moves it to somewhere in the scene. In eye space:<ul>
- * <li>The "camera" is located at the origin (0,0,0), or
- * at <code>viewerPos</code> in world space,
- * and points away from the viewer toward the <code>lookingAt</code>
- * position in world space. This generally
- * puts <code>lookingAt</code> at the center of the view.
- * <li>The X axis points rightward from the "camera"'s viewpoint.
- * <li>The Y axis points upward from the center of the "camera" to its top. The
- * <code>up</code> vector guides this direction.
- * <li>The Z axis is parallel to the direction from the "camera"
- * to the <code>lookingAt</code> point.</ul><p>
- * This method is designed for use in a [right-handed coordinate system]{@tutorial glmath}
- * (the Z axis's direction will be from the "camera" to the point looked at).
- * To adjust the result of this method for a left-handed system,
- * reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
- * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
- * 10, 12, and 14); the Z axis's direction will thus be from the point looked at to the "camera".<p>
- * @param {Array<number>} viewerPos A 3-element vector specifying
- * the "camera" position in world space.<br>
- * When used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}, set this parameter to
- * the value of <code>lookingAt</code> plus a [unit vector]{@tutorial glmath}
- * (for example, using {@link H3DU.Math.vec3add}) to form an
- * <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is
- * an <i>isometric projection</i>). See the examples below.
- * @param {Array<number>} [lookingAt] A 3-element vector specifying
- * the point in world space that the "camera" is looking at. May be null or omitted,
- * in which case the default is the coordinates (0,0,0).
- * @param {Array<number>} [up] A 3-element vector specifying
- * the direction from the center of the "camera" to its top. This parameter may
- * be null or omitted, in which case the default is the vector (0, 1, 0),
- * the vector that results when the "camera" is held upright.<br>
- * This vector must not be parallel to the view direction
- * (the direction from "viewerPos" to "lookingAt").
- * (See the example for one way to ensure this.)<br>
- * @returns {Array<number>} The resulting 4x4 matrix.
- * @example <caption>The following example calls this method with an
- * up vector of (0, 1, 0) except if the view direction is parallel to that
- * vector or nearly so.</caption>
- * var upVector=[0,1,0]; // Y axis
- * var viewdir=HMath.vec3sub(lookingAt, viewerPos);
- * var par=HMath.vec3length(HMath.vec3cross(viewdir,upVector));
- * if(par<0.00001)upVector=[0,0,1]; // view is almost parallel, so use Z axis
- * var matrix=HMath.mat4lookat(viewerPos,lookingAt,upVector);
- * @example <caption>The following example creates an
- * isometric projection for a right-handed coordinate system. The Y
- * axis will point up, the Z axis toward the bottom left, and the X axis toward
- * the bottom right.</caption>
- * // Assumes an orthographic projection matrix is used. Example:
- * // var projectionMatrix=H3DU.Math.mat4ortho(-10,10,-10,10,-50,50);
- * // Camera will be at (1,1,1) -- actually (sqrt(1/3),sqrt(1/3),sqrt(1/3)) --
- * // and point toward [0,0,0]
- * var lookPoint=[0,0,0];
- * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
- * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
- * var matrix=HMath.mat4lookat(cameraPoint,lookPoint);
- * @example <caption>The following example is like the previous
- * example, but with the Z axis pointing up.</caption>
- * var lookPoint=[0,0,0];
- * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
- * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
- * // Positive Z axis is the up vector
- * var matrix=HMath.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
- */
+  /**
+   * Returns a 4x4 matrix that represents a camera view,
+   * transforming world space coordinates to <i>eye space</i>
+   * (or <i>camera space</i>). This essentially rotates a "camera"
+   * and moves it to somewhere in the scene. In eye space:<ul>
+   * <li>The "camera" is located at the origin (0,0,0), or
+   * at <code>viewerPos</code> in world space,
+   * and points away from the viewer toward the <code>lookingAt</code>
+   * position in world space. This generally
+   * puts <code>lookingAt</code> at the center of the view.
+   * <li>The X axis points rightward from the "camera"'s viewpoint.
+   * <li>The Y axis points upward from the center of the "camera" to its top. The
+   * <code>up</code> vector guides this direction.
+   * <li>The Z axis is parallel to the direction from the "camera"
+   * to the <code>lookingAt</code> point.</ul><p>
+   * This method is designed for use in a [right-handed coordinate system]{@tutorial glmath}
+   * (the Z axis's direction will be from the "camera" to the point looked at).
+   * To adjust the result of this method for a left-handed system,
+   * reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
+   * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
+   * 10, 12, and 14); the Z axis's direction will thus be from the point looked at to the "camera".<p>
+   * @param {Array<number>} viewerPos A 3-element vector specifying
+   * the "camera" position in world space.<br>
+   * When used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}, set this parameter to
+   * the value of <code>lookingAt</code> plus a [unit vector]{@tutorial glmath}
+   * (for example, using {@link H3DU.Math.vec3add}) to form an
+   * <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is
+   * an <i>isometric projection</i>). See the examples below.
+   * @param {Array<number>} [lookingAt] A 3-element vector specifying
+   * the point in world space that the "camera" is looking at. May be null or omitted,
+   * in which case the default is the coordinates (0,0,0).
+   * @param {Array<number>} [up] A 3-element vector specifying
+   * the direction from the center of the "camera" to its top. This parameter may
+   * be null or omitted, in which case the default is the vector (0, 1, 0),
+   * the vector that results when the "camera" is held upright.<br>
+   * This vector must not be parallel to the view direction
+   * (the direction from "viewerPos" to "lookingAt").
+   * (See the example for one way to ensure this.)<br>
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   * @example <caption>The following example calls this method with an
+   * up vector of (0, 1, 0) except if the view direction is parallel to that
+   * vector or nearly so.</caption>
+   * var upVector=[0,1,0]; // Y axis
+   * var viewdir=HMath.vec3sub(lookingAt, viewerPos);
+   * var par=HMath.vec3length(HMath.vec3cross(viewdir,upVector));
+   * if(par<0.00001)upVector=[0,0,1]; // view is almost parallel, so use Z axis
+   * var matrix=HMath.mat4lookat(viewerPos,lookingAt,upVector);
+   * @example <caption>The following example creates an
+   * isometric projection for a right-handed coordinate system. The Y
+   * axis will point up, the Z axis toward the bottom left, and the X axis toward
+   * the bottom right.</caption>
+   * // Assumes an orthographic projection matrix is used. Example:
+   * // var projectionMatrix=H3DU.Math.mat4ortho(-10,10,-10,10,-50,50);
+   * // Camera will be at (1,1,1) -- actually (sqrt(1/3),sqrt(1/3),sqrt(1/3)) --
+   * // and point toward [0,0,0]
+   * var lookPoint=[0,0,0];
+   * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
+   * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
+   * var matrix=HMath.mat4lookat(cameraPoint,lookPoint);
+   * @example <caption>The following example is like the previous
+   * example, but with the Z axis pointing up.</caption>
+   * var lookPoint=[0,0,0];
+   * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
+   * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
+   * // Positive Z axis is the up vector
+   * var matrix=HMath.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
+   */
   "mat4lookat":function(viewerPos, lookingAt, up) {
     if(typeof up === "undefined" || up === null)up = [0, 1, 0];
     if(typeof lookingAt === "undefined" || lookingAt === null)lookingAt = [0, 0, 0];
@@ -789,7 +789,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     if(len < 1e-6) {
       return HMath.mat4identity();
     }
-   // "f" is the normalized vector from "viewerPos" to "lookingAt"
+    // "f" is the normalized vector from "viewerPos" to "lookingAt"
     HMath.vec3scaleInPlace(f, 1.0 / len);
     // normalize the "up" vector
     up = HMath.vec3normalize(up);
@@ -808,21 +808,21 @@ tvar47 * tvar51 + tvar8 * tvar52;
       -HMath.vec3dot(viewerPos, u),
       -HMath.vec3dot(viewerPos, f), 1];
   },
-/**
- * Multiplies two 4x4 matrices. A new matrix is returned.
- * The matrices are multiplied such that the transformations
- * they describe happen in reverse order. For example, if the first
- * matrix (input matrix) describes a translation and the second
- * matrix describes a scaling, the multiplied matrix will describe
- * the effect of scaling then translation.
- * <p>The matrix multiplication is effectively done by breaking up matrix <code>b</code>
- * into four 4-element vectors (the first 4 elements make up the first vector, and so on),
- * [transforming]{@link H3DU.Math.mat4transform} each vector with
- * matrix <code>a</code>, and putting the vectors back together into a new matrix.
- * @param {Array<number>} a The first matrix.
- * @param {Array<number>} b The second matrix.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Multiplies two 4x4 matrices. A new matrix is returned.
+   * The matrices are multiplied such that the transformations
+   * they describe happen in reverse order. For example, if the first
+   * matrix (input matrix) describes a translation and the second
+   * matrix describes a scaling, the multiplied matrix will describe
+   * the effect of scaling then translation.
+   * <p>The matrix multiplication is effectively done by breaking up matrix <code>b</code>
+   * into four 4-element vectors (the first 4 elements make up the first vector, and so on),
+   * [transforming]{@link H3DU.Math.mat4transform} each vector with
+   * matrix <code>a</code>, and putting the vectors back together into a new matrix.
+   * @param {Array<number>} a The first matrix.
+   * @param {Array<number>} b The second matrix.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4multiply":function(a, b) {
     var dst = [];
     for(var i = 0; i < 16; i += 4) {
@@ -836,19 +836,19 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return dst;
   },
-/**
- * Returns a 4x4 view matrix representing an oblique projection,
- * when used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}.<p>
- * This method works the same way in right-handed and left-handed
- * coordinate systems.
- * @param {number} alpha Controls how much the Z axis is stretched. In degrees. A value of 45
- * (<code>arctan(1)</code>) indicates
- * a cabinet projection, and a value of 63.435 (<code>arctan(2)</code>) indicates a cavalier projection.
- * @param {number} phi Controls the apparent angle of the negative Z axis in relation to the
- * positive X axis. In degrees. 0 means the negative Z axis appears to point in the same direction as
- * the positive X axis, and 90, in the same direction as the positive Y axis.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 view matrix representing an oblique projection,
+   * when used in conjunction with an [orthographic projection]{@link H3DU.Math.mat4ortho}.<p>
+   * This method works the same way in right-handed and left-handed
+   * coordinate systems.
+   * @param {number} alpha Controls how much the Z axis is stretched. In degrees. A value of 45
+   * (<code>arctan(1)</code>) indicates
+   * a cabinet projection, and a value of 63.435 (<code>arctan(2)</code>) indicates a cavalier projection.
+   * @param {number} phi Controls the apparent angle of the negative Z axis in relation to the
+   * positive X axis. In degrees. 0 means the negative Z axis appears to point in the same direction as
+   * the positive X axis, and 90, in the same direction as the positive Y axis.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4oblique":function(alpha, phi) {
     var alphaAngle = (alpha >= 0 && alpha < 360 ? alpha : alpha % 360 + (alpha < 0 ? 360 : 0)) * HMath.PiDividedBy180;
     var phiAngle = (phi >= 0 && phi < 360 ? phi : phi % 360 + (phi < 0 ? 360 : 0)) * HMath.PiDividedBy180;
@@ -864,38 +864,38 @@ tvar47 * tvar51 + tvar8 * tvar52;
       0, 0, 0, 1
     ];
   },
-/**
- * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera}.
- * In this projection, the left clipping plane is parallel to the right clipping
- * plane and the top to the bottom.<p>
- * The projection returned by this method only scales and/or shifts the view, so that
- * objects with the same size won't appear smaller as they get more distant from the  "camera".<p>
- * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
- * view volume (as is the case in WebGL) will range from -1 to 1.
- * For a matrix in which Z coordinates range from 0 to 1, divide the 11th and 15th elements
- * of the result (zero-based indices 10 and 14) by 2, then add 0.5 to the 15th element.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * To adjust the result of this method for a left-handed system,
- * reverse the sign of the 11th element of the result (zero-based index 10).
- * @param {number} l Leftmost coordinate of the orthographic view.
- * @param {number} r Rightmost coordinate of the orthographic view.
- * ("l" is usually less than "r", so that X coordinates increase leftward.
- * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {number} b Bottommost coordinate of the orthographic view.
- * @param {number} t Topmost coordinate of the orthographic view.
- * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
- * @param {number} n Distance from the "camera" to the near clipping
- * plane. A positive value means the plane is in front of the viewer.
- * @param {number} f Distance from the "camera" to the far clipping
- * plane. A positive value means the plane is in front of the viewer.
- *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
- * when just this matrix is used to transform vertices.
- * If "n" is greater than "f", Z coordinates increase in the opposite direction.)
- * The absolute difference
- * between n and f should be as small as the application can accept.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera}.
+   * In this projection, the left clipping plane is parallel to the right clipping
+   * plane and the top to the bottom.<p>
+   * The projection returned by this method only scales and/or shifts the view, so that
+   * objects with the same size won't appear smaller as they get more distant from the  "camera".<p>
+   * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
+   * view volume (as is the case in WebGL) will range from -1 to 1.
+   * For a matrix in which Z coordinates range from 0 to 1, divide the 11th and 15th elements
+   * of the result (zero-based indices 10 and 14) by 2, then add 0.5 to the 15th element.<p>
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * To adjust the result of this method for a left-handed system,
+   * reverse the sign of the 11th element of the result (zero-based index 10).
+   * @param {number} l Leftmost coordinate of the orthographic view.
+   * @param {number} r Rightmost coordinate of the orthographic view.
+   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * If "l" is greater than "r", X coordinates increase in the opposite direction.)
+   * @param {number} b Bottommost coordinate of the orthographic view.
+   * @param {number} t Topmost coordinate of the orthographic view.
+   * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
+   * @param {number} n Distance from the "camera" to the near clipping
+   * plane. A positive value means the plane is in front of the viewer.
+   * @param {number} f Distance from the "camera" to the far clipping
+   * plane. A positive value means the plane is in front of the viewer.
+   *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
+   * when just this matrix is used to transform vertices.
+   * If "n" is greater than "f", Z coordinates increase in the opposite direction.)
+   * The absolute difference
+   * between n and f should be as small as the application can accept.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4ortho":function(l, r, b, t, n, f) {
     var width = 1 / (r - l);
     var height = 1 / (t - b);
@@ -907,85 +907,85 @@ tvar47 * tvar51 + tvar8 * tvar52;
       -(l + r) * width, -(t + b) * height, -(n + f) * depth, 1];
   },
 
-/**
- * Returns a 4x4 matrix representing a 2D [orthographic projection]{@tutorial camera}.<p>
- * This is the same as mat4ortho() with the near clipping plane
- * set to -1 and the far clipping plane set to 1.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning of coordinates
- * when using this matrix and on adjusting the matrix for other conventions.
- * @param {number} l Leftmost coordinate of the orthographic view.
- * @param {number} r Rightmost coordinate of the orthographic view.
- * ("l" is usually less than "r", so that X coordinates increase leftward.
- * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {number} b Bottommost coordinate of the orthographic view.
- * @param {number} t Topmost coordinate of the orthographic view.
- * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a 2D [orthographic projection]{@tutorial camera}.<p>
+   * This is the same as mat4ortho() with the near clipping plane
+   * set to -1 and the far clipping plane set to 1.<p>
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning of coordinates
+   * when using this matrix and on adjusting the matrix for other conventions.
+   * @param {number} l Leftmost coordinate of the orthographic view.
+   * @param {number} r Rightmost coordinate of the orthographic view.
+   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * If "l" is greater than "r", X coordinates increase in the opposite direction.)
+   * @param {number} b Bottommost coordinate of the orthographic view.
+   * @param {number} t Topmost coordinate of the orthographic view.
+   * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4ortho2d":function(l, r, b, t) {
     return HMath.mat4ortho(l, r, b, t, -1, 1);
   },
-/**
- * Returns a 4x4 matrix representing a 2D [orthographic projection]{@tutorial camera},
- * retaining the view rectangle's aspect ratio.<p>
- * If the view rectangle's aspect ratio doesn't match the desired aspect
- * ratio, the view rectangle will be centered on the viewport
- * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
- * or squishing it.<p>
- * This is the same as mat4orthoAspect() with the near clipping plane
- * set to -1 and the far clipping plane set to 1.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning
- * of coordinates when using this matrix and on adjusting the matrix for other conventions.
- * @param {number} l Leftmost coordinate of the view rectangle.
- * @param {number} r Rightmost coordinate of the orthographic view.
- * ("l" is usually less than "r", so that X coordinates increase leftward.
- * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {number} b Bottommost coordinate of the orthographic view.
- * @param {number} t Topmost coordinate of the orthographic view.
- * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
- * @param {number} aspect The ratio of width to height of the viewport, usually
- * the scene's aspect ratio.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a 2D [orthographic projection]{@tutorial camera},
+   * retaining the view rectangle's aspect ratio.<p>
+   * If the view rectangle's aspect ratio doesn't match the desired aspect
+   * ratio, the view rectangle will be centered on the viewport
+   * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+   * or squishing it.<p>
+   * This is the same as mat4orthoAspect() with the near clipping plane
+   * set to -1 and the far clipping plane set to 1.<p>
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning
+   * of coordinates when using this matrix and on adjusting the matrix for other conventions.
+   * @param {number} l Leftmost coordinate of the view rectangle.
+   * @param {number} r Rightmost coordinate of the orthographic view.
+   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * If "l" is greater than "r", X coordinates increase in the opposite direction.)
+   * @param {number} b Bottommost coordinate of the orthographic view.
+   * @param {number} t Topmost coordinate of the orthographic view.
+   * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
+   * @param {number} aspect The ratio of width to height of the viewport, usually
+   * the scene's aspect ratio.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4ortho2dAspect":function(l, r, b, t, aspect) {
     return HMath.mat4orthoAspect(l, r, b, t, -1, 1, aspect);
   },
-/**
- * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera},
- * retaining the view rectangle's aspect ratio.<p>
- * If the view rectangle's aspect ratio doesn't match the desired aspect
- * ratio, the view rectangle will be centered on the viewport
- * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
- * or squishing it.
- * <p>The projection returned by this method only scales and/or shifts the view, so that
- * objects with the same size won't appear smaller as they get more distant from the  "camera".
- * <p>This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning of coordinates
- * when using this matrix and on adjusting the matrix for other conventions.
- * @param {number} l Leftmost coordinate of the view rectangle.
- * @param {number} r Rightmost coordinate of the orthographic view.
- * ("l" is usually less than "r", so that X coordinates increase leftward.
- * If "l" is greater than "r", X coordinates increase in the opposite direction.)
- * @param {number} b Bottommost coordinate of the orthographic view.
- * @param {number} t Topmost coordinate of the orthographic view.
- * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
- * @param {number} n Distance from the "camera" to the near clipping
- * plane. A positive value means the plane is in front of the viewer.
- * @param {number} f Distance from the "camera" to the far clipping
- * plane. A positive value means the plane is in front of the viewer.
- *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
- * when just this matrix is used to transform vertices.
- * If "n" is greater than "f", Z coordinates increase in the opposite direction.) The absolute difference
- * between n and f should be as small as the application can accept.
- * @param {number} aspect The ratio of width to height of the viewport, usually
- * the scene's aspect ratio.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing an [orthographic projection]{@tutorial camera},
+   * retaining the view rectangle's aspect ratio.<p>
+   * If the view rectangle's aspect ratio doesn't match the desired aspect
+   * ratio, the view rectangle will be centered on the viewport
+   * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+   * or squishing it.
+   * <p>The projection returned by this method only scales and/or shifts the view, so that
+   * objects with the same size won't appear smaller as they get more distant from the  "camera".
+   * <p>This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * See [mat4ortho()]{@link H3DU.Math.mat4ortho} for information on the meaning of coordinates
+   * when using this matrix and on adjusting the matrix for other conventions.
+   * @param {number} l Leftmost coordinate of the view rectangle.
+   * @param {number} r Rightmost coordinate of the orthographic view.
+   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * If "l" is greater than "r", X coordinates increase in the opposite direction.)
+   * @param {number} b Bottommost coordinate of the orthographic view.
+   * @param {number} t Topmost coordinate of the orthographic view.
+   * ("b" is usually less than "t", so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
+   * @param {number} n Distance from the "camera" to the near clipping
+   * plane. A positive value means the plane is in front of the viewer.
+   * @param {number} f Distance from the "camera" to the far clipping
+   * plane. A positive value means the plane is in front of the viewer.
+   *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
+   * when just this matrix is used to transform vertices.
+   * If "n" is greater than "f", Z coordinates increase in the opposite direction.) The absolute difference
+   * between n and f should be as small as the application can accept.
+   * @param {number} aspect The ratio of width to height of the viewport, usually
+   * the scene's aspect ratio.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4orthoAspect":function(l, r, b, t, n, f, aspect) {
     var newDim;
     var boxAspect = Math.abs((r - l) / (t - b));
@@ -1013,45 +1013,45 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return HMath.mat4ortho(l, r, b, t, n, f);
   },
-/**
- * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera}.<p>
- * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
- * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
- * component of the transformed vertex) and
- * increase from left to right and bottom to top. For a matrix in which Z coordinates
- * range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * To adjust the result of this method for a left-handed system,
- * reverse the sign of the 9th, 10th, 11th, and 12th
- * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {number} fovY Y axis field of view, in degrees, that is, the shortest angle
- * between the top and bottom clipping planes. Should be less
- * than 180 degrees. (The smaller
- * this number, the bigger close objects appear to be. As a result, zooming out
- * can be implemented by raising this value, and zooming in by lowering it.)
- * @param {number} aspectRatio The ratio of width to height of the viewport, usually
- * the scene's aspect ratio.
- * @param {number} near The distance, in eye space, from the "camera" to
- * the near clipping plane. Objects closer than this distance won't be
- * seen.<p>This value should be greater than 0, and should be set to the highest distance
- * from the "camera" that the application can afford to clip out for being too
- * close, for example, 0.5, 1, or higher.
- * @param {number} far The distance, in eye space, from the "camera" to
- * the far clipping plane. Objects beyond this distance will be too far
- * to be seen.<br>This value should be greater than 0 and should be set
- * so that the absolute ratio of "far" to "near" is as small as
- * the application can accept.
- * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
- * In the usual case that "far" is greater than "near", depth
- * buffer values will be more concentrated around the near
- * plane than around the far plane due to the perspective
- * projection.  The greater the ratio of "far" to "near", the more
- * concentrated the values will be around the near plane, and the
- * more likely two objects close to the far plane will have identical depth values.
- * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera}.<p>
+   * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
+   * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
+   * component of the transformed vertex) and
+   * increase from left to right and bottom to top. For a matrix in which Z coordinates
+   * range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.<p>
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * To adjust the result of this method for a left-handed system,
+   * reverse the sign of the 9th, 10th, 11th, and 12th
+   * elements of the result (zero-based indices 8, 9, 10, and 11).
+   * @param {number} fovY Y axis field of view, in degrees, that is, the shortest angle
+   * between the top and bottom clipping planes. Should be less
+   * than 180 degrees. (The smaller
+   * this number, the bigger close objects appear to be. As a result, zooming out
+   * can be implemented by raising this value, and zooming in by lowering it.)
+   * @param {number} aspectRatio The ratio of width to height of the viewport, usually
+   * the scene's aspect ratio.
+   * @param {number} near The distance, in eye space, from the "camera" to
+   * the near clipping plane. Objects closer than this distance won't be
+   * seen.<p>This value should be greater than 0, and should be set to the highest distance
+   * from the "camera" that the application can afford to clip out for being too
+   * close, for example, 0.5, 1, or higher.
+   * @param {number} far The distance, in eye space, from the "camera" to
+   * the far clipping plane. Objects beyond this distance will be too far
+   * to be seen.<br>This value should be greater than 0 and should be set
+   * so that the absolute ratio of "far" to "near" is as small as
+   * the application can accept.
+   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
+   * In the usual case that "far" is greater than "near", depth
+   * buffer values will be more concentrated around the near
+   * plane than around the far plane due to the perspective
+   * projection.  The greater the ratio of "far" to "near", the more
+   * concentrated the values will be around the near plane, and the
+   * more likely two objects close to the far plane will have identical depth values.
+   * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4perspective":function(fovY, aspectRatio, near, far) {
     // NOTE: Converts fovY to radians then divides it by 2
     var fov = (fovY >= 0 && fovY < 360 ? fovY : fovY % 360 + (fovY < 0 ? 360 : 0)) * HMath.PiDividedBy360;
@@ -1061,46 +1061,46 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [f / aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
       nmf * (near + far), -1, 0, 0, nmf * near * far * 2, 0];
   },
-/**
- * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera},
- * given an X axis field of view.</p>
- * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
- * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
- * component of the transformed vertex) and
- * increase from left to right and bottom to top. For a matrix in which Z coordinates
- * range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * To adjust the result of this method for a left-handed system,
- * reverse the sign of the 9th, 10th, 11th, and 12th
- * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {number} fovX X axis field of view, in degrees, that is, the shortest angle
- * between the left and right clipping planes. Should be less
- * than 180 degrees. (The smaller
- * this number, the bigger close objects appear to be. As a result, zooming out
- * can be implemented by raising this value, and zooming in by lowering it.)
- * @param {number} aspectRatio The ratio of width to height of the viewport, usually
- * the scene's aspect ratio.
- * @param {number} near The distance, in eye space, from the "camera" to
- * the near clipping plane. Objects closer than this distance won't be
- * seen.<p>This value should be greater than 0, and should be set to the highest distance
- * from the "camera" that the application can afford to clip out for being too
- * close, for example, 0.5, 1, or higher.
- * @param {number} far The distance, in eye space, from the "camera" to
- * the far clipping plane. Objects beyond this distance will be too far
- * to be seen.<br>This value should be greater than 0 and should be set
- * so that the absolute ratio of "far" to "near" is as small as
- * the application can accept.
- * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
- * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
- * In the usual case that "far" is greater than "near", depth
- * buffer values will be more concentrated around the near
- * plane than around the far plane due to the perspective
- * projection.  The greater the ratio of "far" to "near", the more
- * concentrated the values will be around the near plane, and the
- * more likely two objects close to the far plane will have identical depth values.
- * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera},
+   * given an X axis field of view.</p>
+   * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
+   * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
+   * component of the transformed vertex) and
+   * increase from left to right and bottom to top. For a matrix in which Z coordinates
+   * range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.<p>
+   * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+   * To adjust the result of this method for a left-handed system,
+   * reverse the sign of the 9th, 10th, 11th, and 12th
+   * elements of the result (zero-based indices 8, 9, 10, and 11).
+   * @param {number} fovX X axis field of view, in degrees, that is, the shortest angle
+   * between the left and right clipping planes. Should be less
+   * than 180 degrees. (The smaller
+   * this number, the bigger close objects appear to be. As a result, zooming out
+   * can be implemented by raising this value, and zooming in by lowering it.)
+   * @param {number} aspectRatio The ratio of width to height of the viewport, usually
+   * the scene's aspect ratio.
+   * @param {number} near The distance, in eye space, from the "camera" to
+   * the near clipping plane. Objects closer than this distance won't be
+   * seen.<p>This value should be greater than 0, and should be set to the highest distance
+   * from the "camera" that the application can afford to clip out for being too
+   * close, for example, 0.5, 1, or higher.
+   * @param {number} far The distance, in eye space, from the "camera" to
+   * the far clipping plane. Objects beyond this distance will be too far
+   * to be seen.<br>This value should be greater than 0 and should be set
+   * so that the absolute ratio of "far" to "near" is as small as
+   * the application can accept.
+   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
+   * In the usual case that "far" is greater than "near", depth
+   * buffer values will be more concentrated around the near
+   * plane than around the far plane due to the perspective
+   * projection.  The greater the ratio of "far" to "near", the more
+   * concentrated the values will be around the near plane, and the
+   * more likely two objects close to the far plane will have identical depth values.
+   * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4perspectiveHorizontal":function(fovX, aspectRatio, near, far) {
     // NOTE: Converts fovX to radians then divides it by 2
     var fov = (fovX >= 0 && fovX < 360 ? fovX : fovX % 360 + (fovX < 0 ? 360 : 0)) * HMath.PiDividedBy360;
@@ -1108,37 +1108,37 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var fovY = HMath.Num360DividedByPi * Math.atan2(Math.tan(fov), aspectRatio);
     return HMath.mat4perspective(fovY, aspectRatio, near, far);
   },
-/**
- * Transforms a 3-element vector with a 4x4 matrix and returns
- * a perspective-correct version of the vector as a 3D point. <p>
- * The transformation involves transforming a 4-element vector with the same X,
- * Y, and Z coordinates, but with a W coordinate equal to 1, with the 4x4 matrix, and
- * then dividing X, Y, and Z of the transformed 4-element
- * vector by that vector's W (a <i>perspective divide</i>),
- * then returning that vector's new X, Y, and Z.<p>
- * @param {Array<number>} mat A 4x4 matrix to use to transform
- * the vector. This will generally be
- * a projection-view matrix (projection matrix multiplied
- * by the view matrix, in that order), if the vector to transform is in <i>world space</i>,
- * or a model-view-projection matrix, that is, (projection-view matrix multiplied
- * by the model [world] matrix, in that order), if the vector is in <i>model
- * (object) space</i>.<br>
- * If the matrix includes a projection transform returned
- * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
- * similar {@link H3DU.Math} methods, the X, Y, and Z coordinates within the
- * view volume (as is the case in WebGL) will range from -1 to 1 and
- * increase from left to right, front to back, and bottom to top, unless otherwise specified
- * in those methods' documentation.
- * @param {Array<number>|Number} v X coordinate of a 3D point to transform.
- * If "vy" and "vz" are omitted, this value can instead
- * be a 3-element array giving the X, Y, and Z coordinates.
- * @param {number} [vy] Y coordinate.
- * @param {number} [vz] Z coordinate. To transform a 2D
- * point, set Z to 0.
- * @returns {Array<number>} The transformed 3-element vector.
- * The elements, in order, are
- * the transformed vector's X, Y, and Z coordinates.
- */
+  /**
+   * Transforms a 3-element vector with a 4x4 matrix and returns
+   * a perspective-correct version of the vector as a 3D point. <p>
+   * The transformation involves transforming a 4-element vector with the same X,
+   * Y, and Z coordinates, but with a W coordinate equal to 1, with the 4x4 matrix, and
+   * then dividing X, Y, and Z of the transformed 4-element
+   * vector by that vector's W (a <i>perspective divide</i>),
+   * then returning that vector's new X, Y, and Z.<p>
+   * @param {Array<number>} mat A 4x4 matrix to use to transform
+   * the vector. This will generally be
+   * a projection-view matrix (projection matrix multiplied
+   * by the view matrix, in that order), if the vector to transform is in <i>world space</i>,
+   * or a model-view-projection matrix, that is, (projection-view matrix multiplied
+   * by the model [world] matrix, in that order), if the vector is in <i>model
+   * (object) space</i>.<br>
+   * If the matrix includes a projection transform returned
+   * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
+   * similar {@link H3DU.Math} methods, the X, Y, and Z coordinates within the
+   * view volume (as is the case in WebGL) will range from -1 to 1 and
+   * increase from left to right, front to back, and bottom to top, unless otherwise specified
+   * in those methods' documentation.
+   * @param {Array<number>|Number} v X coordinate of a 3D point to transform.
+   * If "vy" and "vz" are omitted, this value can instead
+   * be a 3-element array giving the X, Y, and Z coordinates.
+   * @param {number} [vy] Y coordinate.
+   * @param {number} [vz] Z coordinate. To transform a 2D
+   * point, set Z to 0.
+   * @returns {Array<number>} The transformed 3-element vector.
+   * The elements, in order, are
+   * the transformed vector's X, Y, and Z coordinates.
+   */
   "mat4projectVec3":function(mat, v, vy, vz) {
     var x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
@@ -1156,29 +1156,29 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var w = 1.0 / (x * mat[3] + y * mat[7] + z * mat[11] + mat[15]);
     return [x1 * w, y1 * w, z1 * w];
   },
-/**
- * Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
- * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath},
- * and returns a new matrix.
- * The effect will be that the rotation transformation will
- * happen before the transformation described in the given matrix,
- * when applied in the global coordinate frame.
- * @param {Array<number>} mat A 4x4 matrix to multiply.
- * @param {Array<number>|Number} angle The desired angle
- * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the [axis of rotation]{@tutorial glmath}
- * as the first three elements, followed by the angle
- * in degrees as the fourth element.
- * @param {Array<number>|Number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
+   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath},
+   * and returns a new matrix.
+   * The effect will be that the rotation transformation will
+   * happen before the transformation described in the given matrix,
+   * when applied in the global coordinate frame.
+   * @param {Array<number>} mat A 4x4 matrix to multiply.
+   * @param {Array<number>|Number} angle The desired angle
+   * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+   * instead be a 4-element array giving the [axis of rotation]{@tutorial glmath}
+   * as the first three elements, followed by the angle
+   * in degrees as the fourth element.
+   * @param {Array<number>|Number} v X-component of the point lying on the axis
+   * of rotation.  If "vy" and "vz" are omitted, this can
+   * instead be a 3-element array giving the axis
+   * of rotation.
+   * @param {number} vy Y-component of the point lying on the axis
+   * of rotation.
+   * @param {number} vz Z-component of the point lying on the axis
+   * of rotation.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4rotate":function(mat, angle, v, vy, vz) {
     var v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
@@ -1256,23 +1256,23 @@ tvar47 * tvar51 + tvar8 * tvar52;
         mat[12], mat[13], mat[14], mat[15]];
     }
   },
-/**
- * Returns a 4x4 matrix representing a rotation transformation that rotates vectors
- * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath}.
- * @param {Array<number>|Number} angle The desired angle
- * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.
- * @param {Array<number>|Number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a rotation transformation that rotates vectors
+   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath}.
+   * @param {Array<number>|Number} angle The desired angle
+   * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+   * instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle
+   * in degrees as the fourth element.
+   * @param {Array<number>|Number} v X-component of the point lying on the axis
+   * of rotation.  If "vy" and "vz" are omitted, this can
+   * instead be a 3-element array giving the axis
+   * of rotation.
+   * @param {number} vy Y-component of the point lying on the axis
+   * of rotation.
+   * @param {number} vz Z-component of the point lying on the axis
+   * of rotation.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4rotated":function(angle, v, vy, vz) {
     var v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
@@ -1362,18 +1362,18 @@ tvar47 * tvar51 + tvar8 * tvar52;
         v2 - xs, cost + mcos * z2, 0, 0, 0, 0, 1];
     }
   },
-/**
- * Multiplies a 4x4 matrix by a scaling transformation.
- * @param {Array<number>} mat 4x4 matrix to multiply.
- * @param {Array<number>|Number} v3 Scale factor along the
- * X axis. A scale factor can be negative, in which case the transformation
- * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
- * be a 3-element array giving the scale factors along the X, Y, and
- * Z axes.
- * @param {number} v3y Scale factor along the Y axis.
- * @param {number} v3z Scale factor along the Z axis.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Multiplies a 4x4 matrix by a scaling transformation.
+   * @param {Array<number>} mat 4x4 matrix to multiply.
+   * @param {Array<number>|Number} v3 Scale factor along the
+   * X axis. A scale factor can be negative, in which case the transformation
+   * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
+   * be a 3-element array giving the scale factors along the X, Y, and
+   * Z axes.
+   * @param {number} v3y Scale factor along the Y axis.
+   * @param {number} v3z Scale factor along the Z axis.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4scale":function(mat, v3, v3y, v3z) {
     var scaleX, scaleY, scaleZ;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
@@ -1392,19 +1392,19 @@ tvar47 * tvar51 + tvar8 * tvar52;
       mat[12], mat[13], mat[14], mat[15]
     ];
   },
-/**
- * Modifies a 4x4 matrix by multiplying it by a
- * scaling transformation.
- * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>|Number} v3 Scale factor along the
- * X axis. A scale factor can be negative, in which case the transformation
- * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
- * be a 3-element array giving the scale factors along the X, Y, and
- * Z axes.
- * @param {number} [v3y] Scale factor along the Y axis.
- * @param {number} [v3z] Scale factor along the Z axis.
- * @returns {Array<number>} The same parameter as "mat".
- */
+  /**
+   * Modifies a 4x4 matrix by multiplying it by a
+   * scaling transformation.
+   * @param {Array<number>} mat A 4x4 matrix.
+   * @param {Array<number>|Number} v3 Scale factor along the
+   * X axis. A scale factor can be negative, in which case the transformation
+   * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
+   * be a 3-element array giving the scale factors along the X, Y, and
+   * Z axes.
+   * @param {number} [v3y] Scale factor along the Y axis.
+   * @param {number} [v3z] Scale factor along the Z axis.
+   * @returns {Array<number>} The same parameter as "mat".
+   */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
     var x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
@@ -1431,17 +1431,17 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return mat;
   },
 
-/**
- * Returns a 4x4 matrix representing a scaling transformation.
- * @param {Array<number>|Number} v3 Scale factor along the
- * X axis. A scale factor can be negative, in which case the transformation
- * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
- * be a 3-element array giving the scale factors along the X, Y, and
- * Z axes.
- * @param {number} v3y Scale factor along the Y axis.
- * @param {number} v3z Scale factor along the Z axis.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a scaling transformation.
+   * @param {Array<number>|Number} v3 Scale factor along the
+   * X axis. A scale factor can be negative, in which case the transformation
+   * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
+   * be a 3-element array giving the scale factors along the X, Y, and
+   * Z axes.
+   * @param {number} v3y Scale factor along the Y axis.
+   * @param {number} v3z Scale factor along the Z axis.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4scaled":function(v3, v3y, v3z) {
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       return [v3, 0, 0, 0, 0, v3y, 0, 0, 0, 0, v3z, 0, 0, 0, 0, 1];
@@ -1449,62 +1449,62 @@ tvar47 * tvar51 + tvar8 * tvar52;
       return [v3[0], 0, 0, 0, 0, v3[1], 0, 0, 0, 0, v3[2], 0, 0, 0, 0, 1];
     }
   },
-/**
- * Finds the six clipping planes of a view frustum defined
- * by a 4x4 matrix. These six planes together form the
- * shape of a "chopped-off" pyramid (or frustum).<p>
- * In this model, the eye, or camera, is placed at the top
- * of the pyramid (before being chopped off), four planes are placed at the pyramid's
- * sides, one plane (the far plane) forms its base, and a
- * final plane (the near plane) is the pyramid's chopped
- * off top.
- * @param {Array<number>} matrix A 4x4 matrix. This will
- * usually be a projection-view matrix (projection matrix
- * multiplied by view matrix, in that order).
- * @returns {Array<Array<number>>} An array of six
- * 4-element arrays representing the six clipping planes of the
- * view frustum. In order, they are the left, right, top,
- * bottom, near, and far clipping planes. All six planes
- * will be normalized (see {@link H3DU.Math.planeNormalizeInPlace}).
- */
+  /**
+   * Finds the six clipping planes of a view frustum defined
+   * by a 4x4 matrix. These six planes together form the
+   * shape of a "chopped-off" pyramid (or frustum).<p>
+   * In this model, the eye, or camera, is placed at the top
+   * of the pyramid (before being chopped off), four planes are placed at the pyramid's
+   * sides, one plane (the far plane) forms its base, and a
+   * final plane (the near plane) is the pyramid's chopped
+   * off top.
+   * @param {Array<number>} matrix A 4x4 matrix. This will
+   * usually be a projection-view matrix (projection matrix
+   * multiplied by view matrix, in that order).
+   * @returns {Array<Array<number>>} An array of six
+   * 4-element arrays representing the six clipping planes of the
+   * view frustum. In order, they are the left, right, top,
+   * bottom, near, and far clipping planes. All six planes
+   * will be normalized (see {@link H3DU.Math.planeNormalizeInPlace}).
+   */
   "mat4toFrustumPlanes":function(matrix) {
     var frustum = [[], [], [], [], [], []];
- // Left clipping plane
+    // Left clipping plane
     frustum[0] = HMath.planeNormalizeInPlace([
       matrix[3] + matrix[0],
       matrix[7] + matrix[4],
       matrix[11] + matrix[8],
       matrix[15] + matrix[12]
     ]);
- // Right clipping plane
+    // Right clipping plane
     frustum[1] = HMath.planeNormalizeInPlace([
       matrix[3] - matrix[0],
       matrix[7] - matrix[4],
       matrix[11] - matrix[8],
       matrix[15] - matrix[12]
     ]);
- // Top clipping plane
+    // Top clipping plane
     frustum[2] = HMath.planeNormalizeInPlace([
       matrix[3] - matrix[1],
       matrix[7] - matrix[5],
       matrix[11] - matrix[9],
       matrix[15] - matrix[13]
     ]);
- // Bottom clipping plane
+    // Bottom clipping plane
     frustum[3] = HMath.planeNormalizeInPlace([
       matrix[3] + matrix[1],
       matrix[7] + matrix[5],
       matrix[11] + matrix[9],
       matrix[15] + matrix[13]
     ]);
- // Near clipping plane
+    // Near clipping plane
     frustum[4] = HMath.planeNormalizeInPlace([
       matrix[3] + matrix[2],
       matrix[7] + matrix[6],
       matrix[11] + matrix[10],
       matrix[15] + matrix[14]
     ]);
- // Far clipping plane
+    // Far clipping plane
     frustum[5] = HMath.planeNormalizeInPlace([
       matrix[3] - matrix[2],
       matrix[7] - matrix[6],
@@ -1513,12 +1513,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
     ]);
     return frustum;
   },
-/**
- * Returns the upper-left part of a 4x4 matrix as a new
- * 3x3 matrix.
- * @param {Array<number>} m4 A 4x4 matrix.
- * @returns {Array<number>} The resulting 3x3 matrix.
- */
+  /**
+   * Returns the upper-left part of a 4x4 matrix as a new
+   * 3x3 matrix.
+   * @param {Array<number>} m4 A 4x4 matrix.
+   * @returns {Array<number>} The resulting 3x3 matrix.
+   */
   "mat4toMat3":function(m4) {
     return [
       m4[0], m4[1], m4[2],
@@ -1526,27 +1526,27 @@ tvar47 * tvar51 + tvar8 * tvar52;
       m4[8], m4[9], m4[10]
     ];
   },
-/**
- * Transforms a 4-element vector with a 4x4 matrix and returns
- * the transformed vector.<p>
- * Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
- * is effectively done by breaking up <code>mat</code> into four 4-element vectors
- * (the first 4 elements make up the first vector, and so on), multiplying
- * each vector in <code>mat</code> by the corresponding component in
- * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
- * get the transformed vector.
- * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>|Number} v X coordinate.
- * If "vy", "vz", and "vw" are omitted, this value can instead
- * be a 4-element array giving the X, Y, Z, and W coordinates.
- * @param {number} [vy] Y coordinate.
- * @param {number} [vz] Z coordinate.
- * @param {number} [vw] W coordinate. To transform a 3D
- * point, set W to 1 and divide the result's X, Y, and Z by the
- * result's W. To transform a 2D point, set Z to 0 and W to 1
- * and divide the result's X and Y by the result's W.
- * @returns {Array<number>} The transformed vector.
- */
+  /**
+   * Transforms a 4-element vector with a 4x4 matrix and returns
+   * the transformed vector.<p>
+   * Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
+   * is effectively done by breaking up <code>mat</code> into four 4-element vectors
+   * (the first 4 elements make up the first vector, and so on), multiplying
+   * each vector in <code>mat</code> by the corresponding component in
+   * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
+   * get the transformed vector.
+   * @param {Array<number>} mat A 4x4 matrix.
+   * @param {Array<number>|Number} v X coordinate.
+   * If "vy", "vz", and "vw" are omitted, this value can instead
+   * be a 4-element array giving the X, Y, Z, and W coordinates.
+   * @param {number} [vy] Y coordinate.
+   * @param {number} [vz] Z coordinate.
+   * @param {number} [vw] W coordinate. To transform a 3D
+   * point, set W to 1 and divide the result's X, Y, and Z by the
+   * result's W. To transform a 2D point, set Z to 0 and W to 1
+   * and divide the result's X and Y by the result's W.
+   * @returns {Array<number>} The transformed vector.
+   */
   "mat4transform":function(mat, v, vy, vz, vw) {
     var x, y, z, w;
     if(typeof vy !== "undefined" && typeof vz !== "undefined" &&
@@ -1566,26 +1566,26 @@ tvar47 * tvar51 + tvar8 * tvar52;
       x * mat[2] + y * mat[6] + z * mat[10] + w * mat[14],
       x * mat[3] + y * mat[7] + z * mat[11] + w * mat[15]];
   },
-/**
- * Transforms a 3-element vector with a 4x4 matrix as though it were
- * an affine transformation matrix (without perspective) and returns the transformed vector.
- * The effect is as though elements
- * 3, 7, 11, and 15 (counting from 0) of the matrix
- * were assumed to be (0, 0, 0, 1) instead of their actual values and as though the 3-element
- * vector had a fourth element valued at 1.<p>
- * For most purposes, use
- * the {@link H3DU.Math.mat4projectVec3} method instead, which supports
- * 4x4 matrices that may be in a perspective
- * projection (whose last row is not necessarily (0, 0, 0, 1)).
- * @param {Array<number>} mat A 4x4 matrix.
- * @param {Array<number>|Number} v X coordinate.
- * If "vy" and "vz" are omitted, this value can instead
- * be a 4-element array giving the X, Y, and Z coordinates.
- * @param {number} [vy] Y coordinate.
- * @param {number} [vz] Z coordinate. To transform a 2D
- * point, set Z to 0.
- * @returns {Array<number>} The transformed 3-element vector.
- */
+  /**
+   * Transforms a 3-element vector with a 4x4 matrix as though it were
+   * an affine transformation matrix (without perspective) and returns the transformed vector.
+   * The effect is as though elements
+   * 3, 7, 11, and 15 (counting from 0) of the matrix
+   * were assumed to be (0, 0, 0, 1) instead of their actual values and as though the 3-element
+   * vector had a fourth element valued at 1.<p>
+   * For most purposes, use
+   * the {@link H3DU.Math.mat4projectVec3} method instead, which supports
+   * 4x4 matrices that may be in a perspective
+   * projection (whose last row is not necessarily (0, 0, 0, 1)).
+   * @param {Array<number>} mat A 4x4 matrix.
+   * @param {Array<number>|Number} v X coordinate.
+   * If "vy" and "vz" are omitted, this value can instead
+   * be a 4-element array giving the X, Y, and Z coordinates.
+   * @param {number} [vy] Y coordinate.
+   * @param {number} [vz] Z coordinate. To transform a 2D
+   * point, set Z to 0.
+   * @returns {Array<number>} The transformed 3-element vector.
+   */
   "mat4transformVec3":function(mat, v, vy, vz) {
     var x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
@@ -1601,17 +1601,17 @@ tvar47 * tvar51 + tvar8 * tvar52;
       x * mat[1] + y * mat[5] + z * mat[9] + mat[13],
       x * mat[2] + y * mat[6] + z * mat[10] + mat[14]];
   },
-/**
- * Multiplies a 4x4 matrix by a translation transformation.
- * @param {Array<number>} mat The matrix to multiply.
- * @param {Array<number>|Number} v3 Translation along the
- * X axis.  If "v3y" and "v3z" are omitted, this value can instead
- * be a 3-element array giving the translations along the X, Y, and
- * Z axes.
- * @param {number} v3y Translation along the Y axis.
- * @param {number} v3z Translation along the Z axis.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Multiplies a 4x4 matrix by a translation transformation.
+   * @param {Array<number>} mat The matrix to multiply.
+   * @param {Array<number>|Number} v3 Translation along the
+   * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+   * be a 3-element array giving the translations along the X, Y, and
+   * Z axes.
+   * @param {number} v3y Translation along the Y axis.
+   * @param {number} v3z Translation along the Z axis.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4translate":function(mat, v3, v3y, v3z) {
     var x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
@@ -1633,16 +1633,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
       mat[3] * x + mat[7] * y + mat[11] * z + mat[15]
     ];
   },
-/**
- * Returns a 4x4 matrix representing a translation.
- * @param {Array<number>|Number} v3 Translation along the
- * X axis.  If "v3y" and "v3z" are omitted, this value can instead
- * be a 3-element array giving the translations along the X, Y, and
- * Z axes.
- * @param {number} v3y Translation along the Y axis.
- * @param {number} v3z Translation along the Z axis.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns a 4x4 matrix representing a translation.
+   * @param {Array<number>|Number} v3 Translation along the
+   * X axis.  If "v3y" and "v3z" are omitted, this value can instead
+   * be a 3-element array giving the translations along the X, Y, and
+   * Z axes.
+   * @param {number} v3y Translation along the Y axis.
+   * @param {number} v3z Translation along the Z axis.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4translated":function(v3, v3y, v3z) {
     var x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
@@ -1656,22 +1656,22 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1];
   },
-/**
- * Returns the transpose of a 4x4 matrix. (A transpose is a
- * matrix whose rows are converted to columns and vice versa.)
- * @param {Array<number>} m4 A 4x4 matrix.
- * @returns {Array<number>} The resulting 4x4 matrix.
- */
+  /**
+   * Returns the transpose of a 4x4 matrix. (A transpose is a
+   * matrix whose rows are converted to columns and vice versa.)
+   * @param {Array<number>} m4 A 4x4 matrix.
+   * @returns {Array<number>} The resulting 4x4 matrix.
+   */
   "mat4transpose":function(m4) {
     return HMath.mat4transposeInPlace(HMath.mat4copy(m4));
   },
-/**
- * Transposes a 4x4 matrix in place without creating
- * a new matrix. (A transpose is a matrix whose rows
- * are converted to columns and vice versa.)
- * @param {Array<number>} mat A 4x4 matrix.
- * @returns {Array<number>} The parameter "mat".
- */
+  /**
+   * Transposes a 4x4 matrix in place without creating
+   * a new matrix. (A transpose is a matrix whose rows
+   * are converted to columns and vice versa.)
+   * @param {Array<number>} mat A 4x4 matrix.
+   * @returns {Array<number>} The parameter "mat".
+   */
   "mat4transposeInPlace":function(mat) {
     var tmp = mat[1]; mat[1] = mat[4]; mat[4] = tmp;
     tmp = mat[2]; mat[2] = mat[8]; mat[8] = tmp;
@@ -1681,47 +1681,47 @@ tvar47 * tvar51 + tvar8 * tvar52;
     tmp = mat[11]; mat[11] = mat[14]; mat[14] = tmp;
     return mat;
   },
-/**
- * Creates a plane from a normal vector and a point on the plane.
- * @param {Array<number>} normal A three-element array identifying the plane's normal vector.
- * @param {Array<number>} point A three-element array identifying a point on the plane.
- * @returns {Array<number>} A four-element array describing the plane.
- */
+  /**
+   * Creates a plane from a normal vector and a point on the plane.
+   * @param {Array<number>} normal A three-element array identifying the plane's normal vector.
+   * @param {Array<number>} point A three-element array identifying a point on the plane.
+   * @returns {Array<number>} A four-element array describing the plane.
+   */
   "planeFromNormalAndPoint":function(normal, point) {
     var d = -(normal[0] * point[0] + normal[1] * point[1] + normal[2] * point[2]);
     return [normal[0], normal[1], normal[2], d];
   },
-/**
- * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
- * unless all the normal's components are 0, and returns a new plane with the result.
- * The plane's distance will be divided by the
- * normal's length. Returns a new plane.
- * @param {Array<number>} plane A four-element array
- * defining the plane. The first three elements of the array
- * are the X, Y, and Z components of the plane's normal vector, and
- * the fourth element is the shortest distance from the plane
- * to the origin, or if negative, from the origin to the plane,
- * divided by the normal's length.
- * @returns {Array<number>} A normalized version of
- * the plane.
- * Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
- */
+  /**
+   * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
+   * unless all the normal's components are 0, and returns a new plane with the result.
+   * The plane's distance will be divided by the
+   * normal's length. Returns a new plane.
+   * @param {Array<number>} plane A four-element array
+   * defining the plane. The first three elements of the array
+   * are the X, Y, and Z components of the plane's normal vector, and
+   * the fourth element is the shortest distance from the plane
+   * to the origin, or if negative, from the origin to the plane,
+   * divided by the normal's length.
+   * @returns {Array<number>} A normalized version of
+   * the plane.
+   * Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+   */
   "planeNormalize":function(plane) {
     return HMath.planeNormalizeInPlace(HMath.vec4copy(plane));
   },
-/**
- * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
- * unless all the normal's components are 0, and sets this plane to the result.
- * The plane's distance will be divided by the
- * current normal's length.<p>
- * @param {Array<number>} plane A four-element array
- * defining the plane. The first three elements of the array
- * are the X, Y, and Z components of the plane's normal vector, and
- * the fourth element is the shortest distance from the plane
- * to the origin, or if negative, from the origin to the plane,
- * divided by the normal's length.
- * @returns {Array<number>} The parameter "plane".
- */
+  /**
+   * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
+   * unless all the normal's components are 0, and sets this plane to the result.
+   * The plane's distance will be divided by the
+   * current normal's length.<p>
+   * @param {Array<number>} plane A four-element array
+   * defining the plane. The first three elements of the array
+   * are the X, Y, and Z components of the plane's normal vector, and
+   * the fourth element is the shortest distance from the plane
+   * to the origin, or if negative, from the origin to the plane,
+   * divided by the normal's length.
+   * @returns {Array<number>} The parameter "plane".
+   */
   "planeNormalizeInPlace":function(plane) {
     var x = plane[0];
     var y = plane[1];
@@ -1737,34 +1737,34 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return plane;
   },
-/**
- * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a [unit vector]{@tutorial glmath}.
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} quat A quaternion, containing four elements.
+   * @returns {Array<number>} Return value. */
   "quatConjugate":function(quat) {
     return [-quat[0], -quat[1], -quat[2], quat[3]];
   },
-/**
- * Generates a quaternion from a rotation transformation that rotates vectors
- * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath},
- * @param {Array<number>|Number} angle The desired angle
- * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.
- * @param {Array<number>|Number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Array<number>} The generated quaternion.
- * A quaternion's first three elements (X, Y, Z) describe an
- * [axis of rotation]{@tutorial glmath} whose length is the sine of half of "angle",
- * and its fourth element (W) is the cosine of half of "angle".
- */
+  /**
+   * Generates a quaternion from a rotation transformation that rotates vectors
+   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath},
+   * @param {Array<number>|Number} angle The desired angle
+   * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+   * instead be a 4-element array giving the axis
+   * of rotation as the first three elements, followed by the angle
+   * in degrees as the fourth element.
+   * @param {Array<number>|Number} v X-component of the point lying on the axis
+   * of rotation.  If "vy" and "vz" are omitted, this can
+   * instead be a 3-element array giving the axis
+   * of rotation.
+   * @param {number} vy Y-component of the point lying on the axis
+   * of rotation.
+   * @param {number} vz Z-component of the point lying on the axis
+   * of rotation.
+   * @returns {Array<number>} The generated quaternion.
+   * A quaternion's first three elements (X, Y, Z) describe an
+   * [axis of rotation]{@tutorial glmath} whose length is the sine of half of "angle",
+   * and its fourth element (W) is the cosine of half of "angle".
+   */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
     var v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
@@ -1793,14 +1793,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
     ret[2] *= sint;
     return ret;
   },
-/**
- * Generates a quaternion from the vector rotation described in a 4x4 matrix.
- * The upper 3x3 portion of the matrix is used for this calculation.
- * The results are undefined if the matrix includes any transformation
- * other than rotation.
- * @param {Array<number>} m A 4x4 matrix.
- * @returns {Array<number>} The resulting quaternion.
- */
+  /**
+   * Generates a quaternion from the vector rotation described in a 4x4 matrix.
+   * The upper 3x3 portion of the matrix is used for this calculation.
+   * The results are undefined if the matrix includes any transformation
+   * other than rotation.
+   * @param {Array<number>} m A 4x4 matrix.
+   * @returns {Array<number>} The resulting quaternion.
+   */
   "quatFromMat4":function(m) {
     var ret = [];
     var xy = m[1];
@@ -1819,7 +1819,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ret[2] = (xy - yx) * t;
       ret[3] = s;
     } else if(m[0] > m[5] && m[0] > m[10]) {
-// s=4*x
+      // s=4*x
       s = Math.sqrt(1.0 + m[0] - m[5] - m[10]) * 0.5;
       t = 0.25 / s;
       ret[0] = s;
@@ -1827,7 +1827,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ret[2] = (xz + zx) * t;
       ret[3] = (yz - zy) * t;
     } else if(m[5] > m[10]) {
-// s=4*y
+      // s=4*y
       s = Math.sqrt(1.0 + m[5] - m[0] - m[10]) * 0.5;
       t = 0.25 / s;
       ret[0] = (yx + xy) * t;
@@ -1835,7 +1835,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ret[2] = (zy + yz) * t;
       ret[3] = (zx - xz) * t;
     } else{
-// s=4*z
+      // s=4*z
       s = Math.sqrt(1.0 + m[10] - m[0] - m[5]) * 0.5;
       t = 0.25 / s;
       ret[0] = (zx + xz) * t;
@@ -1845,29 +1845,29 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return ret;
   },
-/**
- * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
- * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
- * @param {number} pitchDegrees Vector rotation about the X axis (upward or downward turn), in degrees.
- * This can instead be a 3-element
- * array giving the rotation about the X axis, Y axis, and Z axis,
- * respectively.
- * @param {number} yawDegrees Vector rotation about the Y axis (left or right turn), in degrees.
- * May be null or omitted if "pitchDegrees" is an array.
- * @param {number} rollDegrees Vector rotation about the Z axis (swaying side by side), in degrees.
- * May be null or omitted if "pitchDegrees" is an array.
- * @param {number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
- * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
- * and {@link H3DU.Math.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
- * The constants starting with <code>Global</code>
- * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
- * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,
- * where the second and third rotations occur around the rotated object's new axes
- * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
- * angles). The order of <code>Local</code> rotations has the same result as the reversed
- * order of <code>Global</code> rotations and vice versa.
- * @returns {Array<number>} The generated quaternion.
- */
+  /**
+   * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
+   * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
+   * @param {number} pitchDegrees Vector rotation about the X axis (upward or downward turn), in degrees.
+   * This can instead be a 3-element
+   * array giving the rotation about the X axis, Y axis, and Z axis,
+   * respectively.
+   * @param {number} yawDegrees Vector rotation about the Y axis (left or right turn), in degrees.
+   * May be null or omitted if "pitchDegrees" is an array.
+   * @param {number} rollDegrees Vector rotation about the Z axis (swaying side by side), in degrees.
+   * May be null or omitted if "pitchDegrees" is an array.
+   * @param {number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
+   * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
+   * and {@link H3DU.Math.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
+   * The constants starting with <code>Global</code>
+   * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
+   * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,
+   * where the second and third rotations occur around the rotated object's new axes
+   * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
+   * angles). The order of <code>Local</code> rotations has the same result as the reversed
+   * order of <code>Global</code> rotations and vice versa.
+   * @returns {Array<number>} The generated quaternion.
+   */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
     var rollRad, pitchRad, yawRad;
     if(typeof mode === "undefined" || mode === null)mode = HMath.GlobalRollPitchYaw;
@@ -1903,27 +1903,27 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return t8;
   },
-/**
- * Generates a quaternion describing a rotation between
- * two 3-element vectors. The quaternion
- * will describe the rotation required to rotate
- * the ray described in the first vector toward the ray described
- * in the second vector. The vectors need not be [unit vectors]{@tutorial glmath}.
- * @param {Array<number>} vec1 The first 3-element vector.
- * @param {Array<number>} vec2 The second 3-element vector.
- * @returns {Array<number>} The generated quaternion, which
- * will be a unit vector.
- */
+  /**
+   * Generates a quaternion describing a rotation between
+   * two 3-element vectors. The quaternion
+   * will describe the rotation required to rotate
+   * the ray described in the first vector toward the ray described
+   * in the second vector. The vectors need not be [unit vectors]{@tutorial glmath}.
+   * @param {Array<number>} vec1 The first 3-element vector.
+   * @param {Array<number>} vec2 The second 3-element vector.
+   * @returns {Array<number>} The generated quaternion, which
+   * will be a unit vector.
+   */
   "quatFromVectors":function(vec1, vec2) {
     var ret = HMath.vec3cross(vec1, vec2);
     if(HMath.vec3dot(ret, ret) < 1e-9) {
       // The vectors are parallel or close to parallel; there are two possible cases
       var dot = HMath.vec3dot(vec1, vec2);
       if(dot > 0) {
-       // The vectors point in the same direction or almost so
+        // The vectors point in the same direction or almost so
         return [0, 0, 0, 1];
       } else {
-       // The vectors point in opposite directions
+        // The vectors point in opposite directions
         ret = HMath.vec3perp(vec1);
         ret[3] = 0;
       }
@@ -1934,49 +1934,49 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return HMath.quatNormalizeInPlace(ret);
   },
-/** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
- * @returns {Array<number>} Return value.
- */
+  /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
+   * @returns {Array<number>} Return value.
+   */
   "quatIdentity":function() {
     return [0, 0, 0, 1];
   },
-/**
- * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a [unit vector]{@tutorial glmath}.
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @returns {Array<number>} Return value.
- * @see {@link H3DU.Math.quatConjugate}
- */
+  /**
+   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} quat A quaternion, containing four elements.
+   * @returns {Array<number>} Return value.
+   * @see {@link H3DU.Math.quatConjugate}
+   */
   "quatInvert":function(quat) {
     var lsq = 1.0 / HMath.quatDot(quat, quat);
     return HMath.vec4scaleInPlace(
-  HMath.quatConjugate(quat), lsq);
+      HMath.quatConjugate(quat), lsq);
   },
-/**
- * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @returns {boolean} Return value.
- */
+  /**
+   * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
+   * @param {Array<number>} quat A quaternion, containing four elements.
+   * @returns {boolean} Return value.
+   */
   "quatIsIdentity":function(quat) {
     return quat[0] === 0 && quat[1] === 0 && quat[2] === 0 && quat[3] === 1;
   },
-/**
- * Multiplies two quaternions, creating a composite rotation.
- * The quaternions are multiplied such that the second quaternion's
- * rotation happens before the first quaternion's rotation when applied
- * in the global coordinate frame.<p>
- * If both quaternions are [unit vectors]{@tutorial glmath}, the resulting
- * quaternion will also be a unit vector. However, for best results, you should
- * normalize the quaternions every few multiplications (using
- * {@link H3DU.Math.quatNormalize} or {@link H3DU.Math.quatNormalizeInPlace}), since successive
- * multiplications can cause rounding errors.<p>
- * Quaternion multiplication is not commutative except in the last component
- * of the resulting quaternion, since the definition of quaternion multiplication
- * includes taking a cross product of <code>a</code>'s and <code>b</code>'s first three components,
- * in that order, and the cross product is not commutative (see also {@link H3DU.Math.vec3cross}).
- * @param {Array<number>} a The first quaternion.
- * @param {Array<number>} b The second quaternion.
- * @returns {Array<number>} The resulting quaternion.
- */
+  /**
+   * Multiplies two quaternions, creating a composite rotation.
+   * The quaternions are multiplied such that the second quaternion's
+   * rotation happens before the first quaternion's rotation when applied
+   * in the global coordinate frame.<p>
+   * If both quaternions are [unit vectors]{@tutorial glmath}, the resulting
+   * quaternion will also be a unit vector. However, for best results, you should
+   * normalize the quaternions every few multiplications (using
+   * {@link H3DU.Math.quatNormalize} or {@link H3DU.Math.quatNormalizeInPlace}), since successive
+   * multiplications can cause rounding errors.<p>
+   * Quaternion multiplication is not commutative except in the last component
+   * of the resulting quaternion, since the definition of quaternion multiplication
+   * includes taking a cross product of <code>a</code>'s and <code>b</code>'s first three components,
+   * in that order, and the cross product is not commutative (see also {@link H3DU.Math.vec3cross}).
+   * @param {Array<number>} a The first quaternion.
+   * @param {Array<number>} b The second quaternion.
+   * @returns {Array<number>} The resulting quaternion.
+   */
   "quatMultiply":function(a, b) {
     return [
       a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
@@ -1984,23 +1984,23 @@ tvar47 * tvar51 + tvar8 * tvar52;
       a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
       a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]];
   },
-/**
- * Returns a quaternion that lies along the shortest path between the
- * given two quaternion rotations, using a linear interpolation function, and converts
- * it to a [unit vector]{@tutorial glmath}.
- * This is called a normalized linear interpolation, or "nlerp".<p>
- * Because the shortest path is curved, not straight, this method
- * will generally not interpolate at constant velocity;
- * however, the difference in this velocity when interpolating is
- * rarely noticeable and this method is generally faster than
- * the {@link H3DU.Math.quatSlerp} method.
- * @param {Array<number>} q1 The first quaternion. Must be a unit vector.
- * @param {Array<number>} q2 The second quaternion. Must be a unit vector.
- * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
- * closer to q1, and closer to 1 means closer to q2.
- * @returns {Array<number>} The interpolated quaternion,
- * which will be a unit vector.
- */
+  /**
+   * Returns a quaternion that lies along the shortest path between the
+   * given two quaternion rotations, using a linear interpolation function, and converts
+   * it to a [unit vector]{@tutorial glmath}.
+   * This is called a normalized linear interpolation, or "nlerp".<p>
+   * Because the shortest path is curved, not straight, this method
+   * will generally not interpolate at constant velocity;
+   * however, the difference in this velocity when interpolating is
+   * rarely noticeable and this method is generally faster than
+   * the {@link H3DU.Math.quatSlerp} method.
+   * @param {Array<number>} q1 The first quaternion. Must be a unit vector.
+   * @param {Array<number>} q2 The second quaternion. Must be a unit vector.
+   * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
+   * closer to q1, and closer to 1 means closer to q2.
+   * @returns {Array<number>} The interpolated quaternion,
+   * which will be a unit vector.
+   */
   "quatNlerp":function(q1, q2, factor) {
     var t1 = 1.0 - factor;
     var t2 = q1[0] * t1;
@@ -2018,57 +2018,57 @@ tvar47 * tvar51 + tvar8 * tvar52;
       return HMath.quatNormalizeInPlace([t2 + t6, t3 + t7, t4 + t8, t5 + t9]);
     }
   },
-/**
- * Multiplies a quaternion by a rotation transformation that rotates vectors
- * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath}.
- * The result is such that the angle-axis
- * rotation happens before the quaternion's rotation when applied
- * in the global coordinate frame.<p>
- * This method is equivalent to the following (see also {@link H3DU.Math.quatMultiply}):<pre>
- * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
- * </pre>
- * @param {Array<number>} quat Quaternion to rotate.
- * @param {Array<number>|Number} angle The desired angle
- * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element.
- * @param {Array<number>|Number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Array<number>} The resulting quaternion.
- */
+  /**
+   * Multiplies a quaternion by a rotation transformation that rotates vectors
+   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath}.
+   * The result is such that the angle-axis
+   * rotation happens before the quaternion's rotation when applied
+   * in the global coordinate frame.<p>
+   * This method is equivalent to the following (see also {@link H3DU.Math.quatMultiply}):<pre>
+   * return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
+   * </pre>
+   * @param {Array<number>} quat Quaternion to rotate.
+   * @param {Array<number>|Number} angle The desired angle
+   * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+   * instead be a 4-element array giving the axis
+   * of rotation as the first three elements, followed by the angle
+   * in degrees as the fourth element.
+   * @param {Array<number>|Number} v X-component of the point lying on the axis
+   * of rotation.  If "vy" and "vz" are omitted, this can
+   * instead be a 3-element array giving the axis
+   * of rotation.
+   * @param {number} vy Y-component of the point lying on the axis
+   * of rotation.
+   * @param {number} vz Z-component of the point lying on the axis
+   * of rotation.
+   * @returns {Array<number>} The resulting quaternion.
+   */
   "quatRotate":function(quat, angle, v, vy, vz) {
     return HMath.quatMultiply(quat,
-    HMath.quatFromAxisAngle(angle, v, vy, vz));
+      HMath.quatFromAxisAngle(angle, v, vy, vz));
   },
-/**
- * Returns a quaternion that lies along the shortest path between the
- * given two quaternion rotations, using a spherical interpolation function.
- * This is called spherical linear interpolation, or "slerp". (A spherical
- * interpolation finds the shortest angle between the two quaternions -- which
- * are treated as 4D vectors -- and then finds a vector with a smaller angle
- * between it and the first quaternion.  The "factor" parameter specifies
- * how small the new angle will be relative to the original angle.)<p>
- * This method will generally interpolate at constant velocity; however,
- * this method is commutative (the order in which the quaternions are given
- * matters), unlike [quatNlerp]{@link H3DU.Math.quatNlerp}, making it
- * unsuitable for blending multiple quaternion rotations,
- * and this method is generally more computationally expensive
- * than the [quatNlerp]{@link H3DU.Math.quatNlerp} method.
- * @param {Array<number>} q1 The first quaternion. Must be a [unit vector]{@tutorial glmath}.
- * @param {Array<number>} q2 The second quaternion. Must be a unit vector.
- * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
- * closer to q1, and closer to 1 means closer to q2.
- * @returns {Array<number>} The interpolated quaternion.
- * @see ["Understanding Slerp, Then Not Using It", Jonathan Blow](http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/),
- * for additional background
- */
+  /**
+   * Returns a quaternion that lies along the shortest path between the
+   * given two quaternion rotations, using a spherical interpolation function.
+   * This is called spherical linear interpolation, or "slerp". (A spherical
+   * interpolation finds the shortest angle between the two quaternions -- which
+   * are treated as 4D vectors -- and then finds a vector with a smaller angle
+   * between it and the first quaternion.  The "factor" parameter specifies
+   * how small the new angle will be relative to the original angle.)<p>
+   * This method will generally interpolate at constant velocity; however,
+   * this method is commutative (the order in which the quaternions are given
+   * matters), unlike [quatNlerp]{@link H3DU.Math.quatNlerp}, making it
+   * unsuitable for blending multiple quaternion rotations,
+   * and this method is generally more computationally expensive
+   * than the [quatNlerp]{@link H3DU.Math.quatNlerp} method.
+   * @param {Array<number>} q1 The first quaternion. Must be a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} q2 The second quaternion. Must be a unit vector.
+   * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
+   * closer to q1, and closer to 1 means closer to q2.
+   * @returns {Array<number>} The interpolated quaternion.
+   * @see ["Understanding Slerp, Then Not Using It", Jonathan Blow](http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/),
+   * for additional background
+   */
   "quatSlerp":function(q1, q2, factor) {
     var cosval = HMath.quatDot(q1, q2);
     var qd = q2;
@@ -2099,16 +2099,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
       q1[3] * c1 + qd[3] * c2
     ];
   },
-/**
- * Calculates the vector rotation for this quaternion in the form
- * of the angle to rotate the vector by and an [axis of rotation]{@tutorial glmath} to
- * rotate that vector around.
- * @param {Array<number>} a A quaternion. Must be a [unit vector]{@tutorial glmath}.
- * @returns {Array<number>} A 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. If "a" is a unit vector, the axis
- * of rotation will be a unit vector.
- */
+  /**
+   * Calculates the vector rotation for this quaternion in the form
+   * of the angle to rotate the vector by and an [axis of rotation]{@tutorial glmath} to
+   * rotate that vector around.
+   * @param {Array<number>} a A quaternion. Must be a [unit vector]{@tutorial glmath}.
+   * @returns {Array<number>} A 4-element array giving the axis
+   * of rotation as the first three elements, followed by the angle
+   * in degrees as the fourth element. If "a" is a unit vector, the axis
+   * of rotation will be a unit vector.
+   */
   "quatToAxisAngle":function(a) {
     var w = a[3];
     var d = 1.0 - w * w;
@@ -2120,12 +2120,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
       return [0, 1, 0, 0];
     }
   },
-/**
- * Generates a 4x4 matrix describing the rotation
- * described by this quaternion.
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @returns {Array<number>} The generated 4x4 matrix.
- */
+  /**
+   * Generates a 4x4 matrix describing the rotation
+   * described by this quaternion.
+   * @param {Array<number>} quat A quaternion, containing four elements.
+   * @returns {Array<number>} The generated 4x4 matrix.
+   */
   "quatToMat4":function(quat) {
     var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
     tx = 2.0 * quat[0];
@@ -2147,25 +2147,25 @@ tvar47 * tvar51 + tvar8 * tvar52;
       0, 0, 0, 1
     ];
   },
-/**
- * Converts this quaternion to the same version of the rotation
- * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
- * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
- * @param {number} [mode] Specifies the order in which the rotations will occur
- * (in terms of their effect, not in terms of how they will be returned by this method).
- * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
- * and {@link H3DU.Math.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
- * The constants starting with <code>Global</code>
- * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
- * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,
- * where the second and third rotations occur around the rotated object's new axes
- * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
- * angles). The order of <code>Local</code> rotations has the same result as the reversed
- * order of <code>Global</code> rotations and vice versa.
- * @returns {Array<number>} A 3-element array containing the
- * pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
- * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
- */
+  /**
+   * Converts this quaternion to the same version of the rotation
+   * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
+   * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
+   * @param {number} [mode] Specifies the order in which the rotations will occur
+   * (in terms of their effect, not in terms of how they will be returned by this method).
+   * This is one of the {@link H3DU.Math} constants such as {@link H3DU.Math.LocalPitchYawRoll}
+   * and {@link H3DU.Math.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link H3DU.Math.GlobalRollPitchYaw}.
+   * The constants starting with <code>Global</code>
+   * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
+   * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,
+   * where the second and third rotations occur around the rotated object's new axes
+   * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
+   * angles). The order of <code>Local</code> rotations has the same result as the reversed
+   * order of <code>Global</code> rotations and vice versa.
+   * @returns {Array<number>} A 3-element array containing the
+   * pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
+   * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
+   */
   "quatToTaitBryan":function(a, mode) {
     var c0 = a[3];
     var c1, c2, c3;
@@ -2200,14 +2200,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
     e1 *= HMath.Num180DividedByPi;
     e2 *= HMath.Num180DividedByPi;
     e3 *= HMath.Num180DividedByPi;
-  // Singularity near the poles
+    // Singularity near the poles
     if(Math.abs(e2 - 90) < 0.000001 ||
       Math.abs(e2 + 90) < 0.000001) {
       e3 = 0;
       e1 = Math.atan2(c1, c0) * HMath.Num180DividedByPi;
       if(isNaN(e1))e1 = 0;
     }
-  // Return the pitch/yaw/roll angles in the standard order
+    // Return the pitch/yaw/roll angles in the standard order
     var angles = [];
     if(mode === HMath.GlobalRollPitchYaw) {
       angles[0] = e2; angles[1] = e1; angles[2] = e3;
@@ -2224,18 +2224,18 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return angles;
   },
-/**
- * Transforms a 3- or 4-element vector using a
- * quaternion's vector rotation.
- * @param {Array<number>} q A quaternion describing
- * the rotation.
- * @param {Array<number>} v A 3- or 4-element vector to
- * transform. The fourth element, if any, is ignored.
- * @returns {Array<number>} A 4-element vector representing
- * the transformed vector. The fourth element will be 1.0.
- * If the input vector has 3 elements, a 3-element vector will
- * be returned instead.
- */
+  /**
+   * Transforms a 3- or 4-element vector using a
+   * quaternion's vector rotation.
+   * @param {Array<number>} q A quaternion describing
+   * the rotation.
+   * @param {Array<number>} v A 3- or 4-element vector to
+   * transform. The fourth element, if any, is ignored.
+   * @returns {Array<number>} A 4-element vector representing
+   * the transformed vector. The fourth element will be 1.0.
+   * If the input vector has 3 elements, a 3-element vector will
+   * be returned instead.
+   */
   "quatTransform":function(q, v) {
     var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
     var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
@@ -2250,94 +2250,94 @@ tvar47 * tvar51 + tvar8 * tvar52;
       t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4,
       t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4, 1.0];
   },
-/**
- * Returns a new 2-element
- * vector with the absolute value of each of its components.
- * @param {Array<number>} a A 2-element vector.
- * @returns {Array<number>} The resulting 2-element vector.
- */
+  /**
+   * Returns a new 2-element
+   * vector with the absolute value of each of its components.
+   * @param {Array<number>} a A 2-element vector.
+   * @returns {Array<number>} The resulting 2-element vector.
+   */
   "vec2abs":function(a) {
     return [Math.abs(a[0]), Math.abs(a[1])];
   },
-/**
- * Sets each component of the given 2-element
- * vector to its absolute value.
- * @param {Array<number>} a A 2-element vector.
- * @returns {Array<number>} The vector "a".
- */
+  /**
+   * Sets each component of the given 2-element
+   * vector to its absolute value.
+   * @param {Array<number>} a A 2-element vector.
+   * @returns {Array<number>} The vector "a".
+   */
   "vec2absInPlace":function(a) {
     a[0] = Math.abs(a[0]);
     a[1] = Math.abs(a[1]);
     return a;
   },
-/**
- * Adds two 2-element vectors and returns a new
- * vector with the result. Adding two vectors
- * is the same as adding each of their components.
- * The resulting vector:<ul>
- * <li>describes a straight-line path for the
- * combined paths described by the given vectors, in either order, and
- * <li>will come "between" the two vectors given (at their shortest angle) if all three start
- * at the same position.</ul>
- * @param {Array<number>} a The first 2-element vector.
- * @param {Array<number>} b The second 2-element vector.
- * @returns {Array<number>} The resulting 2-element vector.
- */
+  /**
+   * Adds two 2-element vectors and returns a new
+   * vector with the result. Adding two vectors
+   * is the same as adding each of their components.
+   * The resulting vector:<ul>
+   * <li>describes a straight-line path for the
+   * combined paths described by the given vectors, in either order, and
+   * <li>will come "between" the two vectors given (at their shortest angle) if all three start
+   * at the same position.</ul>
+   * @param {Array<number>} a The first 2-element vector.
+   * @param {Array<number>} b The second 2-element vector.
+   * @returns {Array<number>} The resulting 2-element vector.
+   */
   "vec2add":function(a, b) {
     return [a[0] + b[0], a[1] + b[1]];
   },
-/**
- * Adds two 2-element vectors and stores
- * the result in the first vector. Adding two vectors
- * is the same as adding each of their components.
- * The resulting vector:<ul>
- * <li>describes a straight-line path for the
- * combined paths described by the given vectors, in either order, and
- * <li>will come "between" the two vectors given (at their shortest angle) if all three start
- * at the same position.</ul>
- * @param {Array<number>} a The first 2-element vector.
- * @param {Array<number>} b The second 2-element vector.
- * @returns {Array<number>} The parameter "a"
- */
+  /**
+   * Adds two 2-element vectors and stores
+   * the result in the first vector. Adding two vectors
+   * is the same as adding each of their components.
+   * The resulting vector:<ul>
+   * <li>describes a straight-line path for the
+   * combined paths described by the given vectors, in either order, and
+   * <li>will come "between" the two vectors given (at their shortest angle) if all three start
+   * at the same position.</ul>
+   * @param {Array<number>} a The first 2-element vector.
+   * @param {Array<number>} b The second 2-element vector.
+   * @returns {Array<number>} The parameter "a"
+   */
   "vec2addInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
     var b0 = b[0];
     var b1 = b[1];
     a[0] += b0;
     a[1] += b1;
     return a;
   },
-/**
- * Assigns the values of a 2-element vector into another
- * 2-element vector.
- * @param {Array<number>} dst The 2-element vector to
- * assign to.
- * @param {Array<number>} src The 2-element vector whose
- * values will be copied.
- * @returns {Array<number>} The parameter "dst"
- */
+  /**
+   * Assigns the values of a 2-element vector into another
+   * 2-element vector.
+   * @param {Array<number>} dst The 2-element vector to
+   * assign to.
+   * @param {Array<number>} src The 2-element vector whose
+   * values will be copied.
+   * @returns {Array<number>} The parameter "dst"
+   */
   "vec2assign":function(dst, src) {
     dst[0] = src[0];
     dst[1] = src[1];
     return dst;
   },
-/**
- * Returns a 2-element vector in which each element of the given 2-element vector is clamped
- * so it's not less than one value or greater than another value.
- * @param {Array<number>} a The vector to clamp.
- * @param {number} min Lowest possible value. Should not be greater than "max".
- * @param {number} max Highest possible value. Should not be less than "min".
- * @returns {Array<number>} The resulting vector. */
+  /**
+   * Returns a 2-element vector in which each element of the given 2-element vector is clamped
+   * so it's not less than one value or greater than another value.
+   * @param {Array<number>} a The vector to clamp.
+   * @param {number} min Lowest possible value. Should not be greater than "max".
+   * @param {number} max Highest possible value. Should not be less than "min".
+   * @returns {Array<number>} The resulting vector. */
   "vec2clamp":function(a, min, max) {
     return HMath.vec2clampInPlace(HMath.vec2copy(a), min, max);
   },
-/**
- * Clamps each element of the given 2-element vector
- * so it's not less than one value or greater than another value.
- * @param {Array<number>} a The vector to clamp.
- * @param {number} min Lowest possible value. Should not be greater than "max".
- * @param {number} max Highest possible value. Should not be less than "min".
- * @returns {Array<number>} The resulting vector. */
+  /**
+   * Clamps each element of the given 2-element vector
+   * so it's not less than one value or greater than another value.
+   * @param {Array<number>} a The vector to clamp.
+   * @param {number} min Lowest possible value. Should not be greater than "max".
+   * @param {number} max Highest possible value. Should not be less than "min".
+   * @returns {Array<number>} The resulting vector. */
   "vec2clampInPlace":function(a, min, max) {
     var x = Math.min(max, Math.max(min, a[0]));
     var y = Math.min(max, Math.max(min, a[1]));
@@ -2345,160 +2345,160 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[1] = y;
     return a;
   },
-/**
- * Returns a copy of a 2-element vector.
- * @param {Array<number>} vec A 2-element vector.
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns a copy of a 2-element vector.
+   * @param {Array<number>} vec A 2-element vector.
+   * @returns {Array<number>} Return value. */
   "vec2copy":function(vec) {
     return [vec[0], vec[1]];
   },
-/**
- * Finds the straight-line distance from one three-element vector
- * to another, treating both as 3D points.
- * @param {Array<number>} vecFrom The first 2-element vector.
- * @param {Array<number>} vecTo The second 2-element vector.
- * @returns {number} The distance between the two vectors.
- */
+  /**
+   * Finds the straight-line distance from one three-element vector
+   * to another, treating both as 3D points.
+   * @param {Array<number>} vecFrom The first 2-element vector.
+   * @param {Array<number>} vecTo The second 2-element vector.
+   * @returns {number} The distance between the two vectors.
+   */
   "vec2dist":function(vecFrom, vecTo) {
     return HMath.vec2length(HMath.vec2sub(vecFrom, vecTo));
   },
-/**
- * Finds the dot product of two 2-element vectors. It's the
- * sum of the products of their components (for example, <b>a</b>'s X times
- * <b>b</b>'s X).<p> For properties of the dot product, see {@link H3DU.Math.vec3dot}.
- * @param {Array<number>} a The first 2-element vector.
- * @param {Array<number>} b The second 2-element vector.
- * @returns {number} A number representing the dot product.
- * @example <caption>The following shows a fast way to compare
- * a vector's length using the dot product.</caption>
- * // Check if the vector's length squared is less than 20 units squared
- * if(H3DU.Math.vec2dot(vector, vector)<20*20) {
- * // The vector's length is shorter than 20 units
- * }
- */
+  /**
+   * Finds the dot product of two 2-element vectors. It's the
+   * sum of the products of their components (for example, <b>a</b>'s X times
+   * <b>b</b>'s X).<p> For properties of the dot product, see {@link H3DU.Math.vec3dot}.
+   * @param {Array<number>} a The first 2-element vector.
+   * @param {Array<number>} b The second 2-element vector.
+   * @returns {number} A number representing the dot product.
+   * @example <caption>The following shows a fast way to compare
+   * a vector's length using the dot product.</caption>
+   * // Check if the vector's length squared is less than 20 units squared
+   * if(H3DU.Math.vec2dot(vector, vector)<20*20) {
+   * // The vector's length is shorter than 20 units
+   * }
+   */
   "vec2dot":function(a, b) {
     return a[0] * b[0] + a[1] * b[1];
   },
-/**
- * Returns the distance of this 2-element vector from the origin,
- * also known as its <i>length</i> or <i>magnitude</i>.
- * It's the same as the square root of the sum of the squares
- * of its components.<p>
- * Note that if vectors are merely sorted or compared by their lengths (and
- * those lengths are not added or multiplied together or the like),
- * it's faster to sort or compare them by the squares of their lengths (to find
- * the square of a 2-element vector's length, call {@link H3DU.Math.vec2dot}
- * passing the same vector as both of its arguments).
- * @param {Array<number>} a A 2-element vector.
- * @returns {number} Return value. */
+  /**
+   * Returns the distance of this 2-element vector from the origin,
+   * also known as its <i>length</i> or <i>magnitude</i>.
+   * It's the same as the square root of the sum of the squares
+   * of its components.<p>
+   * Note that if vectors are merely sorted or compared by their lengths (and
+   * those lengths are not added or multiplied together or the like),
+   * it's faster to sort or compare them by the squares of their lengths (to find
+   * the square of a 2-element vector's length, call {@link H3DU.Math.vec2dot}
+   * passing the same vector as both of its arguments).
+   * @param {Array<number>} a A 2-element vector.
+   * @returns {number} Return value. */
   "vec2length":function(a) {
     var dx = a[0];
     var dy = a[1];
     return Math.sqrt(dx * dx + dy * dy);
   },
-/**
- * Does a linear interpolation between two 2-element vectors;
- * returns a new vector.
- * @param {Array<number>} v1 The first vector to interpolate.
- * The interpolation will occur on each component of this vector and v2.
- * @param {Array<number>} v2 The second vector to interpolate.
- * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
- * closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear
- * interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns
- * a value generally ranging from 0 through 1, and pass the result of that
- * function to this method. For examples, see {@link H3DU.Math.vec3lerp}.
- * @returns {Array<number>} The interpolated vector.
- */
+  /**
+   * Does a linear interpolation between two 2-element vectors;
+   * returns a new vector.
+   * @param {Array<number>} v1 The first vector to interpolate.
+   * The interpolation will occur on each component of this vector and v2.
+   * @param {Array<number>} v2 The second vector to interpolate.
+   * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
+   * closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear
+   * interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns
+   * a value generally ranging from 0 through 1, and pass the result of that
+   * function to this method. For examples, see {@link H3DU.Math.vec3lerp}.
+   * @returns {Array<number>} The interpolated vector.
+   */
   "vec2lerp":function(v1, v2, factor) {
     return [
       v1[0] + (v2[0] - v1[0]) * factor,
       v1[1] + (v2[1] - v1[1]) * factor
     ];
   },
-/**
- * Multiplies each of the components of two 2-element vectors and returns a new
- * vector with the result.
- * @param {Array<number>} a The first 2-element vector.
- * @param {Array<number>} b The second 2-element vector.
- * @returns {Array<number>} The resulting 2-element vector.
- */
+  /**
+   * Multiplies each of the components of two 2-element vectors and returns a new
+   * vector with the result.
+   * @param {Array<number>} a The first 2-element vector.
+   * @param {Array<number>} b The second 2-element vector.
+   * @returns {Array<number>} The resulting 2-element vector.
+   */
   "vec2mul":function(a, b) {
     return [a[0] * b[0], a[1] * b[1]];
   },
-/**
- * Multiplies each of the components of two 2-element vectors and stores
- * the result in the first vector.
- * @param {Array<number>} a The first 2-element vector.
- * @param {Array<number>} b The second 2-element vector.
- * @returns {Array<number>} The parameter "a"
- */
+  /**
+   * Multiplies each of the components of two 2-element vectors and stores
+   * the result in the first vector.
+   * @param {Array<number>} a The first 2-element vector.
+   * @param {Array<number>} b The second 2-element vector.
+   * @returns {Array<number>} The parameter "a"
+   */
   "vec2mulInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
     var b0 = b[0];
     var b1 = b[1];
     a[0] *= b0;
     a[1] *= b1;
     return a;
   },
-/**
- * Negates a 2-element vector and returns a new
- * vector with the result, which is generally a vector with
- * the same length but opposite direction. Negating a vector
- * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 2-element vector.
- * @returns {Array<number>} The resulting 2-element vector.
- */
+  /**
+   * Negates a 2-element vector and returns a new
+   * vector with the result, which is generally a vector with
+   * the same length but opposite direction. Negating a vector
+   * is the same as reversing the sign of each of its components.
+   * @param {Array<number>} a A 2-element vector.
+   * @returns {Array<number>} The resulting 2-element vector.
+   */
   "vec2negate":function(a) {
     return [-a[0], -a[1]];
   },
-/**
- * Negates a 2-element vector in place, generally resulting in a vector with
- * the same length but opposite direction.
- * Negating a vector
- * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 2-element vector.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Negates a 2-element vector in place, generally resulting in a vector with
+   * the same length but opposite direction.
+   * Negating a vector
+   * is the same as reversing the sign of each of its components.
+   * @param {Array<number>} a A 2-element vector.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec2negateInPlace":function(a) {
     a[0] = -a[0];
     a[1] = -a[1];
     return a;
   },
-/**
- * Converts a 2-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
- * When a vector is normalized, its direction remains the same but the distance from the origin
- * to that vector becomes 1 (unless all its components are 0).
- * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec2length}.<p>
- * @param {Array<number>} vec A 2-element vector.
- * @returns {Array<number>} The resulting vector.
- * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
- * @example <caption>The following example changes the
- * length of a line segment. </caption>
- * var startPt=[x1,y1]; // Line segment's start
- * var endPt=[x2,y2]; // Line segment's end
- * // Find difference between endPt and startPt
- * var delta=H3DU.Math.vec2sub(endPt,startPt);
- * // Normalize delta to a unit vector
- * var deltaNorm=H3DU.Math.vec2normalize(delta);
- * // Rescale to the desired length, here, 10
- * H3DU.Math.vec2scaleInPlace(deltaNorm,10);
- * // Find the new endpoint
- * endPt=H3DU.Math.vec2add(startPt,deltaNorm);
- */
+  /**
+   * Converts a 2-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+   * When a vector is normalized, its direction remains the same but the distance from the origin
+   * to that vector becomes 1 (unless all its components are 0).
+   * A vector is normalized by dividing each of its components
+   * by its [length]{@link H3DU.Math.vec2length}.<p>
+   * @param {Array<number>} vec A 2-element vector.
+   * @returns {Array<number>} The resulting vector.
+   * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+   * @example <caption>The following example changes the
+   * length of a line segment. </caption>
+   * var startPt=[x1,y1]; // Line segment's start
+   * var endPt=[x2,y2]; // Line segment's end
+   * // Find difference between endPt and startPt
+   * var delta=H3DU.Math.vec2sub(endPt,startPt);
+   * // Normalize delta to a unit vector
+   * var deltaNorm=H3DU.Math.vec2normalize(delta);
+   * // Rescale to the desired length, here, 10
+   * H3DU.Math.vec2scaleInPlace(deltaNorm,10);
+   * // Find the new endpoint
+   * endPt=H3DU.Math.vec2add(startPt,deltaNorm);
+   */
   "vec2normalize":function(vec) {
     return HMath.vec2normalizeInPlace([vec[0], vec[1]]);
   },
-/**
- * Converts a 2-element vector to a [unit vector]{@tutorial glmath}.
- * When a vector is normalized, its direction remains the same but the distance from the origin
- * to that vector becomes 1 (unless all its components are 0).
- * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec2length}.<p>
- * @param {Array<number>} vec A 2-element vector.
- * @returns {Array<number>} The parameter "vec".
- * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
- */
+  /**
+   * Converts a 2-element vector to a [unit vector]{@tutorial glmath}.
+   * When a vector is normalized, its direction remains the same but the distance from the origin
+   * to that vector becomes 1 (unless all its components are 0).
+   * A vector is normalized by dividing each of its components
+   * by its [length]{@link H3DU.Math.vec2length}.<p>
+   * @param {Array<number>} vec A 2-element vector.
+   * @returns {Array<number>} The parameter "vec".
+   * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+   */
   "vec2normalizeInPlace":function(vec) {
     var x = vec[0];
     var y = vec[1];
@@ -2510,165 +2510,165 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return vec;
   },
-/**
- * Returns an arbitrary 2-element vector that is perpendicular
- * (orthogonal) to the given 2-element vector. The return value
- * will not be converted to a [unit vector]{@tutorial glmath}.
- * @param {Array<number>} vec A 2-element vector.
- * @returns {Array<number>} A perpendicular 2-element
- * vector.  Returns (0,0) if "vec" is (0,0).
- */
+  /**
+   * Returns an arbitrary 2-element vector that is perpendicular
+   * (orthogonal) to the given 2-element vector. The return value
+   * will not be converted to a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} vec A 2-element vector.
+   * @returns {Array<number>} A perpendicular 2-element
+   * vector.  Returns (0,0) if "vec" is (0,0).
+   */
   "vec2perp":function(vec) {
     return [-vec[1], vec[0]];
   },
-/**
- * Returns the projection of a 2-element vector on the given
- * reference vector. Assuming both vectors
- * start at the same point, the resulting vector
- * will be parallel to the
- * reference vector but will make the closest
- * approach possible to the projected vector's
- * endpoint. The difference between the projected
- * vector and the return value will be perpendicular
- * to the reference vector.
- * @param {Array<number>} vec The vector to project.
- * @param {Array<number>} refVec The reference vector whose length
- * will be adjusted.
- * @returns {Array<number>} The projection of
- * "vec" on "refVec".  Returns (0,0,0) if "refVec"'s
- * length is 0 or extremely close to 0.
- */
+  /**
+   * Returns the projection of a 2-element vector on the given
+   * reference vector. Assuming both vectors
+   * start at the same point, the resulting vector
+   * will be parallel to the
+   * reference vector but will make the closest
+   * approach possible to the projected vector's
+   * endpoint. The difference between the projected
+   * vector and the return value will be perpendicular
+   * to the reference vector.
+   * @param {Array<number>} vec The vector to project.
+   * @param {Array<number>} refVec The reference vector whose length
+   * will be adjusted.
+   * @returns {Array<number>} The projection of
+   * "vec" on "refVec".  Returns (0,0,0) if "refVec"'s
+   * length is 0 or extremely close to 0.
+   */
   "vec2proj":function(vec, refVec) {
     var lensq = HMath.vec2dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0];
     return HMath.vec2scale(refVec,
-    HMath.vec2dot(vec, refVec) / lensq);
+      HMath.vec2dot(vec, refVec) / lensq);
   },
-/**
- * Returns a vector that reflects off a surface.
- * @param {Array<number>} incident Incident vector, or
- * a vector headed in the direction of the surface, as a 2-element vector.
- * @param {Array<number>} normal Surface normal vector, or
- * a vector that's perpendicular to the surface, as a 2-element vector.
- * Should be a [unit vector]{@tutorial glmath}.
- * @returns {Array<number>} A vector that has the same length
- * as "incident" but is reflected away from the surface.
- */
+  /**
+   * Returns a vector that reflects off a surface.
+   * @param {Array<number>} incident Incident vector, or
+   * a vector headed in the direction of the surface, as a 2-element vector.
+   * @param {Array<number>} normal Surface normal vector, or
+   * a vector that's perpendicular to the surface, as a 2-element vector.
+   * Should be a [unit vector]{@tutorial glmath}.
+   * @returns {Array<number>} A vector that has the same length
+   * as "incident" but is reflected away from the surface.
+   */
   "vec2reflect":function(incident, normal) {
     return HMath.vec2sub(incident,
-     HMath.vec2scale(normal, 2 * HMath.vec2dot(normal, incident)));
+      HMath.vec2scale(normal, 2 * HMath.vec2dot(normal, incident)));
   },
-/**
- * Multiplies each element of a 2-element vector by a factor. Returns
- * a new vector that is parallel to the old vector
- * but with its length multiplied by the given factor. If the factor
- * is positive, the vector will point in the same direction; if negative,
- * in the opposite direction; if zero, the vector's components will all be 0.
- * @param {Array<number>} a A 2-element vector.
- * @param {number} scalar A factor to multiply. To divide
- * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Multiplies each element of a 2-element vector by a factor. Returns
+   * a new vector that is parallel to the old vector
+   * but with its length multiplied by the given factor. If the factor
+   * is positive, the vector will point in the same direction; if negative,
+   * in the opposite direction; if zero, the vector's components will all be 0.
+   * @param {Array<number>} a A 2-element vector.
+   * @param {number} scalar A factor to multiply. To divide
+   * a vector by a number, the factor will be 1 divided by that number.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec2scale":function(a, scalar) {
     return HMath.vec2scaleInPlace([a[0], a[1]], scalar);
   },
-/**
- * Multiplies each element of a 2-element vector by a factor, so
- * that the vector is parallel to the old vector
- * but its length is multiplied by the given factor. If the factor
- * is positive, the vector will point in the same direction; if negative,
- * in the opposite direction; if zero, the vector's components will all be 0.
- * @param {Array<number>} a A 2-element vector.
- * @param {number} scalar A factor to multiply. To divide
- * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Multiplies each element of a 2-element vector by a factor, so
+   * that the vector is parallel to the old vector
+   * but its length is multiplied by the given factor. If the factor
+   * is positive, the vector will point in the same direction; if negative,
+   * in the opposite direction; if zero, the vector's components will all be 0.
+   * @param {Array<number>} a A 2-element vector.
+   * @param {number} scalar A factor to multiply. To divide
+   * a vector by a number, the factor will be 1 divided by that number.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec2scaleInPlace":function(a, scalar) {
     a[0] *= scalar;
     a[1] *= scalar;
     return a;
   },
-/**
- * Subtracts the second vector from the first vector and returns a new
- * vector with the result. Subtracting two vectors
- * is the same as subtracting each of their components.<p>
- * @param {Array<number>} a The first 2-element vector.
- * @param {Array<number>} b The second 2-element vector.
- * @returns {Array<number>} The resulting 2-element vector.
- * This is the vector <i>to <code>a</code> from <code>b</code></i>.
- */
+  /**
+   * Subtracts the second vector from the first vector and returns a new
+   * vector with the result. Subtracting two vectors
+   * is the same as subtracting each of their components.<p>
+   * @param {Array<number>} a The first 2-element vector.
+   * @param {Array<number>} b The second 2-element vector.
+   * @returns {Array<number>} The resulting 2-element vector.
+   * This is the vector <i>to <code>a</code> from <code>b</code></i>.
+   */
   "vec2sub":function(a, b) {
     return [a[0] - b[0], a[1] - b[1]];
   },
-/**
- * Subtracts the second vector from the first vector and stores
- * the result in the first vector. Subtracting two vectors
- * is the same as subtracting each of their components.
- * @param {Array<number>} a The first 2-element vector.
- * @param {Array<number>} b The second 2-element vector.
- * @returns {Array<number>} The parameter "a".
- * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
- */
+  /**
+   * Subtracts the second vector from the first vector and stores
+   * the result in the first vector. Subtracting two vectors
+   * is the same as subtracting each of their components.
+   * @param {Array<number>} a The first 2-element vector.
+   * @param {Array<number>} b The second 2-element vector.
+   * @returns {Array<number>} The parameter "a".
+   * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
+   */
   "vec2subInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
     var b0 = b[0];
     var b1 = b[1];
     a[0] -= b0;
     a[1] -= b1;
     return a;
   },
-/**
- * Returns a new 3-element
- * vector with the absolute value of each of its components.
- * @param {Array<number>} a A 3-element vector.
- * @returns {Array<number>} The resulting 3-element vector.
- */
+  /**
+   * Returns a new 3-element
+   * vector with the absolute value of each of its components.
+   * @param {Array<number>} a A 3-element vector.
+   * @returns {Array<number>} The resulting 3-element vector.
+   */
   "vec3abs":function(a) {
     return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2])];
   },
-/**
- * Sets each component of the given 3-element
- * vector to its absolute value.
- * @param {Array<number>} a A 3-element vector.
- * @returns {Array<number>} The vector "a".
- */
+  /**
+   * Sets each component of the given 3-element
+   * vector to its absolute value.
+   * @param {Array<number>} a A 3-element vector.
+   * @returns {Array<number>} The vector "a".
+   */
   "vec3absInPlace":function(a) {
     a[0] = Math.abs(a[0]);
     a[1] = Math.abs(a[1]);
     a[2] = Math.abs(a[2]);
     return a;
   },
-/**
- * Adds two 3-element vectors and returns a new
- * vector with the result. Adding two vectors
- * is the same as adding each of their components.
- * The resulting vector:<ul>
- * <li>describes a straight-line path for the
- * combined paths described by the given vectors, in either order, and
- * <li>will come "between" the two vectors given (at their shortest angle) if all three start
- * at the same position.</ul>
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {Array<number>} The resulting 3-element vector.
- */
+  /**
+   * Adds two 3-element vectors and returns a new
+   * vector with the result. Adding two vectors
+   * is the same as adding each of their components.
+   * The resulting vector:<ul>
+   * <li>describes a straight-line path for the
+   * combined paths described by the given vectors, in either order, and
+   * <li>will come "between" the two vectors given (at their shortest angle) if all three start
+   * at the same position.</ul>
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {Array<number>} The resulting 3-element vector.
+   */
   "vec3add":function(a, b) {
     return [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
   },
-/**
- * Adds two 3-element vectors and stores
- * the result in the first vector. Adding two vectors
- * is the same as adding each of their components.
- * The resulting vector:<ul>
- * <li>describes a straight-line path for the
- * combined paths described by the given vectors, in either order, and
- * <li>will come "between" the two vectors given (at their shortest angle) if all three start
- * at the same position.</ul>
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {Array<number>} The parameter "a"
- */
+  /**
+   * Adds two 3-element vectors and stores
+   * the result in the first vector. Adding two vectors
+   * is the same as adding each of their components.
+   * The resulting vector:<ul>
+   * <li>describes a straight-line path for the
+   * combined paths described by the given vectors, in either order, and
+   * <li>will come "between" the two vectors given (at their shortest angle) if all three start
+   * at the same position.</ul>
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {Array<number>} The parameter "a"
+   */
   "vec3addInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
 
     var b0 = b[0];
     var b1 = b[1];
@@ -2678,38 +2678,38 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[2] += b2;
     return a;
   },
-/**
- * Assigns the values of a 3-element vector into another
- * 3-element vector.
- * @param {Array<number>} dst The 3-element vector to
- * assign to.
- * @param {Array<number>} src The 3-element vector whose
- * values will be copied.
- * @returns {Array<number>} The parameter "dst"
- */
+  /**
+   * Assigns the values of a 3-element vector into another
+   * 3-element vector.
+   * @param {Array<number>} dst The 3-element vector to
+   * assign to.
+   * @param {Array<number>} src The 3-element vector whose
+   * values will be copied.
+   * @returns {Array<number>} The parameter "dst"
+   */
   "vec3assign":function(dst, src) {
     dst[0] = src[0];
     dst[1] = src[1];
     dst[2] = src[2];
     return dst;
   },
-/**
- * Returns a 3-element vector in which each element of the given 3-element vector is clamped
- * so it's not less than one value or greater than another value.
- * @param {Array<number>} a The vector to clamp.
- * @param {number} min Lowest possible value. Should not be greater than "max".
- * @param {number} max Highest possible value. Should not be less than "min".
- * @returns {Array<number>} The resulting vector. */
+  /**
+   * Returns a 3-element vector in which each element of the given 3-element vector is clamped
+   * so it's not less than one value or greater than another value.
+   * @param {Array<number>} a The vector to clamp.
+   * @param {number} min Lowest possible value. Should not be greater than "max".
+   * @param {number} max Highest possible value. Should not be less than "min".
+   * @returns {Array<number>} The resulting vector. */
   "vec3clamp":function(a, min, max) {
     return HMath.vec3clampInPlace(HMath.vec3copy(a), min, max);
   },
-/**
- * Clamps each element of the given 3-element vector
- * so it's not less than one value or greater than another value.
- * @param {Array<number>} a The vector to clamp.
- * @param {number} min Lowest possible value. Should not be greater than "max".
- * @param {number} max Highest possible value. Should not be less than "min".
- * @returns {Array<number>} The resulting vector. */
+  /**
+   * Clamps each element of the given 3-element vector
+   * so it's not less than one value or greater than another value.
+   * @param {Array<number>} a The vector to clamp.
+   * @param {number} min Lowest possible value. Should not be greater than "max".
+   * @param {number} max Highest possible value. Should not be less than "min".
+   * @returns {Array<number>} The resulting vector. */
   "vec3clampInPlace":function(a, min, max) {
     var x = Math.min(max, Math.max(min, a[0]));
     var y = Math.min(max, Math.max(min, a[1]));
@@ -2719,160 +2719,160 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[2] = z;
     return a;
   },
-/**
- * Returns a copy of a 3-element vector.
- * @param {Array<number>} vec A 3-element vector.
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns a copy of a 3-element vector.
+   * @param {Array<number>} vec A 3-element vector.
+   * @returns {Array<number>} Return value. */
   "vec3copy":function(vec) {
     return [vec[0], vec[1], vec[2]];
   },
-/**
- * Finds the cross product of two 3-element vectors (called A and B).
- * The following are properties of the cross product:<ul>
- * <li>The cross product will be a vector that is <i>orthogonal</i> (perpendicular) to both A and B.
- * <li>Switching the order of A and B results in a cross product
- * vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>,
- * but it is <i>anticommutative</i>.)
- * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
- * While the cross product of A and B points toward the viewer,
- * the triangle's vertices are oriented counterclockwise for [right-handed coordinate systems]{@tutorial glmath},
- * or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
- * <li>The length of the cross
- * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; |sin &theta;|
- * where |<b>x</b>| is the length of vector <b>x</b>, and
- * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
- * It follows that:<ul>
- * <li>If the length is 0, then A and B are parallel vectors (0 or 180 degrees apart).
- * <li>If A and B are [unit vectors]{@tutorial glmath}, the length equals the absolute value
- * of the sine of the shortest angle between A and B.
- * <li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
- * to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
- * </ul></ul>
- * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
- * follows:<br>
- * <b>c</b>.x = <b>a</b>.y &#x2a; <b>b</b>.z - <b>a</b>.z &#x2a; <b>b</b>.y<br>
- * <b>c</b>.y = <b>a</b>.z &#x2a; <b>b</b>.x - <b>a</b>.x &#x2a; <b>b</b>.z<br>
- * <b>c</b>.z = <b>a</b>.x &#x2a; <b>b</b>.y - <b>a</b>.y &#x2a; <b>b</b>.x<br>
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {Array<number>} A 3-element vector containing the cross product.
- * @example <caption>The following example uses the cross product to
- * calculate a triangle's normal vector and its area.</caption>
- * var a=triangle[0];
- * var b=triangle[1];
- * var c=triangle[2];
- * // Find vector from C to A
- * var da=H3DU.Math.vec3sub(a,c);
- * // Find vector from C to B
- * var db=H3DU.Math.vec3sub(b,c);
- * // The triangle's normal is the cross product of da and db
- * var normal=H3DU.Math.vec3cross(da,db);
- * // Find the triangle's area
- * var area=H3DU.Math.vec3length(normal)*0.5;
- * @example <caption>The following example finds the cosine and sine of
- * the angle between two unit vectors and the orthogonal unit vector of both.</caption>
- * var cr=H3DU.Math.vec3cross(unitA,unitB);
- * // Cosine of the angle. Will be positive or negative depending on
- * // the shortest angle between the vectors.
- * var cosine=H3DU.Math.vec3dot(unitA,unitB);
- * // Sine of the angle. Note that the sine will always be 0 or greater because
- * // the shortest angle betw0] ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
- */
+  /**
+   * Finds the cross product of two 3-element vectors (called A and B).
+   * The following are properties of the cross product:<ul>
+   * <li>The cross product will be a vector that is <i>orthogonal</i> (perpendicular) to both A and B.
+   * <li>Switching the order of A and B results in a cross product
+   * vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>,
+   * but it is <i>anticommutative</i>.)
+   * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+   * While the cross product of A and B points toward the viewer,
+   * the triangle's vertices are oriented counterclockwise for [right-handed coordinate systems]{@tutorial glmath},
+   * or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
+   * <li>The length of the cross
+   * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; |sin &theta;|
+   * where |<b>x</b>| is the length of vector <b>x</b>, and
+   * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
+   * It follows that:<ul>
+   * <li>If the length is 0, then A and B are parallel vectors (0 or 180 degrees apart).
+   * <li>If A and B are [unit vectors]{@tutorial glmath}, the length equals the absolute value
+   * of the sine of the shortest angle between A and B.
+   * <li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
+   * to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
+   * </ul></ul>
+   * The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
+   * follows:<br>
+   * <b>c</b>.x = <b>a</b>.y &#x2a; <b>b</b>.z - <b>a</b>.z &#x2a; <b>b</b>.y<br>
+   * <b>c</b>.y = <b>a</b>.z &#x2a; <b>b</b>.x - <b>a</b>.x &#x2a; <b>b</b>.z<br>
+   * <b>c</b>.z = <b>a</b>.x &#x2a; <b>b</b>.y - <b>a</b>.y &#x2a; <b>b</b>.x<br>
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {Array<number>} A 3-element vector containing the cross product.
+   * @example <caption>The following example uses the cross product to
+   * calculate a triangle's normal vector and its area.</caption>
+   * var a=triangle[0];
+   * var b=triangle[1];
+   * var c=triangle[2];
+   * // Find vector from C to A
+   * var da=H3DU.Math.vec3sub(a,c);
+   * // Find vector from C to B
+   * var db=H3DU.Math.vec3sub(b,c);
+   * // The triangle's normal is the cross product of da and db
+   * var normal=H3DU.Math.vec3cross(da,db);
+   * // Find the triangle's area
+   * var area=H3DU.Math.vec3length(normal)*0.5;
+   * @example <caption>The following example finds the cosine and sine of
+   * the angle between two unit vectors and the orthogonal unit vector of both.</caption>
+   * var cr=H3DU.Math.vec3cross(unitA,unitB);
+   * // Cosine of the angle. Will be positive or negative depending on
+   * // the shortest angle between the vectors.
+   * var cosine=H3DU.Math.vec3dot(unitA,unitB);
+   * // Sine of the angle. Note that the sine will always be 0 or greater because
+   * // the shortest angle betw0] ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
+   */
   "vec3cross":function(a, b) {
     return [a[1] * b[2] - a[2] * b[1],
       a[2] * b[0] - a[0] * b[2],
       a[0] * b[1] - a[1] * b[0]];
   },
-/**
- * Finds the straight-line distance from one three-element vector
- * to another, treating both as 3D points.
- * @param {Array<number>} vecFrom The first 3-element vector.
- * @param {Array<number>} vecTo The second 3-element vector.
- * @returns {number} The distance between the two vectors.
- */
+  /**
+   * Finds the straight-line distance from one three-element vector
+   * to another, treating both as 3D points.
+   * @param {Array<number>} vecFrom The first 3-element vector.
+   * @param {Array<number>} vecTo The second 3-element vector.
+   * @returns {number} The distance between the two vectors.
+   */
   "vec3dist":function(vecFrom, vecTo) {
     return HMath.vec3length(HMath.vec3sub(vecFrom, vecTo));
   },
-/**
- * Finds the dot product of two 3-element vectors. It's the
- * sum of the products of their components (for example, <b>a</b>'s X times
- * <b>b</b>'s X).<p>
- * The following are properties of the dot product:
- * <ul>
- * <li>The dot
- * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; cos &theta;
- * where |<b>x</b>| is the length of vector <b>x</b>, and
- * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
- * It follows that:<ul>
- * <li>A dot product of 0 indicates that the vectors are 90
- * degrees apart, making them <i>orthogonal</i>
- * (perpendicular to each other).
- * <li>A dot product greater than 0 means less than 90 degrees apart.
- * <li>A dot product less than 0 means greater than 90 degrees apart.
- * <li>If both vectors are [unit vectors]{@tutorial glmath}, the cosine
- * of the shortest angle between them is equal to their dot product.
- * However, <code>Math.acos</code> won't return a negative angle
- * from that cosine, so the dot product can't
- * be used to determine if one vector is "ahead of" or "behind" another
- * vector.
- * <li>If both vectors are unit vectors, a dot product of 1 or -1 indicates
- * that the two vectors are parallel (and the vectors are 0 or
- * 180 degrees apart, respectively.)
- * <li>If one of the vectors is a unit vector, the dot product's absolute
- * value will be the length that vector must have to make the closest
- * approach to the other vector's endpoint. If the dot product is negative,
- * the unit vector must also be in the opposite direction to approach the
- * other vector's endpoint.
- * </ul></li>
- * <li>If the two vectors are the same, the return value indicates
- * the vector's length squared. This is illustrated in the example.
- * <li>Switching the order of the two vectors results in the
- * same cross product. (Thus, the dot product is <i>commutative</i>.)
- * </ul>
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {number} A number representing the dot product.
- * @example <caption>The following shows a fast way to compare
- * a vector's length using the dot product.</caption>
- * // Check if the vector's length squared is less than 20 units squared
- * if(H3DU.Math.vec3dot(vector, vector)<20*20) {
- * // The vector's length is shorter than 20 units
- * }
- */
+  /**
+   * Finds the dot product of two 3-element vectors. It's the
+   * sum of the products of their components (for example, <b>a</b>'s X times
+   * <b>b</b>'s X).<p>
+   * The following are properties of the dot product:
+   * <ul>
+   * <li>The dot
+   * product equals |<b>a</b>| &#x2a; |<b>b</b>| &#x2a; cos &theta;
+   * where |<b>x</b>| is the length of vector <b>x</b>, and
+   * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
+   * It follows that:<ul>
+   * <li>A dot product of 0 indicates that the vectors are 90
+   * degrees apart, making them <i>orthogonal</i>
+   * (perpendicular to each other).
+   * <li>A dot product greater than 0 means less than 90 degrees apart.
+   * <li>A dot product less than 0 means greater than 90 degrees apart.
+   * <li>If both vectors are [unit vectors]{@tutorial glmath}, the cosine
+   * of the shortest angle between them is equal to their dot product.
+   * However, <code>Math.acos</code> won't return a negative angle
+   * from that cosine, so the dot product can't
+   * be used to determine if one vector is "ahead of" or "behind" another
+   * vector.
+   * <li>If both vectors are unit vectors, a dot product of 1 or -1 indicates
+   * that the two vectors are parallel (and the vectors are 0 or
+   * 180 degrees apart, respectively.)
+   * <li>If one of the vectors is a unit vector, the dot product's absolute
+   * value will be the length that vector must have to make the closest
+   * approach to the other vector's endpoint. If the dot product is negative,
+   * the unit vector must also be in the opposite direction to approach the
+   * other vector's endpoint.
+   * </ul></li>
+   * <li>If the two vectors are the same, the return value indicates
+   * the vector's length squared. This is illustrated in the example.
+   * <li>Switching the order of the two vectors results in the
+   * same cross product. (Thus, the dot product is <i>commutative</i>.)
+   * </ul>
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {number} A number representing the dot product.
+   * @example <caption>The following shows a fast way to compare
+   * a vector's length using the dot product.</caption>
+   * // Check if the vector's length squared is less than 20 units squared
+   * if(H3DU.Math.vec3dot(vector, vector)<20*20) {
+   * // The vector's length is shorter than 20 units
+   * }
+   */
   "vec3dot":function(a, b) {
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
   },
-/**
- * Unprojects the <i>window coordinates</i> given in a
- * 3-element vector,
- * using the given transformation matrix and viewport
- * rectangle.<p>
- * In the window coordinate space, X coordinates increase
- * rightward and Y coordinates increase upward
- * or downward depending on the "yUp" parameter, and
- * Z coordinates within the view volume range from 0 to 1 and
- * increase from front to back.
- * @param {Array<number>} vector A 3-element vector giving
- * the X, Y, and Z coordinates of the 3D point to transform.
- * @param {Array<number>} matrix A 4x4 matrix.
- * After undoing the transformation to window coordinates, the vector will
- * be transformed by the inverse of this matrix according to the
- * {@link H3DU.Math.mat4projectVec3} method.<br>
- * To convert to
- * world space, this parameter will generally be a projection-view matrix
- * (projection matrix multiplied by the view matrix, in that order). To convert to
- * object (model) space, this parameter will generally be a model-view-projection
- * matrix (projection-view matrix
- * multiplied by the world [model] matrix, in that order).
- * See {@link H3DU.Math.vec3toWindowPoint} for the meaning of window coordinates
- * with respect to the "matrix" and "yUp" parameters.
- * @param {Boolean} viewport Has the same meaning as "viewport" in
- * the {@link H3DU.Math.vec3toWindowPoint} method.
- * @param {Boolean} [yUp] Has the same meaning as "yUp" in
- * the {@link H3DU.Math.vec3toWindowPoint} method.
- * @returns {Array<number>} A 3-element array giving the coordinates
- * of the unprojected point, in that order.
- */
+  /**
+   * Unprojects the <i>window coordinates</i> given in a
+   * 3-element vector,
+   * using the given transformation matrix and viewport
+   * rectangle.<p>
+   * In the window coordinate space, X coordinates increase
+   * rightward and Y coordinates increase upward
+   * or downward depending on the "yUp" parameter, and
+   * Z coordinates within the view volume range from 0 to 1 and
+   * increase from front to back.
+   * @param {Array<number>} vector A 3-element vector giving
+   * the X, Y, and Z coordinates of the 3D point to transform.
+   * @param {Array<number>} matrix A 4x4 matrix.
+   * After undoing the transformation to window coordinates, the vector will
+   * be transformed by the inverse of this matrix according to the
+   * {@link H3DU.Math.mat4projectVec3} method.<br>
+   * To convert to
+   * world space, this parameter will generally be a projection-view matrix
+   * (projection matrix multiplied by the view matrix, in that order). To convert to
+   * object (model) space, this parameter will generally be a model-view-projection
+   * matrix (projection-view matrix
+   * multiplied by the world [model] matrix, in that order).
+   * See {@link H3DU.Math.vec3toWindowPoint} for the meaning of window coordinates
+   * with respect to the "matrix" and "yUp" parameters.
+   * @param {Boolean} viewport Has the same meaning as "viewport" in
+   * the {@link H3DU.Math.vec3toWindowPoint} method.
+   * @param {Boolean} [yUp] Has the same meaning as "yUp" in
+   * the {@link H3DU.Math.vec3toWindowPoint} method.
+   * @returns {Array<number>} A 3-element array giving the coordinates
+   * of the unprojected point, in that order.
+   */
   "vec3fromWindowPoint":function(vector, matrix, viewport, yUp) {
     var halfWidth = viewport[2] * 0.5;
     var halfHeight = viewport[3] * 0.5;
@@ -2887,79 +2887,79 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var invMatrix = HMath.mat4invert(matrix);
     return HMath.mat4projectVec3(invMatrix, [x, y, z]);
   },
-/**
- * Returns the distance of this 3-element vector from the origin,
- * also known as its <i>length</i> or <i>magnitude</i>.
- * It's the same as the square root of the sum of the squares
- * of its components.<p>
- * Note that if vectors are merely sorted or compared by their lengths (and
- * those lengths are not added or multiplied together or the like),
- * it's faster to sort or compare them by the squares of their lengths (to find
- * the square of a 3-element vector's length, call {@link H3DU.Math.vec3dot}
- * passing the same vector as both of its arguments).
- * @param {Array<number>} a A 3-element vector.
- * @returns {number} Return value. */
+  /**
+   * Returns the distance of this 3-element vector from the origin,
+   * also known as its <i>length</i> or <i>magnitude</i>.
+   * It's the same as the square root of the sum of the squares
+   * of its components.<p>
+   * Note that if vectors are merely sorted or compared by their lengths (and
+   * those lengths are not added or multiplied together or the like),
+   * it's faster to sort or compare them by the squares of their lengths (to find
+   * the square of a 3-element vector's length, call {@link H3DU.Math.vec3dot}
+   * passing the same vector as both of its arguments).
+   * @param {Array<number>} a A 3-element vector.
+   * @returns {number} Return value. */
   "vec3length":function(a) {
     var dx = a[0];
     var dy = a[1];
     var dz = a[2];
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   },
-/**
- * Does a linear interpolation between two 3-element vectors;
- * returns a new vector.
- * @param {Array<number>} v1 The first vector to interpolate.
- * The interpolation will occur on each component of this vector and v2.
- * @param {Array<number>} v2 The second vector to interpolate.
- * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
- * closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear
- * interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns
- * a value generally ranging from 0 through 1, and pass the result of that
- * function to this method.<br>
- * The following are examples of interpolation functions. See also
- * the code examples following this list.<ul>
- * <li>Linear: <code>factor</code>. Constant speed.
- * <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0.
- * For example, N=2 means a square, N=3 means cube, N=1/2 means square root,
- * and N=1/3 means cube root. If N &gt; 1, this
- * function starts slow and ends fast. If N &lt; 1,
- * this function starts fast and ends slow.
- * <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function starts fast and ends slow.
- * <li>Smoothstep: <code>(3.0-2.0*factor)*factor*factor</code>. This function
- * starts and ends slow, and speeds up in the middle.
- * <li>Perlin's "Smootherstep": <code>(10+factor*(factor*6-15))*factor*factor*factor</code>. This function
- * starts and ends slow, and speeds up in the middle.
- * <li>Discrete-step timing, where N is a number of steps greater than 0:<ul>
- * <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor*N))/N)</code>.</li>
- * <li>Position end: <code>Math.floor(factor*N)/N</code>.</li></ul>
- * <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>,
- * where <code>INTF(x)</code>
- * is another interpolation function. This function reverses the speed behavior;
- * for example, a function that started fast now starts slow.
- * <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>,
- * where <code>INTF(x)</code> is another interpolation function.
- * Depending on the underlying function, this function eases in,
- * then eases out, or vice versa.
- * </ul>
- * @returns {Array<number>} The interpolated vector.
- * @example <caption>The following code does a nonlinear
- * interpolation of two vectors that uses the cube of "factor" rather than
- * "factor". Rather than at a constant speed, the vectors are interpolated
- * slowly then very fast.</caption>
- * factor = factor*factor*factor; // cube the interpolation factor
- * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
- * @example <caption>The following code does an inverted cubic
- * interpolation. This time, vectors are interpolated fast then very slowly.</caption>
- * factor = 1 - factor; // Invert the factor
- * factor = factor*factor*factor; // cube the interpolation factor
- * factor = 1 - factor; // Invert the result
- * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
- * @example <caption>The following code does the nonlinear
- *  interpolation called "smoothstep". It slows down at the beginning
- * and end, and speeds up in the middle.</caption>
- * factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
- * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
- */
+  /**
+   * Does a linear interpolation between two 3-element vectors;
+   * returns a new vector.
+   * @param {Array<number>} v1 The first vector to interpolate.
+   * The interpolation will occur on each component of this vector and v2.
+   * @param {Array<number>} v2 The second vector to interpolate.
+   * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
+   * closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear
+   * interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns
+   * a value generally ranging from 0 through 1, and pass the result of that
+   * function to this method.<br>
+   * The following are examples of interpolation functions. See also
+   * the code examples following this list.<ul>
+   * <li>Linear: <code>factor</code>. Constant speed.
+   * <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0.
+   * For example, N=2 means a square, N=3 means cube, N=1/2 means square root,
+   * and N=1/3 means cube root. If N &gt; 1, this
+   * function starts slow and ends fast. If N &lt; 1,
+   * this function starts fast and ends slow.
+   * <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function starts fast and ends slow.
+   * <li>Smoothstep: <code>(3.0-2.0*factor)*factor*factor</code>. This function
+   * starts and ends slow, and speeds up in the middle.
+   * <li>Perlin's "Smootherstep": <code>(10+factor*(factor*6-15))*factor*factor*factor</code>. This function
+   * starts and ends slow, and speeds up in the middle.
+   * <li>Discrete-step timing, where N is a number of steps greater than 0:<ul>
+   * <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor*N))/N)</code>.</li>
+   * <li>Position end: <code>Math.floor(factor*N)/N</code>.</li></ul>
+   * <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>,
+   * where <code>INTF(x)</code>
+   * is another interpolation function. This function reverses the speed behavior;
+   * for example, a function that started fast now starts slow.
+   * <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>,
+   * where <code>INTF(x)</code> is another interpolation function.
+   * Depending on the underlying function, this function eases in,
+   * then eases out, or vice versa.
+   * </ul>
+   * @returns {Array<number>} The interpolated vector.
+   * @example <caption>The following code does a nonlinear
+   * interpolation of two vectors that uses the cube of "factor" rather than
+   * "factor". Rather than at a constant speed, the vectors are interpolated
+   * slowly then very fast.</caption>
+   * factor = factor*factor*factor; // cube the interpolation factor
+   * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+   * @example <caption>The following code does an inverted cubic
+   * interpolation. This time, vectors are interpolated fast then very slowly.</caption>
+   * factor = 1 - factor; // Invert the factor
+   * factor = factor*factor*factor; // cube the interpolation factor
+   * factor = 1 - factor; // Invert the result
+   * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+   * @example <caption>The following code does the nonlinear
+   *  interpolation called "smoothstep". It slows down at the beginning
+   * and end, and speeds up in the middle.</caption>
+   * factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
+   * var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
+   */
   "vec3lerp":function(v1, v2, factor) {
     return [
       v1[0] + (v2[0] - v1[0]) * factor,
@@ -2967,25 +2967,25 @@ tvar47 * tvar51 + tvar8 * tvar52;
       v1[2] + (v2[2] - v1[2]) * factor
     ];
   },
-/**
- * Multiplies each of the components of two 3-element vectors and returns a new
- * vector with the result.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {Array<number>} The resulting 3-element vector.
- */
+  /**
+   * Multiplies each of the components of two 3-element vectors and returns a new
+   * vector with the result.
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {Array<number>} The resulting 3-element vector.
+   */
   "vec3mul":function(a, b) {
     return [a[0] * b[0], a[1] * b[1], a[2] * b[2]];
   },
-/**
- * Multiplies each of the components of two 3-element vectors and stores
- * the result in the first vector.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {Array<number>} The parameter "a"
- */
+  /**
+   * Multiplies each of the components of two 3-element vectors and stores
+   * the result in the first vector.
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {Array<number>} The parameter "a"
+   */
   "vec3mulInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
 
     var b0 = b[0];
     var b1 = b[1];
@@ -2995,66 +2995,66 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[2] *= b2;
     return a;
   },
-/**
- * Negates a 3-element vector and returns a new
- * vector with the result, which is generally a vector with
- * the same length but opposite direction. Negating a vector
- * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 3-element vector.
- * @returns {Array<number>} The resulting 3-element vector.
- */
+  /**
+   * Negates a 3-element vector and returns a new
+   * vector with the result, which is generally a vector with
+   * the same length but opposite direction. Negating a vector
+   * is the same as reversing the sign of each of its components.
+   * @param {Array<number>} a A 3-element vector.
+   * @returns {Array<number>} The resulting 3-element vector.
+   */
   "vec3negate":function(a) {
     return [-a[0], -a[1], -a[2]];
   },
-/**
- * Negates a 3-element vector in place, generally resulting in a vector with
- * the same length but opposite direction.
- * Negating a vector
- * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 3-element vector.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Negates a 3-element vector in place, generally resulting in a vector with
+   * the same length but opposite direction.
+   * Negating a vector
+   * is the same as reversing the sign of each of its components.
+   * @param {Array<number>} a A 3-element vector.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec3negateInPlace":function(a) {
     a[0] = -a[0];
     a[1] = -a[1];
     a[2] = -a[2];
     return a;
   },
-/**
- * Converts a 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
- * When a vector is normalized, its direction remains the same but the distance from the origin
- * to that vector becomes 1 (unless all its components are 0).
- * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec3length}.<p>
- * @param {Array<number>} vec A 3-element vector.
- * @returns {Array<number>} The resulting vector.
- * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
- * @example <caption>The following example changes the
- * length of a line segment. </caption>
- * var startPt=[x1,y1,z1]; // Line segment's start
- * var endPt=[x2,y2,z2]; // Line segment's end
- * // Find difference between endPt and startPt
- * var delta=H3DU.Math.vec3sub(endPt,startPt);
- * // Normalize delta to a unit vector
- * var deltaNorm=H3DU.Math.vec3normalize(delta);
- * // Rescale to the desired length, here, 10
- * H3DU.Math.vec3scaleInPlace(deltaNorm,10);
- * // Find the new endpoint
- * endPt=H3DU.Math.vec3add(startPt,deltaNorm);
- */
+  /**
+   * Converts a 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+   * When a vector is normalized, its direction remains the same but the distance from the origin
+   * to that vector becomes 1 (unless all its components are 0).
+   * A vector is normalized by dividing each of its components
+   * by its [length]{@link H3DU.Math.vec3length}.<p>
+   * @param {Array<number>} vec A 3-element vector.
+   * @returns {Array<number>} The resulting vector.
+   * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+   * @example <caption>The following example changes the
+   * length of a line segment. </caption>
+   * var startPt=[x1,y1,z1]; // Line segment's start
+   * var endPt=[x2,y2,z2]; // Line segment's end
+   * // Find difference between endPt and startPt
+   * var delta=H3DU.Math.vec3sub(endPt,startPt);
+   * // Normalize delta to a unit vector
+   * var deltaNorm=H3DU.Math.vec3normalize(delta);
+   * // Rescale to the desired length, here, 10
+   * H3DU.Math.vec3scaleInPlace(deltaNorm,10);
+   * // Find the new endpoint
+   * endPt=H3DU.Math.vec3add(startPt,deltaNorm);
+   */
   "vec3normalize":function(vec) {
     return HMath.vec3normalizeInPlace([vec[0], vec[1], vec[2]]);
   },
-/**
- * Converts a 3-element vector to a [unit vector]{@tutorial glmath}.
- * When a vector is normalized, its direction remains the same but the distance from the origin
- * to that vector becomes 1 (unless all its components are 0).
- * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec3length}.<p>
- * @param {Array<number>} vec A 3-element vector.
- * @returns {Array<number>} The parameter "vec".
- * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
- */
+  /**
+   * Converts a 3-element vector to a [unit vector]{@tutorial glmath}.
+   * When a vector is normalized, its direction remains the same but the distance from the origin
+   * to that vector becomes 1 (unless all its components are 0).
+   * A vector is normalized by dividing each of its components
+   * by its [length]{@link H3DU.Math.vec3length}.<p>
+   * @param {Array<number>} vec A 3-element vector.
+   * @returns {Array<number>} The parameter "vec".
+   * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+   */
   "vec3normalizeInPlace":function(vec) {
     var x = vec[0];
     var y = vec[1];
@@ -3068,14 +3068,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return vec;
   },
-/**
- * Returns an arbitrary 3-element vector that is perpendicular
- * (orthogonal) to the given 3-element vector. The return value
- * will not be converted to a [unit vector]{@tutorial glmath}.
- * @param {Array<number>} vec A 3-element vector.
- * @returns {Array<number>} A perpendicular 3-element
- * vector.  Returns (0,0,0) if "vec" is (0,0,0).
- */
+  /**
+   * Returns an arbitrary 3-element vector that is perpendicular
+   * (orthogonal) to the given 3-element vector. The return value
+   * will not be converted to a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} vec A 3-element vector.
+   * @returns {Array<number>} A perpendicular 3-element
+   * vector.  Returns (0,0,0) if "vec" is (0,0,0).
+   */
   "vec3perp":function(vec) {
     var absx = Math.abs(vec[0]);
     var absy = Math.abs(vec[1]);
@@ -3097,97 +3097,97 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return normal;
   },
-/**
- * Returns the projection of a 3-element vector on the given
- * reference vector. Assuming both vectors
- * start at the same point, the resulting vector
- * will be parallel to the
- * reference vector but will make the closest
- * approach possible to the projected vector's
- * endpoint. The difference between the projected
- * vector and the return value will be perpendicular
- * to the reference vector.
- * @param {Array<number>} vec The vector to project.
- * @param {Array<number>} refVec The reference vector whose length
- * will be adjusted.
- * @returns {Array<number>} The projection of
- * "vec" on "refVec".  Returns (0,0,0) if "refVec"'s
- * length is 0 or extremely close to 0.
- */
+  /**
+   * Returns the projection of a 3-element vector on the given
+   * reference vector. Assuming both vectors
+   * start at the same point, the resulting vector
+   * will be parallel to the
+   * reference vector but will make the closest
+   * approach possible to the projected vector's
+   * endpoint. The difference between the projected
+   * vector and the return value will be perpendicular
+   * to the reference vector.
+   * @param {Array<number>} vec The vector to project.
+   * @param {Array<number>} refVec The reference vector whose length
+   * will be adjusted.
+   * @returns {Array<number>} The projection of
+   * "vec" on "refVec".  Returns (0,0,0) if "refVec"'s
+   * length is 0 or extremely close to 0.
+   */
   "vec3proj":function(vec, refVec) {
     var lensq = HMath.vec3dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return HMath.vec3scale(refVec,
-    HMath.vec3dot(vec, refVec) / lensq);
+      HMath.vec3dot(vec, refVec) / lensq);
   },
-/**
- * Returns a vector that reflects off a surface.
- * @param {Array<number>} incident Incident vector, or
- * a vector headed in the direction of the surface, as a 3-element vector.
- * @param {Array<number>} normal Surface normal vector, or
- * a vector that's perpendicular to the surface, as a 3-element vector.
- * Should be a [unit vector]{@tutorial glmath}.
- * @returns {Array<number>} A vector that has the same length
- * as "incident" but is reflected away from the surface.
- */
+  /**
+   * Returns a vector that reflects off a surface.
+   * @param {Array<number>} incident Incident vector, or
+   * a vector headed in the direction of the surface, as a 3-element vector.
+   * @param {Array<number>} normal Surface normal vector, or
+   * a vector that's perpendicular to the surface, as a 3-element vector.
+   * Should be a [unit vector]{@tutorial glmath}.
+   * @returns {Array<number>} A vector that has the same length
+   * as "incident" but is reflected away from the surface.
+   */
   "vec3reflect":function(incident, normal) {
     return HMath.vec3sub(incident,
-     HMath.vec3scale(normal, 2 * HMath.vec3dot(normal, incident)));
+      HMath.vec3scale(normal, 2 * HMath.vec3dot(normal, incident)));
   },
-/**
- * Multiplies each element of a 3-element vector by a factor. Returns
- * a new vector that is parallel to the old vector
- * but with its length multiplied by the given factor. If the factor
- * is positive, the vector will point in the same direction; if negative,
- * in the opposite direction; if zero, the vector's components will all be 0.
- * @param {Array<number>} a A 3-element vector.
- * @param {number} scalar A factor to multiply. To divide
- * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Multiplies each element of a 3-element vector by a factor. Returns
+   * a new vector that is parallel to the old vector
+   * but with its length multiplied by the given factor. If the factor
+   * is positive, the vector will point in the same direction; if negative,
+   * in the opposite direction; if zero, the vector's components will all be 0.
+   * @param {Array<number>} a A 3-element vector.
+   * @param {number} scalar A factor to multiply. To divide
+   * a vector by a number, the factor will be 1 divided by that number.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec3scale":function(a, scalar) {
     return HMath.vec3scaleInPlace([a[0], a[1], a[2]], scalar);
   },
-/**
- * Multiplies each element of a 3-element vector by a factor, so
- * that the vector is parallel to the old vector
- * but its length is multiplied by the given factor. If the factor
- * is positive, the vector will point in the same direction; if negative,
- * in the opposite direction; if zero, the vector's components will all be 0.
- * @param {Array<number>} a A 3-element vector.
- * @param {number} scalar A factor to multiply. To divide
- * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Multiplies each element of a 3-element vector by a factor, so
+   * that the vector is parallel to the old vector
+   * but its length is multiplied by the given factor. If the factor
+   * is positive, the vector will point in the same direction; if negative,
+   * in the opposite direction; if zero, the vector's components will all be 0.
+   * @param {Array<number>} a A 3-element vector.
+   * @param {number} scalar A factor to multiply. To divide
+   * a vector by a number, the factor will be 1 divided by that number.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec3scaleInPlace":function(a, scalar) {
     a[0] *= scalar;
     a[1] *= scalar;
     a[2] *= scalar;
     return a;
   },
-/**
- * Subtracts the second vector from the first vector and returns a new
- * vector with the result. Subtracting two vectors
- * is the same as subtracting each of their components.<p>
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {Array<number>} The resulting 3-element vector.
- * This is the vector <i>to <code>a</code> from <code>b</code></i>.
- */
+  /**
+   * Subtracts the second vector from the first vector and returns a new
+   * vector with the result. Subtracting two vectors
+   * is the same as subtracting each of their components.<p>
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {Array<number>} The resulting 3-element vector.
+   * This is the vector <i>to <code>a</code> from <code>b</code></i>.
+   */
   "vec3sub":function(a, b) {
     return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
   },
-/**
- * Subtracts the second vector from the first vector and stores
- * the result in the first vector. Subtracting two vectors
- * is the same as subtracting each of their components.
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector.
- * @returns {Array<number>} The parameter "a".
- * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
- */
+  /**
+   * Subtracts the second vector from the first vector and stores
+   * the result in the first vector. Subtracting two vectors
+   * is the same as subtracting each of their components.
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector.
+   * @returns {Array<number>} The parameter "a".
+   * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
+   */
   "vec3subInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];
@@ -3196,49 +3196,49 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[2] -= b2;
     return a;
   },
-/**
- * Transforms the 3D point specified in this 3-element vector to its
- * <i>window coordinates</i>
- * using the given transformation matrix and viewport rectangle.
- * @param {Array<number>} vector A 3-element vector giving
- * the X, Y, and Z coordinates of the 3D point to transform.
- * @param {Array<number>} matrix A 4x4 matrix to use to transform
- * the vector according to the {@link H3DU.Math.mat4projectVec3} method,
- * before the transformed vector is converted to window coordinates.
- * <br>This parameter will generally be
- * a projection-view matrix (projection matrix multiplied
- * by the view matrix, in that order), if the vector to transform is in <i>world space</i>,
- * or a model-view-projection matrix, that is, (projection-view matrix multiplied
- * by the model [world] matrix, in that order), if the vector is in <i>model
- * (object) space</i>.
- * <br>If the matrix includes a projection transform returned
- * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
- * similar {@link H3DU.Math} methods, then in the <i>window coordinate</i> space,
- * X coordinates increase rightward, Y coordinates increase upward, and
- * Z coordinates within the view volume range from 0 to 1 and
- * increase from front to back, unless otherwise specified in those methods' documentation.
- * If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward
- * instead of upward or vice versa.
- * @param {Array<number>} viewport A 4-element array specifying
- * the starting position and size of the viewport in window units
- * (such as pixels). In order, the four elements are the starting position's
- * X coordinate, its Y coordinate, the viewport's width, and the viewport's
- * height. Throws an error if the width or height is less than 0.
- * @param {Boolean} [yUp] If omitted or a "falsy" value, reverses the sign of
- * the Y coordinate returned by the {@link H3DU.Math.mat4projectVec3} method
- * before converting it to window coordinates. If true, the Y
- * coordinate will remain unchanged. If window Y coordinates increase
- * upward, the viewport's starting position is at the lower left corner. If those
- * coordinates increase downward, the viewport's starting position is
- * at the upper left corner.
- * @returns {Array<number>} A 3-element array giving the window
- * coordinates, in that order.
- */
+  /**
+   * Transforms the 3D point specified in this 3-element vector to its
+   * <i>window coordinates</i>
+   * using the given transformation matrix and viewport rectangle.
+   * @param {Array<number>} vector A 3-element vector giving
+   * the X, Y, and Z coordinates of the 3D point to transform.
+   * @param {Array<number>} matrix A 4x4 matrix to use to transform
+   * the vector according to the {@link H3DU.Math.mat4projectVec3} method,
+   * before the transformed vector is converted to window coordinates.
+   * <br>This parameter will generally be
+   * a projection-view matrix (projection matrix multiplied
+   * by the view matrix, in that order), if the vector to transform is in <i>world space</i>,
+   * or a model-view-projection matrix, that is, (projection-view matrix multiplied
+   * by the model [world] matrix, in that order), if the vector is in <i>model
+   * (object) space</i>.
+   * <br>If the matrix includes a projection transform returned
+   * by {@link H3DU.Math.mat4ortho}, {@link H3DU.Math.mat4perspective}, or
+   * similar {@link H3DU.Math} methods, then in the <i>window coordinate</i> space,
+   * X coordinates increase rightward, Y coordinates increase upward, and
+   * Z coordinates within the view volume range from 0 to 1 and
+   * increase from front to back, unless otherwise specified in those methods' documentation.
+   * If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward
+   * instead of upward or vice versa.
+   * @param {Array<number>} viewport A 4-element array specifying
+   * the starting position and size of the viewport in window units
+   * (such as pixels). In order, the four elements are the starting position's
+   * X coordinate, its Y coordinate, the viewport's width, and the viewport's
+   * height. Throws an error if the width or height is less than 0.
+   * @param {Boolean} [yUp] If omitted or a "falsy" value, reverses the sign of
+   * the Y coordinate returned by the {@link H3DU.Math.mat4projectVec3} method
+   * before converting it to window coordinates. If true, the Y
+   * coordinate will remain unchanged. If window Y coordinates increase
+   * upward, the viewport's starting position is at the lower left corner. If those
+   * coordinates increase downward, the viewport's starting position is
+   * at the upper left corner.
+   * @returns {Array<number>} A 3-element array giving the window
+   * coordinates, in that order.
+   */
   "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
     if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
-   // Transform the vector and do a perspective divide
+    // Transform the vector and do a perspective divide
     var vec = HMath.mat4projectVec3(matrix, vector);
-   // Now convert the projected vector to window coordinates
+    // Now convert the projected vector to window coordinates
     var halfWidth = viewport[2] * 0.5;
     var halfHeight = viewport[3] * 0.5;
     var vecY = yUp ? vec[1] : -vec[1];
@@ -3247,56 +3247,56 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var z = (vec[2] + 1.0) * 0.5;
     return [x, y, z];
   },
-/**
- * Finds the scalar triple product of three vectors (A, B, and C). The triple
- * product is the [dot product]{@link H3DU.Math.vec3dot} of both A and the
- * [cross product]{@link H3DU.Math.vec3cross}
- * of B and C. The following are properties of the scalar triple product
- * (called triple product in what follows):<ul>
- * <li>Switching the order of B and C, A and C, or A and B results in a triple product
- * with its sign reversed. Moving all three parameters to different positions, though,
- * results in the same triple product.
- * <li>The triple product's absolute value is the volume of a parallelepiped (skewed
- * box) where three of its sides having a vertex in common are
- * defined by A, B, and C, in any order.
- * <li>The triple product's absolute value divided by 6 is the volume of a tetrahedron,
- * where three of its sides having a vertex in common are
- * defined by A, B, and C, in any order.
- * <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
- * <li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
- * of a 3x3 matrix whose rows or columns are the vectors A, B, and C, in that order.
- * <li>Assume A is perpendicular to vectors B and C. If the triple product is positive,
- * then A points in the same direction as the cross product of
- * B and C -- which will be perpendicular -- and the angle from B to C, when rotated
- * about vector A, is positive. If the triple product is negative, then A points in the
- * opposite direction from that cross product, and that angle is negative.
- * (See the example below.)
- * </ul>
- * @param {Array<number>} a The first 3-element vector.
- * @param {Array<number>} b The second 3-element vector, or the
- * first parameter to the cross product.
- * @param {Array<number>} c The third 3-element vector, or the
- * second parameter to the cross product.
- * @returns {number} A number giving the triple product.
- */
+  /**
+   * Finds the scalar triple product of three vectors (A, B, and C). The triple
+   * product is the [dot product]{@link H3DU.Math.vec3dot} of both A and the
+   * [cross product]{@link H3DU.Math.vec3cross}
+   * of B and C. The following are properties of the scalar triple product
+   * (called triple product in what follows):<ul>
+   * <li>Switching the order of B and C, A and C, or A and B results in a triple product
+   * with its sign reversed. Moving all three parameters to different positions, though,
+   * results in the same triple product.
+   * <li>The triple product's absolute value is the volume of a parallelepiped (skewed
+   * box) where three of its sides having a vertex in common are
+   * defined by A, B, and C, in any order.
+   * <li>The triple product's absolute value divided by 6 is the volume of a tetrahedron,
+   * where three of its sides having a vertex in common are
+   * defined by A, B, and C, in any order.
+   * <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
+   * <li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
+   * of a 3x3 matrix whose rows or columns are the vectors A, B, and C, in that order.
+   * <li>Assume A is perpendicular to vectors B and C. If the triple product is positive,
+   * then A points in the same direction as the cross product of
+   * B and C -- which will be perpendicular -- and the angle from B to C, when rotated
+   * about vector A, is positive. If the triple product is negative, then A points in the
+   * opposite direction from that cross product, and that angle is negative.
+   * (See the example below.)
+   * </ul>
+   * @param {Array<number>} a The first 3-element vector.
+   * @param {Array<number>} b The second 3-element vector, or the
+   * first parameter to the cross product.
+   * @param {Array<number>} c The third 3-element vector, or the
+   * second parameter to the cross product.
+   * @returns {number} A number giving the triple product.
+   */
   "vec3triple":function(a, b, c) {
     return HMath.vec3dot(a, HMath.vec3cross(b, c));
   },
-/**
- * Returns a new 4-element
- * vector with the absolute value of each of its components.
- * @param {Array<number>} a A 4-element vector.
- * @returns {Array<number>} The resulting 4-element vector.
- */
+  /**
+   * Returns a new 4-element
+   * vector with the absolute value of each of its components.
+   * @param {Array<number>} a A 4-element vector.
+   * @returns {Array<number>} The resulting 4-element vector.
+   */
   "vec4abs":function(a) {
     return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2]), Math.abs(a[3])];
   },
-/**
- * Sets each component of the given 4-element
- * vector to its absolute value.
- * @param {Array<number>} a A 4-element vector.
- * @returns {Array<number>} The vector "a".
- */
+  /**
+   * Sets each component of the given 4-element
+   * vector to its absolute value.
+   * @param {Array<number>} a A 4-element vector.
+   * @returns {Array<number>} The vector "a".
+   */
   "vec4absInPlace":function(a) {
     a[0] = Math.abs(a[0]);
     a[1] = Math.abs(a[1]);
@@ -3304,38 +3304,38 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[3] = Math.abs(a[3]);
     return a;
   },
-/**
- * Adds two 4-element vectors and returns a new
- * vector with the result. Adding two vectors
- * is the same as adding each of their components.
- * The resulting vector:<ul>
- * <li>describes a straight-line path for the
- * combined paths described by the given vectors, in either order, and
- * <li>will come "between" the two vectors given (at their shortest angle) if all three start
- * at the same position.</ul>
- * @param {Array<number>} a The first 4-element vector.
- * @param {Array<number>} b The second 4-element vector.
- * @returns {Array<number>} The resulting 4-element vector.
- */
+  /**
+   * Adds two 4-element vectors and returns a new
+   * vector with the result. Adding two vectors
+   * is the same as adding each of their components.
+   * The resulting vector:<ul>
+   * <li>describes a straight-line path for the
+   * combined paths described by the given vectors, in either order, and
+   * <li>will come "between" the two vectors given (at their shortest angle) if all three start
+   * at the same position.</ul>
+   * @param {Array<number>} a The first 4-element vector.
+   * @param {Array<number>} b The second 4-element vector.
+   * @returns {Array<number>} The resulting 4-element vector.
+   */
   "vec4add":function(a, b) {
     return [a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]];
   },
-/**
- * Adds two 4-element vectors and stores
- * the result in the first vector. Adding two vectors
- * is the same as adding each of their components.
- * The resulting vector:<ul>
- * <li>describes a straight-line path for the
- * combined paths described by the given vectors, in either order, and
- * <li>will come "between" the two vectors given (at their shortest angle) if all three start
- * at the same position.</ul>
- * @param {Array<number>} a The first 4-element vector.
- * @param {Array<number>} b The second 4-element vector.
- * @returns {Array<number>} The parameter "a".
- * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
- */
+  /**
+   * Adds two 4-element vectors and stores
+   * the result in the first vector. Adding two vectors
+   * is the same as adding each of their components.
+   * The resulting vector:<ul>
+   * <li>describes a straight-line path for the
+   * combined paths described by the given vectors, in either order, and
+   * <li>will come "between" the two vectors given (at their shortest angle) if all three start
+   * at the same position.</ul>
+   * @param {Array<number>} a The first 4-element vector.
+   * @param {Array<number>} b The second 4-element vector.
+   * @returns {Array<number>} The parameter "a".
+   * This is the vector <i>to the previous <code>a</code> from <code>b</code></i>.
+   */
   "vec4addInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
 
     var b0 = b[0];
     var b1 = b[1];
@@ -3347,15 +3347,15 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[3] += b3;
     return a;
   },
-/**
- * Assigns the values of a 4-element vector into another
- * 4-element vector.
- * @param {Array<number>} dst The 4-element vector to copy
- * the source values to.
- * @param {Array<number>} src The 4-element vector whose
- * values will be copied.
- * @returns {Array<number>} The parameter "dst".
- */
+  /**
+   * Assigns the values of a 4-element vector into another
+   * 4-element vector.
+   * @param {Array<number>} dst The 4-element vector to copy
+   * the source values to.
+   * @param {Array<number>} src The 4-element vector whose
+   * values will be copied.
+   * @returns {Array<number>} The parameter "dst".
+   */
   "vec4assign":function(dst, src) {
     dst[0] = src[0];
     dst[1] = src[1];
@@ -3363,22 +3363,22 @@ tvar47 * tvar51 + tvar8 * tvar52;
     dst[3] = src[3];
     return dst;
   },
-/**
- * Returns a 4-element vector in which each element of the given 4-element vector is clamped
- * @param {Array<number>} a The vector to clamp.
- * @param {number} min Lowest possible value. Should not be greater than "max".
- * @param {number} max Highest possible value. Should not be less than "min".
- * @returns {Array<number>} The resulting vector. */
+  /**
+   * Returns a 4-element vector in which each element of the given 4-element vector is clamped
+   * @param {Array<number>} a The vector to clamp.
+   * @param {number} min Lowest possible value. Should not be greater than "max".
+   * @param {number} max Highest possible value. Should not be less than "min".
+   * @returns {Array<number>} The resulting vector. */
   "vec4clamp":function(a, min, max) {
     return HMath.vec4clampInPlace(HMath.vec4copy(a), min, max);
   },
-/**
- * Clamps each element of the given 4-element vector
- * so it's not less than one value or greater than another value.
- * @param {Array<number>} a The vector to clamp.
- * @param {number} min Lowest possible value. Should not be greater than "max".
- * @param {number} max Highest possible value. Should not be less than "min".
- * @returns {Array<number>} The resulting vector. */
+  /**
+   * Clamps each element of the given 4-element vector
+   * so it's not less than one value or greater than another value.
+   * @param {Array<number>} a The vector to clamp.
+   * @param {number} min Lowest possible value. Should not be greater than "max".
+   * @param {number} max Highest possible value. Should not be less than "min".
+   * @returns {Array<number>} The resulting vector. */
   "vec4clampInPlace":function(a, min, max) {
     var x = Math.min(max, Math.max(min, a[0]));
     var y = Math.min(max, Math.max(min, a[1]));
@@ -3390,35 +3390,35 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[3] = w;
     return a;
   },
-/**
- * Returns a copy of a 4-element vector.
- * @param {Array<number>} vec A 4-element vector.
- * @returns {Array<number>} Return value. */
+  /**
+   * Returns a copy of a 4-element vector.
+   * @param {Array<number>} vec A 4-element vector.
+   * @returns {Array<number>} Return value. */
   "vec4copy":function(vec) {
     return [vec[0], vec[1], vec[2], vec[3]];
   },
-/**
- * Finds the dot product of two 4-element vectors. It's the
- * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
- * For properties of the dot product, see {@link H3DU.Math.vec3dot}.
- * @param {Array<number>} a The first 4-element vector.
- * @param {Array<number>} b The second 4-element vector.
- * @returns {number} Return value.
- */
+  /**
+   * Finds the dot product of two 4-element vectors. It's the
+   * sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
+   * For properties of the dot product, see {@link H3DU.Math.vec3dot}.
+   * @param {Array<number>} a The first 4-element vector.
+   * @param {Array<number>} b The second 4-element vector.
+   * @returns {number} Return value.
+   */
   "vec4dot":function(a, b) {
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
   },
-/**
- * Returns the distance of this 4-element vector from the origin,
- * also known as its <i>length</i> or <i>magnitude</i>.
- * It's the same as the square root of the sum of the squares
- * of its components.<p>
- * Note that if vectors are merely sorted or compared by their lengths,
- * it's faster to sort or compare them by the squares of their lengths (to find
- * the square of a 4-element vector's length, call {@link H3DU.Math.vec4dot}
- * passing the same vector as both of its arguments).
- * @param {Array<number>} a A 4-element vector.
- * @returns {number} Return value. */
+  /**
+   * Returns the distance of this 4-element vector from the origin,
+   * also known as its <i>length</i> or <i>magnitude</i>.
+   * It's the same as the square root of the sum of the squares
+   * of its components.<p>
+   * Note that if vectors are merely sorted or compared by their lengths,
+   * it's faster to sort or compare them by the squares of their lengths (to find
+   * the square of a 4-element vector's length, call {@link H3DU.Math.vec4dot}
+   * passing the same vector as both of its arguments).
+   * @param {Array<number>} a A 4-element vector.
+   * @returns {number} Return value. */
   "vec4length":function(a) {
     var dx = a[0];
     var dy = a[1];
@@ -3426,21 +3426,21 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var dw = a[3];
     return Math.sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
   },
-/**
- * Does a linear interpolation between two 4-element vectors;
- * returns a new vector.
- * @param {Array<number>} v1 The first vector to interpolate.
- * The interpolation will occur on each component of this vector and v2.
- * @param {Array<number>} v2 The second vector to interpolate.
- * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
- * closer to v1, and closer to 1 means closer to v2. For a nonlinear
- * interpolation, define a function that takes a value that usually ranges from 0 through 1
- * and generally returns
- * A value that usually ranges from 0 through 1, and pass the result of that function to this method.
- * See the documentation for {@link H3DU.Math.vec3lerp}
- * for examples of interpolation functions.
- * @returns {Array<number>} The interpolated vector.
- */
+  /**
+   * Does a linear interpolation between two 4-element vectors;
+   * returns a new vector.
+   * @param {Array<number>} v1 The first vector to interpolate.
+   * The interpolation will occur on each component of this vector and v2.
+   * @param {Array<number>} v2 The second vector to interpolate.
+   * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
+   * closer to v1, and closer to 1 means closer to v2. For a nonlinear
+   * interpolation, define a function that takes a value that usually ranges from 0 through 1
+   * and generally returns
+   * A value that usually ranges from 0 through 1, and pass the result of that function to this method.
+   * See the documentation for {@link H3DU.Math.vec3lerp}
+   * for examples of interpolation functions.
+   * @returns {Array<number>} The interpolated vector.
+   */
   "vec4lerp":function(v1, v2, factor) {
     return [
       v1[0] + (v2[0] - v1[0]) * factor,
@@ -3449,25 +3449,25 @@ tvar47 * tvar51 + tvar8 * tvar52;
       v1[3] + (v2[3] - v1[3]) * factor
     ];
   },
-/**
- * Negates a 4-element vector and returns a new
- * vector with the result, which is generally a vector with
- * the same length but opposite direction. Negating a vector
- * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 4-element vector.
- * @returns {Array<number>} The resulting 4-element vector.
- */
+  /**
+   * Negates a 4-element vector and returns a new
+   * vector with the result, which is generally a vector with
+   * the same length but opposite direction. Negating a vector
+   * is the same as reversing the sign of each of its components.
+   * @param {Array<number>} a A 4-element vector.
+   * @returns {Array<number>} The resulting 4-element vector.
+   */
   "vec4negate":function(a) {
     return [-a[0], -a[1], -a[2], -a[3]];
   },
-/**
- * Negates a 4-element vector in place, generally resulting in a vector with
- * the same length but opposite direction.
- * Negating a vector
- * is the same as reversing the sign of each of its components.
- * @param {Array<number>} a A 4-element vector.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Negates a 4-element vector in place, generally resulting in a vector with
+   * the same length but opposite direction.
+   * Negating a vector
+   * is the same as reversing the sign of each of its components.
+   * @param {Array<number>} a A 4-element vector.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec4negateInPlace":function(a) {
     a[0] = -a[0];
     a[1] = -a[1];
@@ -3475,29 +3475,29 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[3] = -a[3];
     return a;
   },
-/**
- * Converts a 4-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
- * When a vector is normalized, its direction remains the same but the distance from the origin
- * to that vector becomes 1 (unless all its components are 0).
- * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec4length}.<p>
- * @param {Array<number>} vec A 4-element vector.
- * @returns {Array<number>} The resulting vector.
- * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
- */
+  /**
+   * Converts a 4-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+   * When a vector is normalized, its direction remains the same but the distance from the origin
+   * to that vector becomes 1 (unless all its components are 0).
+   * A vector is normalized by dividing each of its components
+   * by its [length]{@link H3DU.Math.vec4length}.<p>
+   * @param {Array<number>} vec A 4-element vector.
+   * @returns {Array<number>} The resulting vector.
+   * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+   */
   "vec4normalize":function(vec) {
     return HMath.vec4normalizeInPlace([vec[0], vec[1], vec[2], vec[3]]);
   },
-/**
- * Converts a 4-element vector to a [unit vector]{@tutorial glmath}.
- * When a vector is normalized, its direction remains the same but the distance from the origin
- * to that vector becomes 1 (unless all its components are 0).
- * A vector is normalized by dividing each of its components
- * by its [length]{@link H3DU.Math.vec4length}.<p>
- * @param {Array<number>} vec A 4-element vector.
- * @returns {Array<number>} The parameter "vec".
- * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
- */
+  /**
+   * Converts a 4-element vector to a [unit vector]{@tutorial glmath}.
+   * When a vector is normalized, its direction remains the same but the distance from the origin
+   * to that vector becomes 1 (unless all its components are 0).
+   * A vector is normalized by dividing each of its components
+   * by its [length]{@link H3DU.Math.vec4length}.<p>
+   * @param {Array<number>} vec A 4-element vector.
+   * @returns {Array<number>} The parameter "vec".
+   * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
+   */
   "vec4normalizeInPlace":function(vec) {
     var x = vec[0];
     var y = vec[1];
@@ -3513,54 +3513,54 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return vec;
   },
-/**
- * Returns the projection of a 4-element vector on the given
- * reference vector. Assuming both vectors
- * start at the same point, the resulting vector
- * will be parallel to the
- * reference vector but will make the closest
- * approach possible to the projected vector's
- * endpoint. The difference between the projected
- * vector and the return value will be perpendicular
- * to the reference vector.
- * @param {Array<number>} vec The vector to project.
- * @param {Array<number>} refVec The reference vector whose length
- * will be adjusted.
- * @returns {Array<number>} The projection of
- * "vec" on "refVec".  Returns (0,0,0,0) if "refVec"'s
- * length is 0 or extremely close to 0.
- */
+  /**
+   * Returns the projection of a 4-element vector on the given
+   * reference vector. Assuming both vectors
+   * start at the same point, the resulting vector
+   * will be parallel to the
+   * reference vector but will make the closest
+   * approach possible to the projected vector's
+   * endpoint. The difference between the projected
+   * vector and the return value will be perpendicular
+   * to the reference vector.
+   * @param {Array<number>} vec The vector to project.
+   * @param {Array<number>} refVec The reference vector whose length
+   * will be adjusted.
+   * @returns {Array<number>} The projection of
+   * "vec" on "refVec".  Returns (0,0,0,0) if "refVec"'s
+   * length is 0 or extremely close to 0.
+   */
   "vec4proj":function(vec, refVec) {
     var lensq = HMath.vec4dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return HMath.vec4scale(refVec,
-    HMath.vec4dot(vec, refVec) / lensq);
+      HMath.vec4dot(vec, refVec) / lensq);
   },
-/**
- * Multiplies each element of a 4-element vector by a factor, returning
- * a new vector that is parallel to the old vector
- * but with its length multiplied by the given factor. If the factor
- * is positive, the vector will point in the same direction; if negative,
- * in the opposite direction; if zero, the vector's components will all be 0.
- * @param {Array<number>} a A 4-element vector.
- * @param {number} scalar A factor to multiply. To divide
- * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<number>} The resulting 4-element vector.
- */
+  /**
+   * Multiplies each element of a 4-element vector by a factor, returning
+   * a new vector that is parallel to the old vector
+   * but with its length multiplied by the given factor. If the factor
+   * is positive, the vector will point in the same direction; if negative,
+   * in the opposite direction; if zero, the vector's components will all be 0.
+   * @param {Array<number>} a A 4-element vector.
+   * @param {number} scalar A factor to multiply. To divide
+   * a vector by a number, the factor will be 1 divided by that number.
+   * @returns {Array<number>} The resulting 4-element vector.
+   */
   "vec4scale":function(a, scalar) {
     return [a[0] * scalar, a[1] * scalar, a[2] * scalar, a[3] * scalar];
   },
-/**
- * Multiplies each element of a 4-element vector by a factor, so
- * that the vector is parallel to the old vector
- * but its length is multiplied by the given factor. If the factor
- * is positive, the vector will point in the same direction; if negative,
- * in the opposite direction; if zero, the vector's components will all be 0.
- * @param {Array<number>} a A 4-element vector.
- * @param {number} scalar A factor to multiply. To divide
- * a vector by a number, the factor will be 1 divided by that number.
- * @returns {Array<number>} The parameter "a".
- */
+  /**
+   * Multiplies each element of a 4-element vector by a factor, so
+   * that the vector is parallel to the old vector
+   * but its length is multiplied by the given factor. If the factor
+   * is positive, the vector will point in the same direction; if negative,
+   * in the opposite direction; if zero, the vector's components will all be 0.
+   * @param {Array<number>} a A 4-element vector.
+   * @param {number} scalar A factor to multiply. To divide
+   * a vector by a number, the factor will be 1 divided by that number.
+   * @returns {Array<number>} The parameter "a".
+   */
   "vec4scaleInPlace":function(a, scalar) {
     a[0] *= scalar;
     a[1] *= scalar;
@@ -3568,28 +3568,28 @@ tvar47 * tvar51 + tvar8 * tvar52;
     a[3] *= scalar;
     return a;
   },
-/**
- * Subtracts the second vector from the first vector and returns a new
- * vector with the result. Subtracting two vectors
- * is the same as subtracting each of their components.<p>
- * @param {Array<number>} a The first 4-element vector.
- * @param {Array<number>} b The second 4-element vector.
- * @returns {Array<number>} The resulting 4-element vector.
- * This is the vector <i>to <code>a</code> from <code>b</code></i>.
- */
+  /**
+   * Subtracts the second vector from the first vector and returns a new
+   * vector with the result. Subtracting two vectors
+   * is the same as subtracting each of their components.<p>
+   * @param {Array<number>} a The first 4-element vector.
+   * @param {Array<number>} b The second 4-element vector.
+   * @returns {Array<number>} The resulting 4-element vector.
+   * This is the vector <i>to <code>a</code> from <code>b</code></i>.
+   */
   "vec4sub":function(a, b) {
     return [a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]];
   },
-/**
- * Subtracts the second vector from the first vector and stores
- * the result in the first vector. Subtracting two vectors
- * is the same as subtracting each of their components.
- * @param {Array<number>} a The first 4-element vector.
- * @param {Array<number>} b The second 4-element vector.
- * @returns {Array<number>} The parameter "a"
- */
+  /**
+   * Subtracts the second vector from the first vector and stores
+   * the result in the first vector. Subtracting two vectors
+   * is the same as subtracting each of their components.
+   * @param {Array<number>} a The first 4-element vector.
+   * @param {Array<number>} b The second 4-element vector.
+   * @returns {Array<number>} The parameter "a"
+   */
   "vec4subInPlace":function(a, b) {
-// Use variables in case a and b are the same
+    // Use variables in case a and b are the same
     var b0 = b[0];
     var b1 = b[1];
     var b2 = b[2];

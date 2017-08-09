@@ -24,7 +24,7 @@
 function setPerf() {
   window.performance = {};
 }
- /*
+/*
   Polyfills
 */
 if(typeof window.requestAnimationFrame === "undefined" || window.requestAnimationFrame === null) {
@@ -261,7 +261,7 @@ export var get3DContext = function(canvasElement, err) {
  * @memberof H3DU
  */
 export var getPromiseResults = function(promises,
-   progressResolve, progressReject) {
+  progressResolve, progressReject) {
   if(!promises || promises.length === 0) {
     return Promise.resolve({
       "successes":[],
@@ -292,9 +292,9 @@ export var getPromiseResults = function(promises,
   for(var i = 0; i < promises.length; i++) {
     var index = i;
     newPromises.push(promises[i].then(
-    promiseResolveFunc(progressResolve, ret, index),
-    promiseRejectFunc(progressReject, ret, index)
-  ));
+      promiseResolveFunc(progressResolve, ret, index),
+      promiseRejectFunc(progressReject, ret, index)
+    ));
   }
   return Promise.all(newPromises).then(function(results) {
   // compact the successes and failures arrays
@@ -332,15 +332,15 @@ export var getPromiseResults = function(promises,
  * @memberof H3DU
  */
 export var getPromiseResultsAll = function(promises,
-   progressResolve, progressReject) {
+  progressResolve, progressReject) {
   return getPromiseResults(promises, progressResolve, progressReject)
-     .then(function(results) {
-       if(results.failures.length > 0) {
-         return Promise.reject(results);
-       } else {
-         return Promise.resolve(results.successes);
-       }
-     });
+    .then(function(results) {
+      if(results.failures.length > 0) {
+        return Promise.reject(results);
+      } else {
+        return Promise.resolve(results.successes);
+      }
+    });
 };
 /**
  * Loads a file from a URL asynchronously, using XMLHttpRequest.
@@ -369,7 +369,7 @@ export var loadFileFromUrl = function(url, responseType) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(e) {
       var t = e.target;
-    // console.log([t.readyState,t.status,urlstr])
+      // console.log([t.readyState,t.status,urlstr])
       if(t.readyState === 4) {
         if(t.status >= 200 && t.status < 300) {
           var resp = "";

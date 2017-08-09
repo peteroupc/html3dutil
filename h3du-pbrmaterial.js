@@ -99,22 +99,22 @@ function PbrMaterial(params) {
    * @default
    */
   this.roughnessMap = null;
- /**
-  * Specular reflectivity of this material.
-  * Specular reflection is a bounced-back reflection from the direction
-  * the light reaches the material in, similar to a mirror. As a result, depending
-  * on the viewing angle, specular reflection can give off
-  * shiny highlights on the material.<p>
-  * This value is a 3-element array giving the red, green, and blue
-  * components of the surface's base reflectivity when looking directly at the surface
-  * (base reflectivity at 0 degree incidence, or F<sub>0</sub>).
-  * For most nonmetals, this is a shade of gray ranging from
-  * (0.15, 0.15, 0.15) to (0.32, 0.32, 0.32) in sRGB. For most metals,
-  * this is a very light version of the surface's color.<p>
-  * This value is only used in the <b>specular workflow</b>.
-  * @type {Array<number>}
-  * @default
-  */
+  /**
+   * Specular reflectivity of this material.
+   * Specular reflection is a bounced-back reflection from the direction
+   * the light reaches the material in, similar to a mirror. As a result, depending
+   * on the viewing angle, specular reflection can give off
+   * shiny highlights on the material.<p>
+   * This value is a 3-element array giving the red, green, and blue
+   * components of the surface's base reflectivity when looking directly at the surface
+   * (base reflectivity at 0 degree incidence, or F<sub>0</sub>).
+   * For most nonmetals, this is a shade of gray ranging from
+   * (0.15, 0.15, 0.15) to (0.32, 0.32, 0.32) in sRGB. For most metals,
+   * this is a very light version of the surface's color.<p>
+   * This value is only used in the <b>specular workflow</b>.
+   * @type {Array<number>}
+   * @default
+   */
   this.specular = [0.2, 0.2, 0.2];
   /**
    * A texture where each pixel identifies the "specular" property of that
@@ -128,63 +128,63 @@ function PbrMaterial(params) {
    * @default
    */
   this.specularMap = null;
-/**
- * Specifies which workflow to use when interpreting values for this
- * material. <p>
- * The <b>metallic workflow</b> (<code>H3DU.PbrMaterial.Metallic</code>, the default)
- * is usually easier to understand and uses <code>albedo</code> to set the
- * surface's color and <code>metalness</code> to set whether the surface
- * is a metal or not.<p>
- * The <b>specular workflow</b> (<code>H3DU.PbrMaterial.Specular</code>)
- * uses <code>albedo</code> to set the
- * surface's color for nonmetals and <code>specular</code> to set the
- * surface's specular reflectivity.
- * @type {number}
- * @default
- */
+  /**
+   * Specifies which workflow to use when interpreting values for this
+   * material. <p>
+   * The <b>metallic workflow</b> (<code>H3DU.PbrMaterial.Metallic</code>, the default)
+   * is usually easier to understand and uses <code>albedo</code> to set the
+   * surface's color and <code>metalness</code> to set whether the surface
+   * is a metal or not.<p>
+   * The <b>specular workflow</b> (<code>H3DU.PbrMaterial.Specular</code>)
+   * uses <code>albedo</code> to set the
+   * surface's color for nonmetals and <code>specular</code> to set the
+   * surface's specular reflectivity.
+   * @type {number}
+   * @default
+   */
   this.workflow = H3DU.PbrMaterial.Metallic;
- /**
-  * Normal map (bump map) texture. Normal maps are used either to add
-  * a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
-  * appearance with fewer polygons.<p>
-  * In a normal map texture, each pixel is a vector in which
-  * each component (which usually ranges from 0-255 in most image formats) is scaled to
-  * the range [-1, 1], where:
-  * <ul>
-  * <li>The pixel's red component is the vector's X component.
-  * <li>The pixel's green component is the vector's Y component.
-  * <li>The pixel's blue component is the vector's Z component.
-  * <li>An unchanged normal vector is indicated by the value (0, 0, 1), which is usually
-  * the value (127, 127, 255) in most image formats.
-  * <li>The vector is normalized so its length is about equal to 1.
-  * <li>The vector is expressed in <i>tangent space</i>, where the Z axis points outward
-  * and away from the surface's edges.
-  * </ul>
-  * Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
-  * to the vector given in that pixel. This tilt adjusts the normals used for the
-  * purpose of calculating lighting effects at that part of the surface.
-  * A strong tilt indicates strong relief detail at that point.<p>
-  * Any texture used for normal maps should not be in JPEG format or any other
-  * format that uses lossy compression, as compression artifacts can result in inaccurate
-  * normals in certain areas.
-  * <p>
-  * For normal mapping to work, an object's mesh must include normals
-  * and texture coordinates.
-  * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
-  * @default
-  */
+  /**
+   * Normal map (bump map) texture. Normal maps are used either to add
+   * a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
+   * appearance with fewer polygons.<p>
+   * In a normal map texture, each pixel is a vector in which
+   * each component (which usually ranges from 0-255 in most image formats) is scaled to
+   * the range [-1, 1], where:
+   * <ul>
+   * <li>The pixel's red component is the vector's X component.
+   * <li>The pixel's green component is the vector's Y component.
+   * <li>The pixel's blue component is the vector's Z component.
+   * <li>An unchanged normal vector is indicated by the value (0, 0, 1), which is usually
+   * the value (127, 127, 255) in most image formats.
+   * <li>The vector is normalized so its length is about equal to 1.
+   * <li>The vector is expressed in <i>tangent space</i>, where the Z axis points outward
+   * and away from the surface's edges.
+   * </ul>
+   * Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
+   * to the vector given in that pixel. This tilt adjusts the normals used for the
+   * purpose of calculating lighting effects at that part of the surface.
+   * A strong tilt indicates strong relief detail at that point.<p>
+   * Any texture used for normal maps should not be in JPEG format or any other
+   * format that uses lossy compression, as compression artifacts can result in inaccurate
+   * normals in certain areas.
+   * <p>
+   * For normal mapping to work, an object's mesh must include normals
+   * and texture coordinates.
+   * @type {H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBufferInfo}
+   * @default
+   */
   this.normalMap = null;
- /**
-  * Additive color emitted by objects with this material.
-  * Used for objects that glow on their own, among other things.
-  * This additive color is unaffected by lighting or shading.<p>
-  * This value is a 3-element array giving the red, green, and blue
-  * components.
-  * For each of the three color components, positive values add to that component,
-  * while negative values subtract from it. (0,0,0), the default, means no additive color.
-  * @type {Array<number>}
-  * @default
-  */
+  /**
+   * Additive color emitted by objects with this material.
+   * Used for objects that glow on their own, among other things.
+   * This additive color is unaffected by lighting or shading.<p>
+   * This value is a 3-element array giving the red, green, and blue
+   * components.
+   * For each of the three color components, positive values add to that component,
+   * while negative values subtract from it. (0,0,0), the default, means no additive color.
+   * @type {Array<number>}
+   * @default
+   */
   this.emission = [0, 0, 0];// NOTE: Should use only 3-component emissions
   /**
    * A texture where each pixel identifies the emission of that
@@ -202,10 +202,10 @@ function PbrMaterial(params) {
    * @default
    */
   this.occlusionMap = null;
- /**
-  * Shader program to use when rendering objects with this material.
-  * @default
-  */
+  /**
+   * Shader program to use when rendering objects with this material.
+   * @default
+   */
   this.shader = null;
   /**
    * If true, the roughness property is treated as a "glossiness" property,

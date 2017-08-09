@@ -42,11 +42,11 @@ Transform.prototype.getScale = function() {
     return this.scale.slice(0, 3);
   }
 };
-  /**
-   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
-   * of an object relative to its original position.
-   * @returns {Array<number>} Return value.
-   */
+/**
+ * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+ * of an object relative to its original position.
+ * @returns {Array<number>} Return value.
+ */
 Transform.prototype.getPosition = function() {
   if(this.complexMatrix) {
     return [this.matrix[12], this.matrix[13], this.matrix[14]];
@@ -54,14 +54,14 @@ Transform.prototype.getPosition = function() {
     return this.position.slice(0, 3);
   }
 };
-  /**
-   * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
-   * @returns {Array<number>} Return value.
-   */
+/**
+ * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
+ * @returns {Array<number>} Return value.
+ */
 Transform.prototype.getQuaternion = function() {
   if(this.complexMatrix) {
     return H3DU.Math.quatNormalizeInPlace(
-    H3DU.Math.quatFromMat4(this.matrix));
+      H3DU.Math.quatFromMat4(this.matrix));
   } else {
     return this.rotation.slice(0, 4);
   }
@@ -101,7 +101,7 @@ Transform.prototype.setMatrix = function(value) {
     value[4] === 0 && value[5] === 1 && value[6] === 0 && value[7] === 0 &&
     value[8] === 0 && value[9] === 0 && value[10] === 1 && value[11] === 0 &&
     value[12] === 0 && value[13] === 0 && value[14] === 0 && value[15] === 1
- ;
+  ;
   return this;
 };
 /**
@@ -148,7 +148,7 @@ Transform.prototype.setScale = function(x, y, z) {
     if(typeof x !== "number")
       this.scale = [x[0], x[1], x[2]];
     else
-    this.scale = [x, x, x];
+      this.scale = [x, x, x];
   } else {
     this.scale = [x, y, z];
   }
@@ -179,7 +179,7 @@ Transform.prototype.setPosition = function(x, y, z) {
     if(typeof x !== "number")
       this.position = [x[0], x[1], x[2]];
     else
-    this.position = [x, x, x];
+      this.position = [x, x, x];
   } else {
     this.position = [x, y, z];
   }
@@ -328,7 +328,7 @@ Transform.prototype.setOrientation = function(angle, v, vy, vz) {
 Transform.prototype.multQuaternion = function(quat) {
   if(this.complexMatrix)return this;
   this.rotation = H3DU.Math.quatNormalizeInPlace(
-   H3DU.Math.quatMultiply(this.rotation, quat));
+    H3DU.Math.quatMultiply(this.rotation, quat));
   this._matrixDirty = true;
   return this;
 };
@@ -409,10 +409,10 @@ Transform.prototype.getMatrix = function() {
         this.position[0],
         this.position[1],
         this.position[2], 1];
-    // 2. rotation
+      // 2. rotation
       this.matrix = H3DU.Math.mat4multiply(this.matrix,
-      H3DU.Math.quatToMat4(this.rotation));
-    // 3. scaling
+        H3DU.Math.quatToMat4(this.rotation));
+      // 3. scaling
       H3DU.Math.mat4scaleInPlace(this.matrix, this.scale);
       var m = this.matrix;
       this._isIdentity =
@@ -420,7 +420,7 @@ Transform.prototype.getMatrix = function() {
      m[4] === 0 && m[5] === 1 && m[6] === 0 && m[7] === 0 &&
      m[8] === 0 && m[9] === 0 && m[10] === 1 && m[11] === 0 &&
      m[12] === 0 && m[13] === 0 && m[14] === 0 && m[15] === 1
-    ;
+      ;
     }
   } else if(this._isIdentity) {
     return H3DU.Math.mat4identity();
