@@ -544,7 +544,7 @@ Converts a color in sRGB to the linear RGB color space, and returns
 a new vector with the result.
 
 The sRGB color space is a nonlinear red-green-blue color space;
-it <i>roughly</i> differs from linear RGB in having an exponent
+it differs from linear RGB in <i>roughly</i> having an exponent
 of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
 by a surface of the given color.
 
@@ -566,7 +566,7 @@ Converts a color in linear RGB to the sRGB color space, and returns
 a new vector with the result.
 
 The sRGB color space is a nonlinear red-green-blue color space;
-it <i>roughly</i> differs from linear RGB in having an exponent
+it differs from linear RGB in <i>roughly</i> having an exponent
 of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
 by a surface of the given color.
 

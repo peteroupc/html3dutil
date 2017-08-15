@@ -9,6 +9,7 @@ class SwatchSvg
   @output=""
   @columns = 7
   @width = HEIGHT + 80
+  @totalheight=0
  end
  def separateRow
   if @x>0
@@ -20,13 +21,29 @@ class SwatchSvg
  def addSwatch(color,name=nil)
   cname=name ? name : color
   svgx=@x*@width
-  svgy=@y*HEIGHT+@slack
+  if name==nil
+   svgy=@y*HEIGHT+@slack
+   @totalheight=[@totalheight,svgy+HEIGHT+@slack+4].max
+   @output+="<rect x='#{svgx+2}' y='#{svgy+2}' width='#{HEIGHT-4}'"+
+    " height='#{HEIGHT-4}' style='stroke:black;stroke-width:1px;"+
+    " fill:#{color}'/><text x='#{svgx+HEIGHT}' y='#{svgy+HEIGHT-2}'"+
+    " width='#{@width-HEIGHT-2}' height='#{HEIGHT-4}'"+
+    " style='font-size:#{(HEIGHT-4)*8/10}px;color:currentColor'>"+
+    "<tspan>#{cname}</tspan></text>\n"
+  else
+   ht=HEIGHT*1.5
+   svgy=@y*ht+@slack
+   @totalheight=[@totalheight,svgy+ht+@slack+4].max
   @output+="<rect x='#{svgx+2}' y='#{svgy+2}' width='#{HEIGHT-4}'"+
-   " height='#{HEIGHT-4}' style='stroke:black;stroke-width:1px;"+
-   " fill:#{color}'/><text x='#{svgx+HEIGHT}' y='#{svgy+HEIGHT-2}'"+
-   " width='#{@width-HEIGHT-2}' height='#{HEIGHT-4}'"+
-   " style='font-size:#{(HEIGHT-4)*8/10}px;color:currentColor'>"+
-   "<tspan>#{cname}</tspan></text>\n"
+    " height='#{ht-4}' style='stroke:black;stroke-width:1px;"+
+    " fill:#{color}'/><text x='#{svgx+HEIGHT}' y='#{svgy+(ht/2.0)-4}'"+
+    " width='#{@width-HEIGHT-2}' height='#{(ht/2.0)-4}'"+
+    " style='font-size:#{((ht/2.0)-4)*9/10}px;color:currentColor'>"+
+    "<tspan>#{cname}</tspan></text><text x='#{svgx+HEIGHT}' y='#{svgy+ht-4}'"+
+    " width='#{@width-HEIGHT-2}' height='#{(ht/2.0)-4}'"+
+    " style='font-size:#{((ht/2.0)-4)*9/10}px;color:currentColor'>"+
+    "<tspan>#{color}</tspan></text>\n"
+  end
   @x+=1
   if @x>=@columns
    @y+=1
@@ -36,7 +53,7 @@ class SwatchSvg
  def to_s
   yheight=(@x==0) ? @y : @y+1
   svgx=@columns*@width
-  svgy=yheight*HEIGHT+@slack+4
+  svgy=@totalheight
   head="<svg width='#{svgx}' height='#{svgy}' xmlns='http://www.w3.org/2000/svg'>\n"
   return head+@output+"</svg>"
  end
