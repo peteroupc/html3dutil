@@ -7,7 +7,7 @@
 
 A material for physically-based rendering. Specifies parameters for geometry materials,
 which describe the appearance of a 3D object. This includes how an object
-scatters, reflects, or absorbs light.
+scatters or reflects light.
 
 NOTE: The default shader program assumes that all colors, as well as the albedo,
 specular, and emission maps, specified in this object are in
@@ -82,9 +82,9 @@ of light that is reflected by this material's surface. For both metals and nonme
 is the generally observed color of the surface.
 
 In the <b>specular workflow</b>, this color specifies the amount
-of light that passes through the material and bounces back (<i>diffuse</i> color). For most nonmetals, this color
-is the generally observed color of the surface, though somewhat desaturated. Most metals absorb
-all the light that passes through them,
+of light that passes through the material and bounces off (<i>diffuse</i> color). For most nonmetals, this color
+is the generally observed color of the surface, though somewhat desaturated. Most metals do not reflect
+the light that passes through them,
 so for most metals, this color should generally be black or a very
 dark shade of gray. (In physically-based rendering, the sum of albedo and specular
 colors should not exceed 1.0 in each <a href="H3DU.Math.md#H3DU.Math.colorToLinear">linear RGB</a> channel.)
