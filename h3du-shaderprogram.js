@@ -8,6 +8,16 @@
 */
 /* global H3DU, console */
 
+function logLines(text) {
+  if(!text)text = "";
+  var lines = text.split("\n");
+      // add line numbers
+  for(var i = 0; i < lines.length; i++) {
+    lines[i] = "/* " + (i + 1) + " */   " + lines[i];
+  }
+  return lines.join("\n");
+}
+
 /**
  * Represents a WebGL shader program. A shader program in
  * WebGL consists of a vertex shader (which processes vertices),
@@ -57,6 +67,8 @@ ShaderProgram.prototype._init = function(context, shaderInfo) {
   this.prog = H3DU.ShaderProgram._compileShaders(context,
     shaderInfo.vertexShader,
     shaderInfo.fragmentShader);
+  // console.log(shaderInfo.vertexShader)
+  // console.log(shaderInfo.fragmentShader)
   this.uniformValues = {};
   this.actives = {};
   this.attributes = [];
@@ -302,13 +314,7 @@ ShaderProgram._compileShaders = function(context, vertexShader, fragmentShader) 
     context.shaderSource(shader, text);
     context.compileShader(shader);
     if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
-      if(!text)text = "";
-      var lines = text.split("\n");
-      // add line numbers
-      for(var i = 0; i < lines.length; i++) {
-        lines[i] = "/* " + (i + 1) + " */   " + lines[i];
-      }
-      console.log(lines.join("\n"));
+      console.log(logLines(text));
       console.log((kind === context.VERTEX_SHADER ? "vertex: " : "fragment: ") +
         context.getShaderInfoLog(shader));
       return null;

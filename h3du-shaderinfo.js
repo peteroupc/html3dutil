@@ -453,6 +453,8 @@ ShaderInfo.getDefaultVertex = function() {
  * @returns {string} The resulting shader text.
  */
 ShaderInfo.getDefaultFragment = function() {
+  // TODO: Make physically based code path work again
+  // (macro changed to "X_PHYS_BASED" for now)
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [
     "#define ONE_DIV_PI 0.318309886",
@@ -544,7 +546,7 @@ ShaderInfo.getDefaultFragment = function() {
     "}",
     "#endif",
     // ////////////
-    "#ifdef PHYSICAL_BASED",
+    "#ifdef X_PHYS_BASED",
     // John Hable's tonemapping function, mentioned at
     // at http://filmicgames.com/archives/75
     "#define HABLE_TONEMAP_WHITE 1.37906425",
@@ -673,7 +675,7 @@ ShaderInfo.getDefaultFragment = function() {
     "environment=tolinear(environment);",
     "#endif", "#endif",
 */
-    "#ifdef PHYSICAL_BASED",
+    "#ifdef X_PHYS_BASED",
     "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient
     "#else",
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
@@ -690,7 +692,7 @@ ShaderInfo.getDefaultFragment = function() {
     // NOTE: Default shader no longer multiplies specular by the specular texture
     "#ifdef SPECULAR_MAP", "materialSpecular*=tolinear(texture2D(specularMap,uvVar).rgb);", "#endif",
     "#ifdef ROUGHNESS_MAP", "rough=1.0;", "#endif",
-    "#ifdef PHYSICAL_BASED",
+    "#ifdef X_PHYS_BASED",
     "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
     "#else",
     // Convert Blinn-Phong shininess to roughness
@@ -711,7 +713,7 @@ ShaderInfo.getDefaultFragment = function() {
       // flickering specular highlights if the surface normal is perpendicular to
       // the light's direction vector
       "spectmp = vec3(greaterThan(vec3(lightCosine),vec3(0.0001)));",
-      "#ifdef PHYSICAL_BASED",
+      "#ifdef X_PHYS_BASED",
       "    lightFactor=spectmp*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
       "#ifdef SPECULAR",
       "    lightedColor+=reflectancespec(materialDiffuse,materialSpecular,normalize(lightPowerVec.xyz),",
