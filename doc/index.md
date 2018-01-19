@@ -183,6 +183,9 @@ the library's source code into a single file called <code>h3du_min.js</code>.</l
    scene.render(sub);
   });</code></pre><h2>History</h2><p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html">the history page</a> to find
 information about what has changed in this library.</p>
+<h2>Possible Later Improvements</h2><ul>
+<li>Support &quot;deg&quot;, &quot;grad&quot;, &quot;rad&quot;, and &quot;turn&quot; in CSS color hue parsing</li>
+</ul>
 <h2>About</h2><p>Any copyright is dedicated to the Public Domain.
 <a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
 <p>If you like this, you should donate to Peter O. (original author of

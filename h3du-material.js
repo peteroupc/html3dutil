@@ -12,7 +12,7 @@
  * 3D object. This includes how an object scatters or reflects light,
  * as well as a texture image to apply on that object's surface.<p>
  * NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
- * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
+ * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
  * @constructor
  * @memberof H3DU
  * @param {Array<number>} [params] An object as described in {@link H3DU.Material#setParams}.

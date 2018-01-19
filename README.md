@@ -80,14 +80,16 @@ Example
   });
 ```
 
-History
----------
+## History
 
 See [the history page](https://peteroupc.github.io/html3dutil/tutorial-history.html) to find
 information about what has changed in this library.
 
-About
------------
+## Possible Later Improvements
+
+- Support "deg", "grad", "rad", and "turn" in CSS color hue parsing
+
+## About
 
 Any copyright is dedicated to the Public Domain.
 [http://creativecommons.org/publicdomain/zero/1.0/](http://creativecommons.org/publicdomain/zero/1.0/)

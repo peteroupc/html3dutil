@@ -7,6 +7,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
 import {_LightsBinder, _MaterialBinder} from "./h3du-binders";
 /**
  * A `Batch3D` represents a so-called "scene graph". It holds

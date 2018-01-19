@@ -13,7 +13,7 @@
  * scatters or reflects light.<p>
  * NOTE: The default shader program assumes that all colors, as well as the albedo,
  * specular, and emission maps, specified in this object are in
- * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
+ * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
  * @param {Object} [params] An object described in {@link H3DU.PbrMaterial.setParams}.
  * @constructor
  * @memberof H3DU
@@ -22,18 +22,18 @@ function PbrMaterial(params) {
 /**
  * Albedo (or base color) of this material.<p>
  * This value is a 3- or 4-element array giving the red, green, blue, and
- * alpha components of the albedo (in the [sRGB color space]{@link H3DU.Math.colorTosRGB}). (0,0,0,1) means an
+ * alpha components of the albedo (in [companded sRGB]{@link H3DU.Math.colorTosRGB}). (0,0,0,1) means an
  * albedo value of black, and (1,1,1,1) means an albedo value of white.<p>
  * In the <b>metallic workflow</b>, this color specifies the amount
  * of light that is reflected by this material's surface. For both metals and nonmetals, this color
  * is the generally observed color of the surface. <p>
  * In the <b>specular workflow</b>, this color specifies the amount
- * of light that passes through the material and bounces off (<i>diffuse</i> color). For most nonmetals, this color
+ * of light that scatters off the material in random directions upon reaching it (<i>diffuse</i> color). For most nonmetals, this color
  * is the generally observed color of the surface, though somewhat desaturated. Most metals do not reflect
  * the light that passes through them,
  * so for most metals, this color should generally be black or a very
  * dark shade of gray. (In physically-based rendering, the sum of albedo and specular
- * colors should not exceed 1.0 in each [linear RGB]{@link H3DU.Math.colorToLinear} channel.)<p>
+ * colors should not exceed 1.0 in each [linearized sRGB]{@link H3DU.Math.colorToLinear} channel.)<p>
  * In <b>both workflows</b> in physically-based rendering, the albedo
  * color should not have any added lighting.<p>
  * This value can have an optional fourth element giving the alpha component
@@ -119,7 +119,7 @@ function PbrMaterial(params) {
   /**
    * A texture where each pixel identifies the "specular" property of that
    * part of the texture, as specified in the texture's red, green, and blue channels
-   * (in the [sRGB color space]{@link H3DU.Math.colorTosRGB}).<p>
+   * (in [companded sRGB]{@link H3DU.Math.colorTosRGB}).<p>
    * This value is only used in the <b>specular workflow</b>.<p>
    * Any texture used for this map should not be in JPEG format or any other
    * format that uses lossy compression, as compression artifacts can result in inaccurate

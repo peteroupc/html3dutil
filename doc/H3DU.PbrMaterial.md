@@ -11,7 +11,7 @@ scatters or reflects light.
 
 NOTE: The default shader program assumes that all colors, as well as the albedo,
 specular, and emission maps, specified in this object are in
-the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
+<a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>.
 
 #### Parameters
 
@@ -44,7 +44,7 @@ as specified in the texture's green channel.
 * [specular](#H3DU.PbrMaterial_specular)<br>Specular reflectivity of this material.
 * [specularMap](#H3DU.PbrMaterial_specularMap)<br>A texture where each pixel identifies the "specular" property of that
 part of the texture, as specified in the texture's red, green, and blue channels
-(in the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>).
+(in <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>).
 * [workflow](#H3DU.PbrMaterial_workflow)<br>Specifies which workflow to use when interpreting values for this
 material.
 
@@ -74,7 +74,7 @@ Default Value: `0`
 Albedo (or base color) of this material.
 
 This value is a 3- or 4-element array giving the red, green, blue, and
-alpha components of the albedo (in the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>). (0,0,0,1) means an
+alpha components of the albedo (in <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>). (0,0,0,1) means an
 albedo value of black, and (1,1,1,1) means an albedo value of white.
 
 In the <b>metallic workflow</b>, this color specifies the amount
@@ -82,12 +82,12 @@ of light that is reflected by this material's surface. For both metals and nonme
 is the generally observed color of the surface.
 
 In the <b>specular workflow</b>, this color specifies the amount
-of light that passes through the material and bounces off (<i>diffuse</i> color). For most nonmetals, this color
+of light that scatters off the material in random directions upon reaching it (<i>diffuse</i> color). For most nonmetals, this color
 is the generally observed color of the surface, though somewhat desaturated. Most metals do not reflect
 the light that passes through them,
 so for most metals, this color should generally be black or a very
 dark shade of gray. (In physically-based rendering, the sum of albedo and specular
-colors should not exceed 1.0 in each <a href="H3DU.Math.md#H3DU.Math.colorToLinear">linear RGB</a> channel.)
+colors should not exceed 1.0 in each <a href="H3DU.Math.md#H3DU.Math.colorToLinear">linearized sRGB</a> channel.)
 
 In <b>both workflows</b> in physically-based rendering, the albedo
 color should not have any added lighting.
@@ -293,7 +293,7 @@ Default Value: `"[0.2,0.2,0.2]"`
 
 A texture where each pixel identifies the "specular" property of that
 part of the texture, as specified in the texture's red, green, and blue channels
-(in the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>).
+(in <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>).
 
 This value is only used in the <b>specular workflow</b>.
 

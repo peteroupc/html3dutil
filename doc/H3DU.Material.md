@@ -10,7 +10,7 @@ Specifies parameters for geometry materials, which describe the appearance of a
 as well as a texture image to apply on that object's surface.
 
 NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
-the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
+<a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>.
 
 #### Parameters
 

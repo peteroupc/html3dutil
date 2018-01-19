@@ -31,7 +31,7 @@ import {Semantic} from "./h3du-semantic";
  * primitive type (triangles, lines, and points are the primitive types). This is
  * no longer the case, to simplify the implementation.<p>
  * <li>The default shader program assumes that all colors specified in this object are in
- * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
+ * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
  * <li>Starting in version 2.0, this class should not be used as a general purpose
  * class for storing geometric meshes. It should only be used as a convenient
  * way to build mesh buffers. In the future, some of the functionality in this class

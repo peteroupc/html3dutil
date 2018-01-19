@@ -275,7 +275,7 @@ The scaling formula would look like:
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
 
 For example, we multiply the input x by `sx` to get the output x. If `sx` is 1, x
-remains unchanged. Likewise for y and z.
+remains unchanged. Likewise for y (`sy`) and z (`sz`).
 
 If `sx`, `sy`, or `sz` is -1, that coordinate is _reflected_ along the corresponding axis.
 
@@ -347,7 +347,7 @@ where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
 
 For example, we add the input x and `tx` to get the output x. If `tx` is 0, x
-remains unchanged. Likewise for y and z.
+remains unchanged. Likewise for y (`ty`) and z (`tz`).
 
 Related functions:
 
@@ -513,7 +513,7 @@ of column vectors (with the same number of rows as the number of columns in the
 first matrix).  Multiplying the two matrices transforms these vectors to new ones in the
 same way as if the column vectors were transformed individually.  (This also explains why there can
 be one or more column vectors in the second matrix and not just four in the case of a 4x4 matrix,
-and also why transforming a column vector is the same as multiplying a 4x4 matrix by a
+and also why transforming a 4-element column vector is the same as multiplying a 4x4 matrix by a
 matrix with one column and four rows.*)
 
 This insight reveals a practical use of matrix multiplication: transforming four 4-element
@@ -599,6 +599,8 @@ To describe how inverting a matrix works, we will need to define some terms:
   1. For each cell in the first row (or first column), find the determinant of the matrix's minor at that cell.
   2. Label the minors' determinants (A, B, C, D, ...), in that order.
   3. The matrix's determinant is (A - B + C - D + ...).
+
+  A 1x1 matrix's determinant is simply the value of its only cell.
 
 To invert an NxN matrix:
 

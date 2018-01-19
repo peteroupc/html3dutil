@@ -60,9 +60,9 @@ Use <a href="H3DU.Math.md#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollP
 * [boxCenter](#H3DU.Math.boxCenter)<br>Finds the center of a 3D bounding box.
 * [boxDimensions](#H3DU.Math.boxDimensions)<br>Finds the dimensions of a 3D bounding box.
 * [boxIsEmpty](#H3DU.Math.boxIsEmpty)<br>Determines whether a 3D bounding box is empty.
-* [colorToLinear](#H3DU.Math.colorToLinear)<br>Converts a color in sRGB to the linear RGB color space, and returns
+* [colorToLinear](#H3DU.Math.colorToLinear)<br>Converts a color from companded to linearized sRGB using the sRGB transfer function, and returns
 a new vector with the result.
-* [colorTosRGB](#H3DU.Math.colorTosRGB)<br>Converts a color in linear RGB to the sRGB color space, and returns
+* [colorTosRGB](#H3DU.Math.colorTosRGB)<br>Converts a color from linearized to companded sRGB using the sRGB transfer function, and returns
 a new vector with the result.
 * [frustumHasBox](#H3DU.Math.frustumHasBox)<br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.
@@ -540,12 +540,10 @@ corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)
 <a name='H3DU.Math.colorToLinear'></a>
 ### (static) H3DU.Math.colorToLinear(srgb)
 
-Converts a color in sRGB to the linear RGB color space, and returns
+Converts a color from companded to linearized sRGB using the sRGB transfer function, and returns
 a new vector with the result.
 
-The sRGB color space is a nonlinear red-green-blue color space;
-it differs from linear RGB in <i>roughly</i> having an exponent
-of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+Linearized RGB is linear because of its linear relationship of light emitted
 by a surface of the given color.
 
 #### Parameters
@@ -556,18 +554,16 @@ by a surface of the given color.
 
 A three-element vector giving
 the red, green, and blue components, in that order, of the given color
-in linear RGB. The alpha component will be as specified
+in linearized sRGB. The alpha component will be as specified
 in the "srgb" parameter. (Type: Array.&lt;number>)
 
 <a name='H3DU.Math.colorTosRGB'></a>
 ### (static) H3DU.Math.colorTosRGB(lin)
 
-Converts a color in linear RGB to the sRGB color space, and returns
+Converts a color from linearized to companded sRGB using the sRGB transfer function, and returns
 a new vector with the result.
 
-The sRGB color space is a nonlinear red-green-blue color space;
-it differs from linear RGB in <i>roughly</i> having an exponent
-of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+Linearized RGB is linear because of its linear relationship of light emitted
 by a surface of the given color.
 
 #### Parameters
@@ -578,7 +574,7 @@ by a surface of the given color.
 
 lin A four-element vector giving
 the red, green, blue, and alpha components, in that order, of the given color
-in the sRGB color space. The alpha component will be as specified
+in companded sRGB. The alpha component will be as specified
 in the "lin" parameter. (Type: Array.&lt;number>)
 
 <a name='H3DU.Math.frustumHasBox'></a>

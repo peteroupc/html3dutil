@@ -177,7 +177,7 @@ ShapeGroup.prototype.setMaterial = function(material) {
  * if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code>
  * demo in the HTML 3D Library to see how this is done).
  * NOTE: The default shader program assumes that the texture is in
- * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
+ * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
  * @returns {Object} Return value.
  */
 ShapeGroup.prototype.setTexture = function(material) {

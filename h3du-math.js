@@ -213,11 +213,8 @@ var HMath = {
     return box[0] > box[3] || box[1] > box[4] || box[2] > box[5];
   },
   /**
-   * Converts a color in sRGB to the linear RGB color space, and returns
-   * a new vector with the result.<p>
-   * The sRGB color space is a nonlinear red-green-blue color space;
-   * it differs from linear RGB in <i>roughly</i> having an exponent
-   * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+   * Converts a color from companded to linearized sRGB using the sRGB transfer function, and returns
+   * a new vector with the result.<p>Linearized RGB is linear because of its linear relationship of light emitted
    * by a surface of the given color.
    * @param {Array<number>} srgb A three- or four-element vector giving
    * the red, green, and blue components, in that order, of an sRGB color. The alpha component
@@ -225,7 +222,7 @@ var HMath = {
    * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
    * @returns {Array<number>} A three-element vector giving
    * the red, green, and blue components, in that order, of the given color
-   * in linear RGB. The alpha component will be as specified
+   * in linearized sRGB. The alpha component will be as specified
    * in the "srgb" parameter.
    */
   "colorToLinear":function(srgb) {
@@ -236,11 +233,8 @@ var HMath = {
       srgb.length <= 3 ? 1.0 : srgb[3]];
   },
   /**
-   * Converts a color in linear RGB to the sRGB color space, and returns
-   * a new vector with the result.<p>
-   * The sRGB color space is a nonlinear red-green-blue color space;
-   * it differs from linear RGB in <i>roughly</i> having an exponent
-   * of 1/2.2 from linear RGB. Linear RGB is linear because of its linear relationship of light emitted
+   * Converts a color from linearized to companded sRGB using the sRGB transfer function, and returns
+   * a new vector with the result.<p>Linearized RGB is linear because of its linear relationship of light emitted
    * by a surface of the given color.
    * @param {Array<number>} lin A three- or four-element vector giving
    * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
@@ -248,7 +242,7 @@ var HMath = {
    * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
    * @returns {Array<number>} lin A four-element vector giving
    * the red, green, blue, and alpha components, in that order, of the given color
-   * in the sRGB color space. The alpha component will be as specified
+   * in companded sRGB. The alpha component will be as specified
    * in the "lin" parameter.
    */
   "colorTosRGB":function(lin) {

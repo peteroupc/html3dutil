@@ -14,7 +14,7 @@
  * See the "{@tutorial shapes}" tutorial.<p>
  * NOTE: The default shader program assumes that all colors and the diffuse texture
  * specified in this object are in
- * the [sRGB color space]{@link H3DU.Math.colorTosRGB}.
+ * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
  * @constructor
  * @memberof H3DU
  * @param {H3DU.MeshBuffer|H3DU.Mesh|H3DU.BufferedMesh} mesh A mesh in the form of a buffer object.

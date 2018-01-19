@@ -8,7 +8,7 @@
 Specifies parameters for light sources.
 
 NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">sRGB color space</a>.
+<a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>.
 
 #### Parameters
 

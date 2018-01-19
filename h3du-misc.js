@@ -369,7 +369,6 @@ export var loadFileFromUrl = function(url, responseType) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(e) {
       var t = e.target;
-      // console.log([t.readyState,t.status,urlstr])
       if(t.readyState === 4) {
         if(t.status >= 200 && t.status < 300) {
           var resp = "";
@@ -389,7 +388,6 @@ export var loadFileFromUrl = function(url, responseType) {
       }
     };
     xhr.onerror = function(e) {
-    // console.log([urlstr,e])
       reject({
         "url": urlstr,
         "error": e
