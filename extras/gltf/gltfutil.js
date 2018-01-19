@@ -255,11 +255,7 @@ GltfUtil.parseArrayMin1 = function(value) {
   if(!(value instanceof Array) || value.length === 0)throw new Error("parse error");
   return value;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} value
- * @returns {*} Return value.
- */
+/** @ignore */
 GltfUtil.parseArrayUniqueMin1 = function(value) {
   if(typeof value === "undefined")return [];
   if(!(value instanceof Array) || value.length === 0 ||

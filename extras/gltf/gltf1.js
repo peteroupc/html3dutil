@@ -188,7 +188,6 @@ GltfState1.prototype.readTechnique = function(techniqueName) {
         unif[uniformKey] = unifValue;
       }
       if(typeof param.semantic !== "undefined" && param.semantic !== null) {
-        // LATER: Semantic + param.node
         var sem = 0;
         if(param.semantic === "MODEL" && param.type === 35676) {
           sem = H3DU.Semantic.MODEL;
