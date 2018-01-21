@@ -477,7 +477,7 @@ The changes in beta 2 from beta 1 include:
   new H3DU.PbrMaterial class.
 - Added fromBasic and fromBasicTexture methods to H3DU.Material class.
 - Many new methods were added to the H3DU.Math class, including methods to add and
-   subtract 4-element vectors, to clamp vectors, and to convert to and from linear RGB colors,
+   subtract 4-element vectors, to clamp vectors, and to convert to and from linearized RGB colors,
    as well as vec3proj, vec4proj, mat3invert, and vec3fromWindowPoint methods.
    The frustumHasBox method was improved.
 - The shapeCount, getShape, setShape, and copy methods were added to H3DU.ShapeGroup.

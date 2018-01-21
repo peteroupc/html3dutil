@@ -461,13 +461,13 @@ ShaderInfo.getDefaultFragment = function() {
     "#define TWOPI 6.283185307",
     // Clamp to range [0, 1]
     "#define saturate(f) clamp(f, 0.0, 1.0)",
-    // Convert from sRGB to linear RGB
+    // Convert from sRGB to linearized RGB
     "vec3 tolinear(vec3 c) {",
     " c=saturate(c);",
     " bvec3 lt=lessThanEqual(c,vec3(0.03928));",
     " return mix(pow((0.0556+c)*0.947328534,vec3(2.4)),0.077399381*c,vec3(lt));",
     "}",
-    // Convert from linear RGB to sRGB
+    // Convert from linearized RGB to sRGB
     "vec3 fromlinear(vec3 c) {",
     " c=saturate(c);",
     " bvec3 lt=lessThanEqual(c,vec3(0.00304));",
@@ -573,31 +573,31 @@ ShaderInfo.getDefaultFragment = function() {
     "}",
     "vec3 fresnelschlick(float dothl, vec3 f0) {",
     " float id=1.0-dothl;",
-    " float idsq=id*id;",
-    " return f0+(vec3(1.0)-f0)*idsq*idsq*id;",
+    " return f0+(vec3(1.0)-f0)*pow(id,5.0);",
     "}",
-    // NOTE: Color and specular parameters are in linear RGB
+    // NOTE: Color and specular parameters are in linearized RGB
     "vec3 reflectancespec(vec3 diffuse, vec3 specular, vec3 lightDir, vec3 viewDir, vec3 n, float rough) {",
     " vec3 h=normalize(viewDir+lightDir);",
     " float dotnv=abs(dot(n,viewDir))+0.0001;",
     " float dotnh=saturate(dot(n,h));",
     " float dotnl=saturate(dot(n,lightDir));",
     " float dothl=saturate(dot(h,lightDir));",
-    " vec3 ctnum=ndf(dotnh,rough)*gsmith(dotnv,dotnl,rough)*fresnelschlick(dothl,specular);",
+    " float alpha=rough*rough;",
+    " vec3 ctnum=ndf(dotnh,alpha)*gsmith(dotnv,dotnl,alpha)*fresnelschlick(dothl,specular);",
     " float ctden=min(dotnl*dotnv,0.0001);",
-    " return diffuse;//*ONE_DIV_PI+ctnum*0.25/ctden;", // TODO: Fix specular
+    " return diffuse;//+ctnum*0.25/ctden;", // TODO: Fix specular
     "}",
     "#ifndef SPECULAR",
-    // NOTE: Color parameter is in linear RGB
+    // NOTE: Color parameter is in linearized RGB
     "vec3 reflectance(vec3 color, vec3 lightDir, vec3 viewDir, vec3 n, float rough, float metal) {",
     " vec3 h=normalize(viewDir+lightDir);",
-    " float dothl=saturate(dot(h,lightDir));",
+    " float dothv=saturate(dot(h,viewDir));",
     // 0.04 is a good approximation of F0 reflectivity for most nonmetals (with the exception of gemstones,
     // which can go at least as high as 0.17 for diamond). On the other hand, most metals reflect
     // all the light that passes through them, so their F0 is approximated with the base color (assuming the
     // metallic workflow is used).
     " vec3 refl=mix(vec3(0.04),color,metal);",
-    " vec3 fr=fresnelschlick(dothl,refl);",
+    " vec3 fr=(fresnelschlick(dothv,refl));",
     " vec3 refr=mix((vec3(1.0)-fr)*color,vec3(0.0),metal);",
     " return reflectancespec(refr, refl, lightDir, viewDir, n, rough);",
     "}",

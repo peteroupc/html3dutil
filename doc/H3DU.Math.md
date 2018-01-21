@@ -568,7 +568,7 @@ by a surface of the given color.
 
 #### Parameters
 
-* `lin` (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of a linear RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
+* `lin` (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of a linearized RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
 
 #### Return Value
 
