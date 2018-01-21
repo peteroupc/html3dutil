@@ -453,8 +453,6 @@ ShaderInfo.getDefaultVertex = function() {
  * @returns {string} The resulting shader text.
  */
 ShaderInfo.getDefaultFragment = function() {
-  // TODO: Make physically based code path work again
-  // (macro changed to "X_PHYS_BASED" for now)
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [
     "#define ONE_DIV_PI 0.318309886",
@@ -546,7 +544,7 @@ ShaderInfo.getDefaultFragment = function() {
     "}",
     "#endif",
     // ////////////
-    "#ifdef X_PHYS_BASED",
+    "#ifdef PHYSICAL_BASED",
     // John Hable's tonemapping function, mentioned at
     // at http://filmicgames.com/archives/75
     "#define HABLE_TONEMAP_WHITE 1.37906425",
@@ -587,7 +585,7 @@ ShaderInfo.getDefaultFragment = function() {
     " float dothl=saturate(dot(h,lightDir));",
     " vec3 ctnum=ndf(dotnh,rough)*gsmith(dotnv,dotnl,rough)*fresnelschlick(dothl,specular);",
     " float ctden=min(dotnl*dotnv,0.0001);",
-    " return diffuse*ONE_DIV_PI+ctnum*0.25/ctden;",
+    " return diffuse;//*ONE_DIV_PI+ctnum*0.25/ctden;", // TODO: Fix specular
     "}",
     "#ifndef SPECULAR",
     // NOTE: Color parameter is in linear RGB
@@ -597,7 +595,7 @@ ShaderInfo.getDefaultFragment = function() {
     // 0.04 is a good approximation of F0 reflectivity for most nonmetals (with the exception of gemstones,
     // which can go at least as high as 0.17 for diamond). On the other hand, most metals reflect
     // all the light that passes through them, so their F0 is approximated with the base color (assuming the
-    // metallic workflow is used)
+    // metallic workflow is used).
     " vec3 refl=mix(vec3(0.04),color,metal);",
     " vec3 fr=fresnelschlick(dothl,refl);",
     " vec3 refr=mix((vec3(1.0)-fr)*color,vec3(0.0),metal);",
@@ -658,7 +656,7 @@ ShaderInfo.getDefaultFragment = function() {
     " materialEmission=tolinear(materialEmission);",
     "float materialAlpha=baseColor.a;",
     "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
-    "vec3 viewDirection=normalize(tview.xyz/tview.w);",
+    "vec3 viewDirection=normalize(tview.xyz/(tview.w == 0.0 ? 1.0 : tview.w));",
     "vec3 environment=vec3(1.0);",
     /* LATER: Support environment maps
     "#ifdef ENV_MAP",
@@ -675,7 +673,7 @@ ShaderInfo.getDefaultFragment = function() {
     "environment=tolinear(environment);",
     "#endif", "#endif",
 */
-    "#ifdef X_PHYS_BASED",
+    "#ifdef PHYSICAL_BASED",
     "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient
     "#else",
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
@@ -692,7 +690,7 @@ ShaderInfo.getDefaultFragment = function() {
     // NOTE: Default shader no longer multiplies specular by the specular texture
     "#ifdef SPECULAR_MAP", "materialSpecular*=tolinear(texture2D(specularMap,uvVar).rgb);", "#endif",
     "#ifdef ROUGHNESS_MAP", "rough=1.0;", "#endif",
-    "#ifdef X_PHYS_BASED",
+    "#ifdef PHYSICAL_BASED",
     "#ifdef ROUGHNESS", "rough=roughness;", "#endif",
     "#else",
     // Convert Blinn-Phong shininess to roughness
@@ -713,7 +711,7 @@ ShaderInfo.getDefaultFragment = function() {
       // flickering specular highlights if the surface normal is perpendicular to
       // the light's direction vector
       "spectmp = vec3(greaterThan(vec3(lightCosine),vec3(0.0001)));",
-      "#ifdef X_PHYS_BASED",
+      "#ifdef PHYSICAL_BASED",
       "    lightFactor=spectmp*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
       "#ifdef SPECULAR",
       "    lightedColor+=reflectancespec(materialDiffuse,materialSpecular,normalize(lightPowerVec.xyz),",

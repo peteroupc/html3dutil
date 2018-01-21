@@ -13,9 +13,8 @@ function logLines(text) {
   var lines = text.split("\n");
       // add line numbers
   for(var i = 0; i < lines.length; i++) {
-    lines[i] = "/* " + (i + 1) + " */   " + lines[i];
+    console.log("/* " + (i + 1) + " */   " + lines[i]);
   }
-  return lines.join("\n");
 }
 
 /**
@@ -67,8 +66,6 @@ ShaderProgram.prototype._init = function(context, shaderInfo) {
   this.prog = H3DU.ShaderProgram._compileShaders(context,
     shaderInfo.vertexShader,
     shaderInfo.fragmentShader);
-  // console.log(shaderInfo.vertexShader)
-  // console.log(shaderInfo.fragmentShader)
   this.uniformValues = {};
   this.actives = {};
   this.attributes = [];
@@ -314,7 +311,7 @@ ShaderProgram._compileShaders = function(context, vertexShader, fragmentShader) 
     context.shaderSource(shader, text);
     context.compileShader(shader);
     if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
-      console.log(logLines(text));
+      logLines(text);
       console.log((kind === context.VERTEX_SHADER ? "vertex: " : "fragment: ") +
         context.getShaderInfoLog(shader));
       return null;

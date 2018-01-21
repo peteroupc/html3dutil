@@ -9,6 +9,7 @@
 */
 
 import {_LightsBinder, _MaterialBinder} from "./h3du-binders";
+import {Semantic} from "./h3du-semantic";
 /**
  * A `Batch3D` represents a so-called "scene graph". It holds
  * 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
@@ -78,6 +79,7 @@ Batch3D._isIdentityExceptTranslate = function(mat) {
     mat[15] === 1
   );
 };
+
 /** @ignore */
 Batch3D._setupMatrices = function(
   program,
@@ -90,18 +92,18 @@ Batch3D._setupMatrices = function(
     if(Object.prototype.hasOwnProperty.call(program.uniformSemantics, k)) {
       var v = program.uniformSemantics[k];
       switch(v) {
-      case H3DU.Semantic.MODEL:
+      case Semantic.MODEL:
         uniforms[k] = worldMatrix;
         break;
-      case H3DU.Semantic.VIEW:
+      case Semantic.VIEW:
         uniforms[k] = viewMatrix;
         break;
-      case H3DU.Semantic.PROJECTION:
+      case Semantic.PROJECTION:
         uniforms[k] = projMatrix;
         break;
-      case H3DU.Semantic.MODELVIEW:
-      case H3DU.Semantic.MODELVIEWPROJECTION:
-      case H3DU.Semantic.MODELVIEWINVERSETRANSPOSE:
+      case Semantic.MODELVIEW:
+      case Semantic.MODELVIEWPROJECTION:
+      case Semantic.MODELVIEWINVERSETRANSPOSE:
         if(!viewWorld) {
           if(H3DU.Batch3D._isIdentityExceptTranslate(viewMatrix)) {
             // view matrix is just a translation matrix, so that getting the model-view
@@ -115,15 +117,15 @@ Batch3D._setupMatrices = function(
               worldMatrix);
           }
         }
-        if(v === H3DU.Semantic.MODELVIEW) {
+        if(v === Semantic.MODELVIEW) {
           uniforms[k] = viewWorld;
-        } else if(v === H3DU.Semantic.MODELVIEWPROJECTION) {
+        } else if(v === Semantic.MODELVIEWPROJECTION) {
           uniforms[k] = H3DU.Math.mat4multiply(projMatrix, viewWorld);
-        } else if(v === H3DU.Semantic.MODELVIEWINVERSETRANSPOSE) {
+        } else if(v === Semantic.MODELVIEWINVERSETRANSPOSE) {
           uniforms[k] = H3DU.Math.mat4inverseTranspose3(viewWorld);
         }
         break;
-      case H3DU.Semantic.VIEWINVERSE:
+      case Semantic.VIEWINVERSE:
         uniforms[k] = H3DU.Math.mat4invert(viewMatrix);
         break;
       default:
