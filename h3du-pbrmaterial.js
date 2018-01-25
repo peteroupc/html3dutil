@@ -33,7 +33,7 @@ function PbrMaterial(params) {
  * the light that passes through them,
  * so for most metals, this color should generally be black or a very
  * dark shade of gray. (In physically-based rendering, the sum of albedo and specular
- * colors should not exceed 1.0 in each [linearized sRGB]{@link H3DU.Math.colorToLinear} channel.)<p>
+ * colors should not exceed 1.0 in each [linear sRGB]{@link H3DU.Math.colorToLinear} channel.)<p>
  * In <b>both workflows</b> in physically-based rendering, the albedo
  * color should not have any added lighting.<p>
  * This value can have an optional fourth element giving the alpha component

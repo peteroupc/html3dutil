@@ -426,7 +426,7 @@ ShaderInfo.getDefaultVertex = function() {
     "#ifdef SHADING",
     "uniform mat3 normalMatrix; /* internal */",
     "uniform mat4 world;",
-    "varying vec4 viewPositionVar;",
+    "varying vec3 viewPositionVar;",
     "varying vec3 transformedNormalVar;",
     "#endif",
     "varying vec2 uvVar;",
@@ -442,7 +442,8 @@ ShaderInfo.getDefaultVertex = function() {
     "uvVar=uv;",
     "#ifdef SHADING",
     "transformedNormalVar=normalize(normalMatrix*normal);",
-    "viewPositionVar=modelViewMatrix*positionVec4;",
+    "vec4 viewPosition=world*positionVec4;",
+    "viewPositionVar=viewPosition.xyz/viewPosition.w;",
     "#endif",
     "}"].join("\n");
   return shader;
@@ -456,18 +457,21 @@ ShaderInfo.getDefaultFragment = function() {
   var i;
   var shader = H3DU.ShaderInfo.fragmentShaderHeader() + [
     "#define ONE_DIV_PI 0.318309886",
-    "#define ONE_DIV_TWOPI 0.159154943",
     "#define PI 3.141592654",
-    "#define TWOPI 6.283185307",
+    // 0.04 is a good approximation of F0 reflectivity for most nonmetals (with the exception of gemstones,
+    // which can go at least as high as 0.17 for diamond). On the other hand, most metals reflect
+    // all the light that passes through them, so their F0 is approximated with the base color (assuming the
+    // metallic workflow is used).
+    "#define NONMETAL_F0   0.04",
     // Clamp to range [0, 1]
     "#define saturate(f) clamp(f, 0.0, 1.0)",
-    // Convert from sRGB to linearized RGB
+    // Convert from sRGB to linear RGB
     "vec3 tolinear(vec3 c) {",
     " c=saturate(c);",
     " bvec3 lt=lessThanEqual(c,vec3(0.03928));",
     " return mix(pow((0.0556+c)*0.947328534,vec3(2.4)),0.077399381*c,vec3(lt));",
     "}",
-    // Convert from linearized RGB to sRGB
+    // Convert from linear RGB to sRGB
     "vec3 fromlinear(vec3 c) {",
     " c=saturate(c);",
     " bvec3 lt=lessThanEqual(c,vec3(0.00304));",
@@ -516,7 +520,7 @@ ShaderInfo.getDefaultFragment = function() {
     "#ifdef COLORATTR", "varying vec3 colorAttrVar;", "#endif",
     "varying vec2 uvVar;",
     "#ifdef SHADING",
-    "varying vec4 viewPositionVar;",
+    "varying vec3 viewPositionVar;",
     "varying vec3 transformedNormalVar;",
     "vec4 calcLightPower(light lt, vec4 vertexPosition) {",
     " vec3 sdir;",
@@ -558,47 +562,40 @@ ShaderInfo.getDefaultFragment = function() {
     "float ndf(float dotnh, float alpha) {",
     " float alphasq=alpha*alpha;",
     " float d=dotnh*dotnh*(alphasq-1.0)+1.0;",
-    " return alphasq*ONE_DIV_PI/(d*d);",
+    " if(alphasq == 0.0 || d == 0.0)return 0.0;",
+    " return alphasq/(PI*d*d);",
     "}",
-    "float gsmith(float dotnv, float dotnl, float alpha) {",
-    " float a1=(alpha+1.0);",
-    " float k=a1*a1*0.125;",
-    " float invk=(1.0-k);",
-    " return dotnl/(dotnl*invk+k)*dotnv/(dotnv*invk+k);",
+    "float gschlick(float dotnh, float dothl, float rough) {",
+    " float k=rough*0.7978846;",
+    " float invk=1.0-k;",
+    " float d1=dothl*invk+k;",
+    " float d2=dotnh*invk+k;",
+    " if(d1==0.0 || d2==0.0)return 0.0;",
+    " return (dothl/d1)*(dotnh/d2);",
     "}",
-    "float gsmithindirect(float dotnv, float dotnl, float alpha) {",
-    " float k=alpha*alpha*0.5;",
-    " float invk=(1.0-k);",
-    " return dotnl/(dotnl*invk+k)*dotnv/(dotnv*invk+k);",
+    "vec3 fresnelschlick(float dothv, vec3 f0) {",
+    " float kdothv=saturate(1.0-dothv);",
+    " return f0+pow(kdothv, 5.0)*(vec3(1.0)-f0);",
     "}",
-    "vec3 fresnelschlick(float dothl, vec3 f0) {",
-    " float id=1.0-dothl;",
-    " return f0+(vec3(1.0)-f0)*pow(id,5.0);",
-    "}",
-    // NOTE: Color and specular parameters are in linearized RGB
+    // NOTE: Color and specular parameters are in linear RGB
     "vec3 reflectancespec(vec3 diffuse, vec3 specular, vec3 lightDir, vec3 viewDir, vec3 n, float rough) {",
     " vec3 h=normalize(viewDir+lightDir);",
-    " float dotnv=abs(dot(n,viewDir))+0.0001;",
+    " float dothv=dot(h,viewDir);",
+    " vec3 f=fresnelschlick(dothv,specular);",
     " float dotnh=saturate(dot(n,h));",
-    " float dotnl=saturate(dot(n,lightDir));",
     " float dothl=saturate(dot(h,lightDir));",
     " float alpha=rough*rough;",
-    " vec3 ctnum=ndf(dotnh,alpha)*gsmith(dotnv,dotnl,alpha)*fresnelschlick(dothl,specular);",
-    " float ctden=min(dotnl*dotnv,0.0001);",
-    " return diffuse;//+ctnum*0.25/ctden;", // TODO: Fix specular
+    " vec3 ctnum=ndf(dotnh,alpha)*gschlick(dotnh,dothl,rough)*f;",
+    " float dotnl=max(saturate(dot(n,lightDir)),0.001);",
+    " float dotnv=0.001+abs(dot(n,viewDir));",
+    " return diffuse*(1.0-f)*ONE_DIV_PI+ctnum/(dotnl*dotnv*4.0);",
+    " return ret;",
     "}",
     "#ifndef SPECULAR",
-    // NOTE: Color parameter is in linearized RGB
+    // NOTE: Color parameter is in linear RGB
     "vec3 reflectance(vec3 color, vec3 lightDir, vec3 viewDir, vec3 n, float rough, float metal) {",
-    " vec3 h=normalize(viewDir+lightDir);",
-    " float dothv=saturate(dot(h,viewDir));",
-    // 0.04 is a good approximation of F0 reflectivity for most nonmetals (with the exception of gemstones,
-    // which can go at least as high as 0.17 for diamond). On the other hand, most metals reflect
-    // all the light that passes through them, so their F0 is approximated with the base color (assuming the
-    // metallic workflow is used).
-    " vec3 refl=mix(vec3(0.04),color,metal);",
-    " vec3 fr=(fresnelschlick(dothv,refl));",
-    " vec3 refr=mix((vec3(1.0)-fr)*color,vec3(0.0),metal);",
+    " vec3 refl=mix(vec3(NONMETAL_F0),color,metal);",
+    " vec3 refr=mix((1.0-NONMETAL_F0)*color,vec3(0.0),metal);",
     " return reflectancespec(refr, refl, lightDir, viewDir, n, rough);",
     "}",
     "#endif",
@@ -655,8 +652,8 @@ ShaderInfo.getDefaultFragment = function() {
     " materialEmission=me.rgb;", "#endif",
     " materialEmission=tolinear(materialEmission);",
     "float materialAlpha=baseColor.a;",
-    "vec4 tview=inverseView*vec4(0.0,0.0,0.0,1.0)-viewPositionVar;",
-    "vec3 viewDirection=normalize(tview.xyz/(tview.w == 0.0 ? 1.0 : tview.w));",
+    "vec3 tview=(inverseView*vec4(vec3(0.0),1.0)).xyz;",
+    "vec3 viewDirection=normalize(tview.xyz-viewPositionVar.xyz);",
     "vec3 environment=vec3(1.0);",
     /* LATER: Support environment maps
     "#ifdef ENV_MAP",
@@ -669,7 +666,7 @@ ShaderInfo.getDefaultFragment = function() {
     "vec3 refl=reflect(-eyepos,normal);",
     "refl.x=-refl.x;",
     "environment=vec3(texture2D(envMap,vec2(",
-    "  (atan(refl.x,refl.z)+PI)*ONE_DIV_TWOPI, acos(clamp(-refl.y,-1.0,1.0))*ONE_DIV_PI )));",
+    "  (atan(refl.x,refl.z)+PI)*(1.0/(PI*2)), acos(clamp(-refl.y,-1.0,1.0))*ONE_DIV_PI )));",
     "environment=tolinear(environment);",
     "#endif", "#endif",
 */
@@ -705,8 +702,9 @@ ShaderInfo.getDefaultFragment = function() {
     ""].join("\n") + "\n";
   for(i = 0; i < H3DU.Lights.MAX_LIGHTS; i++) {
     shader += [
-      "lightPowerVec=calcLightPower(lights[" + i + "],viewPositionVar);",
+      "lightPowerVec=calcLightPower(lights[" + i + "],vec4(viewPositionVar,1.0));",
       "lightCosine=saturate(dot(normal,lightPowerVec.xyz));",
+      "if(dot(lightPowerVec,lightPowerVec)>0.0 && lightCosine>0.0) {",
       // not exactly greater than 0 in order to avoid speckling or
       // flickering specular highlights if the surface normal is perpendicular to
       // the light's direction vector
@@ -715,10 +713,10 @@ ShaderInfo.getDefaultFragment = function() {
       "    lightFactor=spectmp*lightCosine*lightPowerVec.w*tolinear(lights[" + i + "].diffuse.xyz);",
       "#ifdef SPECULAR",
       "    lightedColor+=reflectancespec(materialDiffuse,materialSpecular,normalize(lightPowerVec.xyz),",
-      "         normalize(viewDirection),normal,rough)*lightFactor;",
+      "         viewDirection,normal,rough)*lightFactor;",
       "#else",
       "    lightedColor+=reflectance(materialDiffuse,normalize(lightPowerVec.xyz),",
-      "         normalize(viewDirection),normal,rough,metal)*lightFactor;",
+      "         viewDirection,normal,rough,metal)*lightFactor;",
       "#endif",
       "#else",
       // Lambert diffusion term
@@ -730,6 +728,7 @@ ShaderInfo.getDefaultFragment = function() {
       "    lightedColor+=spectmp*materialSpecular*specular*lightPowerVec.w*tolinear(lights[" + i + "].specular.xyz);",
       "#endif",
       "#endif",
+      "}",
       ""].join("\n") + "\n";
   }
   shader += [

@@ -51,9 +51,9 @@ Dir.chdir(".."){
  utf8write(
    normalizeLines(
      ("/* eslint strict: \"off\", no-unused-expressions: \"off\" */\n/* global define */\n"+
-       `rollup --format=umd --name=H3DU ./extras/gltf/gltf.js`).gsub(/\t/,"  ")),"extras/gltf.js")
+       `rollup --output.format=umd --name=H3DU ./extras/gltf/gltf.js`).gsub(/\t/,"  ")),"extras/gltf.js")
  tmppath("h3du_all.js"){|p|
-  utf8write(`rollup --format=umd --name=H3DU ./h3du.js`,p)
+  utf8write(`rollup --output.format=umd --name=H3DU ./h3du.js`,p)
   normalizeAndCompile([p,"./oldnames.js"],"./h3du_min.js",false,ARGV.include?("--sourcemap"))
   generateSvg("doc/websafe.svg")
   generateColorNameSvg("doc/colornames.svg")

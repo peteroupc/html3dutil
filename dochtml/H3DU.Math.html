@@ -19,8 +19,8 @@ Use <a href="H3DU.Math.html#H3DU.Math.GlobalRollYawPitch">H3DU.Math.GlobalRollYa
 degrees in a radian.<li><a href='#H3DU.Math.ToRadians'>ToRadians</a><br>Closest approximation to pi divided by 180, or the number
 of radians in a degree.<li><a href='#H3DU.Math.YawPitchRoll'>YawPitchRoll</a><br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
 Use <a href="H3DU.Math.html#H3DU.Math.GlobalYawPitchRoll">H3DU.Math.GlobalYawPitchRoll</a> instead.</b><li><a href='#H3DU.Math.YawRollPitch'>YawRollPitch</a><br><b>Deprecated: This constant's name is ambiguous between local and global rotations.
-Use <a href="H3DU.Math.html#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a> instead.</b></ul><h3> Methods</h3><ul><li><a href='#H3DU.Math.boxCenter'>boxCenter</a><br>Finds the center of a 3D bounding box.<li><a href='#H3DU.Math.boxDimensions'>boxDimensions</a><br>Finds the dimensions of a 3D bounding box.<li><a href='#H3DU.Math.boxIsEmpty'>boxIsEmpty</a><br>Determines whether a 3D bounding box is empty.<li><a href='#H3DU.Math.colorToLinear'>colorToLinear</a><br>Converts a color from companded to linearized sRGB using the sRGB transfer function, and returns
-a new vector with the result.<li><a href='#H3DU.Math.colorTosRGB'>colorTosRGB</a><br>Converts a color from linearized to companded sRGB using the sRGB transfer function, and returns
+Use <a href="H3DU.Math.html#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRollPitch</a> instead.</b></ul><h3> Methods</h3><ul><li><a href='#H3DU.Math.boxCenter'>boxCenter</a><br>Finds the center of a 3D bounding box.<li><a href='#H3DU.Math.boxDimensions'>boxDimensions</a><br>Finds the dimensions of a 3D bounding box.<li><a href='#H3DU.Math.boxIsEmpty'>boxIsEmpty</a><br>Determines whether a 3D bounding box is empty.<li><a href='#H3DU.Math.colorToLinear'>colorToLinear</a><br>Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+a new vector with the result.<li><a href='#H3DU.Math.colorTosRGB'>colorTosRGB</a><br>Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
 a new vector with the result.<li><a href='#H3DU.Math.frustumHasBox'>frustumHasBox</a><br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.<li><a href='#H3DU.Math.frustumHasPoint'>frustumHasPoint</a><br>Determines whether a point is
 outside or inside a view frustum.<li><a href='#H3DU.Math.frustumHasSphere'>frustumHasSphere</a><br>Determines whether a sphere is at least
@@ -293,15 +293,15 @@ This is determined if the minimum coordinate
 is larger than the corresponding maximum coordinate.<h4> Parameters</h4><ul><li><code>box</code> (Type: Array.&lt;number>)<br>An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.</ul><h4> Return Value</h4><code>true</code> if at least one
 of the minimum coordinates is greater than its
 corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)<a name='H3DU.Math.colorToLinear'></a>
-<h3> (static) H3DU.Math.colorToLinear(srgb)</h3>Converts a color from companded to linearized sRGB using the sRGB transfer function, and returns
-a new vector with the result.<p>Linearized RGB is linear because of its linear relationship of light emitted
+<h3> (static) H3DU.Math.colorToLinear(srgb)</h3>Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
 by a surface of the given color.<h4> Parameters</h4><ul><li><code>srgb</code> (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of an sRGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.</ul><h4> Return Value</h4>A three-element vector giving
 the red, green, and blue components, in that order, of the given color
-in linearized sRGB. The alpha component will be as specified
+in linear sRGB. The alpha component will be as specified
 in the "srgb" parameter. (Type: Array.&lt;number>)<a name='H3DU.Math.colorTosRGB'></a>
-<h3> (static) H3DU.Math.colorTosRGB(lin)</h3>Converts a color from linearized to companded sRGB using the sRGB transfer function, and returns
-a new vector with the result.<p>Linearized RGB is linear because of its linear relationship of light emitted
-by a surface of the given color.<h4> Parameters</h4><ul><li><code>lin</code> (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of a linearized RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.</ul><h4> Return Value</h4>lin A four-element vector giving
+<h3> (static) H3DU.Math.colorTosRGB(lin)</h3>Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
+a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
+by a surface of the given color.<h4> Parameters</h4><ul><li><code>lin</code> (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of a linear RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.</ul><h4> Return Value</h4>lin A four-element vector giving
 the red, green, blue, and alpha components, in that order, of the given color
 in companded sRGB. The alpha component will be as specified
 in the "lin" parameter. (Type: Array.&lt;number>)<a name='H3DU.Math.frustumHasBox'></a>

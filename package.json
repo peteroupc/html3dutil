@@ -27,6 +27,6 @@
   "devDependencies": {
     "eslint": "^3.10.1",
     "jsdoc": "^3.4.3",
-    "rollup": "^0.41.5"
+    "rollup": "^0.54.1"
   }
 }
