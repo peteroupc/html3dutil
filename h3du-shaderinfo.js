@@ -589,7 +589,6 @@ ShaderInfo.getDefaultFragment = function() {
     " float dotnl=max(saturate(dot(n,lightDir)),0.001);",
     " float dotnv=0.001+abs(dot(n,viewDir));",
     " return diffuse*(1.0-f)*ONE_DIV_PI+ctnum/(dotnl*dotnv*4.0);",
-    " return ret;",
     "}",
     "#ifndef SPECULAR",
     // NOTE: Color parameter is in linear RGB
