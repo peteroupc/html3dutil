@@ -1,4 +1,4 @@
-/* global GltfState2, H3DU, Promise */
+/* global H3DU, Promise */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -9,7 +9,7 @@
 */
 
 import {GltfState1} from "./gltf1";
-// import {GltfState2} from "./gltf2";
+import {GltfState2} from "./gltf2";
 // LATER: Convert batches/shape groups to glTF
 
 /**

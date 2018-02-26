@@ -27,6 +27,7 @@
   "devDependencies": {
     "eslint": "^3.10.1",
     "jsdoc": "^3.4.3",
+    "svgo": "^1.0.3",
     "rollup": "^0.54.1"
   }
 }

@@ -670,7 +670,7 @@ ShaderInfo.getDefaultFragment = function() {
     "#endif", "#endif",
 */
     "#ifdef PHYSICAL_BASED",
-    "vec3 lightedColor=vec3(0.05)*materialDiffuse;", // ambient
+    "vec3 lightedColor=(dot(normal,normal)<0.001) ? materialDiffuse : vec3(0.05)*materialDiffuse;", // ambient
     "#else",
     "vec3 lightedColor=sceneAmbient*materialAmbient;", // ambient
     "#endif",

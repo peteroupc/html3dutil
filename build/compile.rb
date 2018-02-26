@@ -55,16 +55,17 @@ Dir.chdir(".."){
  tmppath("h3du_all.js"){|p|
   utf8write(`rollup --output.format=umd --name=H3DU ./h3du.js`,p)
   normalizeAndCompile([p,"./oldnames.js"],"./h3du_min.js",false,ARGV.include?("--sourcemap"))
+  FileUtils.mkdir_p("doc")
+  FileUtils.mkdir_p("dochtml")
   generateSvg("doc/websafe.svg")
   generateColorNameSvg("doc/colornames.svg")
   filesForDoc=[p]|Dir.glob("extras/*.js")
   filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
-  FileUtils.mkdir_p("doc")
-  FileUtils.mkdir_p("dochtml")
   puts `jsdoc -u tutorials -t build -R README.md -d ./doc #{filesForDoc}`
   puts `jsdoc -u tutorials -t build -R README.md -d ./dochtml #{filesForDoc} -q f=html`
  }
  svgs=%w( doc/websafe.svg doc/colornames.svg).each{|s|
   `svgo -i #{ffq(s)} -o #{ffq(s)}`
+  forceCopy(s,"dochtml/"+File.basename(s))
  }
 }

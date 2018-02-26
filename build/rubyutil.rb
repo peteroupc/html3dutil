@@ -520,6 +520,10 @@ def forceMove(s,d)
     s=File.expand_path(s)
     d=File.expand_path(d)
     if s!=d
+      ds=d+"/"+File.basename(s)
+      if File.directory?(d) && (s==ds || File.identical?(s,ds))
+        return true
+      end
       FileUtils.mv(s,d,{:force=>true})
     else
       return FileTest.exist?(d)
