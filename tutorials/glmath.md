@@ -6,31 +6,31 @@ Here is an overview of these data types.
 <a id=Contents></a>
 ## Contents
 
-- [Contents](#Contents)
-- [Vectors](#Vectors)
-    - [Unit Vectors](#Unit_Vectors)
-- [Matrices](#Matrices)
-    - [Translation](#Translation)
-    - [Scaling](#Scaling)
-    - [Rotation](#Rotation)
-    - [Combining Transforms](#Combining_Transforms)
-- [Describing Rotations](#Describing_Rotations)
-    - [Axis of Rotation](#Axis_of_Rotation)
-    - [Quaternions](#Quaternions)
-        - [Generating Quaternions](#Generating_Quaternions)
-        - [Using Quaternions](#Using_Quaternions)
-        - [Multiplying Quaternions](#Multiplying_Quaternions)
-    - [Tait-Bryan angles](#Tait_Bryan_angles)
-    - [4x4 Matrices](#4x4_Matrices)
-- [Planes](#Planes)
-- [Boxes](#Boxes)
-- [Coordinate Systems](#Coordinate_Systems)
-    - [Differences in Behavior](#Differences_in_Behavior)
-        - [Projection and view matrices](#Projection_and_view_matrices)
-        - [Rotation angles (such as used in `mat4rotate` and `quatRotate`)](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)
-        - [Cross product (`vec3cross`) and normals](#Cross_product_vec3cross_and_normals)
-    - [Winding and face classification](#Winding_and_face_classification)
-        - [Finding a triangle's winding](#Finding_a_triangle_s_winding)
+- [**Contents**](#Contents)
+- [**Vectors**](#Vectors)
+    - [**Unit Vectors**](#Unit_Vectors)
+- [**Matrices**](#Matrices)
+    - [**Translation**](#Translation)
+    - [**Scaling**](#Scaling)
+    - [**Rotation**](#Rotation)
+    - [**Combining Transforms**](#Combining_Transforms)
+- [**Describing Rotations**](#Describing_Rotations)
+    - [**Axis of Rotation**](#Axis_of_Rotation)
+    - [**Quaternions**](#Quaternions)
+        - [**Generating Quaternions**](#Generating_Quaternions)
+        - [**Using Quaternions**](#Using_Quaternions)
+        - [**Multiplying Quaternions**](#Multiplying_Quaternions)
+    - [**Tait-Bryan angles**](#Tait_Bryan_angles)
+    - [**4x4 Matrices**](#4x4_Matrices)
+- [**Planes**](#Planes)
+- [**Boxes**](#Boxes)
+- [**Coordinate Systems**](#Coordinate_Systems)
+    - [**Differences in Behavior**](#Differences_in_Behavior)
+        - [**Projection and view matrices**](#Projection_and_view_matrices)
+        - [**Rotation angles (such as used in `mat4rotate` and `quatRotate`)**](#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate)
+        - [**Cross product (`vec3cross`) and normals**](#Cross_product_vec3cross_and_normals)
+    - [**Winding and face classification**](#Winding_and_face_classification)
+        - [**Finding a triangle's winding**](#Finding_a_triangle_s_winding)
 
 <a id=Vectors></a>
 ## Vectors
@@ -117,7 +117,7 @@ before the other transformations.
 Rotation changes an object's orientation.
 
 To create a rotation matrix, use [H3DU.Math.mat4rotated()]{@link H3DU.Math.mat4rotated},
-and specify the angle (in degrees) to rotate, and the [axis of rotation](#Axis_of_Rotation). For example:
+and specify the angle (in degrees) to rotate, and the [**axis of rotation**](#Axis_of_Rotation). For example:
 
 * Specifying `(45, [1, 0, 0])` means a 45-degree rotation of the point around the X axis.
 * Specifying `(80, [0, 2, 3])` means a 45-degree rotation of the point around the axis that
@@ -172,7 +172,7 @@ Here are examples of an axis of rotation.
 * The Z axis of rotation (side-by-side sway) is (0, 0, 1).
 
 While the axis of rotation points toward the viewer, if the angle's value
-is positive and the [coordinate system](#Coordinate_Systems) is...
+is positive and the [**coordinate system**](#Coordinate_Systems) is...
 
 * ...right handed, then the angle runs counterclockwise.
 * ...left handed, then the angle runs clockwise.
@@ -184,7 +184,7 @@ Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2,
 describe the same axis of rotation.
 
 Unless stated otherwise, an axis of rotation passed to an `H3DU.Math`
-method need not be a [unit vector](#Unit_Vectors).
+method need not be a [**unit vector**](#Unit_Vectors).
 
 <a id=Quaternions></a>
 ### Quaternions
@@ -201,8 +201,8 @@ Functions that generate quaternions include:
 absence of rotations.
 * {@link H3DU.Math.quatFromVectors} - Generates a quaternion describing
 a rotation from one vector to another.
-* {@link H3DU.Math.quatFromMat4} - Generates a quaternion from a [4x4 matrix](#Matrices).
-* {@link H3DU.Math.quatFromAxisAngle} - Generates a quaternion from an angle and [axis of rotation](#Axis_of_Rotation).
+* {@link H3DU.Math.quatFromMat4} - Generates a quaternion from a [**4x4 matrix**](#Matrices).
+* {@link H3DU.Math.quatFromAxisAngle} - Generates a quaternion from an angle and [**axis of rotation**](#Axis_of_Rotation).
 * {@link H3DU.Math.quatFromTaitBryan} - Generates a quaternion from Tait-Bryan angles.
 
 <a id=Using_Quaternions></a>
@@ -213,12 +213,12 @@ For best results when using quaternions:
 * Store the rotation of each object as a single quaternion.
 * As rotations happen each frame, convert the rotation (which may be
   in pitch/yaw/roll or another form, depending on the input device) to a quaternion
-  (see ["Generating Quaternions"](#Generating_Quaternions)
+  (see [**"Generating Quaternions"**](#Generating_Quaternions)
   and [multiply]{@link H3DU.Math.quatMultiply} that quaternion by the current
   quaternion to get the object's new rotation.
 * Normalize the rotation quaternion (using [`quatNormalize()`]{@link H3DU.Math.quatNormalize}
  or [`quatNormalizeInPlace()`]{@link H3DU.Math.quatNormalizeInPlace})
-  every few frames. (Quaternions that describe a 3D rotation should be [unit vectors](#Unit_Vectors).)
+  every few frames. (Quaternions that describe a 3D rotation should be [**unit vectors**](#Unit_Vectors).)
 
 <a id=Multiplying_Quaternions></a>
 #### Multiplying Quaternions
@@ -255,7 +255,7 @@ Converts from a quaternion to Tait-Bryan angles
 <a id=4x4_Matrices></a>
 ### 4x4 Matrices
 
-A 4x4 matrix can describe a 3D vector rotation; see ["Rotation", above](#Rotation).
+A 4x4 matrix can describe a 3D vector rotation; see [**"Rotation", above**](#Rotation).
 
 <a id=Planes></a>
 ## Planes
@@ -338,8 +338,8 @@ documentation describes how to adjust them for a left-handed coordinate system.
 <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a>
 #### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
 
-While the [axis of rotation](#Axis_of_Rotation) points toward the viewer, if the angle's value
-is positive and the [coordinate system](#Coordinate_Systems) is...
+While the [**axis of rotation**](#Axis_of_Rotation) points toward the viewer, if the angle's value
+is positive and the [**coordinate system**](#Coordinate_Systems) is...
 
 * ...right handed, then the angle runs counterclockwise.
 * ...left handed, then the angle runs clockwise.

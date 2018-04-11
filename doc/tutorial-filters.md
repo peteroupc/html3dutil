@@ -6,31 +6,31 @@
 ## Introduction
 
 This page describes what graphics filters are and how they work in my
-public domain [HTML 3D Library](http://peteroupc.github.io/html3dutil).
+public domain [**HTML 3D Library**](http://peteroupc.github.io/html3dutil).
 It also describes several examples of graphics filters.
 
-**Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
+**Download the latest version of the library at the [**HTML 3D Library's Releases page**](https://github.com/peteroupc/html3dutil/releases).**
 
 <a id=Contents></a>
 ## Contents
 
-- [Introduction](#Introduction)
-- [Contents](#Contents)
-- [Graphics Filters](#Graphics_Filters)
-- [Writing Graphics Filters](#Writing_Graphics_Filters)
-- [Using Graphics Filters](#Using_Graphics_Filters)
-- [Sample Code](#Sample_Code)
-- [Examples](#Examples)
-    - [Grayscale](#Grayscale)
-    - [Invert](#Invert)
-    - [Red Tint](#Red_Tint)
-    - [Mirror Filter](#Mirror_Filter)
-    - [Matrix Filter](#Matrix_Filter)
-    - [Color Matrix Filter](#Color_Matrix_Filter)
-    - [Pixelate Filter](#Pixelate_Filter)
-    - [Wave Filter](#Wave_Filter)
-    - [Waterpaint Filter](#Waterpaint_Filter)
-- [Other Pages](#Other_Pages)
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**Graphics Filters**](#Graphics_Filters)
+- [**Writing Graphics Filters**](#Writing_Graphics_Filters)
+- [**Using Graphics Filters**](#Using_Graphics_Filters)
+- [**Sample Code**](#Sample_Code)
+- [**Examples**](#Examples)
+    - [**Grayscale**](#Grayscale)
+    - [**Invert**](#Invert)
+    - [**Red Tint**](#Red_Tint)
+    - [**Mirror Filter**](#Mirror_Filter)
+    - [**Matrix Filter**](#Matrix_Filter)
+    - [**Color Matrix Filter**](#Color_Matrix_Filter)
+    - [**Pixelate Filter**](#Pixelate_Filter)
+    - [**Wave Filter**](#Wave_Filter)
+    - [**Waterpaint Filter**](#Waterpaint_Filter)
+- [**Other Pages**](#Other_Pages)
 
 <a id=Graphics_Filters></a>
 ## Graphics Filters
@@ -175,9 +175,9 @@ Here is sample code for using a graphics filter.
 <a id=Examples></a>
 ## Examples
 
-* [squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates graphics filters.
+* [**squares.html**](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates graphics filters.
 
-The demo [squares.html](https://peteroupc.github.io/html3dutil/demos/squares.html) includes a number
+The demo [**squares.html**](https://peteroupc.github.io/html3dutil/demos/squares.html) includes a number
 of graphics filters implemented as shaders.
 
 Here are more details on some of the filters it includes.
@@ -185,7 +185,7 @@ Here are more details on some of the filters it includes.
 <a id=Grayscale></a>
 ### Grayscale
 
-![Grayscale filtered image using former implementation](filters1.png)
+![**Grayscale filtered image using former implementation**](filters1.png)
 
 The grayscale filter converts the screen to black and white. This is currently
 implemented using the color matrix filter, described later, rather than the code already given above.
@@ -193,7 +193,7 @@ implemented using the color matrix filter, described later, rather than the code
 <a id=Invert></a>
 ### Invert
 
-![Invert filtered image using former implementation](filters2.png)
+![**Invert filtered image using former implementation**](filters2.png)
 
 The invert filter is built-in to the HTML 3D Library. It inverts the colors of the screen so the effect looks
 like a film negative.
@@ -213,7 +213,7 @@ demo this is currently implemented using the color matrix filter instead.
 <a id=Red_Tint></a>
 ### Red Tint
 
-![Red Tint filtered image using former implementation](filters9.png)
+![**Red Tint filtered image using former implementation**](filters9.png)
 
 The red tint filter adds a hint of red to the image.  This is currently implemented using the
 color matrix filter, described later.  The former implementation of the filter
@@ -230,7 +230,7 @@ appears below.
 <a id=Mirror_Filter></a>
 ### Mirror Filter
 
-![Mirror filtered image](filters7.png)
+![**Mirror filtered image**](filters7.png)
 
 This filter does a horizontal flip of its pixels. Note that the filter, given below, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
@@ -249,8 +249,8 @@ With a simple change, this filter can be modified to do a vertical flip (`1.0-uv
 <a id=Matrix_Filter></a>
 ### Matrix Filter
 
-![Blur filtered image](filters4.png)
-![Edge detect filtered image](filters8.png)
+![**Blur filtered image**](filters4.png)
+![**Edge detect filtered image**](filters8.png)
 
 This filter enables a family of image processing filters, such as blurring, sharpening,
 edge detection, and embossing, that process each pixel and its neighbors. This filter takes
@@ -293,7 +293,7 @@ This filter is implemented in the function `makeColorMatrix` in the demo.
 <a id=Pixelate_Filter></a>
 ### Pixelate Filter
 
-![Pixelate filtered image](filters5.png)
+![**Pixelate filtered image**](filters5.png)
 
 This filter pixelates the screen, in effect, by scaling it down and then scaling it up.
 This filter takes a uniform variable named `coarseness`, which indicates how many normal pixels
@@ -318,7 +318,7 @@ The demo changes the "coarseness" parameter with time to animate the pixelation 
 <a id=Wave_Filter></a>
 ### Wave Filter
 
-![Wave filtered image](filters3.png)
+![**Wave filtered image**](filters3.png)
 
 This filter shifts the pixels in each row horizontally to cause the screen to undulate
 vertically. This filter takes a uniform variable named `time`, which indicates the animation
@@ -329,7 +329,7 @@ This filter is implemented in the function `makeWave` in the demo.
 <a id=Waterpaint_Filter></a>
 ### Waterpaint Filter
 
-![Waterpaint filtered image](filters6.png)
+![**Waterpaint filtered image**](filters6.png)
 
 This is a watercoloring effect based on a public domain shader by someone
 named "Themaister".
@@ -341,9 +341,9 @@ This filter is implemented in the function `makeWaterpaint` in the demo.
 
 The following pages of mine on CodeProject also discuss this library:
 
-* [_Public-Domain HTML 3D Library_](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-* [_Creating shapes using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
-* [_Drawing parametric surfaces using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai)
-* [_The "Camera" and the Projection and View Transforms_](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
+* [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
+* [**_Creating shapes using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
+* [**_Drawing parametric surfaces using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai)
+* [**_The "Camera" and the Projection and View Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
 
 [Back to documentation index.](index.md)

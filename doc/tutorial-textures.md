@@ -5,12 +5,12 @@
 <a id=Contents></a>
 ## Contents
 
-- [Contents](#Contents)
-- [Texture Loaders](#Texture_Loaders)
-- [Sample Code for Loading Textures](#Sample_Code_for_Loading_Textures)
-    - [Loading a single texture](#Loading_a_single_texture)
-    - [Loading multiple textures](#Loading_multiple_textures)
-    - [Demos](#Demos)
+- [**Contents**](#Contents)
+- [**Texture Loaders**](#Texture_Loaders)
+- [**Sample Code for Loading Textures**](#Sample_Code_for_Loading_Textures)
+    - [**Loading a single texture**](#Loading_a_single_texture)
+    - [**Loading multiple textures**](#Loading_multiple_textures)
+    - [**Demos**](#Demos)
 
 <a id=Texture_Loaders></a>
 ## Texture Loaders
@@ -79,9 +79,9 @@ In the sample code below, The variables `textureURL1` and `textureURL2` are URL 
 <a id=Demos></a>
 ### Demos
 
-* [textured.html](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
+* [**textured.html**](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
 and applying them to 3D shapes.
-* [gradient.html](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
+* [**gradient.html**](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.
 
 [Back to documentation index.](index.md)

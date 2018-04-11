@@ -2,25 +2,25 @@
 ## Introduction
 
 This page describes parametric curves and surfaces and how to generate them using my
-public-domain [HTML 3D Library](http://peteroupc.github.io/html3dutil).
+public-domain [**HTML 3D Library**](http://peteroupc.github.io/html3dutil).
 
-**Download the latest version of the library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
+**Download the latest version of the library at the [**HTML 3D Library's Releases page**](https://github.com/peteroupc/html3dutil/releases).**
 
 <a id=Contents></a>
 ## Contents
 
-- [Introduction](#Introduction)
-- [Contents](#Contents)
-- [What Is a Parametric Surface?](#What_Is_a_Parametric_Surface)
-    - [Why two variables?](#Why_two_variables)
-- [Parametric Surfaces in the HTML 3D Library](#Parametric_Surfaces_in_the_HTML_3D_Library)
-- [Chaining Surface Functions](#Chaining_Surface_Functions)
-- [Parametric Curves](#Parametric_Curves)
-    - [Generating Parametric Curves](#Generating_Parametric_Curves)
-- [Curve and Surface Evaluators in the HTML 3D Library](#Curve_and_Surface_Evaluators_in_the_HTML_3D_Library)
-- [Demos](#Demos)
-    - [Creating Your Own Curves and Surfaces](#Creating_Your_Own_Curves_and_Surfaces)
-- [Other Pages](#Other_Pages)
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**What Is a Parametric Surface?**](#What_Is_a_Parametric_Surface)
+    - [**Why two variables?**](#Why_two_variables)
+- [**Parametric Surfaces in the HTML 3D Library**](#Parametric_Surfaces_in_the_HTML_3D_Library)
+- [**Chaining Surface Functions**](#Chaining_Surface_Functions)
+- [**Parametric Curves**](#Parametric_Curves)
+    - [**Generating Parametric Curves**](#Generating_Parametric_Curves)
+- [**Curve and Surface Evaluators in the HTML 3D Library**](#Curve_and_Surface_Evaluators_in_the_HTML_3D_Library)
+- [**Demos**](#Demos)
+    - [**Creating Your Own Curves and Surfaces**](#Creating_Your_Own_Curves_and_Surfaces)
+- [**Other Pages**](#Other_Pages)
 
 <a id=What_Is_a_Parametric_Surface></a>
 ## What Is a Parametric Surface?
@@ -51,7 +51,7 @@ and we evaluate the UV point (2, 4), then we have:
 So (8, -2, 4) is one point that lies on this parametric surface, and any other point on the
 surface can be found by evaluating different UV points. By the way, the surface looks like this:
 
-![The parametric surface.](surfaces1.png)
+![**The parametric surface.**](surfaces1.png)
 
 <a id=Why_two_variables></a>
 ### Why two variables?
@@ -64,7 +64,7 @@ function "warps" this grid into a three-dimensional surface.
 ## Parametric Surfaces in the HTML 3D Library
 
 The HTML 3D Library supports parametric surfaces using a class named
-[`SurfaceBuilder`](http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html). It helps
+[**`SurfaceBuilder`**](http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html). It helps
 generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, `makeMesh`, generates a parametric surface mesh.
 A function similar to the `makeMesh`
@@ -117,7 +117,7 @@ The following code is a very simple surface evaluator object.
 
 That evaluator simply generates a square at the top-right quadrant:
 
-![The parametric surface.](surfaces2.png)
+![**The parametric surface.**](surfaces2.png)
 
 And the following evaluator generates a circle:
 
@@ -130,7 +130,7 @@ And the following evaluator generates a circle:
       "endPoints":function(){ return [0,1,0,Math.PI*2]; }
     }
 
-![The parametric surface.](surfaces3.png)
+![**The parametric surface.**](surfaces3.png)
 
 Now here's the interesting part: This evaluator returns not a circle,
 but a _cone_, whose length runs along the negative Z axis:
@@ -147,7 +147,7 @@ but a _cone_, whose length runs along the negative Z axis:
 
 The following shape was rotated to show the Z axis; the rotation isn't perfect.
 
-![The parametric surface.](surfaces4.png)
+![**The parametric surface.**](surfaces4.png)
 
 Note that all three examples above use a value named `evaluator`. To generate
 a mesh with an evaluator and add it to the 3D scene, you then need to do:
@@ -161,9 +161,9 @@ a mesh with an evaluator and add it to the 3D scene, you then need to do:
 The generated 3D mesh from a parametric surface is just like any
 other mesh, and the same functions and methods you use for other meshes
 can be used on this mesh as well. For more information, see the
-[overview page](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-and the API references for the [`H3DU.Mesh`](http://peteroupc.github.io/html3dutil/H3DU.Mesh.html) and
-[`Shape`](http://peteroupc.github.io/html3dutil/H3DU.Shape.html) classes.
+[**overview page**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
+and the API references for the [**`H3DU.Mesh`**](http://peteroupc.github.io/html3dutil/H3DU.Mesh.html) and
+[**`Shape`**](http://peteroupc.github.io/html3dutil/H3DU.Shape.html) classes.
 
 <a id=Chaining_Surface_Functions></a>
 ## Chaining Surface Functions
@@ -315,21 +315,21 @@ a supplemental extra in the HTML 3D library.
 <a id=Demos></a>
 ## Demos
 
-* [surfaces.html](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates parametric surfaces.
+* [**surfaces.html**](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates parametric surfaces.
 
 This demo contains several examples of parametric surfaces. The source code defines several classes that create evaluators of parametric surfaces:
 
 * `new Superellipsoid(xRadius, yRadius, zRadius, n, m)`<br>
-   Creates a "[superellipsoid](http://en.wikipedia.org/wiki/Superellipsoid)" shape, with a radius `xRadius` along the X axis,
+   Creates a "[**superellipsoid**](http://en.wikipedia.org/wiki/Superellipsoid)" shape, with a radius `xRadius` along the X axis,
    `yRadius` along the Y axis, and `zRadius` along the Z axis. The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal ellipsoid.
 * `new Supertoroid(xRadius, yRadius, zRadius, innerRadius, n, m)`<br>
-   Creates a "[supertoroid](http://en.wikipedia.org/wiki/Supertoroid)" shape (with a hole in the middle), with a radius `xRadius` along the X axis, `yRadius` along the Y axis, and `zRadius` along the Z axis. The inner radius will be `innerRadius`. The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal torus or toroid.
+   Creates a "[**supertoroid**](http://en.wikipedia.org/wiki/Supertoroid)" shape (with a hole in the middle), with a radius `xRadius` along the X axis, `yRadius` along the Y axis, and `zRadius` along the Z axis. The inner radius will be `innerRadius`. The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal torus or toroid.
 * `new KleinBottle()`<br>Creates a Klein bottle.
 * `new MoebiusStrip()`<br>Creates a M&ouml;bius strip.
 
 These are only some of the many possible kinds of parametric surfaces.
 
-* [demos/bsplinecircles.html](https://peteroupc.github.io/html3dutil/demos/bsplinecircles.html) - Demonstrates how circles and ellipses can be generated using the `BSplineCurve` class.
+* [**demos/bsplinecircles.html**](https://peteroupc.github.io/html3dutil/demos/bsplinecircles.html) - Demonstrates how circles and ellipses can be generated using the `BSplineCurve` class.
 
 <a id=Creating_Your_Own_Curves_and_Surfaces></a>
 ### Creating Your Own Curves and Surfaces
@@ -338,9 +338,9 @@ Two other demos include a formula editor allowing you to experiment with
 parametric curves and surfaces, and to export them to source code appropriate
 for use in the Public Domain HTML 3D Library.
 
-* [curvesexpr.html](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates parametric
+* [**curvesexpr.html**](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates parametric
 curves, with a custom formula editor.
-* [surfacesexpr.html](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates parametric
+* [**surfacesexpr.html**](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates parametric
 surfaces, with a custom formula editor.
 
 <a id=Other_Pages></a>
@@ -348,7 +348,7 @@ surfaces, with a custom formula editor.
 
 The following pages of mine on CodeProject also discuss this library:
 
-* [_Public-Domain HTML 3D Library_](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-* [_Creating shapes using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
-* [_The "Camera" and the Projection and View Transforms_](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
-* [_Graphics Filters for the HTML 3D Canvas_](http://www.codeproject.com/Articles/993433/Graphics-Filters-for-the-HTML-D-Canvas)
+* [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
+* [**_Creating shapes using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)
+* [**_The "Camera" and the Projection and View Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
+* [**_Graphics Filters for the HTML 3D Canvas_**](http://www.codeproject.com/Articles/993433/Graphics-Filters-for-the-HTML-D-Canvas)

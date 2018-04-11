@@ -7,12 +7,12 @@ This page contains source code for creating various kinds of 3D models on the fl
 <a id=Contents></a>
 ## Contents
 
-- [Contents](#Contents)
-- [3D Line](#3D_Line)
-- [Floor](#Floor)
-- [Striped Disk](#Striped_Disk)
-- [Washer](#Washer)
-- [Miscellaneous](#Miscellaneous)
+- [**Contents**](#Contents)
+- [**3D Line**](#3D_Line)
+- [**Floor**](#Floor)
+- [**Striped Disk**](#Striped_Disk)
+- [**Washer**](#Washer)
+- [**Miscellaneous**](#Miscellaneous)
 
 <a id=3D_Line></a>
 ## 3D Line
@@ -40,7 +40,7 @@ This method creates a thin line-like 3D object.
 
 This method creates a flat tiled floor.
 
-![Image of a floor](floor.png)
+![**Image of a floor**](floor.png)
 
     // xStart, yStart - X and Y coordinates of the start of the floor
     // width, height - Width and height of the floor
@@ -78,7 +78,7 @@ This method creates a flat tiled floor.
 
 This method creates a ring or disk striped in two colors.
 
-![Image of a disk striped in red and almost-white](mesh2.png)
+![**Image of a disk striped in red and almost-white**](mesh2.png)
 
     // inner, outer - inner and outer radius of the disk
     // color1, color2 - colors of each stripe; for example:
@@ -105,7 +105,7 @@ This method creates a ring or disk striped in two colors.
 
 This method creates a washer-shaped 3D model.
 
-![Image of a washer](mesh3.png)
+![**Image of a washer**](mesh3.png)
 
     function createWasher(inner,outer,height,slices){
       var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);

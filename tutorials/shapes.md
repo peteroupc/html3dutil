@@ -1,11 +1,11 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page explains how my [HTML 3D Library](http://peteroupc.github.io/html3dutil)
+This page explains how my [**HTML 3D Library**](http://peteroupc.github.io/html3dutil)
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
 shapes.
 
-**Download the latest version of the HTML 3D Library at the [library's Releases page](https://github.com/peteroupc/html3dutil/releases).** As of version 1.2.1, it includes
+**Download the latest version of the HTML 3D Library at the [**library's Releases page**](https://github.com/peteroupc/html3dutil/releases).** As of version 1.2.1, it includes
 the _shapes.html_ and _platonic.html_ demos mentioned in this page.
 
 This page will discuss:
@@ -21,23 +21,23 @@ NOTE: This page will largely discuss the 2.0.0-beta3 version of the HTML 3D libr
 <a id=Contents></a>
 ## Contents
 
-- [Introduction](#Introduction)
-- [Contents](#Contents)
-- [Creating Shapes](#Creating_Shapes)
-    - [Built-In Shapes](#Built_In_Shapes)
-    - [Custom Shapes](#Custom_Shapes)
-    - [The Mesh Constructor](#The_Mesh_Constructor)
-    - [Vertex Methods](#Vertex_Methods)
-    - [Texture Coordinates](#Texture_Coordinates)
-    - [Building the Mesh](#Building_the_Mesh)
-    - [Transforming the Mesh](#Transforming_the_Mesh)
-    - [Normals](#Normals)
-        - [What Are Normals?](#What_Are_Normals)
-        - [Normals on Built-in Shapes](#Normals_on_Built_in_Shapes)
-        - [recalcNormals()](#recalcNormals)
-- [Binding Shapes](#Binding_Shapes)
-- [Shape Groups](#Shape_Groups)
-- [Other Pages](#Other_Pages)
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**Creating Shapes**](#Creating_Shapes)
+    - [**Built-In Shapes**](#Built_In_Shapes)
+    - [**Custom Shapes**](#Custom_Shapes)
+    - [**The Mesh Constructor**](#The_Mesh_Constructor)
+    - [**Vertex Methods**](#Vertex_Methods)
+    - [**Texture Coordinates**](#Texture_Coordinates)
+    - [**Building the Mesh**](#Building_the_Mesh)
+    - [**Transforming the Mesh**](#Transforming_the_Mesh)
+    - [**Normals**](#Normals)
+        - [**What Are Normals?**](#What_Are_Normals)
+        - [**Normals on Built-in Shapes**](#Normals_on_Built_in_Shapes)
+        - [**recalcNormals()**](#recalcNormals)
+- [**Binding Shapes**](#Binding_Shapes)
+- [**Shape Groups**](#Shape_Groups)
+- [**Other Pages**](#Other_Pages)
 
 <a id=Creating_Shapes></a>
 ## Creating Shapes
@@ -45,20 +45,20 @@ NOTE: This page will largely discuss the 2.0.0-beta3 version of the HTML 3D libr
 The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.
 
-![An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
+![**An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
 orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
-green square, and a purple cone on the second row.](shapes.png)
+green square, and a purple cone on the second row.**](shapes.png)
 
 Demos:
 
-* [shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
+* [**shapes.html**](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
 the built-in shapes.
-* [platonic.html](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
+* [**platonic.html**](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
 platonic solids. Demonstrates how vertex and index arrays are built up to create geometric meshes.
 
 Examples:
 
-See [Examples of Creating Meshes on the Fly](https://peteroupc.github.io/html3dutil/tutorial.meshexamples.html) for
+See [**Examples of Creating Meshes on the Fly**](https://peteroupc.github.io/html3dutil/tutorial.meshexamples.html) for
 examples of 3D models that can be created using the Mesh class and built-in shapes.
 
 <a id=Built_In_Shapes></a>
@@ -105,7 +105,7 @@ Here's how.
 
         var vertices = [x1, y1, z1, x2, y2, z2, ... ];
 
-    If you also specify [normals](#Normals), colors, or [texture coordinates](#Texture_Coordinates) for each vertex, you must add
+    If you also specify [**normals**](#Normals), colors, or [**texture coordinates**](#Texture_Coordinates) for each vertex, you must add
     them after each vertex position in this order: normals first, colors second, and texture
     coordinates last. If you don't specify normals, colors, and/or texture coordinates per
     vertex, you can omit them. The following are examples of this:
@@ -144,9 +144,9 @@ previous step:
     Note that you must include a set of bits indicating what kind of data the vertex
     array contains.  (If none of the bits apply, use 0 or omit the "bits" parameter.) The bits are:
 
-      * `H3DU.Mesh.NORMALS_BIT` - if you included [normals](#Normals) for each vertex (3 elements)
+      * `H3DU.Mesh.NORMALS_BIT` - if you included [**normals**](#Normals) for each vertex (3 elements)
       * `H3DU.Mesh.COLORS_BIT` - if you included colors for each vertex (3 elements)
-      * `H3DU.Mesh.TEXCOORDS_BIT` - if you included [texture coordinates](#Texture_Coordinates) for each vertex (2 elements)
+      * `H3DU.Mesh.TEXCOORDS_BIT` - if you included [**texture coordinates**](#Texture_Coordinates) for each vertex (2 elements)
       * `H3DU.Mesh.LINES_BIT` - if the mesh defines a set of lines rather than triangles
       * `H3DU.Mesh.POINTS_BIT` - if the mesh defines a set of points (you can't set both `LINES_BIT` and
  `POINTS_BIT`).
@@ -243,7 +243,7 @@ using the `H3DU.Mesh` constructor or by building it vertex by vertex:
 
 Once you've created the mesh buffer, you can use the `transform()` method to transform
 all the vertices in the mesh buffer with a [4x4 matrix]{@tutorial glmath}. The
-[shapes.html](https://peteroupc.github.io/html3dutil/demos/shapes.html) demo uses
+[**shapes.html**](https://peteroupc.github.io/html3dutil/demos/shapes.html) demo uses
 this method to adjust some of the mesh bufferes to make them look better on the screen.
 Example:
 
@@ -390,7 +390,7 @@ The `H3DU.ShapeGroup` class represents a shape that's a combination of multiple 
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
 at once. Here is an example of a clock made up of multiple shapes:
 
-![Clock](clock.png)
+![**Clock**](clock.png)
 
 This clock is made up of a **torus** for the edge, **disks** for the front and back,
 **capsules** for the hands, and crude **spheres** for the center and top. These shapes
@@ -408,7 +408,7 @@ are added to a single ShapeGroup which represents the whole clock:
 
 The demo for the clock is:
 
-* [clock.html](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
+* [**clock.html**](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
 featuring a wall clock.
 
 To create a shape group, call `new H3DU.ShapeGroup()`. To add a `Shape` object to the group,
@@ -421,6 +421,6 @@ other shape groups.
 
 The following pages of mine on CodeProject also discuss this library:
 
-* [_Public-Domain HTML 3D Library_](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-* [_Drawing parametric surfaces using the Public Domain HTML 3D Library_](http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai)
-* [_The "Camera" and the Projection and View Transforms_](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
+* [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
+* [**_Drawing parametric surfaces using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai)
+* [**_The "Camera" and the Projection and View Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)

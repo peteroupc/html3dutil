@@ -16,20 +16,20 @@ This section contains detailed information on matrices.
 <a id=Contents></a>
 ## Contents
 
-- [Matrix Details](#Matrix_Details)
-- [Contents](#Contents)
-- [Arrangement](#Arrangement)
-    - [A Matrix Transforms Between Coordinate Systems](#A_Matrix_Transforms_Between_Coordinate_Systems)
-    - [Why a 4x4 Matrix?](#Why_a_4x4_Matrix)
-- [Transforming Points](#Transforming_Points)
-    - [Scaling](#Scaling)
-    - [Translation](#Translation)
-    - [Rotation](#Rotation)
-    - [Matrix Multiplication](#Matrix_Multiplication)
-    - [Projective Transformations](#Projective_Transformations)
-    - [Matrix Inversions](#Matrix_Inversions)
-        - [Inverting a General NxN Matrix](#Inverting_a_General_NxN_Matrix)
-- [Rotation Example](#Rotation_Example)
+- [**Matrix Details**](#Matrix_Details)
+- [**Contents**](#Contents)
+- [**Arrangement**](#Arrangement)
+    - [**A Matrix Transforms Between Coordinate Systems**](#A_Matrix_Transforms_Between_Coordinate_Systems)
+    - [**Why a 4x4 Matrix?**](#Why_a_4x4_Matrix)
+- [**Transforming Points**](#Transforming_Points)
+    - [**Scaling**](#Scaling)
+    - [**Translation**](#Translation)
+    - [**Rotation**](#Rotation)
+    - [**Matrix Multiplication**](#Matrix_Multiplication)
+    - [**Projective Transformations**](#Projective_Transformations)
+    - [**Matrix Inversions**](#Matrix_Inversions)
+        - [**Inverting a General NxN Matrix**](#Inverting_a_General_NxN_Matrix)
+- [**Rotation Example**](#Rotation_Example)
 
 <a id=Arrangement></a>
 ## Arrangement
@@ -175,19 +175,19 @@ the second column shows a Y-axis vector at (0, 0.5, 0.866025),
 the third column shows a Z-axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).
 
-Provided the matrix can be [inverted](#Matrix_Inversions), the three axis vectors are
+Provided the matrix can be [**inverted**](#Matrix_Inversions), the three axis vectors are
 _basis vectors_ of the coordinate system.
 
 <a id=Why_a_4x4_Matrix></a>
 ### Why a 4x4 Matrix?
 A matrix can describe _linear transformations_ from one vector in space
-to another.  These transformations, which include [scaling](#Scaling),
-[rotation](#Rotation), and shearing, can change where a vector points _at_,
+to another.  These transformations, which include [**scaling**](#Scaling),
+[**rotation**](#Rotation), and shearing, can change where a vector points _at_,
 but not where it points _from_.  It's enough to use a 3x3 matrix to describe
 linear transformations in 3D space.
 
-But certain other transformations, such as [translation](#Translation) and
-[perspective](#Projective_Transformations), are common in 3D computer graphics.
+But certain other transformations, such as [**translation**](#Translation) and
+[**perspective**](#Projective_Transformations), are common in 3D computer graphics.
 To describe translation and perspective in 3D, the 3x3 matrix must be
 augmented by an additional row and column, turning it into a 4x4 matrix.
 
@@ -198,7 +198,7 @@ components are the point's _homogeneous coordinates_ (unless the
 vector's W is 0).  To convert these coordinates back to 3D, divide
 X, Y, and Z by W.  This is usually only required, however, if the
 matrix describes a perspective projection (see
-["Projective Transformations"](#Projective_Transformations)).
+[**"Projective Transformations"**](#Projective_Transformations)).
 
 A similar situation applies in 2D between 2x2 and 3x3 matrices as it does
 in 3D between 3x3 and 4x4 matrices.
@@ -214,7 +214,7 @@ position:
 * **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14] &#x22c5; **a**<sub>_w_</sub>
 * **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15] &#x22c5; **a**<sub>_w_</sub>
 
-For more on why **a&prime;**<sub>_w_</sub> appears here, see ["Why a 4x4 Matrix?"](#Why_a_4x4_Matrix).  In each formula that follows,  **a**<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
+For more on why **a&prime;**<sub>_w_</sub> appears here, see [**"Why a 4x4 Matrix?"**](#Why_a_4x4_Matrix).  In each formula that follows,  **a**<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
 
 The following sections describe different kinds of matrix transformations in more detail.
 
@@ -474,7 +474,7 @@ clockwise.
 When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
 
-See ["Rotation example"](#Rotation_Example) for an illustration of a rotation
+See [**"Rotation example"**](#Rotation_Example) for an illustration of a rotation
 transformation.
 
 Related functions:
@@ -529,7 +529,7 @@ Related functions:
 * <a href="H3DU.Math.md#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a> -
  Multiplies two matrices
 
-\* Reading the [tutorial by Dmitry Sokolov](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection)
+\* Reading the [**tutorial by Dmitry Sokolov**](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection)
 led me to this highly useful insight.
 
 <a id=Projective_Transformations></a>
@@ -544,7 +544,7 @@ Transformations that don't necessarily preserve parallelism of lines are called 
 An NxN matrix can describe certain projective transformations if it has one more row and one more column
 than the number of dimensions.  For example, a 4x4 matrix can describe 3D projective transformations
 in the form of linear transformations on homogeneous coordinates (see
-["Why a 4x4 Matrix?"](#Why_a_4x4_Matrix)).  For a 3D projective transformation, the last row
+[**"Why a 4x4 Matrix?"**](#Why_a_4x4_Matrix)).  For a 3D projective transformation, the last row
 in the matrix is not necessarily (0, 0, 0, 1).
 
 One example of a projective transformation is found in a _perspective projection_ matrix,

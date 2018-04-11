@@ -3,41 +3,41 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 <p>Here is an overview of these data types.</p>
 <p><a id=Contents></a></p>
 <h2>Contents</h2><ul>
-<li><a href="#Contents">Contents</a></li>
-<li><a href="#Vectors">Vectors</a><ul>
-<li><a href="#Unit_Vectors">Unit Vectors</a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Vectors"><strong>Vectors</strong></a><ul>
+<li><a href="#Unit_Vectors"><strong>Unit Vectors</strong></a></li>
 </ul>
 </li>
-<li><a href="#Matrices">Matrices</a><ul>
-<li><a href="#Translation">Translation</a></li>
-<li><a href="#Scaling">Scaling</a></li>
-<li><a href="#Rotation">Rotation</a></li>
-<li><a href="#Combining_Transforms">Combining Transforms</a></li>
+<li><a href="#Matrices"><strong>Matrices</strong></a><ul>
+<li><a href="#Translation"><strong>Translation</strong></a></li>
+<li><a href="#Scaling"><strong>Scaling</strong></a></li>
+<li><a href="#Rotation"><strong>Rotation</strong></a></li>
+<li><a href="#Combining_Transforms"><strong>Combining Transforms</strong></a></li>
 </ul>
 </li>
-<li><a href="#Describing_Rotations">Describing Rotations</a><ul>
-<li><a href="#Axis_of_Rotation">Axis of Rotation</a></li>
-<li><a href="#Quaternions">Quaternions</a><ul>
-<li><a href="#Generating_Quaternions">Generating Quaternions</a></li>
-<li><a href="#Using_Quaternions">Using Quaternions</a></li>
-<li><a href="#Multiplying_Quaternions">Multiplying Quaternions</a></li>
+<li><a href="#Describing_Rotations"><strong>Describing Rotations</strong></a><ul>
+<li><a href="#Axis_of_Rotation"><strong>Axis of Rotation</strong></a></li>
+<li><a href="#Quaternions"><strong>Quaternions</strong></a><ul>
+<li><a href="#Generating_Quaternions"><strong>Generating Quaternions</strong></a></li>
+<li><a href="#Using_Quaternions"><strong>Using Quaternions</strong></a></li>
+<li><a href="#Multiplying_Quaternions"><strong>Multiplying Quaternions</strong></a></li>
 </ul>
 </li>
-<li><a href="#Tait_Bryan_angles">Tait-Bryan angles</a></li>
-<li><a href="#4x4_Matrices">4x4 Matrices</a></li>
+<li><a href="#Tait_Bryan_angles"><strong>Tait-Bryan angles</strong></a></li>
+<li><a href="#4x4_Matrices"><strong>4x4 Matrices</strong></a></li>
 </ul>
 </li>
-<li><a href="#Planes">Planes</a></li>
-<li><a href="#Boxes">Boxes</a></li>
-<li><a href="#Coordinate_Systems">Coordinate Systems</a><ul>
-<li><a href="#Differences_in_Behavior">Differences in Behavior</a><ul>
-<li><a href="#Projection_and_view_matrices">Projection and view matrices</a></li>
-<li><a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a></li>
-<li><a href="#Cross_product_vec3cross_and_normals">Cross product (<code>vec3cross</code>) and normals</a></li>
+<li><a href="#Planes"><strong>Planes</strong></a></li>
+<li><a href="#Boxes"><strong>Boxes</strong></a></li>
+<li><a href="#Coordinate_Systems"><strong>Coordinate Systems</strong></a><ul>
+<li><a href="#Differences_in_Behavior"><strong>Differences in Behavior</strong></a><ul>
+<li><a href="#Projection_and_view_matrices"><strong>Projection and view matrices</strong></a></li>
+<li><a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate"><strong>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</strong></a></li>
+<li><a href="#Cross_product_vec3cross_and_normals"><strong>Cross product (<code>vec3cross</code>) and normals</strong></a></li>
 </ul>
 </li>
-<li><a href="#Winding_and_face_classification">Winding and face classification</a><ul>
-<li><a href="#Finding_a_triangle_s_winding">Finding a triangle's winding</a></li>
+<li><a href="#Winding_and_face_classification"><strong>Winding and face classification</strong></a><ul>
+<li><a href="#Finding_a_triangle_s_winding"><strong>Finding a triangle's winding</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -101,7 +101,7 @@ before the other transformations.</p>
 <p><a id=Rotation></a></p>
 <h3>Rotation</h3><p>Rotation changes an object's orientation.</p>
 <p>To create a rotation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
-and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation">axis of rotation</a>. For example:</p>
+and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>. For example:</p>
 <ul>
 <li>Specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation of the point around the X axis.</li>
 <li>Specifying <code>(80, [0, 2, 3])</code> means a 45-degree rotation of the point around the axis that
@@ -144,7 +144,7 @@ Here are examples of an axis of rotation.</p>
 <li>The Z axis of rotation (side-by-side sway) is (0, 0, 1).</li>
 </ul>
 <p>While the axis of rotation points toward the viewer, if the angle's value
-is positive and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
+is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is...</p>
 <ul>
 <li>...right handed, then the angle runs counterclockwise.</li>
 <li>...left handed, then the angle runs clockwise.</li>
@@ -154,7 +154,7 @@ is negative, then the angle runs in the opposite direction.</p>
 <p>Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
 describe the same axis of rotation.</p>
 <p>Unless stated otherwise, an axis of rotation passed to an <code>H3DU.Math</code>
-method need not be a <a href="#Unit_Vectors">unit vector</a>.</p>
+method need not be a <a href="#Unit_Vectors"><strong>unit vector</strong></a>.</p>
 <p><a id=Quaternions></a></p>
 <h3>Quaternions</h3><p>A quaternion is a 4-element vector that can describe a
 3D rotation. Functions dealing with quaternions begin with &quot;quat&quot;.</p>
@@ -165,8 +165,8 @@ method need not be a <a href="#Unit_Vectors">unit vector</a>.</p>
 absence of rotations.</li>
 <li><a href="H3DU.Math.html#H3DU.Math.quatFromVectors">H3DU.Math.quatFromVectors</a> - Generates a quaternion describing
 a rotation from one vector to another.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.quatFromMat4">H3DU.Math.quatFromMat4</a> - Generates a quaternion from a <a href="#Matrices">4x4 matrix</a>.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> - Generates a quaternion from an angle and <a href="#Axis_of_Rotation">axis of rotation</a>.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.quatFromMat4">H3DU.Math.quatFromMat4</a> - Generates a quaternion from a <a href="#Matrices"><strong>4x4 matrix</strong></a>.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> - Generates a quaternion from an angle and <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>.</li>
 <li><a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.</li>
 </ul>
 <p><a id=Using_Quaternions></a></p>
@@ -175,12 +175,12 @@ a rotation from one vector to another.</li>
 <li>Store the rotation of each object as a single quaternion.</li>
 <li>As rotations happen each frame, convert the rotation (which may be
 in pitch/yaw/roll or another form, depending on the input device) to a quaternion
-(see <a href="#Generating_Quaternions">&quot;Generating Quaternions&quot;</a>
+(see <a href="#Generating_Quaternions"><strong>&quot;Generating Quaternions&quot;</strong></a>
 and <a href="H3DU.Math.html#H3DU.Math.quatMultiply">multiply</a> that quaternion by the current
 quaternion to get the object's new rotation.</li>
 <li>Normalize the rotation quaternion (using <a href="H3DU.Math.html#H3DU.Math.quatNormalize"><code>quatNormalize()</code></a>
 or <a href="H3DU.Math.html#H3DU.Math.quatNormalizeInPlace"><code>quatNormalizeInPlace()</code></a>)
-every few frames. (Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors">unit vectors</a>.)</li>
+every few frames. (Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors"><strong>unit vectors</strong></a>.)</li>
 </ul>
 <p><a id=Multiplying_Quaternions></a></p>
 <h4>Multiplying Quaternions</h4><p>When two quaternions are multiplied (for example, with {@H3DU.Math.quatMultiply}),
@@ -210,7 +210,7 @@ Converts from Tait-Bryan angles to a quaternion</li>
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 <p><a id=4x4_Matrices></a></p>
-<h3>4x4 Matrices</h3><p>A 4x4 matrix can describe a 3D vector rotation; see <a href="#Rotation">&quot;Rotation&quot;, above</a>.</p>
+<h3>4x4 Matrices</h3><p>A 4x4 matrix can describe a 3D vector rotation; see <a href="#Rotation"><strong>&quot;Rotation&quot;, above</strong></a>.</p>
 <p><a id=Planes></a></p>
 <h2>Planes</h2><p>A 4-element array can describe a plane in the following manner:</p>
 <ul>
@@ -273,8 +273,8 @@ matrices.  The projection and view matrices returned by <a href="H3DU.Math.html"
 matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.</p>
 <p><a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a></p>
-<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4><p>While the <a href="#Axis_of_Rotation">axis of rotation</a> points toward the viewer, if the angle's value
-is positive and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
+<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4><p>While the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a> points toward the viewer, if the angle's value
+is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is...</p>
 <ul>
 <li>...right handed, then the angle runs counterclockwise.</li>
 <li>...left handed, then the angle runs clockwise.</li>

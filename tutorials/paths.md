@@ -4,20 +4,20 @@
 This article describes two-dimensional paths. This is an extra included in the HTML 3D Library.
 
 **Download the latest version of the Public Domain HTML 3D
-Library at the [HTML 3D Library's Releases page](https://github.com/peteroupc/html3dutil/releases).**
+Library at the [**HTML 3D Library's Releases page**](https://github.com/peteroupc/html3dutil/releases).**
 
 <a id=Contents></a>
 ## Contents
 
-- [Introduction](#Introduction)
-- [Contents](#Contents)
-- [Paths](#Paths)
-- [How to Use](#How_to_Use)
-- [Creating Paths](#Creating_Paths)
-    - [SVG Path String](#SVG_Path_String)
-    - [Building Paths](#Building_Paths)
-- [Path Segments](#Path_Segments)
-- [Methods](#Methods)
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**Paths**](#Paths)
+- [**How to Use**](#How_to_Use)
+- [**Creating Paths**](#Creating_Paths)
+    - [**SVG Path String**](#SVG_Path_String)
+    - [**Building Paths**](#Building_Paths)
+- [**Path Segments**](#Path_Segments)
+- [**Methods**](#Methods)
 
 <a id=Paths></a>
 ## Paths

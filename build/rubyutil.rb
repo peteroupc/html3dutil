@@ -21,7 +21,7 @@ require 'rexml/document'
 require 'rexml/formatters/pretty'
 require 'rexml/formatters/transitive'
 
-class Win32 # Wrapper class for Win32API
+class DLLAPI # Wrapper class for Win32API
   @function=nil
   def initialize(dll, func, args, retval)
     @dll=dll;@func=func
@@ -70,7 +70,7 @@ class Win32 # Wrapper class for Win32API
 end
 
 begin
- SetErrorMode=Win32.new('kernel32.dll','SetErrorMode','i','')
+ SetErrorMode=DLLAPI.new('kernel32.dll','SetErrorMode','i','')
  SetErrorMode.call(0x8001) # Don't show a dialog box on Windows if files on removable storage can't be accessed
 rescue; end
 
@@ -452,9 +452,9 @@ def getFileName(f) # Gets the base path without the extension
 end
 
 $setCreationTimeHelper={
-"CreateFile"=>(Win32.new('kernel32.dll','CreateFileA','piiliil','l') rescue nil),
-"SetFileTime"=>(Win32.new('kernel32.dll','SetFileTime','lpll','i') rescue nil),
-"CloseHandle"=>(Win32.new('kernel32.dll','CloseHandle','l','') rescue nil)
+"CreateFile"=>(DLLAPI.new('kernel32.dll','CreateFileA','piiliil','l') rescue nil),
+"SetFileTime"=>(DLLAPI.new('kernel32.dll','SetFileTime','lpll','i') rescue nil),
+"CloseHandle"=>(DLLAPI.new('kernel32.dll','CloseHandle','l','') rescue nil)
 }
 # Supports setting a file's creation time on Windows
 def setCreationTime(f,t)
@@ -570,7 +570,7 @@ def tryDelete(f)
    ex=File.expand_path(f)
    if iswin32() && f.length>=260
      ex="\\\\?\\"+ex.gsub(/\//,"\\")
-     delfile=Win32.new("kernel32.dll","DeleteFileW","p","")
+     delfile=DLLAPI.new("kernel32.dll","DeleteFileW","p","")
      delfile.call(utf8ToWideChar(ex))
      return FileTest.exist?(f)
    else
@@ -582,7 +582,7 @@ def tryDelete(f)
  end
 end
 
-GetFileAttributes=Win32.new('kernel32.dll','GetFileAttributesW','p','i') rescue nil
+GetFileAttributes=DLLAPI.new('kernel32.dll','GetFileAttributesW','p','i') rescue nil
 def isSymLink?(f)
   if iswin32() && GetFileAttributes
     # check reparse point attribute on Win32

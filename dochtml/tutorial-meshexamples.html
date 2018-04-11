@@ -1,12 +1,12 @@
 <!DOCTYPE html><html><head><meta charset=utf-8><title>Examples of Creating Meshes on the Fly</title></head><body><h1> Examples of Creating Meshes on the Fly</h1><p><a href='index.html'>Back to documentation index.</a></p><p>This page contains source code for creating various kinds of 3D models on the fly.</p>
 <p><a id=Contents></a></p>
 <h2>Contents</h2><ul>
-<li><a href="#Contents">Contents</a></li>
-<li><a href="#3D_Line">3D Line</a></li>
-<li><a href="#Floor">Floor</a></li>
-<li><a href="#Striped_Disk">Striped Disk</a></li>
-<li><a href="#Washer">Washer</a></li>
-<li><a href="#Miscellaneous">Miscellaneous</a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#3D_Line"><strong>3D Line</strong></a></li>
+<li><a href="#Floor"><strong>Floor</strong></a></li>
+<li><a href="#Striped_Disk"><strong>Striped Disk</strong></a></li>
+<li><a href="#Washer"><strong>Washer</strong></a></li>
+<li><a href="#Miscellaneous"><strong>Miscellaneous</strong></a></li>
 </ul>
 <p><a id=3D_Line></a></p>
 <h2>3D Line</h2><p>This method creates a thin line-like 3D object.</p>
@@ -26,7 +26,7 @@ function create3DLine(point1,point2,thickness){
   return line.transform(matrix);
 }</code></pre><p><a id=Floor></a></p>
 <h2>Floor</h2><p>This method creates a flat tiled floor.</p>
-<p><img src="floor.png" alt="Image of a floor"></p>
+<p><img src="floor.png" alt="**Image of a floor**"></p>
 <pre class="prettyprint source"><code>// xStart, yStart - X and Y coordinates of the start of the floor
 // width, height - Width and height of the floor
 // tileSize - Size of each floor tile
@@ -58,7 +58,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
  return new H3DU.MeshBuffer(mesh)
 }</code></pre><p><a id=Striped_Disk></a></p>
 <h2>Striped Disk</h2><p>This method creates a ring or disk striped in two colors.</p>
-<p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
+<p><img src="mesh2.png" alt="**Image of a disk striped in red and almost-white**"></p>
 <pre class="prettyprint source"><code>// inner, outer - inner and outer radius of the disk
 // color1, color2 - colors of each stripe; for example:
 //   &quot;red&quot;, &quot;#223344&quot;, &quot;rgb(255,0,0)&quot;, [0,1,0]
@@ -79,7 +79,7 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
  return ret;
 }</code></pre><p><a id=Washer></a></p>
 <h2>Washer</h2><p>This method creates a washer-shaped 3D model.</p>
-<p><img src="mesh3.png" alt="Image of a washer"></p>
+<p><img src="mesh3.png" alt="**Image of a washer**"></p>
 <pre class="prettyprint source"><code>function createWasher(inner,outer,height,slices){
   var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
   var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);

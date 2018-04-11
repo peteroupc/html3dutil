@@ -3,20 +3,20 @@ This page describes common identifiers and names for colors, as used in the HTML
 <a id=Contents></a>
 ## Contents
 
-- [Contents](#Contents)
-- [What Colors Can I Use?](#What_Colors_Can_I_Use)
-- [What Do Some Colors Look Like?](#What_Do_Some_Colors_Look_Like)
-- [What Is the Syntax for HTML Colors?](#What_Is_the_Syntax_for_HTML_Colors)
-    - [Shortened Notation](#Shortened_Notation)
-- [How Do I Make HTML Colors?](#How_Do_I_Make_HTML_Colors)
-- [What Are Some Common HTML Colors?](#What_Are_Some_Common_HTML_Colors)
-- [How Do I Darken an HTML Color?](#How_Do_I_Darken_an_HTML_Color)
-- [How Do I Lighten a HTML Color?](#How_Do_I_Lighten_a_HTML_Color)
-- [How Do I Desaturate an HTML Color?](#How_Do_I_Desaturate_an_HTML_Color)
-- [What Is an RGB Color?](#What_Is_an_RGB_Color)
-- [What Is an HSL Color?](#What_Is_an_HSL_Color)
-    - [HSL Example](#HSL_Example)
-- [What Is an Alpha Component?](#What_Is_an_Alpha_Component)
+- [**Contents**](#Contents)
+- [**What Colors Can I Use?**](#What_Colors_Can_I_Use)
+- [**What Do Some Colors Look Like?**](#What_Do_Some_Colors_Look_Like)
+- [**What Is the Syntax for HTML Colors?**](#What_Is_the_Syntax_for_HTML_Colors)
+    - [**Shortened Notation**](#Shortened_Notation)
+- [**How Do I Make HTML Colors?**](#How_Do_I_Make_HTML_Colors)
+- [**What Are Some Common HTML Colors?**](#What_Are_Some_Common_HTML_Colors)
+- [**How Do I Darken an HTML Color?**](#How_Do_I_Darken_an_HTML_Color)
+- [**How Do I Lighten a HTML Color?**](#How_Do_I_Lighten_a_HTML_Color)
+- [**How Do I Desaturate an HTML Color?**](#How_Do_I_Desaturate_an_HTML_Color)
+- [**What Is an RGB Color?**](#What_Is_an_RGB_Color)
+- [**What Is an HSL Color?**](#What_Is_an_HSL_Color)
+    - [**HSL Example**](#HSL_Example)
+- [**What Is an Alpha Component?**](#What_Is_an_Alpha_Component)
 
 <a id=What_Colors_Can_I_Use></a>
 ## What Colors Can I Use?
@@ -33,11 +33,11 @@ You can use values like the following.
 <a id=What_Do_Some_Colors_Look_Like></a>
 ## What Do Some Colors Look Like?
 
-Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the "Web safe" colors, which were chosen "specifically because they matched the palettes selected by various browser applications" for 256-color displays (according to [Wikipedia](http://en.wikipedia.org/wiki/Web_colors)), but this list is still useful because it's short yet gives you a variety of appropriate colors for most purposes.
+Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the "Web safe" colors, which were chosen "specifically because they matched the palettes selected by various browser applications" for 256-color displays (according to [**Wikipedia**](http://en.wikipedia.org/wiki/Web_colors)), but this list is still useful because it's short yet gives you a variety of appropriate colors for most purposes.
 
-![A list of the "Web-safe colors". Each entry consists of a color swatch and the corresponding HTML name.](websafe.svg)
+![**A list of the "Web-safe colors". Each entry consists of a color swatch and the corresponding HTML name.**](websafe.svg)
 
-The following list shows the colors defined in the [CSS3 Color Module section 4](http://www.w3.org/TR/css3-color/#colorunits), as well as the newly-added name `rebeccapurple`. In addition, the names `darkgrey`,
+The following list shows the colors defined in the [**CSS3 Color Module section 4**](http://www.w3.org/TR/css3-color/#colorunits), as well as the newly-added name `rebeccapurple`. In addition, the names `darkgrey`,
 `darkslategrey`,
 `dimgrey`,
 `grey`,
@@ -51,7 +51,7 @@ The following list shows the colors defined in the [CSS3 Color Module section 4]
 `lightslategray`, and
 `slategray`.
 
-![A list of named colors. Each entry consists of a color swatch and the corresponding name.](colornames.svg)
+![**A list of named colors. Each entry consists of a color swatch and the corresponding name.**](colornames.svg)
 
 <a id=What_Is_the_Syntax_for_HTML_Colors></a>
 ## What Is the Syntax for HTML Colors?
