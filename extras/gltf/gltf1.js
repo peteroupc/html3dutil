@@ -199,14 +199,11 @@ GltfState1.prototype.readTechnique = function(techniqueName) {
           sem = H3DU.Semantic.MODELVIEW;
         } else if(param.semantic === "MODELVIEWPROJECTION" && param.type === 35676) {
           sem = H3DU.Semantic.MODELVIEWPROJECTION;
-        } else if(param.semantic === "MODELVIEWINVERSETRANSPOSE" &&
-          param.type === 35675) {
+        } else if(param.semantic === "MODELVIEWINVERSETRANSPOSE" && param.type === 35675) {
           sem = H3DU.Semantic.MODELVIEWINVERSETRANSPOSE;
-        } else if(param.semantic === "VIEWINVERSE" &&
-          param.type === 35676) {
+        } else if(param.semantic === "VIEWINVERSE" && param.type === 35676) {
           sem = H3DU.Semantic.VIEWINVERSE;
-        } else if(param.semantic === "JOINTMATRIX" &&
-          param.type === 35676) {
+        } else if(param.semantic === "JOINTMATRIX" && param.type === 35676) {
           sem = H3DU.Semantic.JOINTMATRIX;
         }
         if(sem === 0) {

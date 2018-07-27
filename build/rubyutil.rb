@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-# Utility methods for Ruby.  Peter O., 2013-2016.
+# Utility methods for Ruby.  Peter O., 2013-2018.
 # Any copyright is dedicated to the Public Domain.
 # http://creativecommons.org/publicdomain/zero/1.0/
 #
@@ -204,75 +204,57 @@ def getFreeFileNumbered(dest)
   return newfn
 end
 
-class REXML::Document
-  def save(file)
-    File.open(file,"wb:utf-8"){|f|
-      REXML::Formatters::Pretty.new(2,false).write(self,f)
-    }
-  end
-  def saveCompact(file)
-    File.open(file,"wb:utf-8"){|f|
-      REXML::Formatters::Default.new(false).write(self,f)
-    }
-  end
-  def addElement(name,text=nil)
-   child=REXML::Element.new(name,self)
-   if text
-     child.add_text(text)
-   end
-   return child
-  end
-  def addElementNS(name,ns=nil,text=nil)
-    child=nil
-    if text && text.include?("\n")
-      child=REXML::Element.new(name,self,{:respect_whitespace=>:all})
-    else
-      child=REXML::Element.new(name,self)
-    end
-   if ns
-     child.add_namespace(ns)
-   end
-   if text
-     child.add_text(text)
-   end
-   return child
-  end
-end
-
-# Adds a number of utility classes for XML elements
-class REXML::Element
-  class Builder
+class BuilderInternal
     def initialize; @s=[]; end
     def <<(v); @s.push(v); end
     def to_s; return @s.join(""); end
+end
+
+# Deprecated
+def setInnerXML(x,xml)
+   xExtra(x).setInnerXML(xml)
+end
+
+def xExtra(e)
+  return e if e.is_a?(XExtra)
+  return XExtra.new(e)
+end
+
+class XExtra
+  def initialize(s)
+    @node=s
   end
   def setInnerXML(xml)
     els=[]
     els2=[]
-    self.each{|e| els.push(e) }
+    @node.each{|e| els.push(e) }
     begin
      xmldoc=REXML::Document.new("<root>"+xml+"</root>")
     rescue
      raise "Can't set XML to: "+xml+"\n"+$!.message
     end
     xmldoc.root.each{|e| els2.push(e) }
-    els.each{|e| self.delete(e) }
-    els2.each{|e| self.add(e) }
+    els.each{|e| @node.delete(e) }
+    els2.each{|e| @node.add(e) }
   end
   def innerXML(pretty=false)
-    builder=Builder.new
+    builder=BuilderInternal.new
     formatter=(pretty) ?
       REXML::Formatters::Pretty.new(2,false) :
       REXML::Formatters::Default.new(false)
-    each{|node|
+    @node.each{|node|
        formatter.write(node,builder)
     }
     return builder.to_s
   end
   def save(file)
-    File.open(file,"w"){|f|
-      REXML::Formatters::Default.new(false).write(self,f)
-    }
+    bi=BuilderInternal.new
+    if @node.is_a?(REXML::Document)
+      REXML::Formatters::Pretty.new(2,false).write(@node,bi)
+    else
+      REXML::Formatters::Default.new(false).write(@node,bi)
+    end
+    utf8edit(file, true) {  bi.to_s  }
   end
   def attrs(x)
     # Adds a hash of attribute-value pairs
@@ -280,28 +262,29 @@ class REXML::Element
     # or an array like: [["attr1","value1"],["attr2","value2"]]
     if x.is_a?(Hash)
       for k in x.keys
-       add_attribute(k,x[k].to_s)
+       @node.add_attribute(k,x[k].to_s)
       end
     elsif x.is_a?(Array)
       for k in x
-       add_attribute(k[0],k[1].to_s)
+       @node.add_attribute(k[0],k[1].to_s)
       end
     end
-    self
-  end
-  def addElementReturnSelf(name,text=nil)
-    addElement(name,text)
-    return self
+    @node
   end
   def addElement(name,text=nil)
-   child=REXML::Element.new(name,self)
+   child=REXML::Element.new(name,@node)
    if text
      child.add_text(text)
    end
    return child
   end
   def addElementNS(name,ns=nil,text=nil)
-    child=REXML::Element.new(name,self)
+    child=nil
+    if text && text.include?("\n") && @node.is_a?(REXML::Document)
+      child=REXML::Element.new(name,@node,{:respect_whitespace=>:all})
+    else
+      child=REXML::Element.new(name,@node)
+    end
    if ns
      child.add_namespace(ns)
    end
@@ -310,14 +293,6 @@ class REXML::Element
    end
    return child
   end
- class ElementIterator
-  include Enumerable
-  def initialize(e); @e=e; end
-  def each; @e.each {|item| yield item if item.kind_of?(REXML::Element) }; end
- end
- def elems
-  return ElementIterator.new(self)
- end
   def getElementsByTagName(name)
     name=nil if name=="*"
     ret=[]; self.eachElementNamedRecursive(name){|o| ret.push(o); }; return ret
@@ -325,33 +300,25 @@ class REXML::Element
  def eachElement
   # Faster version of REXML::Element#elements, since it avoids
   # invoking XPath
-  self.each { |child| yield child if child.kind_of?(REXML::Element) }
+  @node.each { |child| yield child if child.kind_of?(REXML::Element) }
  end
  def eachElementNamed(name)
-  self.each { |child| yield child if child.kind_of?(
+  @node.each { |child| yield child if child.kind_of?(
        REXML::Element) && (name==nil || child.name==name) }
  end
  def eachElementNamedRecursive(name,&block)
-  eachElement(){|child|
-   if child.name==name || name==nil
-     block.call(child)
+  @node.each{|child|
+   if child.kind_of?(REXML::Element)
+     block.call(child) if (name==nil || child.name==name)
+     xExtra(child).eachElementNamedRecursive(name,&block)
    end
-   child.eachElementNamedRecursive(name,&block)
   }
 end
- def firstElementNamed(name)
-  eachElementNamed(name){|e| return e }
-  nil
- end
- def firstElementNamedRecursive(name)
-  eachElementNamedRecursive(name){|e| return e }
-  nil
- end
  def innerText
   ret=""
-  self.each { |child|
+  @node.each { |child|
    ret+=child.value if child.kind_of?(REXML::Text)
-   ret+=child.innerText if child.kind_of?(REXML::Element)
+   ret+=xExtra(child).innerText if child.kind_of?(REXML::Element)
   }
   return ret
  end
@@ -379,69 +346,55 @@ def fastExpandPath(f)
   return File.expand_path(f)
 end
 
-class Array
- def shuffle
-  self.clone.shuffle!
- end
- def ^(other) # xor of two arrays
-  return (self|other)-(self&other)
- end
- def shuffle!
-  return self if self.length<2
-  i=self.length-1; while i>=1
+def arrayXor(arr)
+  return (arr|other)-(arr&other)
+end
+
+def shuffle(arr)
+  return arr if arr.length<2
+  i=arr.length-1; while i>=1
    other=rand(i+1)
    if i!=other
-    obj=self[i]; self[i]=self[other]; self[other]=obj
+    obj=arr[i]; arr[i]=arr[other]; arr[other]=obj
    end
   i-=1;end
-  return self
- end
- def rearrange(sortproc,thenbyproc=nil,random=false)
-  self.clone.rearrange!(sortproc,thenbyproc,random)
- end
- def rearrange!(sortproc,thenbyproc=nil,random=false)
-  return self if self.length<2
-  self.sort!{|a,b|
+  return arr
+end
+
+ def rearrange(arr, sortproc,thenbyproc=nil,random=false)
+  return arr if arr.length<2
+  arr.sort!{|a,b|
     ret=sortproc.call(a,b)
     next ret
   }
   if !thenbyproc && !random
-    return self
+    return arr
   end
   blocks=[[0,1]]
-  for i in 1...self.length
-   if sortproc.call(self[i-1],self[i])==0 # Both are equal
+  for i in 1...arr.length
+   if sortproc.call(arr[i-1],arr[i])==0 # Both are equal
     blocks[blocks.length-1][1]+=1
    else
     blocks.push([i,1])
    end
   end
   if random
-   blocks.shuffle!
+   shuffle(blocks)
   end
   newArray=[]
   for b in blocks
    if b[1]==1
-     newArray.push(self[b[0]])
+     newArray.push(arr[b[0]])
    else
-     subArray=self[b[0],b[1]]
-     subArray=subArray.clone if subArray===self
+     subArray=arr[b[0],b[1]]
+     subArray=subArray.clone if subArray===arr
      thenbyproc.call(subArray) if thenbyproc
      newArray.concat(subArray)
    end
   end
-  self[0,self.length]=newArray
-  return self
+  arr[0,arr.length]=newArray
+  return arr
  end
-end
-
-module Enumerable
-  def transform_with_index # Converts each item in the enumerable, taking the item and index as arguments
-    ret=[]
-    i=0; self.each{|item| ret.push(yield(item,i)); i+=1 }
-    return ret # Returns a new array
-  end
-end
 
 def iswin32()
   !!RUBY_PLATFORM[/djgpp|bccwin|mingw|cygwin|mswin/]
@@ -701,15 +654,7 @@ def deleteZeroSize(f)
   return false
  end
 end
-class String
-def endsWith?(suffix)
- return self.length>=suffix.length ? (self[self.length-suffix.length,suffix.length]==suffix) : false
-end
-def endsWithIgnoreCase?(suffix)
- return self && self.length>=suffix.length ? (
-      self[s.length-suffix.length,suffix.length].upcase==suffix.upcase) : false
-end
-end
+
 def getByExt(arr,*exts)
  return arr.find_all {|a| exts.any?{|ext|
    if ext && ext[0,1]!="."
@@ -734,7 +679,13 @@ end
 # for Posix and Posix-like shells
 def ufq(f)
   return "''" if !f || f.length==0
-  if f.include?("'") || f[ /^[\-]/ ]
+  if f && f[ /^[\-]/ ]
+    # Filenames starting with hyphen may be misinterpreted
+    # as command line options in some programs, even if they're
+    # quoted, so add "./" to avoid this
+   return "'./"+f+"'"
+  end
+  if f.include?("'")
    return f.gsub( /([\'\s\,\;\&\(\)\[\]\|\"\$\\\#\*\!\?<>\,\;\|]|^[\-\/])/ ){ "\\"+$1 }
   end
   if f[ /[\s\(\)\$\\\#\&\!\*\?<>\,\;\|]/ ]
@@ -832,6 +783,10 @@ def utf8edit(file,createIfNotFound=false)
   data2=yield(data.clone)
   if (createIfNotFound && !found) ||
       (data2!=data && data2!=nil) # nil check for sanity
+    if createIfNotFound
+      dirname=File.dirname(file)
+      FileUtils.mkdir_p(dirname) if !FileTest.exist?(dirname)
+    end
     utf8write(data2||"",file)
   end
 end
@@ -1003,13 +958,13 @@ class CacheHash
     end
     raise
    end
-   utf8write(jsondata,@file)
+   utf8edit(@file,true){ jsondata }
   end
  end
  def clear()
    ensureData()
    @data={}
-   utf8write("{}",@file)
+   utf8edit(@file,true){ "{}" }
  end
  def delete(key)
    ensureData()
@@ -1081,30 +1036,4 @@ def getDataFromCache(file,cache)
   retval=olddata[0]
  end
  return retval
-end
-
-######################
-#
-#   Deprecated methods
-#
-
-# Deprecated; use "map" instead
-module Enumerable
-  def transform # Converts each item in the enumerable, taking the item as the argument
-    ret=[]
-    self.each{|item| ret.push(yield(item)) }
-    return ret # Returns a new array
-  end
-end
-# Deprecated
-def endsWith?(s,suffix); return s && s.endsWith?(suffix); end
-# Deprecated
-def endsWithIgnoreCase?(s,suffix); return s && s.endsWithIgnoreCase?(suffix); end
-# Deprecated
-def homepath(); return Dir.home(); end
-# Deprecated
-def tmpfolder(); return Dir.tmpdir(); end
-# Deprecated; use idiom (File.size(f) rescue 0) instead
-def fsize(f)
- return FileTest.exist?(f) ? (FileTest.size(f) rescue 0) : 0
 end

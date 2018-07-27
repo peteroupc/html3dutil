@@ -2,6 +2,10 @@
 Dir.chdir(File.dirname(__FILE__))
 require './rubyutil'
 require 'fileutils'
+def utf8betterwrite(a,b)
+  utf8edit(b,true){  next a }
+end
+
 $compilerJar=File.expand_path("compiler.jar")
 def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
   if !FileTest.exist?($compilerJar)
@@ -48,12 +52,12 @@ require './generate-websafe-svg'
 Dir.chdir(".."){
  files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
- utf8write(
+ utf8betterwrite(
    normalizeLines(
      ("/* eslint strict: \"off\", no-unused-expressions: \"off\" */\n/* global define */\n"+
        `rollup --output.format=umd --name=H3DU ./extras/gltf/gltf.js`).gsub(/\t/,"  ")),"extras/gltf.js")
  tmppath("h3du_all.js"){|p|
-  utf8write(`rollup --output.format=umd --name=H3DU ./h3du.js`,p)
+  utf8betterwrite(`rollup --output.format=umd --name=H3DU ./h3du.js`,p)
   normalizeAndCompile([p,"./oldnames.js"],"./h3du_min.js",false,ARGV.include?("--sourcemap"))
   FileUtils.mkdir_p("doc")
   FileUtils.mkdir_p("dochtml")

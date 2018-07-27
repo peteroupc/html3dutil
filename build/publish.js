@@ -23,6 +23,18 @@ function normalizeLines(x) {
   return x + "\n";
 }
 
+function writeFileIfNeeded(str, filename) {
+  var oldstr = null;
+  try {
+    oldstr = fs.readFileSync(filename);
+  } catch(ex) {
+    oldstr = null;
+  }
+  if(oldstr !== str) {
+    fs.writeFileSync(filename, str);
+  }
+}
+
 function resolveLinks(x) {
   var ret = helper.resolveLinks(x);
   ret = ret.replace(/href\s*=\s*\"([^\"\n>\#]+?)\.\w+(\"|\#)/, function(a, b, c) {
