@@ -23,6 +23,10 @@ function normalizeLines(x) {
   return x + "\n";
 }
 
+/* exported writeFileIfNeeded */
+/* exported writeFileIfNeeded */
+/* exported writeFileIfNeeded */
+/* exported writeFileIfNeeded */
 function writeFileIfNeeded(str, filename) {
   var oldstr = null;
   try {
