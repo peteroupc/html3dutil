@@ -374,7 +374,7 @@ A two-dimensional triangle has counterclockwise _winding_ if its vertices are or
 
 By default, triangles with counterclockwise winding are _front faces_, and
 other triangles are _back faces_. To change which kinds of triangles are
-front faces, call the <a href="H3DU.Scene3D.md#H3DU.Scene3D_frontFace">`frontFace` method of Scene3D</a>.
+front faces, call the `frontFace` method of Scene3D.
 
 <a id=Finding_a_triangle_s_winding></a>
 #### Finding a triangle's winding

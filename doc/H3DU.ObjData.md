@@ -66,7 +66,7 @@ and is rejected when an error occurs when loading the MTL file.
 If the promise resolves, the result is an object that implements
 the following methods: <ul>
 <li><code>getMaterial(name)</code> - Gets a material by name; <code>name</code> is the name of the material.
-Returns the material as <a href="H3DU.Material.md">H3DU.Material</a>, or null if it doesn't exist.
+Returns the material as H3DU.Material, or null if it doesn't exist.
 <li><code>getMaterialNames()</code> - Gets an array of names of all the materials included in this MTL file.
 </li>
 </ul> (Type: <a href="Promise.md">Promise</a>)

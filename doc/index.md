@@ -12,29 +12,19 @@ as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
 whose edges are made up of B-spline curves.
-* <a href="H3DU.Batch3D.md">H3DU.Batch3D</a><br>A `Batch3D` represents a so-called "scene graph".
 * <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b>
 * <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
 to create a B&eacute;zier surface.</b>
 * <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a><br>A <b>vertex attribute object</b>.
-* <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
-Use the <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
-contexts.</b>
 * <a href="H3DU.Camera.md">H3DU.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
-* <a href="H3DU.CubeMap.md">H3DU.CubeMap</a><br>A cube map, or a set of six textures forming the sides of a cube.
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
 vertex attributes for a curve.
-* <a href="H3DU.CurveEval.md">H3DU.CurveEval</a><br><b>Deprecated: Use <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a> instead.</b>
 * <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
-* <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a><br>**Deprecated: This class is likely to become a private class.
-Use the FrameBufferInfo class instead, which is not coupled to WebGL
-contexts.**
-* <a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.
 * <a href="H3DU.FrameCounter.md">H3DU.FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.
 * <a href="H3DU.FrameCounterDiv.md">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.
 * <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
@@ -42,10 +32,6 @@ contexts.**
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.InputTracker.md">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.
-* <a href="H3DU.LightSource.md">H3DU.LightSource</a><br>Specifies parameters for light sources.
-* <a href="H3DU.Lights.md">H3DU.Lights</a><br>A collection of light sources.
-* <a href="H3DU.Material.md">H3DU.Material</a><br>Specifies parameters for geometry materials, which describe the appearance of a
-3D object.
 * <a href="H3DU.Math.md">H3DU.Math</a><br>A collection of math functions for working
 with vectors, matrices, quaternions, and other
 mathematical objects.
@@ -56,21 +42,12 @@ of 4x4 transformation matrices.
 * <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
 of various geometric shapes and solids.
 * <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
-* <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a><br>A material for physically-based rendering.
 * <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve
 made up of one or more individual curves.
 * <a href="H3DU.Polyhedra.md">H3DU.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
 and other polyhedra.
-* <a href="H3DU.RenderPass.md">H3DU.RenderPass</a><br>Describes a batch (a scene graph of 3D objects) and options for
-rendering that batch.
-* <a href="H3DU.Scene3D.md">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering
-3D objects.
 * <a href="H3DU.Semantic.md">H3DU.Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.
-* <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.
-* <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.
-Use the <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a> class instead, which is not coupled to WebGL
-contexts.</b>
 * <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
 material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
@@ -78,24 +55,13 @@ and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
 vertex attributes for a surface.
-* <a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a><br><b>Deprecated: Use <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a> instead.</b>
 * <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.
 * <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
 text.
-* <a href="H3DU.Texture.md">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to
-the surface of a shape, or even a 2-dimensional array of pixels
-used for some other purpose, such as a depth map, a height map,
-a bump map, a specular map, and so on.
 * <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
 texture.
-* <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a><br>Specifies information about a texture, which can serve as image data applied to
-the surface of a shape, or even a 2-dimensional array of pixels
-used for some other purpose, such as a depth map, a height map,
-a bump map, a specular map, and so on.
-* <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them
-to WebGL contexts.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
 * <a href="H3DU.Trochoid.md">H3DU.Trochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the X axis.

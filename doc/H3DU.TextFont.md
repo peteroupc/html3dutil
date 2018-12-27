@@ -86,14 +86,14 @@ Loads the texture files used by this font object.
 
 #### Parameters
 
-* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.
+* `textureLoader` (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.
 
 #### Return Value
 
 A promise as described in
 <a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
-<a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>)
+H3DU.Texture object. (Type: <a href="Promise.md">Promise</a>.&lt;H3DU.Texture>)
 
 <a name='H3DU.TextFont.loadWithTextures'></a>
 ### (static) H3DU.TextFont.loadWithTextures(fontFileName, textureLoader)
@@ -104,7 +104,7 @@ used by that font.
 #### Parameters
 
 * `fontFileName` (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
-* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.
+* `textureLoader` (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.
 
 #### Return Value
 
@@ -115,7 +115,7 @@ If the promise is resolved, the result will be an object with the
 following keys:<ul>
 <li><code>url</code> - The URL of the font data file.
 <li><code>font</code> - The font data in the form of an <a href="H3DU.TextFont.md">H3DU.TextFont</a> object.
-<li><code>textures</code> - An array of <a href="H3DU.Texture.md">H3DU.Texture</a> objects used by the font,
+<li><code>textures</code> - An array of H3DU.Texture objects used by the font,
 in the order in which they are declared in the font data file.
 </ul> (Type: <a href="Promise.md">Promise</a>)
 
@@ -167,7 +167,7 @@ than the right and bottom coordinates, respectively).
 #### Parameters
 
 * `str` (Type: string)<br>The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.md">H3DU.Texture</a> if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul>
+* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (H3DU.Texture) to use with this font, or a single H3DU.Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul>
 
 #### Return Value
 

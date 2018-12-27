@@ -4,27 +4,12 @@ methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 See the <a href="tutorial-overview.html">Library Overview</a> tutorial.<p>
 This page describes miscellaneous utility methods included in the
-library.<h3> Methods</h3><ul><li><a href='#H3DU.createCanvasElement'>createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
-it to an existing HTML element.<li><a href='#H3DU.get3DContext'>get3DContext</a><br>Creates a 3D rendering context from an HTML canvas element.<li><a href='#H3DU.get3DOr2DContext'>get3DOr2DContext</a><br>Creates a 3D rendering context from an HTML canvas element,
-falling back to a 2D context if that fails.<li><a href='#H3DU.getPromiseResults'>getPromiseResults</a><br>Utility function that returns a promise that
+library.<h3> Methods</h3><ul><li><a href='#H3DU.getPromiseResults'>getPromiseResults</a><br>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.<li><a href='#H3DU.getPromiseResultsAll'>getPromiseResultsAll</a><br>Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
-its work.<li><a href='#H3DU.getTimePosition'>getTimePosition</a><br>Gets the position of a time value within an interval.<li><a href='#H3DU.is3DContext'>is3DContext</a><br>Returns whether the given object is a 3D rendering context.<li><a href='#H3DU.loadFileFromUrl'>loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.<li><a href='#H3DU.loadGltfFromUrl'>loadGltfFromUrl</a><br>Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.<li><a href='#H3DU.loadStlFromUrl'>loadStlFromUrl</a><br>Loads a .STL file asynchronously.<li><a href='#H3DU.newFrames'>newFrames</a><br>Returns the number of frame-length intervals that occurred since
-the last known time, where a frame's length is 1/60 of a second.<li><a href='#H3DU.renderLoop'>renderLoop</a><br>This method will call a function once before returning,
-and queue requests to call that function once per frame,
-using <code>window.requestAnimationFrame</code>
-or a "polyfill" method.<li><a href='#H3DU.toGLColor'>toGLColor</a><br>Creates a 4-element array representing a color.</ul><a name='H3DU.createCanvasElement'></a>
-<h3> (static) H3DU.createCanvasElement(parent, width, height)</h3>Creates an HTML canvas element, optionally appending
-it to an existing HTML element.<h4> Parameters</h4><ul><li><code>parent</code> (Type: HTMLElement | null)<br>If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.<li><code>width</code> (Type: number | null)<br>Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can't be a negative number.<li><code>height</code> (Type: number | null)<br>Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can't be a negative number.</ul><h4> Return Value</h4>The resulting canvas element. (Type: Element)<a name='H3DU.get3DContext'></a>
-<h3> (static) H3DU.get3DContext(canvasElement, err)</h3>Creates a 3D rendering context from an HTML canvas element.<h4> Parameters</h4><ul><li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>An HTML canvas element.<li><code>err</code> (Type: function)<br>A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If "err" is null, window.alert() will be used instead.</ul><h4> Return Value</h4>A 3D rendering context, or null
-if an error occurred in creating the context. Returns null if "canvasElement"
-is null or not an HTML canvas element. (Type: Object)<a name='H3DU.get3DOr2DContext'></a>
-<h3> (static) H3DU.get3DOr2DContext(canvasElement)</h3>Creates a 3D rendering context from an HTML canvas element,
-falling back to a 2D context if that fails.<h4> Parameters</h4><ul><li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>An HTML canvas element.</ul><h4> Return Value</h4>A 3D or 2D rendering context, or null
-if an error occurred in creating the context. Returns null if "canvasElement"
-is null or not an HTML canvas element. (Type: Object)<a name='H3DU.getPromiseResults'></a>
+its work.<li><a href='#H3DU.getTimePosition'>getTimePosition</a><br>Gets the position of a time value within an interval.<li><a href='#H3DU.loadFileFromUrl'>loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.<li><a href='#H3DU.loadStlFromUrl'>loadStlFromUrl</a><br>Loads a .STL file asynchronously.<li><a href='#H3DU.newFrames'>newFrames</a><br>Returns the number of frame-length intervals that occurred since
+the last known time, where a frame's length is 1/60 of a second.<li><a href='#H3DU.toGLColor'>toGLColor</a><br>Creates a 4-element array representing a color.</ul><a name='H3DU.getPromiseResults'></a>
 <h3> (static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])</h3>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.<h4> Parameters</h4><ul><li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>>)<br>an array containing promise objects<li><code>progressResolve</code> (Type: function) (optional)<br>A function called as each individual promise is resolved.<li><code>progressReject</code> (Type: function) (optional)<br>A function called as each individual promise is rejected.</ul><h4> Return Value</h4>A promise that is never rejected and resolves when
@@ -59,8 +44,7 @@ The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
 <code>requestAnimationFrame()</code> callback method.
 </p><pre>
-var angle = 360 * export var getTimePosition(timer, time, 5000);</pre><a name='H3DU.is3DContext'></a>
-<h3> (static) H3DU.is3DContext(context)</h3>Returns whether the given object is a 3D rendering context.<h4> Parameters</h4><ul><li><code>context</code> (Type: Object)<br>The object to check.</ul><h4> Return Value</h4>Return value. (Type: boolean)<a name='H3DU.loadFileFromUrl'></a>
+var angle = 360 * export var getTimePosition(timer, time, 5000);</pre><a name='H3DU.loadFileFromUrl'></a>
 <h3> (static) H3DU.loadFileFromUrl(url, [responseType])</h3>Loads a file from a URL asynchronously, using XMLHttpRequest.<h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>URL of the file to load.<li><code>responseType</code> (Type: string) (optional)<br>Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null, undefined, or omitted, the default is "text".</ul><h4> Return Value</h4>A promise that resolves when the data
 file is loaded successfully (the result will be an object with
 two properties: "url", the URL of the file, and "data", the
@@ -72,28 +56,7 @@ the parameter's "data" property will be:<ul>
 <li>For response type "arraybuffer", an ArrayBuffer object.
 <li>For response type "json", the JavaScript object decoded
 from JSON.
-<li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.html">Promise</a>)<a name='H3DU.loadGltfFromUrl'></a>
-<h3> (static) H3DU.loadGltfFromUrl(url)</h3>Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.
-<p>This method is considered a supplementary method to the
-Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this class, you must include the script "extras/gltf.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:<pre>
-&lt;script type="text/javascript" src="extras/gltf.js">&lt;/script></pre><h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>URL of the glTF file to load.</ul><h4> Return Value</h4>A promise; when it resolves, the result will
-be an object that implements the following methods:<ul>
-<li><code>getShape()</code> - Gets an <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> object described
-by the glTF data.
-<li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
-strings for the texture images described by the glTF data. Each URI will be relative
-to the "url" parameter of the loadGltfFromFile method.
-<li><code>update(time)</code> - A single-parameter method that should be called
-if the glTF data describes an animation; this method updates the state of the
-3D batch in accordance with that animation. The single parameter, <code>time</code>
-(type Number), is a time stamp in milliseconds.
-</ul>If an error occurs in loading the glTF data or any of the buffers and shaders
-it uses, the promise will be rejected. (Type: <a href="Promise.html">Promise</a>.&lt;Object>)<a name='H3DU.loadStlFromUrl'></a>
+<li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.html">Promise</a>)<a name='H3DU.loadStlFromUrl'></a>
 <h3> (static) H3DU.loadStlFromUrl(url)</h3>Loads a .STL file asynchronously.
 <p>This method is considered a supplementary method to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -109,11 +72,7 @@ the last known time, where a frame's length is 1/60 of a second.
 This method should be called only once each frame.<h4> Parameters</h4><ul><li><code>timer</code> (Type: Object)<br>An object described in <a href="H3DU.html#H3DU.getTimePosition">H3DU.getTimePosition</a>.<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</ul><h4> Return Value</h4>The number of frame-length intervals relative to
 the last known time held in the parameter "timer".
 The number can include fractional frames. If an
-initial time or last known time wasn't set, returns 0. (Type: number)<a name='H3DU.renderLoop'></a>
-<h3> (static) H3DU.renderLoop(func)</h3>This method will call a function once before returning,
-and queue requests to call that function once per frame,
-using <code>window.requestAnimationFrame</code>
-or a "polyfill" method.<h4> Parameters</h4><ul><li><code>func</code> (Type: function)<br>The function to call. The function takes one parameter, "time", which is the number of milliseconds since the page was loaded.</ul><h4> Return Value</h4>This function doesn't return a value. (Type: void)<a name='H3DU.toGLColor'></a>
+initial time or last known time wasn't set, returns 0. (Type: number)<a name='H3DU.toGLColor'></a>
 <h3> (static) H3DU.toGLColor(r, g, b, [a])</h3>Creates a 4-element array representing a color. Each element
 can range from 0 to 1 and specifies the red, green, blue or alpha
 component, respectively.

@@ -125,7 +125,7 @@ to the `setProjectionMatrix` method of the `H3DU.Batch3D` class.
 * `aspect` - Aspect ratio of the scene. You should usually use `scene3d.getClientAspect()`.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.
 
-**<a href="H3DU.Batch3D.md#H3DU.Batch3D_perspectiveAspect">`batch3d.perspectiveAspect(fov near, far)`</a>**
+**`batch3d.perspectiveAspect(fov near, far)`**
 
 This method of the `H3DU.Batch3D` class sets the projection matrix to a perspective
 projection. The `fov`, `near`, and `far` parameters are the same as for `mat4perspective`,
@@ -276,7 +276,7 @@ divided by the clip space W, and then converted to _window coordinates_,
 which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels; to set the viewport's
-size, call the <a href="H3DU.Scene3D.md#H3DU.Scene3D_setDimensions">`setDimensions` method of `Scene3D`</a>.
+size, call the `setDimensions` method of `Scene3D`.
 
 For the perspective matrix returned by <a href="H3DU.Math.md#H3DU.Math.mat4perspective">`mat4perspective`</a>, dividing
 the X, Y, and Z coordinates by the clip space W results in the effect that as W gets

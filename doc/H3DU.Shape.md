@@ -16,7 +16,7 @@ specified in this object are in
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> | <a href="H3DU.Mesh.md">H3DU.Mesh</a> | <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a>)<br>A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.md">H3DU.Mesh</a> objects, the <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a> created will use the mesh in its current state and won't track future changes. <i>Using <a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i>
+* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> | <a href="H3DU.Mesh.md">H3DU.Mesh</a> | H3DU.BufferedMesh)<br>A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.md">H3DU.Mesh</a> objects, the H3DU.PbrMaterial created will use the mesh in its current state and won't track future changes. <i>Using H3DU.BufferedMesh objects as the parameter is deprecated.</i>
 
 ### Methods
 
@@ -86,7 +86,7 @@ The material won't be copied.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.Material.md">H3DU.Material</a> | <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)
+Return value. (Type: H3DU.Material | H3DU.PbrMaterial)
 
 <a name='H3DU.Shape_getMatrix'></a>
 ### H3DU.Shape#getMatrix()
@@ -163,7 +163,7 @@ Sets this shape's material parameter object.
 
 #### Parameters
 
-* `material` (Type: <a href="H3DU.Material.md">H3DU.Material</a> | <a href="H3DU.PbrMaterial.md">H3DU.PbrMaterial</a>)<br>The material object to use. Throws an error if this parameter is null, is omitted, or is a <a href="H3DU.Texture.md">H3DU.Texture</a> object
+* `material` (Type: H3DU.Material | H3DU.PbrMaterial)<br>The material object to use. Throws an error if this parameter is null, is omitted, or is a H3DU.Texture object
 
 #### Return Value
 
@@ -222,7 +222,7 @@ Sets this shape's material to a shader with the given URL.
 
 #### Parameters
 
-* `shader` (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)<br>Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a> here is deprecated.</i>
+* `shader` (Type: H3DU.ShaderInfo)<br>Source code for a WebGL shader program. <i>Using a H3DU.ShaderProgram here is deprecated.</i>
 
 #### Return Value
 
@@ -235,7 +235,7 @@ Sets material parameters that give the shape a texture with the given URL.
 
 #### Parameters
 
-* `name` (Type: String | <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> | <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a>)<br><a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done).
+* `name` (Type: String | H3DU.Texture | H3DU.TextureInfo | H3DU.FrameBuffer)<br>H3DU.Texture object, H3DU.TextureInfo object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. This parameter can also be a H3DU.FrameBuffer object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done).
 
 #### Return Value
 
@@ -249,7 +249,7 @@ diffuse parameters to the given color.
 
 #### Parameters
 
-* `name` (Type: String | <a href="H3DU.Texture.md">H3DU.Texture</a> | <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a>)<br><a href="H3DU.Texture.md">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.md">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
+* `name` (Type: String | H3DU.Texture | H3DU.TextureInfo)<br>H3DU.Texture object, H3DU.TextureInfo object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
 * `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
 * `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.

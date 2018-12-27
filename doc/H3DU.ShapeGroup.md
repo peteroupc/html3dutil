@@ -178,7 +178,7 @@ Sets the material used by all shapes in this shape group.
 
 #### Parameters
 
-* `material` (Type: <a href="H3DU.Material.md">H3DU.Material</a>)<br>The material to use.
+* `material` (Type: H3DU.Material)<br>The material to use.
 
 #### Return Value
 
@@ -244,7 +244,7 @@ Sets the shader program used by all shapes in this shape group.
 
 #### Parameters
 
-* `material` (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)<br>Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a> here is deprecated.</i>
+* `material` (Type: H3DU.ShaderInfo)<br>Source code for a WebGL shader program. <i>Using a H3DU.ShaderProgram here is deprecated.</i>
 
 #### Return Value
 
@@ -271,7 +271,7 @@ Sets the texture used by all shapes in this shape group.
 
 #### Parameters
 
-* `material` (Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | String)<br><a href="H3DU.Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>.
+* `material` (Type: H3DU.Texture | String)<br>H3DU.Texture object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. This parameter can also be a H3DU.FrameBuffer object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>.
 
 #### Return Value
 
