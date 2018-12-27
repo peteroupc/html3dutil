@@ -295,7 +295,7 @@ stored in a vertex buffer.
 
 #### Return Value
 
-This object.Throws an error if the given
+This object. Throws an error if the given
 semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 <a name='H3DU.MeshBuffer_setAttributeEx'></a>

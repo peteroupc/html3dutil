@@ -88,7 +88,7 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * item starts.See {@link H3DU.MeshBuffer#setAttributeEx}.
  * @param {number} [stride] The number of elements from the start of
  * one per-vertex item to the start of the next. See {@link H3DU.MeshBuffer#setAttributeEx}.
- * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
+ * @returns {H3DU.MeshBuffer} This object. Throws an error if the given
  * semantic is unsupported.
  */
 MeshBuffer.prototype.setAttribute = function(

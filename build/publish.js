@@ -23,19 +23,15 @@ function normalizeLines(x) {
   return x + "\n";
 }
 
-/* exported writeFileIfNeeded */
-/* exported writeFileIfNeeded */
-/* exported writeFileIfNeeded */
-/* exported writeFileIfNeeded */
-function writeFileIfNeeded(str, filename) {
+function writeFileIfNeeded(filename, str, enc) {
   var oldstr = null;
   try {
-    oldstr = fs.readFileSync(filename);
+    oldstr = fs.readFileSync(filename, enc);
   } catch(ex) {
     oldstr = null;
   }
   if(oldstr !== str) {
-    fs.writeFileSync(filename, str);
+    fs.writeFileSync(filename, str, enc);
   }
 }
 
@@ -345,7 +341,7 @@ function DocCollection() {
     var that = this;
     // Write individual type files
     Object.keys(this.docs).forEach(function(doc) {
-      fs.writeFileSync(that.docs[doc].getFileName(dir),
+      writeFileIfNeeded(that.docs[doc].getFileName(dir),
         normalizeLines(that.docs[doc].getText(that, writer)), "utf8");
     });
     // Write index
@@ -378,7 +374,7 @@ function DocCollection() {
       indexStr += writer.textblock(resolveLinks(this.readme));
     }
     indexStr += writer.footer();
-    fs.writeFileSync(
+    writeFileIfNeeded(
       path.join(dir, "index" + helper.fileExtension),
       normalizeLines(indexStr), "utf8");
     this.tutorials.children.forEach(function(tut) {
@@ -390,7 +386,7 @@ function DocCollection() {
       content += writer.fromMarkdown(writer.textblock(resolveLinks(tut.content)));
       content += doclink;
       content += writer.footer();
-      fs.writeFileSync(
+      writeFileIfNeeded(
         path.join(dir, that.tutorialName(tut)),
         normalizeLines(content), "utf8");
     });

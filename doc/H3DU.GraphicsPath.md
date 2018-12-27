@@ -83,6 +83,7 @@ and dimensions, start angle, and sweep angle.
 ellipse, or a shape based on that arc and ellipse, given the ellipse's corner point
 and dimensions, start angle, and sweep angle.
 * [arrow](#H3DU.GraphicsPath_arrow)<br>Adds path segments to this path in the form of an arrow shape.
+* [bevelRect](#H3DU.GraphicsPath_bevelRect)<br>Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
 * [ellipse](#H3DU.GraphicsPath_ellipse)<br>Adds path segments to this path that form an axis-aligned ellipse given its center
 and dimensions.
 * [ellipseForBox](#H3DU.GraphicsPath_ellipseForBox)<br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
@@ -523,11 +524,10 @@ segments before applying the operation.
 or holes. Subpaths that are holes have the opposite winding
 order (clockwise or counterclockwise) from the subpath
 that contains them.
-<li>To use this method, you must include the script "extras/pathclip.js";
-this is in addition to "extras/path.js". Example:
+<li>To use this method, you must include the script
+"extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathclip.js"></script>
 
 </ul>
 
@@ -659,6 +659,30 @@ this is in addition to "extras/path.js". Example:
 
 This object. Nothing will be added to the path if the distance
 from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+<a name='H3DU.GraphicsPath_bevelRect'></a>
+### H3DU.GraphicsPath#bevelRect(x, y, w, h, arccx, arccy)
+
+Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
+
+To use this method, you must include the script "extras/pathshapes.js";
+this is in addition to "extras/path.js". Example:
+
+    <script type="text/javascript" src="extras/path.js"></script>
+    <script type="text/javascript" src="extras/pathshapes.js"></script>
+
+#### Parameters
+
+* `x` (Type: number)<br>X coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `y` (Type: number)<br>Y coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `w` (Type: number)<br>Width of the rectangle.
+* `h` (Type: number)<br>Height of the rectangle.
+* `arccx` (Type: number)<br>Horizontal extent (from end to end) of the rectangle's corners. Will be adjusted to be not less than 0 and not greater than "w".
+* `arccy` (Type: number)<br>Vertical extent (from end to end) of the rectangle's corners. Will be adjusted to be not less than 0 and not greater than "h".
+
+#### Return Value
+
+This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
 <a name='H3DU.GraphicsPath_ellipse'></a>
 ### H3DU.GraphicsPath#ellipse(cx, cy, w, h)

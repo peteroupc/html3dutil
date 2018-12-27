@@ -644,10 +644,6 @@ configurable control points. The X coordinates of the
 curve indicate time, and the Y coordinates of the curve
 indicate how far the interpolation has reached.
 
-To use this method, you must include the script "extras/interp.js". Example:
-
-    <script type="text/javascript" src="extras/interp.js"></script>
-
 #### Parameters
 
 * `a` (Type: number)<br>X coordinate of the first configurable control point of the curve. Should be within the range 0 through 1.

@@ -237,6 +237,14 @@ class XExtra
     els.each{|e| @node.delete(e) }
     els2.each{|e| @node.add(e) }
   end
+  def outerXML(pretty=false)
+    builder=BuilderInternal.new
+    formatter=(pretty) ?
+      REXML::Formatters::Pretty.new(2,false) :
+      REXML::Formatters::Default.new(false)
+    formatter.write(@node,builder)
+    return builder.to_s
+  end
   def innerXML(pretty=false)
     builder=BuilderInternal.new
     formatter=(pretty) ?
@@ -247,9 +255,9 @@ class XExtra
     }
     return builder.to_s
   end
-  def save(file)
+  def save(file,compact=false)
     bi=BuilderInternal.new
-    if @node.is_a?(REXML::Document)
+    if @node.is_a?(REXML::Document) && !compact
       REXML::Formatters::Pretty.new(2,false).write(@node,bi)
     else
       REXML::Formatters::Default.new(false).write(@node,bi)

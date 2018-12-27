@@ -21,6 +21,7 @@
 .pmd
 .project
 .settings/
+.vs/
 Help/
 ProfilingSessions/
 TestResults/
