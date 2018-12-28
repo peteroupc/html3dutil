@@ -29,8 +29,6 @@ its work.
 * [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
 * [is3DContext](#H3DU.is3DContext)<br>Returns whether the given object is a 3D rendering context.
 * [loadFileFromUrl](#H3DU.loadFileFromUrl)<br>Loads a file from a URL asynchronously, using XMLHttpRequest.
-* [loadGltfFromUrl](#H3DU.loadGltfFromUrl)<br>Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.
 * [loadStlFromUrl](#H3DU.loadStlFromUrl)<br>Loads a .STL file asynchronously.
 * [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
@@ -206,42 +204,6 @@ the parameter's "data" property will be:<ul>
 <li>For response type "json", the JavaScript object decoded
 from JSON.
 <li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.md">Promise</a>)
-
-<a name='H3DU.loadGltfFromUrl'></a>
-### (static) H3DU.loadGltfFromUrl(url)
-
-Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.
-
-This method is considered a supplementary method to the
-Public Domain HTML 3D Library and is not considered part of that
-library.
-
-To use this class, you must include the script "extras/gltf.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:
-
-    <script type="text/javascript" src="extras/gltf.js"></script>
-
-#### Parameters
-
-* `url` (Type: string)<br>URL of the glTF file to load.
-
-#### Return Value
-
-A promise; when it resolves, the result will
-be an object that implements the following methods:<ul>
-<li><code>getShape()</code> - Gets an <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> object described
-by the glTF data.
-<li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
-strings for the texture images described by the glTF data. Each URI will be relative
-to the "url" parameter of the loadGltfFromFile method.
-<li><code>update(time)</code> - A single-parameter method that should be called
-if the glTF data describes an animation; this method updates the state of the
-3D batch in accordance with that animation. The single parameter, <code>time</code>
-(type Number), is a time stamp in milliseconds.
-</ul>If an error occurs in loading the glTF data or any of the buffers and shaders
-it uses, the promise will be rejected. (Type: <a href="Promise.md">Promise</a>.&lt;Object>)
 
 <a name='H3DU.loadStlFromUrl'></a>
 ### (static) H3DU.loadStlFromUrl(url)
