@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, define, exports */
+/* global H3DU, define, exports, flatness */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -1254,11 +1254,7 @@
    * Gets an array of points evenly spaced across the length
    * of the path.
    * @param {number} numPoints Number of points to return.
-   * @param {number} [flatness] When curves and arcs
-   * are decomposed to line segments for the purpose of
-   * calculating their length, the
-   * segments will be close to the true path of the curve by this
-   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @param {number} [flatness] This parameter is no longer used.
    * @returns {Array<Array<number>>} Array of points lying on
    * the path and evenly spaced across the length of the path,
    * starting and ending with the path's endPoints. Returns
@@ -1281,6 +1277,57 @@
       var t = i / (numPoints - 1);
       var ev = curves.evaluate(t);
       points.push([ev[0], ev[1]]);
+    }
+    return points;
+  };
+
+  /**
+   * Gets an array of points evenly spaced across the length
+   * of the path. The positions will be in the form of objects with
+   * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+   * @param {number} numPoints Number of points to return.
+   * @returns {Array<Array<number>>} Array of points lying on
+   * the path and evenly spaced across the length of the path,
+   * starting and ending with the path's endPoints. Returns
+   * an empty array if <i>numPoints</i> is less than 1. Returns
+   * an array consisting of the start point if <i>numPoints</i>
+   * is 1.
+   * @memberof! H3DU.GraphicsPath#
+   * @example The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+   * var points=path.getPointsAsObjects(50)
+   * var buffer=new THREE.BufferGeometry()
+   * .setFromPoints(points);
+   */
+  GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
+    if(numPoints < 1)return [];
+    if(numPoints === 1) {
+      var pt = this._start();
+      return [{
+        "x":pt[0],
+        "y":pt[1]
+      }];
+    }
+    if(numPoints === 2) {
+      var pt1 = this._start();
+      var pt2 = this._end();
+      return [{
+        "x":pt1[0],
+        "y":pt1[1]
+      },
+      {
+        "x":pt2[0],
+        "y":pt2[1]
+      }];
+    }
+    var curves = this.getCurves(flatness);
+    var points = [];
+    for(var i = 0; i < numPoints; i++) {
+      var t = i / (numPoints - 1);
+      var ev = curves.evaluate(t);
+      points.push({
+        "x":ev[0],
+        "y":ev[1]
+      });
     }
     return points;
   };
@@ -1831,7 +1878,6 @@
       return null;
     }
     ret = parseFloat(str.substr(startIndex, str.length - startIndex));
-    // console.log([str.substr(startIndex,str.length-startIndex),ret])
     if(Number.isNaN(ret)) {
       index[0] = oldindex;
       return null;
@@ -4530,7 +4576,7 @@
      * Computes the combination of this path's shape with another
      * path's shape. The following points apply to this method:<ul>
      * <li>This method treats unclosed subpaths as implicitly closed
-     * by connecting their endPoints with their start points.
+     * by connecting their end points with their start points.
      * <li>Currently, the algorithm supports only polygons made up
      * of line segments, so curves and arcs are converted to line
      * segments before applying the operation.

@@ -196,6 +196,8 @@ in this curve object.
 * [getLength](#H3DU.BSplineCurve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#H3DU.BSplineCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
 of U coordinates.
+* [getPointsAsObjects](#H3DU.BSplineCurve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.
 * [jerk](#H3DU.BSplineCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.BSplineCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [split](#H3DU.BSplineCurve_split)<br>Splits this B-spline curve into two at the given point.
@@ -489,7 +491,34 @@ an arc-length parameterization.
 
 An array of curve positions. The first
 element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>>)
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+<a name='H3DU.BSplineCurve_getPointsAsObjects'></a>
+### H3DU.BSplineCurve#getPointsAsObjects(count)
+
+Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.
+
+#### Parameters
+
+* `count` (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.
+
+#### Return Value
+
+An array of curve positions. The first
+element will be the start of the curve. If "count" is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+#### Example
+
+    The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+    var points=curve.getPointsAsObjects(50)
+    var buffer=new THREE.BufferGeometry()
+    .setFromPoints(points);
 
 <a name='H3DU.BSplineCurve_jerk'></a>
 ### H3DU.BSplineCurve#jerk(u)

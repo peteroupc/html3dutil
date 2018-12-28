@@ -60,6 +60,8 @@ cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;B
 * [getLength](#H3DU.PiecewiseCurve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#H3DU.PiecewiseCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
 of U coordinates.
+* [getPointsAsObjects](#H3DU.PiecewiseCurve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.
 * [jerk](#H3DU.PiecewiseCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.PiecewiseCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [tangent](#H3DU.PiecewiseCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
@@ -179,10 +181,6 @@ a collection of control points that the spline
 will go through, and the shape of each curve segment is also determined by the positions
 of neighboring points on the spline.
 
-To use this method, you must include the script "extras/spline.js". Example:
-
-    <script type="text/javascript" src="extras/spline.js"></script>
-
 #### Parameters
 
 * `spline` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.
@@ -205,10 +203,6 @@ Hermite splines are useful for representing an approximate polynomial form
 of a function or curve whose derivative is known; however, Hermite splines are not
 guaranteed to preserve the increasing or decreasing nature of the function or curve.
 
-To use this method, you must include the script "extras/spline.js". Example:
-
-    <script type="text/javascript" src="extras/spline.js"></script>
-
 #### Parameters
 
 * `curve` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.
@@ -225,10 +219,6 @@ Creates a piecewise curve made up of B-spline curves from the control points of 
 cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).
 (If tension, continuity, and bias are all 0, the result is a cubic Catmull&ndash;Rom spline
 in uniform parameterization.)
-
-To use this method, you must include the script "extras/spline.js". Example:
-
-    <script type="text/javascript" src="extras/spline.js"></script>
 
 #### Parameters
 
@@ -278,7 +268,34 @@ an arc-length parameterization.
 
 An array of curve positions. The first
 element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>>)
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+<a name='H3DU.PiecewiseCurve_getPointsAsObjects'></a>
+### H3DU.PiecewiseCurve#getPointsAsObjects(count)
+
+Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.
+
+#### Parameters
+
+* `count` (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.
+
+#### Return Value
+
+An array of curve positions. The first
+element will be the start of the curve. If "count" is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+#### Example
+
+    The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+    var points=curve.getPointsAsObjects(50)
+    var buffer=new THREE.BufferGeometry()
+    .setFromPoints(points);
 
 <a name='H3DU.PiecewiseCurve_jerk'></a>
 ### H3DU.PiecewiseCurve#jerk(u)

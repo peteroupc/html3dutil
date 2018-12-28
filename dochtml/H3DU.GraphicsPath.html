@@ -19,6 +19,7 @@ path's shape.<li><a href='#H3DU.GraphicsPath_GraphicsPath_getBounds'>getBounds</
 fits this graphics path.<li><a href='#H3DU.GraphicsPath_GraphicsPath_getCurrentPoint'>getCurrentPoint</a><br>Gets the current point stored in this path.<li><a href='#H3DU.GraphicsPath_GraphicsPath_getCurves'>getCurves</a><br>Gets a <a href="H3DU.Curve.html">curve evaluator object</a> for
 the curves described by this path.<li><a href='#H3DU.GraphicsPath_GraphicsPath_getLines'>getLines</a><br>Gets an array of line segments approximating
 the path.<li><a href='#H3DU.GraphicsPath_GraphicsPath_getPoints'>getPoints</a><br>Gets an array of points evenly spaced across the length
+of the path.<li><a href='#H3DU.GraphicsPath_GraphicsPath_getPointsAsObjects'>getPointsAsObjects</a><br>Gets an array of points evenly spaced across the length
 of the path.<li><a href='#H3DU.GraphicsPath_GraphicsPath_getTriangles'>getTriangles</a><br>Converts the subpaths in this path to triangles.<li><a href='#H3DU.GraphicsPath_GraphicsPath_interpolate'>interpolate</a><br>Does a linear interpolation between two graphics paths.<li><a href='#H3DU.GraphicsPath_GraphicsPath_intersection'>intersection</a><br>Computes the intersection, or the area common to both this path's shape
 and another path's shape.<li><a href='#H3DU.GraphicsPath_GraphicsPath_isIncomplete'>isIncomplete</a><br>Returns whether the curve path is incomplete
 because of an error in parsing the curve string.<li><a href='#H3DU.GraphicsPath_GraphicsPath_lineTo'>lineTo</a><br>Adds a line segment to the path, starting
@@ -82,12 +83,23 @@ Each line segment is an array of four numbers: the X and
 Y coordinates of the start point, respectively, then the X and
 Y coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;number>>)<a name='H3DU.GraphicsPath_GraphicsPath_getPoints'></a>
 <h3> GraphicsPath#getPoints(numPoints, [flatness])</h3>Gets an array of points evenly spaced across the length
-of the path.<h4> Parameters</h4><ul><li><code>numPoints</code> (Type: number)<br>Number of points to return.<li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</ul><h4> Return Value</h4>Array of points lying on
+of the path.<h4> Parameters</h4><ul><li><code>numPoints</code> (Type: number)<br>Number of points to return.<li><code>flatness</code> (Type: number) (optional)<br>This parameter is no longer used.</ul><h4> Return Value</h4>Array of points lying on
 the path and evenly spaced across the length of the path,
 starting and ending with the path's endPoints. Returns
 an empty array if <i>numPoints</i> is less than 1. Returns
 an array consisting of the start point if <i>numPoints</i>
-is 1. (Type: Array.&lt;Array.&lt;number>>)<a name='H3DU.GraphicsPath_GraphicsPath_getTriangles'></a>
+is 1. (Type: Array.&lt;Array.&lt;number>>)<a name='H3DU.GraphicsPath_GraphicsPath_getPointsAsObjects'></a>
+<h3> GraphicsPath#getPointsAsObjects(numPoints)</h3>Gets an array of points evenly spaced across the length
+of the path. The positions will be in the form of objects with
+two properties: x and y retrieve the X or Y coordinate of each position, respectively.<h4> Parameters</h4><ul><li><code>numPoints</code> (Type: number)<br>Number of points to return.</ul><h4> Return Value</h4>Array of points lying on
+the path and evenly spaced across the length of the path,
+starting and ending with the path's endPoints. Returns
+an empty array if <i>numPoints</i> is less than 1. Returns
+an array consisting of the start point if <i>numPoints</i>
+is 1. (Type: Array.&lt;Array.&lt;number>>)<h4> Example</h4><pre>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+var points=path.getPointsAsObjects(50)
+var buffer=new THREE.BufferGeometry()
+.setFromPoints(points);</pre><a name='H3DU.GraphicsPath_GraphicsPath_getTriangles'></a>
 <h3> GraphicsPath#getTriangles([flatness])</h3>Converts the subpaths in this path to triangles.
 Treats each subpath as a polygon even if it isn't closed.
 Each subpath should not contain self-intersections or
@@ -138,7 +150,7 @@ that keeps straight lines straight and parallel lines parallel).<h4> Parameters<
 <h3> GraphicsPath#union(path, [flatness])</h3>Computes the combination of this path's shape with another
 path's shape. The following points apply to this method:<ul>
 <li>This method treats unclosed subpaths as implicitly closed
-by connecting their endPoints with their start points.
+by connecting their end points with their start points.
 <li>Currently, the algorithm supports only polygons made up
 of line segments, so curves and arcs are converted to line
 segments before applying the operation.

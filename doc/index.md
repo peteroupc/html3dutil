@@ -80,9 +80,7 @@ from one coordinate system to another.
 * [Library Overview](tutorial-overview.md)
 * [2-Dimensional Graphics Paths](tutorial-paths.md)
 * [Creating Shapes](tutorial-shapes.md)
-* [Subclassing](tutorial-subclass.md)
 * [Parametric Curves and Parametric Surfaces](tutorial-surfaces.md)
-* [Texture Examples](tutorial-textures.md)
 
 ## Read Me
 

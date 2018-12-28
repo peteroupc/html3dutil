@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global Float32Array, H3DU */
+/* global Float32Array, H3DU, x, zStartHeight */
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids.<p>
@@ -199,7 +199,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   if(baseRad <= 0 && topRad <= 0 || height === 0) {
   // both baseRad and topRad are zero or negative,
   // or height is zero
-    return mesh;
+    return new H3DU.MeshBuffer();
   }
   var normDir = inside ? -1 : 1;
   var sc = [];
@@ -485,13 +485,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   }
   var normalZ = inward ? -1 : 1;
   var slp1 = sweep === 360 ? slices : slices + 1;
+  var x, y, k;
   if(inner === 0 && loops === 1 && sweep === 360) {
     var vertices = [];
     var indices = [];
     var fan = new TriangleFan(indices);
     var radius = outer * (i / loops);
     var rso = radius / outer;
-    var x, y, k;
     for(k = 0; k < slices; k++) {
       x = sc[k];
       y = sc[k + 1];
@@ -509,7 +509,6 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     for(i = 0; i <= loops; i++) {
       radius = inner + height * (i / loops);
       rso = radius / outer;
-      x, y, k;
       for(k = 0; k < slp1; k++) {
         x = sc[k];
         y = sc[k + 1];
@@ -730,7 +729,6 @@ Meshes.createCapsule = function(radius, length, slices, stacks, middleStacks, fl
 
 /** @ignore */
 Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
-  var mesh = new H3DU.Mesh();
   if(typeof slices === "undefined" || slices === null)slices = 16;
   if(typeof stacks === "undefined" || stacks === null)stacks = 16;
   if(typeof middleStacks === "undefined" || middleStacks === null)middleStacks = 1;
@@ -743,7 +741,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   if(radius < 0)throw new Error("negative radius");
   if(radius === 0) {
   // radius is zero
-    return mesh;
+    return new H3DU.MeshBuffer();
   }
   var cangle;
   var sangle;
@@ -775,6 +773,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   var sphereRatio = radius * 2;
   sphereRatio /= sphereRatio + length;
   var zEnd = [];
+  zEnd.push(-1);
+  scStack.push(0);
+  verticalTexCoords.push(0);
   // Generate latitude and vertical texture coordinates
   angleStep = Math.PI / stacks;
   cosStep = Math.cos(angleStep);
@@ -792,118 +793,51 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
     sangle = tsin;
     cangle = tcos;
   }
-  var slicesTimes2 = slices * 2;
-  var lastZeCen = -1;
-  var lastRad = 0;
+  // Generate the vertex data
+  // var slicesTimes2 = slices * 2;
 
-  var lastTex = 0;
-  function normAndVertex(m, normDir, x, y, z, offset) {
-    m.normal3(x * normDir, y * normDir, z * normDir);
-    m.vertex3(x, y, z + offset);
-  }
-  var startX = sc[0];
-  var startY = sc[1];
-  for(i = 0; i < stacks; i++) {
-    var zsCen = lastZeCen;
+  var vertices = [];
+  var tx, x, y;
+  var gridHeight = 0;
+  for(i = 0; i <= stacks; i++) {
     var zeCen = zEnd[i];
-    var texStart = lastTex;
-    var texEnd = verticalTexCoords[i];
-    var zStartHeight = radius * zsCen;
-    var zEndHeight = radius * zeCen;
+    var txe = verticalTexCoords[i];
+  // var zEndHeight = radius * zeCen;
     var offset = i < halfStacks ? -halfLength : halfLength;
-    var radiusStart = lastRad;
     var radiusEnd = radius * scStack[i];
-    var txs = texStart;
-    var txe = texEnd;
-    if(length > 0) {
-      txs = i < halfStacks ? texStart * sphereRatio :
-        1.0 - (1.0 - texStart) * sphereRatio;
-      txe = i < halfStacks ? texEnd * sphereRatio :
-        1.0 - (1.0 - texEnd) * sphereRatio;
-    }
-    lastZeCen = zeCen;
-    lastTex = texEnd;
-    lastRad = radiusEnd;
-    if(i === stacks - 1 || i === 0) {
-      mesh.mode(H3DU.Mesh.TRIANGLES);
-    } else {
-      mesh.mode(H3DU.Mesh.TRIANGLE_STRIP);
-      mesh.texCoord2(1, txs);
-      normAndVertex(mesh, normDir, startX * radiusStart, startY * radiusStart, zStartHeight, offset);
-      mesh.texCoord2(1, txe);
-      normAndVertex(mesh, normDir, startX * radiusEnd, startY * radiusEnd, zEndHeight, offset);
-    }
-    var lastTx = 0;
-    var lastX = startX;
-    var lastY = startY;
-    var txMiddle, tx, x, y;
-    for(var k = 2, j = 1; k <= slicesTimes2; k += 2, j++) {
+    txe = texEnd;
+    gridHeight++;
+    for(var j = 0; j <= slices; j++) {
       tx = tc[j];
-      if(i === stacks - 1) {
-        txMiddle = lastTx + (tx - lastTx) * 0.5;
-        mesh.texCoord2(1 - lastTx, txs);
-        normAndVertex(mesh, normDir, lastX * radiusStart, lastY * radiusStart, zStartHeight, offset);
-        // point at south pole
-        mesh.texCoord2(1 - txMiddle, txe);
-        normAndVertex(mesh, normDir, startX * radiusEnd, startY * radiusEnd, zEndHeight, offset);
-        x = sc[k];
-        y = sc[k + 1];
-        mesh.texCoord2(1 - tx, txs);
-        normAndVertex(mesh, normDir, x * radiusStart, y * radiusStart, zStartHeight, offset);
-        lastX = x;
-        lastY = y;
-        lastTx = tx;
-      } else if(i === 0) {
-        txMiddle = lastTx + (tx - lastTx) * 0.5;
-        // point at north pole
-        mesh.texCoord2(1 - txMiddle, txs);
-        normAndVertex(mesh, normDir, startX * radiusStart, startY * radiusStart, zStartHeight, offset);
-        mesh.texCoord2(1 - lastTx, txe);
-        normAndVertex(mesh, normDir, lastX * radiusEnd, lastY * radiusEnd, zEndHeight, offset);
-        x = sc[k];
-        y = sc[k + 1];
-        mesh.texCoord2(1 - tx, txe);
-        normAndVertex(mesh, normDir, x * radiusEnd, y * radiusEnd, zEndHeight, offset);
-        lastX = x;
-        lastY = y;
-        lastTx = tx;
-      } else {
-        x = sc[k];
-        y = sc[k + 1];
-        mesh.texCoord2(1 - tx, txs);
-        normAndVertex(mesh, normDir, x * radiusStart, y * radiusStart, zStartHeight, offset);
-        mesh.texCoord2(1 - tx, txe);
-        normAndVertex(mesh, normDir, x * radiusEnd, y * radiusEnd, zEndHeight, offset);
-      }
+      x = sc[j * 2];
+      y = sc[j * 2 + 1];
+      vertices.push(
+          x * radiusEnd, y * radiusEnd, zStartHeight + offset,
+          x * radiusEnd * normDir, y * radiusEnd * normDir, zStartHeight * normDir,
+          1 - tx, txe);
     }
     if(i + 1 === halfStacks && length > 0) {
       var sr2 = sphereRatio * 0.5;
       var hl = halfLength * 2;
-      var endr2 = 1.0 - sr2;
+  // var endr2 = 1.0 - sr2;
       var he = 1.0 - sphereRatio;
-      for(var m = 0; m < middleStacks; m++) {
+      for(var m = 0; m <= middleStacks; m++) {
         s = -halfLength + (m === 0 ? 0 : hl * m / middleStacks);
-        var e = m === middleStacks - 1 ? halfLength : -halfLength + hl * (m + 1) / middleStacks;
-        txs = sr2 + (m === 0 ? 0 : he * m / middleStacks);
-        txe = m === middleStacks - 1 ? endr2 : sr2 + he * (m + 1) / middleStacks;
-        mesh.mode(H3DU.Mesh.TRIANGLE_STRIP);
-        mesh.texCoord2(1, txs);
-        normAndVertex(mesh, normDir, startX * radiusEnd, startY * radiusEnd, zEndHeight, s);
-        mesh.texCoord2(1, txe);
-        normAndVertex(mesh, normDir, startX * radiusEnd, startY * radiusEnd, zEndHeight, e);
-        for(k = 2, j = 1; k <= slicesTimes2; k += 2, j++) {
+        txe = sr2 + (m === 0 ? 0 : he * m / middleStacks);
+        gridHeight++;
+        for(j = 0; j <= slices; j++) {
           tx = tc[j];
-          x = sc[k];
-          y = sc[k + 1];
-          mesh.texCoord2(1 - tx, txs);
-          normAndVertex(mesh, normDir, x * radiusEnd, y * radiusEnd, zEndHeight, s);
-          mesh.texCoord2(1 - tx, txe);
-          normAndVertex(mesh, normDir, x * radiusEnd, y * radiusEnd, zEndHeight, e);
+          x = sc[j * 2];
+          y = sc[j * 2 + 1];
+          vertices.push(
+            x * radiusEnd, y * radiusEnd, zStartHeight + s,
+            x * radiusEnd * normDir, y * radiusEnd * normDir, zStartHeight * normDir,
+            1 - tx, txe);
         }
       }
     }
   }
-  mesh = mesh.toMeshBuffer();
+  mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
   return flat ? mesh.recalcNormals(flat, inside) : mesh.normalizeNormals();
 };
 

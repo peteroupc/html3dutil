@@ -46,6 +46,8 @@ the curves described by this path.
 the path.
 * [getPoints](#H3DU.GraphicsPath_GraphicsPath_getPoints)<br>Gets an array of points evenly spaced across the length
 of the path.
+* [getPointsAsObjects](#H3DU.GraphicsPath_GraphicsPath_getPointsAsObjects)<br>Gets an array of points evenly spaced across the length
+of the path.
 * [getTriangles](#H3DU.GraphicsPath_GraphicsPath_getTriangles)<br>Converts the subpaths in this path to triangles.
 * [interpolate](#H3DU.GraphicsPath_GraphicsPath_interpolate)<br>Does a linear interpolation between two graphics paths.
 * [intersection](#H3DU.GraphicsPath_GraphicsPath_intersection)<br>Computes the intersection, or the area common to both this path's shape
@@ -275,7 +277,7 @@ of the path.
 #### Parameters
 
 * `numPoints` (Type: number)<br>Number of points to return.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
+* `flatness` (Type: number) (optional)<br>This parameter is no longer used.
 
 #### Return Value
 
@@ -285,6 +287,33 @@ starting and ending with the path's endPoints. Returns
 an empty array if <i>numPoints</i> is less than 1. Returns
 an array consisting of the start point if <i>numPoints</i>
 is 1. (Type: Array.&lt;Array.&lt;number>>)
+
+<a name='H3DU.GraphicsPath_GraphicsPath_getPointsAsObjects'></a>
+### GraphicsPath#getPointsAsObjects(numPoints)
+
+Gets an array of points evenly spaced across the length
+of the path. The positions will be in the form of objects with
+two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+
+#### Parameters
+
+* `numPoints` (Type: number)<br>Number of points to return.
+
+#### Return Value
+
+Array of points lying on
+the path and evenly spaced across the length of the path,
+starting and ending with the path's endPoints. Returns
+an empty array if <i>numPoints</i> is less than 1. Returns
+an array consisting of the start point if <i>numPoints</i>
+is 1. (Type: Array.&lt;Array.&lt;number>>)
+
+#### Example
+
+    The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+    var points=path.getPointsAsObjects(50)
+    var buffer=new THREE.BufferGeometry()
+    .setFromPoints(points);
 
 <a name='H3DU.GraphicsPath_GraphicsPath_getTriangles'></a>
 ### GraphicsPath#getTriangles([flatness])
@@ -516,7 +545,7 @@ The transformed version of this path. (Type: <a href="H3DU.GraphicsPath.md">H3DU
 Computes the combination of this path's shape with another
 path's shape. The following points apply to this method:<ul>
 <li>This method treats unclosed subpaths as implicitly closed
-by connecting their endPoints with their start points.
+by connecting their end points with their start points.
 <li>Currently, the algorithm supports only polygons made up
 of line segments, so curves and arcs are converted to line
 segments before applying the operation.

@@ -18,6 +18,7 @@ curve and the point at the given U coordinate of this curve.<li><a href='#H3DU.T
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.<li><a href='#H3DU.Trochoid_endPoints'>endPoints</a><br>Gets the endpoints of this curve.<li><a href='#H3DU.Trochoid_evaluate'>evaluate</a><br>Generates a point on the curve from the given U coordinate.<li><a href='#H3DU.Trochoid_fitRange'>fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to fit the given range.<li><a href='#H3DU.Trochoid_getLength'>getLength</a><br>Convenience method for getting the total length of this curve.<li><a href='#H3DU.Trochoid_getPoints'>getPoints</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.<li><a href='#H3DU.Trochoid_getPointsAsObjects'>getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
 of U coordinates.<li><a href='#H3DU.Trochoid_jerk'>jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.<li><a href='#H3DU.Trochoid_normal'>normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.<li><a href='#H3DU.Trochoid_tangent'>tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.<li><a href='#H3DU.Trochoid_toArcLengthParam'>toArcLengthParam</a><br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>.<li><a href='#H3DU.Trochoid_velocity'>velocity</a><br>Finds the velocity (derivative) of this curve at the given point.</ul><a name='H3DU.Trochoid_accel'></a>
@@ -61,7 +62,18 @@ of U coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization.<h4> Parameters</h4><ul><li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</ul><h4> Return Value</h4>An array of curve positions. The first
 element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>>)<a name='H3DU.Trochoid_jerk'></a>
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)<a name='H3DU.Trochoid_getPointsAsObjects'></a>
+<h3> H3DU.Trochoid#getPointsAsObjects(count)</h3>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.<h4> Parameters</h4><ul><li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</ul><h4> Return Value</h4>An array of curve positions. The first
+element will be the start of the curve. If "count" is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)<h4> Example</h4><pre>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+var points=curve.getPointsAsObjects(50)
+var buffer=new THREE.BufferGeometry()
+.setFromPoints(points);</pre><a name='H3DU.Trochoid_jerk'></a>
 <h3> H3DU.Trochoid#jerk(u)</h3>Finds an approximate jerk vector at the given U coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
