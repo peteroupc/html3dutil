@@ -587,11 +587,9 @@ Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's center
 and dimensions, start angle, and sweep angle.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -614,11 +612,9 @@ Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's corner point
 and dimensions, start angle, and sweep angle.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -639,11 +635,9 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 
 Adds path segments to this path in the form of an arrow shape.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -665,11 +659,9 @@ from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="H3DU.Gr
 
 Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -690,11 +682,9 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 Adds path segments to this path that form an axis-aligned ellipse given its center
 and dimensions.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -713,11 +703,9 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
 and dimensions.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -735,11 +723,9 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 
 Adds a line segment to this path.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -757,11 +743,9 @@ This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
 Adds path segments to this path that form a polygon or a connected line segment strand.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -778,11 +762,9 @@ Throws an error if "pointCoords" has an odd length. (Type: <a href="H3DU.Graphic
 
 Adds path segments to this path that form a regular polygon.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -801,11 +783,9 @@ This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
 Adds path segments to this path that form a regular N-pointed star.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 
@@ -825,11 +805,9 @@ This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
 Adds path segments to this path that form an axis-aligned rounded rectangle.
 
-To use this method, you must include the script "extras/pathshapes.js";
-this is in addition to "extras/path.js". Example:
+To use this method, you must include the script "extras/path.js". Example:
 
     <script type="text/javascript" src="extras/path.js"></script>
-    <script type="text/javascript" src="extras/pathshapes.js"></script>
 
 #### Parameters
 

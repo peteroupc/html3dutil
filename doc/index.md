@@ -12,10 +12,6 @@ as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
 whose edges are made up of B-spline curves.
-* <a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
-to create a B&eacute;zier curve.</b>
-* <a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.md#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
-to create a B&eacute;zier surface.</b>
 * <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a><br>A <b>vertex attribute object</b>.
 * <a href="H3DU.Camera.md">H3DU.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".

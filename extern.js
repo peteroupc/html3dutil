@@ -6,10 +6,8 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* exported H3DU, WebGL2RenderingContext, define, exports, module */
+/* exported H3DU, define, exports, module */
 var H3DU, define, exports, module;
-/** @typedef {WebGL2RenderingContext} */ var WebGL2RenderingContext;
-/** @typedef {CubeMap} */H3DU.CubeMap;
 /** @typedef {Curve} */H3DU.Curve;
 /** @typedef {CurveBuilder} */H3DU.CurveBuilder;
 /** @typedef {SurfaceBuilder} */H3DU.SurfaceBuilder;
@@ -22,4 +20,3 @@ var H3DU, define, exports, module;
 /** @typedef {Shape} */ H3DU.Shape;
 /** @typedef {ShapeGroup} */H3DU.ShapeGroup;
 /** @typedef {Transform} */H3DU.Transform;
-goog.forwardDeclare('WebGL2RenderingContext');

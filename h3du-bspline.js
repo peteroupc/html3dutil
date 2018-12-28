@@ -174,7 +174,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * // the control points will initially be of this type of curve.
  * // var srcBasis = [ .... ]; // To be supplied or filled in.
  * // "dstBasis" is a 4x4 basis matrix for the destination curve type.
- * // It's defined here as the Bezier basis matrix for this example
+ * // It's defined here as the B&eacute;zier basis matrix for this example
  * var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
  * // Step 1: Invert the destination basis matrix
  * var invertedDest=H3DU.Math.mat4invert(destBasis)
@@ -195,11 +195,11 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * newControlPoints[2][i]=cp[2]
  * newControlPoints[3][i]=cp[3]
  * }
- * // Finally, generate a Bezier curve (which is a special case
+ * // Finally, generate a B&eacute;zier curve (which is a special case
  * // of a B-spline curve)
  * var curve=new BSplineCurve(
  * newControlPoints,
- * [0,0,0,0,1,1,1,1] // cubic Bezier knot vector
+ * [0,0,0,0,1,1,1,1] // cubic B&eacute;zier knot vector
  * );
  * // Alternatively, the curve could be generated with the
  * // fromBezierCurve method:
@@ -1134,113 +1134,4 @@ BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
     controlPoints.length - 1, bits);
 };
 
-/**
- * A [curve evaluator object]{@link H3DU.Curve} for a B&eacute;zier curve.<p>
- * @constructor
- * @augments H3DU.Curve
- * @deprecated Instead of this class, use {@link H3DU.BSplineCurve.fromBezierCurve}
- * to create a B&eacute;zier curve.
- * @memberof H3DU
- * @param {Array<Array<number>>} cp An array of control points as specified in {@link H3DU.BSplineCurve.fromBezierCurve}.
- * @param {number} [u1] No longer used since version 2.0. The starting and ending
- * points will be (0, 1). (This parameter was the starting point for the
- * purpose of interpolation.)
- * @param {number} [u2] No longer used since version 2.0. The starting and ending
- * points will be (0, 1). (This parameter was the ending point for the
- * purpose of interpolation.)
- */
-function BezierCurve(cp, u1, u2) {
-  if(typeof u1 !== "undefined" && u1 !== null || typeof u2 !== "undefined" && u2 !== null)console.warn("Unused parameters u1 and/or u2 given");
-  this.curve = BSplineCurve.clamped(cp, cp.length - 1, 0);
-}
-BezierCurve.prototype = Object.create(Curve.prototype);
-BezierCurve.prototype.constructor = BezierCurve;
-/**
- * Returns the starting and ending U coordinates of this curve.
- * @returns {Array<number>} A two-element array. The first and second
- * elements are the starting and ending U coordinates, respectively, of the curve.
- */
-BezierCurve.prototype.endPoints = function() {
-  return this.curve.endPoints();
-};
-/**
- * Evaluates the curve function based on a point
- * in a B&eacute;zier curve.
- * @param {number} u Point on the curve to evaluate (generally within the range
- * given in the constructor).
- * @returns {Array<number>} An array of the result of
- * the evaluation. It will have as many elements as a control point, as specified in the constructor.
- * @example
- * // Generate 11 points forming the B&eacute;zier curve.
- * // Assumes the curve was created with u1=0 and u2=1 (the default).
- * var points=[];
- * for(var i=0;i<=10;i++) {
- * points.push(curve.evaluate(i/10.0));
- * }
- */
-BezierCurve.prototype.evaluate = function(u) {
-  return this.curve.evaluate(u);
-};
-/**
- * A [surface evaluator object]{@link H3DU.Surface} for a B&eacute;zier surface.<p>
- * @deprecated Instead of this class, use {@link H3DU.BSplineSurface.fromBezierSurface}
- * to create a B&eacute;zier surface.
- * @constructor
- * @augments H3DU.Surface
- * @memberof H3DU
- * @param {Array<Array<Array<number>>>} cp An array of control point
- * arrays as specified in {@link H3DU.BSplineSurface.fromBezierSurface}.
- * @param {number} [u1] No longer used since version 2.0. The starting and ending
- * points will be (0, 1). (This parameter was the starting point for the
- * purpose of interpolation along the U axis.)
- * @param {number} [u2] No longer used since version 2.0. The starting and ending
- * points will be (0, 1). (This parameter was the ending point for the
- * purpose of interpolation along the U axis.)
- * @param {number} [v1] No longer used since version 2.0. The starting and ending
- * points will be (0, 1). (This parameter was the starting point for the
- * purpose of interpolation along the V axis.)
- * @param {number} [v2] No longer used since version 2.0. The starting and ending
- * points will be (0, 1). (This parameter was the ending point for the
- * purpose of interpolation along the V axis.)
- */
-function BezierSurface(cp, u1, u2, v1, v2) {
-  if(typeof u1 !== "undefined" && u1 !== null) {
-    console.warn("Unused parameter u1 is defined");
-  }
-  if(typeof u2 !== "undefined" && u2 !== null) {
-    console.warn("Unused parameter u2 is defined");
-  }
-  if(typeof v1 !== "undefined" && v1 !== null) {
-    console.warn("Unused parameter v1 is defined");
-  }
-  if(typeof v2 !== "undefined" && v2 !== null) {
-    console.warn("Unused parameter v2 is defined");
-  }
-  this.surface = BSplineSurface.clamped(cp, cp[0].length - 1, cp.length - 1, 0);
-}
-BezierSurface.prototype = Object.create(Surface.prototype);
-BezierSurface.prototype.constructor = BezierSurface;
-
-/**
- * Evaluates the surface function based on a point
- * in a B&eacute;zier surface.
- * @param {number} u U coordinate of the surface to evaluate (generally within the range
- * given in the constructor).
- * @param {number} v V coordinate of the surface to evaluate.
- * @returns {Array<number>} An array of the result of
- * the evaluation. It will have as many elements as a control point, as specified in the constructor.
- */
-BezierSurface.prototype.evaluate = function(u, v) {
-  return this.surface.evaluate(u, v);
-};
-/**
- * Returns the starting and ending U and V coordinates of this surface.
- * @returns {Array<number>} A four-element array. The first and second
- * elements are the starting and ending U coordinates, respectively, of the surface, and the third
- * and fourth elements are its starting and ending V coordinates.
- */
-BezierSurface.prototype.endPoints = function() {
-  return this.surface.endPoints();
-};
-
-export {BezierCurve, BezierSurface, BSplineSurface, BSplineCurve};
+export {BSplineSurface, BSplineCurve};

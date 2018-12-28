@@ -120,7 +120,7 @@ have the same path as the original curve.
     // the control points will initially be of this type of curve.
     // var srcBasis = [ .... ]; // To be supplied or filled in.
     // "dstBasis" is a 4x4 basis matrix for the destination curve type.
-    // It's defined here as the Bezier basis matrix for this example
+    // It's defined here as the B&eacute;zier basis matrix for this example
     var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
     // Step 1: Invert the destination basis matrix
     var invertedDest=H3DU.Math.mat4invert(destBasis)
@@ -141,11 +141,11 @@ have the same path as the original curve.
     newControlPoints[2][i]=cp[2]
     newControlPoints[3][i]=cp[3]
     }
-    // Finally, generate a Bezier curve (which is a special case
+    // Finally, generate a B&eacute;zier curve (which is a special case
     // of a B-spline curve)
     var curve=new BSplineCurve(
     newControlPoints,
-    [0,0,0,0,1,1,1,1] // cubic Bezier knot vector
+    [0,0,0,0,1,1,1,1] // cubic B&eacute;zier knot vector
     );
     // Alternatively, the curve could be generated with the
     // fromBezierCurve method:

@@ -532,9 +532,9 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   this.mode = mode;
   if(mode === Mesh.TRIANGLES) {
     var unp1 = un + 1;
-    for(i = 0; i < un; i++) {
-      for(j = 0; j < vn; j++) {
-        var index0 = j * unp1 + i + firstVertex;
+    for(var y = 0; y < vn; y++) {
+      for(var x = 0; x < un; x++) {
+        var index0 = y * unp1 + x + firstVertex;
         var index1 = index0 + unp1;
         var index2 = index0 + 1;
         var index3 = index1 + 1;
