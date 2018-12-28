@@ -5,10 +5,7 @@
 <a name='H3DU'></a>
 ### H3DU
 
-The Public Domain HTML 3D Library contains classes and utility
-methods to ease the development of HTML 3D applications, such
-as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
-See the <a href="tutorial-overview.md">Library Overview</a> tutorial.
+This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 
 This page describes miscellaneous utility methods included in the
 library.

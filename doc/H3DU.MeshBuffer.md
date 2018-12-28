@@ -159,7 +159,7 @@ and the other mesh's indices copied or adapted.
 
 #### Parameters
 
-* `other` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> | <a href="H3DU.Mesh.md">H3DU.Mesh</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is not the same as the other mesh's primitive type. <i>Passing a Mesh to this method is for compatibility only and this feature may be dropped in the future.</i>
+* `other` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is not the same as the other mesh's primitive type.
 
 #### Return Value
 

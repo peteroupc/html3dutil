@@ -689,11 +689,10 @@ MeshBuffer.prototype._recalcTangents = function() {
  * Merges the vertices from another mesh into this one.
  * The vertices from the other mesh will be copied into this one,
  * and the other mesh's indices copied or adapted.
- * @param {H3DU.MeshBuffer|H3DU.Mesh} other A mesh to merge into this one. The mesh
+ * @param {H3DU.MeshBuffer} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
  * Throws an error if this mesh's primitive type is not the same as
- * the other mesh's primitive type. <i>Passing a Mesh to this method is for compatibility
- * only and this feature may be dropped in the future.</i>
+ * the other mesh's primitive type.
  * @returns {H3DU.MeshBuffer} This object.
  * @example
  * var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
@@ -702,7 +701,6 @@ MeshBuffer.prototype.merge = function(other) {
   var newAttributes = [];
   var attr;
   if(!other)throw new Error();
-  if(other instanceof H3DU.Mesh)return this.merge(other.toMeshBuffer());
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
     return this;

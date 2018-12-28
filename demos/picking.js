@@ -468,9 +468,9 @@ function makeRay(startPt, focusPt) {
 
 /* exported raypick */
 /**
- * @param x Same meaning as x-coordinate of first parameter of
+ * @param x Same meaning as X coordinate of first parameter of
  * H3DU.Math.vec3fromWindowPoint.
- * @param y Same meaning as y-coordinate of first parameter of
+ * @param y Same meaning as Y coordinate of first parameter of
  * H3DU.Math.vec3fromWindowPoint.
  * @param projView Same meaning as second parameter of
  * H3DU.Math.vec3fromWindowPoint.

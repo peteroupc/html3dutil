@@ -1,4 +1,4 @@
-HTML 3D Utility Library
+Geometry Utilities
 ====
 
 **Download source code: [ZIP file](https://github.com/peteroupc/html3dutil/archive/master.zip)**
@@ -7,7 +7,9 @@ If you like this software, consider donating to me at this link: [http://peterou
 
 ----
 
-A public domain JavaScript library for easing the development of HTML 3D applications.
+This is a public-domain library with classes and methods that were formerly in the Public Domain HTML 3D Library.  Classes and methods that involved WebGL, shaders, or a 3D scene graph were removed, to make this library much more general-purpose.  In any case, maintaining a 3D scene graph, textures, materials, and shaders is not trivial and is better handled by other 3D engines, such as three.js.  The classes and methods remaining in this library don't assume the existence of a 3D rendering pipeline such as WebGL or OpenGL ES, or even the existence of an HTML DOM, and are thus more easily portable to other programming languages.
+
+(Speaking of OpenGL ES, there are some things supported by some implementations that are strictly not necessary, since they can be implemented with shaders and clever mesh construction.  These things include line primitives, triangle fans, triangle strips, and built-in antialiasing.)
 
 API documentation is found at: [https://peteroupc.github.io/html3dutil](https://peteroupc.github.io/html3dutil)
 or [https://github.com/peteroupc/html3dutil/blob/master/doc/index.md](https://github.com/peteroupc/html3dutil/blob/master/doc/index.md).
@@ -35,50 +37,9 @@ the library's source code into a single file called `h3du_min.js`.
 Overview and Demos
 ---------
 
-For a list of demos, as well as detailed instructions on using this library and a summary of the library's features, visit:
+For detailed instructions on using this library and a summary of the library's features, visit:
 
 [https://peteroupc.github.io/html3dutil/tutorial-overview.html](https://peteroupc.github.io/html3dutil/tutorial-overview.html)
-
-Other Sites
---------
-* CodePlex: [https://html3dutil.codeplex.com/](https://html3dutil.codeplex.com/)
-* Code Project: [http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-* SourceForge: [https://sourceforge.net/p/html3dutil](https://sourceforge.net/p/html3dutil)
-
-Example
----------
-```javascript
-  // Create the 3D scene; find the HTML canvas and pass it
-  // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  var sub=new H3DU.Batch3D()
-   // Set the perspective view.  Camera has a 45-degree field of view
-   // and will see objects from 0.1 to 100 units away.
-   .perspectiveAspect(45,0.1,100)
-   // Move the camera back 40 units.
-   .setLookAt([0,0,40]);
-  sub.getLights().setBasic();
-  // Create a box mesh 10 units in size
-  var mesh=H3DU.Meshes.createBox(10,20,20);
-  // Create a shape based on the mesh and give it a red color
-  var shape=new H3DU.Shape(mesh).setColor("red");
-  // Add the shape to the scene
-  sub.addShape(shape);
-  // Create a timer
-  var timer={};
-  // Set up the render loop
-  H3DU.renderLoop(function(time){
-   // Update the shape's rotation
-   var q=H3DU.Math.quatFromTaitBryan(
-     360 * H3DU.getTimePosition(timer,time,6000),
-     360 * H3DU.getTimePosition(timer,time,12000),
-     0
-   );
-   shape.setQuaternion(q);
-   // Render the scene
-   scene.render(sub);
-  });
-```
 
 ## History
 

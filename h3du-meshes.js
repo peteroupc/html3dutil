@@ -19,6 +19,30 @@
  */
 export var Meshes = {};
 
+/**
+ * Primitive mode for rendering a triangle fan. The first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the first vertex of the first triangle,
+ * the previous vertex, and 1 new vertex.
+ */
+function TriangleFan(indices) {
+  this.indices = indices;
+  this.start = -1;
+  this.last = -1;
+  this.addIndex = function(index) {
+    if(this.start < 0) {
+      this.start = index;
+    } else if(this.last < 0) {
+      this.last = index;
+    } else {
+      this.indices.push(this.start);
+      this.indices.push(this.last);
+      this.indices.push(index);
+      this.last = index;
+    }
+  };
+}
+
 // TODO: Stop using H3DU.Mesh
 
 var meshBufferFromVertices = function(vertices, indices) {
@@ -38,6 +62,21 @@ function meshBufferFromVertexGrid(vertices, width, height) {
       var index1 = index0 + width;
       var index2 = index0 + 1;
       var index3 = index1 + 1;
+      indices.push(index0, index1, index2);
+      indices.push(index2, index1, index3);
+    }
+  }
+  return meshBufferFromVertices(vertices, indices);
+}
+
+function meshBufferFromUWrapVertexGrid(vertices, width, height) {
+  var indices = [];
+  for(var y = 0; y < height - 1; y++) {
+    for(var x = 0; x < width; x++) {
+      var index0 = y * width + x;
+      var index1 = index0 + width;
+      var index2 = x === width - 1 ? y * width : index0 + 1;
+      var index3 = x === width - 1 ? (y + 1) * width : index1 + 1;
       indices.push(index0, index1, index2);
       indices.push(index2, index1, index3);
     }
@@ -181,9 +220,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
-  // var slicesTimes2 = slices * 2;
   if(height > 0) {
-
     var sinSlopeNorm, cosSlopeNorm;
     if(baseRad === topRad) {
       sinSlopeNorm = 0;
@@ -277,8 +314,6 @@ Meshes.createLathe = function(points, slices, flat, inside) {
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
-  // var slicesTimes2 = slices * 2;
-
   var stacks = points.length / 2 - 1;
   var recipstacks = 1.0 / stacks;
   var vertices = [];
@@ -396,7 +431,6 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * @returns {H3DU.MeshBuffer} The generated mesh.
  */
 Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, inward) {
-  var mesh = new H3DU.Mesh();
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(typeof loops === "undefined" || loops === null)loops = 1;
   if(typeof start === "undefined" || start === null)start = 0;
@@ -406,7 +440,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   if(inner > outer)throw new Error("inner greater than outer");
   if(inner < 0)inner = 0;
   if(outer < 0)outer = 0;
-  if(outer === 0 || sweep === 0)return mesh;
+  if(outer === 0 || sweep === 0)return new H3DU.MeshBuffer();
   var fullCircle = sweep === 360 && start === 0;
   var sweepDir = sweep < 0 ? -1 : 1;
   if(sweep < 0)sweep = -sweep;
@@ -449,51 +483,45 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     tc[0] = 0;
     tc[tc.length - 1] = 1;
   }
-  var slicesTimes2 = slices * 2;
-  var height = outer - inner;
-
-  var lastRad = inner;
-  if(inward) {
-    mesh.normal3(0, 0, -1);
+  var normalZ = inward ? -1 : 1;
+  var slp1 = sweep === 360 ? slices : slices + 1;
+  if(inner === 0 && loops === 1 && sweep === 360) {
+    var vertices = [];
+    var indices = [];
+    var fan = new TriangleFan(indices);
+    var radius = outer * (i / loops);
+    var rso = radius / outer;
+    var x, y, k;
+    for(k = 0; k < slices; k++) {
+      x = sc[k];
+      y = sc[k + 1];
+      vertices.push(x * radius, y * radius, 0,
+        0, 0, normalZ,
+        (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
+      fan.addIndex(k);
+    }
+    fan.addIndex(0);
+    return meshBufferFromVertices(vertices, indices);
   } else {
-    mesh.normal3(0, 0, 1);
-  }
-  for(i = 0; i < loops; i++) {
-    var zEnd = (i + 1) / loops;
-    var radiusStart = lastRad;
-    var radiusEnd = inner + height * zEnd;
-    var rso = radiusStart / outer;
-    var reo = radiusEnd / outer;
-    lastRad = radiusEnd;
-    var triangleFanBase = i === 0 && inner === 0;
-    mesh.mode(triangleFanBase ?
-      H3DU.Mesh.TRIANGLE_FAN : H3DU.Mesh.TRIANGLE_STRIP);
-    var x, y, j, k;
-    if(triangleFanBase) {
-      var jStart = slicesTimes2 / 2;
-      for(k = slicesTimes2, j = jStart; k >= 0; k -= 2, j--) {
+    var height = outer - inner;
+
+    vertices = [];
+    for(i = 0; i <= loops; i++) {
+      radius = inner + height * (i / loops);
+      rso = radius / outer;
+      x, y, k;
+      for(k = 0; k < slp1; k++) {
         x = sc[k];
         y = sc[k + 1];
-        if(k === slicesTimes2) {
-          mesh.texCoord2((1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
-          mesh.vertex3(x * radiusStart, y * radiusStart, 0);
-        }
-        mesh.texCoord2((1 + x * reo) * 0.5, (1 + y * reo) * 0.5);
-        mesh.vertex3(x * radiusEnd, y * radiusEnd, 0);
-      }
-    } else {
-      for(k = 0, j = 0; k <= slicesTimes2; k += 2, j++) {
-        x = sc[k];
-        y = sc[k + 1];
-        mesh.texCoord2((1 + x * reo) * 0.5, (1 + y * reo) * 0.5);
-        mesh.vertex3(x * radiusEnd, y * radiusEnd, 0);
-        mesh.texCoord2((1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
-        mesh.vertex3(x * radiusStart, y * radiusStart, 0);
+        vertices.push(x * radius, y * radius, 0,
+        0, 0, normalZ,
+        (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
       }
     }
+    return sweep === 360 ?
+    meshBufferFromUWrapVertexGrid(vertices, slp1, loops + 1) :
+    meshBufferFromVertexGrid(vertices, slp1, loops + 1);
   }
-  mesh = mesh.toMeshBuffer();
-  return mesh;
 };
 
 /**
@@ -515,14 +543,12 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
  * @returns {H3DU.MeshBuffer} The generated mesh.
  */
 Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward) {
-  var mesh = new H3DU.Mesh();
   if(typeof crosswise === "undefined" || crosswise === null)crosswise = 16;
   if(typeof lengthwise === "undefined" || lengthwise === null)lengthwise = 16;
   if(crosswise < 3)throw new Error("crosswise is less than 3");
   if(lengthwise < 3)throw new Error("lengthwise is less than 3");
   if(inner < 0 || outer < 0)throw new Error("inner or outer is less than 0");
-  if(outer === 0)return mesh;
-  if(inner === 0)return mesh;
+  if(outer === 0 || inner === 0)return new H3DU.MeshBuffer();
   var tubeRadius = inner;
   var circleRad = outer;
   var sci = [];
@@ -557,39 +583,25 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   }
   scj.push(scj[0]);
   scj.push(scj[1]);
-  for(var j = 0; j < lengthwise; j++) {
+  var vertices = [];
+  for(var j = 0; j <= lengthwise; j++) {
     var v0 = j / lengthwise;
-    var v1 = (j + 1.0) / lengthwise;
     var sinr0 = scj[j * 2];
     var cosr0 = scj[j * 2 + 1];
-    var sinr1 = scj[j * 2 + 2];
-    var cosr1 = scj[j * 2 + 3];
-    mesh.mode(H3DU.Mesh.TRIANGLE_STRIP);
     for(i = 0; i <= crosswise; i++) {
       u = i / crosswise;
       var sint = sci[i * 2];
       var cost = sci[i * 2 + 1];
-      var x = cost * (circleRad + cosr1 * tubeRadius);
-      var y = sint * (circleRad + cosr1 * tubeRadius);
-      var z = sinr1 * tubeRadius;
-      var nx = cosr1 * cost;
-      var ny = cosr1 * sint;
-      var nz = sinr1;
-      mesh.normal3(nx, ny, nz);
-      mesh.texCoord2(u, v1);
-      mesh.vertex3(x, y, z);
-      x = cost * (circleRad + cosr0 * tubeRadius);
-      y = sint * (circleRad + cosr0 * tubeRadius);
-      z = sinr0 * tubeRadius;
-      nx = cosr0 * cost;
-      ny = cosr0 * sint;
-      nz = sinr0;
-      mesh.normal3(nx, ny, nz);
-      mesh.texCoord2(u, v0);
-      mesh.vertex3(x, y, z);
+      var x = cost * (circleRad + cosr0 * tubeRadius);
+      var y = sint * (circleRad + cosr0 * tubeRadius);
+      var z = sinr0 * tubeRadius;
+      var nx = cosr0 * cost;
+      var ny = cosr0 * sint;
+      var nz = sinr0;
+      vertices.push(x, y, z, nx, ny, nz, u, v0);
     }
   }
-  mesh = mesh.toMeshBuffer();
+  var mesh = meshBufferFromVertexGrid(vertices, crosswise + 1, lengthwise + 1);
   return flat ? mesh.recalcNormals(flat, inward) : mesh;
 };
 
@@ -895,24 +907,6 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   return flat ? mesh.recalcNormals(flat, inside) : mesh.normalizeNormals();
 };
 
-function TriangleFan(indices) {
-  this.indices = indices;
-  this.start = -1;
-  this.last = -1;
-  this.addIndex = function(index) {
-    if(this.start < 0) {
-      this.start = index;
-    } else if(this.last < 0) {
-      this.last = index;
-    } else {
-      this.indices.push(this.start);
-      this.indices.push(this.last);
-      this.indices.push(index);
-      this.last = index;
-    }
-  };
-}
-
 /**
  * Creates a mesh in the form of a two-dimensional n-pointed star.
  * Will also generate texture coordinates.
@@ -932,8 +926,10 @@ function TriangleFan(indices) {
 Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   if(points < 2 || firstRadius < 0 || secondRadius < 0)return new H3DU.MeshBuffer();
   if(firstRadius <= 0 && secondRadius <= 0)return new H3DU.MeshBuffer();
+  if(firstRadius === secondRadius) {
+    return Meshes.createDisk(firstRadius, firstRadius, points, 1, inward);
+  }
   var triangleFan = new TriangleFan();
-
   var vertices = [];
   var indices = [];
   var lastIndex = 0;
@@ -953,10 +949,6 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
     var y = cangle * radius;
     var tcx = (1 + x * recipRadius) * 0.5;
     var tcy = (1 + y * recipRadius) * 0.5;
-    if(i === 0) {
- // startX = x;
- // startY = y;
-    }
     vertices.push(x, y, 0, 0, 0, normalZ, tcx, tcy);
     triangleFan.addIndex(lastIndex);
     var ts = cosStep * sangle + sinStep * cangle;

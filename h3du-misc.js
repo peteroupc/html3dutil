@@ -9,10 +9,7 @@
 /* global JSON, Promise */
 
 /**
- * The Public Domain HTML 3D Library contains classes and utility
- * methods to ease the development of HTML 3D applications, such
- * as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
- * See the {@tutorial overview} tutorial.<p>
+ * This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.<p>
  * This page describes miscellaneous utility methods included in the
  * library.
  * @namespace H3DU

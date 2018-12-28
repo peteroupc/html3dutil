@@ -306,6 +306,9 @@ Curve.prototype.arcLength = function(u) {
  * will be the end of the curve.
  */
 Curve.prototype.getPoints = function(count) {
+  // TODO: Add option to return points as {x:...,y:...,z:...}
+  // instead of three-element arrays. And add example for
+  // initializing THREE.js's BufferGeometry with such points
   if(count === 0)return [];
   if(count < 0)throw new Error();
   var ep = this.endPoints();
