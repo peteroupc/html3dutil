@@ -16,7 +16,7 @@ specified in this object are in
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> | <a href="H3DU.Mesh.md">H3DU.Mesh</a> | H3DU.BufferedMesh)<br>A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.md">H3DU.Mesh</a> objects, the H3DU.PbrMaterial created will use the mesh in its current state and won't track future changes. <i>Using H3DU.BufferedMesh objects as the parameter is deprecated.</i>
+* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> | H3DU.Mesh | H3DU.BufferedMesh)<br>A mesh in the form of a buffer object. Cannot be null. For H3DU.Mesh objects, the H3DU.PbrMaterial created will use the mesh in its current state and won't track future changes. <i>Using H3DU.BufferedMesh objects as the parameter is deprecated.</i>
 
 ### Methods
 

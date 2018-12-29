@@ -122,14 +122,6 @@ Transform.prototype.isIdentity = function() {
   return this._isIdentity;
 };
 /**
- * Resets this transform to the untransformed state.
- * @deprecated Use the "reset" method instead.
- * @returns {H3DU.Transform} This object.
- */
-Transform.prototype.resetTransform = function() {
-  return this.reset();
-};
-/**
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.

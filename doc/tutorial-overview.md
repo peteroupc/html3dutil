@@ -499,7 +499,7 @@ The changes in beta 2 from beta 1 include:
 <a id=Version_2_0_0_beta1></a>
 ### Version 2.0.0-beta1:
 
-- All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now <a href="H3DU.Shape.md">H3DU.Shape</a> and `Mesh` is now <a href="H3DU.Mesh.md">H3DU.Mesh</a>.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
+- All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now <a href="H3DU.Shape.md">H3DU.Shape</a> and `Mesh` is now H3DU.Mesh.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
 - `Scene3D`, now H3DU.Scene3D, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new H3DU.Batch3D class. Scene3D's `render` method now takes an array of `Batch3D`s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
 - Alpha is disabled in WebGL contexts created with the H3DU.get3DOr2DContext method.
 - The `Scene3D` H3DU.Scene3D#useProgram method was deprecated and now does nothing.

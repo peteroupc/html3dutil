@@ -223,7 +223,8 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Ob
 
 #### Example
 
-    The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+
     var points=curve.getPointsAsObjects(50)
     var buffer=new THREE.BufferGeometry()
     .setFromPoints(points);

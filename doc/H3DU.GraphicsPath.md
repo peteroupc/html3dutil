@@ -95,6 +95,7 @@ and dimensions.
 * [regularPolygon](#H3DU.GraphicsPath_regularPolygon)<br>Adds path segments to this path that form a regular polygon.
 * [regularStar](#H3DU.GraphicsPath_regularStar)<br>Adds path segments to this path that form a regular N-pointed star.
 * [roundRect](#H3DU.GraphicsPath_roundRect)<br>Adds path segments to this path that form an axis-aligned rounded rectangle.
+* [toMeshBuffer](#H3DU.GraphicsPath_toMeshBuffer)<br>TODO: Not documented yet.
 
 <a name='H3DU.GraphicsPath_GraphicsPath_arc'></a>
 ### GraphicsPath#arc(x, y, radius, startAngle, endAngle, ccw)
@@ -850,5 +851,19 @@ To use this method, you must include the script "extras/path.js". Example:
 #### Return Value
 
 This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
+
+<a name='H3DU.GraphicsPath_toMeshBuffer'></a>
+### H3DU.GraphicsPath#toMeshBuffer(z, flatness)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `z` (Type: *)
+* `flatness` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 [Back to documentation index.](index.md)

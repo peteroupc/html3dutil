@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global Float32Array, H3DU, x, zStartHeight */
+/* global Float32Array, H3DU */
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids.<p>
@@ -24,8 +24,9 @@ export var Meshes = {};
  * vertices make up the first triangle, and each additional
  * triangle is made up of the first vertex of the first triangle,
  * the previous vertex, and 1 new vertex.
+ * @constructor
  */
-function TriangleFan(indices) {
+var TriangleFan = function(indices) {
   this.indices = indices;
   this.start = -1;
   this.last = -1;
@@ -41,7 +42,7 @@ function TriangleFan(indices) {
       this.last = index;
     }
   };
-}
+};
 
 // TODO: Stop using H3DU.Mesh
 
@@ -794,18 +795,15 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
     cangle = tcos;
   }
   // Generate the vertex data
-  // var slicesTimes2 = slices * 2;
-
   var vertices = [];
   var tx, x, y;
   var gridHeight = 0;
   for(i = 0; i <= stacks; i++) {
     var zeCen = zEnd[i];
     var txe = verticalTexCoords[i];
-  // var zEndHeight = radius * zeCen;
+    var zStartHeight = radius * zeCen;
     var offset = i < halfStacks ? -halfLength : halfLength;
     var radiusEnd = radius * scStack[i];
-    txe = texEnd;
     gridHeight++;
     for(var j = 0; j <= slices; j++) {
       tx = tc[j];
@@ -819,7 +817,6 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
     if(i + 1 === halfStacks && length > 0) {
       var sr2 = sphereRatio * 0.5;
       var hl = halfLength * 2;
-  // var endr2 = 1.0 - sr2;
       var he = 1.0 - sphereRatio;
       for(var m = 0; m <= middleStacks; m++) {
         s = -halfLength + (m === 0 ? 0 : hl * m / middleStacks);
@@ -837,7 +834,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       }
     }
   }
-  mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
+  var mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
   return flat ? mesh.recalcNormals(flat, inside) : mesh.normalizeNormals();
 };
 
@@ -863,9 +860,9 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   if(firstRadius === secondRadius) {
     return Meshes.createDisk(firstRadius, firstRadius, points, 1, inward);
   }
-  var triangleFan = new TriangleFan();
   var vertices = [];
   var indices = [];
+  var triangleFan = new TriangleFan(indices);
   var lastIndex = 0;
   var recipRadius = 1.0 / Math.max(firstRadius, secondRadius);
   var normalZ = inward ? -1 : 1;

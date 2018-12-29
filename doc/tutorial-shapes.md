@@ -15,8 +15,8 @@ the _shapes.html_ and _platonic.html_ demos mentioned in this page.
 This page will discuss:
 
 * Using the Meshes methods to make built-in shapes
-* Making your own shapes with the <a href="H3DU.Mesh.md">`H3DU.Mesh`</a> constructor
-* Building up your own shapes using the vertex methods of <a href="H3DU.Mesh.md">`H3DU.Mesh`</a>
+* Making your own shapes with the `H3DU.Mesh` constructor
+* Building up your own shapes using the vertex methods of `H3DU.Mesh`
 * Binding mesh buffers to shapes
 * Shape groups, or combinations of several shapes
 

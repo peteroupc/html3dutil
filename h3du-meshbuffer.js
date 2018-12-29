@@ -23,7 +23,7 @@ import {_MathInternal} from "./h3du-mathinternal.js";
  * @memberof H3DU
  */
 export var MeshBuffer = function() {
-  this.format = H3DU.Mesh.TRIANGLES;
+  this.format = H3DU.MeshBuffer.TRIANGLES;
   this.attributes = [];
   this._bounds = null;
   this.indices = new Uint8Array([]);
@@ -60,8 +60,8 @@ MeshBuffer.prototype.setIndices = function(indices) {
 };
 /**
  * Sets the type of graphics primitives stored in this mesh buffer.
- * @param {number} primType The primitive type, either {@link H3DU.Mesh.TRIANGLES},
- * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
+ * @param {number} primType The primitive type, either {@link H3DU.MeshBuffer.TRIANGLES},
+ * {@link H3DU.MeshBuffer.LINES}, or {@link H3DU.MeshBuffer.POINTS}.
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setPrimitiveType = function(primType) {
@@ -112,7 +112,8 @@ MeshBuffer.prototype.setAttribute = function(
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string.
  * @param {Float32Array|Array|BufferAccessor} buffer The buffer where
- * the per-vertex data is stored.
+ * the per-vertex data is stored. If this parameter is an (untyped) Array, converts
+ * that parameter to a Float32Array.
  * @param {number} [countPerValue] The number of elements in each
  * per-vertex item. For example, if each vertex is a 3-element
  * vector, this value is 3. Throws an error if this value is 0 or less.
@@ -243,8 +244,8 @@ MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
 MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
   var count = 3;
   var prim = this.primitiveType();
-  if(prim === H3DU.Mesh.LINES)count = 2;
-  if(prim === H3DU.Mesh.POINTS)count = 1;
+  if(prim === H3DU.MeshBuffer.LINES)count = 2;
+  if(prim === H3DU.MeshBuffer.POINTS)count = 1;
   var i = primitiveIndex * count;
   ret[0] = this.indices[i];
   if(count >= 2)ret[1] = this.indices[i + 1];
@@ -253,14 +254,62 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
 };
 
 /**
+ * Creates a new mesh buffer with the given array of vertex positions.
+ * @param {Array<number>} ret An array of vertex positions. This
+ * array's length must be divisible by 3; every 3 elements are the
+ * X, Y, and Z coordinates, in that order, of one vertex.
+ * @returns {MeshBuffer} A new mesh buffer.
+ */
+MeshBuffer.fromPositions = function(vertices) {
+  var vertarray = new Float32Array(vertices);
+  return new MeshBuffer().setAttribute("POSITION", vertarray, 3, 0);
+};
+
+/**
+ * Creates a new mesh buffer with the given array of vertex positions
+ * and vertex normals.
+ * @param {Array<number>} ret An array of vertex positions. This
+ * array's length must be divisible by 6; every 6 elements describe
+ * one vertex and are in the following order:<ol>
+ * <li>X, Y, and Z coordinates, in that order, of the vertex position.
+ * <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
+ * @returns {MeshBuffer} A new mesh buffer.
+ */
+MeshBuffer.fromPositionsNormals = function(vertices) {
+  var vertarray = new Float32Array(vertices);
+  return new MeshBuffer()
+   .setAttribute("POSITION", vertarray, 3, 0, 6)
+   .setAttribute("NORMAL", vertarray, 3, 3, 6);
+};
+
+/**
+ * Creates a new mesh buffer with the given array of vertex positions,
+ * vertex normals, and texture coordinates.
+ * @param {Array<number>} ret An array of vertex positions. This
+ * array's length must be divisible by 8; every 8 elements describe
+ * one vertex and are in the following order:<ol>
+ * <li>X, Y, and Z coordinates, in that order, of the vertex position.
+ * <li>X, Y, and Z components, in that order, of the vertex normal.
+ * <li>U and V texture coordinates, in that order, of the vertex.</ol>
+ * @returns {MeshBuffer} A new mesh buffer.
+ */
+MeshBuffer.fromPositionsNormalsUV = function(vertices) {
+  var vertarray = new Float32Array(vertices);
+  return new MeshBuffer()
+   .setAttribute("POSITION", vertarray, 3, 0, 8)
+   .setAttribute("NORMAL", vertarray, 3, 3, 8)
+   .setAttribute("TEXCOORD", vertarray, 3, 2, 8);
+};
+
+/**
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this mesh.
  * @returns {number} Return value.
  */
 MeshBuffer.prototype.primitiveCount = function() {
-  if(this.format === H3DU.Mesh.LINES)
+  if(this.format === H3DU.MeshBuffer.LINES)
     return Math.floor(this.indices.length / 2);
-  if(this.format === H3DU.Mesh.POINTS)
+  if(this.format === H3DU.MeshBuffer.POINTS)
     return this.indices.length;
   return Math.floor(this.indices.length / 3);
 };
@@ -415,7 +464,7 @@ MeshBuffer.prototype.setColor = function(color) {
  * );
  */
 MeshBuffer.prototype.reverseWinding = function() {
-  if(this.primitiveType() === H3DU.Mesh.TRIANGLES) {
+  if(this.primitiveType() === H3DU.MeshBuffer.TRIANGLES) {
     for(var i = 0; i + 2 < this.indices.length; i += 3) {
       var tmp = this.indices[i + 1];
       this.indices[i + 1] = this.indices[i + 2];
@@ -654,7 +703,7 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
   var primtype = this.primitiveType();
-  if(primtype === H3DU.Mesh.TRIANGLES) {
+  if(primtype === H3DU.MeshBuffer.TRIANGLES) {
     if(this._countPerValue(H3DU.Semantic.POSITION) < 3) {
       return this;
     }
@@ -667,7 +716,7 @@ MeshBuffer.prototype.recalcNormals = function(flat, inward) {
 };
 /** @ignore */
 MeshBuffer.prototype._recalcTangents = function() {
-  if(this.primitiveType() === H3DU.Mesh.TRIANGLES) {
+  if(this.primitiveType() === H3DU.MeshBuffer.TRIANGLES) {
     if(this._countPerValue(H3DU.Semantic.POSITION) < 3 ||
   this._countPerValue(H3DU.Semantic.NORMAL) < 3 ||
         this._countPerValue(H3DU.Semantic.TEXCOORD) < 2) {
@@ -852,7 +901,7 @@ MeshBuffer.prototype.toWireFrame = function() {
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.wireFrame = function() {
-  if(this.primitiveType() !== H3DU.Mesh.TRIANGLES) {
+  if(this.primitiveType() !== H3DU.MeshBuffer.TRIANGLES) {
     // Not a triangle mesh
     return this;
   }
@@ -867,7 +916,7 @@ MeshBuffer.prototype.wireFrame = function() {
     MeshBuffer._addLine(lineIndices, existingLines, f3, f1);
   }
   return this.setIndices(lineIndices)
-    .setPrimitiveType(H3DU.Mesh.LINES);
+    .setPrimitiveType(H3DU.MeshBuffer.LINES);
 };
 /**
  * Finds the tightest
@@ -922,8 +971,8 @@ MeshBuffer.prototype.getBounds = function() {
 };
 /**
  * Gets the type of primitive stored in this mesh buffer.
- * @returns {number} Either {@link H3DU.Mesh.TRIANGLES},
- * {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
+ * @returns {number} Either {@link H3DU.MeshBuffer.TRIANGLES},
+ * {@link H3DU.MeshBuffer.LINES}, or {@link H3DU.MeshBuffer.POINTS}.
  */
 MeshBuffer.prototype.primitiveType = function() {
   return this.format;
@@ -966,6 +1015,10 @@ MeshBuffer._resolveSemantic = function(name, index) {
     }
   }
 };
+
+MeshBuffer.LINES = 1;
+MeshBuffer.TRIANGLES = 4;
+MeshBuffer.POINTS = 0;
 
 MeshBuffer._wellKnownAttributes = {
   "POSITION":0,

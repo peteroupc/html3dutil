@@ -8,7 +8,6 @@
  http://peteroupc.github.io/
 */
 
-import {Mesh} from "./h3du-mesh";
 import {MeshBuffer} from "./h3du-meshbuffer";
 import {Semantic} from "./h3du-semantic";
 import {Surface} from "./h3du-surface";
@@ -24,7 +23,7 @@ export var CurveBuilder = function() {
   this.attributes = [];
   this.vertexCount = 0;
   this.indices = [];
-  this.mode = Mesh.TRIANGLES;
+  this.mode = MeshBuffer.TRIANGLES;
 };
 /**
  * An evaluator of surface evaluator objects for generating
@@ -37,7 +36,7 @@ export var SurfaceBuilder = function() {
   this.attributes = [];
   this.vertexCount = 0;
   this.indices = [];
-  this.mode = Mesh.TRIANGLES;
+  this.mode = MeshBuffer.TRIANGLES;
 };
 
 // ------ Common internals
@@ -235,8 +234,8 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
  * cover the given surface.
  * @param {Object} curve A [curve evaluator object]{@link H3DU.Curve} that
  * describes the parametric curve used to generate positions.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null, undefined, or omitted, generates
- * a series of lines defining the curve. If this value is {@link H3DU.Mesh.POINTS},
+ * @param {number} [mode] If this value is {@link H3DU.MeshBuffer.LINES}, or is null, undefined, or omitted, generates
+ * a series of lines defining the curve. If this value is {@link H3DU.MeshBuffer.POINTS},
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
@@ -398,9 +397,9 @@ SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, 
  * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
  * used to generate positions.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
- * this value is {@link H3DU.Mesh.LINES}, generates
- * a series of lines defining the surface. If this value is {@link H3DU.Mesh.POINTS},
+ * @param {number} [mode] If this value is {@link H3DU.MeshBuffer.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
+ * this value is {@link H3DU.MeshBuffer.LINES}, generates
+ * a series of lines defining the surface. If this value is {@link H3DU.MeshBuffer.POINTS},
  * generates a series of points along the surface. For any other value,
  * this method has no effect.
  * @param {number} [un] Number of subdivisions along the U axis.
@@ -424,8 +423,8 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
 };
 /**
  * Generates the vertex attributes of the parametric curves.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.LINES}, or is null, undefined, or omitted, generates
- * a series of lines defining the curve. If this value is {@link H3DU.Mesh.POINTS},
+ * @param {number} [mode] If this value is {@link H3DU.MeshBuffer.LINES}, or is null, undefined, or omitted, generates
+ * a series of lines defining the curve. If this value is {@link H3DU.MeshBuffer.POINTS},
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
@@ -440,7 +439,7 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   n = typeof n === "undefined" || n === null ? 24 : Math.ceil(n);
   if(n === 0)return this;
   if(n < 0)throw new Error();
-  if(typeof mode === "undefined" || mode === null)mode = Mesh.LINES;
+  if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.LINES;
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null)) {
     var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
     u1 = ep[0];
@@ -449,12 +448,12 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   var i;
   var uv = (u2 - u1) / n;
   var firstIndex = this.vertexCount;
-  if(mode === Mesh.LINES || (typeof mode === "undefined" || mode === null)) {
+  if(mode === MeshBuffer.LINES || (typeof mode === "undefined" || mode === null)) {
     for(i = 0; i < n; i++) {
       this.indices.push(firstIndex + i, firstIndex + i + 1);
     }
     this.vertexCount += n + 1;
-  } else if(mode === Mesh.POINTS) {
+  } else if(mode === MeshBuffer.POINTS) {
     for(i = 0; i < n; i++) {
       this.indices.push(firstIndex + i);
     }
@@ -475,9 +474,9 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
 };
 /**
  * Generates the vertex attributes of the parametric surfaces.
- * @param {number} [mode] If this value is {@link H3DU.Mesh.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
- * this value is {@link H3DU.Mesh.LINES}, generates
- * a series of lines defining the surface. If this value is {@link H3DU.Mesh.POINTS},
+ * @param {number} [mode] If this value is {@link H3DU.MeshBuffer.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
+ * this value is {@link H3DU.MeshBuffer.LINES}, generates
+ * a series of lines defining the surface. If this value is {@link H3DU.MeshBuffer.POINTS},
  * generates a series of points along the surface. For any other value,
  * this method has no effect.
  * @param {number} [un] Number of subdivisions along the U axis.
@@ -500,7 +499,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   if(un === 0 || vn === 0)return this;
   if(un <= 0)throw new Error();
   if(vn <= 0)throw new Error();
-  if(typeof mode === "undefined" || mode === null)mode = Mesh.TRIANGLES;
+  if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.TRIANGLES;
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null) || (typeof v1 === "undefined" || v1 === null) || (typeof v2 === "undefined" || v2 === null)) {
     var ep = CurveBuilder._defaultEndPointsSurface(this.attributes);
     u1 = ep[0];
@@ -508,7 +507,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
     v1 = ep[2];
     v2 = ep[3];
   }
-  if(mode !== Mesh.TRIANGLES && mode !== Mesh.LINES && mode !== Mesh.POINTS) {
+  if(mode !== MeshBuffer.TRIANGLES && mode !== MeshBuffer.LINES && mode !== MeshBuffer.POINTS) {
     return this;
   }
   var u, v, i, j;
@@ -530,7 +529,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
     }
   }
   this.mode = mode;
-  if(mode === Mesh.TRIANGLES) {
+  if(mode === MeshBuffer.TRIANGLES) {
     var unp1 = un + 1;
     for(var y = 0; y < vn; y++) {
       for(var x = 0; x < un; x++) {
@@ -542,12 +541,12 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
         this.indices.push(index2, index1, index3);
       }
     }
-  } else if(mode === Mesh.POINTS) {
+  } else if(mode === MeshBuffer.POINTS) {
     var lastVertex = this.vertexCount;
     for(i = firstVertex; i < lastVertex; i++) {
       this.indices.push(i);
     }
-  } else if(mode === Mesh.LINES) {
+  } else if(mode === MeshBuffer.LINES) {
     unp1 = un + 1;
     for(i = 0; i <= un; i++) {
       for(j = 0; j <= vn; j++) {

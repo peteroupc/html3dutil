@@ -29,7 +29,6 @@ for describing 3D rotations).
 in the form of an angle and an axis of
 rotation.
 * [reset](#H3DU.Transform_reset)<br>Resets this transform to the untransformed state.
-* [resetTransform](#H3DU.Transform_resetTransform)<br>**Deprecated: Use the "reset" method instead.**
 * [setMatrix](#H3DU.Transform_setMatrix)<br>Sets this transform's transformation matrix.
 * [setOrientation](#H3DU.Transform_setOrientation)<br><b>Deprecated: Use <a href="H3DU.Transform.md#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a> instead.
 This method's name is inaccurate because orientations are not rotations.</b>
@@ -60,7 +59,7 @@ Gets the transformation matrix used by an object. Depending
 on the state of this transform, will return either:<ul>
 <li>The 4x4 matrix passed to <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>, if the
 matrix was defined with that method
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 <li>The matrix resulting from the position, rotation, and scale properties,
 multiplied in that order, otherwise.
 </ul>
@@ -113,7 +112,7 @@ Return value. (Type: boolean)
 
 Moves the relative position of an object from its original
 position. Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -136,7 +135,7 @@ in the form of an angle and an axis of
 rotation. The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -157,7 +156,7 @@ described by a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations). The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -185,7 +184,7 @@ in the form of an angle and an axis of
 rotation. The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -200,17 +199,6 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 <a name='H3DU.Transform_reset'></a>
 ### H3DU.Transform#reset()
-
-Resets this transform to the untransformed state.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
-
-<a name='H3DU.Transform_resetTransform'></a>
-### H3DU.Transform#resetTransform()
-
-**Deprecated: Use the "reset" method instead.**
 
 Resets this transform to the untransformed state.
 
@@ -241,7 +229,7 @@ This method's name is inaccurate because orientations are not rotations.</b>
 
 Sets this transform's rotation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -259,7 +247,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 Sets the relative position of an object from its original
 position. Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -276,7 +264,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 Sets this transform's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -301,7 +289,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 Sets this transform's rotation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 
@@ -319,7 +307,7 @@ This object. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
 
 Sets the scale of an object relative to its original
 size. Has no effect if a matrix was defined with <a href="H3DU.Transform.md#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn't reset yet with <a href="H3DU.Transform.md#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
 
 #### Parameters
 

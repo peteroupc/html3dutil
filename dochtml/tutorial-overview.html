@@ -421,7 +421,7 @@ new H3DU.PbrMaterial class.</li>
 </ul>
 <p><a id=Version_2_0_0_beta1></a></p>
 <h3>Version 2.0.0-beta1:</h3><ul>
-<li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="H3DU.Shape.html">H3DU.Shape</a> and <code>Mesh</code> is now <a href="H3DU.Mesh.html">H3DU.Mesh</a>.  Many classes in the &quot;extras&quot; directory are also moved to the <code>H3DU</code> namespace.</li>
+<li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="H3DU.Shape.html">H3DU.Shape</a> and <code>Mesh</code> is now H3DU.Mesh.  Many classes in the &quot;extras&quot; directory are also moved to the <code>H3DU</code> namespace.</li>
 <li><code>Scene3D</code>, now H3DU.Scene3D, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new H3DU.Batch3D class. Scene3D's <code>render</code> method now takes an array of <code>Batch3D</code>s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as <code>makeShape</code> and <code>setPerspective</code>, can still be used until <code>H3DU.Scene3D</code> renders a custom <code>H3DU.Batch3D</code>. This compatibility behavior may be dropped in the future.</li>
 <li>Alpha is disabled in WebGL contexts created with the H3DU.get3DOr2DContext method.</li>
 <li>The <code>Scene3D</code> H3DU.Scene3D#useProgram method was deprecated and now does nothing.</li>

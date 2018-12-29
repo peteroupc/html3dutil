@@ -19,7 +19,6 @@ export {BSplineCurve, BSplineSurface} from "./h3du-bspline";
 export {Shape} from "./h3du-shape";
 export {ShapeGroup} from "./h3du-shapegroup";
 export {Transform} from "./h3du-transform";
-export {Mesh} from "./h3du-mesh";
 export {Meshes} from "./h3du-meshes";
 export {BufferAccessor} from "./h3du-bufferaccessor";
 export {MeshBuffer} from "./h3du-meshbuffer";

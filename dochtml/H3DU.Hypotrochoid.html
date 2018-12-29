@@ -76,7 +76,7 @@ an arc-length parameterization. The positions will be in the form of objects wit
 up to four properties: x, y, z, and w retrieve the first, second, third,
 and fourth coordinate of each position, respectively.<h4> Parameters</h4><ul><li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</ul><h4> Return Value</h4>An array of curve positions. The first
 element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)<h4> Example</h4><pre>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)<h4> Example</h4><p>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</p><pre>
 var points=curve.getPointsAsObjects(50)
 var buffer=new THREE.BufferGeometry()
 .setFromPoints(points);</pre><a name='H3DU.Hypotrochoid_jerk'></a>

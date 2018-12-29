@@ -357,7 +357,7 @@ Curve.prototype.getPoints = function(count) {
  * @returns {Array<Array<number>>|Array<Object>} An array of curve positions. The first
  * element will be the start of the curve.  If "count" is 2 or greater, the last element
  * will be the end of the curve.
- * @example The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+ * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
  * var points=curve.getPointsAsObjects(50)
  * var buffer=new THREE.BufferGeometry()
  * .setFromPoints(points);
