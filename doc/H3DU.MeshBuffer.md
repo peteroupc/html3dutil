@@ -63,41 +63,41 @@ or point) in this mesh buffer.
 * [wireFrame](#H3DU.MeshBuffer_wireFrame)<br>Converts the triangles in this mesh to line segments.
 
 <a name='H3DU.MeshBuffer.fromPositions'></a>
-### (static) H3DU.MeshBuffer.fromPositions(ret)
+### (static) H3DU.MeshBuffer.fromPositions(vertices)
 
 Creates a new mesh buffer with the given array of vertex positions.
 
 #### Parameters
 
-* `ret` (Type: Array.&lt;number>)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormals'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormals(ret)
+### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices)
 
 Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.
 
 #### Parameters
 
-* `ret` (Type: Array.&lt;number>)<br>An array of vertex positions. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormalsUV'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(ret)
+### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices)
 
 Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.
 
 #### Parameters
 
-* `ret` (Type: Array.&lt;number>)<br>An array of vertex positions. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol>
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol>
 
 #### Return Value
 
