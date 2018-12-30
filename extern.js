@@ -14,8 +14,6 @@ var H3DU, define, exports, module;
 /** @typedef {BufferAccessor} */H3DU.BufferAccessor;
 /** @typedef {BSplineCurve} */H3DU.BSplineCurve;
 /** @typedef {BSplineSurface} */H3DU.BSplineSurface;
-/** @typedef {Surface} */H3DU.Surface;
-/** @typedef {Mesh} */ H3DU.Mesh;
 /** @typedef {MeshBuffer} */ H3DU.MeshBuffer;
 /** @typedef {Shape} */ H3DU.Shape;
 /** @typedef {ShapeGroup} */H3DU.ShapeGroup;

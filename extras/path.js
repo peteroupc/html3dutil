@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, define, exports, flatness, tri */
+/* global H3DU, define, exports */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -1192,7 +1192,6 @@
   /**
    * Gets a [curve evaluator object]{@link H3DU.Curve} for
    * the curves described by this path. The return value doesn't track changes to the path.
-   * @param {number} [flatness] This parameter is no longer used.
    * @returns {Object} A [curve evaluator object]{@link H3DU.Curve} that implements
    * the following additional method:<ul>
    * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link H3DU.Curve}
@@ -1208,14 +1207,11 @@
    * </ul>
    * @memberof! H3DU.GraphicsPath#
    */
-  GraphicsPath.prototype.getCurves = function(flatness) {
+  GraphicsPath.prototype.getCurves = function() {
     // NOTE: Uses a "tangent" method, not "velocity", because
     // that method's return values are generally unit vectors.
     var subpaths = [];
     var curves = [];
-    if(typeof flatness !== "undefined" && flatness !== null) {
-      console.warn("Unused parameter flatness is defined");
-    }
     var lastptx = 0;
     var lastpty = 0;
     var startptx = 0;
@@ -1251,10 +1247,76 @@
   };
 
   /**
+   * Gets an array of the end points of
+   * line segments approximating the path.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of the end points of
+   * line segments approximating the path.
+   * @memberof! H3DU.GraphicsPath#
+   */
+  GraphicsPath.prototype.getLinePoints = function(flatness) {
+    var lines = this.getLines(flatness);
+    var points = [];
+    var lastx = 0;
+    var lasty = 0;
+    for(var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
+        points.push([line[0], line[1]]);
+      }
+      points.push([line[2], line[3]]);
+      lastx = line[2];
+      lasty = line[3];
+    }
+    return points;
+  };
+
+  /**
+   * Gets an array of the end points of
+   * line segments approximating the path. The positions will be in the form of objects with
+   * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of the end points of
+   * line segments approximating the path.
+   * @memberof! H3DU.GraphicsPath#
+   * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
+   * var points=path.getLinePointsAsObjects()
+   * var buffer=new THREE.BufferGeometry()
+   * .setFromPoints(points);
+   */
+  GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
+    var lines = this.getLines(flatness);
+    var points = [];
+    var lastx = 0;
+    var lasty = 0;
+    for(var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
+        points.push({
+          "x":line[0],
+          "y":line[1]
+        });
+      }
+      points.push({
+        "x":line[2],
+        "y":line[3]
+      });
+      lastx = line[2];
+      lasty = line[3];
+    }
+    return points;
+  };
+
+  /**
    * Gets an array of points evenly spaced across the length
    * of the path.
    * @param {number} numPoints Number of points to return.
-   * @param {number} [flatness] This parameter is no longer used.
    * @returns {Array<Array<number>>} Array of points lying on
    * the path and evenly spaced across the length of the path,
    * starting and ending with the path's endPoints. Returns
@@ -1263,15 +1325,15 @@
    * is 1.
    * @memberof! H3DU.GraphicsPath#
    */
-  GraphicsPath.prototype.getPoints = function(numPoints, flatness) {
-    if(numPoints < 1)return [];
+  GraphicsPath.prototype.getPoints = function(numPoints) {
+    if(numPoints < 1 || this.segments.length === 0)return [];
     if(numPoints === 1) {
       return [this._start()];
     }
     if(numPoints === 2) {
       return [this._start(), this._end()];
     }
-    var curves = this.getCurves(flatness);
+    var curves = this.getCurves();
     var points = [];
     for(var i = 0; i < numPoints; i++) {
       var t = i / (numPoints - 1);
@@ -1293,13 +1355,13 @@
    * an array consisting of the start point if <i>numPoints</i>
    * is 1.
    * @memberof! H3DU.GraphicsPath#
-   * @example The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+   * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
    * var points=path.getPointsAsObjects(50)
    * var buffer=new THREE.BufferGeometry()
    * .setFromPoints(points);
    */
   GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
-    if(numPoints < 1)return [];
+    if(numPoints < 1 || this.segments.length === 0)return [];
     if(numPoints === 1) {
       var pt = this._start();
       return [{
@@ -1319,7 +1381,7 @@
         "y":pt2[1]
       }];
     }
-    var curves = this.getCurves(flatness);
+    var curves = this.getCurves();
     var points = [];
     for(var i = 0; i < numPoints; i++) {
       var t = i / (numPoints - 1);
@@ -1491,7 +1553,7 @@
     if(drawLine) {
       this.lineTo(startX, startY);
     }
-    if(startX === endX && startY === endY || radius === 0) {
+    if(startX === endX && startY === endY && startAngle === endAngle || radius === 0) {
       return this.lineTo(endX, endY);
     }
     if(!ccw && endAngle - startAngle >= twopi ||
@@ -2716,76 +2778,15 @@
   var EPSILON = 1.1102230246251565e-16;
   var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 
-  // orient2D and dependent functions were
+  // orient2D was
   // Adapted by Peter O. from the HE_Mesh library
   // written by Frederik Vanhoutte.
-
-  function cmpDoubleDouble(a, b) {
-    if(a[0] < b[0])return -1;
-    if(a[0] > b[0])return 1;
-    if(a[1] < b[1])return -1;
-    if(a[1] > b[1])return 1;
-    return 0;
-  }
-  function addDoubleDouble(a, b) {
-    var hi = a[0];
-    var lo = a[1];
-    var yhi = b[0];
-    var ylo = b[1];
-    if(isNaN(hi))return a;
-    if(isNaN(yhi))return b;
-    var H, h, T, t, S, s, e, f;
-    S = hi + yhi;
-    T = lo + ylo;
-    e = S - hi;
-    f = T - lo;
-    s = S - e;
-    t = T - f;
-    s = yhi - e + (hi - s);
-    t = ylo - f + (lo - t);
-    e = s + T;
-    H = S + e;
-    h = e + (S - H);
-    e = t + h;
-    var zhi = H + e;
-    var zlo = e + (H - zhi);
-    return [zhi, zlo];
-  }
-  function subDoubleDouble(a, b) {
-    if(isNaN(b[0]))return b;
-    return addDoubleDouble(a, [-b[0], -b[1]]);
-  }
-
-  function mulDoubleDouble(a, b) {
-    var hi = a[0];
-    var lo = a[1];
-    var yhi = b[0];
-    var ylo = b[1];
-    if(isNaN(hi))return a;
-    if(isNaN(yhi))return b;
-    var hx, tx, hy, ty, C, c;
-    C = 134217729.0 * hi;
-    hx = C - hi;
-    c = 134217729.0 * yhi;
-    hx = C - hx;
-    tx = hi - hx;
-    hy = c - yhi;
-    C = hi * yhi;
-    hy = c - hy;
-    ty = yhi - hy;
-    c = hx * hy - C + hx * ty + tx * hy + tx * ty +
-    (hi * ylo + lo * yhi);
-    var zhi = C + c;
-    hx = C - zhi;
-    return [zhi, c + hx];
-  }
 
   function orient2D(pa, pb, pc) {
     var detleft, detright, det;
     var detsum, errbound;
-    var ax, ay, bx, by, cx, cy;
-    var acx, bcx, acy, bcy;
-    var detleft1, det1;
+    var cx, cy;
+
     detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
     detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
     det = detleft - detright;
@@ -2808,21 +2809,12 @@
     if (det >= errbound || -det >= errbound) {
       return det < 0 ? -1 : det === 0 ? 0 : 1;
     }
-    det1 = [0.0, 0];
-    ax = [pa[0], 0];
-    ay = [pa[1], 0];
-    bx = [pb[0], 0];
-    by = [pb[1], 0];
-    cx = [pc[0], 0];
-    cy = [pc[1], 0];
-    acx = subDoubleDouble(ax, cx);
-    bcx = subDoubleDouble(bx, cx);
-    acy = subDoubleDouble(ay, cy);
-    bcy = subDoubleDouble(by, cy);
-    detleft1 = mulDoubleDouble(acx, bcy);
-    var detright1 = mulDoubleDouble(acy, bcx);
-    det1 = subDoubleDouble(detleft1, detright1);
-    return cmpDoubleDouble(det1, [0, 0]);
+/* TODO: use higher precision math for:
+    detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
+    detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
+    det = detleft - detright;
+    return sgn(det); */
+    return 0;
   }
 
   /** @ignore */
@@ -2902,13 +2894,23 @@
     this.bounds = bounds;
     // Find the prevailing winding of the polygon
     var ori = 0;
+    var convex = true;
+    var convexOri = -2;
     var vert = this.vertexList.first();
+    var lastVert = this.vertexList.last().data;
     var firstVert = vert.data;
     while(vert) {
       var vn = vert.next ? vert.next.data : firstVert;
+      var vp = vert.prev ? vert.prev.data : lastVert;
+      if(convex) {
+        var cori = orient2D(vp, vert.data, vn);
+        if(convexOri !== -2 && cori !== convexOri)convex = false;
+        convexOri = cori;
+      }
       ori += vert.data[0] * vn[1] - vert.data[1] * vn[0];
       vert = vert.next;
     }
+    this.convex = convex;
     this.winding = ori === 0 ? 0 : ori < 0 ? -1 : 1;
   };
   Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
@@ -3017,10 +3019,7 @@
     return innerReflexes[0][2];
   };
 
-  // decomposePolygon and dependent functions were
-  // Adapted by Peter O. from the HE_Mesh library
-  // written by Frederik Vanhoutte.
-
+/*
   function getLineIntersectionInto2D(a1, a2, b1, b2, p) {
     var s1 = [a1[0] - a2[0], a1[1] - a2[1]];
     var s2 = [b1[0] - b2[0], b1[1] - b2[1]];
@@ -3062,191 +3061,26 @@
     }
     return ip;
   }
-
-  function addSublist(dst, src, i1, i2) {
-    for(var i = i1; i < i2; i++) {
-      dst.push(src[i]);
-    }
-  }
-
-  function isVisible(pointlist, i, j) {
-    var n = pointlist.length;
-    var iVertex, jVertex;
-    iVertex = pointlist[i];
-    jVertex = pointlist[j];
-    var iVertexPrev, iVertexNext, jVertexPrev, jVertexNext;
-    iVertexPrev = pointlist[i === 0 ? n - 1 : i - 1];
-    iVertexNext = pointlist[i + 1 === n ? 0 : i + 1];
-    jVertexPrev = pointlist[j === 0 ? n - 1 : j - 1];
-    jVertexNext = pointlist[j + 1 === n ? 0 : j + 1];
-    if (orient2D(iVertex, iVertexNext, iVertexPrev) < 0) {
-      if (orient2D(jVertex, iVertex, iVertexPrev) >= 0 &&
-          orient2D(jVertex, iVertex, iVertexNext) <= 0) {
-        return false;
-      }
-    } else if (orient2D(jVertex, iVertex, iVertexNext) <= 0 ||
-          orient2D(jVertex, iVertex, iVertexPrev) >= 0) {
-      return false;
-    }
-    if (orient2D(jVertex, jVertexNext, jVertexPrev) < 0) {
-      if (orient2D(iVertex, jVertex, jVertexPrev) >= 0 &&
-          orient2D(iVertex, jVertex, jVertexNext) <= 0) {
-        return false;
-      }
-    } else if (orient2D(iVertex, jVertex, jVertexNext) <= 0 ||
-          orient2D(iVertex, jVertex, jVertexPrev) >= 0) {
-      return false;
-    }
-    for (var k = 0; k < n; k++) {
-      var knext = k + 1 === n ? 0 : k + 1;
-      if (k === i || k === j || knext === i || knext === j) {
-        continue;
-      }
-      var kVertex = pointlist[k];
-      var kVertexNext = pointlist[knext];
-      var intsec = getSegmentIntersection2D(iVertex, jVertex, kVertex, kVertexNext);
-      if (typeof intsec !== "undefined" && intsec !== null) {
-        return false;
-      }
-    }
-    return true;
-  }
-
+*/
   function decomposePolygon(pointlist, accumulator) {
-    var n = pointlist.length;
     if (pointlist.length < 3) {
       return;
     }
-    var upperIntersection = [0, 0, 0];
-    var lowerIntersection = [0, 0, 0];
-    var upperDistance = Number.POSITIVE_INFINITY;
-    var lowerDistance = Number.POSITIVE_INFINITY;
-    var closestDistance = Number.POSITIVE_INFINITY;
-    var upperIndex = 0;
-    var lowerIndex = 0;
-    var closestIndex = 0;
-    var lower = [];
-    var upper = [];
-    for (var i = 0; i < n; i++) {
-      var iVertex = pointlist[i];
-      var iVertexPrev = pointlist[i === 0 ? n - 1 : i - 1];
-      var iVertexNext = pointlist[i + 1 === n ? 0 : i + 1];
-      if (orient2D(iVertex, iVertexNext, iVertexPrev) < 0) {
-        for (var j = 0; j < n; j++) {
-          var jVertex = pointlist[j];
-          var jVertexPrev = pointlist[j === 0 ? n - 1 : j - 1];
-          var jVertexNext = pointlist[j + 1 === n ? 0 : j + 1];
-          var intersection = [0, 0, 0];
-          if (orient2D(jVertex, iVertexPrev, iVertex) > 0 &&
-              orient2D(jVertexPrev, iVertexPrev, iVertex) <= 0) {
-            if (getLineIntersectionInto2D(iVertexPrev, iVertex, jVertex, jVertexPrev, intersection)) {
-              if (orient2D(intersection, iVertexNext, iVertex) < 0) {
-                var px = iVertex[0];
-                var py = iVertex[1];
-                var qx = intersection[0];
-                var qy = intersection[1];
-                var dist = (qx - px) * (qx - px) + (qy - py) * (qy - py);
-                if (dist < lowerDistance) {
-                  lowerDistance = dist;
-                  lowerIntersection[0] = intersection[0];
-                  lowerIntersection[1] = intersection[1];
-                  lowerIndex = j;
-                }
-              }
-            }
-          }
-          if (orient2D(jVertexNext, iVertexNext, iVertex) > 0 &&
-              orient2D(jVertex, iVertexNext, iVertex) <= 0) {
-            if (getLineIntersectionInto2D(iVertexNext, iVertex, jVertex, jVertexNext,
-              intersection)) {
-              if (orient2D(intersection, iVertexPrev, iVertex) > 0) {
-                px = iVertex[0];
-                py = iVertex[1];
-                qx = intersection[0];
-                qy = intersection[1];
-                dist = (qx - px) * (qx - px) + (qy - py) * (qy - py);
-                if (dist < upperDistance) {
-                  upperDistance = dist;
-                  upperIntersection[0] = intersection[0];
-                  upperIntersection[1] = intersection[1];
-                  upperIndex = j;
-                }
-              }
-            }
-          }
-        }
-        if (lowerIndex === (upperIndex + 1) % n) {
-          var midpoint = [
-            upperIntersection[0] + (lowerIntersection[0] - upperIntersection[0]) * 0.5,
-            upperIntersection[1] + (lowerIntersection[1] - upperIntersection[1]) * 0.5
-          ];
-          if (i < upperIndex) {
-            addSublist(lower, pointlist, i, upperIndex + 1);
-            lower.push(midpoint);
-            upper.push(midpoint);
-            if (lowerIndex !== 0) {
-              addSublist(upper, pointlist, lowerIndex, n);
-            }
-            addSublist(upper, pointlist, 0, i + 1);
-          } else {
-            if (i !== 0) {
-              addSublist(lower, pointlist, i, n);
-            }
-            addSublist(lower, pointlist, 0, upperIndex + 1);
-            lower.push(midpoint);
-            upper.push(midpoint);
-            addSublist(upper, pointlist, lowerIndex, i + 1);
-          }
-        } else {
-          if (lowerIndex > upperIndex) {
-            upperIndex += n;
-          }
-          closestIndex = lowerIndex;
-          for (j = lowerIndex; j <= upperIndex; j++) {
-            var jmod = j % n;
-            var q = pointlist[jmod];
-            if (q === iVertex || q === iVertexPrev || q === iVertexNext) {
-              continue;
-            }
-            if (isVisible(pointlist, i, jmod)) {
-              px = iVertex[0];
-              py = iVertex[1];
-              qx = q[0];
-              qy = q[1];
-              dist = (qx - px) * (qx - px) + (qy - py) * (qy - py);
-              if (dist < closestDistance) {
-                closestDistance = dist;
-                closestIndex = jmod;
-              }
-            }
-          }
-          if (i < closestIndex) {
-            addSublist(lower, pointlist, i, closestIndex + 1);
-            if (closestIndex !== 0) {
-              addSublist(upper, pointlist, closestIndex, n);
-            }
-            addSublist(upper, pointlist, 0, i + 1);
-          } else {
-            if (i !== 0) {
-              addSublist(lower, pointlist, i, n);
-            }
-            addSublist(lower, pointlist, 0, closestIndex + 1);
-            addSublist(upper, pointlist, closestIndex, i + 1);
-          }
-        }
-        var dp1 = lower.length < upper.length ? lower : upper;
-        var dp2 = lower.length < upper.length ? upper : lower;
-        decomposePolygon(dp1, accumulator);
-        decomposePolygon(dp2, accumulator);
-        return;
-      }
-    }
+    // TODO
+    console.warn("not implemented");
     accumulator.push(pointlist);
   }
 
-  function decomposeTriangles(points, tris) {
+  function decomposeTriangles(points, tris, isConvex) {
     var polys = [];
-    decomposePolygon(points, polys);
+    if(isConvex) {
+      // Already found to be convex, so
+      // this is trivial
+      polys.push(points);
+    } else {
+      decomposePolygon(points, polys);
+    }
+    if(points.length > 0 && polys.length === 0)throw new Error();
     for(var i = 0; i < polys.length; i++) {
       var poly = polys[i];
       for(var j = 0; j < poly.length - 2; j++) {
@@ -3305,6 +3139,10 @@
       for(i = 0; i < c.length; i++) {
         Triangulate._triangulate(c[i], tris);
       }
+      // if(tris.length==0) {
+      // console.log("no triangles added! "+[contours1.length,contours2.length])
+      // throw new Error()
+      // }
     } else {
       var c1 = firstOrient > 0 ? contours1 : contours2;
       var c2 = firstOrient > 0 ? contours2 : contours1;
@@ -3336,22 +3174,23 @@
   };
 /**
  * TODO: Not documented yet.
- * @param {*} z
- * @param {*} flatness
- * @returns {*} Return value.
+ * @param {number} z
+ * @param {number} flatness
+ * @returns {H3DU.GraphicsPath} Return value.
  */
   GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
     if(typeof z === "undefined" || z === null)z = 0;
     var tris = this.getTriangles(flatness);
     var vertices = [];
     for(var i = 0; i < tris.length; i++) {
-    // Position X, Y, Z; Normal NX, NY, NZ
+      var tri = tris[i];
+    // Position X, Y, Z; Normal NX, NY, NZ; texture U, V
       vertices.push(
-      tri[0], tri[1], z, 0, 0, 1,
-      tri[2], tri[3], z, 0, 0, 1,
-      tri[4], tri[5], z, 0, 0, 1);
+      tri[0], tri[1], z, 0, 0, 1, tri[0], tri[1],
+      tri[2], tri[3], z, 0, 0, 1, tri[2], tri[3],
+      tri[4], tri[5], z, 0, 0, 1, tri[4], tri[5]);
     }
-    return H3DU.MeshBuffer.fromPositionsNormals(vertices);
+    return H3DU.MeshBuffer.fromPositionsNormalsUV(vertices);
   };
   /** @ignore */
   Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
@@ -3371,6 +3210,9 @@
     }
     vpnode = dst.insertAfter(maxPoint.data, vpnode);
     dst.insertAfter(dstNode.data, vpnode);
+    // Connecting two polygons, even if convex, may not
+    // result in a convex polygon
+    dst.convex = false;
     count += 2;
     return count;
   };
@@ -3394,14 +3236,13 @@
       return;
     }
     var first = contour.vertexList.first();
-    // var last = contour.vertexList.last();
     var vertices = [];
     var vert = first;
     while(vert) {
       vertices.push([vert.data[0], vert.data[1]]);
       vert = vert.next;
     }
-    decomposeTriangles(vertices, tris);
+    decomposeTriangles(vertices, tris, contour.convex);
   };
 
   // //////////////////////////////////////////////////////////////////////////////////////////////

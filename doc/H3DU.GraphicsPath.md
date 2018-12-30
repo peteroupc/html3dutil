@@ -42,6 +42,10 @@ fits this graphics path.
 * [getCurrentPoint](#H3DU.GraphicsPath_GraphicsPath_getCurrentPoint)<br>Gets the current point stored in this path.
 * [getCurves](#H3DU.GraphicsPath_GraphicsPath_getCurves)<br>Gets a <a href="H3DU.Curve.md">curve evaluator object</a> for
 the curves described by this path.
+* [getLinePoints](#H3DU.GraphicsPath_GraphicsPath_getLinePoints)<br>Gets an array of the end points of
+line segments approximating the path.
+* [getLinePointsAsObjects](#H3DU.GraphicsPath_GraphicsPath_getLinePointsAsObjects)<br>Gets an array of the end points of
+line segments approximating the path.
 * [getLines](#H3DU.GraphicsPath_GraphicsPath_getLines)<br>Gets an array of line segments approximating
 the path.
 * [getPoints](#H3DU.GraphicsPath_GraphicsPath_getPoints)<br>Gets an array of points evenly spaced across the length
@@ -227,14 +231,10 @@ Gets the current point stored in this path.
 A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;number>)
 
 <a name='H3DU.GraphicsPath_GraphicsPath_getCurves'></a>
-### GraphicsPath#getCurves([flatness])
+### GraphicsPath#getCurves()
 
 Gets a <a href="H3DU.Curve.md">curve evaluator object</a> for
 the curves described by this path. The return value doesn't track changes to the path.
-
-#### Parameters
-
-* `flatness` (Type: number) (optional)<br>This parameter is no longer used.
 
 #### Return Value
 
@@ -251,6 +251,45 @@ the X, Y, and Z coordinates of the point lying on the curve at the given
 "u" position (however, the z will always be 0 since paths can currently
 only be 2-dimensional).
 </ul> (Type: Object)
+
+<a name='H3DU.GraphicsPath_GraphicsPath_getLinePoints'></a>
+### GraphicsPath#getLinePoints([flatness])
+
+Gets an array of the end points of
+line segments approximating the path.
+
+#### Parameters
+
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
+
+#### Return Value
+
+Array of the end points of
+line segments approximating the path. (Type: Array.&lt;Array.&lt;number>>)
+
+<a name='H3DU.GraphicsPath_GraphicsPath_getLinePointsAsObjects'></a>
+### GraphicsPath#getLinePointsAsObjects([flatness])
+
+Gets an array of the end points of
+line segments approximating the path. The positions will be in the form of objects with
+two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+
+#### Parameters
+
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
+
+#### Return Value
+
+Array of the end points of
+line segments approximating the path. (Type: Array.&lt;Array.&lt;number>>)
+
+#### Example
+
+The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+
+    var points=path.getLinePointsAsObjects()
+    var buffer=new THREE.BufferGeometry()
+    .setFromPoints(points);
 
 <a name='H3DU.GraphicsPath_GraphicsPath_getLines'></a>
 ### GraphicsPath#getLines([flatness])
@@ -270,7 +309,7 @@ Y coordinates of the start point, respectively, then the X and
 Y coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='H3DU.GraphicsPath_GraphicsPath_getPoints'></a>
-### GraphicsPath#getPoints(numPoints, [flatness])
+### GraphicsPath#getPoints(numPoints)
 
 Gets an array of points evenly spaced across the length
 of the path.
@@ -278,7 +317,6 @@ of the path.
 #### Parameters
 
 * `numPoints` (Type: number)<br>Number of points to return.
-* `flatness` (Type: number) (optional)<br>This parameter is no longer used.
 
 #### Return Value
 
@@ -311,7 +349,8 @@ is 1. (Type: Array.&lt;Array.&lt;number>>)
 
 #### Example
 
-    The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+
     var points=path.getPointsAsObjects(50)
     var buffer=new THREE.BufferGeometry()
     .setFromPoints(points);
@@ -859,11 +898,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `z` (Type: *)
-* `flatness` (Type: *)
+* `z` (Type: number)
+* `flatness` (Type: number)
 
 #### Return Value
 
-Return value. (Type: *)
+Return value. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
 [Back to documentation index.](index.md)

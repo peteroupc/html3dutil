@@ -164,7 +164,7 @@ PiecewiseCurve.prototype.velocity = function(u) {
  * This makes the curve compatible with GDI+ cardinal splines with 0
  * continuity, 0 bias, and tension equal to <code>-((T*2)-1)</code>, where
  * T is the GDI+ cardinal spline tension parameter. Default is false.
- * @returns {H3DU.PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the
+ * @returns {PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the
  * same path as the TCB spline.
  */
 PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, closed, rigidEnds) {
@@ -243,12 +243,12 @@ PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, close
  * Hermite splines are useful for representing an approximate polynomial form
  * of a function or curve whose derivative is known; however, Hermite splines are not
  * guaranteed to preserve the increasing or decreasing nature of the function or curve.
- * @param {Array<Array<number>>} curve An array of control points,
+ * @param {Array<Array<number>>} spline An array of control points,
  * each with the same number of values, that describe a Hermite spline.
  * Each pair of control points takes up two elements of the array and consists
  * of the coordinates of that point followed by the velocity vector (derivative) at that point.
  * The array must have an even number of control points and at least four control points.
- * @returns {H3DU.PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the
+ * @returns {PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the
  * same path as the Hermite spline.
  */
 PiecewiseCurve.fromHermiteSpline = function(spline) {
@@ -292,7 +292,7 @@ PiecewiseCurve.fromHermiteSpline = function(spline) {
  * Default is 0.5.
  * @param {number} [closed] If true, connects the last control point of the curve with the first.
  * Default is false.
- * @returns {H3DU.PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline.
+ * @returns {PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline.
  */
 PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
   var elements = spline[0].length;

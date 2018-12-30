@@ -17,31 +17,13 @@
  * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
  * @constructor
  * @memberof H3DU
- * @param {H3DU.MeshBuffer|H3DU.Mesh|H3DU.BufferedMesh} mesh A mesh in the form of a buffer object.
- * Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.PbrMaterial}
- * created will use the mesh in its current state and won't
- * track future changes. <i>Using {@link H3DU.BufferedMesh} objects as the
- * parameter
- * is deprecated.</i>
+ * @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
+ * Cannot be null.
  */
 export var Shape = function(mesh) {
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
-  if(mesh instanceof H3DU.Mesh) {
-    this.meshBuffer = mesh.toMeshBuffer();
-  } else if(mesh instanceof H3DU.BufferedMesh) {
-    if(!H3DU.Shape._meshBufferWarning) {
-      console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.");
-      H3DU.Shape._meshBufferWarning = true;
-    }
-    this.meshBuffer = mesh._toMeshBuffer();
-  } else {
-    this.meshBuffer = mesh;
-  }
-  if(!(this.meshBuffer instanceof H3DU.MeshBuffer)) {
-    throw new Error("Unsupported data type for mesh parameter (must be Mesh or MeshBuffer)");
-  }
+  this.meshBuffer = mesh;
   this.transform = new H3DU.Transform();
-  this.material = new H3DU.PbrMaterial();
   this.parent = null;
   this.visible = true;
 };
@@ -87,107 +69,6 @@ Shape.prototype.getVisible = function() {
   return this.visible;
 };
 /**
- * Sets material parameters that give the shape a certain color.
- * (If a material is already defined, sets its ambient and diffusion
- * colors.)
- * However, if the mesh defines its own colors, those colors will take
- * precedence over the color given in this method.
- * @param {Array<number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
- * or the red color component (0-1).
- * @param {number} g Green color component (0-1).
- * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {number} b Blue color component (0-1).
- * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {number} [a] Alpha color component (0-1).
- * If the "r" parameter is given and this parameter is null, undefined, or omitted,
- * this value is treated as 1.0.
- * @returns {H3DU.Shape} This object.
- */
-Shape.prototype.setColor = function(r, g, b, a) {
-  var c = H3DU.toGLColor(r, g, b, a);
-  this._ensureMaterial().setParams({
-    "ambient":c,
-    "diffuse":c
-  });
-  return this;
-};
-/**
- * Sets material parameters that give the shape a texture with the given URL.
- * @param {String|H3DU.Texture|H3DU.TextureInfo|H3DU.FrameBuffer} name {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the
- * URL of the texture data. In the case of a string the texture will be loaded via
- * the JavaScript DOM's Image class. However, this method
- * will not load that image if it hasn't been loaded yet. This parameter can also
- * be a {@link H3DU.FrameBuffer} object that refers to a frame buffer; this can be useful
- * if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code>
- * demo in the HTML 3D Library to see how this is done).
- * @returns {H3DU.Shape} This object.
- */
-Shape.prototype.setTexture = function(name) {
-  this._ensureMaterial().setParams({"texture":name});
-  return this;
-};
-/**
- * Sets this shape's material to a shader with the given URL.
- * @param {H3DU.ShaderInfo} shader Source code for a WebGL
- * shader program. <i>Using a {@link H3DU.ShaderProgram} here
- * is deprecated.</i>
- * @returns {H3DU.Shape} This object.
- */
-Shape.prototype.setShader = function(shader) {
-  this._ensureMaterial().setParams({"shader":shader});
-  return this;
-};
-/** @ignore */
-Shape.prototype._ensureMaterial = function() {
-  if(typeof this.material === "undefined" || this.material === null) {
-    this.material = new H3DU.PbrMaterial();
-  }
-  return this.material;
-};
-
-/**
- * Sets this shape's material to the given texture, and its ambient and
- * diffuse parameters to the given color.
- * @param {String|H3DU.Texture|H3DU.TextureInfo} name {@link H3DU.Texture} object, {@link H3DU.TextureInfo} object, or a string with the
- * URL of the texture data. In the case of a string the texture will be loaded via
- * the JavaScript DOM's Image class. However, this method
- * will not load that image if it hasn't been loaded yet.
- * @param {Array<number>|number|string} r A [color vector or string]{@link H3DU.toGLColor},
- * or the red color component (0-1).
- * @param {number} g Green color component (0-1).
- * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {number} b Blue color component (0-1).
- * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {number} [a] Alpha color component (0-1).
- * If the "r" parameter is given and this parameter is null, undefined, or omitted,
- * this value is treated as 1.0.
- * @returns {H3DU.Shape} This object.
- */
-Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
-  var c = H3DU.toGLColor(r, g, b, a);
-  this._ensureMaterial().setParams({
-    "texture":name,
-    "ambient":c,
-    "diffuse":c
-  });
-  return this;
-};
-/**
- * Sets this shape's material parameter object.
- * @param {H3DU.Material|H3DU.PbrMaterial} material The material object to use.
- * Throws an error if this parameter is null, is omitted, or is a {@link H3DU.Texture} object
- * @returns {H3DU.Shape} This object.
- */
-Shape.prototype.setMaterial = function(material) {
-  if(typeof material === "undefined" || material === null) {
-    throw new Error();
-  }
-  if(material instanceof H3DU.Texture)
-    throw new Error("Material parameter can't directly be a Texture");
-  this.material = material;
-  return this;
-};
-/**
  * Makes a copy of this object. The copied object
  * will have its own version of the transform and
  * material data, but any texture
@@ -200,7 +81,6 @@ Shape.prototype.copy = function() {
   var ret = new H3DU.Shape(this.meshBuffer);
   ret.visible = this.visible;
   ret.parent = null;
-  ret.material = this.material.copy();
   ret.transform = this.getTransform().copy();
   return ret;
 };
@@ -211,14 +91,6 @@ Shape.prototype.copy = function() {
  */
 Shape.prototype.getTransform = function() {
   return this.transform;
-};
-/**
- * Returns the material used by this shape object.
- * The material won't be copied.
- * @returns {H3DU.Material|H3DU.PbrMaterial} Return value.
- */
-Shape.prototype.getMaterial = function() {
-  return this.material;
 };
 /**
  * Finds a bounding box that holds all vertices in this shape.

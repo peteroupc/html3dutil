@@ -189,10 +189,10 @@ of neighboring points on the spline.
 
 #### Return Value
 
-A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: PiecewiseCurve)
 
 <a name='H3DU.PiecewiseCurve.fromHermiteSpline'></a>
-### (static) H3DU.PiecewiseCurve.fromHermiteSpline(curve)
+### (static) H3DU.PiecewiseCurve.fromHermiteSpline(spline)
 
 Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline. A Hermite spline is a collection of points that the curve will go through,
@@ -205,12 +205,12 @@ guaranteed to preserve the increasing or decreasing nature of the function or cu
 
 #### Parameters
 
-* `curve` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.
+* `spline` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.
 
 #### Return Value
 
 A piecewise curve made up of cubic B-spline curves describing the
-same path as the Hermite spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+same path as the Hermite spline. (Type: PiecewiseCurve)
 
 <a name='H3DU.PiecewiseCurve.fromTCBSpline'></a>
 ### (static) H3DU.PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])
@@ -232,7 +232,7 @@ in uniform parameterization.)
 #### Return Value
 
 A piecewise curve made up of cubic B-spline curves describing the
-same path as the TCB spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+same path as the TCB spline. (Type: PiecewiseCurve)
 
 <a name='H3DU.PiecewiseCurve_getCurves'></a>
 ### H3DU.PiecewiseCurve#getCurves()

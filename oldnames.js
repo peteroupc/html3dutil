@@ -8,16 +8,6 @@
 */
 /* global H3DU */
  /* exported BezierCurve, BezierSurface, BSplineCurve, BSplineSurface, BufferedMesh, FrameBuffer, GLUtil, GLMath, CurveEval, SurfaceEval, Lights, LightSource, Material, Mesh, Meshes, Scene3D, ShaderProgram, Shape, ShapeGroup, Texture, TextureLoader, Transform, ShaderInfo, RenderPass3D */
- /** @deprecated Use {@link H3DU.BezierCurve} instead. */
-var BezierCurve = H3DU.BezierCurve;
- /** @deprecated Use {@link H3DU.BezierSurface} instead. */
-var BezierSurface = H3DU.BezierSurface;
- /** @deprecated Use {@link H3DU.BSplineCurve} instead. */
-var BSplineCurve = H3DU.BSplineCurve;
- /** @deprecated Use {@link H3DU.BSplineSurface} instead. */
-var BSplineSurface = H3DU.BSplineSurface;
- /** @deprecated Use H3DU instead. */
-var GLUtil = H3DU;
 var GLMath = H3DU.Math;
 var BufferedMesh = H3DU.BufferedMesh;
 var FrameBuffer = H3DU.FrameBuffer;

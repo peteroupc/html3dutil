@@ -221,10 +221,15 @@ MeshBuffer.prototype._getAttributes = function() {
  * }
  */
 MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
-  var idx = typeof semanticIndex === "undefined" || semanticIndex === null ? 0 : semanticIndex;
+  // var idx = typeof semanticIndex === "undefined" || semanticIndex === null ? 0 : semanticIndex;
+  var sem = MeshBuffer._resolveSemantic(name, semanticIndex);
+  if(typeof sem === "undefined" || sem === null) {
+    console.warn("Unsupported attribute semantic: " + name);
+    return null;
+  }
   for(var i = 0; i < this.attributes.length; i++) {
-    if(this.attributes[i][0] === name &&
-    this.attributes[i][1] === idx) {
+    if(this.attributes[i][0] === sem[0] &&
+    this.attributes[i][1] === sem[1]) {
       return this.attributes[i][2];
     }
   }
@@ -298,7 +303,7 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices) {
   return new MeshBuffer()
    .setAttribute("POSITION", vertarray, 3, 0, 8)
    .setAttribute("NORMAL", vertarray, 3, 3, 8)
-   .setAttribute("TEXCOORD", vertarray, 3, 6, 8);
+   .setAttribute("TEXCOORD", vertarray, 2, 6, 8);
 };
 
 /**

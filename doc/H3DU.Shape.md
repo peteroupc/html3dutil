@@ -16,30 +16,23 @@ specified in this object are in
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> | H3DU.Mesh | H3DU.BufferedMesh)<br>A mesh in the form of a buffer object. Cannot be null. For H3DU.Mesh objects, the H3DU.PbrMaterial created will use the mesh in its current state and won't track future changes. <i>Using H3DU.BufferedMesh objects as the parameter is deprecated.</i>
+* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>A mesh in the form of a buffer object. Cannot be null.
 
 ### Methods
 
 * [copy](#H3DU.Shape_copy)<br>Makes a copy of this object.
 * [getBounds](#H3DU.Shape_getBounds)<br>Finds a bounding box that holds all vertices in this shape.
-* [getMaterial](#H3DU.Shape_getMaterial)<br>Returns the material used by this shape object.
 * [getMatrix](#H3DU.Shape_getMatrix)<br>Gets the transformation matrix used by this shape.
 * [getMeshBuffer](#H3DU.Shape_getMeshBuffer)<br>Returns a reference to the mesh buffer used by this shape.
 * [getTransform](#H3DU.Shape_getTransform)<br>Returns the transform used by this shape object.
 * [getVisible](#H3DU.Shape_getVisible)<br>Gets whether this shape will be drawn on rendering.
 * [primitiveCount](#H3DU.Shape_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this scene.
-* [setColor](#H3DU.Shape_setColor)<br>Sets material parameters that give the shape a certain color.
-* [setMaterial](#H3DU.Shape_setMaterial)<br>Sets this shape's material parameter object.
 * [setPosition](#H3DU.Shape_setPosition)<br>Sets the relative position of this shape from its original
 position.
 * [setQuaternion](#H3DU.Shape_setQuaternion)<br>Sets this object's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 * [setScale](#H3DU.Shape_setScale)<br>Sets the scale of this shape relative to its original
 size.
-* [setShader](#H3DU.Shape_setShader)<br>Sets this shape's material to a shader with the given URL.
-* [setTexture](#H3DU.Shape_setTexture)<br>Sets material parameters that give the shape a texture with the given URL.
-* [setTextureAndColor](#H3DU.Shape_setTextureAndColor)<br>Sets this shape's material to the given texture, and its ambient and
-diffuse parameters to the given color.
 * [setTransform](#H3DU.Shape_setTransform)<br>Sets this shape's transformation
 to a copy of the given transformation.
 * [setVisible](#H3DU.Shape_setVisible)<br>Sets whether this shape will be drawn on rendering.
@@ -77,16 +70,6 @@ are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;number>)
-
-<a name='H3DU.Shape_getMaterial'></a>
-### H3DU.Shape#getMaterial()
-
-Returns the material used by this shape object.
-The material won't be copied.
-
-#### Return Value
-
-Return value. (Type: H3DU.Material | H3DU.PbrMaterial)
 
 <a name='H3DU.Shape_getMatrix'></a>
 ### H3DU.Shape#getMatrix()
@@ -136,39 +119,6 @@ and points) composed by all shapes in this scene.
 
 Return value. (Type: number)
 
-<a name='H3DU.Shape_setColor'></a>
-### H3DU.Shape#setColor(r, g, b, [a])
-
-Sets material parameters that give the shape a certain color.
-(If a material is already defined, sets its ambient and diffusion
-colors.)
-However, if the mesh defines its own colors, those colors will take
-precedence over the color given in this method.
-
-#### Parameters
-
-* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
-
-<a name='H3DU.Shape_setMaterial'></a>
-### H3DU.Shape#setMaterial(material)
-
-Sets this shape's material parameter object.
-
-#### Parameters
-
-* `material` (Type: H3DU.Material | H3DU.PbrMaterial)<br>The material object to use. Throws an error if this parameter is null, is omitted, or is a H3DU.Texture object
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
-
 <a name='H3DU.Shape_setPosition'></a>
 ### H3DU.Shape#setPosition(x, y, z)
 
@@ -210,50 +160,6 @@ size. See <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#set
 * `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
 * `y` (Type: number)<br>Scaling factor for this object's height.
 * `z` (Type: number)<br>Scaling factor for this object's depth.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
-
-<a name='H3DU.Shape_setShader'></a>
-### H3DU.Shape#setShader(shader)
-
-Sets this shape's material to a shader with the given URL.
-
-#### Parameters
-
-* `shader` (Type: H3DU.ShaderInfo)<br>Source code for a WebGL shader program. <i>Using a H3DU.ShaderProgram here is deprecated.</i>
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
-
-<a name='H3DU.Shape_setTexture'></a>
-### H3DU.Shape#setTexture(name)
-
-Sets material parameters that give the shape a texture with the given URL.
-
-#### Parameters
-
-* `name` (Type: String | H3DU.Texture | H3DU.TextureInfo | H3DU.FrameBuffer)<br>H3DU.Texture object, H3DU.TextureInfo object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. This parameter can also be a H3DU.FrameBuffer object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done).
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
-
-<a name='H3DU.Shape_setTextureAndColor'></a>
-### H3DU.Shape#setTextureAndColor(name, r, g, b, [a])
-
-Sets this shape's material to the given texture, and its ambient and
-diffuse parameters to the given color.
-
-#### Parameters
-
-* `name` (Type: String | H3DU.Texture | H3DU.TextureInfo)<br>H3DU.Texture object, H3DU.TextureInfo object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet.
-* `r` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).
-* `g` (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `b` (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
-* `a` (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.
 
 #### Return Value
 
