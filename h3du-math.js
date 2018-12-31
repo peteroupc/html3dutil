@@ -1840,7 +1840,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return ret;
   },
   /**
-   * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
+   * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
    * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
    * @param {number} pitchDegrees Vector rotation about the X axis (upward or downward turn), in degrees.
    * This can instead be a 3-element
@@ -2143,7 +2143,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Converts this quaternion to the same version of the rotation
-   * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
+   * in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
    * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
    * @param {number} [mode] Specifies the order in which the rotations will occur
    * (in terms of their effect, not in terms of how they will be returned by this method).
@@ -2770,7 +2770,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * // the shortest angle between the vectors.
    * var cosine=H3DU.Math.vec3dot(unitA,unitB);
    * // Sine of the angle. Note that the sine will always be 0 or greater because
-   * // the shortest angle betw0] ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
+   * // the shortest angle between them is positive or 0 degrees.
+   * var sine=H3DU.Math.vec3length(cr);
    */
   "vec3cross":function(a, b) {
     return [a[1] * b[2] - a[2] * b[1],

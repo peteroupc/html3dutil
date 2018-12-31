@@ -792,10 +792,6 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 
 Adds a line segment to this path.
 
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
 #### Parameters
 
 * `x0` (Type: number)<br>X coordinate of the line segment's starting point. The <code>moveTo</code> method will be called on the starting point.
@@ -811,10 +807,6 @@ This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 ### H3DU.GraphicsPath#polyline(pointCoords, closed)
 
 Adds path segments to this path that form a polygon or a connected line segment strand.
-
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
 
 #### Parameters
 

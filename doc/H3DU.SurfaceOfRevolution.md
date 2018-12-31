@@ -6,8 +6,7 @@
 ### H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
 A <a href="H3DU.Surface.md">surface evaluator object</a> for a surface of revolution,
-which results by revolving
-a two-dimensional curve around an axis.
+which results by revolving a two-dimensional curve around an axis.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
