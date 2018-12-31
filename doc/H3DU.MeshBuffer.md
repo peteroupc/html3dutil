@@ -12,7 +12,8 @@ the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.
 
-This constructor creates an empty mesh buffer.
+This constructor creates an empty mesh buffer and sets the array
+of vertex indices to null.
 
 ### Methods
 
@@ -57,7 +58,8 @@ Use H3DU.MeshBuffer.wireFrame instead.**
 in this mesh.
 * [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
-may be duplicates).
+may be duplicates), or if there is no index buffer, the maximum
+number of items that a buffer attribute can hold.
 * [vertexIndices](#H3DU.MeshBuffer_vertexIndices)<br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.
 * [wireFrame](#H3DU.MeshBuffer_wireFrame)<br>Converts the triangles in this mesh to line segments.
@@ -294,7 +296,8 @@ Due to the z-fighting effect, drawing a two-sided mesh is
 recommended only if face culling is enabled.
 
     var twoSidedMesh = originalMesh.merge(
-    new H3DU.MeshBuffer().merge(originalMesh).reverseWinding().reverseNormals()
+    new H3DU.MeshBuffer().merge(originalMesh)
+    .reverseWinding().reverseNormals()
     );
 
 <a name='H3DU.MeshBuffer_reverseWinding'></a>
@@ -459,7 +462,8 @@ This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
 
 Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
-may be duplicates).
+may be duplicates), or if there is no index buffer, the maximum
+number of items that a buffer attribute can hold.
 
 #### Return Value
 
