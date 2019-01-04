@@ -20,8 +20,6 @@ the HTML 3D Library. Example:
 Some methods may be defined in other scripts, in which case the
 script to be included this way will be mentioned.
 
-#### Parameters
-
 ### Methods
 
 * [arc](#H3DU.GraphicsPath_GraphicsPath_arc)<br>Adds path segments in the form of a circular arc to this path,
@@ -884,14 +882,14 @@ To use this method, you must include the script "extras/path.js". Example:
 This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 
 <a name='H3DU.GraphicsPath_toMeshBuffer'></a>
-### H3DU.GraphicsPath#toMeshBuffer(z, flatness)
+### H3DU.GraphicsPath#toMeshBuffer(z, [flatness])
 
 TODO: Not documented yet.
 
 #### Parameters
 
 * `z` (Type: number)
-* `flatness` (Type: number)
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 

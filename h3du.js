@@ -16,6 +16,7 @@ export {Surface} from "./h3du-surface";
 export {CurveBuilder, SurfaceBuilder} from "./h3du-meshbuilder";
 export {PiecewiseCurve} from "./h3du-piecewisecurve";
 export {BSplineCurve, BSplineSurface} from "./h3du-bspline";
+export {GraphicsPath} from "./h3du-path";
 export {Shape} from "./h3du-shape";
 export {ShapeGroup} from "./h3du-shapegroup";
 export {Transform} from "./h3du-transform";

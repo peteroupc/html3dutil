@@ -16,7 +16,25 @@ for <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>.
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point's length represents the size of all the control points. </ul>
 * `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the U axis. For more information, see <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a>.
 * `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the V axis.
-* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.
+* `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.
+
+#### Example
+
+Together with 'convertToHomogen' given in the BSplineCurve documentation, the following function can be used
+to convert an array of arrays of control points, each consisting of conventional
+coordinates and a weight, to homogeneous coordinates.
+For example, the single-control point array
+'[[[2, 3, 4, 0.1]]]' becomes '[[[0.2, 0.3, 0.4, 0.1]]]'; the
+return value can then be used in the BSplineSurface constructor
+to create a rational B-Spline surface.
+
+    function convertSurfaceToHomogen(cp) {
+    var ret = [];
+    for(var i = 0; i < cp.length; i++) {
+    ret.push(convertToHomogen(cp[i]));
+    }
+    return ret;
+    };
 
 ### Methods
 

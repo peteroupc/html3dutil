@@ -147,7 +147,7 @@ unless all the normal's components are 0, and sets this plane to the result.
 * [quatFromAxisAngle](#H3DU.Math.quatFromAxisAngle)<br>Generates a quaternion from a rotation transformation that rotates vectors
 by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
 * [quatFromMat4](#H3DU.Math.quatFromMat4)<br>Generates a quaternion from the vector rotation described in a 4x4 matrix.
-* [quatFromTaitBryan](#H3DU.Math.quatFromTaitBryan)<br>Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
+* [quatFromTaitBryan](#H3DU.Math.quatFromTaitBryan)<br>Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
 * [quatFromVectors](#H3DU.Math.quatFromVectors)<br>Generates a quaternion describing a rotation between
 two 3-element vectors.
 * [quatIdentity](#H3DU.Math.quatIdentity)<br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).
@@ -179,7 +179,7 @@ rotate that vector around.
 * [quatToMat4](#H3DU.Math.quatToMat4)<br>Generates a 4x4 matrix describing the rotation
 described by this quaternion.
 * [quatToTaitBryan](#H3DU.Math.quatToTaitBryan)<br>Converts this quaternion to the same version of the rotation
-in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
+in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
 * [quatTransform](#H3DU.Math.quatTransform)<br>Transforms a 3- or 4-element vector using a
 quaternion's vector rotation.
 * [vec2abs](#H3DU.Math.vec2abs)<br>Returns a new 2-element
@@ -1594,7 +1594,7 @@ The resulting quaternion. (Type: Array.&lt;number>)
 <a name='H3DU.Math.quatFromTaitBryan'></a>
 ### (static) H3DU.Math.quatFromTaitBryan(pitchDegrees, yawDegrees, rollDegrees, [mode])
 
-Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
+Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
 See "Axis of Rotation" in "<a href="tutorial-glmath.md">H3DU's Math Functions</a>" for the meaning of each angle.
 
 #### Parameters
@@ -1962,7 +1962,7 @@ The generated 4x4 matrix. (Type: Array.&lt;number>)
 ### (static) H3DU.Math.quatToTaitBryan(a, [mode])
 
 Converts this quaternion to the same version of the rotation
-in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
+in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
 
 #### Parameters
 
@@ -2637,7 +2637,8 @@ the angle between two unit vectors and the orthogonal unit vector of both.
     // the shortest angle between the vectors.
     var cosine=H3DU.Math.vec3dot(unitA,unitB);
     // Sine of the angle. Note that the sine will always be 0 or greater because
-    // the shortest angle betw0] ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
+    // the shortest angle between them is positive or 0 degrees.
+    var sine=H3DU.Math.vec3length(cr);
 
 <a name='H3DU.Math.vec3dist'></a>
 ### (static) H3DU.Math.vec3dist(vecFrom, vecTo)
