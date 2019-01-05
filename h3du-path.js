@@ -1,4 +1,4 @@
-/* global H3DU, HMathPiTimes2, HMathToRadians */
+/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -2394,8 +2394,8 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= HMathToRadians;
-  var angleStep = HMathPiTimes2 / sides;
+  phase *= HMath.ToRadians;
+  var angleStep = HMath.PiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var c = Math.cos(phase);
@@ -2435,9 +2435,9 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= HMathToRadians;
+  phase *= HMath.ToRadians;
   var sides = points * 2;
-  var angleStep = HMathPiTimes2 / sides;
+  var angleStep = HMath.PiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var c = Math.cos(phase);

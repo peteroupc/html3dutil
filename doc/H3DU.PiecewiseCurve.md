@@ -52,6 +52,7 @@ but has a different set of end points.
 path as this one but has its U coordinates remapped to fit the given range.
 * [fromCatmullRomSpline](#H3DU.PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull&ndash;Rom spline.
+* [fromEllipseArc](#H3DU.PiecewiseCurve.fromEllipseArc)<br>TODO: Not documented yet.
 * [fromHermiteSpline](#H3DU.PiecewiseCurve.fromHermiteSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline.
 * [fromTCBSpline](#H3DU.PiecewiseCurve.fromTCBSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
@@ -190,6 +191,24 @@ of neighboring points on the spline.
 #### Return Value
 
 A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: PiecewiseCurve)
+
+<a name='H3DU.PiecewiseCurve.fromEllipseArc'></a>
+### (static) H3DU.PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `x` (Type: *)
+* `y` (Type: *)
+* `radiusX` (Type: *)
+* `radiusY` (Type: *)
+* `start` (Type: *)
+* `sweep` (Type: *)
+
+#### Return Value
+
+ (Type: *)
 
 <a name='H3DU.PiecewiseCurve.fromHermiteSpline'></a>
 ### (static) H3DU.PiecewiseCurve.fromHermiteSpline(spline)

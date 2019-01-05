@@ -1,3 +1,4 @@
+/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -379,6 +380,64 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
     ret.push(BSplineCurve.clamped(retcurve, 3));
   }
   return new PiecewiseCurve(ret);
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} x
+ * @param {*} y
+ * @param {*} radiusX
+ * @param {*} radiusY
+ * @param {*} start
+ * @param {*} sweep
+ * @returns {*}
+ */
+PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
+  if(typeof start === "undefined" || start === null)start = 0;
+  if(typeof sweep === "undefined" || sweep === null)sweep = 0;
+  var abssweep = sweep;
+  var sweepdir = sweep < 0 ? -1 : 1;
+  var sweepSegments = abssweep > Math.PI * 0.5 &&
+    abssweep <= Math.PI * 2 ? abssweep * 0.25 : Math.PI * 0.5;
+  var arcstart = start;
+  var curves = [];
+  while(abssweep > 0) {
+    var arcangle = Math.min(sweepSegments, abssweep);
+    var arcend = arcstart + arcangle * sweepdir;
+    var ca0 = Math.cos(arcstart);
+    sa0 = (arcstart>=0 && arcstart<6.283185307179586) ? (arcstart<=3.141592653589793 ? Math.sqrt(1.0-ca0*ca0) : -Math.sqrt(1.0-ca0*ca0)) : Math.sin(arcstart);
+    var ca1 = Math.cos(arcend);
+    sa1 = (arcend>=0 && arcend<6.283185307179586) ? (arcend<=3.141592653589793 ? Math.sqrt(1.0-ca1*ca1) : -Math.sqrt(1.0-ca1*ca1)) : Math.sin(arcend);
+    abssweep -= arcangle;
+    arcstart += arcangle * sweepdir;
+    var p0 = [ca0, sa0, 1];
+    var p2 = [ca1, sa1, 1];
+    var halfAngle = (Math.PI - arcangle) * 0.5;
+    var weight = Math.sin(halfAngle);
+    var dx = p2[0] - p0[0];
+    var dy = p2[1] - p0[1];
+  // var dist = Math.sqrt(dx * dx + dy * dy);
+    var m0 = p0[0] + dx * 0.5;
+    var m1 = p0[1] + dy * 0.5;
+    var dcx = m0;
+    var dcy = m1;
+    var mdist = Math.sqrt(dcx * dcx + dcy * dcy);
+    var clen = 1.0 / mdist;
+    var p1dist = 1.0 / weight;
+    var p1 = [
+      dcx * clen * p1dist,
+      dcy * clen * p1dist,
+      weight
+    ];
+    p0[0] = x + p0[0] * radiusX;
+    p0[1] = y + p0[1] * radiusY;
+    p2[0] = x + p2[0] * radiusX;
+    p2[1] = y + p2[1] * radiusY;
+    p1[0] = (x + p1[0] * radiusX) * weight;
+    p1[1] = (y + p1[1] * radiusY) * weight;
+    curves.push(H3DU.BSplineCurve.fromBezierCurve(
+    [p0, p1, p2], H3DU.BSplineCurve.DIVIDE_BIT));
+  }
+  return new H3DU.PiecewiseCurve(curves);
 };
 
 export {PiecewiseCurve};
