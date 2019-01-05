@@ -514,7 +514,7 @@ var HMath = {
    * clipping plane meets the near clipping plane.
    * @param {number} r X coordinate of the point in eye space where the right
    * clipping plane meets the near clipping plane.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Y coordinate of the point in eye space where the bottom
    * clipping plane meets the near clipping plane.
@@ -528,11 +528,11 @@ var HMath = {
    * from the "camera" that the application can afford to clip out for being too
    * close, for example, 0.5, 1, or higher.
    * @param {number} far The distance, in eye space, from the "camera" to
-   * the far clipping plane. Objects beyond this distance will be too far
-   * to be seen.<br>This value should be greater than 0 and should be set
+   * the far clipping plane. Objects farther than this distance won't
+   * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -873,7 +873,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * reverse the sign of the 11th element of the result (zero-based index 10).
    * @param {number} l Leftmost coordinate of the orthographic view.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -883,7 +883,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.)
    * The absolute difference
@@ -910,7 +910,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * when using this matrix and on adjusting the matrix for other conventions.
    * @param {number} l Leftmost coordinate of the orthographic view.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -935,7 +935,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of coordinates when using this matrix and on adjusting the matrix for other conventions.
    * @param {number} l Leftmost coordinate of the view rectangle.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -962,7 +962,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * when using this matrix and on adjusting the matrix for other conventions.
    * @param {number} l Leftmost coordinate of the view rectangle.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -972,7 +972,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.) The absolute difference
    * between n and f should be as small as the application can accept.
@@ -1031,11 +1031,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * from the "camera" that the application can afford to clip out for being too
    * close, for example, 0.5, 1, or higher.
    * @param {number} far The distance, in eye space, from the "camera" to
-   * the far clipping plane. Objects beyond this distance will be too far
-   * to be seen.<br>This value should be greater than 0 and should be set
+   * the far clipping plane. Objects farther than this distance won't
+   * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -1080,11 +1080,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * from the "camera" that the application can afford to clip out for being too
    * close, for example, 0.5, 1, or higher.
    * @param {number} far The distance, in eye space, from the "camera" to
-   * the far clipping plane. Objects beyond this distance will be too far
-   * to be seen.<br>This value should be greater than 0 and should be set
+   * the far clipping plane. Objects farther than this distance won't
+   * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -2822,7 +2822,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * <li>If the two vectors are the same, the return value indicates
    * the vector's length squared. This is illustrated in the example.
    * <li>Switching the order of the two vectors results in the
-   * same cross product. (Thus, the dot product is <i>commutative</i>.)
+   * same dot product. (Thus, the dot product is <i>commutative</i>.)
    * </ul>
    * @param {Array<number>} a The first 3-element vector.
    * @param {Array<number>} b The second 3-element vector.

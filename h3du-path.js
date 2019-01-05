@@ -1,4 +1,4 @@
-/* global H3DU */
+/* global H3DU, HMathPiTimes2, HMathToRadians */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -9,13 +9,18 @@
 */
 
 import {BSplineCurve} from "./h3du-bspline";
+import {HMath} from "./h3du-math";
 
+  /** @ignore
+   * @constructor */
 var LinkedListNode = function(item) {
   this.data = item;
   this.prev = null;
   this.next = null;
 };
 
+  /** @ignore
+   * @constructor */
 var LinkedList = function() {
   this.root = null;
   this._last = null;
@@ -149,7 +154,8 @@ var LinkedList = function() {
 
   // --------------------------------------------------
 
-  /** @ignore */
+  /** @ignore
+   * @constructor */
 function LineCurve(x1, y1, x2, y2) {
   this.x1 = x1;
   this.x2 = x2;
@@ -1063,7 +1069,7 @@ GraphicsPath._CurveList.prototype.getCurves = function() {
    * interpolation, define a function that takes a value that usually ranges from 0 through 1
    * and generally returns a value that usually ranges from 0 through 1,
    * and pass the result of that function to this method.
-   * See the documentation for {@link H3DU.Math.vec3lerp}
+   * See the documentation for {@link HMathvec3lerp}
    * for examples of interpolation functions.
    * @returns {H3DU.GraphicsPath} The interpolated path.
    * @memberof! H3DU.GraphicsPath#
@@ -2388,8 +2394,8 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= H3DU.Math.ToRadians;
-  var angleStep = H3DU.Math.PiTimes2 / sides;
+  phase *= HMathToRadians;
+  var angleStep = HMathPiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var c = Math.cos(phase);
@@ -2429,9 +2435,9 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= H3DU.Math.ToRadians;
+  phase *= HMathToRadians;
   var sides = points * 2;
-  var angleStep = H3DU.Math.PiTimes2 / sides;
+  var angleStep = HMathPiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var c = Math.cos(phase);
@@ -2591,26 +2597,16 @@ GraphicsPath.fromString = function(str) {
         if(typeof x === "undefined" || x === null) {
           if(!sep)failed = true; break;
         }
-        y = GraphicsPath._nextNumber(str, index, true);
-        if(typeof y === "undefined" || y === null) {
-          failed = true; break;
+
+        var arr = [];
+        for(var k = 0; k < 5; k++) {
+          arr[k] = GraphicsPath._nextNumber(str, index, true);
+          if(typeof arr[k] === "undefined" || arr[k] === null) {
+            failed = true; break;
+          }
         }
-        x2 = GraphicsPath._nextNumber(str, index, true);
-        if(typeof x2 === "undefined" || x2 === null) {
-          failed = true; break;
-        }
-        y2 = GraphicsPath._nextNumber(str, index, true);
-        if(typeof y2 === "undefined" || y2 === null) {
-          failed = true; break;
-        }
-        var x3 = GraphicsPath._nextNumber(str, index, true);
-        if(typeof x3 === "undefined" || x3 === null) {
-          failed = true; break;
-        }
-        var y3 = GraphicsPath._nextNumber(str, index, true);
-        if(typeof y3 === "undefined" || y3 === null) {
-          failed = true; break;
-        }
+        if(failed)break;
+        y = arr[0]; x2 = arr[1]; y2 = arr[2]; var x3 = arr[3]; var y3 = arr[4];
         ret.bezierCurveTo(curx + x, cury + y, curx + x2, cury + y2,
             curx + x3, cury + y3);
         sep = true;
@@ -3235,146 +3231,8 @@ Triangulate._triangulate = function(contour, tris) {
   // Data structures
   // //////////////////////////////////////////////////////////////////////////////////////////////
 
-  /** @ignore */
-LinkedListNode = function(item) {
-  this.data = item;
-  this.prev = null;
-  this.next = null;
-};
-
-  /** @ignore */
-LinkedList = function() {
-  this.root = null;
-  this._last = null;
-  this.size = function() {
-    var k = this.root;
-    var ret = 0;
-    while(k) {
-      ret++;
-      k = k.next;
-    }
-    return ret;
-  };
-  this.first = function() {
-    return this.root;
-  };
-  this.last = function() {
-    return this._last;
-  };
-  this.front = function() {
-    return this.root ? this.root.data : null;
-  };
-  this.back = function() {
-    return this._last ? this._last.data : null;
-  };
-  this.clear = function() {
-    this.root = this._last = null;
-  };
-  this.spliceToBegin = function(list) {
-    if(list.root) {
-      this.root.prev = list._last;
-      list._last.next = this.root;
-      this.root = list.root;
-      list.clear();
-    }
-  };
-  this.spliceToEnd = function(list) {
-    if(list.root) {
-      this._last.next = list.root;
-      list.root.prev = this._last;
-      this._last = list._last;
-      list.clear();
-    }
-  };
-  this.spliceOneToEnd = function(list, listNode) {
-    list.erase(listNode);
-    return this.push(listNode.data);
-  };
-  this.erase = function(node) {
-    if(!node)return this;
-    if(node === this.root) {
-      this.root = node.next;
-    }
-    if(node === this._last) {
-      this._last = node.prev;
-    }
-    if(node.prev)
-      node.prev.next = node.next;
-    if(node.next)
-      node.next.prev = node.prev;
-    return this;
-  };
-  this.insertAfter = function(item, node) {
-    var newNode = new LinkedListNode(item);
-    if(node === this._last)
-      this._last = newNode;
-    var oldNext = node.next;
-    node.next = newNode;
-    newNode.prev = node;
-    newNode.next = oldNext;
-    if(oldNext) {
-      oldNext.prev = newNode;
-    }
-    return newNode;
-  };
-  this.push = function(item) {
-    if(!this.root) {
-      this.root = this._last = new LinkedListNode(item);
-    } else {
-      var node = new LinkedListNode(item);
-      this._last.next = node;
-      node.prev = this._last;
-      this._last = node;
-    }
-    return this;
-  };
-  this.reverse = function() {
-    var s = this.root;
-    var e = this._last;
-    if(!s)return;
-    var oldlast = e;
-    var oldroot = s;
-    while(s) {
-      var n = s.next;
-      var p = s.prev;
-      s.prev = n;
-      s.next = p;
-      s = n;
-    }
-    this.root = oldlast;
-    this._last = oldroot;
-    return this;
-  };
-  this.unshift = function(item) {
-    if(!this.root) {
-      this.root = this._last = new LinkedListNode(item);
-    } else {
-      var node = new LinkedListNode(item);
-      this.root.prev = node;
-      node.next = this.root;
-      this.root = node;
-    }
-    return this;
-  };
-  this.pop = function() {
-    if(this._last) {
-      if(this._last.prev)
-        this._last.prev.next = null;
-      this._last = this._last.prev;
-    }
-    return this;
-  };
-  this.shift = function() {
-    if(this.root) {
-      if(this.root.next)
-        this.root.next.prev = null;
-      this.root = this.root.next;
-    }
-    return this;
-  };
-};
-
-  /** @ignore */
+  /** @ignore
+   * @constructor */
 var PriorityQueue = function(comparer) {
     // Based on Doug Lea's public domain Heap class in Java
   this.comparer = comparer;
@@ -3434,6 +3292,8 @@ var PriorityQueue = function(comparer) {
 };
   // Mostly based on Julienne Walker's
   // public domain C implementation
+  /** @ignore
+   * @constructor */
 var RedBlackTreeNode = function(data) {
   this.left = null;
   this.right = null;
@@ -4020,7 +3880,8 @@ Clipper.prototype.storeSweepEvent = function(e) {
   /** @ignore */
 Clipper.prototype.compute = function(op) {
   // Test 1 for trivial result case
-  if(this.subject.ncontours() * this.clipping.ncontours() === 0) { // At least one of the polygons is empty
+  if(this.subject.ncontours() * this.clipping.ncontours() === 0) {
+    // At least one of the polygons is empty
     if(op === Clipper.DIFFERENCE)
       return this.subject;
     if(op === Clipper.UNION)
