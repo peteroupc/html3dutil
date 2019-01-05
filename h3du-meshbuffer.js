@@ -673,7 +673,8 @@ MeshBuffer.prototype._makeRedundant = function() {
   var newAttributes = [];
   for(var i = 0; i < this.attributes.length; i++) {
     var a = this.attributes[i];
-    newAttributes.push([a[0], a[1], BufferAccessor.merge(a[2], this.indices, null, [])]);
+    newAttributes.push([a[0], a[1],
+      BufferAccessor.merge(a[2], this.indices, null, [])]);
   }
   this.attributes = newAttributes;
   this.setIndices(BufferAccessor.makeIndices(this.indices.length));

@@ -234,15 +234,6 @@ ArcCurve.prototype.velocity = function(t) {
   // --------------------------------------------------
   /**
    * Represents a two-dimensional path.
-   * <p>This class is considered a supplementary class to the
-   * Public Domain HTML 3D Library and is not considered part of that
-   * library. <p>
-   * To use this class, you must include the script "extras/path.js"; the
-   * class is not included in the "h3du_min.js" file which makes up
-   * the HTML 3D Library. Example:<pre>
-   * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
-   * Some methods may be defined in other scripts, in which case the
-   * script to be included this way will be mentioned.
    * @memberof H3DU
    * @alias H3DU.GraphicsPath
    * @constructor
@@ -2100,8 +2091,6 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
 
 /**
  * Adds path segments to this path that form an axis-aligned rounded rectangle.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} x X coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's X axis points right and the Y axis down).
  * @param {number} y Y coordinate of the rectangle's upper-left corner (assuming the
@@ -2152,8 +2141,6 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
 
 /**
  * Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} x X coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's X axis points right and the Y axis down).
  * @param {number} y Y coordinate of the rectangle's upper-left corner (assuming the
@@ -2202,8 +2189,6 @@ GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
 /**
  * Adds path segments to this path that form an axis-aligned ellipse given its center
  * and dimensions.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} cx X coordinate of the ellipse's center.
  * @param {number} cy Y coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
@@ -2223,8 +2208,6 @@ GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
 /**
  * Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
  * and dimensions.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} x X coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's X axis points right and the Y axis down).
  * @param {number} y Y coordinate of the ellipse's bounding box's upper-left corner (assuming the
@@ -2240,8 +2223,6 @@ GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * Adds path segments to this path that form an arc running along an axis-aligned
  * ellipse, or a shape based on that arc and ellipse, given the ellipse's center
  * and dimensions, start angle, and sweep angle.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} cx X coordinate of the ellipse's center.
  * @param {number} cy Y coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
@@ -2301,8 +2282,6 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
  * Adds path segments to this path that form an arc running along an axis-aligned
  * ellipse, or a shape based on that arc and ellipse, given the ellipse's corner point
  * and dimensions, start angle, and sweep angle.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} x X coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's X axis points right and the Y axis down).
  * @param {number} y Y coordinate of the ellipse's bounding box's upper-left corner (assuming the
@@ -2328,8 +2307,6 @@ GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type)
 };
 /**
  * Adds path segments to this path in the form of an arrow shape.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} x0 X coordinate of the arrow's tail, at its very end.
  * @param {number} y0 Y coordinate of the arrow's tail, at its very end.
  * @param {number} x1 X coordinate of the arrow's tip.
@@ -2377,8 +2354,6 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
 };
 /**
  * Adds path segments to this path that form a regular polygon.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} cx X coordinate of the center of the polygon.
  * @param {number} cy Y coordinate of the center of the polygon.
  * @param {number} sides Number of sides the polygon has. Nothing will be added to the path if this
@@ -2417,8 +2392,6 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
 };
 /**
  * Adds path segments to this path that form a regular N-pointed star.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} cx X coordinate of the center of the star.
  * @param {number} cy Y coordinate of the center of the star.
  * @param {number} points Number of points the star has. Nothing will be added to the path if this
@@ -4291,9 +4264,6 @@ Clipper.prototype._divideSegment = function(e, p) {
      * or holes. Subpaths that are holes have the opposite winding
      * order (clockwise or counterclockwise) from the subpath
      * that contains them.
-     * <li>To use this method, you must include the script
-     * "extras/path.js". Example:<pre>
-     * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
      * </ul>
      * @param {H3DU.GraphicsPath} path A path to combine with this one.
      * @param {number} [flatness] When curves and arcs

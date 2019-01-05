@@ -7,19 +7,6 @@
 
 Represents a two-dimensional path.
 
-This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.
-
-To use this class, you must include the script "extras/path.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
-Some methods may be defined in other scripts, in which case the
-script to be included this way will be mentioned.
-
 ### Methods
 
 * [arc](#H3DU.GraphicsPath_GraphicsPath_arc)<br>Adds path segments in the form of a circular arc to this path,
@@ -591,11 +578,6 @@ segments before applying the operation.
 or holes. Subpaths that are holes have the opposite winding
 order (clockwise or counterclockwise) from the subpath
 that contains them.
-<li>To use this method, you must include the script
-"extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
 </ul>
 
 #### Parameters
@@ -654,10 +636,6 @@ Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's center
 and dimensions, start angle, and sweep angle.
 
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
 #### Parameters
 
 * `cx` (Type: number)<br>X coordinate of the ellipse's center.
@@ -679,10 +657,6 @@ Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's corner point
 and dimensions, start angle, and sweep angle.
 
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
 #### Parameters
 
 * `x` (Type: number)<br>X coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
@@ -701,10 +675,6 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 ### H3DU.GraphicsPath#arrow(x0, y0, x1, y1, headWidth, headLength, tailWidth)
 
 Adds path segments to this path in the form of an arrow shape.
-
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
 
 #### Parameters
 
@@ -726,10 +696,6 @@ from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="H3DU.Gr
 
 Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
 
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
 #### Parameters
 
 * `x` (Type: number)<br>X coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
@@ -749,10 +715,6 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 Adds path segments to this path that form an axis-aligned ellipse given its center
 and dimensions.
 
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
 #### Parameters
 
 * `cx` (Type: number)<br>X coordinate of the ellipse's center.
@@ -769,10 +731,6 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 
 Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
 and dimensions.
-
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
 
 #### Parameters
 
@@ -821,10 +779,6 @@ Throws an error if "pointCoords" has an odd length. (Type: <a href="H3DU.Graphic
 
 Adds path segments to this path that form a regular polygon.
 
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
-
 #### Parameters
 
 * `cx` (Type: number)<br>X coordinate of the center of the polygon.
@@ -841,10 +795,6 @@ This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 ### H3DU.GraphicsPath#regularStar(cx, cy, points, radiusOut, radiusIn, phaseInDegrees)
 
 Adds path segments to this path that form a regular N-pointed star.
-
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
 
 #### Parameters
 
@@ -863,10 +813,6 @@ This object. (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)
 ### H3DU.GraphicsPath#roundRect(x, y, w, h, arccx, arccy)
 
 Adds path segments to this path that form an axis-aligned rounded rectangle.
-
-To use this method, you must include the script "extras/path.js". Example:
-
-    <script type="text/javascript" src="extras/path.js"></script>
 
 #### Parameters
 

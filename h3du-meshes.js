@@ -25,6 +25,7 @@ export var Meshes = {};
  * triangle is made up of the first vertex of the first triangle,
  * the previous vertex, and 1 new vertex.
  * @constructor
+ * @ignore
  */
 var TriangleFan = function(indices) {
   this.indices = indices;
@@ -43,8 +44,6 @@ var TriangleFan = function(indices) {
     }
   };
 };
-
-// TODO: Stop using H3DU.Mesh
 
 var meshBufferFromVertices = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);

@@ -1,8 +1,5 @@
 # Documentation Index
 
-* <a href="_anonymous__TriangleFan.md">&lt;anonymous>~TriangleFan</a><br>Primitive mode for rendering a triangle fan.
-* <a href="Camera.md">Camera</a><br><b>Deprecated: Use <a href="H3DU.Camera.md">H3DU.Camera</a> instead.</b>
-* <a href="Epitrochoid.md">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a> instead.</b>
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
@@ -52,13 +49,8 @@ from one coordinate system to another.
 * <a href="H3DU.Trochoid.md">H3DU.Trochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the X axis.
 * <a href="H3DU.exports.MatrixStack.md">H3DU.exports.MatrixStack</a><br>This class implements a stack
 of 4x4 transformation matrices.
-* <a href="Hypotrochoid.md">Hypotrochoid</a><br><b>Deprecated: Use <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a> instead.</b>
-* <a href="InputTracker.md">InputTracker</a><br><b>Deprecated: Use <a href="H3DU.InputTracker.md">H3DU.InputTracker</a> instead.</b>
 * <a href="MatrixStack.md">MatrixStack</a><br>**Deprecated: Use H3DU.MatrixStack instead.**
-* <a href="ObjData.md">ObjData</a><br><b>Deprecated: Use <a href="H3DU.ObjData.md">H3DU.ObjData</a> instead.</b>
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
-* <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br><b>Deprecated: Use <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a> instead.</b>
-* <a href="Trochoid.md">Trochoid</a><br><b>Deprecated: Use <a href="H3DU.Trochoid.md">H3DU.Trochoid</a> instead.</b>
 
 ## Tutorials
 
