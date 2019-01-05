@@ -208,7 +208,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
 
 <a name='H3DU.PiecewiseCurve.fromHermiteSpline'></a>
 ### (static) H3DU.PiecewiseCurve.fromHermiteSpline(spline)

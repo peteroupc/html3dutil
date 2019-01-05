@@ -1,4 +1,4 @@
-/* global H3DU */
+/* global H3DU, sa0, sa1 */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -389,7 +389,7 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
  * @param {*} radiusY
  * @param {*} start
  * @param {*} sweep
- * @returns {*}
+ * @returns {*} Return value.
  */
 PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   if(typeof start === "undefined" || start === null)start = 0;
@@ -404,9 +404,9 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
     var arcangle = Math.min(sweepSegments, abssweep);
     var arcend = arcstart + arcangle * sweepdir;
     var ca0 = Math.cos(arcstart);
-    sa0 = (arcstart>=0 && arcstart<6.283185307179586) ? (arcstart<=3.141592653589793 ? Math.sqrt(1.0-ca0*ca0) : -Math.sqrt(1.0-ca0*ca0)) : Math.sin(arcstart);
+ // sa0 = arcstart >= 0 && arcstart < 6.283185307179586 ? arcstart <= 3.141592653589793 ? Math.sqrt(1.0 - ca0 * ca0) : -Math.sqrt(1.0 - ca0 * ca0) : Math.sin(arcstart);
     var ca1 = Math.cos(arcend);
-    sa1 = (arcend>=0 && arcend<6.283185307179586) ? (arcend<=3.141592653589793 ? Math.sqrt(1.0-ca1*ca1) : -Math.sqrt(1.0-ca1*ca1)) : Math.sin(arcend);
+ // sa1 = arcend >= 0 && arcend < 6.283185307179586 ? arcend <= 3.141592653589793 ? Math.sqrt(1.0 - ca1 * ca1) : -Math.sqrt(1.0 - ca1 * ca1) : Math.sin(arcend);
     abssweep -= arcangle;
     arcstart += arcangle * sweepdir;
     var p0 = [ca0, sa0, 1];
