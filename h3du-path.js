@@ -1193,6 +1193,8 @@ GraphicsPath._addSegment = function(a, c) {
    * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getCurves = function() {
+    // TODO: Consider returning a list of curves and require
+    // callers to use PiecewiseCurve to get the prior behavior
     // NOTE: Uses a "tangent" method, not "velocity", because
     // that method's return values are generally unit vectors.
   var subpaths = [];

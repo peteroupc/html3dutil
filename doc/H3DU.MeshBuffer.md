@@ -7,7 +7,7 @@
 
 A geometric mesh in the form of buffer objects.
 A mesh buffer is made up of one or more <a href="H3DU.BufferAccessor.md">vertex attribute objects</a>,
-and an array of vertex indices. Each vertex attribute object contains
+and an optional array of vertex indices. Each vertex attribute object contains
 the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.
@@ -65,20 +65,21 @@ or point) in this mesh buffer.
 * [wireFrame](#H3DU.MeshBuffer_wireFrame)<br>Converts the triangles in this mesh to line segments.
 
 <a name='H3DU.MeshBuffer.fromPositions'></a>
-### (static) H3DU.MeshBuffer.fromPositions(vertices)
+### (static) H3DU.MeshBuffer.fromPositions(vertices, [indices])
 
 Creates a new mesh buffer with the given array of vertex positions.
 
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormals'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices)
+### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices, [indices])
 
 Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.
@@ -86,13 +87,14 @@ and vertex normals.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormalsUV'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices)
+### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices, [indices])
 
 Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.
@@ -100,6 +102,7 @@ vertex normals, and texture coordinates.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol>
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
@@ -408,7 +411,7 @@ Sets the vertex indices used by this mesh buffer.
 
 #### Parameters
 
-* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array)<br>Array of vertex indices that the mesh buffer will use.
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null)<br>Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 

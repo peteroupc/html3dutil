@@ -14,7 +14,7 @@ import {_MathInternal} from "./h3du-mathinternal.js";
 /**
  * A geometric mesh in the form of buffer objects.
  * A mesh buffer is made up of one or more [vertex attribute objects]{@link H3DU.BufferAccessor},
- * and an array of vertex indices. Each vertex attribute object contains
+ * and an optional array of vertex indices. Each vertex attribute object contains
  * the values of one attribute of the mesh, such as positions,
  * vertex normals, and texture coordinates. A mesh buffer
  * can store vertices that make up triangles, line segments, or points.<p>
@@ -38,12 +38,14 @@ MeshBuffer.prototype.getIndices = function() {
 };
 /**
  * Sets the vertex indices used by this mesh buffer.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array} indices Array of vertex indices
- * that the mesh buffer will use.
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} indices Array of vertex indices
+ * that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {H3DU.MeshBuffer} This object.
  */
 MeshBuffer.prototype.setIndices = function(indices) {
-  if(indices instanceof Array) {
+  if(typeof indices === "undefined" || indices === null) {
+    this.indices = null;
+  } else if(indices instanceof Array) {
     var index = 0;
     for(var i = indices.length - 1; i >= 0; i--) {
       index = Math.max(index, indices[i]);
@@ -271,11 +273,14 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * @param {Array<number>|Float32Array} vertices An array of vertex positions. This
  * array's length must be divisible by 3; every 3 elements are the
  * X, Y, and Z coordinates, in that order, of one vertex.
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
-MeshBuffer.fromPositions = function(vertices) {
+MeshBuffer.fromPositions = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
-  return new MeshBuffer().setAttribute("POSITION", vertarray, 3, 0);
+  return new MeshBuffer().setAttribute("POSITION", vertarray, 3, 0)
+    .setIndices(indices);
 };
 
 /**
@@ -286,13 +291,15 @@ MeshBuffer.fromPositions = function(vertices) {
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
-MeshBuffer.fromPositionsNormals = function(vertices) {
+MeshBuffer.fromPositionsNormals = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
    .setAttribute("POSITION", vertarray, 3, 0, 6)
-   .setAttribute("NORMAL", vertarray, 3, 3, 6);
+   .setAttribute("NORMAL", vertarray, 3, 3, 6).setIndices(indices);
 };
 
 /**
@@ -304,14 +311,16 @@ MeshBuffer.fromPositionsNormals = function(vertices) {
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.
  * <li>U and V texture coordinates, in that order, of the vertex.</ol>
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
-MeshBuffer.fromPositionsNormalsUV = function(vertices) {
+MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
    .setAttribute("POSITION", vertarray, 3, 0, 8)
    .setAttribute("NORMAL", vertarray, 3, 3, 8)
-   .setAttribute("TEXCOORD", vertarray, 2, 6, 8);
+   .setAttribute("TEXCOORD", vertarray, 2, 6, 8).setIndices(indices);
 };
 
 /**
