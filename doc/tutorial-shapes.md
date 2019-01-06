@@ -15,8 +15,8 @@ the _shapes.html_ and _platonic.html_ demos mentioned in this page.
 This page will discuss:
 
 * Using the Meshes methods to make built-in shapes
-* Making your own shapes with the <a href="H3DU.Mesh.md">`H3DU.Mesh`</a> constructor
-* Building up your own shapes using the vertex methods of <a href="H3DU.Mesh.md">`H3DU.Mesh`</a>
+* Making your own shapes with the `H3DU.Mesh` constructor
+* Building up your own shapes using the vertex methods of `H3DU.Mesh`
 * Binding mesh buffers to shapes
 * Shape groups, or combinations of several shapes
 
@@ -302,7 +302,7 @@ vertices have the wrong order, use the <a href="H3DU.MeshBuffer.md#H3DU.MeshBuff
 method to change their order.
 
 > Note: For right-handed coordinate systems, as will be the case when using,
-> for example, the <a href="H3DU.Batch3D.md#H3DU.Batch3D_perspectiveAspect">`Batch3D.perspectiveAspect()`</a> method,
+> for example, the `Batch3D.perspectiveAspect()` method,
 > if the mesh buffer describes a closed convex surface (such as a sphere or cube),
 > each triangle's vertices (as they appear when the triangle's front side is seen)
 > must be ordered counterclockwise for the shape to be shaded from the outside.
@@ -380,11 +380,11 @@ in the shape "on the fly" when it comes time to draw it each frame.
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.
 
-3. Add the shape to a 3D batch (<a href="H3DU.Batch3D.md">`H3DU.Batch3D</a>):
+3. Add the shape to a 3D batch (`H3DU.Batch3D):
 
         batch3d.addShape(shape);
 
-    Now, the next time `scene3d.render(batch)` is called, the <a href="H3DU.Scene3D.md">`H3DU.Scene3D`</a> will render the
+    Now, the next time `scene3d.render(batch)` is called, the `H3DU.Scene3D` will render the
 given shape to the scene through the 3D batch.
 
 <a id=Shape_Groups></a>

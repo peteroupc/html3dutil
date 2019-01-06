@@ -46,7 +46,7 @@ its segments.
 <a id=SVG_Path_String></a>
 ### SVG Path String
 
-If you've worked with SVG, you may be familiar with this format for describing 2D paths. An
+If you've worked with SVG (Scalable Vector Graphics), you may be familiar with this format for describing 2D paths. An
 SVG path string consists of one or more path commands that start with a single letter.
 The following are examples of SVG path strings:
 

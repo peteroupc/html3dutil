@@ -155,50 +155,7 @@ ShapeGroup.prototype.setTransform = function(transform) {
   this.transform = transform.copy();
   return this;
 };
-/**
- * Sets the material used by all shapes in this shape group.
- * @param {H3DU.Material} material The material to use.
- * @returns {Object} Return value.
- */
-ShapeGroup.prototype.setMaterial = function(material) {
-  for(var i = 0; i < this.shapes.length; i++) {
-    this.shapes[i].setMaterial(material);
-  }
-  return this;
-};
 
-/**
- * Sets the texture used by all shapes in this shape group.
- * @param {H3DU.Texture|String} material {@link H3DU.Texture} object, or a string with the
- * URL of the texture data. In the case of a string the texture will be loaded via
- * the JavaScript DOM's Image class. However, this method
- * will not load that image if it hasn't been loaded yet. This parameter can also
- * be a {@link H3DU.FrameBuffer} object that refers to a frame buffer; this can be useful
- * if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code>
- * demo in the HTML 3D Library to see how this is done).
- * NOTE: The default shader program assumes that the texture is in
- * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
- * @returns {Object} Return value.
- */
-ShapeGroup.prototype.setTexture = function(material) {
-  for(var i = 0; i < this.shapes.length; i++) {
-    this.shapes[i].setTexture(material);
-  }
-  return this;
-};
-/**
- * Sets the shader program used by all shapes in this shape group.
- * @param {H3DU.ShaderInfo} material Source code for a WebGL
- * shader program. <i>Using a {@link H3DU.ShaderProgram} here
- * is deprecated.</i>
- * @returns {Object} Return value.
- */
-ShapeGroup.prototype.setShader = function(material) {
-  for(var i = 0; i < this.shapes.length; i++) {
-    this.shapes[i].setShader(material);
-  }
-  return this;
-};
 /**
  * Removes all instances of a 3D shape from this shape group
  * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.

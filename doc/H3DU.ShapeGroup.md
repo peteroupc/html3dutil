@@ -31,15 +31,12 @@ in this shape group at the given index.
 * [primitiveCount](#H3DU.ShapeGroup_primitiveCount)<br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this shape group.
 * [removeShape](#H3DU.ShapeGroup_removeShape)<br>Removes all instances of a 3D shape from this shape group
-* [setMaterial](#H3DU.ShapeGroup_setMaterial)<br>Sets the material used by all shapes in this shape group.
 * [setPosition](#H3DU.ShapeGroup_setPosition)<br>Sets the relative position of the shapes in this group
 from their original position.
 * [setQuaternion](#H3DU.ShapeGroup_setQuaternion)<br>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
 * [setScale](#H3DU.ShapeGroup_setScale)<br>Sets the scale of this shape group relative to its original
 size.
-* [setShader](#H3DU.ShapeGroup_setShader)<br>Sets the shader program used by all shapes in this shape group.
 * [setShape](#H3DU.ShapeGroup_setShape)<br>Sets a shape or shape group at the given index in this shape group.
-* [setTexture](#H3DU.ShapeGroup_setTexture)<br>Sets the texture used by all shapes in this shape group.
 * [setTransform](#H3DU.ShapeGroup_setTransform)<br>Sets the transform used by this shape group to a copy
 of the given transform.
 * [setVisible](#H3DU.ShapeGroup_setVisible)<br>Sets whether this shape group will be drawn on rendering.
@@ -171,19 +168,6 @@ Removes all instances of a 3D shape from this shape group
 
 This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
-<a name='H3DU.ShapeGroup_setMaterial'></a>
-### H3DU.ShapeGroup#setMaterial(material)
-
-Sets the material used by all shapes in this shape group.
-
-#### Parameters
-
-* `material` (Type: <a href="H3DU.Material.md">H3DU.Material</a>)<br>The material to use.
-
-#### Return Value
-
-Return value. (Type: Object)
-
 <a name='H3DU.ShapeGroup_setPosition'></a>
 ### H3DU.ShapeGroup#setPosition(x, y, z)
 
@@ -237,19 +221,6 @@ rather than the transform for each shape in the group.
 
 This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
-<a name='H3DU.ShapeGroup_setShader'></a>
-### H3DU.ShapeGroup#setShader(material)
-
-Sets the shader program used by all shapes in this shape group.
-
-#### Parameters
-
-* `material` (Type: <a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a>)<br>Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a> here is deprecated.</i>
-
-#### Return Value
-
-Return value. (Type: Object)
-
 <a name='H3DU.ShapeGroup_setShape'></a>
 ### H3DU.ShapeGroup#setShape(index, shape)
 
@@ -263,19 +234,6 @@ Sets a shape or shape group at the given index in this shape group.
 #### Return Value
 
 This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
-
-<a name='H3DU.ShapeGroup_setTexture'></a>
-### H3DU.ShapeGroup#setTexture(material)
-
-Sets the texture used by all shapes in this shape group.
-
-#### Parameters
-
-* `material` (Type: <a href="H3DU.Texture.md">H3DU.Texture</a> | String)<br><a href="H3DU.Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM's Image class. However, this method will not load that image if it hasn't been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in <a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>.
-
-#### Return Value
-
-Return value. (Type: Object)
 
 <a name='H3DU.ShapeGroup_setTransform'></a>
 ### H3DU.ShapeGroup#setTransform(transform)

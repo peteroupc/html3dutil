@@ -18,7 +18,7 @@ dimensions, a surface function has the following form:
 where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
 and z(u, v) returns a Z coordinate.
 
-Specialized surfaces should <a href="tutorial-subclass.md">subclass</a> this class and implement
+Specialized surfaces should subclass this class and implement
 the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
 
 #### Parameters

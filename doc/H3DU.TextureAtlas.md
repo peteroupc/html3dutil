@@ -59,14 +59,14 @@ Loads the texture files used by this texture atlas.
 
 #### Parameters
 
-* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.
+* `textureLoader` (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.
 
 #### Return Value
 
 A promise as described in
 <a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
-<a href="H3DU.Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.md">H3DU.Texture</a>>>)
+H3DU.Texture object. (Type: <a href="Promise.md">Promise</a>.&lt;Array.&lt;H3DU.Texture>>)
 
 <a name='H3DU.TextureAtlas.loadWithTextures'></a>
 ### (static) H3DU.TextureAtlas.loadWithTextures(atlasFileName, textureLoader)
@@ -77,7 +77,7 @@ it uses.
 #### Parameters
 
 * `atlasFileName` (Type: string)<br>The URL of the texture atlas to load.
-* `textureLoader` (Type: <a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.
+* `textureLoader` (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.
 
 #### Return Value
 
@@ -88,7 +88,7 @@ If the promise is resolved, the result will be an object with the
 following keys:<ul>
 <li><code>url</code> - The URL of the texture atlas data file.
 <li><code>atlas</code> - The texture atlas data in the form of an <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a> object.
-<li><code>textures</code> - An array of <a href="H3DU.Texture.md">H3DU.Texture</a> objects used by the font,
+<li><code>textures</code> - An array of H3DU.Texture objects used by the font,
 in the order in which they are declared in the font data file.
 </ul> (Type: <a href="Promise.md">Promise</a>)
 

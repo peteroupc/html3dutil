@@ -52,10 +52,13 @@ require './generate-websafe-svg'
 Dir.chdir(".."){
  files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
- utf8betterwrite(
-   normalizeLines(
-     ("/* eslint strict: \"off\", no-unused-expressions: \"off\" */\n/* global define */\n"+
-       `rollup --output.format=umd --name=H3DU ./extras/gltf/gltf.js`).gsub(/\t/,"  ")),"extras/gltf.js")
+ if FileTest.exist?("./extras/gltf/gltf.js")
+  utf8betterwrite(
+    normalizeLines(
+      ("/* eslint strict: \"off\", no-unused-expressions: \"off\" */\n/* global define */\n"+
+        `rollup --output.format=umd --name=H3DU ./extras/gltf/gltf.js`).gsub(
+        /\t/," ")),"extras/gltf.js")
+ end
  tmppath("h3du_all.js"){|p|
   utf8betterwrite(`rollup --output.format=umd --name=H3DU ./h3du.js`,p)
   normalizeAndCompile([p,"./oldnames.js"],"./h3du_min.js",false,ARGV.include?("--sourcemap"))

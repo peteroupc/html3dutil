@@ -514,7 +514,7 @@ var HMath = {
    * clipping plane meets the near clipping plane.
    * @param {number} r X coordinate of the point in eye space where the right
    * clipping plane meets the near clipping plane.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Y coordinate of the point in eye space where the bottom
    * clipping plane meets the near clipping plane.
@@ -528,11 +528,11 @@ var HMath = {
    * from the "camera" that the application can afford to clip out for being too
    * close, for example, 0.5, 1, or higher.
    * @param {number} far The distance, in eye space, from the "camera" to
-   * the far clipping plane. Objects beyond this distance will be too far
-   * to be seen.<br>This value should be greater than 0 and should be set
+   * the far clipping plane. Objects farther than this distance won't
+   * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -873,7 +873,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * reverse the sign of the 11th element of the result (zero-based index 10).
    * @param {number} l Leftmost coordinate of the orthographic view.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -883,7 +883,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.)
    * The absolute difference
@@ -910,7 +910,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * when using this matrix and on adjusting the matrix for other conventions.
    * @param {number} l Leftmost coordinate of the orthographic view.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -935,7 +935,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of coordinates when using this matrix and on adjusting the matrix for other conventions.
    * @param {number} l Leftmost coordinate of the view rectangle.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -962,7 +962,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * when using this matrix and on adjusting the matrix for other conventions.
    * @param {number} l Leftmost coordinate of the view rectangle.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that X coordinates increase leftward.
+   * ("l" is usually less than "r", so that X coordinates increase from left to right.
    * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
@@ -972,7 +972,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase upward, as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.) The absolute difference
    * between n and f should be as small as the application can accept.
@@ -1031,11 +1031,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * from the "camera" that the application can afford to clip out for being too
    * close, for example, 0.5, 1, or higher.
    * @param {number} far The distance, in eye space, from the "camera" to
-   * the far clipping plane. Objects beyond this distance will be too far
-   * to be seen.<br>This value should be greater than 0 and should be set
+   * the far clipping plane. Objects farther than this distance won't
+   * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -1080,11 +1080,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * from the "camera" that the application can afford to clip out for being too
    * close, for example, 0.5, 1, or higher.
    * @param {number} far The distance, in eye space, from the "camera" to
-   * the far clipping plane. Objects beyond this distance will be too far
-   * to be seen.<br>This value should be greater than 0 and should be set
+   * the far clipping plane. Objects farther than this distance won't
+   * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -1840,7 +1840,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return ret;
   },
   /**
-   * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).
+   * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
    * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
    * @param {number} pitchDegrees Vector rotation about the X axis (upward or downward turn), in degrees.
    * This can instead be a 3-element
@@ -2143,7 +2143,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Converts this quaternion to the same version of the rotation
-   * in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).
+   * in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
    * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
    * @param {number} [mode] Specifies the order in which the rotations will occur
    * (in terms of their effect, not in terms of how they will be returned by this method).
@@ -2770,7 +2770,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * // the shortest angle between the vectors.
    * var cosine=H3DU.Math.vec3dot(unitA,unitB);
    * // Sine of the angle. Note that the sine will always be 0 or greater because
-   * // the shortest angle betw0] ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
+   * // the shortest angle between them is positive or 0 degrees.
+   * var sine=H3DU.Math.vec3length(cr);
    */
   "vec3cross":function(a, b) {
     return [a[1] * b[2] - a[2] * b[1],
@@ -2821,7 +2822,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * <li>If the two vectors are the same, the return value indicates
    * the vector's length squared. This is illustrated in the example.
    * <li>Switching the order of the two vectors results in the
-   * same cross product. (Thus, the dot product is <i>commutative</i>.)
+   * same dot product. (Thus, the dot product is <i>commutative</i>.)
    * </ul>
    * @param {Array<number>} a The first 3-element vector.
    * @param {Array<number>} b The second 3-element vector.
@@ -3838,128 +3839,4 @@ HMath.LocalRollPitchYaw = HMath.GlobalYawPitchRoll;
  * @const
  */
 HMath.LocalRollYawPitch = HMath.GlobalPitchYawRoll;
-/**
- * Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
- * @deprecated This constant's name is ambiguous between local and global rotations.
- * Use {@link H3DU.Math.GlobalPitchYawRoll} instead.
- * @const
- */
-HMath.PitchYawRoll = 0;
-/**
- * Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
- * @deprecated This constant's name is ambiguous between local and global rotations.
- * Use {@link H3DU.Math.GlobalPitchRollYaw} instead.
- * @const
- */
-HMath.PitchRollYaw = 1;
-/**
- * Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
- * @deprecated This constant's name is ambiguous between local and global rotations.
- * Use {@link H3DU.Math.GlobalYawPitchRoll} instead.
- * @const
- */
-HMath.YawPitchRoll = 2;
-/**
- * Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
- * @deprecated This constant's name is ambiguous between local and global rotations.
- * Use {@link H3DU.Math.GlobalYawRollPitch} instead.
- * @const
- */
-HMath.YawRollPitch = 3;
-/**
- * Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
- * @deprecated This constant's name is ambiguous between local and global rotations.
- * Use {@link H3DU.Math.GlobalRollPitchYaw} instead.
- * @const
- */
-HMath.RollPitchYaw = 4;
-/**
- * Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
- * @deprecated This constant's name is ambiguous between local and global rotations.
- * Use {@link H3DU.Math.GlobalRollYawPitch} instead.
- * @const
- */
-HMath.RollYawPitch = 5;
-/**
- * Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
- * Returns a new quaternion; same as the quatInverse method.
- * @deprecated Use {@link H3DU.Math.quatInvert} instead.
- * @param {Array<number>} quat A quaternion, containing four elements.
- * @returns {Array<number>} Return value.
- * @method
- * @static
- */
-HMath.quatInverse = HMath.quatInvert;
-/**
- * Deprecated alias for {@link H3DU.Math.vec3normalize}.
- * @deprecated Use {@link H3DU.Math.vec3normalize} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} vec Vector to normalize.
- * @returns {Array<number>} The normalized vector.
- */
-HMath.vec3norm = HMath.vec3normalize;
-/**
- * Deprecated alias for {@link H3DU.Math.vec4normalize}.
- * @deprecated Use {@link H3DU.Math.vec4normalize} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} vec Vector to normalize.
- * @returns {Array<number>} The normalized vector.
- */
-HMath.vec4norm = HMath.vec4normalize;
-/**
- * Deprecated alias for {@link H3DU.Math.quatNormalize}.
- * @deprecated Use {@link H3DU.Math.quatNormalize} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} quat Quaternion to normalize.
- * @returns {Array<number>} The normalized quaternion.
- */
-HMath.quatNorm = HMath.quatNormalize;
-/**
- * Deprecated alias for {@link H3DU.Math.vec3normalizeInPlace}.
- * @deprecated Use {@link H3DU.Math.vec3normalizeInPlace} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} vec Vector to normalize in place.
- * @returns {Array<number>} The parameter "vec"
- */
-HMath.vec3normInPlace = HMath.vec3normalizeInPlace;
-/**
- * Deprecated alias for {@link H3DU.Math.vec4normalizeInPlace}.
- * @deprecated Use {@link H3DU.Math.vec4normalizeInPlace} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} vec Vector to normalize in place.
- * @returns {Array<number>} The parameter "vec"
- */
-HMath.vec4normInPlace = HMath.vec4normalizeInPlace;
-/**
- * Deprecated alias for {@link H3DU.Math.quatNormalizeInPlace}.
- * @deprecated Use {@link H3DU.Math.quatNormalizeInPlace} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} quat Quaternion to normalize in place.
- * @returns {Array<number>} The parameter "quat"
- */
-HMath.quatNormInPlace = HMath.quatNormalizeInPlace;
-/**
- * Deprecated alias for {@link H3DU.Math.planeNormalizeInPlace}.
- * @deprecated Use {@link H3DU.Math.planeNormalizeInPlace} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} plane Plane to normalize in place.
- * @returns {Array<number>} The parameter "plane"
- */
-HMath.planeNormInPlace = HMath.planeNormalizeInPlace;
-/**
- * Deprecated alias for {@link H3DU.Math.planeNormalize}.
- * @deprecated Use {@link H3DU.Math.planeNormalize} instead.
- * The name of this method may be confused with a vector's "norm", another name for its length.
- * @function
- * @param {Array<number>} plane Plane to normalize.
- * @returns {Array<number>} The normalized plane.
- */
-HMath.planeNorm = HMath.planeNormalize;
 export {HMath};

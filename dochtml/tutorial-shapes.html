@@ -7,8 +7,8 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 <p>This page will discuss:</p>
 <ul>
 <li>Using the Meshes methods to make built-in shapes</li>
-<li>Making your own shapes with the <a href="H3DU.Mesh.html"><code>H3DU.Mesh</code></a> constructor</li>
-<li>Building up your own shapes using the vertex methods of <a href="H3DU.Mesh.html"><code>H3DU.Mesh</code></a></li>
+<li>Making your own shapes with the <code>H3DU.Mesh</code> constructor</li>
+<li>Building up your own shapes using the vertex methods of <code>H3DU.Mesh</code></li>
 <li>Binding mesh buffers to shapes</li>
 <li>Shape groups, or combinations of several shapes</li>
 </ul>
@@ -233,7 +233,7 @@ vertices have the wrong order, use the <a href="H3DU.MeshBuffer.html#H3DU.MeshBu
 method to change their order.</p>
 <blockquote>
 <p>Note: For right-handed coordinate systems, as will be the case when using,
-for example, the <a href="H3DU.Batch3D.html#H3DU.Batch3D_perspectiveAspect"><code>Batch3D.perspectiveAspect()</code></a> method,
+for example, the <code>Batch3D.perspectiveAspect()</code> method,
 if the mesh buffer describes a closed convex surface (such as a sphere or cube),
 each triangle's vertices (as they appear when the triangle's front side is seen)
 must be ordered counterclockwise for the shape to be shaded from the outside.</p>
@@ -294,8 +294,8 @@ in the shape &quot;on the fly&quot; when it comes time to draw it each frame.</p
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.</p>
 </li>
-<li><p>Add the shape to a 3D batch (<a href="H3DU.Batch3D.html">`H3DU.Batch3D</a>):</p>
-<pre class="prettyprint source"><code> batch3d.addShape(shape);</code></pre><p> Now, the next time <code>scene3d.render(batch)</code> is called, the <a href="H3DU.Scene3D.html"><code>H3DU.Scene3D</code></a> will render the
+<li><p>Add the shape to a 3D batch (`H3DU.Batch3D):</p>
+<pre class="prettyprint source"><code> batch3d.addShape(shape);</code></pre><p> Now, the next time <code>scene3d.render(batch)</code> is called, the <code>H3DU.Scene3D</code> will render the
 given shape to the scene through the 3D batch.</p>
 </li>
 </ol>

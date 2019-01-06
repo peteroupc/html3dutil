@@ -51,14 +51,17 @@ but has a different set of end points.
 * [fitRange](#H3DU.PiecewiseCurve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to fit the given range.
 * [fromCatmullRomSpline](#H3DU.PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic Catmull-Rom spline.
+cubic Catmull&ndash;Rom spline.
+* [fromEllipseArc](#H3DU.PiecewiseCurve.fromEllipseArc)<br>TODO: Not documented yet.
 * [fromHermiteSpline](#H3DU.PiecewiseCurve.fromHermiteSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline.
 * [fromTCBSpline](#H3DU.PiecewiseCurve.fromTCBSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).
 * [getCurves](#H3DU.PiecewiseCurve_getCurves)<br>Gets a reference to the curves that make up this piecewise curve.
 * [getLength](#H3DU.PiecewiseCurve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#H3DU.PiecewiseCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.
+* [getPointsAsObjects](#H3DU.PiecewiseCurve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
 of U coordinates.
 * [jerk](#H3DU.PiecewiseCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.PiecewiseCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
@@ -174,14 +177,10 @@ Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
 ### (static) H3DU.PiecewiseCurve.fromCatmullRomSpline(spline, [param], [closed])
 
 Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic Catmull-Rom spline. A Catmull-Rom spline is defined by
+cubic Catmull&ndash;Rom spline. A Catmull&ndash;Rom spline is defined by
 a collection of control points that the spline
 will go through, and the shape of each curve segment is also determined by the positions
 of neighboring points on the spline.
-
-To use this method, you must include the script "extras/spline.js". Example:
-
-    <script type="text/javascript" src="extras/spline.js"></script>
 
 #### Parameters
 
@@ -191,10 +190,28 @@ To use this method, you must include the script "extras/spline.js". Example:
 
 #### Return Value
 
-A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull-Rom spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: PiecewiseCurve)
+
+<a name='H3DU.PiecewiseCurve.fromEllipseArc'></a>
+### (static) H3DU.PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `x` (Type: number)
+* `y` (Type: number)
+* `radiusX` (Type: number)
+* `radiusY` (Type: number)
+* `start` (Type: number)
+* `sweep` (Type: number)
+
+#### Return Value
+
+Return value. (Type: PiecewiseCurve)
 
 <a name='H3DU.PiecewiseCurve.fromHermiteSpline'></a>
-### (static) H3DU.PiecewiseCurve.fromHermiteSpline(curve)
+### (static) H3DU.PiecewiseCurve.fromHermiteSpline(spline)
 
 Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline. A Hermite spline is a collection of points that the curve will go through,
@@ -205,30 +222,22 @@ Hermite splines are useful for representing an approximate polynomial form
 of a function or curve whose derivative is known; however, Hermite splines are not
 guaranteed to preserve the increasing or decreasing nature of the function or curve.
 
-To use this method, you must include the script "extras/spline.js". Example:
-
-    <script type="text/javascript" src="extras/spline.js"></script>
-
 #### Parameters
 
-* `curve` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.
+* `spline` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.
 
 #### Return Value
 
 A piecewise curve made up of cubic B-spline curves describing the
-same path as the Hermite spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+same path as the Hermite spline. (Type: PiecewiseCurve)
 
 <a name='H3DU.PiecewiseCurve.fromTCBSpline'></a>
 ### (static) H3DU.PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])
 
 Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
-(If tension, continuity, and bias are all 0, the result is a cubic Catmull-Rom spline
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).
+(If tension, continuity, and bias are all 0, the result is a cubic Catmull&ndash;Rom spline
 in uniform parameterization.)
-
-To use this method, you must include the script "extras/spline.js". Example:
-
-    <script type="text/javascript" src="extras/spline.js"></script>
 
 #### Parameters
 
@@ -242,7 +251,7 @@ To use this method, you must include the script "extras/spline.js". Example:
 #### Return Value
 
 A piecewise curve made up of cubic B-spline curves describing the
-same path as the TCB spline. (Type: <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a>)
+same path as the TCB spline. (Type: PiecewiseCurve)
 
 <a name='H3DU.PiecewiseCurve_getCurves'></a>
 ### H3DU.PiecewiseCurve#getCurves()
@@ -278,7 +287,35 @@ an arc-length parameterization.
 
 An array of curve positions. The first
 element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>>)
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+<a name='H3DU.PiecewiseCurve_getPointsAsObjects'></a>
+### H3DU.PiecewiseCurve#getPointsAsObjects(count)
+
+Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.
+
+#### Parameters
+
+* `count` (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.
+
+#### Return Value
+
+An array of curve positions. The first
+element will be the start of the curve. If "count" is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+#### Example
+
+The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+
+    var points=curve.getPointsAsObjects(50)
+    var buffer=new THREE.BufferGeometry()
+    .setFromPoints(points);
 
 <a name='H3DU.PiecewiseCurve_jerk'></a>
 ### H3DU.PiecewiseCurve#jerk(u)

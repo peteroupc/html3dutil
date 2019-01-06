@@ -293,6 +293,32 @@ Curve.prototype.arcLength = function(u) {
   }
 };
 
+function _pointToObject(p) {
+  if(p.length === 1) {
+    return {"x":p[0]};
+  } else if(p.length === 2) {
+    return {
+      "x":p[0],
+      "y":p[1]
+    };
+  } else if(p.length === 3) {
+    return {
+      "x":p[0],
+      "y":p[1],
+      "z":p[2]
+    };
+  } else if(p.length === 4) {
+    return {
+      "x":p[0],
+      "y":p[1],
+      "z":p[2],
+      "w":p[3]
+    };
+  } else {
+    return {};
+  }
+}
+
 /**
  * Gets an array of positions on the curve at fixed intervals
  * of U coordinates. Note that these positions will not generally be
@@ -301,7 +327,7 @@ Curve.prototype.arcLength = function(u) {
  * @param {number} count Number of positions to generate. Throws
  * an error if this number is 0. If this value is 1, returns an array containing
  * the starting point of this curve.
- * @returns {Array<Array<number>>} An array of curve positions. The first
+ * @returns {Array<Array<number>>|Array<Object>} An array of curve positions. The first
  * element will be the start of the curve.  If "count" is 2 or greater, the last element
  * will be the end of the curve.
  */
@@ -312,7 +338,39 @@ Curve.prototype.getPoints = function(count) {
   var ret = [this.evaluate(ep[0])];
   for(var i = 1; i < count; i++) {
     var u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
-    ret.push(this.evaluate(u));
+    var pt = this.evaluate(u);
+    ret.push(pt);
+  }
+  return ret;
+};
+
+/**
+ * Gets an array of positions on the curve at fixed intervals
+ * of U coordinates. Note that these positions will not generally be
+ * evenly spaced along the curve unless the curve uses
+ * an arc-length parameterization. The positions will be in the form of objects with
+ * up to four properties: x, y, z, and w retrieve the first, second, third,
+ * and fourth coordinate of each position, respectively.
+ * @param {number} count Number of positions to generate. Throws
+ * an error if this number is 0. If this value is 1, returns an array containing
+ * the starting point of this curve.
+ * @returns {Array<Array<number>>|Array<Object>} An array of curve positions. The first
+ * element will be the start of the curve.  If "count" is 2 or greater, the last element
+ * will be the end of the curve.
+ * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
+ * var points=curve.getPointsAsObjects(50)
+ * var buffer=new THREE.BufferGeometry()
+ * .setFromPoints(points);
+ */
+Curve.prototype.getPointsAsObjects = function(count) {
+  if(count === 0)return [];
+  if(count < 0)throw new Error();
+  var ep = this.endPoints();
+  var ret = [_pointToObject(this.evaluate(ep[0]))];
+  for(var i = 1; i < count; i++) {
+    var u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
+    var pt = this.evaluate(u);
+    ret.push(_pointToObject(pt));
   }
   return ret;
 };

@@ -5,21 +5,13 @@
 <a name='H3DU'></a>
 ### H3DU
 
-The Public Domain HTML 3D Library contains classes and utility
-methods to ease the development of HTML 3D applications, such
-as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
-See the <a href="tutorial-overview.md">Library Overview</a> tutorial.
+This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 
 This page describes miscellaneous utility methods included in the
 library.
 
 ### Methods
 
-* [createCanvasElement](#H3DU.createCanvasElement)<br>Creates an HTML canvas element, optionally appending
-it to an existing HTML element.
-* [get3DContext](#H3DU.get3DContext)<br>Creates a 3D rendering context from an HTML canvas element.
-* [get3DOr2DContext](#H3DU.get3DOr2DContext)<br>Creates a 3D rendering context from an HTML canvas element,
-falling back to a 2D context if that fails.
 * [getPromiseResults](#H3DU.getPromiseResults)<br>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.
@@ -27,64 +19,11 @@ its work.
 resolves or is rejected after the given list of promises finishes
 its work.
 * [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
-* [is3DContext](#H3DU.is3DContext)<br>Returns whether the given object is a 3D rendering context.
 * [loadFileFromUrl](#H3DU.loadFileFromUrl)<br>Loads a file from a URL asynchronously, using XMLHttpRequest.
 * [loadStlFromUrl](#H3DU.loadStlFromUrl)<br>Loads a .STL file asynchronously.
 * [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
-* [renderLoop](#H3DU.renderLoop)<br>This method will call a function once before returning,
-and queue requests to call that function once per frame,
-using <code>window.requestAnimationFrame</code>
-or a "polyfill" method.
 * [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
-
-<a name='H3DU.createCanvasElement'></a>
-### (static) H3DU.createCanvasElement(parent, width, height)
-
-Creates an HTML canvas element, optionally appending
-it to an existing HTML element.
-
-#### Parameters
-
-* `parent` (Type: HTMLElement | null)<br>If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.
-* `width` (Type: number | null)<br>Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can't be a negative number.
-* `height` (Type: number | null)<br>Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can't be a negative number.
-
-#### Return Value
-
-The resulting canvas element. (Type: Element)
-
-<a name='H3DU.get3DContext'></a>
-### (static) H3DU.get3DContext(canvasElement, err)
-
-Creates a 3D rendering context from an HTML canvas element.
-
-#### Parameters
-
-* `canvasElement` (Type: HTMLCanvasElement)<br>An HTML canvas element.
-* `err` (Type: function)<br>A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If "err" is null, window.alert() will be used instead.
-
-#### Return Value
-
-A 3D rendering context, or null
-if an error occurred in creating the context. Returns null if "canvasElement"
-is null or not an HTML canvas element. (Type: Object)
-
-<a name='H3DU.get3DOr2DContext'></a>
-### (static) H3DU.get3DOr2DContext(canvasElement)
-
-Creates a 3D rendering context from an HTML canvas element,
-falling back to a 2D context if that fails.
-
-#### Parameters
-
-* `canvasElement` (Type: HTMLCanvasElement)<br>An HTML canvas element.
-
-#### Return Value
-
-A 3D or 2D rendering context, or null
-if an error occurred in creating the context. Returns null if "canvasElement"
-is null or not an HTML canvas element. (Type: Object)
 
 <a name='H3DU.getPromiseResults'></a>
 ### (static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])
@@ -167,19 +106,6 @@ value in milliseconds, such as the parameter of a
 
     var angle = 360 * export var getTimePosition(timer, time, 5000);
 
-<a name='H3DU.is3DContext'></a>
-### (static) H3DU.is3DContext(context)
-
-Returns whether the given object is a 3D rendering context.
-
-#### Parameters
-
-* `context` (Type: Object)<br>The object to check.
-
-#### Return Value
-
-Return value. (Type: boolean)
-
 <a name='H3DU.loadFileFromUrl'></a>
 ### (static) H3DU.loadFileFromUrl(url, [responseType])
 
@@ -248,22 +174,6 @@ The number of frame-length intervals relative to
 the last known time held in the parameter "timer".
 The number can include fractional frames. If an
 initial time or last known time wasn't set, returns 0. (Type: number)
-
-<a name='H3DU.renderLoop'></a>
-### (static) H3DU.renderLoop(func)
-
-This method will call a function once before returning,
-and queue requests to call that function once per frame,
-using <code>window.requestAnimationFrame</code>
-or a "polyfill" method.
-
-#### Parameters
-
-* `func` (Type: function)<br>The function to call. The function takes one parameter, "time", which is the number of milliseconds since the page was loaded.
-
-#### Return Value
-
-This function doesn't return a value. (Type: void)
 
 <a name='H3DU.toGLColor'></a>
 ### (static) H3DU.toGLColor(r, g, b, [a])

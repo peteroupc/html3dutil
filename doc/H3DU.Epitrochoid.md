@@ -21,8 +21,7 @@ and D = <code>distFromRollerCenter</code>).<ul>
 <li>Nephroid: R = O/2; D = O/2.</li>
 <li>Ranunculoid: R = O/5; D = O/5.</li>
 <li>N-cusped epicycloid: R = O/N; D = O/N.</li>
-<li>Circle: O = 0; the radius will be R - D.</li>
-<li>Epicycloid: R = D.</li></ul>
+<li>Circle: O = 0; the radius will be R - D.</li></ul>
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -55,6 +54,8 @@ but has a different set of end points.
 path as this one but has its U coordinates remapped to fit the given range.
 * [getLength](#H3DU.Epitrochoid_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#H3DU.Epitrochoid_getPoints)<br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.
+* [getPointsAsObjects](#H3DU.Epitrochoid_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
 of U coordinates.
 * [jerk](#H3DU.Epitrochoid_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.Epitrochoid_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
@@ -198,7 +199,35 @@ an arc-length parameterization.
 
 An array of curve positions. The first
 element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>>)
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+<a name='H3DU.Epitrochoid_getPointsAsObjects'></a>
+### H3DU.Epitrochoid#getPointsAsObjects(count)
+
+Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.
+
+#### Parameters
+
+* `count` (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.
+
+#### Return Value
+
+An array of curve positions. The first
+element will be the start of the curve. If "count" is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
+
+#### Example
+
+The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+
+    var points=curve.getPointsAsObjects(50)
+    var buffer=new THREE.BufferGeometry()
+    .setFromPoints(points);
 
 <a name='H3DU.Epitrochoid_jerk'></a>
 ### H3DU.Epitrochoid#jerk(u)
