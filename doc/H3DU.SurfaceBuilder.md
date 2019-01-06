@@ -99,7 +99,7 @@ Generates the vertex attributes of the parametric surfaces.
 
 #### Parameters
 
-* `mode` (Type: number) (optional)<br>If this value is H3DU.MeshBuffer.TRIANGLES, or is null, undefined, or omitted, generates a series of triangles defining the surface. If this value is H3DU.MeshBuffer.LINES, generates a series of lines defining the surface. If this value is H3DU.MeshBuffer.POINTS, generates a series of points along the surface. For any other value, this method has no effect.
+* `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer.TRIANGLES">H3DU.MeshBuffer.TRIANGLES</a>, or is null, undefined, or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer.LINES">H3DU.MeshBuffer.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer.POINTS">H3DU.MeshBuffer.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.
 * `un` (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
 * `vn` (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
 * `u1` (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 0 if not given.
@@ -148,7 +148,7 @@ from (0,1) along the U and V axes of the surface.
 
 #### Parameters
 
-* `surface` (Type: Object)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate positions.
+* `surface` (Type: Object | null)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate positions.
 * `size` (Type: number) (optional)<br>The number of elements in each position and normal. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional.
 
 #### Return Value
@@ -164,7 +164,7 @@ from (0,1) along the U and V axes of the surface.
 
 #### Parameters
 
-* `surface` (Type: Object)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate positions.
+* `surface` (Type: Object | null)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate positions.
 * `size` (Type: number) (optional)<br>The number of elements in each position. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
 
 #### Return Value
@@ -181,7 +181,7 @@ texture coordinates that cover the given surface.
 #### Parameters
 
 * `surface` (Type: Object)<br>A <a href="H3DU.Surface.md">surface evaluator object</a> that describes the parametric surface used to generate positions.
-* `mode` (Type: number) (optional)<br>If this value is H3DU.MeshBuffer.TRIANGLES, or is null, undefined, or omitted, generates a series of triangles defining the surface. If this value is H3DU.MeshBuffer.LINES, generates a series of lines defining the surface. If this value is H3DU.MeshBuffer.POINTS, generates a series of points along the surface. For any other value, this method has no effect.
+* `mode` (Type: number) (optional)<br>If this value is <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer.TRIANGLES">H3DU.MeshBuffer.TRIANGLES</a>, or is null, undefined, or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer.LINES">H3DU.MeshBuffer.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer.POINTS">H3DU.MeshBuffer.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.
 * `un` (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.
 * `vn` (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.
 * `u1` (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.Surface.md">surface evaluator object</a>, or 0 if not given.

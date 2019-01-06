@@ -199,16 +199,16 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `x` (Type: *)
-* `y` (Type: *)
-* `radiusX` (Type: *)
-* `radiusY` (Type: *)
-* `start` (Type: *)
-* `sweep` (Type: *)
+* `x` (Type: number)
+* `y` (Type: number)
+* `radiusX` (Type: number)
+* `radiusY` (Type: number)
+* `start` (Type: number)
+* `sweep` (Type: number)
 
 #### Return Value
 
-Return value. (Type: *)
+Return value. (Type: PiecewiseCurve)
 
 <a name='H3DU.PiecewiseCurve.fromHermiteSpline'></a>
 ### (static) H3DU.PiecewiseCurve.fromHermiteSpline(spline)

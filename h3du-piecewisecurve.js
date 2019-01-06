@@ -1,4 +1,4 @@
-/* global H3DU, sa0, sa1 */
+/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -383,13 +383,13 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} x
- * @param {*} y
- * @param {*} radiusX
- * @param {*} radiusY
- * @param {*} start
- * @param {*} sweep
- * @returns {*} Return value.
+ * @param {number} x
+ * @param {number} y
+ * @param {number} radiusX
+ * @param {number} radiusY
+ * @param {number} start
+ * @param {number} sweep
+ * @returns {PiecewiseCurve} Return value.
  */
 PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   if(typeof start === "undefined" || start === null)start = 0;
@@ -400,13 +400,14 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
     abssweep <= Math.PI * 2 ? abssweep * 0.25 : Math.PI * 0.5;
   var arcstart = start;
   var curves = [];
+  var sa0, sa1;
   while(abssweep > 0) {
     var arcangle = Math.min(sweepSegments, abssweep);
     var arcend = arcstart + arcangle * sweepdir;
     var ca0 = Math.cos(arcstart);
- // sa0 = arcstart >= 0 && arcstart < 6.283185307179586 ? arcstart <= 3.141592653589793 ? Math.sqrt(1.0 - ca0 * ca0) : -Math.sqrt(1.0 - ca0 * ca0) : Math.sin(arcstart);
+    sa0 = arcstart >= 0 && arcstart < 6.283185307179586 ? arcstart <= 3.141592653589793 ? Math.sqrt(1.0 - ca0 * ca0) : -Math.sqrt(1.0 - ca0 * ca0) : Math.sin(arcstart);
     var ca1 = Math.cos(arcend);
- // sa1 = arcend >= 0 && arcend < 6.283185307179586 ? arcend <= 3.141592653589793 ? Math.sqrt(1.0 - ca1 * ca1) : -Math.sqrt(1.0 - ca1 * ca1) : Math.sin(arcend);
+    sa1 = arcend >= 0 && arcend < 6.283185307179586 ? arcend <= 3.141592653589793 ? Math.sqrt(1.0 - ca1 * ca1) : -Math.sqrt(1.0 - ca1 * ca1) : Math.sin(arcend);
     abssweep -= arcangle;
     arcstart += arcangle * sweepdir;
     var p0 = [ca0, sa0, 1];
@@ -415,7 +416,6 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
     var weight = Math.sin(halfAngle);
     var dx = p2[0] - p0[0];
     var dy = p2[1] - p0[1];
-  // var dist = Math.sqrt(dx * dx + dy * dy);
     var m0 = p0[0] + dx * 0.5;
     var m1 = p0[1] + dy * 0.5;
     var dcx = m0;

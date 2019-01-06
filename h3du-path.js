@@ -10,8 +10,11 @@
 
 import {BSplineCurve} from "./h3du-bspline";
 import {HMath} from "./h3du-math";
+import {Curve} from "./h3du-curve";
+import {PiecewiseCurve} from "./h3du-piecewisecurve";
 
   /** @ignore
+   * @private
    * @constructor */
 var LinkedListNode = function(item) {
   this.data = item;
@@ -162,7 +165,7 @@ function LineCurve(x1, y1, x2, y2) {
   this.y1 = y1;
   this.y2 = y2;
 }
-LineCurve.prototype = Object.create(H3DU.Curve.prototype);
+LineCurve.prototype = Object.create(Curve.prototype);
 LineCurve.prototype.constructor = LineCurve;
   /** @ignore */
 LineCurve.prototype.evaluate = function(u) {
@@ -206,7 +209,7 @@ function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
   this.theta = theta;
   this.delta = delta;
 }
-ArcCurve.prototype = Object.create(H3DU.Curve.prototype);
+ArcCurve.prototype = Object.create(Curve.prototype);
 ArcCurve.prototype.constructor = ArcCurve;
   /** @ignore */
 ArcCurve.prototype.evaluate = function(t) {
@@ -235,7 +238,6 @@ ArcCurve.prototype.velocity = function(t) {
   /**
    * Represents a two-dimensional path.
    * @memberof H3DU
-   * @alias H3DU.GraphicsPath
    * @constructor
    */
 export var GraphicsPath = function() {
@@ -246,10 +248,15 @@ export var GraphicsPath = function() {
 };
   /** @ignore */
 var Triangulate = {};
+  /** @ignore */
 GraphicsPath.CLOSE = 0;
+  /** @ignore */
 GraphicsPath.LINE = 1;
+  /** @ignore */
 GraphicsPath.QUAD = 2;
+  /** @ignore */
 GraphicsPath.CUBIC = 3;
+  /** @ignore */
 GraphicsPath.ARC = 4;
   /**
    * Returns whether the curve path is incomplete
@@ -258,7 +265,6 @@ GraphicsPath.ARC = 4;
    * closePath command, or another path segment
    * is added to the path.
    * @returns {boolean} Return value.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.isIncomplete = function() {
   return this.incomplete;
@@ -495,8 +501,7 @@ GraphicsPath.prototype._end = function() {
    * Merges the path segments in another path onto this one.
    * @param {H3DU.GraphicsPath} path Another graphics path.
    * Can be null.
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.merge = function(path) {
   var oldpos = null;
@@ -537,7 +542,6 @@ GraphicsPath.prototype.merge = function(path) {
    * See {@link H3DU.GraphicsPath.fromString}.
    * @returns {string} A string describing the path in the SVG path
    * format.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.toString = function() {
   var oldpos = null;
@@ -577,7 +581,6 @@ GraphicsPath.prototype.toString = function() {
    * @param {number} [flatness] No longer used by this method.
    * @returns {number} Approximate length of this path
    * in units.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.pathLength = function(flatness) {
   if(this.segments.length === 0)return 0;
@@ -597,7 +600,6 @@ GraphicsPath.prototype.pathLength = function(flatness) {
    * Each line segment is an array of four numbers: the X and
    * Y coordinates of the start point, respectively, then the X and
    * Y coordinates of the end point, respectively.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getLines = function(flatness) {
   var ret = [];
@@ -625,9 +627,8 @@ GraphicsPath.prototype.getLines = function(flatness) {
    * are decomposed to line segments, the
    * segments will be close to the true path of the curve by this
    * value, given in units. If null, undefined, or omitted, default is 1.
-   * @returns {H3DU.GraphicsPath} A path consisting only of line
+   * @returns {GraphicsPath} A path consisting only of line
    * segments and close commands.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.toLinePath = function(flatness) {
   var ret = [];
@@ -677,9 +678,8 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
   /**
    * Creates a path in which arcs are decomposed
    * to cubic B&eacute;zier curves (which will approximate those arcs).
-   * @returns {H3DU.GraphicsPath} A path consisting only of line
+   * @returns {GraphicsPath} A path consisting only of line
    * segments, B&eacute;zier curves, and close commands.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.toCurvePath = function() {
   var path = new GraphicsPath();
@@ -786,7 +786,6 @@ GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
    * the lowest X and Y coordinates, and the last two are
    * the highest X and Y coordinates. If the path is empty,
    * returns the array (Infinity, Infinity, -Infinity, -Infinity).
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getBounds = function() {
   var inf = Number.POSITIVE_INFINITY;
@@ -902,9 +901,8 @@ GraphicsPath.prototype.getBounds = function() {
 
   /**
    * Returns a path that reverses the course of this path.
-   * @returns {H3DU.GraphicsPath} A GraphicsPath
+   * @returns {GraphicsPath} A GraphicsPath
    * object with its path segments reversed.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.reverse = function() {
   var lastptx = 0;
@@ -1039,11 +1037,11 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
 
   /** @ignore */
 GraphicsPath._CurveList = function(curves) {
-  H3DU.Curve.apply(this,
-      [new H3DU.PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
+  Curve.apply(this,
+      [new PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
   this.curves = curves;
 };
-GraphicsPath._CurveList.prototype = Object.create(H3DU.Curve.prototype);
+GraphicsPath._CurveList.prototype = Object.create(Curve.prototype);
 GraphicsPath._CurveList.prototype.constructor = GraphicsPath._CurveList;
 GraphicsPath._CurveList.prototype.getCurves = function() {
   return this.curves;
@@ -1062,8 +1060,7 @@ GraphicsPath._CurveList.prototype.getCurves = function() {
    * and pass the result of that function to this method.
    * See the documentation for {@link HMathvec3lerp}
    * for examples of interpolation functions.
-   * @returns {H3DU.GraphicsPath} The interpolated path.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} The interpolated path.
    */
 GraphicsPath.prototype.interpolate = function(other, t) {
   if(!other || other.segments.length !== this.segments.length) {
@@ -1190,7 +1187,6 @@ GraphicsPath._addSegment = function(a, c) {
    * "u" position (however, the z will always be 0 since paths can currently
    * only be 2-dimensional).
    * </ul>
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getCurves = function() {
     // TODO: Consider returning a list of curves and require
@@ -1228,7 +1224,7 @@ GraphicsPath.prototype.getCurves = function() {
     }
   }
   for(i = 0; i < subpaths.length; i++) {
-    curves.push(new H3DU.PiecewiseCurve(subpaths[i]).toArcLengthParam().fitRange(0, 1));
+    curves.push(new PiecewiseCurve(subpaths[i]).toArcLengthParam().fitRange(0, 1));
   }
   return new GraphicsPath._CurveList(curves);
 };
@@ -1242,7 +1238,6 @@ GraphicsPath.prototype.getCurves = function() {
    * value, given in units. If null, undefined, or omitted, default is 1.
    * @returns {Array<Array<number>>} Array of the end points of
    * line segments approximating the path.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getLinePoints = function(flatness) {
   var lines = this.getLines(flatness);
@@ -1271,7 +1266,6 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
    * value, given in units. If null, undefined, or omitted, default is 1.
    * @returns {Array<Array<number>>} Array of the end points of
    * line segments approximating the path.
-   * @memberof! H3DU.GraphicsPath#
    * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
    * var points=path.getLinePointsAsObjects()
    * var buffer=new THREE.BufferGeometry()
@@ -1310,7 +1304,6 @@ GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
    * an empty array if <i>numPoints</i> is less than 1. Returns
    * an array consisting of the start point if <i>numPoints</i>
    * is 1.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getPoints = function(numPoints) {
   if(numPoints < 1 || this.segments.length === 0)return [];
@@ -1341,7 +1334,6 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
    * an empty array if <i>numPoints</i> is less than 1. Returns
    * an array consisting of the start point if <i>numPoints</i>
    * is 1.
-   * @memberof! H3DU.GraphicsPath#
    * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
    * var points=path.getPointsAsObjects(50)
    * var buffer=new THREE.BufferGeometry()
@@ -1383,8 +1375,7 @@ GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   /**
    * Makes this path closed. Adds a line segment to the
    * path's start position, if necessary.
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.closePath = function() {
   if(this.startPos[0] !== this.endPos[0] ||
@@ -1402,8 +1393,7 @@ GraphicsPath.prototype.closePath = function() {
    * Moves the current start position and end position to the given position.
    * @param {number} x X coordinate of the position.
    * @param {number} y Y coordinate of the position.
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.moveTo = function(x, y) {
   this.startPos[0] = x;
@@ -1419,8 +1409,7 @@ GraphicsPath.prototype.moveTo = function(x, y) {
    * sets the end position to the end of the segment.
    * @param {number} x X coordinate of the end of the line segment.
    * @param {number} y Y coordinate of the end of the line segment.
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.lineTo = function(x, y) {
   this.segments.push([GraphicsPath.LINE,
@@ -1433,7 +1422,6 @@ GraphicsPath.prototype.lineTo = function(x, y) {
   /**
    * Gets the current point stored in this path.
    * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getCurrentPoint = function() {
   return [this.endPos[0], this.endPos[1]];
@@ -1472,8 +1460,7 @@ GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
    * point of the arc.
    * @param {number} y2 Y coordinate of the point described under "x2".
    * @param {number} radius Radius of the circle the arc forms a part of.
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
   if(radius < 0) {
@@ -1515,8 +1502,7 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
    * @param {Boolean} ccw Whether the arc runs counterclockwise
    * (assuming the X axis points right and the Y axis points
    * down under the coordinate system).
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
   return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
@@ -1576,8 +1562,7 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
    * @param {number} y Y coordinate of the curve's second control point.
    * @param {number} x2 X coordinate of the curve's end point (third control point).
    * @param {number} y2 Y coordinate of the curve's end point (third control point).
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
   this.segments.push([GraphicsPath.QUAD,
@@ -1597,8 +1582,7 @@ GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
    * @param {number} y2 Y coordinate of the curve's third control point.
    * @param {number} x3 X coordinate of the curve's end point (fourth control point).
    * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
   this.segments.push([GraphicsPath.CUBIC,
@@ -1734,8 +1718,7 @@ GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) 
    * down under the coordinate system); if false, counterclockwise.
    * @param {number} x2 X coordinate of the arc's end point.
    * @param {number} y2 Y coordinate of the arc's end point.
-   * @returns {H3DU.GraphicsPath} This object.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object.
    */
 GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2) {
   if(rx === 0 || ry === 0) {
@@ -1945,8 +1928,7 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
    * point in the current path, its new X coordinate is `trans[0] * X +
    * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
    * trans[3] * Y + trans[5]`.
-   * @returns {H3DU.GraphicsPath} The transformed version of this path.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} The transformed version of this path.
    */
 GraphicsPath.prototype.transform = function(trans) {
   var ret = new GraphicsPath();
@@ -2042,8 +2024,7 @@ GraphicsPath.prototype.transform = function(trans) {
    * coordinate system's X axis points right and the Y axis down).
    * @param {number} w Width of the rectangle.
    * @param {number} h Height of the rectangle.
-   * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
-   * @memberof! H3DU.GraphicsPath#
+   * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
    */
 GraphicsPath.prototype.rect = function(x, y, w, h) {
   if(w < 0 || h < 0)return this;
@@ -2062,7 +2043,7 @@ GraphicsPath.prototype.rect = function(x, y, w, h) {
  * @param {number} x1 X coordinate of the line segment's ending point.
  * The <code>lineTo</code> method will be called on the ending point.
  * @param {number} y1 X coordinate of the line segment's ending point.
- * @returns {H3DU.GraphicsPath} This object.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
   return this.moveTo(x0, y0).lineTo(x1, y1);
@@ -2076,7 +2057,7 @@ GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * segments will connect each point given (except the last) to the next point given.
  * @param {number} closed If "true", the sequence of points describes a closed polygon and a command
  * to close the path will be added to the path (even if only one pair of numbers is given in "pointCoords").
- * @returns {H3DU.GraphicsPath} This object. If "pointCoords" is empty, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "pointCoords" is empty, no path segments will be appended.
  * Throws an error if "pointCoords" has an odd length.
  */
 GraphicsPath.prototype.polyline = function(pointCoords, closed) {
@@ -2105,7 +2086,7 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
  * @param {number} arccy Vertical extent (from end to end) of the ellipse formed by each arc that makes
  * up the rectangle's corners.
  * Will be adjusted to be not less than 0 and not greater than "h".
- * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
  */
 GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
@@ -2153,7 +2134,7 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  * Will be adjusted to be not less than 0 and not greater than "w".
  * @param {number} arccy Vertical extent (from end to end) of the rectangle's corners.
  * Will be adjusted to be not less than 0 and not greater than "h".
- * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
  */
 GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
@@ -2195,7 +2176,7 @@ GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
  * @param {number} cy Y coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
- * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
  */
 GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
   if(w < 0 || h < 0)return this;
@@ -2216,7 +2197,7 @@ GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
  * coordinate system's X axis points right and the Y axis down).
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
- * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
  */
 GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
   return this.ellipse(x + w * 0.5, y + h * 0.5, w, h);
@@ -2225,8 +2206,8 @@ GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * Adds path segments to this path that form an arc running along an axis-aligned
  * ellipse, or a shape based on that arc and ellipse, given the ellipse's center
  * and dimensions, start angle, and sweep angle.
- * @param {number} cx X coordinate of the ellipse's center.
- * @param {number} cy Y coordinate of the ellipse's center.
+ * @param {number} x X coordinate of the ellipse's center.
+ * @param {number} y Y coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @param {number} start Starting angle of the arc, in degrees.
@@ -2241,7 +2222,7 @@ GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * (the arc and a line segment connecting its ends). If 2,
  * will append a "pie slice" to the path (the arc and two line segments connecting
  * each end of the arc to the ellipse's center).
- * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
  */
 GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
   if(w < 0 || h < 0)return this;
@@ -2302,7 +2283,7 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
  * (the arc and a line segment connecting its ends). If 2,
  * will append a "pie slice" to the path (the arc and two line segments connecting
  * each end of the arc to the ellipse's center).
- * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
  */
 GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type) {
   return this.arcShape(x + w * 0.5, y + h * 0.5, w, h, start, sweep, type);
@@ -2316,7 +2297,7 @@ GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type)
  * @param {number} headWidth Width of the arrowhead's base from side to side.
  * @param {number} headLength Length of the arrowhead from its tip to its base.
  * @param {number} tailWidth Width of the arrow's tail from side to side
- * @returns {H3DU.GraphicsPath} This object. Nothing will be added to the path if the distance
+ * @returns {GraphicsPath} This object. Nothing will be added to the path if the distance
  * from (x0, y0) and (x1, y1) is 0 or extremely close to 0.
  */
 GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, tailWidth) {
@@ -2364,7 +2345,7 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
  * @param {number} phaseInDegrees Starting angle of the first vertex of the polygon, in degrees.
  * 0 means the positive X axis, 90 means the positive Y axis,
  * 180 means the negative X axis, and 270 means the negative Y axis.
- * @returns {H3DU.GraphicsPath} This object.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInDegrees) {
   if(sides <= 2)return this;
@@ -2403,7 +2384,7 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
  * @param {number} phaseInDegrees Starting angle of the first vertex of the polygon, in degrees.
  * 0 means the positive X axis, 90 means the positive Y axis,
  * 180 means the negative X axis, and 270 means the negative Y axis.
- * @returns {H3DU.GraphicsPath} This object.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
   if(points <= 0)return this;
@@ -2468,7 +2449,7 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
    * introduce ambiguity. All commands set the current point
    * to the end of the path segment (including Z/z, which adds a line
    * segment if needed).
-   * @returns {H3DU.GraphicsPath} The resulting path. If an error
+   * @returns {GraphicsPath} The resulting path. If an error
    * occurs while parsing the path, the path's "isIncomplete() method
    * will return <code>true</code>.
    * @example <caption>The following example creates a graphics path
@@ -3064,7 +3045,6 @@ function decomposeTriangles(points, tris, isConvex) {
    * array, the first two, next two, and last two numbers each
    * describe a vertex position of that triangle (X and Y coordinates
    * in that order).
-   * @memberof! H3DU.GraphicsPath#
    */
 GraphicsPath.prototype.getTriangles = function(flatness) {
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
@@ -3133,7 +3113,7 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {H3DU.GraphicsPath} Return value.
+ * @returns {GraphicsPath} Return value.
  */
 GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
@@ -3547,6 +3527,9 @@ RedBlackTree.prototype.insert = function(data) {
   // NOTE: Much of the Polygon, Connector, and Clipper classes
   // was adapted for JavaScript by Peter O. from the public domain
   // C++ code by Francisco Martinez and others.
+/** @constructor
+ * @private
+ * @ignore */
 var Polygon = function(path, flatness) {
   this.subpaths = [];
   this.contours = [];
@@ -3601,7 +3584,9 @@ Polygon._Contour = function(subpath) {
     }
   };
 };
-
+/** @constructor
+ * @private
+ * @ignore */
 var Clipper = function(s, c) {
   this.eq = new PriorityQueue(Clipper.sweepEventCompNum);
   this.eventHolder = [];
@@ -3751,7 +3736,9 @@ Clipper.XOR = 3;
 Clipper.NON_CONTRIBUTING = 1;
 Clipper.SAME_TRANSITION = 2;
 Clipper.DIFFERENT_TRANSITION = 3;
-  /** @ignore */
+/** @constructor
+ * @private
+ * @ignore */
 Clipper.SweepEvent = function(pp, b, apl, o, t) {
   this.p = pp;
   this.id = -1;
@@ -3774,10 +3761,6 @@ Clipper.SweepEvent = function(pp, b, apl, o, t) {
     return !this.below(x);
   };
 };
-  /*
-  Clipper.SweepEvent.prototype.toString = function() {
-    return Clipper._print(this);
-  };*/
   /** @ignore */
 Clipper.signedArea = function(a, b, c) {
   var xa = a[0] - c[0];
@@ -4272,8 +4255,7 @@ Clipper.prototype._divideSegment = function(e, p) {
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this
      * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {H3DU.GraphicsPath} The union of the two paths.
-     * @memberof! H3DU.GraphicsPath#
+     * @returns {GraphicsPath} The union of the two paths.
      */
 GraphicsPath.prototype.union = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
@@ -4291,9 +4273,8 @@ GraphicsPath.prototype.union = function(path, flatness) {
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this
      * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {H3DU.GraphicsPath} The difference between this path
+     * @returns {GraphicsPath} The difference between this path
      * and the other path.
-     * @memberof! H3DU.GraphicsPath#
      */
 GraphicsPath.prototype.difference = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
@@ -4311,9 +4292,8 @@ GraphicsPath.prototype.difference = function(path, flatness) {
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this
      * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {H3DU.GraphicsPath} A path whose shape is contained in
+     * @returns {GraphicsPath} A path whose shape is contained in
      * both paths.
-     * @memberof! H3DU.GraphicsPath#
      */
 GraphicsPath.prototype.intersection = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
@@ -4331,9 +4311,8 @@ GraphicsPath.prototype.intersection = function(path, flatness) {
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this
      * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {H3DU.GraphicsPath} A path whose shape is contained in
+     * @returns {GraphicsPath} A path whose shape is contained in
      * only one of the two paths.
-     * @memberof! H3DU.GraphicsPath#
      */
 GraphicsPath.prototype.xor = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;

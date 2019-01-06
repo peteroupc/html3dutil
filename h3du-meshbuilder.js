@@ -367,7 +367,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * Sets the parametric surface used to generate vertex positions, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
+ * @param {Object|null} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position. For
@@ -385,7 +385,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * Sets the parametric surface used to generate vertex positions and normals, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object} surface A [surface evaluator object]{@link H3DU.Surface} that
+ * @param {Object|null} surface A [surface evaluator object]{@link H3DU.Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position and normal. For
@@ -394,7 +394,9 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * @returns {H3DU.SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
-  return this.positionNormal(surface, size).positionTexCoord(surface, size);
+  var tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
+  return this.positionNormal(surface, size)
+    .attribute(tc, Semantic.TEXCOORD, 0, 2);
 };
 
 /**

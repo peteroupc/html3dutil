@@ -6,8 +6,9 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* exported H3DU, define, exports, module */
-var H3DU, define, exports, module;
+/* exported H3DU, module, exports, define */
+var H3DU;
+var module, exports, define;
 /** @typedef {Curve} */H3DU.Curve;
 /** @typedef {CurveBuilder} */H3DU.CurveBuilder;
 /** @typedef {SurfaceBuilder} */H3DU.SurfaceBuilder;
