@@ -766,14 +766,21 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * var lookPoint=[0,0,0];
    * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
    * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
-   * var matrix=HMath.mat4lookat(cameraPoint,lookPoint);
+   * var matrix=H3DU.Math.mat4lookat(cameraPoint,lookPoint);
    * @example <caption>The following example is like the previous
    * example, but with the Z axis pointing up.</caption>
    * var lookPoint=[0,0,0];
    * var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
    * cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
    * // Positive Z axis is the up vector
-   * var matrix=HMath.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
+   * var matrix=H3DU.Math.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
+   * @example <caption>The following example creates a camera view matrix using the
+   * viewer position, the viewing direction, and the up vector (a "look-to" matrix)</caption>
+   * var viewDirection=[0,0,1]
+   * var viewerPos=[0,0,0]
+   * var upVector=[0,1,0]
+   * var lookingAt=H3DU.Math.vec3add(viewerPos,viewDirection);
+   * var matrix=H3DU.Math.mat4lookat(viewerPos,lookingAt,upVector);
    */
   "mat4lookat":function(viewerPos, lookingAt, up) {
     if(typeof up === "undefined" || up === null)up = [0, 1, 0];
