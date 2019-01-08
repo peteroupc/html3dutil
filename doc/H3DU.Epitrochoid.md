@@ -120,6 +120,9 @@ constant speed with respect to time. For example, shrinking the range of a curve
 from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
 long as the original curve.
 
+For some curves, this method can
+also be used to grow the path of the curve.
+
 #### Parameters
 
 * `ep1` (Type: number)<br>New start point of the curve.

@@ -51,6 +51,8 @@ from one coordinate system to another.
 of 4x4 transformation matrices.
 * <a href="MatrixStack.md">MatrixStack</a><br>**Deprecated: Use H3DU.MatrixStack instead.**
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
+* <a href="Superellipsoid.md">Superellipsoid</a><br>TODO: Not documented yet.
+* <a href="Supertoroid.md">Supertoroid</a><br>TODO: Not documented yet.
 
 ## Tutorials
 

@@ -247,7 +247,7 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
  * curve.constantAttribute([1,0,0],"COLOR");
  */
 CurveBuilder.prototype.constantAttribute = function(
-    constantValue, semantic, semanticIndex, size) {
+    constantValue, semantic, semanticIndex) {
   if(typeof constantValue === "number") {
     return this.attribute({
       "evaluate":function() {
@@ -461,7 +461,6 @@ SurfaceBuilder.prototype.constantAttribute = function(constantValue, semantic, s
     },
     semantic, semanticIndex, constantValue.length );
   }
-  return this;
 };
 
 /**

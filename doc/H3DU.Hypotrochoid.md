@@ -12,7 +12,7 @@ of another circle, whose position is fixed, with a center of (0,0).
 
 The following curves can be generated with this class (in the following
 descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
-and D = <code>distFromRollerCenter</code>).<ul>
+and D = <code>distFromInnerCenter</code>).<ul>
 <li>Hypocycloid: D = R (hypotrochoid touching the fixed circle).</li>
 <li>Curtate hypocycloid: D < R (hypotrochoid not touching the fixed circle).</li>
 <li>Prolate hypocycloid: D > R (hypotrochoid crossing the fixed circle).</li>
@@ -118,6 +118,9 @@ in the same proportion, unless the curve's path runs at
 constant speed with respect to time. For example, shrinking the range of a curve
 from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
 long as the original curve.
+
+For some curves, this method can
+also be used to grow the path of the curve.
 
 #### Parameters
 

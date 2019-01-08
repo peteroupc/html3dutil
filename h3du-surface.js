@@ -37,8 +37,8 @@ import {_MathInternal} from "./h3du-mathinternal";
  * &#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
  * &#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
  * Next, take their cross product:<p>
- * <b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
- * The result is the gradient, which will be normal to the surface.
+ * <b>&Del;F</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
+ * The result is the gradient, which will point up and away from the surface.
  * </caption>
  * var surface=new H3DU.Surface({"evaluate":function(u,v) {
  * "use strict";

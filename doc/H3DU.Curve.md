@@ -28,6 +28,17 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 #### Example
 
+The following is a simple example of a parametric curve.
+
+    var simpleCurve = new H3DU.Curve({
+    "evaluate":function(u) {
+    return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
+    },
+    "endPoints":function() {
+    return [-Math.PI, Math.PI];
+    }
+    });
+
 The following function defines a parametric circle curve. It demonstrates how all methods
 defined for curve evaluator objects can be implemented.
 
@@ -134,6 +145,9 @@ in the same proportion, unless the curve's path runs at
 constant speed with respect to time. For example, shrinking the range of a curve
 from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
 long as the original curve.
+
+For some curves, this method can
+also be used to grow the path of the curve.
 
 #### Parameters
 

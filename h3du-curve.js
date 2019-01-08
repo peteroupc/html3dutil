@@ -29,6 +29,15 @@ import {_MathInternal} from "./h3du-mathinternal";
  * return value takes precedence over the given curve's <code>endPoints</code> method. It also implements
  * a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization
  * to a U coordinate in the new parameterization.
+ * @example <caption>The following is a simple example of a parametric curve.</caption>
+ * var simpleCurve = new H3DU.Curve({
+ * "evaluate":function(u) {
+ * return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
+ * },
+ * "endPoints":function() {
+ * return [-Math.PI, Math.PI];
+ * }
+ * });
  * @example <caption>The following function defines a parametric circle curve. It demonstrates how all methods
  * defined for curve evaluator objects can be implemented.</caption>
  * var circle=new Curve({"evaluate":function(u) {
@@ -542,7 +551,8 @@ Curve._ArcLengthParam.prototype.endPoints = function() {
  * in the same proportion, unless the curve's path runs at
  * constant speed with respect to time. For example, shrinking the range of a curve
  * from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
- * long as the original curve.
+ * long as the original curve.<p>For some curves, this method can
+ * also be used to grow the path of the curve.
  * @param {number} ep1 New start point of the curve.
  * @param {number} ep2 New end point of the curve.
  * @returns {H3DU.Curve} Return value.

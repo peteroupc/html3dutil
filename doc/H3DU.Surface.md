@@ -41,9 +41,9 @@ Then, find the partial derivatives with respect to <i>u</i> and to <i>v</i>:
 
 Next, take their cross product:
 
-<b>c</b>(u, v) = (-sin(v)\*cos(u)\*sin(u), -sin(v)\*sin(u)\*sin(u), 0)<br>
+<b>&Del;F</b>(u, v) = (-sin(v)\*cos(u)\*sin(u), -sin(v)\*sin(u)\*sin(u), 0)<br>
 
-The result is the gradient, which will be normal to the surface.
+The result is the gradient, which will point up and away from the surface.
 
     var surface=new H3DU.Surface({"evaluate":function(u,v) {
     "use strict";

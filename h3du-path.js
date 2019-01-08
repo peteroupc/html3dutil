@@ -9,8 +9,8 @@
 */
 
 import {BSplineCurve} from "./h3du-bspline";
-import {HMath} from "./h3du-math";
 import {Curve} from "./h3du-curve";
+import {HMath} from "./h3du-math";
 import {PiecewiseCurve} from "./h3du-piecewisecurve";
 
   /** @ignore
