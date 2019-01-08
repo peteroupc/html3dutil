@@ -8,8 +8,8 @@
 */
 /* global Float32Array, H3DU, Uint16Array, Uint32Array */
 
-import {BufferAccessor} from "./h3du-bufferaccessor.js";
 import {_MathInternal} from "./h3du-mathinternal.js";
+import {BufferAccessor} from "./h3du-bufferaccessor.js";
 import {Semantic} from "./h3du-semantic.js";
 /**
  * A geometric mesh in the form of buffer objects.
