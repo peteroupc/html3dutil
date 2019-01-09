@@ -8,22 +8,22 @@
  http://peteroupc.github.io/
 */
 
-import {_MathInternal} from "./h3du-mathinternal";
+import {MathInternal} from "./h3du-mathinternal";
 
 /**
  * A <b>vertex attribute object</b>.
  * @constructor
  * @memberof H3DU
  * @param {Float32Array} buffer A buffer to store vertex attribute data; see
- * {@link H3DU.BufferAccessor#buffer}.
+ * {@link BufferAccessor#buffer}.
  * @param {number} countPerValue Number of elements per value; see
- * {@link H3DU.BufferAccessor#countPerValue}. Throws an error if 0 or less.
+ * {@link BufferAccessor#countPerValue}. Throws an error if 0 or less.
  * @param {number} [offset] Offset to the first value; see
- * {@link H3DU.BufferAccessor#offset}. If null, undefined, or
+ * {@link BufferAccessor#offset}. If null, undefined, or
  * omitted, the default is 0. Throws an error if less than 0.
  * @param {number} [stride] Number of elements from the start of one
  * value to the start of the next; see
- * {@link H3DU.BufferAccessor#stride}. If null, undefined, or
+ * {@link BufferAccessor#stride}. If null, undefined, or
  * omitted, has the same value as "countPerValue".
  * Throws an error if 0 or less.
  */
@@ -59,12 +59,12 @@ export var BufferAccessor = function(buffer, countPerValue, offset, stride) {
   /**
    * A stride, which gives the number of elements from the start of one
    * value to the start of the next.  A "packed" buffer will have a stride
-   * equal to the [count per value]{@link H3DU.BufferAccessor#countPerValue}.
+   * equal to the [count per value]{@link BufferAccessor#countPerValue}.
    * @type {number} */
   this.stride = stride;
 };
 /**
- * Gets the number of [values]{@link H3DU.BufferAccessor#buffer} defined for this accessor.
+ * Gets the number of [values]{@link BufferAccessor#buffer} defined for this accessor.
  * @returns {number} The number of values defined in this accessor's buffer.
  */
 BufferAccessor.prototype.count = function() {
@@ -93,7 +93,7 @@ BufferAccessor.prototype.get = function( index) {
  * a value stored in the attribute's buffer. For example, 0 identifies the first
  * value, 1 identifies the second, and so on.
  * @param {number} value The number to set the first element to.
- * @returns {H3DU.BufferAccessor} This object.
+ * @returns {BufferAccessor} This object.
  */
 BufferAccessor.prototype.set = function(index, value) {
   var o = this.offset + index * this.stride;
@@ -109,7 +109,7 @@ BufferAccessor.prototype.set = function(index, value) {
  * value, 1 identifies the second, and so on.
  * @param {Array<number>} vec An array whose elements will be set to those
  * of the value at the given index. The number of elements copied to this
- * array is the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}).
+ * array is the attribute's count per value (see {@link BufferAccessor#countPerValue}).
  * @returns {Array<number>} The parameter "vec".
  */
 BufferAccessor.prototype.getVec = function(index, vec) {
@@ -130,9 +130,9 @@ BufferAccessor.prototype.getVec = function(index, vec) {
  * value, 1 identifies the second, and so on.
  * @param {Array<number>} vec An array containing the elements
  * to copy to the value at the given index. The number of elements copied is this
- * array's length or the attribute's count per value (see {@link H3DU.BufferAccessor#countPerValue}),
+ * array's length or the attribute's count per value (see {@link BufferAccessor#countPerValue}),
  * whichever is less.
- * @returns {H3DU.BufferAccessor} This object.
+ * @returns {BufferAccessor} This object.
  */
 BufferAccessor.prototype.setVec = function(index, vec) {
   var o = this.offset + index * this.stride;
@@ -145,7 +145,7 @@ BufferAccessor.prototype.setVec = function(index, vec) {
 };
 /**
  * Copies the values of this accessor into a new vertex attribute object.
- * @returns {H3DU.BufferAccessor} A copy of the vertex attribute object.
+ * @returns {BufferAccessor} A copy of the vertex attribute object.
  */
 BufferAccessor.prototype.copy = function() {
   var c = this.count();
@@ -159,10 +159,10 @@ BufferAccessor.prototype.copy = function() {
 };
 /**
  * Generates a vertex attribute buffer, with each value set to all zeros.
- * @param {number} count The number of [values]{@link H3DU.BufferAccessor#buffer}
+ * @param {number} count The number of [values]{@link BufferAccessor#buffer}
  * the buffer will hold. For example, (10, 20, 5) is a 3-element value.
  * @param {number} countPerValue The number of elements each value will take in the buffer.
- * @returns {H3DU.BufferAccessor} A blank vertex attribute buffer.
+ * @returns {BufferAccessor} A blank vertex attribute buffer.
  */
 BufferAccessor.makeBlank = function(count, countPerValue) {
   return new BufferAccessor(
@@ -190,17 +190,17 @@ BufferAccessor.makeIndices = function(numIndices) {
 /**
  * Merges two vertex attributes, whose vertices can be indexed differently, into one
  * combined vertex attribute.
- * @param {H3DU.BufferAccessor} attr1 A vertex buffer accessor for the first vertex attribute.
+ * @param {BufferAccessor} attr1 A vertex buffer accessor for the first vertex attribute.
  * Can be null, in which case it is assumed that the attribute contains as many values
  * as the length of "indices1" and all the values are zeros.
  * @param {Array<number>|Uint16Array|Uint8Array|Uint32Array} indices1 An array of vertex indices
  * associated with the first vertex attribute.
- * @param {H3DU.BufferAccessor} attr2 A vertex buffer accessor for the second vertex attribute.
+ * @param {BufferAccessor} attr2 A vertex buffer accessor for the second vertex attribute.
  * Can be null, in which case it is assumed that the attribute contains as many values as the
  * length of "indices2" and all the values are zeros.
  * @param {Array<number>|Uint16Array|Uint8Array|Uint32Array} indices2 An array of vertex indices
  * associated with the second vertex attribute.
- * @returns {H3DU.BufferAccessor} The merged attribute, where the vertices from the first vertex
+ * @returns {BufferAccessor} The merged attribute, where the vertices from the first vertex
  * attribute come before those from the second. The merged attribute will have as many
  * values as the sum of the lengths of "indices1" and "indices2".
  */
@@ -212,7 +212,7 @@ BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
   // NOTE: Buffer returned by makeBlank will be all zeros
   var newAttribute = BufferAccessor.makeBlank(
     indices1.length + indices2.length, elementsPerValue);
-  var value = _MathInternal.vecZeros(elementsPerValue);
+  var value = MathInternal.vecZeros(elementsPerValue);
   // NOTE: If undefined or null, first part of buffer will remain all zeros
   if(typeof attr1 !== "undefined" && attr1 !== null) {
     for(i = 0; i < indices1.length; i++) {

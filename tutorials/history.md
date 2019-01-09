@@ -80,7 +80,7 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are
 - The {@link H3DU.Shape} object is no longer coupled to vertex buffers.
 - The {@link H3DU.LightSource} class now supports a radius of the light.
 - The {@link H3DU.TextureLoader} class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
-- `GLMath`, now {@link H3DU.Math}, was expanded with many new methods. The documentation for it is now very detailed. New methods include {@link H3DU.Math.vec3perp}, {@link H3DU.Math.vec3toWindowPoint}, and {@link H3DU.Math.mat4projectVec3}.
+- `GLMath`, now {@link H3DU.Math}, was expanded with many new methods. The documentation for it is now very detailed. New methods include {@link H3DU.MathUtil.vec3perp}, {@link H3DU.MathUtil.vec3toWindowPoint}, and {@link H3DU.MathUtil.mat4projectVec3}.
 - Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, {@link H3DU.TextFont} and {@link H3DU.TextureAtlas}.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
 - The Camera class, now {@link H3DU.Camera}, was rewritten.

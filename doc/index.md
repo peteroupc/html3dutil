@@ -1,8 +1,10 @@
 # Documentation Index
 
+* <a href="Epitrochoid.md">Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
+of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
-* <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
-* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
+* <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.
+* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
 whose edges are made up of B-spline curves.
 * <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a><br>A <b>vertex attribute object</b>.
 * <a href="H3DU.Camera.md">H3DU.Camera</a><br>A class for controlling the projection and
@@ -11,26 +13,20 @@ view of a 3D scene, in the nature of an abstract "camera".
 * <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
 vertex attributes for a curve.
 * <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a tube extruded from a parametric curve.
-* <a href="H3DU.Epitrochoid.md">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
-of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
-* <a href="H3DU.Hypotrochoid.md">H3DU.Hypotrochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
-of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.InputTracker.md">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.
-* <a href="H3DU.Math.md">H3DU.Math</a><br>A collection of math functions for working
+* <a href="H3DU.MathUtil.md">H3DU.MathUtil</a><br>A collection of math functions for working
 with vectors, matrices, quaternions, and other
 mathematical objects.
 * <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
 * <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
 of various geometric shapes and solids.
 * <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
-* <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve
+* <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A curve evaluator object for a curve
 made up of one or more individual curves.
 * <a href="H3DU.Polyhedra.md">H3DU.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
 and other polyhedra.
-* <a href="H3DU.Semantic.md">H3DU.Semantic</a><br>Contains constants for assigning semantics
-to uniforms and vertex attributes.
 * <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
 material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
@@ -38,21 +34,25 @@ and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
 vertex attributes for a surface.
-* <a href="H3DU.SurfaceOfRevolution.md">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a surface of revolution,
-which results by revolving a two-dimensional curve around an axis.
 * <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
 text.
 * <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
 texture.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
-* <a href="H3DU.Trochoid.md">H3DU.Trochoid</a><br>A <a href="H3DU.Curve.md">curve evaluator object</a> for a curve drawn by a circle that rolls along the X axis.
 * <a href="H3DU.exports.MatrixStack.md">H3DU.exports.MatrixStack</a><br>This class implements a stack
 of 4x4 transformation matrices.
+* <a href="H3DU.exports.SurfaceOfRevolution.md">H3DU.exports.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
+which results by revolving a two-dimensional curve around an axis.
+* <a href="Hypotrochoid.md">Hypotrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the inside
+of another circle, whose position is fixed, with a center of (0,0).
 * <a href="MatrixStack.md">MatrixStack</a><br>**Deprecated: Use H3DU.MatrixStack instead.**
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
+* <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
+to uniforms and vertex attributes.
 * <a href="Superellipsoid.md">Superellipsoid</a><br>TODO: Not documented yet.
 * <a href="Supertoroid.md">Supertoroid</a><br>TODO: Not documented yet.
+* <a href="Trochoid.md">Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
 
 ## Tutorials
 

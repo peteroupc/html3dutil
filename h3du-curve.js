@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 
-import {_MathInternal} from "./h3du-mathinternal";
+import {MathInternal} from "./h3du-mathinternal";
 
 /**
  * A curve evaluator object for a parametric curve.<p>
@@ -25,12 +25,12 @@ import {_MathInternal} from "./h3du-mathinternal";
  * @memberof H3DU
  * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
  * @param {Object} [curveParam] An object for reparameterizing a curve object. It implements a method
- * named <code>endPoints</code>, which has the same meaning as {@link H3DU.Curve#endPoints} and whose
+ * named <code>endPoints</code>, which has the same meaning as {@link Curve#endPoints} and whose
  * return value takes precedence over the given curve's <code>endPoints</code> method. It also implements
  * a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization
  * to a U coordinate in the new parameterization.
  * @example <caption>The following is a simple example of a parametric curve.</caption>
- * var simpleCurve = new H3DU.Curve({
+ * var simpleCurve = new Curve({
  * "evaluate":function(u) {
  * return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
  * },
@@ -56,7 +56,7 @@ import {_MathInternal} from "./h3du-mathinternal";
  * "normal":function(u) {
  * // NOTE: The velocity vector will already be a
  * // unit vector, so we use the accel vector instead
- * return H3DU.Math.vec3normalize(this.accel(u));
+ * return MathUtil.vec3normalize(this.accel(u));
  * },
  * "arcLength":function(u) {
  * return u;
@@ -112,7 +112,7 @@ Curve.prototype.evaluate = function(u) {
 };
 /**
  * Finds an approximate velocity vector at the given U coordinate of this curve.
- * The implementation in {@link H3DU.Curve} calls the evaluator's <code>velocity</code>
+ * The implementation in {@link Curve} calls the evaluator's <code>velocity</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the position (from the <code>evaluate</code> method).<p>
  * The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
@@ -131,12 +131,12 @@ Curve.prototype.velocity = function(u) {
       du = -du;
       vector = this.evaluate(u + du);
     }
-    return _MathInternal.vecSubScaleInPlace(vector, this.evaluate(u), 1.0 / du);
+    return MathInternal.vecSubScaleInPlace(vector, this.evaluate(u), 1.0 / du);
   }
 };
 /**
  * Finds an approximate acceleration vector at the given U coordinate of this curve.
- * The implementation in {@link H3DU.Curve} calls the evaluator's <code>accel</code>
+ * The implementation in {@link Curve} calls the evaluator's <code>accel</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the velocity vector.<p>
  * The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
@@ -155,12 +155,12 @@ Curve.prototype.accel = function(u) {
       du = -du;
       vector = this.velocity(u + du);
     }
-    return _MathInternal.vecSubScaleInPlace(vector, this.velocity(u), 1.0 / du);
+    return MathInternal.vecSubScaleInPlace(vector, this.velocity(u), 1.0 / du);
   }
 };
 /**
  * Finds an approximate jerk vector at the given U coordinate of this curve.
- * The implementation in {@link H3DU.Curve} calls the evaluator's <code>jerk</code>
+ * The implementation in {@link Curve} calls the evaluator's <code>jerk</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the acceleration vector.<p>
  * The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
@@ -179,16 +179,16 @@ Curve.prototype.jerk = function(u) {
       du = -du;
       vector = this.accel(u + du);
     }
-    return _MathInternal.vecSubScaleInPlace(vector, this.accel(u), 1.0 / du);
+    return MathInternal.vecSubScaleInPlace(vector, this.accel(u), 1.0 / du);
   }
 };
 /**
  * Finds an approximate principal normal vector at the given U coordinate of this curve.
- * The implementation in {@link H3DU.Curve} calls the evaluator's <code>normal</code>
+ * The implementation in {@link Curve} calls the evaluator's <code>normal</code>
  * method if it implements it; otherwise, does a numerical differentiation using the velocity vector.<p>
  * The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
  * vector divided by that derivative's length. The normal returned by this method
- * <i>should</i> be "normalized" to a [unit vector]{@tutorial glmath}. (Compare with {@link H3DU.Surface#gradient}.)
+ * <i>should</i> be "normalized" to a [unit vector]{@tutorial glmath}. (Compare with {@link Surface#gradient}.)
  * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a normal vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
@@ -204,8 +204,8 @@ Curve.prototype.normal = function(u) {
       du = -du;
       vector = this.tangent(u + du);
     }
-    vector = _MathInternal.vecSubInPlace(vector, this.tangent(u));
-    return _MathInternal.vecNormalizeInPlace(vector);
+    vector = MathInternal.vecSubInPlace(vector, this.tangent(u));
+    return MathInternal.vecNormalizeInPlace(vector);
   }
 };
 
@@ -217,7 +217,7 @@ Curve.prototype.normal = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.tangent = function(u) {
-  return _MathInternal.vecNormalizeInPlace(this.velocity(u));
+  return MathInternal.vecNormalizeInPlace(this.velocity(u));
 };
 
 /**
@@ -277,7 +277,7 @@ function gaussKronrod(func, mn, mx, dir, depth) {
 /**
  * Finds an approximate arc length (distance) between the start of this
  * curve and the point at the given U coordinate of this curve.
- * The implementation in {@link H3DU.Curve} calls the evaluator's <code>arcLength</code>
+ * The implementation in {@link Curve} calls the evaluator's <code>arcLength</code>
  * method if it implements it; otherwise, calculates a numerical integral using the velocity vector.<p>
  * The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
  * @param {number} u U coordinate of a point on the curve.
@@ -297,7 +297,7 @@ Curve.prototype.arcLength = function(u) {
     var dir = u >= ep[0] ? 1 : -1;
     var that = this;
     return gaussKronrod(function(x) {
-      return _MathInternal.vecLength(that.velocity(x));
+      return MathInternal.vecLength(that.velocity(x));
     }, mn, mx, dir, 0);
   }
 };
@@ -555,7 +555,7 @@ Curve._ArcLengthParam.prototype.endPoints = function() {
  * also be used to grow the path of the curve.
  * @param {number} ep1 New start point of the curve.
  * @param {number} ep2 New end point of the curve.
- * @returns {H3DU.Curve} Return value.
+ * @returns {Curve} Return value.
  */
 Curve.prototype.changeEnds = function(ep1, ep2) {
   return new Curve(this, new Curve._ChangeEnds(ep1, ep2));
@@ -569,7 +569,7 @@ Curve.prototype.changeEnds = function(ep1, ep2) {
  * Here, -&pi; now maps to 0, and &pi; now maps to 1.
  * @param {number} ep1 New value to use as the start point of the curve.
  * @param {number} ep2 New value to use as the end point of the curve.
- * @returns {H3DU.Curve} Return value.
+ * @returns {Curve} Return value.
  */
 Curve.prototype.fitRange = function(ep1, ep2) {
   return new Curve(this, new Curve._FitRange(this, ep1, ep2));
@@ -589,7 +589,7 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * should be continuous and have a speed greater than 0 at every
  * point on the curve. The arc length parameterization used in
  * this method is approximate.
- * @returns {H3DU.Curve} Return value.
+ * @returns {Curve} Return value.
  */
 Curve.prototype.toArcLengthParam = function() {
   return new Curve(this, new Curve._ArcLengthParam(this));

@@ -1,4 +1,3 @@
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -8,7 +7,8 @@
  http://peteroupc.github.io/
 */
 
-import {_MathInternal} from "./h3du-mathinternal";
+import {MathUtil} from "./h3du-math";
+import {MathInternal} from "./h3du-mathinternal";
 
 /**
  * A surface evaluator object for a parametric surface.<p>
@@ -40,7 +40,7 @@ import {_MathInternal} from "./h3du-mathinternal";
  * <b>&Del;F</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
  * The result is the gradient, which will point up and away from the surface.
  * </caption>
- * var surface=new H3DU.Surface({"evaluate":function(u,v) {
+ * var surface=new Surface({"evaluate":function(u,v) {
  * "use strict";
  * return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
  * },
@@ -60,7 +60,7 @@ Surface._EPSILON = 0.00001;
 
 /**
  * Finds an approximate tangent vector of this surface at the given U and V coordinates.
- * The implementation in {@link H3DU.Surface} calls the evaluator's <code>tangent</code>
+ * The implementation in {@link Surface} calls the evaluator's <code>tangent</code>
  * method if it implements it; otherwise, does a numerical differentiation
  * with respect to the U axis using the <code>evaluate</code> method.<p>
  * The <b>tangent vector</b> is the vector pointing in the direction of the U axis,
@@ -82,12 +82,12 @@ Surface.prototype.tangent = function(u, v) {
       du = -du;
       vector = this.evaluate(u + du, v);
     }
-    return _MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
+    return MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
   }
 };
 /**
  * Finds an approximate bitangent vector of this surface at the given U and V coordinates.<p>
- * The implementation in {@link H3DU.Surface} calls the evaluator's <code>bitangent</code>
+ * The implementation in {@link Surface} calls the evaluator's <code>bitangent</code>
  * method if it implements it; otherwise, does a numerical differentiation
  * with respect to the V axis using the <code>evaluate</code> method.<p>
  * The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively,
@@ -108,7 +108,7 @@ Surface.prototype.bitangent = function(u, v) {
       du = -du;
       vector = this.evaluate(u, v + du);
     }
-    return _MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
+    return MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
   }
 };
 
@@ -121,20 +121,20 @@ Surface.prototype.bitangent = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.normal = function(u, v) {
-  return _MathInternal.vecNormalizeInPlace(this.gradient(u, v));
+  return MathInternal.vecNormalizeInPlace(this.gradient(u, v));
 };
 
 /**
  * Finds an approximate gradient vector of this surface at the given U and V coordinates.<p>
- * The implementation in {@link H3DU.Surface} calls the evaluator's <code>gradient</code>
+ * The implementation in {@link Surface} calls the evaluator's <code>gradient</code>
  * method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
  * (however, this approach is generally only meaningful for a three-dimensional surface).<p>
  * The <b>gradient</b> is a vector pointing up and away from the surface.
  * If the evaluator describes a regular three-dimensional surface (usually
  * a continuous, unbroken surface such as a sphere, an open
  * cylinder, or a disk rotated in three dimensions), this can be the cross product
- * of the [tangent vector]{@link H3DU.Surface#tangent}
- * and [bitangent vector]{@link H3DU.Surface#bitangent},
+ * of the [tangent vector]{@link Surface#tangent}
+ * and [bitangent vector]{@link Surface#bitangent},
  * in that order. The gradient returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
  * @param {number} u U coordinate of a point on the surface.
  * @param {number} v V coordinate of a point on the surface.
@@ -147,22 +147,22 @@ Surface.prototype.gradient = function(u, v) {
   } else {
     var tan = this.tangent(u, v);
     var bitan = this.bitangent(u, v);
-    if(_MathInternal.vecLength(bitan) === 0) {
+    if(MathInternal.vecLength(bitan) === 0) {
       return tan;
     }
-    if(_MathInternal.vecLength(tan) !== 0) {
+    if(MathInternal.vecLength(tan) !== 0) {
       if(tan.length !== 3 || bitan.length !== 3) {
         var dims = tan.length;
-        var ret = _MathInternal.vecZeros(dims);
+        var ret = MathInternal.vecZeros(dims);
         tan = [tan[0] || 0, tan[1] || 0, tan[2] || 0];
         bitan = [bitan[0] || 0, bitan[1] || 0, bitan[2] || 0];
-        var cr = H3DU.Math.vec3cross(tan, bitan);
+        var cr = MathUtil.vec3cross(tan, bitan);
         ret[0] = cr[0];
         ret[1] = cr[1];
         ret[2] = cr[2];
         return ret.slice(0, dims);
       } else {
-        return H3DU.Math.vec3cross(tan, bitan);
+        return MathUtil.vec3cross(tan, bitan);
       }
     } else {
       return bitan;

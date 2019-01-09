@@ -78,7 +78,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 This is an overview of most of the JavaScript classes available in this library:
 
 * [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the HTML 3D Library
-* [**`H3DU.Math`**](https://peteroupc.github.io/html3dutil/H3DU.Math.html) - Contains math methods useful in 3D applications, such as matrices and vectors
+* [**`H3DU.Math`**](https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors
 * [**`H3DU.Mesh`**](https://peteroupc.github.io/html3dutil/H3DU.Mesh.html) - Helper class for building a 3D model
 * [**`H3DU.MeshBuffer`**](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model
 * [**`H3DU.Meshes`**](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
@@ -372,7 +372,7 @@ featuring a background with continuously drawn 3D shapes.
 illustrating a simple animation of 3D shapes.
 * [**demos/starfield.html**](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demo of a star field.
 * [**demos/quatlerp.html**](https://peteroupc.github.io/html3dutil/demos/quatlerp.html) - Demonstrates
-the difference between {@link H3DU.Math.quatNlerp} and {@link H3DU.Math.quatSlerp},
+the difference between {@link H3DU.MathUtil.quatNlerp} and {@link H3DU.MathUtil.quatSlerp},
 both functions for interpolating quaternion rotations.
 * [**demos/underlay.html**](https://peteroupc.github.io/html3dutil/demos/underlay.html) - Shows how
 {@link H3DU.RenderPass} can be used to draw a two-dimensional background under three-dimensional
@@ -410,7 +410,7 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
      // Set up the render loop
      H3DU.renderLoop(function(time){
       // Update the shape's rotation
-      var q=H3DU.Math.quatFromTaitBryan(
+      var q=H3DU.MathUtil.quatFromTaitBryan(
         360*H3DU.getTimePosition(timer,time,6000),
         360*H3DU.getTimePosition(timer,time,12000),
         0
@@ -506,7 +506,7 @@ The changes in beta 2 from beta 1 include:
 - The {@link H3DU.Shape} object is no longer coupled to vertex buffers.
 - The {@link H3DU.LightSource} class now supports a radius of the light.
 - The {@link H3DU.TextureLoader} class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
-- `GLMath`, now {@link H3DU.Math}, was expanded with many new methods. The documentation for it is now very detailed. New methods include {@link H3DU.Math.vec3perp}, {@link H3DU.Math.vec3toWindowPoint}, and {@link H3DU.Math.mat4projectVec3}.
+- `GLMath`, now {@link H3DU.Math}, was expanded with many new methods. The documentation for it is now very detailed. New methods include {@link H3DU.MathUtil.vec3perp}, {@link H3DU.MathUtil.vec3toWindowPoint}, and {@link H3DU.MathUtil.mat4projectVec3}.
 - Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, {@link H3DU.TextFont} and {@link H3DU.TextureAtlas}.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
 - The Camera class, now {@link H3DU.Camera}, was rewritten.

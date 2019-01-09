@@ -1,4 +1,3 @@
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -12,7 +11,7 @@ import {BSplineCurve} from "./h3du-bspline";
 import {Curve} from "./h3du-curve";
 
 /**
- * A [curve evaluator object]{@link H3DU.Curve} for a curve
+ * A [curve evaluator object]{@link Curve} for a curve
  * made up of one or more individual curves.<p>
  * The combined curve's U coordinates range from 0 to N,
  * where N is the number of curves. In this way, the integer
@@ -24,9 +23,9 @@ import {Curve} from "./h3du-curve";
  * the piecewise curve.
  * @constructor
  * @memberof H3DU
- * @extends H3DU.Curve
+ * @extends Curve
  * @param {Array<Object>} curves An array of curve evaluator
- * objects, such as an instance of {@link H3DU.Curve} or one
+ * objects, such as an instance of {@link Curve} or one
  * of its subclasses. The combined curve should be continuous
  * in that the curves that make it up should connect at their
  * end points (except the curve need not be closed).
@@ -39,9 +38,9 @@ import {Curve} from "./h3du-curve";
  * for(var i=0;i<points.length;i++) {
  * var cp=points[i]
  * var np=(i==points.length-1) ? points[0] : points[i+1]
- * curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+ * curves.push(BSplineCurve.fromBezierCurve([cp,np]))
  * }
- * return new H3DU.PiecewiseCurve(curves)
+ * return new PiecewiseCurve(curves)
  * }
  */
 var PiecewiseCurve = function(curves) {
@@ -69,7 +68,7 @@ PiecewiseCurve.prototype.endPoints = function() {
 };
 /**
  * Gets a reference to the curves that make up this piecewise curve.
- * @returns {Array<H3DU.Curve>} The curves that make up this piecewise curve.
+ * @returns {Array<Curve>} The curves that make up this piecewise curve.
  */
 PiecewiseCurve.prototype.getCurves = function() {
   return this.curves;
@@ -434,10 +433,10 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
     p2[1] = y + p2[1] * radiusY;
     p1[0] = (x + p1[0] * radiusX) * weight;
     p1[1] = (y + p1[1] * radiusY) * weight;
-    curves.push(H3DU.BSplineCurve.fromBezierCurve(
-    [p0, p1, p2], H3DU.BSplineCurve.DIVIDE_BIT));
+    curves.push(BSplineCurve.fromBezierCurve(
+    [p0, p1, p2], BSplineCurve.DIVIDE_BIT));
   }
-  return new H3DU.PiecewiseCurve(curves);
+  return new PiecewiseCurve(curves);
 };
 
 export {PiecewiseCurve};

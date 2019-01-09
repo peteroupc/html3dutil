@@ -251,7 +251,7 @@ all the vertices in the mesh buffer with a <a href="tutorial-glmath.md">4x4 matr
 this method to adjust some of the mesh bufferes to make them look better on the screen.
 Example:
 
-    var matrix = H3DU.Math.mat4scaled(2,2,2);
+    var matrix = H3DU.MathUtil.mat4scaled(2,2,2);
     // Use the transform to double the mesh buffer's size
     meshBuffer.transform(matrix);
 
@@ -363,9 +363,9 @@ To attach a mesh to a 3D scene:
         shape.setPosition([2,4,5]);
         // rotate the shape 40 units about X axis, 20 units about Y axis,
         // and 50 units about Z axis
-        shape.setQuaternion(H3DU.Math.quatFromTaitBryan(40,20,50));
+        shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
         // rotate the shape 20 units about Y axis
-        shape.setQuaternion(H3DU.Math.quatFromAxisAngle(20,0,1,0));
+        shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
         // scale the shape by 2x in all axes
         shape.setScale(2,2,2);
         // same, but passing an array

@@ -9,11 +9,11 @@
 import "./promise";
 
 export * from "./h3du-misc";
-import {HMath} from "./h3du-math";
-export var Math = HMath;
+export {MathUtil} from "./h3du-math";
 export {Curve} from "./h3du-curve";
 export {Surface} from "./h3du-surface";
-export {CurveBuilder, SurfaceBuilder} from "./h3du-meshbuilder";
+export {CurveBuilder} from "./h3du-meshbuilder";
+export {SurfaceBuilder} from "./h3du-meshbuilder";
 export {PiecewiseCurve} from "./h3du-piecewisecurve";
 export {BSplineCurve, BSplineSurface} from "./h3du-bspline";
 export {GraphicsPath} from "./h3du-path";

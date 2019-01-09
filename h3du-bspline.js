@@ -9,7 +9,7 @@
 
 import {Curve} from "./h3du-curve";
 import {Surface} from "./h3du-surface";
-import {_MathInternal} from "./h3du-mathinternal";
+import {MathInternal} from "./h3du-mathinternal";
 
 function linear(points, elementsPerValue, t) {
   var ret = [];
@@ -65,7 +65,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
   return ret;
 }
 /**
- * A [curve evaluator object]{@link H3DU.Curve} for a B-spline (basis spline) curve.
+ * A [curve evaluator object]{@link Curve} for a B-spline (basis spline) curve.
  * A B-spline curve is a parametric curve based on polynomial functions.
  * Each polynomial is generated using one or more
  * <i>control points</i>, which more or less follow the path of the curve,
@@ -86,7 +86,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * first to the second control point, and the ending direction is the same as the
  * direction from the next-to-last to last control point.<p>
  * B&eacute;zier curves are a subset of B-spline curves
- * (see {@link H3DU.BSplineCurve.fromBezierCurve}).<p>
+ * (see {@link BSplineCurve.fromBezierCurve}).<p>
  * Line segments are degree-1 B&eacute;zier curves with two control points.<p>
  * A B&eacute;zier curve's knot vector consists of as many zeros as the number
  * of control points, followed by that many ones. For example, a degree-3 (cubic)
@@ -99,7 +99,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * A rational B-spline curve is an N-dimensional curve with N plus one coordinates
  * per control point (<i>homogeneous coordinates</i>). B-spline algorithms
  * work the same way with homogeneous coordinates as with conventional
- * coordinates, but if N-dimensional points are wanted, use the {@link H3DU.BSplineCurve.DIVIDE_BIT}
+ * coordinates, but if N-dimensional points are wanted, use the {@link BSplineCurve.DIVIDE_BIT}
  * flag to divide each coordinate by the last (and omit the last coordinate)
  * to convert to N-dimensional points.<p>
  * Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.<p>
@@ -132,7 +132,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * The following JavaScript code shows an example of a basis matrix -- the
  * cubic B&eacute;zier basis matrix.<br>
  * <pre>var bezierBasisMatrix = [
- * // For the purposes of the H3DU.Math matrix functions,
+ * // For the purposes of the Math matrix functions,
  * // the polynomials are arranged "column-wise", like this:
  * // P1, P2, P3, P4
  * -1,3,-3,1,
@@ -142,7 +142,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * <p>For code that converts a curve from one kind to
  * another, see the example.
  * @constructor
- * @augments H3DU.Curve
+ * @augments Curve
  * @memberof H3DU
  * @param {Array<Array<number>>} controlPoints An array of control points. Each
  * control point is an array with the same length as the other control points.
@@ -164,7 +164,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first
  * knot will be 0 or less and the last knot will be 1 or greater.
  * @param {number} [bits] Bits for defining input
- * and controlling output. Zero or more of {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
+ * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>The following function can be used
  * to convert an array of control points, each consisting of conventional
  * coordinates and a weight, to homogeneous coordinates.
@@ -196,10 +196,10 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * // It's defined here as the B&eacute;zier basis matrix for this example
  * var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
  * // Step 1: Invert the destination basis matrix
- * var invertedDest=H3DU.Math.mat4invert(destBasis)
+ * var invertedDest=MathUtil.mat4invert(destBasis)
  * // Step 2: Multiply the inverted destination matrix by the source
  * // matrix
- * var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
+ * var resultMatrix=MathUtil.mat4multiply(invertedDest,srcBasis)
  * // Step 3: Convert the control points one dimension
  * // at a time
  * var newControlPoints=[[],[],[],[]]
@@ -207,7 +207,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
  * controlPoints[3][i]]
  * // Transform the control points using the result matrix
- * cp=H3DU.Math.vec4transform(resultMatrix,cp)
+ * cp=MathUtil.vec4transform(resultMatrix,cp)
  * // Set the new coordinates
  * newControlPoints[0][i]=cp[0]
  * newControlPoints[1][i]=cp[1]
@@ -515,7 +515,7 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
 /**
  * Splits this B-spline curve into two at the given point.
  * @param {number} u Point on the curve where this curve will be split.
- * @returns {Array<H3DU.BSplineCurve>} An array containing two B-spline curves: the
+ * @returns {Array<BSplineCurve>} An array containing two B-spline curves: the
  * first is the part of the curve before the given point, and the second
  * is the part of the curve after the given point. The first element
  * will be null if <code>u</code> is at or before the start of the curve.
@@ -616,7 +616,7 @@ BSplineCurve.prototype.endPoints = function() {
 /**
  * Gets a reference to the array of control points used
  * in this curve object.
- * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineCurve}.
+ * @returns {Array<Array<number>>} An object described in the constructor to {@link BSplineCurve}.
  */
 BSplineCurve.prototype.getControlPoints = function() {
   return this.controlPoints;
@@ -624,7 +624,7 @@ BSplineCurve.prototype.getControlPoints = function() {
 /**
  * Gets a reference to the array of knots used
  * in this curve object.
- * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineCurve}.
+ * @returns {Array<Array<number>>} An object described in the constructor to {@link BSplineCurve}.
  */
 BSplineCurve.prototype.getKnots = function() {
   return this.knots;
@@ -644,10 +644,10 @@ BSplineCurve.prototype.velocity = function(u) {
     var cp = this.controlPoints;
     switch(cp.length) {
     case 1:
-      ret = _MathInternal.vecZeros(cp[0].length);
+      ret = MathInternal.vecZeros(cp[0].length);
       break;
     case 2:
-      ret = _MathInternal.vecSub(cp[1], cp[0]);
+      ret = MathInternal.vecSub(cp[1], cp[0]);
       break;
     case 3:
       ret = bezierQuadraticDerivative(cp, cp[0].length, u);
@@ -699,11 +699,11 @@ BSplineCurve._fromHomogen = function(cp) {
   return cp;
 };
 /**
- * A [surface evaluator object]{@link H3DU.Surface} for a B-spline (basis spline) surface,
+ * A [surface evaluator object]{@link Surface} for a B-spline (basis spline) surface,
  * whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
- * for {@link H3DU.BSplineCurve}.
+ * for {@link BSplineCurve}.
  * @constructor
- * @augments H3DU.Surface
+ * @augments Surface
  * @memberof H3DU
  * @param {Array<Array<Array<number>>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points. Each
@@ -717,10 +717,10 @@ BSplineCurve._fromHomogen = function(cp) {
  * points.
  * </ul>
  * @param {Array<number>} knotsU Knot vector of the curve, along the U axis.
- * For more information, see {@link H3DU.BSplineCurve}.
+ * For more information, see {@link BSplineCurve}.
  * @param {Array<number>} knotsV Knot vector of the curve, along the V axis.
  * @param {number} [bits] Bits for defining input
- * and controlling output. Zero or more of {@link H3DU.BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
+ * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>Together with 'convertToHomogen' given in the {@link BSplineCurve} documentation, the following function can be used
  * to convert an array of arrays of control points, each consisting of conventional
  * coordinates and a weight, to homogeneous coordinates.
@@ -772,12 +772,12 @@ BSplineSurface.prototype.constructor = BSplineSurface;
  * be tangent to the line between the first and second control points
  * and to the line between the next-to-last and last control points.
  * @param {Array<Array<number>>} controlPoints Array of
- * control points as specified in the {@link H3DU.BSplineCurve} constructor.
+ * control points as specified in the {@link BSplineCurve} constructor.
  * @param {number} [degree] Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
- * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
- * @returns {H3DU.BSplineCurve} Return value. The first
+ * @param {number} [bits] Bits as specified in the {@link BSplineCurve} constructor.
+ * @returns {BSplineCurve} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
  */
@@ -797,8 +797,8 @@ BSplineCurve.clamped = function(controlPoints, degree, bits) {
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
- * @returns {H3DU.BSplineCurve} Return value.
+ * @param {number} [bits] Bits as specified in the {@link BSplineCurve} constructor.
+ * @returns {BSplineCurve} Return value.
  * @example <caption>The following function generates a polygon curve using linear B&eacute;zier
  * curves.</caption>
  * function polygonCurve(points) {
@@ -806,9 +806,9 @@ BSplineCurve.clamped = function(controlPoints, degree, bits) {
  * for(var i=0;i &lt; points.length;i++) {
  * var cp=points[i]
  * var np=(i==points.length-1) ? points[0] : points[i+1]
- * curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+ * curves.push(BSplineCurve.fromBezierCurve([cp,np]))
  * }
- * return new H3DU.PiecewiseCurve(curves)
+ * return new PiecewiseCurve(curves)
  * }
  */
 BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
@@ -818,12 +818,12 @@ BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
 /**
  * Creates a B-spline curve with uniform knots.
  * @param {Array<Array<number>>} controlPoints Array of
- * control points as specified in the {@link H3DU.BSplineCurve} constructor.
+ * control points as specified in the {@link BSplineCurve} constructor.
  * @param {number} [degree] Degree of the B-spline
  * curve. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
- * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
- * @returns {H3DU.BSplineCurve} Return value. The first
+ * @param {number} [bits] Bits as specified in the {@link BSplineCurve} constructor.
+ * @returns {BSplineCurve} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
  */
@@ -836,15 +836,15 @@ BSplineCurve.uniform = function(controlPoints, degree, bits) {
  * Creates a B-spline surface with uniform knots, except that
  * the surface's edges lie on the edges of the control point array.
  * @param {Array<Array<Array<number>>>} controlPoints Array of
- * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
+ * control point arrays as specified in the {@link BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
  * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
  * surface along the V axis
  * If null, undefined, or omitted, the default is 3.
- * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
- * @returns {H3DU.BSplineSurface} Return value. The first
+ * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
+ * @returns {BSplineSurface} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
  */
@@ -856,15 +856,15 @@ BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
 /**
  * Creates a B-spline surface with uniform knots.
  * @param {Array<Array<Array<number>>>} controlPoints Array of
- * control point arrays as specified in the {@link H3DU.BSplineSurface} constructor.
+ * control point arrays as specified in the {@link BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
  * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
  * surface along the V axis
  * If null, undefined, or omitted, the default is 3.
- * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
- * @returns {H3DU.BSplineSurface} Return value. The first
+ * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
+ * @returns {BSplineSurface} Return value. The first
  * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
  * versions.)
  */
@@ -875,7 +875,7 @@ BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
 };
 /**
  * Generates a knot vector with uniform knots, to be
- * passed to the {@link H3DU.BSplineCurve} or {@link H3DU.BSplineCurve} constructor.
+ * passed to the {@link BSplineCurve} or {@link BSplineCurve} constructor.
  * @param {number|Object} controlPoints Number of control points the curve will have,
  * or an array of control points.
  * @param {number} [degree] Degree of the B-spline
@@ -901,7 +901,7 @@ BSplineCurve.uniformKnots = function(controlPoints, degree) {
 };
 /**
  * Generates a knot vector with uniform knots, to be
- * passed to the {@link H3DU.BSplineCurve} or {@link H3DU.BSplineCurve} constructor,
+ * passed to the {@link BSplineCurve} or {@link BSplineCurve} constructor,
  * except that with the knot vector the curve will start and end at the first and last control points and will
  * be tangent to the line between the first and second control points
  * and to the line between the next-to-last and last control points.
@@ -974,7 +974,7 @@ BSplineSurface.prototype.evaluate = function(u, v) {
 /**
  * Gets a reference to the array of control point arrays used
  * in this surface object.
- * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineCurve}.
+ * @returns {Array<Array<number>>} An object described in the constructor to {@link BSplineCurve}.
  */
 BSplineSurface.prototype.getControlPoints = function() {
   return this.controlPoints;
@@ -982,14 +982,14 @@ BSplineSurface.prototype.getControlPoints = function() {
 /**
  * Gets a reference to the array of knot vectors used
  * in this curve object.
- * @returns {Array<Array<number>>} An object described in the constructor to {@link H3DU.BSplineSurface}.
+ * @returns {Array<Array<number>>} An object described in the constructor to {@link BSplineSurface}.
  */
 BSplineSurface.prototype.getKnots = function() {
   return this.knots;
 };
 
 /**
- * Finds the [tangent vector]{@link H3DU.Surface} at the
+ * Finds the [tangent vector]{@link Surface} at the
  * given point on the surface.
  * @param {number} u U coordinate of the surface to evaluate.
  * @param {number} v V coordinate of the surface to evaluate.
@@ -1030,7 +1030,7 @@ BSplineSurface.prototype.tangent = function(u, v) {
   return ret;
 };
 /**
- * Finds the [bitangent vector]{@link H3DU.Surface} at the
+ * Finds the [bitangent vector]{@link Surface} at the
  * given point on the surface.
  * @param {number} u U coordinate of the surface to evaluate.
  * @param {number} v V coordinate of the surface to evaluate.
@@ -1085,8 +1085,8 @@ BSplineSurface.prototype.bitangent = function(u, v) {
  * surface along the U axis.
  * <li>The number of elements in the first control point represents the number of elements in all the control points.
  * </ul>
- * @param {number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
- * @returns {H3DU.BSplineSurface} Return value.
+ * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
+ * @returns {BSplineSurface} Return value.
  */
 BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
   return BSplineSurface.clamped(controlPoints, controlPoints[0].length - 1,

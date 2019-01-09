@@ -167,7 +167,7 @@ than the right and bottom coordinates, respectively).
 #### Parameters
 
 * `str` (Type: string)<br>The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (H3DU.Texture) to use with this font, or a single H3DU.Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul>
+* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A color vector or string giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (H3DU.Texture) to use with this font, or a single H3DU.Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul>
 
 #### Return Value
 

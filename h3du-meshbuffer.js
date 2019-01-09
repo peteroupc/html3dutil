@@ -6,14 +6,16 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global Float32Array, H3DU, Uint16Array, Uint32Array */
+/* global Float32Array, Uint16Array, Uint32Array */
 
-import {_MathInternal} from "./h3du-mathinternal.js";
 import {BufferAccessor} from "./h3du-bufferaccessor.js";
+import {MathInternal} from "./h3du-mathinternal.js";
+import {MathUtil} from "./h3du-math";
 import {Semantic} from "./h3du-semantic.js";
+import {toGLColor} from "./h3du-misc";
 /**
  * A geometric mesh in the form of buffer objects.
- * A mesh buffer is made up of one or more [vertex attribute objects]{@link H3DU.BufferAccessor},
+ * A mesh buffer is made up of one or more [vertex attribute objects]{@link BufferAccessor},
  * and an optional array of vertex indices. Each vertex attribute object contains
  * the values of one attribute of the mesh, such as positions,
  * vertex normals, and texture coordinates. A mesh buffer
@@ -38,9 +40,9 @@ MeshBuffer.prototype.getIndices = function() {
 };
 /**
  * Sets the vertex indices used by this mesh buffer.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} indices Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} indices Array of vertex indices
  * that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setIndices = function(indices) {
   if(typeof indices === "undefined" || indices === null) {
@@ -65,7 +67,7 @@ MeshBuffer.prototype.setIndices = function(indices) {
  * Sets the type of graphics primitives stored in this mesh buffer.
  * @param {number} primType The primitive type, either {@link MeshBuffer.TRIANGLES},
  * {@link MeshBuffer.LINES}, or {@link MeshBuffer.POINTS}.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setPrimitiveType = function(primType) {
   this.format = primType;
@@ -81,17 +83,17 @@ MeshBuffer.prototype.setPrimitiveType = function(primType) {
  * @param {number|string} name An attribute semantic, such
  * as {@link Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
- * If this isn't a string, the set index of the attribute will be 0 (see {@link H3DU.MeshBuffer#setAttributeEx}).
+ * If this isn't a string, the set index of the attribute will be 0 (see {@link MeshBuffer#setAttributeEx}).
  * @param {Float32Array|Array} buffer The buffer where
- * the per-vertex data is stored. See {@link H3DU.MeshBuffer#setAttributeEx}.
+ * the per-vertex data is stored. See {@link MeshBuffer#setAttributeEx}.
  * @param {number} countPerValue The number of elements in each
- * per-vertex item. See {@link H3DU.MeshBuffer#setAttributeEx}.
+ * per-vertex item. See {@link MeshBuffer#setAttributeEx}.
  * @param {number} [offset] The index into the array
  * (starting from 0) where the first per-vertex
- * item starts.See {@link H3DU.MeshBuffer#setAttributeEx}.
+ * item starts.See {@link MeshBuffer#setAttributeEx}.
  * @param {number} [stride] The number of elements from the start of
- * one per-vertex item to the start of the next. See {@link H3DU.MeshBuffer#setAttributeEx}.
- * @returns {H3DU.MeshBuffer} This object. Throws an error if the given
+ * one per-vertex item to the start of the next. See {@link MeshBuffer#setAttributeEx}.
+ * @returns {MeshBuffer} This object. Throws an error if the given
  * semantic is unsupported.
  */
 MeshBuffer.prototype.setAttribute = function(
@@ -120,21 +122,21 @@ MeshBuffer.prototype.setAttribute = function(
  * @param {number} [countPerValue] The number of elements in each
  * per-vertex item. For example, if each vertex is a 3-element
  * vector, this value is 3. Throws an error if this value is 0 or less.
- * If "buffer" is a {@link H3DU.BufferAccessor}, the value of "countPerValue"
+ * If "buffer" is a {@link BufferAccessor}, the value of "countPerValue"
  * is taken from that accessor and this parameter is ignored; this parameter
  * is currently required otherwise.
  * @param {number} [offset] The index into the array
  * (starting from 0) where the first per-vertex
  * item starts. If null, undefined, or
  * omitted, the default is 0. Throws an error if less than 0.
- * If "buffer" is a {@link H3DU.BufferAccessor}, the value of "offset"
+ * If "buffer" is a {@link BufferAccessor}, the value of "offset"
  * is taken from that accessor and this parameter is ignored.
  * @param {number} [stride] The number of elements from the start of
  * one per-vertex item to the start of the next. If null, undefined, or omitted,
  * this value is the same as "countPerValue". Throws an error if this value is 0 or less.
- * If "buffer" is a {@link H3DU.BufferAccessor}, the value of "stride"
+ * If "buffer" is a {@link BufferAccessor}, the value of "stride"
  * is taken from that accessor and this parameter is ignored.
- * @returns {H3DU.MeshBuffer} This object.Throws an error if the given
+ * @returns {MeshBuffer} This object.Throws an error if the given
  * semantic is unsupported.
  */
 MeshBuffer.prototype.setAttributeEx = function(
@@ -190,7 +192,7 @@ MeshBuffer.prototype._getAttributes = function() {
  * for the given semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
- * @returns {H3DU.BufferAccessor} A vertex buffer accessor, or null
+ * @returns {BufferAccessor} A vertex buffer accessor, or null
  * if the attribute doesn't exist.
  * @example <caption>The following function gets the positions,
  * normals, texture coordinates, and colors of each primitive
@@ -205,9 +207,9 @@ MeshBuffer.prototype._getAttributes = function() {
  * var c=mesh.getAttribute("COLOR")
  * var ind=mesh.getIndices()
  * var primSize = 3;
- * if(mesh.primitiveType() === H3DU.MeshBuffer.LINES)
+ * if(mesh.primitiveType() === MeshBuffer.LINES)
  * primSize = 2;
- * if(mesh.primitiveType() === H3DU.MeshBuffer.POINTS)
+ * if(mesh.primitiveType() === MeshBuffer.POINTS)
  * primSize = 1;
  * var ret=[]
  * for(var i=0;i&lt;ind.length;i+=primSize) {
@@ -275,7 +277,7 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * @param {Array<number>|Float32Array} vertices An array of vertex positions. This
  * array's length must be divisible by 3; every 3 elements are the
  * X, Y, and Z coordinates, in that order, of one vertex.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -293,7 +295,7 @@ MeshBuffer.fromPositions = function(vertices, indices) {
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -313,7 +315,7 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.
  * <li>U and V texture coordinates, in that order, of the vertex.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -372,7 +374,7 @@ MeshBuffer.prototype.getPositions = function() {
  * Has no effect if this mesh buffer doesn't define any normals.
  * All attributes with the semantic <code>NORMAL</code>,
  * regardless of semantic index, are affected.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.normalizeNormals = function() {
   for(var i = 0; i < this.attributes.length; i++) {
@@ -384,7 +386,7 @@ MeshBuffer.prototype.normalizeNormals = function() {
     var count = attr[2].count();
     for(var j = 0; j < count; j++) {
       attr[2].getVec(j, value);
-      _MathInternal.vecNormalizeInPlace(value);
+      MathInternal.vecNormalizeInPlace(value);
       attr[2].setVec(j, value);
     }
   }
@@ -396,7 +398,7 @@ MeshBuffer.prototype.normalizeNormals = function() {
  * Has no effect if this mesh buffer doesn't define any normals.
  * All attributes with the semantic <code>NORMAL</code>,
  * regardless of semantic index, are affected.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  * @example <caption>
  * The following code generates a two-sided mesh, where
  * the normals on each side face in the opposite direction.
@@ -405,7 +407,7 @@ MeshBuffer.prototype.normalizeNormals = function() {
  * Due to the z-fighting effect, drawing a two-sided mesh is
  * recommended only if face culling is enabled.</caption>
  * var twoSidedMesh = originalMesh.merge(
- * new H3DU.MeshBuffer().merge(originalMesh)
+ * new MeshBuffer().merge(originalMesh)
  * .reverseWinding().reverseNormals()
  * );
  */
@@ -430,19 +432,19 @@ MeshBuffer.prototype.reverseNormals = function() {
 /**
  * Sets all the vertices in this mesh to the given color, by
  * assigning each value with the attribute semantic <code>COLOR</code>
- * to the given color. (If the attribute's [count per value]{@link H3DU.BufferAccessor#countPerValue}
+ * to the given color. (If the attribute's [count per value]{@link BufferAccessor#countPerValue}
  * is less than 4, each such value will be set to as many elements of the converted 4-element
  * color as possible.) If an attribute with the semantic <code>COLOR</code>
  * doesn't exist, an attribute with the semantic <code>COLOR_0</code> and a count per
  * value of 3 is created.<p>
  * All attributes with the semantic <code>COLOR</code>,
  * regardless of semantic index, are affected by this method.
- * @param {Array<number>|number|string} color A [color vector or string]{@link H3DU.toGLColor}
+ * @param {Array<number>|number|string} color A [color vector or string]{@link toGLColor}
  * identifying the color to set. This will be converted to a 4-element color.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setColor = function(color) {
-  var colorValue = H3DU.toGLColor(color);
+  var colorValue = toGLColor(color);
   var haveColor = false;
   for(var i = 0; i < this.attributes.length; i++) {
     var attr = this.attributes[i];
@@ -466,7 +468,7 @@ MeshBuffer.prototype.setColor = function(color) {
  * Reverses the winding order of the triangles in this mesh buffer
  * by swapping the second and third vertex indices of each one.
  * Has an effect only if this mesh buffer consists of triangles.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  * @example <caption>
  * The following code generates a mesh that survives face culling,
  * since the same triangles occur on each side of the mesh, but
@@ -476,7 +478,7 @@ MeshBuffer.prototype.setColor = function(color) {
  * Due to the z-fighting effect, drawing this kind of mesh is
  * recommended only if face culling is enabled.</caption>
  * var frontBackMesh = originalMesh.merge(
- * new H3DU.MeshBuffer().merge(originalMesh).reverseWinding()
+ * new MeshBuffer().merge(originalMesh).reverseWinding()
  * );
  */
 MeshBuffer.prototype.reverseWinding = function() {
@@ -519,19 +521,19 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
     v1 = positions.getVec(indices[i], v1);
     v2 = positions.getVec(indices[i + 1], v2);
     v3 = positions.getVec(indices[i + 2], v3);
-    var n1 = H3DU.Math.vec3sub(v1, v3);
-    var n2 = H3DU.Math.vec3sub(v2, v3);
+    var n1 = MathUtil.vec3sub(v1, v3);
+    var n2 = MathUtil.vec3sub(v2, v3);
     // cross multiply n1 and n2
-    var n1xn2 = H3DU.Math.vec3cross(n1, n2);
-    H3DU.Math.vec3normalizeInPlace(n1xn2);
-    H3DU.Math.vec3scaleInPlace(n1xn2, normDir);
+    var n1xn2 = MathUtil.vec3cross(n1, n2);
+    MathUtil.vec3normalizeInPlace(n1xn2);
+    MathUtil.vec3scaleInPlace(n1xn2, normDir);
     // add normalized normal to each vertex of the face
     normals.getVec(indices[i], v1);
     normals.getVec(indices[i + 1], v2);
     normals.getVec(indices[i + 2], v3);
-    H3DU.Math.vec3addInPlace(v1, n1xn2);
-    H3DU.Math.vec3addInPlace(v2, n1xn2);
-    H3DU.Math.vec3addInPlace(v3, n1xn2);
+    MathUtil.vec3addInPlace(v1, n1xn2);
+    MathUtil.vec3addInPlace(v2, n1xn2);
+    MathUtil.vec3addInPlace(v3, n1xn2);
     normals.setVec(indices[i], v1);
     normals.setVec(indices[i + 1], v2);
     normals.setVec(indices[i + 2], v3);
@@ -567,7 +569,7 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
               dupverts[dupvertcount++] = nx;
               dupverts[dupvertcount++] = ny;
               dupverts[dupvertcount++] = nz;
-              H3DU.Math.vec3addInPlace(avg, normal);
+              MathUtil.vec3addInPlace(avg, normal);
             }
           }
           for(i = 0; i < v.length; i++) {
@@ -580,7 +582,7 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
   // Normalize each normal of the vertex
   for(i = 0; i < normalsCount; i++) {
     normals.getVec(i, normal);
-    H3DU.Math.vec3normalize(normal);
+    MathUtil.vec3normalize(normal);
     normals.setVec(i, normal);
   }
 };
@@ -647,13 +649,13 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
       var norm1 = v1[1];
       var norm2 = v1[2];
       var t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
-      var tangent = H3DU.Math.vec3normalizeInPlace([
+      var tangent = MathUtil.vec3normalizeInPlace([
         m[0] - t20 * norm0,
         m[1] - t20 * norm1,
         m[2] - t20 * norm2]);
       var t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
       var t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
-      var bitangent = H3DU.Math.vec3normalizeInPlace([
+      var bitangent = MathUtil.vec3normalizeInPlace([
         m[3] - t22 * norm0 - t23 * tangent[0],
         m[4] - t22 * norm1 - t23 * tangent[1],
         m[5] - t22 * norm2 - t23 * tangent[2]]);
@@ -690,7 +692,7 @@ MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desire
     return attr;
   var newattr = BufferAccessor.makeBlank(vertexCount, desiredCount);
   if(attrCount > 0) {
-    var vec = _MathInternal.vecZeros(desiredCount);
+    var vec = MathInternal.vecZeros(desiredCount);
     for(var i = 0; i < vertexCount; i++) {
       attr.getVec(i, vec);
       newattr.setVec(i, vec);
@@ -717,14 +719,14 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  * semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
  * long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
  * ensures its values are each at least 3 elements long.
- * @param {Boolean} flat If true, each triangle in the mesh
+ * @param {boolean} flat If true, each triangle in the mesh
  * will have the same normal, which usually leads to a flat
  * appearance. If false, each unique vertex in the mesh
  * will have its own normal, which usually leads to a smooth
  * appearance.
- * @param {Boolean} inward If true, the generated normals
+ * @param {boolean} inward If true, the generated normals
  * will point inward; otherwise, outward.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
   var primtype = this.primitiveType();
@@ -765,13 +767,13 @@ MeshBuffer.prototype._recalcTangents = function() {
  * Merges the vertices from another mesh into this one.
  * The vertices from the other mesh will be copied into this one,
  * and the other mesh's indices copied or adapted.
- * @param {H3DU.MeshBuffer} other A mesh to merge into this one. The mesh
+ * @param {MeshBuffer} other A mesh to merge into this one. The mesh
  * given in this parameter will remain unchanged.
  * Throws an error if this mesh's primitive type is not the same as
  * the other mesh's primitive type.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  * @example
- * var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
+ * var copiedMesh = new MeshBuffer().merge(meshToCopy);
  */
 MeshBuffer.prototype.merge = function(other) {
   var newAttributes = [];
@@ -858,10 +860,10 @@ MeshBuffer.prototype.merge = function(other) {
  * or <code>NORMAL_0</code> will be affected by this method; values of
  * other attributes will be unaffected.
  * @param {Array<number>} matrix A 4x4 matrix described in
- * the {@link H3DU.Math.mat4projectVec3} method. The normals will be transformed using the
- * 3x3 inverse transpose of this matrix (see {@link H3DU.Math.mat4inverseTranspose3}).
+ * the {@link MathUtil.mat4projectVec3} method. The normals will be transformed using the
+ * 3x3 inverse transpose of this matrix (see {@link MathUtil.mat4inverseTranspose3}).
  * (Normals need to be transformed specially because they describe directions, not points.)
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.transform = function(matrix) {
   var positionAttribute = this.getAttribute(Semantic.POSITION);
@@ -874,7 +876,7 @@ MeshBuffer.prototype.transform = function(matrix) {
     matrix[6] === 0 && matrix[8] === 0 && matrix[9] === 0 && matrix[10] === 1);
   var matrixForNormals = null;
   if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isLinearIdentity) {
-    matrixForNormals = H3DU.Math.mat4inverseTranspose3(matrix);
+    matrixForNormals = MathUtil.mat4inverseTranspose3(matrix);
   }
   var count = positionAttribute.count();
   if(normalAttribute)count = Math.min(count, normalAttribute.count());
@@ -882,7 +884,7 @@ MeshBuffer.prototype.transform = function(matrix) {
   var normal = [0, 0, 0];
   for(var i = 0; i < count; i++) {
     positionAttribute.getVec(i, position);
-    var xform = H3DU.Math.mat4projectVec3(matrix,
+    var xform = MathUtil.mat4projectVec3(matrix,
       position[0], position[1], position[2]);
     positionAttribute.setVec(i, xform);
     if(normalAttribute && isLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
@@ -890,9 +892,9 @@ MeshBuffer.prototype.transform = function(matrix) {
       // (using a modified matrix) to ensure
       // they point in the correct direction
       normalAttribute.getVec(i, normal);
-      xform = H3DU.Math.mat3transform(matrixForNormals,
+      xform = MathUtil.mat3transform(matrixForNormals,
         normal[0], normal[1], normal[2]);
-      H3DU.Math.vec3normalizeInPlace(xform);
+      MathUtil.vec3normalizeInPlace(xform);
       normalAttribute.setVec(i, xform);
     }
   }
@@ -920,7 +922,7 @@ MeshBuffer._addLine = function(lineIndices, existingLines, f1, f2) {
 /**
  * Converts the triangles in this mesh to line segments.
  * Has no effect if this mesh doesn't use triangles as primitives.
- * @returns {H3DU.MeshBuffer} This object.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.wireFrame = function() {
   if(this.primitiveType() !== MeshBuffer.TRIANGLES) {
@@ -941,7 +943,7 @@ MeshBuffer.prototype.wireFrame = function() {
     MeshBuffer._addLine(lineIndices, existingLines, f3, f1);
   }
   return this.setIndices(lineIndices)
-    .setPrimitiveType(H3DU.MeshBuffer.LINES);
+    .setPrimitiveType(MeshBuffer.LINES);
 };
 /**
  * Finds the tightest

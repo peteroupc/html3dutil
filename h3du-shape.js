@@ -6,7 +6,11 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, console */
+/* global console */
+
+import {MathUtil} from "./h3du-math";
+import {Transform} from "./h3du-transform";
+
 /**
  * An object that associates a geometric mesh (the shape of the object) with
  * material data (which defines what is seen on the object's surface)
@@ -14,22 +18,22 @@
  * See the "{@tutorial shapes}" tutorial.<p>
  * NOTE: The default shader program assumes that all colors and the diffuse texture
  * specified in this object are in
- * [companded sRGB]{@link H3DU.Math.colorTosRGB}.
+ * [companded sRGB]{@link MathUtil.colorTosRGB}.
  * @constructor
  * @memberof H3DU
- * @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
+ * @param {MeshBuffer} mesh A mesh in the form of a buffer object.
  * Cannot be null.
  */
 export var Shape = function(mesh) {
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   this.meshBuffer = mesh;
-  this.transform = new H3DU.Transform();
+  this.transform = new Transform();
   this.parent = null;
   this.visible = true;
 };
 /**
  * Returns a reference to the mesh buffer used by this shape.
- * @returns {H3DU.MeshBuffer} Return value.
+ * @returns {MeshBuffer} Return value.
  */
 Shape.prototype.getMeshBuffer = function() {
   return this.meshBuffer;
@@ -54,8 +58,8 @@ Shape.prototype.primitiveCount = function() {
 };
 /**
  * Sets whether this shape will be drawn on rendering.
- * @param {Boolean} value True if this shape will be visible; otherwise, false.
- * @returns {H3DU.Shape} This object.
+ * @param {boolean} value True if this shape will be visible; otherwise, false.
+ * @returns {Shape} This object.
  */
 Shape.prototype.setVisible = function(value) {
   this.visible = !!value;
@@ -75,10 +79,10 @@ Shape.prototype.getVisible = function() {
  * image data and mesh buffers will not be duplicated,
  * but rather just references to them will be used.
  * The copied shape won't have a parent.
- * @returns {H3DU.Shape} A copy of this object.
+ * @returns {Shape} A copy of this object.
  */
 Shape.prototype.copy = function() {
-  var ret = new H3DU.Shape(this.meshBuffer);
+  var ret = new Shape(this.meshBuffer);
   ret.visible = this.visible;
   ret.parent = null;
   ret.transform = this.getTransform().copy();
@@ -87,7 +91,7 @@ Shape.prototype.copy = function() {
 /**
  * Returns the transform used by this shape object.
  * The transform won't be copied.
- * @returns {H3DU.Transform} Return value.
+ * @returns {Transform} Return value.
  */
 Shape.prototype.getTransform = function() {
   return this.transform;
@@ -111,9 +115,9 @@ Shape.prototype.getBounds = function() {
     return [inf, inf, inf, -inf, -inf, -inf];
   }
   var bounds = this.meshBuffer.getBounds();
-  if(H3DU.Math.boxIsEmpty(bounds))return bounds;
+  if(MathUtil.boxIsEmpty(bounds))return bounds;
   var matrix = this.getMatrix();
-  if(H3DU.Math.mat4isIdentity(matrix)) {
+  if(MathUtil.mat4isIdentity(matrix)) {
     return bounds.slice(0, 6);
   } else if(matrix[1] === 0 && matrix[2] === 0 && matrix[3] === 0 &&
     matrix[4] === 0 && matrix[6] === 0 && matrix[7] === 0 && matrix[8] === 0 &&
@@ -141,14 +145,14 @@ Shape.prototype.getBounds = function() {
   } else {
     // rotation, shear, and/or non-affine transformation
     var boxVertices = [
-      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]),
-      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[5]),
-      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[2]),
-      H3DU.Math.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[5]),
-      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[1], bounds[2]),
-      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[1], bounds[5]),
-      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[2]),
-      H3DU.Math.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[5])
+      MathUtil.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]),
+      MathUtil.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[5]),
+      MathUtil.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[2]),
+      MathUtil.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[5]),
+      MathUtil.mat4projectVec3(matrix, bounds[3], bounds[1], bounds[2]),
+      MathUtil.mat4projectVec3(matrix, bounds[3], bounds[1], bounds[5]),
+      MathUtil.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[2]),
+      MathUtil.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[5])
     ];
     var bv = boxVertices[0];
     var retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
@@ -167,14 +171,14 @@ Shape.prototype.getBounds = function() {
 /** @ignore */
 Shape.prototype.isCulled = function(frustum) {
   if(!this.meshBuffer || !this.visible)return true;
-  return !H3DU.Math.frustumHasBox(frustum, this.getBounds());
+  return !MathUtil.frustumHasBox(frustum, this.getBounds());
 };
 /**
  * Sets this shape's transformation
  * to a copy of the given transformation.
- * @param {H3DU.Transform} transform The transformation to
+ * @param {Transform} transform The transformation to
  * set to a copy of.
- * @returns {H3DU.Shape} This object.
+ * @returns {Shape} This object.
  */
 Shape.prototype.setTransform = function(transform) {
   this.transform = transform.copy();
@@ -182,12 +186,12 @@ Shape.prototype.setTransform = function(transform) {
 };
 /**
  * Sets the scale of this shape relative to its original
- * size. See {@link H3DU.Transform#setScale}
+ * size. See {@link Transform#setScale}
  * @param {number|Array<number>} x Scaling factor for this object's width,
- * or a 3-element scaling array, as specified in {@link H3DU.Transform#setScale}.
+ * or a 3-element scaling array, as specified in {@link Transform#setScale}.
  * @param {number} y Scaling factor for this object's height.
  * @param {number} z Scaling factor for this object's depth.
- * @returns {H3DU.Shape} This object.
+ * @returns {Shape} This object.
  */
 Shape.prototype.setScale = function(x, y, z) {
   this.getTransform().setScale(x, y, z);
@@ -195,12 +199,12 @@ Shape.prototype.setScale = function(x, y, z) {
 };
 /**
  * Sets the relative position of this shape from its original
- * position. See {@link H3DU.Transform#setPosition}
+ * position. See {@link Transform#setPosition}
  * @param {number|Array<number>} x X coordinate
- * or a 3-element position array, as specified in {@link H3DU.Transform#setScale}.
+ * or a 3-element position array, as specified in {@link Transform#setScale}.
  * @param {number} y Y coordinate.
  * @param {number} z Z coordinate.
- * @returns {H3DU.Shape} This object.
+ * @returns {Shape} This object.
  */
 Shape.prototype.setPosition = function(x, y, z) {
   this.getTransform().setPosition(x, y, z);
@@ -208,9 +212,9 @@ Shape.prototype.setPosition = function(x, y, z) {
 };
 /**
  * Sets this object's rotation in the form of a [quaternion]{@tutorial glmath}.
- * See {@link H3DU.Transform#setQuaternion}.
+ * See {@link Transform#setQuaternion}.
  * @param {Array<number>} quat A four-element array describing the rotation.
- * @returns {H3DU.Shape} This object.
+ * @returns {Shape} This object.
  */
 Shape.prototype.setQuaternion = function(quat) {
   this.getTransform().setQuaternion(quat);
@@ -218,7 +222,7 @@ Shape.prototype.setQuaternion = function(quat) {
 };
 /**
  * Gets the transformation matrix used by this shape.
- * See {@link H3DU.Transform#getMatrix}.
+ * See {@link Transform#getMatrix}.
  * @returns {Array<number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix = function() {
@@ -231,10 +235,10 @@ Shape.prototype.getMatrix = function() {
     var pmat = this.parent.getMatrix();
     if(thisIdentity) {
       mat = pmat;
-    } else if(H3DU.Math.mat4isIdentity(pmat)) {
+    } else if(MathUtil.mat4isIdentity(pmat)) {
       mat = xform.getMatrix();
     } else {
-      mat = H3DU.Math.mat4multiply(pmat, xform.getMatrix());
+      mat = MathUtil.mat4multiply(pmat, xform.getMatrix());
     }
   }
   return mat;

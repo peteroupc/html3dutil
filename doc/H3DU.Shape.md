@@ -12,11 +12,11 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 NOTE: The default shader program assumes that all colors and the diffuse texture
 specified in this object are in
-<a href="H3DU.Math.md#H3DU.Math.colorTosRGB">companded sRGB</a>.
+companded sRGB.
 
 #### Parameters
 
-* `mesh` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>A mesh in the form of a buffer object. Cannot be null.
+* `mesh` (Type: MeshBuffer)<br>A mesh in the form of a buffer object. Cannot be null.
 
 ### Methods
 
@@ -51,7 +51,7 @@ The copied shape won't have a parent.
 
 #### Return Value
 
-A copy of this object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+A copy of this object. (Type: Shape)
 
 <a name='H3DU.Shape_getBounds'></a>
 ### H3DU.Shape#getBounds()
@@ -75,7 +75,7 @@ If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 ### H3DU.Shape#getMatrix()
 
 Gets the transformation matrix used by this shape.
-See <a href="H3DU.Transform.md#H3DU.Transform_getMatrix">H3DU.Transform#getMatrix</a>.
+See Transform#getMatrix.
 
 #### Return Value
 
@@ -88,7 +88,7 @@ Returns a reference to the mesh buffer used by this shape.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+Return value. (Type: MeshBuffer)
 
 <a name='H3DU.Shape_getTransform'></a>
 ### H3DU.Shape#getTransform()
@@ -98,7 +98,7 @@ The transform won't be copied.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
+Return value. (Type: Transform)
 
 <a name='H3DU.Shape_getVisible'></a>
 ### H3DU.Shape#getVisible()
@@ -123,23 +123,23 @@ Return value. (Type: number)
 ### H3DU.Shape#setPosition(x, y, z)
 
 Sets the relative position of this shape from its original
-position. See <a href="H3DU.Transform.md#H3DU.Transform_setPosition">H3DU.Transform#setPosition</a>
+position. See Transform#setPosition
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in Transform#setScale.
 * `y` (Type: number)<br>Y coordinate.
 * `z` (Type: number)<br>Z coordinate.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+This object. (Type: Shape)
 
 <a name='H3DU.Shape_setQuaternion'></a>
 ### H3DU.Shape#setQuaternion(quat)
 
 Sets this object's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
-See <a href="H3DU.Transform.md#H3DU.Transform_setQuaternion">H3DU.Transform#setQuaternion</a>.
+See Transform#setQuaternion.
 
 #### Parameters
 
@@ -147,23 +147,23 @@ See <a href="H3DU.Transform.md#H3DU.Transform_setQuaternion">H3DU.Transform#setQ
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+This object. (Type: Shape)
 
 <a name='H3DU.Shape_setScale'></a>
 ### H3DU.Shape#setScale(x, y, z)
 
 Sets the scale of this shape relative to its original
-size. See <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>
+size. See Transform#setScale
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in Transform#setScale.
 * `y` (Type: number)<br>Scaling factor for this object's height.
 * `z` (Type: number)<br>Scaling factor for this object's depth.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+This object. (Type: Shape)
 
 <a name='H3DU.Shape_setTransform'></a>
 ### H3DU.Shape#setTransform(transform)
@@ -173,11 +173,11 @@ to a copy of the given transformation.
 
 #### Parameters
 
-* `transform` (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)<br>The transformation to set to a copy of.
+* `transform` (Type: Transform)<br>The transformation to set to a copy of.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+This object. (Type: Shape)
 
 <a name='H3DU.Shape_setVisible'></a>
 ### H3DU.Shape#setVisible(value)
@@ -186,11 +186,11 @@ Sets whether this shape will be drawn on rendering.
 
 #### Parameters
 
-* `value` (Type: Boolean)<br>True if this shape will be visible; otherwise, false.
+* `value` (Type: boolean)<br>True if this shape will be visible; otherwise, false.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a>)
+This object. (Type: Shape)
 
 <a name='H3DU.Shape_vertexCount'></a>
 ### H3DU.Shape#vertexCount()

@@ -1,4 +1,3 @@
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -10,7 +9,8 @@
 
 import {BSplineCurve} from "./h3du-bspline";
 import {Curve} from "./h3du-curve";
-import {HMath} from "./h3du-math";
+import {MathUtil} from "./h3du-math";
+import {MeshBuffer} from "./h3du-meshbuffer";
 import {PiecewiseCurve} from "./h3du-piecewisecurve";
 
   /** @ignore
@@ -499,7 +499,7 @@ GraphicsPath.prototype._end = function() {
 
   /**
    * Merges the path segments in another path onto this one.
-   * @param {H3DU.GraphicsPath} path Another graphics path.
+   * @param {GraphicsPath} path Another graphics path.
    * Can be null.
    * @returns {GraphicsPath} This object.
    */
@@ -539,7 +539,7 @@ GraphicsPath.prototype.merge = function(path) {
 
   /**
    * Returns this path in the form of a string in SVG path format.
-   * See {@link H3DU.GraphicsPath.fromString}.
+   * See {@link GraphicsPath.fromString}.
    * @returns {string} A string describing the path in the SVG path
    * format.
    */
@@ -1048,7 +1048,7 @@ GraphicsPath._CurveList.prototype.getCurves = function() {
 };
   /**
    * Does a linear interpolation between two graphics paths.
-   * @param {H3DU.GraphicsPath} other The second graphics path.
+   * @param {GraphicsPath} other The second graphics path.
    * @param {number} t An interpolation factor, generally ranging from 0 through 1.
    * Closer to 0 means closer to this path, and closer to 1 means closer
    * to "other". If the input paths contain arc
@@ -1058,7 +1058,7 @@ GraphicsPath._CurveList.prototype.getCurves = function() {
    * interpolation, define a function that takes a value that usually ranges from 0 through 1
    * and generally returns a value that usually ranges from 0 through 1,
    * and pass the result of that function to this method.
-   * See the documentation for {@link HMathvec3lerp}
+   * See the documentation for {@link MathUtil.vec3lerp}
    * for examples of interpolation functions.
    * @returns {GraphicsPath} The interpolated path.
    */
@@ -1172,11 +1172,11 @@ GraphicsPath._addSegment = function(a, c) {
 };
 
   /**
-   * Gets a [curve evaluator object]{@link H3DU.Curve} for
+   * Gets a [curve evaluator object]{@link Curve} for
    * the curves described by this path. The return value doesn't track changes to the path.
-   * @returns {Object} A [curve evaluator object]{@link H3DU.Curve} that implements
+   * @returns {Object} A [curve evaluator object]{@link Curve} that implements
    * the following additional method:<ul>
-   * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link H3DU.Curve}
+   * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link Curve}
    * described by this path. The list will contain one curve evaluator object for each disconnected
    * portion of the path. For example, if the path contains one polygon, the list will contain
    * one curve object. And if the path is empty, the list will be empty too. Each curve
@@ -1499,7 +1499,7 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
    * 0 means the positive X axis, &pi;/2 means the positive Y axis,
    * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
    * @param {number} endAngle Ending angle of the arc, in radians.
-   * @param {Boolean} ccw Whether the arc runs counterclockwise
+   * @param {boolean} ccw Whether the arc runs counterclockwise
    * (assuming the X axis points right and the Y axis points
    * down under the coordinate system).
    * @returns {GraphicsPath} This object.
@@ -1710,10 +1710,10 @@ GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) 
    * @param {number} rot Rotation of the ellipse in degrees (clockwise
    * assuming the X axis points right and the Y axis points
    * down under the coordinate system).
-   * @param {Boolean} largeArc In general, there are four possible solutions
+   * @param {boolean} largeArc In general, there are four possible solutions
    * for arcs given the start and end points, rotation, and x- and y-radii. If true,
    * chooses an arc solution with the larger arc length; if false, smaller.
-   * @param {Boolean} sweep If true, the arc solution chosen will run
+   * @param {boolean} sweep If true, the arc solution chosen will run
    * clockwise (assuming the X axis points right and the Y axis points
    * down under the coordinate system); if false, counterclockwise.
    * @param {number} x2 X coordinate of the arc's end point.
@@ -2352,8 +2352,8 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= HMath.ToRadians;
-  var angleStep = HMath.PiTimes2 / sides;
+  phase *= MathUtil.ToRadians;
+  var angleStep = MathUtil.PiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var c = Math.cos(phase);
@@ -2391,9 +2391,9 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= HMath.ToRadians;
+  phase *= MathUtil.ToRadians;
   var sides = points * 2;
-  var angleStep = HMath.PiTimes2 / sides;
+  var angleStep = MathUtil.PiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var c = Math.cos(phase);
@@ -2454,8 +2454,8 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
    * will return <code>true</code>.
    * @example <caption>The following example creates a graphics path
    * from an SVG string describing a polyline.</caption>
-   * var path=H3DU.GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
-   * @memberof! H3DU.GraphicsPath
+   * var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+   * @memberof! GraphicsPath
    */
 GraphicsPath.fromString = function(str) {
   var index = [0];
@@ -3127,7 +3127,7 @@ GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
       tri[2], tri[3], z, 0, 0, 1, tri[2], tri[3],
       tri[4], tri[5], z, 0, 0, 1, tri[4], tri[5]);
   }
-  return H3DU.MeshBuffer.fromPositionsNormalsUV(vertices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices);
 };
   /** @ignore */
 Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
@@ -4228,9 +4228,8 @@ Clipper.prototype._divideSegment = function(e, p) {
     e.other.left = true;
     l.left = false;
   }
-  if(Clipper.sweepEventComp(e, r)) { // avoid a rounding error. The left event would be processed after the right event
-    // console.log("Oops2")
-  }
+// avoid a rounding error. The left event would be processed after the right event
+  Clipper.sweepEventComp(e, r);
   e.other.other = l;
   e.other = r;
   this.eq.push(l);
@@ -4250,7 +4249,7 @@ Clipper.prototype._divideSegment = function(e, p) {
      * order (clockwise or counterclockwise) from the subpath
      * that contains them.
      * </ul>
-     * @param {H3DU.GraphicsPath} path A path to combine with this one.
+     * @param {GraphicsPath} path A path to combine with this one.
      * @param {number} [flatness] When curves and arcs
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this
@@ -4266,9 +4265,9 @@ GraphicsPath.prototype.union = function(path, flatness) {
 };
     /**
      * Computes the difference between this path's shape and another
-     * path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
+     * path's shape. The points given in the {@link GraphicsPath#union} method
      * apply to this method.
-     * @param {H3DU.GraphicsPath} path A path to combine with this one.
+     * @param {GraphicsPath} path A path to combine with this one.
      * @param {number} [flatness] When curves and arcs
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this
@@ -4285,9 +4284,9 @@ GraphicsPath.prototype.difference = function(path, flatness) {
 };
     /**
      * Computes the intersection, or the area common to both this path's shape
-     * and another path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
+     * and another path's shape. The points given in the {@link GraphicsPath#union} method
      * apply to this method.
-     * @param {H3DU.GraphicsPath} path A path to combine with this one.
+     * @param {GraphicsPath} path A path to combine with this one.
      * @param {number} [flatness] When curves and arcs
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this
@@ -4304,9 +4303,9 @@ GraphicsPath.prototype.intersection = function(path, flatness) {
 };
     /**
      * Computes the shape contained in either this path or another path,
-     * but not both. The points given in the {@link H3DU.GraphicsPath#union} method
+     * but not both. The points given in the {@link GraphicsPath#union} method
      * apply to this method.
-     * @param {H3DU.GraphicsPath} path A path to combine with this one.
+     * @param {GraphicsPath} path A path to combine with this one.
      * @param {number} [flatness] When curves and arcs
      * are decomposed to line segments, the
      * segments will be close to the true path of the curve by this

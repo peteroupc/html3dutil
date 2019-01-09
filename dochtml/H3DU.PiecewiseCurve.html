@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><meta charset=utf-8><title>H3DU.PiecewiseCurve</title></head><body><h1> H3DU.PiecewiseCurve</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.PiecewiseCurve'></a>
-<h3> H3DU.PiecewiseCurve(curves)</h3><p><b>Augments:</b> <a href="H3DU.Curve.html">H3DU.Curve</a></p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve
+<h3> H3DU.PiecewiseCurve(curves)</h3><p><b>Augments:</b> Curve</p>A curve evaluator object for a curve
 made up of one or more individual curves.<p>
 The combined curve's U coordinates range from 0 to N,
 where N is the number of curves. In this way, the integer
@@ -8,7 +8,7 @@ refers to. For example, if there are four curves, coordinates
 from 0, but less than 1, belong to the first curve, and coordinates
 from 1, but less than 2, belong to the second curve. The U
 coordinate equal to N refers to the end of the last curve in
-the piecewise curve.<h4> Parameters</h4><ul><li><code>curves</code> (Type: Array.&lt;Object>)<br>An array of curve evaluator objects, such as an instance of <a href="H3DU.Curve.html">H3DU.Curve</a> or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</ul><h4> Example</h4><pre>// Generates a piecewise polygon curve from an array of
+the piecewise curve.<h4> Parameters</h4><ul><li><code>curves</code> (Type: Array.&lt;Object>)<br>An array of curve evaluator objects, such as an instance of Curve or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</ul><h4> Example</h4><pre>// Generates a piecewise polygon curve from an array of
 // vectors (arrays with the same number of elements) that
 // specify the points that make up the polygon.
 function polygonCurve(points) {
@@ -16,52 +16,22 @@ var curves=[]
 for(var i=0;i<points.length;i++) {
 var cp=points[i]
 var np=(i==points.length-1) ? points[0] : points[i+1]
-curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+curves.push(BSplineCurve.fromBezierCurve([cp,np]))
 }
-return new H3DU.PiecewiseCurve(curves)
-}</pre><h3> Methods</h3><ul><li><a href='#H3DU.PiecewiseCurve_accel'>accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.<li><a href='#H3DU.PiecewiseCurve_arcLength'>arcLength</a><br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.<li><a href='#H3DU.PiecewiseCurve_changeEnds'>changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
-but has a different set of end points.<li><a href='#H3DU.PiecewiseCurve_endPoints'>endPoints</a><br>Returns the starting and ending U coordinates of this curve.<li><a href='#H3DU.PiecewiseCurve_evaluate'>evaluate</a><br>Finds the position of this curve at the given U coordinate.<li><a href='#H3DU.PiecewiseCurve_fitRange'>fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.<li><a href='#H3DU.PiecewiseCurve.fromCatmullRomSpline'>fromCatmullRomSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
+return new PiecewiseCurve(curves)
+}</pre><h3> Methods</h3><ul><li><a href='#H3DU.PiecewiseCurve_arcLength'>arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.<li><a href='#H3DU.PiecewiseCurve_endPoints'>endPoints</a><br>Returns the starting and ending U coordinates of this curve.<li><a href='#H3DU.PiecewiseCurve_evaluate'>evaluate</a><br>Finds the position of this curve at the given U coordinate.<li><a href='#H3DU.PiecewiseCurve.fromCatmullRomSpline'>fromCatmullRomSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull&ndash;Rom spline.<li><a href='#H3DU.PiecewiseCurve.fromEllipseArc'>fromEllipseArc</a><br>TODO: Not documented yet.<li><a href='#H3DU.PiecewiseCurve.fromHermiteSpline'>fromHermiteSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline.<li><a href='#H3DU.PiecewiseCurve.fromTCBSpline'>fromTCBSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
-cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).<li><a href='#H3DU.PiecewiseCurve_getCurves'>getCurves</a><br>Gets a reference to the curves that make up this piecewise curve.<li><a href='#H3DU.PiecewiseCurve_getLength'>getLength</a><br>Convenience method for getting the total length of this curve.<li><a href='#H3DU.PiecewiseCurve_getPoints'>getPoints</a><br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.<li><a href='#H3DU.PiecewiseCurve_getPointsAsObjects'>getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.<li><a href='#H3DU.PiecewiseCurve_jerk'>jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.<li><a href='#H3DU.PiecewiseCurve_normal'>normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.<li><a href='#H3DU.PiecewiseCurve_tangent'>tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.<li><a href='#H3DU.PiecewiseCurve_toArcLengthParam'>toArcLengthParam</a><br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
-an <i>arc length parameterization</i>.<li><a href='#H3DU.PiecewiseCurve_velocity'>velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</ul><a name='H3DU.PiecewiseCurve_accel'></a>
-<h3> H3DU.PiecewiseCurve#accel(u)</h3>Finds an approximate acceleration vector at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>accel</code>
-method if it implements it; otherwise, does a numerical differentiation using
-the velocity vector.<p>
-The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.html">unit vector</a>.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing an acceleration vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.PiecewiseCurve_arcLength'></a>
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).<li><a href='#H3DU.PiecewiseCurve_getCurves'>getCurves</a><br>Gets a reference to the curves that make up this piecewise curve.<li><a href='#H3DU.PiecewiseCurve_velocity'>velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</ul><a name='H3DU.PiecewiseCurve_arcLength'></a>
 <h3> H3DU.PiecewiseCurve#arcLength(u)</h3>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>The approximate arc length of this curve at the given U coordinate. (Type: number)<a name='H3DU.PiecewiseCurve_changeEnds'></a>
-<h3> H3DU.PiecewiseCurve#changeEnds(ep1, ep2)</h3>Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
-but has a different set of end points.
-For example, this method can be used to shrink the path of a curve
-from [0, &pi;] to [0, &pi;/8].<p>
-Note, however, that in general, shrinking
-the range of a curve will not shrink the length of a curve
-in the same proportion, unless the curve's path runs at
-constant speed with respect to time. For example, shrinking the range of a curve
-from [0, 1] to [0, 0.5] will not generally result in a curve that's exactly half as
-long as the original curve.<p>For some curves, this method can
-also be used to grow the path of the curve.<h4> Parameters</h4><ul><li><code>ep1</code> (Type: number)<br>New start point of the curve.<li><code>ep2</code> (Type: number)<br>New end point of the curve.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.PiecewiseCurve_endPoints'></a>
+curve and the point at the given U coordinate of this curve.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>The approximate arc length of this curve at the given U coordinate. (Type: number)<a name='H3DU.PiecewiseCurve_endPoints'></a>
 <h3> H3DU.PiecewiseCurve#endPoints()</h3>Returns the starting and ending U coordinates of this curve.<h4> Return Value</h4>A two-element array. The first element is the starting coordinate of
 the curve, and the second is its ending coordinate.
 Returns <code>[0, n]</code>, where <code>n</code> is the number
 of curves that make up this piecewise curve.<a name='H3DU.PiecewiseCurve_evaluate'></a>
 <h3> H3DU.PiecewiseCurve#evaluate(u)</h3>Finds the position of this curve at the given U coordinate.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a position. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.PiecewiseCurve_fitRange'></a>
-<h3> H3DU.PiecewiseCurve#fitRange(ep1, ep2)</h3>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
-For example, this method can be used to shrink the range of U coordinates
-from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
-Here, -&pi; now maps to 0, and &pi; now maps to 1.<h4> Parameters</h4><ul><li><code>ep1</code> (Type: number)<br>New value to use as the start point of the curve.<li><code>ep2</code> (Type: number)<br>New value to use as the end point of the curve.</ul><h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.PiecewiseCurve.fromCatmullRomSpline'></a>
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.PiecewiseCurve.fromCatmullRomSpline'></a>
 <h3> (static) H3DU.PiecewiseCurve.fromCatmullRomSpline(spline, [param], [closed])</h3>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull&ndash;Rom spline. A Catmull&ndash;Rom spline is defined by
 a collection of control points that the spline
@@ -81,54 +51,6 @@ cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;B
 (If tension, continuity, and bias are all 0, the result is a cubic Catmull&ndash;Rom spline
 in uniform parameterization.)<h4> Parameters</h4><ul><li><code>spline</code> (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.<li><code>tension</code> (Type: number) (optional)<br>A parameter that adjusts the length of the starting and ending tangents of each curve segment. Ranges from -1 for double-length tangents to 1 for zero-length tangents. A value of 1 results in straight line segments. Default is 0.<li><code>continuity</code> (Type: number) (optional)<br>A parameter that adjusts the direction of the starting and ending tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 or closer to 1 result in tangents that are closer to perpendicular. A value of -1 results in straight line segments. Default is 0.<li><code>bias</code> (Type: number) (optional)<br>A parameter that adjusts the influence of the starting and ending tangents of each curve segment. The greater this number, the greater the ending tangents influence the direction of the next curve segment in comparison to the starting tangents. Ranges from -1 to 1. Default is 0.<li><code>closed</code> (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.<li><code>rigidEnds</code> (Type: number) (optional)<br>If true, the start and end of the piecewise curve will, by default, more rigidly follow the direction to the next or previous control point, respectively. This makes the curve compatible with GDI+ cardinal splines with 0 continuity, 0 bias, and tension equal to <code>-((T*2)-1)</code>, where T is the GDI+ cardinal spline tension parameter. Default is false.</ul><h4> Return Value</h4>A piecewise curve made up of cubic B-spline curves describing the
 same path as the TCB spline. (Type: PiecewiseCurve)<a name='H3DU.PiecewiseCurve_getCurves'></a>
-<h3> H3DU.PiecewiseCurve#getCurves()</h3>Gets a reference to the curves that make up this piecewise curve.<h4> Return Value</h4>The curves that make up this piecewise curve. (Type: Array.&lt;<a href="H3DU.Curve.html">H3DU.Curve</a>>)<a name='H3DU.PiecewiseCurve_getLength'></a>
-<h3> H3DU.PiecewiseCurve#getLength()</h3>Convenience method for getting the total length of this curve.<h4> Return Value</h4>The distance from the start of the curve to its end. (Type: number)<a name='H3DU.PiecewiseCurve_getPoints'></a>
-<h3> H3DU.PiecewiseCurve#getPoints(count)</h3>Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
-evenly spaced along the curve unless the curve uses
-an arc-length parameterization.<h4> Parameters</h4><ul><li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</ul><h4> Return Value</h4>An array of curve positions. The first
-element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)<a name='H3DU.PiecewiseCurve_getPointsAsObjects'></a>
-<h3> H3DU.PiecewiseCurve#getPointsAsObjects(count)</h3>Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
-evenly spaced along the curve unless the curve uses
-an arc-length parameterization. The positions will be in the form of objects with
-up to four properties: x, y, z, and w retrieve the first, second, third,
-and fourth coordinate of each position, respectively.<h4> Parameters</h4><ul><li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</ul><h4> Return Value</h4>An array of curve positions. The first
-element will be the start of the curve. If "count" is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)<h4> Example</h4><p>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</p><pre>
-var points=curve.getPointsAsObjects(50)
-var buffer=new THREE.BufferGeometry()
-.setFromPoints(points);</pre><a name='H3DU.PiecewiseCurve_jerk'></a>
-<h3> H3DU.PiecewiseCurve#jerk(u)</h3>Finds an approximate jerk vector at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
-method if it implements it; otherwise, does a numerical differentiation using
-the acceleration vector.<p>
-The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.html">unit vector</a>.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a jerk vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.PiecewiseCurve_normal'></a>
-<h3> H3DU.PiecewiseCurve#normal(u)</h3>Finds an approximate principal normal vector at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator's <code>normal</code>
-method if it implements it; otherwise, does a numerical differentiation using the velocity vector.<p>
-The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
-vector divided by that derivative's length. The normal returned by this method
-<i>should</i> be "normalized" to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="H3DU.Surface.html#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.PiecewiseCurve_tangent'></a>
-<h3> H3DU.PiecewiseCurve#tangent(u)</h3>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
-The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='H3DU.PiecewiseCurve_toArcLengthParam'></a>
-<h3> H3DU.PiecewiseCurve#toArcLengthParam()</h3>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
-an <i>arc length parameterization</i>. Arc length
-parameterization allows for moving along a curve's path at a uniform
-speed and for generating points which are spaced evenly along that
-path -- both features are more difficult with most other kinds
-of curve parameterization.<p>
-The <i>end points</i> of the curve (obtained by calling the <code>endPoints</code>
-method) will be (0, N), where N is the distance to the end of the curve from its
-start.<p>
-When converting to an arc length parameterization, the curve
-should be continuous and have a speed greater than 0 at every
-point on the curve. The arc length parameterization used in
-this method is approximate.<h4> Return Value</h4>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)<a name='H3DU.PiecewiseCurve_velocity'></a>
+<h3> H3DU.PiecewiseCurve#getCurves()</h3>Gets a reference to the curves that make up this piecewise curve.<h4> Return Value</h4>The curves that make up this piecewise curve. (Type: Array.&lt;Curve>)<a name='H3DU.PiecewiseCurve_velocity'></a>
 <h3> H3DU.PiecewiseCurve#velocity(u)</h3>Finds an approximate velocity vector at the given U coordinate of this curve.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a velocity vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<p><a href='index.html'>Back to documentation index.</a></p></body></html>

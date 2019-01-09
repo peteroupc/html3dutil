@@ -119,7 +119,7 @@ export var getPromiseResults = function(promises,
  * be an array of results from those promises,
  * in the order in which those promises were listed.
  * Will be rejected if any of the promises is rejected; the result
- * will be an object as specified in {@link H3DU.getPromiseResults}.</ul>
+ * will be an object as specified in {@link getPromiseResults}.</ul>
  * @memberof H3DU
  */
 export var getPromiseResultsAll = function(promises,
@@ -237,7 +237,7 @@ export var getTimePosition = function(timer, timeInMs, intervalInMs) {
  * the last known time, where a frame's length is 1/60 of a second.
  * This method should be called only once each frame.
  * @param {Object} timer An object described
- * in {@link H3DU.getTimePosition}.
+ * in {@link getTimePosition}.
  * @param {number} timeInMs A time value, in milliseconds.
  * This could be the parameter received in a
  * <code>requestAnimationFrame()</code> callback method.

@@ -21,7 +21,7 @@ transpose of the given matrix.
 * [lookAt](#MatrixStack_lookAt)<br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a camera view.
 * [multMatrix](#MatrixStack_multMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by another matrix.
-* [multTransposeMatrix](#MatrixStack_multTransposeMatrix)<br><b>Deprecated: Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.</b>
+* [multTransposeMatrix](#MatrixStack_multTransposeMatrix)<br><b>Deprecated: Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.</b>
 * [ortho](#MatrixStack_ortho)<br>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.
 * [ortho2d](#MatrixStack_ortho2d)<br>Modifies the matrix at the top of this stack by multiplying it by
@@ -149,7 +149,7 @@ This object. (Type: H3DU.MatrixStack)
 <a name='MatrixStack_multTransposeMatrix'></a>
 ### MatrixStack#multTransposeMatrix(mat)
 
-<b>Deprecated: Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.</b>
+<b>Deprecated: Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.</b>
 
 Modifies the matrix at the top of this stack by multiplying it by the transpose of
 another matrix.

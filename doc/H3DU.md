@@ -72,7 +72,7 @@ all of the promises are each resolved; the result will
 be an array of results from those promises,
 in the order in which those promises were listed.
 Will be rejected if any of the promises is rejected; the result
-will be an object as specified in <a href="H3DU.md#H3DU.getPromiseResults">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.md">Promise</a>)
+will be an object as specified in getPromiseResults.</ul> (Type: <a href="Promise.md">Promise</a>)
 
 <a name='H3DU.getTimePosition'></a>
 ### (static) H3DU.getTimePosition(timer, timeInMs, intervalInMs)
@@ -165,7 +165,7 @@ This method should be called only once each frame.
 
 #### Parameters
 
-* `timer` (Type: Object)<br>An object described in <a href="H3DU.md#H3DU.getTimePosition">H3DU.getTimePosition</a>.
+* `timer` (Type: Object)<br>An object described in getTimePosition.
 * `timeInMs` (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.
 
 #### Return Value

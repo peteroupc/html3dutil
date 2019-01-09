@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 /** @ignore */
-export var _MathInternal = {
+export var MathInternal = {
   "vecZeros":function(count) {
     var vec = [];
     for(var i = 0; i < count; i++) {

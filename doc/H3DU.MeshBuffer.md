@@ -6,7 +6,7 @@
 ### H3DU.MeshBuffer()
 
 A geometric mesh in the form of buffer objects.
-A mesh buffer is made up of one or more <a href="H3DU.BufferAccessor.md">vertex attribute objects</a>,
+A mesh buffer is made up of one or more vertex attribute objects,
 and an optional array of vertex indices. Each vertex attribute object contains
 the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
@@ -83,21 +83,21 @@ TODO: Not documented yet.
 TODO: Not documented yet.
 
 <a name='H3DU.MeshBuffer.fromPositions'></a>
-### (static) H3DU.MeshBuffer.fromPositions(vertices, [indices])
+### (static) H3DU.MeshBuffer.fromPositions(vertices, {Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
 
 Creates a new mesh buffer with the given array of vertex positions.
 
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.
-* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormals'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices, [indices])
+### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices, {Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
 
 Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.
@@ -105,14 +105,14 @@ and vertex normals.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
-* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormalsUV'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices, [indices])
+### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices, {Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
 
 Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.
@@ -120,7 +120,7 @@ vertex normals, and texture coordinates.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol>
-* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
@@ -133,13 +133,13 @@ Gets a vertex attribute included in this mesh buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `name` (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.md#Semantic.POSITION">Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
 * `semanticIndex` (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
 
 #### Return Value
 
 A vertex buffer accessor, or null
-if the attribute doesn't exist. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
+if the attribute doesn't exist. (Type: BufferAccessor)
 
 #### Example
 
@@ -157,9 +157,9 @@ The attributes, if present, will be stored in the "position",
     var c=mesh.getAttribute("COLOR")
     var ind=mesh.getIndices()
     var primSize = 3;
-    if(mesh.primitiveType() === H3DU.MeshBuffer.LINES)
+    if(mesh.primitiveType() === MeshBuffer.LINES)
     primSize = 2;
-    if(mesh.primitiveType() === H3DU.MeshBuffer.POINTS)
+    if(mesh.primitiveType() === MeshBuffer.POINTS)
     primSize = 1;
     var ret=[]
     for(var i=0;i<ind.length;i+=primSize) {
@@ -230,15 +230,15 @@ and the other mesh's indices copied or adapted.
 
 #### Parameters
 
-* `other` (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is not the same as the other mesh's primitive type.
+* `other` (Type: MeshBuffer)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh's primitive type is not the same as the other mesh's primitive type.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 #### Example
 
-    var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
+    var copiedMesh = new MeshBuffer().merge(meshToCopy);
 
 <a name='H3DU.MeshBuffer_normalizeNormals'></a>
 ### H3DU.MeshBuffer#normalizeNormals()
@@ -251,7 +251,7 @@ regardless of semantic index, are affected.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_primitiveCount'></a>
 ### H3DU.MeshBuffer#primitiveCount()
@@ -290,12 +290,12 @@ ensures its values are each at least 3 elements long.
 
 #### Parameters
 
-* `flat` (Type: Boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.
-* `inward` (Type: Boolean)<br>If true, the generated normals will point inward; otherwise, outward.
+* `flat` (Type: boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.
+* `inward` (Type: boolean)<br>If true, the generated normals will point inward; otherwise, outward.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_reverseNormals'></a>
 ### H3DU.MeshBuffer#reverseNormals()
@@ -307,7 +307,7 @@ regardless of semantic index, are affected.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 #### Example
 
@@ -319,7 +319,7 @@ Due to the z-fighting effect, drawing a two-sided mesh is
 recommended only if face culling is enabled.
 
     var twoSidedMesh = originalMesh.merge(
-    new H3DU.MeshBuffer().merge(originalMesh)
+    new MeshBuffer().merge(originalMesh)
     .reverseWinding().reverseNormals()
     );
 
@@ -332,7 +332,7 @@ Has an effect only if this mesh buffer consists of triangles.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 #### Example
 
@@ -345,7 +345,7 @@ Due to the z-fighting effect, drawing this kind of mesh is
 recommended only if face culling is enabled.
 
     var frontBackMesh = originalMesh.merge(
-    new H3DU.MeshBuffer().merge(originalMesh).reverseWinding()
+    new MeshBuffer().merge(originalMesh).reverseWinding()
     );
 
 <a name='H3DU.MeshBuffer_setAttribute'></a>
@@ -359,16 +359,16 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid. If this isn't a string, the set index of the attribute will be 0 (see <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>).
-* `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored. See <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.
-* `countPerValue` (Type: number)<br>The number of elements in each per-vertex item. See <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.
-* `offset` (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts.See <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.
-* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. See <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.
+* `name` (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.md#Semantic.POSITION">Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid. If this isn't a string, the set index of the attribute will be 0 (see MeshBuffer#setAttributeEx).
+* `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored. See MeshBuffer#setAttributeEx.
+* `countPerValue` (Type: number)<br>The number of elements in each per-vertex item. See MeshBuffer#setAttributeEx.
+* `offset` (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts.See MeshBuffer#setAttributeEx.
+* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. See MeshBuffer#setAttributeEx.
 
 #### Return Value
 
 This object. Throws an error if the given
-semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+semantic is unsupported. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_setAttributeEx'></a>
 ### H3DU.MeshBuffer#setAttributeEx(name, index, buffer, [countPerValue], [offset], [stride])
@@ -382,24 +382,24 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `name` (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.md#Semantic.POSITION">Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
 * `index` (Type: number)<br>The semantic index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array | BufferAccessor)<br>The buffer where the per-vertex data is stored. If this parameter is an (untyped) Array, converts that parameter to a Float32Array.
-* `countPerValue` (Type: number) (optional)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If "buffer" is a <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>, the value of "countPerValue" is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.
-* `offset` (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts. If null, undefined, or omitted, the default is 0. Throws an error if less than 0. If "buffer" is a <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>, the value of "offset" is taken from that accessor and this parameter is ignored.
-* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as "countPerValue". Throws an error if this value is 0 or less. If "buffer" is a <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>, the value of "stride" is taken from that accessor and this parameter is ignored.
+* `countPerValue` (Type: number) (optional)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If "buffer" is a BufferAccessor, the value of "countPerValue" is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.
+* `offset` (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts. If null, undefined, or omitted, the default is 0. Throws an error if less than 0. If "buffer" is a BufferAccessor, the value of "offset" is taken from that accessor and this parameter is ignored.
+* `stride` (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as "countPerValue". Throws an error if this value is 0 or less. If "buffer" is a BufferAccessor, the value of "stride" is taken from that accessor and this parameter is ignored.
 
 #### Return Value
 
 This object.Throws an error if the given
-semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+semantic is unsupported. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_setColor'></a>
 ### H3DU.MeshBuffer#setColor(color)
 
 Sets all the vertices in this mesh to the given color, by
 assigning each value with the attribute semantic <code>COLOR</code>
-to the given color. (If the attribute's <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">count per value</a>
+to the given color. (If the attribute's count per value
 is less than 4, each such value will be set to as many elements of the converted 4-element
 color as possible.) If an attribute with the semantic <code>COLOR</code>
 doesn't exist, an attribute with the semantic <code>COLOR_0</code> and a count per
@@ -410,24 +410,24 @@ regardless of semantic index, are affected by this method.
 
 #### Parameters
 
-* `color` (Type: Array.&lt;number> | number | string)<br>A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a> identifying the color to set. This will be converted to a 4-element color.
+* `color` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color to set. This will be converted to a 4-element color.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_setIndices'></a>
-### H3DU.MeshBuffer#setIndices(indices)
+### H3DU.MeshBuffer#setIndices({Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
 
 Sets the vertex indices used by this mesh buffer.
 
 #### Parameters
 
-* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null)<br>Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} indices Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_setPrimitiveType'></a>
 ### H3DU.MeshBuffer#setPrimitiveType(primType)
@@ -440,7 +440,7 @@ Sets the type of graphics primitives stored in this mesh buffer.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_transform'></a>
 ### H3DU.MeshBuffer#transform(matrix)
@@ -452,11 +452,11 @@ other attributes will be unaffected.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.md#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)
+* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the MathUtil.mat4projectVec3 method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see MathUtil.mat4inverseTranspose3). (Normals need to be transformed specially because they describe directions, not points.)
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()
@@ -493,6 +493,6 @@ Has no effect if this mesh doesn't use triangles as primitives.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>)
+This object. (Type: MeshBuffer)
 
 [Back to documentation index.](index.md)

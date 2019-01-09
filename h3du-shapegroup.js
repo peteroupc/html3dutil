@@ -6,11 +6,13 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+
+import {MathUtil} from "./h3du-math";
+import {Transform} from "./h3du-transform";
 /**
  * Represents a grouping of shapes. This object
- * can hold both {@link H3DU.Shape} objects and
- * other {@link H3DU.ShapeGroup} objects.
+ * can hold both {@link Shape} objects and
+ * other {@link ShapeGroup} objects.
  * @constructor
  * @memberof H3DU
  */
@@ -23,15 +25,15 @@ ShapeGroup.prototype._init = function() {
    * This property should only be used to access properties
    * and call methods on each shape, and not to add, remove
    * or replace shapes directly.
-   * @deprecated Use the {@link H3DU.ShapeGroup#shapeCount},
-   * {@link H3DU.ShapeGroup#getShape}, and
-   * {@link H3DU.ShapeGroup#setShape} methods instead.
+   * @deprecated Use the {@link ShapeGroup#shapeCount},
+   * {@link ShapeGroup#getShape}, and
+   * {@link ShapeGroup#setShape} methods instead.
    * @readonly
    */
   this.shapes = [];
   this.parent = null;
   this.visible = true;
-  this.transform = new H3DU.Transform();
+  this.transform = new Transform();
 };
 /**
  * Returns the number of shapes and/or shape groups that
@@ -45,7 +47,7 @@ ShapeGroup.prototype.shapeCount = function() {
  * Gets the shape or shape group located
  * in this shape group at the given index.
  * @param {number} index Integer index, starting from 0, of the shape or shape group to set.
- * @returns {H3DU.Shape|H3DU.ShapeGroup} The shape or shape group located
+ * @returns {Shape|ShapeGroup} The shape or shape group located
  * in this shape group at the given index, or null if none is found there.
  */
 ShapeGroup.prototype.getShape = function(index) {
@@ -54,8 +56,8 @@ ShapeGroup.prototype.getShape = function(index) {
 /**
  * Sets a shape or shape group at the given index in this shape group.
  * @param {number} index Integer index, starting from 0, to set the shape or shape group at.
- * @param {H3DU.Shape|H3DU.ShapeGroup} shape Shape object to set at the given index.
- * @returns {H3DU.ShapeGroup} This object.
+ * @param {Shape|ShapeGroup} shape Shape object to set at the given index.
+ * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.setShape = function(index, shape) {
   this.shapes[index] = shape;
@@ -69,10 +71,10 @@ ShapeGroup.prototype.setShape = function(index, shape) {
  * visibility flag, and any objects contained in this one
  * will be copied using their <code>copy()</code> method.
  * The copied shape group won't have a parent.
- * @returns {H3DU.ShapeGroup} A copy of this shape group.
+ * @returns {ShapeGroup} A copy of this shape group.
  */
 ShapeGroup.prototype.copy = function() {
-  var ret = new H3DU.ShapeGroup();
+  var ret = new ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
   for(var i = 0; i < this.shapes.length; i++) {
@@ -85,9 +87,9 @@ ShapeGroup.prototype.copy = function() {
  * Adds a 3D shape to this shape group, at the end of the list
  * of shapes. Its reference, not a copy,
  * will be stored in the list of shapes.
- * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
+ * @param {Shape|ShapeGroup} shape A 3D shape.
  * Throws an error if null.
- * @returns {H3DU.ShapeGroup} This object.
+ * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.addShape = function(shape) {
   if(!shape)throw new Error();
@@ -97,8 +99,8 @@ ShapeGroup.prototype.addShape = function(shape) {
 };
 /**
  * Sets whether this shape group will be drawn on rendering.
- * @param {Boolean} value True if this shape group will be visible; otherwise, false.
- * @returns {H3DU.ShapeGroup} This object.
+ * @param {boolean} value True if this shape group will be visible; otherwise, false.
+ * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.setVisible = function(value) {
   this.visible = !!value;
@@ -113,7 +115,7 @@ ShapeGroup.prototype.getVisible = function() {
 };
 /**
  * Gets a reference to the transform used by this shape group object.
- * @returns {H3DU.Transform} Return value.
+ * @returns {Transform} Return value.
  */
 ShapeGroup.prototype.getTransform = function() {
   return this.transform;
@@ -121,7 +123,7 @@ ShapeGroup.prototype.getTransform = function() {
 /**
  * Gets a copy of the transformation needed to transform
  * this shape group's coordinates to world coordinates.
- * @returns {H3DU.Transform} A 4x4 matrix.
+ * @returns {Transform} A 4x4 matrix.
  */
 ShapeGroup.prototype.getMatrix = function() {
   var xform = this.getTransform();
@@ -130,8 +132,8 @@ ShapeGroup.prototype.getMatrix = function() {
   if(typeof this.parent !== "undefined" && this.parent !== null) {
     var pmat = this.parent.getMatrix();
     if(thisIdentity) {
-      mat = H3DU.Math.mat4multiply(pmat, xform.getMatrix());
-    } else if(H3DU.Math.mat4isIdentity(pmat)) {
+      mat = MathUtil.mat4multiply(pmat, xform.getMatrix());
+    } else if(MathUtil.mat4isIdentity(pmat)) {
       mat = xform.getMatrix();
     } else {
       mat = pmat;
@@ -147,7 +149,7 @@ ShapeGroup.prototype.getMatrix = function() {
  * shapes can set their own transforms, in which case the
  * rendering process will multiply this shape group's transform
  * with the child shape's transform as it renders the child shape.
- * @param {H3DU.Transform} transform The transform to
+ * @param {Transform} transform The transform to
  * copy for the use of this shape group.
  * @returns {Object} Return value.
  */
@@ -158,8 +160,8 @@ ShapeGroup.prototype.setTransform = function(transform) {
 
 /**
  * Removes all instances of a 3D shape from this shape group
- * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
- * @returns {H3DU.ShapeGroup} This object.
+ * @param {Shape|ShapeGroup} shape The 3D shape to remove.
+ * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.removeShape = function(shape) {
   for(var i = 0; i < this.shapes.length; i++) {
@@ -189,7 +191,7 @@ ShapeGroup.prototype.getBounds = function() {
   for(var i = 0; i < this.shapes.length; i++) {
     var b = this.shapes[i].getBounds();
     // NOTE: The returned bounding
-    if(!H3DU.Math.boxIsEmpty(b)) {
+    if(!MathUtil.boxIsEmpty(b)) {
       if(first) {
         ret[0] = b[0];
         ret[1] = b[1];
@@ -237,14 +239,14 @@ ShapeGroup.prototype.primitiveCount = function() {
 /**
  * Sets the relative position of the shapes in this group
  * from their original position.
- * See {@link H3DU.Transform#setPosition}
+ * See {@link Transform#setPosition}
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
  * @param {number|Array<number>} x X coordinate
- * or a 3-element position array, as specified in {@link H3DU.Transform#setScale}.
+ * or a 3-element position array, as specified in {@link Transform#setScale}.
  * @param {number} y Y coordinate.
  * @param {number} z Z coordinate.
- * @returns {H3DU.ShapeGroup} This object.
+ * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.setPosition = function(x, y, z) {
   this.transform.setPosition(x, y, z);
@@ -252,11 +254,11 @@ ShapeGroup.prototype.setPosition = function(x, y, z) {
 };
 /**
  * Sets this shape group's rotation in the form of a [quaternion]{@tutorial glmath}.
- * See {@link H3DU.Transform#setQuaternion}.
+ * See {@link Transform#setQuaternion}.
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
  * @param {Array<number>} quat A four-element array describing the rotation.
- * @returns {H3DU.ShapeGroup} This object.
+ * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.setQuaternion = function(quat) {
   this.transform.setQuaternion(quat);
@@ -264,14 +266,14 @@ ShapeGroup.prototype.setQuaternion = function(quat) {
 };
 /**
  * Sets the scale of this shape group relative to its original
- * size. See {@link H3DU.Transform#setScale}.
+ * size. See {@link Transform#setScale}.
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
  * @param {number|Array<number>} x Scaling factor for this object's width,
- * or a 3-element scaling array, as specified in {@link H3DU.Transform#setScale}.
+ * or a 3-element scaling array, as specified in {@link Transform#setScale}.
  * @param {number} y Scaling factor for this object's height.
  * @param {number} z Scaling factor for this object's depth.
- * @returns {H3DU.ShapeGroup} This object.
+ * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.setScale = function(x, y, z) {
   this.transform.setScale(x, y, z);

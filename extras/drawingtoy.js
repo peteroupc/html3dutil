@@ -1,4 +1,3 @@
-/* global gcd */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -8,19 +7,39 @@
  http://peteroupc.github.io/
 */
 
-import {H3DU} from "../h3du_min";
+import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../h3du_module";
+import {Epitrochoid, Hypotrochoid} from "./evaluators";
 
-export function DrawingToy() {
-  this.color = [0, 0, 0];
-  this.ce = new H3DU.CurveBuilder();
+function gcd(u, v) {
+  u = Math.abs(u);
+  v = Math.abs(v);
+  if (u === 0 || v === 0 || u === v) {
+    return u === 0 ? v : u;
+  }
+  do {
+    if (u > v) {
+      u -= v;
+    } else {
+      v -= u;
+    }
+  } while (u !== v);
+  return u;
 }
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ */
+export var DrawingToy = function() {
+  this.color = [0, 0, 0];
+  this.ce = new CurveBuilder();
+};
 /**
  * TODO: Not documented yet.
  * @param {*} color
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.setColor = function(color) {
-  this.color = H3DU.toGLColor(color).slice(0, 3);
+  this.color = toGLColor(color).slice(0, 3);
   return this;
 };
 /** @ignore
@@ -39,14 +58,14 @@ DrawingToy.prototype._drawingToyEpi = function(ringTeeth, wheelTeeth, hole,
   phase = 360 - phase;
   var distFromCenter = relDistFromWheelCenter * rollerRadius;
     // console.log([rollerRadius,distFromCenter])
-  var curve = new H3DU.Epitrochoid(
+  var curve = new Epitrochoid(
       radius, rollerRadius, distFromCenter, phase);
   var factor = gcd(ringTeeth, wheelTeeth);
   var rt = ringTeeth / factor;
   var wt = wheelTeeth / factor;
   var trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = H3DU.Math.PiTimes2 * trips;
+  var extent = MathUtil.PiTimes2 * trips;
   curve = curve.changeEnds(0, extent);
   return curve;
 };
@@ -61,7 +80,7 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   var firstHole = (innerRadius - 2.3) / innerRadius;
   var holeDist = 0.392 / innerRadius;
   var relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
-  var toothDist = radius * H3DU.Math.PiTimes2 / ringTeeth;
+  var toothDist = radius * MathUtil.PiTimes2 / ringTeeth;
   toothDist *= 0.8; // magic number here
     // console.log(toothDist)
     // console.log([firstHole,holeDist,relDistFromWheelCenter])
@@ -70,17 +89,17 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   phase = 360 - phase;
   var distFromCenter = relDistFromWheelCenter * innerRadius;
     // console.log([innerRadius,distFromCenter])
-  var curve = new H3DU.Hypotrochoid(radius, innerRadius, distFromCenter, phase);
+  var curve = new Hypotrochoid(radius, innerRadius, distFromCenter, phase);
   var factor = gcd(ringTeeth, wheelTeeth);
   var rt = ringTeeth / factor;
   var wt = wheelTeeth / factor;
   var trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = H3DU.Math.PiTimes2 * trips;
+  var extent = MathUtil.PiTimes2 * trips;
   curve = curve.changeEnds(0, extent);
   if(typeof offset === "undefined" || offset === null)return curve;
   if(offset === 0)return curve;
-  return new H3DU.Curve({
+  return new Curve({
     "evaluate":(u) => {
       var e = curve.evaluate(u);
       return [e[0] + offset * toothDist, e[1], e[2]];
@@ -101,7 +120,7 @@ DrawingToy.prototype.hypo = function(ringTeeth, wheelTeeth, hole, phase, offset)
   this.ce.constantAttribute(this.color, "COLOR");
   var curve = this._drawingToyHypo(ringTeeth, wheelTeeth, hole, phase, offset);
   this.ce.position(curve).evalCurve(
-      H3DU.MeshBuffer.LINES,
+      MeshBuffer.LINES,
       Math.max(400, Math.floor(curve.getLength() / 4)));
   return this;
 };
@@ -117,7 +136,7 @@ DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
   this.ce.constantAttribute(this.color, "COLOR");
   var curve = this._drawingToyEpi(ringTeeth, wheelTeeth, hole, phase);
   this.ce.position(curve).evalCurve(
-      H3DU.MeshBuffer.LINES,
+      MeshBuffer.LINES,
       Math.max(400, Math.floor(curve.getLength() / 4)));
   return this;
 };

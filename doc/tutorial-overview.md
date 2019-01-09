@@ -82,7 +82,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 This is an overview of most of the JavaScript classes available in this library:
 
 * [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the HTML 3D Library
-* [**`H3DU.Math`**](https://peteroupc.github.io/html3dutil/H3DU.Math.html) - Contains math methods useful in 3D applications, such as matrices and vectors
+* [**`H3DU.Math`**](https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors
 * [**`H3DU.Mesh`**](https://peteroupc.github.io/html3dutil/H3DU.Mesh.html) - Helper class for building a 3D model
 * [**`H3DU.MeshBuffer`**](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model
 * [**`H3DU.Meshes`**](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
@@ -376,7 +376,7 @@ featuring a background with continuously drawn 3D shapes.
 illustrating a simple animation of 3D shapes.
 * [**demos/starfield.html**](https://peteroupc.github.io/html3dutil/demos/starfield.html) - Demo of a star field.
 * [**demos/quatlerp.html**](https://peteroupc.github.io/html3dutil/demos/quatlerp.html) - Demonstrates
-the difference between <a href="H3DU.Math.md#H3DU.Math.quatNlerp">H3DU.Math.quatNlerp</a> and <a href="H3DU.Math.md#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a>,
+the difference between <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatNlerp">H3DU.MathUtil.quatNlerp</a> and <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatSlerp">H3DU.MathUtil.quatSlerp</a>,
 both functions for interpolating quaternion rotations.
 * [**demos/underlay.html**](https://peteroupc.github.io/html3dutil/demos/underlay.html) - Shows how
 H3DU.RenderPass can be used to draw a two-dimensional background under three-dimensional
@@ -414,7 +414,7 @@ The following is a simple example of an HTML page that uses the HTML 3D library.
      // Set up the render loop
      H3DU.renderLoop(function(time){
       // Update the shape's rotation
-      var q=H3DU.Math.quatFromTaitBryan(
+      var q=H3DU.MathUtil.quatFromTaitBryan(
         360*H3DU.getTimePosition(timer,time,6000),
         360*H3DU.getTimePosition(timer,time,12000),
         0
@@ -510,7 +510,7 @@ The changes in beta 2 from beta 1 include:
 - The <a href="H3DU.Shape.md">H3DU.Shape</a> object is no longer coupled to vertex buffers.
 - The H3DU.LightSource class now supports a radius of the light.
 - The H3DU.TextureLoader class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
-- `GLMath`, now <a href="H3DU.Math.md">H3DU.Math</a>, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="H3DU.Math.md#H3DU.Math.vec3perp">H3DU.Math.vec3perp</a>, <a href="H3DU.Math.md#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a>, and <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>.
+- `GLMath`, now H3DU.Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3perp">H3DU.MathUtil.vec3perp</a>, <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3toWindowPoint">H3DU.MathUtil.vec3toWindowPoint</a>, and <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4projectVec3">H3DU.MathUtil.mat4projectVec3</a>.
 - Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, <a href="H3DU.TextFont.md">H3DU.TextFont</a> and <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
 - The Camera class, now <a href="H3DU.Camera.md">H3DU.Camera</a>, was rewritten.

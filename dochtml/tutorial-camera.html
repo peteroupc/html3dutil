@@ -91,7 +91,7 @@ However, this is not the whole story, since in general, nearly all lines that ar
 will generally not appear parallel in a perspective projection, so additional math is needed to
 achieve the perspective effect. This will be <a href="#Vertex Coordinates in the Graphics System"><strong>explained later</strong></a>.</p>
 <p>The following methods define a perspective projection.</p>
-<p><strong><a href="H3DU.Math.html#H3DU.Math.mat4perspective"><code>H3DU.Math.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
+<p><strong><a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4perspective"><code>H3DU.MathUtil.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
 and sets the scene's projection matrix accordingly. The resulting matrix can be passed
@@ -106,7 +106,7 @@ to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> 
 projection. The <code>fov</code>, <code>near</code>, and <code>far</code> parameters are the same as for <code>mat4perspective</code>,
 and the aspect ratio used to calculate the projection matrix adapts automatically to the <code>H3DU.Scene3D</code> in which
 the <code>Batch3D</code> is rendered.</p>
-<p><strong>[</strong><code>H3DU.Math.mat4frustum(left, right, bottom, top, near, far)</code><strong>](http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4frustum)</strong></p>
+<p><strong>[</strong><code>H3DU.MathUtil.mat4frustum(left, right, bottom, top, near, far)</code><strong>](http://peteroupc.github.io/html3dutil/H3DU.MathUtil.html#.mat4frustum)</strong></p>
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection matrix based on the location of the six clipping planes that
 bound the view volume. Their positions are chosen so that the result is a perspective projection.
@@ -126,7 +126,7 @@ and the top and bottom clipping planes are parallel to each other. This results 
 planes having the same size, unlike in a perspective projection, and
 objects with the same size not varying in size with their distance from the &quot;camera&quot;.</p>
 <p>The following methods define an orthographic projection.</p>
-<p><strong><code>H3DU.Math.mat4ortho(left, right, bottom, top, near, far)</code></strong></p>
+<p><strong><code>H3DU.MathUtil.mat4ortho(left, right, bottom, top, near, far)</code></strong></p>
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection.
   The resulting matrix can be passed
 to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class.</p>
@@ -138,14 +138,14 @@ to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> 
 <li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes. Either value
 can be negative.</li>
 </ul>
-<p><strong><code>H3DU.Math.mat4ortho2d(left, right, bottom, top)</code></strong></p>
+<p><strong><code>H3DU.MathUtil.mat4ortho2d(left, right, bottom, top)</code></strong></p>
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.
   The resulting matrix can be passed
 to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class. The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes a Z coordinate of 0 especially appropriate for this projection.</p>
 <ul>
 <li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Same as in <code>mat4ortho</code>.</li>
 </ul>
-<p><strong><code>H3DU.Math.mat4orthoAspect(left, right, bottom, top, near, far, aspect)</code></strong></p>
+<p><strong><code>H3DU.MathUtil.mat4orthoAspect(left, right, bottom, top, near, far, aspect)</code></strong></p>
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection,
 such that the resulting view isn't stretched
 or squished in case the view volume's aspect ratio and the scene's aspect ratio are different.
@@ -217,7 +217,7 @@ without transforming them.</p>
 <p>As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, for example,
+perspective matrix returned by <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4perspective">H3DU.MathUtil.mat4perspective</a>, for example,
 transforms W to the negative Z coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the &quot;eye&quot; or &quot;camera&quot;.</p>
 <p>To take perspective into account, the clip space X, Y, and Z coordinates are
@@ -226,7 +226,7 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current <em>viewport</em>. A viewport is a rectangle
 whose size and position are generally expressed in pixels; to set the viewport's
 size, call the <code>setDimensions</code> method of <code>Scene3D</code>.</p>
-<p>For the perspective matrix returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective"><code>mat4perspective</code></a>, dividing
+<p>For the perspective matrix returned by <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4perspective"><code>mat4perspective</code></a>, dividing
 the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the &quot;eye&quot; or &quot;camera&quot;),
 the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This

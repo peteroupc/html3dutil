@@ -6,14 +6,14 @@
 ### H3DU.ShapeGroup()
 
 Represents a grouping of shapes. This object
-can hold both <a href="H3DU.Shape.md">H3DU.Shape</a> objects and
-other <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a> objects.
+can hold both Shape objects and
+other ShapeGroup objects.
 
 ### Members
 
-* [shapes](#H3DU.ShapeGroup_shapes)<br><b>Deprecated: Use the <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_shapeCount">H3DU.ShapeGroup#shapeCount</a>,
-<a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_getShape">H3DU.ShapeGroup#getShape</a>, and
-<a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_setShape">H3DU.ShapeGroup#setShape</a> methods instead.</b>
+* [shapes](#H3DU.ShapeGroup_shapes)<br>**Deprecated: Use the ShapeGroup#shapeCount,
+ShapeGroup#getShape, and
+ShapeGroup#setShape methods instead.**
 
 ### Methods
 
@@ -47,9 +47,9 @@ are direct children of this shape group.
 <a name='H3DU.ShapeGroup_shapes'></a>
 ### H3DU.ShapeGroup#shapes
 
-<b>Deprecated: Use the <a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_shapeCount">H3DU.ShapeGroup#shapeCount</a>,
-<a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_getShape">H3DU.ShapeGroup#getShape</a>, and
-<a href="H3DU.ShapeGroup.md#H3DU.ShapeGroup_setShape">H3DU.ShapeGroup#setShape</a> methods instead.</b>
+**Deprecated: Use the ShapeGroup#shapeCount,
+ShapeGroup#getShape, and
+ShapeGroup#setShape methods instead.**
 
 List of shapes contained in this group.
 This property should only be used to access properties
@@ -65,11 +65,11 @@ will be stored in the list of shapes.
 
 #### Parameters
 
-* `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>A 3D shape. Throws an error if null.
+* `shape` (Type: Shape | ShapeGroup)<br>A 3D shape. Throws an error if null.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+This object. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_copy'></a>
 ### H3DU.ShapeGroup#copy()
@@ -83,7 +83,7 @@ The copied shape group won't have a parent.
 
 #### Return Value
 
-A copy of this shape group. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+A copy of this shape group. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_getBounds'></a>
 ### H3DU.ShapeGroup#getBounds()
@@ -110,7 +110,7 @@ this shape group's coordinates to world coordinates.
 
 #### Return Value
 
-A 4x4 matrix. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
+A 4x4 matrix. (Type: Transform)
 
 <a name='H3DU.ShapeGroup_getShape'></a>
 ### H3DU.ShapeGroup#getShape(index)
@@ -125,7 +125,7 @@ in this shape group at the given index.
 #### Return Value
 
 The shape or shape group located
-in this shape group at the given index, or null if none is found there. (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+in this shape group at the given index, or null if none is found there. (Type: Shape | ShapeGroup)
 
 <a name='H3DU.ShapeGroup_getTransform'></a>
 ### H3DU.ShapeGroup#getTransform()
@@ -134,7 +134,7 @@ Gets a reference to the transform used by this shape group object.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)
+Return value. (Type: Transform)
 
 <a name='H3DU.ShapeGroup_getVisible'></a>
 ### H3DU.ShapeGroup#getVisible()
@@ -162,36 +162,36 @@ Removes all instances of a 3D shape from this shape group
 
 #### Parameters
 
-* `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>The 3D shape to remove.
+* `shape` (Type: Shape | ShapeGroup)<br>The 3D shape to remove.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+This object. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_setPosition'></a>
 ### H3DU.ShapeGroup#setPosition(x, y, z)
 
 Sets the relative position of the shapes in this group
 from their original position.
-See <a href="H3DU.Transform.md#H3DU.Transform_setPosition">H3DU.Transform#setPosition</a>
+See Transform#setPosition
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in Transform#setScale.
 * `y` (Type: number)<br>Y coordinate.
 * `z` (Type: number)<br>Z coordinate.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+This object. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_setQuaternion'></a>
 ### H3DU.ShapeGroup#setQuaternion(quat)
 
 Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
-See <a href="H3DU.Transform.md#H3DU.Transform_setQuaternion">H3DU.Transform#setQuaternion</a>.
+See Transform#setQuaternion.
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.
 
@@ -201,25 +201,25 @@ rather than the transform for each shape in the group.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+This object. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_setScale'></a>
 ### H3DU.ShapeGroup#setScale(x, y, z)
 
 Sets the scale of this shape group relative to its original
-size. See <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
+size. See Transform#setScale.
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.md#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
+* `x` (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in Transform#setScale.
 * `y` (Type: number)<br>Scaling factor for this object's height.
 * `z` (Type: number)<br>Scaling factor for this object's depth.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+This object. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_setShape'></a>
 ### H3DU.ShapeGroup#setShape(index, shape)
@@ -229,11 +229,11 @@ Sets a shape or shape group at the given index in this shape group.
 #### Parameters
 
 * `index` (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.
-* `shape` (Type: <a href="H3DU.Shape.md">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)<br>Shape object to set at the given index.
+* `shape` (Type: Shape | ShapeGroup)<br>Shape object to set at the given index.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+This object. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_setTransform'></a>
 ### H3DU.ShapeGroup#setTransform(transform)
@@ -246,7 +246,7 @@ with the child shape's transform as it renders the child shape.
 
 #### Parameters
 
-* `transform` (Type: <a href="H3DU.Transform.md">H3DU.Transform</a>)<br>The transform to copy for the use of this shape group.
+* `transform` (Type: Transform)<br>The transform to copy for the use of this shape group.
 
 #### Return Value
 
@@ -259,11 +259,11 @@ Sets whether this shape group will be drawn on rendering.
 
 #### Parameters
 
-* `value` (Type: Boolean)<br>True if this shape group will be visible; otherwise, false.
+* `value` (Type: boolean)<br>True if this shape group will be visible; otherwise, false.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
+This object. (Type: ShapeGroup)
 
 <a name='H3DU.ShapeGroup_shapeCount'></a>
 ### H3DU.ShapeGroup#shapeCount()

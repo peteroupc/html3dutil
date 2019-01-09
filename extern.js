@@ -7,15 +7,4 @@
  http://peteroupc.github.io/
 */
 /* exported H3DU, module, exports, define */
-var H3DU;
 var module, exports, define;
-/** @typedef {Curve} */H3DU.Curve;
-/** @typedef {CurveBuilder} */H3DU.CurveBuilder;
-/** @typedef {SurfaceBuilder} */H3DU.SurfaceBuilder;
-/** @typedef {BufferAccessor} */H3DU.BufferAccessor;
-/** @typedef {BSplineCurve} */H3DU.BSplineCurve;
-/** @typedef {BSplineSurface} */H3DU.BSplineSurface;
-/** @typedef {MeshBuffer} */ H3DU.MeshBuffer;
-/** @typedef {Shape} */ H3DU.Shape;
-/** @typedef {ShapeGroup} */H3DU.ShapeGroup;
-/** @typedef {Transform} */H3DU.Transform;

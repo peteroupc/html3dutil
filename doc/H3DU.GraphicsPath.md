@@ -9,8 +9,6 @@ Represents a two-dimensional path.
 
 ### Methods
 
-* [GraphicsPath.fromString](#H3DU.GraphicsPath.GraphicsPath.fromString)<br>Creates a graphics path from a string whose format follows
-the SVG specification.
 * [arc](#H3DU.GraphicsPath_arc)<br>Adds path segments in the form of a circular arc to this path,
 using the parameterization specified in the "arc" method of the
 HTML Canvas 2D Context.
@@ -39,7 +37,7 @@ and dimensions.
 * [getBounds](#H3DU.GraphicsPath_getBounds)<br>Calculates an axis-aligned bounding box that tightly
 fits this graphics path.
 * [getCurrentPoint](#H3DU.GraphicsPath_getCurrentPoint)<br>Gets the current point stored in this path.
-* [getCurves](#H3DU.GraphicsPath_getCurves)<br>Gets a <a href="H3DU.Curve.md">curve evaluator object</a> for
+* [getCurves](#H3DU.GraphicsPath_getCurves)<br>Gets a curve evaluator object for
 the curves described by this path.
 * [getLinePoints](#H3DU.GraphicsPath_getLinePoints)<br>Gets an array of the end points of
 line segments approximating the path.
@@ -86,29 +84,6 @@ path's shape.
 * [xor](#H3DU.GraphicsPath_xor)<br>Computes the shape contained in either this path or another path,
 but not both.
 
-<a name='H3DU.GraphicsPath.GraphicsPath.fromString'></a>
-### (static) H3DU.GraphicsPath.GraphicsPath.fromString(str)
-
-Creates a graphics path from a string whose format follows
-the SVG specification.
-
-#### Parameters
-
-* `str` (Type: string)<br>A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). "largeArc" and "sweep" are flags, "0" for false and "1" for true. "rot" is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn't introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed).
-
-#### Return Value
-
-The resulting path. If an error
-occurs while parsing the path, the path's "isIncomplete() method
-will return <code>true</code>. (Type: GraphicsPath)
-
-#### Example
-
-The following example creates a graphics path
-from an SVG string describing a polyline.
-
-    var path=H3DU.GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
-
 <a name='H3DU.GraphicsPath_arc'></a>
 ### H3DU.GraphicsPath#arc(x, y, radius, startAngle, endAngle, ccw)
 
@@ -123,7 +98,7 @@ HTML Canvas 2D Context.
 * `radius` (Type: number)<br>Radius of the circle.
 * `startAngle` (Type: number)<br>Starting angle of the arc, in radians. 0 means the positive X axis, &pi;/2 means the positive Y axis, &pi; means the negative X axis, and &pi;\*1.5 means the negative Y axis.
 * `endAngle` (Type: number)<br>Ending angle of the arc, in radians.
-* `ccw` (Type: Boolean)<br>Whether the arc runs counterclockwise (assuming the X axis points right and the Y axis points down under the coordinate system).
+* `ccw` (Type: boolean)<br>Whether the arc runs counterclockwise (assuming the X axis points right and the Y axis points down under the coordinate system).
 
 #### Return Value
 
@@ -182,8 +157,8 @@ using the parameterization used by the SVG specification.
 * `rx` (Type: number)<br>X axis radius of the ellipse that the arc will be formed from.
 * `ry` (Type: number)<br>Y axis radius of the ellipse that the arc will be formed from.
 * `rot` (Type: number)<br>Rotation of the ellipse in degrees (clockwise assuming the X axis points right and the Y axis points down under the coordinate system).
-* `largeArc` (Type: Boolean)<br>In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.
-* `sweep` (Type: Boolean)<br>If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.
+* `largeArc` (Type: boolean)<br>In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.
+* `sweep` (Type: boolean)<br>If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.
 * `x2` (Type: number)<br>X coordinate of the arc's end point.
 * `y2` (Type: number)<br>Y coordinate of the arc's end point.
 
@@ -282,12 +257,12 @@ This object. (Type: GraphicsPath)
 ### H3DU.GraphicsPath#difference(path, [flatness])
 
 Computes the difference between this path's shape and another
-path's shape. The points given in the <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath_union">H3DU.GraphicsPath#union</a> method
+path's shape. The points given in the GraphicsPath#union method
 apply to this method.
 
 #### Parameters
 
-* `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
+* `path` (Type: GraphicsPath)<br>A path to combine with this one.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
@@ -355,14 +330,14 @@ A two-element array giving the X and Y coordinates of the current point. (Type: 
 <a name='H3DU.GraphicsPath_getCurves'></a>
 ### H3DU.GraphicsPath#getCurves()
 
-Gets a <a href="H3DU.Curve.md">curve evaluator object</a> for
+Gets a curve evaluator object for
 the curves described by this path. The return value doesn't track changes to the path.
 
 #### Return Value
 
-A <a href="H3DU.Curve.md">curve evaluator object</a> that implements
+A curve evaluator object that implements
 the following additional method:<ul>
-<li><code>getCurves()</code> - Returns a list of <a href="H3DU.Curve.md">curve evaluator objects</a>
+<li><code>getCurves()</code> - Returns a list of curve evaluator objects
 described by this path. The list will contain one curve evaluator object for each disconnected
 portion of the path. For example, if the path contains one polygon, the list will contain
 one curve object. And if the path is empty, the list will be empty too. Each curve
@@ -509,10 +484,10 @@ Does a linear interpolation between two graphics paths.
 
 #### Parameters
 
-* `other` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>The second graphics path.
+* `other` (Type: GraphicsPath)<br>The second graphics path.
 * `t` (Type: number)<br>An interpolation factor, generally ranging from 0 through 1. Closer to 0 means closer to this path, and closer to 1 means closer to "other". If the input paths contain arc segments that differ in the large arc and sweep flags, the flags from the first path's arc are used if "t" is less than 0.5; and the flags from the second path's arc are used otherwise.
 
-For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns a value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for HMathvec3lerp for examples of interpolation functions.
+For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns a value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for MathUtil.vec3lerp for examples of interpolation functions.
 
 #### Return Value
 
@@ -522,12 +497,12 @@ The interpolated path. (Type: GraphicsPath)
 ### H3DU.GraphicsPath#intersection(path, [flatness])
 
 Computes the intersection, or the area common to both this path's shape
-and another path's shape. The points given in the <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath_union">H3DU.GraphicsPath#union</a> method
+and another path's shape. The points given in the GraphicsPath#union method
 apply to this method.
 
 #### Parameters
 
-* `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
+* `path` (Type: GraphicsPath)<br>A path to combine with this one.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
@@ -587,7 +562,7 @@ Merges the path segments in another path onto this one.
 
 #### Parameters
 
-* `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>Another graphics path. Can be null.
+* `path` (Type: GraphicsPath)<br>Another graphics path. Can be null.
 
 #### Return Value
 
@@ -777,7 +752,7 @@ Return value. (Type: GraphicsPath)
 ### H3DU.GraphicsPath#toString()
 
 Returns this path in the form of a string in SVG path format.
-See H3DU.GraphicsPath.fromString.
+See <a href="GraphicsPath.md#GraphicsPath.fromString">GraphicsPath.fromString</a>.
 
 #### Return Value
 
@@ -817,7 +792,7 @@ that contains them.
 
 #### Parameters
 
-* `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
+* `path` (Type: GraphicsPath)<br>A path to combine with this one.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
@@ -828,12 +803,12 @@ The union of the two paths. (Type: GraphicsPath)
 ### H3DU.GraphicsPath#xor(path, [flatness])
 
 Computes the shape contained in either this path or another path,
-but not both. The points given in the <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath_union">H3DU.GraphicsPath#union</a> method
+but not both. The points given in the GraphicsPath#union method
 apply to this method.
 
 #### Parameters
 
-* `path` (Type: <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a>)<br>A path to combine with this one.
+* `path` (Type: GraphicsPath)<br>A path to combine with this one.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value

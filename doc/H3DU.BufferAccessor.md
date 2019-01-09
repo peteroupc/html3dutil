@@ -9,10 +9,10 @@ A <b>vertex attribute object</b>.
 
 #### Parameters
 
-* `buffer` (Type: Float32Array)<br>A buffer to store vertex attribute data; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_buffer">H3DU.BufferAccessor#buffer</a>.
-* `countPerValue` (Type: number)<br>Number of elements per value; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>. Throws an error if 0 or less.
-* `offset` (Type: number) (optional)<br>Offset to the first value; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_offset">H3DU.BufferAccessor#offset</a>. If null, undefined, or omitted, the default is 0. Throws an error if less than 0.
-* `stride` (Type: number) (optional)<br>Number of elements from the start of one value to the start of the next; see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_stride">H3DU.BufferAccessor#stride</a>. If null, undefined, or omitted, has the same value as "countPerValue". Throws an error if 0 or less.
+* `buffer` (Type: Float32Array)<br>A buffer to store vertex attribute data; see BufferAccessor#buffer.
+* `countPerValue` (Type: number)<br>Number of elements per value; see BufferAccessor#countPerValue. Throws an error if 0 or less.
+* `offset` (Type: number) (optional)<br>Offset to the first value; see BufferAccessor#offset. If null, undefined, or omitted, the default is 0. Throws an error if less than 0.
+* `stride` (Type: number) (optional)<br>Number of elements from the start of one value to the start of the next; see BufferAccessor#stride. If null, undefined, or omitted, has the same value as "countPerValue". Throws an error if 0 or less.
 
 ### Members
 
@@ -26,7 +26,7 @@ value to the start of the next.
 ### Methods
 
 * [copy](#H3DU.BufferAccessor_copy)<br>Copies the values of this accessor into a new vertex attribute object.
-* [count](#H3DU.BufferAccessor_count)<br>Gets the number of <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_buffer">values</a> defined for this accessor.
+* [count](#H3DU.BufferAccessor_count)<br>Gets the number of values defined for this accessor.
 * [get](#H3DU.BufferAccessor_get)<br>Gets the first element of the attribute value with the given vertex index.
 * [getVec](#H3DU.BufferAccessor_getVec)<br>Gets the elements of a vertex attribute value.
 * [makeBlank](#H3DU.BufferAccessor.makeBlank)<br>Generates a vertex attribute buffer, with each value set to all zeros.
@@ -75,7 +75,7 @@ Type: number
 
 A stride, which gives the number of elements from the start of one
 value to the start of the next. A "packed" buffer will have a stride
-equal to the <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">count per value</a>.
+equal to the count per value.
 
 Type: number
 
@@ -86,12 +86,12 @@ Copies the values of this accessor into a new vertex attribute object.
 
 #### Return Value
 
-A copy of the vertex attribute object. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
+A copy of the vertex attribute object. (Type: BufferAccessor)
 
 <a name='H3DU.BufferAccessor_count'></a>
 ### H3DU.BufferAccessor#count()
 
-Gets the number of <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_buffer">values</a> defined for this accessor.
+Gets the number of values defined for this accessor.
 
 #### Return Value
 
@@ -124,7 +124,7 @@ checking naturally done when accessing the attribute's buffer.
 #### Parameters
 
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: Array.&lt;number>)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute's count per value (see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>).
+* `vec` (Type: Array.&lt;number>)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute's count per value (see BufferAccessor#countPerValue).
 
 #### Return Value
 
@@ -137,12 +137,12 @@ Generates a vertex attribute buffer, with each value set to all zeros.
 
 #### Parameters
 
-* `count` (Type: number)<br>The number of <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_buffer">values</a> the buffer will hold. For example, (10, 20, 5) is a 3-element value.
+* `count` (Type: number)<br>The number of values the buffer will hold. For example, (10, 20, 5) is a 3-element value.
 * `countPerValue` (Type: number)<br>The number of elements each value will take in the buffer.
 
 #### Return Value
 
-A blank vertex attribute buffer. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
+A blank vertex attribute buffer. (Type: BufferAccessor)
 
 <a name='H3DU.BufferAccessor.makeIndices'></a>
 ### (static) H3DU.BufferAccessor.makeIndices(numIndices)
@@ -165,16 +165,16 @@ combined vertex attribute.
 
 #### Parameters
 
-* `attr1` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of "indices1" and all the values are zeros.
+* `attr1` (Type: BufferAccessor)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of "indices1" and all the values are zeros.
 * `indices1` (Type: Array.&lt;number> | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the first vertex attribute.
-* `attr2` (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of "indices2" and all the values are zeros.
+* `attr2` (Type: BufferAccessor)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of "indices2" and all the values are zeros.
 * `indices2` (Type: Array.&lt;number> | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the second vertex attribute.
 
 #### Return Value
 
 The merged attribute, where the vertices from the first vertex
 attribute come before those from the second. The merged attribute will have as many
-values as the sum of the lengths of "indices1" and "indices2". (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
+values as the sum of the lengths of "indices1" and "indices2". (Type: BufferAccessor)
 
 <a name='H3DU.BufferAccessor_set'></a>
 ### H3DU.BufferAccessor#set(index, value)
@@ -191,7 +191,7 @@ checking naturally done when writing to the attribute's buffer.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
+This object. (Type: BufferAccessor)
 
 <a name='H3DU.BufferAccessor_setVec'></a>
 ### H3DU.BufferAccessor#setVec(index, vec)
@@ -205,10 +205,10 @@ where noted otherwise.
 #### Parameters
 
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
-* `vec` (Type: Array.&lt;number>)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array's length or the attribute's count per value (see <a href="H3DU.BufferAccessor.md#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>), whichever is less.
+* `vec` (Type: Array.&lt;number>)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array's length or the attribute's count per value (see BufferAccessor#countPerValue), whichever is less.
 
 #### Return Value
 
-This object. (Type: <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a>)
+This object. (Type: BufferAccessor)
 
 [Back to documentation index.](index.md)

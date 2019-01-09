@@ -110,7 +110,7 @@ achieve the perspective effect. This will be [**explained later**](#Vertex Coord
 
 The following methods define a perspective projection.
 
-**[`H3DU.Math.mat4perspective(fov, aspect, near, far)`]{@link H3DU.Math.mat4perspective}**
+**[`H3DU.MathUtil.mat4perspective(fov, aspect, near, far)`]{@link H3DU.MathUtil.mat4perspective}**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -128,7 +128,7 @@ projection. The `fov`, `near`, and `far` parameters are the same as for `mat4per
 and the aspect ratio used to calculate the projection matrix adapts automatically to the `H3DU.Scene3D` in which
 the `Batch3D` is rendered.
 
-**[**`H3DU.Math.mat4frustum(left, right, bottom, top, near, far)`**](http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4frustum)**
+**[**`H3DU.MathUtil.mat4frustum(left, right, bottom, top, near, far)`**](http://peteroupc.github.io/html3dutil/H3DU.MathUtil.html#.mat4frustum)**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection matrix based on the location of the six clipping planes that
@@ -154,7 +154,7 @@ objects with the same size not varying in size with their distance from the "cam
 
 The following methods define an orthographic projection.
 
-**`H3DU.Math.mat4ortho(left, right, bottom, top, near, far)`**
+**`H3DU.MathUtil.mat4ortho(left, right, bottom, top, near, far)`**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection.
   The resulting matrix can be passed
@@ -167,7 +167,7 @@ to the `setProjectionMatrix` method of the `H3DU.Batch3D` class.
 * `near`, `far` - Distance from the camera to the near and far clipping planes. Either value
 can be negative.
 
-**`H3DU.Math.mat4ortho2d(left, right, bottom, top)`**
+**`H3DU.MathUtil.mat4ortho2d(left, right, bottom, top)`**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.
   The resulting matrix can be passed
@@ -175,7 +175,7 @@ to the `setProjectionMatrix` method of the `H3DU.Batch3D` class. The `mat4ortho2
 
 * `left`, `right`, `bottom`, `top` - Same as in `mat4ortho`.
 
-**`H3DU.Math.mat4orthoAspect(left, right, bottom, top, near, far, aspect)`**
+**`H3DU.MathUtil.mat4orthoAspect(left, right, bottom, top, near, far, aspect)`**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection,
 such that the resulting view isn't stretched
@@ -263,7 +263,7 @@ without transforming them.
 As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in _homogeneous coordinates_, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by {@link H3DU.Math.mat4perspective}, for example,
+perspective matrix returned by {@link H3DU.MathUtil.mat4perspective}, for example,
 transforms W to the negative Z coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the "eye" or "camera".
 
@@ -274,7 +274,7 @@ will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels; to set the viewport's
 size, call the [`setDimensions` method of `Scene3D`]{@link H3DU.Scene3D#setDimensions}.
 
-For the perspective matrix returned by [`mat4perspective`]{@link H3DU.Math.mat4perspective}, dividing
+For the perspective matrix returned by [`mat4perspective`]{@link H3DU.MathUtil.mat4perspective}, dividing
 the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the "eye" or "camera"),
 the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This

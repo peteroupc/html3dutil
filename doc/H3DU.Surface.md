@@ -45,7 +45,7 @@ Next, take their cross product:
 
 The result is the gradient, which will point up and away from the surface.
 
-    var surface=new H3DU.Surface({"evaluate":function(u,v) {
+    var surface=new Surface({"evaluate":function(u,v) {
     "use strict";
     return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
     },
@@ -71,7 +71,7 @@ The result is the gradient, which will point up and away from the surface.
 
 Finds an approximate bitangent vector of this surface at the given U and V coordinates.
 
-The implementation in <a href="H3DU.Surface.md">H3DU.Surface</a> calls the evaluator's <code>bitangent</code>
+The implementation in Surface calls the evaluator's <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the V axis using the <code>evaluate</code> method.
 
@@ -123,7 +123,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 Finds an approximate gradient vector of this surface at the given U and V coordinates.
 
-The implementation in <a href="H3DU.Surface.md">H3DU.Surface</a> calls the evaluator's <code>gradient</code>
+The implementation in Surface calls the evaluator's <code>gradient</code>
 method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
 (however, this approach is generally only meaningful for a three-dimensional surface).
 
@@ -131,8 +131,8 @@ The <b>gradient</b> is a vector pointing up and away from the surface.
 If the evaluator describes a regular three-dimensional surface (usually
 a continuous, unbroken surface such as a sphere, an open
 cylinder, or a disk rotated in three dimensions), this can be the cross product
-of the <a href="H3DU.Surface.md#H3DU.Surface_tangent">tangent vector</a>
-and <a href="H3DU.Surface.md#H3DU.Surface_bitangent">bitangent vector</a>,
+of the tangent vector
+and bitangent vector,
 in that order. The gradient returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Parameters
@@ -165,7 +165,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 ### H3DU.Surface#tangent(u, v)
 
 Finds an approximate tangent vector of this surface at the given U and V coordinates.
-The implementation in <a href="H3DU.Surface.md">H3DU.Surface</a> calls the evaluator's <code>tangent</code>
+The implementation in Surface calls the evaluator's <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the U axis using the <code>evaluate</code> method.
 

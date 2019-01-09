@@ -10,7 +10,7 @@
  * Contains constants for assigning semantics
  * to uniforms and vertex attributes.
  * @constructor
- * @alias H3DU.Semantic
+ * @alias Semantic
  */
 export var Semantic = {};
 /** Attribute semantic for a vertex position.

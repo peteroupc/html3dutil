@@ -24,13 +24,13 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 #### Parameters
 
 * `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
-* `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as <a href="H3DU.Curve.md#H3DU.Curve_endPoints">H3DU.Curve#endPoints</a> and whose return value takes precedence over the given curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization to a U coordinate in the new parameterization.
+* `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as Curve#endPoints and whose return value takes precedence over the given curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization to a U coordinate in the new parameterization.
 
 #### Example
 
 The following is a simple example of a parametric curve.
 
-    var simpleCurve = new H3DU.Curve({
+    var simpleCurve = new Curve({
     "evaluate":function(u) {
     return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
     },
@@ -58,7 +58,7 @@ defined for curve evaluator objects can be implemented.
     "normal":function(u) {
     // NOTE: The velocity vector will already be a
     // unit vector, so we use the accel vector instead
-    return H3DU.Math.vec3normalize(this.accel(u));
+    return MathUtil.vec3normalize(this.accel(u));
     },
     "arcLength":function(u) {
     return u;
@@ -97,7 +97,7 @@ an <i>arc length parameterization</i>.
 ### H3DU.Curve#accel(u)
 
 Finds an approximate acceleration vector at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>accel</code>
+The implementation in Curve calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
 
@@ -117,7 +117,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 Finds an approximate arc length (distance) between the start of this
 curve and the point at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>arcLength</code>
+The implementation in Curve calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
 
 The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
@@ -156,7 +156,7 @@ also be used to grow the path of the curve.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
+Return value. (Type: Curve)
 
 <a name='H3DU.Curve_endPoints'></a>
 ### H3DU.Curve#endPoints()
@@ -200,7 +200,7 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
+Return value. (Type: Curve)
 
 <a name='H3DU.Curve_getLength'></a>
 ### H3DU.Curve#getLength()
@@ -261,7 +261,7 @@ The following example initializes a three.js BufferGeometry with the points retr
 ### H3DU.Curve#jerk(u)
 
 Finds an approximate jerk vector at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>jerk</code>
+The implementation in Curve calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
 
@@ -280,12 +280,12 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### H3DU.Curve#normal(u)
 
 Finds an approximate principal normal vector at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>normal</code>
+The implementation in Curve calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
 The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
 vector divided by that derivative's length. The normal returned by this method
-<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with <a href="H3DU.Surface.md#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)
+<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with Surface#gradient.)
 
 #### Parameters
 
@@ -333,13 +333,13 @@ this method is approximate.
 
 #### Return Value
 
-Return value. (Type: <a href="H3DU.Curve.md">H3DU.Curve</a>)
+Return value. (Type: Curve)
 
 <a name='H3DU.Curve_velocity'></a>
 ### H3DU.Curve#velocity(u)
 
 Finds an approximate velocity vector at the given U coordinate of this curve.
-The implementation in <a href="H3DU.Curve.md">H3DU.Curve</a> calls the evaluator's <code>velocity</code>
+The implementation in Curve calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).
 

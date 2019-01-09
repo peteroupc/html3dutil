@@ -7,7 +7,8 @@ def utf8betterwrite(a,b)
 end
 
 $compilerJar=File.expand_path("compiler.jar")
-def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
+def normalizeAndCompile(inputArray, output,
+    advanced=false, useSourceMap=false, toModule=false)
   if !FileTest.exist?($compilerJar)
     STDERR.puts("The Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. "+
       "Download the Closure Compiler JAR and put it in the same directory "+
@@ -26,7 +27,8 @@ def normalizeAndCompile(inputArray, output, advanced=false, useSourceMap=false)
      " --warning_level=VERBOSE --jscomp_off=globalThis --jscomp_off=deprecated "+
      " --generate_exports "+
      " --externs extern.js"+
-     " --language_in ECMASCRIPT6 --language_out ECMASCRIPT3 "+
+     " --language_in ECMASCRIPT6 "+
+     (toModule ? "--language_out ECMASCRIPT_2017" : "--language_out ECMASCRIPT3")+" "+
      "--compilation_level #{opt} #{inputs} "+
      (useSourceMap ? "--create_source_map #{ffq(sourceMap)} " : "")+
      "--js_output_file #{ffq(output)} --rewrite_polyfills false"
@@ -52,14 +54,10 @@ require './generate-websafe-svg'
 Dir.chdir(".."){
  files=%w( promise.js h3du.js )
  files|=Dir.glob("h3du-*.js")
- if FileTest.exist?("./extras/gltf/gltf.js")
-  utf8betterwrite(
-    normalizeLines(
-      ("/* eslint strict: \"off\", no-unused-expressions: \"off\" */\n/* global define */\n"+
-        `rollup --output.format=umd --name=H3DU ./extras/gltf/gltf.js`).gsub(
-        /\t/," ")),"extras/gltf.js")
- end
  tmppath("h3du_all.js"){|p|
+  utf8betterwrite(normalizeLines(
+    `rollup --output.format=es --name=H3DU ./h3du.js`),"./h3du_module.js")
+  #normalizeAndCompile([p],"./h3du_module.js",false,ARGV.include?("--sourcemap"),true)
   utf8betterwrite(`rollup --output.format=umd --name=H3DU ./h3du.js`,p)
   normalizeAndCompile([p,"./oldnames.js"],"./h3du_min.js",false,ARGV.include?("--sourcemap"))
   FileUtils.mkdir_p("doc")
