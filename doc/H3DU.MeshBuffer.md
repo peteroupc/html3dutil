@@ -90,7 +90,7 @@ Creates a new mesh buffer with the given array of vertex positions.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
@@ -105,7 +105,7 @@ and vertex normals.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
@@ -120,7 +120,7 @@ vertex normals, and texture coordinates.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol>
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
@@ -423,7 +423,7 @@ Sets the vertex indices used by this mesh buffer.
 
 #### Parameters
 
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|null} indices Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} indices Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 

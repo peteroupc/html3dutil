@@ -6216,7 +6216,7 @@ MeshBuffer.prototype.getIndices = function() {
 };
 /**
  * Sets the vertex indices used by this mesh buffer.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} indices Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} indices Array of vertex indices
  * that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} This object.
  */
@@ -6453,7 +6453,7 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * @param {Array<number>|Float32Array} vertices An array of vertex positions. This
  * array's length must be divisible by 3; every 3 elements are the
  * X, Y, and Z coordinates, in that order, of one vertex.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -6471,7 +6471,7 @@ MeshBuffer.fromPositions = function(vertices, indices) {
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -6491,7 +6491,7 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.
  * <li>U and V texture coordinates, in that order, of the vertex.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -7612,7 +7612,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * Sets the parametric surface used to generate vertex positions, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position. For
@@ -7630,7 +7630,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * Sets the parametric surface used to generate vertex positions and normals, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position and normal. For

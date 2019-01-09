@@ -25,8 +25,6 @@ of various geometric shapes and solids.
 * <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
 * <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A curve evaluator object for a curve
 made up of one or more individual curves.
-* <a href="H3DU.Polyhedra.md">H3DU.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
-and other polyhedra.
 * <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
 material data (which defines what is seen on the object's surface)
 and a transformation matrix (which defines the object's position and size).
@@ -42,6 +40,8 @@ texture.
 from one coordinate system to another.
 * <a href="H3DU.exports.MatrixStack.md">H3DU.exports.MatrixStack</a><br>This class implements a stack
 of 4x4 transformation matrices.
+* <a href="H3DU.exports.Polyhedra.md">H3DU.exports.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
+and other polyhedra.
 * <a href="H3DU.exports.SurfaceOfRevolution.md">H3DU.exports.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 * <a href="Hypotrochoid.md">Hypotrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the inside

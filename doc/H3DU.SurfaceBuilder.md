@@ -148,7 +148,7 @@ from (0,1) along the U and V axes of the surface.
 
 #### Parameters
 
-* `{Object|@param`<br>{boolean|null} surface A surface evaluator object that describes the parametric surface used to generate positions.
+* `{Object|@param`<br>{boolean|@param {boolean|null} surface A surface evaluator object that describes the parametric surface used to generate positions.
 * `size` (Type: number) (optional)<br>The number of elements in each position and normal. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional.
 
 #### Return Value
@@ -164,7 +164,7 @@ from (0,1) along the U and V axes of the surface.
 
 #### Parameters
 
-* `{Object|@param`<br>{boolean|null} surface A surface evaluator object that describes the parametric surface used to generate positions.
+* `{Object|@param`<br>{boolean|@param {boolean|null} surface A surface evaluator object that describes the parametric surface used to generate positions.
 * `size` (Type: number) (optional)<br>The number of elements in each position. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
 
 #### Return Value

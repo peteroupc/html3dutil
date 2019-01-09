@@ -367,7 +367,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * Sets the parametric surface used to generate vertex positions, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position. For
@@ -385,7 +385,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * Sets the parametric surface used to generate vertex positions and normals, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position and normal. For

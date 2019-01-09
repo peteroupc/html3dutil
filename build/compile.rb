@@ -56,7 +56,7 @@ Dir.chdir(".."){
  files|=Dir.glob("h3du-*.js")
  tmppath("h3du_all.js"){|p|
   utf8betterwrite(normalizeLines(
-    `rollup --output.format=es --name=H3DU ./h3du.js`),"./h3du_module.js")
+    `rollup --output.format=esm --name=H3DU ./h3du.js`),"./h3du_module.js")
   #normalizeAndCompile([p],"./h3du_module.js",false,ARGV.include?("--sourcemap"),true)
   utf8betterwrite(`rollup --output.format=umd --name=H3DU ./h3du.js`,p)
   normalizeAndCompile([p,"./oldnames.js"],"./h3du_min.js",false,ARGV.include?("--sourcemap"))
