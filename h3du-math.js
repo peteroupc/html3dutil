@@ -531,7 +531,7 @@ var MathUtil = {
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -774,7 +774,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * // Positive Z axis is the up vector
    * var matrix=MathUtil.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
    * @example <caption>The following example creates a camera view matrix using the
-   * viewer position, the viewing direction, and the up vector (a "look-to" matrix)</caption>
+   * viewer position, the viewing direction, and the up vector (a "look-to" matrix):</caption>
    * var viewDirection=[0,0,1]
    * var viewerPos=[0,0,0]
    * var upVector=[0,1,0]
@@ -889,7 +889,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.)
    * The absolute difference
@@ -978,7 +978,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.) The absolute difference
    * between n and f should be as small as the application can accept.
@@ -1041,7 +1041,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -1090,7 +1090,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -2854,7 +2854,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Z coordinates within the view volume range from 0 to 1 and
    * increase from front to back.
    * @param {Array<number>} vector A 3-element vector giving
-   * the X, Y, and Z coordinates of the 3D point to transform.
+   * the X, Y, and Z coordinates of the 3D point to transform, in window coordinates.
    * @param {Array<number>} matrix A 4x4 matrix.
    * After undoing the transformation to window coordinates, the vector will
    * be transformed by the inverse of this matrix according to the
@@ -2867,10 +2867,18 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * multiplied by the world [model] matrix, in that order).
    * See {@link MathUtil.vec3toWindowPoint} for the meaning of window coordinates
    * with respect to the "matrix" and "yUp" parameters.
-   * @param {boolean} viewport Has the same meaning as "viewport" in
-   * the {@link MathUtil.vec3toWindowPoint} method.
-   * @param {boolean} [yUp] Has the same meaning as "yUp" in
-   * the {@link MathUtil.vec3toWindowPoint} method.
+   * @param {Array<number>} viewport A 4-element array specifying
+   * the starting position and size of the viewport in window units
+   * (such as pixels). In order, the four elements are the starting position's
+   * X coordinate, its Y coordinate, the viewport's width, and the viewport's
+   * height. Throws an error if the width or height is less than 0.
+   * @param {boolean} [yUp] If omitted or a "falsy" value, reverses the sign of
+   * the Y coordinate returned by the {@link MathUtil.mat4projectVec3} method
+   * before converting it to window coordinates. If true, the Y
+   * coordinate will remain unchanged. If window Y coordinates increase
+   * upward, the viewport's starting position is at the lower left corner. If those
+   * coordinates increase downward, the viewport's starting position is
+   * at the upper left corner.
    * @returns {Array<number>} A 3-element array giving the coordinates
    * of the unprojected point, in that order.
    */
@@ -3214,7 +3222,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * (object) space</i>.
    * <br>If the matrix includes a projection transform returned
    * by {@link MathUtil.mat4ortho}, {@link MathUtil.mat4perspective}, or
-   * similar {@link Math} methods, then in the <i>window coordinate</i> space,
+   * similar {@link MathUtil} methods, then in the <i>window coordinate</i> space,
    * X coordinates increase rightward, Y coordinates increase upward, and
    * Z coordinates within the view volume range from 0 to 1 and
    * increase from front to back, unless otherwise specified in those methods' documentation.
