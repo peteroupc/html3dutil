@@ -83,21 +83,21 @@ TODO: Not documented yet.
 TODO: Not documented yet.
 
 <a name='H3DU.MeshBuffer.fromPositions'></a>
-### (static) H3DU.MeshBuffer.fromPositions(vertices, {Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
+### (static) H3DU.MeshBuffer.fromPositions(vertices, [indices])
 
 Creates a new mesh buffer with the given array of vertex positions.
 
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormals'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices, {Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
+### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices, [indices])
 
 Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.
@@ -105,14 +105,14 @@ and vertex normals.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
 A new mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer.fromPositionsNormalsUV'></a>
-### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices, {Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
+### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices, [indices])
 
 Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.
@@ -120,7 +120,7 @@ vertex normals, and texture coordinates.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol>
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} [indices] Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
@@ -417,13 +417,13 @@ regardless of semantic index, are affected by this method.
 This object. (Type: MeshBuffer)
 
 <a name='H3DU.MeshBuffer_setIndices'></a>
-### H3DU.MeshBuffer#setIndices({Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param)
+### H3DU.MeshBuffer#setIndices(indices)
 
 Sets the vertex indices used by this mesh buffer.
 
 #### Parameters
 
-* `{Array&lt;number>|Uint16Array|Uint32Array|Uint8Array|@param`<br>{boolean|@param {boolean|null} indices Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null)<br>Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
 
@@ -436,7 +436,7 @@ Sets the type of graphics primitives stored in this mesh buffer.
 
 #### Parameters
 
-* `primType` (Type: number)<br>The primitive type, either MeshBuffer.TRIANGLES, MeshBuffer.LINES, or MeshBuffer.POINTS.
+* `primType` (Type: number)<br>The primitive type, either MeshBuffer.TRIANGLES, MeshBuffer.LINES, or MeshBuffer.POINTS. For TRIANGLES, every three vertices or vertex indices identify a single triangle. For LINES, every two vertices or vertex indices identify a single line segment. For POINTS, every vertex or vertex index identifies a single point.
 
 #### Return Value
 

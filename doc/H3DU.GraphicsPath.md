@@ -5,7 +5,10 @@
 <a name='H3DU.GraphicsPath'></a>
 ### H3DU.GraphicsPath()
 
-Represents a two-dimensional path.
+Represents a two-dimensional path. A path is made up
+of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
+cubic B&eacute;zier curves, or any combination of these, and
+the path can be discontinuous and/or contain closed parts.
 
 ### Methods
 
@@ -49,6 +52,7 @@ the path.
 of the path.
 * [getPointsAsObjects](#H3DU.GraphicsPath_getPointsAsObjects)<br>Gets an array of points evenly spaced across the length
 of the path.
+* [getSubpaths](#H3DU.GraphicsPath_getSubpaths)<br>TODO: Not documented yet.
 * [getTriangles](#H3DU.GraphicsPath_getTriangles)<br>Converts the subpaths in this path to triangles.
 * [interpolate](#H3DU.GraphicsPath_interpolate)<br>Does a linear interpolation between two graphics paths.
 * [intersection](#H3DU.GraphicsPath_intersection)<br>Computes the intersection, or the area common to both this path's shape
@@ -72,6 +76,8 @@ at this path's current position.
 * [roundRect](#H3DU.GraphicsPath_roundRect)<br>Adds path segments to this path that form an axis-aligned rounded rectangle.
 * [toCurvePath](#H3DU.GraphicsPath_toCurvePath)<br>Creates a path in which arcs are decomposed
 to cubic B&eacute;zier curves (which will approximate those arcs).
+* [toExtrudedMeshBuffer](#H3DU.GraphicsPath_toExtrudedMeshBuffer)<br>Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
+* [toLineMeshBuffer](#H3DU.GraphicsPath_toLineMeshBuffer)<br>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
 * [toLinePath](#H3DU.GraphicsPath_toLinePath)<br>Creates a path in which curves and arcs are decomposed
 to line segments.
 * [toMeshBuffer](#H3DU.GraphicsPath_toMeshBuffer)<br>TODO: Not documented yet.
@@ -221,7 +227,7 @@ Adds path segments to this path that form an axis-aligned rectangle with beveled
 
 #### Return Value
 
-This object. If "w" or "h" is 0, no path segments will be appended. (Type: GraphicsPath)
+This object. If "w" or "h" is less than 0, no path segments will be appended. (Type: GraphicsPath)
 
 <a name='H3DU.GraphicsPath_bezierCurveTo'></a>
 ### H3DU.GraphicsPath#bezierCurveTo(x, y, x2, y2, x3, y3)
@@ -451,6 +457,15 @@ The following example initializes a three.js BufferGeometry with the points retr
     var points=path.getPointsAsObjects(50)
     var buffer=new THREE.BufferGeometry()
     .setFromPoints(points);
+
+<a name='H3DU.GraphicsPath_getSubpaths'></a>
+### H3DU.GraphicsPath#getSubpaths()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+Return value. (Type: *)
 
 <a name='H3DU.GraphicsPath_getTriangles'></a>
 ### H3DU.GraphicsPath#getTriangles([flatness])
@@ -706,7 +721,7 @@ Adds path segments to this path that form an axis-aligned rounded rectangle.
 
 #### Return Value
 
-This object. If "w" or "h" is 0, no path segments will be appended. (Type: GraphicsPath)
+This object. If "w" or "h" is less than 0, no path segments will be appended. (Type: GraphicsPath)
 
 <a name='H3DU.GraphicsPath_toCurvePath'></a>
 ### H3DU.GraphicsPath#toCurvePath()
@@ -718,6 +733,35 @@ to cubic B&eacute;zier curves (which will approximate those arcs).
 
 A path consisting only of line
 segments, B&eacute;zier curves, and close commands. (Type: GraphicsPath)
+
+<a name='H3DU.GraphicsPath_toExtrudedMeshBuffer'></a>
+### H3DU.GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, [flatness])
+
+Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
+
+#### Parameters
+
+* `zStart` (Type: z)<br>Starting Z coordinate of the mesh buffer's "walls".
+* `zEnd` (Type: z)<br>Ending Z coordinate of the mesh buffer's "walls".
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
+
+#### Return Value
+
+The resulting mesh buffer. (Type: MeshBuffer)
+
+<a name='H3DU.GraphicsPath_toLineMeshBuffer'></a>
+### H3DU.GraphicsPath#toLineMeshBuffer([z], [flatness])
+
+Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
+
+#### Parameters
+
+* `z` (Type: *) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
+* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
+
+#### Return Value
+
+The resulting mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.GraphicsPath_toLinePath'></a>
 ### H3DU.GraphicsPath#toLinePath([flatness])
@@ -735,18 +779,18 @@ A path consisting only of line
 segments and close commands. (Type: GraphicsPath)
 
 <a name='H3DU.GraphicsPath_toMeshBuffer'></a>
-### H3DU.GraphicsPath#toMeshBuffer(z, [flatness])
+### H3DU.GraphicsPath#toMeshBuffer([z], [flatness])
 
 TODO: Not documented yet.
 
 #### Parameters
 
-* `z` (Type: number)
+* `z` (Type: number) (optional)<br>The Z coordinate of each triangle generated. If null, undefined, or omitted, default is 0.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
 
-Return value. (Type: GraphicsPath)
+The resulting mesh buffer. (Type: MeshBuffer)
 
 <a name='H3DU.GraphicsPath_toString'></a>
 ### H3DU.GraphicsPath#toString()

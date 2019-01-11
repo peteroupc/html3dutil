@@ -140,7 +140,7 @@ Sets the parametric surface used to generate vertex positions and normals.
 This object. (Type: SurfaceBuilder)
 
 <a name='H3DU.SurfaceBuilder_positionNormalTexCoord'></a>
-### H3DU.SurfaceBuilder#positionNormalTexCoord({Object|@param, [size])
+### H3DU.SurfaceBuilder#positionNormalTexCoord(surface, [size])
 
 Sets the parametric surface used to generate vertex positions and normals, and
 sets a surface evaluator that generates texture coordinates ranging
@@ -148,7 +148,7 @@ from (0,1) along the U and V axes of the surface.
 
 #### Parameters
 
-* `{Object|@param`<br>{boolean|@param {boolean|null} surface A surface evaluator object that describes the parametric surface used to generate positions.
+* `surface` (Type: Object | null)<br>A surface evaluator object that describes the parametric surface used to generate positions.
 * `size` (Type: number) (optional)<br>The number of elements in each position and normal. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional.
 
 #### Return Value
@@ -156,7 +156,7 @@ from (0,1) along the U and V axes of the surface.
 This object. (Type: SurfaceBuilder)
 
 <a name='H3DU.SurfaceBuilder_positionTexCoord'></a>
-### H3DU.SurfaceBuilder#positionTexCoord({Object|@param, [size])
+### H3DU.SurfaceBuilder#positionTexCoord(surface, [size])
 
 Sets the parametric surface used to generate vertex positions, and
 sets a surface evaluator that generates texture coordinates ranging
@@ -164,7 +164,7 @@ from (0,1) along the U and V axes of the surface.
 
 #### Parameters
 
-* `{Object|@param`<br>{boolean|@param {boolean|null} surface A surface evaluator object that describes the parametric surface used to generate positions.
+* `surface` (Type: Object | null)<br>A surface evaluator object that describes the parametric surface used to generate positions.
 * `size` (Type: number) (optional)<br>The number of elements in each position. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
 
 #### Return Value

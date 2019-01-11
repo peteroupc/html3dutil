@@ -40,7 +40,7 @@ MeshBuffer.prototype.getIndices = function() {
 };
 /**
  * Sets the vertex indices used by this mesh buffer.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} indices Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} indices Array of vertex indices
  * that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} This object.
  */
@@ -67,6 +67,12 @@ MeshBuffer.prototype.setIndices = function(indices) {
  * Sets the type of graphics primitives stored in this mesh buffer.
  * @param {number} primType The primitive type, either {@link MeshBuffer.TRIANGLES},
  * {@link MeshBuffer.LINES}, or {@link MeshBuffer.POINTS}.
+ * For TRIANGLES, every three vertices or vertex indices identify
+ * a single triangle.
+ * For LINES, every two vertices or vertex indices identify
+ * a single line segment.
+ * For POINTS, every vertex or vertex index identifies
+ * a single point.
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setPrimitiveType = function(primType) {
@@ -277,7 +283,7 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * @param {Array<number>|Float32Array} vertices An array of vertex positions. This
  * array's length must be divisible by 3; every 3 elements are the
  * X, Y, and Z coordinates, in that order, of one vertex.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -295,7 +301,7 @@ MeshBuffer.fromPositions = function(vertices, indices) {
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -315,7 +321,7 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.
  * <li>U and V texture coordinates, in that order, of the vertex.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */

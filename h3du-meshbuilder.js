@@ -8,6 +8,7 @@
  http://peteroupc.github.io/
 */
 
+import {Curve} from "./h3du-curve";
 import {MeshBuffer} from "./h3du-meshbuffer";
 import {Semantic} from "./h3du-semantic";
 import {Surface} from "./h3du-surface";
@@ -111,6 +112,18 @@ CurveBuilder._defaultEndPointsCurve = function(attributes) {
   }
   return [0, 1];
 };
+
+/** @ignore */
+CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
+  for(var i = 0; i < attributes.length; i++) {
+    var a = attributes[i];
+    if(a[0] === Semantic.POSITION && a[1] === 0) {
+      var a4 = a[4];
+      return Math.max(200, Math.ceil(new Curve(a4).getLength() / 4));
+    }
+  }
+  return 24;
+};
 /** @ignore */
 CurveBuilder._defaultEndPointsSurface = function(attributes) {
   for(var i = 0; i < attributes.length; i++) {
@@ -125,6 +138,17 @@ CurveBuilder._defaultEndPointsSurface = function(attributes) {
   }
   return [0, 1, 0, 1];
 };
+/** @ignore */
+CurveBuilder._toCurve = function(curve) {
+  return typeof curve !== "undefined" && curve !== null &&
+   !(curve instanceof Curve) ? new Curve(curve) : curve;
+};
+/** @ignore */
+CurveBuilder._toSurface = function(surface) {
+  return typeof surface !== "undefined" && surface !== null &&
+   !(surface instanceof Surface) ? new Surface(surface) : surface;
+};
+
 /** @ignore */
 CurveBuilder._setAttribute = function(
   attributes, vertexCount, curve, semantic, semanticIndex, size
@@ -367,7 +391,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * Sets the parametric surface used to generate vertex positions, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position. For
@@ -385,7 +409,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * Sets the parametric surface used to generate vertex positions and normals, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position and normal. For
@@ -501,7 +525,7 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
- * Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
+ * If null or undefined, a default is determined automatically based on the position curve's arc length, or the distance taken by its path (or the default is 24 if no position curve was defined). If 0, this method has no effect. Throws an error if this value is less than 0.
  * @param {number} [u1] Starting point of the curve.
  * Default is the starting coordinate given by the [curve evaluator object]{@link Curve}, or 0 if not given.
  * @param {number} [u2] Ending point of the curve.
@@ -509,11 +533,14 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  * @returns {CurveBuilder} This object.
  */
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
-  n = typeof n === "undefined" || n === null ? 24 : Math.ceil(n);
+  n = typeof n === "undefined" || n === null ?
+     CurveBuilder._defaultSubdivisionsCurve(this.attributes) :
+     Math.ceil(n);
   if(n === 0)return this;
   if(n < 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.LINES;
-  if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null)) {
+  if(typeof u1 === "undefined" || u1 === null ||
+     (typeof u2 === "undefined" || u2 === null)) {
     var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
     u1 = ep[0];
     u2 = ep[1];

@@ -7,8 +7,8 @@
  http://peteroupc.github.io/
 */
 
-import {MathUtil} from "./h3du-math";
 import {MathInternal} from "./h3du-mathinternal";
+import {MathUtil} from "./h3du-math";
 
 /**
  * A surface evaluator object for a parametric surface.<p>

@@ -6216,7 +6216,7 @@ MeshBuffer.prototype.getIndices = function() {
 };
 /**
  * Sets the vertex indices used by this mesh buffer.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} indices Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} indices Array of vertex indices
  * that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} This object.
  */
@@ -6243,6 +6243,12 @@ MeshBuffer.prototype.setIndices = function(indices) {
  * Sets the type of graphics primitives stored in this mesh buffer.
  * @param {number} primType The primitive type, either {@link MeshBuffer.TRIANGLES},
  * {@link MeshBuffer.LINES}, or {@link MeshBuffer.POINTS}.
+ * For TRIANGLES, every three vertices or vertex indices identify
+ * a single triangle.
+ * For LINES, every two vertices or vertex indices identify
+ * a single line segment.
+ * For POINTS, every vertex or vertex index identifies
+ * a single point.
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setPrimitiveType = function(primType) {
@@ -6453,7 +6459,7 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * @param {Array<number>|Float32Array} vertices An array of vertex positions. This
  * array's length must be divisible by 3; every 3 elements are the
  * X, Y, and Z coordinates, in that order, of one vertex.
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -6471,7 +6477,7 @@ MeshBuffer.fromPositions = function(vertices, indices) {
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -6491,7 +6497,7 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.
  * <li>U and V texture coordinates, in that order, of the vertex.</ol>
- * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|@param {boolean|@param {boolean|null} [indices] Array of vertex indices
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
  */
@@ -7356,6 +7362,18 @@ CurveBuilder._defaultEndPointsCurve = function(attributes) {
   }
   return [0, 1];
 };
+
+/** @ignore */
+CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
+  for(var i = 0; i < attributes.length; i++) {
+    var a = attributes[i];
+    if(a[0] === Semantic.POSITION && a[1] === 0) {
+      var a4 = a[4];
+      return Math.max(200, Math.ceil(new Curve(a4).getLength() / 4));
+    }
+  }
+  return 24;
+};
 /** @ignore */
 CurveBuilder._defaultEndPointsSurface = function(attributes) {
   for(var i = 0; i < attributes.length; i++) {
@@ -7370,6 +7388,17 @@ CurveBuilder._defaultEndPointsSurface = function(attributes) {
   }
   return [0, 1, 0, 1];
 };
+/** @ignore */
+CurveBuilder._toCurve = function(curve) {
+  return typeof curve !== "undefined" && curve !== null &&
+   !(curve instanceof Curve) ? new Curve(curve) : curve;
+};
+/** @ignore */
+CurveBuilder._toSurface = function(surface) {
+  return typeof surface !== "undefined" && surface !== null &&
+   !(surface instanceof Surface) ? new Surface(surface) : surface;
+};
+
 /** @ignore */
 CurveBuilder._setAttribute = function(
   attributes, vertexCount, curve, semantic, semanticIndex, size
@@ -7612,7 +7641,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * Sets the parametric surface used to generate vertex positions, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position. For
@@ -7630,7 +7659,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * Sets the parametric surface used to generate vertex positions and normals, and
  * sets a surface evaluator that generates texture coordinates ranging
  * from (0,1) along the U and V axes of the surface.
- * @param {Object|@param {boolean|@param {boolean|null} surface A [surface evaluator object]{@link Surface} that
+ * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * @param {number} [size] The number of elements in each position and normal. For
@@ -7746,7 +7775,7 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
- * Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
+ * If null or undefined, a default is determined automatically based on the position curve's arc length, or the distance taken by its path (or the default is 24 if no position curve was defined). If 0, this method has no effect. Throws an error if this value is less than 0.
  * @param {number} [u1] Starting point of the curve.
  * Default is the starting coordinate given by the [curve evaluator object]{@link Curve}, or 0 if not given.
  * @param {number} [u2] Ending point of the curve.
@@ -7754,11 +7783,14 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  * @returns {CurveBuilder} This object.
  */
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
-  n = typeof n === "undefined" || n === null ? 24 : Math.ceil(n);
+  n = typeof n === "undefined" || n === null ?
+     CurveBuilder._defaultSubdivisionsCurve(this.attributes) :
+     Math.ceil(n);
   if(n === 0)return this;
   if(n < 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.LINES;
-  if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null)) {
+  if(typeof u1 === "undefined" || u1 === null ||
+     (typeof u2 === "undefined" || u2 === null)) {
     var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
     u1 = ep[0];
     u2 = ep[1];
@@ -9644,7 +9676,10 @@ ArcCurve.prototype.velocity = function(t) {
 
   // --------------------------------------------------
   /**
-   * Represents a two-dimensional path.
+   * Represents a two-dimensional path. A path is made up
+   * of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
+   * cubic B&eacute;zier curves, or any combination of these, and
+   * the path can be discontinuous and/or contain closed parts.
    * @memberof H3DU
    * @constructor
    */
@@ -10599,8 +10634,6 @@ GraphicsPath._addSegment = function(a, c) {
 GraphicsPath.prototype.getCurves = function() {
     // TODO: Consider returning a list of curves and require
     // callers to use PiecewiseCurve to get the prior behavior
-    // NOTE: Uses a "tangent" method, not "velocity", because
-    // that method's return values are generally unit vectors.
   var subpaths = [];
   var curves = [];
   var lastptx = 0;
@@ -10635,6 +10668,37 @@ GraphicsPath.prototype.getCurves = function() {
     curves.push(new PiecewiseCurve(subpaths[i]).toArcLengthParam().fitRange(0, 1));
   }
   return new GraphicsPath._CurveList(curves);
+};
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ */
+GraphicsPath.prototype.getSubpaths = function() {
+  var subpaths = [];
+  var lastptx = 0;
+  var lastpty = 0;
+
+  var first = true;
+  var curPath = null;
+  for(var i = 0; i < this.segments.length; i++) {
+    var s = this.segments[i];
+    var startpt = GraphicsPath._startPoint(s);
+    var endpt = GraphicsPath._endPoint(s);
+    if(s[0] !== GraphicsPath.CLOSE) {
+      if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
+        curPath = new GraphicsPath().moveto(startpt[0], startpt[1]);
+        subpaths.push(curPath);
+        first = false;
+      }
+      curPath.segments.push(s.slice(0, s.length));
+      lastptx = endpt[0];
+      lastpty = endpt[1];
+      curPath.setEndPos(endpt[0], endpt[1]);
+    } else {
+      curPath.closePath();
+    }
+  }
+  return subpaths;
 };
 
   /**
@@ -10827,6 +10891,15 @@ GraphicsPath.prototype.lineTo = function(x, y) {
   this.incomplete = false;
   return this;
 };
+
+/** @ignore
+ * @private */
+GraphicsPath.prototype.setEndPos = function(x, y) {
+  this.endPos[0] = x;
+  this.endPos[1] = y;
+  return this;
+};
+
   /**
    * Gets the current point stored in this path.
    * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
@@ -11494,7 +11567,7 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
  * @param {number} arccy Vertical extent (from end to end) of the ellipse formed by each arc that makes
  * up the rectangle's corners.
  * Will be adjusted to be not less than 0 and not greater than "h".
- * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is less than 0, no path segments will be appended.
  */
 GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
@@ -11542,7 +11615,7 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  * Will be adjusted to be not less than 0 and not greater than "w".
  * @param {number} arccy Vertical extent (from end to end) of the rectangle's corners.
  * Will be adjusted to be not less than 0 and not greater than "h".
- * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ * @returns {GraphicsPath} This object. If "w" or "h" is less than 0, no path segments will be appended.
  */
 GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
@@ -11873,7 +11946,6 @@ GraphicsPath.fromString = function(str) {
   var endx, endy;
   var sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
   while(!failed && index[0] < str.length) {
-      // console.log("////"+[index,str.substr(index[0],30)])
     var c = GraphicsPath._nextAfterWs(str, index);
     if(!started && c !== 0x4d && c !== 0x6d) {
         // not a move-to command when path
@@ -12516,12 +12588,13 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
 };
 /**
  * TODO: Not documented yet.
- * @param {number} z
+ * @param {number} [z] The Z coordinate of each triangle generated.
+ * If null, undefined, or omitted, default is 0.
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {GraphicsPath} Return value.
+ * @returns {MeshBuffer} The resulting mesh buffer.
  */
 GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
@@ -12537,6 +12610,60 @@ GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
   }
   return MeshBuffer.fromPositionsNormalsUV(vertices);
 };
+/**
+ * Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
+ * @param {*} [z] Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {MeshBuffer} The resulting mesh buffer.
+ */
+GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
+  if(typeof z === "undefined" || z === null)z = 0;
+  var lines = this.getLines(flatness);
+  var vertices = [];
+  for(var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    vertices.push(line[0], line[1], z,
+       line[2], line[3], z);
+  }
+  return MeshBuffer.fromPositions(vertices).setPrimitiveType(
+     MeshBuffer.LINES);
+};
+/**
+ * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
+ * @param {z} zStart Starting Z coordinate of the mesh buffer's "walls".
+ * @param {z} zEnd Ending Z coordinate of the mesh buffer's "walls".
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {MeshBuffer} The resulting mesh buffer.
+ */
+GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
+  if((typeof zStart === "undefined" || zStart === null) || zEnd === null)throw new Error();
+  var lines = this.getLines(flatness);
+  var z1 = Math.min(zStart, zEnd);
+  var z2 = Math.max(zStart, zEnd);
+  var vertices = [];
+  for(var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    var dx = line[2] - line[0];
+    var dy = line[3] - line[1];
+    var dot = dx * dx + dy * dy;
+    if(dot === 0)continue;
+    vertices.push(line[0], line[1], z1,
+     line[2], line[3], z1,
+     line[0], line[1], z2,
+     line[2], line[3], z1,
+     line[2], line[3], z2,
+     line[0], line[1], z2);
+  }
+  return MeshBuffer.fromPositions(vertices)
+     .recalcNormals(true);
+};
+
   /** @ignore */
 Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
   var vpnode = dstNode;

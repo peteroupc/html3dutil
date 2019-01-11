@@ -8,8 +8,8 @@
 */
 
 import {Curve} from "./h3du-curve";
-import {Surface} from "./h3du-surface";
 import {MathInternal} from "./h3du-mathinternal";
+import {Surface} from "./h3du-surface";
 
 function linear(points, elementsPerValue, t) {
   var ret = [];

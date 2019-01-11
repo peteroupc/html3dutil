@@ -11,12 +11,6 @@ This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
 library.
 
-To use this class, you must include the script "extras/curvetube.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:
-
-    <script type="text/javascript" src="extras/curvetube.js"></script>
-
 #### Parameters
 
 * `func` (Type: Object)<br>A <a href="H3DU.Curve.md">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from. For best results, the curve should be continuous and smooth.
