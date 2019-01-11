@@ -30,7 +30,7 @@ the piecewise curve.
     // specify the points that make up the polygon.
     function polygonCurve(points) {
     var curves=[]
-    for(var i=0;i<points.length;i++) {
+    for(var i=0;<points.length;i++) {
     var cp=points[i]
     var np=(i==points.length-1) ? points[0] : points[i+1]
     curves.push(BSplineCurve.fromBezierCurve([cp,np]))

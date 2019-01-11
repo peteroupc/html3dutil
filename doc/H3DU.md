@@ -20,7 +20,6 @@ resolves or is rejected after the given list of promises finishes
 its work.
 * [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
 * [loadFileFromUrl](#H3DU.loadFileFromUrl)<br>Loads a file from a URL asynchronously, using XMLHttpRequest.
-* [loadStlFromUrl](#H3DU.loadStlFromUrl)<br>Loads a .STL file asynchronously.
 * [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 * [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
@@ -130,31 +129,6 @@ the parameter's "data" property will be:<ul>
 <li>For response type "json", the JavaScript object decoded
 from JSON.
 <li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.md">Promise</a>)
-
-<a name='H3DU.loadStlFromUrl'></a>
-### (static) H3DU.loadStlFromUrl(url)
-
-Loads a .STL file asynchronously.
-
-This method is considered a supplementary method to the
-Public Domain HTML 3D Library and is not considered part of that
-library.
-
-To use this method, you must include the script "extras/stl.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:
-
-    <script type="text/javascript" src="extras/stl.js"></script>
-
-#### Parameters
-
-* `url` (Type: string)<br>The URL to load.
-
-#### Return Value
-
-A promise that resolves when the
-.STL file is loaded successfully (the result will be an <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a> object),
-and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>>)
 
 <a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)

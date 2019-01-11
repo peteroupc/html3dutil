@@ -65,24 +65,24 @@ import {MathInternal} from "./h3du-mathinternal";
  * return [0,Math.PiTimes2]
  * }
  * });
-* @example <caption>The following method
-* starts a curve at a different offset and wraps the portion
-* of the curve behind that offset at the end of the original
-* curve.  This is useful for offsetting the points retrieved
-* with the getPoints method</caption>
-* function wrapAtOffset(curve, offset) {
-*   "use strict";
-*   var c=curve
-*   if(offset!=0){
-*    var ep=curve.endPoints();
-*    c=new Curve({
-*     evaluate:function(u){curves.evaluate(
-*      u+offset>ep[1] ? (u+offset)-ep[1] : (u+offset))},
-*     endPoints:function(){return ep;}
-*    });
-*   }
-*   return c;
-* }
+ * @example <caption>The following method
+ * starts a curve at a different offset and wraps the portion
+ * of the curve behind that offset at the end of the original
+ * curve. This is useful for offsetting the points retrieved
+ * with the getPoints method</caption>
+ * function wrapAtOffset(curve, offset) {
+ *   "use strict";
+ * var c=curve
+ * if(offset!=0) {
+ * var ep=curve.endPoints();
+ * c=new Curve({
+ * evaluate:function(u) {curves.evaluate(
+ * u+offset>ep[1] ? (u+offset)-ep[1] : (u+offset))},
+ * endPoints:function() {return ep;}
+ * });
+ * }
+ * return c;
+ * }
  */
 function Curve(curve, curveParam) {
   this.curve = curve;

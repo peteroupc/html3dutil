@@ -5,7 +5,7 @@ library.<h3> Methods</h3><ul><li><a href='#H3DU.getPromiseResults'>getPromiseRes
 resolves after the given list of promises finishes
 its work.<li><a href='#H3DU.getPromiseResultsAll'>getPromiseResultsAll</a><br>Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
-its work.<li><a href='#H3DU.getTimePosition'>getTimePosition</a><br>Gets the position of a time value within an interval.<li><a href='#H3DU.loadFileFromUrl'>loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.<li><a href='#H3DU.loadStlFromUrl'>loadStlFromUrl</a><br>Loads a .STL file asynchronously.<li><a href='#H3DU.newFrames'>newFrames</a><br>Returns the number of frame-length intervals that occurred since
+its work.<li><a href='#H3DU.getTimePosition'>getTimePosition</a><br>Gets the position of a time value within an interval.<li><a href='#H3DU.loadFileFromUrl'>loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.<li><a href='#H3DU.newFrames'>newFrames</a><br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.<li><a href='#H3DU.toGLColor'>toGLColor</a><br>Creates a 4-element array representing a color.</ul><a name='H3DU.getPromiseResults'></a>
 <h3> (static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])</h3>Utility function that returns a promise that
 resolves after the given list of promises finishes
@@ -53,17 +53,7 @@ the parameter's "data" property will be:<ul>
 <li>For response type "arraybuffer", an ArrayBuffer object.
 <li>For response type "json", the JavaScript object decoded
 from JSON.
-<li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.html">Promise</a>)<a name='H3DU.loadStlFromUrl'></a>
-<h3> (static) H3DU.loadStlFromUrl(url)</h3>Loads a .STL file asynchronously.
-<p>This method is considered a supplementary method to the
-Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this method, you must include the script "extras/stl.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:<pre>
-&lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre><h4> Parameters</h4><ul><li><code>url</code> (Type: string)<br>The URL to load.</ul><h4> Return Value</h4>A promise that resolves when the
-.STL file is loaded successfully (the result will be an <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> object),
-and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>>)<a name='H3DU.newFrames'></a>
+<li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.html">Promise</a>)<a name='H3DU.newFrames'></a>
 <h3> (static) H3DU.newFrames(timer, timeInMs)</h3>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 This method should be called only once each frame.<h4> Parameters</h4><ul><li><code>timer</code> (Type: Object)<br>An object described in getTimePosition.<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</ul><h4> Return Value</h4>The number of frame-length intervals relative to

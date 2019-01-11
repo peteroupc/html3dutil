@@ -1678,7 +1678,7 @@ var MathUtil = {
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -1921,7 +1921,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * // Positive Z axis is the up vector
    * var matrix=MathUtil.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
    * @example <caption>The following example creates a camera view matrix using the
-   * viewer position, the viewing direction, and the up vector (a "look-to" matrix)</caption>
+   * viewer position, the viewing direction, and the up vector (a "look-to" matrix):</caption>
    * var viewDirection=[0,0,1]
    * var viewerPos=[0,0,0]
    * var upVector=[0,1,0]
@@ -2036,7 +2036,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.)
    * The absolute difference
@@ -2125,7 +2125,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * plane. A positive value means the plane is in front of the viewer.
    * @param {number} f Distance from the "camera" to the far clipping
    * plane. A positive value means the plane is in front of the viewer.
-   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL
+   *  ("n" is usually less than "f", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL
    * when just this matrix is used to transform vertices.
    * If "n" is greater than "f", Z coordinates increase in the opposite direction.) The absolute difference
    * between n and f should be as small as the application can accept.
@@ -2188,7 +2188,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -2237,7 +2237,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
+   * ("near" is usually less than "far", so that Z coordinates increase from near to far in the direction from the back to the front of the "eye", as they do in WebGL when just this matrix is used to transform vertices.
    * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
@@ -4001,7 +4001,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Z coordinates within the view volume range from 0 to 1 and
    * increase from front to back.
    * @param {Array<number>} vector A 3-element vector giving
-   * the X, Y, and Z coordinates of the 3D point to transform.
+   * the X, Y, and Z coordinates of the 3D point to transform, in window coordinates.
    * @param {Array<number>} matrix A 4x4 matrix.
    * After undoing the transformation to window coordinates, the vector will
    * be transformed by the inverse of this matrix according to the
@@ -4014,10 +4014,18 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * multiplied by the world [model] matrix, in that order).
    * See {@link MathUtil.vec3toWindowPoint} for the meaning of window coordinates
    * with respect to the "matrix" and "yUp" parameters.
-   * @param {boolean} viewport Has the same meaning as "viewport" in
-   * the {@link MathUtil.vec3toWindowPoint} method.
-   * @param {boolean} [yUp] Has the same meaning as "yUp" in
-   * the {@link MathUtil.vec3toWindowPoint} method.
+   * @param {Array<number>} viewport A 4-element array specifying
+   * the starting position and size of the viewport in window units
+   * (such as pixels). In order, the four elements are the starting position's
+   * X coordinate, its Y coordinate, the viewport's width, and the viewport's
+   * height. Throws an error if the width or height is less than 0.
+   * @param {boolean} [yUp] If omitted or a "falsy" value, reverses the sign of
+   * the Y coordinate returned by the {@link MathUtil.mat4projectVec3} method
+   * before converting it to window coordinates. If true, the Y
+   * coordinate will remain unchanged. If window Y coordinates increase
+   * upward, the viewport's starting position is at the lower left corner. If those
+   * coordinates increase downward, the viewport's starting position is
+   * at the upper left corner.
    * @returns {Array<number>} A 3-element array giving the coordinates
    * of the unprojected point, in that order.
    */
@@ -4361,7 +4369,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * (object) space</i>.
    * <br>If the matrix includes a projection transform returned
    * by {@link MathUtil.mat4ortho}, {@link MathUtil.mat4perspective}, or
-   * similar {@link Math} methods, then in the <i>window coordinate</i> space,
+   * similar {@link MathUtil} methods, then in the <i>window coordinate</i> space,
    * X coordinates increase rightward, Y coordinates increase upward, and
    * Z coordinates within the view volume range from 0 to 1 and
    * increase from front to back, unless otherwise specified in those methods' documentation.
@@ -5124,6 +5132,24 @@ var MathInternal = {
  * return [0,Math.PiTimes2]
  * }
  * });
+ * @example <caption>The following method
+ * starts a curve at a different offset and wraps the portion
+ * of the curve behind that offset at the end of the original
+ * curve. This is useful for offsetting the points retrieved
+ * with the getPoints method</caption>
+ * function wrapAtOffset(curve, offset) {
+ *   "use strict";
+ * var c=curve
+ * if(offset!=0) {
+ * var ep=curve.endPoints();
+ * c=new Curve({
+ * evaluate:function(u) {curves.evaluate(
+ * u+offset>ep[1] ? (u+offset)-ep[1] : (u+offset))},
+ * endPoints:function() {return ep;}
+ * });
+ * }
+ * return c;
+ * }
  */
 function Curve(curve, curveParam) {
   this.curve = curve;
@@ -9040,7 +9066,7 @@ BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
  * // specify the points that make up the polygon.
  * function polygonCurve(points) {
  * var curves=[]
- * for(var i=0;i<points.length;i++) {
+ * for(var i=0;&lt;points.length;i++) {
  * var cp=points[i]
  * var np=(i==points.length-1) ? points[0] : points[i+1]
  * curves.push(BSplineCurve.fromBezierCurve([cp,np]))
@@ -14858,15 +14884,6 @@ var TriangleFan = function(indices) {
   };
 };
 
-var meshBufferFromVertices = function(vertices, indices) {
-  var vertarray = new Float32Array(vertices);
-  return new MeshBuffer()
-    .setIndices(indices)
-    .setAttribute(Semantic.POSITION, vertarray, 3, 0, 8)
-    .setAttribute(Semantic.NORMAL, vertarray, 3, 3, 8)
-    .setAttribute(Semantic.TEXCOORD, vertarray, 2, 6, 8);
-};
-
 function meshBufferFromVertexGrid(vertices, width, height) {
   var indices = [];
   for(var y = 0; y < height - 1; y++) {
@@ -14879,7 +14896,7 @@ function meshBufferFromVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 }
 
 function meshBufferFromUWrapVertexGrid(vertices, width, height) {
@@ -14894,7 +14911,7 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 }
 
 /**
@@ -14954,7 +14971,7 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
   }
   var indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
     13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23];
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 };
 
 /**
@@ -15069,7 +15086,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
     var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
     return flat ? mesh.recalcNormals(flat, inside) : mesh;
   } else {
-    return meshBufferFromVertices([], []);
+    return MeshBuffer.fromPositionsNormalsUV([], []);
   }
 };
 /**
@@ -15314,7 +15331,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
       fan.addIndex(k);
     }
     fan.addIndex(0);
-    return meshBufferFromVertices(vertices, indices);
+    return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
     var height = outer - inner;
 
@@ -15701,7 +15718,7 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   }
   // Re-add the second index to close the pointed star
   triangleFan.addIndex(1);
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 };
 
 /*

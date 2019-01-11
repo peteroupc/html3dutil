@@ -68,6 +68,26 @@ defined for curve evaluator objects can be implemented.
     }
     });
 
+The following method
+starts a curve at a different offset and wraps the portion
+of the curve behind that offset at the end of the original
+curve. This is useful for offsetting the points retrieved
+with the getPoints method
+
+    function wrapAtOffset(curve, offset) {
+     "use strict";
+    var c=curve
+    if(offset!=0) {
+    var ep=curve.endPoints();
+    c=new Curve({
+    evaluate:function(u) {curves.evaluate(
+    u+offset>ep[1] ? (u+offset)-ep[1] : (u+offset))},
+    endPoints:function() {return ep;}
+    });
+    }
+    return c;
+    }
+
 ### Methods
 
 * [accel](#H3DU.Curve_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.

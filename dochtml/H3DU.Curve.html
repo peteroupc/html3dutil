@@ -43,7 +43,24 @@ return u;
 "endPoints":function(u) {
 return [0,Math.PiTimes2]
 }
-});</pre><h3> Methods</h3><ul><li><a href='#H3DU.Curve_accel'>accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.<li><a href='#H3DU.Curve_arcLength'>arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+});</pre><p>The following method
+starts a curve at a different offset and wraps the portion
+of the curve behind that offset at the end of the original
+curve. This is useful for offsetting the points retrieved
+with the getPoints method</p><pre>
+function wrapAtOffset(curve, offset) {
+ "use strict";
+var c=curve
+if(offset!=0) {
+var ep=curve.endPoints();
+c=new Curve({
+evaluate:function(u) {curves.evaluate(
+u+offset>ep[1] ? (u+offset)-ep[1] : (u+offset))},
+endPoints:function() {return ep;}
+});
+}
+return c;
+}</pre><h3> Methods</h3><ul><li><a href='#H3DU.Curve_accel'>accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.<li><a href='#H3DU.Curve_arcLength'>arcLength</a><br>Finds an approximate arc length (distance) between the start of this
 curve and the point at the given U coordinate of this curve.<li><a href='#H3DU.Curve_changeEnds'>changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same U coordinates),
 but has a different set of end points.<li><a href='#H3DU.Curve_endPoints'>endPoints</a><br>Returns the starting and ending U coordinates of this curve.<li><a href='#H3DU.Curve_evaluate'>evaluate</a><br>Finds the position of this curve at the given U coordinate.<li><a href='#H3DU.Curve_fitRange'>fitRange</a><br>Creates a curve evaluator object for a curve that follows the same

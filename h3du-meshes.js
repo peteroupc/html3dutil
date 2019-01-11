@@ -6,11 +6,9 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global Float32Array */
 
 import {MathUtil} from "./h3du-math";
 import {MeshBuffer} from "./h3du-meshbuffer";
-import {Semantic} from "./h3du-semantic";
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids.<p>
@@ -49,15 +47,6 @@ var TriangleFan = function(indices) {
   };
 };
 
-var meshBufferFromVertices = function(vertices, indices) {
-  var vertarray = new Float32Array(vertices);
-  return new MeshBuffer()
-    .setIndices(indices)
-    .setAttribute(Semantic.POSITION, vertarray, 3, 0, 8)
-    .setAttribute(Semantic.NORMAL, vertarray, 3, 3, 8)
-    .setAttribute(Semantic.TEXCOORD, vertarray, 2, 6, 8);
-};
-
 function meshBufferFromVertexGrid(vertices, width, height) {
   var indices = [];
   for(var y = 0; y < height - 1; y++) {
@@ -70,7 +59,7 @@ function meshBufferFromVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 }
 
 function meshBufferFromUWrapVertexGrid(vertices, width, height) {
@@ -85,7 +74,7 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 }
 
 /**
@@ -145,7 +134,7 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
   }
   var indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
     13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23];
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 };
 
 /**
@@ -260,7 +249,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
     var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
     return flat ? mesh.recalcNormals(flat, inside) : mesh;
   } else {
-    return meshBufferFromVertices([], []);
+    return MeshBuffer.fromPositionsNormalsUV([], []);
   }
 };
 /**
@@ -505,7 +494,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
       fan.addIndex(k);
     }
     fan.addIndex(0);
-    return meshBufferFromVertices(vertices, indices);
+    return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
     var height = outer - inner;
 
@@ -892,5 +881,5 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   }
   // Re-add the second index to close the pointed star
   triangleFan.addIndex(1);
-  return meshBufferFromVertices(vertices, indices);
+  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 };
