@@ -334,6 +334,25 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
 };
 
 /**
+ * Creates a new mesh buffer with the given array of vertex positions
+ * and texture coordinates.
+ * @param {Array<number>|Float32Array} vertices An array of vertex data. This
+ * array's length must be divisible by 5; every 5 elements describe
+ * one vertex and are in the following order:<ol>
+ * <li>X, Y, and Z coordinates, in that order, of the vertex position.
+ * <li>U and V texture coordinates, in that order, of the vertex.</ol>
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+ * @returns {MeshBuffer} A new mesh buffer.
+ */
+MeshBuffer.fromPositionsUV = function(vertices, indices) {
+  var vertarray = new Float32Array(vertices);
+  return new MeshBuffer()
+   .setAttribute("POSITION", vertarray, 3, 0, 5)
+   .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
+};
+
+/**
  * Gets the number of primitives (triangles, lines,
  * and points) composed by all shapes in this mesh.
  * @returns {number} Return value.

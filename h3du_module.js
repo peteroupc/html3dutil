@@ -449,62 +449,6 @@ var getPromiseResultsAll = function(promises,
       }
     });
 };
-/**
- * Loads a file from a URL asynchronously, using XMLHttpRequest.
- * @param {string} url URL of the file to load.
- * @param {string} [responseType] Expected data type of
- * the file.  Can be "json", "xml", "text", or "arraybuffer".
- * If null, undefined, or omitted, the default is "text".
- * @returns {Promise} A promise that resolves when the data
- * file is loaded successfully (the result will be an object with
- * two properties: "url", the URL of the file, and "data", the
- * file's text or data), as given below, and is rejected when an error occurs (the
- * result may be an object with
- * one property: "url", the URL of the file). If the promise resolves,
- * the parameter's "data" property will be:<ul>
- * <li>For response type "xml", an XML document object.
- * <li>For response type "arraybuffer", an ArrayBuffer object.
- * <li>For response type "json", the JavaScript object decoded
- * from JSON.
- * <li>For any other type, a string of the file's text.</ul>
- * @memberof H3DU
- */
-var loadFileFromUrl = function(url, responseType) {
-  var urlstr = url;
-  var respType = responseType || "text";
-  return new Promise(function(resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(e) {
-      var t = e.target;
-      if(t.readyState === 4) {
-        if(t.status >= 200 && t.status < 300) {
-          var resp = "";
-          if(respType === "xml")resp = t.responseXML;
-          else if(respType === "json")
-            resp = "response" in t ? t.response : JSON.parse(t.responseText);
-          else if(respType === "arraybuffer")
-            resp = t.response;
-          else resp = t.responseText + "";
-          resolve({
-            "url": urlstr,
-            "data": resp
-          });
-        } else {
-          reject({"url": urlstr});
-        }
-      }
-    };
-    xhr.onerror = function(e) {
-      reject({
-        "url": urlstr,
-        "error": e
-      });
-    };
-    xhr.open("get", url, true);
-    xhr.responseType = respType;
-    xhr.send();
-  });
-};
 
 /**
  * Gets the position of a time value within an interval.
@@ -6533,6 +6477,25 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
    .setAttribute("POSITION", vertarray, 3, 0, 8)
    .setAttribute("NORMAL", vertarray, 3, 3, 8)
    .setAttribute("TEXCOORD", vertarray, 2, 6, 8).setIndices(indices);
+};
+
+/**
+ * Creates a new mesh buffer with the given array of vertex positions
+ * and texture coordinates.
+ * @param {Array<number>|Float32Array} vertices An array of vertex data. This
+ * array's length must be divisible by 5; every 5 elements describe
+ * one vertex and are in the following order:<ol>
+ * <li>X, Y, and Z coordinates, in that order, of the vertex position.
+ * <li>U and V texture coordinates, in that order, of the vertex.</ol>
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
+ * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+ * @returns {MeshBuffer} A new mesh buffer.
+ */
+MeshBuffer.fromPositionsUV = function(vertices, indices) {
+  var vertarray = new Float32Array(vertices);
+  return new MeshBuffer()
+   .setAttribute("POSITION", vertarray, 3, 0, 5)
+   .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
 };
 
 /**
@@ -15730,4 +15693,4 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
  http://peteroupc.github.io/
 */
 
-export { MathUtil, Curve, Surface, CurveBuilder, SurfaceBuilder, PiecewiseCurve, BSplineCurve, BSplineSurface, GraphicsPath, Shape, ShapeGroup, Transform, Meshes, BufferAccessor, MeshBuffer, Semantic, getPromiseResults, getPromiseResultsAll, loadFileFromUrl, getTimePosition, newFrames, toGLColor };
+export { MathUtil, Curve, Surface, CurveBuilder, SurfaceBuilder, PiecewiseCurve, BSplineCurve, BSplineSurface, GraphicsPath, Shape, ShapeGroup, Transform, Meshes, BufferAccessor, MeshBuffer, Semantic, getPromiseResults, getPromiseResultsAll, getTimePosition, newFrames, toGLColor };

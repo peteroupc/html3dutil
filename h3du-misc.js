@@ -133,62 +133,6 @@ export var getPromiseResultsAll = function(promises,
       }
     });
 };
-/**
- * Loads a file from a URL asynchronously, using XMLHttpRequest.
- * @param {string} url URL of the file to load.
- * @param {string} [responseType] Expected data type of
- * the file.  Can be "json", "xml", "text", or "arraybuffer".
- * If null, undefined, or omitted, the default is "text".
- * @returns {Promise} A promise that resolves when the data
- * file is loaded successfully (the result will be an object with
- * two properties: "url", the URL of the file, and "data", the
- * file's text or data), as given below, and is rejected when an error occurs (the
- * result may be an object with
- * one property: "url", the URL of the file). If the promise resolves,
- * the parameter's "data" property will be:<ul>
- * <li>For response type "xml", an XML document object.
- * <li>For response type "arraybuffer", an ArrayBuffer object.
- * <li>For response type "json", the JavaScript object decoded
- * from JSON.
- * <li>For any other type, a string of the file's text.</ul>
- * @memberof H3DU
- */
-export var loadFileFromUrl = function(url, responseType) {
-  var urlstr = url;
-  var respType = responseType || "text";
-  return new Promise(function(resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(e) {
-      var t = e.target;
-      if(t.readyState === 4) {
-        if(t.status >= 200 && t.status < 300) {
-          var resp = "";
-          if(respType === "xml")resp = t.responseXML;
-          else if(respType === "json")
-            resp = "response" in t ? t.response : JSON.parse(t.responseText);
-          else if(respType === "arraybuffer")
-            resp = t.response;
-          else resp = t.responseText + "";
-          resolve({
-            "url": urlstr,
-            "data": resp
-          });
-        } else {
-          reject({"url": urlstr});
-        }
-      }
-    };
-    xhr.onerror = function(e) {
-      reject({
-        "url": urlstr,
-        "error": e
-      });
-    };
-    xhr.open("get", url, true);
-    xhr.responseType = respType;
-    xhr.send();
-  });
-};
 
 /**
  * Gets the position of a time value within an interval.

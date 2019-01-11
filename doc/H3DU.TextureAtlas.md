@@ -36,7 +36,7 @@ it uses.
 * [makeSprites](#H3DU.TextureAtlas_makeSprites)<br>Makes a shape group used to display one or more sprites.
 
 <a name='H3DU.TextureAtlas.load'></a>
-### (static) H3DU.TextureAtlas.load(atlasFileName)
+### (static) H3DU.TextureAtlas.load(data, atlasFileName)
 
 Loads a texture atlas definition from a file.
 Note that this method only loads the texture atlas data and not the bitmaps
@@ -44,13 +44,12 @@ used by the texture atlas.
 
 #### Parameters
 
+* `data` (Type: ArrayBuffer)<br>Data containing a texture atlas definition.
 * `atlasFileName` (Type: string)<br>The URL of the texture atlas to load.
 
 #### Return Value
 
-A promise that is resolved
-when the texture atlas data is loaded successfully (the result will be
-an H3DU.TextureAtlas object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>>)
+A texture atlas if the texture atlas data is loaded successfully, and null if an error occurs. (Type: <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a> | null)
 
 <a name='H3DU.TextureAtlas_loadTextures'></a>
 ### H3DU.TextureAtlas#loadTextures(textureLoader)

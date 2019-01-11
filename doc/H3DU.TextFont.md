@@ -36,7 +36,7 @@ other, and the mention of this link is not an endorsement or sponsorship
 of any particular tool.)
 
 NOTE: The constructor should not be called directly by applications.
-Use the <a href="H3DU.TextFont.md#H3DU.TextFont.load">H3DU.TextFont.load</a> method to get an H3DU.TextFont object. This
+Use the H3DU.TextFont.load method to get an H3DU.TextFont object. This
 constructor's parameters are undocumented and are subject to change.
 
 This class is considered a supplementary class to the
@@ -51,7 +51,7 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [load](#H3DU.TextFont.load)<br>Loads a bitmap font definition from a file.
+* [loadData](#H3DU.TextFont.loadData)<br>Loads a bitmap font definition from a file.
 * [loadTextures](#H3DU.TextFont_loadTextures)<br>Loads the texture files used by this font object.
 * [loadWithTextures](#H3DU.TextFont.loadWithTextures)<br>Loads a bitmap font definition from a file along with the textures
 used by that font.
@@ -62,8 +62,8 @@ drawn using this font.
 * [textShape](#H3DU.TextFont_textShape)<br>Creates a group of shapes containing the primitives needed to
 draw text in the given position, size, and color.
 
-<a name='H3DU.TextFont.load'></a>
-### (static) H3DU.TextFont.load(fontFileName)
+<a name='H3DU.TextFont.loadData'></a>
+### (static) H3DU.TextFont.loadData(data, fontFileName)
 
 Loads a bitmap font definition from a file.
 Note that this method only loads the font data and not the bitmaps
@@ -71,13 +71,12 @@ used to represent the font.
 
 #### Parameters
 
+* `data` (Type: ArrayBuffer)<br>The data containing a bitmap font definition.
 * `fontFileName` (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
 
 #### Return Value
 
-A promise that is resolved
-when the font data is loaded successfully (the result will be
-an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU.TextFont.md">H3DU.TextFont</a>>)
+Text font data, or null if an error occurs. (Type: TextFont | null)
 
 <a name='H3DU.TextFont_loadTextures'></a>
 ### H3DU.TextFont#loadTextures(textureLoader)

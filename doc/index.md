@@ -22,7 +22,6 @@ mathematical objects.
 * <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
 * <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
 of various geometric shapes and solids.
-* <a href="H3DU.ObjData.md">H3DU.ObjData</a><br>WaveFront OBJ format.
 * <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A curve evaluator object for a curve
 made up of one or more individual curves.
 * <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with

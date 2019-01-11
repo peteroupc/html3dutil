@@ -28,6 +28,8 @@ of vertex indices to null.
 and vertex normals.
 * [fromPositionsNormalsUV](#H3DU.MeshBuffer.fromPositionsNormalsUV)<br>Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.
+* [fromPositionsUV](#H3DU.MeshBuffer.fromPositionsUV)<br>Creates a new mesh buffer with the given array of vertex positions
+and texture coordinates.
 * [getAttribute](#H3DU.MeshBuffer_getAttribute)<br>Gets a vertex attribute included in this mesh buffer.
 * [getBounds](#H3DU.MeshBuffer_getBounds)<br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
@@ -120,6 +122,21 @@ vertex normals, and texture coordinates.
 #### Parameters
 
 * `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol>
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+
+#### Return Value
+
+A new mesh buffer. (Type: MeshBuffer)
+
+<a name='H3DU.MeshBuffer.fromPositionsUV'></a>
+### (static) H3DU.MeshBuffer.fromPositionsUV(vertices, [indices])
+
+Creates a new mesh buffer with the given array of vertex positions
+and texture coordinates.
+
+#### Parameters
+
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 5; every 5 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>U and V texture coordinates, in that order, of the vertex.</ol>
 * `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value

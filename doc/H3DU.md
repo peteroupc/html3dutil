@@ -19,7 +19,6 @@ its work.
 resolves or is rejected after the given list of promises finishes
 its work.
 * [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
-* [loadFileFromUrl](#H3DU.loadFileFromUrl)<br>Loads a file from a URL asynchronously, using XMLHttpRequest.
 * [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 * [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
@@ -104,31 +103,6 @@ value in milliseconds, such as the parameter of a
 <code>requestAnimationFrame()</code> callback method.
 
     var angle = 360 * export var getTimePosition(timer, time, 5000);
-
-<a name='H3DU.loadFileFromUrl'></a>
-### (static) H3DU.loadFileFromUrl(url, [responseType])
-
-Loads a file from a URL asynchronously, using XMLHttpRequest.
-
-#### Parameters
-
-* `url` (Type: string)<br>URL of the file to load.
-* `responseType` (Type: string) (optional)<br>Expected data type of the file. Can be "json", "xml", "text", or "arraybuffer". If null, undefined, or omitted, the default is "text".
-
-#### Return Value
-
-A promise that resolves when the data
-file is loaded successfully (the result will be an object with
-two properties: "url", the URL of the file, and "data", the
-file's text or data), as given below, and is rejected when an error occurs (the
-result may be an object with
-one property: "url", the URL of the file). If the promise resolves,
-the parameter's "data" property will be:<ul>
-<li>For response type "xml", an XML document object.
-<li>For response type "arraybuffer", an ArrayBuffer object.
-<li>For response type "json", the JavaScript object decoded
-from JSON.
-<li>For any other type, a string of the file's text.</ul> (Type: <a href="Promise.md">Promise</a>)
 
 <a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)
