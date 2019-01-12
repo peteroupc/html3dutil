@@ -37,15 +37,13 @@ text.
 texture.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
-* <a href="H3DU.exports.MatrixStack.md">H3DU.exports.MatrixStack</a><br>This class implements a stack
-of 4x4 transformation matrices.
-* <a href="H3DU.exports.Polyhedra.md">H3DU.exports.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
-and other polyhedra.
 * <a href="H3DU.exports.SurfaceOfRevolution.md">H3DU.exports.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 * <a href="Hypotrochoid.md">Hypotrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
-* <a href="MatrixStack.md">MatrixStack</a><br>**Deprecated: Use H3DU.MatrixStack instead.**
+* <a href="MatrixStack.md">MatrixStack</a><br><b>Deprecated: Use <a href="MatrixStack.md">MatrixStack</a> instead.</b>
+* <a href="Polyhedra.md">Polyhedra</a><br>Contains helper methods for generating the five platonic solids
+and other polyhedra.
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
 * <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.

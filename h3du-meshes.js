@@ -320,8 +320,8 @@ Meshes.createLathe = function(points, slices, flat, inside) {
       x = sc[j * 2];
       y = sc[j * 2 + 1];
       vertices.push(x * radiusStart, y * radiusStart, zStartHeight,
-          0, 0, 0,
-          1 - tc[j], zStart);
+        0, 0, 0,
+        1 - tc[j], zStart);
     }
   }
   var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
@@ -506,13 +506,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
         x = sc[k];
         y = sc[k + 1];
         vertices.push(x * radius, y * radius, 0,
-        0, 0, normalZ,
-        (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
+          0, 0, normalZ,
+          (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
       }
     }
     return sweep === 360 ?
-    meshBufferFromUWrapVertexGrid(vertices, slp1, loops + 1) :
-    meshBufferFromVertexGrid(vertices, slp1, loops + 1);
+      meshBufferFromUWrapVertexGrid(vertices, slp1, loops + 1) :
+      meshBufferFromVertexGrid(vertices, slp1, loops + 1);
   }
 };
 
@@ -802,9 +802,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       x = sc[j * 2];
       y = sc[j * 2 + 1];
       vertices.push(
-          x * radiusEnd, y * radiusEnd, zStartHeight + offset,
-          x * radiusEnd * normDir, y * radiusEnd * normDir, zStartHeight * normDir,
-          1 - tx, txe);
+        x * radiusEnd, y * radiusEnd, zStartHeight + offset,
+        x * radiusEnd * normDir, y * radiusEnd * normDir, zStartHeight * normDir,
+        1 - tx, txe);
     }
     if(i + 1 === halfStacks && length > 0) {
       var sr2 = sphereRatio * 0.5;

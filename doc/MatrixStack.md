@@ -5,9 +5,9 @@
 <a name='MatrixStack'></a>
 ### MatrixStack()
 
-**Deprecated: Use H3DU.MatrixStack instead.**
+<b>Deprecated: Use <a href="MatrixStack.md">MatrixStack</a> instead.</b>
 
-Alias for the H3DU.MatrixStack class.
+Alias for the <a href="MatrixStack.md">MatrixStack</a> class.
 
 ### Methods
 
@@ -58,7 +58,7 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_get'></a>
 ### MatrixStack#get()
@@ -76,7 +76,7 @@ Modifies the matrix at the top of this stack by replacing it with the identity m
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_loadMatrix'></a>
 ### MatrixStack#loadMatrix(mat)
@@ -89,7 +89,7 @@ Modifies the matrix at the top of this stack by replacing it with the given matr
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_loadTransposeMatrix'></a>
 ### MatrixStack#loadTransposeMatrix(mat)
@@ -103,7 +103,7 @@ transpose of the given matrix.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_lookAt'></a>
 ### MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz)
@@ -126,7 +126,7 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_multMatrix'></a>
 ### MatrixStack#multMatrix(mat)
@@ -144,7 +144,7 @@ the effect of scaling then translation.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_multTransposeMatrix'></a>
 ### MatrixStack#multTransposeMatrix(mat)
@@ -160,7 +160,7 @@ another matrix.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_ortho'></a>
 ### MatrixStack#ortho(l, r, b, t, n, f)
@@ -183,7 +183,7 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_ortho2d'></a>
 ### MatrixStack#ortho2d(l, r, b, t)
@@ -201,7 +201,7 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_perspective'></a>
 ### MatrixStack#perspective(fov, aspect, n, f)
@@ -220,7 +220,7 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_pickMatrix'></a>
 ### MatrixStack#pickMatrix(wx, wy, ww, wh, vp)
@@ -238,7 +238,7 @@ a matrix that transforms the view to a portion of the viewport.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_popMatrix'></a>
 ### MatrixStack#popMatrix()
@@ -249,7 +249,7 @@ effect if the stack has only one matrix.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_pushMatrix'></a>
 ### MatrixStack#pushMatrix()
@@ -259,7 +259,7 @@ and puts the copy on top of the stack.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_rotate'></a>
 ### MatrixStack#rotate(angle, x, y, z)
@@ -275,7 +275,7 @@ Modifies the matrix at the top of this stack by multiplying it by a rotation tra
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_scale'></a>
 ### MatrixStack#scale(x, y, z)
@@ -291,7 +291,7 @@ scaling transformation.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 <a name='MatrixStack_translate'></a>
 ### MatrixStack#translate(x, y, z)
@@ -307,6 +307,6 @@ translation transformation.
 
 #### Return Value
 
-This object. (Type: H3DU.MatrixStack)
+This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
 
 [Back to documentation index.](index.md)

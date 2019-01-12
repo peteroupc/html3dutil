@@ -14,7 +14,7 @@
     "lib": "."
   },
   "scripts": {
-    "build":"ruby ./build/compile.rb"
+    "build": "ruby ./build/compile.rb"
   },
   "keywords": [
     "html",
@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "eslint": "^3.10.1",
-    "jsdoc": "^3.4.3",
-    "svgo": "^1.0.3",
-    "rollup": "^0.54.1"
+    "jsdoc": "^3.5.5",
+    "rollup": "^0.54.1",
+    "svgo": "^1.0.3"
   }
 }

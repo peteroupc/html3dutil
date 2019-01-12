@@ -434,7 +434,7 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
     p1[0] = (x + p1[0] * radiusX) * weight;
     p1[1] = (y + p1[1] * radiusY) * weight;
     curves.push(BSplineCurve.fromBezierCurve(
-    [p0, p1, p2], BSplineCurve.DIVIDE_BIT));
+      [p0, p1, p2], BSplineCurve.DIVIDE_BIT));
   }
   return new PiecewiseCurve(curves);
 };

@@ -64,7 +64,7 @@ Dir.chdir(".."){
   FileUtils.mkdir_p("dochtml")
   generateSvg("doc/websafe.svg")
   generateColorNameSvg("doc/colornames.svg")
-  filesForDoc=[p]|Dir.glob("extras/*.js")
+  filesForDoc=["./h3du_module.js"]|Dir.glob("extras/*.js")
   filesForDoc=filesForDoc.map{|f| ffq(f) }.join(" ")
   puts `jsdoc -u tutorials -t build -R README.md -d ./doc #{filesForDoc}`
   puts `jsdoc -u tutorials -t build -R README.md -d ./dochtml #{filesForDoc} -q f=html`

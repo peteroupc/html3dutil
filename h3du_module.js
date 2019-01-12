@@ -332,18 +332,22 @@ if (typeof window !== "undefined" && window !== null && !(typeof window.Promise 
  * @license CC0-1.0
  */
 
-/** @suppress {checkTypes} */
-if(typeof Object.keys === "undefined" || Object.keys === null) {
-  Object.keys = function(o) {
-    var ret = [];
-    for(var i in o) {
-      if(Object.prototype.hasOwnProperty.call(o, i)) {
-        ret[ret.length] = i;
+/** @suppress {checkTypes}
+ * @ignore */
+function objectKeysPolyfill() {
+  if(typeof Object.keys === "undefined" || Object.keys === null) {
+    Object.keys = function(o) {
+      var ret = [];
+      for(var i in o) {
+        if(Object.prototype.hasOwnProperty.call(o, i)) {
+          ret[ret.length] = i;
+        }
       }
-    }
-    return ret;
-  };
+      return ret;
+    };
+  }
 }
+objectKeysPolyfill();
 
 /**
  * Utility function that returns a promise that
@@ -1054,9 +1058,9 @@ var clampRgba = function(x) {
  * <li>A number specifying the red component. Must range from 0 to 1.</li>
  * </ul>
  * Returns (0,0,0,0) if this value is null.
- * @param {number} g Green color component (0-1).
+ * @param {number} [g] Green color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {number} b Blue color component (0-1).
+ * @param {number} [b] Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null, undefined, or omitted,
@@ -6458,8 +6462,8 @@ MeshBuffer.fromPositions = function(vertices, indices) {
 MeshBuffer.fromPositionsNormals = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
-   .setAttribute("POSITION", vertarray, 3, 0, 6)
-   .setAttribute("NORMAL", vertarray, 3, 3, 6).setIndices(indices);
+    .setAttribute("POSITION", vertarray, 3, 0, 6)
+    .setAttribute("NORMAL", vertarray, 3, 3, 6).setIndices(indices);
 };
 
 /**
@@ -6478,9 +6482,9 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
 MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
-   .setAttribute("POSITION", vertarray, 3, 0, 8)
-   .setAttribute("NORMAL", vertarray, 3, 3, 8)
-   .setAttribute("TEXCOORD", vertarray, 2, 6, 8).setIndices(indices);
+    .setAttribute("POSITION", vertarray, 3, 0, 8)
+    .setAttribute("NORMAL", vertarray, 3, 3, 8)
+    .setAttribute("TEXCOORD", vertarray, 2, 6, 8).setIndices(indices);
 };
 
 /**
@@ -6498,8 +6502,8 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
 MeshBuffer.fromPositionsUV = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
-   .setAttribute("POSITION", vertarray, 3, 0, 5)
-   .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
+    .setAttribute("POSITION", vertarray, 3, 0, 5)
+    .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
 };
 
 /**
@@ -7514,7 +7518,7 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
  * curve.constantAttribute([1,0,0],"COLOR");
  */
 CurveBuilder.prototype.constantAttribute = function(
-    constantValue, semantic, semanticIndex) {
+  constantValue, semantic, semanticIndex) {
   if(typeof constantValue === "number") {
     return this.attribute({
       "evaluate":function() {
@@ -7777,8 +7781,8 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  */
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   n = typeof n === "undefined" || n === null ?
-     CurveBuilder._defaultSubdivisionsCurve(this.attributes) :
-     Math.ceil(n);
+    CurveBuilder._defaultSubdivisionsCurve(this.attributes) :
+    Math.ceil(n);
   if(n === 0)return this;
   if(n < 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.LINES;
@@ -9429,7 +9433,7 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
     p1[0] = (x + p1[0] * radiusX) * weight;
     p1[1] = (y + p1[1] * radiusY) * weight;
     curves.push(BSplineCurve.fromBezierCurve(
-    [p0, p1, p2], BSplineCurve.DIVIDE_BIT));
+      [p0, p1, p2], BSplineCurve.DIVIDE_BIT));
   }
   return new PiecewiseCurve(curves);
 };
@@ -9443,7 +9447,7 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
  http://peteroupc.github.io/
 */
 
-  /** @ignore
+/** @ignore
    * @private
    * @constructor */
 var LinkedListNode = function(item) {
@@ -9452,7 +9456,7 @@ var LinkedListNode = function(item) {
   this.next = null;
 };
 
-  /** @ignore
+/** @ignore
    * @constructor */
 var LinkedList = function() {
   this.root = null;
@@ -9585,9 +9589,9 @@ var LinkedList = function() {
   };
 };
 
-  // --------------------------------------------------
+// --------------------------------------------------
 
-  /** @ignore
+/** @ignore
    * @constructor */
 function LineCurve(x1, y1, x2, y2) {
   this.x1 = x1;
@@ -9597,21 +9601,21 @@ function LineCurve(x1, y1, x2, y2) {
 }
 LineCurve.prototype = Object.create(Curve.prototype);
 LineCurve.prototype.constructor = LineCurve;
-  /** @ignore */
+/** @ignore */
 LineCurve.prototype.evaluate = function(u) {
   return [
     this.x1 + (this.x2 - this.x1) * u,
     this.y1 + (this.y2 - this.y1) * u, 0
   ];
 };
-  /** @ignore */
+/** @ignore */
 LineCurve.prototype.velocity = function() {
   return [
     this.x2 - this.x1,
     this.y2 - this.y1, 0
   ];
 };
-  /** @ignore */
+/** @ignore */
 LineCurve.prototype.arcLength = function(u) {
   var x = this.x1 + (this.x2 - this.x1) * u;
   var y = this.y1 + (this.y2 - this.y1) * u;
@@ -9622,7 +9626,7 @@ LineCurve.prototype.arcLength = function(u) {
   return ret;
 };
 
-  /** @ignore */
+/** @ignore */
 function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
   this.x1 = x1;
   this.x2 = x2;
@@ -9641,7 +9645,7 @@ function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
 }
 ArcCurve.prototype = Object.create(Curve.prototype);
 ArcCurve.prototype.constructor = ArcCurve;
-  /** @ignore */
+/** @ignore */
 ArcCurve.prototype.evaluate = function(t) {
   if(t === 0)return [this.x1, this.y1, 0];
   if(t === 1)return [this.x2, this.y2, 0];
@@ -9652,7 +9656,7 @@ ArcCurve.prototype.evaluate = function(t) {
     this.cr * ca * this.rx - this.sr * sa * this.rx + this.cx,
     this.sr * ca * this.rx + this.cr * sa * this.ry + this.cy, 0];
 };
-  /** @ignore */
+/** @ignore */
 ArcCurve.prototype.velocity = function(t) {
   var angle = this.theta + this.delta * t;
   var ca = Math.cos(angle);
@@ -9664,8 +9668,8 @@ ArcCurve.prototype.velocity = function(t) {
     this.sr * caDeriv * this.rx + this.cr * saDeriv * this.ry, 0];
 };
 
-  // --------------------------------------------------
-  /**
+// --------------------------------------------------
+/**
    * Represents a two-dimensional path. A path is made up
    * of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
    * cubic B&eacute;zier curves, or any combination of these, and
@@ -9681,17 +9685,17 @@ var GraphicsPath = function() {
 };
   /** @ignore */
 var Triangulate = {};
-  /** @ignore */
+/** @ignore */
 GraphicsPath.CLOSE = 0;
-  /** @ignore */
+/** @ignore */
 GraphicsPath.LINE = 1;
-  /** @ignore */
+/** @ignore */
 GraphicsPath.QUAD = 2;
-  /** @ignore */
+/** @ignore */
 GraphicsPath.CUBIC = 3;
-  /** @ignore */
+/** @ignore */
 GraphicsPath.ARC = 4;
-  /**
+/**
    * Returns whether the curve path is incomplete
    * because of an error in parsing the curve string.
    * This flag will be reset if a moveTo command,
@@ -9702,7 +9706,7 @@ GraphicsPath.ARC = 4;
 GraphicsPath.prototype.isIncomplete = function() {
   return this.incomplete;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._startPoint = function(a) {
   if(a[0] === GraphicsPath.CLOSE) {
     return [0, 0];
@@ -9710,7 +9714,7 @@ GraphicsPath._startPoint = function(a) {
     return [a[1], a[2]];
   }
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._endPoint = function(a) {
   if(a[0] === GraphicsPath.CLOSE) {
     return [0, 0];
@@ -9720,7 +9724,7 @@ GraphicsPath._endPoint = function(a) {
     return [a[a.length - 2], a[a.length - 1]];
   }
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._point = function(seg, t) {
   var a, b, x, y;
   if(seg[0] === GraphicsPath.CLOSE) {
@@ -9773,16 +9777,16 @@ GraphicsPath._point = function(seg, t) {
     return [0, 0];
   }
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._segToCurve = function(seg, t) {
   if(seg[0] === GraphicsPath.LINE) {
     return new LineCurve(seg[1], seg[2], seg[3], seg[4]);
   } else if(seg[0] === GraphicsPath.QUAD) {
     return BSplineCurve.fromBezierCurve([
-        [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0]]);
+      [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0]]);
   } else if(seg[0] === GraphicsPath.CUBIC) {
     return BSplineCurve.fromBezierCurve([
-        [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
+      [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
   } else if(seg[0] === GraphicsPath.ARC) {
     if(t === 0)return [seg[1], seg[2]];
     if(t === 1)return [seg[8], seg[9]];
@@ -9799,7 +9803,7 @@ GraphicsPath._segToCurve = function(seg, t) {
   }
 };
 
-  /** @ignore */
+/** @ignore */
 GraphicsPath._subdivide2 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, list, flatness, mode, depth) {
   var x1 = a1 + (a3 - a1) * tcut;
   var x2 = a3 + (a5 - a3) * tcut;
@@ -9817,7 +9821,7 @@ GraphicsPath._subdivide2 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut
   GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
   GraphicsPath._flattenCubic(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, list, flatness, mode, depth + 1);
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._subdivide3 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, tcut2, list, flatness, mode, depth) {
   var x1 = a1 + (a3 - a1) * tcut;
   var x2 = a3 + (a5 - a3) * tcut;
@@ -9836,7 +9840,7 @@ GraphicsPath._subdivide3 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut
   GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
   GraphicsPath._subdivide2(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, tcutx, list, flatness, mode, depth + 1);
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, list, flatness, mode, depth) {
   if(typeof depth === "undefined" || depth === null)depth = 0;
   if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a3 - a5 - a5 + a7) +
@@ -9853,7 +9857,7 @@ GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, li
     GraphicsPath._subdivide2(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, 0.5, list, flatness, mode, depth);
   }
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatness, mode, depth) {
   if(typeof depth === "undefined" || depth === null)depth = 0;
   if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a2 - a4 - a4 + a6) <= flatness) {
@@ -9877,7 +9881,7 @@ GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatn
     GraphicsPath._flattenQuad(xc, yc, x2, y2, a5, a6, tmid, t2, list, flatness, mode, depth + 1);
   }
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._flattenArc = function(a, t1, t2, list, flatness, mode, depth) {
   var rot = a[5];
   var crot = Math.cos(rot);
@@ -9885,7 +9889,7 @@ GraphicsPath._flattenArc = function(a, t1, t2, list, flatness, mode, depth) {
   var ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
   GraphicsPath._flattenArcInternal(ellipseInfo, a[1], a[2], a[8], a[9], a[12], a[13], t1, t2, list, flatness, mode, depth);
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1, theta2, t1, t2, list, flatness, mode, depth) {
   if(typeof depth === "undefined" || depth === null)depth = 0;
   var thetaMid = (theta1 + theta2) * 0.5;
@@ -9913,7 +9917,7 @@ GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1,
     GraphicsPath._flattenArcInternal(ellipseInfo, xmid, ymid, x2, y2, thetaMid, theta2, tmid, t2, list, flatness, mode, depth + 1);
   }
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath.prototype._start = function() {
   for(var i = 0; i < this.segments.length; i++) {
     var s = this.segments[i];
@@ -9921,7 +9925,7 @@ GraphicsPath.prototype._start = function() {
   }
   return [0, 0];
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath.prototype._end = function() {
   for(var i = this.segments.length - 1; i >= 0; i--) {
     var s = this.segments[i];
@@ -9930,7 +9934,7 @@ GraphicsPath.prototype._end = function() {
   return [0, 0];
 };
 
-  /**
+/**
    * Merges the path segments in another path onto this one.
    * @param {GraphicsPath} path Another graphics path.
    * Can be null.
@@ -9963,14 +9967,14 @@ GraphicsPath.prototype.merge = function(path) {
         var delta = a[13] - a[12];
         var largeArc = Math.abs(delta) > Math.PI;
         this.arcSvgTo(a[3], a[4], a[5] * GraphicsPath._toDegrees,
-            largeArc, delta > 0, a[8], a[9]);
+          largeArc, delta > 0, a[8], a[9]);
       }
     }
   }
   return this;
 };
 
-  /**
+/**
    * Returns this path in the form of a string in SVG path format.
    * See {@link GraphicsPath.fromString}.
    * @returns {string} A string describing the path in the SVG path
@@ -10009,7 +10013,7 @@ GraphicsPath.prototype.toString = function() {
   }
   return ret;
 };
-  /**
+/**
    * Finds the approximate length of this path.
    * @param {number} [flatness] No longer used by this method.
    * @returns {number} Approximate length of this path
@@ -10022,7 +10026,7 @@ GraphicsPath.prototype.pathLength = function(flatness) {
   }
   return this.getCurves().getLength();
 };
-  /**
+/**
    * Gets an array of line segments approximating
    * the path.
    * @param {number} [flatness] When curves and arcs
@@ -10041,19 +10045,19 @@ GraphicsPath.prototype.getLines = function(flatness) {
     var s = this.segments[i];
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-          s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
+        s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
     } else if(s[0] === GraphicsPath.CUBIC) {
       GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-          s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
+        s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
     } else if(s[0] === GraphicsPath.ARC) {
-      GraphicsPath._flattenArc(s, 0.0, 1.0, ret, flatness * 2, 0);
+      GraphicsPath._flattenArc(s, 0.0, 1.0, ret, flatness * 2, 0, 0);
     } else if(s[0] !== GraphicsPath.CLOSE) {
       ret.push([s[1], s[2], s[3], s[4]]);
     }
   }
   return ret;
 };
-  /**
+/**
    * Creates a path in which curves and arcs are decomposed
    * to line segments.
    * @param {number} [flatness] When curves and arcs
@@ -10084,18 +10088,18 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
     ret.splice(0, ret.length);
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-          s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
+        s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0, 0);
       for(j = 0; j < ret.length; j++) {
         path.lineTo(ret[j][2], ret[j][3]);
       }
     } else if(s[0] === GraphicsPath.CUBIC) {
       GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-          s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
+        s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0, 0);
       for(j = 0; j < ret.length; j++) {
         path.lineTo(ret[j][2], ret[j][3]);
       }
     } else if(s[0] === GraphicsPath.ARC) {
-      GraphicsPath._flattenArc(s, 0.0, 1.0, ret, flatness * 2, 0);
+      GraphicsPath._flattenArc(s, 0.0, 1.0, ret, flatness * 2, 0, 0);
       for(j = 0; j < ret.length; j++) {
         path.lineTo(ret[j][2], ret[j][3]);
       }
@@ -10108,7 +10112,7 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
   return path;
 };
 
-  /**
+/**
    * Creates a path in which arcs are decomposed
    * to cubic B&eacute;zier curves (which will approximate those arcs).
    * @returns {GraphicsPath} A path consisting only of line
@@ -10132,15 +10136,15 @@ GraphicsPath.prototype.toCurvePath = function() {
     last = endpt;
     if(s[0] === GraphicsPath.QUAD) {
       path.quadraticCurveTo(s[3], s[4],
-          s[5], s[6]);
+        s[5], s[6]);
     } else if(s[0] === GraphicsPath.CUBIC) {
       path.bezierCurveTo(s[3], s[4],
-          s[5], s[6], s[7], s[8]);
+        s[5], s[6], s[7], s[8]);
     } else if(s[0] === GraphicsPath.ARC) {
       var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
       for(j = 0; j < curves.length; j++) {
         path.bezierCurveTo(curves[j][2], curves[j][3], curves[j][4],
-            curves[j][5], curves[j][6], curves[j][7]);
+          curves[j][5], curves[j][6], curves[j][7]);
       }
     } else if(s[0] === GraphicsPath.LINE) {
       path.lineTo(s[3], s[4]);
@@ -10149,7 +10153,7 @@ GraphicsPath.prototype.toCurvePath = function() {
   return path;
 };
 
-  /** @ignore */
+/** @ignore */
 GraphicsPath._accBounds = function(ret, s, t) {
   if(t >= 0 && t <= 1) {
     var pt = GraphicsPath._point(s, t);
@@ -10159,14 +10163,14 @@ GraphicsPath._accBounds = function(ret, s, t) {
     ret[3] = Math.max(pt[1], ret[3]);
   }
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._accBoundsPoint = function(ret, x, y) {
   ret[0] = Math.min(x, ret[0]);
   ret[1] = Math.min(y, ret[1]);
   ret[2] = Math.max(x, ret[2]);
   ret[3] = Math.max(y, ret[3]);
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
   var ca = Math.cos(angle);
   var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
@@ -10177,7 +10181,7 @@ GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
   ret[2] = Math.max(px, ret[2]);
   ret[3] = Math.max(py, ret[3]);
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._normAngleRadians = function(angle) {
   var twopi = Math.PI * 2;
   var normAngle = angle;
@@ -10189,7 +10193,7 @@ GraphicsPath._normAngleRadians = function(angle) {
   }
   return normAngle;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
   var twopi = Math.PI * 2;
   var diff = endAngle - startAngle;
@@ -10211,7 +10215,7 @@ GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
     return normAngle >= normEnd || normAngle <= normStart;
   }
 };
-  /**
+/**
    * Calculates an axis-aligned bounding box that tightly
    * fits this graphics path.
    * @returns {Array<number>} An array of four numbers
@@ -10287,11 +10291,11 @@ GraphicsPath.prototype.getBounds = function() {
       var rot = s[5]; // Rotation in radians
       var cosp, sinp;
       if(Math.abs(delta - theta) >= Math.PI * 2) {
-          // This arc goes around the entire ellipse, giving
-          // it a much simpler formula for the bounding box
+        // This arc goes around the entire ellipse, giving
+        // it a much simpler formula for the bounding box
         var distx, disty;
         if(rx === ry) {
-            // The arc forms a circle
+          // The arc forms a circle
           distx = rx;
           disty = ry;
         } else {
@@ -10332,7 +10336,7 @@ GraphicsPath.prototype.getBounds = function() {
   return ret;
 };
 
-  /**
+/**
    * Returns a path that reverses the course of this path.
    * @returns {GraphicsPath} A GraphicsPath
    * object with its path segments reversed.
@@ -10400,7 +10404,7 @@ GraphicsPath.prototype.reverse = function() {
       var reversedSweep = delta < 0;
       var largeArc = Math.abs(delta) > Math.PI;
       ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
-          largeArc, reversedSweep, s[1], s[2]);
+        largeArc, reversedSweep, s[1], s[2]);
     } else if(s[0] === GraphicsPath.LINE) {
       ret.lineTo(s[1], s[2]);
     }
@@ -10409,7 +10413,7 @@ GraphicsPath.prototype.reverse = function() {
     ret.closePath();
   return ret;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
   if(!nodegen) {
     curPath.push(x, y);
@@ -10420,7 +10424,7 @@ GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
   }
 };
 
-  /** @ignore */
+/** @ignore */
 GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
   var tmp = [];
   var subpaths = [];
@@ -10446,18 +10450,18 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
     }
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-          s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0);
+        s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0);
       for(j = 0; j < tmp.length; j++) {
         GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
       }
     } else if(s[0] === GraphicsPath.CUBIC) {
       GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-          s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0);
+        s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0);
       for(j = 0; j < tmp.length; j++) {
         GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
       }
     } else if(s[0] === GraphicsPath.ARC) {
-      GraphicsPath._flattenArc(s, 0.0, 1.0, tmp, flatness * 2, 0);
+      GraphicsPath._flattenArc(s, 0.0, 1.0, tmp, flatness * 2, 0, 0);
       for(j = 0; j < tmp.length; j++) {
         GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
       }
@@ -10468,12 +10472,12 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
   return subpaths;
 };
 
-  /** @ignore
+/** @ignore
    * @private
    * @constructor */
 GraphicsPath._CurveList = function(curves) {
   Curve.apply(this,
-      [new PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
+    [new PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
   this.curves = curves;
 };
 GraphicsPath._CurveList.prototype = Object.create(Curve.prototype);
@@ -10481,7 +10485,7 @@ GraphicsPath._CurveList.prototype.constructor = GraphicsPath._CurveList;
 GraphicsPath._CurveList.prototype.getCurves = function() {
   return this.curves;
 };
-  /**
+/**
    * Does a linear interpolation between two graphics paths.
    * @param {GraphicsPath} other The second graphics path.
    * @param {number} t An interpolation factor, generally ranging from 0 through 1.
@@ -10585,7 +10589,7 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       var ey = segThis[9] + (segOther[9] - segThis[9]) * t;
       if(domove)ret.moveTo(sx, sy);
       ret.arcSvgTo(rx, ry, rot * GraphicsPath._toDegrees,
-          largeArc, sweep, ex, ey);
+        largeArc, sweep, ex, ey);
       break;
     }
     default:
@@ -10595,18 +10599,18 @@ GraphicsPath.prototype.interpolate = function(other, t) {
   }
   return ret;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._addSegment = function(a, c) {
   if(a.length > 0 && c instanceof LineCurve) {
     if(c.x1 === c.x2 && c.y1 === c.y2) {
-        // Degenerate line segment, don't add
+      // Degenerate line segment, don't add
       return;
     }
   }
   a.push(c);
 };
 
-  /**
+/**
    * Gets a [curve evaluator object]{@link Curve} for
    * the curves described by this path. The return value doesn't track changes to the path.
    * @returns {Object} A [curve evaluator object]{@link Curve} that implements
@@ -10624,8 +10628,8 @@ GraphicsPath._addSegment = function(a, c) {
    * </ul>
    */
 GraphicsPath.prototype.getCurves = function() {
-    // TODO: Consider returning a list of curves and require
-    // callers to use PiecewiseCurve to get the prior behavior
+  // TODO: Consider returning a list of curves and require
+  // callers to use PiecewiseCurve to get the prior behavior
   var subpaths = [];
   var curves = [];
   var lastptx = 0;
@@ -10651,7 +10655,7 @@ GraphicsPath.prototype.getCurves = function() {
       GraphicsPath._addSegment(curPath, GraphicsPath._segToCurve(s));
     } else {
       GraphicsPath._addSegment(curPath,
-          new LineCurve(lastptx, lastpty, startptx, startpty));
+        new LineCurve(lastptx, lastpty, startptx, startpty));
       lastptx = startptx;
       lastpty = startpty;
     }
@@ -10693,7 +10697,7 @@ GraphicsPath.prototype.getSubpaths = function() {
   return subpaths;
 };
 
-  /**
+/**
    * Gets an array of the end points of
    * line segments approximating the path.
    * @param {number} [flatness] When curves and arcs
@@ -10720,7 +10724,7 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
   return points;
 };
 
-  /**
+/**
    * Gets an array of the end points of
    * line segments approximating the path. The positions will be in the form of objects with
    * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
@@ -10758,7 +10762,7 @@ GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
   return points;
 };
 
-  /**
+/**
    * Gets an array of points evenly spaced across the length
    * of the path.
    * @param {number} numPoints Number of points to return.
@@ -10787,7 +10791,7 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
   return points;
 };
 
-  /**
+/**
    * Gets an array of points evenly spaced across the length
    * of the path. The positions will be in the form of objects with
    * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
@@ -10836,7 +10840,7 @@ GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   }
   return points;
 };
-  /**
+/**
    * Makes this path closed. Adds a line segment to the
    * path's start position, if necessary.
    * @returns {GraphicsPath} This object.
@@ -10853,7 +10857,7 @@ GraphicsPath.prototype.closePath = function() {
   return this;
 };
 
-  /**
+/**
    * Moves the current start position and end position to the given position.
    * @param {number} x X coordinate of the position.
    * @param {number} y Y coordinate of the position.
@@ -10867,7 +10871,7 @@ GraphicsPath.prototype.moveTo = function(x, y) {
   this.incomplete = false;
   return this;
 };
-  /**
+/**
    * Adds a line segment to the path, starting
    * at the path's end position, then
    * sets the end position to the end of the segment.
@@ -10892,7 +10896,7 @@ GraphicsPath.prototype.setEndPos = function(x, y) {
   return this;
 };
 
-  /**
+/**
    * Gets the current point stored in this path.
    * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
    */
@@ -10900,7 +10904,7 @@ GraphicsPath.prototype.getCurrentPoint = function() {
   return [this.endPos[0], this.endPos[1]];
 };
 
-  /** @ignore */
+/** @ignore */
 GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
   var t1 = x1 - x0;
   var t2 = y1 - y0;
@@ -10914,7 +10918,7 @@ GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
   var t6 = [x2 - t5[0], y2 - t5[1]];
   return t6[0] * t6[0] + t6[1] * t6[1] === 0;
 };
-  /**
+/**
    * Adds path segments in the form of a circular arc to this path,
    * using the parameterization specified in the "arcTo" method of the
    * HTML Canvas 2D Context.
@@ -10961,7 +10965,7 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
   var sweep = cross < 0;
   return this.arcSvgTo(radius, radius, 0, false, sweep, endTangent[0], endTangent[1]);
 };
-  /**
+/**
    * Adds path segments in the form of a circular arc to this path,
    * using the parameterization specified in the "arc" method of the
    * HTML Canvas 2D Context.
@@ -10980,7 +10984,7 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
 GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
   return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngle, ccw, drawLine) {
   if(radius < 0) {
     throw new Error("IndexSizeError");
@@ -11005,29 +11009,29 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
   if(!ccw && endAngle - startAngle >= twopi ||
    ccw && startAngle - endAngle >= twopi) {
     return this
-        ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
-        ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
-        ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
+      ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
+      ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
+      ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
   } else {
     var delta = endAngle - startAngle;
     if(delta >= twopi || delta < 0) {
       var d = delta % twopi;
       if(d === 0 && delta !== 0) {
         return this
-            ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
-            ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
-            ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
+          ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
+          ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
+          ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
       }
       delta = d;
     }
     var largeArc = !!(Math.abs(delta) > Math.PI ^ !!ccw ^ startAngle > endAngle);
     var sweep = !!(delta > 0 ^ !!ccw ^ startAngle > endAngle);
     return this.lineTo(startX, startY)
-        .arcSvgTo(radius, radius, 0, largeArc, sweep, endX, endY);
+      .arcSvgTo(radius, radius, 0, largeArc, sweep, endX, endY);
   }
 };
 
-  /**
+/**
    * Adds a quadratic B&eacute;zier curve to this path starting
    * at this path's current position. The current position will be
    * the curve's first control point.
@@ -11045,7 +11049,7 @@ GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
   this.incomplete = false;
   return this;
 };
-  /**
+/**
    * Adds a cubic B&eacute;zier curve to this path starting
    * at this path's current position. The current position will be
    * the curve's first control point.
@@ -11066,21 +11070,21 @@ GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
   return this;
 };
 
-  /** @ignore */
+/** @ignore */
 GraphicsPath._vecangle = function(a, b, c, d) {
   var dot = a * c + b * d;
   var denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
   dot /= denom;
   var sgn = a * d - b * c;
-    // avoid NaN when dot is just slightly out of range
-    // for acos
+  // avoid NaN when dot is just slightly out of range
+  // for acos
   if(dot < -1)dot = -1;
   else if(dot > 1)dot = 1;
   var ret = Math.acos(dot);
   if(sgn < 0)ret = -ret;
   return ret;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._arcSvgToCenterParam = function(a) {
   var x1 = a[1];
   var y1 = a[2];
@@ -11117,8 +11121,8 @@ GraphicsPath._arcSvgToCenterParam = function(a) {
   var nvecx = (-x1p - cxp) / rx;
   var nvecy = (-y1p - cyp) / ry;
   var cosTheta1 = vecx / Math.sqrt(vecx * vecx + vecy * vecy);
-    // avoid NaN when cosTheta1 is just slightly out of range
-    // for acos
+  // avoid NaN when cosTheta1 is just slightly out of range
+  // for acos
   if(cosTheta1 < -1)cosTheta1 = -1;
   else if(cosTheta1 > 1)cosTheta1 = 1;
   var theta1 = Math.acos(cosTheta1);
@@ -11135,7 +11139,7 @@ GraphicsPath._arcSvgToCenterParam = function(a) {
 };
 GraphicsPath._toRadians = Math.PI / 180;
 GraphicsPath._toDegrees = 180.0 / Math.PI;
-  /** @ignore */
+/** @ignore */
 GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) {
   var crot = Math.cos(rot);
   var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
@@ -11173,7 +11177,7 @@ GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) 
   return ret;
 };
 
-  /**
+/**
    * Adds path segments in the form of an elliptical arc to this path,
    * using the parameterization used by the SVG specification.
    * @param {number} rx X axis radius of the ellipse that the arc will
@@ -11234,7 +11238,7 @@ GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2)
   this.incomplete = false;
   return this;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._nextAfterWs = function(str, index) {
   while(index[0] < str.length) {
     var c = str.charCodeAt(index[0]);
@@ -11245,7 +11249,7 @@ GraphicsPath._nextAfterWs = function(str, index) {
   }
   return -1;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._nextAfterSepReq = function(str, index) {
   var comma = false;
   var havesep = false;
@@ -11265,7 +11269,7 @@ GraphicsPath._nextAfterSepReq = function(str, index) {
   }
   return -1;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._nextAfterSep = function(str, index) {
   var comma = false;
   while(index[0] < str.length) {
@@ -11281,19 +11285,19 @@ GraphicsPath._nextAfterSep = function(str, index) {
   }
   return -1;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._peekNextNumber = function(str, index) {
   var oldindex = index[0];
   var ret = GraphicsPath._nextNumber(str, index, true) !== null;
   index[0] = oldindex;
   return ret;
 };
-  /** @ignore */
+/** @ignore */
 GraphicsPath._nextNumber = function(str, index, afterSep) {
   var oldindex = index[0];
   var c = afterSep ?
-      GraphicsPath._nextAfterSep(str, index) :
-      GraphicsPath._nextAfterWs(str, index);
+    GraphicsPath._nextAfterSep(str, index) :
+    GraphicsPath._nextAfterWs(str, index);
   var startIndex = index[0] - 1;
   var dot = false;
   var digit = false;
@@ -11364,7 +11368,7 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
         }
         index[0]--;
         ret = parseFloat(str.substr(startIndex, index[0] - startIndex));
-          // console.log([str.substr(startIndex,index[0]-startIndex),ret])
+        // console.log([str.substr(startIndex,index[0]-startIndex),ret])
         if(Number.isNaN(ret)) {
           index[0] = oldindex;
           return null;
@@ -11392,7 +11396,7 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
   return ret;
 };
 
-  /**
+/**
    * Returns a modified version of this path that is transformed
    * according to the given affine transformation (a transformation
    * that keeps straight lines straight and parallel lines parallel).
@@ -11447,21 +11451,21 @@ GraphicsPath.prototype.transform = function(trans) {
       break;
     case GraphicsPath.ARC: {
       if(a === 1 && b === 0 && c === 0 && d === 1) {
-          // just a translation
+        // just a translation
         var delta = s[13] - s[12];
         var largeArc = Math.abs(delta) > Math.PI;
         if(domove)ret.moveTo(s[1] + e, s[2] + f);
         ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
-            largeArc, delta > 0, s[8] + e, s[9] + f);
+          largeArc, delta > 0, s[8] + e, s[9] + f);
         break;
       }
       if(b === 0 && c === 0 && s[5] === 0) {
-          // any scale and ellipse rotation 0
+        // any scale and ellipse rotation 0
         delta = s[13] - s[12];
         largeArc = Math.abs(delta) > Math.PI;
         if(domove)ret.moveTo(a * s[1] + e, d * s[2] + f);
         ret.arcSvgTo(a * s[3], d * s[4], 0,
-            largeArc, delta > 0, a * s[8] + e, d * s[9] + f);
+          largeArc, delta > 0, a * s[8] + e, d * s[9] + f);
         break;
       }
       var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
@@ -11489,7 +11493,7 @@ GraphicsPath.prototype.transform = function(trans) {
   return ret;
 };
 
-  /**
+/**
    * Adds path segments to this path that form an axis-aligned rectangle.
    * @param {number} x X coordinate of the rectangle's upper-left corner (assuming the
    * coordinate system's X axis points right and the Y axis down).
@@ -11502,10 +11506,10 @@ GraphicsPath.prototype.transform = function(trans) {
 GraphicsPath.prototype.rect = function(x, y, w, h) {
   if(w < 0 || h < 0)return this;
   return this.moveTo(x, y)
-      .lineTo(x + w, y)
-      .lineTo(x + w, y + h)
-      .lineTo(x, y + h)
-      .closePath();
+    .lineTo(x + w, y)
+    .lineTo(x + w, y + h)
+    .lineTo(x, y + h)
+    .closePath();
 };
 
 /**
@@ -11887,7 +11891,7 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
   }
   return this.closePath();
 };
-  /**
+/**
    * Creates a graphics path from a string whose format follows
    * the SVG specification.
    * @param {string} str A string, in the SVG path format, representing
@@ -11940,12 +11944,12 @@ GraphicsPath.fromString = function(str) {
   while(!failed && index[0] < str.length) {
     var c = GraphicsPath._nextAfterWs(str, index);
     if(!started && c !== 0x4d && c !== 0x6d) {
-        // not a move-to command when path
-        // started
+      // not a move-to command when path
+      // started
       failed = true; break;
     }
-      // NOTE: Doesn't implement SVG2 meaning of Z
-      // command yet because it's not yet fully specified
+    // NOTE: Doesn't implement SVG2 meaning of Z
+    // command yet because it's not yet fully specified
     switch(c) {
     case 0x5a:case 0x7a:{ // 'Z', 'z'
       ret.closePath();
@@ -11964,7 +11968,7 @@ GraphicsPath.fromString = function(str) {
         if(typeof y === "undefined" || y === null) {
           failed = true; break;
         }
-          // console.log([x,y])
+        // console.log([x,y])
         if(sep)ret.lineTo(curx + x, cury + y);
         else ret.moveTo(curx + x, cury + y);
         sep = true;
@@ -12036,7 +12040,7 @@ GraphicsPath.fromString = function(str) {
         if(failed)break;
         y = arr[0]; x2 = arr[1]; y2 = arr[2]; var x3 = arr[3]; var y3 = arr[4];
         ret.bezierCurveTo(curx + x, cury + y, curx + x2, cury + y2,
-            curx + x3, cury + y3);
+          curx + x3, cury + y3);
         sep = true;
       }
       break;
@@ -12098,7 +12102,7 @@ GraphicsPath.fromString = function(str) {
           failed = true; break;
         }
         ret.arcSvgTo(x + curx, y + cury, rot, largeArc !== 0x30,
-            sweep !== 0x30, x2 + curx, y2 + cury);
+          sweep !== 0x30, x2 + curx, y2 + cury);
         sep = true;
       }
       break;
@@ -12124,13 +12128,13 @@ GraphicsPath.fromString = function(str) {
         if(typeof y2 === "undefined" || y2 === null) {
           failed = true; break;
         }
-          // second control point to use if previous segment is not a cubic
+        // second control point to use if previous segment is not a cubic
         xcp = ret.endPos[0];
         ycp = ret.endPos[1];
         endx = ret.endPos[0];
         endy = ret.endPos[1];
-          // NOTE: If previous segment is not a cubic, second control
-          // point is same as current point.
+        // NOTE: If previous segment is not a cubic, second control
+        // point is same as current point.
         if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.CUBIC) {
           xcp = ret.segments[ret.segments.length - 1][5];
@@ -12158,8 +12162,8 @@ GraphicsPath.fromString = function(str) {
         ycp = ret.endPos[1];
         endx = ret.endPos[0];
         endy = ret.endPos[1];
-          // NOTE: If previous segment is not a quad, first control
-          // point is same as current point.
+        // NOTE: If previous segment is not a quad, first control
+        // point is same as current point.
         if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.QUAD) {
           xcp = ret.segments[ret.segments.length - 1][3];
@@ -12186,9 +12190,9 @@ Triangulate._REFLEX = 3;
 var EPSILON = 1.1102230246251565e-16;
 var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 
-  // orient2D was
-  // Adapted by Peter O. from the HE_Mesh library
-  // written by Frederik Vanhoutte.
+// orient2D was
+// Adapted by Peter O. from the HE_Mesh library
+// written by Frederik Vanhoutte.
 
 function orient2D(pa, pb, pc) {
   var detleft, detright, det;
@@ -12216,7 +12220,7 @@ function orient2D(pa, pb, pc) {
   if (det >= errbound || -det >= errbound) {
     return det < 0 ? -1 : det === 0 ? 0 : 1;
   }
-/* TODO: use higher precision math for:
+  /* TODO: use higher precision math for:
     detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
     detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
     det = detleft - detright;
@@ -12224,7 +12228,7 @@ function orient2D(pa, pb, pc) {
   return 0;
 }
 
-  /** @ignore */
+/** @ignore */
 Triangulate._pointInTri = function(i1, i2, i3, p) {
   if(p[0] === i1[0] && p[1] === i1[1])return false;
   if(p[0] === i2[0] && p[1] === i2[1])return false;
@@ -12235,7 +12239,7 @@ Triangulate._pointInTri = function(i1, i2, i3, p) {
   var t6 = i2[1] - i1[1];
   var t7 = t5 * t3 + t6 * t4;
   var t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
-      t3 * t3 + t4 * t4);
+    t3 * t3 + t4 * t4);
   if (Math.sqrt(Math.abs(t8)) > 1e-9) {
     var p1 = orient2D(i2, i3, p);
     var p2 = orient2D(i2, i3, i1);
@@ -12251,12 +12255,12 @@ Triangulate._pointInTri = function(i1, i2, i3, p) {
   }
 };
 
-  /** @ignore */
+/** @ignore */
 Triangulate._Contour = function(vertices) {
   this.vertexList = new LinkedList();
   var vertLength = vertices.length;
-    // For convenience, eliminate the last
-    // vertex if it matches the first vertex
+  // For convenience, eliminate the last
+  // vertex if it matches the first vertex
   if(vertLength >= 4 &&
     vertices[0] === vertices[vertLength - 2] &&
     vertices[1] === vertices[vertLength - 1]) {
@@ -12275,7 +12279,7 @@ Triangulate._Contour = function(vertices) {
     var x = vertices[i];
     var y = vertices[i + 1];
     if(i > 0 && x === lastX && y === lastY) {
-        // skip consecutive duplicate points
+      // skip consecutive duplicate points
       continue;
     }
     lastX = x;
@@ -12299,7 +12303,7 @@ Triangulate._Contour = function(vertices) {
   }
   this.maxXNode = maxXNode;
   this.bounds = bounds;
-    // Find the prevailing winding of the polygon
+  // Find the prevailing winding of the polygon
   var ori = 0;
   var convex = true;
   var convexOri = -2;
@@ -12345,7 +12349,7 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     }
     if(x <= xmax && y >= ymin && y <= ymax) {
       if(y1 === y2) {
-          // parallel to the ray
+        // parallel to the ray
         closeVertices.push([
           xmin, xmin === vert.data[0] ? vert : vn, true]);
       } else {
@@ -12366,18 +12370,18 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     vert = vert.next;
   }
   if(closeVertices.length === 0) {
-      // no visible vertices
+    // no visible vertices
     return null;
   } else if(closeVertices.length > 1) {
-      // sort by X coordinate
+    // sort by X coordinate
     closeVertices = closeVertices.sort(function(a, b) {
       if(a[0] === b[0])return 0;
       return a[0] < b[0] ? -1 : 1;
     });
   }
   if(closeVertices[0][2]) {
-      // closest vertex is already a vertex of
-      // the contour
+    // closest vertex is already a vertex of
+    // the contour
     return closeVertices[0][1];
   }
   vert = closeVertices[0][1];
@@ -12392,11 +12396,11 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
       var iterNext = iterVert.next ? iterVert.next : firstVert;
       var orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
       if(orient !== 0 && orient !== this.vertexList.winding) {
-          // This is a reflex vertex
+        // This is a reflex vertex
         var pointIn = Triangulate._pointInTri(
-            triangle1, triangle2, nextVert.data, iterVert.data);
+          triangle1, triangle2, nextVert.data, iterVert.data);
         if(pointIn) {
-            // The reflex vertex is in the triangle
+          // The reflex vertex is in the triangle
           var t1 = iterVert.data[0] - triangle1[0];
           var t2 = iterVert.data[1] - triangle1[1];
           var distance = Math.sqrt(t1 * t1 + t2 * t2);
@@ -12410,10 +12414,10 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     iterVert = iterVert.next;
   }
   if(innerReflexes.length === 0) {
-      // vertex after the intersected vertex is visible
+    // vertex after the intersected vertex is visible
     return nextVert;
   }
-    // sort by angle, then by distance
+  // sort by angle, then by distance
   if(innerReflexes.length > 1) {
     innerReflexes = innerReflexes.sort(function(a, b) {
       if(a[0] === b[0]) {
@@ -12473,7 +12477,7 @@ function decomposePolygon(pointlist, accumulator) {
   if (pointlist.length < 3) {
     return;
   }
-    // TODO
+  // TODO
   console.warn("not implemented");
   accumulator.push(pointlist);
 }
@@ -12481,8 +12485,8 @@ function decomposePolygon(pointlist, accumulator) {
 function decomposeTriangles(points, tris, isConvex) {
   var polys = [];
   if(isConvex) {
-      // Already found to be convex, so
-      // this is trivial
+    // Already found to be convex, so
+    // this is trivial
     polys.push(points);
   } else {
     decomposePolygon(points, polys);
@@ -12499,7 +12503,7 @@ function decomposeTriangles(points, tris, isConvex) {
   }
 }
 
-  /**
+/**
    * Converts the subpaths in this path to triangles.
    * Treats each subpath as a polygon even if it isn't closed.
    * Each subpath should not contain self-intersections or
@@ -12520,7 +12524,7 @@ function decomposeTriangles(points, tris, isConvex) {
    */
 GraphicsPath.prototype.getTriangles = function(flatness) {
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-    // NOTE: _getSubpaths doesn't add degenerate line segments
+  // NOTE: _getSubpaths doesn't add degenerate line segments
   var subpaths = this._getSubpaths(flatness, true);
   var contours1 = [];
   var contours2 = [];
@@ -12529,8 +12533,8 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
   var i, j;
   for(i = 0; i < subpaths.length; i++) {
     var contour = new Triangulate._Contour(subpaths[i]);
-      // NOTE: Ignores contours with winding 0
-      // (empty, zero area, sometimes self-intersecting)
+    // NOTE: Ignores contours with winding 0
+    // (empty, zero area, sometimes self-intersecting)
     if(contour.winding > 0) {
       if(firstOrient === 0)firstOrient = 1;
       contours1.push(contour);
@@ -12540,15 +12544,15 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
     }
   }
   if(contours2.length === 0 || contours1.length === 0) {
-      // All the contours have the same winding order
+    // All the contours have the same winding order
     var c = contours2.length === 0 ? contours1 : contours2;
     for(i = 0; i < c.length; i++) {
       Triangulate._triangulate(c[i], tris);
     }
-      // if(tris.length==0) {
-      // console.log("no triangles added! "+[contours1.length,contours2.length])
-      // throw new Error()
-      // }
+    // if(tris.length==0) {
+    // console.log("no triangles added! "+[contours1.length,contours2.length])
+    // throw new Error()
+    // }
   } else {
     var c1 = firstOrient > 0 ? contours1 : contours2;
     var c2 = firstOrient > 0 ? contours2 : contours1;
@@ -12557,13 +12561,13 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
       for(j = 0; j < c1.length; j++) {
         if(!c1[j])continue;
         var maxPoint = c2[i].maxXNode;
-          // Find out if the contour is inside another contour,
-          // and if so, connect its vertices to that contour
+        // Find out if the contour is inside another contour,
+        // and if so, connect its vertices to that contour
         var vp = c1[j].findVisiblePoint(
-            maxPoint.data[0], maxPoint.data[1]);
+          maxPoint.data[0], maxPoint.data[1]);
         if(vp) {
           c1[j].vertexCount += Triangulate._connectContours(
-              c2[i].vertexList, c1[j].vertexList, maxPoint, vp);
+            c2[i].vertexList, c1[j].vertexList, maxPoint, vp);
           c2[i] = null;
           break;
         }
@@ -12618,10 +12622,10 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
   for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
     vertices.push(line[0], line[1], z,
-       line[2], line[3], z);
+      line[2], line[3], z);
   }
   return MeshBuffer.fromPositions(vertices).setPrimitiveType(
-     MeshBuffer.LINES);
+    MeshBuffer.LINES);
 };
 /**
  * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
@@ -12646,17 +12650,17 @@ GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
     var dot = dx * dx + dy * dy;
     if(dot === 0)continue;
     vertices.push(line[0], line[1], z1,
-     line[2], line[3], z1,
-     line[0], line[1], z2,
-     line[2], line[3], z1,
-     line[2], line[3], z2,
-     line[0], line[1], z2);
+      line[2], line[3], z1,
+      line[0], line[1], z2,
+      line[2], line[3], z1,
+      line[2], line[3], z2,
+      line[0], line[1], z2);
   }
   return MeshBuffer.fromPositions(vertices)
-     .recalcNormals(true);
+    .recalcNormals(true);
 };
 
-  /** @ignore */
+/** @ignore */
 Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
   var vpnode = dstNode;
   var c2node = maxPoint;
@@ -12674,22 +12678,22 @@ Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
   }
   vpnode = dst.insertAfter(maxPoint.data, vpnode);
   dst.insertAfter(dstNode.data, vpnode);
-    // Connecting two polygons, even if convex, may not
-    // result in a convex polygon
+  // Connecting two polygons, even if convex, may not
+  // result in a convex polygon
   dst.convex = false;
   count += 2;
   return count;
 };
-  /** @ignore */
+/** @ignore */
 Triangulate._triangulate = function(contour, tris) {
   var t1, tri;
   if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
-      // too few vertices, or the winding
-      // suggests a zero area or even a certain
-      // self-intersecting polygon
+    // too few vertices, or the winding
+    // suggests a zero area or even a certain
+    // self-intersecting polygon
     return;
   } else if(contour.vertexCount === 3) {
-      // just one triangle
+    // just one triangle
     t1 = contour.vertexList.first();
     tri = [];
     while(t1) {
@@ -12709,14 +12713,14 @@ Triangulate._triangulate = function(contour, tris) {
   decomposeTriangles(vertices, tris, contour.convex);
 };
 
-  // //////////////////////////////////////////////////////////////////////////////////////////////
-  // Data structures
-  // //////////////////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Data structures
+// //////////////////////////////////////////////////////////////////////////////////////////////
 
-  /** @ignore
+/** @ignore
    * @constructor */
 var PriorityQueue = function(comparer) {
-    // Based on Doug Lea's public domain Heap class in Java
+  // Based on Doug Lea's public domain Heap class in Java
   this.comparer = comparer;
   this.nodes = [];
   this._size = 0;
@@ -12735,8 +12739,8 @@ var PriorityQueue = function(comparer) {
     var x = this._size;
     while(x > 0) {
       var p = (x - 1) / 2 | 0;
-        // NOTE: comparer > 0, not comparer < 0, as
-        // in Doug Lea's implementation
+      // NOTE: comparer > 0, not comparer < 0, as
+      // in Doug Lea's implementation
       if(this.comparer(item, this.nodes[p]) > 0) {
         this.nodes[x] = this.nodes[p];
         x = p;
@@ -12746,8 +12750,8 @@ var PriorityQueue = function(comparer) {
     this._size += 1;
     return this;
   };
-    // NOTE: Pops out the greatest element, not
-    // the least, as in Doug Lea's implementation
+  // NOTE: Pops out the greatest element, not
+  // the least, as in Doug Lea's implementation
   this.pop = function() {
     var data = null;
     if(this._size > 0) {
@@ -12856,35 +12860,35 @@ RedBlackTree._defaultCompare = function(a, b) {
   if(a === b)return 0;
   return a < b ? -1 : 1;
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree.prototype.first = function() {
   var r = this.root;
   if(typeof r === "undefined" || r === null)return null;
   while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
   return r;
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree.prototype.last = function() {
   var r = this.root;
   if(typeof r === "undefined" || r === null)return null;
   while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
   return r;
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree.prototype.find = function(data) {
   var it = this.root;
   while(typeof it !== "undefined" && it !== null) {
-    var cmp = this.cmp(it.data, data);
+    var cmp = this.comparer(it.data, data);
     if(cmp === 0)break;
     it = cmp < 0 ? it.right : it.left;
   }
   return typeof it === "undefined" || it === null ? null : it.data;
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree._red = function(node) {
   return typeof node !== "undefined" && node !== null && node.red === 1;
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree._single = function(root, dir) {
   var save = root.link(!dir);
   root.setLink(!dir, save.link(dir));
@@ -12893,12 +12897,12 @@ RedBlackTree._single = function(root, dir) {
   save.red = false;
   return save;
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree._double = function(root, dir) {
   root.setLink(!dir, RedBlackTree._single( root.link(!dir), !dir ));
   return RedBlackTree._single( root, dir );
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree.prototype.erase = function(data) {
   if(typeof this.root !== "undefined" && this.root !== null) {
     var head = new RedBlackTreeNode(null); /* False tree root */
@@ -12906,25 +12910,25 @@ RedBlackTree.prototype.erase = function(data) {
     var f = null; /* Found item */
     var dir = true;
 
-      /* Set up our helpers */
+    /* Set up our helpers */
     q = head;
     g = p = null;
     q.setLink(true, this.root);
 
-      /*
+    /*
       Search and push a red node down
       to fix red violations as we go
     */
     while( q.link(dir) !== null ) {
       var last = dir;
 
-        /* Move the helpers down */
+      /* Move the helpers down */
       g = p;
       p = q;
       q = q.link(dir);
       var cmp = this.comparer( q.data, data );
       dir = cmp < 0;
-        /*
+      /*
         Save the node with matching data and keep
         going; we'll do removal tasks at the end
       */
@@ -12959,16 +12963,16 @@ RedBlackTree.prototype.erase = function(data) {
       }
     }
 
-      /* Replace and remove the saved node */
+    /* Replace and remove the saved node */
     if( typeof f !== "undefined" && f !== null ) {
       f.data = q.data;
       p.setLink(p.right === q, q.link(typeof q.left === "undefined" || q.left === null));
     }
 
-      /* Update the root(it may be different) */
+    /* Update the root(it may be different) */
     this.root = head.right;
 
-      /* Make the root black for simplified logic */
+    /* Make the root black for simplified logic */
     if(typeof this.root !== "undefined" && this.root !== null) {
       this.root.p = null;
       this.root.red = false;
@@ -12976,7 +12980,7 @@ RedBlackTree.prototype.erase = function(data) {
     --this._size;
   }
 };
-  /** @ignore */
+/** @ignore */
 RedBlackTree.prototype.insert = function(data) {
   if(!data)throw new Error();
   var retval = null;
@@ -12994,13 +12998,13 @@ RedBlackTree.prototype.insert = function(data) {
     var dir = false,
       last = false;
 
-      /* Set up our helpers */
+    /* Set up our helpers */
     t = head;
     g = p = null;
     q = this.root;
     t.setLink(true, q);
 
-      /* Search down the tree for a place to insert */
+    /* Search down the tree for a place to insert */
     for (;;) {
       if ( typeof q === "undefined" || q === null ) {
         /* Insert a new node at the first null link */
@@ -13018,9 +13022,9 @@ RedBlackTree.prototype.insert = function(data) {
         if ( q === p.link(last) )
           t.setLink(dir2, RedBlackTree._single( g, !last ));
         else
-            t.setLink(dir2, RedBlackTree._double( g, !last ));
+          t.setLink(dir2, RedBlackTree._double( g, !last ));
       }
-        /*
+      /*
         Stop working if we inserted a node. This
         check also disallows duplicates in the tree
       */
@@ -13032,7 +13036,7 @@ RedBlackTree.prototype.insert = function(data) {
       last = dir;
       dir = cmp < 0;
 
-        /* Move the helpers down */
+      /* Move the helpers down */
       if ( typeof g !== "undefined" && g !== null )
         t = g;
 
@@ -13041,21 +13045,21 @@ RedBlackTree.prototype.insert = function(data) {
       q = q.link(dir);
     }
 
-      /* Update the root (it may be different) */
+    /* Update the root (it may be different) */
     this.root = head.right;
     if(typeof this.root !== "undefined" && this.root !== null)
       this.root.p = null;
   }
 
-    /* Make the root black for simplified logic */
+  /* Make the root black for simplified logic */
   this.root.red = false;
   ++this._size;
   return retval;
 };
 
-  // NOTE: Much of the Polygon, Connector, and Clipper classes
-  // was adapted for JavaScript by Peter O. from the public domain
-  // C++ code by Francisco Martinez and others.
+// NOTE: Much of the Polygon, Connector, and Clipper classes
+// was adapted for JavaScript by Peter O. from the public domain
+// C++ code by Francisco Martinez and others.
 /** @constructor
  * @private
  * @ignore */
@@ -13063,7 +13067,7 @@ var Polygon = function(path, flatness) {
   this.subpaths = [];
   this.contours = [];
   if(typeof path !== "undefined" && path !== null) {
-      // Ignore degenerate line segments
+    // Ignore degenerate line segments
     this.subpaths = path._getSubpaths(flatness, true);
     for(var i = 0; i < this.subpaths.length; i++) {
       this.contours[i] = new Polygon._Contour(this.subpaths[i]);
@@ -13155,7 +13159,7 @@ Polygon.PointChain = function() {
     return this.l.first();
   };
   this.size = function() {
-    return this.l.length;
+    return this.l.size();
   };
   this.init = function(s) {
     this.l.push(s[0]).push(s[1]);
@@ -13165,28 +13169,28 @@ Polygon.PointChain = function() {
       if(Clipper._ptEq(s[1], this.l.back()))
         this._closed = true;
       else
-          this.l.unshift(s[1]);
+        this.l.unshift(s[1]);
       return true;
     }
     if(Clipper._ptEq(s[1], this.l.back())) {
       if(Clipper._ptEq(s[0], this.l.front()))
         this._closed = true;
       else
-          this.l.push(s[0]);
+        this.l.push(s[0]);
       return true;
     }
     if(Clipper._ptEq(s[1], this.l.front())) {
       if(Clipper._ptEq(s[0], this.l.back()))
         this._closed = true;
       else
-          this.l.unshift(s[0]);
+        this.l.unshift(s[0]);
       return true;
     }
     if(Clipper._ptEq(s[0], this.l.back())) {
       if(Clipper._ptEq(s[1], this.l.front()))
         this._closed = true;
       else
-          this.l.push(s[1]);
+        this.l.push(s[1]);
       return true;
     }
     return false;
@@ -13218,7 +13222,7 @@ Polygon.PointChain.prototype.linkPointChain = function(chain) {
   }
   return false;
 };
-  /** @ignore */
+/** @ignore */
 Connector.prototype.add = function(s) {
   var j = this.openPolygons.first();
   while(j) {
@@ -13239,12 +13243,12 @@ Connector.prototype.add = function(s) {
     }
     j = j.next;
   }
-    // The segment cannot be connected with any open polygon
+  // The segment cannot be connected with any open polygon
   var chain = new Polygon.PointChain();
   chain.init(s);
   this.openPolygons.push(chain);
 };
-  /** @ignore */
+/** @ignore */
 Connector.prototype.toPolygon = function() {
   var polygon = new Polygon(null);
   var j = this.closedPolygons.first();
@@ -13289,14 +13293,14 @@ Clipper.SweepEvent = function(pp, b, apl, o, t) {
   };
   this.below = function(x) {
     return this.left ?
-        Clipper.signedArea(this.p, this.other.p, x) > 0 :
-        Clipper.signedArea(this.other.p, this.p, x) > 0;
+      Clipper.signedArea(this.p, this.other.p, x) > 0 :
+      Clipper.signedArea(this.other.p, this.p, x) > 0;
   };
   this.above = function(x) {
     return !this.below(x);
   };
 };
-  /** @ignore */
+/** @ignore */
 Clipper.signedArea = function(a, b, c) {
   var xa = a[0] - c[0];
   var ya = a[1] - c[1];
@@ -13304,12 +13308,12 @@ Clipper.signedArea = function(a, b, c) {
   var yb = b[1] - c[1];
   return 0.5 * (xa * yb - xb * ya);
 };
-  /** @ignore */
+/** @ignore */
 Clipper._ptEq = function(a, b) {
   return a[0] === b[0] && a[1] === b[1];
 };
-  // Compare two sweep events
-  // Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
+// Compare two sweep events
+// Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
 Clipper.sweepEventComp = function(e1, e2) {
   if(e1.p[0] > e2.p[0]) // Different X coordinate
     return true;
@@ -13322,12 +13326,12 @@ Clipper.sweepEventComp = function(e1, e2) {
     // Same point, both events are left endPoints or both are right endPoints. The event associate to the bottom segment is processed first
   return e1.above(e2.other.p);
 };
-  /** @ignore */
+/** @ignore */
 Clipper.sweepEventCompNum = function(e1, e2) {
   if(e1 === e2)return 0;
   return Clipper.sweepEventComp(e1, e2) ? -1 : 1;
 };
-  // e1 and a2 are the left events of line segments(e1.p, e1.other.p) and(e2.p, e2.other.p)
+// e1 and a2 are the left events of line segments(e1.p, e1.other.p) and(e2.p, e2.other.p)
 Clipper.segmentComp = function(e1, e2) {
   if(e1 === e2)
     return false;
@@ -13337,31 +13341,31 @@ Clipper.segmentComp = function(e1, e2) {
     if(Clipper._ptEq(e1.p, e2.p))
       return e1.below(e2.other.p);
 
-      // Different points
+    // Different points
     if(Clipper.sweepEventComp(e1, e2)) // has the line segment associated to e1 been inserted into S after the line segment associated to e2 ?
       return e2.above(e1.p);
       // The line segment associated to e2 has been inserted into S after the line segment associated to e1
     return e1.below(e2.p);
   }
-    // Segments are collinear. Just a consistent criterion is used
+  // Segments are collinear. Just a consistent criterion is used
   if(Clipper._ptEq(e1.p, e2.p)) {
-      // console.log("collinear segments")
+    // console.log("collinear segments")
     return e1.id < e2.id;
   }
   return Clipper.sweepEventComp(e1, e2);
 };
-  /** @ignore */
+/** @ignore */
 Clipper.segmentCompNum = function(e1, e2) {
   if(e1 === e2)return 0;
   return Clipper.segmentComp(e1, e2) ? -1 : 1;
 };
-  /** @ignore */
+/** @ignore */
 Clipper.prototype.storeSweepEvent = function(e) {
   e.id = this.eventHolder.length;
   this.eventHolder.push(e);
   return e;
 };
-  /*
+/*
   Clipper._print = function(e) {
     if(!e)return "null";
     var namesEventTypes = [
@@ -13370,7 +13374,7 @@ Clipper.prototype.storeSweepEvent = function(e) {
          (e.inside ? " (Inside) " : " (Outside) ") +  (e.inOut ? " (In-Out) " : " (Out-In) ") + "Type: " +
          namesEventTypes[e.type] + " Polygon: " + (e.pl === SUBJECT ? " (SUBJECT)" : " (CLIPPING)");
   };*/
-  /** @ignore */
+/** @ignore */
 Clipper.prototype.compute = function(op) {
   // Test 1 for trivial result case
   if(this.subject.ncontours() * this.clipping.ncontours() === 0) {
@@ -13383,7 +13387,7 @@ Clipper.prototype.compute = function(op) {
   }
   var i, j;
   var result = new Polygon();
-    // Test 2 for trivial result case
+  // Test 2 for trivial result case
   var subjBounds = this.subject.getBounds();
   var clipBounds = this.clipping.getBounds();
   var minsubj = [subjBounds[0], subjBounds[1]];
@@ -13402,8 +13406,8 @@ Clipper.prototype.compute = function(op) {
     }
     return result;
   }
-    // Boolean operation is not trivial
-    // Insert all the endPoints associated to the line segments into the event queue
+  // Boolean operation is not trivial
+  // Insert all the endPoints associated to the line segments into the event queue
   for(i = 0; i < this.subject.ncontours(); i++)
     for(j = 0; j < this.subject.contour(i).nvertices(); j++)
       this.processSegment(this.subject.contour(i).segment(j), SUBJECT);
@@ -13417,8 +13421,8 @@ Clipper.prototype.compute = function(op) {
   var minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
   while(this.eq.size() > 0) {
     e = this.eq.pop();
-      // console.log("Process event:  "+e.toString())
-      // optimization 1
+    // console.log("Process event:  "+e.toString())
+    // optimization 1
     if(op === INTERSECTION && e.p[0] > minMaxx ||
        op === DIFFERENCE && e.p[0] > maxsubj[0]) {
       return connector.toPolygon(result);
@@ -13434,7 +13438,7 @@ Clipper.prototype.compute = function(op) {
       }
       return connector.toPolygon(result);
     }
-      // end of optimization 1
+    // end of optimization 1
 
     if(e.left) { // the line segment must be inserted into S
       it = S.insert(e);
@@ -13445,10 +13449,10 @@ Clipper.prototype.compute = function(op) {
       if(prev !== S.first())
         prev = prev.prev();
       else
-          prev = null;
+        prev = null;
         // Compute the inside and inOut flags
       if(typeof prev === "undefined" || prev === null) { // there is not a previous line segment in S?
-          // console.log("prev is end")
+        // console.log("prev is end")
         e.inside = e.inOut = false;
       } else if(prev.data.type !== NORMAL) {
         if(prev === S.first()) { // e overlaps with prev
@@ -13472,30 +13476,30 @@ Clipper.prototype.compute = function(op) {
         e.inside = !prev.data.inOut;
         e.inOut = prev.data.inside;
       }
-        /*
+      /*
       console.log("Status line after insertion:")
       var bgn=S.first()
       while(bgn) {
        console.log(" "+bgn.data.toString())
        bgn=bgn.next()
       }*/
-        // Process a possible intersection between "e" and its next neighbor in S
+      // Process a possible intersection between "e" and its next neighbor in S
       next = next.next();
       if(typeof next !== "undefined" && next !== null)
         this.possibleIntersection(e, next.data);
 
-        // Process a possible intersection between "e" and its previous neighbor in S
+      // Process a possible intersection between "e" and its previous neighbor in S
       if(typeof prev !== "undefined" && prev !== null)
         this.possibleIntersection(prev.data, e);
     } else { // the line segment must be removed from S
       // console.log([e.other.p,e.other.id])
       next = prev = sli = e.other.poss;
-        // Get the next and previous line segments to "e" in S
+      // Get the next and previous line segments to "e" in S
       next = next.next();
       if(prev !== S.first())
         prev = prev.prev();
       else
-          prev = null;
+        prev = null;
         // Check if the line segment belongs to the Boolean operation
       switch(e.type) {
       default:throw new Error();
@@ -13529,7 +13533,7 @@ Clipper.prototype.compute = function(op) {
           connector.add(e.segment());
         break;
       }
-        // delete line segment associated to e from S and check for intersection between the neighbors of "e" in S
+      // delete line segment associated to e from S and check for intersection between the neighbors of "e" in S
       S.erase(sli.data);
       if(typeof next !== "undefined" && next !== null && (typeof prev !== "undefined" && prev !== null)) {
         this.possibleIntersection(prev.data, next.data);
@@ -13546,7 +13550,7 @@ Clipper.prototype.compute = function(op) {
   }
   return connector.toPolygon(result);
 };
-  /** @ignore */
+/** @ignore */
 Clipper.prototype.processSegment = function(s, pl) {
   if(Clipper._ptEq(s[0], s[1])) // if the two edge endPoints are equal the segment is discarded
     return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
@@ -13565,10 +13569,10 @@ Clipper.prototype.processSegment = function(s, pl) {
   this.eq.push(e1);
   this.eq.push(e2);
 };
-  /** @ignore */
+/** @ignore */
 Clipper.findIntersection = function(a, b, e, f) {
   var ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
-      b[0][0], b[0][1], b[1][0], b[1][1]);
+    b[0][0], b[0][1], b[1][0], b[1][1]);
   if(ret.length > 0) {
     e[0] = ret[0][0];
     e[1] = ret[0][1];
@@ -13579,7 +13583,7 @@ Clipper.findIntersection = function(a, b, e, f) {
   }
   return ret.length;
 };
-  /** @ignore */
+/** @ignore */
 Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, b2y) {
   var dpdeltad0;
   var t2 = a2x - a1x;
@@ -13631,16 +13635,16 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
       var s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);
       var s2 = (t2 * (b2x - a1x) + t3 * (b2y - a1y)) / (t2 * t2 + t3 * t3);
       if(s1 <= 0 && s2 >= 1 || s1 >= 1 && s2 <= 0) {
-          // first line contains second line
+        // first line contains second line
         return [[a1x, a1y], [a2x, a2y]];
       } else if(s1 < 0 && s2 < 0 || s1 > 1 && s2 > 1) {
-          // lines don't overlap
+        // lines don't overlap
         return [];
       } else if(s1 <= 0 && s2 <= 0) {
-          // meets at the first point of first line
+        // meets at the first point of first line
         return [[a1x, a1y]];
       } else if(s1 >= 1 && s2 >= 1) {
-          // meets at the second point of first line
+        // meets at the second point of first line
         return [[a2x, a2y]];
       } else if(s1 < 0 || s2 < 0) {
         smax = Math.max(s1, s2);
@@ -13673,15 +13677,15 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
   return ret;
 };
 
-  /** @ignore */
+/** @ignore */
 Clipper.prototype.possibleIntersection = function(e1, e2) {
-    // if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
-    // return false;
+  // if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
+  // return false;
 
   var ip1 = [];
   var ip2 = []; // intersection points
   var nintersections;
-    // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
+  // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
   if(!(nintersections = Clipper.findIntersection(e1.segment(), e2.segment(), ip1, ip2)))
     return;
     // console.log([ip1,ip2])
@@ -13691,8 +13695,8 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
   if(nintersections === 2 && e1.pl === e2.pl)
     return; // the line segments overlap, but they belong to the same polygon
 
-    // The line segments associated to e1 and e2 intersect
-    // nint += nintersections;
+  // The line segments associated to e1 and e2 intersect
+  // nint += nintersections;
 
   if(nintersections === 1) {
     if(!Clipper._ptEq(e1.p, ip1) && !Clipper._ptEq(e1.other.p, ip1))  // if(ip1 is not an endpoint of the line segment associated to e1 then divide "e1"
@@ -13702,7 +13706,7 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
     return;
   }
 
-    // The line segments overlap
+  // The line segments overlap
   var sortedEvents = [];
   if(Clipper._ptEq(e1.p, e2.p)) {
     sortedEvents.push(null);
@@ -13733,7 +13737,7 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
     if(sortedEvents[0]) // is the right endpoint the shared point?
       sortedEvents[0].other.type = e1.inOut === e2.inOut ? SAME_TRANSITION : DIFFERENT_TRANSITION;
     else // the shared point is the left endpoint
-        sortedEvents[2].other.type = e1.inOut === e2.inOut ? SAME_TRANSITION : DIFFERENT_TRANSITION;
+      sortedEvents[2].other.type = e1.inOut === e2.inOut ? SAME_TRANSITION : DIFFERENT_TRANSITION;
     this._divideSegment(sortedEvents[0] ? sortedEvents[0] : sortedEvents[2].other, sortedEvents[1].p);
     return;
   }
@@ -13744,24 +13748,24 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
     this._divideSegment(sortedEvents[1], sortedEvents[2].p);
     return;
   }
-    // one line segment includes the other one
+  // one line segment includes the other one
   sortedEvents[1].type = sortedEvents[1].other.type = NON_CONTRIBUTING;
   this._divideSegment(sortedEvents[0], sortedEvents[1].p);
   sortedEvents[3].other.type = e1.inOut === e2.inOut ? SAME_TRANSITION : DIFFERENT_TRANSITION;
   this._divideSegment(sortedEvents[3].other, sortedEvents[2].p);
 };
-  /** @ignore */
+/** @ignore */
 Clipper.prototype._divideSegment = function(e, p) {
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
   var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
-    // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
+  // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
   var l = this.storeSweepEvent(new Clipper.SweepEvent(p, true, e.pl, e.other, e.other.type));
   if(Clipper.sweepEventComp(l, e.other)) { // avoid a rounding error. The left event would be processed after the right event
     // console.log("Oops")
     e.other.left = true;
     l.left = false;
   }
-// avoid a rounding error. The left event would be processed after the right event
+  // avoid a rounding error. The left event would be processed after the right event
   Clipper.sweepEventComp(e, r);
   e.other.other = l;
   e.other = r;
@@ -13769,7 +13773,7 @@ Clipper.prototype._divideSegment = function(e, p) {
   this.eq.push(r);
 };
 
-    /**
+/**
      * Computes the combination of this path's shape with another
      * path's shape. The following points apply to this method:<ul>
      * <li>This method treats unclosed subpaths as implicitly closed
@@ -13796,7 +13800,7 @@ GraphicsPath.prototype.union = function(path, flatness) {
   var retval = new Clipper(polygon1, polygon2).compute(UNION);
   return retval.toPath();
 };
-    /**
+/**
      * Computes the difference between this path's shape and another
      * path's shape. The points given in the {@link GraphicsPath#union} method
      * apply to this method.
@@ -13815,7 +13819,7 @@ GraphicsPath.prototype.difference = function(path, flatness) {
   var retval = new Clipper(polygon1, polygon2).compute(DIFFERENCE);
   return retval.toPath();
 };
-    /**
+/**
      * Computes the intersection, or the area common to both this path's shape
      * and another path's shape. The points given in the {@link GraphicsPath#union} method
      * apply to this method.
@@ -13834,7 +13838,7 @@ GraphicsPath.prototype.intersection = function(path, flatness) {
   var retval = new Clipper(polygon1, polygon2).compute(INTERSECTION);
   return retval.toPath();
 };
-    /**
+/**
      * Computes the shape contained in either this path or another path,
      * but not both. The points given in the {@link GraphicsPath#union} method
      * apply to this method.
@@ -15131,8 +15135,8 @@ Meshes.createLathe = function(points, slices, flat, inside) {
       x = sc[j * 2];
       y = sc[j * 2 + 1];
       vertices.push(x * radiusStart, y * radiusStart, zStartHeight,
-          0, 0, 0,
-          1 - tc[j], zStart);
+        0, 0, 0,
+        1 - tc[j], zStart);
     }
   }
   var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
@@ -15317,13 +15321,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
         x = sc[k];
         y = sc[k + 1];
         vertices.push(x * radius, y * radius, 0,
-        0, 0, normalZ,
-        (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
+          0, 0, normalZ,
+          (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
       }
     }
     return sweep === 360 ?
-    meshBufferFromUWrapVertexGrid(vertices, slp1, loops + 1) :
-    meshBufferFromVertexGrid(vertices, slp1, loops + 1);
+      meshBufferFromUWrapVertexGrid(vertices, slp1, loops + 1) :
+      meshBufferFromVertexGrid(vertices, slp1, loops + 1);
   }
 };
 
@@ -15613,9 +15617,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       x = sc[j * 2];
       y = sc[j * 2 + 1];
       vertices.push(
-          x * radiusEnd, y * radiusEnd, zStartHeight + offset,
-          x * radiusEnd * normDir, y * radiusEnd * normDir, zStartHeight * normDir,
-          1 - tx, txe);
+        x * radiusEnd, y * radiusEnd, zStartHeight + offset,
+        x * radiusEnd * normDir, y * radiusEnd * normDir, zStartHeight * normDir,
+        1 - tx, txe);
     }
     if(i + 1 === halfStacks && length > 0) {
       var sr2 = sphereRatio * 0.5;

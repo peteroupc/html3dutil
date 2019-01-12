@@ -16,18 +16,22 @@
  * @license CC0-1.0
  */
 
-/** @suppress {checkTypes} */
-if(typeof Object.keys === "undefined" || Object.keys === null) {
-  Object.keys = function(o) {
-    var ret = [];
-    for(var i in o) {
-      if(Object.prototype.hasOwnProperty.call(o, i)) {
-        ret[ret.length] = i;
+/** @suppress {checkTypes}
+ * @ignore */
+function objectKeysPolyfill() {
+  if(typeof Object.keys === "undefined" || Object.keys === null) {
+    Object.keys = function(o) {
+      var ret = [];
+      for(var i in o) {
+        if(Object.prototype.hasOwnProperty.call(o, i)) {
+          ret[ret.length] = i;
+        }
       }
-    }
-    return ret;
-  };
+      return ret;
+    };
+  }
 }
+objectKeysPolyfill();
 
 /**
  * Utility function that returns a promise that
@@ -738,9 +742,9 @@ var clampRgba = function(x) {
  * <li>A number specifying the red component. Must range from 0 to 1.</li>
  * </ul>
  * Returns (0,0,0,0) if this value is null.
- * @param {number} g Green color component (0-1).
+ * @param {number} [g] Green color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
- * @param {number} b Blue color component (0-1).
+ * @param {number} [b] Blue color component (0-1).
  * May be null or omitted if a string or array is given as the "r" parameter.
  * @param {number} [a] Alpha color component (0-1).
  * If the "r" parameter is given and this parameter is null, undefined, or omitted,

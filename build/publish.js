@@ -323,9 +323,10 @@ function DocCollection() {
   this.addMember = function(parent, name, entry, longname) {
     if(typeof parent === "undefined" || parent === null) {
       console.log("tried to add member " + [parent, name, longname]);
-      return;
+      return false;
     }
     this.get(parent).members[name] = [entry, Doc.toHash(longname), longname];
+    return true;
   };
   this.addConstructor = function(parent, entry) {
     this.get(parent).constructorEntry = entry;
@@ -552,7 +553,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       if(node.fires) {
         entry += writer.paragraph(writer.bold("Fires:") + " " + writer.normspace(node.fires || ""));
       }
-      if (node.params) {
+      if (node.params && node.params.length > 0) {
         p = node.params;
         entry += writer.heading(4, "Parameters");
         var listItems = [];
@@ -657,7 +658,9 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
         }
       }
       if(node.kind === "member" || node.kind === "constant") {
-        docCollection.addMember(parentlong, node.name, entry, node.longname);
+        if(!docCollection.addMember(parentlong, node.name, entry, node.longname)) {
+          // console.log(node);
+        }
       } else {
         docCollection.addEntry(node.longname, entry);
         fillCollection(docCollection, nodes, node.longname, writer);

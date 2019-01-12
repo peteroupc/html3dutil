@@ -308,8 +308,8 @@ MeshBuffer.fromPositions = function(vertices, indices) {
 MeshBuffer.fromPositionsNormals = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
-   .setAttribute("POSITION", vertarray, 3, 0, 6)
-   .setAttribute("NORMAL", vertarray, 3, 3, 6).setIndices(indices);
+    .setAttribute("POSITION", vertarray, 3, 0, 6)
+    .setAttribute("NORMAL", vertarray, 3, 3, 6).setIndices(indices);
 };
 
 /**
@@ -328,9 +328,9 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
 MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
-   .setAttribute("POSITION", vertarray, 3, 0, 8)
-   .setAttribute("NORMAL", vertarray, 3, 3, 8)
-   .setAttribute("TEXCOORD", vertarray, 2, 6, 8).setIndices(indices);
+    .setAttribute("POSITION", vertarray, 3, 0, 8)
+    .setAttribute("NORMAL", vertarray, 3, 3, 8)
+    .setAttribute("TEXCOORD", vertarray, 2, 6, 8).setIndices(indices);
 };
 
 /**
@@ -348,8 +348,8 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
 MeshBuffer.fromPositionsUV = function(vertices, indices) {
   var vertarray = new Float32Array(vertices);
   return new MeshBuffer()
-   .setAttribute("POSITION", vertarray, 3, 0, 5)
-   .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
+    .setAttribute("POSITION", vertarray, 3, 0, 5)
+    .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
 };
 
 /**

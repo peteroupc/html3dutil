@@ -271,7 +271,7 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
  * curve.constantAttribute([1,0,0],"COLOR");
  */
 CurveBuilder.prototype.constantAttribute = function(
-    constantValue, semantic, semanticIndex) {
+  constantValue, semantic, semanticIndex) {
   if(typeof constantValue === "number") {
     return this.attribute({
       "evaluate":function() {
@@ -534,8 +534,8 @@ SurfaceBuilder.surfaceToBuffer = function(surface, mode, un, vn, u1, u2, v1, v2)
  */
 CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   n = typeof n === "undefined" || n === null ?
-     CurveBuilder._defaultSubdivisionsCurve(this.attributes) :
-     Math.ceil(n);
+    CurveBuilder._defaultSubdivisionsCurve(this.attributes) :
+    Math.ceil(n);
   if(n === 0)return this;
   if(n < 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.LINES;
