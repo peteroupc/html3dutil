@@ -741,8 +741,8 @@ Generates a mesh buffer consisting of "walls" that follow this graphics path app
 
 #### Parameters
 
-* `zStart` (Type: z)<br>Starting Z coordinate of the mesh buffer's "walls".
-* `zEnd` (Type: z)<br>Ending Z coordinate of the mesh buffer's "walls".
+* `zStart` (Type: number)<br>Starting Z coordinate of the mesh buffer's "walls".
+* `zEnd` (Type: number)<br>Ending Z coordinate of the mesh buffer's "walls".
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value

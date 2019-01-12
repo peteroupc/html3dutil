@@ -1272,6 +1272,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} vz Z-component of the point lying on the axis
    * of rotation.
    * @returns {Array<number>} The resulting 4x4 matrix.
+   * @example <caption>The following example rotates a vector,
+   * "vec", about the Z axis by the given angle, "angle".</caption>
+   * var newVector H3DU.MathUtil.mat4projectVec3(
+   * H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
    */
   "mat4rotated":function(angle, v, vy, vz) {
     var v0, v1, v2, ang;
@@ -2056,7 +2060,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * between it and the first quaternion.  The "factor" parameter specifies
    * how small the new angle will be relative to the original angle.)<p>
    * This method will generally interpolate at constant velocity; however,
-   * this method is commutative (the order in which the quaternions are given
+   * this method is not commutative (that is, the order in which the quaternions are given
    * matters), unlike [quatNlerp]{@link MathUtil.quatNlerp}, making it
    * unsuitable for blending multiple quaternion rotations,
    * and this method is generally more computationally expensive

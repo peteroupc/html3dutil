@@ -1159,6 +1159,14 @@ by the given rotation angle and around the given <a href="tutorial-glmath.md">ax
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
+#### Example
+
+The following example rotates a vector,
+"vec", about the Z axis by the given angle, "angle".
+
+    var newVector H3DU.MathUtil.mat4projectVec3(
+    H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
+
 <a name='H3DU.MathUtil.mat4scale'></a>
 ### (static) H3DU.MathUtil.mat4scale(mat, v3, v3y, v3z)
 
@@ -1757,7 +1765,7 @@ between it and the first quaternion. The "factor" parameter specifies
 how small the new angle will be relative to the original angle.)
 
 This method will generally interpolate at constant velocity; however,
-this method is commutative (the order in which the quaternions are given
+this method is not commutative (that is, the order in which the quaternions are given
 matters), unlike quatNlerp, making it
 unsuitable for blending multiple quaternion rotations,
 and this method is generally more computationally expensive
