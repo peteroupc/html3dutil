@@ -1,4 +1,3 @@
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -7,6 +6,9 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+import {MathUtil, MeshBuffer} from "../h3du-module.js";
+
 // Much of the JavaScript code here was adapted quite
 // heavily by Peter O. from public-domain Java code
 // in the HE_Mesh library. For example,
@@ -16,8 +18,7 @@
 var EPSILON = 1e-9;
 
 function getIntersectionRayBox(ray, box) {
-  "use strict";
-  var d = H3DU.MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]); // direction: last 3 elements of ray
+  var d = MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]); // direction: last 3 elements of ray
   var p = [ray[0], ray[1], ray[2]]; // origin: first 3 elements of ray
   var mn = 0.0;
   var mx = Number.POSITIVE_INFINITY;
@@ -72,34 +73,31 @@ function getIntersectionRayBox(ray, box) {
     ray[2] + ray[5] * mn
   ];
 }
-
-/* exported polygonToPlane */
+/*
 function polygonToPlane(polygon) {
-  "use strict";
   if(polygon.length < 3) {
     return [0, 0, 0, 0, 0, 0];
   }
-  var normal = H3DU.MathUtil.vec3cross(polygon[0], polygon[1]);
-  var centroid = H3DU.MathUtil.vec3copy(polygon[0]);
+  var normal = MathUtil.vec3cross(polygon[0], polygon[1]);
+  var centroid = MathUtil.vec3copy(polygon[0]);
   for(var i = 1; i < polygon.length; i++) {
     var nextIndex = i + 1 === polygon.length ? 0 : i + 1;
-    H3DU.MathUtil.vec3addInPlace(normal,
-      H3DU.MathUtil.vec3cross(polygon[i], polygon[nextIndex]));
-    H3DU.MathUtil.vec3addInPlace(centroid, polygon[i]);
+    MathUtil.vec3addInPlace(normal,
+      MathUtil.vec3cross(polygon[i], polygon[nextIndex]));
+    MathUtil.vec3addInPlace(centroid, polygon[i]);
   }
-  H3DU.MathUtil.vec3scaleInPlace(centroid, 1.0 / polygon.length);
+  MathUtil.vec3scaleInPlace(centroid, 1.0 / polygon.length);
   var plane = [
     normal[0], normal[1], normal[2],
     centroid[0], centroid[1], centroid[2]];
   return plane;
-}
+}*/
 
 function triangleToPlane(face) {
-  "use strict";
-  var ac = H3DU.MathUtil.vec3sub(face[0], face[2]);
-  var bc = H3DU.MathUtil.vec3sub(face[1], face[2]);
+  var ac = MathUtil.vec3sub(face[0], face[2]);
+  var bc = MathUtil.vec3sub(face[1], face[2]);
   // Find a normal of the triangle
-  var planeNormal = H3DU.MathUtil.vec3normalizeInPlace(H3DU.MathUtil.vec3cross(ac, bc));
+  var planeNormal = MathUtil.vec3normalizeInPlace(MathUtil.vec3cross(ac, bc));
   // Find the triangle's centroid, which will lie on the plane
   var planeOrigin = [
     (face[0][0] + face[1][0] + face[2][0]) / 3.0,
@@ -112,63 +110,61 @@ function triangleToPlane(face) {
   return plane;
 }
 function getClosestPointToTriangle3D(p, a, b, c) {
-  "use strict";
-  var ab = H3DU.MathUtil.vec3sub(b, a);
-  var ac = H3DU.MathUtil.vec3sub(c, a);
-  var ap = H3DU.MathUtil.vec3sub(p, a);
-  var d1 = H3DU.MathUtil.vec3dot(ab, ap);
-  var d2 = H3DU.MathUtil.vec3dot(ac, ap);
+  var ab = MathUtil.vec3sub(b, a);
+  var ac = MathUtil.vec3sub(c, a);
+  var ap = MathUtil.vec3sub(p, a);
+  var d1 = MathUtil.vec3dot(ab, ap);
+  var d2 = MathUtil.vec3dot(ac, ap);
   if (d1 <= 0 && d2 <= 0) {
     return a;
   }
-  var bp = H3DU.MathUtil.vec3sub(p, b);
-  var d3 = H3DU.MathUtil.vec3dot(ab, bp);
-  var d4 = H3DU.MathUtil.vec3dot(ac, bp);
+  var bp = MathUtil.vec3sub(p, b);
+  var d3 = MathUtil.vec3dot(ab, bp);
+  var d4 = MathUtil.vec3dot(ac, bp);
   if (d3 >= 0 && d4 <= d3) {
     return b;
   }
   var vc = d1 * d4 - d3 * d2;
   if (vc <= 0 && d1 >= 0 && d3 <= 0) {
     var v = d1 / (d1 - d3);
-    return H3DU.MathUtil.vec3add(a, H3DU.MathUtil.vec3scale(ab, v));
+    return MathUtil.vec3add(a, MathUtil.vec3scale(ab, v));
   }
-  var cp = H3DU.MathUtil.vec3sub(p, c);
-  var d5 = H3DU.MathUtil.vec3dot(ab, cp);
-  var d6 = H3DU.MathUtil.vec3dot(ac, cp);
+  var cp = MathUtil.vec3sub(p, c);
+  var d5 = MathUtil.vec3dot(ab, cp);
+  var d6 = MathUtil.vec3dot(ac, cp);
   if (d6 >= 0 && d5 <= d6) {
     return c;
   }
   var vb = d5 * d2 - d1 * d6;
   if (vb <= 0 && d2 >= 0 && d6 <= 0) {
     var w = d2 / (d2 - d6);
-    return H3DU.MathUtil.vec3add(a, H3DU.MathUtil.vec3scale(ac, w));
+    return MathUtil.vec3add(a, MathUtil.vec3scale(ac, w));
   }
   var va = d3 * d6 - d5 * d4;
   if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0) {
     w = (d4 - d3) / (d4 - d3 + (d5 - d6));
-    var tvec = H3DU.MathUtil.vec3sub(c, b);
-    return H3DU.MathUtil.vec3add(b, H3DU.MathUtil.vec3scale(tvec, w));
+    var tvec = MathUtil.vec3sub(c, b);
+    return MathUtil.vec3add(b, MathUtil.vec3scale(tvec, w));
   }
   var denom = 1.0 / (va + vb + vc);
   v = vb * denom;
   w = vc * denom;
-  var abv = H3DU.MathUtil.vec3scale(ab, v);
-  var acw = H3DU.MathUtil.vec3scale(ac, w);
-  return H3DU.MathUtil.vec3add(a, H3DU.MathUtil.vec3add(abv, acw));
+  var abv = MathUtil.vec3scale(ab, v);
+  var acw = MathUtil.vec3scale(ac, w);
+  return MathUtil.vec3add(a, MathUtil.vec3add(abv, acw));
 }
 
 // NOTE: Planes are as defined in the source library, HE_Mesh,
-// not as defined in H3DU.Math
+// not as defined in Math
 function getIntersectionRayPlane(ray, plane) {
-  "use strict";
   var r1origin = ray.slice(0, 3);
-  var r1direction = H3DU.MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]);
+  var r1direction = MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]);
   var ab = r1direction;
   var p1normal = plane.slice(0, 3);
   var p1origin = plane.slice(3, 6);
-  var p1d = H3DU.MathUtil.vec3dot(p1normal, p1origin);
-  var denom = H3DU.MathUtil.vec3dot(p1normal, ab);
-  var t = p1d - H3DU.MathUtil.vec3dot(p1normal, r1origin);
+  var p1d = MathUtil.vec3dot(p1normal, p1origin);
+  var denom = MathUtil.vec3dot(p1normal, ab);
+  var t = p1d - MathUtil.vec3dot(p1normal, r1origin);
   if(denom === 0) {
     // Ray's direction and plane's normal are orthogonal to each
     // other. Assume no intersection.
@@ -187,13 +183,12 @@ function getIntersectionRayPlane(ray, plane) {
   return null;
 }
 function getIntersectionRayTriangle(ray, face) {
-  "use strict";
   var lpi = getIntersectionRayPlane(ray, triangleToPlane(face));
   if (typeof lpi !== "undefined" && lpi !== null) {
     var p1 = lpi;
     var tmp = getClosestPointToTriangle3D(p1,
       face[0], face[1], face[2]);
-    var dist = H3DU.MathUtil.vec3dist(tmp, p1);
+    var dist = MathUtil.vec3dist(tmp, p1);
     if (Math.abs(dist) < EPSILON) {
       return lpi;
     }
@@ -202,7 +197,6 @@ function getIntersectionRayTriangle(ray, face) {
 }
 
 function facesBounds(faces) {
-  "use strict";
   var inf = Number.POSITIVE_INFINITY;
   var ret = [inf, inf, inf, -inf, -inf, -inf];
   for(var i = 0; i < faces.length; i++) {
@@ -223,12 +217,11 @@ function facesBounds(faces) {
 }
 
 var AABBTree = function(meshBuffer, maxFaces) {
-  "use strict";
   this.maxLevel = Math.ceil(Math.log(meshBuffer.primitiveCount()) *
     AABBTree.INV_LOG_3);
   this.root = null;
   this.maxFaces = Math.max(1, maxFaces);
-  if(meshBuffer.primitiveType() === H3DU.Mesh.TRIANGLES) {
+  if(meshBuffer.primitiveType() === MeshBuffer.TRIANGLES) {
     this._buildTree(meshBuffer);
   }
 };
@@ -238,19 +231,18 @@ AABBTree.FRONT = 1;
 AABBTree.BACK = 2;
 AABBTree.ON = 3;
 // NOTE: Planes are as defined in the source library, HE_Mesh,
-// not as defined in H3DU.Math: a normal and a point on the plane (origin).
+// not as defined in MathUtil: a normal and a point on the plane (origin).
 // In this JavaScript code,
-// the first three elements of the array are the normal, and
+// the first three elements of the plane array are the normal, and
 // the next three are the origin.
 function classifyPointToPlane3D(plane, point) {
-  "use strict";
   // NOTE: HE_Mesh includes fast code and robust code for this
   // function, but only the fast code is used here
   // to keep this code simple
   var planeNormal = plane.slice(0, 3);
   var planeOrigin = plane.slice(3, 6);
-  var planeD = H3DU.MathUtil.vec3dot(planeNormal, planeOrigin);
-  var d = H3DU.MathUtil.vec3dot(planeNormal, point) - planeD;
+  var planeD = MathUtil.vec3dot(planeNormal, planeOrigin);
+  var d = MathUtil.vec3dot(planeNormal, point) - planeD;
   if (Math.abs(d) < EPSILON) {
     return AABBTree.ON;
   }
@@ -261,9 +253,8 @@ function classifyPointToPlane3D(plane, point) {
 }
 
 // NOTE: Planes are as defined in the source library, HE_Mesh,
-// not as defined in H3DU.Math
+// not as defined in Math
 function classifyPolygonToPlane3D(polygon, plane) {
-  "use strict";
   var numInFront = 0;
   var numBehind = 0;
   for (var i = 0; i < polygon.length; i++) {
@@ -290,7 +281,6 @@ function classifyPolygonToPlane3D(polygon, plane) {
 }
 
 function getIntersectionRayTree(ray, tree) {
-  "use strict";
   var result = [];
   var queue = [];
   queue.push(tree.root);
@@ -316,7 +306,6 @@ function getIntersectionRayTree(ray, tree) {
   return result;
 }
 var AABBNode = function() {
-  "use strict";
   this.level = -1;
   this.faces = [];
   this.aabb = null;
@@ -328,14 +317,12 @@ var AABBNode = function() {
 };
 /** @ignore */
 AABBTree.prototype._buildTree = function(mesh) {
-  "use strict";
   this.root = new AABBNode();
   var faces = mesh.getPositions();
   this._buildNode(this.root, faces, 0);
 };
 /** @ignore */
 AABBTree.prototype._buildNode = function(node, faces, level) {
-  "use strict";
   node.level = level;
   node.aabb = facesBounds(faces);
   if (level === this.maxLevel || faces.length <= this.maxFaces) {
@@ -356,7 +343,7 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
     } else {
       plane = [1, 0, 0, 0, 0, 0];
     }
-    var origin = H3DU.MathUtil.boxCenter(node.aabb);
+    var origin = MathUtil.boxCenter(node.aabb);
     plane[3] = origin[0];
     plane[4] = origin[1];
     plane[5] = origin[2];
@@ -393,7 +380,6 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
 };
 
 function pickPoint(mesh, ray) {
-  "use strict";
   var p2 = null;
   var p2face = null;
   var candidates = [];
@@ -461,8 +447,7 @@ function pickPoint(mesh, ray) {
 }
 
 function makeRay(startPt, focusPt) {
-  "use strict";
-  var dist = H3DU.MathUtil.vec3sub(focusPt, startPt);
+  var dist = MathUtil.vec3sub(focusPt, startPt);
   return [startPt[0], startPt[1], startPt[2], dist[0], dist[1], dist[2]];
 }
 
@@ -500,10 +485,9 @@ function makeRay(startPt, focusPt) {
  * pickedShape = null;
  * }
  */
-function raypick(x, y, projView, viewport, objects) {
-  "use strict";
-  var near = H3DU.MathUtil.vec3fromWindowPoint([x, y, 0], projView, viewport);
-  var far = H3DU.MathUtil.vec3fromWindowPoint([x, y, 1], projView, viewport);
+export var raypick = function(x, y, projView, viewport, objects) {
+  var near = MathUtil.vec3fromWindowPoint([x, y, 0], projView, viewport);
+  var far = MathUtil.vec3fromWindowPoint([x, y, 1], projView, viewport);
   var ray = makeRay(near, far); // Near and far will be in world coordinates
   var bestDist = Number.POSITIVE_INFINITY;
   var ret = {"index":-1};
@@ -511,23 +495,23 @@ function raypick(x, y, projView, viewport, objects) {
     var shape = objects[i];
     // Gets the world coordinates of a box that bounds the shape
     var bounds = shape.getBounds();
-    if(H3DU.MathUtil.boxIsEmpty(bounds)) {
+    if(MathUtil.boxIsEmpty(bounds)) {
       continue;
     }
     // Check intersection of the ray with the shape's bounding box,
     // which is relatively fast
     if(getIntersectionRayBox(ray, bounds)) {
       var worldMatrix = shape.getMatrix();
-      var mvp = H3DU.MathUtil.mat4multiply(projView, worldMatrix);
-      near = H3DU.MathUtil.vec3fromWindowPoint([x, y, 0], mvp, viewport);
-      far = H3DU.MathUtil.vec3fromWindowPoint([x, y, 1], mvp, viewport);
+      var mvp = MathUtil.mat4multiply(projView, worldMatrix);
+      near = MathUtil.vec3fromWindowPoint([x, y, 0], mvp, viewport);
+      far = MathUtil.vec3fromWindowPoint([x, y, 1], mvp, viewport);
       ray = makeRay(near, far); // Near and far will be in local coordinates
       var finePick = pickPoint(shape.getMeshBuffer(), ray);
       if(finePick) {
         // Fine pick point will be in local coordinates; convert
         // to world coordinates to check distance from the near plane
-        var world = H3DU.MathUtil.mat4projectVec3(finePick.point, worldMatrix);
-        var dist = H3DU.MathUtil.vec3dist(near, world);
+        var world = MathUtil.mat4projectVec3(finePick.point, worldMatrix);
+        var dist = MathUtil.vec3dist(near, world);
         if(ret.index === -1 || dist < bestDist) {
           // Choose this point if it's the first or closest intersecting point
           // to the near plane
@@ -542,4 +526,4 @@ function raypick(x, y, projView, viewport, objects) {
     }
   }
   return ret;
-}
+};

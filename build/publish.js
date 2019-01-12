@@ -300,28 +300,28 @@ function DocCollection() {
   this.tutorials = {"children":[]};
   this.readme = null;
   this.get = function(parent) {
-    if(!parent)throw new Error();
+    if(typeof parent === "undefined" || parent === null)throw new Error();
     if(!this.docs[parent]) {
       this.docs[parent] = new Doc(parent);
     }
     return this.docs[parent];
   };
   this.addMethod = function(parent, name, entry, longname) {
-    if(!parent) {
+    if(typeof parent === "undefined" || parent === null) {
       console.log("tried to add method " + [parent, name, longname]);
       return;
     }
     this.get(parent).methods[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addEvent = function(parent, name, entry, longname) {
-    if(!parent) {
+    if(typeof parent === "undefined" || parent === null) {
       console.log("tried to add event " + [parent, name, longname]);
       return;
     }
     this.get(parent).events[name] = [entry, Doc.toHash(longname), longname];
   };
   this.addMember = function(parent, name, entry, longname) {
-    if(!parent) {
+    if(typeof parent === "undefined" || parent === null) {
       console.log("tried to add member " + [parent, name, longname]);
       return;
     }

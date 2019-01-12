@@ -63,6 +63,14 @@ This method creates a ring or disk striped in two colors.
 <a id=Miscellaneous></a>
 ## Miscellaneous
 
+function pathClosedFigure(path, zBottom, zTop, flatness) {
+  "use strict";
+  var mesh = new H3DU.MeshBuffer();
+  mesh.merge(path.toExtrudedMeshBuffer(zBottom, zTop, flatness));
+  mesh.merge(path.toMeshBuffer(zTop, flatness));
+  mesh.merge(path.toMeshBuffer(zBottom, flatness).reverseWinding().reverseNormals());
+  return mesh;
+}
     function setBoxSizeAndBounds(shape,box){
      shape.setPosition(H3DU.MathUtil.boxCenter(box))
      shape.setScale(H3DU.MathUtil.boxDimensions(box))

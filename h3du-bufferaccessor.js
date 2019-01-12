@@ -45,7 +45,7 @@ export var BufferAccessor = function(buffer, countPerValue, offset, stride) {
   /**
    * An offset, which identifies the index, starting from 0, of the first value
    * of the attribute within the buffer. The offset counts the number of
-   * elements in the buffer to the first value. For example, if this value is 6,
+   * elements in the buffer to the first value. For example, if this property is 6,
    * then the first element of the first value in the buffer is found at
    * <code>acc.buffer[acc.offset]</code> (assuming the buffer is
    * more than 6 elements long).

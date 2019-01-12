@@ -118,8 +118,8 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * <p>Each kind of polynomial curve (such as B-spline or B&eacute;zier) is
  * associated with a <i>basis matrix</i>, which defines the polynomial
  * coefficients for each control point in the curve. For a degree (N-1) curve,
- * the matrix will be NxN.<p>
- * Each "column" of a basis matrix is a polynomial equation
+ * the matrix will be N&times;N.<p>
+ * Each "column" of a basis matrix is a polynomial
  * containing the coefficients for each control point, and the columns are
  * arranged from left to right. Each polynomial consists of coefficients, ranging from the
  * highest order to the lowest, with respect to the parameter
@@ -778,8 +778,7 @@ BSplineSurface.prototype.constructor = BSplineSurface;
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineCurve} constructor.
  * @returns {BSplineCurve} Return value. The first
- * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
- * versions.)
+ * knot of the curve will be 0 and the last knot will be 1.
  */
 BSplineCurve.clamped = function(controlPoints, degree, bits) {
   return new BSplineCurve(controlPoints,
@@ -845,8 +844,7 @@ BSplineCurve.uniform = function(controlPoints, degree, bits) {
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
- * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
- * versions.)
+ * knot of the curve will be 0 and the last knot will be 1.
  */
 BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
   return new BSplineSurface(controlPoints,
@@ -865,8 +863,7 @@ BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
- * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
- * versions.)
+ * knot of the curve will be 0 and the last knot will be 1.
  */
 BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
   return new BSplineSurface(controlPoints,

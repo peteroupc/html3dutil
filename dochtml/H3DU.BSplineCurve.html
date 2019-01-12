@@ -52,8 +52,8 @@ B-spline curve this way, or vice versa.
 <p>Each kind of polynomial curve (such as B-spline or B&eacute;zier) is
 associated with a <i>basis matrix</i>, which defines the polynomial
 coefficients for each control point in the curve. For a degree (N-1) curve,
-the matrix will be NxN.<p>
-Each "column" of a basis matrix is a polynomial equation
+the matrix will be N&times;N.<p>
+Each "column" of a basis matrix is a polynomial
 containing the coefficients for each control point, and the columns are
 arranged from left to right. Each polynomial consists of coefficients, ranging from the
 highest order to the lowest, with respect to the parameter
@@ -160,8 +160,7 @@ A B-spline curve that has control points whose last coordinate is other than
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.<h4> Parameters</h4><ul><li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number>>)<br>Array of control points as specified in the BSplineCurve constructor.<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the BSplineCurve constructor.</ul><h4> Return Value</h4>Return value. The first
-knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: BSplineCurve)<a name='H3DU.BSplineCurve.clampedKnots'></a>
+knot of the curve will be 0 and the last knot will be 1. (Type: BSplineCurve)<a name='H3DU.BSplineCurve.clampedKnots'></a>
 <h3> (static) H3DU.BSplineCurve.clampedKnots(controlPoints, [degree])</h3>Generates a knot vector with uniform knots, to be
 passed to the BSplineCurve or BSplineCurve constructor,
 except that with the knot vector the curve will start and end at the first and last control points and will

@@ -86,8 +86,7 @@ the surface's edges lie on the edges of the control point array.
 #### Return Value
 
 Return value. The first
-knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: BSplineSurface)
+knot of the curve will be 0 and the last knot will be 1. (Type: BSplineSurface)
 
 <a name='H3DU.BSplineSurface_evaluate'></a>
 ### H3DU.BSplineSurface#evaluate(u, v)
@@ -172,7 +171,6 @@ Creates a B-spline surface with uniform knots.
 #### Return Value
 
 Return value. The first
-knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: BSplineSurface)
+knot of the curve will be 0 and the last knot will be 1. (Type: BSplineSurface)
 
 [Back to documentation index.](index.md)

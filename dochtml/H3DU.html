@@ -41,7 +41,7 @@ The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
 <code>requestAnimationFrame()</code> callback method.
 </p><pre>
-var angle = 360 * export var getTimePosition(timer, time, 5000);</pre><a name='H3DU.newFrames'></a>
+var angle = 360 * getTimePosition(timer, time, 5000);</pre><a name='H3DU.newFrames'></a>
 <h3> (static) H3DU.newFrames(timer, timeInMs)</h3>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 This method should be called only once each frame.<h4> Parameters</h4><ul><li><code>timer</code> (Type: Object)<br>An object described in getTimePosition.<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</ul><h4> Return Value</h4>The number of frame-length intervals relative to

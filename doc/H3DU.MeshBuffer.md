@@ -63,7 +63,7 @@ to the given color.
 in this mesh.
 * [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
-may be duplicates), or if there is no index buffer, the maximum
+may be duplicates), or if there is no index buffer, the lowest maximum
 number of items that a buffer attribute can hold.
 * [vertexIndices](#H3DU.MeshBuffer_vertexIndices)<br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.
@@ -480,7 +480,7 @@ This object. (Type: MeshBuffer)
 
 Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
-may be duplicates), or if there is no index buffer, the maximum
+may be duplicates), or if there is no index buffer, the lowest maximum
 number of items that a buffer attribute can hold.
 
 #### Return Value

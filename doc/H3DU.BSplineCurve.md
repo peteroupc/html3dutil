@@ -76,9 +76,9 @@ B-spline curve this way, or vice versa.
 Each kind of polynomial curve (such as B-spline or B&eacute;zier) is
 associated with a <i>basis matrix</i>, which defines the polynomial
 coefficients for each control point in the curve. For a degree (N-1) curve,
-the matrix will be NxN.
+the matrix will be N&times;N.
 
-Each "column" of a basis matrix is a polynomial equation
+Each "column" of a basis matrix is a polynomial
 containing the coefficients for each control point, and the columns are
 arranged from left to right. Each polynomial consists of coefficients, ranging from the
 highest order to the lowest, with respect to the parameter
@@ -237,8 +237,7 @@ and to the line between the next-to-last and last control points.
 #### Return Value
 
 Return value. The first
-knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: BSplineCurve)
+knot of the curve will be 0 and the last knot will be 1. (Type: BSplineCurve)
 
 <a name='H3DU.BSplineCurve.clampedKnots'></a>
 ### (static) H3DU.BSplineCurve.clampedKnots(controlPoints, [degree])

@@ -1032,7 +1032,7 @@ MeshBuffer.prototype.primitiveType = function() {
 /**
  * Gets the number of vertices in this mesh buffer, that
  * is, the number of vertex indices in its index buffer (some of which
- * may be duplicates), or if there is no index buffer, the maximum
+ * may be duplicates), or if there is no index buffer, the lowest maximum
  * number of items that a buffer attribute can hold.
  * @returns {number} Return value.
  */

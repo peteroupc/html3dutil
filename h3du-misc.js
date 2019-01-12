@@ -163,7 +163,7 @@ export var getPromiseResultsAll = function(promises,
  * value in milliseconds, such as the parameter of a
  * <code>requestAnimationFrame()</code> callback method.
  * </caption>
- * var angle = 360 * export var getTimePosition(timer, time, 5000);
+ * var angle = 360 * getTimePosition(timer, time, 5000);
  * @memberof H3DU
  */
 export var getTimePosition = function(timer, timeInMs, intervalInMs) {

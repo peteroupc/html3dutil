@@ -479,7 +479,7 @@ var getPromiseResultsAll = function(promises,
  * value in milliseconds, such as the parameter of a
  * <code>requestAnimationFrame()</code> callback method.
  * </caption>
- * var angle = 360 * export var getTimePosition(timer, time, 5000);
+ * var angle = 360 * getTimePosition(timer, time, 5000);
  * @memberof H3DU
  */
 var getTimePosition = function(timer, timeInMs, intervalInMs) {
@@ -5866,7 +5866,7 @@ var BufferAccessor = function(buffer, countPerValue, offset, stride) {
   /**
    * An offset, which identifies the index, starting from 0, of the first value
    * of the attribute within the buffer. The offset counts the number of
-   * elements in the buffer to the first value. For example, if this value is 6,
+   * elements in the buffer to the first value. For example, if this property is 6,
    * then the first element of the first value in the buffer is found at
    * <code>acc.buffer[acc.offset]</code> (assuming the buffer is
    * more than 6 elements long).
@@ -7182,7 +7182,7 @@ MeshBuffer.prototype.primitiveType = function() {
 /**
  * Gets the number of vertices in this mesh buffer, that
  * is, the number of vertex indices in its index buffer (some of which
- * may be duplicates), or if there is no index buffer, the maximum
+ * may be duplicates), or if there is no index buffer, the lowest maximum
  * number of items that a buffer attribute can hold.
  * @returns {number} Return value.
  */
@@ -8024,8 +8024,8 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * <p>Each kind of polynomial curve (such as B-spline or B&eacute;zier) is
  * associated with a <i>basis matrix</i>, which defines the polynomial
  * coefficients for each control point in the curve. For a degree (N-1) curve,
- * the matrix will be NxN.<p>
- * Each "column" of a basis matrix is a polynomial equation
+ * the matrix will be N&times;N.<p>
+ * Each "column" of a basis matrix is a polynomial
  * containing the coefficients for each control point, and the columns are
  * arranged from left to right. Each polynomial consists of coefficients, ranging from the
  * highest order to the lowest, with respect to the parameter
@@ -8684,8 +8684,7 @@ BSplineSurface.prototype.constructor = BSplineSurface;
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineCurve} constructor.
  * @returns {BSplineCurve} Return value. The first
- * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
- * versions.)
+ * knot of the curve will be 0 and the last knot will be 1.
  */
 BSplineCurve.clamped = function(controlPoints, degree, bits) {
   return new BSplineCurve(controlPoints,
@@ -8751,8 +8750,7 @@ BSplineCurve.uniform = function(controlPoints, degree, bits) {
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
- * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
- * versions.)
+ * knot of the curve will be 0 and the last knot will be 1.
  */
 BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
   return new BSplineSurface(controlPoints,
@@ -8771,8 +8769,7 @@ BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
- * knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
- * versions.)
+ * knot of the curve will be 0 and the last knot will be 1.
  */
 BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
   return new BSplineSurface(controlPoints,

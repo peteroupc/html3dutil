@@ -102,7 +102,7 @@ The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
 <code>requestAnimationFrame()</code> callback method.
 
-    var angle = 360 * export var getTimePosition(timer, time, 5000);
+    var angle = 360 * getTimePosition(timer, time, 5000);
 
 <a name='H3DU.newFrames'></a>
 ### (static) H3DU.newFrames(timer, timeInMs)
