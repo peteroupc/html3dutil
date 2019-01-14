@@ -10,7 +10,7 @@
 A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
 
 The following curves can be generated with this class (in the following
-descriptions, R means <code>radius</code>
+descriptions, R = <code>radius</code>
 and D = <code>distFromCenter</code>).<ul>
 <li>Cycloid: D = R (trochoid touching the X axis).</li>
 <li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>

@@ -47,11 +47,22 @@ and other polyhedra.
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
 * <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.
+* <a href="StarField.md">StarField</a><br>TODO: Not documented yet.
 * <a href="Superellipsoid.md">Superellipsoid</a><br>TODO: Not documented yet.
 * <a href="Supertoroid.md">Supertoroid</a><br>TODO: Not documented yet.
 * <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 * <a href="Trochoid.md">Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
+* <a href="curveCatacaustic.md">curveCatacaustic</a><br>TODO: Not documented yet.
+* <a href="curveEvolute.md">curveEvolute</a><br>TODO: Not documented yet.
+* <a href="curveInverse.md">curveInverse</a><br>TODO: Not documented yet.
+* <a href="curveInvolute.md">curveInvolute</a><br>TODO: Not documented yet.
+* <a href="curveOrthotomic.md">curveOrthotomic</a><br>TODO: Not documented yet.
+* <a href="curvePedalCurve.md">curvePedalCurve</a><br>TODO: Not documented yet.
+* <a href="curveRadialCurve.md">curveRadialCurve</a><br>TODO: Not documented yet.
+* <a href="polarCurve.md">polarCurve</a><br>TODO: Not documented yet.
+* <a href="ruledSurface.md">ruledSurface</a><br>TODO: Not documented yet.
+* <a href="spiralCurve.md">spiralCurve</a><br>TODO: Not documented yet.
 
 ## Tutorials
 

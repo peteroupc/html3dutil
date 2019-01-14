@@ -72,7 +72,7 @@ The following method
 starts a curve at a different offset and wraps the portion
 of the curve behind that offset at the end of the original
 curve. This is useful for offsetting the points retrieved
-with the getPoints method
+with the getPoints method.
 
     function wrapAtOffset(curve, offset) {
      "use strict";

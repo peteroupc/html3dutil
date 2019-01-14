@@ -69,7 +69,7 @@ import {MathInternal} from "./h3du-mathinternal";
  * starts a curve at a different offset and wraps the portion
  * of the curve behind that offset at the end of the original
  * curve. This is useful for offsetting the points retrieved
- * with the getPoints method</caption>
+ * with the getPoints method.</caption>
  * function wrapAtOffset(curve, offset) {
  *   "use strict";
  * var c=curve
@@ -85,6 +85,8 @@ import {MathInternal} from "./h3du-mathinternal";
  * }
  */
 function Curve(curve, curveParam) {
+// TODO: Consider using a non-prototype method
+// rather than this constructor
   this.curve = curve;
   this.curveParam = curveParam;
 }
