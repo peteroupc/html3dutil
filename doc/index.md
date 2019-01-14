@@ -74,7 +74,6 @@ which results by revolving a two-dimensional curve around an axis.
 * [Matrix Details](tutorial-matrixdetails.md)
 * [Examples of Creating Meshes on the Fly](tutorial-meshexamples.md)
 * [Library Overview](tutorial-overview.md)
-* [2-Dimensional Graphics Paths](tutorial-paths.md)
 * [Creating Shapes](tutorial-shapes.md)
 * [Parametric Curves and Parametric Surfaces](tutorial-surfaces.md)
 

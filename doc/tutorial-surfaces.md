@@ -71,9 +71,6 @@ The HTML 3D Library supports parametric surfaces using a class named
 [**`SurfaceBuilder`**](http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html). It helps
 generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, `makeMesh`, generates a parametric surface mesh.
-A function similar to the `makeMesh`
-function presented here is included in the demos that come with the HTML 3D Library.
-
 The comments explain how `makeMesh` works in detail.
 
     function makeMesh(func,resolutionU, resolutionV){
@@ -162,11 +159,9 @@ a mesh with an evaluator and add it to the 3D scene, you then need to do:
     // Add the shape to the 3D scene
     scene.addShape(shape);
 
-The generated 3D mesh from a parametric surface is just like any
-other mesh, and the same functions and methods you use for other meshes
-can be used on this mesh as well. For more information, see the
-[**overview page**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-and the API references for the [**`H3DU.Mesh`**](http://peteroupc.github.io/html3dutil/H3DU.Mesh.html) and
+The generated 3D mesh buffer from a parametric surface is just like any
+other mesh buffer, and the same functions and methods you use for other mesh buffers
+can be used on this mesh buffer as well. For more information, see the API references for the [**`H3DU.MeshBuffer`**](http://peteroupc.github.io/html3dutil/H3DU.Mesh.html) and
 [**`Shape`**](http://peteroupc.github.io/html3dutil/H3DU.Shape.html) classes.
 
 <a id=Chaining_Surface_Functions></a>
@@ -287,8 +282,8 @@ behavior of a curve. B-Spline curves are created using the
 control point are the curve's end points. B&eacute;zier curves are a subset of B-spline
 curves and are created using the <a href="H3DU.BSplineCurve.md#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 method.
-* **Piecewise curves** These are curves made up of one or more other curves.
-Piecewisec curves are created using the <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a> class.
+* **Piecewise curves.** These are curves made up of one or more other curves.
+Piecewise curves are created using the <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a> class.
 
 Special curves include the following. All of these classes are supplemental
 extras.

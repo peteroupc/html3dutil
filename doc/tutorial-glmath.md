@@ -64,17 +64,17 @@ by the fourth.)
 <a id=Unit_Vectors></a>
 ### Unit Vectors
 
-A _unit vector_ is a vector with a length of 1. (A vector's _length_ is the square root
+A _unit vector_ is a vector with a length of 1. (A vector's _length_,  or _norm_, is the square root
 of the sum of the squares of its components.) A vector can be "normalized" to
 a unit vector by dividing each of its components by its length (doing so won't change
 the vector's direction).
 
 The following functions normalize vectors and find their length.
 
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3normalize">H3DU.MathUtil.vec3normalize</a> - Converts a 3-element vector to a unit vector.
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec4normalize">H3DU.MathUtil.vec4normalize</a> - Converts a 4-element vector to a unit vector.
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3length">H3DU.MathUtil.vec3length</a> - Finds a 3-element vector's length.
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec4length">H3DU.MathUtil.vec4length</a> - Finds a 4-element vector's length.
+* MathUtil.vec3normalize - Converts a 3-element vector to a unit vector.
+* MathUtil.vec4normalize - Converts a 4-element vector to a unit vector.
+* MathUtil.vec3length - Finds a 3-element vector's length.
+* MathUtil.vec4length - Finds a 4-element vector's length.
 
 Note that due to rounding error, normalizing a vector with an `H3DU.Math` method
 might not necessarily result in a vector with a length of 1.
@@ -94,12 +94,12 @@ For more details, see the <a href="tutorial-matrixdetails.md">Matrix Details</a>
 
 A translation is a shifting of an object's position.
 
-To create a translation matrix, use <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4translated">H3DU.MathUtil.mat4translated()</a>,
+To create a translation matrix, use MathUtil.mat4translated(),
 and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.
 
 To multiply an existing matrix by a translation, use
-<a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4translate">H3DU.MathUtil.mat4translate()</a>. This will put the translation
+MathUtil.mat4translate(). This will put the translation
 before the other transformations.
 
 <a id=Scaling></a>
@@ -107,12 +107,12 @@ before the other transformations.
 
 Scaling changes an object's size.
 
-To create a scaling matrix, use <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4scaled">H3DU.MathUtil.mat4scaled()</a>,
+To create a scaling matrix, use MathUtil.mat4scaled(),
 and specify the scaling factors for the X, Y, and Z axis. Each point is multiplied by the scaling
 factors to change the object's size. For example, a Y-factor of 2 doubles an object's height.
 
 To multiply an existing matrix by a scaling, use
-<a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4scale">H3DU.MathUtil.mat4scale()</a>. This will put the scaling
+MathUtil.mat4scale(). This will put the scaling
 before the other transformations.
 
 <a id=Rotation></a>
@@ -120,7 +120,7 @@ before the other transformations.
 
 Rotation changes an object's orientation.
 
-To create a rotation matrix, use <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4rotated">H3DU.MathUtil.mat4rotated()</a>,
+To create a rotation matrix, use MathUtil.mat4rotated(),
 and specify the angle (in degrees) to rotate, and the [**axis of rotation**](#Axis_of_Rotation). For example:
 
 * Specifying `(45, [1, 0, 0])` means a 45-degree rotation of the point around the X axis.
@@ -131,7 +131,7 @@ When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
 
 To multiply an existing matrix by a rotation, use
-<a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4rotate">H3DU.MathUtil.mat4rotate()</a>. This will put the rotation
+MathUtil.mat4rotate(). This will put the rotation
 before the other transformations.
 
 <a id=Combining_Transforms></a>
@@ -141,15 +141,15 @@ The order in which you do transforms is important. In general, scaling then tran
 not the same as translating then scaling. Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:
 
-* Call <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4identity">`H3DU.MathUtil.mat4identity()`</a>, creating a matrix without a transformation.
-* Do your translations if needed, using <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4translate">`mat4translate()`</a>.
-* Do your rotations if needed, using <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4rotate">`mat4rotate()`</a>.
-* Do your scalings if needed, using <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4scale">`mat4scale()`</a>.
+* Call `MathUtil.mat4identity()`, creating a matrix without a transformation.
+* Do your translations if needed, using `mat4translate()`.
+* Do your rotations if needed, using `mat4rotate()`.
+* Do your scalings if needed, using `mat4scale()`.
 
 This way, the scalings and rotations will affect the object while it's still centered, and
 before the translations (shifts) take place.
 
-You can also multiply transforms using <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4multiply">H3DU.MathUtil.mat4multiply()</a>.
+You can also multiply transforms using MathUtil.mat4multiply().
 This takes two matrices and returns one combined matrix. The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.
 
@@ -163,7 +163,7 @@ quaternions, Tait-Bryan angles, and an angle and axis.
 ### Axis of Rotation
 
 A rotation of vectors or points can be described using an _angle_
-and an _axis of rotation_, for example, in the <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4rotate">H3DU.MathUtil.mat4rotate</a> method.
+and an _axis of rotation_, for example, in the MathUtil.mat4rotate method.
 
 An axis of rotation is a vector pointing in a certain direction.  When a point (or vector)
 is rotated at any angle around this axis, the new point (or vector) will lie
@@ -201,13 +201,13 @@ A quaternion is a 4-element vector that can describe a
 
 Functions that generate quaternions include:
 
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatIdentity">H3DU.MathUtil.quatIdentity</a> - Generates a quaternion describing an
+* MathUtil.quatIdentity - Generates a quaternion describing an
 absence of rotations.
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatFromVectors">H3DU.MathUtil.quatFromVectors</a> - Generates a quaternion describing
+* MathUtil.quatFromVectors - Generates a quaternion describing
 a rotation from one vector to another.
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatFromMat4">H3DU.MathUtil.quatFromMat4</a> - Generates a quaternion from a [**4x4 matrix**](#Matrices).
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatFromAxisAngle">H3DU.MathUtil.quatFromAxisAngle</a> - Generates a quaternion from an angle and [**axis of rotation**](#Axis_of_Rotation).
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatFromTaitBryan">H3DU.MathUtil.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.
+* MathUtil.quatFromMat4 - Generates a quaternion from a [**4x4 matrix**](#Matrices).
+* MathUtil.quatFromAxisAngle - Generates a quaternion from an angle and [**axis of rotation**](#Axis_of_Rotation).
+* MathUtil.quatFromTaitBryan - Generates a quaternion from Tait-Bryan angles.
 
 <a id=Using_Quaternions></a>
 #### Using Quaternions
@@ -218,16 +218,16 @@ For best results when using quaternions:
 * As rotations happen each frame, convert the rotation (which may be
   in pitch/yaw/roll or another form, depending on the input device) to a quaternion
   (see [**"Generating Quaternions"**](#Generating_Quaternions)
-  and <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatMultiply">multiply</a> that quaternion by the current
+  and multiply that quaternion by the current
   quaternion to get the object's new rotation.
-* Normalize the rotation quaternion (using <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatNormalize">`quatNormalize()`</a>
- or <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatNormalizeInPlace">`quatNormalizeInPlace()`</a>)
+* Normalize the rotation quaternion (using `quatNormalize()`
+ or `quatNormalizeInPlace()`)
   every few frames. (Quaternions that describe a 3D rotation should be [**unit vectors**](#Unit_Vectors).)
 
 <a id=Multiplying_Quaternions></a>
 #### Multiplying Quaternions
 
-When two quaternions are multiplied (for example, with {@H3DU.MathUtil.quatMultiply}),
+When two quaternions are multiplied (for example, with {@MathUtil.quatMultiply}),
 the result is a combined rotation in which the second rotation happens
 before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.
@@ -251,9 +251,9 @@ axis), so that a rotation along that axis will do nothing.
 
 Related functions:
 
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatFromTaitBryan">H3DU.MathUtil.quatFromTaitBryan()</a> -
+* MathUtil.quatFromTaitBryan() -
 Converts from Tait-Bryan angles to a quaternion
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.quatToTaitBryan">H3DU.MathUtil.quatToTaitBryan()</a> -
+* MathUtil.quatToTaitBryan() -
 Converts from a quaternion to Tait-Bryan angles
 
 <a id=4x4_Matrices></a>
@@ -267,7 +267,7 @@ A 4x4 matrix can describe a 3D vector rotation; see [**"Rotation", above**](#Rot
 A 4-element array can describe a plane in the following manner:
 
 * The 4 elements, labeled A, B, C, and D in that order, describe a plane
- whose points satisfy the equation:
+ whose points satisfy the equation&mdash;
 
         Ax + By + Cz + D = 0
 
@@ -283,7 +283,7 @@ negative if it points away from the origin.
 
 There is one method that deals with planes:
 
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.planeNormalizeInPlace">H3DU.MathUtil.planeNormalizeInPlace</a> - Converts the plane to a form in which
+* MathUtil.planeNormalizeInPlace - Converts the plane to a form in which
 its normal has a length of 1.
 
 <a id=Boxes></a>
@@ -298,9 +298,9 @@ box is considered empty.
 
 Methods that deal with boxes include:
 
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.boxCenter">H3DU.MathUtil.boxCenter</a> - Finds a box's center.
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.boxDimensions">H3DU.MathUtil.boxDimensions</a> - Finds a box's dimensions.
-* <a href="H3DU.MathUtil.md#H3DU.MathUtil.boxIsEmpty">H3DU.MathUtil.boxIsEmpty</a> - Determines whether a box is empty.
+* MathUtil.boxCenter - Finds a box's center.
+* MathUtil.boxDimensions - Finds a box's dimensions.
+* MathUtil.boxIsEmpty - Determines whether a box is empty.
 
 <a id=Coordinate_Systems></a>
 ## Coordinate Systems
@@ -320,9 +320,9 @@ right-handed), if the positive X axis points in the thumb's
 direction and the positive Y axis points in the index finger's direction, the Z axis will
 point in the direction the other three fingers point.
 
-As used here, the Z axis is the <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3cross">cross product</a>
+As used here, the Z axis is the cross product
 of two perpendicular axes, namely the X axis and the Y axis, in that order.
-Which of the X, Y, or Z axes is the right, up, or forward axis is essentially
+Which of the X, Y, or Z axes is the right, up, or forward axis is
 arbitrary; for example, some conventions may have the Z axis, rather than Y,
 be the up axis.  Therefore, these three axes are defined here to avoid
 confusion.
@@ -359,7 +359,7 @@ Given a triangle formed by...
 * points (A minus C), (B minus C), and C, in that order, or
 * points A, B, and (0, 0, 0), in that order,
 
-the <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3cross">cross product</a> of the first point with the second,
+the cross product of the first point with the second,
 in that order, is a _normal_ of that triangle (a vector that's perpendicular to the triangle's surface).
 
 While this particular normal points toward the viewer, the triangle's vertices
@@ -372,7 +372,7 @@ point in opposite directions.)
 
 A two-dimensional triangle has counterclockwise _winding_ if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it's first transformed into 2D _window coordinates_ before its winding is found. (Window coordinates roughly correspond to screen pixels.)
 
-By default, triangles with counterclockwise winding are _front faces_, and
+By default, in the GL pipeline, triangles with counterclockwise winding are _front faces_, and
 other triangles are _back faces_.
 
 <a id=Finding_a_triangle_s_winding></a>

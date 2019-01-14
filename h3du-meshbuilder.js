@@ -299,7 +299,7 @@ CurveBuilder.prototype.constantAttribute = function(
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
- * Default is 24.
+ * If null or undefined, a default is determined automatically based on the position curve's arc length, or the distance taken by its path (or the default is 24 if no position curve was defined). If 0, this method has no effect. Throws an error if this value is less than 0.
  * @param {number} [u1] Starting point of the curve.
  * Default is the starting coordinate given by the [curve evaluator object]{@link Curve}, or 0 if not given.
  * @param {number} [u2] Ending point of the curve.

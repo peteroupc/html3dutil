@@ -5,10 +5,32 @@
 <a name='H3DU.GraphicsPath'></a>
 ### H3DU.GraphicsPath()
 
-Represents a two-dimensional path. A path is made up
+Represents a two-dimensional path.
+A path is a collection of two-dimensional line segments and/or curves. Many paths describe
+closed figures or connected strings of lines and curves. Specifically, a path is made up
 of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
 cubic B&eacute;zier curves, or any combination of these, and
 the path can be discontinuous and/or contain closed parts.
+<h4>Creating Paths</h4>
+
+There are two ways to create paths: using an SVG path string (see <a href="H3DU.GraphicsPath.md#H3DU.GraphicsPath.fromString">H3DU.GraphicsPath.fromString</a>), or by calling methods that add its segments.
+
+A `GraphicsPath` object stores a current position and a starting position, and many methods don't have you specify a starting position, to cover the common case of drawing a series of connected lines and curves.
+_.moveTo(x, y)_ - Moves the starting position and current position.
+_.lineTo(x, y)_ - Adds a line segment from the current position to a new ending position.
+_.closePath()_ - Closes the path by drawing a line to the starting point, if needed.
+<h4>Path Segments</h4>
+Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
+Line segments are relatively easy to understand. The other two kinds of segments
+deserve some discussion.
+A _B&eacute;zier curve_ is a parametric curve based on a polynomial formula. In this kind of
+curve the endpoints are defined as they are, but the other points define
+the shape of the curve and generally don't cross the curve.
+A quadratic B&eacute;zier curve uses 3 points. A cubic B&eacute;zier
+curve uses 4 points.
+An _elliptic arc_ is a curve which forms part of an ellipse. There are several ways to
+parameterize an elliptic arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
+of the `GraphicsPath` class.
 
 ### Methods
 
@@ -37,6 +59,8 @@ path's shape.
 and dimensions.
 * [ellipseForBox](#H3DU.GraphicsPath_ellipseForBox)<br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
 and dimensions.
+* [fromString](#H3DU.GraphicsPath.fromString)<br>Creates a graphics path from a string whose format follows
+the SVG (Scalable Vector Graphics) specification.
 * [getBounds](#H3DU.GraphicsPath_getBounds)<br>Calculates an axis-aligned bounding box that tightly
 fits this graphics path.
 * [getCurrentPoint](#H3DU.GraphicsPath_getCurrentPoint)<br>Gets the current point stored in this path.
@@ -309,6 +333,34 @@ and dimensions.
 #### Return Value
 
 This object. If "w" or "h" is 0, no path segments will be appended. (Type: GraphicsPath)
+
+<a name='H3DU.GraphicsPath.fromString'></a>
+### (static) H3DU.GraphicsPath.fromString(str)
+
+Creates a graphics path from a string whose format follows
+the SVG (Scalable Vector Graphics) specification.
+
+#### Parameters
+
+* `str` (Type: string)<br>A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). "largeArc" and "sweep" are flags, "0" for false and "1" for true. "rot" is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn't introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed). Examples of this parameter are "M50,50L100,100,100,150,150,200", "M50,20C230,245,233,44,22,44", and "M50,50H80V60H50V70H50"
+
+#### Return Value
+
+The resulting path. If an error
+occurs while parsing the path, the path's "isIncomplete()" method
+will return <code>true</code>. (Type: GraphicsPath)
+
+#### Example
+
+The following example creates a graphics path
+from an SVG string describing a polyline.
+
+    var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+
+The following example creates a graphics path
+from an SVG string describing a curved path.
+
+    var path=GraphicsPath.fromString("M50,20C230,245,233,44,22,44")
 
 <a name='H3DU.GraphicsPath_getBounds'></a>
 ### H3DU.GraphicsPath#getBounds()
@@ -796,7 +848,7 @@ The resulting mesh buffer. (Type: MeshBuffer)
 ### H3DU.GraphicsPath#toString()
 
 Returns this path in the form of a string in SVG path format.
-See <a href="GraphicsPath.md#GraphicsPath.fromString">GraphicsPath.fromString</a>.
+See GraphicsPath.fromString.
 
 #### Return Value
 

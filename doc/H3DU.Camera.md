@@ -40,13 +40,10 @@ point to the camera's position.
 the same reference point at the same distance.
 * [moveAngleVertical](#H3DU.Camera_moveAngleVertical)<br>Moves the camera upward or downward so that it faces
 the same reference point at the same distance.
-* [moveCenterHorizontal](#H3DU.Camera_moveCenterHorizontal)<br>**Deprecated: Use "moveHorizontal" instead.**
-* [moveCenterVertical](#H3DU.Camera_moveCenterVertical)<br>**Deprecated: Use "moveVertical" instead.**
 * [moveClose](#H3DU.Camera_moveClose)<br>Moves the camera the given distance, but not too close
 to the reference point.
 * [moveForward](#H3DU.Camera_moveForward)<br>Moves the camera forward the given distance.
 * [moveHorizontal](#H3DU.Camera_moveHorizontal)<br>Moves the camera horizontally relative to the camera's up vector.
-* [movePosition](#H3DU.Camera_movePosition)<br>**Deprecated: Renamed to "setPosition".**
 * [moveVertical](#H3DU.Camera_moveVertical)<br>Moves the camera toward or away from the camera's up vector.
 * [setDistance](#H3DU.Camera_setDistance)<br>Moves the camera a given distance from the reference
 point without changing its orientation.
@@ -119,36 +116,6 @@ the same reference point at the same distance.
 
 This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
 
-<a name='H3DU.Camera_moveCenterHorizontal'></a>
-### H3DU.Camera#moveCenterHorizontal(dist)
-
-**Deprecated: Use "moveHorizontal" instead.**
-
-Moves the camera horizontally relative to the camera's up vector.
-
-#### Parameters
-
-* `dist` (Type: number)<br>Distance to move the camera.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
-
-<a name='H3DU.Camera_moveCenterVertical'></a>
-### H3DU.Camera#moveCenterVertical(dist)
-
-**Deprecated: Use "moveVertical" instead.**
-
-Moves the camera toward or away from the camera's up vector.
-
-#### Parameters
-
-* `dist` (Type: number)<br>Distance to move the camera.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
-
 <a name='H3DU.Camera_moveClose'></a>
 ### H3DU.Camera#moveClose(dist)
 
@@ -184,23 +151,6 @@ Moves the camera horizontally relative to the camera's up vector.
 #### Parameters
 
 * `dist` (Type: number)<br>Distance to move the camera.
-
-#### Return Value
-
-This object. (Type: <a href="H3DU.Camera.md">H3DU.Camera</a>)
-
-<a name='H3DU.Camera_movePosition'></a>
-### H3DU.Camera#movePosition(cx, cy, cz)
-
-**Deprecated: Renamed to "setPosition".**
-
-Sets the position of the camera.
-
-#### Parameters
-
-* `cx` (Type: number)<br>The camera's new X coordinate.
-* `cy` (Type: number)<br>The camera's new Y coordinate.
-* `cz` (Type: number)<br>The camera's new Z coordinate.
 
 #### Return Value
 

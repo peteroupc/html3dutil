@@ -28,8 +28,8 @@ a new matrix.<li><a href='#H3DU.MathUtil.mat4copy'>mat4copy</a><br>Returns a cop
 in the form of a view frustum, or the limits in the "camera"'s view.<li><a href='#H3DU.MathUtil.mat4identity'>mat4identity</a><br>Returns the identity 4x4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).<li><a href='#H3DU.MathUtil.mat4inverseTranspose3'>mat4inverseTranspose3</a><br>Returns the transposed result of the inverted 3x3 upper left corner of
 the given 4x4 matrix.<li><a href='#H3DU.MathUtil.mat4invert'>mat4invert</a><br>Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.<li><a href='#H3DU.MathUtil.mat4isIdentity'>mat4isIdentity</a><br>Returns whether a 4x4 matrix is the identity matrix.<li><a href='#H3DU.MathUtil.mat4lookat'>mat4lookat</a><br>Returns a 4x4 matrix that represents a camera view,
-transforming world space coordinates to <i>eye space</i>
-(or <i>camera space</i>).<li><a href='#H3DU.MathUtil.mat4multiply'>mat4multiply</a><br>Multiplies two 4x4 matrices.<li><a href='#H3DU.MathUtil.mat4oblique'>mat4oblique</a><br>Returns a 4x4 view matrix representing an oblique projection,
+transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
+(also called <i>camera space</i> or <i>view space</i>).<li><a href='#H3DU.MathUtil.mat4multiply'>mat4multiply</a><br>Multiplies two 4x4 matrices.<li><a href='#H3DU.MathUtil.mat4oblique'>mat4oblique</a><br>Returns a 4x4 view matrix representing an oblique projection,
 when used in conjunction with an orthographic projection.<li><a href='#H3DU.MathUtil.mat4ortho'>mat4ortho</a><br>Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.<li><a href='#H3DU.MathUtil.mat4ortho2d'>mat4ortho2d</a><br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>.<li><a href='#H3DU.MathUtil.mat4ortho2dAspect'>mat4ortho2dAspect</a><br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.<li><a href='#H3DU.MathUtil.mat4orthoAspect'>mat4orthoAspect</a><br>Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.<li><a href='#H3DU.MathUtil.mat4perspective'>mat4perspective</a><br>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.<li><a href='#H3DU.MathUtil.mat4perspectiveHorizontal'>mat4perspectiveHorizontal</a><br>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
@@ -331,8 +331,8 @@ can't be inverted, returns the identity 3x3 matrix. (Type: Array.&lt;number>)<a 
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='H3DU.MathUtil.mat4isIdentity'></a>
 <h3> (static) H3DU.MathUtil.mat4isIdentity(mat)</h3>Returns whether a 4x4 matrix is the identity matrix.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>A 4x4 matrix.</ul><h4> Return Value</h4>Return value. (Type: boolean)<a name='H3DU.MathUtil.mat4lookat'></a>
 <h3> (static) H3DU.MathUtil.mat4lookat(viewerPos, [lookingAt], [up])</h3>Returns a 4x4 matrix that represents a camera view,
-transforming world space coordinates to <i>eye space</i>
-(or <i>camera space</i>). This essentially rotates a "camera"
+transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
+(also called <i>camera space</i> or <i>view space</i>). This essentially rotates a "camera"
 and moves it to somewhere in the scene. In eye space:<ul>
 <li>The "camera" is located at the origin (0,0,0), or
 at <code>viewerPos</code> in world space,

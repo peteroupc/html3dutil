@@ -709,8 +709,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Returns a 4x4 matrix that represents a camera view,
-   * transforming world space coordinates to <i>eye space</i>
-   * (or <i>camera space</i>). This essentially rotates a "camera"
+   * transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
+   * (also called <i>camera space</i> or <i>view space</i>). This essentially rotates a "camera"
    * and moves it to somewhere in the scene. In eye space:<ul>
    * <li>The "camera" is located at the origin (0,0,0), or
    * at <code>viewerPos</code> in world space,

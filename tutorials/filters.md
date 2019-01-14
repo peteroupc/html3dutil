@@ -17,12 +17,8 @@ It also describes several examples of graphics filters.
 - [**Using Graphics Filters**](#Using_Graphics_Filters)
 - [**Sample Code**](#Sample_Code)
 - [**Examples**](#Examples)
-    - [**Grayscale**](#Grayscale)
-    - [**Invert**](#Invert)
-    - [**Red Tint**](#Red_Tint)
     - [**Mirror Filter**](#Mirror_Filter)
     - [**Matrix Filter**](#Matrix_Filter)
-    - [**Color Matrix Filter**](#Color_Matrix_Filter)
     - [**Pixelate Filter**](#Pixelate_Filter)
     - [**Wave Filter**](#Wave_Filter)
     - [**Waterpaint Filter**](#Waterpaint_Filter)
@@ -90,8 +86,7 @@ The shader can also define custom parameters called "uniforms". They are declare
 can be used in the `textureEffect` function.
 
 A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
-be found by searching the Web; note that there are many versions of GLSL and the one used
-in most HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.
+be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.
 
 <a id=Using_Graphics_Filters></a>
 ## Using Graphics Filters
@@ -178,51 +173,6 @@ of graphics filters implemented as shaders.
 
 Here are more details on some of the filters it includes.
 
-<a id=Grayscale></a>
-### Grayscale
-
-![**Grayscale filtered image using former implementation**](filters1.png)
-
-The grayscale filter converts the screen to black and white. This is currently
-implemented using the color matrix filter, described later, rather than the code already given above.
-
-<a id=Invert></a>
-### Invert
-
-![**Invert filtered image using former implementation**](filters2.png)
-
-The invert filter is built-in to the HTML 3D Library. It inverts the colors of the screen so the effect looks
-like a film negative.
-
-This filter is implemented in the method `H3DU.ShaderInfo.getInvertEffect()`, shown below, but in the
-demo this is currently implemented using the color matrix filter instead.
-
-    H3DU.ShaderInfo.getInvertEffect=function(){
-    return H3DU.ShaderInfo.makeEffect(context,
-    [
-    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-    " vec4 color=texture2D(sampler,uvCoord);",
-    " vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;",
-    "}"].join("\n"));
-    }
-
-<a id=Red_Tint></a>
-### Red Tint
-
-![**Red Tint filtered image using former implementation**](filters9.png)
-
-The red tint filter adds a hint of red to the image.  This is currently implemented using the
-color matrix filter, described later.  The former implementation of the filter
-appears below.
-
-    function makeRedTint(){
-    return H3DU.ShaderInfo.makeEffect(context,[
-    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-    " vec4 color=texture2D(sampler,uvCoord);",
-    " return vec4(color.r+0.3,color.g,color.b,color.a);",
-    "}"].join("\n"));
-    }
-
 <a id=Mirror_Filter></a>
 ### Mirror Filter
 
@@ -266,25 +216,6 @@ colors of its 4 adjacent pixels. Note that this example adds up to 1.
 This filter is implemented in the function `makeKernelMatrix` in the demo. It is used for
 the "blur" and "edge detect" effects. The filter shows how it's possible for filters to read neighboring
 pixels, not just the current pixel, when implementing their effect.
-
-<a id=Color_Matrix_Filter></a>
-### Color Matrix Filter
-
-This filter enables another family of image processing filters, which modify colors
-based on a transformation matrix.  This is a 4x4 matrix that is multiplied by the red/green/blue
-color to get a new color.
-
-This example of a color matrix implements a _grayscale_ filter, which converts the image to
-black and white and shades of gray.
-
-    [
-      1/3,1/3,1/3,0,
-      1/3,1/3,1/3,0,
-      1/3,1/3,1/3,0,
-       0,0,0,1
-    ]
-
-This filter is implemented in the function `makeColorMatrix` in the demo.
 
 <a id=Pixelate_Filter></a>
 ### Pixelate Filter

@@ -82,8 +82,8 @@ the given 4x4 matrix.
 * [mat4invert](#H3DU.MathUtil.mat4invert)<br>Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
 * [mat4isIdentity](#H3DU.MathUtil.mat4isIdentity)<br>Returns whether a 4x4 matrix is the identity matrix.
 * [mat4lookat](#H3DU.MathUtil.mat4lookat)<br>Returns a 4x4 matrix that represents a camera view,
-transforming world space coordinates to <i>eye space</i>
-(or <i>camera space</i>).
+transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
+(also called <i>camera space</i> or <i>view space</i>).
 * [mat4multiply](#H3DU.MathUtil.mat4multiply)<br>Multiplies two 4x4 matrices.
 * [mat4oblique](#H3DU.MathUtil.mat4oblique)<br>Returns a 4x4 view matrix representing an oblique projection,
 when used in conjunction with an orthographic projection.
@@ -803,8 +803,8 @@ Return value. (Type: boolean)
 ### (static) H3DU.MathUtil.mat4lookat(viewerPos, [lookingAt], [up])
 
 Returns a 4x4 matrix that represents a camera view,
-transforming world space coordinates to <i>eye space</i>
-(or <i>camera space</i>). This essentially rotates a "camera"
+transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
+(also called <i>camera space</i> or <i>view space</i>). This essentially rotates a "camera"
 and moves it to somewhere in the scene. In eye space:<ul>
 <li>The "camera" is located at the origin (0,0,0), or
 at <code>viewerPos</code> in world space,

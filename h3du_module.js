@@ -1804,8 +1804,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Returns a 4x4 matrix that represents a camera view,
-   * transforming world space coordinates to <i>eye space</i>
-   * (or <i>camera space</i>). This essentially rotates a "camera"
+   * transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
+   * (also called <i>camera space</i> or <i>view space</i>). This essentially rotates a "camera"
    * and moves it to somewhere in the scene. In eye space:<ul>
    * <li>The "camera" is located at the origin (0,0,0), or
    * at <code>viewerPos</code> in world space,
@@ -7557,7 +7557,7 @@ CurveBuilder.prototype.constantAttribute = function(
  * generates a series of points along the curve. For any other value,
  * this method has no effect.
  * @param {number} [n] Number of subdivisions of the curve to be drawn.
- * Default is 24.
+ * If null or undefined, a default is determined automatically based on the position curve's arc length, or the distance taken by its path (or the default is 24 if no position curve was defined). If 0, this method has no effect. Throws an error if this value is less than 0.
  * @param {number} [u1] Starting point of the curve.
  * Default is the starting coordinate given by the [curve evaluator object]{@link Curve}, or 0 if not given.
  * @param {number} [u2] Ending point of the curve.
@@ -9681,10 +9681,31 @@ ArcCurve.prototype.velocity = function(t) {
 
 // --------------------------------------------------
 /**
- * Represents a two-dimensional path. A path is made up
+ * Represents a two-dimensional path.
+ * A path is a collection of two-dimensional line segments and/or curves. Many paths describe
+ * closed figures or connected strings of lines and curves. Specifically, a path is made up
  * of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
  * cubic B&eacute;zier curves, or any combination of these, and
  * the path can be discontinuous and/or contain closed parts.
+ * <h4>Creating Paths</h4>
+ * <p>
+ * There are two ways to create paths: using an SVG path string (see {@link H3DU.GraphicsPath.fromString}), or by calling methods that add its segments.
+ * <p>A `GraphicsPath` object stores a current position and a starting position, and many methods don't have you specify a starting position, to cover the common case of drawing a series of connected lines and curves.
+ * _.moveTo(x, y)_ - Moves the starting position and current position.
+ * _.lineTo(x, y)_ - Adds a line segment from the current position to a new ending position.
+ * _.closePath()_ - Closes the path by drawing a line to the starting point, if needed.
+ * <h4>Path Segments</h4>
+ * Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
+ * Line segments are relatively easy to understand. The other two kinds of segments
+ * deserve some discussion.
+ * A _B&eacute;zier curve_ is a parametric curve based on a polynomial formula. In this kind of
+ * curve the endpoints are defined as they are, but the other points define
+ * the shape of the curve and generally don't cross the curve.
+ * A quadratic B&eacute;zier curve uses 3 points. A cubic B&eacute;zier
+ * curve uses 4 points.
+ * An _elliptic arc_ is a curve which forms part of an ellipse. There are several ways to
+ * parameterize an elliptic arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
+ * of the `GraphicsPath` class.
  * @memberof H3DU
  * @constructor
  */
@@ -11905,7 +11926,7 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
 };
 /**
  * Creates a graphics path from a string whose format follows
- * the SVG specification.
+ * the SVG (Scalable Vector Graphics) specification.
  * @param {string} str A string, in the SVG path format, representing
  * a two-dimensional path. An SVG path consists of a number of
  * path segments, starting with a single letter, as follows:
@@ -11937,14 +11958,16 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
  * This separation can be left out as long as doing so doesn't
  * introduce ambiguity. All commands set the current point
  * to the end of the path segment (including Z/z, which adds a line
- * segment if needed).
+ * segment if needed). Examples of this parameter are "M50,50L100,100,100,150,150,200", "M50,20C230,245,233,44,22,44", and "M50,50H80V60H50V70H50"
  * @returns {GraphicsPath} The resulting path. If an error
- * occurs while parsing the path, the path's "isIncomplete() method
+ * occurs while parsing the path, the path's "isIncomplete()" method
  * will return <code>true</code>.
  * @example <caption>The following example creates a graphics path
  * from an SVG string describing a polyline.</caption>
  * var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
- * @memberof! GraphicsPath
+ * @example <caption>The following example creates a graphics path
+ * from an SVG string describing a curved path.</caption>
+ * var path=GraphicsPath.fromString("M50,20C230,245,233,44,22,44")
  */
 GraphicsPath.fromString = function(str) {
   var index = [0];
