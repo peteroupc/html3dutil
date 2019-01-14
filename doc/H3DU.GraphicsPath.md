@@ -661,7 +661,7 @@ Adds path segments to this path that form an axis-aligned rectangle.
 This object. If "w" or "h" is 0, no path segments will be appended. (Type: GraphicsPath)
 
 <a name='H3DU.GraphicsPath_regularPolygon'></a>
-### H3DU.GraphicsPath#regularPolygon(cx, cy, sides, radius, phaseInDegrees)
+### H3DU.GraphicsPath#regularPolygon(cx, cy, sides, radius, [phaseInDegrees])
 
 Adds path segments to this path that form a regular polygon.
 
@@ -671,7 +671,7 @@ Adds path segments to this path that form a regular polygon.
 * `cy` (Type: number)<br>Y coordinate of the center of the polygon.
 * `sides` (Type: number)<br>Number of sides the polygon has. Nothing will be added to the path if this value is 2 or less.
 * `radius` (Type: number)<br>Radius from the center to each vertex of the polygon.
-* `phaseInDegrees` (Type: number)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.
+* `phaseInDegrees` (Type: number) (optional)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis. If null, undefined, or omitted, the default is 0.
 
 #### Return Value
 
@@ -756,7 +756,7 @@ Generates a mesh buffer consisting of the approximate line segments that make up
 
 #### Parameters
 
-* `z` (Type: *) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
+* `z` (Type: number) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value

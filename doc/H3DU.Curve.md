@@ -353,7 +353,7 @@ this method is approximate.
 
 #### Return Value
 
-Return value. (Type: Curve)
+Return value. Returns this object if this curve already uses an arc length parameterization. (Type: Curve)
 
 <a name='H3DU.Curve_velocity'></a>
 ### H3DU.Curve#velocity(u)

@@ -220,7 +220,7 @@ Curve.prototype.normal = function(u) {
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
-      vector = this.tangent(u + du);
+      vector = MathInternal.vecScaleInPlace(this.tangent(u + du), -1);
     }
     vector = MathInternal.vecSubInPlace(vector, this.tangent(u));
     return MathInternal.vecNormalizeInPlace(vector);
@@ -607,9 +607,12 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * should be continuous and have a speed greater than 0 at every
  * point on the curve. The arc length parameterization used in
  * this method is approximate.
- * @returns {Curve} Return value.
+ * @returns {Curve} Return value. Returns this object if this curve already uses an arc length parameterization.
  */
 Curve.prototype.toArcLengthParam = function() {
+  if(typeof this.curveParam !== "undefined" && this.curveParam !== null && this.curveParam instanceof Curve._ArcLengthParam) {
+    return this;
+  }
   return new Curve(this, new Curve._ArcLengthParam(this));
 };
 

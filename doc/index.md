@@ -1,5 +1,6 @@
 # Documentation Index
 
+* <a href="DrawingToy.md">DrawingToy</a><br>TODO: Not documented yet.
 * <a href="Epitrochoid.md">Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
@@ -37,11 +38,10 @@ text.
 texture.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
-* <a href="H3DU.exports.SurfaceOfRevolution.md">H3DU.exports.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
-which results by revolving a two-dimensional curve around an axis.
 * <a href="Hypotrochoid.md">Hypotrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
-* <a href="MatrixStack.md">MatrixStack</a><br><b>Deprecated: Use <a href="MatrixStack.md">MatrixStack</a> instead.</b>
+* <a href="MatrixStack.md">MatrixStack</a><br>This class implements a stack
+of 4x4 transformation matrices.
 * <a href="Polyhedra.md">Polyhedra</a><br>Contains helper methods for generating the five platonic solids
 and other polyhedra.
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
@@ -49,6 +49,8 @@ and other polyhedra.
 to uniforms and vertex attributes.
 * <a href="Superellipsoid.md">Superellipsoid</a><br>TODO: Not documented yet.
 * <a href="Supertoroid.md">Supertoroid</a><br>TODO: Not documented yet.
+* <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
+which results by revolving a two-dimensional curve around an axis.
 * <a href="Trochoid.md">Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
 
 ## Tutorials

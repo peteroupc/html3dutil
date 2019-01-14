@@ -41,6 +41,12 @@ export var MathInternal = {
     }
     return vec;
   },
+  "vecScaleInPlace":function(vec, scaleNum) {
+    for(var i = 0; i < vec.length; i++) {
+      vec[i] *= scaleNum;
+    }
+    return vec;
+  },
   "vecNormalizeInPlace":function(vec) {
     var len = 0;
     for(var i = 0; i < vec.length; i++) {

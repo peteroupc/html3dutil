@@ -12,19 +12,13 @@ A curve evaluator object for a curve drawn by a circle that rolls along the X ax
 The following curves can be generated with this class (in the following
 descriptions, R means <code>radius</code>
 and D = <code>distFromCenter</code>).<ul>
-<li>Cycloid: D = R (trochoid touching the fixed circle).</li>
-<li>Curtate cycloid: D < R (trochoid not touching the fixed circle).</li>
-<li>Prolate cycloid: D > R (trochoid crossing the fixed circle).</li></ul>
+<li>Cycloid: D = R (trochoid touching the X axis).</li>
+<li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
+<li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
 library.
-
-To use this class, you must include the script "extras/evaluators.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library. Example:
-
-    <script type="text/javascript" src="extras/evaluators.js"></script>
 
 #### Parameters
 

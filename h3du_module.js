@@ -4996,6 +4996,12 @@ var MathInternal = {
     }
     return vec;
   },
+  "vecScaleInPlace":function(vec, scaleNum) {
+    for(var i = 0; i < vec.length; i++) {
+      vec[i] *= scaleNum;
+    }
+    return vec;
+  },
   "vecNormalizeInPlace":function(vec) {
     var len = 0;
     for(var i = 0; i < vec.length; i++) {
@@ -5239,7 +5245,7 @@ Curve.prototype.normal = function(u) {
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
-      vector = this.tangent(u + du);
+      vector = MathInternal.vecScaleInPlace(this.tangent(u + du), -1);
     }
     vector = MathInternal.vecSubInPlace(vector, this.tangent(u));
     return MathInternal.vecNormalizeInPlace(vector);
@@ -5626,9 +5632,12 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * should be continuous and have a speed greater than 0 at every
  * point on the curve. The arc length parameterization used in
  * this method is approximate.
- * @returns {Curve} Return value.
+ * @returns {Curve} Return value. Returns this object if this curve already uses an arc length parameterization.
  */
 Curve.prototype.toArcLengthParam = function() {
+  if(typeof this.curveParam !== "undefined" && this.curveParam !== null && this.curveParam instanceof Curve._ArcLengthParam) {
+    return this;
+  }
   return new Curve(this, new Curve._ArcLengthParam(this));
 };
 
@@ -9448,8 +9457,8 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
 */
 
 /** @ignore
-   * @private
-   * @constructor */
+ * @private
+ * @constructor */
 var LinkedListNode = function(item) {
   this.data = item;
   this.prev = null;
@@ -9457,7 +9466,7 @@ var LinkedListNode = function(item) {
 };
 
 /** @ignore
-   * @constructor */
+ * @constructor */
 var LinkedList = function() {
   this.root = null;
   this._last = null;
@@ -9592,7 +9601,7 @@ var LinkedList = function() {
 // --------------------------------------------------
 
 /** @ignore
-   * @constructor */
+ * @constructor */
 function LineCurve(x1, y1, x2, y2) {
   this.x1 = x1;
   this.x2 = x2;
@@ -9670,13 +9679,13 @@ ArcCurve.prototype.velocity = function(t) {
 
 // --------------------------------------------------
 /**
-   * Represents a two-dimensional path. A path is made up
-   * of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
-   * cubic B&eacute;zier curves, or any combination of these, and
-   * the path can be discontinuous and/or contain closed parts.
-   * @memberof H3DU
-   * @constructor
-   */
+ * Represents a two-dimensional path. A path is made up
+ * of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
+ * cubic B&eacute;zier curves, or any combination of these, and
+ * the path can be discontinuous and/or contain closed parts.
+ * @memberof H3DU
+ * @constructor
+ */
 var GraphicsPath = function() {
   this.segments = [];
   this.incomplete = false;
@@ -9696,13 +9705,13 @@ GraphicsPath.CUBIC = 3;
 /** @ignore */
 GraphicsPath.ARC = 4;
 /**
-   * Returns whether the curve path is incomplete
-   * because of an error in parsing the curve string.
-   * This flag will be reset if a moveTo command,
-   * closePath command, or another path segment
-   * is added to the path.
-   * @returns {boolean} Return value.
-   */
+ * Returns whether the curve path is incomplete
+ * because of an error in parsing the curve string.
+ * This flag will be reset if a moveTo command,
+ * closePath command, or another path segment
+ * is added to the path.
+ * @returns {boolean} Return value.
+ */
 GraphicsPath.prototype.isIncomplete = function() {
   return this.incomplete;
 };
@@ -9935,11 +9944,11 @@ GraphicsPath.prototype._end = function() {
 };
 
 /**
-   * Merges the path segments in another path onto this one.
-   * @param {GraphicsPath} path Another graphics path.
-   * Can be null.
-   * @returns {GraphicsPath} This object.
-   */
+ * Merges the path segments in another path onto this one.
+ * @param {GraphicsPath} path Another graphics path.
+ * Can be null.
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.merge = function(path) {
   var oldpos = null;
   if(!path)return this;
@@ -9975,11 +9984,11 @@ GraphicsPath.prototype.merge = function(path) {
 };
 
 /**
-   * Returns this path in the form of a string in SVG path format.
-   * See {@link GraphicsPath.fromString}.
-   * @returns {string} A string describing the path in the SVG path
-   * format.
-   */
+ * Returns this path in the form of a string in SVG path format.
+ * See {@link GraphicsPath.fromString}.
+ * @returns {string} A string describing the path in the SVG path
+ * format.
+ */
 GraphicsPath.prototype.toString = function() {
   var oldpos = null;
   var ret = "";
@@ -10014,11 +10023,11 @@ GraphicsPath.prototype.toString = function() {
   return ret;
 };
 /**
-   * Finds the approximate length of this path.
-   * @param {number} [flatness] No longer used by this method.
-   * @returns {number} Approximate length of this path
-   * in units.
-   */
+ * Finds the approximate length of this path.
+ * @param {number} [flatness] No longer used by this method.
+ * @returns {number} Approximate length of this path
+ * in units.
+ */
 GraphicsPath.prototype.pathLength = function(flatness) {
   if(this.segments.length === 0)return 0;
   if(typeof flatness !== "undefined" && flatness !== null) {
@@ -10027,17 +10036,17 @@ GraphicsPath.prototype.pathLength = function(flatness) {
   return this.getCurves().getLength();
 };
 /**
-   * Gets an array of line segments approximating
-   * the path.
-   * @param {number} [flatness] When curves and arcs
-   * are decomposed to line segments, the
-   * segments will be close to the true path of the curve by this
-   * value, given in units. If null, undefined, or omitted, default is 1.
-   * @returns {Array<Array<number>>} Array of line segments.
-   * Each line segment is an array of four numbers: the X and
-   * Y coordinates of the start point, respectively, then the X and
-   * Y coordinates of the end point, respectively.
-   */
+ * Gets an array of line segments approximating
+ * the path.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {Array<Array<number>>} Array of line segments.
+ * Each line segment is an array of four numbers: the X and
+ * Y coordinates of the start point, respectively, then the X and
+ * Y coordinates of the end point, respectively.
+ */
 GraphicsPath.prototype.getLines = function(flatness) {
   var ret = [];
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
@@ -10058,15 +10067,15 @@ GraphicsPath.prototype.getLines = function(flatness) {
   return ret;
 };
 /**
-   * Creates a path in which curves and arcs are decomposed
-   * to line segments.
-   * @param {number} [flatness] When curves and arcs
-   * are decomposed to line segments, the
-   * segments will be close to the true path of the curve by this
-   * value, given in units. If null, undefined, or omitted, default is 1.
-   * @returns {GraphicsPath} A path consisting only of line
-   * segments and close commands.
-   */
+ * Creates a path in which curves and arcs are decomposed
+ * to line segments.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {GraphicsPath} A path consisting only of line
+ * segments and close commands.
+ */
 GraphicsPath.prototype.toLinePath = function(flatness) {
   var ret = [];
   var path = new GraphicsPath();
@@ -10113,11 +10122,11 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
 };
 
 /**
-   * Creates a path in which arcs are decomposed
-   * to cubic B&eacute;zier curves (which will approximate those arcs).
-   * @returns {GraphicsPath} A path consisting only of line
-   * segments, B&eacute;zier curves, and close commands.
-   */
+ * Creates a path in which arcs are decomposed
+ * to cubic B&eacute;zier curves (which will approximate those arcs).
+ * @returns {GraphicsPath} A path consisting only of line
+ * segments, B&eacute;zier curves, and close commands.
+ */
 GraphicsPath.prototype.toCurvePath = function() {
   var path = new GraphicsPath();
   var last = null;
@@ -10216,14 +10225,14 @@ GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
   }
 };
 /**
-   * Calculates an axis-aligned bounding box that tightly
-   * fits this graphics path.
-   * @returns {Array<number>} An array of four numbers
-   * describing the bounding box. The first two are
-   * the lowest X and Y coordinates, and the last two are
-   * the highest X and Y coordinates. If the path is empty,
-   * returns the array (Infinity, Infinity, -Infinity, -Infinity).
-   */
+ * Calculates an axis-aligned bounding box that tightly
+ * fits this graphics path.
+ * @returns {Array<number>} An array of four numbers
+ * describing the bounding box. The first two are
+ * the lowest X and Y coordinates, and the last two are
+ * the highest X and Y coordinates. If the path is empty,
+ * returns the array (Infinity, Infinity, -Infinity, -Infinity).
+ */
 GraphicsPath.prototype.getBounds = function() {
   var inf = Number.POSITIVE_INFINITY;
   var ret = [inf, inf, -inf, inf];
@@ -10337,10 +10346,10 @@ GraphicsPath.prototype.getBounds = function() {
 };
 
 /**
-   * Returns a path that reverses the course of this path.
-   * @returns {GraphicsPath} A GraphicsPath
-   * object with its path segments reversed.
-   */
+ * Returns a path that reverses the course of this path.
+ * @returns {GraphicsPath} A GraphicsPath
+ * object with its path segments reversed.
+ */
 GraphicsPath.prototype.reverse = function() {
   var lastptx = 0;
   var lastpty = 0;
@@ -10473,8 +10482,8 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
 };
 
 /** @ignore
-   * @private
-   * @constructor */
+ * @private
+ * @constructor */
 GraphicsPath._CurveList = function(curves) {
   Curve.apply(this,
     [new PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
@@ -10486,21 +10495,21 @@ GraphicsPath._CurveList.prototype.getCurves = function() {
   return this.curves;
 };
 /**
-   * Does a linear interpolation between two graphics paths.
-   * @param {GraphicsPath} other The second graphics path.
-   * @param {number} t An interpolation factor, generally ranging from 0 through 1.
-   * Closer to 0 means closer to this path, and closer to 1 means closer
-   * to "other". If the input paths contain arc
-   * segments that differ in the large arc and sweep flags, the flags from
-   * the first path's arc are used if "t" is less than 0.5; and the flags from
-   * the second path's arc are used otherwise.<p>For a nonlinear
-   * interpolation, define a function that takes a value that usually ranges from 0 through 1
-   * and generally returns a value that usually ranges from 0 through 1,
-   * and pass the result of that function to this method.
-   * See the documentation for {@link MathUtil.vec3lerp}
-   * for examples of interpolation functions.
-   * @returns {GraphicsPath} The interpolated path.
-   */
+ * Does a linear interpolation between two graphics paths.
+ * @param {GraphicsPath} other The second graphics path.
+ * @param {number} t An interpolation factor, generally ranging from 0 through 1.
+ * Closer to 0 means closer to this path, and closer to 1 means closer
+ * to "other". If the input paths contain arc
+ * segments that differ in the large arc and sweep flags, the flags from
+ * the first path's arc are used if "t" is less than 0.5; and the flags from
+ * the second path's arc are used otherwise.<p>For a nonlinear
+ * interpolation, define a function that takes a value that usually ranges from 0 through 1
+ * and generally returns a value that usually ranges from 0 through 1,
+ * and pass the result of that function to this method.
+ * See the documentation for {@link MathUtil.vec3lerp}
+ * for examples of interpolation functions.
+ * @returns {GraphicsPath} The interpolated path.
+ */
 GraphicsPath.prototype.interpolate = function(other, t) {
   if(!other || other.segments.length !== this.segments.length) {
     return null;
@@ -10611,22 +10620,22 @@ GraphicsPath._addSegment = function(a, c) {
 };
 
 /**
-   * Gets a [curve evaluator object]{@link Curve} for
-   * the curves described by this path. The return value doesn't track changes to the path.
-   * @returns {Object} A [curve evaluator object]{@link Curve} that implements
-   * the following additional method:<ul>
-   * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link Curve}
-   * described by this path. The list will contain one curve evaluator object for each disconnected
-   * portion of the path. For example, if the path contains one polygon, the list will contain
-   * one curve object. And if the path is empty, the list will be empty too. Each curve
-   * takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
-   * the end of the path (similar to arc-length parameterization). Each curve
-   * returns a 3-element array containing
-   * the X, Y, and Z coordinates of the point lying on the curve at the given
-   * "u" position (however, the z will always be 0 since paths can currently
-   * only be 2-dimensional).
-   * </ul>
-   */
+ * Gets a [curve evaluator object]{@link Curve} for
+ * the curves described by this path. The return value doesn't track changes to the path.
+ * @returns {Object} A [curve evaluator object]{@link Curve} that implements
+ * the following additional method:<ul>
+ * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link Curve}
+ * described by this path. The list will contain one curve evaluator object for each disconnected
+ * portion of the path. For example, if the path contains one polygon, the list will contain
+ * one curve object. And if the path is empty, the list will be empty too. Each curve
+ * takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
+ * the end of the path (similar to arc-length parameterization). Each curve
+ * returns a 3-element array containing
+ * the X, Y, and Z coordinates of the point lying on the curve at the given
+ * "u" position (however, the z will always be 0 since paths can currently
+ * only be 2-dimensional).
+ * </ul>
+ */
 GraphicsPath.prototype.getCurves = function() {
   // TODO: Consider returning a list of curves and require
   // callers to use PiecewiseCurve to get the prior behavior
@@ -10698,15 +10707,15 @@ GraphicsPath.prototype.getSubpaths = function() {
 };
 
 /**
-   * Gets an array of the end points of
-   * line segments approximating the path.
-   * @param {number} [flatness] When curves and arcs
-   * are decomposed to line segments, the
-   * segments will be close to the true path of the curve by this
-   * value, given in units. If null, undefined, or omitted, default is 1.
-   * @returns {Array<Array<number>>} Array of the end points of
-   * line segments approximating the path.
-   */
+ * Gets an array of the end points of
+ * line segments approximating the path.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {Array<Array<number>>} Array of the end points of
+ * line segments approximating the path.
+ */
 GraphicsPath.prototype.getLinePoints = function(flatness) {
   var lines = this.getLines(flatness);
   var points = [];
@@ -10725,20 +10734,20 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
 };
 
 /**
-   * Gets an array of the end points of
-   * line segments approximating the path. The positions will be in the form of objects with
-   * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
-   * @param {number} [flatness] When curves and arcs
-   * are decomposed to line segments, the
-   * segments will be close to the true path of the curve by this
-   * value, given in units. If null, undefined, or omitted, default is 1.
-   * @returns {Array<Array<number>>} Array of the end points of
-   * line segments approximating the path.
-   * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
-   * var points=path.getLinePointsAsObjects()
-   * var buffer=new THREE.BufferGeometry()
-   * .setFromPoints(points);
-   */
+ * Gets an array of the end points of
+ * line segments approximating the path. The positions will be in the form of objects with
+ * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {Array<Array<number>>} Array of the end points of
+ * line segments approximating the path.
+ * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
+ * var points=path.getLinePointsAsObjects()
+ * var buffer=new THREE.BufferGeometry()
+ * .setFromPoints(points);
+ */
 GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
   var lines = this.getLines(flatness);
   var points = [];
@@ -10763,16 +10772,16 @@ GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
 };
 
 /**
-   * Gets an array of points evenly spaced across the length
-   * of the path.
-   * @param {number} numPoints Number of points to return.
-   * @returns {Array<Array<number>>} Array of points lying on
-   * the path and evenly spaced across the length of the path,
-   * starting and ending with the path's endPoints. Returns
-   * an empty array if <i>numPoints</i> is less than 1. Returns
-   * an array consisting of the start point if <i>numPoints</i>
-   * is 1.
-   */
+ * Gets an array of points evenly spaced across the length
+ * of the path.
+ * @param {number} numPoints Number of points to return.
+ * @returns {Array<Array<number>>} Array of points lying on
+ * the path and evenly spaced across the length of the path,
+ * starting and ending with the path's endPoints. Returns
+ * an empty array if <i>numPoints</i> is less than 1. Returns
+ * an array consisting of the start point if <i>numPoints</i>
+ * is 1.
+ */
 GraphicsPath.prototype.getPoints = function(numPoints) {
   if(numPoints < 1 || this.segments.length === 0)return [];
   if(numPoints === 1) {
@@ -10792,21 +10801,21 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
 };
 
 /**
-   * Gets an array of points evenly spaced across the length
-   * of the path. The positions will be in the form of objects with
-   * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
-   * @param {number} numPoints Number of points to return.
-   * @returns {Array<Array<number>>} Array of points lying on
-   * the path and evenly spaced across the length of the path,
-   * starting and ending with the path's endPoints. Returns
-   * an empty array if <i>numPoints</i> is less than 1. Returns
-   * an array consisting of the start point if <i>numPoints</i>
-   * is 1.
-   * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
-   * var points=path.getPointsAsObjects(50)
-   * var buffer=new THREE.BufferGeometry()
-   * .setFromPoints(points);
-   */
+ * Gets an array of points evenly spaced across the length
+ * of the path. The positions will be in the form of objects with
+ * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+ * @param {number} numPoints Number of points to return.
+ * @returns {Array<Array<number>>} Array of points lying on
+ * the path and evenly spaced across the length of the path,
+ * starting and ending with the path's endPoints. Returns
+ * an empty array if <i>numPoints</i> is less than 1. Returns
+ * an array consisting of the start point if <i>numPoints</i>
+ * is 1.
+ * @example <caption>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</caption>
+ * var points=path.getPointsAsObjects(50)
+ * var buffer=new THREE.BufferGeometry()
+ * .setFromPoints(points);
+ */
 GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   if(numPoints < 1 || this.segments.length === 0)return [];
   if(numPoints === 1) {
@@ -10841,10 +10850,10 @@ GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   return points;
 };
 /**
-   * Makes this path closed. Adds a line segment to the
-   * path's start position, if necessary.
-   * @returns {GraphicsPath} This object.
-   */
+ * Makes this path closed. Adds a line segment to the
+ * path's start position, if necessary.
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.closePath = function() {
   if(this.startPos[0] !== this.endPos[0] ||
    this.startPos[1] !== this.endPos[1]) {
@@ -10858,11 +10867,11 @@ GraphicsPath.prototype.closePath = function() {
 };
 
 /**
-   * Moves the current start position and end position to the given position.
-   * @param {number} x X coordinate of the position.
-   * @param {number} y Y coordinate of the position.
-   * @returns {GraphicsPath} This object.
-   */
+ * Moves the current start position and end position to the given position.
+ * @param {number} x X coordinate of the position.
+ * @param {number} y Y coordinate of the position.
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.moveTo = function(x, y) {
   this.startPos[0] = x;
   this.startPos[1] = y;
@@ -10872,13 +10881,13 @@ GraphicsPath.prototype.moveTo = function(x, y) {
   return this;
 };
 /**
-   * Adds a line segment to the path, starting
-   * at the path's end position, then
-   * sets the end position to the end of the segment.
-   * @param {number} x X coordinate of the end of the line segment.
-   * @param {number} y Y coordinate of the end of the line segment.
-   * @returns {GraphicsPath} This object.
-   */
+ * Adds a line segment to the path, starting
+ * at the path's end position, then
+ * sets the end position to the end of the segment.
+ * @param {number} x X coordinate of the end of the line segment.
+ * @param {number} y Y coordinate of the end of the line segment.
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.lineTo = function(x, y) {
   this.segments.push([GraphicsPath.LINE,
     this.endPos[0], this.endPos[1], x, y]);
@@ -10897,9 +10906,9 @@ GraphicsPath.prototype.setEndPos = function(x, y) {
 };
 
 /**
-   * Gets the current point stored in this path.
-   * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
-   */
+ * Gets the current point stored in this path.
+ * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
+ */
 GraphicsPath.prototype.getCurrentPoint = function() {
   return [this.endPos[0], this.endPos[1]];
 };
@@ -10919,26 +10928,26 @@ GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
   return t6[0] * t6[0] + t6[1] * t6[1] === 0;
 };
 /**
-   * Adds path segments in the form of a circular arc to this path,
-   * using the parameterization specified in the "arcTo" method of the
-   * HTML Canvas 2D Context.
-   * @param {number} x1 X coordinate of a point that, along with the
-   * current end point, forms a tangent line. The point where the
-   * circle touches this tangent line is the start point of the arc, and if the
-   * point isn't the same as the current end point, this method adds
-   * a line segment connecting the two points. (Note that the start point
-   * of the arc is not necessarily the same as (x1, y1) or the current end point.)
-   * @param {number} y1 Y coordinate of the point described under "x1".
-   * @param {number} x2 X coordinate of a point that, along with the
-   * point (x1, y1), forms a tangent line. The point where the
-   * circle touches this tangent line is the end point of the arc. (Note that the
-   * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
-   * When this method returns, the current end point will be set to the end
-   * point of the arc.
-   * @param {number} y2 Y coordinate of the point described under "x2".
-   * @param {number} radius Radius of the circle the arc forms a part of.
-   * @returns {GraphicsPath} This object.
-   */
+ * Adds path segments in the form of a circular arc to this path,
+ * using the parameterization specified in the "arcTo" method of the
+ * HTML Canvas 2D Context.
+ * @param {number} x1 X coordinate of a point that, along with the
+ * current end point, forms a tangent line. The point where the
+ * circle touches this tangent line is the start point of the arc, and if the
+ * point isn't the same as the current end point, this method adds
+ * a line segment connecting the two points. (Note that the start point
+ * of the arc is not necessarily the same as (x1, y1) or the current end point.)
+ * @param {number} y1 Y coordinate of the point described under "x1".
+ * @param {number} x2 X coordinate of a point that, along with the
+ * point (x1, y1), forms a tangent line. The point where the
+ * circle touches this tangent line is the end point of the arc. (Note that the
+ * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
+ * When this method returns, the current end point will be set to the end
+ * point of the arc.
+ * @param {number} y2 Y coordinate of the point described under "x2".
+ * @param {number} radius Radius of the circle the arc forms a part of.
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
   if(radius < 0) {
     throw new Error("IndexSizeError");
@@ -10966,21 +10975,21 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
   return this.arcSvgTo(radius, radius, 0, false, sweep, endTangent[0], endTangent[1]);
 };
 /**
-   * Adds path segments in the form of a circular arc to this path,
-   * using the parameterization specified in the "arc" method of the
-   * HTML Canvas 2D Context.
-   * @param {number} x X coordinate of the center of the circle that the arc forms a part of.
-   * @param {number} y Y coordinate of the circle's center.
-   * @param {number} radius Radius of the circle.
-   * @param {number} startAngle Starting angle of the arc, in radians.
-   * 0 means the positive X axis, &pi;/2 means the positive Y axis,
-   * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
-   * @param {number} endAngle Ending angle of the arc, in radians.
-   * @param {boolean} ccw Whether the arc runs counterclockwise
-   * (assuming the X axis points right and the Y axis points
-   * down under the coordinate system).
-   * @returns {GraphicsPath} This object.
-   */
+ * Adds path segments in the form of a circular arc to this path,
+ * using the parameterization specified in the "arc" method of the
+ * HTML Canvas 2D Context.
+ * @param {number} x X coordinate of the center of the circle that the arc forms a part of.
+ * @param {number} y Y coordinate of the circle's center.
+ * @param {number} radius Radius of the circle.
+ * @param {number} startAngle Starting angle of the arc, in radians.
+ * 0 means the positive X axis, &pi;/2 means the positive Y axis,
+ * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
+ * @param {number} endAngle Ending angle of the arc, in radians.
+ * @param {boolean} ccw Whether the arc runs counterclockwise
+ * (assuming the X axis points right and the Y axis points
+ * down under the coordinate system).
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
   return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
 };
@@ -11032,15 +11041,15 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
 };
 
 /**
-   * Adds a quadratic B&eacute;zier curve to this path starting
-   * at this path's current position. The current position will be
-   * the curve's first control point.
-   * @param {number} x X coordinate of the curve's second control point.
-   * @param {number} y Y coordinate of the curve's second control point.
-   * @param {number} x2 X coordinate of the curve's end point (third control point).
-   * @param {number} y2 Y coordinate of the curve's end point (third control point).
-   * @returns {GraphicsPath} This object.
-   */
+ * Adds a quadratic B&eacute;zier curve to this path starting
+ * at this path's current position. The current position will be
+ * the curve's first control point.
+ * @param {number} x X coordinate of the curve's second control point.
+ * @param {number} y Y coordinate of the curve's second control point.
+ * @param {number} x2 X coordinate of the curve's end point (third control point).
+ * @param {number} y2 Y coordinate of the curve's end point (third control point).
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
   this.segments.push([GraphicsPath.QUAD,
     this.endPos[0], this.endPos[1], x, y, x2, y2]);
@@ -11050,17 +11059,17 @@ GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
   return this;
 };
 /**
-   * Adds a cubic B&eacute;zier curve to this path starting
-   * at this path's current position. The current position will be
-   * the curve's first control point.
-   * @param {number} x X coordinate of the curve's second control point.
-   * @param {number} y X coordinate of the curve's second control point.
-   * @param {number} x2 Y coordinate of the curve's third control point.
-   * @param {number} y2 Y coordinate of the curve's third control point.
-   * @param {number} x3 X coordinate of the curve's end point (fourth control point).
-   * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
-   * @returns {GraphicsPath} This object.
-   */
+ * Adds a cubic B&eacute;zier curve to this path starting
+ * at this path's current position. The current position will be
+ * the curve's first control point.
+ * @param {number} x X coordinate of the curve's second control point.
+ * @param {number} y X coordinate of the curve's second control point.
+ * @param {number} x2 Y coordinate of the curve's third control point.
+ * @param {number} y2 Y coordinate of the curve's third control point.
+ * @param {number} x3 X coordinate of the curve's end point (fourth control point).
+ * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
   this.segments.push([GraphicsPath.CUBIC,
     this.endPos[0], this.endPos[1], x, y, x2, y2, x3, y3]);
@@ -11178,25 +11187,25 @@ GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) 
 };
 
 /**
-   * Adds path segments in the form of an elliptical arc to this path,
-   * using the parameterization used by the SVG specification.
-   * @param {number} rx X axis radius of the ellipse that the arc will
-   * be formed from.
-   * @param {number} ry Y axis radius of the ellipse that the arc will
-   * be formed from.
-   * @param {number} rot Rotation of the ellipse in degrees (clockwise
-   * assuming the X axis points right and the Y axis points
-   * down under the coordinate system).
-   * @param {boolean} largeArc In general, there are four possible solutions
-   * for arcs given the start and end points, rotation, and x- and y-radii. If true,
-   * chooses an arc solution with the larger arc length; if false, smaller.
-   * @param {boolean} sweep If true, the arc solution chosen will run
-   * clockwise (assuming the X axis points right and the Y axis points
-   * down under the coordinate system); if false, counterclockwise.
-   * @param {number} x2 X coordinate of the arc's end point.
-   * @param {number} y2 Y coordinate of the arc's end point.
-   * @returns {GraphicsPath} This object.
-   */
+ * Adds path segments in the form of an elliptical arc to this path,
+ * using the parameterization used by the SVG specification.
+ * @param {number} rx X axis radius of the ellipse that the arc will
+ * be formed from.
+ * @param {number} ry Y axis radius of the ellipse that the arc will
+ * be formed from.
+ * @param {number} rot Rotation of the ellipse in degrees (clockwise
+ * assuming the X axis points right and the Y axis points
+ * down under the coordinate system).
+ * @param {boolean} largeArc In general, there are four possible solutions
+ * for arcs given the start and end points, rotation, and x- and y-radii. If true,
+ * chooses an arc solution with the larger arc length; if false, smaller.
+ * @param {boolean} sweep If true, the arc solution chosen will run
+ * clockwise (assuming the X axis points right and the Y axis points
+ * down under the coordinate system); if false, counterclockwise.
+ * @param {number} x2 X coordinate of the arc's end point.
+ * @param {number} y2 Y coordinate of the arc's end point.
+ * @returns {GraphicsPath} This object.
+ */
 GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2) {
   if(rx === 0 || ry === 0) {
     return this.lineTo(x2, y2);
@@ -11397,16 +11406,16 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
 };
 
 /**
-   * Returns a modified version of this path that is transformed
-   * according to the given affine transformation (a transformation
-   * that keeps straight lines straight and parallel lines parallel).
-   * @param {Array<number>} trans An array of six numbers
-   * describing a 2-dimensional affine transformation. For each
-   * point in the current path, its new X coordinate is `trans[0] * X +
-   * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
-   * trans[3] * Y + trans[5]`.
-   * @returns {GraphicsPath} The transformed version of this path.
-   */
+ * Returns a modified version of this path that is transformed
+ * according to the given affine transformation (a transformation
+ * that keeps straight lines straight and parallel lines parallel).
+ * @param {Array<number>} trans An array of six numbers
+ * describing a 2-dimensional affine transformation. For each
+ * point in the current path, its new X coordinate is `trans[0] * X +
+ * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
+ * trans[3] * Y + trans[5]`.
+ * @returns {GraphicsPath} The transformed version of this path.
+ */
 GraphicsPath.prototype.transform = function(trans) {
   var ret = new GraphicsPath();
   var a = trans[0];
@@ -11494,15 +11503,15 @@ GraphicsPath.prototype.transform = function(trans) {
 };
 
 /**
-   * Adds path segments to this path that form an axis-aligned rectangle.
-   * @param {number} x X coordinate of the rectangle's upper-left corner (assuming the
-   * coordinate system's X axis points right and the Y axis down).
-   * @param {number} y Y coordinate of the rectangle's upper-left corner (assuming the
-   * coordinate system's X axis points right and the Y axis down).
-   * @param {number} w Width of the rectangle.
-   * @param {number} h Height of the rectangle.
-   * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
-   */
+ * Adds path segments to this path that form an axis-aligned rectangle.
+ * @param {number} x X coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's X axis points right and the Y axis down).
+ * @param {number} y Y coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's X axis points right and the Y axis down).
+ * @param {number} w Width of the rectangle.
+ * @param {number} h Height of the rectangle.
+ * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ */
 GraphicsPath.prototype.rect = function(x, y, w, h) {
   if(w < 0 || h < 0)return this;
   return this.moveTo(x, y)
@@ -11819,14 +11828,15 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
  * @param {number} sides Number of sides the polygon has. Nothing will be added to the path if this
  * value is 2 or less.
  * @param {number} radius Radius from the center to each vertex of the polygon.
- * @param {number} phaseInDegrees Starting angle of the first vertex of the polygon, in degrees.
+ * @param {number} [phaseInDegrees] Starting angle of the first vertex of the polygon, in degrees.
  * 0 means the positive X axis, 90 means the positive Y axis,
  * 180 means the negative X axis, and 270 means the negative Y axis.
+ * If null, undefined, or omitted, the default is 0.
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInDegrees) {
   if(sides <= 2)return this;
-  var phase = phaseInDegrees || 0;
+  var phase = phaseInDegrees === null ? phaseInDegrees : 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
@@ -11892,48 +11902,48 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
   return this.closePath();
 };
 /**
-   * Creates a graphics path from a string whose format follows
-   * the SVG specification.
-   * @param {string} str A string, in the SVG path format, representing
-   * a two-dimensional path. An SVG path consists of a number of
-   * path segments, starting with a single letter, as follows:
-   * <ul>
-   * <li>M/m (x y) - Moves the current position to (x, y). Further
-   * XY pairs specify line segments.
-   * <li>L/l (x y) - Specifies line segments to the given XY points.
-   * <li>H/h (x) - Specifies horizontal line segments to the given X points.
-   * <li>V/v (y) - Specifies vertical line segments to the given Y points.
-   * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
-   * (see quadraticCurveTo).
-   * <li>T/t (x y) - Specifies quadratic curves tangent to the previous
-   * quadratic curve.
-   * <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves
-   * (see bezierCurveTo).
-   * <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous
-   * cubic curve.
-   * <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo).
-   * "largeArc" and "sweep" are flags, "0" for false and "1" for true.
-   * "rot" is in degrees.
-   * <li>Z/z - Closes the current path; similar to adding a line segment
-   * to the first XY point given in the last M/m command.
-   * </ul>
-   * Lower-case letters mean any X and Y coordinates are relative
-   * to the current position of the path. Each group of parameters
-   * can be repeated in the same path segment. Each parameter after
-   * the starting letter is separated by whitespace and/or a single comma,
-   * and the starting letter can be separated by whitespace.
-   * This separation can be left out as long as doing so doesn't
-   * introduce ambiguity. All commands set the current point
-   * to the end of the path segment (including Z/z, which adds a line
-   * segment if needed).
-   * @returns {GraphicsPath} The resulting path. If an error
-   * occurs while parsing the path, the path's "isIncomplete() method
-   * will return <code>true</code>.
-   * @example <caption>The following example creates a graphics path
-   * from an SVG string describing a polyline.</caption>
-   * var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
-   * @memberof! GraphicsPath
-   */
+ * Creates a graphics path from a string whose format follows
+ * the SVG specification.
+ * @param {string} str A string, in the SVG path format, representing
+ * a two-dimensional path. An SVG path consists of a number of
+ * path segments, starting with a single letter, as follows:
+ * <ul>
+ * <li>M/m (x y) - Moves the current position to (x, y). Further
+ * XY pairs specify line segments.
+ * <li>L/l (x y) - Specifies line segments to the given XY points.
+ * <li>H/h (x) - Specifies horizontal line segments to the given X points.
+ * <li>V/v (y) - Specifies vertical line segments to the given Y points.
+ * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
+ * (see quadraticCurveTo).
+ * <li>T/t (x y) - Specifies quadratic curves tangent to the previous
+ * quadratic curve.
+ * <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves
+ * (see bezierCurveTo).
+ * <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous
+ * cubic curve.
+ * <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo).
+ * "largeArc" and "sweep" are flags, "0" for false and "1" for true.
+ * "rot" is in degrees.
+ * <li>Z/z - Closes the current path; similar to adding a line segment
+ * to the first XY point given in the last M/m command.
+ * </ul>
+ * Lower-case letters mean any X and Y coordinates are relative
+ * to the current position of the path. Each group of parameters
+ * can be repeated in the same path segment. Each parameter after
+ * the starting letter is separated by whitespace and/or a single comma,
+ * and the starting letter can be separated by whitespace.
+ * This separation can be left out as long as doing so doesn't
+ * introduce ambiguity. All commands set the current point
+ * to the end of the path segment (including Z/z, which adds a line
+ * segment if needed).
+ * @returns {GraphicsPath} The resulting path. If an error
+ * occurs while parsing the path, the path's "isIncomplete() method
+ * will return <code>true</code>.
+ * @example <caption>The following example creates a graphics path
+ * from an SVG string describing a polyline.</caption>
+ * var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+ * @memberof! GraphicsPath
+ */
 GraphicsPath.fromString = function(str) {
   var index = [0];
   var started = false;
@@ -12504,24 +12514,24 @@ function decomposeTriangles(points, tris, isConvex) {
 }
 
 /**
-   * Converts the subpaths in this path to triangles.
-   * Treats each subpath as a polygon even if it isn't closed.
-   * Each subpath should not contain self-intersections or
-   * duplicate vertices, except duplicate vertices that appear
-   * consecutively or at the start and end.<p>
-   * The path can contain holes. In this case, subpaths
-   * whose winding order (counterclockwise or clockwise)
-   * differs from the first subpath's winding order can be holes.
-   * @param {number} [flatness] When curves and arcs
-   * are decomposed to line segments, the
-   * segments will be close to the true path of the curve by this
-   * value, given in units. If null, undefined, or omitted, default is 1.
-   * @returns {Array<Array<number>>} Array of six-element
-   * arrays each describing a single triangle. For each six-element
-   * array, the first two, next two, and last two numbers each
-   * describe a vertex position of that triangle (X and Y coordinates
-   * in that order).
-   */
+ * Converts the subpaths in this path to triangles.
+ * Treats each subpath as a polygon even if it isn't closed.
+ * Each subpath should not contain self-intersections or
+ * duplicate vertices, except duplicate vertices that appear
+ * consecutively or at the start and end.<p>
+ * The path can contain holes. In this case, subpaths
+ * whose winding order (counterclockwise or clockwise)
+ * differs from the first subpath's winding order can be holes.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {Array<Array<number>>} Array of six-element
+ * arrays each describing a single triangle. For each six-element
+ * array, the first two, next two, and last two numbers each
+ * describe a vertex position of that triangle (X and Y coordinates
+ * in that order).
+ */
 GraphicsPath.prototype.getTriangles = function(flatness) {
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
   // NOTE: _getSubpaths doesn't add degenerate line segments
@@ -12608,7 +12618,7 @@ GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
 };
 /**
  * Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
- * @param {*} [z] Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
+ * @param {number} [z] Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
@@ -12718,7 +12728,7 @@ Triangulate._triangulate = function(contour, tris) {
 // //////////////////////////////////////////////////////////////////////////////////////////////
 
 /** @ignore
-   * @constructor */
+ * @constructor */
 var PriorityQueue = function(comparer) {
   // Based on Doug Lea's public domain Heap class in Java
   this.comparer = comparer;
@@ -13774,25 +13784,25 @@ Clipper.prototype._divideSegment = function(e, p) {
 };
 
 /**
-     * Computes the combination of this path's shape with another
-     * path's shape. The following points apply to this method:<ul>
-     * <li>This method treats unclosed subpaths as implicitly closed
-     * by connecting their end points with their start points.
-     * <li>Currently, the algorithm supports only polygons made up
-     * of line segments, so curves and arcs are converted to line
-     * segments before applying the operation.
-     * <li>Each polygon can be concave or have self-intersections
-     * or holes. Subpaths that are holes have the opposite winding
-     * order (clockwise or counterclockwise) from the subpath
-     * that contains them.
-     * </ul>
-     * @param {GraphicsPath} path A path to combine with this one.
-     * @param {number} [flatness] When curves and arcs
-     * are decomposed to line segments, the
-     * segments will be close to the true path of the curve by this
-     * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {GraphicsPath} The union of the two paths.
-     */
+ * Computes the combination of this path's shape with another
+ * path's shape. The following points apply to this method:<ul>
+ * <li>This method treats unclosed subpaths as implicitly closed
+ * by connecting their end points with their start points.
+ * <li>Currently, the algorithm supports only polygons made up
+ * of line segments, so curves and arcs are converted to line
+ * segments before applying the operation.
+ * <li>Each polygon can be concave or have self-intersections
+ * or holes. Subpaths that are holes have the opposite winding
+ * order (clockwise or counterclockwise) from the subpath
+ * that contains them.
+ * </ul>
+ * @param {GraphicsPath} path A path to combine with this one.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {GraphicsPath} The union of the two paths.
+ */
 GraphicsPath.prototype.union = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
   var polygon1 = new Polygon(this, flatness);
@@ -13801,17 +13811,17 @@ GraphicsPath.prototype.union = function(path, flatness) {
   return retval.toPath();
 };
 /**
-     * Computes the difference between this path's shape and another
-     * path's shape. The points given in the {@link GraphicsPath#union} method
-     * apply to this method.
-     * @param {GraphicsPath} path A path to combine with this one.
-     * @param {number} [flatness] When curves and arcs
-     * are decomposed to line segments, the
-     * segments will be close to the true path of the curve by this
-     * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {GraphicsPath} The difference between this path
-     * and the other path.
-     */
+ * Computes the difference between this path's shape and another
+ * path's shape. The points given in the {@link GraphicsPath#union} method
+ * apply to this method.
+ * @param {GraphicsPath} path A path to combine with this one.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {GraphicsPath} The difference between this path
+ * and the other path.
+ */
 GraphicsPath.prototype.difference = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
   var polygon1 = new Polygon(this, flatness);
@@ -13820,17 +13830,17 @@ GraphicsPath.prototype.difference = function(path, flatness) {
   return retval.toPath();
 };
 /**
-     * Computes the intersection, or the area common to both this path's shape
-     * and another path's shape. The points given in the {@link GraphicsPath#union} method
-     * apply to this method.
-     * @param {GraphicsPath} path A path to combine with this one.
-     * @param {number} [flatness] When curves and arcs
-     * are decomposed to line segments, the
-     * segments will be close to the true path of the curve by this
-     * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {GraphicsPath} A path whose shape is contained in
-     * both paths.
-     */
+ * Computes the intersection, or the area common to both this path's shape
+ * and another path's shape. The points given in the {@link GraphicsPath#union} method
+ * apply to this method.
+ * @param {GraphicsPath} path A path to combine with this one.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {GraphicsPath} A path whose shape is contained in
+ * both paths.
+ */
 GraphicsPath.prototype.intersection = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
   var polygon1 = new Polygon(this, flatness);
@@ -13839,17 +13849,17 @@ GraphicsPath.prototype.intersection = function(path, flatness) {
   return retval.toPath();
 };
 /**
-     * Computes the shape contained in either this path or another path,
-     * but not both. The points given in the {@link GraphicsPath#union} method
-     * apply to this method.
-     * @param {GraphicsPath} path A path to combine with this one.
-     * @param {number} [flatness] When curves and arcs
-     * are decomposed to line segments, the
-     * segments will be close to the true path of the curve by this
-     * value, given in units. If null, undefined, or omitted, default is 1.
-     * @returns {GraphicsPath} A path whose shape is contained in
-     * only one of the two paths.
-     */
+ * Computes the shape contained in either this path or another path,
+ * but not both. The points given in the {@link GraphicsPath#union} method
+ * apply to this method.
+ * @param {GraphicsPath} path A path to combine with this one.
+ * @param {number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null, undefined, or omitted, default is 1.
+ * @returns {GraphicsPath} A path whose shape is contained in
+ * only one of the two paths.
+ */
 GraphicsPath.prototype.xor = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
   var polygon1 = new Polygon(this, flatness);

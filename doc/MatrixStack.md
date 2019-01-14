@@ -5,9 +5,15 @@
 <a name='MatrixStack'></a>
 ### MatrixStack()
 
-<b>Deprecated: Use <a href="MatrixStack.md">MatrixStack</a> instead.</b>
+This class implements a stack
+of 4x4 transformation matrices.
 
-Alias for the <a href="MatrixStack.md">MatrixStack</a> class.
+When the constructor is called, it will create a stack whose
+only element is the identity matrix.
+
+This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.
 
 ### Methods
 
@@ -21,7 +27,6 @@ transpose of the given matrix.
 * [lookAt](#MatrixStack_lookAt)<br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a camera view.
 * [multMatrix](#MatrixStack_multMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by another matrix.
-* [multTransposeMatrix](#MatrixStack_multTransposeMatrix)<br><b>Deprecated: Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.</b>
 * [ortho](#MatrixStack_ortho)<br>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.
 * [ortho2d](#MatrixStack_ortho2d)<br>Modifies the matrix at the top of this stack by multiplying it by
@@ -141,22 +146,6 @@ the effect of scaling then translation.
 #### Parameters
 
 * `mat` (Type: Array.&lt;number>)<br>A matrix to multiply the current one by.
-
-#### Return Value
-
-This object. (Type: <a href="MatrixStack.md">MatrixStack</a>)
-
-<a name='MatrixStack_multTransposeMatrix'></a>
-### MatrixStack#multTransposeMatrix(mat)
-
-<b>Deprecated: Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.</b>
-
-Modifies the matrix at the top of this stack by multiplying it by the transpose of
-another matrix.
-
-#### Parameters
-
-* `mat` (Type: Array.&lt;number>)<br>A matrix whose transpose the current matrix will be multiplied by.
 
 #### Return Value
 
