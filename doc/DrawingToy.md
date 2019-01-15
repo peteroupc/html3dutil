@@ -5,18 +5,14 @@
 <a name='DrawingToy'></a>
 ### DrawingToy()
 
-TODO: Not documented yet.
-
-#### Return Value
-
-Return value. (Type: *)
+Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels. Curves generated currently assume that the radius of each ring and wheel is equal to its tooth count divided by 5.
 
 ### Methods
 
 * [continuousHypo](#DrawingToy_continuousHypo)<br>Adds line segments that approximate one or more curves drawn by rolling a wheel inside a fixed ring (<i>hypotrochoids</i>), where each additional curve may be drawn from a different hole position, a different ring position, or both.
 * [epi](#DrawingToy_epi)<br>Adds line segments that approximate a curve drawn by rolling a wheel outside a fixed ring (an <i>epitrochoid</i>).
 * [hypo](#DrawingToy_hypo)<br>Adds line segments that approximate a curve drawn by rolling a wheel inside a fixed ring (a <i>hypotrochoid</i>).
-* [setColor](#DrawingToy_setColor)<br>TODO: Not documented yet.
+* [setColor](#DrawingToy_setColor)<br>Sets the color to apply when drawing future curves with this object.
 * [toMeshBuffer](#DrawingToy_toMeshBuffer)<br>TODO: Not documented yet.
 
 <a name='DrawingToy_continuousHypo'></a>
@@ -75,11 +71,11 @@ This object. (Type: <a href="DrawingToy.md">DrawingToy</a>)
 <a name='DrawingToy_setColor'></a>
 ### DrawingToy#setColor(color)
 
-TODO: Not documented yet.
+Sets the color to apply when drawing future curves with this object.
 
 #### Parameters
 
-* `color` (Type: *)
+* `color` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color to apply.
 
 #### Return Value
 

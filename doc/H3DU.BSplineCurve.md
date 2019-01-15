@@ -21,7 +21,7 @@ irregular smooth curves. With the B-spline curves supported here, a perspective 
 <b>B&eacute;zier Curves</b>
 
 A B&eacute;zier curve is defined by a series of control points, where
-the first and last control points define the end points of the curve, and
+the first and last control points are the curve's end points, and
 the remaining control points define the curve's shape, though they don't
 necessarily cross the curve. An important property of these curves is
 that the bounding box of the curve is contained within the bounding box

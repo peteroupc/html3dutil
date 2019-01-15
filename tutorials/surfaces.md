@@ -145,9 +145,9 @@ The following shape was rotated to show the Z axis; the rotation isn't perfect.
 
 ![**The parametric surface.**](surfaces4.png)
 
-Note that all three examples above use a value named `evaluator`. A mesh buffer can be generated using something like the following:
+Note that all three examples above use a value named `evaluator`. A mesh buffer for the surface evaluator can be generated using something like the following:
 
-    var meshBuffer = SurfaceBuilder().surfaceToBuffer(evaluator);
+    var meshBuffer = SurfaceBuilder.surfaceToBuffer(evaluator);
 
 The generated 3D mesh buffer from a parametric surface is just like any
 other mesh buffer, and the same functions and methods you use for other mesh buffers
@@ -189,11 +189,11 @@ or the makeMesh method above.
      }
     }
 
-And here's an example of its use. We'll take the circle surface given above,
+And here's an example of its use. We'll take the disc surface given above,
 and create a SurfaceShifter object that shifts the circle by 3 units horizontally
 and vertically (by default, the circle will be centered at the origin (0, 0, 0)).
 
-    // This is the circle surface from before
+    // This is the disc surface from before
     var evaluator = {
       "evaluate":function(u, v){
          // Extend the range of v
@@ -224,31 +224,24 @@ The curve function takes a single _u_ variable because a parametric
 curve can be a seen as a "warped" version of a line.
 
 One simple example of a parametric curve is a circle. In fact, the same source
-code for the circle surface given above can also serve as the parametric curve
-function, since it only uses the variable _u_, not _v_.
+code for the disc surface given above can also serve as the parametric curve
+function for the circle, since it only uses the variable _u_, not _v_.
 
 Note that any surface evaluator that only uses _u_ can easily serve as a
-parametric curve evaluator, as can any surface in which the _v_ parameter is
+parametric curve evaluator, and so can any surface in which the _v_ parameter is
 kept to the same value, such as 0, 1, or any other constant number.
 
 <a id=Generating_Parametric_Curves></a>
 ### Generating Parametric Curves
 
-The HTML 3D Library's `H3DU.CurveBuilder` class generates vertices for
+The HTML 3D Library's `CurveBuilder` class generates vertices for
 a parametric curve.
 
 Use code like the following to generate a mesh describing a parametric
 curve. It assumes that `evaluator` is a parametric curve object, just like
 the circle example above.
 
-      // Create a curve evaluator
-      var ev=new H3DU.CurveBuilder()
-      .position(evaluator)
-       // Evaluate the curve, using 99 lines (100 points). Alternatively,
-       // H3DU.Mesh.POINTS can be used.
-      .evalCurve(H3DU.Mesh.LINES,100);
-      // Create a mesh describing the curve
-      var mesh=ev.toMeshBuffer()
+    var meshBuffer = CurveBuilder.curveToBuffer(evaluator);
 
 <a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a>
 ## Curve and Surface Evaluators in the HTML 3D Library

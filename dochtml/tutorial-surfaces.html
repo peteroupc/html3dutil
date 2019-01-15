@@ -117,8 +117,8 @@ but a <em>cone</em>, whose length runs along the negative Z axis:</p>
   &quot;endPoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
 };</code></pre><p>The following shape was rotated to show the Z axis; the rotation isn't perfect.</p>
 <p><img src="surfaces4.png" alt="**The parametric surface.**"></p>
-<p>Note that all three examples above use a value named <code>evaluator</code>. A mesh buffer can be generated using something like the following:</p>
-<pre class="prettyprint source"><code>var meshBuffer = SurfaceBuilder().surfaceToBuffer(evaluator);</code></pre><p>The generated 3D mesh buffer from a parametric surface is just like any
+<p>Note that all three examples above use a value named <code>evaluator</code>. A mesh buffer for the surface evaluator can be generated using something like the following:</p>
+<pre class="prettyprint source"><code>var meshBuffer = SurfaceBuilder.surfaceToBuffer(evaluator);</code></pre><p>The generated 3D mesh buffer from a parametric surface is just like any
 other mesh buffer, and the same functions and methods you use for other mesh buffers
 can be used on this mesh buffer as well. For more information, see the API references for the <a href="http://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html"><strong><code>H3DU.MeshBuffer</code></strong></a> and
 <a href="http://peteroupc.github.io/html3dutil/H3DU.Shape.html"><strong><code>Shape</code></strong></a> classes.</p>
@@ -151,10 +151,10 @@ or the makeMesh method above.</p>
  this.endPoints=function(){
   return this.evaluator.endPoints()
  }
-}</code></pre><p>And here's an example of its use. We'll take the circle surface given above,
+}</code></pre><p>And here's an example of its use. We'll take the disc surface given above,
 and create a SurfaceShifter object that shifts the circle by 3 units horizontally
 and vertically (by default, the circle will be centered at the origin (0, 0, 0)).</p>
-<pre class="prettyprint source"><code>// This is the circle surface from before
+<pre class="prettyprint source"><code>// This is the disc surface from before
 var evaluator = {
   &quot;evaluate&quot;:function(u, v){
      // Extend the range of v
@@ -179,25 +179,18 @@ And each (U) point corresponds to an (X, Y, Z) point that lies on the curve.</p>
 <p>The curve function takes a single <em>u</em> variable because a parametric
 curve can be a seen as a &quot;warped&quot; version of a line.</p>
 <p>One simple example of a parametric curve is a circle. In fact, the same source
-code for the circle surface given above can also serve as the parametric curve
-function, since it only uses the variable <em>u</em>, not <em>v</em>.</p>
+code for the disc surface given above can also serve as the parametric curve
+function for the circle, since it only uses the variable <em>u</em>, not <em>v</em>.</p>
 <p>Note that any surface evaluator that only uses <em>u</em> can easily serve as a
-parametric curve evaluator, as can any surface in which the <em>v</em> parameter is
+parametric curve evaluator, and so can any surface in which the <em>v</em> parameter is
 kept to the same value, such as 0, 1, or any other constant number.</p>
 <p><a id=Generating_Parametric_Curves></a></p>
-<h3>Generating Parametric Curves</h3><p>The HTML 3D Library's <code>H3DU.CurveBuilder</code> class generates vertices for
+<h3>Generating Parametric Curves</h3><p>The HTML 3D Library's <code>CurveBuilder</code> class generates vertices for
 a parametric curve.</p>
 <p>Use code like the following to generate a mesh describing a parametric
 curve. It assumes that <code>evaluator</code> is a parametric curve object, just like
 the circle example above.</p>
-<pre class="prettyprint source"><code>  // Create a curve evaluator
-  var ev=new H3DU.CurveBuilder()
-  .position(evaluator)
-   // Evaluate the curve, using 99 lines (100 points). Alternatively,
-   // H3DU.Mesh.POINTS can be used.
-  .evalCurve(H3DU.Mesh.LINES,100);
-  // Create a mesh describing the curve
-  var mesh=ev.toMeshBuffer()</code></pre><p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
+<pre class="prettyprint source"><code>var meshBuffer = CurveBuilder.curveToBuffer(evaluator);</code></pre><p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
 <h2>Curve and Surface Evaluators in the HTML 3D Library</h2><p>The HTML 3D Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an <code>evaluate</code>
 method that returns 3D points lying on the curve or surface.</p>

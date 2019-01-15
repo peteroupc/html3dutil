@@ -465,7 +465,7 @@ MeshBuffer.prototype.reverseNormals = function() {
  * All attributes with the semantic <code>COLOR</code>,
  * regardless of semantic index, are affected by this method.
  * @param {Array<number>|number|string} color A [color vector or string]{@link toGLColor}
- * identifying the color to set. This will be converted to a 4-element color.
+ * identifying the color to set.
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setColor = function(color) {
@@ -497,7 +497,7 @@ MeshBuffer.prototype.setColor = function(color) {
  * @example <caption>
  * The following code generates a mesh that survives face culling,
  * since the same triangles occur on each side of the mesh, but
- * with different winding orders. This is useful when enabling
+ * with different winding orders.
  * This is only useful when drawing open geometric shapes, such as open
  * cylinders and two-dimensional planar shapes.
  * Due to the z-fighting effect, drawing this kind of mesh is

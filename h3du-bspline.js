@@ -77,7 +77,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * irregular smooth curves. With the B-spline curves supported here, a perspective transformation (including a rotation, translation, or scaling) of the curve's control points leads to the same transformation of the resulting curve.
  * <p><b>B&eacute;zier Curves</b><p>
  * A B&eacute;zier curve is defined by a series of control points, where
- * the first and last control points define the end points of the curve, and
+ * the first and last control points are the curve's end points, and
  * the remaining control points define the curve's shape, though they don't
  * necessarily cross the curve. An important property of these curves is
  * that the bounding box of the curve is contained within the bounding box

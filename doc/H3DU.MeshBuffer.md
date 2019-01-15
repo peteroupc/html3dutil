@@ -355,7 +355,7 @@ This object. (Type: MeshBuffer)
 
 The following code generates a mesh that survives face culling,
 since the same triangles occur on each side of the mesh, but
-with different winding orders. This is useful when enabling
+with different winding orders.
 This is only useful when drawing open geometric shapes, such as open
 cylinders and two-dimensional planar shapes.
 Due to the z-fighting effect, drawing this kind of mesh is
@@ -427,7 +427,7 @@ regardless of semantic index, are affected by this method.
 
 #### Parameters
 
-* `color` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color to set. This will be converted to a 4-element color.
+* `color` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color to set.
 
 #### Return Value
 

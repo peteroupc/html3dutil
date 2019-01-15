@@ -1,12 +1,30 @@
 ### Members
 
+* [checkerboardShader](#checkerboardShader)<br>TODO: Not documented yet.
 * [colorMatrixShader](#colorMatrixShader)<br>GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color.
+* [horGradientShader](#horGradientShader)<br>TODO: Not documented yet.
+* [kernelMatrixShader](#kernelMatrixShader)<br>TODO: Not documented yet.
+* [marbleShader](#marbleShader)<br>TODO: Not documented yet.
+* [marbleShader2](#marbleShader2)<br>TODO: Not documented yet.
+* [mirrorShader](#mirrorShader)<br>TODO: Not documented yet.
+* [pixelateShader](#pixelateShader)<br>TODO: Not documented yet.
+* [radialGradientShader](#radialGradientShader)<br>TODO: Not documented yet.
+* [skySphereCubeMapShader](#skySphereCubeMapShader)<br>TODO: Not documented yet.
+* [skySphereShader](#skySphereShader)<br>TODO: Not documented yet.
+* [stripesBackShader](#stripesBackShader)<br>TODO: Not documented yet.
+* [sunburstBackShader](#sunburstBackShader)<br>TODO: Not documented yet.
+* [vignetteShader](#vignetteShader)<br>TODO: Not documented yet.
+* [warpShader](#warpShader)<br>TODO: Not documented yet.
+* [waterpaintShader](#waterpaintShader)<br>TODO: Not documented yet.
+* [waveShader](#waveShader)<br>TODO: Not documented yet.
+* [woodShader](#woodShader)<br>TODO: Not documented yet.
 
 ### Methods
 
 * [FourierKnot](#FourierKnot)<br>A curve evaluator object that calculates a knot in the form of the Fourier series
 
 <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).
+* [KleinBottle](#KleinBottle)<br>TODO: Not documented yet.
 * [MoebiusLikeStrip](#MoebiusLikeStrip)<br>TODO: Not documented yet.
 * [MoebiusStrip](#MoebiusStrip)<br>TODO: Not documented yet.
 * [Roulette](#Roulette)<br>TODO: Not documented yet.
@@ -15,7 +33,7 @@
 * [contourLines](#contourLines)<br>Generates contour lines for two-dimensional data.
 * [createConvexHull](#createConvexHull)<br>Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
 that contains all the points given.
-* [createFloor](#createFloor)<br>TODO: Not documented yet.
+* [createFloor](#createFloor)<br>Generates a mesh buffer of a tiled floor.
 * [createGear](#createGear)<br>Builds a mesh buffer representing a gear centered at the origin.
 * [createMultiColoredArrow](#createMultiColoredArrow)<br>TODO: Not documented yet.
 * [createWasher](#createWasher)<br>TODO: Not documented yet.
@@ -26,18 +44,27 @@ that contains all the points given.
 * [curveOrthotomic](#curveOrthotomic)<br>TODO: Not documented yet.
 * [curvePedalCurve](#curvePedalCurve)<br>TODO: Not documented yet.
 * [curveRadialCurve](#curveRadialCurve)<br>TODO: Not documented yet.
+* [fragmentShaderLib](#fragmentShaderLib)<br>TODO: Not documented yet.
 * [getColorMatrix](#getColorMatrix)<br>Gets a specific kind of color matrix for the color
 matrix shader.
 * [getKernelMatrix](#getKernelMatrix)<br>TODO: Not documented yet.
+* [horizontalGradient](#horizontalGradient)<br>TODO: Not documented yet.
+* [loadTga](#loadTga)<br>TODO: Not documented yet.
 * [normalizeKernelInPlace](#normalizeKernelInPlace)<br>TODO: Not documented yet.
 * [planePointsToConvexHull](#planePointsToConvexHull)<br>Generates a convex hull of the half-space representation
 of several planes.
 * [polarCurve](#polarCurve)<br>TODO: Not documented yet.
-* [randomConvexPolyhedron](#randomConvexPolyhedron)<br>TODO: Not documented yet.
+* [radialGradient](#radialGradient)<br>TODO: Not documented yet.
+* [randomConvexPolyhedron](#randomConvexPolyhedron)<br>Generates a mesh buffer of a convex polyhedron at random.
 * [raypick](#raypick)<br>Finds the three-dimensional shape object and world-space coordinates
 corresponding to the given two-dimensional (X and Y) coordinates.
 * [ruledSurface](#ruledSurface)<br>TODO: Not documented yet.
 * [spiralCurve](#spiralCurve)<br>TODO: Not documented yet.
+
+<a name='checkerboardShader'></a>
+### checkerboardShader
+
+TODO: Not documented yet.
 
 <a name='colorMatrixShader'></a>
 ### colorMatrixShader
@@ -45,6 +72,86 @@ corresponding to the given two-dimensional (X and Y) coordinates.
 GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
 is the input texture, "t", a value from 0 to 1 indicating how strongly to
 apply the color matrix, and "matrix", which is the 4x4 matrix just described.
+
+<a name='horGradientShader'></a>
+### horGradientShader
+
+TODO: Not documented yet.
+
+<a name='kernelMatrixShader'></a>
+### kernelMatrixShader
+
+TODO: Not documented yet.
+
+<a name='marbleShader'></a>
+### marbleShader
+
+TODO: Not documented yet.
+
+<a name='marbleShader2'></a>
+### marbleShader2
+
+TODO: Not documented yet.
+
+<a name='mirrorShader'></a>
+### mirrorShader
+
+TODO: Not documented yet.
+
+<a name='pixelateShader'></a>
+### pixelateShader
+
+TODO: Not documented yet.
+
+<a name='radialGradientShader'></a>
+### radialGradientShader
+
+TODO: Not documented yet.
+
+<a name='skySphereCubeMapShader'></a>
+### skySphereCubeMapShader
+
+TODO: Not documented yet.
+
+<a name='skySphereShader'></a>
+### skySphereShader
+
+TODO: Not documented yet.
+
+<a name='stripesBackShader'></a>
+### stripesBackShader
+
+TODO: Not documented yet.
+
+<a name='sunburstBackShader'></a>
+### sunburstBackShader
+
+TODO: Not documented yet.
+
+<a name='vignetteShader'></a>
+### vignetteShader
+
+TODO: Not documented yet.
+
+<a name='warpShader'></a>
+### warpShader
+
+TODO: Not documented yet.
+
+<a name='waterpaintShader'></a>
+### waterpaintShader
+
+TODO: Not documented yet.
+
+<a name='waveShader'></a>
+### waveShader
+
+TODO: Not documented yet.
+
+<a name='woodShader'></a>
+### woodShader
+
+TODO: Not documented yet.
 
 <a name='FourierKnot'></a>
 ### FourierKnot(a, b)
@@ -57,6 +164,15 @@ A curve evaluator object that calculates a knot in the form of the Fourier serie
 
 * `a` (Type: Array.&lt;Array.&lt;number>>)<br>The cosine coefficients.
 * `b` (Type: Array.&lt;Array.&lt;number>>)<br>The sine coefficients.
+
+<a name='KleinBottle'></a>
+### KleinBottle()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+ (Type: *)
 
 <a name='MoebiusLikeStrip'></a>
 ### MoebiusLikeStrip(maj, a, b)
@@ -175,22 +291,25 @@ that contains all the points given.
 The generated convex hull. (Type: MeshBuffer)
 
 <a name='createFloor'></a>
-### createFloor(xStart, yStart, width, height, tileSize, z)
+### createFloor(xStart, yStart, width, height, tileSize, [z])
 
-TODO: Not documented yet.
+Generates a mesh buffer of a tiled floor. Texture coordinates
+of each tile will range from [0,1] across the width and height
+of that tile. Thus, any texture used to render the mesh buffer should
+entirely be of a square tile.
 
 #### Parameters
 
-* `xStart` (Type: *)
-* `yStart` (Type: *)
-* `width` (Type: *)
-* `height` (Type: *)
-* `tileSize` (Type: *)
-* `z` (Type: *)
+* `xStart` (Type: number)<br>X coordinate of the start of the floor.
+* `yStart` (Type: number)<br>Y coordinate of the start of the floor.
+* `width` (Type: number)<br>Total width of the floor.
+* `height` (Type: number)<br>Total height of the floor.
+* `tileSize` (Type: number)<br>Width and height of each floor tile.
+* `z` (Type: number) (optional)<br>Z coordinate where the floor will be placed. If null, undefined, or omitted, the default is 0.
 
 #### Return Value
 
-Return value. (Type: *)
+The resulting mesh buffer. (Type: MeshBuffer)
 
 <a name='createGear'></a>
 ### createGear(innerRadius, outerRadius, thickness, teeth, toothDepth)
@@ -345,6 +464,15 @@ TODO: Not documented yet.
 
 Return value. (Type: *)
 
+<a name='fragmentShaderLib'></a>
+### fragmentShaderLib()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+ (Type: *)
+
 <a name='getColorMatrix'></a>
 ### getColorMatrix(kind)
 
@@ -371,6 +499,33 @@ TODO: Not documented yet.
 #### Return Value
 
 Return value. (Type: *)
+
+<a name='horizontalGradient'></a>
+### horizontalGradient(color1, color2)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `color1` (Type: *)
+* `color2` (Type: *)
+
+#### Return Value
+
+ (Type: *)
+
+<a name='loadTga'></a>
+### loadTga(data)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `data` (Type: *)
+
+#### Return Value
+
+ (Type: *)
 
 <a name='normalizeKernelInPlace'></a>
 ### normalizeKernelInPlace(matrix)
@@ -413,19 +568,33 @@ TODO: Not documented yet.
 
 Return value. (Type: *)
 
-<a name='randomConvexPolyhedron'></a>
-### randomConvexPolyhedron(avgsize, maxfaces)
+<a name='radialGradient'></a>
+### radialGradient(colorCenter, colorEdges)
 
 TODO: Not documented yet.
 
 #### Parameters
 
-* `avgsize` (Type: *)
-* `maxfaces` (Type: *)
+* `colorCenter` (Type: *)
+* `colorEdges` (Type: *)
 
 #### Return Value
 
-Return value. (Type: *)
+ (Type: *)
+
+<a name='randomConvexPolyhedron'></a>
+### randomConvexPolyhedron(avgsize, maxfaces)
+
+Generates a mesh buffer of a convex polyhedron at random.
+
+#### Parameters
+
+* `avgsize` (Type: number)<br>Average size of the polyhedron generated.
+* `maxfaces` (Type: number)<br>Maximum number of faces for the convex polyhedron.
+
+#### Return Value
+
+The resulting polyhedron. (Type: MeshBuffer)
 
 <a name='raypick'></a>
 ### raypick(x, y, projView, viewport, objects)

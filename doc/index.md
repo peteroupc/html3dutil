@@ -1,6 +1,6 @@
 # Documentation Index
 
-* <a href="DrawingToy.md">DrawingToy</a><br>TODO: Not documented yet.
+* <a href="DrawingToy.md">DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="Epitrochoid.md">Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="FourierKnot.md">FourierKnot</a><br>A curve evaluator object that calculates a knot in the form of the Fourier series
@@ -43,6 +43,7 @@ texture.
 from one coordinate system to another.
 * <a href="Hypotrochoid.md">Hypotrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
+* <a href="KleinBottle.md">KleinBottle</a><br>TODO: Not documented yet.
 * <a href="MatrixStack.md">MatrixStack</a><br>This class implements a stack
 of 4x4 transformation matrices.
 * <a href="MoebiusLikeStrip.md">MoebiusLikeStrip</a><br>TODO: Not documented yet.
@@ -63,7 +64,7 @@ which results by revolving a two-dimensional curve around an axis.
 * <a href="contourLines.md">contourLines</a><br>Generates contour lines for two-dimensional data.
 * <a href="createConvexHull.md">createConvexHull</a><br>Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
 that contains all the points given.
-* <a href="createFloor.md">createFloor</a><br>TODO: Not documented yet.
+* <a href="createFloor.md">createFloor</a><br>Generates a mesh buffer of a tiled floor.
 * <a href="createGear.md">createGear</a><br>Builds a mesh buffer representing a gear centered at the origin.
 * <a href="createMultiColoredArrow.md">createMultiColoredArrow</a><br>TODO: Not documented yet.
 * <a href="createWasher.md">createWasher</a><br>TODO: Not documented yet.
@@ -74,14 +75,18 @@ that contains all the points given.
 * <a href="curveOrthotomic.md">curveOrthotomic</a><br>TODO: Not documented yet.
 * <a href="curvePedalCurve.md">curvePedalCurve</a><br>TODO: Not documented yet.
 * <a href="curveRadialCurve.md">curveRadialCurve</a><br>TODO: Not documented yet.
+* <a href="fragmentShaderLib.md">fragmentShaderLib</a><br>TODO: Not documented yet.
 * <a href="getColorMatrix.md">getColorMatrix</a><br>Gets a specific kind of color matrix for the color
 matrix shader.
 * <a href="getKernelMatrix.md">getKernelMatrix</a><br>TODO: Not documented yet.
+* <a href="horizontalGradient.md">horizontalGradient</a><br>TODO: Not documented yet.
+* <a href="loadTga.md">loadTga</a><br>TODO: Not documented yet.
 * <a href="normalizeKernelInPlace.md">normalizeKernelInPlace</a><br>TODO: Not documented yet.
 * <a href="planePointsToConvexHull.md">planePointsToConvexHull</a><br>Generates a convex hull of the half-space representation
 of several planes.
 * <a href="polarCurve.md">polarCurve</a><br>TODO: Not documented yet.
-* <a href="randomConvexPolyhedron.md">randomConvexPolyhedron</a><br>TODO: Not documented yet.
+* <a href="radialGradient.md">radialGradient</a><br>TODO: Not documented yet.
+* <a href="randomConvexPolyhedron.md">randomConvexPolyhedron</a><br>Generates a mesh buffer of a convex polyhedron at random.
 * <a href="raypick.md">raypick</a><br>Finds the three-dimensional shape object and world-space coordinates
 corresponding to the given two-dimensional (X and Y) coordinates.
 * <a href="ruledSurface.md">ruledSurface</a><br>TODO: Not documented yet.

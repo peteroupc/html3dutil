@@ -235,6 +235,8 @@ CurveBuilder.prototype.position = function(curve, size) {
  * Sets the parametric curve used to generate vertex attribute values.
  * @param {Object} curve A [curve evaluator object]{@link Curve} that
  * describes the parametric curve used to generate attribute values.
+ * U coordinates for the given curve correspond to U coordinates for
+ * the curve used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as {@link Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
@@ -351,6 +353,9 @@ SurfaceBuilder.prototype.position = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate texture coordinates.
+ * U and V coordinates for the given surface correspond to U and V
+ * coordinates, respectively, for
+ * the surface used to generate vertex positions.
  * @param {number} [size] The number of elements in each value of the attribute. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 2.
@@ -389,11 +394,13 @@ SurfaceBuilder._TexCoord = function(s) {
 };
 /**
  * Sets the parametric surface used to generate vertex positions, and
- * sets a surface evaluator that generates texture coordinates ranging
- * from (0,1) along the U and V axes of the surface.
+ * sets a surface evaluator that generates texture coordinates in the interval [0, 1] along the U and V axes of the surface.
  * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
+ * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
+ * correspond to U and V coordinates, respectively, for
+ * the given surface.
  * @param {number} [size] The number of elements in each position. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
@@ -407,11 +414,13 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
 
 /**
  * Sets the parametric surface used to generate vertex positions and normals, and
- * sets a surface evaluator that generates texture coordinates ranging
- * from (0,1) along the U and V axes of the surface.
+ * sets a surface evaluator that generates texture coordinates in the interval [0, 1] along the U and V axes of the surface.
  * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
+ * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
+ * correspond to U and V coordinates, respectively, for
+ * the given surface.
  * @param {number} [size] The number of elements in each position and normal. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3. The texture coordinates will be 2-dimensional.
@@ -428,6 +437,9 @@ SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate attribute values.
+ * U and V coordinates for the given surface correspond to U and V
+ * coordinates, respectively, for
+ * the surface used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as {@link Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
@@ -494,6 +506,9 @@ SurfaceBuilder.prototype.constantAttribute = function(constantValue, semantic, s
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
+ * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
+ * correspond to U and V coordinates, respectively, for
+ * the given surface.
  * @param {number} [mode] If this value is {@link MeshBuffer.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
  * this value is {@link MeshBuffer.LINES}, generates
  * a series of lines defining the surface. If this value is {@link MeshBuffer.POINTS},

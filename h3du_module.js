@@ -6659,7 +6659,7 @@ MeshBuffer.prototype.reverseNormals = function() {
  * All attributes with the semantic <code>COLOR</code>,
  * regardless of semantic index, are affected by this method.
  * @param {Array<number>|number|string} color A [color vector or string]{@link toGLColor}
- * identifying the color to set. This will be converted to a 4-element color.
+ * identifying the color to set.
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setColor = function(color) {
@@ -6691,7 +6691,7 @@ MeshBuffer.prototype.setColor = function(color) {
  * @example <caption>
  * The following code generates a mesh that survives face culling,
  * since the same triangles occur on each side of the mesh, but
- * with different winding orders. This is useful when enabling
+ * with different winding orders.
  * This is only useful when drawing open geometric shapes, such as open
  * cylinders and two-dimensional planar shapes.
  * Due to the z-fighting effect, drawing this kind of mesh is
@@ -7522,6 +7522,8 @@ CurveBuilder.prototype.position = function(curve, size) {
  * Sets the parametric curve used to generate vertex attribute values.
  * @param {Object} curve A [curve evaluator object]{@link Curve} that
  * describes the parametric curve used to generate attribute values.
+ * U coordinates for the given curve correspond to U coordinates for
+ * the curve used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as {@link Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
@@ -7638,6 +7640,9 @@ SurfaceBuilder.prototype.position = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate texture coordinates.
+ * U and V coordinates for the given surface correspond to U and V
+ * coordinates, respectively, for
+ * the surface used to generate vertex positions.
  * @param {number} [size] The number of elements in each value of the attribute. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 2.
@@ -7676,11 +7681,13 @@ SurfaceBuilder._TexCoord = function(s) {
 };
 /**
  * Sets the parametric surface used to generate vertex positions, and
- * sets a surface evaluator that generates texture coordinates ranging
- * from (0,1) along the U and V axes of the surface.
+ * sets a surface evaluator that generates texture coordinates in the interval [0, 1] along the U and V axes of the surface.
  * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
+ * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
+ * correspond to U and V coordinates, respectively, for
+ * the given surface.
  * @param {number} [size] The number of elements in each position. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
@@ -7694,11 +7701,13 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
 
 /**
  * Sets the parametric surface used to generate vertex positions and normals, and
- * sets a surface evaluator that generates texture coordinates ranging
- * from (0,1) along the U and V axes of the surface.
+ * sets a surface evaluator that generates texture coordinates in the interval [0, 1] along the U and V axes of the surface.
  * @param {Object|null} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
+ * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
+ * correspond to U and V coordinates, respectively, for
+ * the given surface.
  * @param {number} [size] The number of elements in each position and normal. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3. The texture coordinates will be 2-dimensional.
@@ -7715,6 +7724,9 @@ SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate attribute values.
+ * U and V coordinates for the given surface correspond to U and V
+ * coordinates, respectively, for
+ * the surface used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as {@link Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
  * Throws an error if this value is a string and the string is invalid.
@@ -7781,6 +7793,9 @@ SurfaceBuilder.prototype.constantAttribute = function(constantValue, semantic, s
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
+ * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
+ * correspond to U and V coordinates, respectively, for
+ * the given surface.
  * @param {number} [mode] If this value is {@link MeshBuffer.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
  * this value is {@link MeshBuffer.LINES}, generates
  * a series of lines defining the surface. If this value is {@link MeshBuffer.POINTS},
@@ -8027,7 +8042,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * irregular smooth curves. With the B-spline curves supported here, a perspective transformation (including a rotation, translation, or scaling) of the curve's control points leads to the same transformation of the resulting curve.
  * <p><b>B&eacute;zier Curves</b><p>
  * A B&eacute;zier curve is defined by a series of control points, where
- * the first and last control points define the end points of the curve, and
+ * the first and last control points are the curve's end points, and
  * the remaining control points define the curve's shape, though they don't
  * necessarily cross the curve. An important property of these curves is
  * that the bounding box of the curve is contained within the bounding box
