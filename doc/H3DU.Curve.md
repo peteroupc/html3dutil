@@ -18,7 +18,7 @@ dimensions, a curve function has the following form:
 where x(u) returns an X coordinate, y(u) a Y coordinate,
 and z(u) returns a Z coordinate.
 
-Specialized curves should subclass this class and implement
+Classes or JavaScript objects defining parametric curves should implement
 the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
 
 #### Parameters

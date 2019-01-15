@@ -20,7 +20,7 @@ import {MathUtil} from "./h3du-math";
  * <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
  * where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
  * and z(u, v) returns a Z coordinate.<p>
- * Specialized surfaces should [subclass]{@tutorial subclass} this class and implement
+ * Classes or JavaScript objects defining parametric surfaces should implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
  * @constructor
  * @memberof H3DU
@@ -28,29 +28,6 @@ import {MathUtil} from "./h3du-math";
  * must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>,
  * <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code>
  * method, as described in the corresponding methods of this class.
- * @example <caption>The following example creates a surface evaluator
- * object for a parametric surface. To illustrate how the gradient method is derived
- * from the vector calculation method, that method is also given below. To
- * derive the normal calculation, first look at the vector function:<p>
- * <b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
- * Then, find the partial derivatives with respect to <i>u</i> and to <i>v</i>:<p>
- * &#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
- * &#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
- * Next, take their cross product:<p>
- * <b>&Del;F</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
- * The result is the gradient, which will point up and away from the surface.
- * </caption>
- * var surface=new Surface({"evaluate":function(u,v) {
- * "use strict";
- * return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
- * },
- * "gradient":function(u,v) {
- * "use strict";
- * return [
- * Math.cos(u)*-Math.sin(v)*Math.sin(u),
- * Math.sin(u)*-Math.sin(v)*Math.sin(u),
- * 0];
- * }})
  */
 export var Surface = function(surface) {
   this.surface = typeof surface === "undefined" ? null : surface;
@@ -96,6 +73,15 @@ Surface.prototype.tangent = function(u, v) {
  * @param {number} v V coordinate of a point on the surface.
  * @returns {Array<number>} An array describing a bitangent vector. It should have at least as many
  * elements as the number of dimensions of the underlying surface.
+ * @example <caption> The following code is a very simple surface evaluator object.
+ * var evaluator = new Surface({
+ * "evaluate":function(u, v) {
+ * // Take the U parameter as the X coordinate,
+ * // the V parameter as the Y coordinate, and 0 as
+ * // the Z coordinate.
+ * return [u, v, 0];
+ * }
+ * });
  */
 Surface.prototype.bitangent = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.bitangent !== "undefined" && this.surface.bitangent !== null)) {
@@ -128,7 +114,7 @@ Surface.prototype.normal = function(u, v) {
  * Finds an approximate gradient vector of this surface at the given U and V coordinates.<p>
  * The implementation in {@link Surface} calls the evaluator's <code>gradient</code>
  * method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
- * (however, this approach is generally only meaningful for a three-dimensional surface).<p>
+ * (however, this approach is generally only meaningful for a surface in three-dimensional space).<p>
  * The <b>gradient</b> is a vector pointing up and away from the surface.
  * If the evaluator describes a regular three-dimensional surface (usually
  * a continuous, unbroken surface such as a sphere, an open
@@ -140,6 +126,29 @@ Surface.prototype.normal = function(u, v) {
  * @param {number} v V coordinate of a point on the surface.
  * @returns {Array<number>} An array describing a gradient vector. It should have at least as many
  * elements as the number of dimensions of the underlying surface.
+ * @example <caption>The following example is a surface evaluator
+ * object for a parametric surface with a gradient method. To illustrate how the gradient method is derived
+ * from the vector calculation method, that method is also given below. To
+ * derive the normal calculation, first look at the vector function:<p>
+ * <b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
+ * Then, find the partial derivatives with respect to <i>u</i> and to <i>v</i>:<p>
+ * &#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
+ * &#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
+ * Next, take their cross product:<p>
+ * <b>&Del;F</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
+ * The result is the gradient, which will point up and away from the surface.
+ * </caption>
+ * var surface=new Surface({"evaluate":function(u,v) {
+ * "use strict";
+ * return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+ * },
+ * "gradient":function(u,v) {
+ * "use strict";
+ * return [
+ * Math.cos(u)*-Math.sin(v)*Math.sin(u),
+ * Math.sin(u)*-Math.sin(v)*Math.sin(u),
+ * 0];
+ * }})
  */
 Surface.prototype.gradient = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.gradient !== "undefined" && this.surface.gradient !== null)) {

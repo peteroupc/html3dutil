@@ -258,8 +258,8 @@ ArcCurve.prototype.velocity = function(t) {
  * the shape of the curve and generally don't cross the curve.
  * A quadratic B&eacute;zier curve uses 3 points. A cubic B&eacute;zier
  * curve uses 4 points.
- * An _elliptic arc_ is a curve which forms part of an ellipse. There are several ways to
- * parameterize an elliptic arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
+ * An _elliptical arc_ is a curve which forms part of an ellipse. There are several ways to
+ * parameterize an elliptical arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
  * of the `GraphicsPath` class.
  * @memberof H3DU
  * @constructor

@@ -19,7 +19,7 @@ import {MathInternal} from "./h3du-mathinternal";
  * <b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
  * where x(u) returns an X coordinate, y(u) a Y coordinate,
  * and z(u) returns a Z coordinate.<p>
- * Specialized curves should [subclass]{@tutorial subclass} this class and implement
+ * Classes or JavaScript objects defining parametric curves should implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
  * @constructor
  * @memberof H3DU

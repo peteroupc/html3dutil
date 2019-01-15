@@ -7,7 +7,7 @@ If you like this software, consider donating to me at this link: [http://peterou
 
 ----
 
-This is a public-domain library with classes and methods that were formerly in the Public Domain HTML 3D Library.  Classes and methods that involved WebGL, shaders, or a 3D scene graph were removed, to make this library much more general-purpose.  In any case, maintaining a 3D scene graph, textures, materials, and shaders is not trivial and is better handled by other 3D engines, such as three.js.  The classes and methods remaining in this library don't assume the existence of a 3D rendering pipeline such as WebGL or OpenGL ES, or even the existence of an HTML DOM, and are thus more easily portable to other programming languages.
+This is a public-domain library with classes and methods that were formerly in the Public Domain HTML 3D Library.  Classes and methods that involved WebGL, shaders, or a 3D scene graph were removed, to make this library much more general-purpose.  In any case, maintaining a 3D scene graph, textures, materials, and shaders is not trivial and is better handled by established 3D engines, such as three.js.  The classes and methods remaining in this library don't assume the existence of a 3D rendering pipeline such as WebGL or OpenGL ES, or even the existence of an HTML DOM, and are thus more easily portable to other programming languages.
 
 (Speaking of OpenGL ES, there are some things supported by some implementations that are strictly not necessary, since they can be implemented with shaders and clever mesh construction.  These things include line primitives, triangle fans, triangle strips, and built-in antialiasing.)
 

@@ -12,6 +12,7 @@ var path = require("jsdoc/path");
 var fs = require("jsdoc/fs");
 var helper = require("jsdoc/util/templateHelper");
 var markdown = require("jsdoc/util/markdown");
+// TODO: Document module filename for "Global" members
 
 function normalizeLines(x) {
   if(!x)return x;
@@ -498,6 +499,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
+
     if(typeof parentlong === "undefined" || parentlong === null) {
       if(typeof node.memberof !== "undefined" && node.memberof !== null)return;
     } else if(node.memberof !== parentlong)return;
@@ -604,12 +606,12 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
         }
       }
       if(node.kind === "function") {
-        docCollection.addMethod(parentlong, node.name, entry, node.longname);
+        docCollection.addMethod(parentlong || "Global", node.name, entry, node.longname);
       } else if(node.kind === "class" || node.kind === "namespace") {
         docCollection.addConstructor(node.longname, entry);
         fillCollection(docCollection, nodes, node.longname, writer);
       } else {
-        docCollection.addEvent(parentlong, node.name, entry, node.longname);
+        docCollection.addEvent(parentlong || "Global", node.name, entry, node.longname);
       }
     } else if (node.kind === "member" || node.kind === "constant" ||
         node.kind === "namespace" || node.kind === "mixin") {
@@ -658,7 +660,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
         }
       }
       if(node.kind === "member" || node.kind === "constant") {
-        if(!docCollection.addMember(parentlong, node.name, entry, node.longname)) {
+        if(!docCollection.addMember(parentlong || "Global", node.name, entry, node.longname)) {
           // console.log(node);
         }
       } else {

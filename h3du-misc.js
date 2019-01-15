@@ -54,6 +54,7 @@ objectKeysPolyfill();
  * promise, in the order in which the promises were listed.
  * True means success, and false means failure.</ul>
  * @memberof H3DU
+ * @function
  */
 export var getPromiseResults = function(promises,
   progressResolve, progressReject) {
@@ -125,6 +126,7 @@ export var getPromiseResults = function(promises,
  * Will be rejected if any of the promises is rejected; the result
  * will be an object as specified in {@link getPromiseResults}.</ul>
  * @memberof H3DU
+ * @function
  */
 export var getPromiseResultsAll = function(promises,
   progressResolve, progressReject) {
@@ -169,6 +171,7 @@ export var getPromiseResultsAll = function(promises,
  * </caption>
  * var angle = 360 * getTimePosition(timer, time, 5000);
  * @memberof H3DU
+ * @function
  */
 export var getTimePosition = function(timer, timeInMs, intervalInMs) {
   if(typeof timer.time === "undefined" || timer.time === null) {
@@ -195,6 +198,7 @@ export var getTimePosition = function(timer, timeInMs, intervalInMs) {
  * The number can include fractional frames. If an
  * initial time or last known time wasn't set, returns 0.
  * @memberof H3DU
+ * @function
  */
 export var newFrames = function(timer, timeInMs) {
   if(typeof timer.time === "undefined" || timer.time === null) {
@@ -622,13 +626,28 @@ var ColorValidator = function() {
     }
     return true;
   };
-
+  function trimSpaces(str) {
+    var s = 0,
+      e = str.length;
+    while(s < str.length) {
+      if(str.charAt(s) === 0x20 || str.charAt(s) === 0x0a ||
+str.charAt(s) === 0x09 || str.charAt(s) === 0x0c || str.charAt(s) === 0x0d)
+        s++;
+      else break;
+    }
+    while(e > 0) {
+      if(str.charAt(e - 1) === 0x20 || str.charAt(e - 1) === 0x0a ||
+str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) === 0x0d)
+        e--;
+      else break;
+    }
+    return str.substring(s, e);
+  }
   constructor.colorToRgba = constructor.colorToRgba = function(x) {
     if (typeof x === "undefined" || x === null || x.length === 0) {
       return null;
     }
-    x = x.replace(/^[\r\n\t \u000c]+|[\r\n\t \u000c]+$/g, "");
-    x = x.toLowerCase();
+    x = trimSpaces(x).toLowerCase();
     if (x === "transparent") {
       return [0, 0, 0, 0];
     }
@@ -754,6 +773,7 @@ var clampRgba = function(x) {
  * than 0 are clamped to 0, and numbers greater than 1 are
  * clamped to 1.
  * @memberof H3DU
+ * @function
  */
 export var toGLColor = function(r, g, b, a) {
   if(typeof r === "undefined" || r === null)return [0, 0, 0, 0];

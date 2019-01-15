@@ -3,6 +3,9 @@
 * <a href="DrawingToy.md">DrawingToy</a><br>TODO: Not documented yet.
 * <a href="Epitrochoid.md">Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
+* <a href="FourierKnot.md">FourierKnot</a><br>A curve evaluator object that calculates a knot in the form of the Fourier series
+
+<b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
@@ -42,9 +45,12 @@ from one coordinate system to another.
 of another circle, whose position is fixed, with a center of (0,0).
 * <a href="MatrixStack.md">MatrixStack</a><br>This class implements a stack
 of 4x4 transformation matrices.
+* <a href="MoebiusLikeStrip.md">MoebiusLikeStrip</a><br>TODO: Not documented yet.
+* <a href="MoebiusStrip.md">MoebiusStrip</a><br>TODO: Not documented yet.
 * <a href="Polyhedra.md">Polyhedra</a><br>Contains helper methods for generating the five platonic solids
 and other polyhedra.
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
+* <a href="Roulette.md">Roulette</a><br>TODO: Not documented yet.
 * <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.
 * <a href="StarField.md">StarField</a><br>TODO: Not documented yet.
@@ -52,7 +58,15 @@ to uniforms and vertex attributes.
 * <a href="Supertoroid.md">Supertoroid</a><br>TODO: Not documented yet.
 * <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
+* <a href="TorusKnot.md">TorusKnot</a><br>TODO: Not documented yet.
 * <a href="Trochoid.md">Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
+* <a href="contourLines.md">contourLines</a><br>Generates contour lines for two-dimensional data.
+* <a href="createConvexHull.md">createConvexHull</a><br>Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
+that contains all the points given.
+* <a href="createFloor.md">createFloor</a><br>TODO: Not documented yet.
+* <a href="createGear.md">createGear</a><br>Builds a mesh buffer representing a gear centered at the origin.
+* <a href="createMultiColoredArrow.md">createMultiColoredArrow</a><br>TODO: Not documented yet.
+* <a href="createWasher.md">createWasher</a><br>TODO: Not documented yet.
 * <a href="curveCatacaustic.md">curveCatacaustic</a><br>TODO: Not documented yet.
 * <a href="curveEvolute.md">curveEvolute</a><br>TODO: Not documented yet.
 * <a href="curveInverse.md">curveInverse</a><br>TODO: Not documented yet.
@@ -60,7 +74,16 @@ which results by revolving a two-dimensional curve around an axis.
 * <a href="curveOrthotomic.md">curveOrthotomic</a><br>TODO: Not documented yet.
 * <a href="curvePedalCurve.md">curvePedalCurve</a><br>TODO: Not documented yet.
 * <a href="curveRadialCurve.md">curveRadialCurve</a><br>TODO: Not documented yet.
+* <a href="getColorMatrix.md">getColorMatrix</a><br>Gets a specific kind of color matrix for the color
+matrix shader.
+* <a href="getKernelMatrix.md">getKernelMatrix</a><br>TODO: Not documented yet.
+* <a href="normalizeKernelInPlace.md">normalizeKernelInPlace</a><br>TODO: Not documented yet.
+* <a href="planePointsToConvexHull.md">planePointsToConvexHull</a><br>Generates a convex hull of the half-space representation
+of several planes.
 * <a href="polarCurve.md">polarCurve</a><br>TODO: Not documented yet.
+* <a href="randomConvexPolyhedron.md">randomConvexPolyhedron</a><br>TODO: Not documented yet.
+* <a href="raypick.md">raypick</a><br>Finds the three-dimensional shape object and world-space coordinates
+corresponding to the given two-dimensional (X and Y) coordinates.
 * <a href="ruledSurface.md">ruledSurface</a><br>TODO: Not documented yet.
 * <a href="spiralCurve.md">spiralCurve</a><br>TODO: Not documented yet.
 
@@ -82,7 +105,7 @@ which results by revolving a two-dimensional curve around an axis.
 <h1>Geometry Utilities</h1><p><strong>Download source code: <a href="https://github.com/peteroupc/html3dutil/archive/master.md">ZIP file</a></strong></p>
 <p>If you like this software, consider donating to me at this link: <a href="http://peteroupc.github.io/">http://peteroupc.github.io/</a></p>
 <hr>
-<p>This is a public-domain library with classes and methods that were formerly in the Public Domain HTML 3D Library.  Classes and methods that involved WebGL, shaders, or a 3D scene graph were removed, to make this library much more general-purpose.  In any case, maintaining a 3D scene graph, textures, materials, and shaders is not trivial and is better handled by other 3D engines, such as three.js.  The classes and methods remaining in this library don't assume the existence of a 3D rendering pipeline such as WebGL or OpenGL ES, or even the existence of an HTML DOM, and are thus more easily portable to other programming languages.</p>
+<p>This is a public-domain library with classes and methods that were formerly in the Public Domain HTML 3D Library.  Classes and methods that involved WebGL, shaders, or a 3D scene graph were removed, to make this library much more general-purpose.  In any case, maintaining a 3D scene graph, textures, materials, and shaders is not trivial and is better handled by established 3D engines, such as three.js.  The classes and methods remaining in this library don't assume the existence of a 3D rendering pipeline such as WebGL or OpenGL ES, or even the existence of an HTML DOM, and are thus more easily portable to other programming languages.</p>
 <p>(Speaking of OpenGL ES, there are some things supported by some implementations that are strictly not necessary, since they can be implemented with shaders and clever mesh construction.  These things include line primitives, triangle fans, triangle strips, and built-in antialiasing.)</p>
 <p>API documentation is found at: <a href="https://peteroupc.github.io/html3dutil">https://peteroupc.github.io/html3dutil</a>
 or <a href="https://github.com/peteroupc/html3dutil/blob/master/doc/index.md">https://github.com/peteroupc/html3dutil/blob/master/doc/index.md</a>.</p>
