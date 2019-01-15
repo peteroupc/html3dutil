@@ -350,14 +350,20 @@ function DocCollection() {
     var indexStr = writer.header("Documentation") +
         writer.heading(1, "Documentation Index");
     var indexList = [];
-    Object.keys(this.typeNames).sort().forEach(function(name) {
+    var tnames = this.typeNames;
+    Object.keys(this.docs).sort().forEach(function(name) {
       var tname = name;
-      tname = helper.linkto(tname, helper.htmlsafe(tname));
-      var tdesc = that.descriptions[name];
-      if(tdesc) {
-        tname += writer.breaktext(tdesc);
+      if(tname === "Global") {
+        tname = writer.linkText("Global" + helper.fileExtension, "Global Members");
+        indexList.push(tname);
+      } else if(tnames[tname]) {
+        tname = helper.linkto(tname, helper.htmlsafe(tname));
+        var tdesc = that.descriptions[name] || "";
+        if(tdesc) {
+          tname += writer.breaktext(tdesc);
+        }
+        indexList.push(tname);
       }
-      indexList.push(tname);
     });
     indexStr += writer.listText(indexList);
     // Write tutorial links

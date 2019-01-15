@@ -4,11 +4,14 @@
 * [colorMatrixShader](#colorMatrixShader)<br>GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color.
 * [horGradientShader](#horGradientShader)<br>TODO: Not documented yet.
 * [kernelMatrixShader](#kernelMatrixShader)<br>TODO: Not documented yet.
+* [leftButton](#leftButton)<br>True if the left mouse button was detected as being down.
 * [marbleShader](#marbleShader)<br>TODO: Not documented yet.
 * [marbleShader2](#marbleShader2)<br>TODO: Not documented yet.
+* [middleButton](#middleButton)<br>True if the middle mouse button was detected as being down.
 * [mirrorShader](#mirrorShader)<br>TODO: Not documented yet.
 * [pixelateShader](#pixelateShader)<br>TODO: Not documented yet.
 * [radialGradientShader](#radialGradientShader)<br>TODO: Not documented yet.
+* [rightButton](#rightButton)<br>True if the right mouse button was detected as being down.
 * [skySphereCubeMapShader](#skySphereCubeMapShader)<br>TODO: Not documented yet.
 * [skySphereShader](#skySphereShader)<br>TODO: Not documented yet.
 * [stripesBackShader](#stripesBackShader)<br>TODO: Not documented yet.
@@ -24,12 +27,9 @@
 * [FourierKnot](#FourierKnot)<br>A curve evaluator object that calculates a knot in the form of the Fourier series
 
 <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).
-* [KleinBottle](#KleinBottle)<br>TODO: Not documented yet.
 * [MoebiusLikeStrip](#MoebiusLikeStrip)<br>TODO: Not documented yet.
-* [MoebiusStrip](#MoebiusStrip)<br>TODO: Not documented yet.
 * [Roulette](#Roulette)<br>TODO: Not documented yet.
 * [StarField](#StarField)<br>TODO: Not documented yet.
-* [TorusKnot](#TorusKnot)<br>TODO: Not documented yet.
 * [contourLines](#contourLines)<br>Generates contour lines for two-dimensional data.
 * [createConvexHull](#createConvexHull)<br>Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
 that contains all the points given.
@@ -45,6 +45,7 @@ that contains all the points given.
 * [curvePedalCurve](#curvePedalCurve)<br>TODO: Not documented yet.
 * [curveRadialCurve](#curveRadialCurve)<br>TODO: Not documented yet.
 * [fragmentShaderLib](#fragmentShaderLib)<br>TODO: Not documented yet.
+* [fromStlString](#fromStlString)<br>TODO: Not documented yet.
 * [getColorMatrix](#getColorMatrix)<br>Gets a specific kind of color matrix for the color
 matrix shader.
 * [getKernelMatrix](#getKernelMatrix)<br>TODO: Not documented yet.
@@ -83,6 +84,13 @@ TODO: Not documented yet.
 
 TODO: Not documented yet.
 
+<a name='leftButton'></a>
+### leftButton
+
+True if the left mouse button was detected as being down.
+
+Type: boolean
+
 <a name='marbleShader'></a>
 ### marbleShader
 
@@ -92,6 +100,13 @@ TODO: Not documented yet.
 ### marbleShader2
 
 TODO: Not documented yet.
+
+<a name='middleButton'></a>
+### middleButton
+
+True if the middle mouse button was detected as being down.
+
+Type: boolean
 
 <a name='mirrorShader'></a>
 ### mirrorShader
@@ -107,6 +122,13 @@ TODO: Not documented yet.
 ### radialGradientShader
 
 TODO: Not documented yet.
+
+<a name='rightButton'></a>
+### rightButton
+
+True if the right mouse button was detected as being down.
+
+Type: boolean
 
 <a name='skySphereCubeMapShader'></a>
 ### skySphereCubeMapShader
@@ -165,15 +187,6 @@ A curve evaluator object that calculates a knot in the form of the Fourier serie
 * `a` (Type: Array.&lt;Array.&lt;number>>)<br>The cosine coefficients.
 * `b` (Type: Array.&lt;Array.&lt;number>>)<br>The sine coefficients.
 
-<a name='KleinBottle'></a>
-### KleinBottle()
-
-TODO: Not documented yet.
-
-#### Return Value
-
- (Type: *)
-
 <a name='MoebiusLikeStrip'></a>
 ### MoebiusLikeStrip(maj, a, b)
 
@@ -184,20 +197,6 @@ TODO: Not documented yet.
 * `maj` (Type: *)
 * `a` (Type: *)
 * `b` (Type: *)
-
-#### Return Value
-
-Return value. (Type: *)
-
-<a name='MoebiusStrip'></a>
-### MoebiusStrip(radius, width)
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `radius` (Type: *)
-* `width` (Type: *)
 
 #### Return Value
 
@@ -223,23 +222,6 @@ TODO: Not documented yet.
 #### Parameters
 
 * `range` (Type: *)
-
-#### Return Value
-
-Return value. (Type: *)
-
-<a name='TorusKnot'></a>
-### TorusKnot(revolutions, r, q, s1, m1)
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `revolutions` (Type: *)
-* `r` (Type: *)
-* `q` (Type: *)
-* `s1` (Type: *)
-* `m1` (Type: *)
 
 #### Return Value
 
@@ -471,7 +453,20 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
+
+<a name='fromStlString'></a>
+### fromStlString(str)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `str` (Type: *)
+
+#### Return Value
+
+Return value. (Type: *)
 
 <a name='getColorMatrix'></a>
 ### getColorMatrix(kind)
@@ -512,7 +507,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
 
 <a name='loadTga'></a>
 ### loadTga(data)
@@ -525,7 +520,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
 
 <a name='normalizeKernelInPlace'></a>
 ### normalizeKernelInPlace(matrix)
@@ -580,7 +575,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
- (Type: *)
+Return value. (Type: *)
 
 <a name='randomConvexPolyhedron'></a>
 ### randomConvexPolyhedron(avgsize, maxfaces)

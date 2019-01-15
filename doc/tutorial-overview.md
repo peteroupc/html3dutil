@@ -513,7 +513,7 @@ The changes in beta 2 from beta 1 include:
 - `GLMath`, now H3DU.Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3perp">H3DU.MathUtil.vec3perp</a>, <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3toWindowPoint">H3DU.MathUtil.vec3toWindowPoint</a>, and <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4projectVec3">H3DU.MathUtil.mat4projectVec3</a>.
 - Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, <a href="H3DU.TextFont.md">H3DU.TextFont</a> and <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
-- The Camera class, now <a href="H3DU.Camera.md">H3DU.Camera</a>, was rewritten.
+- The Camera class, now H3DU.Camera, was rewritten.
 - A build script was included in the repository. This build includes a style checker which is run on the library's JavaScript files.
 - Many methods were added to many classes. Some methods that didn't return a value now return the value of the object called on, for example, the `clear` method of `H3DU.Scene3D`.
 - New demos, including _spinbox.html_ and _quatlerp.html_.  For example, the _gears.html_ demo was moved from the separate "html-gears" repository to here. Other demos were expanded or rewritten. Viewport `meta` tags were added to the demos.
@@ -530,7 +530,7 @@ The changes in beta 2 from beta 1 include:
 - The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, `TRIANGLE_FAN` and `QUAD_STRIP`) in the same mesh is still supported.
 - Many of the tutorials were edited heavily to accommodate the new version. The `GraphicsPath` tutorial was added.
 - There were also numerous bug fixes.
-- A known issue: When using the <a href="H3DU.Camera.md">H3DU.Camera</a> in conjunction with the compatibility behavior of H3DU.Scene3D, only one side of the scene will appear lighted by default.
+- A known issue: When using the H3DU.Camera in conjunction with the compatibility behavior of H3DU.Scene3D, only one side of the scene will appear lighted by default.
 
 See [**older version history**](https://peteroupc.github.io/html3dutil/tutorial-history.html).
 

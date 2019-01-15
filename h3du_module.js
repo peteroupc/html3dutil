@@ -12334,7 +12334,8 @@ Triangulate._pointInTri = function(i1, i2, i3, p) {
   }
 };
 
-/** @ignore */
+/** @ignore
+ * @constructor */
 Triangulate._Contour = function(vertices) {
   this.vertexList = new LinkedList();
   var vertLength = vertices.length;
@@ -13462,10 +13463,10 @@ Clipper.prototype.compute = function(op) {
       return this.subject;
     if(op === UNION)
       return this.subject.ncontours() === 0 ? this.clipping : this.subject;
-    return new Polygon();
+    return new Polygon(null, null);
   }
   var i, j;
-  var result = new Polygon();
+  var result = new Polygon(null, null);
   // Test 2 for trivial result case
   var subjBounds = this.subject.getBounds();
   var clipBounds = this.clipping.getBounds();
@@ -13504,7 +13505,7 @@ Clipper.prototype.compute = function(op) {
     // optimization 1
     if(op === INTERSECTION && e.p[0] > minMaxx ||
        op === DIFFERENCE && e.p[0] > maxsubj[0]) {
-      return connector.toPolygon(result);
+      return connector.toPolygon();
     }
     if(op === UNION && e.p[0] > minMaxx) {
       // add all the non-processed line segments to the result
@@ -13515,7 +13516,7 @@ Clipper.prototype.compute = function(op) {
         if(!e.left)
           connector.add(e.segment());
       }
-      return connector.toPolygon(result);
+      return connector.toPolygon();
     }
     // end of optimization 1
 
@@ -13627,7 +13628,7 @@ Clipper.prototype.compute = function(op) {
       }
       console.log(" ")*/
   }
-  return connector.toPolygon(result);
+  return connector.toPolygon();
 };
 /** @ignore */
 Clipper.prototype.processSegment = function(s, pl) {
