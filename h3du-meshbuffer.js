@@ -744,16 +744,18 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  * semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
  * long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
  * ensures its values are each at least 3 elements long.
- * @param {boolean} flat If true, each triangle in the mesh
+ * @param {boolean} [flat] If true, each triangle in the mesh
  * will have the same normal, which usually leads to a flat
  * appearance. If false, each unique vertex in the mesh
  * will have its own normal, which usually leads to a smooth
- * appearance.
- * @param {boolean} inward If true, the generated normals
- * will point inward; otherwise, outward.
+ * appearance. If null, undefined, or omitted, the default is false.
+ * @param {boolean} [inward] If true, the generated normals
+ * will point inward; otherwise, outward. If null, undefined, or omitted, the default is false.
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
+  flat = flat === null ? false : flat;
+  inward = inward === null ? false : inward;
   var primtype = this.primitiveType();
   if(primtype === MeshBuffer.TRIANGLES) {
     if(this._countPerValue(Semantic.POSITION) < 3) {

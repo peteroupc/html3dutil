@@ -365,7 +365,7 @@ GraphicsPath._point = function(seg, t) {
   }
 };
 /** @ignore */
-GraphicsPath._segToCurve = function(seg, t) {
+GraphicsPath._segToCurve = function(seg) {
   if(seg[0] === GraphicsPath.LINE) {
     return new LineCurve(seg[1], seg[2], seg[3], seg[4]);
   } else if(seg[0] === GraphicsPath.QUAD) {
@@ -375,8 +375,6 @@ GraphicsPath._segToCurve = function(seg, t) {
     return BSplineCurve.fromBezierCurve([
       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
   } else if(seg[0] === GraphicsPath.ARC) {
-    if(t === 0)return [seg[1], seg[2]];
-    if(t === 1)return [seg[8], seg[9]];
     var rx = seg[3];
     var ry = seg[4];
     var cx = seg[10];
@@ -3841,7 +3839,7 @@ Connector.prototype.add = function(s) {
 };
 /** @ignore */
 Connector.prototype.toPolygon = function() {
-  var polygon = new Polygon(null);
+  var polygon = new Polygon(null, null);
   var j = this.closedPolygons.first();
   while(j) {
     var contour = new Polygon._Contour([]);

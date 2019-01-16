@@ -8,7 +8,6 @@ whose edges are made up of B-spline curves.
 * <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
 vertex attributes for a curve.
-* <a href="H3DU.CurveTube.md">H3DU.CurveTube</a><br>A <a href="H3DU.Surface.md">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
 * <a href="H3DU.MathUtil.md">H3DU.MathUtil</a><br>A collection of math functions for working
 with vectors, matrices, quaternions, and other

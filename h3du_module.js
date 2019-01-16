@@ -6938,16 +6938,18 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  * semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
  * long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
  * ensures its values are each at least 3 elements long.
- * @param {boolean} flat If true, each triangle in the mesh
+ * @param {boolean} [flat] If true, each triangle in the mesh
  * will have the same normal, which usually leads to a flat
  * appearance. If false, each unique vertex in the mesh
  * will have its own normal, which usually leads to a smooth
- * appearance.
- * @param {boolean} inward If true, the generated normals
- * will point inward; otherwise, outward.
+ * appearance. If null, undefined, or omitted, the default is false.
+ * @param {boolean} [inward] If true, the generated normals
+ * will point inward; otherwise, outward. If null, undefined, or omitted, the default is false.
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
+  flat = flat === null ? false : flat;
+  inward = inward === null ? false : inward;
   var primtype = this.primitiveType();
   if(primtype === MeshBuffer.TRIANGLES) {
     if(this._countPerValue(Semantic.POSITION) < 3) {
@@ -9860,7 +9862,7 @@ GraphicsPath._point = function(seg, t) {
   }
 };
 /** @ignore */
-GraphicsPath._segToCurve = function(seg, t) {
+GraphicsPath._segToCurve = function(seg) {
   if(seg[0] === GraphicsPath.LINE) {
     return new LineCurve(seg[1], seg[2], seg[3], seg[4]);
   } else if(seg[0] === GraphicsPath.QUAD) {
@@ -9870,8 +9872,6 @@ GraphicsPath._segToCurve = function(seg, t) {
     return BSplineCurve.fromBezierCurve([
       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
   } else if(seg[0] === GraphicsPath.ARC) {
-    if(t === 0)return [seg[1], seg[2]];
-    if(t === 1)return [seg[8], seg[9]];
     var rx = seg[3];
     var ry = seg[4];
     var cx = seg[10];
@@ -13336,7 +13336,7 @@ Connector.prototype.add = function(s) {
 };
 /** @ignore */
 Connector.prototype.toPolygon = function() {
-  var polygon = new Polygon(null);
+  var polygon = new Polygon(null, null);
   var j = this.closedPolygons.first();
   while(j) {
     var contour = new Polygon._Contour([]);

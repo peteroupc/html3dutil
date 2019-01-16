@@ -291,7 +291,7 @@ Either MeshBuffer.TRIANGLES,
 MeshBuffer.LINES, or MeshBuffer.POINTS. (Type: number)
 
 <a name='H3DU.MeshBuffer_recalcNormals'></a>
-### H3DU.MeshBuffer#recalcNormals(flat, inward)
+### H3DU.MeshBuffer#recalcNormals([flat], [inward])
 
 Recalculates the normal vectors for triangles
 in this mesh. For this to properly affect shading, each triangle in
@@ -307,8 +307,8 @@ ensures its values are each at least 3 elements long.
 
 #### Parameters
 
-* `flat` (Type: boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.
-* `inward` (Type: boolean)<br>If true, the generated normals will point inward; otherwise, outward.
+* `flat` (Type: boolean) (optional)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance. If null, undefined, or omitted, the default is false.
+* `inward` (Type: boolean) (optional)<br>If true, the generated normals will point inward; otherwise, outward. If null, undefined, or omitted, the default is false.
 
 #### Return Value
 

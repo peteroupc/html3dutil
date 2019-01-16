@@ -115,7 +115,7 @@ regardless of semantic index, are affected.<h4> Return Value</h4>This object. (T
 and points) composed by all shapes in this mesh.<h4> Return Value</h4>Return value. (Type: number)<a name='H3DU.MeshBuffer_primitiveType'></a>
 <h3> H3DU.MeshBuffer#primitiveType()</h3>Gets the type of primitive stored in this mesh buffer.<h4> Return Value</h4>Either MeshBuffer.TRIANGLES,
 MeshBuffer.LINES, or MeshBuffer.POINTS. (Type: number)<a name='H3DU.MeshBuffer_recalcNormals'></a>
-<h3> H3DU.MeshBuffer#recalcNormals(flat, inward)</h3>Recalculates the normal vectors for triangles
+<h3> H3DU.MeshBuffer#recalcNormals([flat], [inward])</h3>Recalculates the normal vectors for triangles
 in this mesh. For this to properly affect shading, each triangle in
 the mesh must have its vertices defined in
 counterclockwise order (if the triangle is being rendered
@@ -125,7 +125,7 @@ and will be stored in an attribute with semantic <code>NORMAL_0</code>.
 Will have an effect only if the buffer includes an attribute with
 semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
 long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
-ensures its values are each at least 3 elements long.<h4> Parameters</h4><ul><li><code>flat</code> (Type: boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.<li><code>inward</code> (Type: boolean)<br>If true, the generated normals will point inward; otherwise, outward.</ul><h4> Return Value</h4>This object. (Type: MeshBuffer)<a name='H3DU.MeshBuffer_reverseNormals'></a>
+ensures its values are each at least 3 elements long.<h4> Parameters</h4><ul><li><code>flat</code> (Type: boolean) (optional)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance. If null, undefined, or omitted, the default is false.<li><code>inward</code> (Type: boolean) (optional)<br>If true, the generated normals will point inward; otherwise, outward. If null, undefined, or omitted, the default is false.</ul><h4> Return Value</h4>This object. (Type: MeshBuffer)<a name='H3DU.MeshBuffer_reverseNormals'></a>
 <h3> H3DU.MeshBuffer#reverseNormals()</h3>Modifies this mesh buffer by reversing the sign of normals it defines.
 Has no effect if this mesh buffer doesn't define any normals.
 All attributes with the semantic <code>NORMAL</code>,
