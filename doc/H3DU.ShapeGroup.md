@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.ShapeGroup'></a>
-### H3DU.ShapeGroup()
+### new H3DU.ShapeGroup()
 
 Represents a grouping of shapes. This object
 can hold both Shape objects and

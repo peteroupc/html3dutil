@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='Semantic'></a>
-### Semantic()
+### new Semantic()
 
 Contains constants for assigning semantics
 to uniforms and vertex attributes.

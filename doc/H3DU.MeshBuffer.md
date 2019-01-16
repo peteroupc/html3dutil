@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.MeshBuffer'></a>
-### H3DU.MeshBuffer()
+### new H3DU.MeshBuffer()
 
 A geometric mesh in the form of buffer objects.
 A mesh buffer is made up of one or more vertex attribute objects,
@@ -158,7 +158,7 @@ Gets a vertex attribute included in this mesh buffer.
 A vertex buffer accessor, or null
 if the attribute doesn't exist. (Type: BufferAccessor)
 
-#### Example
+#### Examples
 
 The following function gets the positions,
 normals, texture coordinates, and colors of each primitive
@@ -253,7 +253,7 @@ and the other mesh's indices copied or adapted.
 
 This object. (Type: MeshBuffer)
 
-#### Example
+#### Examples
 
     var copiedMesh = new MeshBuffer().merge(meshToCopy);
 
@@ -326,7 +326,7 @@ regardless of semantic index, are affected.
 
 This object. (Type: MeshBuffer)
 
-#### Example
+#### Examples
 
 The following code generates a two-sided mesh, where
 the normals on each side face in the opposite direction.
@@ -351,7 +351,7 @@ Has an effect only if this mesh buffer consists of triangles.
 
 This object. (Type: MeshBuffer)
 
-#### Example
+#### Examples
 
 The following code generates a mesh that survives face culling,
 since the same triangles occur on each side of the mesh, but
@@ -474,6 +474,18 @@ other attributes will be unaffected.
 #### Return Value
 
 This object. (Type: MeshBuffer)
+
+#### Examples
+
+The following example transforms positions
+and normals to move the mesh 2 units to the right.
+
+    mesh.transform(MathUtil.mat4translated(2, 0, 0));
+
+The following example transforms positions
+and normals to double the mesh's size.
+
+    mesh.transform(MathUtil.mat4scaled(2, 2, 2));
 
 <a name='H3DU.MeshBuffer_vertexCount'></a>
 ### H3DU.MeshBuffer#vertexCount()

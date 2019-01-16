@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.Curve'></a>
-### H3DU.Curve(curve, [curveParam])
+### new H3DU.Curve(curve, [curveParam])
 
 A curve evaluator object for a parametric curve.
 
@@ -26,7 +26,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 * `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
 * `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as Curve#endPoints and whose return value takes precedence over the given curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization to a U coordinate in the new parameterization.
 
-#### Example
+#### Examples
 
 The following is a simple example of a parametric curve.
 
@@ -108,7 +108,7 @@ of U coordinates.
 * [jerk](#H3DU.Curve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
 * [normal](#H3DU.Curve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
 * [tangent](#H3DU.Curve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
-* [toArcLengthParam](#H3DU.Curve_toArcLengthParam)<br>Creates a curve evaluator object for a curve that follows the same
+* [toArcLengthParam](#H3DU.Curve_toArcLengthParam)<br>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>.
 * [velocity](#H3DU.Curve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
@@ -269,7 +269,7 @@ An array of curve positions. The first
 element will be the start of the curve. If "count" is 2 or greater, the last element
 will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
 
-#### Example
+#### Examples
 
 The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
 
@@ -334,7 +334,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='H3DU.Curve_toArcLengthParam'></a>
 ### H3DU.Curve#toArcLengthParam()
 
-Creates a curve evaluator object for a curve that follows the same
+Gets a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>. Arc length
 parameterization allows for moving along a curve's path at a uniform

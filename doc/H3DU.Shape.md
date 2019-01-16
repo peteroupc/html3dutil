@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.Shape'></a>
-### H3DU.Shape(mesh)
+### new H3DU.Shape(mesh)
 
 An object that associates a geometric mesh (the shape of the object) with
 material data (which defines what is seen on the object's surface)

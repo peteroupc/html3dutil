@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.PiecewiseCurve'></a>
-### H3DU.PiecewiseCurve(curves)
+### new H3DU.PiecewiseCurve(curves)
 
 **Augments:** Curve
 
@@ -23,7 +23,7 @@ the piecewise curve.
 
 * `curves` (Type: Array.&lt;Object>)<br>An array of curve evaluator objects, such as an instance of Curve or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).
 
-#### Example
+#### Examples
 
     // Generates a piecewise polygon curve from an array of
     // vectors (arrays with the same number of elements) that

@@ -3,11 +3,11 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.GraphicsPath'></a>
-### H3DU.GraphicsPath()
+### new H3DU.GraphicsPath()
 
 Represents a two-dimensional path.
 A path is a collection of two-dimensional line segments and/or curves. Many paths describe
-closed figures or connected strings of lines and curves. Specifically, a path is made up
+closed figures or connected sequences of lines and curves. Specifically, a path is made up
 of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
 cubic B&eacute;zier curves, or any combination of these, and
 the path can be discontinuous and/or contain closed parts.
@@ -350,7 +350,7 @@ The resulting path. If an error
 occurs while parsing the path, the path's "isIncomplete()" method
 will return <code>true</code>. (Type: GraphicsPath)
 
-#### Example
+#### Examples
 
 The following example creates a graphics path
 from an SVG string describing a polyline.
@@ -438,7 +438,7 @@ two properties: x and y retrieve the X or Y coordinate of each position, respect
 Array of the end points of
 line segments approximating the path. (Type: Array.&lt;Array.&lt;number>>)
 
-#### Example
+#### Examples
 
 The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
 
@@ -502,7 +502,7 @@ an empty array if <i>numPoints</i> is less than 1. Returns
 an array consisting of the start point if <i>numPoints</i>
 is 1. (Type: Array.&lt;Array.&lt;number>>)
 
-#### Example
+#### Examples
 
 The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
 

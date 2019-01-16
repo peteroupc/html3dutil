@@ -34,7 +34,7 @@ of seconds, such as rotating a shape in a 5-second cycle.
 This method may be called any number of times each frame.<h4> Parameters</h4><ul><li><code>timer</code> (Type: Object)<br>An object that will hold two properties:<ul> <li>"time" - initial time value, in milliseconds. <li>"lastTime" - last known time value, in milliseconds. Will be set to the value given in "timeInMs" before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.<li><code>intervalInMs</code> (Type: number)<br>The length of the interval (animation cycle), in milliseconds.</ul><h4> Return Value</h4>A value in the range [0, 1), where closer
 to 0 means "timeInMs" lies
 closer to the start, and closer to 1 means closer
-to the end of the interval. If an initial time wasn't set, returns 0. (Type: number)<h4> Example</h4><p>The following code sets an angle of
+to the end of the interval. If an initial time wasn't set, returns 0. (Type: number)<h4> Examples</h4><p>The following code sets an angle of
 rotation, in degrees, such that an object rotated with the
 angle does a 360-degree turn in 5 seconds (5000 milliseconds).
 The variable <code>time</code> is assumed to be a time

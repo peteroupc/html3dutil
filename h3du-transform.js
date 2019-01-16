@@ -271,33 +271,7 @@ Transform.prototype.setQuaternion = function(quat) {
 Transform.prototype.setRotation = function(angle, v, vy, vz) {
   return this.setQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
 };
-/**
- * Sets this transform's rotation in the form of an angle and an axis of
- * rotation. Has no effect if a matrix was defined with {@link Transform#setMatrix}
- * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @deprecated Use {@link Transform#setRotation} instead.
- * This method's name is inaccurate because orientations are not rotations.
- * @param {Array<number>|number} angle The desired angle
- * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
- * @param {Array<number>|number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Transform} This object.
- */
-Transform.prototype.setOrientation = function(angle, v, vy, vz) {
-  return this.setQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
-};
+
 /**
  * Combines an object's current rotation with another rotation
  * described by a [quaternion]{@tutorial glmath} (a 4-element array
@@ -347,30 +321,7 @@ Transform.prototype.multQuaternion = function(quat) {
 Transform.prototype.multRotation = function(angle, v, vy, vz) {
   return this.multQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
 };
-/**
- * Combines an object's current rotation with another rotation
- * in the form of an angle and an axis of
- * rotation. The combined rotation will have the
- * same effect as the new rotation followed by the existing rotation.
- * Has no effect if a matrix was defined with {@link Transform#setMatrix}
- * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @deprecated Use {@link Transform#multRotation} instead.
- * This method's name is inaccurate because orientations are not rotations.
- * @param {Array<number>|number} angle The desired angle
- * to rotate in degrees. See {@link Transform#setRotation}.
- * @param {Array<number>|number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Transform} This object.
- */
-Transform.prototype.multOrientation = function(angle, v, vy, vz) {
-  return this.multQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
-};
+
 /**
  * Gets the transformation matrix used by an object. Depending
  * on the state of this transform, will return either:<ul>

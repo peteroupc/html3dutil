@@ -93,7 +93,7 @@ to 0 means "timeInMs" lies
 closer to the start, and closer to 1 means closer
 to the end of the interval. If an initial time wasn't set, returns 0. (Type: number)
 
-#### Example
+#### Examples
 
 The following code sets an angle of
 rotation, in degrees, such that an object rotated with the

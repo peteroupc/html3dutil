@@ -3,15 +3,10 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.Meshes'></a>
-### H3DU.Meshes()
+### new H3DU.Meshes()
 
 Contains methods that create meshes
 of various geometric shapes and solids.
-
-Note that wherever a method in this class describes how texture
-coordinates are generated, it is assumed that the coordinate (0,0)
-is at the lower-left corner of the texture and (1,1) is at the upper-right
-corner.
 
 ### Methods
 
@@ -36,7 +31,9 @@ Creates a mesh of a box (rectangular prism), which
 will be centered at the origin.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 Will create texture coordinates such that the same texture
-is used on each face of the box. The resulting mesh buffer
+is used on each face of the box. Texture coordinates are generated assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner. The resulting mesh buffer
 will use 36 vertex indices divided into 12 triangles, with each
 face using two triangles. The faces will be ordered as follows:
 Negative X face, positive X face, negative Y face,
@@ -65,7 +62,9 @@ Will also generate texture coordinates such that the V (vertical)
 coordinates start from the bottom of the texture and increase from the negative
 to positive Z axis, and the U (horizontal) coordinates start from the left of the
 texture and increase from the positive X to positive Y to negative X to negative
-Y to positive X axis.
+Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 
 If the "length" parameter is 0, the X, Y, and Z coordinates of a point on the solid
 are as described in Meshes.createSphere.
@@ -94,7 +93,9 @@ positive Z axis. The base and top will be included in the mesh if
 their radius is greater than 0. Will generate texture coordinates for
 the cylinder and for the base and top.
 The base's and top's texture coordinates will be such that the
-texture will be flat as seen from either.
+texture will be flat as seen from either. Texture coordinates are generated assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 
 See Meshes.createCylinder for information on how texture
 coordinates for the cylinder (other than the base and top) are generated and how
@@ -116,7 +117,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 The generated mesh. (Type: MeshBuffer)
 
-#### Example
+#### Examples
 
 The following method creates a cone that's closed at its base.
 <img src="mesh1.png">
@@ -138,7 +139,9 @@ be generated such that the V (vertical)
 coordinates start from the bottom of the texture and increase from the origin
 to the positive Z axis, and the U (horizontal) coordinates start from the left of the
 texture and increase from the positive X to positive Y to negative X to negative
-Y to positive X axis.
+Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 
 The X, Y, and Z coordinates of a point on the cylinder are
 <code>(-R\*cos(&lambda;), -R\*sin(&lambda;), H\*&phi;)</code>,
@@ -175,7 +178,9 @@ Creates a mesh of a 2D disk.
 Assuming the Y axis points up, the X axis right,
 and the Z axis toward the viewer, the first vertex in the outer edge
 of the 2D disk will be at the 12 o'clock position.
-Will also generate texture coordinates.
+Will also generate texture coordinates, assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters
@@ -201,7 +206,9 @@ be generated such that the V (vertical)
 coordinates start from the bottom of the texture and increase along the Z axis in the direction
 of the given path, and the U (horizontal) coordinates start from the left of the
 texture and increase from the positive X to positive Y to negative X to negative
-Y to positive X axis.
+Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 
 #### Parameters
 
@@ -218,7 +225,9 @@ The generated mesh. (Type: MeshBuffer)
 ### (static) H3DU.Meshes.createPartialDisk(inner, outer, [slices], [loops], [start], [sweep], [inward])
 
 Creates a mesh of a 2D disk or an arc of a 2D disk.
-Will also generate texture coordinates.
+Will also generate texture coordinates, assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters
@@ -242,7 +251,9 @@ Creates a mesh of a 2D rectangle, centered at the origin.
 The plane's Z coordinate will be 0.
 Will also generate texture coordinates that increase toward
 the positive X and Y axes. The texture coordinates will range
-from 0 to 1 on each end of the 2D rectangle.
+from 0 to 1 on each end of the 2D rectangle. Texture coordinates are generated assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters
@@ -261,7 +272,9 @@ The generated mesh. (Type: MeshBuffer)
 ### (static) H3DU.Meshes.createPointedStar(points, firstRadius, secondRadius, [inward])
 
 Creates a mesh in the form of a two-dimensional n-pointed star.
-Will also generate texture coordinates.
+Will also generate texture coordinates, assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 
 #### Parameters
 
@@ -283,7 +296,9 @@ Will also generate texture coordinates such that the V (vertical)
 coordinates start from the bottom of the texture and increase from the negative
 to positive Z axis, and the U (horizontal) coordinates start from the left of the
 texture and increase from the positive X to positive Y to negative X to negative
-Y to positive X axis.
+Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 
 The X, Y, and Z coordinates of a point on the sphere are
 <code>(-R\*cos(&delta;)\*cos(&lambda;), -R\*cos(&delta;)\*sin(&lambda;), R\*sin(&delta;))</code>,
@@ -313,7 +328,9 @@ The generated mesh. (Type: MeshBuffer)
 ### (static) H3DU.Meshes.createTorus(inner, outer, [lengthwise], [crosswise], [flat], [inward])
 
 Creates a mesh of a torus (donut), centered at the origin.
-Will also generate texture coordinates.
+Will also generate texture coordinates, assuming that the coordinate (0,0)
+is at the lower-left corner of the texture and (1,1) is at the upper-right
+corner.
 See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Parameters

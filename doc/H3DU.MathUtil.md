@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.MathUtil'></a>
-### H3DU.MathUtil()
+### new H3DU.MathUtil()
 
 A collection of math functions for working
 with vectors, matrices, quaternions, and other
@@ -834,7 +834,7 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
 The following example calls this method with an
 up vector of (0, 1, 0) except if the view direction is parallel to that
@@ -1159,7 +1159,7 @@ by the given rotation angle and around the given <a href="tutorial-glmath.md">ax
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
 The following example rotates a vector,
 "vec", about the Z axis by the given angle, "angle".
@@ -2016,7 +2016,7 @@ sum of the products of their components (for example, <b>a</b>'s X times
 
 A number representing the dot product. (Type: number)
 
-#### Example
+#### Examples
 
 The following shows a fast way to compare
 a vector's length using the dot product.
@@ -2144,7 +2144,7 @@ by its length.
 The resulting vector.
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
 The following example changes the
 length of a line segment.
@@ -2472,7 +2472,7 @@ follows:<br>
 
 A 3-element vector containing the cross product. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
 The following example uses the cross product to
 calculate a triangle's normal vector and its area.
@@ -2564,7 +2564,7 @@ same dot product. (Thus, the dot product is <i>commutative</i>.)
 
 A number representing the dot product. (Type: number)
 
-#### Example
+#### Examples
 
 The following shows a fast way to compare
 a vector's length using the dot product.
@@ -2638,7 +2638,7 @@ returns a new vector.
 
 The interpolated vector. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
 The following code does a nonlinear
 interpolation of two vectors that uses the cube of "factor" rather than
@@ -2743,7 +2743,7 @@ by its length.
 The resulting vector.
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
 The following example changes the
 length of a line segment.

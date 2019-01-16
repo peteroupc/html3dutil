@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.BSplineSurface'></a>
-### H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits])
+### new H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits])
 
 **Augments:** Surface
 
@@ -18,7 +18,7 @@ for BSplineCurve.
 * `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the V axis.
 * `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.DIVIDE_BIT. If null, undefined, or omitted, no bits are set.
 
-#### Example
+#### Examples
 
 Together with 'convertToHomogen' given in the BSplineCurve documentation, the following function can be used
 to convert an array of arrays of control points, each consisting of conventional

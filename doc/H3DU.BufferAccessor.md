@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.BufferAccessor'></a>
-### H3DU.BufferAccessor(buffer, countPerValue, [offset], [stride])
+### new H3DU.BufferAccessor(buffer, countPerValue, [offset], [stride])
 
 A <b>vertex attribute object</b>.
 

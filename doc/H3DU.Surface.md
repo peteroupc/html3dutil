@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.Surface'></a>
-### H3DU.Surface(surface)
+### new H3DU.Surface(surface)
 
 A surface evaluator object for a parametric surface.
 
@@ -56,7 +56,7 @@ the partial derivative of the <code>evaluate</code> method with respect to <code
 An array describing a bitangent vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
     <caption> The following code is a very simple surface evaluator object.
     var evaluator = new Surface({
@@ -125,7 +125,7 @@ in that order. The gradient returned by this method <i>should not</i> be "normal
 An array describing a gradient vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
 The following example is a surface evaluator
 object for a parametric surface with a gradient method. To illustrate how the gradient method is derived

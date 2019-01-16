@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.TextFont'></a>
-### H3DU.TextFont()
+### new H3DU.TextFont()
 
 Represents a bitmap font, which supports drawing two-dimensional
 text. This class supports
@@ -48,128 +48,5 @@ class is not included in the "h3du_min.js" file which makes up
 the HTML 3D Library. Example:
 
     <script type="text/javascript" src="extras/text.js"></script>
-
-### Methods
-
-* [loadData](#H3DU.TextFont.loadData)<br>Loads a bitmap font definition from a file.
-* [loadTextures](#H3DU.TextFont_loadTextures)<br>Loads the texture files used by this font object.
-* [loadWithTextures](#H3DU.TextFont.loadWithTextures)<br>Loads a bitmap font definition from a file along with the textures
-used by that font.
-* [makeTextMeshes](#H3DU.TextFont_makeTextMeshes)<br>Creates an array of meshes containing the primitives
-needed to draw text with this font.
-* [measure](#H3DU.TextFont_measure)<br>Calculates the width and height of a text string when
-drawn using this font.
-* [textShape](#H3DU.TextFont_textShape)<br>Creates a group of shapes containing the primitives needed to
-draw text in the given position, size, and color.
-
-<a name='H3DU.TextFont.loadData'></a>
-### (static) H3DU.TextFont.loadData(data, fontFileName)
-
-Loads a bitmap font definition from a file.
-Note that this method only loads the font data and not the bitmaps
-used to represent the font.
-
-#### Parameters
-
-* `data` (Type: ArrayBuffer)<br>The data containing a bitmap font definition.
-* `fontFileName` (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
-
-#### Return Value
-
-Text font data, or null if an error occurs. (Type: TextFont | null)
-
-<a name='H3DU.TextFont_loadTextures'></a>
-### H3DU.TextFont#loadTextures(textureLoader)
-
-Loads the texture files used by this font object.
-
-#### Parameters
-
-* `textureLoader` (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.
-
-#### Return Value
-
-A promise as described in
-<a href="H3DU.md#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
-resolves, each item in the resulting array will be a loaded
-H3DU.Texture object. (Type: <a href="Promise.md">Promise</a>.&lt;H3DU.Texture>)
-
-<a name='H3DU.TextFont.loadWithTextures'></a>
-### (static) H3DU.TextFont.loadWithTextures(fontFileName, textureLoader)
-
-Loads a bitmap font definition from a file along with the textures
-used by that font.
-
-#### Parameters
-
-* `fontFileName` (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
-* `textureLoader` (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.
-
-#### Return Value
-
-A promise that is resolved
-when the font data and textures are loaded successfully,
-and is rejected when an error occurs.
-If the promise is resolved, the result will be an object with the
-following keys:<ul>
-<li><code>url</code> - The URL of the font data file.
-<li><code>font</code> - The font data in the form of an <a href="H3DU.TextFont.md">H3DU.TextFont</a> object.
-<li><code>textures</code> - An array of H3DU.Texture objects used by the font,
-in the order in which they are declared in the font data file.
-</ul> (Type: <a href="Promise.md">Promise</a>)
-
-<a name='H3DU.TextFont_makeTextMeshes'></a>
-### H3DU.TextFont#makeTextMeshes(str, params)
-
-Creates an array of meshes containing the primitives
-needed to draw text with this font.
-
-#### Parameters
-
-* `str` (Type: string)<br>The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>x</code> - X coordinate of the top left corner of the text. If null, undefined, or omitted, uses 0. For the text to show upright, the coordinate system should have the X axis pointing right and the Y axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - Y coordinate of the top left corner of the text. If null, undefined, or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null, undefined, or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be "left", "center", or "right" (all strings). </ul>
-
-#### Return Value
-
-An array of meshes representing the text.
-There is one mesh for each texture page of the font. If none of the
-text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;<a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a>>)
-
-<a name='H3DU.TextFont_measure'></a>
-### H3DU.TextFont#measure(str, params)
-
-Calculates the width and height of a text string when
-drawn using this font.
-
-#### Parameters
-
-* `str` (Type: string)<br>The text string to measure. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>.
-
-#### Return Value
-
-An array of two numbers;
-the first is the width of the string, and the second is the
-height of the string (taking into account line feed characters,
-U+000A, that break lines). (Type: Array.&lt;number>)
-
-<a name='H3DU.TextFont_textShape'></a>
-### H3DU.TextFont#textShape(str, params)
-
-Creates a group of shapes containing the primitives needed to
-draw text in the given position, size, and color.
-For the text to show upright, the coordinate system should have the
-X axis pointing right and the Y axis pointing down (for example, an
-orthographic projection where the left and top coordinates are less
-than the right and bottom coordinates, respectively).
-
-#### Parameters
-
-* `str` (Type: string)<br>The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object described in <a href="H3DU.TextFont.md#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A color vector or string giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (H3DU.Texture) to use with this font, or a single H3DU.Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul>
-
-#### Return Value
-
-The generated group of shapes. (Type: <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a>)
 
 [Back to documentation index.](index.md)

@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='Promise'></a>
-### Promise([resolver])
+### new Promise([resolver])
 
 A promise holds a value to be resolved in the future.
 

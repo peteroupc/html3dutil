@@ -49,13 +49,13 @@ that contains all the points given.
 * [getColorMatrix](#getColorMatrix)<br>Gets a specific kind of color matrix for the color
 matrix shader.
 * [getKernelMatrix](#getKernelMatrix)<br>TODO: Not documented yet.
-* [horizontalGradient](#horizontalGradient)<br>TODO: Not documented yet.
+* [horizontalGradient](#horizontalGradient)<br>Generates a 32x32 bitmap of a linear gradient in the horizontal direction.
 * [loadTga](#loadTga)<br>TODO: Not documented yet.
 * [normalizeKernelInPlace](#normalizeKernelInPlace)<br>TODO: Not documented yet.
 * [planePointsToConvexHull](#planePointsToConvexHull)<br>Generates a convex hull of the half-space representation
 of several planes.
 * [polarCurve](#polarCurve)<br>TODO: Not documented yet.
-* [radialGradient](#radialGradient)<br>TODO: Not documented yet.
+* [radialGradient](#radialGradient)<br>Generates a 32x32 bitmap of a radial gradient.
 * [randomConvexPolyhedron](#randomConvexPolyhedron)<br>Generates a mesh buffer of a convex polyhedron at random.
 * [raypick](#raypick)<br>Finds the three-dimensional shape object and world-space coordinates
 corresponding to the given two-dimensional (X and Y) coordinates.
@@ -498,16 +498,18 @@ Return value. (Type: *)
 <a name='horizontalGradient'></a>
 ### horizontalGradient(color1, color2)
 
-TODO: Not documented yet.
+Generates a 32x32 bitmap of a linear gradient in the horizontal direction. This function demonstrates generating a custom texture.
 
 #### Parameters
 
-* `color1` (Type: *)
-* `color2` (Type: *)
+* `color1` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the left edge of the gradient.
+* `color2` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the right edge of the gradient.
 
 #### Return Value
 
-Return value. (Type: *)
+An array with 32x32x4 bytes, arranged in 32 rows of 32 pixels
+of 4 bytes each. For each pixel, the four bytes are color components
+in the following order: red, green, blue, alpha. (Type: UInt8Array)
 
 <a name='loadTga'></a>
 ### loadTga(data)
@@ -566,16 +568,18 @@ Return value. (Type: *)
 <a name='radialGradient'></a>
 ### radialGradient(colorCenter, colorEdges)
 
-TODO: Not documented yet.
+Generates a 32x32 bitmap of a radial gradient. This function demonstrates generating a custom texture.
 
 #### Parameters
 
-* `colorCenter` (Type: *)
-* `colorEdges` (Type: *)
+* `colorCenter` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the center of the gradient.
+* `colorEdges` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the edges of the gradient.
 
 #### Return Value
 
-Return value. (Type: *)
+An array with 32x32x4 bytes, arranged in 32 rows of 32 pixels
+of 4 bytes each. For each pixel, the four bytes are color components
+in the following order: red, green, blue, alpha. (Type: UInt8Array)
 
 <a name='randomConvexPolyhedron'></a>
 ### randomConvexPolyhedron(avgsize, maxfaces)

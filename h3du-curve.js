@@ -595,7 +595,7 @@ Curve.prototype.fitRange = function(ep1, ep2) {
   return new Curve(this, new Curve._FitRange(this, ep1, ep2));
 };
 /**
- * Creates a curve evaluator object for a curve that follows the same
+ * Gets a curve evaluator object for a curve that follows the same
  * path as this one but has its U coordinates remapped to
  * an <i>arc length parameterization</i>. Arc length
  * parameterization allows for moving along a curve's path at a uniform

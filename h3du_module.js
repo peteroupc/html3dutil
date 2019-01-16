@@ -5640,7 +5640,7 @@ Curve.prototype.fitRange = function(ep1, ep2) {
   return new Curve(this, new Curve._FitRange(this, ep1, ep2));
 };
 /**
- * Creates a curve evaluator object for a curve that follows the same
+ * Gets a curve evaluator object for a curve that follows the same
  * path as this one but has its U coordinates remapped to
  * an <i>arc length parameterization</i>. Arc length
  * parameterization allows for moving along a curve's path at a uniform
@@ -7083,6 +7083,12 @@ MeshBuffer.prototype.merge = function(other) {
  * 3x3 inverse transpose of this matrix (see {@link MathUtil.mat4inverseTranspose3}).
  * (Normals need to be transformed specially because they describe directions, not points.)
  * @returns {MeshBuffer} This object.
+ * @example <caption>The following example transforms positions
+ * and normals to move the mesh 2 units to the right.</caption>
+ * mesh.transform(MathUtil.mat4translated(2, 0, 0));
+ * @example <caption>The following example transforms positions
+ * and normals to double the mesh's size.</caption>
+ * mesh.transform(MathUtil.mat4scaled(2, 2, 2));
  */
 MeshBuffer.prototype.transform = function(matrix) {
   var positionAttribute = this.getAttribute(Semantic.POSITION);
@@ -7090,11 +7096,11 @@ MeshBuffer.prototype.transform = function(matrix) {
     return this;
   }
   var normalAttribute = this.getAttribute(Semantic.NORMAL);
-  var isLinearIdentity = !(matrix[0] === 1 && matrix[1] === 0 &&
+  var isNotLinearIdentity = !(matrix[0] === 1 && matrix[1] === 0 &&
     matrix[2] === 0 && matrix[4] === 0 && matrix[5] === 1 &&
     matrix[6] === 0 && matrix[8] === 0 && matrix[9] === 0 && matrix[10] === 1);
   var matrixForNormals = null;
-  if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isLinearIdentity) {
+  if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isNotLinearIdentity) {
     matrixForNormals = MathUtil.mat4inverseTranspose3(matrix);
   }
   var count = positionAttribute.count();
@@ -7106,7 +7112,7 @@ MeshBuffer.prototype.transform = function(matrix) {
     var xform = MathUtil.mat4projectVec3(matrix,
       position[0], position[1], position[2]);
     positionAttribute.setVec(i, xform);
-    if(normalAttribute && isLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
+    if(normalAttribute && isNotLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
       // Transform and normalize the normals
       // (using a modified matrix) to ensure
       // they point in the correct direction
@@ -9727,7 +9733,7 @@ ArcCurve.prototype.velocity = function(t) {
 /**
  * Represents a two-dimensional path.
  * A path is a collection of two-dimensional line segments and/or curves. Many paths describe
- * closed figures or connected strings of lines and curves. Specifically, a path is made up
+ * closed figures or connected sequences of lines and curves. Specifically, a path is made up
  * of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
  * cubic B&eacute;zier curves, or any combination of these, and
  * the path can be discontinuous and/or contain closed parts.
@@ -14209,33 +14215,7 @@ Transform.prototype.setQuaternion = function(quat) {
 Transform.prototype.setRotation = function(angle, v, vy, vz) {
   return this.setQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
 };
-/**
- * Sets this transform's rotation in the form of an angle and an axis of
- * rotation. Has no effect if a matrix was defined with {@link Transform#setMatrix}
- * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @deprecated Use {@link Transform#setRotation} instead.
- * This method's name is inaccurate because orientations are not rotations.
- * @param {Array<number>|number} angle The desired angle
- * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
- * instead be a 4-element array giving the axis
- * of rotation as the first three elements, followed by the angle
- * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
- * a counterclockwise direction for right-handed coordinate systems and
- * in a clockwise direction for left-handed systems.
- * @param {Array<number>|number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Transform} This object.
- */
-Transform.prototype.setOrientation = function(angle, v, vy, vz) {
-  return this.setQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
-};
+
 /**
  * Combines an object's current rotation with another rotation
  * described by a [quaternion]{@tutorial glmath} (a 4-element array
@@ -14285,30 +14265,7 @@ Transform.prototype.multQuaternion = function(quat) {
 Transform.prototype.multRotation = function(angle, v, vy, vz) {
   return this.multQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
 };
-/**
- * Combines an object's current rotation with another rotation
- * in the form of an angle and an axis of
- * rotation. The combined rotation will have the
- * same effect as the new rotation followed by the existing rotation.
- * Has no effect if a matrix was defined with {@link Transform#setMatrix}
- * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @deprecated Use {@link Transform#multRotation} instead.
- * This method's name is inaccurate because orientations are not rotations.
- * @param {Array<number>|number} angle The desired angle
- * to rotate in degrees. See {@link Transform#setRotation}.
- * @param {Array<number>|number} v X-component of the point lying on the axis
- * of rotation.  If "vy" and "vz" are omitted, this can
- * instead be a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
- * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
- * of rotation.
- * @returns {Transform} This object.
- */
-Transform.prototype.multOrientation = function(angle, v, vy, vz) {
-  return this.multQuaternion(MathUtil.quatFromAxisAngle(angle, v, vy, vz));
-};
+
 /**
  * Gets the transformation matrix used by an object. Depending
  * on the state of this transform, will return either:<ul>
@@ -14907,10 +14864,6 @@ ShapeGroup.prototype.setScale = function(x, y, z) {
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids.<p>
- * Note that wherever a method in this class describes how texture
- * coordinates are generated, it is assumed that the coordinate (0,0)
- * is at the lower-left corner of the texture and (1,1) is at the upper-right
- * corner.
  * @constructor
  * @memberof H3DU
  */
@@ -14977,7 +14930,9 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
  * will be centered at the origin.
  * See the "{@tutorial shapes}" tutorial.
  * Will create texture coordinates such that the same texture
- * is used on each face of the box. The resulting mesh buffer
+ * is used on each face of the box. Texture coordinates are generated assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner. The resulting mesh buffer
  * will use 36 vertex indices divided into 12 triangles, with each
  * face using two triangles. The faces will be ordered as follows:
  * Negative X face, positive X face, negative Y face,
@@ -15042,7 +14997,9 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
  * coordinates start from the bottom of the texture and increase from the origin
  * to the positive Z axis, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis.<p>
+ * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner. <p>
  * The X, Y, and Z coordinates of a point on the cylinder are
  * <code>(-R*cos(&lambda;), -R*sin(&lambda;), H*&phi;)</code>,
  * where &phi; = <code>(&pi;/2 + L)/&pi;</code>, L is the latitude in radians,
@@ -15155,7 +15112,9 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
  * coordinates start from the bottom of the texture and increase along the Z axis in the direction
  * of the given path, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis.<p>
+ * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner. <p>
  * @param {Array<number>} points Array of alternating X and Z coordinates describing
  * a two-dimensional path that will revolve around the Z axis to generate the figure
  * (the first number is an X coordinate, the second is a Z coordinate, and so on).
@@ -15230,7 +15189,9 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  * their radius is greater than 0. Will generate texture coordinates for
  * the cylinder and for the base and top.
  * The base's and top's texture coordinates will be such that the
- * texture will be flat as seen from either.<p>
+ * texture will be flat as seen from either. Texture coordinates are generated assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner. <p>
  * See {@link Meshes.createCylinder} for information on how texture
  * coordinates for the cylinder (other than the base and top) are generated and how
  * to find the coordinates of a particular point on the cylinder.<p>
@@ -15272,7 +15233,9 @@ Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, 
  * Assuming the Y axis points up, the X axis right,
  * and the Z axis toward the viewer, the first vertex in the outer edge
  * of the 2D disk will be at the 12 o'clock position.
- * Will also generate texture coordinates.
+ * Will also generate texture coordinates, assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner.
  * See the "{@tutorial shapes}" tutorial.
  * @param {number} inner Radius of the hole in the middle of the
  * disk. If 0, no hole is created and the method will generate a regular
@@ -15295,7 +15258,9 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
 
 /**
  * Creates a mesh of a 2D disk or an arc of a 2D disk.
- * Will also generate texture coordinates.
+ * Will also generate texture coordinates, assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner.
  * See the "{@tutorial shapes}" tutorial.
  * @param {number} inner Radius of the hole where the middle of the
  * complete disk would be. If 0, no hole is created.
@@ -15413,7 +15378,9 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
 
 /**
  * Creates a mesh of a torus (donut), centered at the origin.
- * Will also generate texture coordinates.
+ * Will also generate texture coordinates, assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner.
  * See the "{@tutorial shapes}" tutorial.
  * @param {number} inner Inner radius (thickness) of the torus.
  * @param {number} outer Outer radius of the torus (distance from the
@@ -15497,7 +15464,9 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
  * The plane's Z coordinate will be 0.
  * Will also generate texture coordinates that increase toward
  * the positive X and Y axes. The texture coordinates will range
- * from 0 to 1 on each end of the 2D rectangle.
+ * from 0 to 1 on each end of the 2D rectangle. Texture coordinates are generated assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner.
  * See the "{@tutorial shapes}" tutorial.
  * @param {number} [width] Width of the rectangle.
  * May be null or omitted; default is 1.
@@ -15543,7 +15512,9 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
  * coordinates start from the bottom of the texture and increase from the negative
  * to positive Z axis, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis.<p>
+ * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner. <p>
  * The X, Y, and Z coordinates of a point on the sphere are
  * <code>(-R*cos(&delta;)*cos(&lambda;), -R*cos(&delta;)*sin(&lambda;), R*sin(&delta;))</code>,
  * where &delta; and &lambda; are the latitude and longitude, respectively, in radians, R is the sphere's radius,
@@ -15582,7 +15553,9 @@ Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  * coordinates start from the bottom of the texture and increase from the negative
  * to positive Z axis, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis.<p>
+ * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner. <p>
  * If the "length" parameter is 0, the X, Y, and Z coordinates of a point on the solid
  * are as described in {@link Meshes.createSphere}.
  * See the "{@tutorial shapes}" tutorial.
@@ -15727,7 +15700,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
 
 /**
  * Creates a mesh in the form of a two-dimensional n-pointed star.
- * Will also generate texture coordinates.
+ * Will also generate texture coordinates, assuming that the coordinate (0,0)
+ * is at the lower-left corner of the texture and (1,1) is at the upper-right
+ * corner.
  * @param {number} points Number of points in the star.
  * Must be 2 or greater.
  * @param {number} firstRadius First radius of the star.

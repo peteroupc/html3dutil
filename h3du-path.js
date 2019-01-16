@@ -238,7 +238,7 @@ ArcCurve.prototype.velocity = function(t) {
 /**
  * Represents a two-dimensional path.
  * A path is a collection of two-dimensional line segments and/or curves. Many paths describe
- * closed figures or connected strings of lines and curves. Specifically, a path is made up
+ * closed figures or connected sequences of lines and curves. Specifically, a path is made up
  * of straight line segments, elliptical arcs, quadratic B&eacute;zier curves,
  * cubic B&eacute;zier curves, or any combination of these, and
  * the path can be discontinuous and/or contain closed parts.

@@ -1,0 +1,160 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>InputTracker</title></head><body><h1> InputTracker</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='InputTracker'></a>
+<h3> InputTracker(element)</h3>A class for tracking key press, mouse, touch, and mouse wheel
+events.
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library. <p><h4> Parameters</h4><ul><li><code>element</code> (Type: HTMLElement | HTMLDocument)<br>The HTML document or element to track keyboard and mouse events for. If null, undefined, or omitted, uses the calling application's HTML document.</ul><h3> Members</h3><ul><li><a href='#InputTracker.A'>A</a><br>Key code for the A key.<li><a href='#InputTracker.ADD'>ADD</a><br>Key code for the plus key.<li><a href='#InputTracker.ALT'>ALT</a><br>Key code for the return key.<li><a href='#InputTracker.CTRL'>CTRL</a><br>Key code for the return key.<li><a href='#InputTracker.DELETE'>DELETE</a><br>Key code for the delete key.<li><a href='#InputTracker.DOWN'>DOWN</a><br>Key code for the down arrow key.<li><a href='#InputTracker.END'>END</a><br>Key code for the end key.<li><a href='#InputTracker.ENTER'>ENTER</a><br>Key code for the enter key.<li><a href='#InputTracker.ESC'>ESC</a><br>Key code for the return key.<li><a href='#InputTracker.HOME'>HOME</a><br>Key code for the home key.<li><a href='#InputTracker.LEFT'>LEFT</a><br>Key code for the left arrow key.<li><a href='#InputTracker.PAGEDOWN'>PAGEDOWN</a><br>Key code for the page down key.<li><a href='#InputTracker.PAGEUP'>PAGEUP</a><br>Key code for the page up key.<li><a href='#InputTracker.RETURN'>RETURN</a><br>Key code for the return key.<li><a href='#InputTracker.RIGHT'>RIGHT</a><br>Key code for the right arrow key.<li><a href='#InputTracker.SHIFT'>SHIFT</a><br>Key code for the shift key.<li><a href='#InputTracker.SPACE'>SPACE</a><br>Key code for the space bar.<li><a href='#InputTracker.SUBTRACT'>SUBTRACT</a><br>Key code for the minus key.<li><a href='#InputTracker.TAB'>TAB</a><br>Key code for the tab key.<li><a href='#InputTracker.UP'>UP</a><br>Key code for the up arrow key.<li><a href='#InputTracker.ZERO'>ZERO</a><br>Key code for the 0 key.<li><a href='#InputTracker_deltaXY'>deltaXY</a><br><b>Deprecated: Yes</b></ul><h3> Methods</h3><ul><li><a href='#InputTracker_dispose'>dispose</a><br>Disposes all resources used by this input tracker.<li><a href='#InputTracker_getKey'>getKey</a><br>Gets whether a key is pressed, as detected by this
+input tracker.<li><a href='#InputTracker_mousePos'>mousePos</a><br>Returns the current mouse position, delta
+mouse position, and delta mouse wheel
+position (see the "update" method).<li><a href='#InputTracker_mousewheel'>mousewheel</a><br><b>Deprecated: Will be removed in the future. Use the
+mousePos method to find out whether the user
+has rotated the mouse wheel.</b><li><a href='#InputTracker_update'>update</a><br>Retrieves the current position of the mouse within
+the page's client area, as detected by the input
+tracker and calculates the "delta mouse position",
+or the difference between
+those values and the values they had the last
+time this method was called.</ul><a name='InputTracker.A'></a>
+<h3> InputTracker.A (constant)
+
+</h3>Key code for the A key. Add 1 through 25 to get
+the keys for the other letters of the English alphabet.
+
+<p>Default Value: <code>65</code></p><a name='InputTracker.ADD'></a>
+<h3> InputTracker.ADD (constant)
+
+</h3>Key code for the plus key.
+
+<p>Default Value: <code>107</code></p><a name='InputTracker.ALT'></a>
+<h3> InputTracker.ALT (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>18</code></p><a name='InputTracker.CTRL'></a>
+<h3> InputTracker.CTRL (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>17</code></p><a name='InputTracker.DELETE'></a>
+<h3> InputTracker.DELETE (constant)
+
+</h3>Key code for the delete key.
+
+<p>Default Value: <code>46</code></p><a name='InputTracker.DOWN'></a>
+<h3> InputTracker.DOWN (constant)
+
+</h3>Key code for the down arrow key.
+
+<p>Default Value: <code>40</code></p><a name='InputTracker.END'></a>
+<h3> InputTracker.END (constant)
+
+</h3>Key code for the end key.
+
+<p>Default Value: <code>35</code></p><a name='InputTracker.ENTER'></a>
+<h3> InputTracker.ENTER (constant)
+
+</h3>Key code for the enter key.
+
+<p>Default Value: <code>13</code></p><a name='InputTracker.ESC'></a>
+<h3> InputTracker.ESC (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>27</code></p><a name='InputTracker.HOME'></a>
+<h3> InputTracker.HOME (constant)
+
+</h3>Key code for the home key.
+
+<p>Default Value: <code>36</code></p><a name='InputTracker.LEFT'></a>
+<h3> InputTracker.LEFT (constant)
+
+</h3>Key code for the left arrow key.
+
+<p>Default Value: <code>37</code></p><a name='InputTracker.PAGEDOWN'></a>
+<h3> InputTracker.PAGEDOWN (constant)
+
+</h3>Key code for the page down key.
+
+<p>Default Value: <code>34</code></p><a name='InputTracker.PAGEUP'></a>
+<h3> InputTracker.PAGEUP (constant)
+
+</h3>Key code for the page up key.
+
+<p>Default Value: <code>33</code></p><a name='InputTracker.RETURN'></a>
+<h3> InputTracker.RETURN (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>10</code></p><a name='InputTracker.RIGHT'></a>
+<h3> InputTracker.RIGHT (constant)
+
+</h3>Key code for the right arrow key.
+
+<p>Default Value: <code>39</code></p><a name='InputTracker.SHIFT'></a>
+<h3> InputTracker.SHIFT (constant)
+
+</h3>Key code for the shift key.
+
+<p>Default Value: <code>16</code></p><a name='InputTracker.SPACE'></a>
+<h3> InputTracker.SPACE (constant)
+
+</h3>Key code for the space bar.
+
+<p>Default Value: <code>32</code></p><a name='InputTracker.SUBTRACT'></a>
+<h3> InputTracker.SUBTRACT (constant)
+
+</h3>Key code for the minus key.
+
+<p>Default Value: <code>109</code></p><a name='InputTracker.TAB'></a>
+<h3> InputTracker.TAB (constant)
+
+</h3>Key code for the tab key.
+
+<p>Default Value: <code>9</code></p><a name='InputTracker.UP'></a>
+<h3> InputTracker.UP (constant)
+
+</h3>Key code for the up arrow key.
+
+<p>Default Value: <code>38</code></p><a name='InputTracker.ZERO'></a>
+<h3> InputTracker.ZERO (constant)
+
+</h3>Key code for the 0 key. Add 1 through 9 to get
+the keys for the other basic digits 1 through 9.
+
+<p>Default Value: <code>48</code></p><a name='InputTracker_deltaXY'></a>
+<h3> InputTracker#deltaXY
+
+</h3><p><b>Deprecated: Yes</b></p>An alias for <a href="InputTracker.html#InputTracker_mousePos">InputTracker#mousePos</a>.
+
+<a name='InputTracker_dispose'></a>
+<h3> InputTracker#dispose()</h3>Disposes all resources used by this input tracker.<h4> Return Value</h4>Return value. (Type: Object)<a name='InputTracker_getKey'></a>
+<h3> InputTracker#getKey()</h3>Gets whether a key is pressed, as detected by this
+input tracker.<h4> Return Value</h4>key Key code of the key to check. (Type: number)<a name='InputTracker_mousePos'></a>
+<h3> InputTracker#mousePos()</h3>Returns the current mouse position, delta
+mouse position, and delta mouse wheel
+position (see the "update" method).<h4> Return Value</h4>An object containing the following keys:<ul>
+<li><code>cx</code> - X coordinate of the current mouse
+position.
+<li><code>cx</code> - Y coordinate of the current mouse
+position.
+<li><code>x</code> - X component of the delta mouse position.
+<li><code>y</code> - Y component of the delta mouse position.
+<li><code>ticks</code> - The delta mouse wheel position.
+</ul>
+If this object's update method wasn't called, all these values
+will be 0. (Type: Object)<a name='InputTracker_mousewheel'></a>
+<h3> InputTracker#mousewheel(func)</h3><p><b>Deprecated: Will be removed in the future. Use the
+mousePos method to find out whether the user
+has rotated the mouse wheel.</b></p>Sets a function to handle mouse wheel events.<h4> Parameters</h4><ul><li><code>func</code> (Type: function)<br>A function.</ul><h4> Return Value</h4>Return value. (Type: Object)<a name='InputTracker_update'></a>
+<h3> InputTracker#update()</h3>Retrieves the current position of the mouse within
+the page's client area, as detected by the input
+tracker and calculates the "delta mouse position",
+or the difference between
+those values and the values they had the last
+time this method was called. If this method wasn't
+called before for this tracker, the delta mouse position is
+(0, 0). If the current position of the mouse is unknown,
+it's (0, 0) instead.<p>
+Also retrieves the "delta mouse wheel position", or the
+offset, in "ticks", from the mouse wheel position at the
+last time this method was called (or the time this tracker
+was created if it wasn't) to the current mouse wheel position.<h4> Return Value</h4>This object. (Type: <a href="InputTracker.html">InputTracker</a>)<p><a href='index.html'>Back to documentation index.</a></p></body></html>

@@ -536,7 +536,11 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       var attribs = helper.getAttribs(node);
       var attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
       entry += writer.anchor(Doc.toHash(node.longname));
-      var heading = attribstr + elname;
+      var heading = attribstr;
+      if(node.kind === "class") {
+        heading += "new ";
+      }
+      heading += elname;
       if(node.kind !== "namespace") {
         heading += "(" + paramnames.join(", ") + ")";
       }
@@ -600,7 +604,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
         entry += writer.textblock(retval);
       }
       if(node.examples) {
-        entry += writer.heading(4, "Example");
+        entry += writer.heading(4, "Examples");
         for(i = 0; i < node.examples.length; i++) {
           entry += writer.textblock(writer.normexample(node.examples[i]));
         }

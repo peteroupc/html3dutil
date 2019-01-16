@@ -3,7 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='H3DU.BSplineCurve'></a>
-### H3DU.BSplineCurve(controlPoints, knots, [bits])
+### new H3DU.BSplineCurve(controlPoints, knots, [bits])
 
 **Augments:** Curve
 
@@ -110,7 +110,7 @@ another, see the example.
 * `knots` (Type: Array.&lt;number>)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.
 * `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.DIVIDE_BIT. If null, undefined, or omitted, no bits are set.
 
-#### Example
+#### Examples
 
 The following function can be used
 to convert an array of control points, each consisting of conventional
@@ -284,7 +284,7 @@ An array of the result of
 the evaluation. Its length will be equal to the
 length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
-#### Example
+#### Examples
 
     // Generate 11 points forming the curve.
     var points=[];
@@ -306,7 +306,7 @@ Creates a B-spline curve from the control points of a B&eacute;zier curve.
 
 Return value. (Type: BSplineCurve)
 
-#### Example
+#### Examples
 
 The following function generates a polygon curve using linear B&eacute;zier
 curves.

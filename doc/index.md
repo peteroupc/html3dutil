@@ -1,9 +1,5 @@
 # Documentation Index
 
-* <a href="DrawingToy.md">DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
-* <a href="Epitrochoid.md">Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
-of another circle, whose position is fixed, with a center of (0,0).
-* [Global Members](Global.md)
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
@@ -37,25 +33,9 @@ texture.
 from one coordinate system to another.
 * <a href="H3DU.exports.Camera.md">H3DU.exports.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
-* <a href="Hypotrochoid.md">Hypotrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the inside
-of another circle, whose position is fixed, with a center of (0,0).
-* <a href="InputTracker.md">InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
-events.
-* <a href="KleinBottle.md">KleinBottle</a><br>Surface evaluator object for the Klein surface, also known as the "Klein bottle".
-* <a href="MatrixStack.md">MatrixStack</a><br>This class implements a stack
-of 4x4 transformation matrices.
-* <a href="MoebiusStrip.md">MoebiusStrip</a><br>Surface evaluator object for a M&ouml;bius strip.
-* <a href="Polyhedra.md">Polyhedra</a><br>Contains helper methods for generating the five platonic solids
-and other polyhedra.
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
 * <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.
-* <a href="Superellipsoid.md">Superellipsoid</a><br>TODO: Not documented yet.
-* <a href="Supertoroid.md">Supertoroid</a><br>TODO: Not documented yet.
-* <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
-which results by revolving a two-dimensional curve around an axis.
-* <a href="TorusKnot.md">TorusKnot</a><br>Generates torus knots and torus-knot-like curves.
-* <a href="Trochoid.md">Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
 
 ## Tutorials
 

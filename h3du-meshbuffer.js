@@ -889,6 +889,12 @@ MeshBuffer.prototype.merge = function(other) {
  * 3x3 inverse transpose of this matrix (see {@link MathUtil.mat4inverseTranspose3}).
  * (Normals need to be transformed specially because they describe directions, not points.)
  * @returns {MeshBuffer} This object.
+ * @example <caption>The following example transforms positions
+ * and normals to move the mesh 2 units to the right.</caption>
+ * mesh.transform(MathUtil.mat4translated(2, 0, 0));
+ * @example <caption>The following example transforms positions
+ * and normals to double the mesh's size.</caption>
+ * mesh.transform(MathUtil.mat4scaled(2, 2, 2));
  */
 MeshBuffer.prototype.transform = function(matrix) {
   var positionAttribute = this.getAttribute(Semantic.POSITION);
@@ -896,11 +902,11 @@ MeshBuffer.prototype.transform = function(matrix) {
     return this;
   }
   var normalAttribute = this.getAttribute(Semantic.NORMAL);
-  var isLinearIdentity = !(matrix[0] === 1 && matrix[1] === 0 &&
+  var isNotLinearIdentity = !(matrix[0] === 1 && matrix[1] === 0 &&
     matrix[2] === 0 && matrix[4] === 0 && matrix[5] === 1 &&
     matrix[6] === 0 && matrix[8] === 0 && matrix[9] === 0 && matrix[10] === 1);
   var matrixForNormals = null;
-  if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isLinearIdentity) {
+  if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isNotLinearIdentity) {
     matrixForNormals = MathUtil.mat4inverseTranspose3(matrix);
   }
   var count = positionAttribute.count();
@@ -912,7 +918,7 @@ MeshBuffer.prototype.transform = function(matrix) {
     var xform = MathUtil.mat4projectVec3(matrix,
       position[0], position[1], position[2]);
     positionAttribute.setVec(i, xform);
-    if(normalAttribute && isLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
+    if(normalAttribute && isNotLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
       // Transform and normalize the normals
       // (using a modified matrix) to ensure
       // they point in the correct direction
