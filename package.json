@@ -14,7 +14,7 @@
     "lib": "."
   },
   "scripts": {
-    "build": "ruby ./build/compile.rb"
+    "build": "cd build && node ./compile.js"
   },
   "keywords": [
     "html",

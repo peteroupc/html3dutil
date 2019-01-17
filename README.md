@@ -26,13 +26,13 @@ Source Code and Building
 
 Source code is available in the [project page](https://github.com/peteroupc/html3dutil).
 
-To build, you will need a Java runtime environment, Ruby, and a JavaScript environment
+To build, you will need a Java runtime environment and a JavaScript environment
 that supports `npm`.
 
 * Put `compiler.jar` (the JAR file for the Closure Compiler) in the `build` directory.
 * Install [JSDoc](https://github.com/jsdoc3/jsdoc) and `rollup` via `npm`.
-* Run `npm run build`. This will generate the documentation and compile
-the library's source code into a single file called `h3du_min.js`.
+* Run `npm run-script build`. This will generate the documentation and compile
+the library's source code into files called `h3du_min.js` and `h3du_module.js`.
 
 Overview and Demos
 ---------
