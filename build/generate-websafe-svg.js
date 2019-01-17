@@ -1,4 +1,4 @@
-/* global exports, i, svgx, svgy, yheight */
+/* global exports */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -106,7 +106,7 @@ function generateColorNameSvg() {
   var svg = new SwatchSvg();
   svg.width = 150;
   svg.columns = 5;
-  i = 0; while(i < cn.length) {
+  var i = 0; while(i < cn.length) {
     svg.addSwatch("#" + cn[i + 1], cn[i]);
     i += 2;
   }

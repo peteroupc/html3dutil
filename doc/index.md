@@ -24,14 +24,8 @@ and a transformation matrix (which defines the object's position and size).
 * <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
 vertex attributes for a surface.
-* <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
-text.
-* <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
-texture.
 * <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
-* <a href="H3DU.exports.Camera.md">H3DU.exports.Camera</a><br>A class for controlling the projection and
-view of a 3D scene, in the nature of an abstract "camera".
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
 * <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.

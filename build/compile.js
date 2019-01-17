@@ -10,9 +10,9 @@
 
 var fs = require("fs");
 var os = require("os");
-var glob = require("glob");
 var process = require("process");
 var cp = require("child_process");
+var util=require("util");
 var gwsvg = require("./generate-websafe-svg");
 
 // Escapes a filename to appear in a command line argument
@@ -67,77 +67,126 @@ function normalizeLines(x) {
   return x + "\n";
 }
 
-function readFile(filename) {
+var fs_readFile=util.promisify(fs.readFile)
+var fs_writeFile=util.promisify(fs.writeFile)
+var fs_mkdtemp=util.promisify(fs.mkdtemp)
+var fs_mkdir=util.promisify(fs.mkdir)
+var fs_unlink=util.promisify(fs.unlink)
+var fs_rmdir=util.promisify(fs.rmdir)
+var cp_exec=util.promisify(cp.exec)
+var fs_readdir=util.promisify(fs.readdir)
+var fs_realpath=util.promisify(fs.realpath)
+
+async function execAsync(cmd, outOptions) {
+ try {
+//console.log(cmd)
+  // NOTE: Default buffer size is too small for our purposes;
+ // increase to 5000 KiB
+  var cpe=(await cp_exec(cmd,{maxBuffer:5000*1024}))
+  if(outOptions==null)return cpe.stdout.toString()
+  if(outOptions=="outerr")return cpe.stdout.toString()+
+   "\n"+cpe.stderr.toString()
+  if(outOptions=="err")return cpe.stderr.toString()
+  return cpe.stdout.toString()
+ } catch(ex) {
+  if(outOptions==null)return ex.stdout.toString()
+  if(outOptions=="outerr")return ex.stdout.toString()+
+   "\n"+cpe.stderr.toString()
+  if(outOptions=="err")return ex.stderr.toString()
+  return cpe.stdout.toString()
+ }
+}
+
+async function readFileAsync(filename) {
   try {
-    return fs.readFileSync(filename, "utf8");
+    return await fs_readFile(filename, "utf8");
   } catch(ex) {
     return "";
   }
 }
 
-function writeFileIfNeeded(filename, str) {
+async function writeFileIfNeededAsync(filename, str) {
   var oldstr = null;
   try {
-    oldstr = fs.readFileSync(filename, "utf8");
+    oldstr = await fs_readFile(filename, "utf8");
   } catch(ex) {
     oldstr = null;
   }
   if(oldstr !== str) {
-    fs.writeFileSync(filename, str, "utf8");
+console.log(str.length)
+    await fs_writeFile(filename, str, "utf8");
   }
+return filename
 }
 
-function editFileIfNeeded(filename, fstr) {
+async function editFileIfNeededAsync(filename, fstr) {
   var oldstr = null;
   try {
-    oldstr = fs.readFileSync(filename, "utf8");
+    oldstr = await fs_readFile(filename, "utf8");
     var str = fstr(oldstr);
 
     if(oldstr !== str) {
-      fs.writeFileSync(filename, str, "utf8");
+      await fs_writeFile(filename, str, "utf8");
     }
   } catch(ex) {
+console.log("editFile")
+console.log(ex)
   }
-
+return filename
 }
 
-function tmppath(f, cb) {
-  var t = fs.mkdtempSync(os.tmpdir() + "/temp");
-  writeFileIfNeeded(t + "/" + f, "");
-  try{
-    cb(t + "/" + f);
-  } finally {
-    fs.unlinkSync(t + "/" + f);
-    fs.rmdirSync(t);
-  }
+async function tmppathAsync(f, cb) {
+  var t = await fs_mkdtemp(os.tmpdir() + "/temp");
+  await writeFileIfNeededAsync(t + "/" + f, "")
+  .then(async ()=>{
+    try{
+      await cb(t + "/" + f);
+    } finally {
+      await fs_unlink(t + "/" + f)
+        .then(()=>fs_rmdir(t))
+    }
+  });
 }
 
-function chdir(x, cb) {
+async function chdirAsync(x, cb) {
   var wd = process.cwd();
   try {
     process.chdir(x);
-    cb();
+    await cb();
   } finally {
     process.chdir(wd);
   }
 }
 
-function fmkdir(p) {
+async function mkdirAsync(p) {
   try {
-    fs.mkdirSync(p);
-  } catch(ex) {}
+    await fs_mkdir(p);
+    return p
+  } catch(ex) {
+return p
+   }
 }
 
-var compilerJar = fs.realpathSync("compiler.jar");
-function normalizeAndCompile(inputArray, output,
-  advanced, useSourceMap, toModule) {
-  if(!fs.existsSync(compilerJar)) {
-    console.error("The Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. " +
-      "Download the Closure Compiler JAR and put it in the same directory " +
-      "as this script. (Running the Closure Compiler requires a Java runtime environment.)");
-    process.exit();
+async function realpathAsync(p) {
+  try {
+    return await fs_realpath(p);
+  } catch(ex) {
+    return p
   }
-  inputArray.forEach((input) => editFileIfNeeded(input, (d) => normalizeLines(d)));
+}
+
+async function readdirAsync(dir, regex) {
+ try {
+    var files=await fs_readdir(dir)
+    return regex==null ? files :
+        files.filter(f=>regex.test(f))
+ } catch(ex) {
+    return []
+ }
+}
+
+async function normalizeAndCompile(compilerJar, inputArray, output,
+  advanced, useSourceMap, toModule) {
   var inputs = inputArray.map((x) => "--js " + ffq(x)).join(" ");
   var sourceMap = output + ".map";
   var formatting = false ? "--formatting PRETTY_PRINT" : "";
@@ -151,41 +200,60 @@ function normalizeAndCompile(inputArray, output,
      "--compilation_level " + opt + " " + inputs + " " +
      (useSourceMap ? "--create_source_map " + ffq(sourceMap) + " " : "") +
      "--js_output_file " + ffq(output) + " --rewrite_polyfills false";
-  cp.exec(cmd, (e, so, se) => {
-    console.log(se);
-    editFileIfNeeded(output, (data) => {
+  try {
+   await Promise.all(inputArray.map(
+     input=>editFileIfNeededAsync(input, (d) => normalizeLines(d))))
+    .then(()=>execAsync(cmd,"err"))
+    .then(x=>{console.log(x); return true})
+    .then(()=>editFileIfNeededAsync(output, (data) => {
       data = normalizeLines(data);
       if(useSourceMap) {
         data += "/*# sourceMappingURL=" + File.basename(sourceMap) + " */\n";
       }
       return data;
-    });
+    }))
+   return output
+  } catch(ex) {
+    console.error("Note that the Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. " +
+      "It it doesn't exist yet, download the Closure Compiler JAR and put it in the same directory " +
+      "as this script. (Running the Closure Compiler requires a Java runtime environment.)");
+    process.exit();
+  }
+}
+async function asyncMain() {
+var compilerJar = await realpathAsync("compiler.jar");
+await chdirAsync("..", async () => {
+  var files = ["promise.js", "h3du.js"];
+  files = files.concat(await readdirAsync(".",/^h3du-.*?\.js$/));
+  await tmppathAsync("h3du_all.js", async (p) => {
+    var filesForDoc = ["./h3du_module.js"].concat(
+       await readdirAsync("extras",/^.*?\.js$/));
+    filesForDoc = filesForDoc.map((f) => ffq(f)).join(" ");
+    await Promise.all([mkdirAsync("doc"),mkdirAsync("dochtml")])
+      .then(async ()=>writeFileIfNeededAsync("./h3du_module.js", normalizeLines(
+         await execAsync("rollup --output.format=esm --name=H3DU ./h3du.js"))))
+      .then(async ()=>writeFileIfNeededAsync(p,
+         await execAsync("rollup --output.format=umd --name=H3DU ./h3du.js")))
+      .then(()=>normalizeAndCompile(compilerJar,[p],
+        "./h3du_min.js", false,
+        process.argv.indexOf("--sourcemap") >= 0))
+      .then(()=>Promise.all([
+        execAsync("jsdoc -u tutorials -t build -R README.md -d ./doc " + filesForDoc)
+         .then(x=>console.log(x)),
+        execAsync("jsdoc -u tutorials -t build -R README.md -d ./dochtml " + filesForDoc + " -q f=html")
+         .then(x=>console.log(x))
+        ]));
   });
+  var svgs = [["doc/websafe.svg", "dochtml/websafe.svg", gwsvg.generateSvg()],
+    ["doc/colornames.svg", "dochtml/colornames.svg", gwsvg.generateColorNameSvg()]];
+  for(var i=0;i<svgs.length;i++) {
+    var s=svgs[i];
+    await writeFileIfNeededAsync(s[0],s[2])
+        .then(()=>execAsync("svgo -i " + ffq(s[0]) + " -o " + ffq(s[0])))
+        .then(()=>readFileAsync(s[0]))
+        .then((r)=>writeFileIfNeededAsync(s[1],r))
+  }
+});
 }
 
-chdir("..", () => {
-  var files = ["promise.js", "h3du.js"];
-  files = files.concat(glob.sync("h3du-*.js"));
-  tmppath("h3du_all.js", (p) => {
-    writeFileIfNeeded("./h3du_module.js", normalizeLines(
-      cp.execSync("rollup --output.format=esm --name=H3DU ./h3du.js").toString()));
-    // normalizeAndCompile([p],"./h3du_module.js",false,process.argv.indexOf("--sourcemap")>=0,true)
-    writeFileIfNeeded(p, cp.execSync("rollup --output.format=umd --name=H3DU ./h3du.js").toString());
-    normalizeAndCompile([p, "./oldnames.js"], "./h3du_min.js", false,
-      process.argv.indexOf("--sourcemap") >= 0);
-    fmkdir("doc");
-    fmkdir("dochtml");
-    writeFileIfNeeded("doc/websafe.svg", gwsvg.generateSvg());
-    writeFileIfNeeded("doc/colornames.svg", gwsvg.generateColorNameSvg());
-    var filesForDoc = ["./h3du_module.js"].concat(glob.sync("extras/*.js"));
-    filesForDoc = filesForDoc.map((f) => ffq(f)).join(" ");
-    console.log(cp.execSync("jsdoc -u tutorials -t build -R README.md -d ./doc " + filesForDoc).toString());
-    console.log(cp.execSync("jsdoc -u tutorials -t build -R README.md -d ./dochtml " + filesForDoc + " -q f=html").toString());
-  });
-  var svgs = [["doc/websafe.svg", "dochtml/websafe.svg"],
-    ["doc/colornames.svg", "dochtml/colornames.svg"]];
-  svgs.forEach((s) => {
-    console.log(cp.execSync("svgo -i " + ffq(s[0]) + " -o " + ffq(s[0])).toString());
-    writeFileIfNeeded(s[1], readFile(s[0]));
-  });
-});
+asyncMain();

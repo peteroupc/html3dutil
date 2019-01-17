@@ -85,7 +85,7 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are
 - The H3DU.LightSource class now supports a radius of the light.
 - The H3DU.TextureLoader class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
 - `GLMath`, now H3DU.Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3perp">H3DU.MathUtil.vec3perp</a>, <a href="H3DU.MathUtil.md#H3DU.MathUtil.vec3toWindowPoint">H3DU.MathUtil.vec3toWindowPoint</a>, and <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4projectVec3">H3DU.MathUtil.mat4projectVec3</a>.
-- Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, <a href="H3DU.TextFont.md">H3DU.TextFont</a> and <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a>.
+- Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, H3DU.TextFont and H3DU.TextureAtlas.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
 - The Camera class, now H3DU.Camera, was rewritten.
 - A build script was included in the repository. This build includes a style checker which is run on the library's JavaScript files.
