@@ -86,7 +86,8 @@ import {MathInternal} from "./h3du-mathinternal";
  */
 function Curve(curve, curveParam) {
 // TODO: Consider using a non-prototype method
-// rather than this constructor
+// rather than this constructor. If so, deprecate
+// this constructor
   this.curve = curve;
   this.curveParam = curveParam;
 }

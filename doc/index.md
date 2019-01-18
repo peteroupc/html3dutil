@@ -51,12 +51,11 @@ events.
 * <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>The <code>extras/drawingtoy.js</code> module.
 * <a href="extras_drawingtoy.DrawingToy.md">module:extras/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_evaluators.md">module:extras/evaluators</a><br>The <code>extras/evaluators.js</code> module.
-* <a href="extras_evaluators.Epitrochoid.md">module:extras/evaluators.Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
-of another circle, whose position is fixed, with a center of (0,0).
-* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A curve evaluator object for a curve drawn by a curve that rolls along another curve, whose position is fixed, with a center of (0,0).
+* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A curve evaluator object for a curve drawn by a curve that rolls along another curve whose position is fixed.
 * <a href="extras_evaluators.SurfaceOfRevolution.md">module:extras/evaluators.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
-* <a href="extras_evaluators.Trochoid.md">module:extras/evaluators.Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
+* <a href="extras_evaluators_Roulette.epitrochoid.md">module:extras/evaluators~Roulette.epitrochoid</a><br>Generates a curve evaluator object for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside
+of another circle, whose position is fixed, with a center of (0,0).
 * <a href="extras_fourierknot.md">module:extras/fourierknot</a><br>The <code>extras/fourierknot.js</code> module.
 * <a href="extras_fragmentshaderlib.md">module:extras/fragmentshaderlib</a><br>The <code>extras/fragmentshaderlib.js</code> module.
 * <a href="extras_gearmesh.md">module:extras/gearmesh</a><br>The <code>extras/gearmesh.js</code> module.

@@ -5,12 +5,14 @@
 <a name='extras_evaluators.Roulette'></a>
 ### new module:extras/evaluators.Roulette(rollingCurve, fixedCurve, polePoint, [revolutions])
 
-A curve evaluator object for a curve drawn by a curve that rolls along another curve, whose position is fixed, with a center of (0,0).
+**Augments:** Curve
+
+A curve evaluator object for a curve drawn by a curve that rolls along another curve whose position is fixed.
 
 #### Parameters
 
 * `rollingCurve` (Type: Object)<br>A curve evaluator object that describes the curve that rolls to generate the roulette curve. This curve is assumed to be a smooth closed curve such as a circle.
-* `fixedCurve` (Type: Object)<br>A curve evaluator object that describes the curve on which the rolling curve will move. This curve is assumed to be repeating (periodic) and smooth at every point; this includes periodic waves and circles. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
+* `fixedCurve` (Type: Object)<br>A curve evaluator object that describes the curve on which the rolling curve will move. This curve is assumed to be smooth at every point; this includes periodic waves and circles. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
 * `polePoint` (Type: Array.&lt;number>)<br>X and Y coordinates of a point, from the same coordinate system (reference frame) as <i>rollingCurve</i>, that will generate the roulette curve.
 * `revolutions` (Type: number) (optional)<br>Number of complete rotations of the rolling curve to perform when generating the roulette curve; this will be reflected in this instance's <code>endPoints</code> method.
 
@@ -21,6 +23,7 @@ of another circle, whose position is fixed, with a center of (0,0).
 * [rose](#extras_evaluators_Roulette.rose)<br>Creates a curve evaluator object for a rose, a special
 form of hypotrochoid (roulette curve generated when one circle rolls
 inside another fixed circle).
+* [trochoid](#extras_evaluators_Roulette.trochoid)<br>Creates a curve evaluator object for a <i>trochoid</i>, a curve drawn by a circle that rolls along the X axis.
 
 <a name='extras_evaluators_Roulette.hypotrochoid'></a>
 ### (static) module:extras/evaluators~Roulette.hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees])
@@ -67,5 +70,22 @@ inside another fixed circle).
 #### Return Value
 
 The resulting curve evaluator object. (Type: Roulette)
+
+<a name='extras_evaluators_Roulette.trochoid'></a>
+### (static) module:extras/evaluators~Roulette.trochoid(radius, distFromCenter)
+
+Creates a curve evaluator object for a <i>trochoid</i>, a curve drawn by a circle that rolls along the X axis.
+
+The following curves can be generated with this class (in the following
+descriptions, R = <code>radius</code>
+and D = <code>distFromCenter</code>).<ul>
+<li>Cycloid: D = R (trochoid touching the X axis).</li>
+<li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
+<li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
+
+#### Parameters
+
+* `radius` (Type: number)<br>Radius of the rolling circle.
+* `distFromCenter` (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.
 
 [Back to documentation index.](index.md)
