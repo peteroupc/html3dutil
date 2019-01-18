@@ -56,7 +56,6 @@ function SwatchSvg() {
     }
   };
   this.toString = function() {
-  // var yheight = this.x === 0 ? this.y : this.y + 1;
     var svgx = this.columns * this.width;
     var svgy = this.totalheight;
     var head = "<svg width='" + svgx + "' height='" + svgy + "' xmlns='http://www.w3.org/2000/svg'>\n";

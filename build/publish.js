@@ -505,11 +505,21 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
-
     if(typeof parentlong === "undefined" || parentlong === null) {
-      if(typeof node.memberof !== "undefined" && node.memberof !== null)return;
-    } else if(node.memberof !== parentlong)return;
-    if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind === "namespace") {
+      if(typeof node.memberof !== "undefined" && node.memberof !== null) {
+        // console.log(node)
+        // return;
+      }
+    } else {
+      var memberof = node.memberof;
+      if(typeof memberof !== "undefined" && memberof !== null) {
+        // Work around issue jsdoc3/jsdoc#924
+        if(memberof.replace(/\~/, ".") !==
+        parentlong.replace(/\~/, "."))return;
+      } else return;
+
+    }
+    if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind === "namespace" || node.kind === "module") {
       var paramnames = [];
       if(node.params) {
         var p = node.params;
@@ -528,7 +538,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
           elname = helper.htmlsafe(node.name);
         }
       }
-      if(node.kind === "class" || node.kind === "namespace") {
+      if(node.kind === "class" || node.kind === "namespace" || node.kind === "module") {
         entry += writer.heading(1, elname);
         entry += writer.paragraph(writer.linkText("index" + helper.fileExtension,
           "Back to documentation index."));
@@ -617,7 +627,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       }
       if(node.kind === "function") {
         docCollection.addMethod(parentlong || "Global", node.name, entry, node.longname);
-      } else if(node.kind === "class" || node.kind === "namespace") {
+      } else if(node.kind === "class" || node.kind === "namespace" || node.kind === "module") {
         docCollection.addConstructor(node.longname, entry);
         fillCollection(docCollection, nodes, node.longname, writer);
       } else {

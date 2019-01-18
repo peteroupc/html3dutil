@@ -113,7 +113,7 @@ async function writeFileIfNeededAsync(filename, str) {
     oldstr = null;
   }
   if(oldstr !== str) {
-console.log(str.length)
+//console.log(str.length)
     await fs_writeFile(filename, str, "utf8");
   }
 return filename
@@ -178,8 +178,9 @@ async function realpathAsync(p) {
 async function readdirAsync(dir, regex) {
  try {
     var files=await fs_readdir(dir)
-    return regex==null ? files :
+    files=regex==null ? files :
         files.filter(f=>regex.test(f))
+return files.map(f=>dir+"/"+f)
  } catch(ex) {
     return []
  }
@@ -238,9 +239,9 @@ await chdirAsync("..", async () => {
         "./h3du_min.js", false,
         process.argv.indexOf("--sourcemap") >= 0))
       .then(()=>Promise.all([
-        execAsync("jsdoc -u tutorials -t build -R README.md -d ./doc " + filesForDoc)
+        execAsync("jsdoc -u tutorials -t build -R README.md -d ./doc " + filesForDoc,"outerr")
          .then(x=>console.log(x)),
-        execAsync("jsdoc -u tutorials -t build -R README.md -d ./dochtml " + filesForDoc + " -q f=html")
+        execAsync("jsdoc -u tutorials -t build -R README.md -d ./dochtml " + filesForDoc + " -q f=html","outerr")
          .then(x=>console.log(x))
         ]));
   });
