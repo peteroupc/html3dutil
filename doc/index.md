@@ -1,6 +1,5 @@
 # Documentation Index
 
-* [Global Members](Global.md)
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
@@ -54,9 +53,7 @@ events.
 * <a href="extras_evaluators.md">module:extras/evaluators</a><br>The <code>extras/evaluators.js</code> module.
 * <a href="extras_evaluators.Epitrochoid.md">module:extras/evaluators.Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
-* <a href="extras_evaluators.Hypotrochoid.md">module:extras/evaluators.Hypotrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the inside
-of another circle, whose position is fixed, with a center of (0,0).
-* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>TODO: Not documented yet.
+* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A curve evaluator object for a curve drawn by a curve that rolls along another curve, whose position is fixed, with a center of (0,0).
 * <a href="extras_evaluators.SurfaceOfRevolution.md">module:extras/evaluators.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 * <a href="extras_evaluators.Trochoid.md">module:extras/evaluators.Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.

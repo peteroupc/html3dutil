@@ -507,8 +507,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
     if(node.access === "private")return;
     if(typeof parentlong === "undefined" || parentlong === null) {
       if(typeof node.memberof !== "undefined" && node.memberof !== null) {
-        // console.log(node)
-        // return;
+        return;
       }
     } else {
       var memberof = node.memberof;

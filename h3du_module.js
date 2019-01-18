@@ -5558,6 +5558,7 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
   // example, the length of the velocity vector may differ for the underlying curve object
   // than for this one, even though both vectors generally point in the same direction.
   var ep, guess;
+  if(Number.isNaN(s))throw new Error();
   if(s > this.length) {
     ep = this.curve.endPoints();
     guess = ep[0] + (ep[1] - ep[0]) * (s / this.length);
