@@ -14,11 +14,15 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [radialGradientShader](#extras_radgradshader.radialGradientShader)<br>TODO: Not documented yet.
+* [radialGradientShader](#extras_radgradshader.radialGradientShader)<br>GLSL shader code for a screen-space radial gradient.
 
 <a name='extras_radgradshader.radialGradientShader'></a>
 ### module:extras/radgradshader.radialGradientShader
 
-TODO: Not documented yet.
+GLSL shader code for a screen-space radial gradient.
+It takes the following uniforms: "colorCenter" is a 4-element array
+giving the red, green, blue, and alpha components, in that order,
+of the color at the center; and "colorEdges" is those same components
+of the color at the edges.
 
 [Back to documentation index.](index.md)

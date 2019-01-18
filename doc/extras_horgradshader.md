@@ -14,11 +14,15 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [horGradientShader](#extras_horgradshader.horGradientShader)<br>TODO: Not documented yet.
+* [horGradientShader](#extras_horgradshader.horGradientShader)<br>GLSL shader code for a screen-space horizontal gradient.
 
 <a name='extras_horgradshader.horGradientShader'></a>
 ### module:extras/horgradshader.horGradientShader
 
-TODO: Not documented yet.
+GLSL shader code for a screen-space horizontal gradient.
+It takes the following uniforms: "color1" is a 4-element array
+giving the red, green, blue, and alpha components, in that order,
+of the left-hand color; and "color2" is those same components
+of the right-hand color.
 
 [Back to documentation index.](index.md)
