@@ -21,7 +21,7 @@ its work.
 * [getTimePosition](#H3DU.getTimePosition)<br>Gets the position of a time value within an interval.
 * [newFrames](#H3DU.newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
-* [toGLColor](#H3DU.toGLColor)<br>Creates a 4-element array representing a color.
+* [toGLColor$1](#H3DU.toGLColor$1)<br>Creates a 4-element array representing a color.
 
 <a name='H3DU.getPromiseResults'></a>
 ### (static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])
@@ -123,8 +123,8 @@ the last known time held in the parameter "timer".
 The number can include fractional frames. If an
 initial time or last known time wasn't set, returns 0. (Type: number)
 
-<a name='H3DU.toGLColor'></a>
-### (static) H3DU.toGLColor(r, [g], [b], [a])
+<a name='H3DU.toGLColor$1'></a>
+### (static) H3DU.toGLColor$1(r, [g], [b], [a])
 
 Creates a 4-element array representing a color. Each element
 can range from 0 to 1 and specifies the red, green, blue or alpha

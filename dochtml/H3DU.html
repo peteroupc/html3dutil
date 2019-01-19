@@ -6,7 +6,7 @@ resolves after the given list of promises finishes
 its work.<li><a href='#H3DU.getPromiseResultsAll'>getPromiseResultsAll</a><br>Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
 its work.<li><a href='#H3DU.getTimePosition'>getTimePosition</a><br>Gets the position of a time value within an interval.<li><a href='#H3DU.newFrames'>newFrames</a><br>Returns the number of frame-length intervals that occurred since
-the last known time, where a frame's length is 1/60 of a second.<li><a href='#H3DU.toGLColor'>toGLColor</a><br>Creates a 4-element array representing a color.</ul><a name='H3DU.getPromiseResults'></a>
+the last known time, where a frame's length is 1/60 of a second.<li><a href='#H3DU.toGLColor$1'>toGLColor$1</a><br>Creates a 4-element array representing a color.</ul><a name='H3DU.getPromiseResults'></a>
 <h3> (static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])</h3>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.<h4> Parameters</h4><ul><li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>>)<br>an array containing promise objects<li><code>progressResolve</code> (Type: function) (optional)<br>A function called as each individual promise is resolved.<li><code>progressReject</code> (Type: function) (optional)<br>A function called as each individual promise is rejected.</ul><h4> Return Value</h4>A promise that is never rejected and resolves when
@@ -47,8 +47,8 @@ the last known time, where a frame's length is 1/60 of a second.
 This method should be called only once each frame.<h4> Parameters</h4><ul><li><code>timer</code> (Type: Object)<br>An object described in getTimePosition.<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</ul><h4> Return Value</h4>The number of frame-length intervals relative to
 the last known time held in the parameter "timer".
 The number can include fractional frames. If an
-initial time or last known time wasn't set, returns 0. (Type: number)<a name='H3DU.toGLColor'></a>
-<h3> (static) H3DU.toGLColor(r, [g], [b], [a])</h3>Creates a 4-element array representing a color. Each element
+initial time or last known time wasn't set, returns 0. (Type: number)<a name='H3DU.toGLColor$1'></a>
+<h3> (static) H3DU.toGLColor$1(r, [g], [b], [a])</h3>Creates a 4-element array representing a color. Each element
 can range from 0 to 1 and specifies the red, green, blue or alpha
 component, respectively.
 This method also converts HTML and CSS colors to 4-element RGB
