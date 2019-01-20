@@ -359,7 +359,7 @@ Return value. Returns this object if this curve already uses an arc length param
 
 The following example uses the arc-length
 parameterization to generate, uniformly at random, a point that lies anywhere
-on the curve.
+on a curve.
 
     var arclen = curve.toArcLengthParam();
     var point = arclen.evaluate(Math.random()*arclen.getLength())

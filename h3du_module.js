@@ -5659,7 +5659,7 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * @returns {Curve} Return value. Returns this object if this curve already uses an arc length parameterization.
  * @example <caption>The following example uses the arc-length
  * parameterization to generate, uniformly at random, a point that lies anywhere
- * on the curve.</caption>
+ * on a curve.</caption>
  * var arclen = curve.toArcLengthParam();
  * var point = arclen.evaluate(Math.random()*arclen.getLength())
  */
@@ -6415,6 +6415,15 @@ MeshBuffer.prototype._getAttributes = function() {
   return this.attributes;
 };
 /**
+ * TODO: Not documented yet.
+ * @param {*} indicesIndex TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+MeshBuffer.prototype.getIndex = function(indicesIndex) {
+  if(typeof indices === "undefined" || indices === null)return indicesIndex;
+  return this.indices[indicesIndex];
+};
+/**
  * Gets a vertex attribute included in this mesh buffer.
  * @param {number|string} name An attribute semantic, such
  * as {@link Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
@@ -6436,7 +6445,7 @@ MeshBuffer.prototype._getAttributes = function() {
  * var n=mesh.getAttribute("NORMAL")
  * var t=mesh.getAttribute("TEXCOORD_0")
  * var c=mesh.getAttribute("COLOR")
- * var ind=mesh.getIndices()
+ * var count=mesh.vertexCount()
  * var primSize = 3;
  * if(mesh.primitiveType() === MeshBuffer.LINES)
  * primSize = 2;
@@ -6445,7 +6454,7 @@ MeshBuffer.prototype._getAttributes = function() {
  * var ret=[]
  * for(var i=0;i&lt;ind.length;i+=primSize) {
  * var prim=[]
- * var index=ind[i]
+ * var index=mesh.getIndex(i)
  * for(var j=0;j&lt;primSize;j++) {
  * var info={}
  * if(p)info.position=p.getVec(index,[])

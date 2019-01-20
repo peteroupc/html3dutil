@@ -15,6 +15,7 @@ To import all symbols in this module, either of the following can be used:
 ### Methods
 
 * [contourLines](#extras_contourlines.contourLines)<br>Generates contour lines for two-dimensional data.
+* [contourLines3D](#extras_contourlines.contourLines3D)<br>TODO: Not documented yet.
 
 <a name='extras_contourlines.contourLines'></a>
 ### (static) module:extras/contourlines.contourLines(func, levels, u1, u2, v1, v2, usize, vsize)
@@ -44,5 +45,19 @@ function. This method samples the function at integer grid points.
     var mesh=contourLines((u,v)=>(Math.sin((u+v)/6)),
     [0, 1, 2, 3],
     0,10,0,10,10,10);
+
+<a name='extras_contourlines.contourLines3D'></a>
+### (static) module:extras/contourlines.contourLines3D(mesh, planes)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `mesh` (Type: *)<br>TODO: Not documented yet.
+* `planes` (Type: *)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
 
 [Back to documentation index.](index.md)

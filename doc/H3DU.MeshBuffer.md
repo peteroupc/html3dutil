@@ -61,6 +61,7 @@ and texture coordinates.
 * [getAttribute](#H3DU.MeshBuffer_getAttribute)<br>Gets a vertex attribute included in this mesh buffer.
 * [getBounds](#H3DU.MeshBuffer_getBounds)<br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
+* [getIndex](#H3DU.MeshBuffer_getIndex)<br>TODO: Not documented yet.
 * [getIndices](#H3DU.MeshBuffer_getIndices)<br>Gets the array of vertex indices used by this mesh buffer.
 * [getPositions](#H3DU.MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive.
@@ -200,7 +201,7 @@ The attributes, if present, will be stored in the "position",
     var n=mesh.getAttribute("NORMAL")
     var t=mesh.getAttribute("TEXCOORD_0")
     var c=mesh.getAttribute("COLOR")
-    var ind=mesh.getIndices()
+    var count=mesh.vertexCount()
     var primSize = 3;
     if(mesh.primitiveType() === MeshBuffer.LINES)
     primSize = 2;
@@ -209,7 +210,7 @@ The attributes, if present, will be stored in the "position",
     var ret=[]
     for(var i=0;i<ind.length;i+=primSize) {
     var prim=[]
-    var index=ind[i]
+    var index=mesh.getIndex(i)
     for(var j=0;j<primSize;j++) {
     var info={}
     if(p)info.position=p.getVec(index,[])
@@ -241,6 +242,19 @@ This calculation uses the attribute with the semantic POSITION
 and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
 [Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;number>)
+
+<a name='H3DU.MeshBuffer_getIndex'></a>
+### H3DU.MeshBuffer#getIndex(indicesIndex)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `indicesIndex` (Type: *)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
 
 <a name='H3DU.MeshBuffer_getIndices'></a>
 ### H3DU.MeshBuffer#getIndices()

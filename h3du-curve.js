@@ -614,7 +614,7 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * @returns {Curve} Return value. Returns this object if this curve already uses an arc length parameterization.
  * @example <caption>The following example uses the arc-length
  * parameterization to generate, uniformly at random, a point that lies anywhere
- * on the curve.</caption>
+ * on a curve.</caption>
  * var arclen = curve.toArcLengthParam();
  * var point = arclen.evaluate(Math.random()*arclen.getLength())
  */
