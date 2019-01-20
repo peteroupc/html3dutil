@@ -14,7 +14,7 @@ import {MathUtil} from "./h3du-math";
  * @constructor
  * @memberof H3DU
  */
-export var Transform = function() {
+export const Transform = function() {
   /** @ignore */
   this.scale = [1, 1, 1];
   /** @ignore */

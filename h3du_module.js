@@ -372,7 +372,7 @@ objectKeysPolyfill();
  * @memberof H3DU
  * @function
  */
-var getPromiseResults = function(promises,
+const getPromiseResults = function(promises,
   progressResolve, progressReject) {
   if(!promises || promises.length === 0) {
     return Promise.resolve({
@@ -401,7 +401,8 @@ var getPromiseResults = function(promises,
     "results":[]
   };
   const newPromises = [];
-  for(let i = 0; i < promises.length; i++) {
+  let i;
+  for (i = 0; i < promises.length; i++) {
     const index = i;
     newPromises.push(promises[i].then(
       promiseResolveFunc(progressResolve, ret, index),
@@ -410,13 +411,15 @@ var getPromiseResults = function(promises,
   }
   return Promise.all(newPromises).then(function(results) {
   // compact the successes and failures arrays
-    for(var i = 0; i < ret.successes.length; i++) {
+    let i;
+    for (i = 0; i < ret.successes.length; i++) {
       if(typeof ret.successes[i] === "undefined") {
         ret.successes.splice(i, 1);
         i -= 1;
       }
     }
-    for(i = 0; i < ret.failures.length; i++) {
+
+    for (i = 0; i < ret.failures.length; i++) {
       if(typeof ret.failures[i] === "undefined") {
         ret.failures.splice(i, 1);
         i -= 1;
@@ -444,7 +447,7 @@ var getPromiseResults = function(promises,
  * @memberof H3DU
  * @function
  */
-var getPromiseResultsAll = function(promises,
+const getPromiseResultsAll = function(promises,
   progressResolve, progressReject) {
   return getPromiseResults(promises, progressResolve, progressReject)
     .then(function(results) {
@@ -489,7 +492,7 @@ var getPromiseResultsAll = function(promises,
  * @memberof H3DU
  * @function
  */
-var getTimePosition = function(timer, timeInMs, intervalInMs) {
+const getTimePosition = function(timer, timeInMs, intervalInMs) {
   if(typeof timer.time === "undefined" || timer.time === null) {
     timer.time = timeInMs;
     timer.lastTime = timeInMs;
@@ -516,7 +519,7 @@ var getTimePosition = function(timer, timeInMs, intervalInMs) {
  * @memberof H3DU
  * @function
  */
-var newFrames = function(timer, timeInMs) {
+const newFrames = function(timer, timeInMs) {
   if(typeof timer.time === "undefined" || timer.time === null) {
     timer.time = timeInMs;
     timer.lastTime = timeInMs;
@@ -568,8 +571,10 @@ const ColorValidator = function() {
   };
 
   constructor.hsl = function(str, index, endIndex, ret) {
-    let indexStart, indexTemp, tx2;
-    indexStart = index;
+    let indexTemp;
+    let tx2;
+
+    const indexStart = index;
     indexTemp = index;
     if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
       return indexStart;
@@ -646,8 +651,9 @@ const ColorValidator = function() {
   };
 
   constructor.hsla = function(str, index, endIndex, ret) {
-    let indexStart, indexTemp, tx2;
-    indexStart = index;
+    let indexTemp;
+    let tx2;
+    const indexStart = index;
     indexTemp = index;
     if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
       return indexStart;
@@ -680,8 +686,8 @@ const ColorValidator = function() {
   };
 
   constructor.rgba = function(str, index, endIndex, result) {
-    let indexStart, tx2;
-    indexStart = index;
+    const indexStart = index;
+    let tx2;
     index = constructor.skipWhite(str, index, endIndex);
     const st = index;
     let continuing = true;
@@ -737,8 +743,8 @@ const ColorValidator = function() {
     return index;
   };
   constructor.rgb = function(str, index, endIndex, result) {
-    let indexStart, tx2;
-    indexStart = index;
+    let tx2;
+    const indexStart = index;
     index = constructor.skipWhite(str, index, endIndex);
     const st = index;
     let continuing = true;
@@ -875,7 +881,6 @@ const ColorValidator = function() {
       b = lum + sat - b;
     }
     const a = lum * 2 - b;
-    let r, g, bl;
     if (hueval < 0 || hueval >= 360) {
       hueval = (hueval % 360 + 360) % 360;
     }
@@ -883,14 +888,16 @@ const ColorValidator = function() {
     if (hue >= 360) {
       hue -= 360;
     }
-    r = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
+    const r = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
     hue = hueval;
-    g = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
+
+    const g = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
     hue = hueval - 120;
     if (hue < 0) {
       hue += 360;
     }
-    bl = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
+
+    const bl = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
     return [r < 0 ? 0 : r > 255 ? 255 : r, g < 0 ? 0 : g > 255 ? 255 : g, bl < 0 ? 0 : bl > 255 ? 255 : bl];
   };
 
@@ -917,7 +924,8 @@ const ColorValidator = function() {
     if (slen !== 3 && slen !== 4 && slen !== 6 && slen !== 8) {
       return false;
     }
-    for (let i = index; i < str.length; ++i) {
+    let i;
+    for (i = index; i < str.length; ++i) {
       const hex = constructor.dehexchar(str.charCodeAt(i));
       if (hex < 0) {
         return false;
@@ -1004,7 +1012,8 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
   constructor.colorToRgbaSetUpNamedColors = function() {
     if (typeof constructor.namedColorMap === "undefined" || constructor.namedColorMap === null) {
       const ncm = {};
-      for (var i = 0; i < constructor.nc.length; i += 2) {
+      let i;
+      for (i = 0; i < constructor.nc.length; i += 2) {
         ncm[constructor.nc[i]] = constructor.nc[i + 1];
       }
       const altnames = ["grey", "gray", "darkgrey", "darkgray",
@@ -1012,6 +1021,7 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
         "lightgrey", "lightgray",
         "lightslategrey", "lightslategray",
         "slategrey", "slategray"];
+
       for (i = 0; i < altnames.length; i += 2) {
         ncm[altnames[i]] = ncm[altnames[i + 1]];
       }
@@ -1091,7 +1101,7 @@ const clampRgba = function(x) {
  * @memberof H3DU
  * @function
  */
-var toGLColor$1 = function(r, g, b, a) {
+const toGLColor = function(r, g, b, a) {
   if(typeof r === "undefined" || r === null)return [0, 0, 0, 0];
   if(typeof r === "string") {
     const rgba = ColorValidator.colorToRgba(r) || [0, 0, 0, 0];
@@ -1130,7 +1140,7 @@ var toGLColor$1 = function(r, g, b, a) {
  * @class
  * @memberof H3DU
  */
-var MathUtil = {
+const MathUtil = {
 /** @ignore */
   "_frustumPoints":function(frustum) {
     const p0 = frustum[0];
@@ -1388,7 +1398,8 @@ var MathUtil = {
     if(MathUtil.boxIsEmpty(box)) {
       return false;
     }
-    for(var i = 0; i < 6; i++) {
+    let i;
+    for (i = 0; i < 6; i++) {
       const plane = frustum[i];
       const p3 = plane[3];
       const p0b0 = plane[0] * box[0];
@@ -1408,7 +1419,8 @@ var MathUtil = {
     // To increase robustness in frustum culling; see
     // <http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm>
     const pts = MathUtil._frustumPoints(frustum);
-    for(i = 0; i < 3; i++) {
+
+    for (i = 0; i < 3; i++) {
       const minval = box[i];
       if(pts[i] < minval && pts[3 + i] < minval && pts[6 + i] < minval &&
       pts[9 + i] < minval && pts[12 + i] < minval && pts[15 + i] < minval &&
@@ -1441,7 +1453,8 @@ var MathUtil = {
    * otherwise false;
    */
   "frustumHasPoint":function(frustum, x, y, z) {
-    for(let i = 0; i < 6; i++) {
+    let i;
+    for (i = 0; i < 6; i++) {
       const d = frustum[i][0] * x + frustum[i][1] * y +
      frustum[i][2] * z + frustum[i][3];
       if(d <= 0)return false;
@@ -1469,7 +1482,8 @@ var MathUtil = {
    */
   "frustumHasSphere":function(frustum, x, y, z, radius) {
     if(radius < 0)throw new Error("radius is negative");
-    for(let i = 0; i < 6; i++) {
+    let i;
+    for (i = 0; i < 6; i++) {
       const plane = frustum[i];
       const dot = plane[3] + plane[0] * x +
      plane[1] * y + plane[2] * z;
@@ -1567,7 +1581,9 @@ var MathUtil = {
    * @returns {Array<number>} The transformed vector.
    */
   "mat3transform":function(mat, v, vy, vz) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -1805,7 +1821,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
     r[13] = m[1] * tvar6 - tvar23 * m[12] + m[13] * (tvar22 - tvar0) + m[14] * (tvar5 - tvar17);
     r[14] = m[12] * tvar53 + m[13] * tvar58 + m[14] * tvar48;
     r[15] = m[8] * tvar49 + m[9] * tvar51 + m[10] * tvar52;
-    for(let i = 0; i < 16; i++) {
+    let i;
+    for (i = 0; i < 16; i++) {
       r[i] *= det;
     }
     return r;
@@ -1940,8 +1957,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "mat4multiply":function(a, b) {
     const dst = [];
-    for(let i = 0; i < 16; i += 4) {
-      for(let j = 0; j < 4; j++) {
+    let i;
+    for (i = 0; i < 16; i += 4) {
+      let j;
+      for (j = 0; j < 4; j++) {
         dst[i + j] =
     b[i] * a[j] +
     b[i + 1] * a[j + 4] +
@@ -2255,7 +2274,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * the transformed vector's X, Y, and Z coordinates.
    */
   "mat4projectVec3":function(mat, v, vy, vz) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -2295,7 +2316,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4rotate":function(mat, angle, v, vy, vz) {
-    let v0, v1, v2, ang;
+    let v0;
+    let v1;
+    let v2;
+    let ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -2393,7 +2417,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
    */
   "mat4rotated":function(angle, v, vy, vz) {
-    let v0, v1, v2, ang;
+    let v0;
+    let v1;
+    let v2;
+    let ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -2411,8 +2438,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ang = angle;
     }
     ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
+    let iscale;
     if(ang === 90 || ang === -270) {
-      var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
       v0 *= iscale;
       v1 *= iscale;
       v2 *= iscale;
@@ -2494,7 +2522,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4scale":function(mat, v3, v3y, v3z) {
-    let scaleX, scaleY, scaleZ;
+    let scaleX;
+    let scaleY;
+    let scaleZ;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       scaleX = v3;
       scaleY = v3y;
@@ -2525,7 +2555,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The same parameter as "mat".
    */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -2667,7 +2699,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed vector.
    */
   "mat4transform":function(mat, v, vy, vz, vw) {
-    let x, y, z, w;
+    let x;
+    let y;
+    let z;
+    let w;
     if(typeof vy !== "undefined" && typeof vz !== "undefined" &&
       typeof vw !== "undefined") {
       x = v;
@@ -2706,7 +2741,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed 3-element vector.
    */
   "mat4transformVec3":function(mat, v, vy, vz) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -2732,7 +2769,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translate":function(mat, v3, v3y, v3z) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -2763,7 +2802,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translated":function(v3, v3y, v3z) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -2885,7 +2926,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * and its fourth element (W) is the cosine of half of "angle".
    */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
-    let v0, v1, v2, ang;
+    let v0;
+    let v1;
+    let v2;
+    let ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -2929,7 +2973,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
     const zx = m[8];
     const zy = m[9];
     const trace = m[0] + m[5] + m[10];
-    let s, t;
+    let s;
+    let t;
     if (trace >= 0.0) {
       s = Math.sqrt(trace + 1.0) * 0.5;
       t = 0.25 / s;
@@ -2988,7 +3033,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated quaternion.
    */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
-    let rollRad, pitchRad, yawRad;
+    let rollRad;
+    let pitchRad;
+    let yawRad;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(pitchDegrees.constructor === Array) {
@@ -3006,7 +3053,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
     const yx = yawRad >= 0 && yawRad < 6.283185307179586 ? yawRad <= 3.141592653589793 ? Math.sqrt(1.0 - yy * yy) : -Math.sqrt(1.0 - yy * yy) : Math.sin(yawRad);
     const ry = Math.cos(rollRad);
     const rx = rollRad >= 0 && rollRad < 6.283185307179586 ? rollRad <= 3.141592653589793 ? Math.sqrt(1.0 - ry * ry) : -Math.sqrt(1.0 - ry * ry) : Math.sin(rollRad);
-    let t8, t7;
+    let t8;
+    let t7;
     if(mode === MathUtil.GlobalPitchYawRoll || mode === MathUtil.GlobalPitchRollYaw) {
       t7 = [rx * yx, ry * yx, rx * yy, ry * yy];
       if(mode === MathUtil.GlobalPitchYawRoll)t7[0] = -t7[0];
@@ -3246,19 +3294,29 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated 4x4 matrix.
    */
   "quatToMat4":function(quat) {
-    let tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
-    tx = 2.0 * quat[0];
-    ty = 2.0 * quat[1];
-    tz = 2.0 * quat[2];
-    xx = tx * quat[0];
-    xy = tx * quat[1];
-    xz = tx * quat[2];
-    yy = ty * quat[1];
-    yz = tz * quat[1];
-    zz = tz * quat[2];
-    wx = tx * quat[3];
-    wy = ty * quat[3];
-    wz = tz * quat[3];
+    const tx = 2.0 * quat[0];
+
+    const ty = 2.0 * quat[1];
+
+    const tz = 2.0 * quat[2];
+
+    const xx = tx * quat[0];
+
+    const xy = tx * quat[1];
+
+    const xz = tx * quat[2];
+
+    const yy = ty * quat[1];
+
+    const yz = tz * quat[1];
+
+    const zz = tz * quat[2];
+
+    const wx = tx * quat[3];
+
+    const wy = ty * quat[3];
+
+    const wz = tz * quat[3];
     return [
       1 - (yy + zz), xy + wz, xz - wy, 0,
       xy - wz, 1 - (xx + zz), yz + wx, 0,
@@ -3287,7 +3345,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "quatToTaitBryan":function(a, mode) {
     const c0 = a[3];
-    let c1, c2, c3;
+    let c1;
+    let c2;
+    let c3;
     let e = 1;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
@@ -4759,7 +4819,8 @@ MathUtil.interpCubicBezier = function(a, b, c, d, t) {
   // Find Bezier curve's T for given X coordinate ("t" parameter passed to
   // this method) using Newton's method
   let tx = t;
-  for(let i = 0; i < 10; i++) {
+  let i;
+  for (i = 0; i < 10; i++) {
     const fx = tx * (3 * a * (tx * (tx - 2) + 1) - 3 * c * tx * (tx - 1) + tx * tx) - t;
     if(Math.abs(fx) < 1e-9)break;
     const dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
@@ -4859,28 +4920,24 @@ MathUtil.quatScale = MathUtil.vec4scale;
 MathUtil.quatCopy = MathUtil.vec4copy;
 /**
  * Closest approximation to pi times 2, or a 360-degree turn in radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.PiTimes2 = 6.283185307179586476925286766559;
 /**
  * Closest approximation to pi divided by 2, or a 90-degree turn in radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.HalfPi = 1.5707963267948966192313216916398;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.ToRadians = MathUtil.PiDividedBy180;
 /**
@@ -4894,83 +4951,69 @@ MathUtil.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.ToDegrees = MathUtil.Num180DividedByPi;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
  * or in the reverse order around
- * @const
- */
+ * @const */
 MathUtil.GlobalPitchYawRoll = 0;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalPitchRollYaw = 1;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalYawPitchRoll = 2;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalYawRollPitch = 3;
 /**
  * Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalRollPitchYaw = 4;
 /**
  * Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalRollYawPitch = 5;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalPitchYawRoll = MathUtil.GlobalRollYawPitch;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalPitchRollYaw = MathUtil.GlobalYawRollPitch;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalYawPitchRoll = MathUtil.GlobalRollPitchYaw;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalYawRollPitch = MathUtil.GlobalPitchRollYaw;
 /**
  * Indicates that a vector's rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalRollPitchYaw = MathUtil.GlobalYawPitchRoll;
 /**
  * Indicates that a vector's rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalRollYawPitch = MathUtil.GlobalPitchYawRoll;
 
 /*
@@ -4982,55 +5025,63 @@ MathUtil.LocalRollYawPitch = MathUtil.GlobalPitchYawRoll;
  http://peteroupc.github.io/
 */
 /** @ignore */
-var MathInternal = {
+const MathInternal = {
   "vecZeros":function(count) {
     const vec = [];
-    for(let i = 0; i < count; i++) {
+    let i;
+    for (i = 0; i < count; i++) {
       vec[i] = 0;
     }
     return vec;
   },
   "vecSub":function(vec, subVec) {
     const ret = [];
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       ret[i] = vec[i] - subVec[i];
     }
     return ret;
   },
   "vecSubInPlace":function(vec, subVec) {
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       vec[i] -= subVec[i];
     }
     return vec;
   },
   "vecScale":function(vec, scalar) {
     const ret = [];
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       ret[i] = vec[i] * scalar;
     }
     return ret;
   },
   "vecSubScaleInPlace":function(vec, subVec, scaleNum) {
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       vec[i] = (vec[i] - subVec[i]) * scaleNum;
     }
     return vec;
   },
   "vecScaleInPlace":function(vec, scaleNum) {
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       vec[i] *= scaleNum;
     }
     return vec;
   },
   "vecNormalizeInPlace":function(vec) {
     let len = 0;
-    for(var i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       len += vec[i] * vec[i];
     }
     len = Math.sqrt(len);
     if(len !== 0) {
       const invlen = 1.0 / len;
-      for(i = 0; i < vec.length; i++) {
+      let i;
+      for (i = 0; i < vec.length; i++) {
         vec[i] *= invlen;
       }
     }
@@ -5038,7 +5089,8 @@ var MathInternal = {
   },
   "vecLength":function(vec) {
     let dsq = 0;
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       dsq += vec[i] * vec[i];
     }
     return Math.sqrt(dsq);
@@ -5315,7 +5367,8 @@ function gaussKronrod(func, mn, mx, dir, depth) {
   const bp = mn + bm;
   let gauss = 0;
   let kronrod = 0;
-  for(let i = 0; i < gaussKronrodArray.length; i += 3) {
+  let i;
+  for (i = 0; i < gaussKronrodArray.length; i += 3) {
     const gaussWeight = gaussKronrodArray[i + 2];
     const kronrodWeight = gaussKronrodArray[i + 1];
     const abscissa = gaussKronrodArray[i];
@@ -5411,7 +5464,8 @@ Curve.prototype.getPoints = function(count) {
   if(count < 0)throw new Error();
   const ep = this.endPoints();
   const ret = [this.evaluate(ep[0])];
-  for(let i = 1; i < count; i++) {
+  let i;
+  for (i = 1; i < count; i++) {
     const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
     const pt = this.evaluate(u);
     ret.push(pt);
@@ -5442,7 +5496,8 @@ Curve.prototype.getPointsAsObjects = function(count) {
   if(count < 0)throw new Error();
   const ep = this.endPoints();
   const ret = [_pointToObject(this.evaluate(ep[0]))];
-  for(let i = 1; i < count; i++) {
+  let i;
+  for (i = 1; i < count; i++) {
     const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
     const pt = this.evaluate(u);
     ret.push(_pointToObject(pt));
@@ -5488,7 +5543,8 @@ Curve._ArcLengthParam = function(curve) {
   let lastS = 0;
   const totalLength = this.curve.getLength();
   const segments = Math.min(Math.max(10, Math.ceil(totalLength * 18)), 50);
-  for(let i = 1; i <= segments; i++) {
+  let i;
+  for (i = 1; i <= segments; i++) {
     const t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / segments);
     const s = this.curve.arcLength(t);
     this.segments.push([lastS, s, lastT, t]);
@@ -5499,7 +5555,8 @@ Curve._ArcLengthParam = function(curve) {
     this.segments[this.segments.length - 1][1];
   this._vecLength = function(vec) {
     let ret = 0;
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       ret += vec[i] * vec[i];
     }
     return Math.sqrt(ret);
@@ -5507,7 +5564,8 @@ Curve._ArcLengthParam = function(curve) {
   // solve arcLength(t)-s = 0 numerically
   this._solveArcLength = function(s, guess, minValue, maxExclusive) {
     let ret = guess;
-    for(let i = 0; i < 10; i++) {
+    let i;
+    for (i = 0; i < 10; i++) {
       const val = this.curve.arcLength(ret) - s;
       if(Math.abs(val) < 1e-10 && ret >= minValue &&
        ret < maxExclusive) {
@@ -5558,7 +5616,8 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
   // NOTE: Note that velocity and acceleration depend on parameterization; for
   // example, the length of the velocity vector may differ for the underlying curve object
   // than for this one, even though both vectors generally point in the same direction.
-  let ep, guess;
+  let ep;
+  let guess;
   if(Number.isNaN(s))throw new Error();
   if(s > this.length) {
     ep = this.curve.endPoints();
@@ -5698,7 +5757,7 @@ Curve.prototype.toArcLengthParam = function() {
  * <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code>
  * method, as described in the corresponding methods of this class.
  */
-var Surface = function(surface) {
+const Surface = function(surface) {
   this.surface = typeof surface === "undefined" ? null : surface;
 };
 /** @ignore */
@@ -5899,7 +5958,7 @@ Surface.prototype.endPoints = function() {
  * omitted, has the same value as "countPerValue".
  * Throws an error if 0 or less.
  */
-var BufferAccessor = function(buffer, countPerValue, offset, stride) {
+const BufferAccessor = function(buffer, countPerValue, offset, stride) {
   if(typeof stride === "undefined" || stride === null)stride = countPerValue;
   if(typeof offset === "undefined" || offset === null)offset = 0;
   if(offset < 0 || countPerValue <= 0 || stride <= 0)throw new Error();
@@ -5987,7 +6046,8 @@ BufferAccessor.prototype.set = function(index, value) {
 BufferAccessor.prototype.getVec = function(index, vec) {
   const o = this.offset + index * this.stride;
   const buffer = this.buffer;
-  for(let i = 0; i < this.countPerValue; i++) {
+  let i;
+  for (i = 0; i < this.countPerValue; i++) {
     vec[i] = buffer[o + i];
   }
   return vec;
@@ -6010,7 +6070,8 @@ BufferAccessor.prototype.setVec = function(index, vec) {
   const o = this.offset + index * this.stride;
   const buffer = this.buffer;
   const alen = Math.min(vec.length, this.countPerValue);
-  for(let i = 0; i < alen; i++) {
+  let i;
+  for (i = 0; i < alen; i++) {
     buffer[o + i] = vec[i];
   }
   return this;
@@ -6023,7 +6084,8 @@ BufferAccessor.prototype.copy = function() {
   const c = this.count();
   const newAttribute = BufferAccessor.makeBlank(c, this.countPerValue);
   const value = [];
-  for(let i = 0; i < c; i++) {
+  let i;
+  for (i = 0; i < c; i++) {
     this.getVec(i, value);
     newAttribute.setVec( i, value);
   }
@@ -6054,7 +6116,8 @@ BufferAccessor.makeIndices = function(numIndices) {
   } else {
     array = new Uint32Array(new ArrayBuffer(numIndices * 4));
   }
-  for(let i = 0; i < numIndices; i++) {
+  let i;
+  for (i = 0; i < numIndices; i++) {
     array[i] = i;
   }
   return array;
@@ -6116,17 +6179,15 @@ BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
  * @constructor
  * @alias Semantic
  */
-var Semantic = {};
+const Semantic = {};
 /** Attribute semantic for a vertex position.
  * The default shader uses 3-dimensional positions.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.POSITION = 0;
 /** Attribute semantic for a vertex normal.
  * The default shader uses 3-dimensional normals.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.NORMAL = 1;
 /** Attribute semantic for a texture coordinate.<p>
@@ -6138,72 +6199,57 @@ Semantic.NORMAL = 1;
  * to 2-D by dividing the X and Y components by the Z component.
  * In a fragment shader, this can look like the following
  * code: <code>texCoord.xy/texCoord.z</code>.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.TEXCOORD = 2;
 /** Attribute semantic for a color.
  * The default shader uses 3-component colors.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.COLOR = 3;
 /** Attribute semantic for a skinning joint.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.JOINT = 4;
 /** Attribute semantic for a skinning weight.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.WEIGHT = 5;
 /** Attribute semantic for a tangent vector.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.TANGENT = 6;
 /** Attribute semantic for a bitangent vector.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.BITANGENT = 7;
 /** Attribute semantic for custom attributes.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.CUSTOM = 8;
 /** Uniform semantic for a model matrix.
- * @const
- */
+ * @const */
 Semantic.MODEL = 101;
 /** Uniform semantic for a view matrix.
- * @const
- */
+ * @const */
 Semantic.VIEW = 102;
 /** Uniform semantic for a projection matrix.
- * @const
- */
+ * @const */
 Semantic.PROJECTION = 103;
 /** Uniform semantic for a model-view matrix.
- * @const
- */
+ * @const */
 Semantic.MODELVIEW = 104;
 /** Uniform semantic for a model-view-projection matrix.
- * @const
- */
+ * @const */
 Semantic.MODELVIEWPROJECTION = 105;
 /** Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
- * @const
- */
+ * @const */
 Semantic.MODELVIEWINVERSETRANSPOSE = 106;
 /** Uniform semantic for an inverse view matrix.
- * @const
- */
+ * @const */
 Semantic.VIEWINVERSE = 107;
 /** Uniform semantic for a joint matrix.
- * @const
- */
+ * @const */
 Semantic.JOINTMATRIX = 108;
 
 /*
@@ -6250,7 +6296,7 @@ Semantic.JOINTMATRIX = 108;
  * return geom
  * }
  */
-var MeshBuffer = function() {
+const MeshBuffer = function() {
   this.format = MeshBuffer.TRIANGLES;
   this.attributes = [];
   this._bounds = null;
@@ -6274,7 +6320,8 @@ MeshBuffer.prototype.setIndices = function(indices) {
     this.indices = null;
   } else if(indices instanceof Array) {
     let index = 0;
-    for(let i = indices.length - 1; i >= 0; i--) {
+    let i;
+    for (i = indices.length - 1; i >= 0; i--) {
       index = Math.max(index, indices[i]);
       if(index >= 65536)break;
     }
@@ -6420,7 +6467,7 @@ MeshBuffer.prototype._getAttributes = function() {
  * @returns {*} TODO: Not documented yet.
  */
 MeshBuffer.prototype.getIndex = function(indicesIndex) {
-  if(typeof indices === "undefined" || indices === null)return indicesIndex;
+  if(typeof this.indices === "undefined" || this.indices === null)return indicesIndex;
   return this.indices[indicesIndex];
 };
 /**
@@ -6473,7 +6520,8 @@ MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
     console.warn("Unsupported attribute semantic: " + name);
     return null;
   }
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     if(this.attributes[i][0] === sem[0] &&
     this.attributes[i][1] === sem[1]) {
       return this.attributes[i][2];
@@ -6493,18 +6541,16 @@ MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
  * @returns {Array<number>} The parameter "ret".
  */
 MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
-  let count = 3;
   const prim = this.primitiveType();
-  if(prim === MeshBuffer.LINES)count = 2;
-  if(prim === MeshBuffer.POINTS)count = 1;
+  const count = prim === MeshBuffer.LINES ? 2 :
+    prim === MeshBuffer.POINTS ? 1 : 3;
+  const i = primitiveIndex * count;
   if(typeof this.indices === "undefined" || this.indices === null) {
-    var i = primitiveIndex * count;
     if(i + count > this.vertexCount())throw new Error();
     ret[0] = i;
     if(count >= 2)ret[1] = i + 1;
     if(count >= 3)ret[2] = i + 2;
   } else {
-    i = primitiveIndex * count;
     ret[0] = this.indices[i];
     if(count >= 2)ret[1] = this.indices[i + 1];
     if(count >= 3)ret[2] = this.indices[i + 2];
@@ -6616,10 +6662,12 @@ MeshBuffer.prototype.getPositions = function() {
   const ret = [];
   const indices = [];
   const primcount = this.primitiveCount();
-  for(let j = 0; j < primcount; j++) {
+  let j;
+  for (j = 0; j < primcount; j++) {
     this.vertexIndices(j, indices);
     const primitive = [];
-    for(let k = 0; k < indices.length; k++) {
+    let k;
+    for (k = 0; k < indices.length; k++) {
       primitive.push(posattr.getVec(indices[k], [0, 0, 0]));
     }
     ret.push(primitive);
@@ -6636,14 +6684,16 @@ MeshBuffer.prototype.getPositions = function() {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.normalizeNormals = function() {
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const attr = this.attributes[i];
     if(attr[0] !== Semantic.NORMAL) {
       continue;
     }
     const value = [];
     const count = attr[2].count();
-    for(let j = 0; j < count; j++) {
+    let j;
+    for (j = 0; j < count; j++) {
       attr[2].getVec(j, value);
       MathInternal.vecNormalizeInPlace(value);
       attr[2].setVec(j, value);
@@ -6671,16 +6721,19 @@ MeshBuffer.prototype.normalizeNormals = function() {
  * );
  */
 MeshBuffer.prototype.reverseNormals = function() {
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const attr = this.attributes[i];
     if(attr[0] !== Semantic.NORMAL) {
       continue;
     }
     const value = [];
     const count = attr[2].count();
-    for(let j = 0; j < count; j++) {
+    let j;
+    for (j = 0; j < count; j++) {
       attr[2].getVec(j, value);
-      for(let k = 0; k < value.length; k++) {
+      let k;
+      for (k = 0; k < value.length; k++) {
         value[k] = -value[k];
       }
       attr[2].setVec(j, value);
@@ -6703,16 +6756,18 @@ MeshBuffer.prototype.reverseNormals = function() {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setColor = function(color) {
-  const colorValue = toGLColor$1(color);
+  const colorValue = toGLColor(color);
   let haveColor = false;
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const attr = this.attributes[i];
     const count = attr[2].count();
     if(attr[0] !== Semantic.COLOR) {
       continue;
     }
     haveColor = true;
-    for(let j = 0; j < count; j++) {
+    let j;
+    for (j = 0; j < count; j++) {
       attr[2].setVec(j, colorValue);
     }
   }
@@ -6743,7 +6798,8 @@ MeshBuffer.prototype.setColor = function(color) {
 MeshBuffer.prototype.reverseWinding = function() {
   if(this.primitiveType() === MeshBuffer.TRIANGLES) {
     this._ensureIndices();
-    for(let i = 0; i + 2 < this.indices.length; i += 3) {
+    let i;
+    for (i = 0; i + 2 < this.indices.length; i += 3) {
       const tmp = this.indices[i + 1];
       this.indices[i + 1] = this.indices[i + 2];
       this.indices[i + 2] = tmp;
@@ -6818,7 +6874,8 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
             const nx = normal[0];
             const ny = normal[1];
             const nz = normal[2];
-            for(let j = 0; j < dupvertcount; j += 3) {
+            let j;
+            for (j = 0; j < dupvertcount; j += 3) {
               if(nx === dupverts[j] && ny === dupverts[j + 1] && nz === dupverts[j + 2]) {
                 dupfound = true;
                 break;
@@ -6851,12 +6908,13 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
   let v1 = [0, 0, 0];
   let v2 = [0, 0, 0];
   let v3 = [0, 0, 0];
-  for(let i = 0; i < indices.length; i += 3) {
+  let i;
+  for (i = 0; i < indices.length; i += 3) {
     v1 = positions.getVec(indices[i], v1);
     v2 = positions.getVec(indices[i + 1], v2);
     v3 = positions.getVec(indices[i + 2], v3);
     // Find the tangent and bitangent
-    var ret;
+    let ret;
     const t1 = v2[0] - v1[0];
     const t2 = v2[1] - v1[1];
     const t3 = v2[2] - v1[2];
@@ -6901,7 +6959,8 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
     // (where AA and BB are the orthonormalized versions of the tangent
     // and bitangent) as the tangent space transform, in order to avoid
     // the need to also specify a transformed normal due to matrix inversion.
-    for(let j = 0; j < 3; j++) {
+    let j;
+    for (j = 0; j < 3; j++) {
       const m = ret;
       v1 = normals.getVec(indices[i + j], v1);
       const norm0 = v1[0];
@@ -6934,7 +6993,8 @@ MeshBuffer.prototype._ensureIndices = function() {
 MeshBuffer.prototype._makeRedundant = function() {
   this._ensureIndices();
   const newAttributes = [];
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const a = this.attributes[i];
     newAttributes.push([a[0], a[1],
       BufferAccessor.merge(a[2], this.indices, null, [])]);
@@ -6952,7 +7012,8 @@ MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desire
   const newattr = BufferAccessor.makeBlank(vertexCount, desiredCount);
   if(attrCount > 0) {
     const vec = MathInternal.vecZeros(desiredCount);
-    for(let i = 0; i < vertexCount; i++) {
+    let i;
+    for (i = 0; i < vertexCount; i++) {
       attr.getVec(i, vec);
       newattr.setVec(i, vec);
     }
@@ -7038,21 +7099,26 @@ MeshBuffer.prototype._recalcTangents = function() {
  */
 MeshBuffer.prototype.merge = function(other) {
   const newAttributes = [];
+  let newAttribute;
   let attr;
+  let oattr;
+  let existingAttribute;
   if(!other)throw new Error();
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
     return this;
   } else if(this.indices && this.indices.length === 0) {
     let empty = true;
-    for(var i = 0; i < this.attributes.length; i++) {
+    let i;
+    for (i = 0; i < this.attributes.length; i++) {
       attr = this.attributes[i][2];
       empty = empty && (typeof attr === "undefined" || attr === null || attr.count() === 0);
     }
     if(empty) {
       // If this object is empty, copy the attributes and
       // indices from the other object
-      for(i = 0; i < other.attributes.length; i++) {
+      let i;
+      for (i = 0; i < other.attributes.length; i++) {
         const o = other.attributes[i];
         newAttributes.push([o[0], o[1], o[2].copy()]);
       }
@@ -7075,14 +7141,16 @@ MeshBuffer.prototype.merge = function(other) {
   }
   this._ensureIndices();
   other._ensureIndices();
-  for(i = 0; i < this.attributes.length; i++) {
-    var existingAttribute = null;
-    var newAttribute = null;
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
+    existingAttribute = null;
+    newAttribute = null;
     attr = this.attributes[i];
     const sem = attr[0];
     const semIndex = attr[1];
-    for(var j = 0; j < other.attributes.length; j++) {
-      var oattr = other.attributes[j];
+    let j;
+    for (j = 0; j < other.attributes.length; j++) {
+      const oattr = other.attributes[j];
       if(oattr[0] === sem && oattr[1] === semIndex) {
         existingAttribute = oattr[2];
         break;
@@ -7092,10 +7160,12 @@ MeshBuffer.prototype.merge = function(other) {
     if(!newAttribute)throw new Error();
     newAttributes.push([sem, semIndex, newAttribute]);
   }
-  for(i = 0; i < other.attributes.length; i++) {
+
+  for (i = 0; i < other.attributes.length; i++) {
     existingAttribute = null;
     oattr = other.attributes[i];
-    for(j = 0; j < this.attributes.length; j++) {
+    let j;
+    for (j = 0; j < this.attributes.length; j++) {
       attr = this.attributes[j];
       if(oattr[0] === attr[0] && oattr[1] === attr[1]) {
         existingAttribute = attr;
@@ -7149,7 +7219,8 @@ MeshBuffer.prototype.transform = function(matrix) {
   if(normalAttribute)count = Math.min(count, normalAttribute.count());
   const position = [0, 0, 0];
   const normal = [0, 0, 0];
-  for(let i = 0; i < count; i++) {
+  let i;
+  for (i = 0; i < count; i++) {
     positionAttribute.getVec(i, position);
     let xform = MathUtil.mat4projectVec3(matrix,
       position[0], position[1], position[2]);
@@ -7200,7 +7271,8 @@ MeshBuffer.prototype.wireFrame = function() {
   const existingLines = {};
   const primitive = [];
   const primcount = this.primitiveCount();
-  for(let i = 0; i < primcount; i++) {
+  let i;
+  for (i = 0; i < primcount; i++) {
     this.vertexIndices(i, primitive);
     const f1 = primitive[0];
     const f2 = primitive[1];
@@ -7237,10 +7309,12 @@ MeshBuffer.prototype.getBounds = function() {
     const indices = [];
     const vec = [0, 0, 0];
     const primcount = this.primitiveCount();
-    for(let j = 0; j < primcount; j++) {
+    let j;
+    for (j = 0; j < primcount; j++) {
       this.vertexIndices(j, indices);
       const primitive = [];
-      for(let k = 0; k < indices.length; k++) {
+      let k;
+      for (k = 0; k < indices.length; k++) {
         const v = posattr.getVec(indices[k], vec);
         if(empty) {
           empty = false;
@@ -7281,7 +7355,8 @@ MeshBuffer.prototype.primitiveType = function() {
 MeshBuffer.prototype.vertexCount = function() {
   if(typeof this.indices === "undefined" || this.indices === null) {
     let mincount = 0;
-    for(let i = 0; i < this.attributes.length; i++) {
+    let i;
+    for (i = 0; i < this.attributes.length; i++) {
       const a = this.attributes[i];
       if(i === 0 || a.count() < mincount)mincount = a.count();
     }
@@ -7346,7 +7421,7 @@ MeshBuffer._wellKnownAttributes = {
   "BITANGENT":7
 };
 
-/* global Uint16Array, Uint32Array, toGLColor */
+/* global Uint16Array, Uint32Array */
 
 /**
  * An evaluator of curve evaluator objects for generating
@@ -7355,7 +7430,7 @@ MeshBuffer._wellKnownAttributes = {
  * @constructor
  * @memberof H3DU
  */
-var CurveBuilder = function() {
+const CurveBuilder = function() {
   this.attributes = [];
   this.vertexCount = 0;
   this.indices = [];
@@ -7368,7 +7443,7 @@ var CurveBuilder = function() {
  * @constructor
  * @memberof H3DU
  */
-var SurfaceBuilder = function() {
+const SurfaceBuilder = function() {
   this.attributes = [];
   this.vertexCount = 0;
   this.indices = [];
@@ -7380,7 +7455,8 @@ var SurfaceBuilder = function() {
 /** @ignore */
 CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
   let maxIndex = 0;
-  for(var i = indices.length - 1; i >= 0; i--) {
+  let i;
+  for (i = indices.length - 1; i >= 0; i--) {
     maxIndex = Math.max(maxIndex, indices[i]);
     if(maxIndex >= 65536)break;
   }
@@ -7390,7 +7466,8 @@ CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
     new Uint32Array(indices);
   mb.setPrimitiveType(mode);
   mb.setIndices(indexArray);
-  for(i = 0; i < attributes.length; i++) {
+
+  for (i = 0; i < attributes.length; i++) {
     const a = attributes[i];
     mb.setAttributeEx(a[0], a[1], a[3], a[2]);
   }
@@ -7399,7 +7476,8 @@ CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
 /** @ignore */
 CurveBuilder._blank = function(count) {
   const ret = [];
-  for(let i = 0; i < count; i++) {
+  let i;
+  for (i = 0; i < count; i++) {
     ret.push(0);
   }
   return ret;
@@ -7412,8 +7490,10 @@ CurveBuilder._resize = function(a, newsize) {
     const arr = CurveBuilder._blank(oldcount * newsize);
     let oldindex = 0;
     let newindex = 0;
-    for(let i = 0; i < oldcount; i++) {
-      for(let j = 0; j < minsize; j++) {
+    let i;
+    for (i = 0; i < oldcount; i++) {
+      let j;
+      for (j = 0; j < minsize; j++) {
         arr[newindex + j] = a[3][oldindex + j];
       }
       oldindex += a[2];
@@ -7426,16 +7506,18 @@ CurveBuilder._resize = function(a, newsize) {
 /** @ignore */
 CurveBuilder._addValue = function(a, value) {
   const mm = Math.min(value.length, a[2]);
-  for(var i = 0; i < mm; i++) {
+  let i;
+  for (i = 0; i < mm; i++) {
     a[3].push(value[i]);
   }
-  for(i = mm; i < a[2]; i++) {
+  for(mm; i < a[2]; i++) {
     a[3].push(0);
   }
 };
 /** @ignore */
 CurveBuilder._defaultEndPointsCurve = function(attributes) {
-  for(let i = 0; i < attributes.length; i++) {
+  let i;
+  for (i = 0; i < attributes.length; i++) {
     const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
       const a4 = a[4];
@@ -7450,7 +7532,8 @@ CurveBuilder._defaultEndPointsCurve = function(attributes) {
 
 /** @ignore */
 CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
-  for(let i = 0; i < attributes.length; i++) {
+  let i;
+  for (i = 0; i < attributes.length; i++) {
     const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
       const a4 = a[4];
@@ -7461,7 +7544,8 @@ CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
 };
 /** @ignore */
 CurveBuilder._defaultEndPointsSurface = function(attributes) {
-  for(let i = 0; i < attributes.length; i++) {
+  let i;
+  for (i = 0; i < attributes.length; i++) {
     const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
       const a4 = a[4];
@@ -7496,7 +7580,8 @@ CurveBuilder._setAttribute = function(
   const sem = MeshBuffer._resolveSemantic(semantic,
     semanticIndexValue);
   if(typeof sem === "undefined" || sem === null)throw new Error();
-  for(let i = 0; i < attributes.length; i++) {
+  let i;
+  for (i = 0; i < attributes.length; i++) {
     const a = attributes[i];
     if(a[0] === sem[0] && a[1] === sem[1]) {
       if(iscurve) {
@@ -7540,7 +7625,8 @@ CurveBuilder._NormalSurface = function(surface) {
 CurveBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     this.attributes[i][3] = [];
   }
   return this;
@@ -7676,7 +7762,8 @@ CurveBuilder.curveToBuffer = function(curve, mode, n, u1, u2) {
 SurfaceBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     this.attributes[i][3] = [];
   }
   return this;
@@ -7953,7 +8040,8 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   this.mode = mode;
   for(i = 0; i <= n; i++) {
     const u = u1 + i * uv;
-    for(let j = 0; j < this.attributes.length; j++) {
+    let j;
+    for (j = 0; j < this.attributes.length; j++) {
       const a = this.attributes[j];
       const value = typeof a[4] !== "undefined" && a[4] !== null ? a[4].evaluate(u) : [];
       CurveBuilder._addValue(a, value);
@@ -7999,7 +8087,10 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   if(mode !== MeshBuffer.TRIANGLES && mode !== MeshBuffer.LINES && mode !== MeshBuffer.POINTS) {
     return this;
   }
-  let u, v, i, j;
+  let u;
+  let v;
+  let i;
+  let j;
   const du = (u2 - u1) / un;
   const dv = (v2 - v1) / vn;
   const numVertices = (vn + 1) * (un + 1);
@@ -8009,7 +8100,8 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
     for(j = 0; j <= un; j++) {
       u = j * du + u1;
       v = i * dv + v1;
-      for(let k = 0; k < this.attributes.length; k++) {
+      let k;
+      for (k = 0; k < this.attributes.length; k++) {
         const a = this.attributes[k];
         const value = typeof a[4] !== "undefined" && a[4] !== null ?
           a[4].evaluate(u, v) : [];
@@ -8018,13 +8110,18 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
     }
   }
   this.mode = mode;
+  let unp1;
+  let index1;
+  let index2;
   if(mode === MeshBuffer.TRIANGLES) {
-    var unp1 = un + 1;
-    for(let y = 0; y < vn; y++) {
-      for(let x = 0; x < un; x++) {
+    unp1 = un + 1;
+    let y;
+    for (y = 0; y < vn; y++) {
+      let x;
+      for (x = 0; x < un; x++) {
         const index0 = y * unp1 + x + firstVertex;
-        var index1 = index0 + unp1;
-        var index2 = index0 + 1;
+        index1 = index0 + unp1;
+        index2 = index0 + 1;
         const index3 = index1 + 1;
         this.indices.push(index0, index1, index2);
         this.indices.push(index2, index1, index3);
@@ -8054,20 +8151,14 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   return this;
 };
 
-/*
- Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
-*/
+/* global den2 */
 
 function linear(points, elementsPerValue, t) {
   const ret = [];
   const p0 = points[0];
   const p1 = points[1];
-  for(let i = 0; i < elementsPerValue; i++) {
+  let i;
+  for (i = 0; i < elementsPerValue; i++) {
     const pp0 = p0[i];
     ret[i] = pp0 + (p1[i] - pp0) * t;
   }
@@ -8079,7 +8170,8 @@ function bezierCubic(points, elementsPerValue, t) {
   const p1 = points[1];
   const p2 = points[2];
   const p3 = points[3];
-  for(let i = 0; i < elementsPerValue; i++) {
+  let i;
+  for (i = 0; i < elementsPerValue; i++) {
     ret[i] = (((3 - t) * t - 3) * t + 1) * p0[i] + ((3 * t - 6) * t + 3) * t * p1[i] + (-3 * t + 3) * t * t * p2[i] + t * t * t * p3[i];
   }
   return ret;
@@ -8091,7 +8183,8 @@ function bezierCubicDerivative(points, elementsPerValue, t) {
   const p1 = points[1];
   const p2 = points[2];
   const p3 = points[3];
-  for(let i = 0; i < elementsPerValue; i++) {
+  let i;
+  for (i = 0; i < elementsPerValue; i++) {
     ret[i] = ((-3 * t + 6) * t - 3) * p0[i] + ((9 * t - 12) * t + 3) * p1[i] + (-9 * t + 6) * t * p2[i] + 3 * t * t * p3[i];
   }
   return ret;
@@ -8101,7 +8194,8 @@ function bezierQuadratic(points, elementsPerValue, t) {
   const p0 = points[0];
   const p1 = points[1];
   const p2 = points[2];
-  for(let i = 0; i < elementsPerValue; i++) {
+  let i;
+  for (i = 0; i < elementsPerValue; i++) {
     ret[i] = ((t - 2) * t + 1) * p0[i] + (-2 * t + 2) * t * p1[i] + t * t * p2[i];
   }
   return ret;
@@ -8111,7 +8205,8 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
   const p0 = points[0];
   const p1 = points[1];
   const p2 = points[2];
-  for(let i = 0; i < elementsPerValue; i++) {
+  let i;
+  for (i = 0; i < elementsPerValue; i++) {
     ret[i] = (2 * t - 2) * p0[i] + (-4 * t + 2) * p1[i] + 2 * t * p2[i];
   }
   return ret;
@@ -8294,13 +8389,14 @@ function BSplineCurve(controlPoints, knots, bits) {
   this.fastBezier = false;
   if(order === this.controlPoints.length && order <= 4) {
     this.fastBezier = true;
-    for(var i = 0; i < order; i++) {
+    let i;
+    for (i = 0; i < order; i++) {
       if(knots[i] !== 0) {
         this.fastBezier = false;
         break;
       }
     }
-    for(i = order; this.fastBezier && i < knots.length; i++) {
+    for(order; this.fastBezier && i < knots.length; i++) {
       if(knots[i] !== 1) {
         this.fastBezier = false;
         break;
@@ -8321,17 +8417,17 @@ BSplineCurve.prototype.constructor = BSplineCurve;
  * If this bit is set, the length of each control point must be at least 2.<p>
  * A B-spline curve that has control points whose last coordinate is other than
  * 1 is a <i>rational</i> B-spline curve.
- * @const
- * @default
+ * @const * @default
  */
 BSplineCurve.DIVIDE_BIT = 2;
 /** @ignore */
 BSplineCurve._checkKnots = function(knots, degree) {
-  for(var i = 1; i < knots.length; i++) {
+  let i;
+  for (i = 1; i < knots.length; i++) {
     if(knots[i] < knots[i - 1])
       throw new Error();
   }
-  for(i = 1; i < knots.length - 2 - degree; i++) {
+  for(1; i < knots.length - 2 - degree; i++) {
     if(knots[i + degree] <= knots[i])
       throw new Error();
   }
@@ -8355,11 +8451,11 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
   }
   let ret = 0;
   if(v1 !== 0) {
-    var den2 = kn[i + d] - kn[i];
+    const den2 = kn[i + d] - kn[i];
     ret += (u - kn[i]) * v1 * (den2 === 0 ? 1 : 1.0 / den2);
   }
   if(v2 !== 0) {
-    den2 = kn[i + d + 1] - kn[i + 1];
+    // den2 = kn[i + d + 1] - kn[i + 1];
     ret += (kn[i + d + 1] - u) * v2 * (den2 === 0 ? 1 : 1.0 / den2);
   }
   return ret;
@@ -8368,17 +8464,18 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
 BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
   let multStart = 1;
   let multEnd = 1;
-  for(var i = 0; i < numPoints; i++) {
+  let i;
+  for (i = 0; i < numPoints; i++) {
     buffer[i] = 0;
   }
-  for(i = 1; i < kn.length; i++) {
+  for(1; i < kn.length; i++) {
     if(kn[i] === kn[0]) {
       multStart += 1;
     } else {
       break;
     }
   }
-  for(i = kn.length - 2; i >= 0; i--) {
+  for(kn.length - 2; i >= 0; i--) {
     if(kn[i] === kn[kn.length - 1]) {
       multEnd += 1;
     } else {
@@ -8392,7 +8489,8 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
   }
   if(multStart !== degree + 1 || multEnd !== degree + 1) {
     // Not a clamped curve
-    for(i = 0; i < numPoints; i++) {
+    let i;
+    for (i = 0; i < numPoints; i++) {
       buffer[i] = BSplineCurve._nfunc(i, degree, t, kn);
     }
     return;
@@ -8405,7 +8503,8 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
 
   } else {
     let k = -1;
-    for(i = 0; i <= kn.length; i++) {
+    let i;
+    for (i = 0; i <= kn.length; i++) {
       if(kn[i] <= t && t < kn[i + 1]) {
         k = i;
         break;
@@ -8416,10 +8515,11 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
     const knotStart = kn[k];
     const numBefore = t - knotStart;
     buffer[k] = 1;
-    for(let d = 1; d <= degree; d++) {
+    let d;
+    for (d = 1; d <= degree; d++) {
       const den = kn[k + 1] - kn[k - d + 1];
       buffer[k - d] = buffer[k - d + 1] * numAfter / den;
-      for(i = k - d + 1; i < k; i++) {
+      for(k - d + 1; i < k; i++) {
         const kni = kn[i];
         buffer[i] *= (t - kni) / (kn[i + d] - kni);
         buffer[i] += buffer[i + 1] * (kn[i + d + 1] - t) / (kn[i + d + 1] - kn[i + 1]);
@@ -8512,7 +8612,8 @@ BSplineCurve.prototype.evaluate = function(u) {
         for(i = index - degree; i <= index - mult; i++) {
           buffer.push(this.controlPoints[i]);
         }
-        for(let r = 1; r <= h; r++) {
+        let r;
+        for (r = 1; r <= h; r++) {
           let lastPt = buffer[r - 1];
           for(i = r; i < buffer.length; i++) {
             const kindex = index - degree + i;
@@ -8521,7 +8622,8 @@ BSplineCurve.prototype.evaluate = function(u) {
             const thisPt = buffer[i];
             const newPt = [];
             // console.log("p"+[kindex,r]+"="+(1-a)+"*p"+[kindex-1,r-1]+"+"+(a)+"*p"+[kindex,r-1])
-            for(let j = 0; j < elementsPerPoint; j++) {
+            let j;
+            for (j = 0; j < elementsPerPoint; j++) {
               newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
             }
             buffer[i] = newPt;
@@ -8543,7 +8645,8 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
   let firstBack = -1;
   const front = [];
   const back = [];
-  for(var i = 0; i < knots.length; i++) {
+  let i;
+  for (i = 0; i < knots.length; i++) {
     if(knots[i] > u) {
       firstBack = i;
       break;
@@ -8552,14 +8655,16 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
     }
   }
   if(lastFront < 0 || firstBack < 0)throw new Error();
-  for(i = 0; i <= lastFront; i++) {
+
+  for (i = 0; i <= lastFront; i++) {
     front.push(knots[i]);
   }
-  for(i = 0; i < degree + 1; i++) {
+
+  for (i = 0; i < degree + 1; i++) {
     front.push(u);
     back.push(u);
   }
-  for(i = firstBack; i < knots.length; i++) {
+  for(firstBack; i < knots.length; i++) {
     back.push(knots[i]);
   }
   return [front, back];
@@ -8620,7 +8725,8 @@ BSplineCurve.prototype.split = function(u) {
       front.push(this.controlPoints[i]);
     }
     const back = [];
-    for(let r = 1; r <= h; r++) {
+    let r;
+    for (r = 1; r <= h; r++) {
       let lastPt = buffer[r - 1];
       for(i = r; i < buffer.length; i++) {
         const kindex = index - degree + i;
@@ -8628,7 +8734,8 @@ BSplineCurve.prototype.split = function(u) {
         const a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
         const thisPt = buffer[i];
         const newPt = [];
-        for(let j = 0; j < elementsPerPoint; j++) {
+        let j;
+        for (j = 0; j < elementsPerPoint; j++) {
           newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
         }
         buffer[i] = newPt;
@@ -8716,7 +8823,8 @@ BSplineCurve.prototype.velocity = function(u) {
     const elementsPerPoint = this.controlPoints[0].length;
     BSplineCurve._getFactors(this.knots, u, degree - 1, numPoints,
       this.buffer);
-    let i, j;
+    let i;
+    let j;
     const coeffs = [];
     for(i = 0; i < numPoints; i++) {
       coeffs[i] = 0;
@@ -8744,7 +8852,8 @@ BSplineCurve.prototype.velocity = function(u) {
 BSplineCurve._fromHomogen = function(cp) {
   const cplen = cp.length;
   const div = 1.0 / cp[cplen - 1];
-  for(let i = 0; i < cplen - 1; i++) {
+  let i;
+  for (i = 0; i < cplen - 1; i++) {
     cp[i] *= div;
   }
   cp = cp.slice(0, cplen - 1);
@@ -8943,7 +9052,8 @@ BSplineCurve.uniformKnots = function(controlPoints, degree) {
   const order = deg + 1;
   const ret = [];
   const scale = 1.0 / (controlPoints + order - 1);
-  for(let i = 0; i < controlPoints + order; i++) {
+  let i;
+  for (i = 0; i < controlPoints + order; i++) {
     ret.push(i * scale);
   }
   return ret;
@@ -8971,13 +9081,16 @@ BSplineCurve.clampedKnots = function(controlPoints, degree) {
   const order = deg + 1;
   const extras = controlPoints - order;
   const ret = [];
-  for(var i = 0; i < order; i++) {
+  let i;
+  for (i = 0; i < order; i++) {
     ret.push(0);
   }
-  for(i = 0; i < extras; i++) {
+
+  for (i = 0; i < extras; i++) {
     ret.push((i + 1) * 1.0 / (extras + 1));
   }
-  for(i = 0; i < order; i++) {
+
+  for (i = 0; i < order; i++) {
     ret.push(1);
   }
   return ret;
@@ -9000,7 +9113,10 @@ BSplineSurface.prototype.evaluate = function(u, v) {
   const elementsPerPoint = this.controlPoints[0][0].length;
   const bu = this.bufferU;
   const bv = this.bufferV;
-  let tt, uu, i, value;
+  let tt;
+  let uu;
+  let i;
+  let value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
@@ -9049,7 +9165,10 @@ BSplineSurface.prototype.getKnots = function() {
 BSplineSurface.prototype.tangent = function(u, v) {
   const elementsPerPoint = this.controlPoints[0][0].length;
   const bv = this.bufferV;
-  let tt, uu, i, value;
+  let tt;
+  let uu;
+  let i;
+  let value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU - 1, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
@@ -9059,7 +9178,8 @@ BSplineSurface.prototype.tangent = function(u, v) {
   for(i = 0; i < this.ucplen; i++) {
     coeffs[i] = 0;
   }
-  for(let j = 0; j < this.ucplen - 1; j++) {
+  let j;
+  for (j = 0; j < this.ucplen - 1; j++) {
     const pix = this.degreeU * this.bufferU[j + 1] / (this.knotsU[j + this.degreeU + 1] - this.knotsU[j + 1]);
     coeffs[j + 1] += pix;
     coeffs[j] -= pix;
@@ -9090,7 +9210,10 @@ BSplineSurface.prototype.tangent = function(u, v) {
 BSplineSurface.prototype.bitangent = function(u, v) {
   const elementsPerPoint = this.controlPoints[0][0].length;
   const bu = this.bufferU;
-  let tt, uu, i, value;
+  let tt;
+  let uu;
+  let i;
+  let value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV - 1, this.vcplen,
@@ -9100,7 +9223,8 @@ BSplineSurface.prototype.bitangent = function(u, v) {
   for(i = 0; i < this.vcplen; i++) {
     coeffs[i] = 0;
   }
-  for(let j = 0; j < this.vcplen - 1; j++) {
+  let j;
+  for (j = 0; j < this.vcplen - 1; j++) {
     const pix = this.degreeV * this.bufferV[j + 1] / (this.knotsV[j + this.degreeV + 1] - this.knotsV[j + 1]);
     coeffs[j + 1] += pix;
     coeffs[j] -= pix;
@@ -9188,7 +9312,8 @@ const PiecewiseCurve = function(curves) {
   this.curves = [];
   this.curvesEp = [];
   this.runningCurveStart = [];
-  for(let i = 0; i < curves.length; i++) {
+  let i;
+  for (i = 0; i < curves.length; i++) {
     this.curves[i] = curves[i] instanceof Curve ?
       curves[i] : new Curve(curves[i]);
     this.curvesEp[i] = this.curves[i].endPoints();
@@ -9220,7 +9345,8 @@ PiecewiseCurve.prototype._getRunningCurveStart = function(uc) {
     return 0;
   }
   if(isNaN(this.runningCurveStart[uc])) {
-    for(let i = 1; i <= uc; i++) {
+    let i;
+    for (i = 1; i <= uc; i++) {
       if(isNaN(this.runningCurveStart[i])) {
         this.runningCurveStart[i] = this.runningCurveStart[i - 1] +
         this.curves[i - 1].arcLength(this.curvesEp[i - 1][1]);
@@ -9231,7 +9357,8 @@ PiecewiseCurve.prototype._getRunningCurveStart = function(uc) {
 };
 /** @ignore */
 PiecewiseCurve.prototype._getCurveAndPoint = function(u) {
-  let uc, ut;
+  let uc;
+  let ut;
   if(u < 0) {
     uc = 0;
     ut = 0;
@@ -9320,10 +9447,13 @@ PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, close
   const ret = [];
   const lastVecIndex = spline.length - 1;
   const numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
-  for(let j = 0; j < numSplines; j++) {
+  let j;
+  for (j = 0; j < numSplines; j++) {
     const retcurve = [[], [], [], []];
     const pt0 = j > lastVecIndex ? spline[0] : spline[j];
-    var pt1, ptPrev, ptNext;
+    let pt1;
+    let ptPrev;
+    let ptNext;
     if(closedValue) {
       if(j === 0) {
         ptPrev = spline[lastVecIndex];
@@ -9352,7 +9482,8 @@ PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, close
     const mb = 1 - biasValue;
     const pb = 1 + biasValue;
     const mt = 1 - tensionValue;
-    for(let i = 0; i < elements; i++) {
+    let i;
+    for (i = 0; i < elements; i++) {
       const p1 = pt0[i];
       const p4 = pt1[i];
       const diffCurr = pt1[i] - pt0[i];
@@ -9397,13 +9528,15 @@ PiecewiseCurve.fromHermiteSpline = function(spline) {
   if(spline.length < 4 || spline.length % 2 !== 0)throw new Error();
   const third = 1 / 3;
   const ret = [];
-  for(let j = 0; j < spline.length - 2; j += 2) {
+  let j;
+  for (j = 0; j < spline.length - 2; j += 2) {
     const retcurve = [[], [], [], []];
     const pt0 = spline[j];
     const tg0 = spline[j + 1];
     const pt1 = spline[j + 2];
     const tg1 = spline[j + 3];
-    for(let i = 0; i < elements; i++) {
+    let i;
+    for (i = 0; i < elements; i++) {
       const p1 = pt0[i];
       const p4 = pt1[i];
       const p2 = p1 + tg0[i] * third;
@@ -9443,22 +9576,26 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
   const ret = [];
   const lastVecIndex = spline.length - 1;
   const numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
-  for(let j = 0; j < numSplines; j++) {
+  let j;
+  for (j = 0; j < numSplines; j++) {
     const retcurve = [[], [], [], []];
     let pt0 = j === 0 ? spline[0] : spline[j - 1];
     const pt1 = spline[j];
     let pt2 = spline[j + 1];
     let pt3 = j + 2 > lastVecIndex ? spline[lastVecIndex] : spline[j + 2];
+    let newpt;
     if(!closedValue && j + 2 > lastVecIndex) {
-      var newpt = [];
-      for(var i = 0; i < elements; i++) {
+      newpt = [];
+      let i;
+      for (i = 0; i < elements; i++) {
         newpt[i] = pt0[i] + (pt1[i] - pt2[i]);
       }
       pt3 = newpt;
     }
     if(!closedValue && j === 0) {
       newpt = [];
-      for(i = 0; i < elements; i++) {
+      let i;
+      for (i = 0; i < elements; i++) {
         newpt[i] = pt3[i] + (pt2[i] - pt1[i]);
       }
       pt0 = newpt;
@@ -9477,7 +9614,8 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
     let p1len = 0;
     let p2len = 0;
     let p3len = 0;
-    for(i = 0; i < elements; i++) {
+    let i;
+    for (i = 0; i < elements; i++) {
       let dx = pt0[i] - pt1[i];
       p1len += dx * dx;
       dx = pt1[i] - pt2[i];
@@ -9488,7 +9626,8 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
     p1len = Math.sqrt(p1len);
     p2len = Math.sqrt(p2len);
     p3len = Math.sqrt(p3len);
-    for(i = 0; i < elements; i++) {
+
+    for (i = 0; i < elements; i++) {
       const p1 = pt0[i];
       const p2 = pt1[i];
       const p3 = pt2[i];
@@ -9540,7 +9679,8 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
     abssweep <= Math.PI * 2 ? abssweep * 0.25 : Math.PI * 0.5;
   let arcstart = start;
   const curves = [];
-  let sa0, sa1;
+  let sa0;
+  let sa1;
   while(abssweep > 0) {
     const arcangle = Math.min(sweepSegments, abssweep);
     const arcend = arcstart + arcangle * sweepdir;
@@ -9580,14 +9720,7 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   return new PiecewiseCurve(curves);
 };
 
-/*
- Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
-*/
+/* global bx, by, tx, ty */
 
 /** @ignore
  * @private
@@ -9840,7 +9973,7 @@ ArcCurve.prototype.velocity = function(t) {
  * @memberof H3DU
  * @constructor
  */
-var GraphicsPath = function() {
+const GraphicsPath = function() {
   this.segments = [];
   this.incomplete = false;
   this.startPos = [0, 0];
@@ -9889,7 +10022,10 @@ GraphicsPath._endPoint = function(a) {
 };
 /** @ignore */
 GraphicsPath._point = function(seg, t) {
-  let a, b, x, y;
+  let a;
+  let b;
+  let x;
+  let y;
   if(seg[0] === GraphicsPath.CLOSE) {
     return [0, 0];
   } else if(seg[0] === GraphicsPath.LINE) {
@@ -10080,7 +10216,8 @@ GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1,
 };
 /** @ignore */
 GraphicsPath.prototype._start = function() {
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._startPoint(s);
   }
@@ -10088,7 +10225,8 @@ GraphicsPath.prototype._start = function() {
 };
 /** @ignore */
 GraphicsPath.prototype._end = function() {
-  for(let i = this.segments.length - 1; i >= 0; i--) {
+  let i;
+  for (i = this.segments.length - 1; i >= 0; i--) {
     const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._endPoint(s);
   }
@@ -10105,7 +10243,8 @@ GraphicsPath.prototype.merge = function(path) {
   let oldpos = null;
   if(!path)return this;
   const segsLength = path.segments.length;
-  for(let i = 0; i < segsLength; i++) {
+  let i;
+  for (i = 0; i < segsLength; i++) {
     const a = path.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       this.closePath();
@@ -10145,7 +10284,8 @@ GraphicsPath.prototype.toString = function() {
   let oldpos = null;
   let ret = "";
 
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const a = this.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       ret += "Z";
@@ -10202,7 +10342,8 @@ GraphicsPath.prototype.pathLength = function(flatness) {
 GraphicsPath.prototype.getLines = function(flatness) {
   const ret = [];
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
@@ -10233,13 +10374,14 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
   const path = new GraphicsPath();
   let last = null;
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
-    var j;
+    let j;
     const endpt = GraphicsPath._endPoint(s);
     const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
@@ -10282,13 +10424,14 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
 GraphicsPath.prototype.toCurvePath = function() {
   const path = new GraphicsPath();
   let last = null;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
-    var j;
+    let j;
     const endpt = GraphicsPath._endPoint(s);
     const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
@@ -10389,15 +10532,17 @@ GraphicsPath.prototype.getBounds = function() {
   const inf = Number.POSITIVE_INFINITY;
   const ret = [inf, inf, -inf, inf];
   let first = true;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
-    var ax, ay;
+    let ax;
+    let ay;
     if(s[0] === GraphicsPath.CLOSE)continue;
     const endpt = GraphicsPath._endPoint(s);
-    let x1 = s[1],
-      y1 = s[2],
-      x2 = endpt[0],
-      y2 = endpt[1];
+    const x1 = s[1];
+    const y1 = s[2];
+    let x2 = endpt[0];
+    let y2 = endpt[1];
     if(first) {
       ret[0] = Math.min(x1, x2);
       ret[1] = Math.min(y1, y2);
@@ -10429,8 +10574,8 @@ GraphicsPath.prototype.getBounds = function() {
       if(denomX !== 0 || denomY !== 0) {
         ax = x1 - 2 * s[3] + s[5];
         ay = y1 - 2 * s[4] + s[6];
-        var bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
-        var by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
+        let bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
+        let by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
         if(bx >= 0 && denomX !== 0) {
           bx = Math.sqrt(bx);
           GraphicsPath._accBounds(ret, s, (ax - bx) / denomX);
@@ -10450,11 +10595,13 @@ GraphicsPath.prototype.getBounds = function() {
       const theta = s[12];
       const delta = s[13];
       const rot = s[5]; // Rotation in radians
-      var cosp, sinp;
+      let cosp;
+      let sinp;
       if(Math.abs(delta - theta) >= Math.PI * 2) {
         // This arc goes around the entire ellipse, giving
         // it a much simpler formula for the bounding box
-        var distx, disty;
+        let distx;
+        let disty;
         if(rx === ry) {
           // The arc forms a circle
           distx = rx;
@@ -10464,8 +10611,8 @@ GraphicsPath.prototype.getBounds = function() {
           sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
           ax = cosp * rx;
           ay = sinp * rx;
-          bx = -sinp * ry;
-          by = cosp * ry;
+          // bx = -sinp * ry;
+          // by = cosp * ry;
           distx = Math.sqrt(ax * ax + bx * bx);
           disty = Math.sqrt(ay * ay + by * by);
         }
@@ -10477,7 +10624,7 @@ GraphicsPath.prototype.getBounds = function() {
         cosp = Math.cos(rot);
         sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
         const angles = [];
-        var angle;
+        let angle;
         if(cosp !== 0 && sinp !== 0) {
           angle = Math.atan2(-ry * sinp / cosp, rx);
           angles.push(angle, angle + Math.PI);
@@ -10486,7 +10633,8 @@ GraphicsPath.prototype.getBounds = function() {
         } else {
           angles.push(0, Math.PI, Math.PI * 0.5, Math.PI * 1.5);
         }
-        for(let k = 0; k < angles.length; k++) {
+        let k;
+        for (k = 0; k < angles.length; k++) {
           if(GraphicsPath._angleInRange(angles[k], theta, delta)) {
             GraphicsPath._accBoundsArc(ret, rx, ry, cosp, sinp, cx, cy, angles[k]);
           }
@@ -10509,7 +10657,8 @@ GraphicsPath.prototype.reverse = function() {
   let pathStartX = 0;
   let pathStartY = 0;
   const ret = new GraphicsPath();
-  for(let i = this.segments.length - 1; i >= 0; i--) {
+  let i;
+  for (i = this.segments.length - 1; i >= 0; i--) {
     const s = this.segments[i];
     let startpt = GraphicsPath._startPoint(s);
     let endpt = GraphicsPath._endPoint(s);
@@ -10532,7 +10681,8 @@ GraphicsPath.prototype.reverse = function() {
       }
       lastClosed = true;
       let havePathStart = false;
-      for(let j = i - 1; j >= 0; j--) {
+      let j;
+      for (j = i - 1; j >= 0; j--) {
         if(this.segments[j][0] === GraphicsPath.CLOSE) {
           break;
         }
@@ -10595,7 +10745,8 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
   let lastpty = 0;
   let first = true;
   let curPath = null;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     const startpt = GraphicsPath._startPoint(s);
     const endpt = GraphicsPath._endPoint(s);
@@ -10672,7 +10823,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
   let j;
   const ret = new GraphicsPath();
   let oldpos;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     let segThis = this.segments[i];
     let segOther = other.segments[i];
     let domove = false;
@@ -10687,8 +10839,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       tmpThis[0] = GraphicsPath.CUBIC;
       tmpThis[1] = segThis[1];
       tmpThis[2] = segThis[2];
-      var tx = 2 * segThis[3];
-      var ty = 2 * segThis[4];
+      const tx = 2 * segThis[3];
+      const ty = 2 * segThis[4];
       tmpThis[3] = (segThis[1] + tx) / 3;
       tmpThis[4] = (segThis[2] + ty) / 3;
       tmpThis[5] = (segThis[5] + tx) / 3;
@@ -10701,8 +10853,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       tmpOther[0] = GraphicsPath.CUBIC;
       tmpOther[1] = segOther[1];
       tmpOther[2] = segOther[2];
-      tx = 2 * segOther[3];
-      ty = 2 * segOther[4];
+      // tx = 2 * segOther[3];
+      // ty = 2 * segOther[4];
       tmpOther[3] = (segOther[1] + tx) / 3;
       tmpOther[4] = (segOther[2] + ty) / 3;
       tmpOther[5] = (segOther[5] + tx) / 3;
@@ -10799,7 +10951,8 @@ GraphicsPath.prototype.getCurves = function() {
   let startpty = 0;
   let first = true;
   let curPath = null;
-  for(var i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     const startpt = GraphicsPath._startPoint(s);
     const endpt = GraphicsPath._endPoint(s);
@@ -10821,7 +10974,8 @@ GraphicsPath.prototype.getCurves = function() {
       lastpty = startpty;
     }
   }
-  for(i = 0; i < subpaths.length; i++) {
+
+  for (i = 0; i < subpaths.length; i++) {
     curves.push(new PiecewiseCurve(subpaths[i]).toArcLengthParam().fitRange(0, 1));
   }
   return new GraphicsPath._CurveList(curves);
@@ -10837,7 +10991,8 @@ GraphicsPath.prototype.getSubpaths = function() {
 
   let first = true;
   let curPath = null;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     const startpt = GraphicsPath._startPoint(s);
     const endpt = GraphicsPath._endPoint(s);
@@ -10873,7 +11028,8 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
   const points = [];
   let lastx = 0;
   let lasty = 0;
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push([line[0], line[1]]);
@@ -10905,7 +11061,8 @@ GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
   const points = [];
   let lastx = 0;
   let lasty = 0;
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push({
@@ -10944,7 +11101,8 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
   }
   const curves = this.getCurves();
   const points = [];
-  for(let i = 0; i < numPoints; i++) {
+  let i;
+  for (i = 0; i < numPoints; i++) {
     const t = i / (numPoints - 1);
     const ev = curves.evaluate(t);
     points.push([ev[0], ev[1]]);
@@ -10991,7 +11149,8 @@ GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   }
   const curves = this.getCurves();
   const points = [];
-  for(let i = 0; i < numPoints; i++) {
+  let i;
+  for (i = 0; i < numPoints; i++) {
     const t = i / (numPoints - 1);
     const ev = curves.evaluate(t);
     points.push({
@@ -11320,7 +11479,8 @@ GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) 
   const sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
   let t2 = Math.cos(angle1);
   let t1 = angle1 >= 0 && angle1 < 6.283185307179586 ? angle1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(angle1);
-  for(let i = 0; i < arcs; i++) {
+  let i;
+  for (i = 0; i < arcs; i++) {
     const ts = cosStep * t1 + sinStep * t2;
     const tc = cosStep * t2 - sinStep * t1;
     const t3 = ts;
@@ -11576,7 +11736,10 @@ GraphicsPath.prototype.transform = function(trans) {
   const d = trans[3];
   const e = trans[4];
   const f = trans[5];
-  let x, y, i, j;
+  let x;
+  let y;
+  let i;
+  let j;
   const tmp = [0];
   let oldpos = null;
   for(i = 0; i < this.segments.length; i++) {
@@ -11611,10 +11774,12 @@ GraphicsPath.prototype.transform = function(trans) {
         ret.bezierCurveTo(tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8]);
       break;
     case GraphicsPath.ARC: {
+      let largeArc;
+      let delta;
       if(a === 1 && b === 0 && c === 0 && d === 1) {
         // just a translation
-        var delta = s[13] - s[12];
-        var largeArc = Math.abs(delta) > Math.PI;
+        delta = s[13] - s[12];
+        largeArc = Math.abs(delta) > Math.PI;
         if(domove)ret.moveTo(s[1] + e, s[2] + f);
         ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
           largeArc, delta > 0, s[8] + e, s[9] + f);
@@ -11636,7 +11801,8 @@ GraphicsPath.prototype.transform = function(trans) {
       curves[curves.length - 1][7] = s[9];
       for(j = 0; j < curves.length; j++) {
         const cs = curves[j];
-        for(let k = 0; k < 8; k += 2) {
+        let k;
+        for (k = 0; k < 8; k += 2) {
           x = a * cs[k] + c * cs[k + 1] + e;
           y = b * cs[k] + d * cs[k + 1] + f;
           cs[k] = x;
@@ -11703,7 +11869,8 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
   if(pointCoords.length === 0)return this;
   if(pointCoords.length % 2 !== 0)throw new Error();
   this.moveTo(pointCoords[0], pointCoords[1]);
-  for(let i = 2; i < pointCoords.length; i += 2) {
+  let i;
+  for (i = 2; i < pointCoords.length; i += 2) {
     this.lineTo(pointCoords[i], pointCoords[i + 1]);
   }
   if(closedValue)this.closePath();
@@ -11728,7 +11895,8 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
  */
 GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  let px, py;
+  let px;
+  let py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
   const harccx = arccx * 0.5;
@@ -11776,7 +11944,8 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  */
 GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  let px, py;
+  let px;
+  let py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
   const harccx = arccx * 0.5;
@@ -11875,7 +12044,9 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
   const cosStart = Math.cos(startRad);
   const sinStart = startRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
   this.moveTo(x + cosStart * hw, y + sinStart * hh);
-  let angleInit, angleStep, cw;
+  let angleInit;
+  let angleStep;
+  let cw;
   if(sweep > 0) {
     angleInit = start + 180;
     angleStep = 180;
@@ -11885,7 +12056,8 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
     angleStep = -180;
     cw = false;
   }
-  for(let a = angleInit; cw ? a < e : a > e; a += angleStep) {
+  let a;
+  for (a = angleInit; cw ? a < e : a > e; a += angleStep) {
     const angleRad = (a >= 0 && a < 360 ? a : a % 360 + (a < 0 ? 360 : 0)) * pidiv180;
     const cosAng = Math.cos(angleRad);
     const sinAng = angleRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosAng * cosAng) : -Math.sqrt(1.0 - cosAng * cosAng);
@@ -11950,7 +12122,8 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
   const sinRot = dy * invArrowLen;
   headLength = Math.min(headLength, arrowLen);
   const shaftLength = arrowLen - headLength;
-  let x, y;
+  let x;
+  let y;
   this.moveTo(x0, y0);
   x = halfTailWidth * sinRot + x0;
   y = -halfTailWidth * cosRot + y0;
@@ -11997,7 +12170,8 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let c = Math.cos(phase);
   let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(let i = 0; i < sides; i++) {
+  let i;
+  for (i = 0; i < sides; i++) {
     const x = cx + c * radius;
     const y = cy + s * radius;
     if(i === 0) {
@@ -12037,7 +12211,8 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let c = Math.cos(phase);
   let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(let i = 0; i < sides; i++) {
+  let i;
+  for (i = 0; i < sides; i++) {
     const radius = (i & 1) === 0 ? radiusOut : radiusIn;
     const x = cx + c * radius;
     const y = cy + s * radius;
@@ -12103,8 +12278,18 @@ GraphicsPath.fromString = function(str) {
   let started = false;
   const ret = new GraphicsPath();
   let failed = false;
-  let endx, endy;
-  let sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
+  let endx;
+  let endy;
+  let sep;
+  let curx;
+  let cury;
+  let x;
+  let y;
+  let curpt;
+  let x2;
+  let y2;
+  let xcp;
+  let ycp;
   while(!failed && index[0] < str.length) {
     const c = GraphicsPath._nextAfterWs(str, index);
     if(!started && c !== 0x4d && c !== 0x6d) {
@@ -12195,7 +12380,8 @@ GraphicsPath.fromString = function(str) {
         }
 
         const arr = [];
-        for(let k = 0; k < 5; k++) {
+        let k;
+        for (k = 0; k < 5; k++) {
           arr[k] = GraphicsPath._nextNumber(str, index, true);
           if(typeof arr[k] === "undefined" || arr[k] === null) {
             failed = true; break;
@@ -12359,12 +12545,13 @@ const ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 // written by Frederik Vanhoutte.
 
 function orient2D(pa, pb, pc) {
-  let detleft, detright, det;
-  let detsum, errbound;
+  let detsum;
 
-  detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
-  detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
-  det = detleft - detright;
+  const detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
+
+  const detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
+
+  const det = detleft - detright;
   if (detleft > 0.0) {
     if (detright <= 0.0) {
       return det < 0 ? -1 : det === 0 ? 0 : 1;
@@ -12380,7 +12567,8 @@ function orient2D(pa, pb, pc) {
   } else {
     return det < 0 ? -1 : det === 0 ? 0 : 1;
   }
-  errbound = ORIENT_ERROR_BOUND_2D * detsum;
+
+  const errbound = ORIENT_ERROR_BOUND_2D * detsum;
   if (det >= errbound || -det >= errbound) {
     return det < 0 ? -1 : det === 0 ? 0 : 1;
   }
@@ -12657,9 +12845,11 @@ function decomposeTriangles(points, tris, isConvex) {
     decomposePolygon(points, polys);
   }
   if(points.length > 0 && polys.length === 0)throw new Error();
-  for(let i = 0; i < polys.length; i++) {
+  let i;
+  for (i = 0; i < polys.length; i++) {
     const poly = polys[i];
-    for(let j = 0; j < poly.length - 2; j++) {
+    let j;
+    for (j = 0; j < poly.length - 2; j++) {
       tris.push([
         poly[0][0], poly[0][1],
         poly[j + 1][0], poly[j + 1][1],
@@ -12695,7 +12885,8 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
   const contours2 = [];
   let firstOrient = 0;
   const tris = [];
-  let i, j;
+  let i;
+  let j;
   for(i = 0; i < subpaths.length; i++) {
     const contour = new Triangulate._Contour(subpaths[i]);
     // NOTE: Ignores contours with winding 0
@@ -12761,7 +12952,8 @@ GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
   const tris = this.getTriangles(flatness);
   const vertices = [];
-  for(let i = 0; i < tris.length; i++) {
+  let i;
+  for (i = 0; i < tris.length; i++) {
     const tri = tris[i];
     // Position X, Y, Z; Normal NX, NY, NZ; texture U, V
     vertices.push(
@@ -12784,7 +12976,8 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
   const lines = this.getLines(flatness);
   const vertices = [];
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
@@ -12808,7 +13001,8 @@ GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
   const z1 = Math.min(zStart, zEnd);
   const z2 = Math.max(zStart, zEnd);
   const vertices = [];
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     const dx = line[2] - line[0];
     const dy = line[3] - line[1];
@@ -12851,7 +13045,8 @@ Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
 };
 /** @ignore */
 Triangulate._triangulate = function(contour, tris) {
-  let t1, tri;
+  let t1;
+  let tri;
   if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
     // too few vertices, or the winding
     // suggests a zero area or even a certain
@@ -12945,7 +13140,7 @@ const PriorityQueue = function(comparer) {
   // public domain C implementation
   /** @ignore
    * @constructor */
-var RedBlackTreeNode = function(data) {
+const RedBlackTreeNode = function(data) {
   this.left = null;
   this.right = null;
   this.red = true;
@@ -13008,7 +13203,7 @@ var RedBlackTreeNode = function(data) {
 };
   /** @ignore
    * @constructor */
-var RedBlackTree = function(comparer) {
+const RedBlackTree = function(comparer) {
   if(!comparer) {
     this.comparer = RedBlackTree._defaultCompare;
   } else {
@@ -13071,7 +13266,9 @@ RedBlackTree._double = function(root, dir) {
 RedBlackTree.prototype.erase = function(data) {
   if(typeof this.root !== "undefined" && this.root !== null) {
     const head = new RedBlackTreeNode(null); /* False tree root */
-    let q, p, g; /* Helpers */
+    let q;
+    let p;
+    let g; /* Helpers */
     let f = null; /* Found item */
     let dir = true;
 
@@ -13158,8 +13355,10 @@ RedBlackTree.prototype.insert = function(data) {
     retval = this.root;
   } else {
     const head = new RedBlackTreeNode(null); /* False tree root */
-    let g, t; /* Grandparent & parent */
-    let p, q; /* Iterator & parent */
+    let g;
+    let t; /* Grandparent & parent */
+    let p;
+    let q; /* Iterator & parent */
     let dir = false,
       last = false;
 
@@ -13228,13 +13427,14 @@ RedBlackTree.prototype.insert = function(data) {
 /** @constructor
  * @private
  * @ignore */
-var Polygon = function(path, flatness) {
+const Polygon = function(path, flatness) {
   this.subpaths = [];
   this.contours = [];
   if(typeof path !== "undefined" && path !== null) {
     // Ignore degenerate line segments
     this.subpaths = path._getSubpaths(flatness, true);
-    for(let i = 0; i < this.subpaths.length; i++) {
+    let i;
+    for (i = 0; i < this.subpaths.length; i++) {
       this.contours[i] = new Polygon._Contour(this.subpaths[i]);
     }
   }
@@ -13253,10 +13453,12 @@ var Polygon = function(path, flatness) {
   };
   this.toPath = function() {
     const p = new GraphicsPath();
-    for(let i = 0; i < this.contours.length; i++) {
+    let i;
+    for (i = 0; i < this.contours.length; i++) {
       const c = this.contours[i];
       const cv = c.vertices;
-      for(let j = 0; j < cv.length; j += 2) {
+      let j;
+      for (j = 0; j < cv.length; j += 2) {
         if(j === 0) {
           p.moveTo(cv[j], cv[j + 1]);
         } else {
@@ -13287,7 +13489,7 @@ Polygon._Contour = function(subpath) {
 /** @constructor
  * @private
  * @ignore */
-var Clipper = function(s, c) {
+const Clipper = function(s, c) {
   this.eq = new PriorityQueue(Clipper.sweepEventCompNum);
   this.eventHolder = [];
   this.subject = s;
@@ -13550,7 +13752,8 @@ Clipper.prototype.compute = function(op) {
       return this.subject.ncontours() === 0 ? this.clipping : this.subject;
     return new Polygon(null, null);
   }
-  let i, j;
+  let i;
+  let j;
   let result = new Polygon(null, null);
   // Test 2 for trivial result case
   const subjBounds = this.subject.getBounds();
@@ -13580,7 +13783,10 @@ Clipper.prototype.compute = function(op) {
     for(j = 0; j < this.clipping.contour(i).nvertices(); j++)
       this.processSegment(this.clipping.contour(i).segment(j), CLIPPING);
   const S = new RedBlackTree(Clipper.segmentCompNum);
-  let it, sli, prev, next;
+  let it;
+  let sli;
+  let prev;
+  let next;
   const connector = new Connector(); // to connect the edge solutions
   let e;
   const minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
@@ -13750,7 +13956,6 @@ Clipper.findIntersection = function(a, b, e, f) {
 };
 /** @ignore */
 Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, b2y) {
-  let dpdeltad0;
   const t2 = a2x - a1x;
   const t3 = a2y - a1y;
   const t4 = b2x - b1x;
@@ -13758,7 +13963,8 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
   const t6 = t2 * t2 + t3 * t3;
   const t7 = t4 * t4 + t5 * t5;
   const ret = [];
-  let smin, smax;
+  let smin;
+  let smax;
   if (t6 === 0.0) {
     if (t7 === 0.0) {
       if (a1x === b1x && a1y === b1y) {
@@ -13794,7 +14000,7 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
   const t22 = b1x - a1x;
   const t23 = b1y - a1y;
   const t24 = t22 * t5 - t4 * t23;
-  dpdeltad0 = t22 * t3 - t2 * t23;
+  const dpdeltad0 = t22 * t3 - t2 * t23;
   if (t21 === 0.0) {
     if (t24 === 0.0 && dpdeltad0 === 0) {
       const s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);
@@ -14037,7 +14243,7 @@ GraphicsPath.prototype.xor = function(path, flatness) {
  * @constructor
  * @memberof H3DU
  */
-var Transform = function() {
+const Transform = function() {
   /** @ignore */
   this.scale = [1, 1, 1];
   /** @ignore */
@@ -14433,7 +14639,7 @@ Transform.prototype.copy = function() {
  * @param {MeshBuffer} mesh A mesh in the form of a buffer object.
  * Cannot be null.
  */
-var Shape = function(mesh) {
+const Shape = function(mesh) {
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   this.meshBuffer = mesh;
   this.transform = new Transform();
@@ -14565,7 +14771,8 @@ Shape.prototype.getBounds = function() {
     ];
     let bv = boxVertices[0];
     const retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
-    for(let i = 1; i < 8; i++) {
+    let i;
+    for (i = 1; i < 8; i++) {
       bv = boxVertices[i];
       retval[0] = Math.min(retval[0], bv[0]);
       retval[1] = Math.min(retval[1], bv[1]);
@@ -14668,7 +14875,7 @@ Shape.prototype.getMatrix = function() {
  * @constructor
  * @memberof H3DU
  */
-var ShapeGroup = function() {
+const ShapeGroup = function() {
   this._init();
 };
 /** @ignore */
@@ -14729,7 +14936,8 @@ ShapeGroup.prototype.copy = function() {
   const ret = new ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     ret.addShape(this.shapes[i].copy());
   }
   return ret;
@@ -14816,7 +15024,8 @@ ShapeGroup.prototype.setTransform = function(transform) {
  * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.removeShape = function(shape) {
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
       i--;
@@ -14840,7 +15049,8 @@ ShapeGroup.prototype.getBounds = function() {
   const inf = Number.POSITIVE_INFINITY;
   const ret = [inf, inf, inf, -inf, -inf, -inf];
   let first = true;
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     const b = this.shapes[i].getBounds();
     // NOTE: The returned bounding
     if(!MathUtil.boxIsEmpty(b)) {
@@ -14871,7 +15081,8 @@ ShapeGroup.prototype.getBounds = function() {
  */
 ShapeGroup.prototype.vertexCount = function() {
   let c = 0;
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
   }
   return c;
@@ -14883,7 +15094,8 @@ ShapeGroup.prototype.vertexCount = function() {
  */
 ShapeGroup.prototype.primitiveCount = function() {
   let c = 0;
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
   }
   return c;
@@ -14932,21 +15144,14 @@ ShapeGroup.prototype.setScale = function(x, y, z) {
   return this;
 };
 
-/*
- Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
-*/
+/* global rso */
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids.<p>
  * @constructor
  * @memberof H3DU
  */
-var Meshes = {};
+const Meshes = {};
 
 /**
  * Primitive mode for rendering a triangle fan. The first 3
@@ -14976,8 +15181,10 @@ const TriangleFan = function(indices) {
 
 function meshBufferFromVertexGrid(vertices, width, height) {
   const indices = [];
-  for(let y = 0; y < height - 1; y++) {
-    for(let x = 0; x < width - 1; x++) {
+  let y;
+  for (y = 0; y < height - 1; y++) {
+    let x;
+    for (x = 0; x < width - 1; x++) {
       const index0 = y * width + x;
       const index1 = index0 + width;
       const index2 = index0 + 1;
@@ -14991,8 +15198,10 @@ function meshBufferFromVertexGrid(vertices, width, height) {
 
 function meshBufferFromUWrapVertexGrid(vertices, width, height) {
   const indices = [];
-  for(let y = 0; y < height - 1; y++) {
-    for(let x = 0; x < width; x++) {
+  let y;
+  for (y = 0; y < height - 1; y++) {
+    let x;
+    for (x = 0; x < width; x++) {
       const index0 = y * width + x;
       const index1 = index0 + width;
       const index2 = x === width - 1 ? y * width : index0 + 1;
@@ -15055,7 +15264,8 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
     -xSize, ySize, zSize, 0.0, 0.0, 1.0, 0.0, 1.0,
     -xSize, -ySize, zSize, 0.0, 0.0, 1.0, 0.0, 0.0];
   if(inward) {
-    for(let i = 0; i < vertices.length; i += 8) {
+    let i;
+    for (i = 0; i < vertices.length; i += 8) {
       vertices[i + 3] = -vertices[i + 3];
       vertices[i + 4] = -vertices[i + 4];
       vertices[i + 5] = -vertices[i + 5];
@@ -15133,7 +15343,8 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let sangle = 1.0; // sin(90.0deg)
   let cangle = 0; // cos(90.0deg)
-  for(var i = 0; i < slices; i++) {
+  let i;
+  for (i = 0; i < slices; i++) {
     const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
@@ -15145,7 +15356,8 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   sc.push(sc[0], sc[1]);
   tc.push(1);
   if(height > 0) {
-    let sinSlopeNorm, cosSlopeNorm;
+    let sinSlopeNorm;
+    let cosSlopeNorm;
     if(baseRad === topRad) {
       sinSlopeNorm = 0;
       cosSlopeNorm = normDir;
@@ -15164,14 +15376,16 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
     }
     const recipstacks = 1.0 / stacks;
     const vertices = [];
-    for(i = 0; i <= stacks; i++) {
+    let i;
+    for (i = 0; i <= stacks; i++) {
       const zStart = i === stacks ? 1.0 : i * recipstacks;
       const zStartHeight = height * zStart;
       const radiusStart = baseRad + (topRad - baseRad) * zStart;
-      for(let j = 0; j <= slices; j++) {
-        var x, y;
-        x = sc[j * 2];
-        y = sc[j * 2 + 1];
+      let j;
+      for (j = 0; j <= slices; j++) {
+        const x = sc[j * 2];
+
+        const y = sc[j * 2 + 1];
         vertices.push(x * radiusStart, y * radiusStart, zStartHeight,
           x * cosSlopeNorm, y * cosSlopeNorm, sinSlopeNorm,
           1 - tc[j], zStart);
@@ -15248,11 +15462,10 @@ Meshes.createLathe = function(points, slices, flat, inside) {
     const index = i << 1;
     const zStartHeight = points[index + 1];
     const radiusStart = points[index];
-    for(let j = 0; j <= slices; j++) {
-      var x, y;
-      x = sc[j * 2];
-      y = sc[j * 2 + 1];
-      vertices.push(x * radiusStart, y * radiusStart, zStartHeight,
+    let j;
+    for (j = 0; j <= slices; j++) {
+      vertices.push(sc[j * 2] * radiusStart,
+        sc[j * 2 + 1] * radiusStart, zStartHeight,
         0, 0, 0,
         1 - tc[j], zStart);
     }
@@ -15394,6 +15607,11 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   let sangle = start >= 0 && start < 6.283185307179586 ? start <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(start);
   const cstart = cangle;
   const sstart = sangle;
+
+  let radius;
+
+  let height;
+  let vertices;
   for(i = 0; i <= slices; i++) {
     if(i === slices && arcLength === twopi) {
       sc.push(sstart, cstart);
@@ -15417,13 +15635,15 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   }
   const normalZ = inward ? -1 : 1;
   const slp1 = sweep === 360 ? slices : slices + 1;
-  let x, y, k;
+  let x;
+  let y;
+  let k;
   if(inner === 0 && loops === 1 && sweep === 360) {
-    var vertices = [];
+    vertices = [];
     const indices = [];
     const fan = new TriangleFan(indices);
-    var radius = outer * (i / loops);
-    var rso = radius / outer;
+    const radius = outer * (i / loops);
+    const rso = radius / outer;
     for(k = 0; k < slices; k++) {
       x = sc[k];
       y = sc[k + 1];
@@ -15435,12 +15655,12 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     fan.addIndex(0);
     return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
-    const height = outer - inner;
+    height = outer - inner;
 
     vertices = [];
     for(i = 0; i <= loops; i++) {
       radius = inner + height * (i / loops);
-      rso = radius / outer;
+      // rso = radius / outer;
       for(k = 0; k < slp1; k++) {
         x = sc[k];
         y = sc[k + 1];
@@ -15486,16 +15706,19 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   const circleRad = outer;
   const sci = [];
   const scj = [];
-  let cangle, sangle, u;
+  let cangle;
+  let sangle;
+  let u;
   let angleStep = MathUtil.PiTimes2 / crosswise;
   let cosStep = Math.cos(angleStep);
   let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
-  for(var i = 0; i < crosswise; i++) {
+  let i;
+  for (i = 0; i < crosswise; i++) {
     sci.push(sangle, cangle);
-    var ts = cosStep * sangle + sinStep * cangle;
-    var tc = cosStep * cangle - sinStep * sangle;
+    const ts = cosStep * sangle + sinStep * cangle;
+    const tc = cosStep * cangle - sinStep * sangle;
     cangle = tc;
     sangle = ts;
   }
@@ -15506,7 +15729,9 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
-  for(i = 0; i < lengthwise; i++) {
+  let ts;
+  let tc;
+  for (i = 0; i < lengthwise; i++) {
     scj.push(sangle, cangle);
     ts = cosStep * sangle + sinStep * cangle;
     tc = cosStep * cangle - sinStep * sangle;
@@ -15517,11 +15742,13 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   scj.push(scj[0]);
   scj.push(scj[1]);
   const vertices = [];
-  for(let j = 0; j <= lengthwise; j++) {
+  let j;
+  for (j = 0; j <= lengthwise; j++) {
     const v0 = j / lengthwise;
     const sinr0 = scj[j * 2];
     const cosr0 = scj[j * 2 + 1];
-    for(i = 0; i <= crosswise; i++) {
+    let i;
+    for (i = 0; i <= crosswise; i++) {
       u = i / crosswise;
       const sint = sci[i * 2];
       const cost = sci[i * 2 + 1];
@@ -15573,10 +15800,12 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   const yStart = -height * 0.5;
   const normalZ = inward ? -1 : 1;
   const vertices = [];
-  for(let i = 0; i <= heightDiv; i++) {
+  let i;
+  for (i = 0; i <= heightDiv; i++) {
     const iStart = i / heightDiv;
     const y = yStart + height * iStart;
-    for(let j = 0; j <= widthDiv; j++) {
+    let j;
+    for (j = 0; j <= widthDiv; j++) {
       const jx = j / widthDiv;
       const x = xStart + width * jx;
       vertices.push(x, y, 0, 0, 0, normalZ, jx, iStart);
@@ -15699,12 +15928,13 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 1.0; // sin(90.0deg)
   cangle = 0; // cos(90.0deg)
-  for(var i = 0; i < slices; i++) {
+  let i;
+  for (i = 0; i < slices; i++) {
     const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     sangle = tsin;
     cangle = tcos;
   }
@@ -15722,7 +15952,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = sinStep;
   cangle = cosStep;
-  for(i = 0; i < stacks; i++) {
+  let tsin;
+  let tcos;
+  for (i = 0; i < stacks; i++) {
     const origt = (i + 1) * 1.0 / stacks;
     scStack.push(sangle);
     zEnd.push(-cangle);
@@ -15735,16 +15967,20 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   }
   // Generate the vertex data
   const vertices = [];
-  let tx, x, y;
+  let tx;
+  let x;
+  let y;
   let gridHeight = 0;
-  for(i = 0; i <= stacks; i++) {
+
+  for (i = 0; i <= stacks; i++) {
     const zeCen = zEnd[i];
     let txe = verticalTexCoords[i];
     const zStartHeight = radius * zeCen;
     const offset = i < halfStacks ? -halfLength : halfLength;
     const radiusEnd = radius * scStack[i];
     gridHeight++;
-    for(var j = 0; j <= slices; j++) {
+    let j;
+    for (j = 0; j <= slices; j++) {
       tx = tc[j];
       x = sc[j * 2];
       y = sc[j * 2 + 1];
@@ -15757,11 +15993,13 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       const sr2 = sphereRatio * 0.5;
       const hl = halfLength * 2;
       const he = 1.0 - sphereRatio;
-      for(let m = 0; m <= middleStacks; m++) {
+      let m;
+      for (m = 0; m <= middleStacks; m++) {
         s = -halfLength + (m === 0 ? 0 : hl * m / middleStacks);
         txe = sr2 + (m === 0 ? 0 : he * m / middleStacks);
         gridHeight++;
-        for(j = 0; j <= slices; j++) {
+        let j;
+        for (j = 0; j <= slices; j++) {
           tx = tc[j];
           x = sc[j * 2];
           y = sc[j * 2 + 1];
@@ -15815,7 +16053,8 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let sangle = 0.0; // sin(0.0deg)
   let cangle = 1.0; // cos(0.0deg)
-  for(let i = 0; i < points * 2; i++) {
+  let i;
+  for (i = 0; i < points * 2; i++) {
     const radius = (i & 1) === 0 ? firstRadius : secondRadius;
     const x = -sangle * radius;
     const y = cangle * radius;
@@ -15842,4 +16081,4 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
  http://peteroupc.github.io/
 */
 
-export { MathUtil, Curve, Surface, CurveBuilder, SurfaceBuilder, PiecewiseCurve, BSplineCurve, BSplineSurface, GraphicsPath, Shape, ShapeGroup, Transform, Meshes, BufferAccessor, MeshBuffer, Semantic, getPromiseResults, getPromiseResultsAll, getTimePosition, newFrames, toGLColor$1 as toGLColor };
+export { MathUtil, Curve, Surface, CurveBuilder, SurfaceBuilder, PiecewiseCurve, BSplineCurve, BSplineSurface, GraphicsPath, Shape, ShapeGroup, Transform, Meshes, BufferAccessor, MeshBuffer, Semantic, getPromiseResults, getPromiseResultsAll, getTimePosition, newFrames, toGLColor };

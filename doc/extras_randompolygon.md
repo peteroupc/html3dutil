@@ -23,15 +23,15 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `cx` (Type: *)<br>TODO: Not documented yet.
-* `cy` (Type: *)<br>TODO: Not documented yet.
-* `avgRadius` (Type: *)<br>TODO: Not documented yet.
-* `sides` (Type: *)<br>TODO: Not documented yet.
-* `irregular` (Type: *)<br>TODO: Not documented yet.
-* `spiky` (Type: *)<br>TODO: Not documented yet.
+* `cx` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
+* `cy` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
+* `avgRadius` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
+* `sides` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
+* `irregular` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
+* `spiky` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: *)
+TODO: Not documented yet. (Type: <a href="_.md">*</a>)
 
 [Back to documentation index.](index.md)

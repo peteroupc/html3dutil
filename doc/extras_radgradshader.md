@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [radialGradientShader](#extras_radgradshader.radialGradientShader)<br>GLSL shader code for a screen-space radial gradient.
 
 <a name='extras_radgradshader.radialGradientShader'></a>
-### module:extras/radgradshader.radialGradientShader
+### module:extras/radgradshader.radialGradientShader (constant)
 
 GLSL shader code for a screen-space radial gradient.
 It takes the following uniforms: "colorCenter" is a 4-element array

@@ -270,7 +270,8 @@ function gaussKronrod(func, mn, mx, dir, depth) {
   const bp = mn + bm;
   let gauss = 0;
   let kronrod = 0;
-  for(let i = 0; i < gaussKronrodArray.length; i += 3) {
+  let i;
+  for (i = 0; i < gaussKronrodArray.length; i += 3) {
     const gaussWeight = gaussKronrodArray[i + 2];
     const kronrodWeight = gaussKronrodArray[i + 1];
     const abscissa = gaussKronrodArray[i];
@@ -366,7 +367,8 @@ Curve.prototype.getPoints = function(count) {
   if(count < 0)throw new Error();
   const ep = this.endPoints();
   const ret = [this.evaluate(ep[0])];
-  for(let i = 1; i < count; i++) {
+  let i;
+  for (i = 1; i < count; i++) {
     const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
     const pt = this.evaluate(u);
     ret.push(pt);
@@ -397,7 +399,8 @@ Curve.prototype.getPointsAsObjects = function(count) {
   if(count < 0)throw new Error();
   const ep = this.endPoints();
   const ret = [_pointToObject(this.evaluate(ep[0]))];
-  for(let i = 1; i < count; i++) {
+  let i;
+  for (i = 1; i < count; i++) {
     const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
     const pt = this.evaluate(u);
     ret.push(_pointToObject(pt));
@@ -443,7 +446,8 @@ Curve._ArcLengthParam = function(curve) {
   let lastS = 0;
   const totalLength = this.curve.getLength();
   const segments = Math.min(Math.max(10, Math.ceil(totalLength * 18)), 50);
-  for(let i = 1; i <= segments; i++) {
+  let i;
+  for (i = 1; i <= segments; i++) {
     const t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / segments);
     const s = this.curve.arcLength(t);
     this.segments.push([lastS, s, lastT, t]);
@@ -454,7 +458,8 @@ Curve._ArcLengthParam = function(curve) {
     this.segments[this.segments.length - 1][1];
   this._vecLength = function(vec) {
     let ret = 0;
-    for(let i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       ret += vec[i] * vec[i];
     }
     return Math.sqrt(ret);
@@ -462,7 +467,8 @@ Curve._ArcLengthParam = function(curve) {
   // solve arcLength(t)-s = 0 numerically
   this._solveArcLength = function(s, guess, minValue, maxExclusive) {
     let ret = guess;
-    for(let i = 0; i < 10; i++) {
+    let i;
+    for (i = 0; i < 10; i++) {
       const val = this.curve.arcLength(ret) - s;
       if(Math.abs(val) < 1e-10 && ret >= minValue &&
        ret < maxExclusive) {
@@ -513,7 +519,8 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
   // NOTE: Note that velocity and acceleration depend on parameterization; for
   // example, the length of the velocity vector may differ for the underlying curve object
   // than for this one, even though both vectors generally point in the same direction.
-  let ep, guess;
+  let ep;
+  let guess;
   if(Number.isNaN(s))throw new Error();
   if(s > this.length) {
     ep = this.curve.endPoints();

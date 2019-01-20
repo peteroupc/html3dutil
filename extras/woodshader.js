@@ -17,7 +17,7 @@ import {fragmentShaderLib} from "./fragmentshaderlib";
 /**
  * TODO: Not documented yet.
  */
-export var woodShader = {
+export const woodShader = {
   "uniform":{
     "darkColor":[0, 0, 0],
     "lightColor":[1, 1, 1]

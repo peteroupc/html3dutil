@@ -88,6 +88,6 @@ TODO: Not documented yet.
 
 #### Return Value
 
-Return value. (Type: *)
+Return value. (Type: <a href="_.md">*</a>)
 
 [Back to documentation index.](index.md)

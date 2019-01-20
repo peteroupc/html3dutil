@@ -517,7 +517,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
-Return value. (Type: *)
+Return value. (Type: <a href="_.md">*</a>)
 
 <a name='H3DU.GraphicsPath_getTriangles'></a>
 ### H3DU.GraphicsPath#getTriangles([flatness])

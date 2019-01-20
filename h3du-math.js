@@ -15,7 +15,7 @@
  * @class
  * @memberof H3DU
  */
-var MathUtil = {
+const MathUtil = {
 /** @ignore */
   "_frustumPoints":function(frustum) {
     const p0 = frustum[0];
@@ -273,7 +273,8 @@ var MathUtil = {
     if(MathUtil.boxIsEmpty(box)) {
       return false;
     }
-    for(var i = 0; i < 6; i++) {
+    let i;
+    for (i = 0; i < 6; i++) {
       const plane = frustum[i];
       const p3 = plane[3];
       const p0b0 = plane[0] * box[0];
@@ -293,7 +294,8 @@ var MathUtil = {
     // To increase robustness in frustum culling; see
     // <http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm>
     const pts = MathUtil._frustumPoints(frustum);
-    for(i = 0; i < 3; i++) {
+
+    for (i = 0; i < 3; i++) {
       const minval = box[i];
       if(pts[i] < minval && pts[3 + i] < minval && pts[6 + i] < minval &&
       pts[9 + i] < minval && pts[12 + i] < minval && pts[15 + i] < minval &&
@@ -326,7 +328,8 @@ var MathUtil = {
    * otherwise false;
    */
   "frustumHasPoint":function(frustum, x, y, z) {
-    for(let i = 0; i < 6; i++) {
+    let i;
+    for (i = 0; i < 6; i++) {
       const d = frustum[i][0] * x + frustum[i][1] * y +
      frustum[i][2] * z + frustum[i][3];
       if(d <= 0)return false;
@@ -354,7 +357,8 @@ var MathUtil = {
    */
   "frustumHasSphere":function(frustum, x, y, z, radius) {
     if(radius < 0)throw new Error("radius is negative");
-    for(let i = 0; i < 6; i++) {
+    let i;
+    for (i = 0; i < 6; i++) {
       const plane = frustum[i];
       const dot = plane[3] + plane[0] * x +
      plane[1] * y + plane[2] * z;
@@ -452,7 +456,9 @@ var MathUtil = {
    * @returns {Array<number>} The transformed vector.
    */
   "mat3transform":function(mat, v, vy, vz) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -690,7 +696,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
     r[13] = m[1] * tvar6 - tvar23 * m[12] + m[13] * (tvar22 - tvar0) + m[14] * (tvar5 - tvar17);
     r[14] = m[12] * tvar53 + m[13] * tvar58 + m[14] * tvar48;
     r[15] = m[8] * tvar49 + m[9] * tvar51 + m[10] * tvar52;
-    for(let i = 0; i < 16; i++) {
+    let i;
+    for (i = 0; i < 16; i++) {
       r[i] *= det;
     }
     return r;
@@ -825,8 +832,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "mat4multiply":function(a, b) {
     const dst = [];
-    for(let i = 0; i < 16; i += 4) {
-      for(let j = 0; j < 4; j++) {
+    let i;
+    for (i = 0; i < 16; i += 4) {
+      let j;
+      for (j = 0; j < 4; j++) {
         dst[i + j] =
     b[i] * a[j] +
     b[i + 1] * a[j + 4] +
@@ -1140,7 +1149,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * the transformed vector's X, Y, and Z coordinates.
    */
   "mat4projectVec3":function(mat, v, vy, vz) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -1180,7 +1191,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4rotate":function(mat, angle, v, vy, vz) {
-    let v0, v1, v2, ang;
+    let v0;
+    let v1;
+    let v2;
+    let ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -1278,7 +1292,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
    */
   "mat4rotated":function(angle, v, vy, vz) {
-    let v0, v1, v2, ang;
+    let v0;
+    let v1;
+    let v2;
+    let ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -1296,8 +1313,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ang = angle;
     }
     ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
+    let iscale;
     if(ang === 90 || ang === -270) {
-      var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
       v0 *= iscale;
       v1 *= iscale;
       v2 *= iscale;
@@ -1379,7 +1397,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4scale":function(mat, v3, v3y, v3z) {
-    let scaleX, scaleY, scaleZ;
+    let scaleX;
+    let scaleY;
+    let scaleZ;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       scaleX = v3;
       scaleY = v3y;
@@ -1410,7 +1430,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The same parameter as "mat".
    */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -1552,7 +1574,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed vector.
    */
   "mat4transform":function(mat, v, vy, vz, vw) {
-    let x, y, z, w;
+    let x;
+    let y;
+    let z;
+    let w;
     if(typeof vy !== "undefined" && typeof vz !== "undefined" &&
       typeof vw !== "undefined") {
       x = v;
@@ -1591,7 +1616,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed 3-element vector.
    */
   "mat4transformVec3":function(mat, v, vy, vz) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -1617,7 +1644,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translate":function(mat, v3, v3y, v3z) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -1648,7 +1677,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translated":function(v3, v3y, v3z) {
-    let x, y, z;
+    let x;
+    let y;
+    let z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -1770,7 +1801,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * and its fourth element (W) is the cosine of half of "angle".
    */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
-    let v0, v1, v2, ang;
+    let v0;
+    let v1;
+    let v2;
+    let ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -1814,7 +1848,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
     const zx = m[8];
     const zy = m[9];
     const trace = m[0] + m[5] + m[10];
-    let s, t;
+    let s;
+    let t;
     if (trace >= 0.0) {
       s = Math.sqrt(trace + 1.0) * 0.5;
       t = 0.25 / s;
@@ -1873,7 +1908,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated quaternion.
    */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
-    let rollRad, pitchRad, yawRad;
+    let rollRad;
+    let pitchRad;
+    let yawRad;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(pitchDegrees.constructor === Array) {
@@ -1891,7 +1928,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
     const yx = yawRad >= 0 && yawRad < 6.283185307179586 ? yawRad <= 3.141592653589793 ? Math.sqrt(1.0 - yy * yy) : -Math.sqrt(1.0 - yy * yy) : Math.sin(yawRad);
     const ry = Math.cos(rollRad);
     const rx = rollRad >= 0 && rollRad < 6.283185307179586 ? rollRad <= 3.141592653589793 ? Math.sqrt(1.0 - ry * ry) : -Math.sqrt(1.0 - ry * ry) : Math.sin(rollRad);
-    let t8, t7;
+    let t8;
+    let t7;
     if(mode === MathUtil.GlobalPitchYawRoll || mode === MathUtil.GlobalPitchRollYaw) {
       t7 = [rx * yx, ry * yx, rx * yy, ry * yy];
       if(mode === MathUtil.GlobalPitchYawRoll)t7[0] = -t7[0];
@@ -2131,19 +2169,29 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated 4x4 matrix.
    */
   "quatToMat4":function(quat) {
-    let tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
-    tx = 2.0 * quat[0];
-    ty = 2.0 * quat[1];
-    tz = 2.0 * quat[2];
-    xx = tx * quat[0];
-    xy = tx * quat[1];
-    xz = tx * quat[2];
-    yy = ty * quat[1];
-    yz = tz * quat[1];
-    zz = tz * quat[2];
-    wx = tx * quat[3];
-    wy = ty * quat[3];
-    wz = tz * quat[3];
+    const tx = 2.0 * quat[0];
+
+    const ty = 2.0 * quat[1];
+
+    const tz = 2.0 * quat[2];
+
+    const xx = tx * quat[0];
+
+    const xy = tx * quat[1];
+
+    const xz = tx * quat[2];
+
+    const yy = ty * quat[1];
+
+    const yz = tz * quat[1];
+
+    const zz = tz * quat[2];
+
+    const wx = tx * quat[3];
+
+    const wy = ty * quat[3];
+
+    const wz = tz * quat[3];
     return [
       1 - (yy + zz), xy + wz, xz - wy, 0,
       xy - wz, 1 - (xx + zz), yz + wx, 0,
@@ -2172,7 +2220,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "quatToTaitBryan":function(a, mode) {
     const c0 = a[3];
-    let c1, c2, c3;
+    let c1;
+    let c2;
+    let c3;
     let e = 1;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
@@ -3644,7 +3694,8 @@ MathUtil.interpCubicBezier = function(a, b, c, d, t) {
   // Find Bezier curve's T for given X coordinate ("t" parameter passed to
   // this method) using Newton's method
   let tx = t;
-  for(let i = 0; i < 10; i++) {
+  let i;
+  for (i = 0; i < 10; i++) {
     const fx = tx * (3 * a * (tx * (tx - 2) + 1) - 3 * c * tx * (tx - 1) + tx * tx) - t;
     if(Math.abs(fx) < 1e-9)break;
     const dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
@@ -3744,28 +3795,24 @@ MathUtil.quatScale = MathUtil.vec4scale;
 MathUtil.quatCopy = MathUtil.vec4copy;
 /**
  * Closest approximation to pi times 2, or a 360-degree turn in radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.PiTimes2 = 6.283185307179586476925286766559;
 /**
  * Closest approximation to pi divided by 2, or a 90-degree turn in radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.HalfPi = 1.5707963267948966192313216916398;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.ToRadians = MathUtil.PiDividedBy180;
 /**
@@ -3779,82 +3826,68 @@ MathUtil.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @const
- * @default
+ * @const * @default
  */
 MathUtil.ToDegrees = MathUtil.Num180DividedByPi;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
  * or in the reverse order around
- * @const
- */
+ * @const */
 MathUtil.GlobalPitchYawRoll = 0;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalPitchRollYaw = 1;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalYawPitchRoll = 2;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalYawRollPitch = 3;
 /**
  * Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalRollPitchYaw = 4;
 /**
  * Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
- * @const
- */
+ * @const */
 MathUtil.GlobalRollYawPitch = 5;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalPitchYawRoll = MathUtil.GlobalRollYawPitch;
 /**
  * Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalPitchRollYaw = MathUtil.GlobalYawRollPitch;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalYawPitchRoll = MathUtil.GlobalRollPitchYaw;
 /**
  * Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalYawRollPitch = MathUtil.GlobalPitchRollYaw;
 /**
  * Indicates that a vector's rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalRollPitchYaw = MathUtil.GlobalYawPitchRoll;
 /**
  * Indicates that a vector's rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
  * occur around the rotated object's new axes and not necessarily the original axes.
- * @const
- */
+ * @const */
 MathUtil.LocalRollYawPitch = MathUtil.GlobalPitchYawRoll;
 export {MathUtil};

@@ -53,11 +53,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `mesh` (Type: *)<br>TODO: Not documented yet.
-* `planes` (Type: *)<br>TODO: Not documented yet.
+* `mesh` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
+* `planes` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: *)
+A mesh buffer containing the generated contour lines. (Type: MeshBuffer)
 
 [Back to documentation index.](index.md)

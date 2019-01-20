@@ -31,8 +31,8 @@ TODO: Not documented yet.
 
 * `p` (Type: number)<br>Integer greater than 0 giving the number of revolutions.
 * `q` (Type: number)<br>Integer greater than 0 giving the number of loop crossings.
-* `r1` (Type: *)
-* `s1` (Type: *)
+* `r1` (Type: <a href="_.md">*</a>)
+* `s1` (Type: <a href="_.md">*</a>)
 
 #### Return Value
 
@@ -47,7 +47,7 @@ Generates a torus knot with simple parameters.
 
 * `p` (Type: number)<br>Integer greater than 0 giving the number of revolutions.
 * `q` (Type: number)<br>Integer greater than 0 giving the number of loop crossings.
-* `r1` (Type: *)
+* `r1` (Type: <a href="_.md">*</a>)
 
 #### Return Value
 

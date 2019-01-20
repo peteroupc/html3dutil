@@ -3,17 +3,13 @@
 with vectors, matrices, quaternions, and other
 mathematical objects.<p>
 See the tutorial "<a href="tutorial-glmath.html">H3DU's Math Functions</a>" for more information.<h3> Members</h3><ul><li><a href='#H3DU.MathUtil.GlobalPitchRollYaw'>GlobalPitchRollYaw</a><br>Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).<li><a href='#H3DU.MathUtil.GlobalPitchYawRoll'>GlobalPitchYawRoll</a><br>Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
-or in the reverse order around<li><a href='#H3DU.MathUtil.GlobalRollPitchYaw'>GlobalRollPitchYaw</a><br>Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).<li><a href='#H3DU.MathUtil.GlobalRollYawPitch'>GlobalRollYawPitch</a><br>Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).<li><a href='#H3DU.MathUtil.GlobalYawPitchRoll'>GlobalYawPitchRoll</a><br>Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).<li><a href='#H3DU.MathUtil.GlobalYawRollPitch'>GlobalYawRollPitch</a><br>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).<li><a href='#H3DU.MathUtil.HalfPi'>HalfPi</a><br>Closest approximation to pi divided by 2, or a 90-degree turn in radians.<li><a href='#H3DU.MathUtil.LocalPitchRollYaw'>LocalPitchRollYaw</a><br>Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
+or in the reverse order around<li><a href='#H3DU.MathUtil.GlobalRollPitchYaw'>GlobalRollPitchYaw</a><br>Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).<li><a href='#H3DU.MathUtil.GlobalRollYawPitch'>GlobalRollYawPitch</a><br>Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).<li><a href='#H3DU.MathUtil.GlobalYawPitchRoll'>GlobalYawPitchRoll</a><br>Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).<li><a href='#H3DU.MathUtil.GlobalYawRollPitch'>GlobalYawRollPitch</a><br>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).<li><a href='#H3DU.MathUtil.LocalPitchRollYaw'>LocalPitchRollYaw</a><br>Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
 occur around the rotated object's new axes and not necessarily the original axes.<li><a href='#H3DU.MathUtil.LocalPitchYawRoll'>LocalPitchYawRoll</a><br>Indicates that a vector's rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
 occur around the rotated object's new axes and not necessarily the original axes.<li><a href='#H3DU.MathUtil.LocalRollPitchYaw'>LocalRollPitchYaw</a><br>Indicates that a vector's rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
 occur around the rotated object's new axes and not necessarily the original axes.<li><a href='#H3DU.MathUtil.LocalRollYawPitch'>LocalRollYawPitch</a><br>Indicates that a vector's rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
 occur around the rotated object's new axes and not necessarily the original axes.<li><a href='#H3DU.MathUtil.LocalYawPitchRoll'>LocalYawPitchRoll</a><br>Indicates that a vector's rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
 occur around the rotated object's new axes and not necessarily the original axes.<li><a href='#H3DU.MathUtil.LocalYawRollPitch'>LocalYawRollPitch</a><br>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
-occur around the rotated object's new axes and not necessarily the original axes.<li><a href='#H3DU.MathUtil.Num180DividedByPi'>Num180DividedByPi</a><br>Closest approximation to 180 divided by pi, or the number of
-degrees in a radian.<li><a href='#H3DU.MathUtil.PiDividedBy180'>PiDividedBy180</a><br>Closest approximation to pi divided by 180, or the number
-of radians in a degree.<li><a href='#H3DU.MathUtil.PiTimes2'>PiTimes2</a><br>Closest approximation to pi times 2, or a 360-degree turn in radians.<li><a href='#H3DU.MathUtil.ToDegrees'>ToDegrees</a><br>Closest approximation to 180 divided by pi, or the number of
-degrees in a radian.<li><a href='#H3DU.MathUtil.ToRadians'>ToRadians</a><br>Closest approximation to pi divided by 180, or the number
-of radians in a degree.</ul><h3> Methods</h3><ul><li><a href='#H3DU.MathUtil.boxCenter'>boxCenter</a><br>Finds the center of a 3D bounding box.<li><a href='#H3DU.MathUtil.boxDimensions'>boxDimensions</a><br>Finds the dimensions of a 3D bounding box.<li><a href='#H3DU.MathUtil.boxIsEmpty'>boxIsEmpty</a><br>Determines whether a 3D bounding box is empty.<li><a href='#H3DU.MathUtil.colorToLinear'>colorToLinear</a><br>Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+occur around the rotated object's new axes and not necessarily the original axes.</ul><h3> Methods</h3><ul><li><a href='#H3DU.MathUtil.boxCenter'>boxCenter</a><br>Finds the center of a 3D bounding box.<li><a href='#H3DU.MathUtil.boxDimensions'>boxDimensions</a><br>Finds the dimensions of a 3D bounding box.<li><a href='#H3DU.MathUtil.boxIsEmpty'>boxIsEmpty</a><br>Determines whether a 3D bounding box is empty.<li><a href='#H3DU.MathUtil.colorToLinear'>colorToLinear</a><br>Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
 a new vector with the result.<li><a href='#H3DU.MathUtil.colorTosRGB'>colorTosRGB</a><br>Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
 a new vector with the result.<li><a href='#H3DU.MathUtil.frustumHasBox'>frustumHasBox</a><br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.<li><a href='#H3DU.MathUtil.frustumHasPoint'>frustumHasPoint</a><br>Determines whether a point is
@@ -158,12 +154,7 @@ or in the reverse order around
 
 </h3>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
-<a name='H3DU.MathUtil.HalfPi'></a>
-<h3> H3DU.MathUtil.HalfPi (constant)
-
-</h3>Closest approximation to pi divided by 2, or a 90-degree turn in radians.
-
-<p>Default Value: <code>1.5707963267948966</code></p><a name='H3DU.MathUtil.LocalPitchRollYaw'></a>
+<a name='H3DU.MathUtil.LocalPitchRollYaw'></a>
 <h3> H3DU.MathUtil.LocalPitchRollYaw (constant)
 
 </h3>Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
@@ -198,35 +189,6 @@ occur around the rotated object's new axes and not necessarily the original axes
 
 </h3>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
-
-<a name='H3DU.MathUtil.Num180DividedByPi'></a>
-<h3> H3DU.MathUtil.Num180DividedByPi (constant)
-
-</h3>Closest approximation to 180 divided by pi, or the number of
-degrees in a radian. Multiply by this number to convert radians to degrees.
-
-<p>Default Value: <code>57.29577951308232</code></p><a name='H3DU.MathUtil.PiDividedBy180'></a>
-<h3> H3DU.MathUtil.PiDividedBy180 (constant)
-
-</h3>Closest approximation to pi divided by 180, or the number
-of radians in a degree. Multiply by this number to convert degrees to radians.
-
-<p>Default Value: <code>0.017453292519943295</code></p><a name='H3DU.MathUtil.PiTimes2'></a>
-<h3> H3DU.MathUtil.PiTimes2 (constant)
-
-</h3>Closest approximation to pi times 2, or a 360-degree turn in radians.
-
-<p>Default Value: <code>6.283185307179586</code></p><a name='H3DU.MathUtil.ToDegrees'></a>
-<h3> H3DU.MathUtil.ToDegrees (constant)
-
-</h3>Closest approximation to 180 divided by pi, or the number of
-degrees in a radian. Multiply by this number to convert radians to degrees.
-
-<a name='H3DU.MathUtil.ToRadians'></a>
-<h3> H3DU.MathUtil.ToRadians (constant)
-
-</h3>Closest approximation to pi divided by 180, or the number
-of radians in a degree. Multiply by this number to convert degrees to radians.
 
 <a name='H3DU.MathUtil.boxCenter'></a>
 <h3> (static) H3DU.MathUtil.boxCenter(box)</h3>Finds the center of a 3D bounding box.<h4> Parameters</h4><ul><li><code>box</code> (Type: Array.&lt;number>)<br>An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.</ul><h4> Return Value</h4>A 3-element array containing the

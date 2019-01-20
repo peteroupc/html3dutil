@@ -22,7 +22,7 @@ To import all symbols in this module, either of the following can be used:
 matrix shader.
 
 <a name='extras_colormatrixshader.colorMatrixShader'></a>
-### module:extras/colormatrixshader.colorMatrixShader
+### module:extras/colormatrixshader.colorMatrixShader (constant)
 
 GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
 is the input texture, "t", a value from 0 to 1 indicating how strongly to

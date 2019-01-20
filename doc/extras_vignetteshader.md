@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [vignetteShader](#extras_vignetteshader.vignetteShader)<br>TODO: Not documented yet.
 
 <a name='extras_vignetteshader.vignetteShader'></a>
-### module:extras/vignetteshader.vignetteShader
+### module:extras/vignetteshader.vignetteShader (constant)
 
 TODO: Not documented yet.
 

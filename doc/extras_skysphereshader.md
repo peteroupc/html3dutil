@@ -18,12 +18,12 @@ To import all symbols in this module, either of the following can be used:
 * [skySphereShader](#extras_skysphereshader.skySphereShader)<br>TODO: Not documented yet.
 
 <a name='extras_skysphereshader.skySphereCubeMapShader'></a>
-### module:extras/skysphereshader.skySphereCubeMapShader
+### module:extras/skysphereshader.skySphereCubeMapShader (constant)
 
 TODO: Not documented yet.
 
 <a name='extras_skysphereshader.skySphereShader'></a>
-### module:extras/skysphereshader.skySphereShader
+### module:extras/skysphereshader.skySphereShader (constant)
 
 TODO: Not documented yet.
 

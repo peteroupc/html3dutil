@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [waterpaintShader](#extras_waterpaintshader.waterpaintShader)<br>TODO: Not documented yet.
 
 <a name='extras_waterpaintshader.waterpaintShader'></a>
-### module:extras/waterpaintshader.waterpaintShader
+### module:extras/waterpaintshader.waterpaintShader (constant)
 
 TODO: Not documented yet.
 

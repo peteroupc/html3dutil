@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [marbleShader](#extras_marbleshader.marbleShader)<br>TODO: Not documented yet.
 
 <a name='extras_marbleshader.marbleShader'></a>
-### module:extras/marbleshader.marbleShader
+### module:extras/marbleshader.marbleShader (constant)
 
 TODO: Not documented yet.
 

@@ -56,7 +56,7 @@ objectKeysPolyfill();
  * @memberof H3DU
  * @function
  */
-export var getPromiseResults = function(promises,
+export const getPromiseResults = function(promises,
   progressResolve, progressReject) {
   if(!promises || promises.length === 0) {
     return Promise.resolve({
@@ -85,7 +85,8 @@ export var getPromiseResults = function(promises,
     "results":[]
   };
   const newPromises = [];
-  for(let i = 0; i < promises.length; i++) {
+  let i;
+  for (i = 0; i < promises.length; i++) {
     const index = i;
     newPromises.push(promises[i].then(
       promiseResolveFunc(progressResolve, ret, index),
@@ -94,13 +95,15 @@ export var getPromiseResults = function(promises,
   }
   return Promise.all(newPromises).then(function(results) {
   // compact the successes and failures arrays
-    for(var i = 0; i < ret.successes.length; i++) {
+    let i;
+    for (i = 0; i < ret.successes.length; i++) {
       if(typeof ret.successes[i] === "undefined") {
         ret.successes.splice(i, 1);
         i -= 1;
       }
     }
-    for(i = 0; i < ret.failures.length; i++) {
+
+    for (i = 0; i < ret.failures.length; i++) {
       if(typeof ret.failures[i] === "undefined") {
         ret.failures.splice(i, 1);
         i -= 1;
@@ -128,7 +131,7 @@ export var getPromiseResults = function(promises,
  * @memberof H3DU
  * @function
  */
-export var getPromiseResultsAll = function(promises,
+export const getPromiseResultsAll = function(promises,
   progressResolve, progressReject) {
   return getPromiseResults(promises, progressResolve, progressReject)
     .then(function(results) {
@@ -173,7 +176,7 @@ export var getPromiseResultsAll = function(promises,
  * @memberof H3DU
  * @function
  */
-export var getTimePosition = function(timer, timeInMs, intervalInMs) {
+export const getTimePosition = function(timer, timeInMs, intervalInMs) {
   if(typeof timer.time === "undefined" || timer.time === null) {
     timer.time = timeInMs;
     timer.lastTime = timeInMs;
@@ -200,7 +203,7 @@ export var getTimePosition = function(timer, timeInMs, intervalInMs) {
  * @memberof H3DU
  * @function
  */
-export var newFrames = function(timer, timeInMs) {
+export const newFrames = function(timer, timeInMs) {
   if(typeof timer.time === "undefined" || timer.time === null) {
     timer.time = timeInMs;
     timer.lastTime = timeInMs;
@@ -252,8 +255,10 @@ const ColorValidator = function() {
   };
 
   constructor.hsl = function(str, index, endIndex, ret) {
-    let indexStart, indexTemp, tx2;
-    indexStart = index;
+    let indexTemp;
+    let tx2;
+
+    const indexStart = index;
     indexTemp = index;
     if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
       return indexStart;
@@ -330,8 +335,9 @@ const ColorValidator = function() {
   };
 
   constructor.hsla = function(str, index, endIndex, ret) {
-    let indexStart, indexTemp, tx2;
-    indexStart = index;
+    let indexTemp;
+    let tx2;
+    const indexStart = index;
     indexTemp = index;
     if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
       return indexStart;
@@ -364,8 +370,8 @@ const ColorValidator = function() {
   };
 
   constructor.rgba = function(str, index, endIndex, result) {
-    let indexStart, tx2;
-    indexStart = index;
+    const indexStart = index;
+    let tx2;
     index = constructor.skipWhite(str, index, endIndex);
     const st = index;
     let continuing = true;
@@ -421,8 +427,8 @@ const ColorValidator = function() {
     return index;
   };
   constructor.rgb = function(str, index, endIndex, result) {
-    let indexStart, tx2;
-    indexStart = index;
+    let tx2;
+    const indexStart = index;
     index = constructor.skipWhite(str, index, endIndex);
     const st = index;
     let continuing = true;
@@ -559,7 +565,6 @@ const ColorValidator = function() {
       b = lum + sat - b;
     }
     const a = lum * 2 - b;
-    let r, g, bl;
     if (hueval < 0 || hueval >= 360) {
       hueval = (hueval % 360 + 360) % 360;
     }
@@ -567,14 +572,16 @@ const ColorValidator = function() {
     if (hue >= 360) {
       hue -= 360;
     }
-    r = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
+    const r = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
     hue = hueval;
-    g = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
+
+    const g = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
     hue = hueval - 120;
     if (hue < 0) {
       hue += 360;
     }
-    bl = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
+
+    const bl = hue < 60 ? a + (b - a) * hue / 60 : hue < 180 ? b : hue < 240 ? a + (b - a) * (240 - hue) / 60 : a;
     return [r < 0 ? 0 : r > 255 ? 255 : r, g < 0 ? 0 : g > 255 ? 255 : g, bl < 0 ? 0 : bl > 255 ? 255 : bl];
   };
 
@@ -601,7 +608,8 @@ const ColorValidator = function() {
     if (slen !== 3 && slen !== 4 && slen !== 6 && slen !== 8) {
       return false;
     }
-    for (let i = index; i < str.length; ++i) {
+    let i;
+    for (i = index; i < str.length; ++i) {
       const hex = constructor.dehexchar(str.charCodeAt(i));
       if (hex < 0) {
         return false;
@@ -688,7 +696,8 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
   constructor.colorToRgbaSetUpNamedColors = function() {
     if (typeof constructor.namedColorMap === "undefined" || constructor.namedColorMap === null) {
       const ncm = {};
-      for (var i = 0; i < constructor.nc.length; i += 2) {
+      let i;
+      for (i = 0; i < constructor.nc.length; i += 2) {
         ncm[constructor.nc[i]] = constructor.nc[i + 1];
       }
       const altnames = ["grey", "gray", "darkgrey", "darkgray",
@@ -696,6 +705,7 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
         "lightgrey", "lightgray",
         "lightslategrey", "lightslategray",
         "slategrey", "slategray"];
+
       for (i = 0; i < altnames.length; i += 2) {
         ncm[altnames[i]] = ncm[altnames[i + 1]];
       }
@@ -775,7 +785,7 @@ const clampRgba = function(x) {
  * @memberof H3DU
  * @function
  */
-export var toGLColor = function(r, g, b, a) {
+export const toGLColor = function(r, g, b, a) {
   if(typeof r === "undefined" || r === null)return [0, 0, 0, 0];
   if(typeof r === "string") {
     const rgba = ColorValidator.colorToRgba(r) || [0, 0, 0, 0];

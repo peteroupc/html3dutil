@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [waveShader](#extras_waveshader.waveShader)<br>TODO: Not documented yet.
 
 <a name='extras_waveshader.waveShader'></a>
-### module:extras/waveshader.waveShader
+### module:extras/waveshader.waveShader (constant)
 
 TODO: Not documented yet.
 

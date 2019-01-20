@@ -12,17 +12,15 @@
  * @constructor
  * @alias Semantic
  */
-export var Semantic = {};
+export const Semantic = {};
 /** Attribute semantic for a vertex position.
  * The default shader uses 3-dimensional positions.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.POSITION = 0;
 /** Attribute semantic for a vertex normal.
  * The default shader uses 3-dimensional normals.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.NORMAL = 1;
 /** Attribute semantic for a texture coordinate.<p>
@@ -34,70 +32,55 @@ Semantic.NORMAL = 1;
  * to 2-D by dividing the X and Y components by the Z component.
  * In a fragment shader, this can look like the following
  * code: <code>texCoord.xy/texCoord.z</code>.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.TEXCOORD = 2;
 /** Attribute semantic for a color.
  * The default shader uses 3-component colors.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.COLOR = 3;
 /** Attribute semantic for a skinning joint.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.JOINT = 4;
 /** Attribute semantic for a skinning weight.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.WEIGHT = 5;
 /** Attribute semantic for a tangent vector.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.TANGENT = 6;
 /** Attribute semantic for a bitangent vector.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.BITANGENT = 7;
 /** Attribute semantic for custom attributes.
- * @const
- * @static
+ * @const * @static
  */
 Semantic.CUSTOM = 8;
 /** Uniform semantic for a model matrix.
- * @const
- */
+ * @const */
 Semantic.MODEL = 101;
 /** Uniform semantic for a view matrix.
- * @const
- */
+ * @const */
 Semantic.VIEW = 102;
 /** Uniform semantic for a projection matrix.
- * @const
- */
+ * @const */
 Semantic.PROJECTION = 103;
 /** Uniform semantic for a model-view matrix.
- * @const
- */
+ * @const */
 Semantic.MODELVIEW = 104;
 /** Uniform semantic for a model-view-projection matrix.
- * @const
- */
+ * @const */
 Semantic.MODELVIEWPROJECTION = 105;
 /** Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
- * @const
- */
+ * @const */
 Semantic.MODELVIEWINVERSETRANSPOSE = 106;
 /** Uniform semantic for an inverse view matrix.
- * @const
- */
+ * @const */
 Semantic.VIEWINVERSE = 107;
 /** Uniform semantic for a joint matrix.
- * @const
- */
+ * @const */
 Semantic.JOINTMATRIX = 108;

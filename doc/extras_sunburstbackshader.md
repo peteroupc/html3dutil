@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [sunburstBackShader](#extras_sunburstbackshader.sunburstBackShader)<br>TODO: Not documented yet.
 
 <a name='extras_sunburstbackshader.sunburstBackShader'></a>
-### module:extras/sunburstbackshader.sunburstBackShader
+### module:extras/sunburstbackshader.sunburstBackShader (constant)
 
 TODO: Not documented yet.
 

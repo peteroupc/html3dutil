@@ -1,3 +1,4 @@
+/* global rso */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -15,7 +16,7 @@ import {MeshBuffer} from "./h3du-meshbuffer";
  * @constructor
  * @memberof H3DU
  */
-export var Meshes = {};
+export const Meshes = {};
 
 /**
  * Primitive mode for rendering a triangle fan. The first 3
@@ -45,8 +46,10 @@ const TriangleFan = function(indices) {
 
 function meshBufferFromVertexGrid(vertices, width, height) {
   const indices = [];
-  for(let y = 0; y < height - 1; y++) {
-    for(let x = 0; x < width - 1; x++) {
+  let y;
+  for (y = 0; y < height - 1; y++) {
+    let x;
+    for (x = 0; x < width - 1; x++) {
       const index0 = y * width + x;
       const index1 = index0 + width;
       const index2 = index0 + 1;
@@ -60,8 +63,10 @@ function meshBufferFromVertexGrid(vertices, width, height) {
 
 function meshBufferFromUWrapVertexGrid(vertices, width, height) {
   const indices = [];
-  for(let y = 0; y < height - 1; y++) {
-    for(let x = 0; x < width; x++) {
+  let y;
+  for (y = 0; y < height - 1; y++) {
+    let x;
+    for (x = 0; x < width; x++) {
       const index0 = y * width + x;
       const index1 = index0 + width;
       const index2 = x === width - 1 ? y * width : index0 + 1;
@@ -124,7 +129,8 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
     -xSize, ySize, zSize, 0.0, 0.0, 1.0, 0.0, 1.0,
     -xSize, -ySize, zSize, 0.0, 0.0, 1.0, 0.0, 0.0];
   if(inward) {
-    for(let i = 0; i < vertices.length; i += 8) {
+    let i;
+    for (i = 0; i < vertices.length; i += 8) {
       vertices[i + 3] = -vertices[i + 3];
       vertices[i + 4] = -vertices[i + 4];
       vertices[i + 5] = -vertices[i + 5];
@@ -202,7 +208,8 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let sangle = 1.0; // sin(90.0deg)
   let cangle = 0; // cos(90.0deg)
-  for(var i = 0; i < slices; i++) {
+  let i;
+  for (i = 0; i < slices; i++) {
     const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
@@ -214,7 +221,8 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   sc.push(sc[0], sc[1]);
   tc.push(1);
   if(height > 0) {
-    let sinSlopeNorm, cosSlopeNorm;
+    let sinSlopeNorm;
+    let cosSlopeNorm;
     if(baseRad === topRad) {
       sinSlopeNorm = 0;
       cosSlopeNorm = normDir;
@@ -233,14 +241,16 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
     }
     const recipstacks = 1.0 / stacks;
     const vertices = [];
-    for(i = 0; i <= stacks; i++) {
+    let i;
+    for (i = 0; i <= stacks; i++) {
       const zStart = i === stacks ? 1.0 : i * recipstacks;
       const zStartHeight = height * zStart;
       const radiusStart = baseRad + (topRad - baseRad) * zStart;
-      for(let j = 0; j <= slices; j++) {
-        var x, y;
-        x = sc[j * 2];
-        y = sc[j * 2 + 1];
+      let j;
+      for (j = 0; j <= slices; j++) {
+        const x = sc[j * 2];
+
+        const y = sc[j * 2 + 1];
         vertices.push(x * radiusStart, y * radiusStart, zStartHeight,
           x * cosSlopeNorm, y * cosSlopeNorm, sinSlopeNorm,
           1 - tc[j], zStart);
@@ -317,11 +327,10 @@ Meshes.createLathe = function(points, slices, flat, inside) {
     const index = i << 1;
     const zStartHeight = points[index + 1];
     const radiusStart = points[index];
-    for(let j = 0; j <= slices; j++) {
-      var x, y;
-      x = sc[j * 2];
-      y = sc[j * 2 + 1];
-      vertices.push(x * radiusStart, y * radiusStart, zStartHeight,
+    let j;
+    for (j = 0; j <= slices; j++) {
+      vertices.push(sc[j * 2] * radiusStart,
+        sc[j * 2 + 1] * radiusStart, zStartHeight,
         0, 0, 0,
         1 - tc[j], zStart);
     }
@@ -463,6 +472,11 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   let sangle = start >= 0 && start < 6.283185307179586 ? start <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(start);
   const cstart = cangle;
   const sstart = sangle;
+
+  let radius;
+
+  let height;
+  let vertices;
   for(i = 0; i <= slices; i++) {
     if(i === slices && arcLength === twopi) {
       sc.push(sstart, cstart);
@@ -486,13 +500,15 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   }
   const normalZ = inward ? -1 : 1;
   const slp1 = sweep === 360 ? slices : slices + 1;
-  let x, y, k;
+  let x;
+  let y;
+  let k;
   if(inner === 0 && loops === 1 && sweep === 360) {
-    var vertices = [];
+    vertices = [];
     const indices = [];
     const fan = new TriangleFan(indices);
-    var radius = outer * (i / loops);
-    var rso = radius / outer;
+    const radius = outer * (i / loops);
+    const rso = radius / outer;
     for(k = 0; k < slices; k++) {
       x = sc[k];
       y = sc[k + 1];
@@ -504,12 +520,12 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     fan.addIndex(0);
     return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
-    const height = outer - inner;
+    height = outer - inner;
 
     vertices = [];
     for(i = 0; i <= loops; i++) {
       radius = inner + height * (i / loops);
-      rso = radius / outer;
+      // rso = radius / outer;
       for(k = 0; k < slp1; k++) {
         x = sc[k];
         y = sc[k + 1];
@@ -555,16 +571,19 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   const circleRad = outer;
   const sci = [];
   const scj = [];
-  let cangle, sangle, u;
+  let cangle;
+  let sangle;
+  let u;
   let angleStep = MathUtil.PiTimes2 / crosswise;
   let cosStep = Math.cos(angleStep);
   let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
-  for(var i = 0; i < crosswise; i++) {
+  let i;
+  for (i = 0; i < crosswise; i++) {
     sci.push(sangle, cangle);
-    var ts = cosStep * sangle + sinStep * cangle;
-    var tc = cosStep * cangle - sinStep * sangle;
+    const ts = cosStep * sangle + sinStep * cangle;
+    const tc = cosStep * cangle - sinStep * sangle;
     cangle = tc;
     sangle = ts;
   }
@@ -575,7 +594,9 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
-  for(i = 0; i < lengthwise; i++) {
+  let ts;
+  let tc;
+  for (i = 0; i < lengthwise; i++) {
     scj.push(sangle, cangle);
     ts = cosStep * sangle + sinStep * cangle;
     tc = cosStep * cangle - sinStep * sangle;
@@ -586,11 +607,13 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   scj.push(scj[0]);
   scj.push(scj[1]);
   const vertices = [];
-  for(let j = 0; j <= lengthwise; j++) {
+  let j;
+  for (j = 0; j <= lengthwise; j++) {
     const v0 = j / lengthwise;
     const sinr0 = scj[j * 2];
     const cosr0 = scj[j * 2 + 1];
-    for(i = 0; i <= crosswise; i++) {
+    let i;
+    for (i = 0; i <= crosswise; i++) {
       u = i / crosswise;
       const sint = sci[i * 2];
       const cost = sci[i * 2 + 1];
@@ -642,10 +665,12 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   const yStart = -height * 0.5;
   const normalZ = inward ? -1 : 1;
   const vertices = [];
-  for(let i = 0; i <= heightDiv; i++) {
+  let i;
+  for (i = 0; i <= heightDiv; i++) {
     const iStart = i / heightDiv;
     const y = yStart + height * iStart;
-    for(let j = 0; j <= widthDiv; j++) {
+    let j;
+    for (j = 0; j <= widthDiv; j++) {
       const jx = j / widthDiv;
       const x = xStart + width * jx;
       vertices.push(x, y, 0, 0, 0, normalZ, jx, iStart);
@@ -768,12 +793,13 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 1.0; // sin(90.0deg)
   cangle = 0; // cos(90.0deg)
-  for(var i = 0; i < slices; i++) {
+  let i;
+  for (i = 0; i < slices; i++) {
     const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     sangle = tsin;
     cangle = tcos;
   }
@@ -791,7 +817,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = sinStep;
   cangle = cosStep;
-  for(i = 0; i < stacks; i++) {
+  let tsin;
+  let tcos;
+  for (i = 0; i < stacks; i++) {
     const origt = (i + 1) * 1.0 / stacks;
     scStack.push(sangle);
     zEnd.push(-cangle);
@@ -804,16 +832,20 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   }
   // Generate the vertex data
   const vertices = [];
-  let tx, x, y;
+  let tx;
+  let x;
+  let y;
   let gridHeight = 0;
-  for(i = 0; i <= stacks; i++) {
+
+  for (i = 0; i <= stacks; i++) {
     const zeCen = zEnd[i];
     let txe = verticalTexCoords[i];
     const zStartHeight = radius * zeCen;
     const offset = i < halfStacks ? -halfLength : halfLength;
     const radiusEnd = radius * scStack[i];
     gridHeight++;
-    for(var j = 0; j <= slices; j++) {
+    let j;
+    for (j = 0; j <= slices; j++) {
       tx = tc[j];
       x = sc[j * 2];
       y = sc[j * 2 + 1];
@@ -826,11 +858,13 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       const sr2 = sphereRatio * 0.5;
       const hl = halfLength * 2;
       const he = 1.0 - sphereRatio;
-      for(let m = 0; m <= middleStacks; m++) {
+      let m;
+      for (m = 0; m <= middleStacks; m++) {
         s = -halfLength + (m === 0 ? 0 : hl * m / middleStacks);
         txe = sr2 + (m === 0 ? 0 : he * m / middleStacks);
         gridHeight++;
-        for(j = 0; j <= slices; j++) {
+        let j;
+        for (j = 0; j <= slices; j++) {
           tx = tc[j];
           x = sc[j * 2];
           y = sc[j * 2 + 1];
@@ -884,7 +918,8 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let sangle = 0.0; // sin(0.0deg)
   let cangle = 1.0; // cos(0.0deg)
-  for(let i = 0; i < points * 2; i++) {
+  let i;
+  for (i = 0; i < points * 2; i++) {
     const radius = (i & 1) === 0 ? firstRadius : secondRadius;
     const x = -sangle * radius;
     const y = cangle * radius;

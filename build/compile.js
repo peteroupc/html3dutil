@@ -79,21 +79,27 @@ const fsRealpath = util.promisify(fs.realpath);
 
 async function execAsync(cmd, outOptions) {
   try {
-    // console.log(cmd)
-  // NOTE: Default buffer size is too small for our purposes;
+    console.log(cmd);
+    // NOTE: Default buffer size is too small for our purposes;
     // increase to 5000 KiB
-    var cpe = await cpExec(cmd, {"maxBuffer":5000 * 1024});
+    const cpe = await cpExec(cmd, {"maxBuffer":5000 * 1024});
+    // console.log(cpe);
+    // console.log([cpe.stdout.toString().length, cpe.stderr.toString().length]);
+    // console.log(cpe.stderr.toString());
     if(typeof outOptions === "undefined" || outOptions === null)return cpe.stdout.toString();
     if(outOptions === "outerr")return cpe.stdout.toString() +
    "\n" + cpe.stderr.toString();
     if(outOptions === "err")return cpe.stderr.toString();
     return cpe.stdout.toString();
   } catch(ex) {
+    // console.log(ex);
+    // console.log([ex.stdout.toString().length, ex.stderr.toString().length]);
+    // console.log(ex.stderr.toString());
     if(typeof outOptions === "undefined" || outOptions === null)return ex.stdout.toString();
     if(outOptions === "outerr")return ex.stdout.toString() +
-   "\n" + cpe.stderr.toString();
+   "\n" + ex.stderr.toString();
     if(outOptions === "err")return ex.stderr.toString();
-    return cpe.stdout.toString();
+    return ex.stdout.toString();
   }
 }
 
@@ -140,7 +146,7 @@ async function tmppathAsync(f, cb) {
   await writeFileIfNeededAsync(t + "/" + f, "")
     .then(async () => {
       try{
-        await cb(t + "/" + f);
+        return await cb(t + "/" + f);
       } finally {
         await fsUnlink(t + "/" + f)
           .then(() => fsRmdir(t));
@@ -152,7 +158,7 @@ async function chdirAsync(x, cb) {
   const wd = process.cwd();
   try {
     process.chdir(x);
-    await cb();
+    return await cb();
   } finally {
     process.chdir(wd);
   }
@@ -190,7 +196,7 @@ async function normalizeAndCompile(compilerJar, inputArray, output,
   advanced, useSourceMap, toModule) {
   const inputs = inputArray.map((x) => "--js " + ffq(x)).join(" ");
   const sourceMap = output + ".map";
-  const formatting = false ? "--formatting PRETTY_PRINT" : "";
+  const formatting = ""; // "--formatting PRETTY_PRINT"
   const opt = advanced ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS";
   const cmd = "java -jar " + ffq(compilerJar) + " " + formatting + " " +
      " --warning_level=VERBOSE --jscomp_off=globalThis --jscomp_off=deprecated " +
@@ -217,17 +223,14 @@ async function normalizeAndCompile(compilerJar, inputArray, output,
       }));
     return output;
   } catch(ex) {
-    console.error("Note that the Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. " +
+    throw new Error("Note that the Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. " +
       "It it doesn't exist yet, download the Closure Compiler JAR and put it in the same directory " +
       "as this script. (Running the Closure Compiler requires a Java runtime environment.)");
-    process.exit();
   }
 }
 async function asyncMain() {
   const compilerJar = await realpathAsync("compiler.jar");
   await chdirAsync("..", async () => {
-    let files = ["promise.js", "h3du.js"];
-    files = files.concat(await readdirAsync(".", /^h3du-.*?\.js$/));
     await tmppathAsync("h3du_all.js", async (p) => {
       let filesForDoc = ["./h3du_module.js"].concat(
         await readdirAsync("extras", /^.*?\.js$/));
@@ -249,13 +252,16 @@ async function asyncMain() {
     });
     const svgs = [["doc/websafe.svg", "dochtml/websafe.svg", gwsvg.generateSvg()],
       ["doc/colornames.svg", "dochtml/colornames.svg", gwsvg.generateColorNameSvg()]];
-    for(let i = 0; i < svgs.length; i++) {
-      var s = svgs[i];
-      await writeFileIfNeededAsync(s[0], s[2])
+    let i;
+    const tasks = [];
+    for (i = 0; i < svgs.length; i++) {
+      const s = svgs[i];
+      tasks.push(writeFileIfNeededAsync(s[0], s[2])
         .then(() => execAsync("svgo -i " + ffq(s[0]) + " -o " + ffq(s[0])))
         .then(() => readFileAsync(s[0]))
-        .then((r) => writeFileIfNeededAsync(s[1], r));
+        .then((r) => writeFileIfNeededAsync(s[1], r)));
     }
+    await Promise.all(tasks);
   });
 }
 

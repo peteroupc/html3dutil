@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [woodShader](#extras_woodshader.woodShader)<br>TODO: Not documented yet.
 
 <a name='extras_woodshader.woodShader'></a>
-### module:extras/woodshader.woodShader
+### module:extras/woodshader.woodShader (constant)
 
 TODO: Not documented yet.
 

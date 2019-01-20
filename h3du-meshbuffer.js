@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global Float32Array, Uint16Array, Uint32Array, indices */
+/* global Float32Array, Uint16Array, Uint32Array */
 
 import {BufferAccessor} from "./h3du-bufferaccessor.js";
 import {MathInternal} from "./h3du-mathinternal.js";
@@ -49,7 +49,7 @@ import {toGLColor} from "./h3du-misc";
  * return geom
  * }
  */
-export var MeshBuffer = function() {
+export const MeshBuffer = function() {
   this.format = MeshBuffer.TRIANGLES;
   this.attributes = [];
   this._bounds = null;
@@ -73,7 +73,8 @@ MeshBuffer.prototype.setIndices = function(indices) {
     this.indices = null;
   } else if(indices instanceof Array) {
     let index = 0;
-    for(let i = indices.length - 1; i >= 0; i--) {
+    let i;
+    for (i = indices.length - 1; i >= 0; i--) {
       index = Math.max(index, indices[i]);
       if(index >= 65536)break;
     }
@@ -219,7 +220,7 @@ MeshBuffer.prototype._getAttributes = function() {
  * @returns {*} TODO: Not documented yet.
  */
 MeshBuffer.prototype.getIndex = function(indicesIndex) {
-  if(typeof indices === "undefined" || indices === null)return indicesIndex;
+  if(typeof this.indices === "undefined" || this.indices === null)return indicesIndex;
   return this.indices[indicesIndex];
 };
 /**
@@ -272,7 +273,8 @@ MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
     console.warn("Unsupported attribute semantic: " + name);
     return null;
   }
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     if(this.attributes[i][0] === sem[0] &&
     this.attributes[i][1] === sem[1]) {
       return this.attributes[i][2];
@@ -292,18 +294,16 @@ MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
  * @returns {Array<number>} The parameter "ret".
  */
 MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
-  let count = 3;
   const prim = this.primitiveType();
-  if(prim === MeshBuffer.LINES)count = 2;
-  if(prim === MeshBuffer.POINTS)count = 1;
+  const count = prim === MeshBuffer.LINES ? 2 :
+    prim === MeshBuffer.POINTS ? 1 : 3;
+  const i = primitiveIndex * count;
   if(typeof this.indices === "undefined" || this.indices === null) {
-    var i = primitiveIndex * count;
     if(i + count > this.vertexCount())throw new Error();
     ret[0] = i;
     if(count >= 2)ret[1] = i + 1;
     if(count >= 3)ret[2] = i + 2;
   } else {
-    i = primitiveIndex * count;
     ret[0] = this.indices[i];
     if(count >= 2)ret[1] = this.indices[i + 1];
     if(count >= 3)ret[2] = this.indices[i + 2];
@@ -415,10 +415,12 @@ MeshBuffer.prototype.getPositions = function() {
   const ret = [];
   const indices = [];
   const primcount = this.primitiveCount();
-  for(let j = 0; j < primcount; j++) {
+  let j;
+  for (j = 0; j < primcount; j++) {
     this.vertexIndices(j, indices);
     const primitive = [];
-    for(let k = 0; k < indices.length; k++) {
+    let k;
+    for (k = 0; k < indices.length; k++) {
       primitive.push(posattr.getVec(indices[k], [0, 0, 0]));
     }
     ret.push(primitive);
@@ -435,14 +437,16 @@ MeshBuffer.prototype.getPositions = function() {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.normalizeNormals = function() {
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const attr = this.attributes[i];
     if(attr[0] !== Semantic.NORMAL) {
       continue;
     }
     const value = [];
     const count = attr[2].count();
-    for(let j = 0; j < count; j++) {
+    let j;
+    for (j = 0; j < count; j++) {
       attr[2].getVec(j, value);
       MathInternal.vecNormalizeInPlace(value);
       attr[2].setVec(j, value);
@@ -470,16 +474,19 @@ MeshBuffer.prototype.normalizeNormals = function() {
  * );
  */
 MeshBuffer.prototype.reverseNormals = function() {
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const attr = this.attributes[i];
     if(attr[0] !== Semantic.NORMAL) {
       continue;
     }
     const value = [];
     const count = attr[2].count();
-    for(let j = 0; j < count; j++) {
+    let j;
+    for (j = 0; j < count; j++) {
       attr[2].getVec(j, value);
-      for(let k = 0; k < value.length; k++) {
+      let k;
+      for (k = 0; k < value.length; k++) {
         value[k] = -value[k];
       }
       attr[2].setVec(j, value);
@@ -504,14 +511,16 @@ MeshBuffer.prototype.reverseNormals = function() {
 MeshBuffer.prototype.setColor = function(color) {
   const colorValue = toGLColor(color);
   let haveColor = false;
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const attr = this.attributes[i];
     const count = attr[2].count();
     if(attr[0] !== Semantic.COLOR) {
       continue;
     }
     haveColor = true;
-    for(let j = 0; j < count; j++) {
+    let j;
+    for (j = 0; j < count; j++) {
       attr[2].setVec(j, colorValue);
     }
   }
@@ -542,7 +551,8 @@ MeshBuffer.prototype.setColor = function(color) {
 MeshBuffer.prototype.reverseWinding = function() {
   if(this.primitiveType() === MeshBuffer.TRIANGLES) {
     this._ensureIndices();
-    for(let i = 0; i + 2 < this.indices.length; i += 3) {
+    let i;
+    for (i = 0; i + 2 < this.indices.length; i += 3) {
       const tmp = this.indices[i + 1];
       this.indices[i + 1] = this.indices[i + 2];
       this.indices[i + 2] = tmp;
@@ -617,7 +627,8 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
             const nx = normal[0];
             const ny = normal[1];
             const nz = normal[2];
-            for(let j = 0; j < dupvertcount; j += 3) {
+            let j;
+            for (j = 0; j < dupvertcount; j += 3) {
               if(nx === dupverts[j] && ny === dupverts[j + 1] && nz === dupverts[j + 2]) {
                 dupfound = true;
                 break;
@@ -650,12 +661,13 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
   let v1 = [0, 0, 0];
   let v2 = [0, 0, 0];
   let v3 = [0, 0, 0];
-  for(let i = 0; i < indices.length; i += 3) {
+  let i;
+  for (i = 0; i < indices.length; i += 3) {
     v1 = positions.getVec(indices[i], v1);
     v2 = positions.getVec(indices[i + 1], v2);
     v3 = positions.getVec(indices[i + 2], v3);
     // Find the tangent and bitangent
-    var ret;
+    let ret;
     const t1 = v2[0] - v1[0];
     const t2 = v2[1] - v1[1];
     const t3 = v2[2] - v1[2];
@@ -700,7 +712,8 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
     // (where AA and BB are the orthonormalized versions of the tangent
     // and bitangent) as the tangent space transform, in order to avoid
     // the need to also specify a transformed normal due to matrix inversion.
-    for(let j = 0; j < 3; j++) {
+    let j;
+    for (j = 0; j < 3; j++) {
       const m = ret;
       v1 = normals.getVec(indices[i + j], v1);
       const norm0 = v1[0];
@@ -733,7 +746,8 @@ MeshBuffer.prototype._ensureIndices = function() {
 MeshBuffer.prototype._makeRedundant = function() {
   this._ensureIndices();
   const newAttributes = [];
-  for(let i = 0; i < this.attributes.length; i++) {
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
     const a = this.attributes[i];
     newAttributes.push([a[0], a[1],
       BufferAccessor.merge(a[2], this.indices, null, [])]);
@@ -751,7 +765,8 @@ MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desire
   const newattr = BufferAccessor.makeBlank(vertexCount, desiredCount);
   if(attrCount > 0) {
     const vec = MathInternal.vecZeros(desiredCount);
-    for(let i = 0; i < vertexCount; i++) {
+    let i;
+    for (i = 0; i < vertexCount; i++) {
       attr.getVec(i, vec);
       newattr.setVec(i, vec);
     }
@@ -837,21 +852,26 @@ MeshBuffer.prototype._recalcTangents = function() {
  */
 MeshBuffer.prototype.merge = function(other) {
   const newAttributes = [];
+  let newAttribute;
   let attr;
+  let oattr;
+  let existingAttribute;
   if(!other)throw new Error();
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
     return this;
   } else if(this.indices && this.indices.length === 0) {
     let empty = true;
-    for(var i = 0; i < this.attributes.length; i++) {
+    let i;
+    for (i = 0; i < this.attributes.length; i++) {
       attr = this.attributes[i][2];
       empty = empty && (typeof attr === "undefined" || attr === null || attr.count() === 0);
     }
     if(empty) {
       // If this object is empty, copy the attributes and
       // indices from the other object
-      for(i = 0; i < other.attributes.length; i++) {
+      let i;
+      for (i = 0; i < other.attributes.length; i++) {
         const o = other.attributes[i];
         newAttributes.push([o[0], o[1], o[2].copy()]);
       }
@@ -874,14 +894,16 @@ MeshBuffer.prototype.merge = function(other) {
   }
   this._ensureIndices();
   other._ensureIndices();
-  for(i = 0; i < this.attributes.length; i++) {
-    var existingAttribute = null;
-    var newAttribute = null;
+  let i;
+  for (i = 0; i < this.attributes.length; i++) {
+    existingAttribute = null;
+    newAttribute = null;
     attr = this.attributes[i];
     const sem = attr[0];
     const semIndex = attr[1];
-    for(var j = 0; j < other.attributes.length; j++) {
-      var oattr = other.attributes[j];
+    let j;
+    for (j = 0; j < other.attributes.length; j++) {
+      const oattr = other.attributes[j];
       if(oattr[0] === sem && oattr[1] === semIndex) {
         existingAttribute = oattr[2];
         break;
@@ -891,10 +913,12 @@ MeshBuffer.prototype.merge = function(other) {
     if(!newAttribute)throw new Error();
     newAttributes.push([sem, semIndex, newAttribute]);
   }
-  for(i = 0; i < other.attributes.length; i++) {
+
+  for (i = 0; i < other.attributes.length; i++) {
     existingAttribute = null;
     oattr = other.attributes[i];
-    for(j = 0; j < this.attributes.length; j++) {
+    let j;
+    for (j = 0; j < this.attributes.length; j++) {
       attr = this.attributes[j];
       if(oattr[0] === attr[0] && oattr[1] === attr[1]) {
         existingAttribute = attr;
@@ -948,7 +972,8 @@ MeshBuffer.prototype.transform = function(matrix) {
   if(normalAttribute)count = Math.min(count, normalAttribute.count());
   const position = [0, 0, 0];
   const normal = [0, 0, 0];
-  for(let i = 0; i < count; i++) {
+  let i;
+  for (i = 0; i < count; i++) {
     positionAttribute.getVec(i, position);
     let xform = MathUtil.mat4projectVec3(matrix,
       position[0], position[1], position[2]);
@@ -999,7 +1024,8 @@ MeshBuffer.prototype.wireFrame = function() {
   const existingLines = {};
   const primitive = [];
   const primcount = this.primitiveCount();
-  for(let i = 0; i < primcount; i++) {
+  let i;
+  for (i = 0; i < primcount; i++) {
     this.vertexIndices(i, primitive);
     const f1 = primitive[0];
     const f2 = primitive[1];
@@ -1036,10 +1062,12 @@ MeshBuffer.prototype.getBounds = function() {
     const indices = [];
     const vec = [0, 0, 0];
     const primcount = this.primitiveCount();
-    for(let j = 0; j < primcount; j++) {
+    let j;
+    for (j = 0; j < primcount; j++) {
       this.vertexIndices(j, indices);
       const primitive = [];
-      for(let k = 0; k < indices.length; k++) {
+      let k;
+      for (k = 0; k < indices.length; k++) {
         const v = posattr.getVec(indices[k], vec);
         if(empty) {
           empty = false;
@@ -1080,7 +1108,8 @@ MeshBuffer.prototype.primitiveType = function() {
 MeshBuffer.prototype.vertexCount = function() {
   if(typeof this.indices === "undefined" || this.indices === null) {
     let mincount = 0;
-    for(let i = 0; i < this.attributes.length; i++) {
+    let i;
+    for (i = 0; i < this.attributes.length; i++) {
       const a = this.attributes[i];
       if(i === 0 || a.count() < mincount)mincount = a.count();
     }

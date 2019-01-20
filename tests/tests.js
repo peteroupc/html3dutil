@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, console, valueDIff */
+/* global H3DU, console, valueDiff */
 // Portions adapted from public domain Mozilla unit tests
 
 const EPSILON = 0.001;
@@ -74,7 +74,9 @@ function isApproxVec(vec1, vec2, delta) {
     info("isApproxVec got [" + vec2 + "], expected [" + vec1 + "] instead.");
     return false;
   }
-  for (let i = 0, len = vec1.length; i < len; i++) {
+  let i;
+  let len;
+  for (i = 0, len = vec1.length; i < len; i++) {
     if (!isApprox(vec1[i], vec2[i], delta)) {
       info("isApproxVec got [" + vec2 + "], expected [" + vec1 + "] instead.");
       return false;
@@ -113,8 +115,10 @@ function compareWithNumericalBitangentSurface(curve) {
     // Skip this test if no bitangent method is defined
     return;
   }
-  for(let j = 0; j <= 100; j += 5) {
-    for(let i = 0; i <= 100; i += 5) {
+  let j;
+  for (j = 0; j <= 100; j += 5) {
+    let i;
+    for (i = 0; i <= 100; i += 5) {
       // Analytical tangent
       const anatan = H3DU.SurfaceEval.findBitangent(curve, i / 100.0, j / 100.0);
       curve.bitangent = null;
@@ -130,14 +134,16 @@ function compareWithNumericalBitangentSurface(curve) {
 function compareWithNumericalTangentSurface(curve) {
   "use strict";
   const oldtan = curve.tangent;
-  for(let j = 0; j <= 100; j += 5) {
-    for(let i = 0; i <= 100; i += 5) {
+  let j;
+  for (j = 0; j <= 100; j += 5) {
+    let i;
+    for (i = 0; i <= 100; i += 5) {
       // Analytical tangent
       const anatan = H3DU.SurfaceEval.findTangent(curve, i / 100.0, j / 100.0);
       curve.tangent = null;
       // Numerical tangent
       const numtan = H3DU.SurfaceEval.findTangent(curve, i / 100.0, j / 100.0);
-      valueDIff(numtan, anatan);
+      valueDiff(numtan, anatan);
       curve.tangent = oldtan;
     }
   }
@@ -145,18 +151,22 @@ function compareWithNumericalTangentSurface(curve) {
 function compareWithNumericalCurveValues(curve) {
   "use strict";
   const oldtan = curve.tangent;
-  for(var i = 0; i <= 100; i += 5) {
+  let i;
+  let anatan;
+  let numtan;
+  for (i = 0; i <= 100; i += 5) {
   // Analytical tangent
-    var anatan = new H3DU.Curve(curve).velocity( i / 100.0);
+    anatan = new H3DU.Curve(curve).velocity( i / 100.0);
     curve.tangent = null;
     // Numerical tangent
-    var numtan = new H3DU.Curve(curve).velocity( i / 100.0);
+    numtan = new H3DU.Curve(curve).velocity( i / 100.0);
     valueDiff(numtan, anatan);
     curve.tangent = oldtan;
   }
   let al = null;
   if(typeof curve.arcLength !== "undefined" && curve.arcLength !== null) {
-    for(i = 0; i <= 10; i++) {
+    let i;
+    for (i = 0; i <= 10; i++) {
       al = curve.arcLength;
       anatan = new H3DU.Curve(curve).arcLength( i / 10.0);
       curve.arcLength = null;
@@ -166,7 +176,8 @@ function compareWithNumericalCurveValues(curve) {
     }
   }
   if(typeof curve.tangent !== "undefined" && curve.tangent !== null) {
-    for(i = 0; i <= 10; i++) {
+    let i;
+    for (i = 0; i <= 10; i++) {
       al = curve.tangent;
       anatan = new H3DU.Curve(curve).velocity( i / 10.0);
       curve.tangent = null;
@@ -176,7 +187,8 @@ function compareWithNumericalCurveValues(curve) {
     }
   }
   if(typeof curve.accel !== "undefined" && curve.accel !== null) {
-    for(i = 0; i <= 10; i++) {
+    let i;
+    for (i = 0; i <= 10; i++) {
       al = curve.accel;
       anatan = new H3DU.Curve(curve).accel( i / 10.0);
       curve.accel = null;
@@ -542,7 +554,8 @@ function test() {
   ok(isApproxVec([20.085999999999995, 19.582999999999995, 32.593999999999994], curve.evaluate(0.9)), "Point at 0.9 is not correct.");
   ok(isApproxVec([0, 13, 23], curve.evaluate(1)), "Point at 1 is not correct.");
   testPathBounds();
-  for(let i = 0; i < testfunctions.length; i++) {
+  let i;
+  for (i = 0; i < testfunctions.length; i++) {
     testfunctions[i]();
   }
 }
@@ -570,7 +583,8 @@ testfunctions.push(function() {
 testfunctions.push(function() {
   "use strict";
   // adapted from public domain World_Seed quat.tests.cpp
-  for(let i = 0; i < 1000; i++) {
+  let i;
+  for (i = 0; i < 1000; i++) {
     let vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2,
       Math.random() * 4 - 2];
     ok(isApprox(Math.sqrt(H3DU.MathUtil.vec4dot(vec, vec)), H3DU.MathUtil.vec4length(vec)));
@@ -580,10 +594,11 @@ testfunctions.push(function() {
 });
 testfunctions.push(function() {
   "use strict";
-  for(let i = 0; i < 1000; i++) {
+  let i;
+  for (i = 0; i < 1000; i++) {
     const vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2];
     const scalar = Math.random() * 4 - 2;
-    var vec2;
+    let vec2;
     vec2 = H3DU.MathUtil.vec3scale(vec, scalar);
     is(vec[0] * scalar, vec2[0]);
     is(vec[1] * scalar, vec2[1]);
@@ -614,7 +629,8 @@ testfunctions.push(function() {
     [2.3366679, 43.905643],
     [3.8443565, 45.413332],
     [3.8443565, 23.75]], 3);
-  for(let i = 0; i <= 100; i++) {
+  let i;
+  for (i = 0; i <= 100; i++) {
     const a = curve.evaluate(i / 100.0);
     const b = curve2.evaluate(i / 100.0);
     ok(isApproxVec(a, b));
@@ -691,7 +707,8 @@ testfunctions.push(function() {
 
 testfunctions.push(function() {
   "use strict";
-  for(let i = 0; i < 100; i++) {
+  let i;
+  for (i = 0; i < 100; i++) {
     const angle = Math.random() * 360 - 180;
     const axis = H3DU.MathUtil.vec3normalize([Math.random() * 2 - 1,
       Math.random() * 2 - 1, Math.random() * 2 - 1]);
@@ -704,7 +721,8 @@ testfunctions.push(function() {
 
 testfunctions.push(function() {
   "use strict";
-  for(let i = 0; i < 100; i++) {
+  let i;
+  for (i = 0; i < 100; i++) {
     const x = Math.random() * 360 - 180;
     const y = Math.random() * 360 - 180;
     const z = Math.random() * 360 - 180;

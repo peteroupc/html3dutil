@@ -79,7 +79,8 @@ TextWriter.prototype.footer = function() {
 TextWriter.prototype.heading = function(level, x) {
   let ret = "";
   if(level >= 1 && level <= 6) {
-    for(let i = 0; i < level; i++) {
+    let i;
+    for (i = 0; i < level; i++) {
       ret += "#";
     }
     ret += " " + x + "\n\n";
@@ -267,15 +268,16 @@ function Doc(name) {
     entry += memToIndex(this.events, "Events", docs);
     entry += memToIndex(this.methods, "Methods", docs);
     keys = Object.keys(this.members).sort();
-    for(var i = 0; i < keys.length; i++) {
+    let i;
+    for (i = 0; i < keys.length; i++) {
       entry += this.members[keys[i]][0];
     }
     keys = Object.keys(this.events).sort();
-    for(i = 0; i < keys.length; i++) {
+    for (i = 0; i < keys.length; i++) {
       entry += this.events[keys[i]][0];
     }
     keys = Object.keys(this.methods).sort();
-    for(i = 0; i < keys.length; i++) {
+    for (i = 0; i < keys.length; i++) {
       entry += this.methods[keys[i]][0];
     }
     entry += writer.paragraph(writer.linkText("index" + helper.fileExtension,
@@ -410,7 +412,8 @@ function typeval(x) {
     xnames = [x.names];
   }
   const xn = [];
-  for(let i = 0; i < xnames.length; i++) {
+  let i;
+  for (i = 0; i < xnames.length; i++) {
     let tname = xnames[i];
     tname = helper.linkto(tname, helper.htmlsafe(tname));
     xn.push(tname);
@@ -420,7 +423,8 @@ function typeval(x) {
 
 function augmentsval(x) {
   const xn = [];
-  for(let i = 0; i < x.length; i++) {
+  let i;
+  for (i = 0; i < x.length; i++) {
     let tname = x[i];
     tname = helper.linkto(tname, helper.htmlsafe(tname));
     xn.push(tname);
@@ -502,6 +506,8 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
   nodes.forEach(function (node) {
     let i;
     let entry;
+    let heading;
+    let p;
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
@@ -521,7 +527,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
     if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind === "namespace" || node.kind === "module") {
       const paramnames = [];
       if(node.params) {
-        var p = node.params;
+        const p = node.params;
         for(i = 0; i < p.length; i++) {
           let pname = p[i].name;
           if(p[i].optional) {
@@ -545,7 +551,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       const attribs = helper.getAttribs(node);
       const attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
       entry += writer.anchor(Doc.toHash(node.longname));
-      var heading = attribstr;
+      heading = attribstr;
       if(node.kind === "class") {
         heading += "new ";
       }

@@ -23,12 +23,12 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `maj` (Type: *)
-* `a` (Type: *)
-* `b` (Type: *)
+* `maj` (Type: <a href="_.md">*</a>)
+* `a` (Type: <a href="_.md">*</a>)
+* `b` (Type: <a href="_.md">*</a>)
 
 #### Return Value
 
-Return value. (Type: *)
+Return value. (Type: <a href="_.md">*</a>)
 
 [Back to documentation index.](index.md)

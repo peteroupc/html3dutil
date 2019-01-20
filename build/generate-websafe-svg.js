@@ -26,8 +26,9 @@ function SwatchSvg() {
   this.addSwatch = function(color, name) {
     const cname = name !== null ? name : color;
     const svgx = this.x * this.width;
+    let svgy;
     if (typeof name === "undefined" || name === null) {
-      var svgy = this.y * HEIGHT + this.slack;
+      svgy = this.y * HEIGHT + this.slack;
       this.totalheight = Math.max(this.totalheight, svgy + HEIGHT + this.slack + 4);
       this.output += "<rect x='" + (svgx + 2) + "' y='" + (svgy + 2) + "' width='" + (HEIGHT - 4) + "'" +
     " height='" + (HEIGHT - 4) + "' style='stroke:black;stroke-width:1px;" +
@@ -76,7 +77,8 @@ function generateSvg() {
   ];
 
   const svg = new SwatchSvg();
-  for (let i = 0; i < webcolors.length; i++) {
+  let i;
+  for (i = 0; i < webcolors.length; i++) {
     webcolors[i].forEach((c) => svg.addSwatch(c));
     if (i + 1 < webcolors.length)svg.separateRow();
   }

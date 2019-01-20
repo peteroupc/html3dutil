@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [pixelateShader](#extras_pixelateshader.pixelateShader)<br>TODO: Not documented yet.
 
 <a name='extras_pixelateshader.pixelateShader'></a>
-### module:extras/pixelateshader.pixelateShader
+### module:extras/pixelateshader.pixelateShader (constant)
 
 TODO: Not documented yet.
 

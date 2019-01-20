@@ -130,9 +130,7 @@ newControlPoints,
 );
 // Alternatively, the curve could be generated with the
 // fromBezierCurve method:
-// var curve=BSplineCurve.fromBezierCurve(newControlPoints);</pre><h3> Members</h3><ul><li><a href='#H3DU.BSplineCurve.DIVIDE_BIT'>DIVIDE_BIT</a><br>Indicates to divide each other coordinate of the returned point
-by the last coordinate of the point and omit the last
-coordinate.</ul><h3> Methods</h3><ul><li><a href='#H3DU.BSplineCurve.clamped'>clamped</a><br>Creates a B-spline curve with uniform knots, except that
+// var curve=BSplineCurve.fromBezierCurve(newControlPoints);</pre><h3> Methods</h3><ul><li><a href='#H3DU.BSplineCurve.clamped'>clamped</a><br>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.<li><a href='#H3DU.BSplineCurve.clampedKnots'>clampedKnots</a><br>Generates a knot vector with uniform knots, to be
@@ -144,18 +142,7 @@ in a B-spline curve.<li><a href='#H3DU.BSplineCurve.fromBezierCurve'>fromBezierC
 in this curve object.<li><a href='#H3DU.BSplineCurve_getKnots'>getKnots</a><br>Gets a reference to the array of knots used
 in this curve object.<li><a href='#H3DU.BSplineCurve_split'>split</a><br>Splits this B-spline curve into two at the given point.<li><a href='#H3DU.BSplineCurve.uniform'>uniform</a><br>Creates a B-spline curve with uniform knots.<li><a href='#H3DU.BSplineCurve.uniformKnots'>uniformKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the BSplineCurve or BSplineCurve constructor.<li><a href='#H3DU.BSplineCurve_velocity'>velocity</a><br>Finds the velocity (derivative) of
-this curve at the given point.</ul><a name='H3DU.BSplineCurve.DIVIDE_BIT'></a>
-<h3> H3DU.BSplineCurve.DIVIDE_BIT (constant)
-
-</h3>Indicates to divide each other coordinate of the returned point
-by the last coordinate of the point and omit the last
-coordinate. This is used to convert
-homogeneous coordinates to conventional coordinates.
-If this bit is set, the length of each control point must be at least 2.<p>
-A B-spline curve that has control points whose last coordinate is other than
-1 is a <i>rational</i> B-spline curve.
-
-<p>Default Value: <code>2</code></p><a name='H3DU.BSplineCurve.clamped'></a>
+this curve at the given point.</ul><a name='H3DU.BSplineCurve.clamped'></a>
 <h3> (static) H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])</h3>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points

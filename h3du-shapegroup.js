@@ -16,7 +16,7 @@ import {Transform} from "./h3du-transform";
  * @constructor
  * @memberof H3DU
  */
-export var ShapeGroup = function() {
+export const ShapeGroup = function() {
   this._init();
 };
 /** @ignore */
@@ -77,7 +77,8 @@ ShapeGroup.prototype.copy = function() {
   const ret = new ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     ret.addShape(this.shapes[i].copy());
   }
   return ret;
@@ -164,7 +165,8 @@ ShapeGroup.prototype.setTransform = function(transform) {
  * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.removeShape = function(shape) {
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
       i--;
@@ -188,7 +190,8 @@ ShapeGroup.prototype.getBounds = function() {
   const inf = Number.POSITIVE_INFINITY;
   const ret = [inf, inf, inf, -inf, -inf, -inf];
   let first = true;
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     const b = this.shapes[i].getBounds();
     // NOTE: The returned bounding
     if(!MathUtil.boxIsEmpty(b)) {
@@ -219,7 +222,8 @@ ShapeGroup.prototype.getBounds = function() {
  */
 ShapeGroup.prototype.vertexCount = function() {
   let c = 0;
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
   }
   return c;
@@ -231,7 +235,8 @@ ShapeGroup.prototype.vertexCount = function() {
  */
 ShapeGroup.prototype.primitiveCount = function() {
   let c = 0;
-  for(let i = 0; i < this.shapes.length; i++) {
+  let i;
+  for (i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
   }
   return c;

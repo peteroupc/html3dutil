@@ -179,7 +179,7 @@ Gets a vertex attribute included in this mesh buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.md#Semantic.POSITION">Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `name` (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
 * `semanticIndex` (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string. Otherwise, if null or omitted, the default value is 0.
 
 #### Return Value
@@ -250,11 +250,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `indicesIndex` (Type: *)<br>TODO: Not documented yet.
+* `indicesIndex` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: *)
+TODO: Not documented yet. (Type: <a href="_.md">*</a>)
 
 <a name='H3DU.MeshBuffer_getIndices'></a>
 ### H3DU.MeshBuffer#getIndices()
@@ -418,7 +418,7 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.md#Semantic.POSITION">Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid. If this isn't a string, the set index of the attribute will be 0 (see MeshBuffer#setAttributeEx).
+* `name` (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid. If this isn't a string, the set index of the attribute will be 0 (see MeshBuffer#setAttributeEx).
 * `buffer` (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored. See MeshBuffer#setAttributeEx.
 * `countPerValue` (Type: number)<br>The number of elements in each per-vertex item. See MeshBuffer#setAttributeEx.
 * `offset` (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts.See MeshBuffer#setAttributeEx.
@@ -441,7 +441,7 @@ stored in a vertex buffer.
 
 #### Parameters
 
-* `name` (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.md#Semantic.POSITION">Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
+* `name` (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
 * `index` (Type: number)<br>The semantic index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array | BufferAccessor)<br>The buffer where the per-vertex data is stored. If this parameter is an (untyped) Array, converts that parameter to a Float32Array.
 * `countPerValue` (Type: number) (optional)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If "buffer" is a BufferAccessor, the value of "countPerValue" is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.

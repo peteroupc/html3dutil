@@ -23,7 +23,7 @@ edge detection, and embossing, that process each pixel and its neighbors.
 * [normalizeKernelInPlace](#extras_kernelmatrixshader.normalizeKernelInPlace)<br>TODO: Not documented yet.
 
 <a name='extras_kernelmatrixshader.kernelMatrixShader'></a>
-### module:extras/kernelmatrixshader.kernelMatrixShader
+### module:extras/kernelmatrixshader.kernelMatrixShader (constant)
 
 GLSL shader code for a family of image processing filters, such as blurring, sharpening,
 edge detection, and embossing, that process each pixel and its neighbors. This filter takes
@@ -48,11 +48,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `kind` (Type: *)
+* `kind` (Type: <a href="_.md">*</a>)
 
 #### Return Value
 
-Return value. (Type: *)
+Return value. (Type: <a href="_.md">*</a>)
 
 <a name='extras_kernelmatrixshader.normalizeKernelInPlace'></a>
 ### (static) module:extras/kernelmatrixshader.normalizeKernelInPlace(matrix)
@@ -61,10 +61,10 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `matrix` (Type: *)
+* `matrix` (Type: <a href="_.md">*</a>)
 
 #### Return Value
 
-Return value. (Type: *)
+Return value. (Type: <a href="_.md">*</a>)
 
 [Back to documentation index.](index.md)

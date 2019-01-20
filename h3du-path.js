@@ -1,3 +1,4 @@
+/* global bx, by, tx, ty */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -264,7 +265,7 @@ ArcCurve.prototype.velocity = function(t) {
  * @memberof H3DU
  * @constructor
  */
-export var GraphicsPath = function() {
+export const GraphicsPath = function() {
   this.segments = [];
   this.incomplete = false;
   this.startPos = [0, 0];
@@ -313,7 +314,10 @@ GraphicsPath._endPoint = function(a) {
 };
 /** @ignore */
 GraphicsPath._point = function(seg, t) {
-  let a, b, x, y;
+  let a;
+  let b;
+  let x;
+  let y;
   if(seg[0] === GraphicsPath.CLOSE) {
     return [0, 0];
   } else if(seg[0] === GraphicsPath.LINE) {
@@ -504,7 +508,8 @@ GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1,
 };
 /** @ignore */
 GraphicsPath.prototype._start = function() {
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._startPoint(s);
   }
@@ -512,7 +517,8 @@ GraphicsPath.prototype._start = function() {
 };
 /** @ignore */
 GraphicsPath.prototype._end = function() {
-  for(let i = this.segments.length - 1; i >= 0; i--) {
+  let i;
+  for (i = this.segments.length - 1; i >= 0; i--) {
     const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._endPoint(s);
   }
@@ -529,7 +535,8 @@ GraphicsPath.prototype.merge = function(path) {
   let oldpos = null;
   if(!path)return this;
   const segsLength = path.segments.length;
-  for(let i = 0; i < segsLength; i++) {
+  let i;
+  for (i = 0; i < segsLength; i++) {
     const a = path.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       this.closePath();
@@ -569,7 +576,8 @@ GraphicsPath.prototype.toString = function() {
   let oldpos = null;
   let ret = "";
 
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const a = this.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       ret += "Z";
@@ -626,7 +634,8 @@ GraphicsPath.prototype.pathLength = function(flatness) {
 GraphicsPath.prototype.getLines = function(flatness) {
   const ret = [];
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
@@ -657,13 +666,14 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
   const path = new GraphicsPath();
   let last = null;
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
-    var j;
+    let j;
     const endpt = GraphicsPath._endPoint(s);
     const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
@@ -706,13 +716,14 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
 GraphicsPath.prototype.toCurvePath = function() {
   const path = new GraphicsPath();
   let last = null;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
-    var j;
+    let j;
     const endpt = GraphicsPath._endPoint(s);
     const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
@@ -813,15 +824,17 @@ GraphicsPath.prototype.getBounds = function() {
   const inf = Number.POSITIVE_INFINITY;
   const ret = [inf, inf, -inf, inf];
   let first = true;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
-    var ax, ay;
+    let ax;
+    let ay;
     if(s[0] === GraphicsPath.CLOSE)continue;
     const endpt = GraphicsPath._endPoint(s);
-    let x1 = s[1],
-      y1 = s[2],
-      x2 = endpt[0],
-      y2 = endpt[1];
+    const x1 = s[1];
+    const y1 = s[2];
+    let x2 = endpt[0];
+    let y2 = endpt[1];
     if(first) {
       ret[0] = Math.min(x1, x2);
       ret[1] = Math.min(y1, y2);
@@ -853,8 +866,8 @@ GraphicsPath.prototype.getBounds = function() {
       if(denomX !== 0 || denomY !== 0) {
         ax = x1 - 2 * s[3] + s[5];
         ay = y1 - 2 * s[4] + s[6];
-        var bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
-        var by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
+        let bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
+        let by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
         if(bx >= 0 && denomX !== 0) {
           bx = Math.sqrt(bx);
           GraphicsPath._accBounds(ret, s, (ax - bx) / denomX);
@@ -874,11 +887,13 @@ GraphicsPath.prototype.getBounds = function() {
       const theta = s[12];
       const delta = s[13];
       const rot = s[5]; // Rotation in radians
-      var cosp, sinp;
+      let cosp;
+      let sinp;
       if(Math.abs(delta - theta) >= Math.PI * 2) {
         // This arc goes around the entire ellipse, giving
         // it a much simpler formula for the bounding box
-        var distx, disty;
+        let distx;
+        let disty;
         if(rx === ry) {
           // The arc forms a circle
           distx = rx;
@@ -888,8 +903,8 @@ GraphicsPath.prototype.getBounds = function() {
           sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
           ax = cosp * rx;
           ay = sinp * rx;
-          bx = -sinp * ry;
-          by = cosp * ry;
+          // bx = -sinp * ry;
+          // by = cosp * ry;
           distx = Math.sqrt(ax * ax + bx * bx);
           disty = Math.sqrt(ay * ay + by * by);
         }
@@ -901,7 +916,7 @@ GraphicsPath.prototype.getBounds = function() {
         cosp = Math.cos(rot);
         sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
         const angles = [];
-        var angle;
+        let angle;
         if(cosp !== 0 && sinp !== 0) {
           angle = Math.atan2(-ry * sinp / cosp, rx);
           angles.push(angle, angle + Math.PI);
@@ -910,7 +925,8 @@ GraphicsPath.prototype.getBounds = function() {
         } else {
           angles.push(0, Math.PI, Math.PI * 0.5, Math.PI * 1.5);
         }
-        for(let k = 0; k < angles.length; k++) {
+        let k;
+        for (k = 0; k < angles.length; k++) {
           if(GraphicsPath._angleInRange(angles[k], theta, delta)) {
             GraphicsPath._accBoundsArc(ret, rx, ry, cosp, sinp, cx, cy, angles[k]);
           }
@@ -933,7 +949,8 @@ GraphicsPath.prototype.reverse = function() {
   let pathStartX = 0;
   let pathStartY = 0;
   const ret = new GraphicsPath();
-  for(let i = this.segments.length - 1; i >= 0; i--) {
+  let i;
+  for (i = this.segments.length - 1; i >= 0; i--) {
     const s = this.segments[i];
     let startpt = GraphicsPath._startPoint(s);
     let endpt = GraphicsPath._endPoint(s);
@@ -956,7 +973,8 @@ GraphicsPath.prototype.reverse = function() {
       }
       lastClosed = true;
       let havePathStart = false;
-      for(let j = i - 1; j >= 0; j--) {
+      let j;
+      for (j = i - 1; j >= 0; j--) {
         if(this.segments[j][0] === GraphicsPath.CLOSE) {
           break;
         }
@@ -1019,7 +1037,8 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
   let lastpty = 0;
   let first = true;
   let curPath = null;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     const startpt = GraphicsPath._startPoint(s);
     const endpt = GraphicsPath._endPoint(s);
@@ -1096,7 +1115,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
   let j;
   const ret = new GraphicsPath();
   let oldpos;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     let segThis = this.segments[i];
     let segOther = other.segments[i];
     let domove = false;
@@ -1111,8 +1131,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       tmpThis[0] = GraphicsPath.CUBIC;
       tmpThis[1] = segThis[1];
       tmpThis[2] = segThis[2];
-      var tx = 2 * segThis[3];
-      var ty = 2 * segThis[4];
+      const tx = 2 * segThis[3];
+      const ty = 2 * segThis[4];
       tmpThis[3] = (segThis[1] + tx) / 3;
       tmpThis[4] = (segThis[2] + ty) / 3;
       tmpThis[5] = (segThis[5] + tx) / 3;
@@ -1125,8 +1145,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       tmpOther[0] = GraphicsPath.CUBIC;
       tmpOther[1] = segOther[1];
       tmpOther[2] = segOther[2];
-      tx = 2 * segOther[3];
-      ty = 2 * segOther[4];
+      // tx = 2 * segOther[3];
+      // ty = 2 * segOther[4];
       tmpOther[3] = (segOther[1] + tx) / 3;
       tmpOther[4] = (segOther[2] + ty) / 3;
       tmpOther[5] = (segOther[5] + tx) / 3;
@@ -1223,7 +1243,8 @@ GraphicsPath.prototype.getCurves = function() {
   let startpty = 0;
   let first = true;
   let curPath = null;
-  for(var i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     const startpt = GraphicsPath._startPoint(s);
     const endpt = GraphicsPath._endPoint(s);
@@ -1245,7 +1266,8 @@ GraphicsPath.prototype.getCurves = function() {
       lastpty = startpty;
     }
   }
-  for(i = 0; i < subpaths.length; i++) {
+
+  for (i = 0; i < subpaths.length; i++) {
     curves.push(new PiecewiseCurve(subpaths[i]).toArcLengthParam().fitRange(0, 1));
   }
   return new GraphicsPath._CurveList(curves);
@@ -1261,7 +1283,8 @@ GraphicsPath.prototype.getSubpaths = function() {
 
   let first = true;
   let curPath = null;
-  for(let i = 0; i < this.segments.length; i++) {
+  let i;
+  for (i = 0; i < this.segments.length; i++) {
     const s = this.segments[i];
     const startpt = GraphicsPath._startPoint(s);
     const endpt = GraphicsPath._endPoint(s);
@@ -1297,7 +1320,8 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
   const points = [];
   let lastx = 0;
   let lasty = 0;
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push([line[0], line[1]]);
@@ -1329,7 +1353,8 @@ GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
   const points = [];
   let lastx = 0;
   let lasty = 0;
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push({
@@ -1368,7 +1393,8 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
   }
   const curves = this.getCurves();
   const points = [];
-  for(let i = 0; i < numPoints; i++) {
+  let i;
+  for (i = 0; i < numPoints; i++) {
     const t = i / (numPoints - 1);
     const ev = curves.evaluate(t);
     points.push([ev[0], ev[1]]);
@@ -1415,7 +1441,8 @@ GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   }
   const curves = this.getCurves();
   const points = [];
-  for(let i = 0; i < numPoints; i++) {
+  let i;
+  for (i = 0; i < numPoints; i++) {
     const t = i / (numPoints - 1);
     const ev = curves.evaluate(t);
     points.push({
@@ -1744,7 +1771,8 @@ GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) 
   const sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
   let t2 = Math.cos(angle1);
   let t1 = angle1 >= 0 && angle1 < 6.283185307179586 ? angle1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(angle1);
-  for(let i = 0; i < arcs; i++) {
+  let i;
+  for (i = 0; i < arcs; i++) {
     const ts = cosStep * t1 + sinStep * t2;
     const tc = cosStep * t2 - sinStep * t1;
     const t3 = ts;
@@ -2000,7 +2028,10 @@ GraphicsPath.prototype.transform = function(trans) {
   const d = trans[3];
   const e = trans[4];
   const f = trans[5];
-  let x, y, i, j;
+  let x;
+  let y;
+  let i;
+  let j;
   const tmp = [0];
   let oldpos = null;
   for(i = 0; i < this.segments.length; i++) {
@@ -2035,10 +2066,12 @@ GraphicsPath.prototype.transform = function(trans) {
         ret.bezierCurveTo(tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8]);
       break;
     case GraphicsPath.ARC: {
+      let largeArc;
+      let delta;
       if(a === 1 && b === 0 && c === 0 && d === 1) {
         // just a translation
-        var delta = s[13] - s[12];
-        var largeArc = Math.abs(delta) > Math.PI;
+        delta = s[13] - s[12];
+        largeArc = Math.abs(delta) > Math.PI;
         if(domove)ret.moveTo(s[1] + e, s[2] + f);
         ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
           largeArc, delta > 0, s[8] + e, s[9] + f);
@@ -2060,7 +2093,8 @@ GraphicsPath.prototype.transform = function(trans) {
       curves[curves.length - 1][7] = s[9];
       for(j = 0; j < curves.length; j++) {
         const cs = curves[j];
-        for(let k = 0; k < 8; k += 2) {
+        let k;
+        for (k = 0; k < 8; k += 2) {
           x = a * cs[k] + c * cs[k + 1] + e;
           y = b * cs[k] + d * cs[k + 1] + f;
           cs[k] = x;
@@ -2127,7 +2161,8 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
   if(pointCoords.length === 0)return this;
   if(pointCoords.length % 2 !== 0)throw new Error();
   this.moveTo(pointCoords[0], pointCoords[1]);
-  for(let i = 2; i < pointCoords.length; i += 2) {
+  let i;
+  for (i = 2; i < pointCoords.length; i += 2) {
     this.lineTo(pointCoords[i], pointCoords[i + 1]);
   }
   if(closedValue)this.closePath();
@@ -2152,7 +2187,8 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
  */
 GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  let px, py;
+  let px;
+  let py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
   const harccx = arccx * 0.5;
@@ -2200,7 +2236,8 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  */
 GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  let px, py;
+  let px;
+  let py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
   const harccx = arccx * 0.5;
@@ -2299,7 +2336,9 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
   const cosStart = Math.cos(startRad);
   const sinStart = startRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
   this.moveTo(x + cosStart * hw, y + sinStart * hh);
-  let angleInit, angleStep, cw;
+  let angleInit;
+  let angleStep;
+  let cw;
   if(sweep > 0) {
     angleInit = start + 180;
     angleStep = 180;
@@ -2309,7 +2348,8 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
     angleStep = -180;
     cw = false;
   }
-  for(let a = angleInit; cw ? a < e : a > e; a += angleStep) {
+  let a;
+  for (a = angleInit; cw ? a < e : a > e; a += angleStep) {
     const angleRad = (a >= 0 && a < 360 ? a : a % 360 + (a < 0 ? 360 : 0)) * pidiv180;
     const cosAng = Math.cos(angleRad);
     const sinAng = angleRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosAng * cosAng) : -Math.sqrt(1.0 - cosAng * cosAng);
@@ -2374,7 +2414,8 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
   const sinRot = dy * invArrowLen;
   headLength = Math.min(headLength, arrowLen);
   const shaftLength = arrowLen - headLength;
-  let x, y;
+  let x;
+  let y;
   this.moveTo(x0, y0);
   x = halfTailWidth * sinRot + x0;
   y = -halfTailWidth * cosRot + y0;
@@ -2421,7 +2462,8 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let c = Math.cos(phase);
   let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(let i = 0; i < sides; i++) {
+  let i;
+  for (i = 0; i < sides; i++) {
     const x = cx + c * radius;
     const y = cy + s * radius;
     if(i === 0) {
@@ -2461,7 +2503,8 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let c = Math.cos(phase);
   let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(let i = 0; i < sides; i++) {
+  let i;
+  for (i = 0; i < sides; i++) {
     const radius = (i & 1) === 0 ? radiusOut : radiusIn;
     const x = cx + c * radius;
     const y = cy + s * radius;
@@ -2527,8 +2570,18 @@ GraphicsPath.fromString = function(str) {
   let started = false;
   const ret = new GraphicsPath();
   let failed = false;
-  let endx, endy;
-  let sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
+  let endx;
+  let endy;
+  let sep;
+  let curx;
+  let cury;
+  let x;
+  let y;
+  let curpt;
+  let x2;
+  let y2;
+  let xcp;
+  let ycp;
   while(!failed && index[0] < str.length) {
     const c = GraphicsPath._nextAfterWs(str, index);
     if(!started && c !== 0x4d && c !== 0x6d) {
@@ -2619,7 +2672,8 @@ GraphicsPath.fromString = function(str) {
         }
 
         const arr = [];
-        for(let k = 0; k < 5; k++) {
+        let k;
+        for (k = 0; k < 5; k++) {
           arr[k] = GraphicsPath._nextNumber(str, index, true);
           if(typeof arr[k] === "undefined" || arr[k] === null) {
             failed = true; break;
@@ -2783,12 +2837,13 @@ const ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 // written by Frederik Vanhoutte.
 
 function orient2D(pa, pb, pc) {
-  let detleft, detright, det;
-  let detsum, errbound;
+  let detsum;
 
-  detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
-  detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
-  det = detleft - detright;
+  const detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
+
+  const detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
+
+  const det = detleft - detright;
   if (detleft > 0.0) {
     if (detright <= 0.0) {
       return det < 0 ? -1 : det === 0 ? 0 : 1;
@@ -2804,7 +2859,8 @@ function orient2D(pa, pb, pc) {
   } else {
     return det < 0 ? -1 : det === 0 ? 0 : 1;
   }
-  errbound = ORIENT_ERROR_BOUND_2D * detsum;
+
+  const errbound = ORIENT_ERROR_BOUND_2D * detsum;
   if (det >= errbound || -det >= errbound) {
     return det < 0 ? -1 : det === 0 ? 0 : 1;
   }
@@ -3081,9 +3137,11 @@ function decomposeTriangles(points, tris, isConvex) {
     decomposePolygon(points, polys);
   }
   if(points.length > 0 && polys.length === 0)throw new Error();
-  for(let i = 0; i < polys.length; i++) {
+  let i;
+  for (i = 0; i < polys.length; i++) {
     const poly = polys[i];
-    for(let j = 0; j < poly.length - 2; j++) {
+    let j;
+    for (j = 0; j < poly.length - 2; j++) {
       tris.push([
         poly[0][0], poly[0][1],
         poly[j + 1][0], poly[j + 1][1],
@@ -3119,7 +3177,8 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
   const contours2 = [];
   let firstOrient = 0;
   const tris = [];
-  let i, j;
+  let i;
+  let j;
   for(i = 0; i < subpaths.length; i++) {
     const contour = new Triangulate._Contour(subpaths[i]);
     // NOTE: Ignores contours with winding 0
@@ -3185,7 +3244,8 @@ GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
   const tris = this.getTriangles(flatness);
   const vertices = [];
-  for(let i = 0; i < tris.length; i++) {
+  let i;
+  for (i = 0; i < tris.length; i++) {
     const tri = tris[i];
     // Position X, Y, Z; Normal NX, NY, NZ; texture U, V
     vertices.push(
@@ -3208,7 +3268,8 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
   const lines = this.getLines(flatness);
   const vertices = [];
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
@@ -3232,7 +3293,8 @@ GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
   const z1 = Math.min(zStart, zEnd);
   const z2 = Math.max(zStart, zEnd);
   const vertices = [];
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     const dx = line[2] - line[0];
     const dy = line[3] - line[1];
@@ -3275,7 +3337,8 @@ Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
 };
 /** @ignore */
 Triangulate._triangulate = function(contour, tris) {
-  let t1, tri;
+  let t1;
+  let tri;
   if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
     // too few vertices, or the winding
     // suggests a zero area or even a certain
@@ -3369,7 +3432,7 @@ const PriorityQueue = function(comparer) {
   // public domain C implementation
   /** @ignore
    * @constructor */
-var RedBlackTreeNode = function(data) {
+const RedBlackTreeNode = function(data) {
   this.left = null;
   this.right = null;
   this.red = true;
@@ -3432,7 +3495,7 @@ var RedBlackTreeNode = function(data) {
 };
   /** @ignore
    * @constructor */
-var RedBlackTree = function(comparer) {
+const RedBlackTree = function(comparer) {
   if(!comparer) {
     this.comparer = RedBlackTree._defaultCompare;
   } else {
@@ -3495,7 +3558,9 @@ RedBlackTree._double = function(root, dir) {
 RedBlackTree.prototype.erase = function(data) {
   if(typeof this.root !== "undefined" && this.root !== null) {
     const head = new RedBlackTreeNode(null); /* False tree root */
-    let q, p, g; /* Helpers */
+    let q;
+    let p;
+    let g; /* Helpers */
     let f = null; /* Found item */
     let dir = true;
 
@@ -3582,8 +3647,10 @@ RedBlackTree.prototype.insert = function(data) {
     retval = this.root;
   } else {
     const head = new RedBlackTreeNode(null); /* False tree root */
-    let g, t; /* Grandparent & parent */
-    let p, q; /* Iterator & parent */
+    let g;
+    let t; /* Grandparent & parent */
+    let p;
+    let q; /* Iterator & parent */
     let dir = false,
       last = false;
 
@@ -3652,13 +3719,14 @@ RedBlackTree.prototype.insert = function(data) {
 /** @constructor
  * @private
  * @ignore */
-var Polygon = function(path, flatness) {
+const Polygon = function(path, flatness) {
   this.subpaths = [];
   this.contours = [];
   if(typeof path !== "undefined" && path !== null) {
     // Ignore degenerate line segments
     this.subpaths = path._getSubpaths(flatness, true);
-    for(let i = 0; i < this.subpaths.length; i++) {
+    let i;
+    for (i = 0; i < this.subpaths.length; i++) {
       this.contours[i] = new Polygon._Contour(this.subpaths[i]);
     }
   }
@@ -3677,10 +3745,12 @@ var Polygon = function(path, flatness) {
   };
   this.toPath = function() {
     const p = new GraphicsPath();
-    for(let i = 0; i < this.contours.length; i++) {
+    let i;
+    for (i = 0; i < this.contours.length; i++) {
       const c = this.contours[i];
       const cv = c.vertices;
-      for(let j = 0; j < cv.length; j += 2) {
+      let j;
+      for (j = 0; j < cv.length; j += 2) {
         if(j === 0) {
           p.moveTo(cv[j], cv[j + 1]);
         } else {
@@ -3711,7 +3781,7 @@ Polygon._Contour = function(subpath) {
 /** @constructor
  * @private
  * @ignore */
-var Clipper = function(s, c) {
+const Clipper = function(s, c) {
   this.eq = new PriorityQueue(Clipper.sweepEventCompNum);
   this.eventHolder = [];
   this.subject = s;
@@ -3974,7 +4044,8 @@ Clipper.prototype.compute = function(op) {
       return this.subject.ncontours() === 0 ? this.clipping : this.subject;
     return new Polygon(null, null);
   }
-  let i, j;
+  let i;
+  let j;
   let result = new Polygon(null, null);
   // Test 2 for trivial result case
   const subjBounds = this.subject.getBounds();
@@ -4004,7 +4075,10 @@ Clipper.prototype.compute = function(op) {
     for(j = 0; j < this.clipping.contour(i).nvertices(); j++)
       this.processSegment(this.clipping.contour(i).segment(j), CLIPPING);
   const S = new RedBlackTree(Clipper.segmentCompNum);
-  let it, sli, prev, next;
+  let it;
+  let sli;
+  let prev;
+  let next;
   const connector = new Connector(); // to connect the edge solutions
   let e;
   const minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
@@ -4174,7 +4248,6 @@ Clipper.findIntersection = function(a, b, e, f) {
 };
 /** @ignore */
 Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, b2y) {
-  let dpdeltad0;
   const t2 = a2x - a1x;
   const t3 = a2y - a1y;
   const t4 = b2x - b1x;
@@ -4182,7 +4255,8 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
   const t6 = t2 * t2 + t3 * t3;
   const t7 = t4 * t4 + t5 * t5;
   const ret = [];
-  let smin, smax;
+  let smin;
+  let smax;
   if (t6 === 0.0) {
     if (t7 === 0.0) {
       if (a1x === b1x && a1y === b1y) {
@@ -4218,7 +4292,7 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
   const t22 = b1x - a1x;
   const t23 = b1y - a1y;
   const t24 = t22 * t5 - t4 * t23;
-  dpdeltad0 = t22 * t3 - t2 * t23;
+  const dpdeltad0 = t22 * t3 - t2 * t23;
   if (t21 === 0.0) {
     if (t24 === 0.0 && dpdeltad0 === 0) {
       const s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);

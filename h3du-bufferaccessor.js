@@ -27,7 +27,7 @@ import {MathInternal} from "./h3du-mathinternal";
  * omitted, has the same value as "countPerValue".
  * Throws an error if 0 or less.
  */
-export var BufferAccessor = function(buffer, countPerValue, offset, stride) {
+export const BufferAccessor = function(buffer, countPerValue, offset, stride) {
   if(typeof stride === "undefined" || stride === null)stride = countPerValue;
   if(typeof offset === "undefined" || offset === null)offset = 0;
   if(offset < 0 || countPerValue <= 0 || stride <= 0)throw new Error();
@@ -115,7 +115,8 @@ BufferAccessor.prototype.set = function(index, value) {
 BufferAccessor.prototype.getVec = function(index, vec) {
   const o = this.offset + index * this.stride;
   const buffer = this.buffer;
-  for(let i = 0; i < this.countPerValue; i++) {
+  let i;
+  for (i = 0; i < this.countPerValue; i++) {
     vec[i] = buffer[o + i];
   }
   return vec;
@@ -138,7 +139,8 @@ BufferAccessor.prototype.setVec = function(index, vec) {
   const o = this.offset + index * this.stride;
   const buffer = this.buffer;
   const alen = Math.min(vec.length, this.countPerValue);
-  for(let i = 0; i < alen; i++) {
+  let i;
+  for (i = 0; i < alen; i++) {
     buffer[o + i] = vec[i];
   }
   return this;
@@ -151,7 +153,8 @@ BufferAccessor.prototype.copy = function() {
   const c = this.count();
   const newAttribute = BufferAccessor.makeBlank(c, this.countPerValue);
   const value = [];
-  for(let i = 0; i < c; i++) {
+  let i;
+  for (i = 0; i < c; i++) {
     this.getVec(i, value);
     newAttribute.setVec( i, value);
   }
@@ -182,7 +185,8 @@ BufferAccessor.makeIndices = function(numIndices) {
   } else {
     array = new Uint32Array(new ArrayBuffer(numIndices * 4));
   }
-  for(let i = 0; i < numIndices; i++) {
+  let i;
+  for (i = 0; i < numIndices; i++) {
     array[i] = i;
   }
   return array;

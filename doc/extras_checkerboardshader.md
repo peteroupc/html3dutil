@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [checkerboardShader](#extras_checkerboardshader.checkerboardShader)<br>TODO: Not documented yet.
 
 <a name='extras_checkerboardshader.checkerboardShader'></a>
-### module:extras/checkerboardshader.checkerboardShader
+### module:extras/checkerboardshader.checkerboardShader (constant)
 
 TODO: Not documented yet.
 

@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [warpShader](#extras_warpshader.warpShader)<br>TODO: Not documented yet.
 
 <a name='extras_warpshader.warpShader'></a>
-### module:extras/warpshader.warpShader
+### module:extras/warpshader.warpShader (constant)
 
 TODO: Not documented yet.
 

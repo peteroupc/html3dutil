@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [stripesBackShader](#extras_stripesbackshader.stripesBackShader)<br>TODO: Not documented yet.
 
 <a name='extras_stripesbackshader.stripesBackShader'></a>
-### module:extras/stripesbackshader.stripesBackShader
+### module:extras/stripesbackshader.stripesBackShader (constant)
 
 TODO: Not documented yet.
 

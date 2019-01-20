@@ -17,7 +17,7 @@ To import all symbols in this module, either of the following can be used:
 * [mirrorShader](#extras_mirrorshader.mirrorShader)<br>TODO: Not documented yet.
 
 <a name='extras_mirrorshader.mirrorShader'></a>
-### module:extras/mirrorshader.mirrorShader
+### module:extras/mirrorshader.mirrorShader (constant)
 
 TODO: Not documented yet.
 

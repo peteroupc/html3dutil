@@ -29,7 +29,7 @@ import {MathUtil} from "./h3du-math";
  * <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code>
  * method, as described in the corresponding methods of this class.
  */
-export var Surface = function(surface) {
+export const Surface = function(surface) {
   this.surface = typeof surface === "undefined" ? null : surface;
 };
 /** @ignore */

@@ -24,7 +24,7 @@ import {Transform} from "./h3du-transform";
  * @param {MeshBuffer} mesh A mesh in the form of a buffer object.
  * Cannot be null.
  */
-export var Shape = function(mesh) {
+export const Shape = function(mesh) {
   if(typeof mesh === "undefined" || mesh === null)throw new Error("mesh is null");
   this.meshBuffer = mesh;
   this.transform = new Transform();
@@ -156,7 +156,8 @@ Shape.prototype.getBounds = function() {
     ];
     let bv = boxVertices[0];
     const retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
-    for(let i = 1; i < 8; i++) {
+    let i;
+    for (i = 1; i < 8; i++) {
       bv = boxVertices[i];
       retval[0] = Math.min(retval[0], bv[0]);
       retval[1] = Math.min(retval[1], bv[1]);
